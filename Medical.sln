@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical", "Medical\Medical.csproj", "{D8D1014B-BE6D-4D9E-8A6C-5E37BEED8ACA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Head", "Head\Head.csproj", "{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlas", "Atlas\Atlas.csproj", "{31552C42-57C2-4AD4-A520-CC6EC4269205}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D8D1014B-BE6D-4D9E-8A6C-5E37BEED8ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8D1014B-BE6D-4D9E-8A6C-5E37BEED8ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8D1014B-BE6D-4D9E-8A6C-5E37BEED8ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8D1014B-BE6D-4D9E-8A6C-5E37BEED8ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B05D69F8-6463-4276-8077-D7F3F0C02A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B05D69F8-6463-4276-8077-D7F3F0C02A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B05D69F8-6463-4276-8077-D7F3F0C02A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B05D69F8-6463-4276-8077-D7F3F0C02A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31552C42-57C2-4AD4-A520-CC6EC4269205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31552C42-57C2-4AD4-A520-CC6EC4269205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31552C42-57C2-4AD4-A520-CC6EC4269205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31552C42-57C2-4AD4-A520-CC6EC4269205}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
