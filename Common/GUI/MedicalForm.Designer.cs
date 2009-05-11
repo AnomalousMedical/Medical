@@ -28,7 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalForm));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.drawingSplitHost = new Medical.GUI.View.DrawingSplitHost();
+            this.rightPanel = new System.Windows.Forms.Panel();
+            this.leftPanel = new System.Windows.Forms.Panel();
+            this.bottomPanel = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.layersButton = new System.Windows.Forms.ToolStripButton();
+            this.pictureButton = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,9 +50,10 @@
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawingSplitHost = new Medical.GUI.View.DrawingSplitHost();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
+            this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +64,9 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.drawingSplitHost);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.rightPanel);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.leftPanel);
+            this.toolStripContainer1.ContentPanel.Controls.Add(this.bottomPanel);
             this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(599, 358);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.LeftToolStripPanelVisible = false;
@@ -64,6 +76,75 @@
             this.toolStripContainer1.Size = new System.Drawing.Size(599, 383);
             this.toolStripContainer1.TabIndex = 0;
             this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer1.TopToolStripPanel
+            // 
+            this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
+            // 
+            // drawingSplitHost
+            // 
+            this.drawingSplitHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawingSplitHost.Location = new System.Drawing.Point(51, 0);
+            this.drawingSplitHost.Name = "drawingSplitHost";
+            this.drawingSplitHost.Size = new System.Drawing.Size(497, 325);
+            this.drawingSplitHost.TabIndex = 4;
+            // 
+            // rightPanel
+            // 
+            this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.rightPanel.Location = new System.Drawing.Point(548, 0);
+            this.rightPanel.Name = "rightPanel";
+            this.rightPanel.Size = new System.Drawing.Size(51, 325);
+            this.rightPanel.TabIndex = 3;
+            // 
+            // leftPanel
+            // 
+            this.leftPanel.AutoScroll = true;
+            this.leftPanel.AutoScrollMinSize = new System.Drawing.Size(10, 0);
+            this.leftPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.leftPanel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.leftPanel.Location = new System.Drawing.Point(0, 0);
+            this.leftPanel.Name = "leftPanel";
+            this.leftPanel.Size = new System.Drawing.Size(51, 325);
+            this.leftPanel.TabIndex = 2;
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 325);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(599, 33);
+            this.bottomPanel.TabIndex = 1;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.layersButton,
+            this.pictureButton});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(135, 25);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // layersButton
+            // 
+            this.layersButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.layersButton.Image = ((System.Drawing.Image)(resources.GetObject("layersButton.Image")));
+            this.layersButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.layersButton.Name = "layersButton";
+            this.layersButton.Size = new System.Drawing.Size(44, 22);
+            this.layersButton.Text = "Layers";
+            this.layersButton.Click += new System.EventHandler(this.layersButton_Click);
+            // 
+            // pictureButton
+            // 
+            this.pictureButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.pictureButton.Image = ((System.Drawing.Image)(resources.GetObject("pictureButton.Image")));
+            this.pictureButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pictureButton.Name = "pictureButton";
+            this.pictureButton.Size = new System.Drawing.Size(48, 22);
+            this.pictureButton.Text = "Picture";
             // 
             // menuStrip1
             // 
@@ -91,31 +172,31 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.newToolStripMenuItem.Text = "New";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -166,14 +247,6 @@
             this.fourWindowsToolStripMenuItem.Text = "Four Windows";
             this.fourWindowsToolStripMenuItem.Click += new System.EventHandler(this.fourWindowsToolStripMenuItem_Click);
             // 
-            // drawingSplitHost
-            // 
-            this.drawingSplitHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawingSplitHost.Location = new System.Drawing.Point(0, 0);
-            this.drawingSplitHost.Name = "drawingSplitHost";
-            this.drawingSplitHost.Size = new System.Drawing.Size(599, 358);
-            this.drawingSplitHost.TabIndex = 0;
-            // 
             // MedicalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,8 +258,12 @@
             this.Name = "MedicalForm";
             this.Text = "MainForm";
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer1.TopToolStripPanel.PerformLayout();
             this.toolStripContainer1.ResumeLayout(false);
             this.toolStripContainer1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -197,7 +274,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
-        private Medical.GUI.View.DrawingSplitHost drawingSplitHost;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
@@ -211,5 +287,12 @@
         private System.Windows.Forms.ToolStripMenuItem twoWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem threeWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fourWindowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton layersButton;
+        private System.Windows.Forms.ToolStripButton pictureButton;
+        private Medical.GUI.View.DrawingSplitHost drawingSplitHost;
+        private System.Windows.Forms.Panel rightPanel;
+        private System.Windows.Forms.Panel leftPanel;
+        private System.Windows.Forms.Panel bottomPanel;
     }
 }

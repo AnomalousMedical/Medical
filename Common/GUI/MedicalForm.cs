@@ -16,6 +16,7 @@ namespace Medical.GUI
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private MedicalController controller;
+        private LayersControl layersControl = new LayersControl();
 
         public MedicalForm()
         {
@@ -25,6 +26,12 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
+            leftPanel.AutoSize = true;
+            rightPanel.AutoSize = true;
+            bottomPanel.AutoSize = true;
+            layersControl.ParentChanged += new EventHandler(layersControl_ParentChanged);
+            layersControl.addLayerSection("Bones");
+            layersControl.addLayerSection("Teeth");
         }
 
         public DrawingSplitHost DrawingHost
@@ -132,6 +139,24 @@ namespace Medical.GUI
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.shutdown();
+        }
+
+        private void layersButton_Click(object sender, EventArgs e)
+        {
+            if (layersControl.Parent == null)
+            {
+                leftPanel.Controls.Clear();
+                leftPanel.Controls.Add(layersControl);
+            }
+            else
+            {
+                layersControl.Parent.Controls.Remove(layersControl);
+            }
+        }
+
+        void layersControl_ParentChanged(object sender, EventArgs e)
+        {
+            layersButton.Checked = layersControl.Parent != null;
         }
     }
 }
