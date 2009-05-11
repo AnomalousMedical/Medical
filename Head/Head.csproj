@@ -8,7 +8,7 @@
     <ProjectGuid>{3EA2CDFA-DEBE-4A57-BED9-85447F65716E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Head</RootNamespace>
+    <RootNamespace>Medical</RootNamespace>
     <AssemblyName>Head</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
