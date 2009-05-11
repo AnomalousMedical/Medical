@@ -31,6 +31,7 @@ namespace Medical.GUI
             rightPanel.AutoSize = true;
             bottomPanel.AutoSize = true;
             layersControl.ParentChanged += new EventHandler(layersControl_ParentChanged);
+            pictureControl.ParentChanged += new EventHandler(pictureControl_ParentChanged);
             layersControl.addLayerSection("Bones");
             layersControl.addLayerSection("Teeth");
         }
@@ -171,6 +172,11 @@ namespace Medical.GUI
             {
                 pictureControl.Parent.Controls.Clear();
             }
+        }
+
+        void pictureControl_ParentChanged(object sender, EventArgs e)
+        {
+            pictureButton.Checked = pictureControl.Parent != null;
         }
     }
 }
