@@ -8,8 +8,9 @@ using Medical.GUI;
 using OgrePlugin;
 using PhysXPlugin;
 using Engine.Platform;
+using Engine.Renderer;
 
-namespace Medical
+namespace Medical.Controller
 {
     public class MedicalController : IDisposable
     {
@@ -19,8 +20,18 @@ namespace Medical
         private PluginManager pluginManager;
         private LogFileListener logListener;
 
+        //Platform
+        private UpdateTimer mainTimer;
+        private EventManager eventManager;
+        private InputHandler inputHandler;
+        private EventUpdateListener eventUpdate;
+
         //GUI
         private DrawingWindow hiddenEmbedWindow;
+        private MedicalForm mainForm;
+
+        //Controller
+        private DrawingSplitController splitController = new DrawingSplitController();
 
         #endregion Fields
 
@@ -28,6 +39,14 @@ namespace Medical
 
         public void Dispose()
         {
+            if (eventManager != null)
+            {
+                eventManager.Dispose();
+            }
+            if (inputHandler != null)
+            {
+                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
+            }
             if (pluginManager != null)
             {
                 pluginManager.Dispose();
@@ -37,6 +56,7 @@ namespace Medical
                 hiddenEmbedWindow.Dispose();
             }
 
+            MedicalConfig.save();
             logListener.closeLogFile();
         }
 
@@ -49,12 +69,72 @@ namespace Medical
 
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager();
+            pluginManager.OnConfigureDefaultWindow = createWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(PhysXInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(Win32PlatformPlugin).Assembly);
             pluginManager.initializePlugins();
+            pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
+
+            //Create the GUI
+            mainForm = new MedicalForm();
+
+            //Intialize the platform
+            mainTimer = pluginManager.PlatformPlugin.createTimer();
+            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
+            eventManager = new EventManager(inputHandler);
+            eventUpdate = new EventUpdateListener(eventManager);
+            mainTimer.addFixedUpdateListener(eventUpdate);
+            pluginManager.setPlatformInfo(mainTimer, eventManager);
+
+            //Initialize controllers
+            splitController.initialize(mainForm.DrawingHost);
+            splitController.createOneWaySplit();
+
+            //Initialize GUI
+            mainForm.initialize(this);
+        }
+
+        /// <summary>
+        /// Show the form to the user and start the loop.
+        /// </summary>
+        public void start()
+        {
+            mainTimer.processMessageLoop(true);
+            mainForm.Show();
+            mainTimer.startLoop();
+        }
+
+        /// <summary>
+        /// Stop the loop and begin the process of shutting down the program.
+        /// </summary>
+        public void shutdown()
+        {
+            mainTimer.stopLoop();
+        }
+
+        /// <summary>
+        /// Helper function to create the default window. This is the callback
+        /// to the PluginManager.
+        /// </summary>
+        /// <param name="defaultWindow"></param>
+        private void createWindow(out DefaultWindowInfo defaultWindow)
+        {
+            defaultWindow = new DefaultWindowInfo(hiddenEmbedWindow);
         }
 
         #endregion Functions
+
+        #region Properties
+
+        public DrawingSplitController SplitController
+        {
+            get
+            {
+                return splitController;
+            }
+        }
+
+        #endregion Properties
     }
 }

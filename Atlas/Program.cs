@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Medical;
+using Medical.Controller;
 
 namespace Atlas
 {
@@ -20,6 +21,7 @@ namespace Atlas
             using (MedicalController controller = new MedicalController())
             {
                 controller.intialize();
+                controller.start();
             }
         }
     }
