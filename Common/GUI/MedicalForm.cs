@@ -17,6 +17,7 @@ namespace Medical.GUI
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private MedicalController controller;
         private LayersControl layersControl = new LayersControl();
+        private PictureControl pictureControl = new PictureControl();
 
         public MedicalForm()
         {
@@ -157,6 +158,19 @@ namespace Medical.GUI
         void layersControl_ParentChanged(object sender, EventArgs e)
         {
             layersButton.Checked = layersControl.Parent != null;
+        }
+
+        private void pictureButton_Click(object sender, EventArgs e)
+        {
+            if (pictureControl.Parent == null)
+            {
+                leftPanel.Controls.Clear();
+                leftPanel.Controls.Add(pictureControl);
+            }
+            else
+            {
+                pictureControl.Parent.Controls.Clear();
+            }
         }
     }
 }

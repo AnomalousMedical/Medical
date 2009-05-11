@@ -30,7 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalForm));
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
-            this.drawingSplitHost = new Medical.GUI.View.DrawingSplitHost();
             this.rightPanel = new System.Windows.Forms.Panel();
             this.leftPanel = new System.Windows.Forms.Panel();
             this.bottomPanel = new System.Windows.Forms.Panel();
@@ -50,6 +49,7 @@
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.drawingSplitHost = new Medical.GUI.View.DrawingSplitHost();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -80,14 +80,6 @@
             // toolStripContainer1.TopToolStripPanel
             // 
             this.toolStripContainer1.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
-            // drawingSplitHost
-            // 
-            this.drawingSplitHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawingSplitHost.Location = new System.Drawing.Point(51, 0);
-            this.drawingSplitHost.Name = "drawingSplitHost";
-            this.drawingSplitHost.Size = new System.Drawing.Size(497, 325);
-            this.drawingSplitHost.TabIndex = 4;
             // 
             // rightPanel
             // 
@@ -145,6 +137,7 @@
             this.pictureButton.Name = "pictureButton";
             this.pictureButton.Size = new System.Drawing.Size(48, 22);
             this.pictureButton.Text = "Picture";
+            this.pictureButton.Click += new System.EventHandler(this.pictureButton_Click);
             // 
             // menuStrip1
             // 
@@ -246,6 +239,14 @@
             this.fourWindowsToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.fourWindowsToolStripMenuItem.Text = "Four Windows";
             this.fourWindowsToolStripMenuItem.Click += new System.EventHandler(this.fourWindowsToolStripMenuItem_Click);
+            // 
+            // drawingSplitHost
+            // 
+            this.drawingSplitHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawingSplitHost.Location = new System.Drawing.Point(51, 0);
+            this.drawingSplitHost.Name = "drawingSplitHost";
+            this.drawingSplitHost.Size = new System.Drawing.Size(497, 325);
+            this.drawingSplitHost.TabIndex = 4;
             // 
             // MedicalForm
             // 
