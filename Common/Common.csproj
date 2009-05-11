@@ -25,16 +25,46 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Log.dll</HintPath>
+    </Reference>
+    <Reference Include="Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Math.dll</HintPath>
+    </Reference>
+    <Reference Include="OgrePlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="OgreWrapper, Version=1.0.3418.16973, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\OgreWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysXPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\PhysXPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="PhysXWrapper, Version=1.0.3418.16965, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\PhysXWrapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -43,12 +73,25 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Win32Platform, Version=1.0.3418.16948, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Win32Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="WrapperUtilities, Version=1.0.3418.16945, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\WrapperUtilities.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Controller\MedicalController.cs" />
+    <Compile Include="GUI\View\DrawingWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\View\DrawingWindow.Designer.cs">
+      <DependentUpon>DrawingWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GUI\View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -58,4 +101,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(ENGINE_HOME)\Release\cg.dll $(TargetDir)cg.dll
+copy $(ENGINE_HOME)\Release\OgreMain.dll $(TargetDir)OgreMain.dll
+copy $(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll $(TargetDir)Plugin_CgProgramManager.dll
+copy $(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll $(TargetDir)RenderSystem_Direct3D9.dll</PostBuildEvent>
+  </PropertyGroup>
 </Project>

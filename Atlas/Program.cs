@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Medical;
 
 namespace Atlas
 {
@@ -15,7 +16,11 @@ namespace Atlas
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
+            using (MedicalController controller = new MedicalController())
+            {
+                controller.intialize();
+            }
         }
     }
 }
