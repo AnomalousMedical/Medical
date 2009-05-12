@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Engine.Platform;
 using Medical.Controller;
-using Medical.GUI.View;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
@@ -19,7 +18,6 @@ namespace Medical.GUI
         private MedicalController controller;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
-        private DrawingSplitHost drawingSplitHost = new DrawingSplitHost();
 
         public MedicalForm()
         {
@@ -31,17 +29,10 @@ namespace Medical.GUI
             this.controller = controller;
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
+
+            //temp
             layersControl.addLayerSection("Bones");
             layersControl.addLayerSection("Teeth");
-            drawingSplitHost.Show(dockPanel);
-        }
-
-        public DrawingSplitHost DrawingHost
-        {
-            get
-            {
-                return drawingSplitHost;
-            }
         }
 
         public void addToolStrip(ToolStrip toolStrip)
@@ -143,22 +134,22 @@ namespace Medical.GUI
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.SplitController.createOneWaySplit();
+            
         }
 
         private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.SplitController.createTwoWaySplit();
+            
         }
 
         private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.SplitController.createThreeWayUpperSplit();
+            
         }
 
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.SplitController.createFourWaySplit();
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

@@ -120,44 +120,11 @@
     <Compile Include="GUI\Picture\PictureControl.Designer.cs">
       <DependentUpon>PictureControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\View\DrawingSplitHost.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\View\DrawingSplitHost.Designer.cs">
-      <DependentUpon>DrawingSplitHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\DrawingSplitView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="GUI\View\DrawingWindow.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindow.Designer.cs">
       <DependentUpon>DrawingWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\FourWaySplit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\View\FourWaySplit.designer.cs">
-      <DependentUpon>FourWaySplit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\OneWaySplit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\View\OneWaySplit.designer.cs">
-      <DependentUpon>OneWaySplit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\ThreeWayUpperSplit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\View\ThreeWayUpperSplit.designer.cs">
-      <DependentUpon>ThreeWayUpperSplit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\TwoWaySplit.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\View\TwoWaySplit.designer.cs">
-      <DependentUpon>TwoWaySplit.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -177,22 +144,9 @@
       <DependentUpon>PictureControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\DrawingSplitHost.resx">
-      <DependentUpon>DrawingSplitHost.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\View\DrawingWindow.resx">
       <DependentUpon>DrawingWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\FourWaySplit.resx">
-      <DependentUpon>FourWaySplit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\ThreeWayUpperSplit.resx">
-      <DependentUpon>ThreeWayUpperSplit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\TwoWaySplit.resx">
-      <DependentUpon>TwoWaySplit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

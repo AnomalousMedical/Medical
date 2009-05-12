@@ -8,10 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using Engine.Platform;
 using Medical.Controller;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class DrawingWindow : UserControl, OSWindow
+    public partial class DrawingWindow : DockContent, OSWindow
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private DrawingSplitController splitController;
@@ -65,12 +66,6 @@ namespace Medical.GUI
         }
 
         #endregion
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            splitController.setActiveWindow(this);
-            base.OnMouseDown(e);
-        }
 
         protected override void OnResize(EventArgs e)
         {

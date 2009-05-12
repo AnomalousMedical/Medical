@@ -92,8 +92,7 @@ namespace Medical.Controller
             pluginManager.setPlatformInfo(mainTimer, eventManager);
 
             //Initialize controllers
-            splitController.initialize(mainForm.DrawingHost);
-            splitController.createOneWaySplit();
+            splitController.initialize(this);
 
             //Initialize GUI
             mainForm.initialize(this);
