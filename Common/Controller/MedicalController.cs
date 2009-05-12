@@ -9,6 +9,8 @@ using OgrePlugin;
 using PhysXPlugin;
 using Engine.Platform;
 using Engine.Renderer;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Medical.Controller
 {
@@ -32,6 +34,7 @@ namespace Medical.Controller
 
         //Controller
         private DrawingSplitController splitController = new DrawingSplitController();
+        private MedicalInterface currentMedicalInterface;
 
         #endregion Fields
 
@@ -110,7 +113,22 @@ namespace Medical.Controller
         /// </summary>
         public void shutdown()
         {
+            if (currentMedicalInterface != null)
+            {
+                currentMedicalInterface.destroy();
+            }
             mainTimer.stopLoop();
+        }
+
+        /// <summary>
+        /// Set the MedicalInterface for the specific area being displayed. This
+        /// will create the appropriate controls.
+        /// </summary>
+        /// <param name="medInterface">The medical interface to set.</param>
+        public void setMedicalInterface(MedicalInterface medInterface)
+        {
+            currentMedicalInterface = medInterface;
+            currentMedicalInterface.initialize(this);
         }
 
         /// <summary>
@@ -132,6 +150,14 @@ namespace Medical.Controller
             get
             {
                 return splitController;
+            }
+        }
+
+        public MedicalForm MedicalForm
+        {
+            get
+            {
+                return mainForm;
             }
         }
 

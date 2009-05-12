@@ -44,6 +44,33 @@ namespace Medical.GUI
             }
         }
 
+        public void addToolStrip(ToolStrip toolStrip)
+        {
+            toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+        }
+
+        public void removeToolStrip(ToolStrip toolStrip)
+        {
+            if (toolStrip.Parent != null)
+            {
+                toolStrip.Parent.Controls.Remove(toolStrip);
+            }
+        }
+
+        public void addLeftControl(Control control)
+        {
+            leftPanel.Controls.Clear();
+            leftPanel.Controls.Add(control);
+        }
+
+        public void removeControl(Control control)
+        {
+            if (control.Parent != null)
+            {
+                control.Parent.Controls.Remove(control);
+            }
+        }
+
         #region OSWindow Members
 
         public IntPtr WindowHandle
@@ -141,14 +168,15 @@ namespace Medical.GUI
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.shutdown();
+            this.Close();
         }
 
         private void layersButton_Click(object sender, EventArgs e)
         {
             if (layersControl.Parent == null)
             {
-                leftPanel.Controls.Clear();
-                leftPanel.Controls.Add(layersControl);
+                rightPanel.Controls.Clear();
+                rightPanel.Controls.Add(layersControl);
             }
             else
             {
@@ -165,8 +193,8 @@ namespace Medical.GUI
         {
             if (pictureControl.Parent == null)
             {
-                leftPanel.Controls.Clear();
-                leftPanel.Controls.Add(pictureControl);
+                rightPanel.Controls.Clear();
+                rightPanel.Controls.Add(pictureControl);
             }
             else
             {

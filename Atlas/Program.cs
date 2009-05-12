@@ -21,6 +21,7 @@ namespace Atlas
             using (MedicalController controller = new MedicalController())
             {
                 controller.intialize();
+                controller.setMedicalInterface(new HeadController());
                 controller.start();
             }
         }

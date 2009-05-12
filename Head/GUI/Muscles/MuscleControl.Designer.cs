@@ -1,6 +1,6 @@
-﻿namespace Medical.GUI
+﻿namespace Medical.GUI.Muscles
 {
-    partial class DrawingWindow
+    partial class MuscleControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,16 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // DrawingWindow
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.Name = "DrawingWindow";
-            this.ResumeLayout(false);
-
         }
 
         #endregion

@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,10 +51,153 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\HeadController.cs" />
+    <Compile Include="GUI\Disk\DiskControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Disk\DiskControl.Designer.cs">
+      <DependentUpon>DiskControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\HeadToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Mandible\MandibleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Mandible\MandibleControl.Designer.cs">
+      <DependentUpon>MandibleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Muscles\MuscleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
+      <DependentUpon>MuscleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Teeth\TeethControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
+      <DependentUpon>TeethControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{7185582B-5482-4148-82B0-263477681B01}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Teeth\TeethControl.resx">
+      <DependentUpon>TeethControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
