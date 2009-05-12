@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeethControl));
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.teethPanel = new System.Windows.Forms.Panel();
             this.tooth32 = new System.Windows.Forms.Panel();
             this.tooth31 = new System.Windows.Forms.Panel();
@@ -61,8 +63,22 @@
             this.tooth3 = new System.Windows.Forms.Panel();
             this.tooth2 = new System.Windows.Forms.Panel();
             this.tooth1 = new System.Windows.Forms.Panel();
+            this.moveButton = new System.Windows.Forms.ToolStripButton();
+            this.rotateButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moveButton,
+            this.rotateButton});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(257, 25);
+            this.toolStrip1.TabIndex = 1;
+            this.toolStrip1.Text = "toolStrip1";
             // 
             // teethPanel
             // 
@@ -100,10 +116,11 @@
             this.teethPanel.Controls.Add(this.tooth3);
             this.teethPanel.Controls.Add(this.tooth2);
             this.teethPanel.Controls.Add(this.tooth1);
-            this.teethPanel.Location = new System.Drawing.Point(3, 51);
+            this.teethPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.teethPanel.Location = new System.Drawing.Point(0, 25);
             this.teethPanel.Name = "teethPanel";
-            this.teethPanel.Size = new System.Drawing.Size(254, 464);
-            this.teethPanel.TabIndex = 0;
+            this.teethPanel.Size = new System.Drawing.Size(257, 466);
+            this.teethPanel.TabIndex = 2;
             // 
             // tooth32
             // 
@@ -393,22 +410,61 @@
             this.tooth1.Size = new System.Drawing.Size(35, 30);
             this.tooth1.TabIndex = 0;
             // 
+            // moveButton
+            // 
+            this.moveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.moveButton.Image = ((System.Drawing.Image)(resources.GetObject("moveButton.Image")));
+            this.moveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(41, 22);
+            this.moveButton.Text = "Move";
+            // 
+            // rotateButton
+            // 
+            this.rotateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.rotateButton.Image = ((System.Drawing.Image)(resources.GetObject("rotateButton.Image")));
+            this.rotateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.rotateButton.Name = "rotateButton";
+            this.rotateButton.Size = new System.Drawing.Size(45, 22);
+            this.rotateButton.Text = "Rotate";
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.teethPanel);
+            this.Controls.Add(this.toolStrip1);
             this.Name = "TeethControl";
-            this.Size = new System.Drawing.Size(257, 515);
+            this.Size = new System.Drawing.Size(257, 491);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.teethPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton moveButton;
+        private System.Windows.Forms.ToolStripButton rotateButton;
         private System.Windows.Forms.Panel teethPanel;
-        private System.Windows.Forms.Panel tooth1;
+        private System.Windows.Forms.Panel tooth32;
+        private System.Windows.Forms.Panel tooth31;
+        private System.Windows.Forms.Panel tooth30;
+        private System.Windows.Forms.Panel tooth29;
+        private System.Windows.Forms.Panel tooth28;
+        private System.Windows.Forms.Panel tooth27;
+        private System.Windows.Forms.Panel tooth26;
+        private System.Windows.Forms.Panel tooth25;
+        private System.Windows.Forms.Panel tooth24;
+        private System.Windows.Forms.Panel tooth23;
+        private System.Windows.Forms.Panel tooth22;
+        private System.Windows.Forms.Panel tooth21;
+        private System.Windows.Forms.Panel tooth20;
+        private System.Windows.Forms.Panel tooth19;
+        private System.Windows.Forms.Panel tooth18;
         private System.Windows.Forms.Panel tooth17;
         private System.Windows.Forms.Panel tooth16;
         private System.Windows.Forms.Panel tooth15;
@@ -425,20 +481,7 @@
         private System.Windows.Forms.Panel tooth4;
         private System.Windows.Forms.Panel tooth3;
         private System.Windows.Forms.Panel tooth2;
-        private System.Windows.Forms.Panel tooth24;
-        private System.Windows.Forms.Panel tooth23;
-        private System.Windows.Forms.Panel tooth22;
-        private System.Windows.Forms.Panel tooth21;
-        private System.Windows.Forms.Panel tooth20;
-        private System.Windows.Forms.Panel tooth19;
-        private System.Windows.Forms.Panel tooth18;
-        private System.Windows.Forms.Panel tooth32;
-        private System.Windows.Forms.Panel tooth31;
-        private System.Windows.Forms.Panel tooth30;
-        private System.Windows.Forms.Panel tooth29;
-        private System.Windows.Forms.Panel tooth28;
-        private System.Windows.Forms.Panel tooth27;
-        private System.Windows.Forms.Panel tooth26;
-        private System.Windows.Forms.Panel tooth25;
+        private System.Windows.Forms.Panel tooth1;
+
     }
 }

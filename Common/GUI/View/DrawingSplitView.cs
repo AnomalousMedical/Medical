@@ -6,26 +6,38 @@ using System.Windows.Forms;
 
 namespace Medical.GUI
 {
-    abstract class DrawingSplitView : UserControl
+    class DrawingSplitView : UserControl
     {
-        public abstract Control FrontView
+        public virtual Control FrontView
         {
-            get;
+            get
+            {
+                return null;
+            }
         }
 
-        public abstract Control BackView
+        public virtual Control BackView
         {
-            get;
+            get
+            {
+                return null;
+            }
         }
 
-        public abstract Control LeftView
+        public virtual Control LeftView
         {
-            get;
+            get
+            {
+                return null;
+            }
         }
 
-        public abstract Control RightView
+        public virtual Control RightView
         {
-            get;
+            get
+            {
+                return null;
+            }
         }
     }
 }
