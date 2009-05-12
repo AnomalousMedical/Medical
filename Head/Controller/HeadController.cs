@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.Controller
 {
@@ -24,14 +25,14 @@ namespace Medical.Controller
             controller.MedicalForm.removeToolStrip(headToolStrip);
         }
 
-        public void addControlToUI(Control control)
+        public void addControlToUI(DockContent control)
         {
-            controller.MedicalForm.addLeftControl(control);
+            controller.MedicalForm.addDockContent(control);
         }
 
-        public void removeControl(Control control)
+        public void removeControl(DockContent control)
         {
-            controller.MedicalForm.removeControl(control);
+            controller.MedicalForm.removeDockContent(control);
         }
     }
 }

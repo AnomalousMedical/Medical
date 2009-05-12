@@ -49,6 +49,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.22263, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\DockPanel\Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\HeadController.cs" />
@@ -74,7 +78,7 @@
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
       <DependentUpon>TeethControl.cs</DependentUpon>

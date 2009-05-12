@@ -33,7 +33,7 @@ namespace Medical.GUI
             teethButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             teethButton.Click += new EventHandler(teethButton_Click);
             this.Items.Add(teethButton);
-            teethControl.ParentChanged += new EventHandler(teethControl_ParentChanged);
+            teethControl.VisibleChanged += new EventHandler(teethControl_VisibleChanged);
         }
 
         protected override void Dispose(bool disposing)
@@ -44,19 +44,19 @@ namespace Medical.GUI
 
         void teethButton_Click(object sender, EventArgs e)
         {
-            if (teethControl.Parent == null)
-            {
-                headController.addControlToUI(teethControl);
-            }
-            else
+            if (teethControl.Visible)
             {
                 headController.removeControl(teethControl);
             }
+            else
+            {
+                headController.addControlToUI(teethControl); 
+            }
         }
 
-        void teethControl_ParentChanged(object sender, EventArgs e)
+        void teethControl_VisibleChanged(object sender, EventArgs e)
         {
-            teethButton.Checked = teethControl.Parent != null;
+            teethButton.Checked = teethControl.Visible;
         }
     }
 }

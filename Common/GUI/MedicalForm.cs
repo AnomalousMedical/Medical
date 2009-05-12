@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Engine.Platform;
 using Medical.Controller;
 using Medical.GUI.View;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
@@ -28,8 +29,8 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
-            layersControl.ParentChanged += new EventHandler(layersControl_ParentChanged);
-            pictureControl.ParentChanged += new EventHandler(pictureControl_ParentChanged);
+            layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
+            pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
             layersControl.addLayerSection("Bones");
             layersControl.addLayerSection("Teeth");
             drawingSplitHost.Show(dockPanel);
@@ -56,17 +57,14 @@ namespace Medical.GUI
             }
         }
 
-        public void addLeftControl(Control control)
+        public void addDockContent(DockContent content)
         {
-            
+            content.Show(dockPanel);
         }
 
-        public void removeControl(Control control)
+        public void removeDockContent(DockContent content)
         {
-            if (control.Parent != null)
-            {
-                control.Parent.Controls.Remove(control);
-            }
+            content.DockHandler.Hide();
         }
 
         #region OSWindow Members
@@ -171,32 +169,36 @@ namespace Medical.GUI
 
         private void layersButton_Click(object sender, EventArgs e)
         {
-            if (layersControl.Visible == false)
+            if (layersControl.Visible)
+            {
+                layersControl.DockHandler.Hide();
+            }
+            else
             {
                 layersControl.Show(dockPanel);
             }
         }
 
-        void layersControl_ParentChanged(object sender, EventArgs e)
+        void layersControl_VisibleChanged(object sender, EventArgs e)
         {
-            layersButton.Checked = layersControl.Parent != null;
+            layersButton.Checked = layersControl.Visible;
         }
 
         private void pictureButton_Click(object sender, EventArgs e)
         {
-            if (pictureControl.Visible == false)
-            {
-                pictureControl.Show(dockPanel);
-            }
-            else
+            if (pictureControl.Visible)
             {
                 pictureControl.DockHandler.Hide();
             }
+            else
+            {
+                pictureControl.Show(dockPanel); 
+            }
         }
 
-        void pictureControl_ParentChanged(object sender, EventArgs e)
+        void pictureControl_VisibleChanged(object sender, EventArgs e)
         {
-            pictureButton.Checked = pictureControl.Parent != null;
+            pictureButton.Checked = pictureControl.Visible;
         }
     }
 }

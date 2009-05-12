@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeethControl));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.moveButton = new System.Windows.Forms.ToolStripButton();
+            this.rotateButton = new System.Windows.Forms.ToolStripButton();
             this.teethPanel = new System.Windows.Forms.Panel();
             this.tooth32 = new System.Windows.Forms.Panel();
             this.tooth31 = new System.Windows.Forms.Panel();
@@ -63,8 +65,6 @@
             this.tooth3 = new System.Windows.Forms.Panel();
             this.tooth2 = new System.Windows.Forms.Panel();
             this.tooth1 = new System.Windows.Forms.Panel();
-            this.moveButton = new System.Windows.Forms.ToolStripButton();
-            this.rotateButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
@@ -79,6 +79,24 @@
             this.toolStrip1.Size = new System.Drawing.Size(257, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // moveButton
+            // 
+            this.moveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.moveButton.Image = ((System.Drawing.Image)(resources.GetObject("moveButton.Image")));
+            this.moveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(41, 22);
+            this.moveButton.Text = "Move";
+            // 
+            // rotateButton
+            // 
+            this.rotateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.rotateButton.Image = ((System.Drawing.Image)(resources.GetObject("rotateButton.Image")));
+            this.rotateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.rotateButton.Name = "rotateButton";
+            this.rotateButton.Size = new System.Drawing.Size(45, 22);
+            this.rotateButton.Text = "Rotate";
             // 
             // teethPanel
             // 
@@ -116,7 +134,6 @@
             this.teethPanel.Controls.Add(this.tooth3);
             this.teethPanel.Controls.Add(this.tooth2);
             this.teethPanel.Controls.Add(this.tooth1);
-            this.teethPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.teethPanel.Location = new System.Drawing.Point(0, 25);
             this.teethPanel.Name = "teethPanel";
             this.teethPanel.Size = new System.Drawing.Size(257, 466);
@@ -410,32 +427,21 @@
             this.tooth1.Size = new System.Drawing.Size(35, 30);
             this.tooth1.TabIndex = 0;
             // 
-            // moveButton
-            // 
-            this.moveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moveButton.Image = ((System.Drawing.Image)(resources.GetObject("moveButton.Image")));
-            this.moveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(41, 22);
-            this.moveButton.Text = "Move";
-            // 
-            // rotateButton
-            // 
-            this.rotateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.rotateButton.Image = ((System.Drawing.Image)(resources.GetObject("rotateButton.Image")));
-            this.rotateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.rotateButton.Name = "rotateButton";
-            this.rotateButton.Size = new System.Drawing.Size(45, 22);
-            this.rotateButton.Text = "Rotate";
-            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(257, 495);
             this.Controls.Add(this.teethPanel);
             this.Controls.Add(this.toolStrip1);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HideOnClose = true;
             this.Name = "TeethControl";
-            this.Size = new System.Drawing.Size(257, 491);
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.Text = "Teeth";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.teethPanel.ResumeLayout(false);
