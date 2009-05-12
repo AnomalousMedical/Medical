@@ -18,6 +18,7 @@ namespace Medical.GUI
         private MedicalController controller;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
+        private DrawingSplitHost drawingSplitHost = new DrawingSplitHost();
 
         public MedicalForm()
         {
@@ -27,13 +28,11 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
-            leftPanel.AutoSize = true;
-            rightPanel.AutoSize = true;
-            bottomPanel.AutoSize = true;
             layersControl.ParentChanged += new EventHandler(layersControl_ParentChanged);
             pictureControl.ParentChanged += new EventHandler(pictureControl_ParentChanged);
             layersControl.addLayerSection("Bones");
             layersControl.addLayerSection("Teeth");
+            drawingSplitHost.Show(dockPanel);
         }
 
         public DrawingSplitHost DrawingHost
@@ -59,8 +58,7 @@ namespace Medical.GUI
 
         public void addLeftControl(Control control)
         {
-            leftPanel.Controls.Clear();
-            leftPanel.Controls.Add(control);
+            
         }
 
         public void removeControl(Control control)
@@ -173,14 +171,9 @@ namespace Medical.GUI
 
         private void layersButton_Click(object sender, EventArgs e)
         {
-            if (layersControl.Parent == null)
+            if (layersControl.Visible == false)
             {
-                rightPanel.Controls.Clear();
-                rightPanel.Controls.Add(layersControl);
-            }
-            else
-            {
-                layersControl.Parent.Controls.Remove(layersControl);
+                layersControl.Show(dockPanel);
             }
         }
 
@@ -191,14 +184,13 @@ namespace Medical.GUI
 
         private void pictureButton_Click(object sender, EventArgs e)
         {
-            if (pictureControl.Parent == null)
+            if (pictureControl.Visible == false)
             {
-                rightPanel.Controls.Clear();
-                rightPanel.Controls.Add(pictureControl);
+                pictureControl.Show(dockPanel);
             }
             else
             {
-                pictureControl.Parent.Controls.Clear();
+                pictureControl.DockHandler.Hide();
             }
         }
 

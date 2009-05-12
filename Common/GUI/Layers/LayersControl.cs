@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.GUI.Layers;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class LayersControl : UserControl
+    public partial class LayersControl : DockContent
     {
         public LayersControl()
         {

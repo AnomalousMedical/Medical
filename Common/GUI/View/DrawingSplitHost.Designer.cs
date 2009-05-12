@@ -28,8 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // DrawingSplitHost
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 264);
+            this.CloseButton = false;
+            this.CloseButtonVisible = false;
+            this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HideOnClose = true;
+            this.Name = "DrawingSplitHost";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
+            this.Text = "Scene";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

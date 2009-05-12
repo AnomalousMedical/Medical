@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace Medical.Controller
 {
-    public class MedicalController : IDisposable
+    public class MedicalController : IDisposable, UpdateListener
     {
         #region Fields
 
@@ -88,6 +88,7 @@ namespace Medical.Controller
             eventManager = new EventManager(inputHandler);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addFixedUpdateListener(eventUpdate);
+            mainTimer.addFullSpeedUpdateListener(this);
             pluginManager.setPlatformInfo(mainTimer, eventManager);
 
             //Initialize controllers
@@ -103,7 +104,6 @@ namespace Medical.Controller
         /// </summary>
         public void start()
         {
-            mainTimer.processMessageLoop(true);
             mainForm.Show();
             mainTimer.startLoop();
         }
@@ -162,5 +162,24 @@ namespace Medical.Controller
         }
 
         #endregion Properties
+
+        #region UpdateListener Members
+
+        public void exceededMaxDelta()
+        {
+            
+        }
+
+        public void loopStarting()
+        {
+            
+        }
+
+        public void sendUpdate(Clock clock)
+        {
+            Application.DoEvents();
+        }
+
+        #endregion
     }
 }

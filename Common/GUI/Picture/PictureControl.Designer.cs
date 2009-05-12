@@ -30,18 +30,18 @@
         {
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.sizeGroup = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.resolutionWidth = new System.Windows.Forms.NumericUpDown();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.resolutionHeight = new System.Windows.Forms.NumericUpDown();
             this.aspectWidth = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.aspectHeight = new System.Windows.Forms.NumericUpDown();
             this.button1 = new System.Windows.Forms.Button();
+            this.sizeGroup = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.resolutionWidth = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.resolutionHeight = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,28 +54,29 @@
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.aspectWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspectHeight)).BeginInit();
             this.sizeGroup.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionWidth)).BeginInit();
-            this.flowLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aspectWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aspectHeight)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Controls.Add(this.sizeGroup);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.renderSequenceButton);
             this.flowLayoutPanel1.Controls.Add(this.renderSingleButton);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(137, 413);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(141, 405);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // groupBox2
@@ -87,54 +88,6 @@
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Aspect Ratio";
-            // 
-            // sizeGroup
-            // 
-            this.sizeGroup.Controls.Add(this.flowLayoutPanel2);
-            this.sizeGroup.Location = new System.Drawing.Point(3, 137);
-            this.sizeGroup.Name = "sizeGroup";
-            this.sizeGroup.Size = new System.Drawing.Size(134, 101);
-            this.sizeGroup.TabIndex = 4;
-            this.sizeGroup.TabStop = false;
-            this.sizeGroup.Text = "Size";
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Controls.Add(this.label1);
-            this.flowLayoutPanel2.Controls.Add(this.resolutionWidth);
-            this.flowLayoutPanel2.Controls.Add(this.label2);
-            this.flowLayoutPanel2.Controls.Add(this.resolutionHeight);
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(128, 82);
-            this.flowLayoutPanel2.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(3, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Width";
-            // 
-            // resolutionWidth
-            // 
-            this.resolutionWidth.Location = new System.Drawing.Point(3, 16);
-            this.resolutionWidth.Maximum = new decimal(new int[] {
-            8000,
-            0,
-            0,
-            0});
-            this.resolutionWidth.Name = "resolutionWidth";
-            this.resolutionWidth.Size = new System.Drawing.Size(120, 20);
-            this.resolutionWidth.TabIndex = 12;
-            this.resolutionWidth.Value = new decimal(new int[] {
-            1024,
-            0,
-            0,
-            0});
             // 
             // flowLayoutPanel3
             // 
@@ -158,31 +111,6 @@
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 0;
             this.label3.Text = "Width";
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(3, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Height";
-            // 
-            // resolutionHeight
-            // 
-            this.resolutionHeight.Location = new System.Drawing.Point(3, 55);
-            this.resolutionHeight.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-            this.resolutionHeight.Name = "resolutionHeight";
-            this.resolutionHeight.Size = new System.Drawing.Size(120, 20);
-            this.resolutionHeight.TabIndex = 14;
-            this.resolutionHeight.Value = new decimal(new int[] {
-            768,
-            0,
-            0,
-            0});
             // 
             // aspectWidth
             // 
@@ -235,6 +163,79 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Lock Aspect Ratio";
             this.button1.UseVisualStyleBackColor = true;
+            // 
+            // sizeGroup
+            // 
+            this.sizeGroup.Controls.Add(this.flowLayoutPanel2);
+            this.sizeGroup.Location = new System.Drawing.Point(3, 137);
+            this.sizeGroup.Name = "sizeGroup";
+            this.sizeGroup.Size = new System.Drawing.Size(134, 101);
+            this.sizeGroup.TabIndex = 4;
+            this.sizeGroup.TabStop = false;
+            this.sizeGroup.Text = "Size";
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.label1);
+            this.flowLayoutPanel2.Controls.Add(this.resolutionWidth);
+            this.flowLayoutPanel2.Controls.Add(this.label2);
+            this.flowLayoutPanel2.Controls.Add(this.resolutionHeight);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(128, 82);
+            this.flowLayoutPanel2.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Width";
+            // 
+            // resolutionWidth
+            // 
+            this.resolutionWidth.Location = new System.Drawing.Point(3, 16);
+            this.resolutionWidth.Maximum = new decimal(new int[] {
+            8000,
+            0,
+            0,
+            0});
+            this.resolutionWidth.Name = "resolutionWidth";
+            this.resolutionWidth.Size = new System.Drawing.Size(120, 20);
+            this.resolutionWidth.TabIndex = 12;
+            this.resolutionWidth.Value = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(3, 39);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Height";
+            // 
+            // resolutionHeight
+            // 
+            this.resolutionHeight.Location = new System.Drawing.Point(3, 55);
+            this.resolutionHeight.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+            this.resolutionHeight.Name = "resolutionHeight";
+            this.resolutionHeight.Size = new System.Drawing.Size(120, 20);
+            this.resolutionHeight.TabIndex = 14;
+            this.resolutionHeight.Value = new decimal(new int[] {
+            768,
+            0,
+            0,
+            0});
             // 
             // groupBox1
             // 
@@ -324,25 +325,30 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(142, 406);
             this.Controls.Add(this.flowLayoutPanel1);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HideOnClose = true;
             this.Name = "PictureControl";
-            this.Size = new System.Drawing.Size(137, 413);
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            this.Text = "Picture";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.aspectWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aspectHeight)).EndInit();
             this.sizeGroup.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.resolutionWidth)).EndInit();
-            this.flowLayoutPanel3.ResumeLayout(false);
-            this.flowLayoutPanel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aspectWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.aspectHeight)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

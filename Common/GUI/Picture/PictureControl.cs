@@ -6,10 +6,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class PictureControl : UserControl
+    public partial class PictureControl : DockContent
     {
         public PictureControl()
         {
