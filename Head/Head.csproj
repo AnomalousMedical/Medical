@@ -65,14 +65,20 @@
     <Compile Include="GUI\HeadToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Mandible\MandibleControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="GUI\Mandible\MandibleOffsetControl.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Mandible\MandibleControl.Designer.cs">
-      <DependentUpon>MandibleControl.cs</DependentUpon>
+    <Compile Include="GUI\Mandible\MandibleOffsetControl.Designer.cs">
+      <DependentUpon>MandibleOffsetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Mandible\MandibleSizeControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Mandible\MandibleSizeControl.Designer.cs">
+      <DependentUpon>MandibleSizeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
@@ -97,6 +103,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\Mandible\MandibleOffsetControl.resx">
+      <DependentUpon>MandibleOffsetControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Mandible\MandibleSizeControl.resx">
+      <DependentUpon>MandibleSizeControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
+      <DependentUpon>MuscleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Teeth\TeethControl.resx">
       <DependentUpon>TeethControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -202,6 +220,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tooth32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clenchedmuscle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\neutralmuscle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openmuscle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mandibletranslation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftcondyleresize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightcondyleresize.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

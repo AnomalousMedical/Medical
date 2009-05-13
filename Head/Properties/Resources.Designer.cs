@@ -60,6 +60,48 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap clenchedmuscle {
+            get {
+                object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap leftcondyleresize {
+            get {
+                object obj = ResourceManager.GetObject("leftcondyleresize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap mandibletranslation {
+            get {
+                object obj = ResourceManager.GetObject("mandibletranslation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap neutralmuscle {
+            get {
+                object obj = ResourceManager.GetObject("neutralmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap openmuscle {
+            get {
+                object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rightcondyleresize {
+            get {
+                object obj = ResourceManager.GetObject("rightcondyleresize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth1 {
             get {
                 object obj = ResourceManager.GetObject("tooth1", resourceCulture);

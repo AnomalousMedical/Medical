@@ -10,9 +10,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class MuscleControl : DockContent
+    public partial class MandibleOffsetControl : DockContent
     {
-        public MuscleControl()
+        public MandibleOffsetControl()
         {
             InitializeComponent();
         }
