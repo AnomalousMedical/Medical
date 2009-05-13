@@ -113,7 +113,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
-            this.panel2.BackgroundImage = global::Medical.Properties.Resources.rightcondyleresize;
+            this.panel2.BackgroundImage = global::Medical.Properties.Resources.leftcondyleresize;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel2.Location = new System.Drawing.Point(128, 50);
             this.panel2.Name = "panel2";
@@ -122,7 +122,7 @@
             // 
             // panel1
             // 
-            this.panel1.BackgroundImage = global::Medical.Properties.Resources.leftcondyleresize;
+            this.panel1.BackgroundImage = global::Medical.Properties.Resources.rightcondyleresize;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Location = new System.Drawing.Point(25, 50);
             this.panel1.Name = "panel1";
