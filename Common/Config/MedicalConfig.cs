@@ -30,6 +30,14 @@ namespace Medical
             }
         }
 
+        public static ConfigFile ConfigFile
+        {
+            get
+            {
+                return configFile;
+            }
+        }
+
         public static void save()
         {
             configFile.writeConfigFile();

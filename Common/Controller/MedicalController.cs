@@ -71,7 +71,7 @@ namespace Medical.Controller
             Log.Default.addLogListener(logListener);
 
             hiddenEmbedWindow = new DrawingWindow();
-            pluginManager = new PluginManager();
+            pluginManager = new PluginManager(MedicalConfig.ConfigFile);
             pluginManager.OnConfigureDefaultWindow = createWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(PhysXInterface).Assembly);
