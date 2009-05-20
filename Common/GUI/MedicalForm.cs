@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Engine.Platform;
-using Medical.Controller;
+using Medical;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
@@ -48,12 +48,12 @@ namespace Medical.GUI
             }
         }
 
-        public void addDockContent(DockContent content)
+        public void showDockContent(DockContent content)
         {
             content.Show(dockPanel);
         }
 
-        public void removeDockContent(DockContent content)
+        public void hideDockContent(DockContent content)
         {
             content.DockHandler.Hide();
         }

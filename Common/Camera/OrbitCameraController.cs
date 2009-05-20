@@ -1,0 +1,261 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Engine.Platform;
+using Engine;
+
+namespace Medical
+{
+    enum CameraEvents
+    {
+        RotateCamera,
+        PanCamera,
+        ZoomCamera,
+    }
+
+    public class OrbitCameraController : UpdateListener
+    {
+        #region Static
+
+        static OrbitCameraController()
+        {
+            MessageEvent rotateCamera = new MessageEvent(CameraEvents.RotateCamera);
+            rotateCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            DefaultEvents.registerDefaultEvent(rotateCamera);
+
+            MessageEvent panCamera = new MessageEvent(CameraEvents.PanCamera);
+            panCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            panCamera.addButton(KeyboardButtonCode.KC_LCONTROL);
+            DefaultEvents.registerDefaultEvent(panCamera);
+
+            MessageEvent zoomCamera = new MessageEvent(CameraEvents.ZoomCamera);
+            zoomCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
+            DefaultEvents.registerDefaultEvent(zoomCamera);
+        }
+
+        private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
+        private const int SCROLL_SCALE = 5;
+
+        #endregion Static
+
+        private CameraControl camera;
+        private EventManager events;
+        private Vector3 normalDirection;
+        private Vector3 left;
+        private float orbitDistance;
+        private float yaw;
+        private float pitch;
+        private bool currentlyInMotion;
+        private Vector3 lookAt;
+        private Vector3 translation;
+        private CameraMotionValidator motionValidator = null;
+
+        public OrbitCameraController(CameraControl camera, EventManager eventManager)
+        {
+            this.camera = camera;
+            this.events = eventManager;
+            translation = camera.Translation;
+            lookAt = camera.LookAt;
+            computeStartingValues(translation - lookAt);
+        }
+
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, EventManager eventManager)
+        {
+            this.camera = null;
+            this.events = eventManager;
+            this.translation = translation;
+            this.lookAt = lookAt;
+            computeStartingValues(translation - lookAt);
+        }
+
+        public void sendUpdate(Clock clock)
+        {
+            if (camera != null)
+            {
+                Vector3 mouseCoords = events.Mouse.getAbsMouse();
+                bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
+                if (events[CameraEvents.RotateCamera].FirstFrameDown)
+                {
+                    if (activeWindow)
+                    {
+                        currentlyInMotion = true;
+                    }
+                }
+                else if (events[CameraEvents.RotateCamera].FirstFrameUp)
+                {
+                    currentlyInMotion = false;
+                }
+                mouseCoords = events.Mouse.getRelMouse();
+                if (currentlyInMotion)
+                {
+                    if (events[CameraEvents.PanCamera].Down)
+                    {
+                        lookAt += left * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * orbitDistance);
+                        Vector3 relUp = left.cross(ref normalDirection);
+                        lookAt += relUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * orbitDistance);
+                        updateTranslation(lookAt + normalDirection * orbitDistance);
+                    }
+                    else if (events[CameraEvents.ZoomCamera].Down)
+                    {
+                        orbitDistance += mouseCoords.y;
+                        if (orbitDistance < 0.0f)
+                        {
+                            orbitDistance = 0.0f;
+                        }
+                        //camera.setOrthoWindowHeight(orbitDistance);
+                        updateTranslation(normalDirection * orbitDistance + lookAt);
+                    }
+                    else if (events[CameraEvents.RotateCamera].Down)
+                    {
+                        yaw += mouseCoords.x / -100.0f;
+                        pitch += mouseCoords.y / 100.0f;
+                        if (pitch > HALF_PI)
+                        {
+                            pitch = HALF_PI;
+                        }
+                        if (pitch < -HALF_PI)
+                        {
+                            pitch = -HALF_PI;
+                        }
+
+                        Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+                        Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
+
+                        normalDirection = Quaternion.quatRotate(yawRot * pitchRot, Vector3.Backward);
+                        updateTranslation(normalDirection * orbitDistance + lookAt);
+                        camera.LookAt = lookAt;
+                        left = normalDirection.cross(ref Vector3.Up);
+                    }
+                }
+                if (activeWindow)
+                {
+                    if (mouseCoords.z != 0)
+                    {
+                        if (mouseCoords.z < 0)
+                        {
+                            orbitDistance += 3.6f;
+                        }
+                        else if (mouseCoords.z > 0)
+                        {
+                            orbitDistance -= 3.6f;
+                            if (orbitDistance < 0.0f)
+                            {
+                                orbitDistance = 0.0f;
+                            }
+                        }
+                        //camera.setOrthoWindowHeight(orbitDistance);
+                        updateTranslation(normalDirection * orbitDistance + lookAt);
+                    }
+                }
+            }
+        }
+
+        public void loopStarting()
+        {
+            
+        }
+
+        public void exceededMaxDelta()
+        {
+            
+        }
+
+        /// <summary>
+        /// set the current camera for this controller. This can be set to null to disable the controller.
+        /// </summary>
+        /// <param name="camera">The camera to use.</param>
+        public void setCamera(CameraControl camera)
+        {
+            this.camera = camera;
+        }
+
+        /// <summary>
+        /// Set the camera to the given position looking at the given point.
+        /// </summary>
+        /// <param name="position">The position to set the camera at.</param>
+        /// <param name="lookAt">The look at point of the camera.</param>
+        public void setNewPosition(Vector3 position, Vector3 lookAt)
+        {
+            this.lookAt = lookAt;
+            computeStartingValues(position - lookAt);
+            //camera.setOrthoWindowHeight(orbitDistance);
+            updateTranslation(normalDirection * orbitDistance + lookAt);
+            camera.LookAt = lookAt;
+        }
+
+        /// <summary>
+        /// Helper function to compute the starting orbitDistance, yaw, pitch,
+        /// normalDirection and left values.
+        /// </summary>
+        /// <param name="localTrans">The translation of the camera relative to the look at point.</param>
+        private void computeStartingValues(Vector3 localTrans)
+        {
+            //Compute the orbit distance, this is the distance from the location to the look at point.
+            orbitDistance = localTrans.length();
+
+            //Compute the yaw.
+            float localY = localTrans.y;
+            localTrans.y = 0;
+            yaw = Vector3.Backward.angle(ref localTrans);
+            if (localTrans.x < 0)
+            {
+                yaw = -yaw;
+            }
+
+            //Compute the pitch by rotating the local translation to -yaw.
+            localTrans.y = localY;
+            localTrans = Quaternion.quatRotate(new Quaternion(Vector3.Up, -yaw), localTrans);
+            localTrans.x = 0;
+            if (localTrans.z >= 0.0f)
+            {
+                pitch = Vector3.Backward.angle(ref localTrans);
+            }
+            else
+            {
+                pitch = Vector3.Forward.angle(ref localTrans);
+            }
+
+            //Compute the normal direction and the left vector.
+            Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+            Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
+            normalDirection = Quaternion.quatRotate(yawRot * pitchRot, Vector3.Backward);
+            left = normalDirection.cross(ref Vector3.Up);
+        }
+
+        private void updateTranslation(Vector3 translation)
+        {
+            camera.Translation = translation;
+            this.translation = translation;
+        }
+
+        public Vector3 Translation
+        {
+            get
+            {
+                return translation;
+            }
+        }
+
+        public Vector3 LookAt
+        {
+            get
+            {
+                return lookAt;
+            }
+        }
+
+        public CameraMotionValidator MotionValidator
+        {
+            get
+            {
+                return motionValidator;
+            }
+            set
+            {
+                motionValidator = value;
+            }
+        }
+    }
+}

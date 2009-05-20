@@ -17,22 +17,22 @@ namespace Medical.Controller
         {
             headToolStrip = new HeadToolStrip(this);
             this.controller = controller;
-            controller.MedicalForm.addToolStrip(headToolStrip);
+            controller.addToolStrip(headToolStrip);
         }
 
         public void destroy()
         {
-            controller.MedicalForm.removeToolStrip(headToolStrip);
+            controller.removeToolStrip(headToolStrip);
         }
 
         public void addControlToUI(DockContent control)
         {
-            controller.MedicalForm.addDockContent(control);
+            controller.showDockContent(control);
         }
 
         public void removeControl(DockContent control)
         {
-            controller.MedicalForm.removeDockContent(control);
+            controller.hideDockContent(control);
         }
     }
 }

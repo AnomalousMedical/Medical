@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical.Controller
+namespace Medical
 {
     public interface MedicalInterface
     {

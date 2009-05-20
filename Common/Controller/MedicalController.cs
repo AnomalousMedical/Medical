@@ -11,8 +11,9 @@ using Engine.Platform;
 using Engine.Renderer;
 using System.Threading;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
-namespace Medical.Controller
+namespace Medical
 {
     public class MedicalController : IDisposable, UpdateListener
     {
@@ -33,7 +34,7 @@ namespace Medical.Controller
         private MedicalForm mainForm;
 
         //Controller
-        private DrawingSplitController splitController = new DrawingSplitController();
+        private DrawingWindowController drawingWindowController = new DrawingWindowController();
         private MedicalInterface currentMedicalInterface;
 
         #endregion Fields
@@ -92,7 +93,8 @@ namespace Medical.Controller
             pluginManager.setPlatformInfo(mainTimer, eventManager);
 
             //Initialize controllers
-            splitController.initialize(this);
+            drawingWindowController.initialize(this, eventManager, pluginManager.RendererPlugin, MedicalConfig.ConfigFile);
+            drawingWindowController.createOneWaySplit();
 
             //Initialize GUI
             mainForm.initialize(this);
@@ -130,6 +132,26 @@ namespace Medical.Controller
             currentMedicalInterface.initialize(this);
         }
 
+        public void showDockContent(DockContent content)
+        {
+            mainForm.showDockContent(content);
+        }
+
+        public void hideDockContent(DockContent content)
+        {
+            mainForm.hideDockContent(content);
+        }
+
+        public void addToolStrip(ToolStrip toolStrip)
+        {
+            mainForm.addToolStrip(toolStrip);
+        }
+
+        public void removeToolStrip(ToolStrip toolStrip)
+        {
+            mainForm.removeToolStrip(toolStrip);
+        }
+
         /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
@@ -144,19 +166,11 @@ namespace Medical.Controller
 
         #region Properties
 
-        public DrawingSplitController SplitController
+        public DrawingWindowController DrawingWindowController
         {
             get
             {
-                return splitController;
-            }
-        }
-
-        public MedicalForm MedicalForm
-        {
-            get
-            {
-                return mainForm;
+                return drawingWindowController;
             }
         }
 
