@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.tabContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.changeBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.renderingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wireframeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.drawingWindow = new DrawingWindow();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.drawingWindow = new Medical.DrawingWindow();
             this.tabContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
             this.changeBackgroundColorToolStripMenuItem,
             this.renderingModeToolStripMenuItem});
             this.tabContextMenu.Name = "contextMenuStrip1";
-            this.tabContextMenu.Size = new System.Drawing.Size(215, 70);
+            this.tabContextMenu.Size = new System.Drawing.Size(215, 48);
             // 
             // changeBackgroundColorToolStripMenuItem
             // 
@@ -69,7 +69,7 @@
             // 
             this.solidToolStripMenuItem.Name = "solidToolStripMenuItem";
             this.solidToolStripMenuItem.ShortcutKeyDisplayString = "F6";
-            this.solidToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.solidToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.solidToolStripMenuItem.Text = "Solid";
             this.solidToolStripMenuItem.Click += new System.EventHandler(this.solidToolStripMenuItem_Click);
             // 
@@ -77,7 +77,7 @@
             // 
             this.wireframeToolStripMenuItem.Name = "wireframeToolStripMenuItem";
             this.wireframeToolStripMenuItem.ShortcutKeyDisplayString = "F7";
-            this.wireframeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.wireframeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.wireframeToolStripMenuItem.Text = "Wireframe";
             this.wireframeToolStripMenuItem.Click += new System.EventHandler(this.wireframeToolStripMenuItem_Click);
             // 
@@ -85,13 +85,13 @@
             // 
             this.pointToolStripMenuItem.Name = "pointToolStripMenuItem";
             this.pointToolStripMenuItem.ShortcutKeyDisplayString = "F8";
-            this.pointToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pointToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.pointToolStripMenuItem.Text = "Point";
             this.pointToolStripMenuItem.Click += new System.EventHandler(this.pointToolStripMenuItem_Click);
             // 
             // drawingWindow
             // 
-            this.drawingWindow.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.drawingWindow.BackColor = System.Drawing.Color.Black;
             this.drawingWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawingWindow.Location = new System.Drawing.Point(0, 0);
             this.drawingWindow.Name = "drawingWindow";

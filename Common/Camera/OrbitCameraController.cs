@@ -42,8 +42,12 @@ namespace Medical
 
         private CameraControl camera;
         private EventManager events;
-        private Vector3 normalDirection;
-        private Vector3 left;
+
+        //These three vectors form the axis relative to the current rotation.
+        private Vector3 normalDirection; //z
+        private Vector3 rotatedLeft; //x
+        private Vector3 rotatedUp; //y
+
         private float orbitDistance;
         private float yaw;
         private float pitch;
@@ -92,9 +96,8 @@ namespace Medical
                 {
                     if (events[CameraEvents.PanCamera].Down)
                     {
-                        lookAt += left * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * orbitDistance);
-                        Vector3 relUp = left.cross(ref normalDirection);
-                        lookAt += relUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * orbitDistance);
+                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * orbitDistance);
+                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * orbitDistance);
                         updateTranslation(lookAt + normalDirection * orbitDistance);
                     }
                     else if (events[CameraEvents.ZoomCamera].Down)
@@ -123,10 +126,13 @@ namespace Medical
                         Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
                         Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
 
-                        normalDirection = Quaternion.quatRotate(yawRot * pitchRot, Vector3.Backward);
+                        Quaternion rotation = yawRot * pitchRot;
+                        normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+                        rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
+                        rotatedLeft = normalDirection.cross(ref rotatedUp);
+
                         updateTranslation(normalDirection * orbitDistance + lookAt);
                         camera.LookAt = lookAt;
-                        left = normalDirection.cross(ref Vector3.Up);
                     }
                 }
                 if (activeWindow)
@@ -154,12 +160,12 @@ namespace Medical
 
         public void loopStarting()
         {
-            
+
         }
 
         public void exceededMaxDelta()
         {
-            
+
         }
 
         /// <summary>
@@ -220,8 +226,10 @@ namespace Medical
             //Compute the normal direction and the left vector.
             Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
             Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
-            normalDirection = Quaternion.quatRotate(yawRot * pitchRot, Vector3.Backward);
-            left = normalDirection.cross(ref Vector3.Up);
+            Quaternion rotation = yawRot * pitchRot;
+            normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+            rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
+            rotatedLeft = normalDirection.cross(ref rotatedUp);
         }
 
         private void updateTranslation(Vector3 translation)
