@@ -91,8 +91,10 @@
     <Compile Include="Camera\CameraResolver.cs" />
     <Compile Include="Camera\OrbitCameraController.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
+    <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">

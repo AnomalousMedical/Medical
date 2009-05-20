@@ -12,6 +12,10 @@ using Engine.Renderer;
 using System.Threading;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using System.Xml;
+using Engine.ObjectManagement;
+using Engine.Saving.XMLSaver;
+using Engine.Resources;
 
 namespace Medical
 {
@@ -36,6 +40,10 @@ namespace Medical
         //Controller
         private DrawingWindowController drawingWindowController = new DrawingWindowController();
         private MedicalInterface currentMedicalInterface;
+        private MedicalSceneController medicalScene;
+
+        //Serialization
+        private XmlSaver xmlSaver = new XmlSaver();
 
         #endregion Fields
 
@@ -71,6 +79,8 @@ namespace Medical
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
 
+            Resource.ResourceRoot = null;
+
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
             pluginManager.OnConfigureDefaultWindow = createWindow;
@@ -95,6 +105,9 @@ namespace Medical
             //Initialize controllers
             drawingWindowController.initialize(this, eventManager, pluginManager.RendererPlugin, MedicalConfig.ConfigFile);
             drawingWindowController.createOneWaySplit();
+            medicalScene = new MedicalSceneController(pluginManager);
+            medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
+            medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
 
             //Initialize GUI
             mainForm.initialize(this);
@@ -152,6 +165,32 @@ namespace Medical
             mainForm.removeToolStrip(toolStrip);
         }
 
+        public void createNewScene()
+        {
+
+        }
+
+        public void openScene(String filename)
+        {
+            XmlTextReader textReader = new XmlTextReader(filename);
+            ScenePackage scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
+            if (scenePackage != null)
+            {
+                medicalScene.destroyScene();
+                medicalScene.loadScene(scenePackage);
+            }
+            else
+            {
+                MessageBox.Show(mainForm, String.Format("Could not load scene from {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            textReader.Close();
+        }
+
+        public void saveScene(String filename)
+        {
+
+        }
+
         /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
@@ -160,6 +199,26 @@ namespace Medical
         private void createWindow(out DefaultWindowInfo defaultWindow)
         {
             defaultWindow = new DefaultWindowInfo(hiddenEmbedWindow);
+        }
+
+        /// <summary>
+        /// Callback for when the scene is unloading.
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="scene"></param>
+        void medicalScene_OnSceneUnloading(MedicalSceneController controller, Engine.ObjectManagement.SimScene scene)
+        {
+            drawingWindowController.destroyCameras();
+        }
+
+        /// <summary>
+        /// Callback for when the scene is loaded.
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="scene"></param>
+        void medicalScene_OnSceneLoaded(MedicalSceneController controller, Engine.ObjectManagement.SimScene scene)
+        {
+            drawingWindowController.createCameras(mainTimer, scene);
         }
 
         #endregion Functions

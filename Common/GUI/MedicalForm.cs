@@ -18,10 +18,14 @@ namespace Medical.GUI
         private MedicalController controller;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
+        private FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
+        private String windowDefaultText;
+        private const String TITLE_FORMAT = "{0} - {1}";
 
         public MedicalForm()
         {
             InitializeComponent();
+            windowDefaultText = this.Text;
         }
 
         public void initialize(MedicalController controller)
@@ -149,7 +153,43 @@ namespace Medical.GUI
 
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.createNewScene();
+            clearWindowTitle();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String filename = fileTracker.openFile(this);
+            if (fileTracker.lastDialogAccepted())
+            {
+                controller.openScene(filename);
+                updateWindowTitle(filename);
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String filename = fileTracker.saveFile(this);
+            if (fileTracker.lastDialogAccepted())
+            {
+                controller.saveScene(filename);
+                updateWindowTitle(filename);
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String filename = fileTracker.saveFileAs(this);
+            if (fileTracker.lastDialogAccepted())
+            {
+                controller.saveScene(filename);
+                updateWindowTitle(filename);
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -190,6 +230,23 @@ namespace Medical.GUI
         void pictureControl_VisibleChanged(object sender, EventArgs e)
         {
             pictureButton.Checked = pictureControl.Visible;
+        }
+        
+        /// <summary>
+        /// Update the title of the window to reflect a current filename or other info.
+        /// </summary>
+        /// <param name="subName">A name to place as a secondary name in the title.</param>
+        private void updateWindowTitle(String subName)
+        {
+            Text = String.Format(TITLE_FORMAT, windowDefaultText, subName);
+        }
+
+        /// <summary>
+        /// Clear the window title back to the default text.
+        /// </summary>
+        private void clearWindowTitle()
+        {
+            Text = windowDefaultText;
         }
     }
 }
