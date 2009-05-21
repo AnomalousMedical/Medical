@@ -8,10 +8,10 @@ using Engine.Editing;
 using Engine.Attributes;
 using OgrePlugin;
 
-namespace Medical.Transparency
+namespace Medical
 {
     [SingleEnum]
-    enum RenderGroup
+    public enum RenderGroup
     {
         None,
         Teeth,
@@ -19,7 +19,7 @@ namespace Medical.Transparency
         Muscles
     }
 
-    class TransparencyInterface : Interface
+    public class TransparencyInterface : Interface
     {
         [Editable] String alphaSuffix = "Alpha";
         //An optional alpha material, if this is defined the alpha suffix will be ignored
@@ -68,7 +68,7 @@ namespace Medical.Transparency
             SceneNodeElement sceneNode = SimObject.getElement(nodeName) as SceneNodeElement;
             if (sceneNode != null)
             {
-                //entity = sceneNode.getEntity
+                entity = sceneNode.getNodeObject(entityName) as Entity;
             }
             bool valid = entity != null;
             if (valid)
