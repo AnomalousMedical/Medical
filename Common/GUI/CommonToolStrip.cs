@@ -43,11 +43,11 @@ namespace Medical
         {
             if (persistString == layersControl.GetType().ToString())
             {
-                return layersControl.DockHandler == null ? layersControl : null;
+                return layersControl;
             }
             if (persistString == pictureControl.GetType().ToString())
             {
-                return pictureControl.DockHandler == null ? pictureControl : null;
+                return pictureControl;
             }
             return null;
         }

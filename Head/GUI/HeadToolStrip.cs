@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
@@ -56,6 +57,33 @@ namespace Medical.GUI
         {
             teethControl.Dispose();
             base.Dispose(disposing);
+        }
+
+        /// <summary>
+        /// Used when restoring window positions. Return the window matching the
+        /// persistString or null if no match is found.
+        /// </summary>
+        /// <param name="persistString">A string describing the window.</param>
+        /// <returns>The matching DockContent or null if none is found.</returns>
+        public DockContent getDockContent(String persistString)
+        {
+            if (persistString == muscleControl.GetType().ToString())
+            {
+                return muscleControl;
+            }
+            if (persistString == mandibleOffsetControl.GetType().ToString())
+            {
+                return mandibleOffsetControl;
+            }
+            if (persistString == mandibleSizeControl.GetType().ToString())
+            {
+                return mandibleSizeControl;
+            }
+            if (persistString == teethControl.GetType().ToString())
+            {
+                return teethControl;
+            }
+            return null;
         }
 
         void teethButton_Click(object sender, EventArgs e)

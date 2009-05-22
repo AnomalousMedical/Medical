@@ -28,7 +28,7 @@ namespace Medical.Controller
         /// <returns>The matching DockContent or null if none is found.</returns>
         public DockContent getDockContent(String persistString)
         {
-            return null;
+            return headToolStrip.getDockContent(persistString);
         }
 
         public void destroy()

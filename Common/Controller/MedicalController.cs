@@ -82,7 +82,6 @@ namespace Medical
 
             //Initialize controllers
             drawingWindowController.initialize(this, eventManager, pluginManager.RendererPlugin, MedicalConfig.ConfigFile);
-            drawingWindowController.createOneWaySplit();
             medicalScene = new MedicalSceneController(pluginManager);
             medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
             medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
@@ -90,12 +89,6 @@ namespace Medical
 
             //Initialize GUI
             mainForm.initialize(this);
-
-            mainForm.SuspendLayout();
-
-            mainForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent);
-
-            mainForm.ResumeLayout();
         }
 
         /// <summary>
@@ -156,6 +149,13 @@ namespace Medical
         {
             currentMedicalInterface = medInterface;
             currentMedicalInterface.initialize(this);
+
+            mainForm.SuspendLayout();
+            if (!mainForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            {
+                drawingWindowController.createOneWaySplit();
+            }
+            mainForm.ResumeLayout();
         }
 
         public void showDockContent(DockContent content)
@@ -242,6 +242,20 @@ namespace Medical
         /// <returns>The IDockContent associated with the given string.</returns>
         private IDockContent getDockContent(String persistString)
         {
+            IDockContent content = commonController.getDockContent(persistString);
+            if (content != null)
+            {
+                return content;
+            }
+            if (currentMedicalInterface != null)
+            {
+                content = currentMedicalInterface.getDockContent(persistString);
+                if (content != null)
+                {
+                    return content;
+                }
+            }
+
             String name;
             Vector3 translation;
             Vector3 lookAt;
