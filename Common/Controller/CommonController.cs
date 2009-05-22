@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Medical.GUI;
-using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace Medical.Controller
+namespace Medical
 {
-    public class HeadController : MedicalInterface
+    class CommonController : MedicalInterface
     {
         private MedicalController controller;
-        private HeadToolStrip headToolStrip;
+        private CommonToolStrip toolStrip;
 
         public void initialize(MedicalController controller)
         {
-            headToolStrip = new HeadToolStrip(this);
+            toolStrip = new CommonToolStrip(this);
             this.controller = controller;
-            controller.addToolStrip(headToolStrip);
+            controller.addToolStrip(toolStrip);
+        }
+
+        public void sceneChanged()
+        {
+            toolStrip.sceneChanged();
         }
 
         public void destroy()
         {
-            controller.removeToolStrip(headToolStrip);
-            headToolStrip.Dispose();
+            controller.removeToolStrip(toolStrip);
+            toolStrip.Dispose();
         }
 
         public void addControlToUI(DockContent control)

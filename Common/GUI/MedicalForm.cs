@@ -16,8 +16,6 @@ namespace Medical.GUI
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private MedicalController controller;
-        private LayersControl layersControl = new LayersControl();
-        private PictureControl pictureControl = new PictureControl();
         private FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
         private String windowDefaultText;
         private const String TITLE_FORMAT = "{0} - {1}";
@@ -31,8 +29,6 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
-            layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
-            pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
         }
 
         public void addToolStrip(ToolStrip toolStrip)
@@ -156,8 +152,6 @@ namespace Medical.GUI
         {
             controller.createNewScene();
             clearWindowTitle();
-            //temp
-            layersControl.setupLayers();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,8 +162,6 @@ namespace Medical.GUI
                 controller.openScene(filename);
                 updateWindowTitle(filename);
             }
-            //temp
-            layersControl.setupLayers();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -196,40 +188,6 @@ namespace Medical.GUI
         {
             controller.shutdown();
             this.Close();
-        }
-
-        private void layersButton_Click(object sender, EventArgs e)
-        {
-            if (layersControl.Visible)
-            {
-                layersControl.DockHandler.Hide();
-            }
-            else
-            {
-                layersControl.Show(dockPanel);
-            }
-        }
-
-        void layersControl_VisibleChanged(object sender, EventArgs e)
-        {
-            layersButton.Checked = layersControl.Visible;
-        }
-
-        private void pictureButton_Click(object sender, EventArgs e)
-        {
-            if (pictureControl.Visible)
-            {
-                pictureControl.DockHandler.Hide();
-            }
-            else
-            {
-                pictureControl.Show(dockPanel); 
-            }
-        }
-
-        void pictureControl_VisibleChanged(object sender, EventArgs e)
-        {
-            pictureButton.Checked = pictureControl.Visible;
         }
         
         /// <summary>

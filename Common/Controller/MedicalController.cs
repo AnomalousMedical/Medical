@@ -41,6 +41,7 @@ namespace Medical
         private DrawingWindowController drawingWindowController = new DrawingWindowController();
         private MedicalInterface currentMedicalInterface;
         private MedicalSceneController medicalScene;
+        private CommonController commonController = new CommonController();
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -48,29 +49,6 @@ namespace Medical
         #endregion Fields
 
         #region Functions
-
-        public void Dispose()
-        {
-            if (eventManager != null)
-            {
-                eventManager.Dispose();
-            }
-            if (inputHandler != null)
-            {
-                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
-            }
-            if (pluginManager != null)
-            {
-                pluginManager.Dispose();
-            }
-            if (hiddenEmbedWindow != null)
-            {
-                hiddenEmbedWindow.Dispose();
-            }
-
-            MedicalConfig.save();
-            logListener.closeLogFile();
-        }
 
         public void intialize()
         {
@@ -108,9 +86,41 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
             medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
             medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
+            commonController.initialize(this);
 
             //Initialize GUI
             mainForm.initialize(this);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            if (currentMedicalInterface != null)
+            {
+                currentMedicalInterface.destroy();
+            }
+            commonController.destroy();
+            if (eventManager != null)
+            {
+                eventManager.Dispose();
+            }
+            if (inputHandler != null)
+            {
+                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
+            }
+            if (pluginManager != null)
+            {
+                pluginManager.Dispose();
+            }
+            if (hiddenEmbedWindow != null)
+            {
+                hiddenEmbedWindow.Dispose();
+            }
+
+            MedicalConfig.save();
+            logListener.closeLogFile();
         }
 
         /// <summary>
@@ -127,10 +137,6 @@ namespace Medical
         /// </summary>
         public void shutdown()
         {
-            if (currentMedicalInterface != null)
-            {
-                currentMedicalInterface.destroy();
-            }
             mainTimer.stopLoop();
         }
 
@@ -219,6 +225,7 @@ namespace Medical
         void medicalScene_OnSceneLoaded(MedicalSceneController controller, Engine.ObjectManagement.SimScene scene)
         {
             drawingWindowController.createCameras(mainTimer, scene);
+            commonController.sceneChanged();
         }
 
         #endregion Functions

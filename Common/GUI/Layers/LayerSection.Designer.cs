@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.headerPanel = new System.Windows.Forms.Panel();
-            this.expandButton = new System.Windows.Forms.Button();
-            this.groupTransparency = new System.Windows.Forms.NumericUpDown();
             this.categoryLabel = new System.Windows.Forms.Label();
+            this.groupTransparency = new System.Windows.Forms.NumericUpDown();
+            this.expandButton = new System.Windows.Forms.Button();
             this.alphaDataGrid = new System.Windows.Forms.DataGridView();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupTransparency)).BeginInit();
@@ -49,17 +49,16 @@
             this.headerPanel.Size = new System.Drawing.Size(192, 21);
             this.headerPanel.TabIndex = 0;
             // 
-            // expandButton
+            // categoryLabel
             // 
-            this.expandButton.AutoSize = true;
-            this.expandButton.Dock = System.Windows.Forms.DockStyle.Left;
-            this.expandButton.Location = new System.Drawing.Point(0, 0);
-            this.expandButton.Name = "expandButton";
-            this.expandButton.Size = new System.Drawing.Size(23, 21);
-            this.expandButton.TabIndex = 0;
-            this.expandButton.Text = "+";
-            this.expandButton.UseVisualStyleBackColor = true;
-            this.expandButton.Click += new System.EventHandler(this.expandButton_Click);
+            this.categoryLabel.BackColor = System.Drawing.SystemColors.Window;
+            this.categoryLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.categoryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.categoryLabel.Location = new System.Drawing.Point(23, 0);
+            this.categoryLabel.Name = "categoryLabel";
+            this.categoryLabel.Size = new System.Drawing.Size(131, 21);
+            this.categoryLabel.TabIndex = 2;
+            this.categoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupTransparency
             // 
@@ -80,17 +79,23 @@
             this.groupTransparency.Name = "groupTransparency";
             this.groupTransparency.Size = new System.Drawing.Size(38, 20);
             this.groupTransparency.TabIndex = 1;
+            this.groupTransparency.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
-            // categoryLabel
+            // expandButton
             // 
-            this.categoryLabel.BackColor = System.Drawing.SystemColors.Window;
-            this.categoryLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.categoryLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.categoryLabel.Location = new System.Drawing.Point(23, 0);
-            this.categoryLabel.Name = "categoryLabel";
-            this.categoryLabel.Size = new System.Drawing.Size(131, 21);
-            this.categoryLabel.TabIndex = 2;
-            this.categoryLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.expandButton.AutoSize = true;
+            this.expandButton.Dock = System.Windows.Forms.DockStyle.Left;
+            this.expandButton.Location = new System.Drawing.Point(0, 0);
+            this.expandButton.Name = "expandButton";
+            this.expandButton.Size = new System.Drawing.Size(23, 21);
+            this.expandButton.TabIndex = 0;
+            this.expandButton.Text = "+";
+            this.expandButton.UseVisualStyleBackColor = true;
+            this.expandButton.Click += new System.EventHandler(this.expandButton_Click);
             // 
             // alphaDataGrid
             // 
