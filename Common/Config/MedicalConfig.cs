@@ -11,6 +11,7 @@ namespace Medical
     {
         private static ConfigFile configFile;
         private static String docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Atlas";
+        private static String windowsFile = docRoot + "/windows.ini";
 
         static MedicalConfig()
         {
@@ -35,6 +36,14 @@ namespace Medical
             get
             {
                 return configFile;
+            }
+        }
+
+        public static String WindowsFile
+        {
+            get
+            {
+                return windowsFile;
             }
         }
 

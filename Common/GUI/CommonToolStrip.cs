@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.GUI;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical
 {
@@ -30,6 +31,25 @@ namespace Medical
 
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
+        }
+
+        /// <summary>
+        /// Used when restoring window positions. Return the window matching the
+        /// persistString or null if no match is found.
+        /// </summary>
+        /// <param name="persistString">A string describing the window.</param>
+        /// <returns>The matching DockContent or null if none is found.</returns>
+        public DockContent getDockContent(String persistString)
+        {
+            if (persistString == layersControl.GetType().ToString())
+            {
+                return layersControl.DockHandler == null ? layersControl : null;
+            }
+            if (persistString == pictureControl.GetType().ToString())
+            {
+                return pictureControl.DockHandler == null ? pictureControl : null;
+            }
+            return null;
         }
 
         public void sceneChanged()

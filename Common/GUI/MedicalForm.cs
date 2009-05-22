@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Engine.Platform;
 using Medical;
 using WeifenLuo.WinFormsUI.Docking;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -52,6 +53,29 @@ namespace Medical.GUI
         public void hideDockContent(DockContent content)
         {
             content.DockHandler.Hide();
+        }
+
+        public void saveWindows(String filename)
+        {
+            dockPanel.SaveAsXml(filename);
+        }
+
+        public bool restoreWindows(String filename, DeserializeDockContent callback)
+        {
+            bool restore = File.Exists(filename);
+            if (restore)
+            {
+                for (int index = dockPanel.Contents.Count - 1; index >= 0; index--)
+                {
+                    if (dockPanel.Contents[index] is IDockContent)
+                    {
+                        IDockContent content = (IDockContent)dockPanel.Contents[index];
+                        content.DockHandler.Close();
+                    }
+                }
+                dockPanel.LoadFromXml(filename, callback);
+            }
+            return restore;
         }
 
         #region OSWindow Members

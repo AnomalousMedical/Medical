@@ -90,6 +90,12 @@ namespace Medical
 
             //Initialize GUI
             mainForm.initialize(this);
+
+            mainForm.SuspendLayout();
+
+            mainForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent);
+
+            mainForm.ResumeLayout();
         }
 
         /// <summary>
@@ -138,6 +144,7 @@ namespace Medical
         public void shutdown()
         {
             mainTimer.stopLoop();
+            mainForm.saveWindows(MedicalConfig.WindowsFile);
         }
 
         /// <summary>
@@ -226,6 +233,23 @@ namespace Medical
         {
             drawingWindowController.createCameras(mainTimer, scene);
             commonController.sceneChanged();
+        }
+
+        /// <summary>
+        /// Restore function for restoring the window layout.
+        /// </summary>
+        /// <param name="persistString">The string describing the window.</param>
+        /// <returns>The IDockContent associated with the given string.</returns>
+        private IDockContent getDockContent(String persistString)
+        {
+            String name;
+            Vector3 translation;
+            Vector3 lookAt;
+            if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt))
+            {
+                return drawingWindowController.createDrawingWindowHost(name, translation, lookAt);
+            }
+            return null;
         }
 
         #endregion Functions
