@@ -21,15 +21,16 @@ namespace Medical
 
     public class TransparencyInterface : Interface
     {
-        [Editable] String alphaSuffix = "Alpha";
+        [Editable] private String alphaSuffix = "Alpha";
         //An optional alpha material, if this is defined the alpha suffix will be ignored
         //and this material will be used instead.
-        [Editable] String alphaMaterialName = null;
-        [Editable] float currentAlpha = 1.0f;
+        [Editable] private String alphaMaterialName = null;
+        [Editable] private float currentAlpha = 1.0f;
+        [Editable] private String nodeName;
+        [Editable] private String entityName;
+
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
-        [Editable] String nodeName;
-        [Editable] String entityName;
 
         Entity entity;
 
@@ -117,8 +118,11 @@ namespace Medical
 
         protected override void destroy()
         {
-            alphaMaterial.Dispose();
-            TransparencyController.removeTransparencyObject(this);
+            if (alphaMaterial != null)
+            {
+                alphaMaterial.Dispose();
+                TransparencyController.removeTransparencyObject(this);
+            }
         }
 
         public float CurrentAlpha

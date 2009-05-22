@@ -33,10 +33,6 @@ namespace Medical.GUI
             this.controller = controller;
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
-
-            //temp
-            layersControl.addLayerSection("Bones");
-            layersControl.addLayerSection("Teeth");
         }
 
         public void addToolStrip(ToolStrip toolStrip)
@@ -160,6 +156,8 @@ namespace Medical.GUI
         {
             controller.createNewScene();
             clearWindowTitle();
+            //temp
+            layersControl.setupLayers();
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -170,6 +168,8 @@ namespace Medical.GUI
                 controller.openScene(filename);
                 updateWindowTitle(filename);
             }
+            //temp
+            layersControl.setupLayers();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

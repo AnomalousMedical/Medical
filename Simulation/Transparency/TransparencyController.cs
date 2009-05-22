@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical
 {
-    class TransparencyController
+    public class TransparencyController
     {
         static Dictionary<RenderGroup, TransparencyGroup> groups = new Dictionary<RenderGroup, TransparencyGroup>();
 

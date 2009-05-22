@@ -18,11 +18,18 @@ namespace Medical.GUI
             InitializeComponent();
         }
 
-        public void addLayerSection(String name)
+        public void setupLayers()
         {
-            LayerSection section = new LayerSection();
-            section.Text = name;
-            sectionsPanel.Controls.Add(section);
+            foreach (Control control in sectionsPanel.Controls)
+            {
+                control.Dispose();
+            }
+            sectionsPanel.Controls.Clear();
+            foreach (TransparencyGroup group in TransparencyController.getGroupIter())
+            {
+                LayerSection section = new LayerSection(group);
+                sectionsPanel.Controls.Add(section);
+            }
         }
     }
 }

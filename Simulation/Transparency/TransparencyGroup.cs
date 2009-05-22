@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical
 {
-    class TransparencyGroup
+    public class TransparencyGroup
     {
         private Dictionary<String, TransparencyInterface> alphaObjects = new Dictionary<string, TransparencyInterface>();
 
@@ -54,7 +54,7 @@ namespace Medical
             return alphaObjects.Count == 0;
         }
 
-        public IEnumerable<TransparencyInterface> getAlphaObjectIter()
+        public IEnumerable<TransparencyInterface> getTransparencyObjectIter()
         {
             return alphaObjects.Values;
         }
