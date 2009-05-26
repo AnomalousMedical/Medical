@@ -77,6 +77,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\PhysicalAnimator.cs" />
+    <Compile Include="Muscles\MuscleBehavior.cs" />
     <Compile Include="Plugin\SimulationPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />
