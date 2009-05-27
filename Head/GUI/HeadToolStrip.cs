@@ -86,6 +86,14 @@ namespace Medical.GUI
             return null;
         }
 
+        /// <summary>
+        /// Alert the GUIS that the scene has changed.
+        /// </summary>
+        public void sceneChanged()
+        {
+            muscleControl.sceneChanged();
+        }
+
         void teethButton_Click(object sender, EventArgs e)
         {
             if (teethControl.Visible)

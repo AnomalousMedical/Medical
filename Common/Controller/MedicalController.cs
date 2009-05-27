@@ -233,6 +233,10 @@ namespace Medical
         {
             drawingWindowController.createCameras(mainTimer, scene);
             commonController.sceneChanged();
+            if (currentMedicalInterface != null)
+            {
+                currentMedicalInterface.sceneChanged();
+            }
         }
 
         /// <summary>

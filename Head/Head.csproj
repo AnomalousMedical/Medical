@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\HeadController.cs" />
+    <Compile Include="Controller\MuscleGroup.cs" />
     <Compile Include="GUI\Disk\DiskControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +101,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{7185582B-5482-4148-82B0-263477681B01}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simulation\Simulation.csproj">
+      <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
+      <Name>Simulation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

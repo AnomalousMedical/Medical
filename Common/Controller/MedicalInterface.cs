@@ -20,6 +20,11 @@ namespace Medical
         void initialize(MedicalController controller);
 
         /// <summary>
+        /// Called when the scene has changed.
+        /// </summary>
+        void sceneChanged();
+
+        /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.
         /// </summary>

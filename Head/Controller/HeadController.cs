@@ -21,6 +21,14 @@ namespace Medical.Controller
         }
 
         /// <summary>
+        /// Called when the scene has changed.
+        /// </summary>
+        public void sceneChanged()
+        {
+            headToolStrip.sceneChanged();
+        }
+
+        /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.
         /// </summary>

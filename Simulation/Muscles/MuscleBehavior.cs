@@ -9,10 +9,11 @@ using PhysXWrapper;
 using Engine.Platform;
 using Engine.ObjectManagement;
 using PhysXPlugin;
+using Logging;
 
 namespace Medical
 {
-    class MuscleBehavior : Behavior
+    public class MuscleBehavior : Behavior
     {
         [Editable]
         protected String targetSimObject;
@@ -46,13 +47,19 @@ namespace Medical
             {
                 blacklist("Cannot find SimObject {0}.", targetSimObject);
             }
+            MuscleController.addMuscle(SimObject.Name, this);
+        }
+
+        protected override void destroy()
+        {
+            MuscleController.removeMuscle(SimObject.Name);
         }
 
         public override void update(Clock clock, EventManager events)
         {
-            Vector3 location = targetObject.Translation - SimObject.Translation; ;
+            Vector3 location = targetObject.Translation - SimObject.Translation;
             location.normalize();
-            location *= force;
+            location *= force * -1f;
             actor.Actor.addLocalForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
         }
 
