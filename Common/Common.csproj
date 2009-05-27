@@ -96,6 +96,12 @@
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
+    <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.Designer.cs">
+      <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\CommonToolStrip.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -145,6 +151,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">
+      <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Layers\LayersControl.resx">
       <DependentUpon>LayersControl.cs</DependentUpon>
       <SubType>Designer</SubType>

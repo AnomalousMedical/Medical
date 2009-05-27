@@ -15,6 +15,22 @@ namespace Medical.GUI
         public MandibleSizeControl()
         {
             InitializeComponent();
+        }            
+
+        public void sceneChanged()
+        {
+            foreach (Control control in layoutPanel.Controls)
+            {
+                control.Dispose();
+            }
+            layoutPanel.Controls.Clear();
+            Dictionary<String, BoneManipulator> manipulators = BoneManipulatorController.getManipulators();
+            foreach (BoneManipulator manipulator in manipulators.Values)
+            {
+                BoneManipulatorSlider slider = new BoneManipulatorSlider();
+                slider.initialize(manipulator);
+                this.layoutPanel.Controls.Add(slider);
+            }
         }
     }
 }

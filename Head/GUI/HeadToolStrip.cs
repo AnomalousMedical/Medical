@@ -92,6 +92,7 @@ namespace Medical.GUI
         public void sceneChanged()
         {
             muscleControl.sceneChanged();
+            mandibleSizeControl.sceneChanged();
         }
 
         void teethButton_Click(object sender, EventArgs e)

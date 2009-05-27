@@ -10,7 +10,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    class BoneScalar : Interface
+    class BoneScalar : Interface, BoneManipulator
     {
         [Editable]
         String targetSimObject;
@@ -54,6 +54,7 @@ namespace Medical
                             {
                                 bone = skeleton.getBone(targetBone);
                                 bone.setManuallyControlled(true);
+                                BoneManipulatorController.addBoneManipulator(this.Name, this);
                             }
                             else
                             {
@@ -81,6 +82,14 @@ namespace Medical
             }
         }
 
+        protected override void destroy()
+        {
+            if (bone != null)
+            {
+                BoneManipulatorController.removeBoneManipulator(this.Name);
+            }
+        }
+
         public void setPosition(float position)
         {
             if (bone != null)
@@ -89,6 +98,11 @@ namespace Medical
                 bone.setScale(startScale.lerp(ref endScale, ref position));
                 bone.needUpdate(true);
             }
+        }
+
+        public String getUIName()
+        {
+            return Name;
         }
     }
 }
