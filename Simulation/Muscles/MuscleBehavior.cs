@@ -10,6 +10,7 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using PhysXPlugin;
 using Logging;
+using Engine.Renderer;
 
 namespace Medical
 {
@@ -59,8 +60,20 @@ namespace Medical
         {
             Vector3 location = targetObject.Translation - SimObject.Translation;
             location.normalize();
-            location *= force * -1f;
+            location *= force;
             actor.Actor.addLocalForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
+        }
+
+        public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
+        {
+            Vector3 halfwayPoint = targetObject.Translation - SimObject.Translation;
+            halfwayPoint = halfwayPoint.length() / 2 * halfwayPoint.normalize() + SimObject.Translation;
+            debugDrawing.begin("Muscle" + SimObject.Name, DrawingType.LineList);
+            debugDrawing.setColor(Color.Green);
+            debugDrawing.drawLine(SimObject.Translation, halfwayPoint);
+            debugDrawing.setColor(Color.Red);
+            debugDrawing.drawLine(halfwayPoint, targetObject.Translation);
+            debugDrawing.end();
         }
 
         /*public void draw(LineHelper surface)
