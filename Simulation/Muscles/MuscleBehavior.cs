@@ -58,7 +58,7 @@ namespace Medical
 
         public override void update(Clock clock, EventManager events)
         {
-            Vector3 location = targetObject.Translation - SimObject.Translation;
+            Vector3 location = SimObject.Translation - targetObject.Translation;
             location.normalize();
             location *= force;
             actor.Actor.addLocalForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);

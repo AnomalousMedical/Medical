@@ -188,7 +188,6 @@ namespace Medical.GUI
 
             MuscleGroup rightElevators = new MuscleGroup("All Elevators");
             rightElevators.setActivation(rightMasseter.Tag.ToString(), true);
-            rightElevators.setActivation(rightMedialPterygoid.Tag.ToString(), true);
             rightElevators.setActivation(rightTemporalis.Tag.ToString(), true);
             rightMuscleGroups.Items.Add(rightElevators);
 
@@ -205,17 +204,10 @@ namespace Medical.GUI
             rightDepressors.setActivation(rightLateralPterygoid.Tag.ToString(), true);
             rightMuscleGroups.Items.Add(rightDepressors);
 
-            MuscleGroup rightVerticalElevator = new MuscleGroup("Vertical Elevator");
-            rightVerticalElevator.setActivation(rightMasseter.Tag.ToString(), true);
-            rightVerticalElevator.setActivation(rightMedialPterygoid.Tag.ToString(), true);
-            rightVerticalElevator.setActivation(rightTemporalis.Tag.ToString(), true);
-            rightMuscleGroups.Items.Add(rightVerticalElevator);
-
             //Left
 
             MuscleGroup leftElevators = new MuscleGroup("All Elevators");
             leftElevators.setActivation(leftMasseter.Tag.ToString(), true);
-            leftElevators.setActivation(leftMedialPterygoid.Tag.ToString(), true);
             leftElevators.setActivation(leftTemporalis.Tag.ToString(), true);
             leftMuscleGroups.Items.Add(leftElevators);
 
@@ -231,12 +223,6 @@ namespace Medical.GUI
             leftDepressors.setActivation(leftDigastric.Tag.ToString(), true);
             leftDepressors.setActivation(leftLateralPterygoid.Tag.ToString(), true);
             leftMuscleGroups.Items.Add(leftDepressors);
-
-            MuscleGroup leftVerticalElevator = new MuscleGroup("Vertical Elevator");
-            leftVerticalElevator.setActivation(leftMasseter.Tag.ToString(), true);
-            leftVerticalElevator.setActivation(leftMedialPterygoid.Tag.ToString(), true);
-            leftVerticalElevator.setActivation(leftTemporalis.Tag.ToString(), true);
-            leftMuscleGroups.Items.Add(leftVerticalElevator);
 
             foreach (Object obj in rightMuscleGroups.Items)
             {
