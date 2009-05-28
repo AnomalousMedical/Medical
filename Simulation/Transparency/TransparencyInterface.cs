@@ -7,6 +7,7 @@ using OgreWrapper;
 using Engine.Editing;
 using Engine.Attributes;
 using OgrePlugin;
+using Logging;
 
 namespace Medical
 {
@@ -16,7 +17,9 @@ namespace Medical
         None,
         Teeth,
         Bones,
-        Muscles
+        Muscles,
+        Skin,
+        Spine
     }
 
     public class TransparencyInterface : Interface
@@ -57,10 +60,32 @@ namespace Medical
             if (alpha == 1.0f)
             {
                 subEntity.setMaterialName(baseMaterialName);
+                entity.setRenderQueueGroup(0);
             }
             else
             {
                 subEntity.setMaterialName(alphaMaterial.Value.getName());
+                switch (RenderGroup)
+                {
+                    case RenderGroup.None:
+                        entity.setRenderQueueGroup(255);
+                        break;
+                    case RenderGroup.Teeth:
+                        entity.setRenderQueueGroup(0);
+                        break;
+                    case RenderGroup.Bones:
+                        entity.setRenderQueueGroup(20);
+                        break;
+                    case RenderGroup.Muscles:
+                        entity.setRenderQueueGroup(20);
+                        break;
+                    case RenderGroup.Skin:
+                        entity.setRenderQueueGroup(200);
+                        break;
+                    case RenderGroup.Spine:
+                        entity.setRenderQueueGroup(20);
+                        break;
+                }
             }
         }
 
