@@ -110,7 +110,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(251, 522);
+            this.tabPage1.Size = new System.Drawing.Size(251, 395);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             // 
@@ -154,6 +154,7 @@
             this.closeButton.TabIndex = 3;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // openButton
             // 
@@ -163,6 +164,7 @@
             this.openButton.TabIndex = 2;
             this.openButton.Text = "Open";
             this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // clenchButton
             // 
@@ -172,6 +174,7 @@
             this.clenchButton.TabIndex = 1;
             this.clenchButton.Text = "Clench";
             this.clenchButton.UseVisualStyleBackColor = true;
+            this.clenchButton.Click += new System.EventHandler(this.clenchButton_Click);
             // 
             // neutralButton
             // 
@@ -181,6 +184,7 @@
             this.neutralButton.TabIndex = 0;
             this.neutralButton.Text = "Neutral";
             this.neutralButton.UseVisualStyleBackColor = true;
+            this.neutralButton.Click += new System.EventHandler(this.neutralButton_Click);
             // 
             // tabPage2
             // 

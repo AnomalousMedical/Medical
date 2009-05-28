@@ -248,5 +248,65 @@ namespace Medical.GUI
                 toggleMuscles.Text = "Show Vectors";
             }*/
         }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.rightDigastricForce.Value = 0.0m;
+            this.rightLatPtForce.Value = 0.0m;
+            this.rightMasseterForce.Value = 30.0m;
+            this.rightMedPtForce.Value = 0.0m;
+            this.rightTemporalisForce.Value = 30.0m;
+
+            this.leftDigastricForce.Value = 0.0m;
+            this.leftLatPtForce.Value = 0.0m;
+            this.leftMasseterForce.Value = 30.0m;
+            this.leftMedPtForce.Value = 0.0m;
+            this.leftTemporalisForce.Value = 30.0m;
+        }
+
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            this.rightDigastricForce.Value = 10.0m;
+            this.rightLatPtForce.Value = 0.0m;
+            this.rightMasseterForce.Value = 0.0m;
+            this.rightMedPtForce.Value = 0.0m;
+            this.rightTemporalisForce.Value = 0.0m;
+
+            this.leftDigastricForce.Value = 10.0m;
+            this.leftLatPtForce.Value = 0.0m;
+            this.leftMasseterForce.Value = 0.0m;
+            this.leftMedPtForce.Value = 0.0m;
+            this.leftTemporalisForce.Value = 0.0m;
+        }
+
+        private void clenchButton_Click(object sender, EventArgs e)
+        {
+            this.rightDigastricForce.Value = 0.0m;
+            this.rightLatPtForce.Value = 0.0m;
+            this.rightMasseterForce.Value = 100.0m;
+            this.rightMedPtForce.Value = 0.0m;
+            this.rightTemporalisForce.Value = 100.0m;
+
+            this.leftDigastricForce.Value = 0.0m;
+            this.leftLatPtForce.Value = 0.0m;
+            this.leftMasseterForce.Value = 100.0m;
+            this.leftMedPtForce.Value = 0.0m;
+            this.leftTemporalisForce.Value = 100.0m;
+        }
+
+        private void neutralButton_Click(object sender, EventArgs e)
+        {
+            this.rightDigastricForce.Value = 0.0m;
+            this.rightLatPtForce.Value = 0.0m;
+            this.rightMasseterForce.Value = 0.0m;
+            this.rightMedPtForce.Value = 0.0m;
+            this.rightTemporalisForce.Value = 0.0m;
+
+            this.leftDigastricForce.Value = 0.0m;
+            this.leftLatPtForce.Value = 0.0m;
+            this.leftMasseterForce.Value = 0.0m;
+            this.leftMedPtForce.Value = 0.0m;
+            this.leftTemporalisForce.Value = 0.0m;
+        }
     }
 }
