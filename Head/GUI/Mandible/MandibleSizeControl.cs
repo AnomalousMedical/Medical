@@ -20,8 +20,7 @@ namespace Medical.GUI
         public void sceneChanged()
         {
             layoutPanel.Controls.Clear();
-            Dictionary<String, BoneManipulator> manipulators = BoneManipulatorController.getManipulators();
-            foreach (BoneManipulator manipulator in manipulators.Values)
+            foreach (BoneManipulator manipulator in BoneManipulatorController.getManipulators())
             {
                 BoneManipulatorSlider slider = new BoneManipulatorSlider();
                 slider.initialize(manipulator);

@@ -29,12 +29,14 @@ namespace Medical.GUI
 
         public void sceneLoaded()
         {
+            sectionsPanel.SuspendLayout();
             sectionsPanel.Controls.Clear();
             foreach (TransparencyGroup group in TransparencyController.getGroupIter())
             {
                 LayerSection section = new LayerSection(group);
                 sectionsPanel.Controls.Add(section);
             }
+            sectionsPanel.ResumeLayout();
         }
     }
 }

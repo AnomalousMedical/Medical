@@ -7,7 +7,8 @@ namespace Medical
 {
     public class BoneManipulatorController
     {
-        private static Dictionary<String, BoneManipulator> boneManipulators = new Dictionary<string, BoneManipulator>();
+        static NaturalSort<String> sorter = new NaturalSort<string>();
+        private static SortedList<String, BoneManipulator> boneManipulators = new SortedList<string, BoneManipulator>(sorter);
 
         public static void addBoneManipulator(String name, BoneManipulator boneManipulator)
         {
@@ -19,9 +20,9 @@ namespace Medical
             boneManipulators.Remove(name);
         }
 
-        public static Dictionary<String, BoneManipulator> getManipulators()
+        public static IEnumerable<BoneManipulator> getManipulators()
         {
-            return boneManipulators;
+            return boneManipulators.Values;
         }
     }
 }
