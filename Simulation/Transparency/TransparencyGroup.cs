@@ -7,7 +7,8 @@ namespace Medical
 {
     public class TransparencyGroup
     {
-        private Dictionary<String, TransparencyInterface> alphaObjects = new Dictionary<string, TransparencyInterface>();
+        static NaturalSort<String> sorter = new NaturalSort<string>();
+        private SortedList<String, TransparencyInterface> alphaObjects = new SortedList<string, TransparencyInterface>(sorter);
 
         public TransparencyGroup(RenderGroup name)
         {
@@ -22,14 +23,6 @@ namespace Medical
         public void removeTransparencyObject(TransparencyInterface alphaObject)
         {
             alphaObjects.Remove(alphaObject.ObjectName);
-        }
-
-        public void setAlphaValue(float alpha)
-        {
-            foreach (TransparencyInterface alphaObject in alphaObjects.Values)
-            {
-                alphaObject.setAlpha(alpha);
-            }
         }
 
         public bool isEmpty()

@@ -7,7 +7,8 @@ namespace Medical
 {
     public class TransparencyController
     {
-        static Dictionary<RenderGroup, TransparencyGroup> groups = new Dictionary<RenderGroup, TransparencyGroup>();
+        static NaturalSort<RenderGroup> sorter = new NaturalSort<RenderGroup>();
+        static SortedList<RenderGroup, TransparencyGroup> groups = new SortedList<RenderGroup, TransparencyGroup>(sorter);
 
         public static void addTransparencyObject(TransparencyInterface alphaObject)
         {

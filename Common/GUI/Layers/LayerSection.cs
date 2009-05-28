@@ -22,7 +22,6 @@ namespace Medical.GUI.Layers
             Text = group.Name.ToString();
 
             groupTransparency.ValueChanged += new EventHandler(groupTransparency_ValueChanged);
-
             foreach (TransparencyInterface transparency in group.getTransparencyObjectIter())
             {
                 LayerEntry entry = new LayerEntry();
