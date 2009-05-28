@@ -32,10 +32,9 @@
             this.categoryLabel = new System.Windows.Forms.Label();
             this.groupTransparency = new System.Windows.Forms.NumericUpDown();
             this.expandButton = new System.Windows.Forms.Button();
-            this.alphaDataGrid = new System.Windows.Forms.DataGridView();
+            this.entriesPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.headerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupTransparency)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alphaDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // headerPanel
@@ -97,30 +96,29 @@
             this.expandButton.UseVisualStyleBackColor = true;
             this.expandButton.Click += new System.EventHandler(this.expandButton_Click);
             // 
-            // alphaDataGrid
+            // entriesPanel
             // 
-            this.alphaDataGrid.AllowUserToAddRows = false;
-            this.alphaDataGrid.AllowUserToDeleteRows = false;
-            this.alphaDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.alphaDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.alphaDataGrid.Location = new System.Drawing.Point(0, 21);
-            this.alphaDataGrid.Name = "alphaDataGrid";
-            this.alphaDataGrid.Size = new System.Drawing.Size(192, 0);
-            this.alphaDataGrid.TabIndex = 1;
+            this.entriesPanel.AutoSize = true;
+            this.entriesPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.entriesPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.entriesPanel.Location = new System.Drawing.Point(0, 21);
+            this.entriesPanel.Name = "entriesPanel";
+            this.entriesPanel.Size = new System.Drawing.Size(192, 0);
+            this.entriesPanel.TabIndex = 1;
             // 
             // LayerSection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.alphaDataGrid);
+            this.Controls.Add(this.entriesPanel);
             this.Controls.Add(this.headerPanel);
             this.Name = "LayerSection";
             this.Size = new System.Drawing.Size(192, 21);
             this.headerPanel.ResumeLayout(false);
             this.headerPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupTransparency)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.alphaDataGrid)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -130,7 +128,7 @@
         private System.Windows.Forms.Label categoryLabel;
         private System.Windows.Forms.NumericUpDown groupTransparency;
         private System.Windows.Forms.Button expandButton;
-        private System.Windows.Forms.DataGridView alphaDataGrid;
+        private System.Windows.Forms.FlowLayoutPanel entriesPanel;
 
 
     }

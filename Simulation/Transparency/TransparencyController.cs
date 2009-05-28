@@ -31,31 +31,6 @@ namespace Medical
             }
         }
 
-        public static void setAlphaForGroup(RenderGroup group, float alpha)
-        {
-            if (groups.ContainsKey(group))
-            {
-                groups[group].setAlphaValue(alpha);
-            }
-        }
-
-        public static void setAlphaForObject(RenderGroup group, String objName, float alpha)
-        {
-            if (groups.ContainsKey(group))
-            {
-                groups[group].setAlphaValue(objName, alpha);
-            }
-        }
-
-        public static float getAlphaForObject(RenderGroup group, String objName)
-        {
-            if (groups.ContainsKey(group))
-            {
-                return groups[group].getAlphaValue(objName);
-            }
-            return 0.0f;
-        }
-
         public static IEnumerable<TransparencyGroup> getGroupIter()
         {
             return groups.Values;

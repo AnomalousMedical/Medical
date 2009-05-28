@@ -110,6 +110,12 @@
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Layers\LayerEntry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Layers\LayerEntry.Designer.cs">
+      <DependentUpon>LayerEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Layers\LayersControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +159,10 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">
       <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Layers\LayerEntry.resx">
+      <DependentUpon>LayerEntry.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Layers\LayersControl.resx">
