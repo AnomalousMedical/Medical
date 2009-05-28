@@ -36,7 +36,7 @@
             // valueTrackBar
             // 
             this.valueTrackBar.LargeChange = 20;
-            this.valueTrackBar.Location = new System.Drawing.Point(3, 20);
+            this.valueTrackBar.Location = new System.Drawing.Point(3, 14);
             this.valueTrackBar.Maximum = 100;
             this.valueTrackBar.Name = "valueTrackBar";
             this.valueTrackBar.Size = new System.Drawing.Size(191, 45);
@@ -47,7 +47,7 @@
             // sliderNameLabel
             // 
             this.sliderNameLabel.AutoSize = true;
-            this.sliderNameLabel.Location = new System.Drawing.Point(4, 4);
+            this.sliderNameLabel.Location = new System.Drawing.Point(4, -1);
             this.sliderNameLabel.Name = "sliderNameLabel";
             this.sliderNameLabel.Size = new System.Drawing.Size(61, 13);
             this.sliderNameLabel.TabIndex = 1;
@@ -60,7 +60,7 @@
             this.Controls.Add(this.sliderNameLabel);
             this.Controls.Add(this.valueTrackBar);
             this.Name = "BoneManipulatorSlider";
-            this.Size = new System.Drawing.Size(197, 68);
+            this.Size = new System.Drawing.Size(197, 44);
             ((System.ComponentModel.ISupportInitialize)(this.valueTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
