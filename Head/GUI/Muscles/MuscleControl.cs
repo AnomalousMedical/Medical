@@ -66,6 +66,11 @@ namespace Medical.GUI
             }
         }
 
+        internal void sceneUnloading()
+        {
+            
+        }
+
         void bothSides_SelectedValueChanged(object sender, EventArgs e)
         {
             ComboBox combo = sender as ComboBox;

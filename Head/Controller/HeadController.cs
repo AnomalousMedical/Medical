@@ -28,6 +28,11 @@ namespace Medical.Controller
             headToolStrip.sceneChanged();
         }
 
+        public void sceneUnloading()
+        {
+
+        }
+
         /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.

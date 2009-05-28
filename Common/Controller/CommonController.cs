@@ -50,6 +50,11 @@ namespace Medical
             toolStrip.sceneChanged();
         }
 
+        public void sceneUnloading()
+        {
+            toolStrip.sceneUnloading();
+        }
+
         /// <summary>
         /// Add some DockContent to the UI.
         /// </summary>

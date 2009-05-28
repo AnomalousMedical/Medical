@@ -18,12 +18,17 @@ namespace Medical.GUI
             InitializeComponent();
         }
 
-        public void setupLayers()
+        public void sceneUnloading()
         {
             foreach (Control control in sectionsPanel.Controls)
             {
                 control.Dispose();
             }
+            sectionsPanel.Controls.Clear();
+        }
+
+        public void sceneLoaded()
+        {
             sectionsPanel.Controls.Clear();
             foreach (TransparencyGroup group in TransparencyController.getGroupIter())
             {

@@ -25,6 +25,11 @@ namespace Medical
         void sceneChanged();
 
         /// <summary>
+        /// Called when the scene is unloading.
+        /// </summary>
+        void sceneUnloading();
+
+        /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.
         /// </summary>

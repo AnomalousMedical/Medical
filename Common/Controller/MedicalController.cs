@@ -221,6 +221,11 @@ namespace Medical
         /// <param name="scene"></param>
         void medicalScene_OnSceneUnloading(MedicalSceneController controller, Engine.ObjectManagement.SimScene scene)
         {
+            commonController.sceneUnloading();
+            if (currentMedicalInterface != null)
+            {
+                currentMedicalInterface.sceneUnloading();
+            }
             drawingWindowController.destroyCameras();
         }
 

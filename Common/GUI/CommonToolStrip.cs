@@ -54,7 +54,12 @@ namespace Medical
 
         public void sceneChanged()
         {
-            layersControl.setupLayers();
+            layersControl.sceneLoaded();
+        }
+
+        public void sceneUnloading()
+        {
+            layersControl.sceneUnloading();
         }
 
         private void layersButton_Click(object sender, EventArgs e)

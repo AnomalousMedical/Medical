@@ -95,6 +95,12 @@ namespace Medical.GUI
             mandibleSizeControl.sceneChanged();
         }
 
+        public void sceneUnloading()
+        {
+            muscleControl.sceneUnloading();
+            mandibleSizeControl.sceneUnloading();
+        }
+
         void teethButton_Click(object sender, EventArgs e)
         {
             if (teethControl.Visible)

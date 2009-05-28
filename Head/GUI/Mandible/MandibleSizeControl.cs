@@ -19,10 +19,6 @@ namespace Medical.GUI
 
         public void sceneChanged()
         {
-            foreach (Control control in layoutPanel.Controls)
-            {
-                control.Dispose();
-            }
             layoutPanel.Controls.Clear();
             Dictionary<String, BoneManipulator> manipulators = BoneManipulatorController.getManipulators();
             foreach (BoneManipulator manipulator in manipulators.Values)
@@ -31,6 +27,15 @@ namespace Medical.GUI
                 slider.initialize(manipulator);
                 this.layoutPanel.Controls.Add(slider);
             }
+        }
+
+        internal void sceneUnloading()
+        {
+            foreach (Control control in layoutPanel.Controls)
+            {
+                control.Dispose();
+            }
+            layoutPanel.Controls.Clear();
         }
     }
 }
