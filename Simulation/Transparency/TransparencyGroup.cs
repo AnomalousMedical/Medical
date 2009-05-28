@@ -32,23 +32,6 @@ namespace Medical
             }
         }
 
-        public void setAlphaValue(String objName, float alpha)
-        {
-            if (alphaObjects.ContainsKey(objName))
-            {
-                alphaObjects[objName].setAlpha(alpha);
-            }
-        }
-
-        public float getAlphaValue(String objName)
-        {
-            if (alphaObjects.ContainsKey(objName))
-            {
-                return alphaObjects[objName].CurrentAlpha;
-            }
-            return 0.0f;
-        }
-
         public bool isEmpty()
         {
             return alphaObjects.Count == 0;
