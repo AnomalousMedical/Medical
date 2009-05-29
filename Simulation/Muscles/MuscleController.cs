@@ -55,9 +55,11 @@ namespace Medical
             }
         }
 
-        public static Dictionary<String, MuscleBehavior> getMuscles()
+        public static MuscleBehavior getMuscle(String name)
         {
-            return muscles;
+            MuscleBehavior ret;
+            muscles.TryGetValue(name, out ret);
+            return ret;
         }
     }
 }

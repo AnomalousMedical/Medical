@@ -127,19 +127,15 @@ namespace Medical.GUI
         private void captureMuscleForces()
         {
             allowMuscleUpdates = false;
-            Dictionary<String, MuscleBehavior> muscles = MuscleController.getMuscles();
-
-            leftTemporalisForce.Value = (decimal)muscles[leftTemporalisForce.Tag.ToString()].getForce();
-            leftMasseterForce.Value = (decimal)muscles[leftMasseterForce.Tag.ToString()].getForce();
-            leftMedPtForce.Value = (decimal)muscles[leftMedPtForce.Tag.ToString()].getForce();
-            leftLatPtForce.Value = (decimal)muscles[leftLatPtForce.Tag.ToString()].getForce();
-            leftDigastricForce.Value = (decimal)muscles[leftDigastricForce.Tag.ToString()].getForce();
-
-            rightTemporalisForce.Value = (decimal)muscles[rightTemporalisForce.Tag.ToString()].getForce();
-            rightMasseterForce.Value = (decimal)muscles[rightMasseterForce.Tag.ToString()].getForce();
-            rightMedPtForce.Value = (decimal)muscles[rightMedPtForce.Tag.ToString()].getForce();
-            rightLatPtForce.Value = (decimal)muscles[rightLatPtForce.Tag.ToString()].getForce();
-            rightDigastricForce.Value = (decimal)muscles[rightDigastricForce.Tag.ToString()].getForce();
+            foreach (Control control in tabPage2.Controls)
+            {
+                NumericUpDown upDown = control as NumericUpDown;
+                if (upDown != null && upDown.Tag != null)
+                {
+                    MuscleBehavior muscle = MuscleController.getMuscle(upDown.Tag.ToString());
+                    upDown.Value = muscle != null ? (decimal)muscle.getForce() : 0m;
+                }
+            }
             allowMuscleUpdates = true;
         }
 

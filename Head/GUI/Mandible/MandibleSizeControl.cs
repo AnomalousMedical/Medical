@@ -16,7 +16,7 @@ namespace Medical.GUI
     {
         float rightBlendPercent = 0.0f;
         float leftBlendPercent = 0.0f;
-        float blendRate = 0.2f;
+        float blendRate = 0.25f;
 
         private MedicalController controller;
 
