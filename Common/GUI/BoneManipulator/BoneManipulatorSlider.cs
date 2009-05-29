@@ -45,5 +45,17 @@ namespace Medical.GUI
                 sliderNameLabel.Text = value;
             }
         }
+
+        public int Value
+        {
+            get
+            {
+                return valueTrackBar.Value;
+            }
+            set
+            {
+                valueTrackBar.Value = value;
+            }
+        }
     }
 }

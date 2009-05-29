@@ -54,7 +54,6 @@ namespace Medical
                                 bone = skeleton.getBone(targetBone);
                                 bone.setManuallyControlled(true);
                                 BoneManipulatorController.addBoneManipulator(this);
-                                Log.Default.debug("Bone {0} rotation is {1}.", bone.getName(), bone.getOrientation().getEuler() * 57.2957795f);
                             }
                             else
                             {
