@@ -18,6 +18,7 @@ namespace Medical.Controller
             headToolStrip = new HeadToolStrip(this);
             this.controller = controller;
             controller.addToolStrip(headToolStrip);
+            headToolStrip.MandibleSizeControl.initialize(controller);
         }
 
         /// <summary>

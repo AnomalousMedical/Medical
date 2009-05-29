@@ -38,14 +38,14 @@
             this.valueTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.valueTrackBar.LargeChange = 20;
+            this.valueTrackBar.LargeChange = 2000;
             this.valueTrackBar.Location = new System.Drawing.Point(3, 14);
-            this.valueTrackBar.Maximum = 100;
+            this.valueTrackBar.Maximum = 10000;
             this.valueTrackBar.Name = "valueTrackBar";
             this.valueTrackBar.Size = new System.Drawing.Size(191, 45);
-            this.valueTrackBar.SmallChange = 10;
+            this.valueTrackBar.SmallChange = 1000;
             this.valueTrackBar.TabIndex = 0;
-            this.valueTrackBar.TickFrequency = 10;
+            this.valueTrackBar.TickFrequency = 1000;
             // 
             // sliderNameLabel
             // 

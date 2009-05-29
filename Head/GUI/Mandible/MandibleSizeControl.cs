@@ -8,15 +8,27 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Logging;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
     public partial class MandibleSizeControl : DockContent
     {
+        float rightBlendPercent = 0.0f;
+        float leftBlendPercent = 0.0f;
+        float blendRate = 0.2f;
+
+        private MedicalController controller;
+
         public MandibleSizeControl()
         {
             InitializeComponent();
-        }            
+        }
+
+        public void initialize(MedicalController controller)
+        {
+            this.controller = controller;
+        }
 
         public void sceneChanged()
         {
@@ -49,64 +61,124 @@ namespace Medical.GUI
             }
         }
 
+        void startRightTimer()
+        {
+            controller.LoopUpdate += updateRightTimer;
+            rightBlendPercent = 0.0f;
+        }
+
+        void stopRightTimer()
+        {
+            controller.LoopUpdate -= updateRightTimer;
+        }
+
+        public void updateRightTimer(Clock clock)
+        {
+            rightBlendPercent += blendRate * (float)clock.Seconds;
+            if (rightBlendPercent >= 1.0f)
+            {
+                stopRightTimer();
+                rightBlendPercent = 1.0f;
+            }
+            rightAntegonialNotchSlider.blend(rightBlendPercent);
+            rightCondyleDegenerationSlider.blend(rightBlendPercent);
+            rightCondyleHeightSlider.blend(rightBlendPercent);
+            rightCondyleRotationSlider.blend(rightBlendPercent);
+            rightMandibularNotchSlider.blend(rightBlendPercent);
+            rightRamusHeightSlider.blend(rightBlendPercent);
+        }
+
+        void startLeftTimer()
+        {
+            controller.LoopUpdate += updateLeftTimer;
+            leftBlendPercent = 0.0f;
+        }
+
+        void stopLeftTimer()
+        {
+            controller.LoopUpdate -= updateLeftTimer;
+        }
+
+        public void updateLeftTimer(Clock clock)
+        {
+            leftBlendPercent += blendRate * (float)clock.Seconds;
+            if (leftBlendPercent >= 1.0f)
+            {
+                stopLeftTimer();
+                leftBlendPercent = 1.0f;
+            }
+            leftAntegonialNotchSlider.blend(leftBlendPercent);
+            leftCondyleDegenerationSlider.blend(leftBlendPercent);
+            leftCondyleHeightSlider.blend(leftBlendPercent);
+            leftCondyleRotationSlider.blend(leftBlendPercent);
+            leftMandibularNotchSlider.blend(leftBlendPercent);
+            leftRamusHeightSlider.blend(leftBlendPercent);
+        }
+
         private void rightNormal_Click(object sender, EventArgs e)
         {
-            rightAntegonialNotchSlider.Value = 0;
-            rightCondyleDegenerationSlider.Value = 0;
-            rightCondyleHeightSlider.Value = 0;
-            rightCondyleRotationSlider.Value = 0;
-            rightMandibularNotchSlider.Value = 0;
-            rightRamusHeightSlider.Value = 0;
+            rightAntegonialNotchSlider.startBlend(0f);
+            rightCondyleDegenerationSlider.startBlend(0f);
+            rightCondyleHeightSlider.startBlend(0f);
+            rightCondyleRotationSlider.startBlend(0f);
+            rightMandibularNotchSlider.startBlend(0f);
+            rightRamusHeightSlider.startBlend(0f);
+            startRightTimer();
         }
 
         private void leftNormal_Click(object sender, EventArgs e)
         {
-            leftAntegonialNotchSlider.Value = 0;
-            leftCondyleDegenerationSlider.Value = 0;
-            leftCondyleHeightSlider.Value = 0;
-            leftCondyleRotationSlider.Value = 0;
-            leftMandibularNotchSlider.Value = 0;
-            leftRamusHeightSlider.Value = 0;
+            leftAntegonialNotchSlider.startBlend(0f);
+            leftCondyleDegenerationSlider.startBlend(0f);
+            leftCondyleHeightSlider.startBlend(0f);
+            leftCondyleRotationSlider.startBlend(0f);
+            leftMandibularNotchSlider.startBlend(0f);
+            leftRamusHeightSlider.startBlend(0f);
+            startLeftTimer();
         }
 
         private void rightGrowth_Click(object sender, EventArgs e)
         {
-            rightAntegonialNotchSlider.Value = 100;
-            rightCondyleDegenerationSlider.Value = 0;
-            rightCondyleHeightSlider.Value = 30;
-            rightCondyleRotationSlider.Value = 75;
-            rightMandibularNotchSlider.Value = 55;
-            rightRamusHeightSlider.Value = 80;
+            rightAntegonialNotchSlider.startBlend(1f);
+            rightCondyleDegenerationSlider.startBlend(0f);
+            rightCondyleHeightSlider.startBlend(.3f);
+            rightCondyleRotationSlider.startBlend(.75f);
+            rightMandibularNotchSlider.startBlend(.55f);
+            rightRamusHeightSlider.startBlend(.80f);
+            startRightTimer();
         }
 
         private void leftGrowth_Click(object sender, EventArgs e)
         {
-            leftAntegonialNotchSlider.Value = 100;
-            leftCondyleDegenerationSlider.Value = 0;
-            leftCondyleHeightSlider.Value = 30;
-            leftCondyleRotationSlider.Value = 75;
-            leftMandibularNotchSlider.Value = 55;
-            leftRamusHeightSlider.Value = 80;
+            leftAntegonialNotchSlider.startBlend(1f);
+            leftCondyleDegenerationSlider.startBlend(0f);
+            leftCondyleHeightSlider.startBlend(.3f);
+            leftCondyleRotationSlider.startBlend(.75f);
+            leftMandibularNotchSlider.startBlend(.55f);
+            leftRamusHeightSlider.startBlend(.8f);
+            startLeftTimer();
         }
 
         private void rightDegenerated_Click(object sender, EventArgs e)
         {
-            rightAntegonialNotchSlider.Value = 100;
-            rightCondyleDegenerationSlider.Value = 100;
-            rightCondyleHeightSlider.Value = 60;
-            rightCondyleRotationSlider.Value = 100;
-            rightMandibularNotchSlider.Value = 60;
-            rightRamusHeightSlider.Value = 0;
+            rightAntegonialNotchSlider.startBlend(1f);
+            rightCondyleDegenerationSlider.startBlend(1f);
+            rightCondyleHeightSlider.startBlend(.6f);
+            rightCondyleRotationSlider.startBlend(1);
+            rightMandibularNotchSlider.startBlend(.6f);
+            rightRamusHeightSlider.startBlend(0f);
+            startRightTimer();
         }
 
         private void leftDegenerated_Click(object sender, EventArgs e)
         {
-            leftAntegonialNotchSlider.Value = 100;
-            leftCondyleDegenerationSlider.Value = 100;
-            leftCondyleHeightSlider.Value = 60;
-            leftCondyleRotationSlider.Value = 100;
-            leftMandibularNotchSlider.Value = 60;
-            leftRamusHeightSlider.Value = 0;
+            leftAntegonialNotchSlider.startBlend(1f);
+            leftCondyleDegenerationSlider.startBlend(1f);
+            leftCondyleHeightSlider.startBlend(.6f);
+            leftCondyleRotationSlider.startBlend(1f);
+            leftMandibularNotchSlider.startBlend(.6f);
+            leftRamusHeightSlider.startBlend(0f);
+            startLeftTimer();
         }
     }
 }

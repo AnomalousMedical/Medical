@@ -168,5 +168,13 @@ namespace Medical.GUI
         {
             mandibleSizeButton.Checked = mandibleSizeControl.Visible;
         }
+
+        public MandibleSizeControl MandibleSizeControl
+        {
+            get
+            {
+                return mandibleSizeControl;
+            }
+        }
     }
 }

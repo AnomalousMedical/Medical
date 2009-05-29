@@ -19,6 +19,8 @@ using Engine.Resources;
 
 namespace Medical
 {
+    public delegate void LoopUpdate(Clock time);
+
     public class MedicalController : IDisposable, UpdateListener
     {
         #region Fields
@@ -47,6 +49,12 @@ namespace Medical
         private XmlSaver xmlSaver = new XmlSaver();
 
         #endregion Fields
+
+        #region Events
+
+        public event LoopUpdate LoopUpdate;
+
+        #endregion Events
 
         #region Functions
 
@@ -304,6 +312,10 @@ namespace Medical
         public void sendUpdate(Clock clock)
         {
             Application.DoEvents();
+            if (LoopUpdate != null)
+            {
+                LoopUpdate.Invoke(clock);
+            }
         }
 
         #endregion
