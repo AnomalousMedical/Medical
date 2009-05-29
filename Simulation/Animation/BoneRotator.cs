@@ -7,11 +7,15 @@ using OgreWrapper;
 using Engine;
 using OgrePlugin;
 using Engine.ObjectManagement;
+using Engine.Attributes;
+using Logging;
 
-namespace Medical.Animation
+namespace Medical
 {
     class BoneRotator : Interface, BoneManipulator
     {
+        const float DEG_TO_RAD = 0.0174532925f;
+
         [Editable]
         String targetSimObject;
 
@@ -25,10 +29,10 @@ namespace Medical.Animation
         String targetBone;
 
         [Editable]
-        Vector3 startScale = Vector3.ScaleIdentity;
+        Vector3 startRotation = Vector3.Zero;
 
         [Editable]
-        Vector3 endScale = Vector3.Zero;
+        Vector3 endRotation = Vector3.Zero;
 
         [Editable]
         float currentPosition = 0.0f;
@@ -39,8 +43,22 @@ namespace Medical.Animation
         SkeletonInstance skeleton;
         Bone bone;
 
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 startRotationRad;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 endRotationRad;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Quaternion newRotQuat = Quaternion.Identity;
+
         protected override void constructed()
         {
+            startRotationRad = startRotation * DEG_TO_RAD;
+            endRotationRad = endRotation * DEG_TO_RAD;
             SimObject targetObject = Owner.getOtherSimObject(targetSimObject);
             if (targetObject != null)
             {
@@ -58,6 +76,7 @@ namespace Medical.Animation
                                 bone = skeleton.getBone(targetBone);
                                 bone.setManuallyControlled(true);
                                 BoneManipulatorController.addBoneManipulator(this.Name, this);
+                                Log.Default.debug("Bone {0} rotation is {1}.", bone.getName(), bone.getOrientation().getEuler() * 57.2957795f);
                             }
                             else
                             {
@@ -98,7 +117,9 @@ namespace Medical.Animation
             if (bone != null)
             {
                 currentPosition = position;
-                bone.setScale(startScale.lerp(ref endScale, ref position));
+                Vector3 newRot = startRotationRad.lerp(ref endRotationRad, ref position);
+                newRotQuat.setEuler(newRot.x, newRot.y, newRot.z);
+                bone.setOrientation(newRotQuat);
                 bone.needUpdate(true);
             }
         }
