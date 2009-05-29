@@ -41,7 +41,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            SimObject targetObject = SimObject.getOtherSimObject(targetSimObject);
+            SimObject targetObject = Owner.getOtherSimObject(targetSimObject);
             if (targetObject != null)
             {
                 SceneNodeElement node = targetObject.getElement(targetNode) as SceneNodeElement;

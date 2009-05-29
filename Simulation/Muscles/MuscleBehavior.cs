@@ -38,27 +38,27 @@ namespace Medical
 
         protected override void constructed()
         {
-            actor = SimObject.getElement(actorName) as PhysActorElement;
+            actor = Owner.getElement(actorName) as PhysActorElement;
             if (actor == null)
             {
                 blacklist("Cannot find actor {0}.", actorName);
             }
-            targetObject = SimObject.getOtherSimObject(targetSimObject);
+            targetObject = Owner.getOtherSimObject(targetSimObject);
             if (targetObject == null)
             {
                 blacklist("Cannot find SimObject {0}.", targetSimObject);
             }
-            MuscleController.addMuscle(SimObject.Name, this);
+            MuscleController.addMuscle(Owner.Name, this);
         }
 
         protected override void destroy()
         {
-            MuscleController.removeMuscle(SimObject.Name);
+            MuscleController.removeMuscle(Owner.Name);
         }
 
         public override void update(Clock clock, EventManager events)
         {
-            Vector3 location = SimObject.Translation - targetObject.Translation;
+            Vector3 location = Owner.Translation - targetObject.Translation;
             location.normalize();
             location *= force;
             actor.Actor.addLocalForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
@@ -66,11 +66,11 @@ namespace Medical
 
         public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
         {
-            Vector3 halfwayPoint = targetObject.Translation - SimObject.Translation;
-            halfwayPoint = halfwayPoint.length() / 2 * halfwayPoint.normalize() + SimObject.Translation;
-            debugDrawing.begin("Muscle" + SimObject.Name, DrawingType.LineList);
+            Vector3 halfwayPoint = targetObject.Translation - Owner.Translation;
+            halfwayPoint = halfwayPoint.length() / 2 * halfwayPoint.normalize() + Owner.Translation;
+            debugDrawing.begin("Muscle" + Owner.Name, DrawingType.LineList);
             debugDrawing.setColor(Color.Green);
-            debugDrawing.drawLine(SimObject.Translation, halfwayPoint);
+            debugDrawing.drawLine(Owner.Translation, halfwayPoint);
             debugDrawing.setColor(Color.Red);
             debugDrawing.drawLine(halfwayPoint, targetObject.Translation);
             debugDrawing.end();

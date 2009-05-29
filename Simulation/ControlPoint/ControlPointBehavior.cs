@@ -38,7 +38,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            boneObject = SimObject.getOtherSimObject(boneSimObject);
+            boneObject = Owner.getOtherSimObject(boneSimObject);
             if (boneObject != null)
             {
                 SceneNodeElement node = boneObject.getElement(boneNode) as SceneNodeElement;
@@ -78,7 +78,7 @@ namespace Medical
             {
                 blacklist("Could not find Target SimObject {0}.", boneSimObject);
             }
-            joint = SimObject.getElement(jointName) as PhysD6JointElement;
+            joint = Owner.getElement(jointName) as PhysD6JointElement;
             if (joint == null)
             {
                 blacklist("Could not find joint {0}.", jointName);

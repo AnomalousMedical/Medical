@@ -91,7 +91,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            SceneNodeElement sceneNode = SimObject.getElement(nodeName) as SceneNodeElement;
+            SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode != null)
             {
                 entity = sceneNode.getNodeObject(entityName) as Entity;

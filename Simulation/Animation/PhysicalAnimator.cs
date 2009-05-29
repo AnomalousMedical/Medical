@@ -31,7 +31,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            targetObject = SimObject.getOtherSimObject(targetSimObject);
+            targetObject = Owner.getOtherSimObject(targetSimObject);
             if (targetObject != null)
             {
                 SceneNodeElement node = targetObject.getElement(targetNode) as SceneNodeElement;
@@ -76,8 +76,8 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            bone.setPosition(SimObject.Translation - targetObject.Translation);
-            bone.setOrientation(SimObject.Rotation);
+            bone.setPosition(Owner.Translation - targetObject.Translation);
+            bone.setOrientation(Owner.Rotation);
             //bone.setScale(SimObject.Scale);
             bone.needUpdate(true);
         }
