@@ -41,7 +41,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.bothSides = new System.Windows.Forms.ComboBox();
-            this.toggleMuscles = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.forceUpDown = new System.Windows.Forms.NumericUpDown();
             this.leftMuscleGroups = new System.Windows.Forms.ComboBox();
@@ -192,7 +191,6 @@
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.bothSides);
-            this.tabPage2.Controls.Add(this.toggleMuscles);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Controls.Add(this.forceUpDown);
             this.tabPage2.Controls.Add(this.leftMuscleGroups);
@@ -229,7 +227,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 3);
+            this.label3.Location = new System.Drawing.Point(90, 3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 82;
@@ -238,19 +236,10 @@
             // bothSides
             // 
             this.bothSides.FormattingEnabled = true;
-            this.bothSides.Location = new System.Drawing.Point(1, 19);
+            this.bothSides.Location = new System.Drawing.Point(63, 19);
             this.bothSides.Name = "bothSides";
             this.bothSides.Size = new System.Drawing.Size(117, 21);
             this.bothSides.TabIndex = 81;
-            // 
-            // toggleMuscles
-            // 
-            this.toggleMuscles.Location = new System.Drawing.Point(146, 17);
-            this.toggleMuscles.Name = "toggleMuscles";
-            this.toggleMuscles.Size = new System.Drawing.Size(86, 23);
-            this.toggleMuscles.TabIndex = 80;
-            this.toggleMuscles.Text = "Show Vectors";
-            this.toggleMuscles.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -666,7 +655,6 @@
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox bothSides;
-        private System.Windows.Forms.Button toggleMuscles;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown forceUpDown;
         private System.Windows.Forms.ComboBox leftMuscleGroups;

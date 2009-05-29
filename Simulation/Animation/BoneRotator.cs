@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Engine;
 using Engine.Editing;
 using OgreWrapper;
-using Engine.ObjectManagement;
+using Engine;
 using OgrePlugin;
+using Engine.ObjectManagement;
 
-namespace Medical
+namespace Medical.Animation
 {
-    class BoneScalar : Interface, BoneManipulator
+    class BoneRotator : Interface, BoneManipulator
     {
         [Editable]
         String targetSimObject;

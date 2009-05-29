@@ -143,8 +143,6 @@ namespace Medical.GUI
             allowMuscleUpdates = true;
         }
 
-
-
         private void setRightMuscleGroup(MuscleGroup group)
         {
             rightMasseter.Checked = group.getActivation(rightMasseter.Tag.ToString());
@@ -234,19 +232,6 @@ namespace Medical.GUI
                 bothSides.Items.Add(obj.ToString());
             }
 
-        }
-
-        private void toggleMuscles_Click(object sender, EventArgs e)
-        {
-            /*muscleController.DrawMuscles = !muscleController.DrawMuscles;
-            if (muscleController.DrawMuscles)
-            {
-                toggleMuscles.Text = "Hide Vectors";
-            }
-            else
-            {
-                toggleMuscles.Text = "Show Vectors";
-            }*/
         }
 
         private void closeButton_Click(object sender, EventArgs e)
