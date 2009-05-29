@@ -30,10 +30,6 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.closeButton = new System.Windows.Forms.Button();
             this.openButton = new System.Windows.Forms.Button();
             this.clenchButton = new System.Windows.Forms.Button();
@@ -98,10 +94,6 @@
             // 
             this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage1.Controls.Add(this.panel4);
-            this.tabPage1.Controls.Add(this.panel3);
-            this.tabPage1.Controls.Add(this.panel2);
-            this.tabPage1.Controls.Add(this.panel1);
             this.tabPage1.Controls.Add(this.closeButton);
             this.tabPage1.Controls.Add(this.openButton);
             this.tabPage1.Controls.Add(this.clenchButton);
@@ -113,75 +105,51 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             // 
-            // panel4
-            // 
-            this.panel4.BackgroundImage = global::Medical.Properties.Resources.openmuscle;
-            this.panel4.Location = new System.Drawing.Point(18, 167);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(96, 115);
-            this.panel4.TabIndex = 7;
-            // 
-            // panel3
-            // 
-            this.panel3.BackgroundImage = global::Medical.Properties.Resources.clenchedmuscle;
-            this.panel3.Location = new System.Drawing.Point(125, 16);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(96, 115);
-            this.panel3.TabIndex = 6;
-            // 
-            // panel2
-            // 
-            this.panel2.BackgroundImage = global::Medical.Properties.Resources.neutralmuscle;
-            this.panel2.Location = new System.Drawing.Point(125, 167);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(96, 115);
-            this.panel2.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = global::Medical.Properties.Resources.neutralmuscle;
-            this.panel1.Location = new System.Drawing.Point(18, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(96, 115);
-            this.panel1.TabIndex = 4;
-            // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(135, 288);
+            this.closeButton.Image = global::Medical.Properties.Resources.neutralmuscle;
+            this.closeButton.Location = new System.Drawing.Point(125, 162);
             this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(75, 23);
-            this.closeButton.TabIndex = 3;
+            this.closeButton.Size = new System.Drawing.Size(111, 140);
+            this.closeButton.TabIndex = 5;
             this.closeButton.Text = "Close";
+            this.closeButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(29, 288);
+            this.openButton.Image = global::Medical.Properties.Resources.openmuscle;
+            this.openButton.Location = new System.Drawing.Point(8, 162);
             this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(75, 23);
-            this.openButton.TabIndex = 2;
+            this.openButton.Size = new System.Drawing.Size(111, 140);
+            this.openButton.TabIndex = 4;
             this.openButton.Text = "Open";
+            this.openButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // clenchButton
             // 
-            this.clenchButton.Location = new System.Drawing.Point(135, 137);
+            this.clenchButton.Image = global::Medical.Properties.Resources.clenchedmuscle;
+            this.clenchButton.Location = new System.Drawing.Point(125, 16);
             this.clenchButton.Name = "clenchButton";
-            this.clenchButton.Size = new System.Drawing.Size(75, 23);
+            this.clenchButton.Size = new System.Drawing.Size(111, 140);
             this.clenchButton.TabIndex = 1;
             this.clenchButton.Text = "Clench";
+            this.clenchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.clenchButton.UseVisualStyleBackColor = true;
             this.clenchButton.Click += new System.EventHandler(this.clenchButton_Click);
             // 
             // neutralButton
             // 
-            this.neutralButton.Location = new System.Drawing.Point(29, 137);
+            this.neutralButton.Image = global::Medical.Properties.Resources.neutralmuscle;
+            this.neutralButton.Location = new System.Drawing.Point(8, 16);
             this.neutralButton.Name = "neutralButton";
-            this.neutralButton.Size = new System.Drawing.Size(75, 23);
+            this.neutralButton.Size = new System.Drawing.Size(111, 140);
             this.neutralButton.TabIndex = 0;
             this.neutralButton.Text = "Neutral";
+            this.neutralButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.neutralButton.UseVisualStyleBackColor = true;
             this.neutralButton.Click += new System.EventHandler(this.neutralButton_Click);
             // 
@@ -651,8 +619,6 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button clenchButton;
         private System.Windows.Forms.Button neutralButton;
-        private System.Windows.Forms.Button closeButton;
-        private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox bothSides;
         private System.Windows.Forms.Label label2;
@@ -681,9 +647,7 @@
         private System.Windows.Forms.CheckBox rightTemporalis;
         private System.Windows.Forms.CheckBox leftMasseter;
         private System.Windows.Forms.CheckBox rightMasseter;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button openButton;
     }
 }

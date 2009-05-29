@@ -67,6 +67,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap extremeLeftSide {
+            get {
+                object obj = ResourceManager.GetObject("extremeLeftSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap extremeRightSide {
+            get {
+                object obj = ResourceManager.GetObject("extremeRightSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap leftcondyleresize {
             get {
                 object obj = ResourceManager.GetObject("leftcondyleresize", resourceCulture);
@@ -81,9 +95,37 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap middleLeftSide {
+            get {
+                object obj = ResourceManager.GetObject("middleLeftSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap middleRightSide {
+            get {
+                object obj = ResourceManager.GetObject("middleRightSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap neutralmuscle {
             get {
                 object obj = ResourceManager.GetObject("neutralmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap normalLeftSide {
+            get {
+                object obj = ResourceManager.GetObject("normalLeftSide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap normalRightSide {
+            get {
+                object obj = ResourceManager.GetObject("normalRightSide", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

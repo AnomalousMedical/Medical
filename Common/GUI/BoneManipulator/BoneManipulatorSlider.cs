@@ -22,12 +22,28 @@ namespace Medical.GUI
         public void initialize(BoneManipulator manipulator)
         {
             this.manipulator = manipulator;
-            this.sliderNameLabel.Text = manipulator.getUIName();
+        }
+
+        public void clearManipulator()
+        {
+            this.manipulator = null;
         }
 
         void valueTrackBar_ValueChanged(object sender, EventArgs e)
         {
             manipulator.setPosition(valueTrackBar.Value / 100.0f);
+        }
+
+        public String LabelText
+        {
+            get
+            {
+                return sliderNameLabel.Text;
+            }
+            set
+            {
+                sliderNameLabel.Text = value;
+            }
         }
     }
 }

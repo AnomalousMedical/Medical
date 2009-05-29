@@ -121,14 +121,32 @@
   <data name="clenchedmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clenchedmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="extremeLeftSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\extremeLeftSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="extremeRightSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\extremeRightSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="leftcondyleresize" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\leftcondyleresize.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="mandibletranslation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mandibletranslation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="middleLeftSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\middleLeftSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="middleRightSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\middleRightSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="neutralmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\neutralmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="normalLeftSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\normalLeftSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="normalRightSide" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\normalRightSide.PNG;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="openmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\openmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

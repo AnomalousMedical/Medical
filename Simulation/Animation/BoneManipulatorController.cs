@@ -2,27 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Logging;
 
 namespace Medical
 {
     public class BoneManipulatorController
     {
-        static NaturalSort<String> sorter = new NaturalSort<string>();
-        private static SortedList<String, BoneManipulator> boneManipulators = new SortedList<string, BoneManipulator>(sorter);
+        private static Dictionary<String, BoneManipulator> boneManipulators = new Dictionary<String, BoneManipulator>();
 
-        public static void addBoneManipulator(String name, BoneManipulator boneManipulator)
+        public static void addBoneManipulator(BoneManipulator boneManipulator)
         {
-            boneManipulators.Add(name, boneManipulator);
+            String name = boneManipulator.UIName;
+            if (name != null && !boneManipulators.ContainsKey(name))
+            {
+                boneManipulators.Add(name, boneManipulator);
+            }
+            else
+            {
+                Log.Default.sendMessage("Added duplicate BoneManipulator named {0}. Duplicate ignored.", LogLevel.Warning, "Medical", name);
+            }
         }
 
-        public static void removeBoneManipulator(String name)
+        public static void removeBoneManipulator(BoneManipulator boneManipulator)
         {
-            boneManipulators.Remove(name);
+            String name = boneManipulator.UIName;
+            if (name != null && boneManipulators.ContainsKey(name))
+            {
+                if (boneManipulators[name] == boneManipulator)
+                {
+                    boneManipulators.Remove(name);
+                }
+                else
+                {
+                    Log.Default.sendMessage("Attempted to remove BoneManipulator named {0} that does not match the manipulator in the controller. No changes made.", LogLevel.Warning, "Medical", name);
+                }
+            }
+            else
+            {
+                Log.Default.sendMessage("Attempted to remove BoneManipulator named {0}. No changes made.", LogLevel.Warning, "Medical", name);
+            }
         }
 
-        public static IEnumerable<BoneManipulator> getManipulators()
+        public static BoneManipulator getManipulator(String name)
         {
-            return boneManipulators.Values;
+            BoneManipulator ret;
+            boneManipulators.TryGetValue(name, out ret);
+            return ret;
         }
     }
 }

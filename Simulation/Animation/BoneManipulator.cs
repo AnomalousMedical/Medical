@@ -2,13 +2,108 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
+using Engine.Editing;
+using OgreWrapper;
+using Engine.ObjectManagement;
+using OgrePlugin;
+using Logging;
 
 namespace Medical
 {
-    public interface BoneManipulator
+    public abstract class BoneManipulator : Interface
     {
-        void setPosition(float position);
+        [Editable]
+        String targetSimObject;
 
-        String getUIName();
+        [Editable]
+        String targetNode;
+
+        [Editable]
+        String targetEntity;
+
+        [Editable]
+        String targetBone;
+
+        [Editable]
+        float currentPosition = 0.0f;
+
+        //The tag on the UI control for this manipulator. Must be unique.
+        [Editable]
+        String uiName;
+
+        SkeletonInstance skeleton;
+        Bone bone;
+
+        protected override void constructed()
+        {
+            SimObject targetObject = Owner.getOtherSimObject(targetSimObject);
+            if (targetObject != null)
+            {
+                SceneNodeElement node = targetObject.getElement(targetNode) as SceneNodeElement;
+                if (node != null)
+                {
+                    Entity entity = node.getNodeObject(targetEntity) as Entity;
+                    if (entity != null)
+                    {
+                        if (entity.hasSkeleton())
+                        {
+                            skeleton = entity.getSkeleton();
+                            if (skeleton.hasBone(targetBone))
+                            {
+                                bone = skeleton.getBone(targetBone);
+                                bone.setManuallyControlled(true);
+                                BoneManipulatorController.addBoneManipulator(this);
+                                Log.Default.debug("Bone {0} rotation is {1}.", bone.getName(), bone.getOrientation().getEuler() * 57.2957795f);
+                            }
+                            else
+                            {
+                                blacklist("Entity {0} does not have a bone named {1}.", targetEntity, targetBone);
+                            }
+                        }
+                        else
+                        {
+                            blacklist("Entity {0} does not have a skeleton.", targetEntity);
+                        }
+                    }
+                    else
+                    {
+                        blacklist("Could not find Entity {0}.", targetEntity);
+                    }
+                }
+                else
+                {
+                    blacklist("Could not find target SceneNodeElement {0}.", targetNode);
+                }
+            }
+            else
+            {
+                blacklist("Could not find Target SimObject {0}.", targetSimObject);
+            }
+        }
+
+        protected override void destroy()
+        {
+            if (bone != null)
+            {
+                BoneManipulatorController.removeBoneManipulator(this);
+            }
+        }
+
+        public void setPosition(float position)
+        {
+            currentPosition = position;
+            positionUpdated(position, bone);
+        }
+
+        public abstract void positionUpdated(float position, Bone bone);
+
+        public String UIName
+        {
+            get
+            {
+                return uiName;
+            }
+        }
     }
 }

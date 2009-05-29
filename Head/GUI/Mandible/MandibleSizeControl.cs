@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -19,22 +20,43 @@ namespace Medical.GUI
 
         public void sceneChanged()
         {
-            layoutPanel.Controls.Clear();
-            foreach (BoneManipulator manipulator in BoneManipulatorController.getManipulators())
+            foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
             {
-                BoneManipulatorSlider slider = new BoneManipulatorSlider();
-                slider.initialize(manipulator);
-                this.layoutPanel.Controls.Add(slider);
+                if (slider.Tag != null)
+                {
+                    BoneManipulator manipulator = BoneManipulatorController.getManipulator(slider.Tag.ToString());
+                    if (manipulator != null)
+                    {
+                        slider.initialize(manipulator);
+                    }
+                    else
+                    {
+                        Log.Default.sendMessage("Could not find manipulator named {0}.", LogLevel.Warning, "Head", slider.Tag.ToString());
+                    }
+                }
+                else
+                {
+                    Log.Default.sendMessage("No tag set on slider. Cannot search for manipulator.", LogLevel.Warning, "Head");
+                }
             }
         }
 
         internal void sceneUnloading()
         {
-            foreach (Control control in layoutPanel.Controls)
+            foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
             {
-                control.Dispose();
+                slider.clearManipulator();
             }
-            layoutPanel.Controls.Clear();
+        }
+
+        private void rightNormal_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void leftNormal_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
