@@ -18,6 +18,9 @@ namespace Medical
     {
         #region Static
 
+        private readonly Vector3 LOOK_AT_BOUND_MAX = new Vector3(15.0f, 15.0f, 15.0f);
+        private readonly Vector3 LOOK_AT_BOUND_MIN = new Vector3(-15.0f, -15.0f, -15.0f);
+
         static OrbitCameraController()
         {
             MessageEvent rotateCamera = new MessageEvent(CameraEvents.RotateCamera);
@@ -96,8 +99,35 @@ namespace Medical
                 {
                     if (events[CameraEvents.PanCamera].Down)
                     {
-                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * orbitDistance);
-                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * orbitDistance);
+                        float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
+                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
+                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
+                        //Restrict look at position
+                        if (lookAt.x > LOOK_AT_BOUND_MAX.x)
+                        {
+                            lookAt.x = LOOK_AT_BOUND_MAX.x;
+                        }
+                        else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
+                        {
+                            lookAt.x = LOOK_AT_BOUND_MIN.x;
+                        }
+                        if (lookAt.y > LOOK_AT_BOUND_MAX.y)
+                        {
+                            lookAt.y = LOOK_AT_BOUND_MAX.y;
+                        }
+                        else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
+                        {
+                            lookAt.y = LOOK_AT_BOUND_MIN.y;
+                        }
+                        if (lookAt.z > LOOK_AT_BOUND_MAX.z)
+                        {
+                            lookAt.z = LOOK_AT_BOUND_MAX.z;
+                        }
+                        else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
+                        {
+                            lookAt.z = LOOK_AT_BOUND_MIN.z;
+                        }
+
                         updateTranslation(lookAt + normalDirection * orbitDistance);
                     }
                     else if (events[CameraEvents.ZoomCamera].Down)
@@ -107,7 +137,10 @@ namespace Medical
                         {
                             orbitDistance = 0.0f;
                         }
-                        //camera.setOrthoWindowHeight(orbitDistance);
+                        if (orbitDistance > 500.0f)
+                        {
+                            orbitDistance = 500.0f;
+                        }
                         updateTranslation(normalDirection * orbitDistance + lookAt);
                     }
                     else if (events[CameraEvents.RotateCamera].Down)
