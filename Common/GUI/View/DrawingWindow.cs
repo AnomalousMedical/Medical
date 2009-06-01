@@ -89,6 +89,8 @@ namespace Medical
                 camera = window.createCamera(defaultScene, name, orbitCamera.Translation, orbitCamera.LookAt);
                 camera.BackgroundColor = Engine.Color.FromARGB(BackColor.ToArgb());
                 camera.addLight();
+                camera.setNearClipDistance(1.0f);
+                camera.setFarClipDistance(1000.0f);
                 camera.setRenderingMode(renderingMode);
                 mainTimer.addFixedUpdateListener(orbitCamera);
                 orbitCamera.setCamera(camera);
