@@ -133,9 +133,9 @@ namespace Medical
                     else if (events[CameraEvents.ZoomCamera].Down)
                     {
                         orbitDistance += mouseCoords.y;
-                        if (orbitDistance < 0.0f)
+                        if (orbitDistance < 0.2f)
                         {
-                            orbitDistance = 0.0f;
+                            orbitDistance = 0.2f;
                         }
                         if (orbitDistance > 500.0f)
                         {
