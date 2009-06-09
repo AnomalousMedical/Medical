@@ -81,8 +81,12 @@
     <Compile Include="Animation\BoneManipulatorController.cs" />
     <Compile Include="Animation\BoneRotator.cs" />
     <Compile Include="Animation\BoneScalar.cs" />
+    <Compile Include="Animation\InteractiveCurve.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />
+    <Compile Include="ControlPoint\ControlPointController.cs" />
+    <Compile Include="ControlPoint\Fossa.cs" />
+    <Compile Include="ControlPoint\Disc.cs" />
     <Compile Include="Muscles\MuscleBehavior.cs" />
     <Compile Include="Muscles\MuscleController.cs" />
     <Compile Include="Plugin\SimulationPlugin.cs" />

@@ -13,7 +13,7 @@ using PhysXPlugin;
 
 namespace Medical
 {
-    class ControlPointBehavior : Behavior
+    public class ControlPointBehavior : Behavior
     {
         [Editable]
         String boneSimObject;
@@ -30,11 +30,30 @@ namespace Medical
         [Editable]
         String jointName;
 
+        [Editable]
+        String fossaObject;
+
+        [Editable]
+        String fossaName;
+
+        [Editable]
+        String discObject;
+
+        [Editable]
+        String discName;
+
+        [Editable]
+        //The position along the curve where the condyle starts
+        float neutralLocation = .3528f;
+
         SimObject boneObject;
         Bone bone;
         PhysD6JointElement joint;
         Vector3 lastPosition = Vector3.Zero;
         PhysD6JointDesc jointDesc = new PhysD6JointDesc();
+
+        Fossa fossa;
+        Disc disc;
 
         protected override void constructed()
         {
@@ -83,11 +102,44 @@ namespace Medical
             {
                 blacklist("Could not find joint {0}.", jointName);
             }
+            SimObject discSimObject = Owner.getOtherSimObject(discObject);
+            if (discSimObject != null)
+            {
+                disc = discSimObject.getElement(discName) as Disc;
+                if (disc == null)
+                {
+                    blacklist("Could not find Disc {0} in SimObject {1}.", discName, discObject);
+                }
+            }
+            else
+            {
+                blacklist("Could not find Disc SimObject {0}.", discObject);
+            }
+
+            SimObject fossaSimObject = Owner.getOtherSimObject(fossaObject);
+            if (fossaSimObject != null)
+            {
+                fossa = fossaSimObject.getElement(fossaName) as Fossa;
+                if (fossa == null)
+                {
+                    blacklist("Could not find Fossa {0} in SimObject {1}.", fossaName, fossaObject);
+                }
+            }
+            else
+            {
+                blacklist("Could not find Fisc SimObject {0}.", fossaObject);
+            }
+
+            ControlPointController.addControlPoint(this);
+        }
+
+        protected override void destroy()
+        {
+            ControlPointController.removeControlPoint(this);
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            //Vector3 location = Quaternion.quatRotate(boneObject.Rotation, bone.getDerivedPosition()) + boneObject.Translation;
             Vector3 bonePos = bone.getDerivedPosition();
             if (bonePos != lastPosition)
             {
@@ -97,6 +149,19 @@ namespace Medical
 
                 lastPosition = bonePos;
             }
+        }
+
+        public void setLocation(float location)
+        {
+            Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
+            joint.RealJoint.saveToDesc(jointDesc);
+            jointDesc.set_LocalAnchor(1, newLocation);
+            joint.RealJoint.loadFromDesc(jointDesc);
+        }
+
+        public float getNeutralLocation()
+        {
+            return neutralLocation;
         }
     }
 }

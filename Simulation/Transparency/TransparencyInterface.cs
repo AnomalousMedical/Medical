@@ -19,7 +19,9 @@ namespace Medical
         Bones,
         Muscles,
         Skin,
-        Spine
+        Spine,
+        Nasal,
+        TMJ
     }
 
     public class TransparencyInterface : Interface
@@ -84,6 +86,12 @@ namespace Medical
                         break;
                     case RenderGroup.Spine:
                         entity.setRenderQueueGroup(20);
+                        break;
+                    case RenderGroup.Nasal:
+                        entity.setRenderQueueGroup(20);
+                        break;
+                    case RenderGroup.TMJ:
+                        entity.setRenderQueueGroup(10);
                         break;
                 }
             }

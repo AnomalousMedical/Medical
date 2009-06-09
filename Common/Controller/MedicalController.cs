@@ -144,6 +144,7 @@ namespace Medical
         /// </summary>
         public void shutdown()
         {
+            medicalScene.destroyScene();
             mainTimer.stopLoop();
             mainForm.saveWindows(MedicalConfig.WindowsFile);
         }

@@ -28,36 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.distortionButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.centerHorizontalScroll = new System.Windows.Forms.HScrollBar();
+            this.centerTrackBar = new System.Windows.Forms.TrackBar();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.rightHorizontalScroll = new System.Windows.Forms.VScrollBar();
+            this.button2 = new System.Windows.Forms.Button();
+            this.rightForwardBack = new System.Windows.Forms.TrackBar();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.leftHorizontalScroll = new System.Windows.Forms.VScrollBar();
+            this.leftForwardBack = new System.Windows.Forms.TrackBar();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.leftVerticalScroll = new System.Windows.Forms.VScrollBar();
+            this.leftUpDown = new System.Windows.Forms.TrackBar();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.rightVerticalScroll = new System.Windows.Forms.VScrollBar();
+            this.rightUpDown = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
             this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftUpDown)).BeginInit();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // distortionButton
             // 
-            this.button1.Location = new System.Drawing.Point(67, 241);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Make Normal";
-            this.button1.UseVisualStyleBackColor = true;
+            this.distortionButton.Location = new System.Drawing.Point(67, 241);
+            this.distortionButton.Name = "distortionButton";
+            this.distortionButton.Size = new System.Drawing.Size(125, 23);
+            this.distortionButton.TabIndex = 1;
+            this.distortionButton.Text = "Make Normal";
+            this.distortionButton.UseVisualStyleBackColor = true;
+            this.distortionButton.Click += new System.EventHandler(this.distortionButton_Click);
             // 
             // panel1
             // 
@@ -95,102 +102,123 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(111)))), ((int)(((byte)(243)))));
-            this.panel2.Controls.Add(this.centerHorizontalScroll);
+            this.panel2.Controls.Add(this.centerTrackBar);
             this.panel2.Location = new System.Drawing.Point(67, 210);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(125, 25);
             this.panel2.TabIndex = 6;
             // 
-            // centerHorizontalScroll
+            // centerTrackBar
             // 
-            this.centerHorizontalScroll.LargeChange = 10000;
-            this.centerHorizontalScroll.Location = new System.Drawing.Point(3, 4);
-            this.centerHorizontalScroll.Maximum = 40000;
-            this.centerHorizontalScroll.Minimum = -30000;
-            this.centerHorizontalScroll.Name = "centerHorizontalScroll";
-            this.centerHorizontalScroll.Size = new System.Drawing.Size(118, 17);
-            this.centerHorizontalScroll.SmallChange = 500;
-            this.centerHorizontalScroll.TabIndex = 2;
+            this.centerTrackBar.LargeChange = 2000;
+            this.centerTrackBar.Location = new System.Drawing.Point(8, 0);
+            this.centerTrackBar.Maximum = 10000;
+            this.centerTrackBar.Minimum = -10000;
+            this.centerTrackBar.Name = "centerTrackBar";
+            this.centerTrackBar.Size = new System.Drawing.Size(104, 45);
+            this.centerTrackBar.SmallChange = 1000;
+            this.centerTrackBar.TabIndex = 0;
+            this.centerTrackBar.TickFrequency = 10000;
+            this.centerTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Yellow;
-            this.panel3.Controls.Add(this.rightHorizontalScroll);
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.rightForwardBack);
             this.panel3.Location = new System.Drawing.Point(-1, 113);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(26, 88);
+            this.panel3.Size = new System.Drawing.Size(26, 122);
             this.panel3.TabIndex = 7;
             // 
-            // rightHorizontalScroll
+            // button2
             // 
-            this.rightHorizontalScroll.LargeChange = 10000;
-            this.rightHorizontalScroll.Location = new System.Drawing.Point(4, 4);
-            this.rightHorizontalScroll.Maximum = 40000;
-            this.rightHorizontalScroll.Minimum = -30000;
-            this.rightHorizontalScroll.Name = "rightHorizontalScroll";
-            this.rightHorizontalScroll.Size = new System.Drawing.Size(17, 80);
-            this.rightHorizontalScroll.SmallChange = 500;
-            this.rightHorizontalScroll.TabIndex = 2;
+            this.button2.Location = new System.Drawing.Point(3, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(21, 23);
+            this.button2.TabIndex = 4;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // rightForwardBack
+            // 
+            this.rightForwardBack.LargeChange = 2000;
+            this.rightForwardBack.Location = new System.Drawing.Point(2, 18);
+            this.rightForwardBack.Maximum = 10000;
+            this.rightForwardBack.Name = "rightForwardBack";
+            this.rightForwardBack.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.rightForwardBack.Size = new System.Drawing.Size(45, 82);
+            this.rightForwardBack.SmallChange = 1000;
+            this.rightForwardBack.TabIndex = 2;
+            this.rightForwardBack.TickFrequency = 10000;
+            this.rightForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.Yellow;
-            this.panel4.Controls.Add(this.leftHorizontalScroll);
+            this.panel4.Controls.Add(this.leftForwardBack);
             this.panel4.Location = new System.Drawing.Point(232, 113);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(26, 88);
+            this.panel4.Size = new System.Drawing.Size(26, 122);
             this.panel4.TabIndex = 8;
             // 
-            // leftHorizontalScroll
+            // leftForwardBack
             // 
-            this.leftHorizontalScroll.LargeChange = 10000;
-            this.leftHorizontalScroll.Location = new System.Drawing.Point(4, 4);
-            this.leftHorizontalScroll.Maximum = 40000;
-            this.leftHorizontalScroll.Minimum = -30000;
-            this.leftHorizontalScroll.Name = "leftHorizontalScroll";
-            this.leftHorizontalScroll.Size = new System.Drawing.Size(17, 80);
-            this.leftHorizontalScroll.SmallChange = 500;
-            this.leftHorizontalScroll.TabIndex = 2;
+            this.leftForwardBack.LargeChange = 2000;
+            this.leftForwardBack.Location = new System.Drawing.Point(3, 18);
+            this.leftForwardBack.Maximum = 10000;
+            this.leftForwardBack.Name = "leftForwardBack";
+            this.leftForwardBack.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.leftForwardBack.Size = new System.Drawing.Size(45, 82);
+            this.leftForwardBack.SmallChange = 1000;
+            this.leftForwardBack.TabIndex = 3;
+            this.leftForwardBack.TickFrequency = 10000;
+            this.leftForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.Red;
-            this.panel6.Controls.Add(this.leftVerticalScroll);
+            this.panel6.Controls.Add(this.leftUpDown);
             this.panel6.Location = new System.Drawing.Point(232, 12);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(26, 88);
             this.panel6.TabIndex = 8;
             // 
-            // leftVerticalScroll
+            // leftUpDown
             // 
-            this.leftVerticalScroll.LargeChange = 10000;
-            this.leftVerticalScroll.Location = new System.Drawing.Point(4, 4);
-            this.leftVerticalScroll.Maximum = 40000;
-            this.leftVerticalScroll.Minimum = -30000;
-            this.leftVerticalScroll.Name = "leftVerticalScroll";
-            this.leftVerticalScroll.Size = new System.Drawing.Size(17, 80);
-            this.leftVerticalScroll.SmallChange = 500;
-            this.leftVerticalScroll.TabIndex = 2;
+            this.leftUpDown.LargeChange = 2000;
+            this.leftUpDown.Location = new System.Drawing.Point(2, 3);
+            this.leftUpDown.Maximum = 10000;
+            this.leftUpDown.Minimum = -10000;
+            this.leftUpDown.Name = "leftUpDown";
+            this.leftUpDown.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.leftUpDown.Size = new System.Drawing.Size(45, 82);
+            this.leftUpDown.SmallChange = 1000;
+            this.leftUpDown.TabIndex = 3;
+            this.leftUpDown.TickFrequency = 10000;
+            this.leftUpDown.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.Red;
-            this.panel5.Controls.Add(this.rightVerticalScroll);
+            this.panel5.Controls.Add(this.rightUpDown);
             this.panel5.Location = new System.Drawing.Point(-1, 12);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(26, 88);
             this.panel5.TabIndex = 9;
             // 
-            // rightVerticalScroll
+            // rightUpDown
             // 
-            this.rightVerticalScroll.LargeChange = 10000;
-            this.rightVerticalScroll.Location = new System.Drawing.Point(4, 4);
-            this.rightVerticalScroll.Maximum = 40000;
-            this.rightVerticalScroll.Minimum = -30000;
-            this.rightVerticalScroll.Name = "rightVerticalScroll";
-            this.rightVerticalScroll.Size = new System.Drawing.Size(17, 80);
-            this.rightVerticalScroll.SmallChange = 500;
-            this.rightVerticalScroll.TabIndex = 2;
+            this.rightUpDown.LargeChange = 2000;
+            this.rightUpDown.Location = new System.Drawing.Point(2, 3);
+            this.rightUpDown.Maximum = 10000;
+            this.rightUpDown.Minimum = -10000;
+            this.rightUpDown.Name = "rightUpDown";
+            this.rightUpDown.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.rightUpDown.Size = new System.Drawing.Size(45, 82);
+            this.rightUpDown.SmallChange = 1000;
+            this.rightUpDown.TabIndex = 3;
+            this.rightUpDown.TickFrequency = 10000;
+            this.rightUpDown.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // MandibleOffsetControl
             // 
@@ -198,7 +226,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(259, 267);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel3);
@@ -215,10 +243,20 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).EndInit();
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).EndInit();
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();
             this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftUpDown)).EndInit();
             this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,18 +264,19 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.VScrollBar rightHorizontalScroll;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.HScrollBar centerHorizontalScroll;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.VScrollBar leftHorizontalScroll;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.VScrollBar rightVerticalScroll;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.VScrollBar leftVerticalScroll;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button distortionButton;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar centerTrackBar;
+        private System.Windows.Forms.TrackBar rightForwardBack;
+        private System.Windows.Forms.TrackBar leftForwardBack;
+        private System.Windows.Forms.TrackBar leftUpDown;
+        private System.Windows.Forms.TrackBar rightUpDown;
+        private System.Windows.Forms.Button button2;
     }
 }

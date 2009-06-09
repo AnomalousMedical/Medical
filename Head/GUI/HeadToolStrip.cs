@@ -93,12 +93,14 @@ namespace Medical.GUI
         {
             muscleControl.sceneChanged();
             mandibleSizeControl.sceneChanged();
+            mandibleOffsetControl.sceneChanged();
         }
 
         public void sceneUnloading()
         {
             muscleControl.sceneUnloading();
             mandibleSizeControl.sceneUnloading();
+            mandibleOffsetControl.sceneUnloading();
         }
 
         void teethButton_Click(object sender, EventArgs e)
