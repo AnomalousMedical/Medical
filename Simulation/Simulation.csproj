@@ -91,6 +91,10 @@
     <Compile Include="Muscles\MuscleController.cs" />
     <Compile Include="Plugin\SimulationPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Teeth\BottomTooth.cs" />
+    <Compile Include="Teeth\TeethController.cs" />
+    <Compile Include="Teeth\Tooth.cs" />
+    <Compile Include="Teeth\TopTooth.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />
     <Compile Include="Transparency\TransparencyGroup.cs" />
     <Compile Include="Transparency\TransparencyInterface.cs" />

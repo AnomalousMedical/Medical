@@ -94,6 +94,7 @@ namespace Medical.GUI
             muscleControl.sceneChanged();
             mandibleSizeControl.sceneChanged();
             mandibleOffsetControl.sceneChanged();
+            teethControl.sceneChanged();
         }
 
         public void sceneUnloading()
@@ -101,6 +102,7 @@ namespace Medical.GUI
             muscleControl.sceneUnloading();
             mandibleSizeControl.sceneUnloading();
             mandibleOffsetControl.sceneUnloading();
+            teethControl.sceneUnloading();
         }
 
         void teethButton_Click(object sender, EventArgs e)

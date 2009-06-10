@@ -16,5 +16,32 @@ namespace Medical.GUI
         {
             InitializeComponent();
         }
+
+        public void sceneChanged()
+        {
+            foreach (CheckBox control in teethPanel.Controls)
+            {
+                control.Visible = TeethController.hasTooth(control.Tag.ToString());
+                control.Checked = false;
+            }
+        }
+
+        public void sceneUnloading()
+        {
+
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            foreach (CheckBox control in teethPanel.Controls)
+            {
+                if (control.Visible && control.Checked)
+                {
+                    control.Visible = false;
+                    Tooth tooth = TeethController.getTooth(control.Tag.ToString());
+                    tooth.Owner.destroy();
+                }
+            }
+        }
     }
 }
