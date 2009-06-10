@@ -43,6 +43,8 @@
             this.leftUpDown = new System.Windows.Forms.TrackBar();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rightUpDown = new System.Windows.Forms.TrackBar();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.bothForwardBack = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
@@ -54,11 +56,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.leftUpDown)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).BeginInit();
+            this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
             this.SuspendLayout();
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(67, 241);
+            this.distortionButton.Location = new System.Drawing.Point(67, 279);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(125, 23);
             this.distortionButton.TabIndex = 1;
@@ -111,11 +115,11 @@
             // centerTrackBar
             // 
             this.centerTrackBar.LargeChange = 2000;
-            this.centerTrackBar.Location = new System.Drawing.Point(8, 0);
+            this.centerTrackBar.Location = new System.Drawing.Point(0, 0);
             this.centerTrackBar.Maximum = 10000;
             this.centerTrackBar.Minimum = -10000;
             this.centerTrackBar.Name = "centerTrackBar";
-            this.centerTrackBar.Size = new System.Drawing.Size(104, 45);
+            this.centerTrackBar.Size = new System.Drawing.Size(122, 45);
             this.centerTrackBar.SmallChange = 1000;
             this.centerTrackBar.TabIndex = 0;
             this.centerTrackBar.TickFrequency = 10000;
@@ -220,12 +224,34 @@
             this.rightUpDown.TickFrequency = 10000;
             this.rightUpDown.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.Yellow;
+            this.panel7.Controls.Add(this.bothForwardBack);
+            this.panel7.Location = new System.Drawing.Point(67, 241);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(125, 29);
+            this.panel7.TabIndex = 10;
+            // 
+            // bothForwardBack
+            // 
+            this.bothForwardBack.LargeChange = 2000;
+            this.bothForwardBack.Location = new System.Drawing.Point(4, 3);
+            this.bothForwardBack.Maximum = 10000;
+            this.bothForwardBack.Name = "bothForwardBack";
+            this.bothForwardBack.Size = new System.Drawing.Size(118, 45);
+            this.bothForwardBack.SmallChange = 1000;
+            this.bothForwardBack.TabIndex = 3;
+            this.bothForwardBack.TickFrequency = 10000;
+            this.bothForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
             // MandibleOffsetControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(259, 267);
+            this.ClientSize = new System.Drawing.Size(259, 310);
+            this.Controls.Add(this.panel7);
             this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel6);
@@ -257,6 +283,9 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).EndInit();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -278,5 +307,7 @@
         private System.Windows.Forms.TrackBar leftUpDown;
         private System.Windows.Forms.TrackBar rightUpDown;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.TrackBar bothForwardBack;
     }
 }

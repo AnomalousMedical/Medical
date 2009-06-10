@@ -25,6 +25,7 @@ namespace Medical.GUI
             centerTrackBar.ValueChanged += offsetValueChanged;
             rightForwardBack.ValueChanged += offsetValueChanged;
             rightUpDown.ValueChanged += offsetValueChanged;
+            bothForwardBack.ValueChanged += bothForwardBackChanged;
         }
 
         public void sceneChanged()
@@ -40,6 +41,7 @@ namespace Medical.GUI
             {
                 rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
             }
+            bothForwardBack.Value = rightForwardBack.Value;
             allowUpdates = true;
         }
 
@@ -64,6 +66,14 @@ namespace Medical.GUI
                     rightCP.setLocation(rightForwardBack.Value / (float)rightForwardBack.Maximum);
                 }
             }
+        }
+
+        void bothForwardBackChanged(object sender, EventArgs e)
+        {
+            allowUpdates = false;
+            leftForwardBack.Value = bothForwardBack.Value;
+            allowUpdates = true;
+            rightForwardBack.Value = bothForwardBack.Value;
         }
 
         private void distortionButton_Click(object sender, EventArgs e)
