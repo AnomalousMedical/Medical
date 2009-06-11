@@ -8,10 +8,13 @@ using Engine.Editing;
 using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using Engine.Attributes;
+using PhysXWrapper;
+using PhysXPlugin;
 
 namespace Medical
 {
-    class PhysicalAnimator : Behavior
+    class FixedJointBoneFollower : Behavior
     {
         [Editable]
         String targetSimObject;
@@ -25,9 +28,21 @@ namespace Medical
         [Editable]
         String targetBone;
 
+        [Editable]
+        String jointName;
+
         SkeletonInstance skeleton;
         SimObject targetObject;
         Bone bone;
+
+        [DoNotSave]
+        [DoNotCopy]
+        Vector3 offset;
+        PhysD6JointDesc jointDesc = new PhysD6JointDesc();
+        [DoNotSave]
+        [DoNotCopy]
+        Vector3 lastPosition;
+        PhysD6JointElement joint;
 
         protected override void constructed()
         {
@@ -46,7 +61,10 @@ namespace Medical
                             if (skeleton.hasBone(targetBone))
                             {
                                 bone = skeleton.getBone(targetBone);
-                                bone.setManuallyControlled(true);
+                                offset = Owner.Translation - targetObject.Translation - bone.getDerivedPosition();
+                                //calculate the scale at 100%
+                                Vector3 adjust = (Vector3.ScaleIdentity - Owner.Scale) * offset;
+                                offset += adjust;
                             }
                             else
                             {
@@ -72,14 +90,27 @@ namespace Medical
             {
                 blacklist("Could not find Target SimObject {0}.", targetSimObject);
             }
+
+            joint = Owner.getElement(jointName) as PhysD6JointElement;
+            if (joint == null)
+            {
+                blacklist("Could not find D6 Joint {0} in SimObject {1}.", jointName, Owner.Name);
+            }
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            bone.setPosition(Owner.Translation - targetObject.Translation);
-            bone.setOrientation(Owner.Rotation);
-            bone.setScale(Owner.Scale);
-            bone.needUpdate(true);
+            Vector3 bonePos = bone.getDerivedPosition();
+            if (bonePos != lastPosition)
+            {
+                this.updateScale(bone.getDerivedScale());
+
+                joint.RealJoint.saveToDesc(jointDesc);
+                jointDesc.set_LocalAnchor(0, bonePos + offset * Owner.Scale);
+                joint.RealJoint.loadFromDesc(jointDesc);
+
+                lastPosition = bonePos;
+            }
         }
     }
 }
