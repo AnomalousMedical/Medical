@@ -213,18 +213,25 @@ namespace Medical
 
         public void openScene(String filename)
         {
+            progress.ProgressMaximum = 30;
+            progress.ProgressStep = 10;
+            progress.fadeIn();
             XmlTextReader textReader = new XmlTextReader(filename);
             ScenePackage scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
+            progress.stepProgress();
             if (scenePackage != null)
             {
                 medicalScene.destroyScene();
+                progress.stepProgress();
                 medicalScene.loadScene(scenePackage);
+                progress.stepProgress();
             }
             else
             {
                 MessageBox.Show(mainForm, String.Format("Could not load scene from {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             textReader.Close();
+            progress.fadeAway();
         }
 
         public void saveScene(String filename)
