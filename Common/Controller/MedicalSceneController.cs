@@ -97,5 +97,14 @@ namespace Medical
                 }
             }
         }
+
+        public ScenePackage saveSceneToPackage()
+        {
+            ScenePackage package = new ScenePackage();
+            package.ResourceManager = pluginManager.createSecondaryResourceManager();
+            package.SceneDefinition = currentScene.createDefinition();
+            package.SimObjectManagerDefinition = currentSimObjects.saveToDefinition();
+            return package;
+        }
     }
 }

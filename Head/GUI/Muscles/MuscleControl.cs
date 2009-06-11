@@ -247,13 +247,13 @@ namespace Medical.GUI
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            this.rightDigastricForce.Value = 10.0m;
+            this.rightDigastricForce.Value = 30.0m;
             this.rightLatPtForce.Value = 0.0m;
             this.rightMasseterForce.Value = 0.0m;
             this.rightMedPtForce.Value = 0.0m;
             this.rightTemporalisForce.Value = 0.0m;
 
-            this.leftDigastricForce.Value = 10.0m;
+            this.leftDigastricForce.Value = 30.0m;
             this.leftLatPtForce.Value = 0.0m;
             this.leftMasseterForce.Value = 0.0m;
             this.leftMedPtForce.Value = 0.0m;

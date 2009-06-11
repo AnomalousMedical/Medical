@@ -58,10 +58,13 @@ namespace Medical
 
         public override void update(Clock clock, EventManager events)
         {
-            Vector3 location = Owner.Translation - targetObject.Translation;
-            location.normalize();
-            location *= force;
-            actor.Actor.addLocalForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
+            if (force != 0.0f)
+            {
+                Vector3 location = targetObject.Translation - Owner.Translation;
+                location.normalize();
+                location *= force;
+                actor.Actor.addForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
+            }
         }
 
         public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
@@ -73,6 +76,13 @@ namespace Medical
             debugDrawing.drawLine(Owner.Translation, halfwayPoint);
             debugDrawing.setColor(Color.Red);
             debugDrawing.drawLine(halfwayPoint, targetObject.Translation);
+
+            Vector3 location = targetObject.Translation - Owner.Translation;
+            location.normalize();
+            location *= force;
+            debugDrawing.setColor(Color.Blue);
+            debugDrawing.drawLine(Owner.Translation, Owner.Translation + location);
+
             debugDrawing.end();
         }
 

@@ -236,7 +236,21 @@ namespace Medical
 
         public void saveScene(String filename)
         {
-
+            ScenePackage package = medicalScene.saveSceneToPackage();
+            XmlTextWriter textWriter = null;
+            try
+            {
+                textWriter = new XmlTextWriter(filename, Encoding.Default);
+                textWriter.Formatting = Formatting.Indented;
+                xmlSaver.saveObject(package, textWriter);
+            }
+            finally
+            {
+                if (textWriter != null)
+                {
+                    textWriter.Close();
+                }
+            }
         }
 
         /// <summary>
