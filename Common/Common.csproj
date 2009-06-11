@@ -128,6 +128,13 @@
     <Compile Include="GUI\Layers\LayerSection.Designer.cs">
       <DependentUpon>LayerSection.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Loading\LoadingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Loading\LoadingDialog.designer.cs">
+      <DependentUpon>LoadingDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Loading\ProgressDialog.cs" />
     <Compile Include="GUI\MedicalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +162,11 @@
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">
@@ -173,6 +185,10 @@
       <DependentUpon>LayerSection.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Loading\LoadingDialog.resx">
+      <DependentUpon>LoadingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\MedicalForm.resx">
       <DependentUpon>MedicalForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -189,12 +205,20 @@
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\articulometrics.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

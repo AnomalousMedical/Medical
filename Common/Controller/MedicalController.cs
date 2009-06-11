@@ -16,6 +16,7 @@ using System.Xml;
 using Engine.ObjectManagement;
 using Engine.Saving.XMLSaver;
 using Engine.Resources;
+using Medical.Properties;
 
 namespace Medical
 {
@@ -38,12 +39,13 @@ namespace Medical
         //GUI
         private DrawingWindow hiddenEmbedWindow;
         private MedicalForm mainForm;
+        private ProgressDialog progress;
 
         //Controller
-        private DrawingWindowController drawingWindowController = new DrawingWindowController();
+        private DrawingWindowController drawingWindowController;
         private MedicalInterface currentMedicalInterface;
         private MedicalSceneController medicalScene;
-        private CommonController commonController = new CommonController();
+        private CommonController commonController;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -55,6 +57,22 @@ namespace Medical
         public event LoopUpdate LoopUpdate;
 
         #endregion Events
+
+        #region Constructors
+
+        public MedicalController()
+        {
+            progress = new ProgressDialog(Resources.articulometrics);
+            progress.ProgressMaximum = 1;
+            progress.ProgressMinimum = 0;
+            progress.ProgressStep = 1;
+            progress.fadeIn();
+            progress.stepProgress();
+            drawingWindowController = new DrawingWindowController();
+            commonController = new CommonController();
+        }
+
+        #endregion Constructors
 
         #region Functions
 
@@ -135,6 +153,7 @@ namespace Medical
         /// </summary>
         public void start()
         {
+            progress.fadeAway();
             mainForm.Show();
             mainTimer.startLoop();
         }
