@@ -51,6 +51,9 @@ namespace Medical
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
 
+        //Other
+        private String startupFile;
+
         #endregion Fields
 
         #region Events
@@ -86,6 +89,7 @@ namespace Medical
 
             Resource.ResourceRoot = "s:/export";
             Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
+            startupFile = Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml";
 
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
@@ -156,7 +160,6 @@ namespace Medical
         public void start()
         {
             progress.stepProgress();
-            String startupFile = Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml";
             if (File.Exists(startupFile))
             {
                 XmlTextReader textReader = new XmlTextReader(startupFile);
@@ -227,7 +230,10 @@ namespace Medical
 
         public void createNewScene()
         {
-
+            if (File.Exists(startupFile))
+            {
+                openScene(startupFile);
+            }
         }
 
         public void openScene(String filename)
