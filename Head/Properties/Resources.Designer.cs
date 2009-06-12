@@ -67,6 +67,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap disc {
+            get {
+                object obj = ResourceManager.GetObject("disc", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap extremeLeftSide {
             get {
                 object obj = ResourceManager.GetObject("extremeLeftSide", resourceCulture);

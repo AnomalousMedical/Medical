@@ -14,11 +14,13 @@ namespace Medical.GUI
         private TeethControl teethControl = new TeethControl();
         private MandibleOffsetControl mandibleOffsetControl = new MandibleOffsetControl();
         private MandibleSizeControl mandibleSizeControl = new MandibleSizeControl();
+        private DiskControl discControl = new DiskControl();
         private HeadController headController;
         private ToolStripButton teethButton;
         private ToolStripButton musclesButton;
         private ToolStripButton mandibleOffsetButton;
         private ToolStripButton mandibleSizeButton;
+        private ToolStripButton discButton;
 
         public HeadToolStrip(HeadController headController)
         {
@@ -51,6 +53,12 @@ namespace Medical.GUI
             teethButton.Click += new EventHandler(teethButton_Click);
             this.Items.Add(teethButton);
             teethControl.VisibleChanged += new EventHandler(teethControl_VisibleChanged);
+
+            discButton = new ToolStripButton("Disc");
+            discButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            this.Items.Add(discButton);
+            discButton.Click += new EventHandler(discButton_Click);
+            discControl.VisibleChanged += new EventHandler(discControl_VisibleChanged);
         }
 
         protected override void Dispose(bool disposing)
@@ -83,6 +91,10 @@ namespace Medical.GUI
             {
                 return teethControl;
             }
+            if (persistString == discControl.GetType().ToString())
+            {
+                return discControl;
+            }
             return null;
         }
 
@@ -95,6 +107,7 @@ namespace Medical.GUI
             mandibleSizeControl.sceneChanged();
             mandibleOffsetControl.sceneChanged();
             teethControl.sceneChanged();
+            discControl.sceneChanged();
         }
 
         public void sceneUnloading()
@@ -103,6 +116,7 @@ namespace Medical.GUI
             mandibleSizeControl.sceneUnloading();
             mandibleOffsetControl.sceneUnloading();
             teethControl.sceneUnloading();
+            discControl.sceneUnloading();
         }
 
         void teethButton_Click(object sender, EventArgs e)
@@ -178,6 +192,23 @@ namespace Medical.GUI
             get
             {
                 return mandibleSizeControl;
+            }
+        }
+
+        void discControl_VisibleChanged(object sender, EventArgs e)
+        {
+            discButton.Checked = discControl.Visible;
+        }
+
+        void discButton_Click(object sender, EventArgs e)
+        {
+            if (discControl.Visible)
+            {
+                headController.removeControl(discControl);
+            }
+            else
+            {
+                headController.addControlToUI(discControl);
             }
         }
     }

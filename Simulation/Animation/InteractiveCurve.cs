@@ -47,16 +47,16 @@ namespace Medical
         public void recomputeCurve()
         {
             curve.computeSplines();
-            manualObject.clear();
-            manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
-            manualObject.position(curve.interpolate(0.0f));
-            manualObject.color(color.r, color.g, color.b, color.a);
-            for (uint i = 1; i <= lineDetail; ++i)
-            {
-                manualObject.position(curve.interpolate(i / (float)lineDetail));
-                manualObject.color(color.r, color.g, color.b, color.a);
-            }
-            manualObject.end();
+            //manualObject.clear();
+            //manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
+            //manualObject.position(curve.interpolate(0.0f));
+            //manualObject.color(color.r, color.g, color.b, color.a);
+            //for (uint i = 1; i <= lineDetail; ++i)
+            //{
+            //    manualObject.position(curve.interpolate(i / (float)lineDetail));
+            //    manualObject.color(color.r, color.g, color.b, color.a);
+            //}
+            //manualObject.end();
         }
 
         public Vector3 interpolate(float percentage)

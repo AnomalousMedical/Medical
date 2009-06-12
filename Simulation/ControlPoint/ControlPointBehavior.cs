@@ -46,6 +46,9 @@ namespace Medical
         //The position along the curve where the condyle starts
         float neutralLocation = .3528f;
 
+        [Editable]
+        float location;
+
         SimObject boneObject;
         Bone bone;
         PhysD6JointElement joint;
@@ -54,6 +57,11 @@ namespace Medical
 
         Fossa fossa;
         Disc disc;
+
+        public ControlPointBehavior()
+        {
+            location = neutralLocation;
+        }
 
         protected override void constructed()
         {
@@ -152,6 +160,12 @@ namespace Medical
         }
 
         public void setLocation(float location)
+        {
+            this.location = location;
+            positionModified();
+        }
+
+        public void positionModified()
         {
             Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
             joint.RealJoint.saveToDesc(jointDesc);

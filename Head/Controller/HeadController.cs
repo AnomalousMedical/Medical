@@ -31,7 +31,7 @@ namespace Medical.Controller
 
         public void sceneUnloading()
         {
-
+            headToolStrip.sceneUnloading();
         }
 
         /// <summary>

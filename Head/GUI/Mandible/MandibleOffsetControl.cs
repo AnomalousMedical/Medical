@@ -21,10 +21,7 @@ namespace Medical.GUI
         {
             InitializeComponent();
             leftForwardBack.ValueChanged += offsetValueChanged;
-            leftUpDown.ValueChanged += offsetValueChanged;
-            centerTrackBar.ValueChanged += offsetValueChanged;
             rightForwardBack.ValueChanged += offsetValueChanged;
-            rightUpDown.ValueChanged += offsetValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
         }
 
@@ -70,20 +67,21 @@ namespace Medical.GUI
 
         void bothForwardBackChanged(object sender, EventArgs e)
         {
-            allowUpdates = false;
-            leftForwardBack.Value = bothForwardBack.Value;
-            allowUpdates = true;
-            rightForwardBack.Value = bothForwardBack.Value;
+            if (allowUpdates)
+            {
+                allowUpdates = false;
+                leftForwardBack.Value = bothForwardBack.Value;
+                allowUpdates = true;
+                rightForwardBack.Value = bothForwardBack.Value;
+            }
         }
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
             allowUpdates = false;
-            centerTrackBar.Value = 0;
-            rightForwardBack.Value = 0;
-            rightUpDown.Value = 0;
-            leftForwardBack.Value = 0;
-            leftUpDown.Value = 0;
+            rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
+            leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
+            bothForwardBack.Value = rightForwardBack.Value;
             allowUpdates = true;
             offsetValueChanged(sender, e);
         }   

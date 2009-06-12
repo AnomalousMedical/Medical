@@ -1,4 +1,4 @@
-﻿namespace Medical.GUI.Disk
+﻿namespace Medical.GUI
 {
     partial class DiskControl
     {
@@ -28,10 +28,246 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.distortionButton = new System.Windows.Forms.Button();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.leftUpDown = new System.Windows.Forms.TrackBar();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.rightForwardBack = new System.Windows.Forms.TrackBar();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.rightUpDown = new System.Windows.Forms.TrackBar();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.centerTrackBar = new System.Windows.Forms.TrackBar();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.leftForwardBack = new System.Windows.Forms.TrackBar();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftUpDown)).BeginInit();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).BeginInit();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // distortionButton
+            // 
+            this.distortionButton.Location = new System.Drawing.Point(69, 230);
+            this.distortionButton.Name = "distortionButton";
+            this.distortionButton.Size = new System.Drawing.Size(125, 23);
+            this.distortionButton.TabIndex = 12;
+            this.distortionButton.Text = "Make Normal";
+            this.distortionButton.UseVisualStyleBackColor = true;
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.Red;
+            this.panel6.Controls.Add(this.leftUpDown);
+            this.panel6.Location = new System.Drawing.Point(234, 1);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(26, 88);
+            this.panel6.TabIndex = 15;
+            // 
+            // leftUpDown
+            // 
+            this.leftUpDown.LargeChange = 2000;
+            this.leftUpDown.Location = new System.Drawing.Point(2, 3);
+            this.leftUpDown.Maximum = 0;
+            this.leftUpDown.Minimum = -10000;
+            this.leftUpDown.Name = "leftUpDown";
+            this.leftUpDown.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.leftUpDown.Size = new System.Drawing.Size(45, 82);
+            this.leftUpDown.SmallChange = 1000;
+            this.leftUpDown.TabIndex = 3;
+            this.leftUpDown.TickFrequency = 10000;
+            this.leftUpDown.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Yellow;
+            this.panel3.Controls.Add(this.rightForwardBack);
+            this.panel3.Location = new System.Drawing.Point(1, 102);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(26, 91);
+            this.panel3.TabIndex = 14;
+            // 
+            // rightForwardBack
+            // 
+            this.rightForwardBack.LargeChange = 2000;
+            this.rightForwardBack.Location = new System.Drawing.Point(3, 0);
+            this.rightForwardBack.Maximum = 10000;
+            this.rightForwardBack.Minimum = -10000;
+            this.rightForwardBack.Name = "rightForwardBack";
+            this.rightForwardBack.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.rightForwardBack.Size = new System.Drawing.Size(45, 82);
+            this.rightForwardBack.SmallChange = 1000;
+            this.rightForwardBack.TabIndex = 2;
+            this.rightForwardBack.TickFrequency = 10000;
+            this.rightForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.Red;
+            this.panel5.Controls.Add(this.rightUpDown);
+            this.panel5.Location = new System.Drawing.Point(1, 1);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(26, 88);
+            this.panel5.TabIndex = 17;
+            // 
+            // rightUpDown
+            // 
+            this.rightUpDown.LargeChange = 2000;
+            this.rightUpDown.Location = new System.Drawing.Point(2, 3);
+            this.rightUpDown.Maximum = 0;
+            this.rightUpDown.Minimum = -10000;
+            this.rightUpDown.Name = "rightUpDown";
+            this.rightUpDown.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.rightUpDown.Size = new System.Drawing.Size(45, 82);
+            this.rightUpDown.SmallChange = 1000;
+            this.rightUpDown.TabIndex = 3;
+            this.rightUpDown.TickFrequency = 10000;
+            this.rightUpDown.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(111)))), ((int)(((byte)(243)))));
+            this.panel2.Controls.Add(this.centerTrackBar);
+            this.panel2.Location = new System.Drawing.Point(69, 199);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(125, 25);
+            this.panel2.TabIndex = 13;
+            // 
+            // centerTrackBar
+            // 
+            this.centerTrackBar.LargeChange = 2000;
+            this.centerTrackBar.Location = new System.Drawing.Point(0, 0);
+            this.centerTrackBar.Maximum = 10000;
+            this.centerTrackBar.Minimum = -10000;
+            this.centerTrackBar.Name = "centerTrackBar";
+            this.centerTrackBar.Size = new System.Drawing.Size(122, 45);
+            this.centerTrackBar.SmallChange = 1000;
+            this.centerTrackBar.TabIndex = 0;
+            this.centerTrackBar.TickFrequency = 10000;
+            this.centerTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.Yellow;
+            this.panel4.Controls.Add(this.leftForwardBack);
+            this.panel4.Location = new System.Drawing.Point(234, 102);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(26, 91);
+            this.panel4.TabIndex = 16;
+            // 
+            // leftForwardBack
+            // 
+            this.leftForwardBack.LargeChange = 2000;
+            this.leftForwardBack.Location = new System.Drawing.Point(3, 3);
+            this.leftForwardBack.Maximum = 10000;
+            this.leftForwardBack.Minimum = -10000;
+            this.leftForwardBack.Name = "leftForwardBack";
+            this.leftForwardBack.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.leftForwardBack.Size = new System.Drawing.Size(45, 82);
+            this.leftForwardBack.SmallChange = 1000;
+            this.leftForwardBack.TabIndex = 3;
+            this.leftForwardBack.TickFrequency = 10000;
+            this.leftForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = global::Medical.Properties.Resources.disc;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(27, 1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(206, 192);
+            this.panel1.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(178, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Left";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Right";
+            // 
+            // DiskControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(262, 255);
+            this.Controls.Add(this.distortionButton);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel4);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.HideOnClose = true;
+            this.Name = "DiskControl";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.Tag = "Disc";
+            this.Text = "Disc";
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftUpDown)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).EndInit();
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rightUpDown)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button distortionButton;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.TrackBar leftUpDown;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TrackBar rightForwardBack;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.TrackBar rightUpDown;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TrackBar centerTrackBar;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TrackBar leftForwardBack;
     }
 }
