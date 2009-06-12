@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -30,12 +31,10 @@ namespace Medical.GUI
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
             allowUpdates = false;
-            if (leftCP != null)
+            Enabled = leftCP != null && rightCP != null;
+            if (Enabled)
             {
                 leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
-            }
-            if (rightCP != null)
-            {
                 rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
             }
             bothForwardBack.Value = rightForwardBack.Value;
@@ -52,16 +51,8 @@ namespace Medical.GUI
         {
             if (allowUpdates)
             {
-                if (leftCP != null)
-                {
-                    //Vector3 offset = new Vector3(centerTrackBar.Value / 5000.0f, leftUpDown.Value / 5000.0f, leftForwardBack.Value / -5000.0f);
-                    leftCP.setLocation(leftForwardBack.Value / (float)leftForwardBack.Maximum);
-                }
-                if (rightCP != null)
-                {
-                   // Vector3 offset = new Vector3(centerTrackBar.Value / 5000.0f, rightUpDown.Value / 5000.0f, rightForwardBack.Value / -5000.0f);
-                    rightCP.setLocation(rightForwardBack.Value / (float)rightForwardBack.Maximum);
-                }
+                leftCP.setLocation(leftForwardBack.Value / (float)leftForwardBack.Maximum);
+                rightCP.setLocation(rightForwardBack.Value / (float)rightForwardBack.Maximum);
             }
         }
 
@@ -71,8 +62,9 @@ namespace Medical.GUI
             {
                 allowUpdates = false;
                 leftForwardBack.Value = bothForwardBack.Value;
-                allowUpdates = true;
                 rightForwardBack.Value = bothForwardBack.Value;
+                allowUpdates = true;
+                offsetValueChanged(null, null);
             }
         }
 

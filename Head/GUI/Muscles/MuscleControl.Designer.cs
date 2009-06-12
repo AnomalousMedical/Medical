@@ -108,7 +108,7 @@
             // closeButton
             // 
             this.closeButton.Image = global::Medical.Properties.Resources.neutralmuscle;
-            this.closeButton.Location = new System.Drawing.Point(125, 162);
+            this.closeButton.Location = new System.Drawing.Point(119, 6);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(111, 140);
             this.closeButton.TabIndex = 5;
@@ -120,7 +120,7 @@
             // openButton
             // 
             this.openButton.Image = global::Medical.Properties.Resources.openmuscle;
-            this.openButton.Location = new System.Drawing.Point(8, 162);
+            this.openButton.Location = new System.Drawing.Point(2, 6);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(111, 140);
             this.openButton.TabIndex = 4;
@@ -132,7 +132,7 @@
             // clenchButton
             // 
             this.clenchButton.Image = global::Medical.Properties.Resources.clenchedmuscle;
-            this.clenchButton.Location = new System.Drawing.Point(125, 16);
+            this.clenchButton.Location = new System.Drawing.Point(119, 152);
             this.clenchButton.Name = "clenchButton";
             this.clenchButton.Size = new System.Drawing.Size(111, 140);
             this.clenchButton.TabIndex = 1;
@@ -144,7 +144,7 @@
             // neutralButton
             // 
             this.neutralButton.Image = global::Medical.Properties.Resources.neutralmuscle;
-            this.neutralButton.Location = new System.Drawing.Point(8, 16);
+            this.neutralButton.Location = new System.Drawing.Point(2, 152);
             this.neutralButton.Name = "neutralButton";
             this.neutralButton.Size = new System.Drawing.Size(111, 140);
             this.neutralButton.TabIndex = 0;

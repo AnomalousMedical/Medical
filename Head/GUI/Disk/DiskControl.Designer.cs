@@ -63,6 +63,7 @@
             this.distortionButton.TabIndex = 12;
             this.distortionButton.Text = "Make Normal";
             this.distortionButton.UseVisualStyleBackColor = true;
+            this.distortionButton.Click += new System.EventHandler(this.distortionButton_Click);
             // 
             // panel6
             // 

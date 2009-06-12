@@ -63,5 +63,10 @@ namespace Medical
                 controlPoint.positionModified();
             }
         }
+
+        public Vector3 getNormalOffset()
+        {
+            return normalOffset;
+        }
     }
 }

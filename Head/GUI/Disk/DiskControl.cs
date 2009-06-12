@@ -54,26 +54,36 @@ namespace Medical.GUI
         {
             leftDisc = DiscController.getDisc("LeftTMJDisc");
             rightDisc = DiscController.getDisc("RightTMJDisc");
-            allowUpdates = false;
             Enabled = leftDisc != null && rightDisc != null;
             if (Enabled)
             {
-                Vector3 offset = leftDisc.getOffset(0.0f);
-                leftForwardBack.Value = (int)(offset.z * leftForwardBack.Maximum);
-                leftUpDown.Value = (int)(offset.y * -leftUpDown.Minimum);
-
-                offset = rightDisc.getOffset(0.0f);
-                rightForwardBack.Value = (int)(offset.z * rightForwardBack.Maximum);
-                rightUpDown.Value = (int)(offset.y * -rightUpDown.Minimum);
-                centerTrackBar.Value = (int)(offset.x * centerTrackBar.Maximum);
+                setSliders(leftDisc.getOffset(0.0f), rightDisc.getOffset(0.0f));
             }
-            allowUpdates = true;
         }
 
         public void sceneUnloading()
         {
             leftDisc = null;
             rightDisc = null;
+        }
+
+        private void distortionButton_Click(object sender, EventArgs e)
+        {
+            setSliders(leftDisc.getNormalOffset(), rightDisc.getNormalOffset());
+            leftSideValueChanged(null, null);
+            rightSideValueChanged(null, null);
+        }
+
+        private void setSliders(Vector3 leftOffset, Vector3 rightOffset)
+        {
+            allowUpdates = false;
+            leftForwardBack.Value = (int)(leftOffset.z * leftForwardBack.Maximum);
+            leftUpDown.Value = (int)(leftOffset.y * -leftUpDown.Minimum);
+
+            rightForwardBack.Value = (int)(rightOffset.z * rightForwardBack.Maximum);
+            rightUpDown.Value = (int)(rightOffset.y * -rightUpDown.Minimum);
+            centerTrackBar.Value = (int)(rightOffset.x * centerTrackBar.Maximum);
+            allowUpdates = true;
         }
     }
 }
