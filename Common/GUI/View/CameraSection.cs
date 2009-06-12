@@ -12,24 +12,24 @@ namespace Medical
 
         private const String CAMERA_HEADER = "Cameras";
         private const String FRONT_CAMERA_POSITION_ENTRY = "FrontPosition";
-        private static readonly Vector3 FRONT_CAMERA_POSITION_DEFAULT = new Vector3(0.0f, 0.0f, 150.0f);
+        private static readonly Vector3 FRONT_CAMERA_POSITION_DEFAULT = new Vector3(0.0f, -5.0f, 170.0f);
         private const String FRONT_CAMERA_LOOKAT_ENTRY = "FrontLookAt";
-        private static readonly Vector3 FRONT_CAMERA_LOOKAT_DEFAULT = Vector3.Zero;
+        private static readonly Vector3 FRONT_CAMERA_LOOKAT_DEFAULT = new Vector3(0.0f, -5.0f, 0.0f);
 
         private const String LEFT_CAMERA_POSITION_ENTRY = "LeftPosition";
-        private static readonly Vector3 LEFT_CAMERA_POSITION_DEFAULT = new Vector3(150.0f, 0.0f, 0.0f);
+        private static readonly Vector3 LEFT_CAMERA_POSITION_DEFAULT = new Vector3(170.0f, -5.0f, 0.0f);
         private const String LEFT_CAMERA_LOOKAT_ENTRY = "LeftLookAt";
-        private static readonly Vector3 LEFT_CAMERA_LOOKAT_DEFAULT = Vector3.Zero;
+        private static readonly Vector3 LEFT_CAMERA_LOOKAT_DEFAULT = new Vector3(0.0f, -5.0f, 0.0f);
 
         private const String RIGHT_CAMERA_POSITION_ENTRY = "RightPosition";
-        private static readonly Vector3 RIGHT_CAMERA_POSITION_DEFAULT = new Vector3(-150.0f, 0.0f, 0.0f);
+        private static readonly Vector3 RIGHT_CAMERA_POSITION_DEFAULT = new Vector3(-170.0f, -5.0f, 0.0f);
         private const String RIGHT_CAMERA_LOOKAT_ENTRY = "RightLookAt";
-        private static readonly Vector3 RIGHT_CAMERA_LOOKAT_DEFAULT = Vector3.Zero;
+        private static readonly Vector3 RIGHT_CAMERA_LOOKAT_DEFAULT = new Vector3(0.0f, -5.0f, 0.0f);
 
         private const String BACK_CAMERA_POSITION_ENTRY = "BackPosition";
-        private static readonly Vector3 BACK_CAMERA_POSITION_DEFAULT = new Vector3(0.0f, 0.0f, -150.0f);
+        private static readonly Vector3 BACK_CAMERA_POSITION_DEFAULT = new Vector3(0.0f, -5.0f, -170.0f);
         private const String BACK_CAMERA_LOOKAT_ENTRY = "BackLookAt";
-        private static readonly Vector3 BACK_CAMERA_LOOKAT_DEFAULT = Vector3.Zero;
+        private static readonly Vector3 BACK_CAMERA_LOOKAT_DEFAULT = new Vector3(0.0f, -5.0f, 0.0f);
 
         #endregion Static
 

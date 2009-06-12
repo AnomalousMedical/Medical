@@ -154,22 +154,22 @@ namespace Medical.GUI
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.DrawingWindowController.createOneWaySplit();
         }
 
         private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.DrawingWindowController.createTwoWaySplit();
         }
 
         private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.DrawingWindowController.createThreeWayUpperSplit();
         }
 
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            controller.DrawingWindowController.createFourWaySplit();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)

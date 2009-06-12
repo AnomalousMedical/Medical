@@ -83,7 +83,7 @@ namespace Medical
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
 
-            Resource.ResourceRoot = null;
+            Resource.ResourceRoot = "S:/export";
 
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
