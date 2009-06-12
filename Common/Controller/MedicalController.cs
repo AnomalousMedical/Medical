@@ -17,6 +17,7 @@ using Engine.ObjectManagement;
 using Engine.Saving.XMLSaver;
 using Engine.Resources;
 using Medical.Properties;
+using System.IO;
 
 namespace Medical
 {
@@ -63,9 +64,9 @@ namespace Medical
         public MedicalController()
         {
             progress = new ProgressDialog(Resources.articulometrics);
-            progress.ProgressMaximum = 1;
+            progress.ProgressMaximum = 30;
             progress.ProgressMinimum = 0;
-            progress.ProgressStep = 1;
+            progress.ProgressStep = 10;
             progress.fadeIn();
             progress.stepProgress();
             drawingWindowController = new DrawingWindowController();
@@ -83,7 +84,8 @@ namespace Medical
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
 
-            Resource.ResourceRoot = "S:/export";
+            Resource.ResourceRoot = "s:/export";
+            Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
 
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
@@ -153,6 +155,23 @@ namespace Medical
         /// </summary>
         public void start()
         {
+            progress.stepProgress();
+            String startupFile = Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml";
+            if (File.Exists(startupFile))
+            {
+                XmlTextReader textReader = new XmlTextReader(startupFile);
+                ScenePackage scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
+                if (scenePackage != null)
+                {
+                    medicalScene.loadScene(scenePackage);
+                    progress.stepProgress();
+                }
+                else
+                {
+                    MessageBox.Show(mainForm, String.Format("Could not load scene from {0}.", startupFile), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                textReader.Close();
+            }
             progress.fadeAway();
             mainForm.Show();
             mainTimer.startLoop();
