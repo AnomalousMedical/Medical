@@ -198,8 +198,10 @@
             this.dockPanel.ActiveAutoHideContent = null;
             this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel.DockBackColor = System.Drawing.SystemColors.Control;
+            this.dockPanel.DockBottomPortion = 100;
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
+            this.dockPanel.DockTopPortion = 100;
             this.dockPanel.Location = new System.Drawing.Point(0, 49);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.Size = new System.Drawing.Size(599, 336);

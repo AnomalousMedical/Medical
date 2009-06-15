@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\HeadController.cs" />
+    <Compile Include="Controller\HeadPlaybackState.cs" />
     <Compile Include="Controller\MuscleGroup.cs" />
     <Compile Include="GUI\Disk\DiskControl.cs">
       <SubType>Form</SubType>

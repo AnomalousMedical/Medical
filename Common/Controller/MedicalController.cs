@@ -47,6 +47,7 @@ namespace Medical
         private MedicalInterface currentMedicalInterface;
         private MedicalSceneController medicalScene;
         private CommonController commonController;
+        private PlaybackController medicalScenePlayback;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -118,6 +119,7 @@ namespace Medical
             medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
             medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
             commonController.initialize(this);
+            medicalScenePlayback = new PlaybackController(mainTimer);
 
             //Initialize GUI
             mainForm.initialize(this);
@@ -278,6 +280,11 @@ namespace Medical
             }
         }
 
+        public PlaybackState createMedicalPlaybackState(float startTime)
+        {
+            return currentMedicalInterface.createPlaybackState(startTime);
+        }
+
         /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
@@ -316,6 +323,7 @@ namespace Medical
             {
                 currentMedicalInterface.sceneChanged();
             }
+            medicalScenePlayback.StartState = currentMedicalInterface.getStartPlaybackState();
         }
 
         /// <summary>
@@ -358,6 +366,14 @@ namespace Medical
             get
             {
                 return drawingWindowController;
+            }
+        }
+
+        public PlaybackController MedicalPlayback
+        {
+            get
+            {
+                return medicalScenePlayback;
             }
         }
 

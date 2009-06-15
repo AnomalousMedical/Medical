@@ -95,6 +95,11 @@ namespace Medical
             positionUpdated(position, bone);
         }
 
+        public float getPosition()
+        {
+            return currentPosition;
+        }
+
         public abstract void positionUpdated(float position, Bone bone);
 
         public String UIName

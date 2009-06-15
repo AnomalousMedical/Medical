@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.GUI;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -12,11 +13,13 @@ namespace Medical
     {
         private ToolStripButton layersButton;
         private ToolStripButton pictureButton;
+        private ToolStripButton animationButton;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
+        private AnimationGUI animationGUI = new AnimationGUI();
         private CommonController controller;
 
-        public CommonToolStrip(CommonController controller)
+        public CommonToolStrip(CommonController controller, MedicalController medicalController)
         {
             this.controller = controller;
             layersButton = new ToolStripButton("Layers");
@@ -29,8 +32,16 @@ namespace Medical
             pictureButton.Click += new EventHandler(pictureButton_Click);
             this.Items.Add(pictureButton);
 
+            animationButton = new ToolStripButton("Animation");
+            animationButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            animationButton.Click += new EventHandler(animationButton_Click);
+            this.Items.Add(animationButton);
+
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
+            animationGUI.VisibleChanged += new EventHandler(animationGUI_VisibleChanged);
+
+            animationGUI.initialize(medicalController);
         }
 
         /// <summary>
@@ -49,17 +60,23 @@ namespace Medical
             {
                 return pictureControl;
             }
+            if (persistString == animationGUI.GetType().ToString())
+            {
+                return animationGUI;
+            }
             return null;
         }
 
         public void sceneChanged()
         {
             layersControl.sceneLoaded();
+            animationGUI.sceneLoaded();
         }
 
         public void sceneUnloading()
         {
             layersControl.sceneUnloading();
+            animationGUI.sceneUnloading();
         }
 
         private void layersButton_Click(object sender, EventArgs e)
@@ -94,6 +111,23 @@ namespace Medical
         void pictureControl_VisibleChanged(object sender, EventArgs e)
         {
             pictureButton.Checked = pictureControl.Visible;
+        }
+
+        void animationButton_Click(object sender, EventArgs e)
+        {
+            if (animationGUI.Visible)
+            {
+                controller.removeControl(animationGUI);
+            }
+            else
+            {
+                controller.addControlToUI(animationGUI);
+            }
+        }
+
+        void animationGUI_VisibleChanged(object sender, EventArgs e)
+        {
+            animationButton.Checked = animationGUI.Visible;
         }
     }
 }

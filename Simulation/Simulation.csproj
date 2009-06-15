@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="Animation\BoneManipulator.cs" />
     <Compile Include="Animation\BoneManipulatorController.cs" />
+    <Compile Include="Animation\BoneManipulatorState.cs" />
     <Compile Include="Animation\BoneRotator.cs" />
     <Compile Include="Animation\BoneScalar.cs" />
     <Compile Include="Animation\InteractiveCurve.cs" />

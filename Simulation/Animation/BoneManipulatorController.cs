@@ -49,5 +49,15 @@ namespace Medical
             boneManipulators.TryGetValue(name, out ret);
             return ret;
         }
+
+        public static BoneManipulatorState createBoneManipulatorState()
+        {
+            BoneManipulatorState state = new BoneManipulatorState();
+            foreach (BoneManipulator manipulator in boneManipulators.Values)
+            {
+                state.addPosition(manipulator.UIName, manipulator.getPosition());
+            }
+            return state;
+        }
     }
 }

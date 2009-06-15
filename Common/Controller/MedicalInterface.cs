@@ -41,5 +41,17 @@ namespace Medical
         /// Destroy the interface and all ui's.
         /// </summary>
         void destroy();
+
+        /// <summary>
+        /// Create a new PlaybackState and return it.
+        /// </summary>
+        /// <returns>A new playback state with the current info in it.</returns>
+        PlaybackState createPlaybackState(float startTime);
+
+        /// <summary>
+        /// Get the first playback state.
+        /// </summary>
+        /// <returns>The starting playback state.</returns>
+        PlaybackState getStartPlaybackState();
     }
 }

@@ -12,6 +12,7 @@ namespace Medical.Controller
     {
         private MedicalController controller;
         private HeadToolStrip headToolStrip;
+        private HeadPlaybackState startHeadState;
 
         public void initialize(MedicalController controller)
         {
@@ -27,6 +28,8 @@ namespace Medical.Controller
         public void sceneChanged()
         {
             headToolStrip.sceneChanged();
+            startHeadState = new HeadPlaybackState(0.0f);
+            startHeadState.update();
         }
 
         public void sceneUnloading()
@@ -59,6 +62,23 @@ namespace Medical.Controller
         public void removeControl(DockContent control)
         {
             controller.hideDockContent(control);
+        }
+
+        /// <summary>
+        /// Create a new PlaybackState and return it.
+        /// </summary>
+        /// <returns>A new playback state with the current info in it.</returns>
+        public PlaybackState createPlaybackState(float startTime)
+        {
+            HeadPlaybackState newState = new HeadPlaybackState(startTime);
+            newState.update();
+            startHeadState.Last.HeadNext = newState;
+            return newState;
+        }
+
+        public PlaybackState getStartPlaybackState()
+        {
+            return startHeadState;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Medical
         /// <param name="controller">The MedicalController.</param>
         public void initialize(MedicalController controller)
         {
-            toolStrip = new CommonToolStrip(this);
+            toolStrip = new CommonToolStrip(this, controller);
             this.controller = controller;
             controller.addToolStrip(toolStrip);
         }
@@ -71,6 +71,20 @@ namespace Medical
         public void removeControl(DockContent control)
         {
             controller.hideDockContent(control);
+        }
+
+        /// <summary>
+        /// Create a new PlaybackState and return it.
+        /// </summary>
+        /// <returns>A new playback state with the current info in it.</returns>
+        public PlaybackState createPlaybackState(float startTime)
+        {
+            return null;
+        }
+
+        public PlaybackState getStartPlaybackState()
+        {
+            return null;
         }
     }
 }
