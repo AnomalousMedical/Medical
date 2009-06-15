@@ -27,15 +27,28 @@ namespace Medical.Controller
             boneState = BoneManipulatorController.createBoneManipulatorState();
         }
 
-        public override PlaybackState Previous
+        public void insert(HeadPlaybackState state)
         {
-            get
+            if (next == null)
             {
-                return previous;
+                state.previous = this;
+                next = state;
+            }
+            else if (state.StartTime > StartTime && state.StartTime < StopTime)
+            {
+                next.previous = state;
+                state.next = next;
+
+                state.previous = this;
+                next = state;
+            }
+            else
+            {
+                next.insert(state);
             }
         }
 
-        public HeadPlaybackState HeadPrevious
+        public override PlaybackState Previous
         {
             get
             {
@@ -48,34 +61,6 @@ namespace Medical.Controller
             get
             {
                 return next;
-            }
-        }
-
-        public HeadPlaybackState HeadNext
-        {
-            get
-            {
-                return next;
-            }
-            set
-            {
-                next = value;
-                next.previous = this;
-            }
-        }
-
-        public HeadPlaybackState Last
-        {
-            get
-            {
-                if (next == null)
-                {
-                    return this;
-                }
-                else
-                {
-                    return next.Last;
-                }
             }
         }
     }

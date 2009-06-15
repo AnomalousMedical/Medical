@@ -72,7 +72,7 @@ namespace Medical.Controller
         {
             HeadPlaybackState newState = new HeadPlaybackState(startTime);
             newState.update();
-            startHeadState.Last.HeadNext = newState;
+            startHeadState.insert(newState);
             return newState;
         }
 

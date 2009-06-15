@@ -31,7 +31,7 @@ namespace Medical
                     return this;
                 }
             }
-            else if (time > StopTime)
+            else if (time >= StopTime)
             {
                 if (Next != null)
                 {
