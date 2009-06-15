@@ -118,8 +118,8 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
             medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
             medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
-            commonController.initialize(this);
             medicalScenePlayback = new PlaybackController(mainTimer);
+            commonController.initialize(this);
 
             //Initialize GUI
             mainForm.initialize(this);

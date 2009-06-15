@@ -7,8 +7,12 @@ using Logging;
 
 namespace Medical
 {
+    public delegate void PlaybackTimeChanged(float time);
+
     public class PlaybackController : UpdateListener
     {
+        public event PlaybackTimeChanged PlaybackTimeChanged;
+
         private PlaybackState startState;
         private PlaybackState currentState;
         private float currentTime = 0.0f;
@@ -29,7 +33,11 @@ namespace Medical
         public void setTime(float time)
         {
             currentTime = time;
-            currentState = currentState.blend(time);
+            if (currentState != null)
+            {
+                currentState = currentState.blend(time);
+            }
+            fireTimeChange();
         }
 
         public void startPlayback(float time)
@@ -65,6 +73,7 @@ namespace Medical
         {
             currentTime += (float)clock.Seconds;
             currentState = currentState.blend(currentTime);
+            fireTimeChange();
         }
 
         public PlaybackState StartState
@@ -77,6 +86,14 @@ namespace Medical
             {
                 startState = value;
                 currentState = startState;
+            }
+        }
+
+        private void fireTimeChange()
+        {
+            if (PlaybackTimeChanged != null)
+            {
+                PlaybackTimeChanged.Invoke(currentTime);
             }
         }
     }

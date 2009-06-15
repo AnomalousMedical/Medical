@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.GUI;
 
 namespace Medical.GUI
 {
@@ -14,20 +15,34 @@ namespace Medical.GUI
     {
         private MedicalController controller;
         private float startTime;
+        private bool allowUpdate = true;
+        private bool dispatchingUpdate = false;
 
         public AnimationGUI()
         {
             InitializeComponent();
+            playbackTrackBar1.CurrentTimeChanged += new CurrentTimeChanged(playbackTrackBar1_CurrentTimeChanged);
         }
 
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
+            controller.MedicalPlayback.PlaybackTimeChanged += new PlaybackTimeChanged(MedicalPlayback_PlaybackTimeChanged);
+        }
+
+        void MedicalPlayback_PlaybackTimeChanged(float time)
+        {
+            if (!dispatchingUpdate)
+            {
+                allowUpdate = false;
+                playbackTrackBar1.CurrentTime = time;
+                allowUpdate = true;
+            }
         }
 
         public void sceneLoaded()
         {
-            startTime = 10.0f;
+            playbackTrackBar1.CurrentTime = 0.0;
         }
 
         public void sceneUnloading()
@@ -47,8 +62,30 @@ namespace Medical.GUI
 
         private void addStateButton_Click(object sender, EventArgs e)
         {
-            controller.createMedicalPlaybackState(startTime);
-            startTime += 10.0f;
+            controller.createMedicalPlaybackState((float)playbackTrackBar1.CurrentTime);
+        }
+
+        void playbackTrackBar1_CurrentTimeChanged(PlaybackTrackBar trackBar, double currentTime)
+        {
+            int minute = (int)(currentTime / 60.0);
+            int second = (int)(currentTime % 60.0);
+            String minString = minute.ToString();
+            if (minute < 10)
+            {
+                minString = "0" + minString;
+            }
+            String secString = second.ToString();
+            if (second < 10)
+            {
+                secString = "0" + secString;
+            }
+            timeLabel.Text = String.Format("{0}:{1}", minString, secString);
+            if (allowUpdate)
+            {
+                dispatchingUpdate = true;
+                controller.MedicalPlayback.setTime((float)currentTime);
+                dispatchingUpdate = false;
+            }
         }
     }
 }

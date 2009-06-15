@@ -31,7 +31,8 @@
             this.playButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.addStateButton = new System.Windows.Forms.Button();
-            this.playbackTrackBar1 = new Medical.GUI.Animation.PlaybackTrackBar();
+            this.timeLabel = new System.Windows.Forms.Label();
+            this.playbackTrackBar1 = new Medical.GUI.PlaybackTrackBar();
             this.SuspendLayout();
             // 
             // playButton
@@ -64,6 +65,15 @@
             this.addStateButton.UseVisualStyleBackColor = true;
             this.addStateButton.Click += new System.EventHandler(this.addStateButton_Click);
             // 
+            // timeLabel
+            // 
+            this.timeLabel.AutoSize = true;
+            this.timeLabel.Location = new System.Drawing.Point(0, 0);
+            this.timeLabel.Name = "timeLabel";
+            this.timeLabel.Size = new System.Drawing.Size(34, 13);
+            this.timeLabel.TabIndex = 4;
+            this.timeLabel.Text = "00:00";
+            // 
             // playbackTrackBar1
             // 
             this.playbackTrackBar1.CurrentTime = 0;
@@ -80,6 +90,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 155);
+            this.Controls.Add(this.timeLabel);
             this.Controls.Add(this.playbackTrackBar1);
             this.Controls.Add(this.addStateButton);
             this.Controls.Add(this.stopButton);
@@ -92,6 +103,7 @@
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
             this.Text = "Animation";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,7 +112,8 @@
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button addStateButton;
-        private Medical.GUI.Animation.PlaybackTrackBar playbackTrackBar1;
+        private Medical.GUI.PlaybackTrackBar playbackTrackBar1;
+        private System.Windows.Forms.Label timeLabel;
 
 
     }

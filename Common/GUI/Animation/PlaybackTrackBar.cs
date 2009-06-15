@@ -6,10 +6,14 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Drawing;
 
-namespace Medical.GUI.Animation
+namespace Medical.GUI
 {
-    class PlaybackTrackBar : UserControl
+    public delegate void CurrentTimeChanged(PlaybackTrackBar trackBar, double currentTime);
+
+    public class PlaybackTrackBar : UserControl
     {
+        public event CurrentTimeChanged CurrentTimeChanged;
+
         private int numberTicks = 10;
         private Rectangle trackRectangle = new Rectangle();
         private Rectangle ticksRectangle = new Rectangle();
@@ -155,6 +159,11 @@ namespace Medical.GUI.Animation
                     currentTime = maxTime;
                 }
                 calculateThumbPosition();
+                if (CurrentTimeChanged != null)
+                {
+                    CurrentTimeChanged.Invoke(this, currentTime);
+                }
+                Invalidate();
             }
         }
 
