@@ -28,25 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.addStateButton = new System.Windows.Forms.Button();
             this.timeLabel = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.playButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
-            this.playButton = new System.Windows.Forms.Button();
             this.playbackTrackBar1 = new Medical.GUI.PlaybackTrackBar();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // addStateButton
-            // 
-            this.addStateButton.Location = new System.Drawing.Point(270, 40);
-            this.addStateButton.Name = "addStateButton";
-            this.addStateButton.Size = new System.Drawing.Size(75, 23);
-            this.addStateButton.TabIndex = 2;
-            this.addStateButton.Text = "Add State";
-            this.addStateButton.UseVisualStyleBackColor = true;
-            this.addStateButton.Click += new System.EventHandler(this.addStateButton_Click);
             // 
             // timeLabel
             // 
@@ -66,6 +55,16 @@
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(200, 29);
             this.flowLayoutPanel1.TabIndex = 5;
+            // 
+            // playButton
+            // 
+            this.playButton.Location = new System.Drawing.Point(3, 3);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(37, 23);
+            this.playButton.TabIndex = 6;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
             // pauseButton
             // 
@@ -87,16 +86,6 @@
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
-            // playButton
-            // 
-            this.playButton.Location = new System.Drawing.Point(3, 3);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(37, 23);
-            this.playButton.TabIndex = 6;
-            this.playButton.Text = "Play";
-            this.playButton.UseVisualStyleBackColor = true;
-            this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
             // playbackTrackBar1
             // 
             this.playbackTrackBar1.CurrentTime = 0;
@@ -106,7 +95,6 @@
             this.playbackTrackBar1.Name = "playbackTrackBar1";
             this.playbackTrackBar1.Size = new System.Drawing.Size(345, 39);
             this.playbackTrackBar1.TabIndex = 3;
-            this.playbackTrackBar1.TickDelta = 15;
             // 
             // PlaybackGUI
             // 
@@ -114,7 +102,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(345, 155);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.addStateButton);
             this.Controls.Add(this.timeLabel);
             this.Controls.Add(this.playbackTrackBar1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
@@ -132,7 +119,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button addStateButton;
         private Medical.GUI.PlaybackTrackBar playbackTrackBar1;
         private System.Windows.Forms.Label timeLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

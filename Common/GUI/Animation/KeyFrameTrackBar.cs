@@ -21,7 +21,7 @@ namespace Medical.GUI.Animation
         int tickSkip = 1;
         private List<KeyFrameMark> keyFrames = new List<KeyFrameMark>();
 
-        private int numKeyFrames = 100;
+        private int numKeyFrames = 30;
 
         public KeyFrameTrackBar()
         {

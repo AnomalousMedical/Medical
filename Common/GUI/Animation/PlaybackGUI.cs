@@ -65,11 +65,6 @@ namespace Medical.GUI
             controller.MedicalPlayback.pausePlayback();
         }
 
-        private void addStateButton_Click(object sender, EventArgs e)
-        {
-            controller.createMedicalPlaybackState((float)playbackTrackBar1.CurrentTime);
-        }
-
         void playbackTrackBar1_CurrentTimeChanged(PlaybackTrackBar trackBar, double currentTime)
         {
             int minute = (int)(currentTime / 60.0);

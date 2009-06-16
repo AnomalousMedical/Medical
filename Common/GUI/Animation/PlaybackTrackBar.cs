@@ -14,7 +14,6 @@ namespace Medical.GUI
     {
         public event CurrentTimeChanged CurrentTimeChanged;
 
-        private int numberTicks = 10;
         private Rectangle trackRectangle = new Rectangle();
         private Rectangle ticksRectangle = new Rectangle();
         private Rectangle thumbRectangle = new Rectangle();
@@ -22,7 +21,6 @@ namespace Medical.GUI
         private TrackBarThumbState thumbState = TrackBarThumbState.Normal;
         private double currentTime;
         private double maxTime;
-        private double tickDelta;
 
         public PlaybackTrackBar()
         {
@@ -31,8 +29,6 @@ namespace Medical.GUI
             this.Size = new System.Drawing.Size(150, 47);
             currentTime = 0.0;
             maxTime = 60.0;
-            tickDelta = 15.0f;
-            calculateNumTicks();
 
             // Calculate the initial sizes of the bar, 
             // thumb and ticks.
@@ -77,7 +73,6 @@ namespace Medical.GUI
         {
             TrackBarRenderer.DrawHorizontalTrack(e.Graphics, trackRectangle);
             TrackBarRenderer.DrawTopPointingThumb(e.Graphics, thumbRectangle, thumbState);
-            TrackBarRenderer.DrawHorizontalTicks(e.Graphics, ticksRectangle, numberTicks, EdgeStyle.Raised);
         }
 
         // Determine whether the user has clicked the track bar thumb.
@@ -130,11 +125,6 @@ namespace Medical.GUI
             thumbRectangle.X = (int)(CurrentTime / MaxTime * ticksRectangle.Width);
         }
 
-        private void calculateNumTicks()
-        {
-            numberTicks = (int)(maxTime / tickDelta);
-        }
-
         public double CurrentTime
         {
             get
@@ -171,19 +161,6 @@ namespace Medical.GUI
             {
                 maxTime = value;
                 calculateThumbPosition();
-            }
-        }
-
-        public double TickDelta
-        {
-            get
-            {
-                return tickDelta;
-            }
-            set
-            {
-                tickDelta = value;
-                calculateNumTicks();
             }
         }
     }
