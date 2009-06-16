@@ -40,10 +40,9 @@ namespace Medical
             fireTimeChange();
         }
 
-        public void startPlayback(float time)
+        public void startPlayback()
         {
-            setTime(time);
-            if (!playing)
+            if (!playing && currentState != null)
             {
                 timer.addFixedUpdateListener(this);
                 playing = true;
@@ -51,6 +50,16 @@ namespace Medical
         }
 
         public void stopPlayback()
+        {
+            if (playing)
+            {
+                timer.removeFixedUpdateListener(this);
+                playing = false;
+                setTime(0.0f);
+            }
+        }
+
+        internal void pausePlayback()
         {
             if (playing)
             {

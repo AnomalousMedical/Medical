@@ -6,33 +6,26 @@ using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Drawing;
 
-namespace Medical.GUI
+namespace Medical.GUI.Animation
 {
-    public delegate void CurrentTimeChanged(PlaybackTrackBar trackBar, double currentTime);
-
-    public class PlaybackTrackBar : UserControl
+    class KeyFrameTrackBar : UserControl
     {
-        public event CurrentTimeChanged CurrentTimeChanged;
+        private const int minTickDelta = 10;
 
-        private int numberTicks = 10;
         private Rectangle trackRectangle = new Rectangle();
         private Rectangle ticksRectangle = new Rectangle();
         private Rectangle thumbRectangle = new Rectangle();
+        private int currentTickPosition = 0;
         private bool thumbClicked = false;
         private TrackBarThumbState thumbState = TrackBarThumbState.Normal;
-        private double currentTime;
-        private double maxTime;
-        private double tickDelta;
+        int tickSkip = 1;
 
-        public PlaybackTrackBar()
+        private int numKeyFrames = 100;
+
+        public KeyFrameTrackBar()
         {
+            this.Location = new Point(10, 10);
             this.DoubleBuffered = true;
-            this.Name = "PlaybackTrackBar";
-            this.Size = new System.Drawing.Size(150, 47);
-            currentTime = 0.0;
-            maxTime = 60.0;
-            tickDelta = 15.0f;
-            calculateNumTicks();
 
             // Calculate the initial sizes of the bar, 
             // thumb and ticks.
@@ -45,22 +38,32 @@ namespace Medical.GUI
             using (Graphics g = this.CreateGraphics())
             {
                 // Calculate the size of the track bar.
-                trackRectangle.X = ClientRectangle.X + 2;
+                trackRectangle.X = ClientRectangle.X;
                 trackRectangle.Y = ClientRectangle.Y + 28;
-                trackRectangle.Width = ClientRectangle.Width - 4;
+                trackRectangle.Width = ClientRectangle.Width;
                 trackRectangle.Height = 4;
-
-                // Calculate the size of the rectangle in which to 
-                // draw the ticks.
-                ticksRectangle.X = trackRectangle.X + 4;
-                ticksRectangle.Y = trackRectangle.Y - 8;
-                ticksRectangle.Width = trackRectangle.Width - 8;
-                ticksRectangle.Height = 4;
 
                 // Calculate the size of the thumb.
                 thumbRectangle.Size = TrackBarRenderer.GetTopPointingThumbSize(g, TrackBarThumbState.Normal);
 
-                thumbRectangle.X = (int)(CurrentTime / MaxTime * ticksRectangle.Width);
+                // Calculate the size of the rectangle in which to 
+                // draw the ticks.
+                ticksRectangle.X = trackRectangle.X;
+                ticksRectangle.Y = trackRectangle.Y - 8;
+                ticksRectangle.Width = trackRectangle.Width;
+                ticksRectangle.Height = 4;
+
+                float tickSpace = ((float)ticksRectangle.Width) / ((float)numKeyFrames);
+                if (tickSpace > minTickDelta)
+                {
+                    tickSkip = 1;
+                }
+                else
+                {
+                    tickSkip = numKeyFrames / (ticksRectangle.Width / minTickDelta);
+                }
+
+                calculateThumbPosition();
                 thumbRectangle.Y = trackRectangle.Y - 8;
             }
         }
@@ -77,7 +80,18 @@ namespace Medical.GUI
         {
             TrackBarRenderer.DrawHorizontalTrack(e.Graphics, trackRectangle);
             TrackBarRenderer.DrawTopPointingThumb(e.Graphics, thumbRectangle, thumbState);
-            TrackBarRenderer.DrawHorizontalTicks(e.Graphics, ticksRectangle, numberTicks, EdgeStyle.Raised);
+            using (Pen pen = new Pen(Color.Black))
+            {
+                Point p1 = new Point(0, ticksRectangle.Y);
+                Point p2 = new Point(0, ticksRectangle.Y + ticksRectangle.Height);
+                int thumbHalfWidth = (thumbRectangle.Width / 2);
+                for (int i = 0; i < numKeyFrames; i += tickSkip)
+                {
+                    int location = (int)((float)i / numKeyFrames * ticksRectangle.Width) + thumbHalfWidth;
+                    p1.X = location;
+                    p2.X = location;e.Graphics.DrawLine(pen, p1, p2);
+                }
+            }
         }
 
         // Determine whether the user has clicked the track bar thumb.
@@ -87,7 +101,6 @@ namespace Medical.GUI
             {
                 thumbClicked = true;
                 thumbState = TrackBarThumbState.Pressed;
-                Cursor.Hide();
             }
 
             this.Invalidate();
@@ -104,7 +117,7 @@ namespace Medical.GUI
                     thumbState = TrackBarThumbState.Hot;
                     this.Invalidate();
                 }
-                Cursor.Show();
+
                 thumbClicked = false;
             }
         }
@@ -115,75 +128,48 @@ namespace Medical.GUI
             // The user is moving the thumb.
             if (thumbClicked == true)
             {
-                CurrentTime = e.Location.X / (float)ticksRectangle.Width * MaxTime;
+                currentTickPosition = (int)(e.Location.X / (float)ticksRectangle.Width * numKeyFrames);
+                // Track movements to the next tick to the right, if 
+                // the cursor has moved halfway to the next tick.
+                if (currentTickPosition > numKeyFrames - 1)
+                {
+                    currentTickPosition = numKeyFrames - 1;
+                }
+
+                // Track movements to the next tick to the left, if 
+                // cursor has moved halfway to the next tick.
+                else if (currentTickPosition < 0)
+                {
+                    currentTickPosition = 0;
+                }
+
+                calculateThumbPosition();
             }
+
             // The cursor is passing over the track.
             else
             {
                 thumbState = thumbRectangle.Contains(e.Location) ? TrackBarThumbState.Hot : TrackBarThumbState.Normal;
             }
+
             Invalidate();
         }
 
         private void calculateThumbPosition()
         {
-            thumbRectangle.X = (int)(CurrentTime / MaxTime * ticksRectangle.Width);
+            thumbRectangle.X = (int)((float)currentTickPosition / numKeyFrames * ticksRectangle.Width);
         }
 
-        private void calculateNumTicks()
-        {
-            numberTicks = (int)(maxTime / tickDelta);
-        }
-
-        public double CurrentTime
+        public int CurrentTickPosition
         {
             get
             {
-                return currentTime;
+                return currentTickPosition;
             }
             set
             {
-                currentTime = value;
-                if (currentTime < 0.0)
-                {
-                    currentTime = 0.0;
-                }
-                if (currentTime > maxTime)
-                {
-                    currentTime = maxTime;
-                }
+                currentTickPosition = value;
                 calculateThumbPosition();
-                if (CurrentTimeChanged != null)
-                {
-                    CurrentTimeChanged.Invoke(this, currentTime);
-                }
-                Invalidate();
-            }
-        }
-
-        public double MaxTime
-        {
-            get
-            {
-                return maxTime;
-            }
-            set
-            {
-                maxTime = value;
-                calculateThumbPosition();
-            }
-        }
-
-        public double TickDelta
-        {
-            get
-            {
-                return tickDelta;
-            }
-            set
-            {
-                tickDelta = value;
-                calculateNumTicks();
             }
         }
     }

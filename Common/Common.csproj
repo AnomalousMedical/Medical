@@ -98,14 +98,29 @@
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\Playback\PlaybackController.cs" />
     <Compile Include="Controller\Playback\PlaybackState.cs" />
-    <Compile Include="GUI\Animation\AnimationGUI.cs">
+    <Compile Include="GUI\Animation\KeyFrameTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Animation\PlaybackGUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Animation\AnimationGUI.Designer.cs">
-      <DependentUpon>AnimationGUI.cs</DependentUpon>
+    <Compile Include="GUI\Animation\PlaybackGUI.Designer.cs">
+      <DependentUpon>PlaybackGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Animation\PlaybackTrackBar.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Animation\StateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Animation\StateEditor.Designer.cs">
+      <DependentUpon>StateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Animation\BlendEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Animation\BlendEditor.Designer.cs">
+      <DependentUpon>BlendEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>
@@ -180,12 +195,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Animation\AnimationGUI.resx">
-      <DependentUpon>AnimationGUI.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\Animation\PlaybackGUI.resx">
+      <DependentUpon>PlaybackGUI.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Animation\PlaybackTrackBar.resx">
       <DependentUpon>PlaybackTrackBar.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Animation\StateEditor.resx">
+      <DependentUpon>StateEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Animation\BlendEditor.resx">
+      <DependentUpon>BlendEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">

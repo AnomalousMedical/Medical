@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.GUI;
 using WeifenLuo.WinFormsUI.Docking;
-using Medical.GUI;
 
 namespace Medical
 {
@@ -13,11 +12,14 @@ namespace Medical
     {
         private ToolStripButton layersButton;
         private ToolStripButton pictureButton;
+        private ToolStripButton playbackButton;
         private ToolStripButton animationButton;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
-        private AnimationGUI animationGUI = new AnimationGUI();
+        private PlaybackGUI playbackGUI = new PlaybackGUI();
         private CommonController controller;
+        private BlendEditor trackEditor = new BlendEditor();
+        private StateEditor stateEditor = new StateEditor();
 
         public CommonToolStrip(CommonController controller, MedicalController medicalController)
         {
@@ -32,6 +34,11 @@ namespace Medical
             pictureButton.Click += new EventHandler(pictureButton_Click);
             this.Items.Add(pictureButton);
 
+            playbackButton = new ToolStripButton("Playback");
+            playbackButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            playbackButton.Click += new EventHandler(playbackButton_Click);
+            this.Items.Add(playbackButton);
+
             animationButton = new ToolStripButton("Animation");
             animationButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             animationButton.Click += new EventHandler(animationButton_Click);
@@ -39,9 +46,11 @@ namespace Medical
 
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
-            animationGUI.VisibleChanged += new EventHandler(animationGUI_VisibleChanged);
+            playbackGUI.VisibleChanged += new EventHandler(playbackGUI_VisibleChanged);
+            trackEditor.VisibleChanged += new EventHandler(trackEditor_VisibleChanged);
 
-            animationGUI.initialize(medicalController);
+            playbackGUI.initialize(medicalController);
+            trackEditor.initialize(medicalController);
         }
 
         /// <summary>
@@ -60,9 +69,17 @@ namespace Medical
             {
                 return pictureControl;
             }
-            if (persistString == animationGUI.GetType().ToString())
+            if (persistString == playbackGUI.GetType().ToString())
             {
-                return animationGUI;
+                return playbackGUI;
+            }
+            if (persistString == trackEditor.GetType().ToString())
+            {
+                return trackEditor;
+            }
+            if (persistString == stateEditor.GetType().ToString())
+            {
+                return stateEditor;
             }
             return null;
         }
@@ -70,13 +87,13 @@ namespace Medical
         public void sceneChanged()
         {
             layersControl.sceneLoaded();
-            animationGUI.sceneLoaded();
+            playbackGUI.sceneLoaded();
         }
 
         public void sceneUnloading()
         {
             layersControl.sceneUnloading();
-            animationGUI.sceneUnloading();
+            playbackGUI.sceneUnloading();
         }
 
         private void layersButton_Click(object sender, EventArgs e)
@@ -113,21 +130,47 @@ namespace Medical
             pictureButton.Checked = pictureControl.Visible;
         }
 
-        void animationButton_Click(object sender, EventArgs e)
+        void playbackButton_Click(object sender, EventArgs e)
         {
-            if (animationGUI.Visible)
+            if (playbackGUI.Visible)
             {
-                controller.removeControl(animationGUI);
+                controller.removeControl(playbackGUI);
             }
             else
             {
-                controller.addControlToUI(animationGUI);
+                controller.addControlToUI(playbackGUI);
             }
         }
 
-        void animationGUI_VisibleChanged(object sender, EventArgs e)
+        void playbackGUI_VisibleChanged(object sender, EventArgs e)
         {
-            animationButton.Checked = animationGUI.Visible;
+            playbackButton.Checked = playbackGUI.Visible;
+        }
+
+        void animationButton_Click(object sender, EventArgs e)
+        {
+            if (trackEditor.Visible)
+            {
+                controller.removeControl(trackEditor);
+                controller.removeControl(stateEditor);
+            }
+            else
+            {
+                controller.addControlToUI(trackEditor);
+                if (stateEditor.DockPanel == null)
+                {
+                    stateEditor.Show(trackEditor.Pane, DockAlignment.Left, (double)stateEditor.Width / trackEditor.Width);
+                }
+                else
+                {
+                    controller.addControlToUI(stateEditor);
+                }
+            }
+        }
+
+        void trackEditor_VisibleChanged(object sender, EventArgs e)
+        {
+            animationButton.Checked = trackEditor.Visible;
         }
     }
 }

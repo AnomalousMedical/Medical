@@ -11,14 +11,14 @@ using Medical.GUI;
 
 namespace Medical.GUI
 {
-    public partial class AnimationGUI : DockContent
+    public partial class PlaybackGUI : DockContent
     {
         private MedicalController controller;
         private float startTime;
         private bool allowUpdate = true;
         private bool dispatchingUpdate = false;
 
-        public AnimationGUI()
+        public PlaybackGUI()
         {
             InitializeComponent();
             playbackTrackBar1.CurrentTimeChanged += new CurrentTimeChanged(playbackTrackBar1_CurrentTimeChanged);
@@ -52,12 +52,17 @@ namespace Medical.GUI
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            controller.MedicalPlayback.startPlayback(0.0f);
+            controller.MedicalPlayback.startPlayback();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             controller.MedicalPlayback.stopPlayback();
+        }
+
+        private void pauseButton_Click(object sender, EventArgs e)
+        {
+            controller.MedicalPlayback.pausePlayback();
         }
 
         private void addStateButton_Click(object sender, EventArgs e)
