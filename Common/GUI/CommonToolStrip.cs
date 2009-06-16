@@ -18,7 +18,7 @@ namespace Medical
         private PictureControl pictureControl = new PictureControl();
         private PlaybackGUI playbackGUI = new PlaybackGUI();
         private CommonController controller;
-        private BlendEditor trackEditor = new BlendEditor();
+        private BlendEditor blendEditor = new BlendEditor();
         private StateEditor stateEditor = new StateEditor();
 
         public CommonToolStrip(CommonController controller, MedicalController medicalController)
@@ -47,10 +47,10 @@ namespace Medical
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
             playbackGUI.VisibleChanged += new EventHandler(playbackGUI_VisibleChanged);
-            trackEditor.VisibleChanged += new EventHandler(trackEditor_VisibleChanged);
+            blendEditor.VisibleChanged += new EventHandler(blendEditor_VisibleChanged);
 
             playbackGUI.initialize(medicalController);
-            trackEditor.initialize(medicalController);
+            blendEditor.initialize(medicalController);
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace Medical
             {
                 return playbackGUI;
             }
-            if (persistString == trackEditor.GetType().ToString())
+            if (persistString == blendEditor.GetType().ToString())
             {
-                return trackEditor;
+                return blendEditor;
             }
             if (persistString == stateEditor.GetType().ToString())
             {
@@ -88,12 +88,14 @@ namespace Medical
         {
             layersControl.sceneLoaded();
             playbackGUI.sceneLoaded();
+            blendEditor.sceneLoaded();
         }
 
         public void sceneUnloading()
         {
             layersControl.sceneUnloading();
             playbackGUI.sceneUnloading();
+            blendEditor.sceneUnloading();
         }
 
         private void layersButton_Click(object sender, EventArgs e)
@@ -149,17 +151,17 @@ namespace Medical
 
         void animationButton_Click(object sender, EventArgs e)
         {
-            if (trackEditor.Visible)
+            if (blendEditor.Visible)
             {
-                controller.removeControl(trackEditor);
+                controller.removeControl(blendEditor);
                 controller.removeControl(stateEditor);
             }
             else
             {
-                controller.addControlToUI(trackEditor);
+                controller.addControlToUI(blendEditor);
                 if (stateEditor.DockPanel == null)
                 {
-                    stateEditor.Show(trackEditor.Pane, DockAlignment.Left, (double)stateEditor.Width / trackEditor.Width);
+                    stateEditor.Show(blendEditor.Pane, DockAlignment.Left, (double)stateEditor.Width / blendEditor.Width);
                 }
                 else
                 {
@@ -168,9 +170,9 @@ namespace Medical
             }
         }
 
-        void trackEditor_VisibleChanged(object sender, EventArgs e)
+        void blendEditor_VisibleChanged(object sender, EventArgs e)
         {
-            animationButton.Checked = trackEditor.Visible;
+            animationButton.Checked = blendEditor.Visible;
         }
     }
 }

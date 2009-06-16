@@ -19,6 +19,7 @@ namespace Medical.GUI.Animation
         private bool thumbClicked = false;
         private TrackBarThumbState thumbState = TrackBarThumbState.Normal;
         int tickSkip = 1;
+        private List<KeyFrameMark> keyFrames = new List<KeyFrameMark>();
 
         private int numKeyFrames = 100;
 
@@ -30,6 +31,24 @@ namespace Medical.GUI.Animation
             // Calculate the initial sizes of the bar, 
             // thumb and ticks.
             SetupTrackBar();
+        }
+
+        public void addKeyFrame(int time)
+        {
+            keyFrames.Add(new KeyFrameMark(time));
+            Invalidate();
+        }
+
+        public void removeKeyFrame(int index)
+        {
+            keyFrames.RemoveAt(index);
+            Invalidate();
+        }
+
+        public void clearKeyFrames()
+        {
+            keyFrames.Clear();
+            Invalidate();
         }
 
         // Calculate the sizes of the bar, thumb, and ticks rectangle.
@@ -46,8 +65,7 @@ namespace Medical.GUI.Animation
                 // Calculate the size of the thumb.
                 thumbRectangle.Size = TrackBarRenderer.GetTopPointingThumbSize(g, TrackBarThumbState.Normal);
 
-                // Calculate the size of the rectangle in which to 
-                // draw the ticks.
+                // Calculate the size of the rectangle in which to draw the ticks.
                 ticksRectangle.X = trackRectangle.X;
                 ticksRectangle.Y = trackRectangle.Y - 8;
                 ticksRectangle.Width = trackRectangle.Width;
@@ -60,7 +78,15 @@ namespace Medical.GUI.Animation
                 }
                 else
                 {
-                    tickSkip = numKeyFrames / (ticksRectangle.Width / minTickDelta);
+                    int denom = ticksRectangle.Width / minTickDelta;
+                    if (denom != 0)
+                    {
+                        tickSkip = numKeyFrames / denom;
+                    }
+                    else
+                    {
+                        tickSkip = numKeyFrames - 1;
+                    }
                 }
 
                 calculateThumbPosition();
@@ -90,6 +116,26 @@ namespace Medical.GUI.Animation
                     int location = (int)((float)i / numKeyFrames * ticksRectangle.Width) + thumbHalfWidth;
                     p1.X = location;
                     p2.X = location;e.Graphics.DrawLine(pen, p1, p2);
+                }
+
+                Color fillColor = Color.FromArgb(155, Color.Red);
+                Color borderColor = Color.Black;
+                Rectangle rect = new Rectangle(0, trackRectangle.Y, minTickDelta, 10);
+                p2.Y = rect.Y;
+                foreach (KeyFrameMark keyFrame in keyFrames)
+                {
+                    pen.Color = fillColor;
+                    int location = (int)((float)keyFrame.Time / numKeyFrames * ticksRectangle.Width);
+                    rect.X = location;
+                    e.Graphics.FillRectangle(pen.Brush, rect);
+                    
+                    pen.Color = borderColor;
+                    e.Graphics.DrawRectangle(pen, rect);
+
+                    location += thumbHalfWidth;
+                    p1.X = location;
+                    p2.X = location; e.Graphics.DrawLine(pen, p1, p2);
+                    p2.X = location; e.Graphics.DrawLine(pen, p1, p2);
                 }
             }
         }

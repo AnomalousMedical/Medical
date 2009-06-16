@@ -98,6 +98,7 @@
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\Playback\PlaybackController.cs" />
     <Compile Include="Controller\Playback\PlaybackState.cs" />
+    <Compile Include="GUI\Animation\KeyFrameMark.cs" />
     <Compile Include="GUI\Animation\KeyFrameTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>

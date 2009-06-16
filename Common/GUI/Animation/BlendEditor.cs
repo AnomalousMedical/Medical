@@ -29,15 +29,15 @@ namespace Medical.GUI
         {
         }
 
-        public void sceneUnloaded()
+        public void sceneUnloading()
         {
-            //medicalTrack.clearStates();
+            keyFrameTrackBar.clearKeyFrames();
         }
 
         private void addStateButton_Click(object sender, EventArgs e)
         {
             controller.createMedicalPlaybackState(keyFrameTrackBar.CurrentTickPosition);
-            //medicalTrack.addState(time);
+            keyFrameTrackBar.addKeyFrame(keyFrameTrackBar.CurrentTickPosition);
         }
     }
 }
