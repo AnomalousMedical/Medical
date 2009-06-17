@@ -74,15 +74,10 @@ namespace Medical
         }
 
         /// <summary>
-        /// Create a new PlaybackState and return it.
+        /// Create a new MedicalState and return it.
         /// </summary>
-        /// <returns>A new playback state with the current info in it.</returns>
-        public PlaybackState createPlaybackState(float startTime)
-        {
-            return null;
-        }
-
-        public PlaybackState getStartPlaybackState()
+        /// <returns>A new MedicalState with the current info in it.</returns>
+        public MedicalState createMedicalState(String name)
         {
             return null;
         }

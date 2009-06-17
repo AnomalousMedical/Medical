@@ -22,7 +22,7 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
-            controller.MedicalPlayback.StartStateChanged += new StartStateChanged(MedicalPlayback_StartStateChanged);
+            //controller.MedicalPlayback.StartStateChanged += new StartStateChanged(MedicalPlayback_StartStateChanged);
         }
 
         public void sceneLoaded()
@@ -36,8 +36,8 @@ namespace Medical.GUI
 
         private void addStateButton_Click(object sender, EventArgs e)
         {
-            controller.createMedicalPlaybackState(keyFrameTrackBar.CurrentTickPosition);
-            keyFrameTrackBar.addKeyFrame(keyFrameTrackBar.CurrentTickPosition);
+            //controller.createMedicalPlaybackState(keyFrameTrackBar.CurrentTickPosition);
+            //keyFrameTrackBar.addKeyFrame(keyFrameTrackBar.CurrentTickPosition);
         }
 
         void MedicalPlayback_StartStateChanged(PlaybackState startState)

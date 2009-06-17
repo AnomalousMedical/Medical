@@ -12,14 +12,11 @@ namespace Medical
     {
         private ToolStripButton layersButton;
         private ToolStripButton pictureButton;
-        private ToolStripButton playbackButton;
-        private ToolStripButton animationButton;
+        private ToolStripButton stateButton;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
-        private PlaybackGUI playbackGUI = new PlaybackGUI();
+        private MedicalStateGUI medicalState = new MedicalStateGUI();
         private CommonController controller;
-        private BlendEditor blendEditor = new BlendEditor();
-        private StateEditor stateEditor = new StateEditor();
 
         public CommonToolStrip(CommonController controller, MedicalController medicalController)
         {
@@ -34,23 +31,16 @@ namespace Medical
             pictureButton.Click += new EventHandler(pictureButton_Click);
             this.Items.Add(pictureButton);
 
-            playbackButton = new ToolStripButton("Playback");
-            playbackButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            playbackButton.Click += new EventHandler(playbackButton_Click);
-            this.Items.Add(playbackButton);
-
-            animationButton = new ToolStripButton("Animation");
-            animationButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            animationButton.Click += new EventHandler(animationButton_Click);
-            this.Items.Add(animationButton);
+            stateButton = new ToolStripButton("State");
+            stateButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            stateButton.Click += new EventHandler(stateButton_Click);
+            this.Items.Add(stateButton);
 
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
-            playbackGUI.VisibleChanged += new EventHandler(playbackGUI_VisibleChanged);
-            blendEditor.VisibleChanged += new EventHandler(blendEditor_VisibleChanged);
+            medicalState.VisibleChanged += new EventHandler(medicalState_VisibleChanged);
 
-            playbackGUI.initialize(medicalController);
-            blendEditor.initialize(medicalController);
+            medicalState.initialize(medicalController);
         }
 
         /// <summary>
@@ -69,17 +59,9 @@ namespace Medical
             {
                 return pictureControl;
             }
-            if (persistString == playbackGUI.GetType().ToString())
+            if (persistString == medicalState.GetType().ToString())
             {
-                return playbackGUI;
-            }
-            if (persistString == blendEditor.GetType().ToString())
-            {
-                return blendEditor;
-            }
-            if (persistString == stateEditor.GetType().ToString())
-            {
-                return stateEditor;
+                return medicalState;
             }
             return null;
         }
@@ -87,15 +69,13 @@ namespace Medical
         public void sceneChanged()
         {
             layersControl.sceneLoaded();
-            playbackGUI.sceneLoaded();
-            blendEditor.sceneLoaded();
+            medicalState.sceneLoaded();
         }
 
         public void sceneUnloading()
         {
             layersControl.sceneUnloading();
-            playbackGUI.sceneUnloading();
-            blendEditor.sceneUnloading();
+            medicalState.sceneUnloading();
         }
 
         private void layersButton_Click(object sender, EventArgs e)
@@ -132,47 +112,21 @@ namespace Medical
             pictureButton.Checked = pictureControl.Visible;
         }
 
-        void playbackButton_Click(object sender, EventArgs e)
+        void stateButton_Click(object sender, EventArgs e)
         {
-            if (playbackGUI.Visible)
+            if (medicalState.Visible)
             {
-                controller.removeControl(playbackGUI);
+                controller.removeControl(medicalState);
             }
             else
             {
-                controller.addControlToUI(playbackGUI);
+                controller.addControlToUI(medicalState);
             }
         }
 
-        void playbackGUI_VisibleChanged(object sender, EventArgs e)
+        void medicalState_VisibleChanged(object sender, EventArgs e)
         {
-            playbackButton.Checked = playbackGUI.Visible;
-        }
-
-        void animationButton_Click(object sender, EventArgs e)
-        {
-            if (blendEditor.Visible)
-            {
-                controller.removeControl(blendEditor);
-                controller.removeControl(stateEditor);
-            }
-            else
-            {
-                controller.addControlToUI(blendEditor);
-                if (stateEditor.DockPanel == null)
-                {
-                    stateEditor.Show(blendEditor.Pane, DockAlignment.Left, (double)stateEditor.Width / blendEditor.Width);
-                }
-                else
-                {
-                    controller.addControlToUI(stateEditor);
-                }
-            }
-        }
-
-        void blendEditor_VisibleChanged(object sender, EventArgs e)
-        {
-            animationButton.Checked = blendEditor.Visible;
+            stateButton.Checked = medicalState.Visible;
         }
     }
 }

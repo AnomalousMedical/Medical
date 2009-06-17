@@ -27,7 +27,7 @@ namespace Medical.GUI
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
-            controller.MedicalPlayback.PlaybackTimeChanged += new PlaybackTimeChanged(MedicalPlayback_PlaybackTimeChanged);
+            //controller.MedicalPlayback.PlaybackTimeChanged += new PlaybackTimeChanged(MedicalPlayback_PlaybackTimeChanged);
         }
 
         void MedicalPlayback_PlaybackTimeChanged(float time)
@@ -52,17 +52,17 @@ namespace Medical.GUI
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            controller.MedicalPlayback.startPlayback();
+            //controller.MedicalPlayback.startPlayback();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            controller.MedicalPlayback.stopPlayback();
+            //controller.MedicalPlayback.stopPlayback();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
-            controller.MedicalPlayback.pausePlayback();
+            //controller.MedicalPlayback.pausePlayback();
         }
 
         void playbackTrackBar1_CurrentTimeChanged(PlaybackTrackBar trackBar, double currentTime)
@@ -83,7 +83,7 @@ namespace Medical.GUI
             if (allowUpdate)
             {
                 dispatchingUpdate = true;
-                controller.MedicalPlayback.setTime((float)currentTime);
+                //controller.MedicalPlayback.setTime((float)currentTime);
                 dispatchingUpdate = false;
             }
         }

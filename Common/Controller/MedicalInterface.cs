@@ -43,15 +43,9 @@ namespace Medical
         void destroy();
 
         /// <summary>
-        /// Create a new PlaybackState and return it.
+        /// Create a new MedicalState and return it.
         /// </summary>
-        /// <returns>A new playback state with the current info in it.</returns>
-        PlaybackState createPlaybackState(float startTime);
-
-        /// <summary>
-        /// Get the first playback state.
-        /// </summary>
-        /// <returns>The starting playback state.</returns>
-        PlaybackState getStartPlaybackState();
+        /// <returns>A new MedicalState with the current info in it.</returns>
+        MedicalState createMedicalState(String name);
     }
 }

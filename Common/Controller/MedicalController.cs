@@ -47,7 +47,7 @@ namespace Medical
         private MedicalInterface currentMedicalInterface;
         private MedicalSceneController medicalScene;
         private CommonController commonController;
-        private PlaybackController medicalScenePlayback;
+        private MedicalStateController medicalStates;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -118,7 +118,7 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
             medicalScene.OnSceneLoaded += new MedicalSceneControllerEvent(medicalScene_OnSceneLoaded);
             medicalScene.OnSceneUnloading += new MedicalSceneControllerEvent(medicalScene_OnSceneUnloading);
-            medicalScenePlayback = new PlaybackController(mainTimer);
+            medicalStates = new MedicalStateController();
             commonController.initialize(this);
 
             //Initialize GUI
@@ -280,9 +280,9 @@ namespace Medical
             }
         }
 
-        public PlaybackState createMedicalPlaybackState(float startTime)
+        public void createMedicalState(String name)
         {
-            return currentMedicalInterface.createPlaybackState(startTime);
+            medicalStates.addState(currentMedicalInterface.createMedicalState(name));
         }
 
         /// <summary>
@@ -323,7 +323,8 @@ namespace Medical
             {
                 currentMedicalInterface.sceneChanged();
             }
-            medicalScenePlayback.StartState = currentMedicalInterface.getStartPlaybackState();
+            //Create a state of the scene default.
+            createMedicalState("Normal");
         }
 
         /// <summary>
@@ -369,11 +370,11 @@ namespace Medical
             }
         }
 
-        public PlaybackController MedicalPlayback
+        public MedicalStateController MedicalStates
         {
             get
             {
-                return medicalScenePlayback;
+                return medicalStates;
             }
         }
 
