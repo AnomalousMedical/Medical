@@ -25,5 +25,15 @@ namespace Medical
             discs.TryGetValue(name, out ret);
             return ret;
         }
+
+        public static DiscState createDiscState()
+        {
+            DiscState state = new DiscState();
+            foreach (Disc disc in discs.Values)
+            {
+                state.addPosition(disc.Owner.Name, disc.getOffset(0));
+            }
+            return state;
+        }
     }
 }

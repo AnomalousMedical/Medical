@@ -8,6 +8,7 @@ namespace Medical.Controller
     class HeadPlaybackState : MedicalState
     {
         private BoneManipulatorState boneState;
+        private DiscState discState;
 
         public HeadPlaybackState(String name)
             :base(name)
@@ -19,11 +20,13 @@ namespace Medical.Controller
         {
             HeadPlaybackState headState = target as HeadPlaybackState;
             boneState.blend(headState.boneState, percent);
+            discState.blend(headState.discState, percent);
         }
 
         public override void update()
         {
             boneState = BoneManipulatorController.createBoneManipulatorState();
+            discState = DiscController.createDiscState();
         }
     }
 }
