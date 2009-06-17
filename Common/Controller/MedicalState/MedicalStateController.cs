@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Medical
 {
-    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state);
-    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state);
+    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
+    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStatesCleared(MedicalStateController controller);
 
     public class MedicalStateController
@@ -22,16 +22,17 @@ namespace Medical
             states.Add(state);
             if (StateAdded != null)
             {
-                StateAdded.Invoke(this, state);
+                StateAdded.Invoke(this, state, states.Count - 1);
             }
         }
 
         public void removeState(MedicalState state)
         {
-            states.Remove(state);
+            int index = states.IndexOf(state);
+            states.RemoveAt(index);
             if (StateRemoved != null)
             {
-                StateRemoved.Invoke(this, state);
+                StateRemoved.Invoke(this, state, index);
             }
         }
 
