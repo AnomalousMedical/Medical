@@ -120,7 +120,8 @@ namespace Medical.GUI
         private void nextButton_Click(object sender, EventArgs e)
         {
             int blend = (int)medicalStateTrackBar.CurrentBlend;
-            if (blend < medicalController.MedicalStates.getNumStates())
+            int numStates = medicalController.MedicalStates.getNumStates();
+            if (blend < numStates && numStates > 1)
             {
                 startPlayback(blend + 1, 1.0);
             }

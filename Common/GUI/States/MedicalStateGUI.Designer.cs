@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.playAllButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
@@ -44,19 +43,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
-            // playAllButton
-            // 
-            this.playAllButton.Location = new System.Drawing.Point(82, 32);
-            this.playAllButton.Name = "playAllButton";
-            this.playAllButton.Size = new System.Drawing.Size(75, 23);
-            this.playAllButton.TabIndex = 2;
-            this.playAllButton.Text = "Play All";
-            this.playAllButton.UseVisualStyleBackColor = true;
-            this.playAllButton.Click += new System.EventHandler(this.playAllButton_Click);
-            // 
             // pauseButton
             // 
-            this.pauseButton.Location = new System.Drawing.Point(164, 32);
+            this.pauseButton.Location = new System.Drawing.Point(82, 32);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(75, 23);
             this.pauseButton.TabIndex = 3;
@@ -76,7 +65,7 @@
             // 
             // nextButton
             // 
-            this.nextButton.Location = new System.Drawing.Point(246, 32);
+            this.nextButton.Location = new System.Drawing.Point(164, 32);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(75, 23);
             this.nextButton.TabIndex = 5;
@@ -118,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(325, 37);
+            this.label1.Location = new System.Drawing.Point(243, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 7;
@@ -127,7 +116,7 @@
             // speedTrackBar
             // 
             this.speedTrackBar.LargeChange = 2;
-            this.speedTrackBar.Location = new System.Drawing.Point(354, 32);
+            this.speedTrackBar.Location = new System.Drawing.Point(272, 32);
             this.speedTrackBar.Maximum = 4;
             this.speedTrackBar.Name = "speedTrackBar";
             this.speedTrackBar.Size = new System.Drawing.Size(104, 45);
@@ -137,7 +126,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(453, 39);
+            this.label2.Location = new System.Drawing.Point(371, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 9;
@@ -165,7 +154,6 @@
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.previousButton);
             this.Controls.Add(this.pauseButton);
-            this.Controls.Add(this.playAllButton);
             this.Controls.Add(this.panel1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
@@ -184,7 +172,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button playAllButton;
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button previousButton;
         private System.Windows.Forms.Button nextButton;
