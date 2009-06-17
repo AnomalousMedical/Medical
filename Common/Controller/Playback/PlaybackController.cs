@@ -9,9 +9,12 @@ namespace Medical
 {
     public delegate void PlaybackTimeChanged(float time);
 
+    public delegate void StartStateChanged(PlaybackState startState);
+
     public class PlaybackController : UpdateListener
     {
         public event PlaybackTimeChanged PlaybackTimeChanged;
+        public event StartStateChanged StartStateChanged;
 
         private PlaybackState startState;
         private PlaybackState currentState;
@@ -22,12 +25,6 @@ namespace Medical
         public PlaybackController(UpdateTimer timer)
         {
             this.timer = timer;
-        }
-
-        public void setCurrentState(PlaybackState current)
-        {
-            this.currentState = current;
-            currentState = currentState.blend(currentState.StartTime);
         }
 
         public void setTime(float time)
@@ -95,6 +92,7 @@ namespace Medical
             {
                 startState = value;
                 currentState = startState;
+                fireStartStateChanged();
             }
         }
 
@@ -103,6 +101,14 @@ namespace Medical
             if (PlaybackTimeChanged != null)
             {
                 PlaybackTimeChanged.Invoke(currentTime);
+            }
+        }
+
+        private void fireStartStateChanged()
+        {
+            if (StartStateChanged != null)
+            {
+                StartStateChanged.Invoke(startState);
             }
         }
     }

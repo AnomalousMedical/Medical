@@ -17,12 +17,12 @@ namespace Medical.GUI
         public BlendEditor()
         {
             InitializeComponent();
-            
         }
 
         public void initialize(MedicalController controller)
         {
             this.controller = controller;
+            controller.MedicalPlayback.StartStateChanged += new StartStateChanged(MedicalPlayback_StartStateChanged);
         }
 
         public void sceneLoaded()
@@ -38,6 +38,16 @@ namespace Medical.GUI
         {
             controller.createMedicalPlaybackState(keyFrameTrackBar.CurrentTickPosition);
             keyFrameTrackBar.addKeyFrame(keyFrameTrackBar.CurrentTickPosition);
+        }
+
+        void MedicalPlayback_StartStateChanged(PlaybackState startState)
+        {
+            PlaybackState current = startState;
+            while (current != null)
+            {
+                keyFrameTrackBar.addKeyFrame((int)current.StartTime);
+                current = current.Next;
+            }
         }
     }
 }
