@@ -65,6 +65,11 @@ namespace Medical
             {
                 states[startState].blend(percent - startState, states[endState]);
             }
+            //Be sure to blend if on the exact frame of the last state.
+            else if (startState == states.Count - 1 && startState > 0)
+            {
+                states[startState - 1].blend(1.0f, states[startState]);
+            }
         }
     }
 }

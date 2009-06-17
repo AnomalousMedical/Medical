@@ -6,6 +6,13 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
+    enum MedicalStateMarkStatus
+    {
+        Normal,
+        Hover,
+        Selected,
+    }
+
     class MedicalStateMark
     {
         private MedicalState state;
@@ -13,6 +20,7 @@ namespace Medical.GUI
         public MedicalStateMark(MedicalState state)
         {
             this.state = state;
+            Status = MedicalStateMarkStatus.Normal;
         }
 
         public void render(Graphics g, Pen pen, Rectangle boundsRect, Rectangle renderRect, int index, int maxIndex)
@@ -21,8 +29,19 @@ namespace Medical.GUI
             {
                 maxIndex = maxIndex - 1;
             }
-            pen.Color = Color.Red;
-            int location = (int)((float)index / maxIndex * boundsRect.Width);
+            switch(Status)
+            {
+                case MedicalStateMarkStatus.Normal:
+                    pen.Color = Color.Red;
+                    break;
+                case MedicalStateMarkStatus.Hover:
+                    pen.Color = Color.Yellow;
+                    break;
+                case MedicalStateMarkStatus.Selected:
+                    pen.Color = SystemColors.Highlight;
+                    break;
+            }
+            int location = computeLocation(index, maxIndex, boundsRect.Width);
             renderRect.X = location;
             g.FillRectangle(pen.Brush, renderRect);
 
@@ -34,5 +53,12 @@ namespace Medical.GUI
             //p2.X = location; e.Graphics.DrawLine(pen, p1, p2);
             //p2.X = location; e.Graphics.DrawLine(pen, p1, p2);
         }
+
+        public int computeLocation(int index, int maxIndex, int boundsRectWidth)
+        {
+            return (int)((float)index / maxIndex * boundsRectWidth);
+        }
+
+        public MedicalStateMarkStatus Status { get; set; }
     }
 }

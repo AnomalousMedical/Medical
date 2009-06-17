@@ -302,6 +302,7 @@ namespace Medical
         /// <param name="scene"></param>
         void medicalScene_OnSceneUnloading(MedicalSceneController controller, Engine.ObjectManagement.SimScene scene)
         {
+            medicalStates.clearStates();
             commonController.sceneUnloading();
             if (currentMedicalInterface != null)
             {
@@ -322,9 +323,9 @@ namespace Medical
             if (currentMedicalInterface != null)
             {
                 currentMedicalInterface.sceneChanged();
+                //Create a state of the scene default.
+                createMedicalState("Normal");
             }
-            //Create a state of the scene default.
-            createMedicalState("Normal");
         }
 
         /// <summary>

@@ -24,6 +24,7 @@ namespace Medical.GUI
         private double currentBlend;
         private double maxBlend;
         private List<MedicalStateMark> states = new List<MedicalStateMark>();
+        private int selectedState = -1;
 
         public MedicalStateTrackBar()
         {
@@ -53,7 +54,10 @@ namespace Medical.GUI
 
         public void clearStates()
         {
-
+            states.Clear();
+            currentBlend = 0;
+            calculateThumbPosition();
+            Invalidate();
         }
 
         // Calculate the sizes of the bar, thumb, and ticks rectangle.
@@ -113,20 +117,38 @@ namespace Medical.GUI
         // Determine whether the user has clicked the track bar thumb.
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (this.thumbRectangle.Contains(e.Location))
+            if (findMarkAt(e.Location) == -1)
             {
-                thumbClicked = true;
-                thumbState = TrackBarThumbState.Pressed;
-                Cursor.Hide();
-            }
+                if (this.thumbRectangle.Contains(e.Location))
+                {
+                    thumbClicked = true;
+                    thumbState = TrackBarThumbState.Pressed;
+                    Cursor.Hide();
+                }
 
-            this.Invalidate();
+                this.Invalidate();
+            }
         }
 
         // Redraw the track bar thumb if the user has moved it.
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (thumbClicked == true)
+            if (thumbClicked == false)
+            {
+                int index = findMarkAt(e.Location);
+                if (index != -1)
+                {
+                    if (selectedState > 0 && selectedState < states.Count)
+                    {
+                        states[selectedState].Status = MedicalStateMarkStatus.Normal;
+                    }
+                    selectedState = index;
+                    states[selectedState].Status = MedicalStateMarkStatus.Selected;
+                    CurrentBlend = index;
+                    Invalidate();
+                }
+            }
+            else
             {
                 if (e.Location.X > trackRectangle.X && e.Location.X < (trackRectangle.X + trackRectangle.Width - thumbRectangle.Width))
                 {
@@ -137,6 +159,24 @@ namespace Medical.GUI
                 Cursor.Show();
                 thumbClicked = false;
             }
+        }
+
+        private int findMarkAt(Point location)
+        {
+            int maxIndex = states.Count;
+            if (maxIndex > 1)
+            {
+                --maxIndex;
+            }
+            for (int i = 0; i < states.Count; ++i)
+            {
+                markRectangle.X = states[i].computeLocation(i, maxIndex, ticksRectangle.Width);
+                if (markRectangle.Contains(location))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         // Track cursor movements.
@@ -151,6 +191,19 @@ namespace Medical.GUI
             else
             {
                 thumbState = thumbRectangle.Contains(e.Location) ? TrackBarThumbState.Hot : TrackBarThumbState.Normal;
+                int maxIndex = states.Count;
+                if (maxIndex > 1)
+                {
+                    --maxIndex;
+                }
+                for (int i = 0; i < states.Count; ++i)
+                {
+                    if (i != selectedState)
+                    {
+                        markRectangle.X = states[i].computeLocation(i, maxIndex, ticksRectangle.Width);
+                        states[i].Status = markRectangle.Contains(e.Location) ? MedicalStateMarkStatus.Hover : MedicalStateMarkStatus.Normal;
+                    }
+                }
             }
             Invalidate();
         }

@@ -54,12 +54,12 @@ namespace Medical.GUI
 
         void MedicalStates_StatesCleared(MedicalStateController controller)
         {
-            
+            medicalStateTrackBar.clearStates();
         }
 
         void MedicalStates_StateRemoved(MedicalStateController controller, MedicalState state, int index)
         {
-            
+            medicalStateTrackBar.removeState(state);
         }
 
         void MedicalStates_StateAdded(MedicalStateController controller, MedicalState state, int index)
@@ -74,26 +74,24 @@ namespace Medical.GUI
 
         void loopUpdate(Clock time)
         {
+            double nextTime = medicalStateTrackBar.CurrentBlend + time.Seconds * playbackSpeed;
             if (playbackSpeed > 0)
             {
-                double nextTime = medicalStateTrackBar.CurrentBlend + time.Seconds;
                 if (nextTime > targetTime)
                 {
                     nextTime = targetTime;
                     pausePlayback();
                 }
-                medicalStateTrackBar.CurrentBlend = nextTime;
             }
-            if (playbackSpeed < 0)
+            else if (playbackSpeed < 0)
             {
-                double nextTime = medicalStateTrackBar.CurrentBlend - time.Seconds;
                 if (nextTime < targetTime)
                 {
                     nextTime = targetTime;
                     pausePlayback();
                 }
-                medicalStateTrackBar.CurrentBlend = nextTime;
             }
+            medicalStateTrackBar.CurrentBlend = nextTime;
         }
 
         private void playAllButton_Click(object sender, EventArgs e)
@@ -104,16 +102,13 @@ namespace Medical.GUI
         private void previousButton_Click(object sender, EventArgs e)
         {
             int blend = (int)medicalStateTrackBar.CurrentBlend;
-            if (blend > 0)
+            if (blend != medicalStateTrackBar.CurrentBlend)
             {
-                if (blend != medicalStateTrackBar.CurrentBlend)
-                {
-                    startPlayback(blend, -1.0);
-                }
-                else
-                {
-                    startPlayback(blend - 1, -1.0);
-                }
+                startPlayback(blend, -1.0);
+            }
+            else if (blend > 0)
+            {
+                startPlayback(blend - 1, -1.0);
             }
         }
 
@@ -131,10 +126,27 @@ namespace Medical.GUI
             }
         }
 
-        private void startPlayback(double goalTime, double playbackSpeed)
+        private void startPlayback(double goalTime, double playbackDirection)
         {
             targetTime = goalTime;
-            this.playbackSpeed = playbackSpeed;
+            switch (speedTrackBar.Value)
+            {
+                case(0):
+                    playbackSpeed = playbackDirection * 0.2;
+                    break;
+                case (1):
+                    playbackSpeed = playbackDirection * 0.5;
+                    break;
+                case (2):
+                    playbackSpeed = playbackDirection * 1.0;
+                    break;
+                case (3):
+                    playbackSpeed = playbackDirection * 3.0;
+                    break;
+                case (4):
+                    playbackSpeed = playbackDirection * 10.0;
+                    break;
+            }
             if (!playing)
             {
                 playing = true;
