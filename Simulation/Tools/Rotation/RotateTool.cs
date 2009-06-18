@@ -8,7 +8,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class RotateTool : Tool
+    public class RotateTool : Behavior
     {
         private static Vector3 YAW = new Vector3(1.0f, 0.0f, 0.0f);
         private static Vector3 PITCH = new Vector3(0.0f, 1.0f, 0.0f);
@@ -17,7 +17,6 @@ namespace Medical
 
         private DebugDrawingSurface circleSurface;
 
-        private RotateController rotateController;
         private RotationAxis xAxis;
         private RotationAxis yAxis;
         private RotationAxis zAxis;
@@ -32,17 +31,15 @@ namespace Medical
         private bool enabled = true;
         private Vector3 savedOrigin = Vector3.Zero; //The origin of the tool when it was destroyed.
 
-        public RotateTool(String name, RotateController rotateController)
+        public RotateTool(String name)
         {
             this.name = name;
             xAxis = new RotationAxis(Vector3.Backward, Vector3.Up, ROLL, currentRadius, new Color(1.0f, 0.0f, 0.0f));
             yAxis = new RotationAxis(Vector3.Backward, Vector3.Right, YAW, currentRadius, new Color(0.0f, 0.0f, 1.0f));
             zAxis = new RotationAxis(Vector3.Right, Vector3.Up, PITCH, currentRadius, new Color(0.0f, 1.0f, 0.0f));
-            this.rotateController = rotateController;
-            rotateController.OnRotationChanged += new RotationChanged(rotateController_OnRotationChanged);
         }
 
-        public void update(EventManager events)
+        public override void update(Clock clock, EventManager events)
         {
             //Process the mouse
             Mouse mouse = events.Mouse;
@@ -105,7 +102,7 @@ namespace Medical
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
                 allowMotionUpdates = false;
-                rotateController.setRotation(ref newRot, this);
+                this.updateRotation(ref newRot);
                 allowMotionUpdates = true;
             }
             else if (events[ToolEvents.Pick].FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
@@ -142,10 +139,10 @@ namespace Medical
                 }
                 //Y closest
                 else if (yAxisDistance < zAxisDistance && yAxisDistance < xAxisDistance)
-                    {
-                        xAxis.clearSelection();
-                        zAxis.clearSelection();
-                    }
+                {
+                    xAxis.clearSelection();
+                    zAxis.clearSelection();
+                }
                 //Z closest
                 else if (zAxisDistance < yAxisDistance && zAxisDistance < xAxisDistance)
                 {
@@ -207,7 +204,7 @@ namespace Medical
 
         #region Tool Members
 
-        public void setEnabled(bool enabled)
+        public void setToolActive(bool enabled)
         {
             if (circleSurface != null)
             {
@@ -242,14 +239,6 @@ namespace Medical
             {
                 circleSurface.moveOrigin(newTranslation);
                 translation = newTranslation;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return name;
             }
         }
 

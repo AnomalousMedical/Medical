@@ -87,8 +87,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera\CameraMotionValidator.cs" />
-    <Compile Include="Camera\CameraResolver.cs" />
     <Compile Include="Camera\OrbitCameraController.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\CommonController.cs" />
@@ -182,32 +180,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tools\Movement\Axis.cs" />
-    <Compile Include="Tools\Movement\MoveController.cs" />
-    <Compile Include="Tools\Movement\MovementTool.cs" />
-    <Compile Include="Tools\Movement\MovePanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\Movement\MovePanel.designer.cs">
-      <DependentUpon>MovePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\Rotation\EulerRotatePanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Tools\Rotation\EulerRotatePanel.designer.cs">
-      <DependentUpon>EulerRotatePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\Rotation\RotateController.cs" />
-    <Compile Include="Tools\Rotation\RotateTool.cs" />
-    <Compile Include="Tools\Rotation\RotationAxis.cs" />
-    <Compile Include="Tools\Selection\SelectableObject.cs" />
-    <Compile Include="Tools\Selection\SelectedObjectCollection.cs" />
-    <Compile Include="Tools\Selection\SelectionChangedArgs.cs" />
-    <Compile Include="Tools\Selection\SelectionController.cs" />
-    <Compile Include="Tools\Tool.cs" />
-    <Compile Include="Tools\ToolEvents.cs" />
-    <Compile Include="Tools\ToolInteropController.cs" />
-    <Compile Include="Tools\ToolManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">
@@ -253,14 +225,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Movement\MovePanel.resx">
-      <DependentUpon>MovePanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tools\Rotation\EulerRotatePanel.resx">
-      <DependentUpon>EulerRotatePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

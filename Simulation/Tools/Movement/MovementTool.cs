@@ -10,7 +10,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class MovementTool : Tool
+    public class MovementTool : Behavior
     {
         #region Static
 
@@ -37,7 +37,6 @@ namespace Medical
         #region Fields
 
         private DebugDrawingSurface axisSurface;
-        private MoveController moveController; 
         private Axis xAxisBox;
         private Axis yAxisBox;
         private Axis zAxisBox;
@@ -54,9 +53,8 @@ namespace Medical
 
         #region Constructors
 
-        public MovementTool(String name, MoveController manager)
+        public MovementTool(String name)
         {
-            this.moveController = manager;
             this.name = name;
             xAxisBox = new Axis(Vector3.Right, currentLength, new Color(1.0f, 0.0f, 0.0f));
             yAxisBox = new Axis(Vector3.Up, currentLength, new Color(0.0f, 0.0f, 1.0f));
@@ -90,7 +88,7 @@ namespace Medical
             }
         }
 
-        public void update(EventManager events)
+        public override void update(Clock clock, EventManager events)
         {
             if (axisSurface != null)
             {
@@ -121,7 +119,7 @@ namespace Medical
             }
         }
 
-        public void setEnabled(bool enabled)
+        public void setToolActive(bool enabled)
         {
             if (axisSurface != null)
             {
@@ -150,18 +148,18 @@ namespace Medical
 
         private void processSelection(EventManager events, CameraMotionValidator validator, ref Vector3 mouseLoc)
         {
-            Vector3 trans = moveController.Translation;
+            Vector3 trans = Owner.Translation;
             CameraControl camera = validator.getCamera();
             Ray3 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
-            float distance = (camera.Translation - moveController.Translation).length();
+            float distance = (camera.Translation - Owner.Translation).length();
             Vector3 spacePoint = spaceRay.Direction * distance + spaceRay.Origin;
             if (events[ToolEvents.Pick].FirstFrameDown)
             {
-                mouseOffset = -(spacePoint - moveController.Translation);
+                mouseOffset = -(spacePoint - Owner.Translation);
             }
             else if (events[ToolEvents.Pick].Down)
             {
-                spacePoint += -moveController.Translation + mouseOffset;
+                spacePoint += -Owner.Translation + mouseOffset;
 
                 Vector3 newPos = xAxisBox.translate(spacePoint)
                     + yAxisBox.translate(spacePoint)
@@ -170,8 +168,8 @@ namespace Medical
                     + xyAxisBox.translate(spacePoint)
                     + yzAxisBox.translate(spacePoint);
 
-                newPos += moveController.Translation;
-                moveController.setTranslation(ref newPos, this);
+                newPos += Owner.Translation;
+                updateTranslation(ref newPos);
             }
             else
             {
@@ -181,12 +179,12 @@ namespace Medical
 
         private void processAxis(ref Ray3 spaceRay)
         {
-            xzAxisBox.process(spaceRay, moveController.Translation);
-            xyAxisBox.process(spaceRay, moveController.Translation);
-            yzAxisBox.process(spaceRay, moveController.Translation);
-            xAxisBox.process(spaceRay, moveController.Translation);
-            yAxisBox.process(spaceRay, moveController.Translation);
-            zAxisBox.process(spaceRay, moveController.Translation);
+            xzAxisBox.process(spaceRay, Owner.Translation);
+            xyAxisBox.process(spaceRay, Owner.Translation);
+            yzAxisBox.process(spaceRay, Owner.Translation);
+            xAxisBox.process(spaceRay, Owner.Translation);
+            yAxisBox.process(spaceRay, Owner.Translation);
+            zAxisBox.process(spaceRay, Owner.Translation);
 
             if (xzAxisBox.isSelected())
             {
@@ -229,17 +227,5 @@ namespace Medical
         }
 
         #endregion Functions
-
-        #region Properties
-
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        #endregion Properties
     }
 }

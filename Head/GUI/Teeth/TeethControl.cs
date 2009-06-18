@@ -14,15 +14,6 @@ namespace Medical.GUI
     {
         private MedicalController medicalController;
 
-        //Tools
-        private ToolInteropController toolInterop = new ToolInteropController();
-        private MoveController moveController = new MoveController();
-        private SelectionController selectionController = new SelectionController();
-        private RotateController rotateController = new RotateController();
-        private MovementTool movementTool;
-        private RotateTool rotateTool;
-        private ToolManager toolManager;
-
         public TeethControl()
         {
             InitializeComponent();
@@ -31,12 +22,6 @@ namespace Medical.GUI
         public void initialize(MedicalController medicalController)
         {
             this.medicalController = medicalController;
-            //toolManager = new ToolManager(eventManager);
-            toolInterop.setToolManager(toolManager);
-            movementTool = new MovementTool("MovementTool", moveController);
-            toolManager.addTool(movementTool);
-            rotateTool = new RotateTool("RotateTool", rotateController);
-            toolManager.addTool(rotateTool);
         }
 
         public void sceneChanged()
