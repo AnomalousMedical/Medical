@@ -63,13 +63,13 @@ namespace Medical.GUI
 
         void startRightTimer()
         {
-            controller.LoopUpdate += updateRightTimer;
+            controller.FullSpeedLoopUpdate += updateRightTimer;
             rightBlendPercent = 0.0f;
         }
 
         void stopRightTimer()
         {
-            controller.LoopUpdate -= updateRightTimer;
+            controller.FullSpeedLoopUpdate -= updateRightTimer;
         }
 
         public void updateRightTimer(Clock clock)
@@ -90,13 +90,13 @@ namespace Medical.GUI
 
         void startLeftTimer()
         {
-            controller.LoopUpdate += updateLeftTimer;
+            controller.FullSpeedLoopUpdate += updateLeftTimer;
             leftBlendPercent = 0.0f;
         }
 
         void stopLeftTimer()
         {
-            controller.LoopUpdate -= updateLeftTimer;
+            controller.FullSpeedLoopUpdate -= updateLeftTimer;
         }
 
         public void updateLeftTimer(Clock clock)

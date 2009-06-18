@@ -151,7 +151,7 @@ namespace Medical.GUI
             if (!playing)
             {
                 playing = true;
-                medicalController.LoopUpdate += loopUpdate;
+                medicalController.FullSpeedLoopUpdate += loopUpdate;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Medical.GUI
             if (playing)
             {
                 playing = false;
-                medicalController.LoopUpdate -= loopUpdate;
+                medicalController.FullSpeedLoopUpdate -= loopUpdate;
             }
         }
     }

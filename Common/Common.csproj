@@ -93,38 +93,14 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\CommonController.cs" />
     <Compile Include="Controller\FileTracker.cs" />
+    <Compile Include="Controller\FixedMedicalUpdate.cs" />
+    <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalState\MedicalState.cs" />
     <Compile Include="Controller\MedicalState\MedicalStateController.cs" />
-    <Compile Include="Controller\Playback\PlaybackController.cs" />
-    <Compile Include="Controller\Playback\PlaybackState.cs" />
-    <Compile Include="GUI\Animation\KeyFrameMark.cs" />
-    <Compile Include="GUI\Animation\KeyFrameTrackBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\Animation\PlaybackGUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Animation\PlaybackGUI.Designer.cs">
-      <DependentUpon>PlaybackGUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\Animation\PlaybackTrackBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\Animation\StateEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Animation\StateEditor.Designer.cs">
-      <DependentUpon>StateEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\Animation\BlendEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Animation\BlendEditor.Designer.cs">
-      <DependentUpon>BlendEditor.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Controller\WindowsFormsUpdate.cs" />
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -206,24 +182,34 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Movement\Axis.cs" />
+    <Compile Include="Tools\Movement\MoveController.cs" />
+    <Compile Include="Tools\Movement\MovementTool.cs" />
+    <Compile Include="Tools\Movement\MovePanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Movement\MovePanel.designer.cs">
+      <DependentUpon>MovePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Rotation\EulerRotatePanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Rotation\EulerRotatePanel.designer.cs">
+      <DependentUpon>EulerRotatePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Rotation\RotateController.cs" />
+    <Compile Include="Tools\Rotation\RotateTool.cs" />
+    <Compile Include="Tools\Rotation\RotationAxis.cs" />
+    <Compile Include="Tools\Selection\SelectableObject.cs" />
+    <Compile Include="Tools\Selection\SelectedObjectCollection.cs" />
+    <Compile Include="Tools\Selection\SelectionChangedArgs.cs" />
+    <Compile Include="Tools\Selection\SelectionController.cs" />
+    <Compile Include="Tools\Tool.cs" />
+    <Compile Include="Tools\ToolEvents.cs" />
+    <Compile Include="Tools\ToolInteropController.cs" />
+    <Compile Include="Tools\ToolManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Animation\PlaybackGUI.resx">
-      <DependentUpon>PlaybackGUI.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Animation\PlaybackTrackBar.resx">
-      <DependentUpon>PlaybackTrackBar.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Animation\StateEditor.resx">
-      <DependentUpon>StateEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Animation\BlendEditor.resx">
-      <DependentUpon>BlendEditor.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\BoneManipulator\BoneManipulatorSlider.resx">
       <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -267,6 +253,14 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Movement\MovePanel.resx">
+      <DependentUpon>MovePanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Rotation\EulerRotatePanel.resx">
+      <DependentUpon>EulerRotatePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -23,7 +23,7 @@ namespace Medical
 {
     public delegate void LoopUpdate(Clock time);
 
-    public class MedicalController : IDisposable, UpdateListener
+    public class MedicalController : IDisposable
     {
         #region Fields
 
@@ -32,10 +32,13 @@ namespace Medical
         private LogFileListener logListener;
 
         //Platform
+        private SystemTimer systemTimer;
         private UpdateTimer mainTimer;
         private EventManager eventManager;
         private InputHandler inputHandler;
         private EventUpdateListener eventUpdate;
+        private FixedMedicalUpdate fixedUpdate;
+        private FullSpeedMedicalUpdate fullSpeedUpdate;
 
         //GUI
         private DrawingWindow hiddenEmbedWindow;
@@ -59,7 +62,8 @@ namespace Medical
 
         #region Events
 
-        public event LoopUpdate LoopUpdate;
+        public event LoopUpdate FullSpeedLoopUpdate;
+        public event LoopUpdate FixedLoopUpdate;
 
         #endregion Events
 
@@ -105,13 +109,17 @@ namespace Medical
             mainForm = new MedicalForm();
 
             //Intialize the platform
-            mainTimer = pluginManager.PlatformPlugin.createTimer();
+            systemTimer = pluginManager.PlatformPlugin.createTimer();
+            mainTimer = new UpdateTimer(systemTimer, new WindowsFormsUpdate());
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addFixedUpdateListener(eventUpdate);
-            mainTimer.addFullSpeedUpdateListener(this);
             pluginManager.setPlatformInfo(mainTimer, eventManager);
+            fixedUpdate = new FixedMedicalUpdate(this);
+            mainTimer.addFixedUpdateListener(fixedUpdate);
+            fullSpeedUpdate = new FullSpeedMedicalUpdate(this);
+            mainTimer.addFullSpeedUpdateListener(fullSpeedUpdate);
 
             //Initialize controllers
             drawingWindowController.initialize(this, eventManager, pluginManager.RendererPlugin, MedicalConfig.ConfigFile);
@@ -142,6 +150,10 @@ namespace Medical
             if (inputHandler != null)
             {
                 pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
+            }
+            if (systemTimer != null)
+            {
+                pluginManager.PlatformPlugin.destroyTimer(systemTimer);
             }
             if (pluginManager != null)
             {
@@ -285,6 +297,22 @@ namespace Medical
             medicalStates.addState(currentMedicalInterface.createMedicalState(name));
         }
 
+        internal void _sendFullSpeedUpdate(Clock clock)
+        {
+            if (FullSpeedLoopUpdate != null)
+            {
+                FullSpeedLoopUpdate.Invoke(clock);
+            }
+        }
+
+        internal void _sendFixedUpdate(Clock clock)
+        {
+            if (FixedLoopUpdate != null)
+            {
+                FixedLoopUpdate.Invoke(clock);
+            }
+        }
+
         /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
@@ -380,28 +408,5 @@ namespace Medical
         }
 
         #endregion Properties
-
-        #region UpdateListener Members
-
-        public void exceededMaxDelta()
-        {
-            
-        }
-
-        public void loopStarting()
-        {
-            
-        }
-
-        public void sendUpdate(Clock clock)
-        {
-            Application.DoEvents();
-            if (LoopUpdate != null)
-            {
-                LoopUpdate.Invoke(clock);
-            }
-        }
-
-        #endregion
     }
 }
