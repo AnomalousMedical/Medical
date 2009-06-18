@@ -30,5 +30,15 @@ namespace Medical
             teeth.TryGetValue(name, out ret);
             return ret;
         }
+
+        public static TeethState createTeethState()
+        {
+            TeethState state = new TeethState();
+            foreach (Tooth tooth in teeth.Values)
+            {
+                state.addPosition(tooth.Owner.Name, new ToothState(tooth.Extracted));
+            }
+            return state;
+        }
     }
 }
