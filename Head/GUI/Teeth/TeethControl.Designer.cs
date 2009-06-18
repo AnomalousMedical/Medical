@@ -66,6 +66,7 @@
             this.tooth3 = new System.Windows.Forms.CheckBox();
             this.tooth2 = new System.Windows.Forms.CheckBox();
             this.tooth1 = new System.Windows.Forms.CheckBox();
+            this.restoreButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
@@ -75,7 +76,8 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.moveButton,
             this.rotateButton,
-            this.removeButton});
+            this.removeButton,
+            this.restoreButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(260, 25);
@@ -663,6 +665,16 @@
             this.tooth1.Tag = "Tooth01";
             this.tooth1.UseVisualStyleBackColor = true;
             // 
+            // restoreButton
+            // 
+            this.restoreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.restoreButton.Image = ((System.Drawing.Image)(resources.GetObject("restoreButton.Image")));
+            this.restoreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.restoreButton.Name = "restoreButton";
+            this.restoreButton.Size = new System.Drawing.Size(50, 22);
+            this.restoreButton.Text = "Restore";
+            this.restoreButton.Click += new System.EventHandler(this.restoreButton_Click);
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -726,6 +738,7 @@
         private System.Windows.Forms.CheckBox tooth23;
         private System.Windows.Forms.CheckBox tooth22;
         private System.Windows.Forms.ToolStripButton removeButton;
+        private System.Windows.Forms.ToolStripButton restoreButton;
 
     }
 }

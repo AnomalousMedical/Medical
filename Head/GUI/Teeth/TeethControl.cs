@@ -35,11 +35,22 @@ namespace Medical.GUI
         {
             foreach (CheckBox control in teethPanel.Controls)
             {
-                if (control.Visible && control.Checked)
+                if (control.Checked)
                 {
-                    control.Visible = false;
                     Tooth tooth = TeethController.getTooth(control.Tag.ToString());
-                    tooth.Owner.destroy();
+                    tooth.Extracted = true;
+                }
+            }
+        }
+
+        private void restoreButton_Click(object sender, EventArgs e)
+        {
+            foreach (CheckBox control in teethPanel.Controls)
+            {
+                if (control.Checked)
+                {
+                    Tooth tooth = TeethController.getTooth(control.Tag.ToString());
+                    tooth.Extracted = false;
                 }
             }
         }
