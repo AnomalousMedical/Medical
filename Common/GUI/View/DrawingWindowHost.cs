@@ -141,25 +141,5 @@ namespace Medical
         {
             return String.Format(PERSIST_STRING, typeof(DrawingWindowHost).ToString(), drawingWindow.CameraName, drawingWindow.Translation, drawingWindow.LookAt);
         }
-
-        //protected override void OnActivated(EventArgs e)
-        //{
-        //    drawingWindow.setEnabled(true);
-        //    Console.WriteLine(this.Text + " activated " + this.Pane.ActiveContent);
-        //    base.OnActivated(e);
-        //}
-
-        //protected override void OnDeactivate(EventArgs e)
-        //{
-        //    drawingWindow.setEnabled(false);
-        //    Console.WriteLine(this.Text + " deactivated " + this.Pane.ActiveContent);
-        //    base.OnDeactivate(e);
-        //}
-
-        //protected override void OnDockStateChanged(EventArgs e)
-        //{
-        //    Console.WriteLine(this.Text + " dock changed");
-        //    base.OnDockStateChanged(e);
-        //}
     }
 }

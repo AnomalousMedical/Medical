@@ -217,11 +217,14 @@ namespace Medical
         /// <param name="lookAt">The look at point of the camera.</param>
         public void setNewPosition(Vector3 position, Vector3 lookAt)
         {
-            this.lookAt = lookAt;
-            computeStartingValues(position - lookAt);
-            //camera.setOrthoWindowHeight(orbitDistance);
-            updateTranslation(normalDirection * orbitDistance + lookAt);
-            camera.LookAt = lookAt;
+            if (camera != null)
+            {
+                this.lookAt = lookAt;
+                computeStartingValues(position - lookAt);
+                //camera.setOrthoWindowHeight(orbitDistance);
+                updateTranslation(normalDirection * orbitDistance + lookAt);
+                camera.LookAt = lookAt;
+            }
         }
 
         /// <summary>

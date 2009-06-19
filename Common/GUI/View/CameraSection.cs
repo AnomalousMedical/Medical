@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    class CameraSection
+    public class CameraSection
     {
         #region Static
 

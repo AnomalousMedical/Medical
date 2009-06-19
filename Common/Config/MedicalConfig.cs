@@ -12,6 +12,8 @@ namespace Medical
         private static ConfigFile configFile;
         private static String docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Atlas";
         private static String windowsFile = docRoot + "/windows.ini";
+        private static String camerasFile = docRoot + "/cameras.ini";
+        private static CameraSection cameraSection;
 
         static MedicalConfig()
         {
@@ -21,6 +23,7 @@ namespace Medical
             }
             configFile = new ConfigFile(docRoot + "/config.ini");
             configFile.loadConfigFile();
+            cameraSection = new CameraSection(configFile);
         }
 
         public static String DocRoot
@@ -44,6 +47,22 @@ namespace Medical
             get
             {
                 return windowsFile;
+            }
+        }
+
+        public static CameraSection CameraSection
+        {
+            get
+            {
+                return cameraSection;
+            }
+        }
+
+        public static String CamerasFile
+        {
+            get
+            {
+                return camerasFile;
             }
         }
 

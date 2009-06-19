@@ -21,16 +21,15 @@ namespace Medical
         private SimScene scene;
         private EventManager eventManager;
         private RendererPlugin rendererPlugin;
-        private CameraSection cameraSection;
+        private SavedCameraController savedCameras;
 
-        public DrawingWindowController()
+        public DrawingWindowController(String camerasFile)
         {
-
+            savedCameras = new SavedCameraController(camerasFile);
         }
 
         public void initialize(MedicalController controller, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
-            this.cameraSection = new CameraSection(configFile);
             this.controller = controller;
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
@@ -51,6 +50,7 @@ namespace Medical
 
         public void createFourWaySplit()
         {
+            CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
             controller.showDockContent(camera1);
@@ -64,6 +64,7 @@ namespace Medical
 
         public void createThreeWayUpperSplit()
         {
+            CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
             controller.showDockContent(camera1);
@@ -75,6 +76,7 @@ namespace Medical
 
         public void createTwoWaySplit()
         {
+            CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
             controller.showDockContent(camera1);
@@ -84,6 +86,7 @@ namespace Medical
 
         public void createOneWaySplit()
         {
+            CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
             controller.showDockContent(camera1);
@@ -123,6 +126,48 @@ namespace Medical
                 host.DrawingWindow.showStats(show);
             }
             showStatsActive = show;
+        }
+
+        public void restoreSavedCamera(String cameraName)
+        {
+            DrawingWindowHost activeWindow = controller.ActiveDocument as DrawingWindowHost;
+            if (activeWindow != null && savedCameras.hasSavedCamera(cameraName))
+            {
+                SavedCameraDefinition cameraDef = savedCameras.getSavedCamera(cameraName);
+                activeWindow.DrawingWindow.setCamera(cameraDef.Position, cameraDef.LookAt);
+            }
+        }
+
+        public IEnumerable<String> getSavedCameraNames()
+        {
+            return savedCameras.getSavedCameraNames();
+        }
+
+        public bool saveCamera(String name)
+        {
+            DrawingWindowHost activeWindow = controller.ActiveDocument as DrawingWindowHost;
+            if (activeWindow != null)
+            {
+                SavedCameraDefinition cam = new SavedCameraDefinition(name, activeWindow.DrawingWindow.Translation, activeWindow.DrawingWindow.LookAt);
+                savedCameras.addOrUpdateSavedCamera(cam);
+                return true;
+            }
+            return false;
+        }
+
+        public bool destroySavedCamera(String name)
+        {
+            return savedCameras.removeSavedCamera(name);
+        }
+
+        public bool hasSavedCamera(String name)
+        {
+            return savedCameras.hasSavedCamera(name);
+        }
+
+        public void saveCameraFile()
+        {
+            savedCameras.saveCameras();
         }
 
         internal void _alertCameraDestroyed(DrawingWindowHost host)

@@ -13,9 +13,11 @@ namespace Medical
         private ToolStripButton layersButton;
         private ToolStripButton pictureButton;
         private ToolStripButton stateButton;
+        private ToolStripButton camerasButton;
         private LayersControl layersControl = new LayersControl();
         private PictureControl pictureControl = new PictureControl();
         private MedicalStateGUI medicalState = new MedicalStateGUI();
+        private SavedCameraGUI savedCameras = new SavedCameraGUI();
         private CommonController controller;
 
         public CommonToolStrip(CommonController controller, MedicalController medicalController)
@@ -36,11 +38,18 @@ namespace Medical
             stateButton.Click += new EventHandler(stateButton_Click);
             this.Items.Add(stateButton);
 
+            camerasButton = new ToolStripButton("Cameras");
+            camerasButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            camerasButton.Click += new EventHandler(camerasButton_Click);
+            this.Items.Add(camerasButton);
+
             layersControl.VisibleChanged += new EventHandler(layersControl_VisibleChanged);
             pictureControl.VisibleChanged += new EventHandler(pictureControl_VisibleChanged);
             medicalState.VisibleChanged += new EventHandler(medicalState_VisibleChanged);
+            savedCameras.VisibleChanged += new EventHandler(savedCameras_VisibleChanged);
 
             medicalState.initialize(medicalController);
+            savedCameras.initialize(medicalController);
         }
 
         /// <summary>
@@ -62,6 +71,10 @@ namespace Medical
             if (persistString == medicalState.GetType().ToString())
             {
                 return medicalState;
+            }
+            if (persistString == savedCameras.GetType().ToString())
+            {
+                return savedCameras;
             }
             return null;
         }
@@ -127,6 +140,23 @@ namespace Medical
         void medicalState_VisibleChanged(object sender, EventArgs e)
         {
             stateButton.Checked = medicalState.Visible;
+        }
+
+        void camerasButton_Click(object sender, EventArgs e)
+        {
+            if (savedCameras.Visible)
+            {
+                controller.removeControl(savedCameras);
+            }
+            else
+            {
+                controller.addControlToUI(savedCameras);
+            }
+        }
+
+        void savedCameras_VisibleChanged(object sender, EventArgs e)
+        {
+            camerasButton.Checked = savedCameras.Visible;
         }
     }
 }

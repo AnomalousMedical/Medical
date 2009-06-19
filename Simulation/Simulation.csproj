@@ -99,6 +99,7 @@
     <Compile Include="Teeth\TeethController.cs" />
     <Compile Include="Teeth\TeethState.cs" />
     <Compile Include="Teeth\Tooth.cs" />
+    <Compile Include="Teeth\ToothMover.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\TopTooth.cs" />
     <Compile Include="Tools\Movement\Axis.cs" />

@@ -115,6 +115,11 @@ namespace Medical
             }
         }
 
+        public void setCamera(Vector3 position, Vector3 lookAt)
+        {
+            orbitCamera.setNewPosition(position, lookAt);
+        }
+
         public void setEnabled(bool enabled)
         {
             if (window != null)

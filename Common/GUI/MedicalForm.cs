@@ -78,6 +78,14 @@ namespace Medical.GUI
             return restore;
         }
 
+        public IDockContent ActiveDocument
+        {
+            get
+            {
+                return dockPanel.ActiveDocument;
+            }
+        }
+
         #region OSWindow Members
 
         public IntPtr WindowHandle

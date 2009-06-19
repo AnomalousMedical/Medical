@@ -77,7 +77,7 @@ namespace Medical
             progress.ProgressStep = 10;
             progress.fadeIn();
             progress.stepProgress();
-            drawingWindowController = new DrawingWindowController();
+            drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             commonController = new CommonController();
         }
 
@@ -203,6 +203,7 @@ namespace Medical
             medicalScene.destroyScene();
             mainTimer.stopLoop();
             mainForm.saveWindows(MedicalConfig.WindowsFile);
+            drawingWindowController.saveCameraFile();
         }
 
         /// <summary>
@@ -405,6 +406,14 @@ namespace Medical
             get
             {
                 return medicalStates;
+            }
+        }
+
+        public IDockContent ActiveDocument
+        {
+            get
+            {
+                return mainForm.ActiveDocument;
             }
         }
 

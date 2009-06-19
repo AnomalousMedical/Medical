@@ -88,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\OrbitCameraController.cs" />
+    <Compile Include="Camera\SavedCameraController.cs" />
+    <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\CommonController.cs" />
     <Compile Include="Controller\FileTracker.cs" />
@@ -112,6 +114,12 @@
     <Compile Include="GUI\Common\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Common\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Common\InputBox.designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Layers\LayerEntry.cs">
       <SubType>UserControl</SubType>
@@ -150,6 +158,12 @@
     <Compile Include="GUI\Picture\PictureControl.Designer.cs">
       <DependentUpon>PictureControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SavedCamera\SavedCameraGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SavedCamera\SavedCameraGUI.Designer.cs">
+      <DependentUpon>SavedCameraGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,6 +200,10 @@
       <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Common\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Layers\LayerEntry.resx">
       <DependentUpon>LayerEntry.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -208,6 +226,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Picture\PictureControl.resx">
       <DependentUpon>PictureControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SavedCamera\SavedCameraGUI.resx">
+      <DependentUpon>SavedCameraGUI.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\States\MedicalStateGUI.resx">
