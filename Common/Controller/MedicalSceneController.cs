@@ -106,5 +106,13 @@ namespace Medical
             package.SimObjectManagerDefinition = currentSimObjects.saveToDefinition();
             return package;
         }
+
+        public SimScene CurrentScene
+        {
+            get
+            {
+                return currentScene;
+            }
+        }
     }
 }

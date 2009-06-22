@@ -11,14 +11,14 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class LayersControl : DockContent
+    public partial class LayersControl : GUIElement
     {
         public LayersControl()
         {
             InitializeComponent();
         }
 
-        public void sceneUnloading()
+        public override void sceneUnloading()
         {
             foreach (Control control in sectionsPanel.Controls)
             {
@@ -27,7 +27,7 @@ namespace Medical.GUI
             sectionsPanel.Controls.Clear();
         }
 
-        public void sceneLoaded()
+        public override void sceneLoaded()
         {
             sectionsPanel.SuspendLayout();
             sectionsPanel.Controls.Clear();

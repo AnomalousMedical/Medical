@@ -13,46 +13,24 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public partial class MedicalForm : Form, OSWindow
+    public class MedicalForm : Form, OSWindow
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
-        private MedicalController controller;
-        private FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
+        protected FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
         private String windowDefaultText;
         private const String TITLE_FORMAT = "{0} - {1}";
+        private DockPanel dockPanel;
+        private ToolStripContainer toolStrip;
 
         public MedicalForm()
         {
-            InitializeComponent();
-            windowDefaultText = this.Text;
+
         }
 
-        public void initialize(MedicalController controller)
+        protected void initialize(DockPanel dockPanel, ToolStripContainer toolStrip)
         {
-            this.controller = controller;
-        }
-
-        public void addToolStrip(ToolStrip toolStrip)
-        {
-            toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
-        }
-
-        public void removeToolStrip(ToolStrip toolStrip)
-        {
-            if (toolStrip.Parent != null)
-            {
-                toolStrip.Parent.Controls.Remove(toolStrip);
-            }
-        }
-
-        public void showDockContent(DockContent content)
-        {
-            content.Show(dockPanel);
-        }
-
-        public void hideDockContent(DockContent content)
-        {
-            content.DockHandler.Hide();
+            this.dockPanel = dockPanel;
+            this.toolStrip = toolStrip;
         }
 
         public void saveWindows(String filename)
@@ -65,14 +43,16 @@ namespace Medical.GUI
             bool restore = File.Exists(filename);
             if (restore)
             {
+                //Close all windows
                 for (int index = dockPanel.Contents.Count - 1; index >= 0; index--)
                 {
-                    if (dockPanel.Contents[index] is IDockContent)
+                    IDockContent content = dockPanel.Contents[index] as IDockContent;
+                    if (content != null)
                     {
-                        IDockContent content = (IDockContent)dockPanel.Contents[index];
                         content.DockHandler.Close();
                     }
                 }
+                //Load the file
                 dockPanel.LoadFromXml(filename, callback);
             }
             return restore;
@@ -84,6 +64,16 @@ namespace Medical.GUI
             {
                 return dockPanel.ActiveDocument;
             }
+        }
+
+        internal void showDockContent(DockContent content)
+        {
+            content.Show(dockPanel);
+        }
+
+        internal void hideDockContent(DockContent content)
+        {
+            content.DockHandler.Hide();
         }
 
         #region OSWindow Members
@@ -150,77 +140,6 @@ namespace Medical.GUI
             }
             base.OnHandleDestroyed(e);
         }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            if (controller != null)
-            {
-                controller.shutdown();
-            }
-            base.OnFormClosing(e);
-        }
-
-        private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.DrawingWindowController.createOneWaySplit();
-        }
-
-        private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.DrawingWindowController.createTwoWaySplit();
-        }
-
-        private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.DrawingWindowController.createThreeWayUpperSplit();
-        }
-
-        private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.DrawingWindowController.createFourWaySplit();
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.createNewScene();
-            clearWindowTitle();
-        }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            String filename = fileTracker.openFile(this);
-            if (fileTracker.lastDialogAccepted())
-            {
-                controller.openScene(filename);
-                updateWindowTitle(filename);
-            }
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            String filename = fileTracker.saveFile(this);
-            if (fileTracker.lastDialogAccepted())
-            {
-                controller.saveScene(filename);
-                updateWindowTitle(filename);
-            }
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            String filename = fileTracker.saveFileAs(this);
-            if (fileTracker.lastDialogAccepted())
-            {
-                controller.saveScene(filename);
-                updateWindowTitle(filename);
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.shutdown();
-            this.Close();
-        }
         
         /// <summary>
         /// Update the title of the window to reflect a current filename or other info.
@@ -237,6 +156,22 @@ namespace Medical.GUI
         private void clearWindowTitle()
         {
             Text = windowDefaultText;
+        }
+
+        public DockPanel DockPanel
+        {
+            get
+            {
+                return dockPanel;
+            }
+        }
+
+        public ToolStripContainer ToolStrip
+        {
+            get
+            {
+                return toolStrip;
+            }
         }
     }
 }

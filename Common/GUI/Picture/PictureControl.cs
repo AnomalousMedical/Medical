@@ -10,7 +10,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class PictureControl : DockContent
+    public partial class PictureControl : GUIElement
     {
         public PictureControl()
         {

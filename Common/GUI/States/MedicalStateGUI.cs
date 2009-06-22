@@ -11,7 +11,7 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    public partial class MedicalStateGUI : DockContent
+    public partial class MedicalStateGUI : GUIElement
     {
         private MedicalController medicalController;
         private bool playing = false;
@@ -32,16 +32,6 @@ namespace Medical.GUI
             medicalController.MedicalStates.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
         }
 
-        public void sceneLoaded()
-        {
-
-        }
-
-        public void sceneUnloading()
-        {
-
-        }
-
         void medicalStateTrackBar_CurrentBlendChanged(MedicalStateTrackBar trackBar, double currentTime)
         {
             medicalController.MedicalStates.blend((float)currentTime);
@@ -49,7 +39,7 @@ namespace Medical.GUI
 
         private void addStateButton_Click(object sender, EventArgs e)
         {
-            medicalController.createMedicalState("Test");
+            
         }
 
         void MedicalStates_StatesCleared(MedicalStateController controller)

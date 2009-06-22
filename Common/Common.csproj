@@ -91,7 +91,6 @@
     <Compile Include="Camera\SavedCameraController.cs" />
     <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
-    <Compile Include="Controller\CommonController.cs" />
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
@@ -107,9 +106,6 @@
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.Designer.cs">
       <DependentUpon>BoneManipulatorSlider.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CommonToolStrip.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="GUI\Common\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">
@@ -121,6 +117,10 @@
     <Compile Include="GUI\Common\InputBox.designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\GUIElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\GUIElementController.cs" />
     <Compile Include="GUI\Layers\LayerEntry.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -148,9 +148,6 @@
     <Compile Include="GUI\Loading\ProgressDialog.cs" />
     <Compile Include="GUI\MedicalForm.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\MedicalForm.Designer.cs">
-      <DependentUpon>MedicalForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Picture\PictureControl.cs">
       <SubType>Form</SubType>
@@ -202,6 +199,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Common\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\GUIElement.resx">
+      <DependentUpon>GUIElement.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Layers\LayerEntry.resx">

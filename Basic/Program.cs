@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Logging;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -19,16 +20,18 @@ namespace Medical
 
             using (MedicalController controller = new MedicalController())
             {
-                try
+                using (MedicalForm medicalForm = new MedicalForm())
                 {
-                    controller.intialize();
-                    //controller.setMedicalInterface(new HeadController());
-                    controller.start();
-                }
-                catch (Exception e)
-                {
-                    Log.Default.printException(e);
-                    MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        controller.intialize(medicalForm);
+                        controller.start();
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Default.printException(e);
+                        MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

@@ -8,12 +8,12 @@ using System.Windows.Forms;
 using Engine.Platform;
 using Engine.Renderer;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.GUI;
 
 namespace Medical
 {
     public class DrawingWindowController
     {
-        private MedicalController controller;
         private List<DrawingWindowHost> cameras = new List<DrawingWindowHost>();
         private bool camerasActive = false;
         private bool showStatsActive = false;
@@ -22,15 +22,16 @@ namespace Medical
         private EventManager eventManager;
         private RendererPlugin rendererPlugin;
         private SavedCameraController savedCameras;
+        private DockPanel dock;
 
         public DrawingWindowController(String camerasFile)
         {
             savedCameras = new SavedCameraController(camerasFile);
         }
 
-        public void initialize(MedicalController controller, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
+        public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
-            this.controller = controller;
+            this.dock = dock;
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
         }
@@ -53,7 +54,7 @@ namespace Medical
             CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            controller.showDockContent(camera1);
+            camera1.Show(dock);
             DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
             camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
             DrawingWindowHost camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
@@ -67,7 +68,7 @@ namespace Medical
             CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            controller.showDockContent(camera1);
+            camera1.Show(dock);
             DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
             camera2.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
             DrawingWindowHost camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
@@ -79,7 +80,7 @@ namespace Medical
             CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            controller.showDockContent(camera1);
+            camera1.Show(dock);
             DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
             camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
         }
@@ -89,7 +90,7 @@ namespace Medical
             CameraSection cameraSection = MedicalConfig.CameraSection;
             closeAllWindows();
             DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            controller.showDockContent(camera1);
+            camera1.Show(dock);
         }
 
         public DrawingWindowHost createDrawingWindowHost(String name, Vector3 translation, Vector3 lookAt)
@@ -130,7 +131,7 @@ namespace Medical
 
         public void restoreSavedCamera(String cameraName)
         {
-            DrawingWindowHost activeWindow = controller.ActiveDocument as DrawingWindowHost;
+            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
             if (activeWindow != null && savedCameras.hasSavedCamera(cameraName))
             {
                 SavedCameraDefinition cameraDef = savedCameras.getSavedCamera(cameraName);
@@ -145,7 +146,7 @@ namespace Medical
 
         public bool saveCamera(String name)
         {
-            DrawingWindowHost activeWindow = controller.ActiveDocument as DrawingWindowHost;
+            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
             if (activeWindow != null)
             {
                 SavedCameraDefinition cam = new SavedCameraDefinition(name, activeWindow.DrawingWindow.Translation, activeWindow.DrawingWindow.LookAt);

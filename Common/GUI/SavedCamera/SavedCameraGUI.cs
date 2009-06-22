@@ -10,9 +10,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    public partial class SavedCameraGUI : DockContent
+    public partial class SavedCameraGUI : GUIElement
     {
-        private MedicalController medicalController;
+        private DrawingWindowController drawingWindowController;
 
         public SavedCameraGUI()
         {
@@ -21,10 +21,10 @@ namespace Medical.GUI
             cameraNameList.KeyUp += new KeyEventHandler(cameraNameList_KeyUp);
         }
 
-        public void initialize(MedicalController medicalController)
+        public void initialize(DrawingWindowController drawingWindowController)
         {
-            this.medicalController = medicalController;
-            foreach (String name in medicalController.DrawingWindowController.getSavedCameraNames())
+            this.drawingWindowController = drawingWindowController;
+            foreach (String name in drawingWindowController.getSavedCameraNames())
             {
                 cameraNameList.Items.Add(name);
             }
@@ -45,7 +45,7 @@ namespace Medical.GUI
             InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm());
             if (result.ok)
             {
-                medicalController.DrawingWindowController.saveCamera(result.text);
+                drawingWindowController.saveCamera(result.text);
                 if (!cameraNameList.Items.Contains(result.text))
                 {
                     cameraNameList.Items.Add(result.text);
@@ -74,7 +74,7 @@ namespace Medical.GUI
         {
             if (cameraNameList.SelectedItem != null)
             {
-                medicalController.DrawingWindowController.restoreSavedCamera(cameraNameList.SelectedItem.ToString());
+                drawingWindowController.restoreSavedCamera(cameraNameList.SelectedItem.ToString());
             }
         }
 
@@ -83,7 +83,7 @@ namespace Medical.GUI
             if (cameraNameList.SelectedItem != null)
             {
                 String selectedItem = cameraNameList.SelectedItem.ToString();
-                if (medicalController.DrawingWindowController.destroySavedCamera(selectedItem))
+                if (drawingWindowController.destroySavedCamera(selectedItem))
                 {
                     cameraNameList.Items.Remove(selectedItem);
                 }

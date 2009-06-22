@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Medical;
 using Medical.Controller;
 using Logging;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -19,13 +20,11 @@ namespace Medical
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (MedicalController controller = new MedicalController())
+            using (AdvancedController controller = new AdvancedController())
             {
                 try
                 {
-                    controller.intialize();
-                    controller.setMedicalInterface(new AdvancedController());
-                    controller.start();
+                    controller.go();
                 }
                 catch (Exception e)
                 {
