@@ -190,8 +190,8 @@ namespace Medical
                 }
                 textReader.Close();
             }
-            progress.fadeAway();
             mainForm.Show();
+            progress.fadeAway();
             mainTimer.startLoop();
         }
 

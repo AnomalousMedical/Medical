@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Medical;
-using Medical.Controller;
 using Logging;
 
-namespace Atlas
+namespace Medical
 {
     static class Program
     {
@@ -24,7 +22,7 @@ namespace Atlas
                 try
                 {
                     controller.intialize();
-                    controller.setMedicalInterface(new HeadController());
+                    //controller.setMedicalInterface(new HeadController());
                     controller.start();
                 }
                 catch (Exception e)
