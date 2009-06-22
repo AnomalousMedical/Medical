@@ -97,8 +97,6 @@
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
-    <Compile Include="Controller\MedicalState\MedicalState.cs" />
-    <Compile Include="Controller\MedicalState\MedicalStateController.cs" />
     <Compile Include="Controller\WindowsFormsUpdate.cs" />
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>

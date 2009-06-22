@@ -45,7 +45,6 @@ namespace Medical
 
         //Controller
         private MedicalSceneController medicalScene;
-        private MedicalStateController medicalStates;
 
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
@@ -105,7 +104,6 @@ namespace Medical
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
-            medicalStates = new MedicalStateController();
         }
 
         /// <summary>
@@ -234,14 +232,6 @@ namespace Medical
         #endregion Functions
 
         #region Properties
-
-        public MedicalStateController MedicalStates
-        {
-            get
-            {
-                return medicalStates;
-            }
-        }
 
         public EventManager EventManager
         {

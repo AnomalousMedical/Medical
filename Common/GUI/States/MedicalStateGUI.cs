@@ -13,6 +13,7 @@ namespace Medical.GUI
 {
     public partial class MedicalStateGUI : GUIElement
     {
+        private MedicalStateController stateController;
         private MedicalController medicalController;
         private bool playing = false;
         private double targetTime = 0.0f;
@@ -24,17 +25,18 @@ namespace Medical.GUI
             medicalStateTrackBar.CurrentBlendChanged += new CurrentBlendChanged(medicalStateTrackBar_CurrentBlendChanged);
         }
 
-        public void initialize(MedicalController medicalController)
+        public void initialize(MedicalStateController stateController, MedicalController medicalController)
         {
+            this.stateController = stateController;
             this.medicalController = medicalController;
-            medicalController.MedicalStates.StateAdded += new MedicalStateAdded(MedicalStates_StateAdded);
-            medicalController.MedicalStates.StateRemoved += new MedicalStateRemoved(MedicalStates_StateRemoved);
-            medicalController.MedicalStates.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
+            stateController.StateAdded += new MedicalStateAdded(MedicalStates_StateAdded);
+            stateController.StateRemoved += new MedicalStateRemoved(MedicalStates_StateRemoved);
+            stateController.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
         }
 
         void medicalStateTrackBar_CurrentBlendChanged(MedicalStateTrackBar trackBar, double currentTime)
         {
-            medicalController.MedicalStates.blend((float)currentTime);
+            stateController.blend((float)currentTime);
         }
 
         private void addStateButton_Click(object sender, EventArgs e)
@@ -86,7 +88,7 @@ namespace Medical.GUI
 
         private void playAllButton_Click(object sender, EventArgs e)
         {
-            startPlayback(medicalController.MedicalStates.getNumStates(), 1.0);
+            startPlayback(stateController.getNumStates(), 1.0);
         }
 
         private void previousButton_Click(object sender, EventArgs e)
@@ -110,7 +112,7 @@ namespace Medical.GUI
         private void nextButton_Click(object sender, EventArgs e)
         {
             int blend = (int)medicalStateTrackBar.CurrentBlend;
-            int numStates = medicalController.MedicalStates.getNumStates();
+            int numStates = stateController.getNumStates();
             if (blend < numStates && numStates > 1)
             {
                 startPlayback(blend + 1, 1.0);

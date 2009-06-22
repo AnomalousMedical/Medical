@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical.Controller
+namespace Medical
 {
-    class HeadPlaybackState : MedicalState
+    public abstract class MedicalState
     {
         private BoneManipulatorState boneState;
         private DiscState discState;
         private TeethState teethState;
 
-        public HeadPlaybackState(String name)
-            :base(name)
+        public MedicalState(String name)
         {
-
+            Name = name;
         }
 
-        public override void blend(float percent, MedicalState target)
+        public void blend(float percent, MedicalState target)
         {
-            HeadPlaybackState headState = target as HeadPlaybackState;
-            boneState.blend(headState.boneState, percent);
-            discState.blend(headState.discState, percent);
-            teethState.blend(headState.teethState, percent);
+            boneState.blend(target.boneState, percent);
+            discState.blend(target.discState, percent);
+            teethState.blend(target.teethState, percent);
         }
 
-        public override void update()
+        public void update()
         {
             boneState = BoneManipulatorController.createBoneManipulatorState();
             discState = DiscController.createDiscState();
             teethState = TeethController.createTeethState();
         }
+
+        public String Name { get; set; }
     }
 }
