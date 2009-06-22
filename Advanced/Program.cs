@@ -6,7 +6,7 @@ using Medical;
 using Medical.Controller;
 using Logging;
 
-namespace Advanced
+namespace Medical
 {
     static class Program
     {
@@ -24,7 +24,7 @@ namespace Advanced
                 try
                 {
                     controller.intialize();
-                    controller.setMedicalInterface(new HeadController());
+                    controller.setMedicalInterface(new AdvancedController());
                     controller.start();
                 }
                 catch (Exception e)
