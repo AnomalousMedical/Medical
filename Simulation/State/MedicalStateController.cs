@@ -17,13 +17,16 @@ namespace Medical
 
         private List<MedicalState> states = new List<MedicalState>();
 
-        public void addState(MedicalState state)
+        public MedicalState createState(String name)
         {
+            MedicalState state = new MedicalState(name);
+            state.update();
             states.Add(state);
             if (StateAdded != null)
             {
                 StateAdded.Invoke(this, state, states.Count - 1);
             }
+            return state;
         }
 
         public void removeState(MedicalState state)

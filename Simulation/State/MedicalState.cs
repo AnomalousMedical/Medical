@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Medical
 {
-    public abstract class MedicalState
+    public class MedicalState
     {
         private BoneManipulatorState boneState;
         private DiscState discState;

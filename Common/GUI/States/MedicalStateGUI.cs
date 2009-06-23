@@ -41,7 +41,7 @@ namespace Medical.GUI
 
         private void addStateButton_Click(object sender, EventArgs e)
         {
-            
+            stateController.createState("Test");
         }
 
         void MedicalStates_StatesCleared(MedicalStateController controller)
