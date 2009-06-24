@@ -10,6 +10,7 @@ namespace Medical
         private BoneManipulatorState boneState;
         private DiscState discState;
         private TeethState teethState;
+        private FossaState fossaState;
 
         public MedicalState(String name)
         {
@@ -21,6 +22,7 @@ namespace Medical
             boneState.blend(target.boneState, percent);
             discState.blend(target.discState, percent);
             teethState.blend(target.teethState, percent);
+            fossaState.blend(target.fossaState, percent);
         }
 
         public void update()
@@ -28,6 +30,7 @@ namespace Medical
             boneState = BoneManipulatorController.createBoneManipulatorState();
             discState = DiscController.createDiscState();
             teethState = TeethController.createTeethState();
+            fossaState = FossaController.createState();
         }
 
         public String Name { get; set; }

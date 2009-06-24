@@ -25,5 +25,15 @@ namespace Medical
             fossas.TryGetValue(name, out ret);
             return ret;
         }
+
+        public static FossaState createState()
+        {
+            FossaState state = new FossaState();
+            foreach (Fossa fossa in fossas.Values)
+            {
+                state.addPosition(fossa.Owner.Name, fossa.getEminanceDistortion());
+            }
+            return state;
+        }
     }
 }
