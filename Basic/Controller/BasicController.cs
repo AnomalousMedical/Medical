@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.GUI;
-using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
-using System.Threading;
+using System.Windows.Forms;
 
 namespace Medical.Controller
 {
-    /// <summary>
-    /// This is the main controller for the Advanced program.
-    /// </summary>
-    public class AdvancedController : IDisposable
+    public class BasicController : IDisposable
     {
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
-        private AdvancedForm advancedForm;
+        private BasicForm basicForm;
         private GUIElementController guiElements;
         private MedicalStateController stateController = new MedicalStateController();
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public AdvancedController()
+        public BasicController()
         {
 
         }
@@ -38,9 +34,9 @@ namespace Medical.Controller
             {
                 medicalController.Dispose();
             }
-            if (advancedForm != null)
+            if (basicForm != null)
             {
-                advancedForm.Dispose();
+                basicForm.Dispose();
             }
         }
 
@@ -52,15 +48,15 @@ namespace Medical.Controller
             SplashScreen splash = new SplashScreen();
             splash.Show();
 
-            advancedForm = new AdvancedForm();
-            advancedForm.initialize(this);
+            basicForm = new BasicForm();
+            basicForm.initialize(this);
             medicalController = new MedicalController();
-            medicalController.intialize(advancedForm);
+            medicalController.intialize(basicForm);
 
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
-            drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+            drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
-            guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip);
+            guiElements = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip);
 
             //Add common gui elements
             LayersControl layersControl = new LayersControl();
@@ -75,32 +71,15 @@ namespace Medical.Controller
             guiElements.addGUIElement(savedCameraGUI);
 
             //Add specific gui elements
-            DiskControl discControl = new DiskControl();
-            guiElements.addGUIElement(discControl);
-            
-            MandibleOffsetControl mandibleOffset = new MandibleOffsetControl();
-            guiElements.addGUIElement(mandibleOffset);
-            
-            MandibleSizeControl mandibleSize = new MandibleSizeControl();
-            mandibleSize.initialize(medicalController);
-            guiElements.addGUIElement(mandibleSize);
-
             MuscleControl muscleControl = new MuscleControl();
             guiElements.addGUIElement(muscleControl);
 
-            TeethControl teethControl = new TeethControl();
-            teethControl.initialize(medicalController);
-            guiElements.addGUIElement(teethControl);
-
-            FossaControl fossaControl = new FossaControl();
-            guiElements.addGUIElement(fossaControl);
-            
-            if(!advancedForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            if(!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
 
-            advancedForm.Show();
+            basicForm.Show();
             splash.Close();
             medicalController.start();
         }
@@ -111,7 +90,7 @@ namespace Medical.Controller
         public void stop()
         {
             medicalController.shutdown();
-            advancedForm.saveWindows(MedicalConfig.WindowsFile);
+            basicForm.saveWindows(MedicalConfig.WindowsFile);
             drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }

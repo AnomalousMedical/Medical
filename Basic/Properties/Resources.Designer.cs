@@ -59,5 +59,26 @@ namespace Medical.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap clenchedmuscle {
+            get {
+                object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap neutralmuscle {
+            get {
+                object obj = ResourceManager.GetObject("neutralmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap openmuscle {
+            get {
+                object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

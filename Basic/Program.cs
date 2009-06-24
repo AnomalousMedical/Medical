@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Logging;
 using Medical.GUI;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -18,20 +19,16 @@ namespace Medical
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (MedicalController controller = new MedicalController())
+            using (BasicController controller = new BasicController())
             {
-                using (MedicalForm medicalForm = new MedicalForm())
+                try
                 {
-                    try
-                    {
-                        controller.intialize(medicalForm);
-                        controller.start();
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Default.printException(e);
-                        MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    controller.go();
+                }
+                catch (Exception e)
+                {
+                    Log.Default.printException(e);
+                    MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

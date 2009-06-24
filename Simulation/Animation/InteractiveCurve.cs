@@ -39,24 +39,34 @@ namespace Medical
             curve.addControlPoint(controlPoint);
         }
 
+        public void updateControlPoint(int index, Vector3 newValue)
+        {
+            curve.updateControlPoint(index, newValue);
+        }
+
         public int getNumControlPoints()
         {
             return curve.getNumControlPoints();
         }
 
+        public Vector3 getControlPoint(int index)
+        {
+            return curve.getControlPoint(index);
+        }
+
         public void recomputeCurve()
         {
             curve.computeSplines();
-            //manualObject.clear();
-            //manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
-            //manualObject.position(curve.interpolate(0.0f));
-            //manualObject.color(color.r, color.g, color.b, color.a);
-            //for (uint i = 1; i <= lineDetail; ++i)
-            //{
-            //    manualObject.position(curve.interpolate(i / (float)lineDetail));
-            //    manualObject.color(color.r, color.g, color.b, color.a);
-            //}
-            //manualObject.end();
+            manualObject.clear();
+            manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
+            manualObject.position(curve.interpolate(0.0f));
+            manualObject.color(color.r, color.g, color.b, color.a);
+            for (uint i = 1; i <= lineDetail; ++i)
+            {
+                manualObject.position(curve.interpolate(i / (float)lineDetail));
+                manualObject.color(color.r, color.g, color.b, color.a);
+            }
+            manualObject.end();
         }
 
         public Vector3 interpolate(float percentage)
@@ -80,11 +90,11 @@ namespace Medical
                     else
                     {
                         //Initialize the manual object so it can be easily updated.
-                        //manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
-                        //manualObject.estimateVertexCount(lineDetail);
-                        //manualObject.position(ref Vector3.Zero);
-                        //manualObject.position(ref Vector3.Zero);
-                        //manualObject.end();
+                        manualObject.begin("colorVertexNoDepth", OperationType.OT_LINE_STRIP);
+                        manualObject.estimateVertexCount(lineDetail);
+                        manualObject.position(ref Vector3.Zero);
+                        manualObject.position(ref Vector3.Zero);
+                        manualObject.end();
                     }
                 }
                 else
