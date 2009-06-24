@@ -14,6 +14,7 @@ namespace Medical.GUI
     {
         Fossa leftFossa;
         Fossa rightFossa;
+        bool allowUpdates = true;
 
         public FossaControl()
         {
@@ -30,7 +31,10 @@ namespace Medical.GUI
             this.Enabled = leftFossa != null && rightFossa != null;
             if (this.Enabled)
             {
-                
+                allowUpdates = false;
+                leftEminanceSlider.Value = (int)(leftFossa.getEminanceDistortion() * leftEminanceSlider.Maximum);
+                rightEminanceSlider.Value = (int)(rightFossa.getEminanceDistortion() * rightEminanceSlider.Maximum);
+                allowUpdates = true;
             }
         }
 
@@ -43,12 +47,18 @@ namespace Medical.GUI
 
         void leftEminanceSlider_ValueChanged(object sender, EventArgs e)
         {
-            leftFossa.setEminanceDistortion((float)leftEminanceSlider.Value / leftEminanceSlider.Maximum);
+            if (allowUpdates)
+            {
+                leftFossa.setEminanceDistortion((float)leftEminanceSlider.Value / leftEminanceSlider.Maximum);
+            }
         }
 
         void rightEminanceSlider_ValueChanged(object sender, EventArgs e)
         {
-            rightFossa.setEminanceDistortion((float)rightEminanceSlider.Value / rightEminanceSlider.Maximum);
+            if (allowUpdates)
+            {
+                rightFossa.setEminanceDistortion((float)rightEminanceSlider.Value / rightEminanceSlider.Maximum);
+            }
         }
     }
 }

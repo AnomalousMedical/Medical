@@ -48,6 +48,14 @@ namespace Medical
         [DoNotCopy]
         private List<Bone> bones = new List<Bone>();
 
+        [Editable]
+        String controlPointObject;
+
+        [Editable]
+        String controlPointBehavior;
+
+        private ControlPointBehavior controlPoint;
+
         protected override void constructed()
         {
             FossaController.add(this);
@@ -110,6 +118,21 @@ namespace Medical
                 {
                     translation.addControlPoint(point);
                 }
+
+                //Find the control point
+                SimObject controlPointObj = Owner.getOtherSimObject(controlPointObject);
+                if (controlPointObj != null)
+                {
+                    controlPoint = controlPointObj.getElement(controlPointBehavior) as ControlPointBehavior;
+                    if (controlPoint == null)
+                    {
+                        blacklist("Could not find controlPointBehavior {0}.", controlPointBehavior);
+                    }
+                }
+                else
+                {
+                    blacklist("Could not find controlPointObject {0}.", controlPointObject);
+                }
             }
         }
 
@@ -133,26 +156,6 @@ namespace Medical
             FossaController.remove(this);
         }
 
-        public int getNumControlPoints()
-        {
-            return translation.getNumControlPoints();
-        }
-
-        public Vector3 getControlPoint(int index)
-        {
-            return translation.getControlPoint(index);
-        }
-
-        public void updateControlPoint(int index, Vector3 value)
-        {
-            translation.updateControlPoint(index, value);
-        }
-
-        public void updateFossa()
-        {
-            translation.recomputeCurve();
-        }
-
         public void setEminanceDistortion(float percent)
         {
             eminanceDistortion = percent;
@@ -163,6 +166,12 @@ namespace Medical
             }
             translation.recomputeCurve();
             updateBones();
+            controlPoint.positionModified();
+        }
+
+        public float getEminanceDistortion()
+        {
+            return eminanceDistortion;
         }
 
         protected override void link()
