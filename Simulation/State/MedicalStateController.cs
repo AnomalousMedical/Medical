@@ -21,12 +21,17 @@ namespace Medical
         {
             MedicalState state = new MedicalState(name);
             state.update();
+            addState(state);
+            return state;
+        }
+
+        public void addState(MedicalState state)
+        {
             states.Add(state);
             if (StateAdded != null)
             {
                 StateAdded.Invoke(this, state, states.Count - 1);
             }
-            return state;
         }
 
         public void removeState(MedicalState state)

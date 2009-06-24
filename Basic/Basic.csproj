@@ -78,6 +78,36 @@
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StateWizard\JointPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StateWizard\JointPanel.Designer.cs">
+      <DependentUpon>JointPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StateWizard\MandiblePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StateWizard\MandiblePanel.Designer.cs">
+      <DependentUpon>MandiblePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StateWizard\StateWizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\StateWizard\StateWizardForm.Designer.cs">
+      <DependentUpon>StateWizardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StateWizard\StateWizardPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StateWizard\StateWizardPanel.Designer.cs">
+      <DependentUpon>StateWizardPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StateWizard\TeethPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StateWizard\TeethPanel.Designer.cs">
+      <DependentUpon>TeethPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\BasicForm.resx">
@@ -86,6 +116,26 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
       <DependentUpon>MuscleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StateWizard\JointPanel.resx">
+      <DependentUpon>JointPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StateWizard\MandiblePanel.resx">
+      <DependentUpon>MandiblePanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StateWizard\StateWizardForm.resx">
+      <DependentUpon>StateWizardForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StateWizard\StateWizardPanel.resx">
+      <DependentUpon>StateWizardPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StateWizard\TeethPanel.resx">
+      <DependentUpon>TeethPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -126,6 +176,120 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\openmuscle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftEminenceNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftJointSpaceNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftMandibleSizeNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightEminenceNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightJointSpaceNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightMandibleSizeNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

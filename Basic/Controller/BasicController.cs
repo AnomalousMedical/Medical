@@ -6,6 +6,7 @@ using Medical.GUI;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Windows.Forms;
+using Medical.GUI.StateWizard;
 
 namespace Medical.Controller
 {
@@ -16,6 +17,7 @@ namespace Medical.Controller
         private BasicForm basicForm;
         private GUIElementController guiElements;
         private MedicalStateController stateController = new MedicalStateController();
+        private StateWizardForm stateWizard = new StateWizardForm();
 
         /// <summary>
         /// Constructor.
@@ -124,6 +126,16 @@ namespace Medical.Controller
                 }
             }
             return ret;
+        }
+
+        public void showStateWizard()
+        {
+            stateWizard.startWizard();
+            stateWizard.ShowDialog(basicForm);
+            if (stateWizard.WizardFinished)
+            {
+                stateController.addState(stateWizard.CreatedState);
+            }
         }
 
         /// <summary>

@@ -121,10 +121,124 @@
   <data name="clenchedmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clenchedmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LeftEminenceNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftEminenceNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftJointSpaceNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftJointSpaceNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftMandibleSizeNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftMandibleSizeNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="neutralmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\neutralmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="openmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\openmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightEminenceNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightEminenceNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightJointSpaceNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightJointSpaceNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightMandibleSizeNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightMandibleSizeNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth10.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth11.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth12.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth13.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth14.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth15.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth17" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth17.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth18.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth19" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth19.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth20.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth21.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth22" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth22.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth23" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth23.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth25.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth26" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth26.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth27" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth27.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth28" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth28.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth29" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth29.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth30.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth31" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth31.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth4.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth5.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth7.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth8.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth9.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

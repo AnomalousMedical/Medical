@@ -44,5 +44,10 @@ namespace Medical.GUI
         {
             this.Close();
         }
+
+        private void testWizardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.showStateWizard();
+        }
     }
 }
