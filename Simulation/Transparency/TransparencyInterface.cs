@@ -33,6 +33,7 @@ namespace Medical
         [Editable] private float currentAlpha = 1.0f;
         [Editable] private String nodeName;
         [Editable] private String entityName;
+        [Editable] private bool disableOnHidden = true;
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -58,7 +59,10 @@ namespace Medical
             currentAlpha = alpha;
             diffuse.a = alpha;
             alphaMaterial.Value.setDiffuse(ref diffuse);
-            entity.setVisible(alpha != 0.0f);
+            if (disableOnHidden)
+            {
+                entity.setVisible(alpha != 0.0f);
+            }
             if (alpha == 1.0f)
             {
                 subEntity.setMaterialName(baseMaterialName);
