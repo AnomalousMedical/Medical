@@ -8,6 +8,8 @@ using Engine.Editing;
 using OgrePlugin;
 using PhysXPlugin;
 using OgreWrapper;
+using Engine.Attributes;
+using PhysXWrapper;
 
 namespace Medical
 {
@@ -23,11 +25,17 @@ namespace Medical
         private String actorName = "Actor";
 
         [Editable]
+        private String jointName = "Joint";
+
+        [Editable]
         private bool extracted = false;
 
-        private SceneNodeElement sceneNodeElement;
-        private PhysActorElement actorElement;
-        private Entity entity;
+        protected bool loose = false;
+
+        protected SceneNodeElement sceneNodeElement;
+        protected PhysActorElement actorElement;
+        protected Entity entity;
+        protected PhysD6JointElement joint;
 
         protected override void constructed()
         {
@@ -50,6 +58,16 @@ namespace Medical
             {
                 blacklist("Could not find Actor {0}.", actorName);
             }
+            joint = Owner.getElement(jointName) as PhysD6JointElement;
+            if (joint == null)
+            {
+                blacklist("Could not find Joint {0}.", jointName);
+            }
+                //temp
+            else
+            {
+                
+            }
         }
 
         protected override void destroy()
@@ -61,6 +79,8 @@ namespace Medical
         {
 
         }
+
+        protected abstract void looseChanged(bool loose);
 
         public bool Extracted
         {
@@ -84,6 +104,20 @@ namespace Medical
                     actorElement.Actor.raiseActorFlag(PhysXWrapper.ActorFlag.NX_AF_DISABLE_COLLISION);
                     entity.setVisible(false);
                 }
+            }
+        }
+
+        [DoNotCopy]
+        public bool Loose
+        {
+            get
+            {
+                return loose;
+            }
+            set
+            {
+                loose = value;
+                looseChanged(loose);
             }
         }
     }

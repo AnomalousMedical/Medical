@@ -12,6 +12,9 @@ namespace Medical
 {
     class BottomTooth : Tooth
     {
-
+        protected override void looseChanged(bool loose)
+        {
+            
+        }
     }
 }

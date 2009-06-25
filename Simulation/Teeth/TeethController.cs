@@ -40,5 +40,13 @@ namespace Medical
             }
             return state;
         }
+
+        public static void setTeethLoose(bool loose)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                tooth.Loose = loose;
+            }
+        }
     }
 }
