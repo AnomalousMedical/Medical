@@ -42,7 +42,6 @@ namespace Medical.GUI
         public void addState(MedicalState state, int index)
         {
             states.Insert(index, new MedicalStateMark(state));
-            currentBlend = index;
             calculateThumbPosition();
             Invalidate();
         }

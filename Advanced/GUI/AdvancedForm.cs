@@ -44,5 +44,10 @@ namespace Medical.GUI
                 controller.open(fileTracker.getCurrentFile());
             }
         }
+
+        private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.saveMedicalState("Test");
+        }
     }
 }

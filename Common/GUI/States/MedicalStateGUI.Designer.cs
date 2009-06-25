@@ -31,15 +31,10 @@
             this.pauseButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.addStateButton = new System.Windows.Forms.Button();
+            this.medicalStateTrackBar = new Medical.GUI.MedicalStateTrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.speedTrackBar = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
-            this.medicalStateTrackBar = new Medical.GUI.MedicalStateTrackBar();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,36 +68,16 @@
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
-            // panel1
+            // medicalStateTrackBar
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.medicalStateTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.medicalStateTrackBar);
-            this.panel1.Location = new System.Drawing.Point(2, -35);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(486, 66);
-            this.panel1.TabIndex = 6;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.addStateButton);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(389, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(97, 66);
-            this.panel2.TabIndex = 2;
-            // 
-            // addStateButton
-            // 
-            this.addStateButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.addStateButton.Location = new System.Drawing.Point(0, 43);
-            this.addStateButton.Name = "addStateButton";
-            this.addStateButton.Size = new System.Drawing.Size(97, 23);
-            this.addStateButton.TabIndex = 2;
-            this.addStateButton.Text = "Add State";
-            this.addStateButton.UseVisualStyleBackColor = true;
-            this.addStateButton.Click += new System.EventHandler(this.addStateButton_Click);
+            this.medicalStateTrackBar.CurrentBlend = 0;
+            this.medicalStateTrackBar.Location = new System.Drawing.Point(1, -16);
+            this.medicalStateTrackBar.MaxBlend = 60;
+            this.medicalStateTrackBar.Name = "medicalStateTrackBar";
+            this.medicalStateTrackBar.Size = new System.Drawing.Size(487, 47);
+            this.medicalStateTrackBar.TabIndex = 1;
             // 
             // label1
             // 
@@ -132,38 +107,23 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Fast";
             // 
-            // medicalStateTrackBar
-            // 
-            this.medicalStateTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.medicalStateTrackBar.CurrentBlend = 0;
-            this.medicalStateTrackBar.Location = new System.Drawing.Point(3, 19);
-            this.medicalStateTrackBar.MaxBlend = 60;
-            this.medicalStateTrackBar.Name = "medicalStateTrackBar";
-            this.medicalStateTrackBar.Size = new System.Drawing.Size(383, 47);
-            this.medicalStateTrackBar.TabIndex = 1;
-            // 
             // MedicalStateGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 125);
+            this.Controls.Add(this.medicalStateTrackBar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.speedTrackBar);
             this.Controls.Add(this.nextButton);
             this.Controls.Add(this.previousButton);
             this.Controls.Add(this.pauseButton);
-            this.Controls.Add(this.panel1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HideOnClose = true;
             this.Name = "MedicalStateGUI";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
             this.Text = "States";
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -175,9 +135,6 @@
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button previousButton;
         private System.Windows.Forms.Button nextButton;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button addStateButton;
         private MedicalStateTrackBar medicalStateTrackBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar speedTrackBar;

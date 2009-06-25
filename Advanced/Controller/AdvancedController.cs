@@ -20,6 +20,7 @@ namespace Medical.Controller
         private AdvancedForm advancedForm;
         private GUIElementController guiElements;
         private MedicalStateController stateController = new MedicalStateController();
+        private MedicalStateGUI stateGUI;
 
         /// <summary>
         /// Constructor.
@@ -66,7 +67,7 @@ namespace Medical.Controller
             LayersControl layersControl = new LayersControl();
             guiElements.addGUIElement(layersControl);
 
-            MedicalStateGUI stateGUI = new MedicalStateGUI();
+            stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController, medicalController);
             guiElements.addGUIElement(stateGUI);
 
@@ -145,6 +146,12 @@ namespace Medical.Controller
                 }
             }
             return ret;
+        }
+
+        public void saveMedicalState(string name)
+        {
+            stateController.createState(name);
+            stateGUI.CurrentBlend = stateController.getNumStates() - 1;
         }
 
         /// <summary>

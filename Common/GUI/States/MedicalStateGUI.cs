@@ -39,11 +39,6 @@ namespace Medical.GUI
             stateController.blend((float)currentTime);
         }
 
-        private void addStateButton_Click(object sender, EventArgs e)
-        {
-            stateController.createState("Test");
-        }
-
         void MedicalStates_StatesCleared(MedicalStateController controller)
         {
             medicalStateTrackBar.clearStates();
@@ -153,6 +148,18 @@ namespace Medical.GUI
             {
                 playing = false;
                 medicalController.FullSpeedLoopUpdate -= loopUpdate;
+            }
+        }
+
+        public double CurrentBlend
+        {
+            get
+            {
+                return medicalStateTrackBar.CurrentBlend;
+            }
+            set
+            {
+                medicalStateTrackBar.CurrentBlend = value;
             }
         }
     }
