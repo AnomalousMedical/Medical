@@ -34,6 +34,43 @@ namespace Medical.GUI
             stateController.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
         }
 
+        public void next()
+        {
+            int blend = (int)medicalStateTrackBar.CurrentBlend;
+            int numStates = stateController.getNumStates();
+            if (blend < numStates && numStates > 1)
+            {
+                startPlayback(blend + 1, 1.0);
+            }
+        }
+
+        public void previous()
+        {
+            int blend = (int)medicalStateTrackBar.CurrentBlend;
+            if (blend != medicalStateTrackBar.CurrentBlend)
+            {
+                startPlayback(blend, -1.0);
+            }
+            else if (blend > 0)
+            {
+                startPlayback(blend - 1, -1.0);
+            }
+        }
+
+        public void playAll()
+        {
+            startPlayback(stateController.getNumStates(), 1.0);
+        }
+
+        public void pause()
+        {
+            if (playing)
+            {
+                playing = false;
+                medicalController.FullSpeedLoopUpdate -= loopUpdate;
+            }
+        }
+
         void medicalStateTrackBar_CurrentBlendChanged(MedicalStateTrackBar trackBar, double currentTime)
         {
             stateController.blend((float)currentTime);
@@ -67,7 +104,7 @@ namespace Medical.GUI
                 if (nextTime > targetTime)
                 {
                     nextTime = targetTime;
-                    pausePlayback();
+                    pause();
                 }
             }
             else if (playbackSpeed < 0)
@@ -75,7 +112,7 @@ namespace Medical.GUI
                 if (nextTime < targetTime)
                 {
                     nextTime = targetTime;
-                    pausePlayback();
+                    pause();
                 }
             }
             medicalStateTrackBar.CurrentBlend = nextTime;
@@ -83,35 +120,22 @@ namespace Medical.GUI
 
         private void playAllButton_Click(object sender, EventArgs e)
         {
-            startPlayback(stateController.getNumStates(), 1.0);
+            playAll();
         }
 
         private void previousButton_Click(object sender, EventArgs e)
         {
-            int blend = (int)medicalStateTrackBar.CurrentBlend;
-            if (blend != medicalStateTrackBar.CurrentBlend)
-            {
-                startPlayback(blend, -1.0);
-            }
-            else if (blend > 0)
-            {
-                startPlayback(blend - 1, -1.0);
-            }
+            previous();
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
-            pausePlayback();
+            pause();
         }
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            int blend = (int)medicalStateTrackBar.CurrentBlend;
-            int numStates = stateController.getNumStates();
-            if (blend < numStates && numStates > 1)
-            {
-                startPlayback(blend + 1, 1.0);
-            }
+            next();
         }
 
         private void startPlayback(double goalTime, double playbackDirection)
@@ -139,15 +163,6 @@ namespace Medical.GUI
             {
                 playing = true;
                 medicalController.FullSpeedLoopUpdate += loopUpdate;
-            }
-        }
-
-        private void pausePlayback()
-        {
-            if (playing)
-            {
-                playing = false;
-                medicalController.FullSpeedLoopUpdate -= loopUpdate;
             }
         }
 
