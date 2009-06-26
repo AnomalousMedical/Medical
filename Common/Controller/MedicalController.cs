@@ -91,7 +91,7 @@ namespace Medical
             //Intialize the platform
             systemTimer = pluginManager.PlatformPlugin.createTimer();
             mainTimer = new UpdateTimer(systemTimer, new WindowsFormsUpdate());
-            mainTimer.FramerateCap = 60.0;
+            mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
             eventUpdate = new EventUpdateListener(eventManager);

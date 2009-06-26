@@ -90,6 +90,7 @@
     <Compile Include="Camera\OrbitCameraController.cs" />
     <Compile Include="Camera\SavedCameraController.cs" />
     <Compile Include="Camera\SavedCameraDefinition.cs" />
+    <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />

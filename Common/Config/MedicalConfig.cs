@@ -24,6 +24,7 @@ namespace Medical
             configFile = new ConfigFile(docRoot + "/config.ini");
             configFile.loadConfigFile();
             cameraSection = new CameraSection(configFile);
+            EngineConfig = new EngineConfig(configFile);
         }
 
         public static String DocRoot
@@ -65,6 +66,8 @@ namespace Medical
                 return camerasFile;
             }
         }
+
+        public static EngineConfig EngineConfig { get; private set; }
 
         public static void save()
         {

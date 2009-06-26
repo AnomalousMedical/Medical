@@ -45,7 +45,7 @@ namespace Medical.GUI
             this.Close();
         }
 
-        private void testWizardToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addDistortionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.showStateWizard();
         }

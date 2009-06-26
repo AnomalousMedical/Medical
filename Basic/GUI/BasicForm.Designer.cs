@@ -50,7 +50,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.testWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.distortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDistortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -137,7 +138,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.distortionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(711, 24);
@@ -148,8 +150,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.testWizardToolStripMenuItem});
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -168,12 +169,20 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // testWizardToolStripMenuItem
+            // distortionToolStripMenuItem
             // 
-            this.testWizardToolStripMenuItem.Name = "testWizardToolStripMenuItem";
-            this.testWizardToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.testWizardToolStripMenuItem.Text = "Test Wizard";
-            this.testWizardToolStripMenuItem.Click += new System.EventHandler(this.testWizardToolStripMenuItem_Click);
+            this.distortionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addDistortionToolStripMenuItem});
+            this.distortionToolStripMenuItem.Name = "distortionToolStripMenuItem";
+            this.distortionToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+            this.distortionToolStripMenuItem.Text = "Distortion";
+            // 
+            // addDistortionToolStripMenuItem
+            // 
+            this.addDistortionToolStripMenuItem.Name = "addDistortionToolStripMenuItem";
+            this.addDistortionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.addDistortionToolStripMenuItem.Text = "Add Distortion";
+            this.addDistortionToolStripMenuItem.Click += new System.EventHandler(this.addDistortionToolStripMenuItem_Click);
             // 
             // BasicForm
             // 
@@ -207,6 +216,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem testWizardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem distortionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addDistortionToolStripMenuItem;
     }
 }
