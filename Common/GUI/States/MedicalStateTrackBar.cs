@@ -25,6 +25,7 @@ namespace Medical.GUI
         private double maxBlend;
         private List<MedicalStateMark> states = new List<MedicalStateMark>();
         private int selectedState = -1;
+        Pen pen = new Pen(Color.Black);
 
         public MedicalStateTrackBar()
         {
@@ -37,6 +38,12 @@ namespace Medical.GUI
             // Calculate the initial sizes of the bar, 
             // thumb and ticks.
             SetupTrackBar();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            pen.Dispose();
         }
 
         public void addState(MedicalState state, int index)
@@ -64,8 +71,15 @@ namespace Medical.GUI
         {
             using (Graphics g = this.CreateGraphics())
             {
-                // Calculate the size of the thumb.
-                thumbRectangle.Size = TrackBarRenderer.GetTopPointingThumbSize(g, TrackBarThumbState.Normal);
+                if (TrackBarRenderer.IsSupported)
+                {
+                    // Calculate the size of the thumb.
+                    thumbRectangle.Size = TrackBarRenderer.GetTopPointingThumbSize(g, TrackBarThumbState.Normal);
+                }
+                else
+                {
+                    thumbRectangle.Size = new Size(11, 19);
+                }
 
                 // Calculate the size of the mark rectangle
                 markRectangle.Y = trackRectangle.Y;
@@ -102,14 +116,20 @@ namespace Medical.GUI
         // Draw the track bar.
         protected override void OnPaint(PaintEventArgs e)
         {
-            TrackBarRenderer.DrawHorizontalTrack(e.Graphics, trackRectangle);
-            TrackBarRenderer.DrawTopPointingThumb(e.Graphics, thumbRectangle, thumbState);
-            using (Pen pen = new Pen(Color.Black))
+            if (TrackBarRenderer.IsSupported)
             {
-                for(int i = 0; i < states.Count; ++i)
-                {
-                    states[i].render(e.Graphics, pen, ticksRectangle, markRectangle, i, states.Count);
-                }
+                TrackBarRenderer.DrawHorizontalTrack(e.Graphics, trackRectangle);
+                TrackBarRenderer.DrawTopPointingThumb(e.Graphics, thumbRectangle, thumbState);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(pen.Brush, trackRectangle);
+                e.Graphics.FillRectangle(pen.Brush, thumbRectangle);
+            }
+
+            for (int i = 0; i < states.Count; ++i)
+            {
+                states[i].render(e.Graphics, pen, ticksRectangle, markRectangle, i, states.Count);
             }
         }
 

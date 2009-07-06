@@ -49,5 +49,10 @@ namespace Medical.GUI
         {
             controller.saveMedicalState("Test");
         }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.newScene();
+        }
     }
 }

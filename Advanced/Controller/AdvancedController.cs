@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Threading;
+using System.IO;
+using Engine.Resources;
 
 namespace Medical.Controller
 {
@@ -124,6 +126,14 @@ namespace Medical.Controller
         public void open(String filename)
         {
             changeScene(filename);
+        }
+
+        public void newScene()
+        {
+            if(File.Exists(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml"))
+            {
+                changeScene(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml");
+            }
         }
 
         /// <summary>
