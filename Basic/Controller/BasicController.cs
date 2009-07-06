@@ -64,8 +64,8 @@ namespace Medical.Controller
             guiElements = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip);
 
             //Add common gui elements
-            LayersControl layersControl = new LayersControl();
-            guiElements.addGUIElement(layersControl);
+            //LayersControl layersControl = new LayersControl();
+            //guiElements.addGUIElement(layersControl);
 
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController, medicalController);
@@ -78,6 +78,9 @@ namespace Medical.Controller
             //Add specific gui elements
             MuscleControl muscleControl = new MuscleControl();
             guiElements.addGUIElement(muscleControl);
+
+            SimpleLayerControl simpleLayer = new SimpleLayerControl();
+            guiElements.addGUIElement(simpleLayer);
 
             if(!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {

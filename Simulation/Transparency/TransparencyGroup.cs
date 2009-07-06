@@ -35,6 +35,11 @@ namespace Medical
             return alphaObjects.Values;
         }
 
+        public TransparencyInterface getTransparencyObject(String name)
+        {
+            return alphaObjects[name];
+        }
+
         public RenderGroup Name { get; private set; }
     }
 }

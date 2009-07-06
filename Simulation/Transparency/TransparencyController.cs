@@ -32,6 +32,11 @@ namespace Medical
             }
         }
 
+        public static TransparencyGroup getTransparencyGroup(RenderGroup group)
+        {
+            return groups[group];
+        }
+
         public static IEnumerable<TransparencyGroup> getGroupIter()
         {
             return groups.Values;
