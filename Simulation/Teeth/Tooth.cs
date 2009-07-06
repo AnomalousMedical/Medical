@@ -28,6 +28,9 @@ namespace Medical
         private String jointName = "Joint";
 
         [Editable]
+        private String transparencyInterface = "Alpha";
+
+        [Editable]
         private bool extracted = false;
 
         protected bool loose = false;
@@ -36,6 +39,8 @@ namespace Medical
         protected PhysActorElement actorElement;
         protected Entity entity;
         protected PhysD6JointElement joint;
+
+        private TransparencyInterface transparency;
 
         protected override void constructed()
         {
@@ -63,10 +68,10 @@ namespace Medical
             {
                 blacklist("Could not find Joint {0}.", jointName);
             }
-                //temp
-            else
+            transparency = Owner.getElement(transparencyInterface) as TransparencyInterface;
+            if (transparency == null)
             {
-                
+                blacklist("Could not find TransparencyInterface {0}", transparencyInterface);
             }
         }
 
@@ -96,6 +101,7 @@ namespace Medical
                     extracted = false;
                     actorElement.Actor.clearActorFlag(PhysXWrapper.ActorFlag.NX_AF_DISABLE_COLLISION);
                     entity.setVisible(true);
+                    transparency.DisableOnHidden = true;
                 }
                 //Extract the tooth if it is in the scene
                 else if (!this.extracted && value)
@@ -103,6 +109,7 @@ namespace Medical
                     extracted = true;
                     actorElement.Actor.raiseActorFlag(PhysXWrapper.ActorFlag.NX_AF_DISABLE_COLLISION);
                     entity.setVisible(false);
+                    transparency.DisableOnHidden = false;
                 }
             }
         }

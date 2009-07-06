@@ -169,5 +169,17 @@ namespace Medical
                 return currentAlpha;
             }
         }
+
+        public bool DisableOnHidden
+        {
+            get
+            {
+                return disableOnHidden;
+            }
+            set
+            {
+                disableOnHidden = value;
+            }
+        }
     }
 }
