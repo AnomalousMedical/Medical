@@ -59,7 +59,7 @@ namespace Medical.GUI
 
         public void playAll()
         {
-            startPlayback(stateController.getNumStates(), 1.0);
+            startPlayback(stateController.getNumStates() - 1, 1.0);
         }
 
         public void pause()

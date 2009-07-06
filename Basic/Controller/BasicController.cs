@@ -7,6 +7,8 @@ using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Windows.Forms;
 using Medical.GUI.StateWizard;
+using System.IO;
+using Engine.Resources;
 
 namespace Medical.Controller
 {
@@ -82,6 +84,7 @@ namespace Medical.Controller
                 drawingWindowController.createOneWaySplit();
             }
 
+            openDefaultScene();
             basicForm.Show();
             splash.Close();
             medicalController.start();
@@ -108,6 +111,17 @@ namespace Medical.Controller
         }
 
         /// <summary>
+        /// Open the default scene.
+        /// </summary>
+        public void openDefaultScene()
+        {
+            if (File.Exists(Resource.ResourceRoot + "/Scenes/SkullScene.sim.xml"))
+            {
+                changeScene(Resource.ResourceRoot + "/Scenes/SkullScene.sim.xml");
+            }
+        }
+
+        /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.
         /// </summary>
@@ -131,6 +145,10 @@ namespace Medical.Controller
 
         public void showStateWizard()
         {
+            if (stateController.getNumStates() == 0)
+            {
+                stateController.createState("Normal");
+            }
             stateWizard.startWizard();
             stateWizard.ShowDialog(basicForm);
             if (stateWizard.WizardFinished)
@@ -138,6 +156,26 @@ namespace Medical.Controller
                 stateController.addState(stateWizard.CreatedState);
                 stateGUI.playAll();
             }
+        }
+
+        public void setOneWindowLayout()
+        {
+            drawingWindowController.createOneWaySplit();
+        }
+
+        public void setTwoWindowLayout()
+        {
+            drawingWindowController.createTwoWaySplit();
+        }
+
+        public void setThreeWindowLayout()
+        {
+            drawingWindowController.createThreeWayUpperSplit();
+        }
+
+        public void setFourWindowLayout()
+        {
+            drawingWindowController.createFourWaySplit();
         }
 
         /// <summary>

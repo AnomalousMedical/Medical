@@ -54,5 +54,25 @@ namespace Medical.GUI
         {
             controller.newScene();
         }
+
+        private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.setOneWindowLayout();
+        }
+
+        private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.setTwoWindowLayout();
+        }
+
+        private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.setThreeWindowLayout();
+        }
+
+        private void fourWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.setFourWindowLayout();
+        }
     }
 }

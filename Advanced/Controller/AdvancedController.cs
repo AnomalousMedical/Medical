@@ -136,6 +136,26 @@ namespace Medical.Controller
             }
         }
 
+        public void setOneWindowLayout()
+        {
+            drawingWindowController.createOneWaySplit();
+        }
+
+        public void setTwoWindowLayout()
+        {
+            drawingWindowController.createTwoWaySplit();
+        }
+
+        public void setThreeWindowLayout()
+        {
+            drawingWindowController.createThreeWayUpperSplit();
+        }
+
+        public void setFourWindowLayout()
+        {
+            drawingWindowController.createFourWaySplit();
+        }
+
         /// <summary>
         /// Used when restoring window positions. Return the window matching the
         /// persistString or null if no match is found.
