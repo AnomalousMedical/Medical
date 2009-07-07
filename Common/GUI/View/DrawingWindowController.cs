@@ -39,7 +39,7 @@ namespace Medical
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
         {
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
-            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt, this);
+            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
             cameras.Add(cameraHost);
             if (camerasActive)
             {
@@ -137,6 +137,11 @@ namespace Medical
                 SavedCameraDefinition cameraDef = savedCameras.getSavedCamera(cameraName);
                 activeWindow.DrawingWindow.setCamera(cameraDef.Position, cameraDef.LookAt);
             }
+        }
+
+        public DrawingWindowHost getActiveWindow()
+        {
+            return dock.ActiveDocument as DrawingWindowHost;
         }
 
         public IEnumerable<String> getSavedCameraNames()

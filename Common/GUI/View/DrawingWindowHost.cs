@@ -149,6 +149,7 @@ namespace Medical
             form.BackgroundImage = bitmap;
             form.Size = bitmap.Size;
             form.ShowDialog();
+            form.Dispose();
             bitmap.Dispose();
         }
     }

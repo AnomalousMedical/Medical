@@ -28,7 +28,6 @@ namespace Medical
         private OrbitCameraController orbitCamera;
         private RendererPlugin renderer;
         private bool showSceneStats = false;
-        private DrawingWindowController splitController;
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
 
@@ -37,11 +36,10 @@ namespace Medical
             InitializeComponent();
         }
 
-        internal void initialize(string name, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt, DrawingWindowController splitController)
+        internal void initialize(string name, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
         {
             this.name = name;
             this.renderer = renderer;
-            this.splitController = splitController;
             orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
@@ -174,6 +172,11 @@ namespace Medical
             }
         }
 
+        public void updateRender(bool swapBuffers)
+        {
+            camera.update(swapBuffers);
+        }
+
         public String CameraName
         {
             get
@@ -195,6 +198,14 @@ namespace Medical
             get
             {
                 return orbitCamera.LookAt;
+            }
+        }
+
+        public Camera Camera
+        {
+            get
+            {
+                return ((OgreCameraControl)camera).Camera;
             }
         }
 

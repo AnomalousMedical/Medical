@@ -67,6 +67,10 @@ namespace Medical.Controller
             //LayersControl layersControl = new LayersControl();
             //guiElements.addGUIElement(layersControl);
 
+            PictureControl pictureControl = new PictureControl();
+            pictureControl.initialize(medicalController, drawingWindowController);
+            guiElements.addGUIElement(pictureControl);
+
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController, medicalController);
             guiElements.addGUIElement(stateGUI);
