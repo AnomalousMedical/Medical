@@ -22,12 +22,6 @@ namespace Medical.GUI
         public PictureControl()
         {
             InitializeComponent();
-            this.Disposed += new EventHandler(PictureControl_Disposed);
-        }
-
-        void PictureControl_Disposed(object sender, EventArgs e)
-        {
-            
         }
 
         public void initialize(MedicalController medicalController, DrawingWindowController drawingWindowController)
@@ -78,6 +72,7 @@ namespace Medical.GUI
                         Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
                         node.attachObject(light);
                         Viewport viewport = renderTexture.addViewport(camera);
+                        viewport.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
                         
                         renderTexture.update();
                         OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
@@ -97,10 +92,10 @@ namespace Medical.GUI
                         sceneManager.SceneManager.destroySceneNode(node);
                         sceneManager.SceneManager.destroyCamera(camera);
 
-                        Form form = new Form();
-                        form.Size = bitmap.Size;
-                        form.BackgroundImage = bitmap;
-                        form.Show();
+                        PictureWindow picture = new PictureWindow();
+                        picture.initialize(bitmap);
+                        picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
+                        picture.Show(DockPanel, DockState.Float);
                     }
                 }
             }

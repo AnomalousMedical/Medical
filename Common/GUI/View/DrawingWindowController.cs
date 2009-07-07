@@ -23,6 +23,7 @@ namespace Medical
         private RendererPlugin rendererPlugin;
         private SavedCameraController savedCameras;
         private DockPanel dock;
+        private DrawingWindowHost activeDrawingWindow = null;
 
         public DrawingWindowController(String camerasFile)
         {
@@ -32,8 +33,18 @@ namespace Medical
         public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
             this.dock = dock;
+            dock.ActiveDocumentChanged += new EventHandler(dock_ActiveDocumentChanged);
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
+        }
+
+        void dock_ActiveDocumentChanged(object sender, EventArgs e)
+        {
+            DrawingWindowHost changed = dock.ActiveDocument as DrawingWindowHost;
+            if (changed != null)
+            {
+                activeDrawingWindow = changed;
+            }
         }
 
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
@@ -141,7 +152,7 @@ namespace Medical
 
         public DrawingWindowHost getActiveWindow()
         {
-            return dock.ActiveDocument as DrawingWindowHost;
+            return activeDrawingWindow;
         }
 
         public IEnumerable<String> getSavedCameraNames()
