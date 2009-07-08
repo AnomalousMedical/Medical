@@ -83,29 +83,6 @@ namespace Medical
 
         #endregion
 
-        public Bitmap createBitmap()
-        {
-            OgreCameraControl ogreCamera = camera as OgreCameraControl;
-            if (ogreCamera != null)
-            {
-                OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-                System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
-                Bitmap bitmap = new Bitmap(this.Width, this.Height, bitmapFormat);
-                unsafe
-                {
-                    BitmapData bmpData = bitmap.LockBits(new Rectangle(new Point(), bitmap.Size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-                    PixelBox pixelBox = new PixelBox(0, 0, (uint)bmpData.Width, (uint)bmpData.Height, format, bmpData.Scan0.ToPointer());
-                    ogreCamera.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
-                    bitmap.UnlockBits(bmpData);
-                }
-                return bitmap;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         public void createCamera(UpdateTimer mainTimer, SimScene scene)
         {
             SimSubScene defaultScene = scene.getDefaultSubScene();

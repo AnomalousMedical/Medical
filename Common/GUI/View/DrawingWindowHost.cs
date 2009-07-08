@@ -141,16 +141,5 @@ namespace Medical
         {
             return String.Format(PERSIST_STRING, typeof(DrawingWindowHost).ToString(), drawingWindow.CameraName, drawingWindow.Translation, drawingWindow.LookAt);
         }
-
-        private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Bitmap bitmap = drawingWindow.createBitmap();
-            Form form = new Form();
-            form.BackgroundImage = bitmap;
-            form.Size = bitmap.Size;
-            form.ShowDialog();
-            form.Dispose();
-            bitmap.Dispose();
-        }
     }
 }

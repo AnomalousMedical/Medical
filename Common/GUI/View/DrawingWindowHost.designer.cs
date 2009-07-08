@@ -37,7 +37,6 @@
             this.pointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.drawingWindow = new Medical.DrawingWindow();
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,10 +44,9 @@
             // 
             this.tabContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBackgroundColorToolStripMenuItem,
-            this.renderingModeToolStripMenuItem,
-            this.saveImageToolStripMenuItem});
+            this.renderingModeToolStripMenuItem});
             this.tabContextMenu.Name = "contextMenuStrip1";
-            this.tabContextMenu.Size = new System.Drawing.Size(215, 92);
+            this.tabContextMenu.Size = new System.Drawing.Size(215, 70);
             // 
             // changeBackgroundColorToolStripMenuItem
             // 
@@ -100,13 +98,6 @@
             this.drawingWindow.Size = new System.Drawing.Size(284, 264);
             this.drawingWindow.TabIndex = 0;
             // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.saveImageToolStripMenuItem.Text = "Save Image";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
-            // 
             // DrawingWindowHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -135,6 +126,5 @@
         private System.Windows.Forms.ToolStripMenuItem solidToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wireframeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pointToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
     }
 }

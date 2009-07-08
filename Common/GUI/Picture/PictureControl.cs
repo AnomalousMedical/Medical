@@ -63,7 +63,7 @@ namespace Medical.GUI
                         Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
                         node.attachObject(light);
                         Viewport viewport = renderTexture.addViewport(camera);
-                        viewport.setBackgroundColor(new Engine.Color(0.0f, 0.0f, 0.0f, 0.0f));
+                        viewport.setBackgroundColor(Engine.Color.FromARGB(drawingWindow.DrawingWindow.BackColor.ToArgb()));
                         
                         renderTexture.update();
                         OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
