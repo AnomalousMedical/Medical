@@ -33,7 +33,12 @@ namespace Medical
 
         public void Dispose()
         {
-            
+
+        }
+
+        public void createDebugCommands(List<CommandManager> commands)
+        {
+
         }
 
         #endregion
