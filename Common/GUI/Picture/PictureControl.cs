@@ -30,15 +30,6 @@ namespace Medical.GUI
             this.drawingWindowController = drawingWindowController;
         }
 
-        private void browseButton_Click(object sender, EventArgs e)
-        {
-            DialogResult result = folderBrowser.ShowDialog(this);
-            if (result == DialogResult.OK)
-            {
-                directoryText.Text = folderBrowser.SelectedPath;
-            }
-        }
-
         private void renderSingleButton_Click(object sender, EventArgs e)
         {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
