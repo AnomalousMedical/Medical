@@ -229,26 +229,26 @@ namespace Medical.GUI
         {
             this.rightDigastricForce.Value = 0.0m;
             this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 30.0m;
+            this.rightMasseterForce.Value = 3.0m;
             this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 30.0m;
+            this.rightTemporalisForce.Value = 3.0m;
 
             this.leftDigastricForce.Value = 0.0m;
             this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 30.0m;
+            this.leftMasseterForce.Value = 3.0m;
             this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 30.0m;
+            this.leftTemporalisForce.Value = 3.0m;
         }
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            this.rightDigastricForce.Value = 30.0m;
+            this.rightDigastricForce.Value = 3.0m;
             this.rightLatPtForce.Value = 0.0m;
             this.rightMasseterForce.Value = 0.0m;
             this.rightMedPtForce.Value = 0.0m;
             this.rightTemporalisForce.Value = 0.0m;
 
-            this.leftDigastricForce.Value = 30.0m;
+            this.leftDigastricForce.Value = 3.0m;
             this.leftLatPtForce.Value = 0.0m;
             this.leftMasseterForce.Value = 0.0m;
             this.leftMedPtForce.Value = 0.0m;
@@ -259,15 +259,15 @@ namespace Medical.GUI
         {
             this.rightDigastricForce.Value = 0.0m;
             this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 100.0m;
+            this.rightMasseterForce.Value = 10.0m;
             this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 100.0m;
+            this.rightTemporalisForce.Value = 10.0m;
 
             this.leftDigastricForce.Value = 0.0m;
             this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 100.0m;
+            this.leftMasseterForce.Value = 10.0m;
             this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 100.0m;
+            this.leftTemporalisForce.Value = 10.0m;
         }
 
         private void neutralButton_Click(object sender, EventArgs e)
