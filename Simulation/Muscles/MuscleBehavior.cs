@@ -86,19 +86,6 @@ namespace Medical
             debugDrawing.end();
         }
 
-        /*public void draw(LineHelper surface)
-        {
-            if (selected)
-            {
-                surface.setColor(0.0f, 0.0f, 1.0f, 1.0f);
-            }
-            else
-            {
-                surface.setColor(1.0f, 0.0f, 0.0f, 1.0f);
-            }
-            surface.drawLine(getTranslation(), staticPoint);
-        }*/
-
         public void changeForce(float force)
         {
             this.force = force;
