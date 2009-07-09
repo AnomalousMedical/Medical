@@ -152,7 +152,7 @@ namespace Medical
             if (bonePos != lastPosition)
             {
                 joint.RealJoint.saveToDesc(jointDesc);
-                jointDesc.set_LocalAnchor(0, bonePos);
+                jointDesc.set_LocalAnchor(1, bonePos);
                 joint.RealJoint.loadFromDesc(jointDesc);
 
                 lastPosition = bonePos;
@@ -168,9 +168,10 @@ namespace Medical
         public void positionModified()
         {
             Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
-            joint.RealJoint.saveToDesc(jointDesc);
-            jointDesc.set_LocalAnchor(1, newLocation);
-            joint.RealJoint.loadFromDesc(jointDesc);
+            //joint.RealJoint.saveToDesc(jointDesc);
+            //jointDesc.set_LocalAnchor(0, newLocation);
+            //joint.RealJoint.loadFromDesc(jointDesc);
+            this.updateTranslation(ref newLocation);
         }
 
         public float getNeutralLocation()
