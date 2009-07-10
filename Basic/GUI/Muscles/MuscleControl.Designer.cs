@@ -32,6 +32,7 @@
             this.openButton = new System.Windows.Forms.Button();
             this.clenchButton = new System.Windows.Forms.Button();
             this.neutralButton = new System.Windows.Forms.Button();
+            this.resetTeethButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // closeButton
@@ -61,11 +62,11 @@
             // clenchButton
             // 
             this.clenchButton.Image = global::Medical.Properties.Resources.clenchedmuscle;
-            this.clenchButton.Location = new System.Drawing.Point(121, 150);
+            this.clenchButton.Location = new System.Drawing.Point(4, 296);
             this.clenchButton.Name = "clenchButton";
             this.clenchButton.Size = new System.Drawing.Size(111, 140);
             this.clenchButton.TabIndex = 7;
-            this.clenchButton.Text = "Clench";
+            this.clenchButton.Text = "Clench and Adapt";
             this.clenchButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.clenchButton.UseVisualStyleBackColor = true;
             this.clenchButton.Click += new System.EventHandler(this.clenchButton_Click);
@@ -82,11 +83,24 @@
             this.neutralButton.UseVisualStyleBackColor = true;
             this.neutralButton.Click += new System.EventHandler(this.neutralButton_Click);
             // 
+            // resetTeethButton
+            // 
+            this.resetTeethButton.Image = global::Medical.Properties.Resources.neutralmuscle;
+            this.resetTeethButton.Location = new System.Drawing.Point(121, 296);
+            this.resetTeethButton.Name = "resetTeethButton";
+            this.resetTeethButton.Size = new System.Drawing.Size(111, 140);
+            this.resetTeethButton.TabIndex = 10;
+            this.resetTeethButton.Text = "Reset Teeth";
+            this.resetTeethButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.resetTeethButton.UseVisualStyleBackColor = true;
+            this.resetTeethButton.Click += new System.EventHandler(this.resetTeethButton_Click);
+            // 
             // MuscleControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 299);
+            this.ClientSize = new System.Drawing.Size(257, 445);
+            this.Controls.Add(this.resetTeethButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.openButton);
             this.Controls.Add(this.clenchButton);
@@ -107,6 +121,7 @@
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button clenchButton;
         private System.Windows.Forms.Button neutralButton;
+        private System.Windows.Forms.Button resetTeethButton;
 
     }
 }

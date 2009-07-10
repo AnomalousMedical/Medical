@@ -42,7 +42,7 @@ namespace Medical.GUI
             MuscleController.changeForce(LeftMasseterDynamic, 3.0f);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
             MuscleController.changeForce(LeftTemporalisDynamic, 3.0f);
-            //TeethController.setTeethLoose(true);
+            TeethController.setTeethLoose(false);
         }
 
         private void openButton_Click(object sender, EventArgs e)
@@ -58,23 +58,24 @@ namespace Medical.GUI
             MuscleController.changeForce(LeftMasseterDynamic, 0.0f);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
             MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
-            //TeethController.setTeethLoose(true);
+            TeethController.setTeethLoose(false);
         }
 
         private void clenchButton_Click(object sender, EventArgs e)
         {
+            float clenchForce = 15.0f;
             MuscleController.changeForce(RightDigastricDynamic, 0.0f);
             MuscleController.changeForce(RightLateralPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(RightMasseterDynamic, 10.0f);
+            MuscleController.changeForce(RightMasseterDynamic, clenchForce);
             MuscleController.changeForce(RightMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(RightTemporalisDynamic, 10.0f);
+            MuscleController.changeForce(RightTemporalisDynamic, clenchForce);
 
             MuscleController.changeForce(LeftDigastricDynamic, 0.0f);
             MuscleController.changeForce(LeftLateralPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(LeftMasseterDynamic, 10.0f);
+            MuscleController.changeForce(LeftMasseterDynamic, clenchForce);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(LeftTemporalisDynamic, 10.0f);
-            //TeethController.setTeethLoose(true);
+            MuscleController.changeForce(LeftTemporalisDynamic, clenchForce);
+            TeethController.setTeethLoose(true);
         }
 
         private void neutralButton_Click(object sender, EventArgs e)
@@ -90,7 +91,23 @@ namespace Medical.GUI
             MuscleController.changeForce(LeftMasseterDynamic, 0.0f);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
             MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
-            //TeethController.setTeethLoose(true);
+            TeethController.setTeethLoose(false);
+        }
+
+        private void resetTeethButton_Click(object sender, EventArgs e)
+        {
+            MuscleController.changeForce(RightDigastricDynamic, 0.0f);
+            MuscleController.changeForce(RightLateralPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(RightMasseterDynamic, 0.0f);
+            MuscleController.changeForce(RightMedialPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(RightTemporalisDynamic, 0.0f);
+
+            MuscleController.changeForce(LeftDigastricDynamic, 0.0f);
+            MuscleController.changeForce(LeftLateralPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(LeftMasseterDynamic, 0.0f);
+            MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
+            TeethController.setTeethLoose(true);
         }
     }
 }
