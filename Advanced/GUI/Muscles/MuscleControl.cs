@@ -48,7 +48,7 @@ namespace Medical.GUI
             setupMuscleGroups();
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             captureMuscleForces();
             clearSelection();

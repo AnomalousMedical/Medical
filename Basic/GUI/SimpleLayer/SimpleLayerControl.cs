@@ -12,12 +12,16 @@ namespace Medical.GUI
 {
     public partial class SimpleLayerControl : GUIElement
     {
+        private List<TransparencyInterface> currentAlphaBlendInterfaces = new List<TransparencyInterface>();
+
         public SimpleLayerControl()
         {
             InitializeComponent();
         }
 
-        public override void sceneLoaded()
+        
+
+        protected override void sceneLoaded()
         {
             base.sceneLoaded();
             skullOpaque.Checked = true;

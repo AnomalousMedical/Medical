@@ -18,7 +18,7 @@ namespace Medical.GUI
             InitializeComponent();
         }
 
-        public override void sceneUnloading()
+        protected override void sceneUnloading()
         {
             foreach (Control control in sectionsPanel.Controls)
             {
@@ -27,7 +27,7 @@ namespace Medical.GUI
             sectionsPanel.Controls.Clear();
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             sectionsPanel.SuspendLayout();
             sectionsPanel.Controls.Clear();

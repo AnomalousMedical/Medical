@@ -14,7 +14,7 @@ namespace Medical.GUI
     public partial class MedicalStateGUI : GUIElement
     {
         private MedicalStateController stateController;
-        private MedicalController medicalController;
+        //private MedicalController medicalController;
         private bool playing = false;
         private double targetTime = 0.0f;
         private double playbackSpeed = 1.0f;
@@ -25,10 +25,9 @@ namespace Medical.GUI
             medicalStateTrackBar.CurrentBlendChanged += new CurrentBlendChanged(medicalStateTrackBar_CurrentBlendChanged);
         }
 
-        public void initialize(MedicalStateController stateController, MedicalController medicalController)
+        public void initialize(MedicalStateController stateController)
         {
             this.stateController = stateController;
-            this.medicalController = medicalController;
             stateController.StateAdded += new MedicalStateAdded(MedicalStates_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(MedicalStates_StateRemoved);
             stateController.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
@@ -67,7 +66,7 @@ namespace Medical.GUI
             if (playing)
             {
                 playing = false;
-                medicalController.FullSpeedLoopUpdate -= loopUpdate;
+                unsubscribeFromUpdates();
             }
         }
 
@@ -96,7 +95,7 @@ namespace Medical.GUI
             medicalStateTrackBar.addState(state, index);
         }
 
-        void loopUpdate(Clock time)
+        protected override void fixedLoopUpdate(Clock time)
         {
             double nextTime = medicalStateTrackBar.CurrentBlend + time.Seconds * playbackSpeed;
             if (playbackSpeed > 0)
@@ -162,7 +161,7 @@ namespace Medical.GUI
             if (!playing)
             {
                 playing = true;
-                medicalController.FullSpeedLoopUpdate += loopUpdate;
+                subscribeToUpdates();
             }
         }
 

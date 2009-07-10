@@ -63,14 +63,14 @@ namespace Medical.Controller
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
-            guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip);
+            guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
 
             //Add common gui elements
             LayersControl layersControl = new LayersControl();
             guiElements.addGUIElement(layersControl);
 
             stateGUI = new MedicalStateGUI();
-            stateGUI.initialize(stateController, medicalController);
+            stateGUI.initialize(stateController);
             guiElements.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();

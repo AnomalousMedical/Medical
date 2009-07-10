@@ -23,7 +23,7 @@ namespace Medical.GUI
             rightEminanceSlider.ValueChanged += new EventHandler(rightEminanceSlider_ValueChanged);
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             base.sceneLoaded();
             leftFossa = FossaController.get("LeftFossa");
@@ -38,7 +38,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void sceneUnloading()
+        protected override void sceneUnloading()
         {
             base.sceneUnloading();
             leftFossa = null;

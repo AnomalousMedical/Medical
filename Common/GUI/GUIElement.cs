@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -22,12 +23,32 @@ namespace Medical.GUI
             button.Click += new EventHandler(button_Click);
         }
 
-        public virtual void sceneUnloading()
+        internal void callSceneUnloading()
+        {
+            sceneUnloading();
+        }
+
+        protected virtual void sceneUnloading()
         {
 
         }
 
-        public virtual void sceneLoaded()
+        internal void callSceneLoaded()
+        {
+            sceneLoaded();
+        }
+
+        protected virtual void sceneLoaded()
+        {
+
+        }
+
+        internal void callFixedLoopUpdate(Clock time)
+        {
+            this.fixedLoopUpdate(time);
+        }
+
+        protected virtual void fixedLoopUpdate(Clock time)
         {
 
         }
@@ -40,6 +61,16 @@ namespace Medical.GUI
         internal void _setController(GUIElementController controller)
         {
             this.controller = controller;
+        }
+
+        protected void subscribeToUpdates()
+        {
+            controller.addUpdatingElement(this);
+        }
+
+        protected void unsubscribeFromUpdates()
+        {
+            controller.removeUpdatingElement(this);
         }
 
         private void content_VisibleChanged(object sender, EventArgs e)

@@ -30,7 +30,7 @@ namespace Medical.GUI
             this.controller = controller;
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
             {
@@ -53,7 +53,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void sceneUnloading()
+        protected override void sceneUnloading()
         {
             foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
             {

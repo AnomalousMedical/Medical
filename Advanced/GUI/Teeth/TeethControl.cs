@@ -24,7 +24,7 @@ namespace Medical.GUI
             this.medicalController = medicalController;
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             foreach (CheckBox control in teethPanel.Controls)
             {

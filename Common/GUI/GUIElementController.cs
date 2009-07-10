@@ -4,20 +4,27 @@ using System.Linq;
 using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
     public class GUIElementController
     {
+        private delegate void CallFixedUpdate(Clock time);
+
+        private event CallFixedUpdate callFixedUpdate;
+
         private List<GUIElement> guiElements = new List<GUIElement>();
+        private List<GUIElement> updatingGUIElements = new List<GUIElement>();
         private DockPanel dock;
         private ToolStripContainer toolStripContainer;
         private Dictionary<String, ToolStrip> toolStrips = new Dictionary<string, ToolStrip>();
 
-        public GUIElementController(DockPanel dock, ToolStripContainer toolStrip)
+        public GUIElementController(DockPanel dock, ToolStripContainer toolStrip, MedicalController controller)
         {
             this.dock = dock;
             this.toolStripContainer = toolStrip;
+            controller.FixedLoopUpdate += fixedLoopUpdate;
         }
 
         public void addGUIElement(GUIElement element)
@@ -76,7 +83,7 @@ namespace Medical.GUI
         {
             foreach (GUIElement element in guiElements)
             {
-                element.sceneUnloading();
+                element.callSceneUnloading();
             }
         }
 
@@ -84,7 +91,25 @@ namespace Medical.GUI
         {
             foreach (GUIElement element in guiElements)
             {
-                element.sceneLoaded();
+                element.callSceneLoaded();
+            }
+        }
+
+        internal void addUpdatingElement(GUIElement element)
+        {
+            callFixedUpdate += element.callFixedLoopUpdate;
+        }
+
+        internal void removeUpdatingElement(GUIElement element)
+        {
+            callFixedUpdate -= element.callFixedLoopUpdate;
+        }
+
+        void fixedLoopUpdate(Clock time)
+        {
+            if (callFixedUpdate != null)
+            {
+                callFixedUpdate.Invoke(time);
             }
         }
     }

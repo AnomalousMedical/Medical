@@ -26,7 +26,7 @@ namespace Medical.GUI
             bothForwardBack.ValueChanged += bothForwardBackChanged;
         }
 
-        public override void sceneLoaded()
+        protected override void sceneLoaded()
         {
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
@@ -41,7 +41,7 @@ namespace Medical.GUI
             allowUpdates = true;
         }
 
-        public override void sceneUnloading()
+        protected override void sceneUnloading()
         {
             leftCP = null;
             rightCP = null;

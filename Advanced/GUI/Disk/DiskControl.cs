@@ -50,7 +50,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void  sceneLoaded()
+        protected override void sceneLoaded()
         {
             leftDisc = DiscController.getDisc("LeftTMJDisc");
             rightDisc = DiscController.getDisc("RightTMJDisc");
@@ -61,7 +61,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void sceneUnloading()
+        protected override void sceneUnloading()
         {
             leftDisc = null;
             rightDisc = null;
