@@ -13,6 +13,7 @@ namespace Medical.GUI
     public partial class BasicForm : MedicalForm
     {
         private BasicController controller;
+        private OpenPatientDialog openPatient = new OpenPatientDialog();
 
         public BasicForm()
         {
@@ -33,10 +34,16 @@ namespace Medical.GUI
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fileTracker.openFile(this);
-            if (fileTracker.lastDialogAccepted())
+            //fileTracker.openFile(this);
+            //if (fileTracker.lastDialogAccepted())
+            //{
+            //    controller.openStates(fileTracker.getCurrentFile());
+            //}
+            openPatient.listFiles(MedicalConfig.DocRoot);
+            openPatient.ShowDialog(this);
+            if (openPatient.FileChosen)
             {
-                controller.openStates(fileTracker.getCurrentFile());
+                controller.openStates(openPatient.CurrentFile);
             }
         }
 

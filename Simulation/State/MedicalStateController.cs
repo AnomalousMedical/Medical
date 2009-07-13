@@ -87,6 +87,7 @@ namespace Medical
 
         public void setStates(SavedMedicalStates states)
         {
+            clearStates();
             foreach (MedicalState state in states.getStates())
             {
                 addState(state);
