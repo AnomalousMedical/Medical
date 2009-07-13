@@ -35,7 +35,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
-                skull.setAlpha(1.0f);
+                skull.smoothBlend(1.0f);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
-                skull.setAlpha(0.7f);
+                skull.smoothBlend(0.7f);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
-                skull.setAlpha(0.0f);
+                skull.smoothBlend(0.0f);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Mandible");
-                skull.setAlpha(1.0f);
+                skull.smoothBlend(1.0f);
             }
         }
 
@@ -75,7 +75,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Mandible");
-                skull.setAlpha(0.7f);
+                skull.smoothBlend(0.7f);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Medical.GUI
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Mandible");
-                skull.setAlpha(0.0f);
+                skull.smoothBlend(0.0f);
             }
         }
 
@@ -96,7 +96,7 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
                 foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
                 {
-                    tooth.setAlpha(1.0f);
+                    tooth.smoothBlend(1.0f);
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
                 foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
                 {
-                    tooth.setAlpha(0.7f);
+                    tooth.smoothBlend(0.7f);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
                 foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
                 {
-                    tooth.setAlpha(0.0f);
+                    tooth.smoothBlend(0.0f);
                 }
             }
         }

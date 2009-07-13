@@ -8,6 +8,7 @@ using Engine.Editing;
 using Engine.Attributes;
 using OgrePlugin;
 using Logging;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -24,7 +25,7 @@ namespace Medical
         TMJ
     }
 
-    public class TransparencyInterface : Interface
+    public class TransparencyInterface : Behavior
     {
         [Editable] private String alphaSuffix = "Alpha";
         //An optional alpha material, if this is defined the alpha suffix will be ignored
@@ -34,6 +35,8 @@ namespace Medical
         [Editable] private String nodeName;
         [Editable] private String entityName;
         [Editable] private bool disableOnHidden = true;
+        [Editable] private float targetOpacity = 1.0f;
+        [Editable] private bool changingOpacity = false;
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -99,6 +102,12 @@ namespace Medical
                         break;
                 }
             }
+        }
+
+        public void smoothBlend(float targetOpacity)
+        {
+            changingOpacity = true;
+            this.targetOpacity = targetOpacity;
         }
 
         protected override void constructed()
@@ -179,6 +188,34 @@ namespace Medical
             set
             {
                 disableOnHidden = value;
+            }
+        }
+
+        private const float opacityChangeRate = 1.0f;
+
+        public override void update(Clock clock, EventManager eventManager)
+        {
+            if (changingOpacity)
+            {
+                if (currentAlpha > targetOpacity)
+                {
+                    currentAlpha -= (float)clock.Seconds * opacityChangeRate;
+                    if (currentAlpha < targetOpacity)
+                    {
+                        currentAlpha = targetOpacity;
+                        changingOpacity = false;
+                    }
+                }
+                else
+                {
+                    currentAlpha += (float)clock.Seconds * opacityChangeRate;
+                    if (currentAlpha > targetOpacity)
+                    {
+                        currentAlpha = targetOpacity;
+                        changingOpacity = false;
+                    }
+                }
+                setAlpha(currentAlpha);
             }
         }
     }
