@@ -79,5 +79,18 @@ namespace Medical
                 states[startState].blend(1.0f, states[startState]);
             }
         }
+
+        public SavedMedicalStates getSavedState()
+        {
+            return new SavedMedicalStates(states);
+        }
+
+        public void setStates(SavedMedicalStates states)
+        {
+            foreach (MedicalState state in states.getStates())
+            {
+                addState(state);
+            }
+        }
     }
 }

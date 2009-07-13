@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
-    public class TeethState
+    public class TeethState : Saveable
     {
         private Dictionary<String, ToothState> teeth = new Dictionary<string, ToothState>();
+
+        public TeethState()
+        {
+
+        }
 
         public void addPosition(String disc, ToothState state)
         {
@@ -23,5 +29,21 @@ namespace Medical
                 TeethController.getTooth(key).Extracted = start.Extracted;
             }
         }
+
+        #region Saveable Members
+
+        private const string TEETH = "Teeth";
+
+        protected TeethState(LoadInfo info)
+        {
+            info.RebuildDictionary<String, ToothState>(TEETH, teeth);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.ExtractDictionary<String, ToothState>(TEETH, teeth);
+        }
+
+        #endregion
     }
 }

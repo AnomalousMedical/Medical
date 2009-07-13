@@ -33,16 +33,20 @@ namespace Medical.GUI
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //fileTracker.openFile(this);
-            //if (fileTracker.lastDialogAccepted())
-            //{
-            //    controller.open(fileTracker.getCurrentFile());
-            //}
+            fileTracker.openFile(this);
+            if (fileTracker.lastDialogAccepted())
+            {
+                controller.openStates(fileTracker.getCurrentFile());
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            fileTracker.saveFile(this);
+            if (fileTracker.lastDialogAccepted())
+            {
+                controller.saveMedicalState(fileTracker.getCurrentFile());
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

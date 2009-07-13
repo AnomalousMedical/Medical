@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using Medical.GUI.StateWizard;
 using System.IO;
 using Engine.Resources;
+using Engine.Saving;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical.Controller
 {
@@ -21,6 +24,7 @@ namespace Medical.Controller
         private MedicalStateController stateController = new MedicalStateController();
         private StateWizardForm stateWizard = new StateWizardForm();
         private MedicalStateGUI stateGUI;
+        private XmlSaver saver = new XmlSaver();
 
         /// <summary>
         /// Constructor.
@@ -109,15 +113,6 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// Open the specified file and change the scene.
-        /// </summary>
-        /// <param name="filename"></param>
-        public void open(String filename)
-        {
-            changeScene(filename);
-        }
-
-        /// <summary>
         /// Open the default scene.
         /// </summary>
         public void openDefaultScene()
@@ -183,6 +178,51 @@ namespace Medical.Controller
         public void setFourWindowLayout()
         {
             drawingWindowController.createFourWaySplit();
+        }
+
+        public void saveMedicalState(String filename)
+        {
+            XmlTextWriter textWriter = null;
+            try
+            {
+                textWriter = new XmlTextWriter(filename, Encoding.Default);
+                textWriter.Formatting = Formatting.Indented;
+                SavedMedicalStates states = stateController.getSavedState();
+                saver.saveObject(states, textWriter);
+            }
+            finally
+            {
+                if (textWriter != null)
+                {
+                    textWriter.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Open the specified file and change the scene.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void openStates(String filename)
+        {
+            openDefaultScene();
+            XmlTextReader textReader = null;
+            try
+            {
+                textReader = new XmlTextReader(filename);
+                SavedMedicalStates states = saver.restoreObject(textReader) as SavedMedicalStates;
+                if (states != null)
+                {
+                    stateController.setStates(states);
+                }
+            }
+            finally
+            {
+                if (textReader != null)
+                {
+                    textReader.Close();
+                }
+            }
         }
 
         /// <summary>

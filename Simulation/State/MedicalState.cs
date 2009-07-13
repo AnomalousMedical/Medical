@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
-    public class MedicalState
+    public class MedicalState : Saveable
     {
         private BoneManipulatorState boneState;
         private DiscState discState;
@@ -82,5 +83,30 @@ namespace Medical
                 fossaState = value;
             }
         }
+
+        #region Saveable Members
+
+        private const string BONE_MANIPULATOR_STATE = "BoneManipulatorState";
+        private const string DISC_STATE = "DiscState";
+        private const string TEETH_STATE = "TeethState";
+        private const string FOSSA_STATE = "FossaState";
+
+        protected MedicalState(LoadInfo info)
+        {
+            boneState = info.GetValue<BoneManipulatorState>(BONE_MANIPULATOR_STATE);
+            discState = info.GetValue<DiscState>(DISC_STATE);
+            teethState = info.GetValue<TeethState>(TEETH_STATE);
+            fossaState = info.GetValue<FossaState>(FOSSA_STATE);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue(BONE_MANIPULATOR_STATE, boneState);
+            info.AddValue(DISC_STATE, discState);
+            info.AddValue(TEETH_STATE, teethState);
+            info.AddValue(FOSSA_STATE, fossaState);
+        }
+
+        #endregion
     }
 }

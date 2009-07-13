@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
-    public class FossaState
+    public class FossaState : Saveable
     {
         private Dictionary<String, float> positions = new Dictionary<string, float>();
+
+        public FossaState()
+        {
+
+        }
 
         public void addPosition(String fossa, float position)
         {
@@ -24,5 +30,21 @@ namespace Medical
                 FossaController.get(key).setEminanceDistortion(start + delta * percent);
             }
         }
+
+        #region Saveable Members
+
+        private const string POSITIONS = "Positions";
+
+        protected FossaState(LoadInfo info)
+        {
+            info.RebuildDictionary<String, float>(POSITIONS, positions);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.ExtractDictionary<String, float>(POSITIONS, positions);
+        }
+
+        #endregion
     }
 }

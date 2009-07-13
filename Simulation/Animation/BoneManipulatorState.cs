@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
-    public class BoneManipulatorState
+    public class BoneManipulatorState : Saveable
     {
         private Dictionary<String, float> positions = new Dictionary<string, float>();
+
+        public BoneManipulatorState()
+        {
+
+        }
 
         public void addPosition(String manipulator, float position)
         {
@@ -24,5 +30,21 @@ namespace Medical
                 BoneManipulatorController.getManipulator(key).setPosition(start + delta * percent);
             }
         }
+
+        #region Saveable Members
+
+        private const string POSITIONS = "Positions";
+
+        protected BoneManipulatorState(LoadInfo info)
+        {
+            info.RebuildDictionary<String, float>(POSITIONS, positions);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.ExtractDictionary<String, float>(POSITIONS, positions);
+        }
+
+        #endregion
     }
 }
