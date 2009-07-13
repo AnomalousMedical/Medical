@@ -121,6 +121,7 @@ namespace Medical.Controller
             {
                 changeScene(Resource.ResourceRoot + "/Scenes/SkullScene.sim.xml");
             }
+            stateController.clearStates();
         }
 
         /// <summary>

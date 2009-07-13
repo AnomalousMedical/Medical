@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -39,7 +40,7 @@ namespace Medical.GUI
             //{
             //    controller.openStates(fileTracker.getCurrentFile());
             //}
-            openPatient.listFiles(MedicalConfig.DocRoot);
+            openPatient.listFiles(MedicalConfig.SaveDirectory);
             openPatient.ShowDialog(this);
             if (openPatient.FileChosen)
             {
@@ -49,10 +50,39 @@ namespace Medical.GUI
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            fileTracker.saveFile(this);
-            if (fileTracker.lastDialogAccepted())
+            //fileTracker.saveFile(this);
+            //if (fileTracker.lastDialogAccepted())
+            //{
+            //    controller.saveMedicalState(fileTracker.getCurrentFile());
+            //}
+            InputResult result = InputBox.GetInput("Save", "Enter a file name", this);
+            bool saveFile = true;
+            if (result.ok)
             {
-                controller.saveMedicalState(fileTracker.getCurrentFile());
+                while (File.Exists(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml") && saveFile)
+                {
+                    DialogResult msgRes = MessageBox.Show(this, "A file named " + result.text + " already exists. Would you like to overwrite it?", "Overwright?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (msgRes == DialogResult.No)
+                    {
+                        result = InputBox.GetInput("Save", "Enter a different file name", this, result.text);
+                        if (!result.ok)
+                        {
+                            saveFile = false;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                saveFile = false;
+            }
+            if (saveFile)
+            {
+                controller.saveMedicalState(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml");
             }
         }
 

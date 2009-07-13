@@ -14,6 +14,7 @@ namespace Medical
         private static String windowsFile = docRoot + "/windows.ini";
         private static String camerasFile = docRoot + "/cameras.ini";
         private static CameraSection cameraSection;
+        private static ConfigSection program;
 
         static MedicalConfig()
         {
@@ -25,6 +26,7 @@ namespace Medical
             configFile.loadConfigFile();
             cameraSection = new CameraSection(configFile);
             EngineConfig = new EngineConfig(configFile);
+            program = configFile.createOrRetrieveConfigSection("Program");
         }
 
         public static String DocRoot
@@ -64,6 +66,18 @@ namespace Medical
             get
             {
                 return camerasFile;
+            }
+        }
+
+        public static String SaveDirectory
+        {
+            get
+            {
+                return program.getValue("SaveDirectory", docRoot + "/Files");
+            }
+            set
+            {
+                program.setValue("SaveDirectory", value);
             }
         }
 
