@@ -58,6 +58,10 @@ namespace Medical
         Fossa fossa;
         Disc disc;
 
+        bool translate = false;
+        float targetLocation = 0.0f;
+        float moveSpeed = 0.0f;
+
         public ControlPointBehavior()
         {
             location = neutralLocation;
@@ -157,6 +161,41 @@ namespace Medical
 
                 lastPosition = bonePos;
             }
+            if (translate)
+            {
+                float newLocation = location;
+                if (location < targetLocation)
+                {
+                    newLocation += moveSpeed * (float)clock.Seconds;
+                    if (location > targetLocation)
+                    {
+                        location = targetLocation;
+                        translate = false;
+                    }
+                }
+                else
+                {
+                    newLocation -= moveSpeed * (float)clock.Seconds;
+                    if (location < targetLocation)
+                    {
+                        location = targetLocation;
+                        translate = false;
+                    }
+                }
+                setLocation(newLocation);
+            }
+        }
+
+        public void moveToLocation(float location, float speed)
+        {
+            targetLocation = location;
+            moveSpeed = speed;
+            translate = true;
+        }
+
+        public void stopMovement()
+        {
+            translate = false;
         }
 
         public void setLocation(float location)

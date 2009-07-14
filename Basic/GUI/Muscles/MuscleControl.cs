@@ -24,9 +24,27 @@ namespace Medical.GUI
         private const String LeftLateralPterygoidDynamic = "LeftLateralPterygoidDynamic";
         private const String LeftDigastricDynamic = "LeftDigastricDynamic";
 
+        private const float CP_MOVE_SPEED = 0.5f;
+
+        private ControlPointBehavior leftCP;
+        private ControlPointBehavior rightCP;
+
         public MuscleControl()
         {
             InitializeComponent();
+        }
+
+        protected override void sceneLoaded()
+        {
+            leftCP = ControlPointController.getControlPoint("LeftCP");
+            rightCP = ControlPointController.getControlPoint("RightCP");
+            this.Enabled = leftCP != null && rightCP != null;
+        }
+
+        protected override void sceneUnloading()
+        {
+            leftCP = null;
+            rightCP = null;
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -92,6 +110,9 @@ namespace Medical.GUI
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
             MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
             TeethController.setTeethLoose(false);
+
+            leftCP.stopMovement();
+            rightCP.stopMovement();
         }
 
         private void resetTeethButton_Click(object sender, EventArgs e)
@@ -113,33 +134,39 @@ namespace Medical.GUI
         private void translateForward_Click(object sender, EventArgs e)
         {
             MuscleController.changeForce(RightDigastricDynamic, 0.0f);
-            MuscleController.changeForce(RightLateralPterygoidDynamic, 0.2f);
-            MuscleController.changeForce(RightMasseterDynamic, 0.0f);
+            MuscleController.changeForce(RightLateralPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(RightMasseterDynamic, 3.0f);
             MuscleController.changeForce(RightMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(RightTemporalisDynamic, 0.0f);
+            MuscleController.changeForce(RightTemporalisDynamic, 3.0f);
 
             MuscleController.changeForce(LeftDigastricDynamic, 0.0f);
-            MuscleController.changeForce(LeftLateralPterygoidDynamic, 0.2f);
-            MuscleController.changeForce(LeftMasseterDynamic, 0.0f);
+            MuscleController.changeForce(LeftLateralPterygoidDynamic, 0.0f);
+            MuscleController.changeForce(LeftMasseterDynamic, 3.0f);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
+            MuscleController.changeForce(LeftTemporalisDynamic, 3.0f);
             TeethController.setTeethLoose(false);
+
+            leftCP.moveToLocation(1.0f, CP_MOVE_SPEED);
+            rightCP.moveToLocation(1.0f, CP_MOVE_SPEED);
         }
 
         private void translateBackward_Click(object sender, EventArgs e)
         {
             MuscleController.changeForce(RightDigastricDynamic, 0.0f);
             MuscleController.changeForce(RightLateralPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(RightMasseterDynamic, 0.0f);
+            MuscleController.changeForce(RightMasseterDynamic, 3.0f);
             MuscleController.changeForce(RightMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(RightTemporalisDynamic, 0.0f);
+            MuscleController.changeForce(RightTemporalisDynamic, 3.0f);
 
             MuscleController.changeForce(LeftDigastricDynamic, 0.0f);
             MuscleController.changeForce(LeftLateralPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(LeftMasseterDynamic, 0.0f);
+            MuscleController.changeForce(LeftMasseterDynamic, 3.0f);
             MuscleController.changeForce(LeftMedialPterygoidDynamic, 0.0f);
-            MuscleController.changeForce(LeftTemporalisDynamic, 0.0f);
+            MuscleController.changeForce(LeftTemporalisDynamic, 3.0f);
             TeethController.setTeethLoose(false);
+
+            leftCP.moveToLocation(leftCP.getNeutralLocation(), CP_MOVE_SPEED);
+            rightCP.moveToLocation(rightCP.getNeutralLocation(), CP_MOVE_SPEED);
         }
     }
 }
