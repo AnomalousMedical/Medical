@@ -37,12 +37,17 @@
             this.mandibleTransparent = new System.Windows.Forms.RadioButton();
             this.mandibleOpaque = new System.Windows.Forms.RadioButton();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.teethHidden = new System.Windows.Forms.RadioButton();
-            this.teethTransparent = new System.Windows.Forms.RadioButton();
-            this.teethOpaque = new System.Windows.Forms.RadioButton();
+            this.topTeethHidden = new System.Windows.Forms.RadioButton();
+            this.topTeethTransparent = new System.Windows.Forms.RadioButton();
+            this.topTeethOpaque = new System.Windows.Forms.RadioButton();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.bottomTeethHidden = new System.Windows.Forms.RadioButton();
+            this.bottomTeethTransparent = new System.Windows.Forms.RadioButton();
+            this.bottomTeethOpaque = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -143,57 +148,106 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.teethHidden);
-            this.groupBox3.Controls.Add(this.teethTransparent);
-            this.groupBox3.Controls.Add(this.teethOpaque);
+            this.groupBox3.Controls.Add(this.topTeethHidden);
+            this.groupBox3.Controls.Add(this.topTeethTransparent);
+            this.groupBox3.Controls.Add(this.topTeethOpaque);
             this.groupBox3.Location = new System.Drawing.Point(13, 210);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(125, 91);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Teeth";
+            this.groupBox3.Text = "Top Teeth";
             // 
-            // teethHidden
+            // topTeethHidden
             // 
-            this.teethHidden.AutoSize = true;
-            this.teethHidden.Location = new System.Drawing.Point(7, 68);
-            this.teethHidden.Name = "teethHidden";
-            this.teethHidden.Size = new System.Drawing.Size(59, 17);
-            this.teethHidden.TabIndex = 2;
-            this.teethHidden.TabStop = true;
-            this.teethHidden.Text = "Hidden";
-            this.teethHidden.UseVisualStyleBackColor = true;
-            this.teethHidden.CheckedChanged += new System.EventHandler(this.teethHidden_CheckedChanged);
+            this.topTeethHidden.AutoSize = true;
+            this.topTeethHidden.Location = new System.Drawing.Point(7, 68);
+            this.topTeethHidden.Name = "topTeethHidden";
+            this.topTeethHidden.Size = new System.Drawing.Size(59, 17);
+            this.topTeethHidden.TabIndex = 2;
+            this.topTeethHidden.TabStop = true;
+            this.topTeethHidden.Text = "Hidden";
+            this.topTeethHidden.UseVisualStyleBackColor = true;
+            this.topTeethHidden.CheckedChanged += new System.EventHandler(this.teethHidden_CheckedChanged);
             // 
-            // teethTransparent
+            // topTeethTransparent
             // 
-            this.teethTransparent.AutoSize = true;
-            this.teethTransparent.Location = new System.Drawing.Point(7, 44);
-            this.teethTransparent.Name = "teethTransparent";
-            this.teethTransparent.Size = new System.Drawing.Size(82, 17);
-            this.teethTransparent.TabIndex = 1;
-            this.teethTransparent.TabStop = true;
-            this.teethTransparent.Text = "Transparent";
-            this.teethTransparent.UseVisualStyleBackColor = true;
-            this.teethTransparent.CheckedChanged += new System.EventHandler(this.teethTransparent_CheckedChanged);
+            this.topTeethTransparent.AutoSize = true;
+            this.topTeethTransparent.Location = new System.Drawing.Point(7, 44);
+            this.topTeethTransparent.Name = "topTeethTransparent";
+            this.topTeethTransparent.Size = new System.Drawing.Size(82, 17);
+            this.topTeethTransparent.TabIndex = 1;
+            this.topTeethTransparent.TabStop = true;
+            this.topTeethTransparent.Text = "Transparent";
+            this.topTeethTransparent.UseVisualStyleBackColor = true;
+            this.topTeethTransparent.CheckedChanged += new System.EventHandler(this.teethTransparent_CheckedChanged);
             // 
-            // teethOpaque
+            // topTeethOpaque
             // 
-            this.teethOpaque.AutoSize = true;
-            this.teethOpaque.Location = new System.Drawing.Point(7, 20);
-            this.teethOpaque.Name = "teethOpaque";
-            this.teethOpaque.Size = new System.Drawing.Size(63, 17);
-            this.teethOpaque.TabIndex = 0;
-            this.teethOpaque.TabStop = true;
-            this.teethOpaque.Text = "Opaque";
-            this.teethOpaque.UseVisualStyleBackColor = true;
-            this.teethOpaque.CheckedChanged += new System.EventHandler(this.teethOpaque_CheckedChanged);
+            this.topTeethOpaque.AutoSize = true;
+            this.topTeethOpaque.Location = new System.Drawing.Point(7, 20);
+            this.topTeethOpaque.Name = "topTeethOpaque";
+            this.topTeethOpaque.Size = new System.Drawing.Size(63, 17);
+            this.topTeethOpaque.TabIndex = 0;
+            this.topTeethOpaque.TabStop = true;
+            this.topTeethOpaque.Text = "Opaque";
+            this.topTeethOpaque.UseVisualStyleBackColor = true;
+            this.topTeethOpaque.CheckedChanged += new System.EventHandler(this.teethOpaque_CheckedChanged);
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.bottomTeethHidden);
+            this.groupBox4.Controls.Add(this.bottomTeethTransparent);
+            this.groupBox4.Controls.Add(this.bottomTeethOpaque);
+            this.groupBox4.Location = new System.Drawing.Point(13, 307);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(125, 91);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Bottom Teeth";
+            // 
+            // bottomTeethHidden
+            // 
+            this.bottomTeethHidden.AutoSize = true;
+            this.bottomTeethHidden.Location = new System.Drawing.Point(7, 68);
+            this.bottomTeethHidden.Name = "bottomTeethHidden";
+            this.bottomTeethHidden.Size = new System.Drawing.Size(59, 17);
+            this.bottomTeethHidden.TabIndex = 2;
+            this.bottomTeethHidden.TabStop = true;
+            this.bottomTeethHidden.Text = "Hidden";
+            this.bottomTeethHidden.UseVisualStyleBackColor = true;
+            this.bottomTeethHidden.CheckedChanged += new System.EventHandler(this.bottomTeethHidden_CheckedChanged);
+            // 
+            // bottomTeethTransparent
+            // 
+            this.bottomTeethTransparent.AutoSize = true;
+            this.bottomTeethTransparent.Location = new System.Drawing.Point(7, 44);
+            this.bottomTeethTransparent.Name = "bottomTeethTransparent";
+            this.bottomTeethTransparent.Size = new System.Drawing.Size(82, 17);
+            this.bottomTeethTransparent.TabIndex = 1;
+            this.bottomTeethTransparent.TabStop = true;
+            this.bottomTeethTransparent.Text = "Transparent";
+            this.bottomTeethTransparent.UseVisualStyleBackColor = true;
+            this.bottomTeethTransparent.CheckedChanged += new System.EventHandler(this.bottomTeethTransparent_CheckedChanged);
+            // 
+            // bottomTeethOpaque
+            // 
+            this.bottomTeethOpaque.AutoSize = true;
+            this.bottomTeethOpaque.Location = new System.Drawing.Point(7, 20);
+            this.bottomTeethOpaque.Name = "bottomTeethOpaque";
+            this.bottomTeethOpaque.Size = new System.Drawing.Size(63, 17);
+            this.bottomTeethOpaque.TabIndex = 0;
+            this.bottomTeethOpaque.TabStop = true;
+            this.bottomTeethOpaque.Text = "Opaque";
+            this.bottomTeethOpaque.UseVisualStyleBackColor = true;
+            this.bottomTeethOpaque.CheckedChanged += new System.EventHandler(this.bottomTeethOpaque_CheckedChanged);
             // 
             // SimpleLayerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(150, 309);
+            this.ClientSize = new System.Drawing.Size(150, 405);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -208,6 +262,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -223,9 +279,13 @@
         private System.Windows.Forms.RadioButton mandibleTransparent;
         private System.Windows.Forms.RadioButton mandibleOpaque;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton teethHidden;
-        private System.Windows.Forms.RadioButton teethTransparent;
-        private System.Windows.Forms.RadioButton teethOpaque;
+        private System.Windows.Forms.RadioButton topTeethHidden;
+        private System.Windows.Forms.RadioButton topTeethTransparent;
+        private System.Windows.Forms.RadioButton topTeethOpaque;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton bottomTeethHidden;
+        private System.Windows.Forms.RadioButton bottomTeethTransparent;
+        private System.Windows.Forms.RadioButton bottomTeethOpaque;
 
     }
 }

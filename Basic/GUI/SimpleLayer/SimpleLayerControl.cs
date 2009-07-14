@@ -26,7 +26,8 @@ namespace Medical.GUI
             base.sceneLoaded();
             skullOpaque.Checked = true;
             mandibleOpaque.Checked = true;
-            teethOpaque.Checked = true;
+            topTeethOpaque.Checked = true;
+            bottomTeethOpaque.Checked = true;
         }
 
         private void skullOpaque_CheckedChanged(object sender, EventArgs e)
@@ -91,36 +92,72 @@ namespace Medical.GUI
 
         private void teethOpaque_CheckedChanged(object sender, EventArgs e)
         {
-            if (teethOpaque.Checked)
+            if (topTeethOpaque.Checked)
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
-                foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
+                for( int i = 1; i < 17; ++i)
                 {
-                    tooth.smoothBlend(1.0f);
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(1.0f);
                 }
             }
         }
 
         private void teethTransparent_CheckedChanged(object sender, EventArgs e)
         {
-            if (teethTransparent.Checked)
+            if (topTeethTransparent.Checked)
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
-                foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
+                for (int i = 1; i < 17; ++i)
                 {
-                    tooth.smoothBlend(0.7f);
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(0.7f);
                 }
             }
         }
 
         private void teethHidden_CheckedChanged(object sender, EventArgs e)
         {
-            if (teethHidden.Checked)
+            if (topTeethHidden.Checked)
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
-                foreach (TransparencyInterface tooth in group.getTransparencyObjectIter())
+                for (int i = 1; i < 17; ++i)
                 {
-                    tooth.smoothBlend(0.0f);
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(0.0f);
+                }
+            }
+        }
+
+        private void bottomTeethOpaque_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bottomTeethOpaque.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+                for (int i = 17; i < 33; ++i)
+                {
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(1.0f);
+                }
+            }
+        }
+
+        private void bottomTeethTransparent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bottomTeethTransparent.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+                for (int i = 17; i < 33; ++i)
+                {
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(0.7f);
+                }
+            }
+        }
+
+        private void bottomTeethHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bottomTeethHidden.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+                for (int i = 17; i < 33; ++i)
+                {
+                    group.getTransparencyObject("Tooth " + i).smoothBlend(0.0f);
                 }
             }
         }
