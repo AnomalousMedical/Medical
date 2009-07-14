@@ -59,13 +59,20 @@ namespace Medical
         private Vector3 translation;
         private CameraMotionValidator motionValidator = null;
 
+        private bool automaticMovement = false;
+        private Vector3 targetLookAt = Vector3.Zero;
+        private Vector3 targetTranslation = Vector3.Zero;
+        private Vector3 startLookAt = Vector3.Zero;
+        private Vector3 startTranslation = Vector3.Zero;
+        private float totalTime = 0.0f;
+
         public OrbitCameraController(CameraControl camera, EventManager eventManager)
         {
             this.camera = camera;
             this.events = eventManager;
             translation = camera.Translation;
             lookAt = camera.LookAt;
-            computeStartingValues(translation - lookAt);
+            computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
         public OrbitCameraController(Vector3 translation, Vector3 lookAt, EventManager eventManager)
@@ -74,119 +81,142 @@ namespace Medical
             this.events = eventManager;
             this.translation = translation;
             this.lookAt = lookAt;
-            computeStartingValues(translation - lookAt);
+            computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
         public void sendUpdate(Clock clock)
         {
             if (camera != null)
             {
-                Vector3 mouseCoords = events.Mouse.getAbsMouse();
-                bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
-                if (events[CameraEvents.RotateCamera].FirstFrameDown)
+                if (automaticMovement)
                 {
-                    if (activeWindow)
+                    totalTime += (float)clock.Seconds;
+                    if (totalTime > 1.0f)
                     {
-                        currentlyInMotion = true;
+                        totalTime = 1.0f;
+                        automaticMovement = false;
                     }
+                    this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
+
+                    computeStartingValues(startTranslation.lerp(ref targetTranslation, ref totalTime) - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+                    //camera.setOrthoWindowHeight(orbitDistance);
+                    updateTranslation(normalDirection * orbitDistance + lookAt);
+                    camera.LookAt = lookAt;
                 }
-                else if (events[CameraEvents.RotateCamera].FirstFrameUp)
+                else
                 {
-                    currentlyInMotion = false;
+                    manualMove();
                 }
-                mouseCoords = events.Mouse.getRelMouse();
-                if (currentlyInMotion)
-                {
-                    if (events[CameraEvents.PanCamera].Down)
-                    {
-                        float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
-                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
-                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
-                        //Restrict look at position
-                        if (lookAt.x > LOOK_AT_BOUND_MAX.x)
-                        {
-                            lookAt.x = LOOK_AT_BOUND_MAX.x;
-                        }
-                        else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
-                        {
-                            lookAt.x = LOOK_AT_BOUND_MIN.x;
-                        }
-                        if (lookAt.y > LOOK_AT_BOUND_MAX.y)
-                        {
-                            lookAt.y = LOOK_AT_BOUND_MAX.y;
-                        }
-                        else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
-                        {
-                            lookAt.y = LOOK_AT_BOUND_MIN.y;
-                        }
-                        if (lookAt.z > LOOK_AT_BOUND_MAX.z)
-                        {
-                            lookAt.z = LOOK_AT_BOUND_MAX.z;
-                        }
-                        else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
-                        {
-                            lookAt.z = LOOK_AT_BOUND_MIN.z;
-                        }
+            }
+        }
 
-                        updateTranslation(lookAt + normalDirection * orbitDistance);
-                    }
-                    else if (events[CameraEvents.ZoomCamera].Down)
-                    {
-                        orbitDistance += mouseCoords.y;
-                        if (orbitDistance < 0.2f)
-                        {
-                            orbitDistance = 0.2f;
-                        }
-                        if (orbitDistance > 500.0f)
-                        {
-                            orbitDistance = 500.0f;
-                        }
-                        updateTranslation(normalDirection * orbitDistance + lookAt);
-                    }
-                    else if (events[CameraEvents.RotateCamera].Down)
-                    {
-                        yaw += mouseCoords.x / -100.0f;
-                        pitch += mouseCoords.y / 100.0f;
-                        if (pitch > HALF_PI)
-                        {
-                            pitch = HALF_PI;
-                        }
-                        if (pitch < -HALF_PI)
-                        {
-                            pitch = -HALF_PI;
-                        }
-
-                        Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
-                        Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
-
-                        Quaternion rotation = yawRot * pitchRot;
-                        normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                        rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
-                        rotatedLeft = normalDirection.cross(ref rotatedUp);
-
-                        updateTranslation(normalDirection * orbitDistance + lookAt);
-                        camera.LookAt = lookAt;
-                    }
-                }
+        private void manualMove()
+        {
+            Vector3 mouseCoords = events.Mouse.getAbsMouse();
+            bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
+            if (events[CameraEvents.RotateCamera].FirstFrameDown)
+            {
                 if (activeWindow)
                 {
-                    if (mouseCoords.z != 0)
+                    currentlyInMotion = true;
+                }
+            }
+            else if (events[CameraEvents.RotateCamera].FirstFrameUp)
+            {
+                currentlyInMotion = false;
+            }
+            mouseCoords = events.Mouse.getRelMouse();
+            if (currentlyInMotion)
+            {
+                if (events[CameraEvents.PanCamera].Down)
+                {
+                    float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
+                    lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
+                    lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
+                    //Restrict look at position
+                    if (lookAt.x > LOOK_AT_BOUND_MAX.x)
                     {
-                        if (mouseCoords.z < 0)
-                        {
-                            orbitDistance += 3.6f;
-                        }
-                        else if (mouseCoords.z > 0)
-                        {
-                            orbitDistance -= 3.6f;
-                            if (orbitDistance < 0.0f)
-                            {
-                                orbitDistance = 0.0f;
-                            }
-                        }
-                        //camera.setOrthoWindowHeight(orbitDistance);
-                        updateTranslation(normalDirection * orbitDistance + lookAt);
+                        lookAt.x = LOOK_AT_BOUND_MAX.x;
                     }
+                    else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
+                    {
+                        lookAt.x = LOOK_AT_BOUND_MIN.x;
+                    }
+                    if (lookAt.y > LOOK_AT_BOUND_MAX.y)
+                    {
+                        lookAt.y = LOOK_AT_BOUND_MAX.y;
+                    }
+                    else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
+                    {
+                        lookAt.y = LOOK_AT_BOUND_MIN.y;
+                    }
+                    if (lookAt.z > LOOK_AT_BOUND_MAX.z)
+                    {
+                        lookAt.z = LOOK_AT_BOUND_MAX.z;
+                    }
+                    else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
+                    {
+                        lookAt.z = LOOK_AT_BOUND_MIN.z;
+                    }
+
+                    updateTranslation(lookAt + normalDirection * orbitDistance);
+                }
+                else if (events[CameraEvents.ZoomCamera].Down)
+                {
+                    orbitDistance += mouseCoords.y;
+                    if (orbitDistance < 0.2f)
+                    {
+                        orbitDistance = 0.2f;
+                    }
+                    if (orbitDistance > 500.0f)
+                    {
+                        orbitDistance = 500.0f;
+                    }
+                    updateTranslation(normalDirection * orbitDistance + lookAt);
+                }
+                else if (events[CameraEvents.RotateCamera].Down)
+                {
+                    yaw += mouseCoords.x / -100.0f;
+                    pitch += mouseCoords.y / 100.0f;
+                    if (pitch > HALF_PI)
+                    {
+                        pitch = HALF_PI;
+                    }
+                    if (pitch < -HALF_PI)
+                    {
+                        pitch = -HALF_PI;
+                    }
+
+                    Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+                    Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
+
+                    Quaternion rotation = yawRot * pitchRot;
+                    normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+                    rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
+                    rotatedLeft = normalDirection.cross(ref rotatedUp);
+
+                    updateTranslation(normalDirection * orbitDistance + lookAt);
+                    camera.LookAt = lookAt;
+                }
+            }
+            if (activeWindow)
+            {
+                if (mouseCoords.z != 0)
+                {
+                    if (mouseCoords.z < 0)
+                    {
+                        orbitDistance += 3.6f;
+                    }
+                    else if (mouseCoords.z > 0)
+                    {
+                        orbitDistance -= 3.6f;
+                        if (orbitDistance < 0.0f)
+                        {
+                            orbitDistance = 0.0f;
+                        }
+                    }
+                    //camera.setOrthoWindowHeight(orbitDistance);
+                    updateTranslation(normalDirection * orbitDistance + lookAt);
                 }
             }
         }
@@ -219,11 +249,17 @@ namespace Medical
         {
             if (camera != null)
             {
-                this.lookAt = lookAt;
-                computeStartingValues(position - lookAt);
-                //camera.setOrthoWindowHeight(orbitDistance);
-                updateTranslation(normalDirection * orbitDistance + lookAt);
-                camera.LookAt = lookAt;
+                //this.lookAt = lookAt;
+                //computeStartingValues(position - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+                ////camera.setOrthoWindowHeight(orbitDistance);
+                //updateTranslation(normalDirection * orbitDistance + lookAt);
+                //camera.LookAt = lookAt;
+                startLookAt = this.lookAt;
+                startTranslation = this.translation;
+                this.targetLookAt = lookAt;
+                this.targetTranslation = position;
+                automaticMovement = true;
+                totalTime = 0.0f;
             }
         }
 
@@ -232,7 +268,7 @@ namespace Medical
         /// normalDirection and left values.
         /// </summary>
         /// <param name="localTrans">The translation of the camera relative to the look at point.</param>
-        private void computeStartingValues(Vector3 localTrans)
+        private static void computeStartingValues(Vector3 localTrans, out float orbitDistance, out float yaw, out float pitch, out Vector3 normalDirection, out Vector3 rotatedUp, out Vector3 rotatedLeft)
         {
             //Compute the orbit distance, this is the distance from the location to the look at point.
             orbitDistance = localTrans.length();
