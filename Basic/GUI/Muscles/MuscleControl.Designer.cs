@@ -33,6 +33,8 @@
             this.clenchButton = new System.Windows.Forms.Button();
             this.neutralButton = new System.Windows.Forms.Button();
             this.resetTeethButton = new System.Windows.Forms.Button();
+            this.translateBackward = new System.Windows.Forms.Button();
+            this.translateForward = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // closeButton
@@ -62,7 +64,7 @@
             // clenchButton
             // 
             this.clenchButton.Image = global::Medical.Properties.Resources.clenchedmuscle;
-            this.clenchButton.Location = new System.Drawing.Point(4, 296);
+            this.clenchButton.Location = new System.Drawing.Point(12, 447);
             this.clenchButton.Name = "clenchButton";
             this.clenchButton.Size = new System.Drawing.Size(111, 140);
             this.clenchButton.TabIndex = 7;
@@ -86,7 +88,7 @@
             // resetTeethButton
             // 
             this.resetTeethButton.Image = global::Medical.Properties.Resources.neutralmuscle;
-            this.resetTeethButton.Location = new System.Drawing.Point(121, 296);
+            this.resetTeethButton.Location = new System.Drawing.Point(129, 447);
             this.resetTeethButton.Name = "resetTeethButton";
             this.resetTeethButton.Size = new System.Drawing.Size(111, 140);
             this.resetTeethButton.TabIndex = 10;
@@ -95,11 +97,37 @@
             this.resetTeethButton.UseVisualStyleBackColor = true;
             this.resetTeethButton.Click += new System.EventHandler(this.resetTeethButton_Click);
             // 
+            // translateBackward
+            // 
+            this.translateBackward.Image = global::Medical.Properties.Resources.neutralmuscle;
+            this.translateBackward.Location = new System.Drawing.Point(129, 296);
+            this.translateBackward.Name = "translateBackward";
+            this.translateBackward.Size = new System.Drawing.Size(111, 140);
+            this.translateBackward.TabIndex = 12;
+            this.translateBackward.Text = "Translate Backward";
+            this.translateBackward.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.translateBackward.UseVisualStyleBackColor = true;
+            this.translateBackward.Click += new System.EventHandler(this.translateBackward_Click);
+            // 
+            // translateForward
+            // 
+            this.translateForward.Image = global::Medical.Properties.Resources.openmuscle;
+            this.translateForward.Location = new System.Drawing.Point(12, 296);
+            this.translateForward.Name = "translateForward";
+            this.translateForward.Size = new System.Drawing.Size(111, 140);
+            this.translateForward.TabIndex = 11;
+            this.translateForward.Text = "Translate Forward";
+            this.translateForward.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.translateForward.UseVisualStyleBackColor = true;
+            this.translateForward.Click += new System.EventHandler(this.translateForward_Click);
+            // 
             // MuscleControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(257, 445);
+            this.ClientSize = new System.Drawing.Size(257, 599);
+            this.Controls.Add(this.translateBackward);
+            this.Controls.Add(this.translateForward);
             this.Controls.Add(this.resetTeethButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.openButton);
@@ -122,6 +150,8 @@
         private System.Windows.Forms.Button clenchButton;
         private System.Windows.Forms.Button neutralButton;
         private System.Windows.Forms.Button resetTeethButton;
+        private System.Windows.Forms.Button translateBackward;
+        private System.Windows.Forms.Button translateForward;
 
     }
 }
