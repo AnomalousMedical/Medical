@@ -44,7 +44,7 @@ namespace Medical
 
         [Editable]
         //The position along the curve where the condyle starts
-        float neutralLocation = .3528f;
+        float neutralLocation;
 
         [Editable]
         float location;
@@ -207,9 +207,7 @@ namespace Medical
         public void positionModified()
         {
             Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
-            joint.RealJoint.saveToDesc(jointDesc);
-            jointDesc.set_LocalAnchor(0, newLocation);
-            joint.RealJoint.loadFromDesc(jointDesc);
+            this.updateTranslation(ref newLocation);
         }
 
         public float getNeutralLocation()
