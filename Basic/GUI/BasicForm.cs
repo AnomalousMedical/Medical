@@ -22,6 +22,20 @@ namespace Medical.GUI
             this.initialize(dockPanel, toolStripContainer);
         }
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            openPatient.Dispose();
+            base.Dispose(disposing);
+        }
+
         public void initialize(BasicController controller)
         {
             this.controller = controller;

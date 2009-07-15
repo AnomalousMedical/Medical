@@ -72,6 +72,12 @@
     <Compile Include="GUI\BasicForm.Designer.cs">
       <DependentUpon>BasicForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Config\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Config\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>
     </Compile>
