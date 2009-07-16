@@ -42,7 +42,7 @@ namespace Medical.GUI
 
         private void saveCameraButton_Click(object sender, EventArgs e)
         {
-            InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm());
+            InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm(), validateSaveCameraName);
             if (result.ok)
             {
                 drawingWindowController.saveCamera(result.text);
@@ -51,6 +51,17 @@ namespace Medical.GUI
                     cameraNameList.Items.Add(result.text);
                 }
             }
+        }
+
+        private bool validateSaveCameraName(string input, out string error)
+        {
+            if (cameraNameList.Items.Contains(input))
+            {
+                error = "Camera name already exists please enter another.";
+                return false;
+            }
+            error = "";
+            return true;
         }
 
         void cameraNameList_MouseDoubleClick(object sender, MouseEventArgs e)

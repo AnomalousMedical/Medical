@@ -64,40 +64,26 @@ namespace Medical.GUI
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //fileTracker.saveFile(this);
-            //if (fileTracker.lastDialogAccepted())
-            //{
-            //    controller.saveMedicalState(fileTracker.getCurrentFile());
-            //}
-            InputResult result = InputBox.GetInput("Save", "Enter a file name", this);
-            bool saveFile = true;
+            InputResult result = InputBox.GetInput("Save", "Enter a file name", this, validateFileName);
             if (result.ok)
-            {
-                while (File.Exists(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml") && saveFile)
-                {
-                    DialogResult msgRes = MessageBox.Show(this, "A file named " + result.text + " already exists. Would you like to overwrite it?", "Overwright?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (msgRes == DialogResult.No)
-                    {
-                        result = InputBox.GetInput("Save", "Enter a different file name", this, result.text);
-                        if (!result.ok)
-                        {
-                            saveFile = false;
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                saveFile = false;
-            }
-            if (saveFile)
             {
                 controller.saveMedicalState(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml");
             }
+        }
+
+        private bool validateFileName(String input, out String errorPrompt)
+        {
+            if (File.Exists(MedicalConfig.SaveDirectory + "/" + input + ".sim.xml"))
+            {
+                DialogResult msgRes = MessageBox.Show(this, "A file named " + input + " already exists. Would you like to overwrite it?", "Overwright?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (msgRes == DialogResult.No)
+                {
+                    errorPrompt = "Enter a different file name.";
+                    return false;
+                }
+            }
+            errorPrompt = "";
+            return true;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

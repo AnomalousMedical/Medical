@@ -8,6 +8,16 @@ using System.Windows.Forms;
 
 namespace Medical
 {
+    /// <summary>
+    /// This delegate can be passed to the GetInput function to validate the
+    /// user's input. Return false if the input is invalid and fill out the
+    /// newPrompt with something meaningful.
+    /// </summary>
+    /// <param name="input">The input string entered.</param>
+    /// <param name="newPrompt">An output error message and new prompt for the dialog.</param>
+    /// <returns>True if the input is valid, false if it is invalid.</returns>
+    public delegate bool ValidateInput(String input, out String newPrompt);
+
     public partial class InputBox : Form
     {
         public InputBox(String title, String message, String text)
@@ -34,12 +44,21 @@ namespace Medical
 
         }
 
-        public static InputResult GetInput(String title, String message, IWin32Window parent)
+        public static InputResult GetInput(String title, String message, IWin32Window parent, ValidateInput validate)
         {
-            return GetInput(title, message, parent, "");
+            InputResult result = GetInput(title, message, parent, "");
+            if (validate != null)
+            {
+                String error;
+                while (result.ok && !validate.Invoke(result.text, out error))
+                {
+                    result = GetInput(title, error, parent, result.text);
+                }
+            }
+            return result;
         }
 
-        public static InputResult GetInput(String title, String message, IWin32Window parent, String text)
+        private static InputResult GetInput(String title, String message, IWin32Window parent, String text)
         {
             InputResult inputResult = new InputResult();
             using (InputBox inputBox = new InputBox(title, message, text))
