@@ -73,6 +73,11 @@ namespace Medical.GUI
 
         private bool validateFileName(String input, out String errorPrompt)
         {
+            if (input == null || input == "")
+            {
+                errorPrompt = "Please enter a non empty name.";
+                return false;
+            }
             if (File.Exists(MedicalConfig.SaveDirectory + "/" + input + ".sim.xml"))
             {
                 DialogResult msgRes = MessageBox.Show(this, "A file named " + input + " already exists. Would you like to overwrite it?", "Overwright?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

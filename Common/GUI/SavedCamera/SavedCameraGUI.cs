@@ -55,6 +55,11 @@ namespace Medical.GUI
 
         private bool validateSaveCameraName(string input, out string error)
         {
+            if (input == null || input == "")
+            {
+                error = "Please enter a non empty name.";
+                return false;
+            }
             if (cameraNameList.Items.Contains(input))
             {
                 error = "Camera name already exists please enter another.";
