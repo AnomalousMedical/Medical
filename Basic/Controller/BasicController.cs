@@ -17,6 +17,8 @@ namespace Medical.Controller
 {
     public class BasicController : IDisposable
     {
+        private const String sceneFileName = "/Scenes/BasicScene.sim.xml";
+
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
@@ -117,9 +119,9 @@ namespace Medical.Controller
         /// </summary>
         public void openDefaultScene()
         {
-            if (File.Exists(Resource.ResourceRoot + "/Scenes/SkullScene.sim.xml"))
+            if (File.Exists(Resource.ResourceRoot + sceneFileName))
             {
-                changeScene(Resource.ResourceRoot + "/Scenes/SkullScene.sim.xml");
+                changeScene(Resource.ResourceRoot + sceneFileName);
             }
             stateController.clearStates();
         }
