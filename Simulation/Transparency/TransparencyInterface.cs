@@ -37,6 +37,7 @@ namespace Medical
         [Editable] private bool disableOnHidden = true;
         [Editable] private float targetOpacity = 1.0f;
         [Editable] private bool changingOpacity = false;
+        [Editable] private int renderGroupOffset = 0;
 
         [Editable] public String ObjectName { get; private set; }
         [Editable] public RenderGroup RenderGroup { get; private set; }
@@ -77,28 +78,28 @@ namespace Medical
                 switch (RenderGroup)
                 {
                     case RenderGroup.None:
-                        entity.setRenderQueueGroup(255);
+                        entity.setRenderQueueGroup((byte)(255 + renderGroupOffset));
                         break;
                     case RenderGroup.Teeth:
-                        entity.setRenderQueueGroup(0);
+                        entity.setRenderQueueGroup((byte)(0 + renderGroupOffset));
                         break;
                     case RenderGroup.Bones:
-                        entity.setRenderQueueGroup(20);
+                        entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));
                         break;
                     case RenderGroup.Muscles:
-                        entity.setRenderQueueGroup(20);
+                        entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));
                         break;
                     case RenderGroup.Skin:
-                        entity.setRenderQueueGroup(200);
+                        entity.setRenderQueueGroup((byte)(200 + renderGroupOffset));
                         break;
                     case RenderGroup.Spine:
-                        entity.setRenderQueueGroup(20);
+                        entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));
                         break;
                     case RenderGroup.Nasal:
-                        entity.setRenderQueueGroup(20);
+                        entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));
                         break;
                     case RenderGroup.TMJ:
-                        entity.setRenderQueueGroup(10);
+                        entity.setRenderQueueGroup((byte)(10 + renderGroupOffset));
                         break;
                 }
             }

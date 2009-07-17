@@ -103,6 +103,7 @@ namespace Medical.Controller
                 drawingWindowController.createOneWaySplit();
             }
 
+            newScene();
             advancedForm.Show();
             splash.Close();
             medicalController.start();

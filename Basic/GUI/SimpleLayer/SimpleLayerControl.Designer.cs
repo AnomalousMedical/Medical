@@ -44,10 +44,19 @@
             this.bottomTeethHidden = new System.Windows.Forms.RadioButton();
             this.bottomTeethTransparent = new System.Windows.Forms.RadioButton();
             this.bottomTeethOpaque = new System.Windows.Forms.RadioButton();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.skullInteriorHidden = new System.Windows.Forms.RadioButton();
+            this.skullInteriorTransparent = new System.Windows.Forms.RadioButton();
+            this.skullInteriorOpaque = new System.Windows.Forms.RadioButton();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.eminenceHidden = new System.Windows.Forms.RadioButton();
+            this.eminenceVisible = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -103,7 +112,7 @@
             this.groupBox2.Controls.Add(this.mandibleHidden);
             this.groupBox2.Controls.Add(this.mandibleTransparent);
             this.groupBox2.Controls.Add(this.mandibleOpaque);
-            this.groupBox2.Location = new System.Drawing.Point(12, 110);
+            this.groupBox2.Location = new System.Drawing.Point(12, 275);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(125, 91);
             this.groupBox2.TabIndex = 3;
@@ -151,7 +160,7 @@
             this.groupBox3.Controls.Add(this.topTeethHidden);
             this.groupBox3.Controls.Add(this.topTeethTransparent);
             this.groupBox3.Controls.Add(this.topTeethOpaque);
-            this.groupBox3.Location = new System.Drawing.Point(13, 210);
+            this.groupBox3.Location = new System.Drawing.Point(13, 375);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(125, 91);
             this.groupBox3.TabIndex = 4;
@@ -199,7 +208,7 @@
             this.groupBox4.Controls.Add(this.bottomTeethHidden);
             this.groupBox4.Controls.Add(this.bottomTeethTransparent);
             this.groupBox4.Controls.Add(this.bottomTeethOpaque);
-            this.groupBox4.Location = new System.Drawing.Point(13, 307);
+            this.groupBox4.Location = new System.Drawing.Point(13, 472);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(125, 91);
             this.groupBox4.TabIndex = 5;
@@ -242,11 +251,96 @@
             this.bottomTeethOpaque.UseVisualStyleBackColor = true;
             this.bottomTeethOpaque.CheckedChanged += new System.EventHandler(this.bottomTeethOpaque_CheckedChanged);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.skullInteriorHidden);
+            this.groupBox5.Controls.Add(this.skullInteriorTransparent);
+            this.groupBox5.Controls.Add(this.skullInteriorOpaque);
+            this.groupBox5.Location = new System.Drawing.Point(13, 106);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(125, 91);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Interior";
+            // 
+            // skullInteriorHidden
+            // 
+            this.skullInteriorHidden.AutoSize = true;
+            this.skullInteriorHidden.Location = new System.Drawing.Point(7, 68);
+            this.skullInteriorHidden.Name = "skullInteriorHidden";
+            this.skullInteriorHidden.Size = new System.Drawing.Size(59, 17);
+            this.skullInteriorHidden.TabIndex = 2;
+            this.skullInteriorHidden.TabStop = true;
+            this.skullInteriorHidden.Text = "Hidden";
+            this.skullInteriorHidden.UseVisualStyleBackColor = true;
+            this.skullInteriorHidden.CheckedChanged += new System.EventHandler(this.skullInteriorHidden_CheckedChanged);
+            // 
+            // skullInteriorTransparent
+            // 
+            this.skullInteriorTransparent.AutoSize = true;
+            this.skullInteriorTransparent.Location = new System.Drawing.Point(7, 44);
+            this.skullInteriorTransparent.Name = "skullInteriorTransparent";
+            this.skullInteriorTransparent.Size = new System.Drawing.Size(82, 17);
+            this.skullInteriorTransparent.TabIndex = 1;
+            this.skullInteriorTransparent.TabStop = true;
+            this.skullInteriorTransparent.Text = "Transparent";
+            this.skullInteriorTransparent.UseVisualStyleBackColor = true;
+            this.skullInteriorTransparent.CheckedChanged += new System.EventHandler(this.skullInteriorTransparent_CheckedChanged);
+            // 
+            // skullInteriorOpaque
+            // 
+            this.skullInteriorOpaque.AutoSize = true;
+            this.skullInteriorOpaque.Location = new System.Drawing.Point(7, 20);
+            this.skullInteriorOpaque.Name = "skullInteriorOpaque";
+            this.skullInteriorOpaque.Size = new System.Drawing.Size(63, 17);
+            this.skullInteriorOpaque.TabIndex = 0;
+            this.skullInteriorOpaque.TabStop = true;
+            this.skullInteriorOpaque.Text = "Opaque";
+            this.skullInteriorOpaque.UseVisualStyleBackColor = true;
+            this.skullInteriorOpaque.CheckedChanged += new System.EventHandler(this.skullInteriorOpaque_CheckedChanged);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.eminenceHidden);
+            this.groupBox6.Controls.Add(this.eminenceVisible);
+            this.groupBox6.Location = new System.Drawing.Point(13, 203);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(125, 66);
+            this.groupBox6.TabIndex = 4;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Eminence";
+            // 
+            // eminenceHidden
+            // 
+            this.eminenceHidden.AutoSize = true;
+            this.eminenceHidden.Location = new System.Drawing.Point(7, 44);
+            this.eminenceHidden.Name = "eminenceHidden";
+            this.eminenceHidden.Size = new System.Drawing.Size(59, 17);
+            this.eminenceHidden.TabIndex = 1;
+            this.eminenceHidden.TabStop = true;
+            this.eminenceHidden.Text = "Hidden";
+            this.eminenceHidden.UseVisualStyleBackColor = true;
+            this.eminenceHidden.CheckedChanged += new System.EventHandler(this.eminenceHidden_CheckedChanged);
+            // 
+            // eminenceVisible
+            // 
+            this.eminenceVisible.AutoSize = true;
+            this.eminenceVisible.Location = new System.Drawing.Point(7, 20);
+            this.eminenceVisible.Name = "eminenceVisible";
+            this.eminenceVisible.Size = new System.Drawing.Size(55, 17);
+            this.eminenceVisible.TabIndex = 0;
+            this.eminenceVisible.TabStop = true;
+            this.eminenceVisible.Text = "Visible";
+            this.eminenceVisible.UseVisualStyleBackColor = true;
+            this.eminenceVisible.CheckedChanged += new System.EventHandler(this.eminenceVisible_CheckedChanged);
+            // 
             // SimpleLayerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(150, 405);
+            this.ClientSize = new System.Drawing.Size(150, 573);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -264,6 +358,10 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -286,6 +384,13 @@
         private System.Windows.Forms.RadioButton bottomTeethHidden;
         private System.Windows.Forms.RadioButton bottomTeethTransparent;
         private System.Windows.Forms.RadioButton bottomTeethOpaque;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton skullInteriorHidden;
+        private System.Windows.Forms.RadioButton skullInteriorTransparent;
+        private System.Windows.Forms.RadioButton skullInteriorOpaque;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.RadioButton eminenceHidden;
+        private System.Windows.Forms.RadioButton eminenceVisible;
 
     }
 }

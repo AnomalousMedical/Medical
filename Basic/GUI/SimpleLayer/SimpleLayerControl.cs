@@ -28,6 +28,8 @@ namespace Medical.GUI
             mandibleOpaque.Checked = true;
             topTeethOpaque.Checked = true;
             bottomTeethOpaque.Checked = true;
+            eminenceVisible.Checked = true;
+            skullInteriorOpaque.Checked = true;
         }
 
         private void skullOpaque_CheckedChanged(object sender, EventArgs e)
@@ -37,6 +39,13 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
                 skull.smoothBlend(1.0f);
+                if (eminenceVisible.Checked)
+                {
+                    TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                    TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                    leftEminence.smoothBlend(1.0f);
+                    rightEminence.smoothBlend(1.0f);
+                }
             }
         }
 
@@ -47,6 +56,13 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
                 skull.smoothBlend(0.7f);
+                if (eminenceVisible.Checked)
+                {
+                    TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                    TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                    leftEminence.smoothBlend(0.7f);
+                    rightEminence.smoothBlend(0.7f);
+                }
             }
         }
 
@@ -57,6 +73,81 @@ namespace Medical.GUI
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
                 skull.smoothBlend(0.0f);
+                if (eminenceVisible.Checked)
+                {
+                    TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                    TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                    leftEminence.smoothBlend(0.0f);
+                    rightEminence.smoothBlend(0.0f);
+                }
+            }
+        }
+
+        private void skullInteriorOpaque_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skullInteriorOpaque.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
+                skull.smoothBlend(1.0f);
+            }
+        }
+
+        private void skullInteriorTransparent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skullInteriorTransparent.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
+                skull.smoothBlend(0.7f);
+            }
+        }
+
+        private void skullInteriorHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skullInteriorHidden.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
+                skull.smoothBlend(0.0f);
+            }
+        }
+
+        private void eminenceVisible_CheckedChanged(object sender, EventArgs e)
+        {
+            if (eminenceVisible.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull");
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                if (skullOpaque.Checked)
+                {
+                    leftEminence.smoothBlend(1.0f);
+                    rightEminence.smoothBlend(1.0f);
+                }
+                if (skullTransparent.Checked)
+                {
+                    leftEminence.smoothBlend(0.7f);
+                    rightEminence.smoothBlend(0.7f);
+                }
+                if (skullHidden.Checked)
+                {
+                    leftEminence.smoothBlend(0.0f);
+                    rightEminence.smoothBlend(0.0f);
+                }
+            }
+        }
+
+        private void eminenceHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            if (eminenceHidden.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                leftEminence.smoothBlend(0.0f);
+                rightEminence.smoothBlend(0.0f);
             }
         }
 
