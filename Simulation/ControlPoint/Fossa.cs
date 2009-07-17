@@ -30,6 +30,15 @@ namespace Medical
         private String skullEntityName;
 
         [Editable]
+        private String eminanceName;
+
+        [Editable]
+        private String eminanceNodeName;
+
+        [Editable]
+        private String eminanceEntityName;
+
+        [Editable]
         private int eminanceStart = 12;
 
         [DoNotSave]
@@ -46,7 +55,15 @@ namespace Medical
         private SimObject skullSimObject;
         [DoNotSave]
         [DoNotCopy]
-        private List<Bone> bones = new List<Bone>();
+        private List<Bone> skullBones = new List<Bone>();
+
+        [DoNotSave]
+        [DoNotCopy]
+        private SimObject eminanceSimObject;
+
+        [DoNotSave]
+        [DoNotCopy]
+        private List<Bone> eminanceBones = new List<Bone>();
 
         [Editable]
         String controlPointObject;
@@ -66,6 +83,37 @@ namespace Medical
             }
             else
             {
+                eminanceSimObject = Owner.getOtherSimObject(eminanceName);
+                if (eminanceSimObject != null)
+                {
+                    SceneNodeElement eminanceSceneNode = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
+                    if (eminanceSceneNode != null)
+                    {
+                        Entity eminanceEntity = eminanceSceneNode.getNodeObject(eminanceEntityName) as Entity;
+                        if (eminanceEntity != null)
+                        {
+                            if (eminanceEntity.hasSkeleton())
+                            {
+                                SkeletonInstance skeleton = eminanceEntity.getSkeleton();
+                                for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
+                                {
+                                    Bone bone = skeleton.getBone(fossaBoneBaseName + i);
+                                    eminanceBones.Add(bone);
+                                    bone.setManuallyControlled(true);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            blacklist("Cannot find the eminance entity {0}", eminanceEntityName);
+                        }
+                    }
+                    else
+                    {
+                        blacklist("Cannot find the eminance scene node {0}", eminanceNodeName);
+                    }
+                }
+
                 skullSimObject = Owner.getOtherSimObject(skullName);
                 if (skullSimObject != null)
                 {
@@ -82,7 +130,7 @@ namespace Medical
                                 for (int i = 1; skeleton.hasBone(fossaBoneBaseName + i); ++i)
                                 {
                                     Bone bone = skeleton.getBone(fossaBoneBaseName + i);
-                                    bones.Add(bone);
+                                    skullBones.Add(bone);
                                     bone.setManuallyControlled(true);
                                     Vector3 trans = bone.getDerivedPosition() + skullSimObject.Translation - this.Owner.Translation;
                                     trans.x = 0;
@@ -142,10 +190,12 @@ namespace Medical
             {
                 float boneOffsetDelta = 1.0f / basePoints.Count;
                 float currentOffset = 0.0f;
-                for (int i = 0; i < bones.Count; ++i)
+                for (int i = 0; i < skullBones.Count; ++i)
                 {
-                    bones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - skullSimObject.Translation);
-                    bones[i].needUpdate(true);
+                    skullBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - skullSimObject.Translation);
+                    skullBones[i].needUpdate(true);
+                    eminanceBones[i].setPosition(translation.interpolate(currentOffset) + this.Owner.Translation - eminanceSimObject.Translation);
+                    eminanceBones[i].needUpdate(true);
                     currentOffset += boneOffsetDelta;
                 }
             }
