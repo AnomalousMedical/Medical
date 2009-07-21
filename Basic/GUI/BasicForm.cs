@@ -15,6 +15,7 @@ namespace Medical.GUI
     {
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
+        private SavePatientDialog savePatient = new SavePatientDialog();
 
         public BasicForm()
         {
@@ -64,10 +65,15 @@ namespace Medical.GUI
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InputResult result = InputBox.GetInput("Save", "Enter a file name", this, validateFileName);
-            if (result.ok)
+            //InputResult result = InputBox.GetInput("Save", "Enter a file name", this, validateFileName);
+            //if (result.ok)
+            //{
+            //    controller.saveMedicalState(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml");
+            //}
+            savePatient.ShowDialog(this);
+            if (savePatient.SaveFile)
             {
-                controller.saveMedicalState(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml");
+                controller.saveMedicalState(savePatient.Filename);
             }
         }
 
