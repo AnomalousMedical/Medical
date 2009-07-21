@@ -33,7 +33,7 @@ namespace Medical.Controller
         /// </summary>
         public BasicController()
         {
-
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Basic");
         }
 
         /// <summary>

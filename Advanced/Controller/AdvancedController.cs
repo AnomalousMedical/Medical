@@ -29,7 +29,7 @@ namespace Medical.Controller
         /// </summary>
         public AdvancedController()
         {
-
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Advanced");
         }
 
         /// <summary>

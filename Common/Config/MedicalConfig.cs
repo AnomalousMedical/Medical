@@ -10,14 +10,17 @@ namespace Medical
     public class MedicalConfig
     {
         private static ConfigFile configFile;
-        private static String docRoot = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Atlas";
-        private static String windowsFile = docRoot + "/windows.ini";
-        private static String camerasFile = docRoot + "/cameras.ini";
+        private static String docRoot;
+        private static String windowsFile;
+        private static String camerasFile;
         private static CameraSection cameraSection;
         private static ConfigSection program;
 
-        static MedicalConfig()
+        public MedicalConfig(String docRoot)
         {
+            MedicalConfig.docRoot = docRoot;
+            windowsFile = docRoot + "/windows.ini";
+            camerasFile = docRoot + "/cameras.ini";
             if (!Directory.Exists(docRoot))
             {
                 Directory.CreateDirectory(docRoot);
