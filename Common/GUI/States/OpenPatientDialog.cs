@@ -12,6 +12,8 @@ namespace Medical.GUI
 {
     public partial class OpenPatientDialog : Form
     {
+        private static char[] SEPS = { ',' };
+
         private String currentFile = null;
 
         public OpenPatientDialog()
@@ -31,14 +33,24 @@ namespace Medical.GUI
                 {
                     Directory.CreateDirectory(directory);
                 }
-                String[] files = Directory.GetFiles(directory, "*.sim.xml");
-                fileList.Columns[0].Width = (int)(fileList.Width * 0.7f);
-                fileList.Columns[1].Width = fileList.Width - fileList.Columns[0].Width;
+                String[] files = Directory.GetFiles(directory, "*.pat");
+                fileList.Columns[0].Width = (int)(fileList.Width * 0.35f);
+                fileList.Columns[1].Width = (int)(fileList.Width * 0.35f);
+                fileList.Columns[2].Width = (int)(fileList.Width * 0.3f);
                 foreach (String file in files)
                 {
                     String name = Path.GetFileNameWithoutExtension(file);
                     DateTime dateModified = File.GetLastWriteTime(file);
-                    ListViewItem item = new ListViewItem(name);
+                    String[] split = name.Split(SEPS);
+                    ListViewItem item = new ListViewItem(split[0].Trim());
+                    if (split.Length > 1)
+                    {
+                        item.SubItems.Add(split[1].Trim());
+                    }
+                    else
+                    {
+                        item.SubItems.Add("");
+                    }
                     item.SubItems.Add(dateModified.ToShortDateString() + " " + dateModified.ToShortTimeString());
                     item.Tag = file;
                     fileList.Items.Add(item);
@@ -94,6 +106,14 @@ namespace Medical.GUI
         void fileList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             openButton.Enabled = fileList.SelectedItems.Count > 0;
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            fileList.Columns[0].Width = (int)(fileList.Width * 0.35f);
+            fileList.Columns[1].Width = (int)(fileList.Width * 0.35f);
+            fileList.Columns[2].Width = (int)(fileList.Width * 0.3f);
+            base.OnResize(e);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Medical.GUI
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            filename = MedicalConfig.SaveDirectory + "/" + String.Format("{0}, {1}", lastText.Text, firstText.Text) + ".sim.xml";
+            filename = MedicalConfig.SaveDirectory + "/" + String.Format("{0}, {1}", lastText.Text, firstText.Text) + ".pat";
             saveFile = true;
             if (File.Exists(filename))
             {
