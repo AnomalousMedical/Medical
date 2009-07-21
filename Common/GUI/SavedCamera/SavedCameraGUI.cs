@@ -13,21 +13,52 @@ namespace Medical.GUI
     public partial class SavedCameraGUI : GUIElement
     {
         private DrawingWindowController drawingWindowController;
+        private ListViewGroup defaultGroup = new ListViewGroup("Default");
+        private ListViewGroup userDefined = new ListViewGroup("User Defined");
 
         public SavedCameraGUI()
         {
             InitializeComponent();
             cameraNameList.MouseDoubleClick += new MouseEventHandler(cameraNameList_MouseDoubleClick);
             cameraNameList.KeyUp += new KeyEventHandler(cameraNameList_KeyUp);
+            cameraNameList.Groups.Add(defaultGroup);
+            cameraNameList.Groups.Add(userDefined);
         }
 
         public void initialize(DrawingWindowController drawingWindowController)
         {
             this.drawingWindowController = drawingWindowController;
+            //foreach (String name in PredefinedCameraController.getCameraNameList())
+            //{
+            //    ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+            //    item.Group = defaultGroup;
+            //}
+            //foreach (String name in drawingWindowController.getSavedCameraNames())
+            //{
+            //    ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+            //    item.Group = userDefined;
+            //}
+        }
+
+        protected override void sceneLoaded()
+        {
+            foreach (String name in PredefinedCameraController.getCameraNameList())
+            {
+                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+                item.Group = defaultGroup;
+            }
             foreach (String name in drawingWindowController.getSavedCameraNames())
             {
-                cameraNameList.Items.Add(name);
+                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+                item.Group = userDefined;
             }
+            base.sceneLoaded();
+        }
+
+        protected override void sceneUnloading()
+        {
+            cameraNameList.Items.Clear();
+            base.sceneUnloading();
         }
 
         private void activateButton_Click(object sender, EventArgs e)
@@ -46,9 +77,9 @@ namespace Medical.GUI
             if (result.ok)
             {
                 drawingWindowController.saveCamera(result.text);
-                if (!cameraNameList.Items.Contains(result.text))
+                if (!cameraNameList.Items.ContainsKey(result.text))
                 {
-                    cameraNameList.Items.Add(result.text);
+                    cameraNameList.Items.Add(result.text, result.text, 0);
                 }
             }
         }
@@ -60,7 +91,7 @@ namespace Medical.GUI
                 error = "Please enter a non empty name.";
                 return false;
             }
-            if (cameraNameList.Items.Contains(input))
+            if (cameraNameList.Items.ContainsKey(input))
             {
                 error = "Camera name already exists please enter another.";
                 return false;
@@ -88,20 +119,28 @@ namespace Medical.GUI
 
         private void activateSelectedCamera()
         {
-            if (cameraNameList.SelectedItem != null)
+            if (cameraNameList.SelectedItems.Count > 0)
             {
-                drawingWindowController.restoreSavedCamera(cameraNameList.SelectedItem.ToString());
+                ListViewItem item = cameraNameList.SelectedItems[0];
+                if (item.Group == defaultGroup)
+                {
+                    drawingWindowController.restorePredefinedCamera(item.Text);
+                }
+                else
+                {
+                    drawingWindowController.restoreSavedCamera(item.Text);
+                }
             }
         }
 
         private void deleteSelectedCamera()
         {
-            if (cameraNameList.SelectedItem != null)
+            if (cameraNameList.SelectedItems.Count > 0)
             {
-                String selectedItem = cameraNameList.SelectedItem.ToString();
+                String selectedItem = cameraNameList.SelectedItems[0].Text;
                 if (drawingWindowController.destroySavedCamera(selectedItem))
                 {
-                    cameraNameList.Items.Remove(selectedItem);
+                    cameraNameList.Items.RemoveByKey(selectedItem);
                 }
             }
         }

@@ -150,6 +150,16 @@ namespace Medical
             }
         }
 
+        public void restorePredefinedCamera(String cameraName)
+        {
+            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
+            if (activeWindow != null && PredefinedCameraController.contains(cameraName))
+            {
+                PredefinedCamera camera = PredefinedCameraController.get(cameraName);
+                activeWindow.DrawingWindow.setCamera(camera.EyePoint, camera.LookAt);
+            }
+        }
+
         public DrawingWindowHost getActiveWindow()
         {
             return activeDrawingWindow;

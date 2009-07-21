@@ -32,7 +32,8 @@
             this.deleteCameraButton = new System.Windows.Forms.Button();
             this.activateButton = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.cameraNameList = new System.Windows.Forms.ListBox();
+            this.cameraNameList = new System.Windows.Forms.ListView();
+            this.Camera = new System.Windows.Forms.ColumnHeader();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,12 +81,21 @@
             // 
             // cameraNameList
             // 
+            this.cameraNameList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Camera});
             this.cameraNameList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraNameList.FormattingEnabled = true;
             this.cameraNameList.Location = new System.Drawing.Point(0, 0);
+            this.cameraNameList.MultiSelect = false;
             this.cameraNameList.Name = "cameraNameList";
-            this.cameraNameList.Size = new System.Drawing.Size(311, 82);
+            this.cameraNameList.Size = new System.Drawing.Size(311, 83);
             this.cameraNameList.TabIndex = 5;
+            this.cameraNameList.UseCompatibleStateImageBehavior = false;
+            this.cameraNameList.View = System.Windows.Forms.View.Details;
+            // 
+            // Camera
+            // 
+            this.Camera.Text = "Camera";
+            this.Camera.Width = 158;
             // 
             // SavedCameraGUI
             // 
@@ -99,8 +109,6 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HideOnClose = true;
             this.Name = "SavedCameraGUI";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Cameras";
@@ -116,6 +124,7 @@
         private System.Windows.Forms.Button deleteCameraButton;
         private System.Windows.Forms.Button activateButton;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ListBox cameraNameList;
+        private System.Windows.Forms.ListView cameraNameList;
+        private System.Windows.Forms.ColumnHeader Camera;
     }
 }
