@@ -101,13 +101,14 @@ namespace Medical.Controller
 
             FossaControl fossaControl = new FossaControl();
             guiElements.addGUIElement(fossaControl);
+
+            newScene();
             
             if(!advancedForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
 
-            newScene();
             advancedForm.Show();
             splash.Close();
             medicalController.start();

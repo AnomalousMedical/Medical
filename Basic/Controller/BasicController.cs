@@ -92,12 +92,13 @@ namespace Medical.Controller
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
             guiElements.addGUIElement(simpleLayer);
 
-            if(!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            openDefaultScene();
+
+            if (!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
 
-            openDefaultScene();
             basicForm.Show();
             splash.Close();
             medicalController.start();

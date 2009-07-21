@@ -63,44 +63,148 @@ namespace Medical
         public void createFourWaySplit()
         {
             CameraSection cameraSection = MedicalConfig.CameraSection;
+            PredefinedCamera camera;
             closeAllWindows();
-            DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+
+            DrawingWindowHost camera1;
+            if (PredefinedCameraController.contains("Front"))
+            {
+                camera = PredefinedCameraController.get("Front");
+                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+            }
             camera1.Show(dock);
-            DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+
+            DrawingWindowHost camera2;
+            if (PredefinedCameraController.contains("Back"))
+            {
+                camera = PredefinedCameraController.get("Back");
+                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+            }
             camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
-            DrawingWindowHost camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
+
+            DrawingWindowHost camera3;
+            if (PredefinedCameraController.contains("Right"))
+            {
+                camera = PredefinedCameraController.get("Right");
+                camera3 = addCamera("Camera 3", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
+            }
             camera3.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
-            DrawingWindowHost camera4 = addCamera("Camera 4", cameraSection.LeftCameraPosition, cameraSection.LeftCameraLookAt);
+
+            DrawingWindowHost camera4;
+            if (PredefinedCameraController.contains("Left"))
+            {
+                camera = PredefinedCameraController.get("Left");
+                camera4 = addCamera("Camera 4", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera4 = addCamera("Camera 4", cameraSection.LeftCameraPosition, cameraSection.LeftCameraLookAt);
+            }
             camera4.Show(camera2.Pane, DockAlignment.Bottom, 0.5);
         }
 
         public void createThreeWayUpperSplit()
         {
             CameraSection cameraSection = MedicalConfig.CameraSection;
+            PredefinedCamera camera;
             closeAllWindows();
-            DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+
+            DrawingWindowHost camera1;
+            if (PredefinedCameraController.contains("Front"))
+            {
+                camera = PredefinedCameraController.get("Front");
+                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+            }
             camera1.Show(dock);
-            DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+
+            DrawingWindowHost camera2;
+            if (PredefinedCameraController.contains("Back"))
+            {
+                camera = PredefinedCameraController.get("Back");
+                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+            }
             camera2.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
-            DrawingWindowHost camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
+
+            DrawingWindowHost camera3;
+            if (PredefinedCameraController.contains("Right"))
+            {
+                camera = PredefinedCameraController.get("Right");
+                camera3 = addCamera("Camera 3", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
+            }
             camera3.Show(camera2.Pane, DockAlignment.Right, 0.5);
         }
 
         public void createTwoWaySplit()
         {
             CameraSection cameraSection = MedicalConfig.CameraSection;
+            PredefinedCamera camera;
             closeAllWindows();
-            DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+
+            DrawingWindowHost camera1;
+            if (PredefinedCameraController.contains("Front"))
+            {
+                camera = PredefinedCameraController.get("Front");
+                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+            }
             camera1.Show(dock);
-            DrawingWindowHost camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+
+            DrawingWindowHost camera2;
+            if (PredefinedCameraController.contains("Back"))
+            {
+                camera = PredefinedCameraController.get("Back");
+                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
+            }
             camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
         }
 
         public void createOneWaySplit()
         {
             CameraSection cameraSection = MedicalConfig.CameraSection;
+            PredefinedCamera camera;
             closeAllWindows();
-            DrawingWindowHost camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+
+            DrawingWindowHost camera1;
+            if (PredefinedCameraController.contains("Front"))
+            {
+                camera = PredefinedCameraController.get("Front");
+                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+            }
+            else
+            {
+                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+            }
             camera1.Show(dock);
         }
 
