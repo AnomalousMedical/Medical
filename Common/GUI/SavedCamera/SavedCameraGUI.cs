@@ -13,7 +13,7 @@ namespace Medical.GUI
     public partial class SavedCameraGUI : GUIElement
     {
         private DrawingWindowController drawingWindowController;
-        private ListViewGroup defaultGroup = new ListViewGroup("Default");
+        private ListViewGroup predefined = new ListViewGroup("Predefined");
         private ListViewGroup userDefined = new ListViewGroup("User Defined");
 
         public SavedCameraGUI()
@@ -21,7 +21,7 @@ namespace Medical.GUI
             InitializeComponent();
             cameraNameList.MouseDoubleClick += new MouseEventHandler(cameraNameList_MouseDoubleClick);
             cameraNameList.KeyUp += new KeyEventHandler(cameraNameList_KeyUp);
-            cameraNameList.Groups.Add(defaultGroup);
+            cameraNameList.Groups.Add(predefined);
             cameraNameList.Groups.Add(userDefined);
         }
 
@@ -45,7 +45,7 @@ namespace Medical.GUI
             foreach (String name in PredefinedCameraController.getCameraNameList())
             {
                 ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-                item.Group = defaultGroup;
+                item.Group = predefined;
             }
             foreach (String name in drawingWindowController.getSavedCameraNames())
             {
@@ -122,7 +122,7 @@ namespace Medical.GUI
             if (cameraNameList.SelectedItems.Count > 0)
             {
                 ListViewItem item = cameraNameList.SelectedItems[0];
-                if (item.Group == defaultGroup)
+                if (item.Group == predefined)
                 {
                     drawingWindowController.restorePredefinedCamera(item.Text);
                 }

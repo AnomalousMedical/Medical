@@ -22,13 +22,6 @@ namespace Medical
             {
                 addOrUpdateSavedCamera(new SavedCameraDefinition(section.Name, section.getValue(POSITION_ENTRY, Vector3.Backward), section.getValue(LOOK_AT_ENTRY, Vector3.Zero)));
             }
-
-            //Add default cameras.
-            CameraSection cameras = MedicalConfig.CameraSection;
-            addOrUpdateSavedCamera(new SavedCameraDefinition("Front", cameras.FrontCameraPosition, cameras.FrontCameraLookAt, false));
-            addOrUpdateSavedCamera(new SavedCameraDefinition("Back", cameras.BackCameraPosition, cameras.BackCameraLookAt, false));
-            addOrUpdateSavedCamera(new SavedCameraDefinition("Right", cameras.RightCameraPosition, cameras.RightCameraLookAt, false));
-            addOrUpdateSavedCamera(new SavedCameraDefinition("Left", cameras.LeftCameraPosition, cameras.LeftCameraLookAt, false));
         }
 
         public void saveCameras()
@@ -36,12 +29,9 @@ namespace Medical
             savedCamerasFile.clearSections();
             foreach (SavedCameraDefinition camera in savedCameras.Values)
             {
-                if (camera.Save)
-                {
-                    ConfigSection cameraSection = savedCamerasFile.createOrRetrieveConfigSection(camera.Name);
-                    cameraSection.setValue(POSITION_ENTRY, camera.Position);
-                    cameraSection.setValue(LOOK_AT_ENTRY, camera.LookAt);
-                }
+                ConfigSection cameraSection = savedCamerasFile.createOrRetrieveConfigSection(camera.Name);
+                cameraSection.setValue(POSITION_ENTRY, camera.Position);
+                cameraSection.setValue(LOOK_AT_ENTRY, camera.LookAt);
             }
             savedCamerasFile.writeConfigFile();
         }
@@ -65,7 +55,7 @@ namespace Medical
 
         public bool removeSavedCamera(String name)
         {
-            if (savedCameras.ContainsKey(name) && savedCameras[name].Save == true)
+            if (savedCameras.ContainsKey(name))
             {
                 savedCameras.Remove(name);
                 return true;
