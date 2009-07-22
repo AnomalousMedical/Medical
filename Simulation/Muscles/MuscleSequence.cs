@@ -18,6 +18,9 @@ namespace Medical
         [Editable]
         private String iconName = "";
 
+        [Editable]
+        private String groupName = "Group Me";
+
         private float currentTime = 0.0f;
         private int currentState = 0;
 
@@ -89,6 +92,14 @@ namespace Medical
             get
             {
                 return iconName;
+            }
+        }
+
+        public String GroupName
+        {
+            get
+            {
+                return groupName;
             }
         }
 

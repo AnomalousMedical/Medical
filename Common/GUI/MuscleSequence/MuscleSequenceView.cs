@@ -12,6 +12,8 @@ namespace Medical.GUI
 {
     public partial class MuscleSequenceView : UserControl
     {
+        private Dictionary<String, ListViewGroup> groups = new Dictionary<string, ListViewGroup>();
+
         public MuscleSequenceView()
         {
             InitializeComponent();
@@ -20,10 +22,21 @@ namespace Medical.GUI
 
         public void initializeSequences()
         {
+            groups.Clear();
+            muscleStateList.Groups.Clear();
             foreach (MuscleSequence sequence in MuscleController.getMuscleSequences())
             {
                 ListViewItem listViewItem = new ListViewItem(sequence.SequenceName, sequence.IconName);
                 listViewItem.Tag = sequence;
+                ListViewGroup group;
+                groups.TryGetValue(sequence.GroupName, out group);
+                if (group == null)
+                {
+                    group = new ListViewGroup(sequence.GroupName, sequence.GroupName);
+                    groups.Add(sequence.GroupName, group);
+                    muscleStateList.Groups.Add(group);
+                }
+                listViewItem.Group = group;
                 muscleStateList.Items.Add(listViewItem);
             }
         }

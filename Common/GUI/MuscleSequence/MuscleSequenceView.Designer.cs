@@ -39,6 +39,7 @@
             this.muscleStateList.Location = new System.Drawing.Point(0, 0);
             this.muscleStateList.Name = "muscleStateList";
             this.muscleStateList.Size = new System.Drawing.Size(150, 150);
+            this.muscleStateList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.muscleStateList.TabIndex = 14;
             this.muscleStateList.TileSize = new System.Drawing.Size(100, 100);
             this.muscleStateList.UseCompatibleStateImageBehavior = false;
