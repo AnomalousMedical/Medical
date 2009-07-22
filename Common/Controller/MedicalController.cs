@@ -18,6 +18,7 @@ using Engine.Saving.XMLSaver;
 using Engine.Resources;
 using Medical.Properties;
 using System.IO;
+using PhysXWrapper;
 
 namespace Medical
 {
@@ -87,6 +88,8 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(Win32PlatformPlugin).Assembly);
             pluginManager.initializePlugins();
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
+
+            PhysSDK.Instance.setParameter(PhysParameter.NX_SKIN_WIDTH, 0.04f);
 
             //Intialize the platform
             systemTimer = pluginManager.PlatformPlugin.createTimer();
