@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -46,6 +47,12 @@ namespace Medical.GUI
             leftMuscleGroups.SelectedValueChanged += new EventHandler(leftMuscleGroups_SelectedValueChanged);
             bothSides.SelectedValueChanged += new EventHandler(bothSides_SelectedValueChanged);
             setupMuscleGroups();
+
+            muscleSequenceView.LargeImageList = new ImageList();
+            muscleSequenceView.LargeImageList.ImageSize = new Size(108, 120);
+            muscleSequenceView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            muscleSequenceView.LargeImageList.Images.Add("OpenIcon", Resources.openmuscle);
+            muscleSequenceView.LargeImageList.Images.Add("CloseIcon", Resources.clenchedmuscle);
         }
 
         protected override void sceneLoaded()
@@ -64,6 +71,14 @@ namespace Medical.GUI
             {
                 setRightMuscleGroup(group);
             }
+
+            muscleSequenceView.initializeSequences();
+        }
+
+        protected override void sceneUnloading()
+        {
+            base.sceneUnloading();
+            muscleSequenceView.clearSequences();
         }
 
         void bothSides_SelectedValueChanged(object sender, EventArgs e)
@@ -223,66 +238,6 @@ namespace Medical.GUI
                 bothSides.Items.Add(obj.ToString());
             }
 
-        }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.rightDigastricForce.Value = 0.0m;
-            this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 3.0m;
-            this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 3.0m;
-
-            this.leftDigastricForce.Value = 0.0m;
-            this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 3.0m;
-            this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 3.0m;
-        }
-
-        private void openButton_Click(object sender, EventArgs e)
-        {
-            this.rightDigastricForce.Value = 3.0m;
-            this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 0.0m;
-            this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 0.0m;
-
-            this.leftDigastricForce.Value = 3.0m;
-            this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 0.0m;
-            this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 0.0m;
-        }
-
-        private void clenchButton_Click(object sender, EventArgs e)
-        {
-            this.rightDigastricForce.Value = 0.0m;
-            this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 10.0m;
-            this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 10.0m;
-
-            this.leftDigastricForce.Value = 0.0m;
-            this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 10.0m;
-            this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 10.0m;
-        }
-
-        private void neutralButton_Click(object sender, EventArgs e)
-        {
-            this.rightDigastricForce.Value = 0.0m;
-            this.rightLatPtForce.Value = 0.0m;
-            this.rightMasseterForce.Value = 0.0m;
-            this.rightMedPtForce.Value = 0.0m;
-            this.rightTemporalisForce.Value = 0.0m;
-
-            this.leftDigastricForce.Value = 0.0m;
-            this.leftLatPtForce.Value = 0.0m;
-            this.leftMasseterForce.Value = 0.0m;
-            this.leftMedPtForce.Value = 0.0m;
-            this.leftTemporalisForce.Value = 0.0m;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Medical.GUI
 {
-    partial class MuscleControl
+    partial class MuscleSequenceView
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,37 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
+            this.muscleStateList = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
-            // muscleSequenceView
+            // muscleStateList
             // 
-            this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.muscleSequenceView.LargeImageList = null;
-            this.muscleSequenceView.Location = new System.Drawing.Point(0, 0);
-            this.muscleSequenceView.Name = "muscleSequenceView";
-            this.muscleSequenceView.Size = new System.Drawing.Size(236, 599);
-            this.muscleSequenceView.TabIndex = 13;
+            this.muscleStateList.BackColor = System.Drawing.SystemColors.Window;
+            this.muscleStateList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.muscleStateList.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.muscleStateList.Location = new System.Drawing.Point(0, 0);
+            this.muscleStateList.Name = "muscleStateList";
+            this.muscleStateList.Size = new System.Drawing.Size(150, 150);
+            this.muscleStateList.TabIndex = 14;
+            this.muscleStateList.TileSize = new System.Drawing.Size(100, 100);
+            this.muscleStateList.UseCompatibleStateImageBehavior = false;
             // 
-            // MuscleControl
+            // MuscleSequenceView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 599);
-            this.Controls.Add(this.muscleSequenceView);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
-            this.Name = "MuscleControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
-            this.Text = "Muscles";
-            this.ToolStripName = "Advanced";
+            this.Controls.Add(this.muscleStateList);
+            this.Name = "MuscleSequenceView";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private MuscleSequenceView muscleSequenceView;
-
+        private System.Windows.Forms.ListView muscleStateList;
     }
 }

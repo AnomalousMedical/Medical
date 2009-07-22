@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -24,7 +25,7 @@ namespace Medical.GUI
         private const String LeftLateralPterygoidDynamic = "LeftLateralPterygoidDynamic";
         private const String LeftDigastricDynamic = "LeftDigastricDynamic";
 
-        private const float CP_MOVE_SPEED = 0.5f;
+        private const float CP_MOVE_SPEED = 0.25f;
 
         private ControlPointBehavior leftCP;
         private ControlPointBehavior rightCP;
@@ -32,6 +33,11 @@ namespace Medical.GUI
         public MuscleControl()
         {
             InitializeComponent();
+            muscleSequenceView.LargeImageList = new ImageList();
+            muscleSequenceView.LargeImageList.ImageSize = new Size(108, 120);
+            muscleSequenceView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            muscleSequenceView.LargeImageList.Images.Add("OpenIcon", Resources.openmuscle);
+            muscleSequenceView.LargeImageList.Images.Add("CloseIcon", Resources.clenchedmuscle);
         }
 
         protected override void sceneLoaded()
@@ -39,12 +45,14 @@ namespace Medical.GUI
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
             this.Enabled = leftCP != null && rightCP != null;
+            muscleSequenceView.initializeSequences();
         }
 
         protected override void sceneUnloading()
         {
             leftCP = null;
             rightCP = null;
+            muscleSequenceView.clearSequences();
         }
 
         private void closeButton_Click(object sender, EventArgs e)
