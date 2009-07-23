@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Diagnostics;
 
 namespace Medical.GUI
 {
@@ -88,6 +90,15 @@ namespace Medical.GUI
                 }
                 pictureBox.Image.Save(saveDialog.FileName, format);
                 this.Text = saveDialog.FileName;
+                exploreButton.Enabled = true;
+            }
+        }
+
+        private void exploreButton_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(this.Text))
+            {
+                Process.Start("explorer.exe", Path.GetDirectoryName(Path.GetFullPath(this.Text)));
             }
         }
     }

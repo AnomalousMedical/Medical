@@ -31,9 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PictureWindow));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomStrechButton = new System.Windows.Forms.ToolStripButton();
             this.picturePanel = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.zoomStrechButton = new System.Windows.Forms.ToolStripButton();
+            this.exploreButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.picturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -43,7 +44,8 @@
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveButton,
-            this.zoomStrechButton});
+            this.zoomStrechButton,
+            this.exploreButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(345, 25);
@@ -59,6 +61,16 @@
             this.saveButton.Size = new System.Drawing.Size(35, 22);
             this.saveButton.Text = "Save";
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // zoomStrechButton
+            // 
+            this.zoomStrechButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.zoomStrechButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomStrechButton.Image")));
+            this.zoomStrechButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomStrechButton.Name = "zoomStrechButton";
+            this.zoomStrechButton.Size = new System.Drawing.Size(43, 22);
+            this.zoomStrechButton.Text = "Zoom";
+            this.zoomStrechButton.Click += new System.EventHandler(this.zoomStrechButton_Click);
             // 
             // picturePanel
             // 
@@ -78,15 +90,16 @@
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
             // 
-            // zoomStrechButton
+            // exploreButton
             // 
-            this.zoomStrechButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.zoomStrechButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomStrechButton.Image")));
-            this.zoomStrechButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomStrechButton.Name = "zoomStrechButton";
-            this.zoomStrechButton.Size = new System.Drawing.Size(43, 22);
-            this.zoomStrechButton.Text = "Zoom";
-            this.zoomStrechButton.Click += new System.EventHandler(this.zoomStrechButton_Click);
+            this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.exploreButton.Enabled = false;
+            this.exploreButton.Image = ((System.Drawing.Image)(resources.GetObject("exploreButton.Image")));
+            this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exploreButton.Name = "exploreButton";
+            this.exploreButton.Size = new System.Drawing.Size(49, 22);
+            this.exploreButton.Text = "Explore";
+            this.exploreButton.Click += new System.EventHandler(this.exploreButton_Click);
             // 
             // PictureWindow
             // 
@@ -116,5 +129,6 @@
         private System.Windows.Forms.Panel picturePanel;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ToolStripButton zoomStrechButton;
+        private System.Windows.Forms.ToolStripButton exploreButton;
     }
 }
