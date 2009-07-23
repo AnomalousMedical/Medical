@@ -91,5 +91,65 @@ namespace Medical.GUI
                 }
             }
         }
+
+        private void megapixel1dot3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel1dot3.Checked)
+            {
+                resolutionWidth.Value = 1280;
+                resolutionHeight.Value = 1024;
+            }
+        }
+
+        private void megapixel4_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel4.Checked)
+            {
+                resolutionWidth.Value = 2448;
+                resolutionHeight.Value = 1632;
+            }
+        }
+
+        private void megapixel6_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel6.Checked)
+            {
+                resolutionWidth.Value = 3000;
+                resolutionHeight.Value = 2000;
+            }
+        }
+
+        private void megapixel8_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel8.Checked)
+            {
+                resolutionWidth.Value = 3456;
+                resolutionHeight.Value = 2304;
+            }
+        }
+
+        private void megapixel10_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel10.Checked)
+            {
+                resolutionWidth.Value = 3648;
+                resolutionHeight.Value = 2736;
+            }
+        }
+
+        private void megapixel12_CheckedChanged(object sender, EventArgs e)
+        {
+            if (megapixel12.Checked)
+            {
+                resolutionWidth.Value = 4000;
+                resolutionHeight.Value = 3000;
+            }
+        }
+
+        private void custom_CheckedChanged(object sender, EventArgs e)
+        {
+            resolutionWidth.Enabled = custom.Checked;
+            resolutionHeight.Enabled = custom.Checked;
+        }
     }
 }
