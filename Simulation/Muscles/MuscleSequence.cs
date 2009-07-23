@@ -21,6 +21,9 @@ namespace Medical
         [Editable]
         private String groupName = "Group Me";
 
+        [Editable]
+        private bool repeat = false;
+
         private float currentTime = 0.0f;
         private int currentState = 0;
 
@@ -51,7 +54,15 @@ namespace Medical
                 }
                 else
                 {
-                    Owner.setEnabled(false);
+                    if (repeat)
+                    {
+                        currentState = 0;
+                        states[currentState].apply();
+                    }
+                    else
+                    {
+                        deactivate();
+                    }
                 }
             }
         }
@@ -62,9 +73,15 @@ namespace Medical
             currentState = 0;
             if (states.Count > currentState)
             {
+                MuscleController.setCurrentSequence(this);
                 states[currentState].apply();
                 Owner.setEnabled(true);
             }
+        }
+
+        public void deactivate()
+        {
+            Owner.setEnabled(false);
         }
 
         protected override void customLoad(LoadInfo info)

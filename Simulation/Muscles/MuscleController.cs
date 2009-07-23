@@ -10,6 +10,7 @@ namespace Medical
     {
         static Dictionary<String, MuscleBehavior> muscles = new Dictionary<string,MuscleBehavior>();
         static LinkedList<MuscleSequence> muscleSequences = new LinkedList<MuscleSequence>();
+        private static MuscleSequence currentSequence = null;
 
         internal static void addMuscle(String name, MuscleBehavior muscle)
         {
@@ -71,6 +72,15 @@ namespace Medical
         internal static void removeMuscleSequence(MuscleSequence sequence)
         {
             muscleSequences.Remove(sequence);
+        }
+
+        internal static void setCurrentSequence(MuscleSequence sequence)
+        {
+            if (currentSequence != null)
+            {
+                currentSequence.deactivate();
+            }
+            currentSequence = sequence;
         }
 
         public static IEnumerable<MuscleSequence> getMuscleSequences()
