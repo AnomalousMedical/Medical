@@ -19,12 +19,12 @@ namespace Medical.GUI
             Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
             if (configOptions.ContainsKey("Anti aliasing"))
             {
-                antiAliasingCombo.Items.Add("None");
+                antiAliasingCombo.Items.Add("0");
                 foreach (String value in configOptions["Anti aliasing"].PossibleValues)
                 {
                     if (value.StartsWith("Level "))
                     {
-                        antiAliasingCombo.Items.Add(value);
+                        antiAliasingCombo.Items.Add(value.Replace("Level ", ""));
                     }
                 }
                 antiAliasingCombo.SelectedItem = OgreConfig.FSAA;
@@ -33,6 +33,21 @@ namespace Medical.GUI
             {
                 antiAliasingCombo.Enabled = false;
             }
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            antiAliasingCombo.SelectedItem = OgreConfig.FSAA.ToString();
+            if (OgreConfig.VSync)
+            {
+                vsyncButton.Checked = true;
+            }
+            else
+            {
+                frameCapButton.Checked = true;
+            }
+            fpsUpDown.Value = MedicalConfig.EngineConfig.MaxFPS;
         }
 
         private void applyButton_Click(object sender, EventArgs e)
@@ -48,7 +63,7 @@ namespace Medical.GUI
                 MedicalConfig.EngineConfig.MaxFPS = (int)fpsUpDown.Value;
             }
             int value = 0;
-            int.TryParse(antiAliasingCombo.SelectedItem.ToString().Replace("Level ", ""), out value);
+            int.TryParse(antiAliasingCombo.SelectedItem.ToString(), out value);
             OgreConfig.FSAA = value;
             this.DialogResult = DialogResult.OK;
         }
