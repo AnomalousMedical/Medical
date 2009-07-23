@@ -114,7 +114,10 @@ namespace Medical
         /// </summary>
         public void Dispose()
         {
-            medicalScene.destroyScene();
+            if (medicalScene != null)
+            {
+                medicalScene.destroyScene();
+            }
             if (eventManager != null)
             {
                 eventManager.Dispose();
