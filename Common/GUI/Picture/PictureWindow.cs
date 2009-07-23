@@ -98,7 +98,7 @@ namespace Medical.GUI
         {
             if (File.Exists(this.Text))
             {
-                Process.Start("explorer.exe", Path.GetDirectoryName(Path.GetFullPath(this.Text)));
+                Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Text));
             }
         }
     }
