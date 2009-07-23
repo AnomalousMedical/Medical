@@ -10,6 +10,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -98,7 +99,14 @@ namespace Medical.GUI
         {
             if (File.Exists(this.Text))
             {
-                Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Text));
+                try
+                {
+                    Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Text));
+                }
+                catch (Exception ex)
+                {
+                    Log.Default.sendMessage("Exception occured when opening explorer.exe:\n{0}.", LogLevel.Error, "Medical", ex.Message);
+                }
             }
         }
     }
