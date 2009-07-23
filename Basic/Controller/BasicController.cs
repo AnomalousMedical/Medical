@@ -27,6 +27,7 @@ namespace Medical.Controller
         private StateWizardForm stateWizard = new StateWizardForm();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
+        private Options options = null;
 
         /// <summary>
         /// Constructor.
@@ -48,6 +49,10 @@ namespace Medical.Controller
             if (basicForm != null)
             {
                 basicForm.Dispose();
+            }
+            if (options != null)
+            {
+                options.Dispose();
             }
         }
 
@@ -98,6 +103,8 @@ namespace Medical.Controller
             {
                 drawingWindowController.createOneWaySplit();
             }
+
+            options = new Options();
 
             basicForm.Show();
             splash.Close();
@@ -161,6 +168,15 @@ namespace Medical.Controller
             {
                 stateController.addState(stateWizard.CreatedState);
                 stateGUI.playAll();
+            }
+        }
+
+        public void showOptions()
+        {
+            if (options.ShowDialog(basicForm) == DialogResult.OK)
+            {
+                drawingWindowController.recreateAllWindows();
+                medicalController.MainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             }
         }
 

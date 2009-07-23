@@ -34,6 +34,7 @@ namespace Medical.GUI
                 components.Dispose();
             }
             openPatient.Dispose();
+            savePatient.Dispose();
             base.Dispose(disposing);
         }
 
@@ -130,6 +131,11 @@ namespace Medical.GUI
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.setFourWindowLayout();
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.showOptions();
         }
     }
 }

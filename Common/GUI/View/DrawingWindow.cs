@@ -30,6 +30,7 @@ namespace Medical
         private bool showSceneStats = false;
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
+        private SimScene scene;
 
         public DrawingWindow()
         {
@@ -43,6 +44,14 @@ namespace Medical
             orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
+        }
+
+        public void recreateWindow()
+        {
+            destroyCamera();
+            renderer.destroyRendererWindow(window);
+            window = renderer.createRendererWindow(this, name);
+            createCamera(mainTimer, scene);
         }
 
         #region OSWindow Members
@@ -85,6 +94,7 @@ namespace Medical
 
         public void createCamera(UpdateTimer mainTimer, SimScene scene)
         {
+            this.scene = scene;
             SimSubScene defaultScene = scene.getDefaultSubScene();
             if (defaultScene != null)
             {

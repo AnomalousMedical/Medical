@@ -60,6 +60,14 @@ namespace Medical
             return cameraHost;
         }
 
+        public void recreateAllWindows()
+        {
+            foreach (DrawingWindowHost host in cameras)
+            {
+                host.DrawingWindow.recreateWindow();
+            }
+        }
+
         public void createFourWaySplit()
         {
             CameraSection cameraSection = MedicalConfig.CameraSection;
