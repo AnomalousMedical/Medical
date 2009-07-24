@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Platform;
+using Engine.Command;
 
 namespace Medical
 {
@@ -23,7 +24,7 @@ namespace Medical
 
         public void initialize(PluginManager pluginManager)
         {
-            
+            pluginManager.addCreateSimElementManagerCommand(new AddSimElementManagerCommand("Create Simulation Scene Definition", SimulationSceneDefinition.Create));
         }
 
         public void setPlatformInfo(UpdateTimer mainTimer, EventManager eventManager)

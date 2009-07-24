@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -50,7 +51,7 @@ namespace Medical.GUI
             }
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             leftDisc = DiscController.getDisc("LeftTMJDisc");
             rightDisc = DiscController.getDisc("RightTMJDisc");

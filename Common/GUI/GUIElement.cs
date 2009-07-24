@@ -5,6 +5,7 @@ using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -33,12 +34,12 @@ namespace Medical.GUI
 
         }
 
-        internal void callSceneLoaded()
+        internal void callSceneLoaded(SimScene scene)
         {
-            sceneLoaded();
+            sceneLoaded(scene);
         }
 
-        protected virtual void sceneLoaded()
+        protected virtual void sceneLoaded(SimScene scene)
         {
 
         }

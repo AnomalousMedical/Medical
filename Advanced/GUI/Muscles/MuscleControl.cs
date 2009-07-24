@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -55,7 +56,7 @@ namespace Medical.GUI
             muscleSequenceView.LargeImageList.Images.Add("CloseIcon", Resources.clenchedmuscle);
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             captureMuscleForces();
             clearSelection();

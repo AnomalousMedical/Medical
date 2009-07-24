@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using Logging;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -26,7 +27,7 @@ namespace Medical.GUI
             bothForwardBack.ValueChanged += bothForwardBackChanged;
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");

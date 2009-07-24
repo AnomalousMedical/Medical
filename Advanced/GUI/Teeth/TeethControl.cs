@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -24,7 +25,7 @@ namespace Medical.GUI
             this.medicalController = medicalController;
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             foreach (CheckBox control in teethPanel.Controls)
             {

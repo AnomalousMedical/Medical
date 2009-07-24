@@ -5,6 +5,7 @@ using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -87,11 +88,11 @@ namespace Medical.GUI
             }
         }
 
-        public void alertGUISceneLoaded()
+        public void alertGUISceneLoaded(SimScene scene)
         {
             foreach (GUIElement element in guiElements)
             {
-                element.callSceneLoaded();
+                element.callSceneLoaded(scene);
             }
         }
 

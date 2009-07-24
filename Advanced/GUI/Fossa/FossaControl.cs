@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -23,9 +24,8 @@ namespace Medical.GUI
             rightEminanceSlider.ValueChanged += new EventHandler(rightEminanceSlider_ValueChanged);
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
-            base.sceneLoaded();
             leftFossa = FossaController.get("LeftFossa");
             rightFossa = FossaController.get("RightFossa");
             this.Enabled = leftFossa != null && rightFossa != null;

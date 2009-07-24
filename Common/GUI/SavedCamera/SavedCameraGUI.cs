@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -40,19 +41,27 @@ namespace Medical.GUI
             //}
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
-            foreach (String name in PredefinedCameraController.getCameraNameList())
+            SimSubScene defaultScene = scene.getDefaultSubScene();
+            if (defaultScene != null)
             {
-                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-                item.Group = predefined;
+                SimulationScene simScene = defaultScene.getSimElementManager<SimulationScene>();
+                if (simScene != null)
+                {
+                    foreach (PredefinedCamera camera in simScene.getPredefinedCameras())
+                    {
+                        ListViewItem item = cameraNameList.Items.Add(camera.Name, camera.Name, 0);
+                        item.Group = predefined;
+                    }
+                }
             }
             foreach (String name in drawingWindowController.getSavedCameraNames())
             {
                 ListViewItem item = cameraNameList.Items.Add(name, name, 0);
                 item.Group = userDefined;
             }
-            base.sceneLoaded();
+            base.sceneLoaded(scene);
         }
 
         protected override void sceneUnloading()
@@ -79,7 +88,8 @@ namespace Medical.GUI
                 drawingWindowController.saveCamera(result.text);
                 if (!cameraNameList.Items.ContainsKey(result.text))
                 {
-                    cameraNameList.Items.Add(result.text, result.text, 0);
+                    ListViewItem item = cameraNameList.Items.Add(result.text, result.text, 0);
+                    item.Group = userDefined;
                 }
             }
         }

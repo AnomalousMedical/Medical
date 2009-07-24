@@ -259,7 +259,7 @@ namespace Medical.Controller
             if (medicalController.openScene(filename))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene);
-                guiElements.alertGUISceneLoaded();
+                guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
             }
             else
             {

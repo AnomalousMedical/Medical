@@ -24,6 +24,7 @@ namespace Medical
         private SavedCameraController savedCameras;
         private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
+        private SimulationScene medicalScene = null;
 
         public DrawingWindowController(String camerasFile)
         {
@@ -75,10 +76,10 @@ namespace Medical
             closeAllWindows();
 
             DrawingWindowHost camera1;
-            if (PredefinedCameraController.contains("Front"))
+            if (medicalScene != null && medicalScene.contains("Front"))
             {
-                camera = PredefinedCameraController.get("Front");
-                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Front");
+                camera1 = addCamera("Camera 1", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -87,10 +88,10 @@ namespace Medical
             camera1.Show(dock);
 
             DrawingWindowHost camera2;
-            if (PredefinedCameraController.contains("Back"))
+            if (medicalScene != null && medicalScene.contains("Back"))
             {
-                camera = PredefinedCameraController.get("Back");
-                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Back");
+                camera2 = addCamera("Camera 2", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -99,10 +100,10 @@ namespace Medical
             camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
 
             DrawingWindowHost camera3;
-            if (PredefinedCameraController.contains("Right"))
+            if (medicalScene != null && medicalScene.contains("Right"))
             {
-                camera = PredefinedCameraController.get("Right");
-                camera3 = addCamera("Camera 3", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Right");
+                camera3 = addCamera("Camera 3", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -111,10 +112,10 @@ namespace Medical
             camera3.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
 
             DrawingWindowHost camera4;
-            if (PredefinedCameraController.contains("Left"))
+            if (medicalScene != null && medicalScene.contains("Left"))
             {
-                camera = PredefinedCameraController.get("Left");
-                camera4 = addCamera("Camera 4", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Left");
+                camera4 = addCamera("Camera 4", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -130,10 +131,10 @@ namespace Medical
             closeAllWindows();
 
             DrawingWindowHost camera1;
-            if (PredefinedCameraController.contains("Front"))
+            if (medicalScene != null && medicalScene.contains("Front"))
             {
-                camera = PredefinedCameraController.get("Front");
-                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Front");
+                camera1 = addCamera("Camera 1", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -142,10 +143,10 @@ namespace Medical
             camera1.Show(dock);
 
             DrawingWindowHost camera2;
-            if (PredefinedCameraController.contains("Back"))
+            if (medicalScene != null && medicalScene.contains("Back"))
             {
-                camera = PredefinedCameraController.get("Back");
-                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Back");
+                camera2 = addCamera("Camera 2", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -154,10 +155,10 @@ namespace Medical
             camera2.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
 
             DrawingWindowHost camera3;
-            if (PredefinedCameraController.contains("Right"))
+            if (medicalScene != null && medicalScene.contains("Right"))
             {
-                camera = PredefinedCameraController.get("Right");
-                camera3 = addCamera("Camera 3", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Right");
+                camera3 = addCamera("Camera 3", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -173,10 +174,10 @@ namespace Medical
             closeAllWindows();
 
             DrawingWindowHost camera1;
-            if (PredefinedCameraController.contains("Front"))
+            if (medicalScene != null && medicalScene.contains("Front"))
             {
-                camera = PredefinedCameraController.get("Front");
-                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Front");
+                camera1 = addCamera("Camera 1", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -185,10 +186,10 @@ namespace Medical
             camera1.Show(dock);
 
             DrawingWindowHost camera2;
-            if (PredefinedCameraController.contains("Back"))
+            if (medicalScene != null && medicalScene.contains("Back"))
             {
-                camera = PredefinedCameraController.get("Back");
-                camera2 = addCamera("Camera 2", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Back");
+                camera2 = addCamera("Camera 2", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -204,10 +205,10 @@ namespace Medical
             closeAllWindows();
 
             DrawingWindowHost camera1;
-            if (PredefinedCameraController.contains("Front"))
+            if (medicalScene != null && medicalScene.contains("Front"))
             {
-                camera = PredefinedCameraController.get("Front");
-                camera1 = addCamera("Camera 1", camera.EyePoint, camera.LookAt);
+                camera = medicalScene.get("Front");
+                camera1 = addCamera("Camera 1", camera.Translation, camera.LookAt);
             }
             else
             {
@@ -234,6 +235,11 @@ namespace Medical
 
         public void createCameras(UpdateTimer mainTimer, SimScene scene)
         {
+            SimSubScene defaultScene = scene.getDefaultSubScene();
+            if (defaultScene != null)
+            {
+                medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+            }
             foreach (DrawingWindowHost host in cameras)
             {
                 host.DrawingWindow.createCamera(mainTimer, scene);
@@ -265,10 +271,10 @@ namespace Medical
         public void restorePredefinedCamera(String cameraName)
         {
             DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
-            if (activeWindow != null && PredefinedCameraController.contains(cameraName))
+            if (activeWindow != null && medicalScene.contains(cameraName))
             {
-                PredefinedCamera camera = PredefinedCameraController.get(cameraName);
-                activeWindow.DrawingWindow.setCamera(camera.EyePoint, camera.LookAt);
+                PredefinedCamera camera = medicalScene.get(cameraName);
+                activeWindow.DrawingWindow.setCamera(camera.Translation, camera.LookAt);
             }
         }
 

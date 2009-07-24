@@ -10,30 +10,36 @@ namespace Medical
     {
         private Dictionary<String, SavedCameraDefinition> savedCameras = new Dictionary<string,SavedCameraDefinition>();
         ConfigFile savedCamerasFile;
+        private bool loading = false;
 
         private const String POSITION_ENTRY = "Position";
         private const String LOOK_AT_ENTRY = "LookAt";
 
         public SavedCameraController(String backingFile)
         {
+            loading = true;
             savedCamerasFile = new ConfigFile(backingFile);
             savedCamerasFile.loadConfigFile();
             foreach (ConfigSection section in savedCamerasFile.getSectionIterator())
             {
                 addOrUpdateSavedCamera(new SavedCameraDefinition(section.Name, section.getValue(POSITION_ENTRY, Vector3.Backward), section.getValue(LOOK_AT_ENTRY, Vector3.Zero)));
             }
+            loading = false;
         }
 
         public void saveCameras()
         {
-            savedCamerasFile.clearSections();
-            foreach (SavedCameraDefinition camera in savedCameras.Values)
+            if (!loading)
             {
-                ConfigSection cameraSection = savedCamerasFile.createOrRetrieveConfigSection(camera.Name);
-                cameraSection.setValue(POSITION_ENTRY, camera.Position);
-                cameraSection.setValue(LOOK_AT_ENTRY, camera.LookAt);
+                savedCamerasFile.clearSections();
+                foreach (SavedCameraDefinition camera in savedCameras.Values)
+                {
+                    ConfigSection cameraSection = savedCamerasFile.createOrRetrieveConfigSection(camera.Name);
+                    cameraSection.setValue(POSITION_ENTRY, camera.Position);
+                    cameraSection.setValue(LOOK_AT_ENTRY, camera.LookAt);
+                }
+                savedCamerasFile.writeConfigFile();
             }
-            savedCamerasFile.writeConfigFile();
         }
 
         public void addOrUpdateSavedCamera(SavedCameraDefinition definition)
@@ -46,6 +52,7 @@ namespace Medical
             {
                 savedCameras[definition.Name] = definition;
             }
+            saveCameras();
         }
 
         public bool hasSavedCamera(String name)

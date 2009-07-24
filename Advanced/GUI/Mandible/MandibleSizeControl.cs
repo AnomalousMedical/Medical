@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Logging;
 using Engine.Platform;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -30,7 +31,7 @@ namespace Medical.GUI
             this.controller = controller;
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
             {

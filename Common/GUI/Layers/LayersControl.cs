@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.GUI.Layers;
 using WeifenLuo.WinFormsUI.Docking;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -27,7 +28,7 @@ namespace Medical.GUI
             sectionsPanel.Controls.Clear();
         }
 
-        protected override void sceneLoaded()
+        protected override void sceneLoaded(SimScene scene)
         {
             sectionsPanel.SuspendLayout();
             sectionsPanel.Controls.Clear();
