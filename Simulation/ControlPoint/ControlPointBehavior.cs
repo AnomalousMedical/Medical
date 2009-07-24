@@ -176,7 +176,7 @@ namespace Medical
                 else
                 {
                     newLocation -= moveSpeed * (float)clock.Seconds;
-                    if (location < targetLocation)
+                    if (location <= targetLocation)
                     {
                         location = targetLocation;
                         translate = false;
