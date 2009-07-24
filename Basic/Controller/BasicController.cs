@@ -97,6 +97,9 @@ namespace Medical.Controller
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
             guiElements.addGUIElement(simpleLayer);
 
+            PredefinedLayerControl predefinedLayers = new PredefinedLayerControl();
+            guiElements.addGUIElement(predefinedLayers);
+
             openDefaultScene();
 
             if (!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))

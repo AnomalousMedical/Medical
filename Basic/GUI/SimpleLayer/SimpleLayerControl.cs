@@ -30,6 +30,7 @@ namespace Medical.GUI
             bottomTeethOpaque.Checked = true;
             eminenceVisible.Checked = true;
             skullInteriorOpaque.Checked = true;
+            skinOpaque.Checked = true;
         }
 
         private void skullOpaque_CheckedChanged(object sender, EventArgs e)
@@ -250,6 +251,48 @@ namespace Medical.GUI
                 {
                     group.getTransparencyObject("Tooth " + i).smoothBlend(0.0f);
                 }
+            }
+        }
+
+        private void skinOpaque_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skinOpaque.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
+                TransparencyInterface skin = group.getTransparencyObject("Skin");
+                skin.smoothBlend(1.0f);
+                TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
+                leftEye.smoothBlend(1.0f);
+                TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
+                rightEye.smoothBlend(1.0f);
+            }
+        }
+
+        private void skinTransparent_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skinTransparent.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
+                TransparencyInterface skin = group.getTransparencyObject("Skin");
+                skin.smoothBlend(0.7f);
+                TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
+                leftEye.smoothBlend(0.7f);
+                TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
+                rightEye.smoothBlend(0.7f);
+            }
+        }
+
+        private void skinHidden_CheckedChanged(object sender, EventArgs e)
+        {
+            if (skinHidden.Checked)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
+                TransparencyInterface skin = group.getTransparencyObject("Skin");
+                skin.smoothBlend(0.0f);
+                TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
+                leftEye.smoothBlend(0.0f);
+                TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
+                rightEye.smoothBlend(0.0f);
             }
         }
     }
