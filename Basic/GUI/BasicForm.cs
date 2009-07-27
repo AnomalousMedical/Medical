@@ -20,7 +20,7 @@ namespace Medical.GUI
         public BasicForm()
         {
             InitializeComponent();
-            this.initialize(dockPanel, toolStripContainer);
+            this.initialize(dockPanel, toolStripContainer, Text);
         }
 
         /// <summary>

@@ -9,6 +9,8 @@ using Engine;
 using System.Threading;
 using System.IO;
 using Engine.Resources;
+using System.Xml;
+using Engine.Saving.XMLSaver;
 
 namespace Medical.Controller
 {
@@ -23,6 +25,7 @@ namespace Medical.Controller
         private GUIElementController guiElements;
         private MedicalStateController stateController = new MedicalStateController();
         private MedicalStateGUI stateGUI;
+        private XmlSaver saver = new XmlSaver();
 
         /// <summary>
         /// Constructor.
@@ -136,10 +139,8 @@ namespace Medical.Controller
 
         public void newScene()
         {
-            if(File.Exists(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml"))
-            {
-                changeScene(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml");
-            }
+            loadDefaultScene();
+            stateController.clearStates();
         }
 
         public void setOneWindowLayout()
@@ -184,10 +185,55 @@ namespace Medical.Controller
             return ret;
         }
 
-        public void saveMedicalState(string name)
+        public void createMedicalState(string name)
         {
             stateController.createState(name);
             stateGUI.CurrentBlend = stateController.getNumStates() - 1;
+        }
+
+        public void saveMedicalState(String filename)
+        {
+            XmlTextWriter textWriter = null;
+            try
+            {
+                textWriter = new XmlTextWriter(filename, Encoding.Default);
+                textWriter.Formatting = Formatting.Indented;
+                SavedMedicalStates states = stateController.getSavedState();
+                saver.saveObject(states, textWriter);
+            }
+            finally
+            {
+                if (textWriter != null)
+                {
+                    textWriter.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Open the specified file and change the scene.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void openStates(String filename)
+        {
+            loadDefaultScene();
+            XmlTextReader textReader = null;
+            try
+            {
+                textReader = new XmlTextReader(filename);
+                SavedMedicalStates states = saver.restoreObject(textReader) as SavedMedicalStates;
+                if (states != null)
+                {
+                    stateController.setStates(states);
+                }
+            }
+            finally
+            {
+                if (textReader != null)
+                {
+                    textReader.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -206,6 +252,14 @@ namespace Medical.Controller
             else
             {
                 MessageBox.Show(String.Format("Could not open scene {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void loadDefaultScene()
+        {
+            if (File.Exists(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml"))
+            {
+                changeScene(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml");
             }
         }
     }

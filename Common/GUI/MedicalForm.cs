@@ -27,8 +27,9 @@ namespace Medical.GUI
 
         }
 
-        protected void initialize(DockPanel dockPanel, ToolStripContainer toolStrip)
+        protected void initialize(DockPanel dockPanel, ToolStripContainer toolStrip, String windowDefaultText)
         {
+            this.windowDefaultText = windowDefaultText;
             this.dockPanel = dockPanel;
             this.toolStrip = toolStrip;
         }
@@ -145,7 +146,7 @@ namespace Medical.GUI
         /// Update the title of the window to reflect a current filename or other info.
         /// </summary>
         /// <param name="subName">A name to place as a secondary name in the title.</param>
-        private void updateWindowTitle(String subName)
+        protected void updateWindowTitle(String subName)
         {
             Text = String.Format(TITLE_FORMAT, windowDefaultText, subName);
         }
@@ -153,7 +154,7 @@ namespace Medical.GUI
         /// <summary>
         /// Clear the window title back to the default text.
         /// </summary>
-        private void clearWindowTitle()
+        protected void clearWindowTitle()
         {
             Text = windowDefaultText;
         }

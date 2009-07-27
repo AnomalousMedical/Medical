@@ -13,11 +13,12 @@ namespace Medical.GUI
     public partial class AdvancedForm : MedicalForm
     {
         private AdvancedController controller;
+        private FileTracker patientFileTracker = new FileTracker("*.pat|*.pat");
 
         public AdvancedForm()
         {
             InitializeComponent();
-            this.initialize(dockPanel, toolStripContainer);
+            this.initialize(dockPanel, toolStripContainer, Text);
         }
 
         public void initialize(AdvancedController controller)
@@ -36,23 +37,15 @@ namespace Medical.GUI
             this.Close();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fileTracker.openFile(this);
-            if (fileTracker.lastDialogAccepted())
-            {
-                controller.open(fileTracker.getCurrentFile());
-            }
-        }
-
         private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.saveMedicalState("Test");
+            controller.createMedicalState("Test");
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.newScene();
+            clearWindowTitle();
         }
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,6 +66,41 @@ namespace Medical.GUI
         private void fourWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.setFourWindowLayout();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            patientFileTracker.saveFile(this);
+            if (patientFileTracker.lastDialogAccepted())
+            {
+                controller.saveMedicalState(patientFileTracker.getCurrentFile());
+                updateWindowTitle(patientFileTracker.getCurrentFile());
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            patientFileTracker.saveFileAs(this);
+            if (patientFileTracker.lastDialogAccepted())
+            {
+                controller.saveMedicalState(patientFileTracker.getCurrentFile());
+                updateWindowTitle(patientFileTracker.getCurrentFile());
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            patientFileTracker.openFile(this);
+            if (patientFileTracker.lastDialogAccepted())
+            {
+                controller.openStates(patientFileTracker.getCurrentFile());
+                updateWindowTitle(patientFileTracker.getCurrentFile());
+            }
+            //fileTracker.openFile(this);
+            //if (fileTracker.lastDialogAccepted())
+            //{
+            //    controller.open(fileTracker.getCurrentFile());
+            //}
         }
     }
 }
