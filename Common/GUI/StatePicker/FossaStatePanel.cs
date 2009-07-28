@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -58,6 +59,54 @@ namespace Medical.GUI
             else if (leftEminenceSevere.Checked)
             {
                 fossaState.addPosition("LeftFossa", 1.0f);
+            }
+        }
+
+        private void rightEminenceNormal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rightEminenceNormal.Checked)
+            {
+                rightEminanceImage.Image = Resources.rightnormaleminance;
+            }
+        }
+
+        private void rightEminenceModerate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rightEminenceModerate.Checked)
+            {
+                rightEminanceImage.Image = Resources.rightsemiflateminance;
+            }
+        }
+
+        private void rightEminenceSevere_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rightEminenceSevere.Checked)
+            {
+                rightEminanceImage.Image = Resources.rightflateminance;
+            }
+        }
+
+        private void leftEminenceNormal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (leftEminenceNormal.Checked)
+            {
+                leftEminanceImage.Image = Resources.leftnormaleminance;
+            }
+        }
+
+        private void leftEminenceModerate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (leftEminenceModerate.Checked)
+            {
+                leftEminanceImage.Image = Resources.leftsemiflateminance;
+            }
+        }
+
+        private void leftEminenceSevere_CheckedChanged(object sender, EventArgs e)
+        {
+            if (leftEminenceSevere.Checked)
+            {
+                leftEminanceImage.Image = Resources.leftflateminance;
             }
         }
     }

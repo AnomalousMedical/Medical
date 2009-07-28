@@ -121,6 +121,24 @@
   <data name="articulometrics" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\articulometrics.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="leftflateminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leftflateminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="leftnormaleminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leftnormaleminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="leftsemiflateminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\leftsemiflateminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rightflateminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rightflateminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rightnormaleminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rightnormaleminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rightsemiflateminance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rightsemiflateminance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tooth1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

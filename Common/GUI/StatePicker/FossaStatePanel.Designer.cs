@@ -36,8 +36,12 @@
             this.leftEminenceSevere = new System.Windows.Forms.RadioButton();
             this.leftEminenceModerate = new System.Windows.Forms.RadioButton();
             this.leftEminenceNormal = new System.Windows.Forms.RadioButton();
+            this.leftEminanceImage = new System.Windows.Forms.PictureBox();
+            this.rightEminanceImage = new System.Windows.Forms.PictureBox();
             this.groupBox5.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftEminanceImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightEminanceImage)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox5
@@ -62,6 +66,7 @@
             this.rightEminenceSevere.TabStop = true;
             this.rightEminenceSevere.Text = "Severe";
             this.rightEminenceSevere.UseVisualStyleBackColor = true;
+            this.rightEminenceSevere.CheckedChanged += new System.EventHandler(this.rightEminenceSevere_CheckedChanged);
             // 
             // rightEminenceModerate
             // 
@@ -73,6 +78,7 @@
             this.rightEminenceModerate.TabStop = true;
             this.rightEminenceModerate.Text = "Moderate";
             this.rightEminenceModerate.UseVisualStyleBackColor = true;
+            this.rightEminenceModerate.CheckedChanged += new System.EventHandler(this.rightEminenceModerate_CheckedChanged);
             // 
             // rightEminenceNormal
             // 
@@ -84,13 +90,14 @@
             this.rightEminenceNormal.TabStop = true;
             this.rightEminenceNormal.Text = "Normal";
             this.rightEminenceNormal.UseVisualStyleBackColor = true;
+            this.rightEminenceNormal.CheckedChanged += new System.EventHandler(this.rightEminenceNormal_CheckedChanged);
             // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.leftEminenceSevere);
             this.groupBox7.Controls.Add(this.leftEminenceModerate);
             this.groupBox7.Controls.Add(this.leftEminenceNormal);
-            this.groupBox7.Location = new System.Drawing.Point(299, 5);
+            this.groupBox7.Location = new System.Drawing.Point(5, 145);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(111, 87);
             this.groupBox7.TabIndex = 8;
@@ -107,6 +114,7 @@
             this.leftEminenceSevere.TabStop = true;
             this.leftEminenceSevere.Text = "Severe";
             this.leftEminenceSevere.UseVisualStyleBackColor = true;
+            this.leftEminenceSevere.CheckedChanged += new System.EventHandler(this.leftEminenceSevere_CheckedChanged);
             // 
             // leftEminenceModerate
             // 
@@ -118,6 +126,7 @@
             this.leftEminenceModerate.TabStop = true;
             this.leftEminenceModerate.Text = "Moderate";
             this.leftEminenceModerate.UseVisualStyleBackColor = true;
+            this.leftEminenceModerate.CheckedChanged += new System.EventHandler(this.leftEminenceModerate_CheckedChanged);
             // 
             // leftEminenceNormal
             // 
@@ -129,19 +138,40 @@
             this.leftEminenceNormal.TabStop = true;
             this.leftEminenceNormal.Text = "Normal";
             this.leftEminenceNormal.UseVisualStyleBackColor = true;
+            this.leftEminenceNormal.CheckedChanged += new System.EventHandler(this.leftEminenceNormal_CheckedChanged);
+            // 
+            // leftEminanceImage
+            // 
+            this.leftEminanceImage.Location = new System.Drawing.Point(122, 145);
+            this.leftEminanceImage.Name = "leftEminanceImage";
+            this.leftEminanceImage.Size = new System.Drawing.Size(163, 128);
+            this.leftEminanceImage.TabIndex = 10;
+            this.leftEminanceImage.TabStop = false;
+            // 
+            // rightEminanceImage
+            // 
+            this.rightEminanceImage.Location = new System.Drawing.Point(122, 5);
+            this.rightEminanceImage.Name = "rightEminanceImage";
+            this.rightEminanceImage.Size = new System.Drawing.Size(163, 128);
+            this.rightEminanceImage.TabIndex = 9;
+            this.rightEminanceImage.TabStop = false;
             // 
             // FossaStatePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.leftEminanceImage);
+            this.Controls.Add(this.rightEminanceImage);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Name = "FossaStatePanel";
-            this.Size = new System.Drawing.Size(416, 100);
+            this.Size = new System.Drawing.Size(298, 281);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftEminanceImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightEminanceImage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -156,6 +186,8 @@
         private System.Windows.Forms.RadioButton leftEminenceSevere;
         private System.Windows.Forms.RadioButton leftEminenceModerate;
         private System.Windows.Forms.RadioButton leftEminenceNormal;
+        private System.Windows.Forms.PictureBox rightEminanceImage;
+        private System.Windows.Forms.PictureBox leftEminanceImage;
 
     }
 }

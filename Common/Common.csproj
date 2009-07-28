@@ -462,6 +462,24 @@
   <ItemGroup>
     <None Include="Resources\tooth32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftflateminance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftnormaleminance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\leftsemiflateminance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightflateminance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightnormaleminance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rightsemiflateminance.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

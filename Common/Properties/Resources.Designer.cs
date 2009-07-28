@@ -67,6 +67,48 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap leftflateminance {
+            get {
+                object obj = ResourceManager.GetObject("leftflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap leftnormaleminance {
+            get {
+                object obj = ResourceManager.GetObject("leftnormaleminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap leftsemiflateminance {
+            get {
+                object obj = ResourceManager.GetObject("leftsemiflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rightflateminance {
+            get {
+                object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rightnormaleminance {
+            get {
+                object obj = ResourceManager.GetObject("rightnormaleminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap rightsemiflateminance {
+            get {
+                object obj = ResourceManager.GetObject("rightsemiflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth1 {
             get {
                 object obj = ResourceManager.GetObject("tooth1", resourceCulture);
