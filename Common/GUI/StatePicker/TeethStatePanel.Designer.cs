@@ -60,6 +60,8 @@
             this.tooth3 = new System.Windows.Forms.CheckBox();
             this.tooth2 = new System.Windows.Forms.CheckBox();
             this.tooth1 = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tooth32
@@ -70,9 +72,10 @@
             this.tooth32.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth32.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth32.Location = new System.Drawing.Point(303, 51);
+            this.tooth32.Image = global::Medical.Properties.Resources.tooth32;
+            this.tooth32.Location = new System.Drawing.Point(112, 169);
             this.tooth32.Name = "tooth32";
-            this.tooth32.Size = new System.Drawing.Size(6, 6);
+            this.tooth32.Size = new System.Drawing.Size(39, 38);
             this.tooth32.TabIndex = 128;
             this.tooth32.Tag = "Tooth32";
             this.tooth32.UseVisualStyleBackColor = true;
@@ -85,9 +88,10 @@
             this.tooth31.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth31.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth31.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth31.Location = new System.Drawing.Point(303, 88);
+            this.tooth31.Image = global::Medical.Properties.Resources.tooth31;
+            this.tooth31.Location = new System.Drawing.Point(112, 206);
             this.tooth31.Name = "tooth31";
-            this.tooth31.Size = new System.Drawing.Size(6, 6);
+            this.tooth31.Size = new System.Drawing.Size(42, 42);
             this.tooth31.TabIndex = 127;
             this.tooth31.Tag = "Tooth31";
             this.tooth31.UseVisualStyleBackColor = true;
@@ -100,9 +104,10 @@
             this.tooth30.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth30.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth30.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth30.Location = new System.Drawing.Point(306, 129);
+            this.tooth30.Image = global::Medical.Properties.Resources.tooth30;
+            this.tooth30.Location = new System.Drawing.Point(115, 247);
             this.tooth30.Name = "tooth30";
-            this.tooth30.Size = new System.Drawing.Size(6, 6);
+            this.tooth30.Size = new System.Drawing.Size(44, 44);
             this.tooth30.TabIndex = 126;
             this.tooth30.Tag = "Tooth30";
             this.tooth30.UseVisualStyleBackColor = true;
@@ -115,9 +120,10 @@
             this.tooth29.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth29.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth29.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth29.Location = new System.Drawing.Point(313, 170);
+            this.tooth29.Image = global::Medical.Properties.Resources.tooth29;
+            this.tooth29.Location = new System.Drawing.Point(122, 288);
             this.tooth29.Name = "tooth29";
-            this.tooth29.Size = new System.Drawing.Size(6, 6);
+            this.tooth29.Size = new System.Drawing.Size(34, 33);
             this.tooth29.TabIndex = 125;
             this.tooth29.Tag = "Tooth29";
             this.tooth29.UseVisualStyleBackColor = true;
@@ -130,9 +136,10 @@
             this.tooth28.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth28.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth28.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth28.Location = new System.Drawing.Point(327, 202);
+            this.tooth28.Image = global::Medical.Properties.Resources.tooth28;
+            this.tooth28.Location = new System.Drawing.Point(136, 320);
             this.tooth28.Name = "tooth28";
-            this.tooth28.Size = new System.Drawing.Size(6, 6);
+            this.tooth28.Size = new System.Drawing.Size(30, 32);
             this.tooth28.TabIndex = 124;
             this.tooth28.Tag = "Tooth28";
             this.tooth28.UseVisualStyleBackColor = true;
@@ -145,9 +152,10 @@
             this.tooth27.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth27.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth27.Location = new System.Drawing.Point(345, 232);
+            this.tooth27.Image = global::Medical.Properties.Resources.tooth27;
+            this.tooth27.Location = new System.Drawing.Point(154, 350);
             this.tooth27.Name = "tooth27";
-            this.tooth27.Size = new System.Drawing.Size(6, 6);
+            this.tooth27.Size = new System.Drawing.Size(30, 29);
             this.tooth27.TabIndex = 123;
             this.tooth27.Tag = "Tooth27";
             this.tooth27.UseVisualStyleBackColor = true;
@@ -160,9 +168,10 @@
             this.tooth26.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth26.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth26.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth26.Location = new System.Drawing.Point(375, 240);
+            this.tooth26.Image = global::Medical.Properties.Resources.tooth26;
+            this.tooth26.Location = new System.Drawing.Point(184, 358);
             this.tooth26.Name = "tooth26";
-            this.tooth26.Size = new System.Drawing.Size(6, 6);
+            this.tooth26.Size = new System.Drawing.Size(28, 30);
             this.tooth26.TabIndex = 122;
             this.tooth26.Tag = "Tooth26";
             this.tooth26.UseVisualStyleBackColor = true;
@@ -175,9 +184,10 @@
             this.tooth25.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth25.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth25.Location = new System.Drawing.Point(403, 246);
+            this.tooth25.Image = global::Medical.Properties.Resources.tooth25;
+            this.tooth25.Location = new System.Drawing.Point(212, 364);
             this.tooth25.Name = "tooth25";
-            this.tooth25.Size = new System.Drawing.Size(6, 6);
+            this.tooth25.Size = new System.Drawing.Size(26, 27);
             this.tooth25.TabIndex = 121;
             this.tooth25.Tag = "Tooth25";
             this.tooth25.UseVisualStyleBackColor = true;
@@ -190,9 +200,10 @@
             this.tooth24.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth24.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth24.Location = new System.Drawing.Point(428, 246);
+            this.tooth24.Image = global::Medical.Properties.Resources.tooth24;
+            this.tooth24.Location = new System.Drawing.Point(237, 364);
             this.tooth24.Name = "tooth24";
-            this.tooth24.Size = new System.Drawing.Size(6, 6);
+            this.tooth24.Size = new System.Drawing.Size(24, 28);
             this.tooth24.TabIndex = 120;
             this.tooth24.Tag = "Tooth24";
             this.tooth24.UseVisualStyleBackColor = true;
@@ -205,9 +216,10 @@
             this.tooth23.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth23.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth23.Location = new System.Drawing.Point(451, 241);
+            this.tooth23.Image = global::Medical.Properties.Resources.tooth23;
+            this.tooth23.Location = new System.Drawing.Point(260, 359);
             this.tooth23.Name = "tooth23";
-            this.tooth23.Size = new System.Drawing.Size(6, 6);
+            this.tooth23.Size = new System.Drawing.Size(28, 29);
             this.tooth23.TabIndex = 119;
             this.tooth23.Tag = "Tooth23";
             this.tooth23.UseVisualStyleBackColor = true;
@@ -220,9 +232,10 @@
             this.tooth22.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth22.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth22.Location = new System.Drawing.Point(477, 232);
+            this.tooth22.Image = global::Medical.Properties.Resources.tooth22;
+            this.tooth22.Location = new System.Drawing.Point(286, 350);
             this.tooth22.Name = "tooth22";
-            this.tooth22.Size = new System.Drawing.Size(6, 6);
+            this.tooth22.Size = new System.Drawing.Size(32, 29);
             this.tooth22.TabIndex = 118;
             this.tooth22.Tag = "Tooth22";
             this.tooth22.UseVisualStyleBackColor = true;
@@ -235,9 +248,10 @@
             this.tooth21.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth21.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth21.Location = new System.Drawing.Point(494, 202);
+            this.tooth21.Image = global::Medical.Properties.Resources.tooth21;
+            this.tooth21.Location = new System.Drawing.Point(303, 320);
             this.tooth21.Name = "tooth21";
-            this.tooth21.Size = new System.Drawing.Size(6, 6);
+            this.tooth21.Size = new System.Drawing.Size(30, 31);
             this.tooth21.TabIndex = 117;
             this.tooth21.Tag = "Tooth21";
             this.tooth21.UseVisualStyleBackColor = true;
@@ -250,9 +264,10 @@
             this.tooth20.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth20.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth20.Location = new System.Drawing.Point(509, 173);
+            this.tooth20.Image = global::Medical.Properties.Resources.tooth20;
+            this.tooth20.Location = new System.Drawing.Point(318, 291);
             this.tooth20.Name = "tooth20";
-            this.tooth20.Size = new System.Drawing.Size(6, 6);
+            this.tooth20.Size = new System.Drawing.Size(32, 30);
             this.tooth20.TabIndex = 116;
             this.tooth20.Tag = "Tooth20";
             this.tooth20.UseVisualStyleBackColor = true;
@@ -265,9 +280,10 @@
             this.tooth19.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth19.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth19.Location = new System.Drawing.Point(512, 129);
+            this.tooth19.Image = global::Medical.Properties.Resources.tooth19;
+            this.tooth19.Location = new System.Drawing.Point(321, 247);
             this.tooth19.Name = "tooth19";
-            this.tooth19.Size = new System.Drawing.Size(6, 6);
+            this.tooth19.Size = new System.Drawing.Size(45, 45);
             this.tooth19.TabIndex = 115;
             this.tooth19.Tag = "Tooth19";
             this.tooth19.UseVisualStyleBackColor = true;
@@ -280,9 +296,10 @@
             this.tooth18.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth18.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth18.Location = new System.Drawing.Point(515, 88);
+            this.tooth18.Image = global::Medical.Properties.Resources.tooth18;
+            this.tooth18.Location = new System.Drawing.Point(324, 206);
             this.tooth18.Name = "tooth18";
-            this.tooth18.Size = new System.Drawing.Size(6, 6);
+            this.tooth18.Size = new System.Drawing.Size(42, 41);
             this.tooth18.TabIndex = 114;
             this.tooth18.Tag = "Tooth18";
             this.tooth18.UseVisualStyleBackColor = true;
@@ -295,9 +312,10 @@
             this.tooth17.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth17.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth17.Location = new System.Drawing.Point(519, 50);
+            this.tooth17.Image = global::Medical.Properties.Resources.tooth17;
+            this.tooth17.Location = new System.Drawing.Point(328, 168);
             this.tooth17.Name = "tooth17";
-            this.tooth17.Size = new System.Drawing.Size(6, 6);
+            this.tooth17.Size = new System.Drawing.Size(40, 39);
             this.tooth17.TabIndex = 113;
             this.tooth17.Tag = "Tooth17";
             this.tooth17.UseVisualStyleBackColor = true;
@@ -310,9 +328,10 @@
             this.tooth16.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth16.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth16.Location = new System.Drawing.Point(251, 242);
+            this.tooth16.Image = global::Medical.Properties.Resources.tooth16;
+            this.tooth16.Location = new System.Drawing.Point(226, 223);
             this.tooth16.Name = "tooth16";
-            this.tooth16.Size = new System.Drawing.Size(6, 6);
+            this.tooth16.Size = new System.Drawing.Size(38, 37);
             this.tooth16.TabIndex = 112;
             this.tooth16.Tag = "Tooth16";
             this.tooth16.UseVisualStyleBackColor = true;
@@ -325,9 +344,10 @@
             this.tooth15.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth15.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth15.Location = new System.Drawing.Point(249, 199);
+            this.tooth15.Image = global::Medical.Properties.Resources.tooth15;
+            this.tooth15.Location = new System.Drawing.Point(224, 180);
             this.tooth15.Name = "tooth15";
-            this.tooth15.Size = new System.Drawing.Size(6, 6);
+            this.tooth15.Size = new System.Drawing.Size(42, 42);
             this.tooth15.TabIndex = 111;
             this.tooth15.Tag = "Tooth15";
             this.tooth15.UseVisualStyleBackColor = true;
@@ -340,9 +360,10 @@
             this.tooth14.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth14.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth14.Location = new System.Drawing.Point(244, 156);
+            this.tooth14.Image = global::Medical.Properties.Resources.tooth14;
+            this.tooth14.Location = new System.Drawing.Point(219, 137);
             this.tooth14.Name = "tooth14";
-            this.tooth14.Size = new System.Drawing.Size(6, 6);
+            this.tooth14.Size = new System.Drawing.Size(45, 45);
             this.tooth14.TabIndex = 110;
             this.tooth14.Tag = "Tooth14";
             this.tooth14.UseVisualStyleBackColor = true;
@@ -355,9 +376,10 @@
             this.tooth13.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth13.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth13.Location = new System.Drawing.Point(244, 125);
+            this.tooth13.Image = global::Medical.Properties.Resources.tooth13;
+            this.tooth13.Location = new System.Drawing.Point(219, 106);
             this.tooth13.Name = "tooth13";
-            this.tooth13.Size = new System.Drawing.Size(6, 6);
+            this.tooth13.Size = new System.Drawing.Size(34, 33);
             this.tooth13.TabIndex = 109;
             this.tooth13.Tag = "Tooth13";
             this.tooth13.UseVisualStyleBackColor = true;
@@ -370,9 +392,10 @@
             this.tooth12.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth12.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth12.Location = new System.Drawing.Point(236, 94);
+            this.tooth12.Image = global::Medical.Properties.Resources.tooth12;
+            this.tooth12.Location = new System.Drawing.Point(211, 75);
             this.tooth12.Name = "tooth12";
-            this.tooth12.Size = new System.Drawing.Size(6, 6);
+            this.tooth12.Size = new System.Drawing.Size(37, 33);
             this.tooth12.TabIndex = 108;
             this.tooth12.Tag = "Tooth12";
             this.tooth12.UseVisualStyleBackColor = true;
@@ -385,9 +408,10 @@
             this.tooth11.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth11.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth11.Location = new System.Drawing.Point(221, 58);
+            this.tooth11.Image = global::Medical.Properties.Resources.tooth11;
+            this.tooth11.Location = new System.Drawing.Point(196, 39);
             this.tooth11.Name = "tooth11";
-            this.tooth11.Size = new System.Drawing.Size(6, 6);
+            this.tooth11.Size = new System.Drawing.Size(33, 37);
             this.tooth11.TabIndex = 107;
             this.tooth11.Tag = "Tooth11";
             this.tooth11.UseVisualStyleBackColor = true;
@@ -400,9 +424,10 @@
             this.tooth10.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth10.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth10.Location = new System.Drawing.Point(193, 43);
+            this.tooth10.Image = global::Medical.Properties.Resources.tooth10;
+            this.tooth10.Location = new System.Drawing.Point(168, 24);
             this.tooth10.Name = "tooth10";
-            this.tooth10.Size = new System.Drawing.Size(6, 6);
+            this.tooth10.Size = new System.Drawing.Size(29, 32);
             this.tooth10.TabIndex = 106;
             this.tooth10.Tag = "Tooth10";
             this.tooth10.UseVisualStyleBackColor = true;
@@ -415,9 +440,10 @@
             this.tooth9.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth9.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth9.Location = new System.Drawing.Point(162, 36);
+            this.tooth9.Image = global::Medical.Properties.Resources.tooth9;
+            this.tooth9.Location = new System.Drawing.Point(137, 17);
             this.tooth9.Name = "tooth9";
-            this.tooth9.Size = new System.Drawing.Size(6, 6);
+            this.tooth9.Size = new System.Drawing.Size(33, 36);
             this.tooth9.TabIndex = 105;
             this.tooth9.Tag = "Tooth09";
             this.tooth9.UseVisualStyleBackColor = true;
@@ -430,9 +456,10 @@
             this.tooth8.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth8.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth8.Location = new System.Drawing.Point(128, 38);
+            this.tooth8.Image = global::Medical.Properties.Resources.tooth8;
+            this.tooth8.Location = new System.Drawing.Point(103, 19);
             this.tooth8.Name = "tooth8";
-            this.tooth8.Size = new System.Drawing.Size(6, 6);
+            this.tooth8.Size = new System.Drawing.Size(35, 34);
             this.tooth8.TabIndex = 104;
             this.tooth8.Tag = "Tooth08";
             this.tooth8.UseVisualStyleBackColor = true;
@@ -445,9 +472,10 @@
             this.tooth7.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth7.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth7.Location = new System.Drawing.Point(97, 43);
+            this.tooth7.Image = global::Medical.Properties.Resources.tooth7;
+            this.tooth7.Location = new System.Drawing.Point(72, 24);
             this.tooth7.Name = "tooth7";
-            this.tooth7.Size = new System.Drawing.Size(6, 6);
+            this.tooth7.Size = new System.Drawing.Size(33, 32);
             this.tooth7.TabIndex = 103;
             this.tooth7.Tag = "Tooth07";
             this.tooth7.UseVisualStyleBackColor = true;
@@ -460,9 +488,10 @@
             this.tooth6.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth6.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth6.Location = new System.Drawing.Point(65, 59);
+            this.tooth6.Image = global::Medical.Properties.Resources.tooth6;
+            this.tooth6.Location = new System.Drawing.Point(40, 40);
             this.tooth6.Name = "tooth6";
-            this.tooth6.Size = new System.Drawing.Size(6, 6);
+            this.tooth6.Size = new System.Drawing.Size(33, 36);
             this.tooth6.TabIndex = 102;
             this.tooth6.Tag = "Tooth06";
             this.tooth6.UseVisualStyleBackColor = true;
@@ -475,9 +504,10 @@
             this.tooth5.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth5.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth5.Location = new System.Drawing.Point(54, 94);
+            this.tooth5.Image = global::Medical.Properties.Resources.tooth5;
+            this.tooth5.Location = new System.Drawing.Point(29, 75);
             this.tooth5.Name = "tooth5";
-            this.tooth5.Size = new System.Drawing.Size(6, 6);
+            this.tooth5.Size = new System.Drawing.Size(35, 34);
             this.tooth5.TabIndex = 101;
             this.tooth5.Tag = "Tooth05";
             this.tooth5.UseVisualStyleBackColor = true;
@@ -490,9 +520,10 @@
             this.tooth4.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth4.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth4.Location = new System.Drawing.Point(45, 126);
+            this.tooth4.Image = global::Medical.Properties.Resources.tooth4;
+            this.tooth4.Location = new System.Drawing.Point(20, 107);
             this.tooth4.Name = "tooth4";
-            this.tooth4.Size = new System.Drawing.Size(6, 6);
+            this.tooth4.Size = new System.Drawing.Size(37, 31);
             this.tooth4.TabIndex = 100;
             this.tooth4.Tag = "Tooth04";
             this.tooth4.UseVisualStyleBackColor = true;
@@ -505,9 +536,10 @@
             this.tooth3.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth3.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth3.Location = new System.Drawing.Point(38, 156);
+            this.tooth3.Image = global::Medical.Properties.Resources.tooth3;
+            this.tooth3.Location = new System.Drawing.Point(13, 137);
             this.tooth3.Name = "tooth3";
-            this.tooth3.Size = new System.Drawing.Size(6, 6);
+            this.tooth3.Size = new System.Drawing.Size(44, 44);
             this.tooth3.TabIndex = 99;
             this.tooth3.Tag = "Tooth03";
             this.tooth3.UseVisualStyleBackColor = true;
@@ -520,9 +552,10 @@
             this.tooth2.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth2.Location = new System.Drawing.Point(35, 199);
+            this.tooth2.Image = global::Medical.Properties.Resources.tooth2;
+            this.tooth2.Location = new System.Drawing.Point(10, 180);
             this.tooth2.Name = "tooth2";
-            this.tooth2.Size = new System.Drawing.Size(6, 6);
+            this.tooth2.Size = new System.Drawing.Size(44, 42);
             this.tooth2.TabIndex = 98;
             this.tooth2.Tag = "Tooth02";
             this.tooth2.UseVisualStyleBackColor = true;
@@ -535,17 +568,41 @@
             this.tooth1.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
             this.tooth1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
             this.tooth1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth1.Location = new System.Drawing.Point(35, 243);
+            this.tooth1.Image = global::Medical.Properties.Resources.tooth1;
+            this.tooth1.Location = new System.Drawing.Point(10, 224);
             this.tooth1.Name = "tooth1";
-            this.tooth1.Size = new System.Drawing.Size(6, 6);
+            this.tooth1.Size = new System.Drawing.Size(41, 36);
             this.tooth1.TabIndex = 97;
             this.tooth1.Tag = "Tooth01";
             this.tooth1.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(17, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(26, 13);
+            this.label1.TabIndex = 129;
+            this.label1.Text = "Top";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(328, 375);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.TabIndex = 130;
+            this.label2.Text = "Bottom";
             // 
             // TeethStatePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tooth32);
             this.Controls.Add(this.tooth31);
             this.Controls.Add(this.tooth30);
@@ -579,7 +636,7 @@
             this.Controls.Add(this.tooth2);
             this.Controls.Add(this.tooth1);
             this.Name = "TeethStatePanel";
-            this.Size = new System.Drawing.Size(544, 292);
+            this.Size = new System.Drawing.Size(387, 408);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -619,5 +676,8 @@
         private System.Windows.Forms.CheckBox tooth3;
         private System.Windows.Forms.CheckBox tooth2;
         private System.Windows.Forms.CheckBox tooth1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+
     }
 }

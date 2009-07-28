@@ -66,5 +66,229 @@ namespace Medical.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap tooth1 {
+            get {
+                object obj = ResourceManager.GetObject("tooth1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth10 {
+            get {
+                object obj = ResourceManager.GetObject("tooth10", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth11 {
+            get {
+                object obj = ResourceManager.GetObject("tooth11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth12 {
+            get {
+                object obj = ResourceManager.GetObject("tooth12", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth13 {
+            get {
+                object obj = ResourceManager.GetObject("tooth13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth14 {
+            get {
+                object obj = ResourceManager.GetObject("tooth14", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth15 {
+            get {
+                object obj = ResourceManager.GetObject("tooth15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth16 {
+            get {
+                object obj = ResourceManager.GetObject("tooth16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth17 {
+            get {
+                object obj = ResourceManager.GetObject("tooth17", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth18 {
+            get {
+                object obj = ResourceManager.GetObject("tooth18", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth19 {
+            get {
+                object obj = ResourceManager.GetObject("tooth19", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth2 {
+            get {
+                object obj = ResourceManager.GetObject("tooth2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth20 {
+            get {
+                object obj = ResourceManager.GetObject("tooth20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth21 {
+            get {
+                object obj = ResourceManager.GetObject("tooth21", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth22 {
+            get {
+                object obj = ResourceManager.GetObject("tooth22", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth23 {
+            get {
+                object obj = ResourceManager.GetObject("tooth23", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth24 {
+            get {
+                object obj = ResourceManager.GetObject("tooth24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth25 {
+            get {
+                object obj = ResourceManager.GetObject("tooth25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth26 {
+            get {
+                object obj = ResourceManager.GetObject("tooth26", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth27 {
+            get {
+                object obj = ResourceManager.GetObject("tooth27", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth28 {
+            get {
+                object obj = ResourceManager.GetObject("tooth28", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth29 {
+            get {
+                object obj = ResourceManager.GetObject("tooth29", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth3 {
+            get {
+                object obj = ResourceManager.GetObject("tooth3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth30 {
+            get {
+                object obj = ResourceManager.GetObject("tooth30", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth31 {
+            get {
+                object obj = ResourceManager.GetObject("tooth31", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth32 {
+            get {
+                object obj = ResourceManager.GetObject("tooth32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth4 {
+            get {
+                object obj = ResourceManager.GetObject("tooth4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth5 {
+            get {
+                object obj = ResourceManager.GetObject("tooth5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth6 {
+            get {
+                object obj = ResourceManager.GetObject("tooth6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth7 {
+            get {
+                object obj = ResourceManager.GetObject("tooth7", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth8 {
+            get {
+                object obj = ResourceManager.GetObject("tooth8", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth9 {
+            get {
+                object obj = ResourceManager.GetObject("tooth9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
