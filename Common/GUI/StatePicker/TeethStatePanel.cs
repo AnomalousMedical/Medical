@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Medical.GUI.StateWizard
+namespace Medical.GUI
 {
-    public partial class TeethPanel : StateWizardPanel
+    public partial class TeethStatePanel : StatePickerPanel
     {
-        public TeethPanel()
+        public TeethStatePanel()
         {
             InitializeComponent();
             this.Text = "Teeth";
@@ -28,7 +28,7 @@ namespace Medical.GUI.StateWizard
 
         public override void setToDefault()
         {
-            
+
         }
     }
 }

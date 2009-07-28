@@ -16,6 +16,10 @@ namespace Medical
         public MedicalState(String name)
         {
             Name = name;
+            boneState = new BoneManipulatorState();
+            discState = new DiscState();
+            teethState = new TeethState();
+            fossaState = new FossaState();
         }
 
         public void blend(float percent, MedicalState target)
@@ -42,10 +46,6 @@ namespace Medical
             {
                 return boneState;
             }
-            set
-            {
-                boneState = value;
-            }
         }
 
         public DiscState Disc
@@ -53,10 +53,6 @@ namespace Medical
             get
             {
                 return discState;
-            }
-            set
-            {
-                discState = value;
             }
         }
 
@@ -66,10 +62,6 @@ namespace Medical
             {
                 return teethState;
             }
-            set
-            {
-                teethState = value;
-            }
         }
 
         public FossaState Fossa
@@ -77,10 +69,6 @@ namespace Medical
             get
             {
                 return fossaState;
-            }
-            set
-            {
-                fossaState = value;
             }
         }
 

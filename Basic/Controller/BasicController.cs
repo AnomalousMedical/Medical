@@ -28,6 +28,7 @@ namespace Medical.Controller
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
+        private StatePicker statePicker = new StatePicker();
 
         /// <summary>
         /// Constructor.
@@ -35,6 +36,7 @@ namespace Medical.Controller
         public BasicController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Basic");
+            constructStatePicker();
         }
 
         /// <summary>
@@ -53,6 +55,14 @@ namespace Medical.Controller
             if (options != null)
             {
                 options.Dispose();
+            }
+            if (stateWizard != null)
+            {
+                stateWizard.Dispose();
+            }
+            if (statePicker != null)
+            {
+                statePicker.Dispose();
             }
         }
 
@@ -266,5 +276,137 @@ namespace Medical.Controller
                 MessageBox.Show(String.Format("Could not open scene {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        internal void showStatePicker()
+        {
+            statePicker.startWizard();
+            statePicker.ShowDialog(basicForm);
+            if (statePicker.WizardFinished)
+            {
+                if (stateController.getNumStates() == 0)
+                {
+                    stateController.createState("Normal");
+                }
+                stateController.addState(statePicker.CreatedState);
+                stateGUI.playAll();
+            }
+        }
+
+        private void constructStatePicker()
+        {
+            BoneManipulatorPresetState boneManipulatorPreset;
+            DiscPresetState discPreset;
+            FossaPresetState fossaPreset;
+
+            //Left condyle growth
+            PresetStateSet leftCondyleGrowth = new PresetStateSet("Left Condyle Growth");
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", "GrowthNormalLeft");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+            leftCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 1", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.1f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+            leftCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 2", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.2f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+            leftCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 3", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.3f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+            leftCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.3f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.4f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+            leftCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            //Right Condyle Growth
+            PresetStateSet rightCondyleGrowth = new PresetStateSet("Right Condyle Growth");
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", "GrowthNormalRight");
+            boneManipulatorPreset.addPosition("rightRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("rightCondyleHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("rightCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("rightMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("rightAntegonialNotchMandible", 0.0f);
+            rightCondyleGrowth.addPresetState(boneManipulatorPreset);
+
+            //Left condyle degeneration
+            PresetStateSet leftCondyleDegeneration = new PresetStateSet("Left Condyle Degeneration");
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", "DegenerationNormalLeft");
+            boneManipulatorPreset.addPosition("leftCondyleDegenerationMandible", 0.0f);
+            leftCondyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            //Right condyle degeneration
+            PresetStateSet rightCondyleDegeneration = new PresetStateSet("Right Condyle Degeneration");
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", "DegenerationNormalLeft");
+            boneManipulatorPreset.addPosition("rightCondyleDegenerationMandible", 0.0f);
+            rightCondyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            //Left Disc
+            PresetStateSet leftDiscSpace = new PresetStateSet("Left Disc Space");
+            discPreset = new DiscPresetState("Normal", "Normal", "NormalLeftDisc");
+            discPreset.addPosition("LeftTMJDisc", new Vector3(0.0f, -0.302f, 0.0f));
+            leftDiscSpace.addPresetState(discPreset);
+
+            //Right Disc
+            PresetStateSet rightDiscSpace = new PresetStateSet("Right Disc Space");
+            discPreset = new DiscPresetState("Normal", "Normal", "NormalLeftDisc");
+            discPreset.addPosition("RightTMJDisc", new Vector3(0.0f, -0.302f, 0.0f));
+            rightDiscSpace.addPresetState(discPreset);
+
+            //Left Fossa
+            PresetStateSet leftFossa = new PresetStateSet("Left Fossa");
+            fossaPreset = new FossaPresetState("Normal", "Normal", "Normal");
+            fossaPreset.addPosition("LeftFossa", 0.0f);
+            leftFossa.addPresetState(fossaPreset);
+
+            //Right Fossa
+            PresetStateSet rightFossa = new PresetStateSet("Right Fossa");
+            fossaPreset = new FossaPresetState("Normal", "Normal", "Normal");
+            fossaPreset.addPosition("RightFossa", 0.0f);
+            rightFossa.addPresetState(fossaPreset);
+
+            statePicker.addPresetStateSet(leftCondyleGrowth);
+            statePicker.addPresetStateSet(rightCondyleGrowth);
+            statePicker.addPresetStateSet(leftCondyleDegeneration);
+            statePicker.addPresetStateSet(rightCondyleDegeneration);
+            statePicker.addPresetStateSet(leftDiscSpace);
+            statePicker.addPresetStateSet(rightDiscSpace);
+            statePicker.addPresetStateSet(leftFossa);
+            statePicker.addPresetStateSet(rightFossa);
+            statePicker.addStatePanel(new TeethStatePanel());
+        }
     }
 }
+/*
+boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
+            boneManipulatorPreset.addPosition("leftRamusHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleHeightMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftCondyleRotationMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftMandibularNotchMandible", 0.0f);
+            boneManipulatorPreset.addPosition("leftAntegonialNotchMandible", 0.0f);
+*/

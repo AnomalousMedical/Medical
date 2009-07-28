@@ -18,12 +18,11 @@ namespace Medical.GUI.StateWizard
 
         public override void applyToState(MedicalState state)
         {
-            BoneManipulatorState boneManipulator = new BoneManipulatorState();
+            BoneManipulatorState boneManipulator = state.BoneManipulator;
             getRightGrowthDefect(boneManipulator);
             getRightDegeneration(boneManipulator);
             getLeftGrowthDefect(boneManipulator);
             getLeftDegeneration(boneManipulator);
-            state.BoneManipulator = boneManipulator;
         }
 
         public override void setToDefault()

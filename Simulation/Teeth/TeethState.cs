@@ -10,7 +10,7 @@ namespace Medical
     {
         private Dictionary<String, ToothState> teeth = new Dictionary<string, ToothState>();
 
-        public TeethState()
+        internal TeethState()
         {
 
         }

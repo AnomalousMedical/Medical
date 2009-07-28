@@ -10,7 +10,7 @@ namespace Medical
     {
         private Dictionary<String, float> positions = new Dictionary<string, float>();
 
-        public BoneManipulatorState()
+        internal BoneManipulatorState()
         {
 
         }

@@ -11,7 +11,7 @@ namespace Medical
     {
         private Dictionary<String, Vector3> positions = new Dictionary<string, Vector3>();
 
-        public DiscState()
+        internal DiscState()
         {
 
         }

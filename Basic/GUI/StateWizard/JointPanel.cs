@@ -19,15 +19,13 @@ namespace Medical.GUI.StateWizard
 
         public override void applyToState(MedicalState state)
         {
-            FossaState fossaState = new FossaState();
+            FossaState fossaState = state.Fossa;
             getRightFossaState(fossaState);
             getLeftFossaState(fossaState);
-            state.Fossa = fossaState;
 
-            DiscState discState = new DiscState();
+            DiscState discState = state.Disc;
             getRightDiscState(discState);
             getLeftDiscState(discState);
-            state.Disc = discState;
         }
 
         public override void setToDefault()

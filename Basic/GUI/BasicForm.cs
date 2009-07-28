@@ -137,5 +137,10 @@ namespace Medical.GUI
         {
             controller.showOptions();
         }
+
+        private void addDistortion2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.showStatePicker();
+        }
     }
 }
