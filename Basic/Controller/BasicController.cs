@@ -298,10 +298,8 @@ namespace Medical.Controller
             statePicker.addPresetStateSet(createGrowthSet("Right", "right"));
             statePicker.addPresetStateSet(createDegenerationSet("Left", "left"));
             statePicker.addPresetStateSet(createDegenerationSet("Right", "right"));
-            statePicker.addPresetStateSet(createDiscSpaceSet("Left", "LeftTMJDisc"));
-            statePicker.addPresetStateSet(createDiscSpaceSet("Right", "RightTMJDisc"));
-            statePicker.addPresetStateSet(createFossaSet("Left", "LeftFossa"));
-            statePicker.addPresetStateSet(createFossaSet("Right", "RightFossa"));
+            statePicker.addStatePanel(new DiscSpacePanel());
+            statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
         }
 

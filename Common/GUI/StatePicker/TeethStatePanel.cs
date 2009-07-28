@@ -20,9 +20,13 @@ namespace Medical.GUI
         public override void applyToState(MedicalState state)
         {
             TeethState teethState = state.Teeth;
-            foreach (CheckBox checkBox in this.Controls)
+            foreach (Control control in this.Controls)
             {
-                teethState.addPosition(checkBox.Tag.ToString(), new ToothState(checkBox.Checked));
+                CheckBox checkBox = control as CheckBox;
+                if (checkBox != null)
+                {
+                    teethState.addPosition(checkBox.Tag.ToString(), new ToothState(checkBox.Checked));
+                }
             }
         }
 

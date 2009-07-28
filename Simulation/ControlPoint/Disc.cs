@@ -20,6 +20,9 @@ namespace Medical
         private Vector3 offset = Vector3.UnitY * -0.302f;
 
         [Editable]
+        private Vector3 horizontalTickSpacing = Vector3.UnitX * 0.1f;
+
+        [Editable]
         String controlPointObject;
 
         [Editable]
@@ -67,6 +70,14 @@ namespace Medical
         public Vector3 getNormalOffset()
         {
             return normalOffset;
+        }
+
+        public Vector3 HorizontalTickSpacing
+        {
+            get
+            {
+                return horizontalTickSpacing;
+            }
         }
     }
 }
