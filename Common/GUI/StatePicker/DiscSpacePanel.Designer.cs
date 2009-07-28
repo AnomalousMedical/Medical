@@ -34,6 +34,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.leftCondyleSpace = new System.Windows.Forms.Label();
+            this.rightCondyleSpace = new System.Windows.Forms.Label();
+            this.horizontalSpace = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.rightDiscSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscSpace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.horizontalDisc)).BeginInit();
@@ -43,7 +46,7 @@
             // rightDiscSpace
             // 
             this.rightDiscSpace.LargeChange = 1;
-            this.rightDiscSpace.Location = new System.Drawing.Point(15, 24);
+            this.rightDiscSpace.Location = new System.Drawing.Point(15, 43);
             this.rightDiscSpace.Maximum = 4;
             this.rightDiscSpace.Name = "rightDiscSpace";
             this.rightDiscSpace.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -54,7 +57,7 @@
             // leftDiscSpace
             // 
             this.leftDiscSpace.LargeChange = 1;
-            this.leftDiscSpace.Location = new System.Drawing.Point(334, 24);
+            this.leftDiscSpace.Location = new System.Drawing.Point(313, 43);
             this.leftDiscSpace.Maximum = 4;
             this.leftDiscSpace.Name = "leftDiscSpace";
             this.leftDiscSpace.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -65,7 +68,7 @@
             // horizontalDisc
             // 
             this.horizontalDisc.LargeChange = 1;
-            this.horizontalDisc.Location = new System.Drawing.Point(135, 176);
+            this.horizontalDisc.Location = new System.Drawing.Point(128, 241);
             this.horizontalDisc.Maximum = 2;
             this.horizontalDisc.Minimum = -2;
             this.horizontalDisc.Name = "horizontalDisc";
@@ -84,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(317, 8);
+            this.label2.Location = new System.Drawing.Point(290, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 13);
             this.label2.TabIndex = 4;
@@ -92,16 +95,46 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(65, 34);
+            this.pictureBox1.Image = global::Medical.Properties.Resources.mandiblediscspace;
+            this.pictureBox1.Location = new System.Drawing.Point(65, 53);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(252, 132);
+            this.pictureBox1.Size = new System.Drawing.Size(232, 182);
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
+            // 
+            // leftCondyleSpace
+            // 
+            this.leftCondyleSpace.Location = new System.Drawing.Point(253, 26);
+            this.leftCondyleSpace.Name = "leftCondyleSpace";
+            this.leftCondyleSpace.Size = new System.Drawing.Size(101, 13);
+            this.leftCondyleSpace.TabIndex = 7;
+            this.leftCondyleSpace.Text = "Normal";
+            this.leftCondyleSpace.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // rightCondyleSpace
+            // 
+            this.rightCondyleSpace.Location = new System.Drawing.Point(3, 26);
+            this.rightCondyleSpace.Name = "rightCondyleSpace";
+            this.rightCondyleSpace.Size = new System.Drawing.Size(101, 13);
+            this.rightCondyleSpace.TabIndex = 6;
+            this.rightCondyleSpace.Text = "Normal";
+            // 
+            // horizontalSpace
+            // 
+            this.horizontalSpace.Location = new System.Drawing.Point(128, 273);
+            this.horizontalSpace.Name = "horizontalSpace";
+            this.horizontalSpace.Size = new System.Drawing.Size(104, 13);
+            this.horizontalSpace.TabIndex = 8;
+            this.horizontalSpace.Text = "Normal";
+            this.horizontalSpace.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // DiscSpacePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.horizontalSpace);
+            this.Controls.Add(this.leftCondyleSpace);
+            this.Controls.Add(this.rightCondyleSpace);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -109,7 +142,7 @@
             this.Controls.Add(this.leftDiscSpace);
             this.Controls.Add(this.rightDiscSpace);
             this.Name = "DiscSpacePanel";
-            this.Size = new System.Drawing.Size(386, 219);
+            this.Size = new System.Drawing.Size(364, 294);
             ((System.ComponentModel.ISupportInitialize)(this.rightDiscSpace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscSpace)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.horizontalDisc)).EndInit();
@@ -127,5 +160,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label leftCondyleSpace;
+        private System.Windows.Forms.Label rightCondyleSpace;
+        private System.Windows.Forms.Label horizontalSpace;
     }
 }

@@ -88,6 +88,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap mandiblediscspace {
+            get {
+                object obj = ResourceManager.GetObject("mandiblediscspace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap rightflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);

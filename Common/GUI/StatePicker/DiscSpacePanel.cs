@@ -16,6 +16,75 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Text = "Disc Spacing";
+            leftDiscSpace.ValueChanged += new EventHandler(leftDiscSpace_ValueChanged);
+            rightDiscSpace.ValueChanged += new EventHandler(rightDiscSpace_ValueChanged);
+            horizontalDisc.ValueChanged += new EventHandler(horizontalDisc_ValueChanged);
+        }
+
+        void horizontalDisc_ValueChanged(object sender, EventArgs e)
+        {
+            switch (horizontalDisc.Value)
+            {
+                case -2:
+                    horizontalSpace.Text = "Large Right Shift";
+                    break;
+                case -1:
+                    horizontalSpace.Text = "Small Right Shift";
+                    break;
+                case 0:
+                    horizontalSpace.Text = "Normal";
+                    break;
+                case 1:
+                    horizontalSpace.Text = "Small Left Shift";
+                    break;
+                case 2:
+                    horizontalSpace.Text = "Large Right Shift";
+                    break;
+            }
+        }
+
+        void rightDiscSpace_ValueChanged(object sender, EventArgs e)
+        {
+            switch (rightDiscSpace.Value)
+            {
+                case 0:
+                    rightCondyleSpace.Text = "Large";
+                    break;
+                case 1:
+                    rightCondyleSpace.Text = "Normal";
+                    break;
+                case 2:
+                    rightCondyleSpace.Text = "Lightly Reduced";
+                    break;
+                case 3:
+                    rightCondyleSpace.Text = "Greatly Reduced";
+                    break;
+                case 4:
+                    rightCondyleSpace.Text = "Bone on Bone";
+                    break;
+            }
+        }
+
+        void leftDiscSpace_ValueChanged(object sender, EventArgs e)
+        {
+            switch (leftDiscSpace.Value)
+            {
+                case 0:
+                    leftCondyleSpace.Text = "Large";
+                    break;
+                case 1:
+                    leftCondyleSpace.Text = "Normal";
+                    break;
+                case 2:
+                    leftCondyleSpace.Text = "Lightly Reduced";
+                    break;
+                case 3:
+                    leftCondyleSpace.Text = "Greatly Reduced";
+                    break;
+                case 4:
+                    leftCondyleSpace.Text = "Bone on Bone";
+                    break;
+            }
         }
 
         public override void applyToState(MedicalState state)
@@ -53,7 +122,7 @@ namespace Medical.GUI
 
         public override void setToDefault()
         {
-            
+
         }
     }
 }
