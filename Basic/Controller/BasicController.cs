@@ -418,7 +418,7 @@ namespace Medical.Controller
         {
             String condyleDegenerationMandible = sideBoneBase + "CondyleDegenerationMandible";
             BoneManipulatorPresetState boneManipulatorPreset;
-            PresetStateSet condyleDegeneration = new PresetStateSet(sideBoneBase + " Condyle Degeneration");
+            PresetStateSet condyleDegeneration = new PresetStateSet(sidePretty + " Condyle Degeneration");
 
             boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "NoImage");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.0f);
@@ -433,7 +433,7 @@ namespace Medical.Controller
             DiscPresetState discPreset;
 
             discPreset = new DiscPresetState("Normal", "Normal", sidePretty + "NoImage");
-            discPreset.addPosition(discName, new Vector3(0.0f, -0.302f, 0.0f));
+            discPreset.addPosition(discName, 1.0f);
             discSpace.addPresetState(discPreset);
 
             return discSpace;
@@ -452,11 +452,3 @@ namespace Medical.Controller
         }
     }
 }
-/*
-boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation", "Mild Deficiency", "GrowthMildDefiencyCondylarCompensation");
-            boneManipulatorPreset.addPosition(ramusHeight, 0.0f);
-            boneManipulatorPreset.addPosition(condyleHeight, 0.0f);
-            boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
-            boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
-            boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
-*/

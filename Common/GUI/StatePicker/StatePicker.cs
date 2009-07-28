@@ -14,17 +14,19 @@ namespace Medical.GUI
         private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
         int currentIndex = 0;
         MedicalState createdState;
+        private bool updatePanel = true;
 
         public StatePicker()
         {
             InitializeComponent();
+            navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);
         }
 
         public void addStatePanel(StatePickerPanel panel)
         {
             panels.Add(panel);
-            ListViewItem item = new ListViewItem(panel.Text);
-            navigatorList.Items.Add(item);
+            ListViewItem item = navigatorList.Items.Add(panel.Text, panel.Text, panel.Text);
+            item.Tag = panel;
         }
 
         public void addPresetStateSet(PresetStateSet presetSet)
@@ -48,29 +50,36 @@ namespace Medical.GUI
 
         private void showPanel()
         {
-            this.statePickerPanelHost.Controls.Add(panels[currentIndex]);
-            //Size size = this.PreferredSize;
-            //size.Height += buttonPanel.PreferredSize.Height;
-            //this.Size = size;
-            if (currentIndex == panels.Count - 1)
+            if (updatePanel)
             {
-                nextButton.Visible = false;
-                finishButton.Visible = true;
-            }
-            else
-            {
-                nextButton.Visible = true;
-                finishButton.Visible = false;
-            }
-            if (currentIndex == 0)
-            {
-                previousButton.Visible = false;
-                cancelButton.Visible = true;
-            }
-            else
-            {
-                previousButton.Visible = true;
-                cancelButton.Visible = false;
+                updatePanel = false;
+                StatePickerPanel panel = panels[currentIndex];
+                this.statePickerPanelHost.Controls.Add(panel);
+                navigatorList.SelectedItems.Clear();
+                ListViewItem item = navigatorList.Items[panel.Text];
+                item.Selected = true;
+                navigatorList.Select();
+                if (currentIndex == panels.Count - 1)
+                {
+                    nextButton.Visible = false;
+                    finishButton.Visible = true;
+                }
+                else
+                {
+                    nextButton.Visible = true;
+                    finishButton.Visible = false;
+                }
+                if (currentIndex == 0)
+                {
+                    previousButton.Visible = false;
+                    cancelButton.Visible = true;
+                }
+                else
+                {
+                    previousButton.Visible = true;
+                    cancelButton.Visible = false;
+                }
+                updatePanel = true;
             }
         }
 
@@ -106,6 +115,16 @@ namespace Medical.GUI
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        void navigatorList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (updatePanel && navigatorList.SelectedIndices.Count > 0)
+            {
+                hidePanel();
+                currentIndex = navigatorList.SelectedIndices[0];
+                showPanel();
+            }
         }
 
         public bool WizardFinished

@@ -37,7 +37,9 @@
             this.presetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameColumn});
             this.presetListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.presetListView.HideSelection = false;
             this.presetListView.Location = new System.Drawing.Point(0, 0);
+            this.presetListView.MultiSelect = false;
             this.presetListView.Name = "presetListView";
             this.presetListView.Size = new System.Drawing.Size(150, 150);
             this.presetListView.TabIndex = 0;

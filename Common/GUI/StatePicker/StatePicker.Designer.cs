@@ -44,7 +44,9 @@
             this.navigatorList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn});
             this.navigatorList.Dock = System.Windows.Forms.DockStyle.Left;
+            this.navigatorList.HideSelection = false;
             this.navigatorList.Location = new System.Drawing.Point(0, 0);
+            this.navigatorList.MultiSelect = false;
             this.navigatorList.Name = "navigatorList";
             this.navigatorList.Size = new System.Drawing.Size(136, 414);
             this.navigatorList.TabIndex = 0;

@@ -8,7 +8,7 @@ namespace Medical
 {
     public class DiscPresetState: PresetState
     {
-        private Dictionary<String, Vector3> positions = new Dictionary<string, Vector3>();
+        private Dictionary<String, float> positions = new Dictionary<string, float>();
 
         public DiscPresetState(String name, String category, String imageName)
             : base(name, category, imageName)
@@ -16,16 +16,19 @@ namespace Medical
 
         }
 
-        public void addPosition(String disc, Vector3 position)
+        public void addPosition(String disc, float position)
         {
             positions.Add(disc, position);
         }
     
         public override void applyToState(MedicalState state)
         {
-            foreach (String position in positions.Keys)
+            foreach (String discName in positions.Keys)
             {
-                state.Disc.addPosition(position, positions[position]);
+                Disc disc = DiscController.getDisc(discName);
+                Vector3 offset = disc.getNormalOffset();
+                offset *= positions[discName];
+                state.Disc.addPosition(discName, offset);
             }
         }
     }
