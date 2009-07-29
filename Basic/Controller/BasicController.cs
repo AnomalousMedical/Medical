@@ -6,7 +6,6 @@ using Medical.GUI;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Windows.Forms;
-using Medical.GUI.StateWizard;
 using System.IO;
 using Engine.Resources;
 using Engine.Saving;
