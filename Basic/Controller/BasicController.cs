@@ -24,7 +24,6 @@ namespace Medical.Controller
         private BasicForm basicForm;
         private GUIElementController guiElements;
         private MedicalStateController stateController = new MedicalStateController();
-        private StateWizardForm stateWizard = new StateWizardForm();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
@@ -55,10 +54,6 @@ namespace Medical.Controller
             if (options != null)
             {
                 options.Dispose();
-            }
-            if (stateWizard != null)
-            {
-                stateWizard.Dispose();
             }
             if (statePicker != null)
             {
@@ -167,21 +162,6 @@ namespace Medical.Controller
                 }
             }
             return ret;
-        }
-
-        public void showStateWizard()
-        {
-            if (stateController.getNumStates() == 0)
-            {
-                stateController.createState("Normal");
-            }
-            stateWizard.startWizard();
-            stateWizard.ShowDialog(basicForm);
-            if (stateWizard.WizardFinished)
-            {
-                stateController.addState(stateWizard.CreatedState);
-                stateGUI.playAll();
-            }
         }
 
         public void showOptions()

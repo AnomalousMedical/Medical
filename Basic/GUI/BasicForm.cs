@@ -105,7 +105,7 @@ namespace Medical.GUI
 
         private void addDistortionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.showStateWizard();
+            controller.showStatePicker();
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -136,11 +136,6 @@ namespace Medical.GUI
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.showOptions();
-        }
-
-        private void addDistortion2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.showStatePicker();
         }
     }
 }
