@@ -415,38 +415,42 @@ namespace Medical.Controller
         private PresetStateSet createDegenerationSet(String sidePretty, String sideBoneBase)
         {
             String condyleDegenerationMandible = sideBoneBase + "CondyleDegenerationMandible";
+            String lateralPoleMandible = sideBoneBase + "LateralPoleMandible";
+            String medialPoleScale = sideBoneBase + "MedialPoleScaleMandible";
             BoneManipulatorPresetState boneManipulatorPreset;
             PresetStateSet condyleDegeneration = new PresetStateSet(sidePretty + " Condyle Degeneration");
 
             boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "NoImage");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.0f);
+            boneManipulatorPreset.addPosition(lateralPoleMandible, 0.0f);
+            boneManipulatorPreset.addPosition(medialPoleScale, 0.0f);
+            condyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Mild Degeneration", "Total Degeneration", sidePretty + "NoImage");
+            boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.2f);
+            boneManipulatorPreset.addPosition(lateralPoleMandible, 0.2f);
+            boneManipulatorPreset.addPosition(medialPoleScale, 0.2f);
+            condyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Moderate Degeneration", "Total Degeneration", sidePretty + "NoImage");
+            boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.4f);
+            boneManipulatorPreset.addPosition(lateralPoleMandible, 0.4f);
+            boneManipulatorPreset.addPosition(medialPoleScale, 0.4f);
+            condyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Severe Degeneration", "Total Degeneration", sidePretty + "NoImage");
+            boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.7f);
+            boneManipulatorPreset.addPosition(lateralPoleMandible, 0.7f);
+            boneManipulatorPreset.addPosition(medialPoleScale, 0.7f);
+            condyleDegeneration.addPresetState(boneManipulatorPreset);
+
+            boneManipulatorPreset = new BoneManipulatorPresetState("Extreme Degeneration", "Total Degeneration", sidePretty + "NoImage");
+            boneManipulatorPreset.addPosition(condyleDegenerationMandible, 1.0f);
+            boneManipulatorPreset.addPosition(lateralPoleMandible, 1.0f);
+            boneManipulatorPreset.addPosition(medialPoleScale, 1.0f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
 
             return condyleDegeneration;
-        }
-
-        private PresetStateSet createDiscSpaceSet(String sidePretty, String discName)
-        {
-            PresetStateSet discSpace = new PresetStateSet(sidePretty + " Disc Space");
-            DiscPresetState discPreset;
-
-            discPreset = new DiscPresetState("Normal", "Normal", sidePretty + "NoImage");
-            discPreset.addPosition(discName, 1.0f);
-            discSpace.addPresetState(discPreset);
-
-            return discSpace;
-        }
-
-        private PresetStateSet createFossaSet(String sidePretty, String fossaName)
-        {
-            PresetStateSet fossa = new PresetStateSet(sidePretty + " Fossa");
-            FossaPresetState fossaPreset;
-
-            fossaPreset = new FossaPresetState("Normal", "Normal", sidePretty + "NoImage");
-            fossaPreset.addPosition(fossaName, 0.0f);
-            fossa.addPresetState(fossaPreset);
-
-            return fossa;
         }
     }
 }
