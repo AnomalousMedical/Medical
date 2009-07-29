@@ -44,7 +44,6 @@
             this.presetListView.Size = new System.Drawing.Size(150, 150);
             this.presetListView.TabIndex = 0;
             this.presetListView.UseCompatibleStateImageBehavior = false;
-            this.presetListView.View = System.Windows.Forms.View.Details;
             // 
             // NameColumn
             // 

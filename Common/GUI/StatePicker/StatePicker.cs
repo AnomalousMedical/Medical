@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Resources;
 
 namespace Medical.GUI
 {
@@ -29,10 +30,10 @@ namespace Medical.GUI
             item.Tag = panel;
         }
 
-        public void addPresetStateSet(PresetStateSet presetSet)
+        public void addPresetStateSet(PresetStateSet presetSet, ResourceManager imageResources)
         {
             PresetStatePanel panel = new PresetStatePanel();
-            panel.initialize(presetSet);
+            panel.initialize(presetSet, imageResources);
             addStatePanel(panel);
         }
 

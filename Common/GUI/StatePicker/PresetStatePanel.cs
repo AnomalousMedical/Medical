@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Resources;
 
 namespace Medical.GUI
 {
@@ -18,9 +19,12 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+            presetListView.LargeImageList = new ImageList();
+            presetListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            presetListView.LargeImageList.ImageSize = new Size(100, 100);
         }
 
-        public void initialize(PresetStateSet presetStateSet)
+        public void initialize(PresetStateSet presetStateSet, ResourceManager imageResources)
         {
             this.Text = presetStateSet.Name;
             foreach (PresetState state in presetStateSet.Presets)
@@ -32,6 +36,14 @@ namespace Medical.GUI
                     group = new ListViewGroup(state.Category);
                     groups.Add(state.Category, group);
                     presetListView.Groups.Add(group);
+                }
+                if (!presetListView.LargeImageList.Images.ContainsKey(state.ImageName))
+                {
+                    Image image = imageResources.GetObject(state.ImageName) as Image;
+                    if(image != null)
+                    {
+                        presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                    }
                 }
                 ListViewItem item = new ListViewItem(state.Name, state.ImageName);
                 item.Tag = state;
