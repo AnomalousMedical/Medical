@@ -109,6 +109,8 @@ namespace Medical.GUI
             leftEye.smoothBlend(skinAlpha);
             TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
             rightEye.smoothBlend(skinAlpha);
+            TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
+            eyebrowsAndEyelashes.smoothBlend(skinAlpha);
         }
     }
 }

@@ -265,6 +265,8 @@ namespace Medical.GUI
                 leftEye.smoothBlend(1.0f);
                 TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
                 rightEye.smoothBlend(1.0f);
+                TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
+                eyebrowsAndEyelashes.smoothBlend(1.0f);
             }
         }
 
@@ -279,6 +281,8 @@ namespace Medical.GUI
                 leftEye.smoothBlend(0.7f);
                 TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
                 rightEye.smoothBlend(0.7f);
+                TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
+                eyebrowsAndEyelashes.smoothBlend(0.7f);
             }
         }
 
@@ -293,6 +297,8 @@ namespace Medical.GUI
                 leftEye.smoothBlend(0.0f);
                 TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
                 rightEye.smoothBlend(0.0f);
+                TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
+                eyebrowsAndEyelashes.smoothBlend(0.0f);
             }
         }
     }
