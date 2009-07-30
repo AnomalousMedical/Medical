@@ -22,12 +22,14 @@ namespace Medical.GUI
         public DiskControl()
         {
             InitializeComponent();
-            leftForwardBack.ValueChanged += leftSideValueChanged;
-            leftUpDown.ValueChanged += leftSideValueChanged;
+            leftDiscPositionSlider.ValueChanged += leftSideValueChanged;
+            leftDiscOffset.ValueChanged += leftSideValueChanged;
+            leftRDAOffset.ValueChanged += leftSideValueChanged;
             centerTrackBar.ValueChanged += leftSideValueChanged;
 
-            rightForwardBack.ValueChanged += rightSideValueChanged;
-            rightUpDown.ValueChanged += rightSideValueChanged;
+            rightDiscPositionSlider.ValueChanged += rightSideValueChanged;
+            rightDiscOffset.ValueChanged += rightSideValueChanged;
+            rightRDAOffset.ValueChanged += rightSideValueChanged;
             centerTrackBar.ValueChanged += rightSideValueChanged;
         }
 
@@ -35,8 +37,10 @@ namespace Medical.GUI
         {
             if (allowUpdates)
             {
-                leftDisc.DiscOffset = new Vector3(0.0f, leftUpDown.Value / (float)-leftUpDown.Minimum, leftForwardBack.Value / (float)leftForwardBack.Maximum);
+                leftDisc.RDAOffset = new Vector3(0.0f, leftRDAOffset.Value / -(float)leftRDAOffset.Maximum, 0.0f);
+                leftDisc.DiscOffset = new Vector3(0.0f, leftDiscOffset.Value / -(float)leftDiscOffset.Maximum, 0.0f);
                 leftDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
+                leftDisc.PopLocation = leftDiscPositionSlider.Value / (float)leftDiscPositionSlider.Maximum;
             }
         }
 
@@ -44,8 +48,10 @@ namespace Medical.GUI
         {
             if (allowUpdates)
             {
-                rightDisc.DiscOffset = new Vector3(0.0f, rightUpDown.Value / (float)-rightUpDown.Minimum, rightForwardBack.Value / (float)rightForwardBack.Maximum);
+                rightDisc.RDAOffset = new Vector3(0.0f, rightRDAOffset.Value / -(float)rightRDAOffset.Maximum, 0.0f);
+                rightDisc.DiscOffset = new Vector3(0.0f, rightDiscOffset.Value / -(float)rightDiscOffset.Maximum, 0.0f);
                 rightDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
+                rightDisc.PopLocation = rightDiscPositionSlider.Value / (float)rightDiscPositionSlider.Maximum;
             }
         }
 
@@ -56,7 +62,7 @@ namespace Medical.GUI
             Enabled = leftDisc != null && rightDisc != null;
             if (Enabled)
             {
-                setSliders(leftDisc.getOffset(0.0f), rightDisc.getOffset(0.0f));
+                setSliders(leftDisc.DiscOffset.y, leftDisc.RDAOffset.y, rightDisc.DiscOffset.y, rightDisc.RDAOffset.y);
             }
         }
 
@@ -68,19 +74,19 @@ namespace Medical.GUI
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
-            setSliders(leftDisc.NormalDiscOffset, rightDisc.NormalDiscOffset);
+            setSliders(leftDisc.NormalDiscOffset.y, leftDisc.NormalRDAOffset.y, rightDisc.NormalDiscOffset.y, rightDisc.NormalRDAOffset.y);
             leftSideValueChanged(null, null);
             rightSideValueChanged(null, null);
         }
 
-        private void setSliders(Vector3 leftOffset, Vector3 rightOffset)
+        private void setSliders(float leftDisc, float leftRDA, float rightDisc, float rightRDA)
         {
             allowUpdates = false;
-            leftForwardBack.Value = (int)(leftOffset.z * leftForwardBack.Maximum);
-            leftUpDown.Value = (int)(leftOffset.y * -leftUpDown.Minimum);
+            leftDiscOffset.Value = (int)(leftDisc * -leftDiscOffset.Maximum);
+            leftRDAOffset.Value = (int)(leftRDA * -leftRDAOffset.Maximum);
 
-            rightForwardBack.Value = (int)(rightOffset.z * rightForwardBack.Maximum);
-            rightUpDown.Value = (int)(rightOffset.y * -rightUpDown.Minimum);
+            rightDiscOffset.Value = (int)(rightDisc * -rightDiscOffset.Maximum);
+            rightRDAOffset.Value = (int)(rightRDA * -rightRDAOffset.Maximum);
 
             centerTrackBar.Value = 0;
             allowUpdates = true;
