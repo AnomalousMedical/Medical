@@ -97,14 +97,14 @@ namespace Medical.GUI
         private void getDiscState(DiscState discState, String discName, int verticalValue)
         {
             Disc disc = DiscController.getDisc(discName);
-            Vector3 discSpacing = disc.getNormalOffset() / 3.0f;
+            Vector3 discSpacing = disc.NormalDiscOffset / 3.0f;
             switch (verticalValue)
             {
                 case 0:
                     discSpacing = discSpacing * 4.0f;
                     break;
                 case 1:
-                    discSpacing = disc.getNormalOffset();
+                    discSpacing = disc.NormalDiscOffset;
                     break;
                 case 2:
                     discSpacing = discSpacing * 2.0f;
@@ -116,8 +116,12 @@ namespace Medical.GUI
                     discSpacing = Vector3.Zero;
                     break;
             }
-            discSpacing += disc.HorizontalTickSpacing * horizontalDisc.Value;
-            discState.addPosition(discName, discSpacing);
+            DiscStateProperties properties = new DiscStateProperties(discName);
+            properties.DiscOffset = discSpacing;
+            properties.HorizontalOffset = disc.HorizontalTickSpacing * horizontalDisc.Value;
+            properties.PopLocation = 0.0f;
+            properties.RDAOffset = Vector3.Zero;
+            discState.addPosition(properties);
         }
 
         public override void setToDefault()

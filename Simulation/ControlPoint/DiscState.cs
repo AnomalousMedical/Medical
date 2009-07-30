@@ -9,25 +9,28 @@ namespace Medical
 {
     public class DiscState : Saveable
     {
-        private Dictionary<String, Vector3> positions = new Dictionary<string, Vector3>();
+        private Dictionary<String, DiscStateProperties> discs = new Dictionary<String, DiscStateProperties>();
 
         internal DiscState()
         {
 
         }
 
-        public void addPosition(String disc, Vector3 position)
+        public void addPosition(Disc disc)
         {
-            positions.Add(disc, position);
+            discs.Add(disc.Owner.Name, new DiscStateProperties(disc));
+        }
+
+        public void addPosition(DiscStateProperties prop)
+        {
+            discs.Add(prop.DiscName, prop);
         }
 
         public void blend(DiscState target, float percent)
         {
-            foreach (String key in positions.Keys)
+            foreach (String key in discs.Keys)
             {
-                Vector3 start = positions[key];
-                Vector3 end = target.positions[key];
-                DiscController.getDisc(key).setOffset(start.lerp(ref end, ref percent));
+                discs[key].blend(target.discs[key], percent);
             }
         }
 
@@ -37,12 +40,12 @@ namespace Medical
 
         protected DiscState(LoadInfo info)
         {
-            info.RebuildDictionary<String, Vector3>(POSITIONS, positions);
+            info.RebuildDictionary<String, DiscStateProperties>(POSITIONS, discs);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.ExtractDictionary<String, Vector3>(POSITIONS, positions);
+            info.ExtractDictionary<String, DiscStateProperties>(POSITIONS, discs);
         }
 
         #endregion

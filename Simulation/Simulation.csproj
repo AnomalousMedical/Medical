@@ -89,8 +89,8 @@
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />
     <Compile Include="ControlPoint\ControlPointController.cs" />
     <Compile Include="ControlPoint\DiscController.cs" />
-    <Compile Include="ControlPoint\DiscPresetState.cs" />
     <Compile Include="ControlPoint\DiscState.cs" />
+    <Compile Include="ControlPoint\DiscStateProperties.cs" />
     <Compile Include="ControlPoint\Fossa.cs" />
     <Compile Include="ControlPoint\Disc.cs" />
     <Compile Include="ControlPoint\FossaController.cs" />

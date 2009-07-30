@@ -14,13 +14,25 @@ namespace Medical
     public class Disc : Interface
     {
         [Editable]
-        private Vector3 normalOffset = Vector3.UnitY * -0.302f;
+        private Vector3 normalDiscOffset = Vector3.UnitY * -0.302f;
 
         [Editable]
-        private Vector3 offset = Vector3.UnitY * -0.302f;
+        private Vector3 discOffset = Vector3.UnitY * -0.302f;
+
+        [Editable]
+        private Vector3 normalRDAOffset = Vector3.UnitY * -0.151f;
+
+        [Editable]
+        private Vector3 rdaOffset = Vector3.UnitY * -0.151f;
 
         [Editable]
         private Vector3 horizontalTickSpacing = Vector3.UnitX * 0.1f;
+
+        [Editable]
+        private Vector3 horizontalOffset = Vector3.Zero;
+
+        [Editable]
+        private float discPopLocation = 0.0f;
 
         [Editable]
         String controlPointObject;
@@ -53,23 +65,16 @@ namespace Medical
             DiscController.removeDisc(this);
         }
 
-        public Vector3 getOffset(float position)
+        public Vector3 getOffset(float location)
         {
-            return offset;
-        }
-
-        public void setOffset(Vector3 offset)
-        {
-            this.offset = offset;
-            if (controlPoint != null)
+            if (location < discPopLocation)
             {
-                controlPoint.positionModified();
+                return rdaOffset + horizontalOffset;
             }
-        }
-
-        public Vector3 getNormalOffset()
-        {
-            return normalOffset;
+            else
+            {
+                return discOffset + horizontalOffset;
+            }
         }
 
         public Vector3 HorizontalTickSpacing
@@ -77,6 +82,86 @@ namespace Medical
             get
             {
                 return horizontalTickSpacing;
+            }
+        }
+
+        public Vector3 DiscOffset
+        {
+            get
+            {
+                return discOffset;
+            }
+            set
+            {
+                discOffset = value;
+                if (controlPoint != null)
+                {
+                    controlPoint.positionModified();
+                }
+            }
+        }
+
+        public Vector3 NormalDiscOffset
+        {
+            get
+            {
+                return normalDiscOffset;
+            }
+        }
+
+        public Vector3 RDAOffset
+        {
+            get
+            {
+                return rdaOffset;
+            }
+            set
+            {
+                rdaOffset = value;
+                if (controlPoint != null)
+                {
+                    controlPoint.positionModified();
+                }
+            }
+        }
+
+        public Vector3 NormalRDAOffset
+        {
+            get
+            {
+                return normalRDAOffset;
+            }
+        }
+
+        public float PopLocation
+        {
+            get
+            {
+                return discPopLocation;
+            }
+            set
+            {
+                discPopLocation = value;
+                if (controlPoint != null)
+                {
+                    controlPoint.positionModified();
+                }
+            }
+        }
+
+        public Vector3 HorizontalOffset
+        {
+            get
+            {
+                return horizontalOffset;
+            }
+            set
+            {
+                horizontalOffset = value;
+                if (controlPoint != null)
+                {
+                    controlPoint.positionModified();
+                }
             }
         }
     }

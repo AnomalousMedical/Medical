@@ -195,6 +195,11 @@ namespace Medical.Controller
 
         public void saveMedicalState(String filename)
         {
+            String saveFolder = Path.GetDirectoryName(filename);
+            if (!Directory.Exists(saveFolder))
+            {
+                Directory.CreateDirectory(saveFolder);
+            }
             XmlTextWriter textWriter = null;
             try
             {

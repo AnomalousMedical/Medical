@@ -35,9 +35,8 @@ namespace Medical.GUI
         {
             if (allowUpdates)
             {
-                leftDisc.setOffset(new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum,
-                                             leftUpDown.Value / (float)-leftUpDown.Minimum,
-                                             leftForwardBack.Value / (float)leftForwardBack.Maximum));
+                leftDisc.DiscOffset = new Vector3(0.0f, leftUpDown.Value / (float)-leftUpDown.Minimum, leftForwardBack.Value / (float)leftForwardBack.Maximum);
+                leftDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
             }
         }
 
@@ -45,9 +44,8 @@ namespace Medical.GUI
         {
             if (allowUpdates)
             {
-                rightDisc.setOffset(new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum,
-                                             rightUpDown.Value / (float)-rightUpDown.Minimum,
-                                             rightForwardBack.Value / (float)rightForwardBack.Maximum));
+                rightDisc.DiscOffset = new Vector3(0.0f, rightUpDown.Value / (float)-rightUpDown.Minimum, rightForwardBack.Value / (float)rightForwardBack.Maximum);
+                rightDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
             }
         }
 
@@ -70,7 +68,7 @@ namespace Medical.GUI
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
-            setSliders(leftDisc.getNormalOffset(), rightDisc.getNormalOffset());
+            setSliders(leftDisc.NormalDiscOffset, rightDisc.NormalDiscOffset);
             leftSideValueChanged(null, null);
             rightSideValueChanged(null, null);
         }
@@ -83,7 +81,8 @@ namespace Medical.GUI
 
             rightForwardBack.Value = (int)(rightOffset.z * rightForwardBack.Maximum);
             rightUpDown.Value = (int)(rightOffset.y * -rightUpDown.Minimum);
-            centerTrackBar.Value = (int)(rightOffset.x * centerTrackBar.Maximum);
+
+            centerTrackBar.Value = 0;
             allowUpdates = true;
         }
     }

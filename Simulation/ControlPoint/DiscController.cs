@@ -31,7 +31,7 @@ namespace Medical
             DiscState state = new DiscState();
             foreach (Disc disc in discs.Values)
             {
-                state.addPosition(disc.Owner.Name, disc.getOffset(0));
+                state.addPosition(disc);
             }
             return state;
         }
