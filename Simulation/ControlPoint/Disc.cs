@@ -8,10 +8,23 @@ using Engine.Editing;
 using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using Engine.Attributes;
 
 namespace Medical
 {
-    public class Disc : Interface
+    class DiscBonePair
+    {
+        public Bone bone;
+        public float offset;
+
+        public DiscBonePair(Bone bone, float offset)
+        {
+            this.bone = bone;
+            this.offset = offset;
+        }
+    }
+
+    public class Disc : Behavior
     {
         [Editable]
         private Vector3 normalDiscOffset = Vector3.UnitY * -0.302f;
@@ -40,6 +53,21 @@ namespace Medical
         [Editable]
         String controlPointBehavior;
 
+        [Editable]
+        String sceneNodeName = "Node";
+
+        [Editable]
+        String entityName = "Entity";
+
+        [Editable]
+        String boneBaseName;
+
+        Vector3 endpointOffset = Vector3.Zero;
+
+        [DoNotCopy]
+        [DoNotSave]
+        List<DiscBonePair> bones = new List<DiscBonePair>();
+
         private ControlPointBehavior controlPoint;
 
         protected override void constructed()
@@ -51,18 +79,84 @@ namespace Medical
                 controlPoint = controlPointObj.getElement(controlPointBehavior) as ControlPointBehavior;
                 if (controlPoint == null)
                 {
-                    blacklist("Could not find controlPointBehavior {0}.", controlPointBehavior); 
+                    blacklist("Could not find controlPointBehavior {0}.", controlPointBehavior);
                 }
             }
             else
             {
                 blacklist("Could not find controlPointObject {0}.", controlPointObject);
             }
+            SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
+            if (node != null)
+            {
+                Entity entity = node.getNodeObject(entityName) as Entity;
+                if (entity != null)
+                {
+                    if (entity.hasSkeleton())
+                    {
+                        SkeletonInstance skeleton = entity.getSkeleton();
+                        float current = -0.1f;
+                        float delta = 0.025f;
+                        for (int i = 1; skeleton.hasBone(boneBaseName + i); ++i)
+                        {
+                            Bone bone = skeleton.getBone(boneBaseName + i);
+                            bone.setManuallyControlled(true);
+                            bones.Add(new DiscBonePair(bone, current));
+                            current += delta;
+                        }
+                    }
+                }
+                else
+                {
+                    blacklist("Could not find entity {0} in node {1}.", entityName, sceneNodeName);
+                }
+            }
+            else
+            {
+                blacklist("Could not find SceneNode {0}.", sceneNodeName);
+            }
+        }
+
+        protected override void link()
+        {
+            endpointOffset = this.Owner.Translation - (controlPoint.MandibleBonePosition + controlPoint.MandibleTranslation);
         }
 
         protected override void destroy()
         {
             DiscController.removeDisc(this);
+        }
+
+        public override void update(Clock clock, EventManager eventManager)
+        {
+            float location = controlPoint.CurrentLocation;
+            if (controlPoint.CurrentLocation >= discPopLocation)
+            {
+                Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
+                Quaternion rotation = controlPoint.MandibleBoneRotation * controlPoint.MandibleRotation;
+                updatePosition(ref translation, ref rotation);
+            }
+            else
+            {
+                location = discPopLocation;
+                Vector3 offset = controlPoint.getPositionAt(discPopLocation) + endpointOffset;
+                Quaternion rotation = Quaternion.Identity;
+                updatePosition(ref offset, ref rotation);
+            }
+            foreach (DiscBonePair bone in bones)
+            {
+                float loc = location + bone.offset;
+                if (loc < 0.0f)
+                {
+                    loc = 0.0f;
+                }
+                else if (loc > 1.0f)
+                {
+                    loc = 1.0f;
+                }
+                bone.bone.setPosition(controlPoint.getPositionAt(loc) - getOffset(loc) - Owner.Translation);
+                bone.bone.needUpdate(true);
+            }
         }
 
         public Vector3 getOffset(float location)

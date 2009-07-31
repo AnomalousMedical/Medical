@@ -210,9 +210,54 @@ namespace Medical
             this.updateTranslation(ref newLocation);
         }
 
+        public Vector3 getPositionAt(float location)
+        {
+            return fossa.getPosition(location) + disc.getOffset(location);
+        }
+
         public float getNeutralLocation()
         {
             return neutralLocation;
+        }
+
+        public Vector3 MandibleBonePosition
+        {
+            get
+            {
+                return bone.getDerivedPosition();
+            }
+        }
+
+        public Quaternion MandibleBoneRotation
+        {
+            get
+            {
+                return bone.getDerivedOrientation();
+            }
+        }
+
+        public Quaternion MandibleRotation
+        {
+            get
+            {
+                return boneObject.Rotation;
+            }
+        }
+
+        public Vector3 MandibleTranslation
+        {
+            get
+            {
+                return boneObject.Translation;
+            }
+        }
+
+        public float CurrentLocation
+        {
+            get
+            {
+                return location;
+            }
         }
     }
 }
