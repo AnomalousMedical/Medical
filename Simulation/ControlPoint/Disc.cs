@@ -62,11 +62,21 @@ namespace Medical
         [Editable]
         String boneBaseName;
 
+        [Editable]
+        String fossaObject;
+
+        [Editable]
+        String fossaName;
+
         Vector3 endpointOffset = Vector3.Zero;
 
         [DoNotCopy]
         [DoNotSave]
         List<DiscBonePair> bones = new List<DiscBonePair>();
+
+        [DoNotCopy]
+        [DoNotSave]
+        Fossa fossa;
 
         private ControlPointBehavior controlPoint;
 
@@ -115,6 +125,20 @@ namespace Medical
             {
                 blacklist("Could not find SceneNode {0}.", sceneNodeName);
             }
+
+            SimObject fossaSimObject = Owner.getOtherSimObject(fossaObject);
+            if (fossaSimObject != null)
+            {
+                fossa = fossaSimObject.getElement(fossaName) as Fossa;
+                if (fossa == null)
+                {
+                    blacklist("Could not find Fossa {0} in SimObject {1}.", fossaName, fossaObject);
+                }
+            }
+            else
+            {
+                blacklist("Could not find Fossa SimObject {0}.", fossaObject);
+            }
         }
 
         protected override void link()
@@ -139,7 +163,7 @@ namespace Medical
             else
             {
                 location = discPopLocation;
-                Vector3 offset = controlPoint.getPositionAt(discPopLocation) + endpointOffset;
+                Vector3 offset = fossa.getPosition(discPopLocation) + this.getOffset(discPopLocation) + endpointOffset;
                 Quaternion rotation = Quaternion.Identity;
                 updatePosition(ref offset, ref rotation);
             }
@@ -154,7 +178,7 @@ namespace Medical
                 {
                     loc = 1.0f;
                 }
-                bone.bone.setPosition(controlPoint.getPositionAt(loc) - getOffset(loc) - Owner.Translation);
+                bone.bone.setPosition(fossa.getPosition(loc) - Owner.Translation);
                 bone.bone.needUpdate(true);
             }
         }

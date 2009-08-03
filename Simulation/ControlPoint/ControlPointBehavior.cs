@@ -139,7 +139,7 @@ namespace Medical
             }
             else
             {
-                blacklist("Could not find Fisc SimObject {0}.", fossaObject);
+                blacklist("Could not find Fossa SimObject {0}.", fossaObject);
             }
 
             ControlPointController.addControlPoint(this);
@@ -208,11 +208,6 @@ namespace Medical
         {
             Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
             this.updateTranslation(ref newLocation);
-        }
-
-        public Vector3 getPositionAt(float location)
-        {
-            return fossa.getPosition(location) + disc.getOffset(location);
         }
 
         public float getNeutralLocation()
