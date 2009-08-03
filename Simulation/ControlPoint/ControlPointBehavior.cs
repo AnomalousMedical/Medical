@@ -31,12 +31,6 @@ namespace Medical
         String jointName;
 
         [Editable]
-        String fossaObject;
-
-        [Editable]
-        String fossaName;
-
-        [Editable]
         String discObject;
 
         [Editable]
@@ -55,7 +49,6 @@ namespace Medical
         Vector3 lastPosition = Vector3.Zero;
         PhysD6JointDesc jointDesc = new PhysD6JointDesc();
 
-        Fossa fossa;
         Disc disc;
 
         bool translate = false;
@@ -128,20 +121,6 @@ namespace Medical
                 blacklist("Could not find Disc SimObject {0}.", discObject);
             }
 
-            SimObject fossaSimObject = Owner.getOtherSimObject(fossaObject);
-            if (fossaSimObject != null)
-            {
-                fossa = fossaSimObject.getElement(fossaName) as Fossa;
-                if (fossa == null)
-                {
-                    blacklist("Could not find Fossa {0} in SimObject {1}.", fossaName, fossaObject);
-                }
-            }
-            else
-            {
-                blacklist("Could not find Fossa SimObject {0}.", fossaObject);
-            }
-
             ControlPointController.addControlPoint(this);
         }
 
@@ -206,7 +185,7 @@ namespace Medical
 
         public void positionModified()
         {
-            Vector3 newLocation = fossa.getPosition(location) + disc.getOffset(location);
+            Vector3 newLocation = disc.getPosition(location);
             this.updateTranslation(ref newLocation);
         }
 

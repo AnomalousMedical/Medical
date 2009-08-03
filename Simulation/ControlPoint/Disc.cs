@@ -183,7 +183,7 @@ namespace Medical
             }
         }
 
-        public Vector3 getOffset(float location)
+        private Vector3 getOffset(float location)
         {
             if (location < discPopLocation)
             {
@@ -193,6 +193,11 @@ namespace Medical
             {
                 return discOffset + horizontalOffset;
             }
+        }
+
+        public Vector3 getPosition(float location)
+        {
+            return fossa.getPosition(location) + getOffset(location);
         }
 
         public Vector3 HorizontalTickSpacing
