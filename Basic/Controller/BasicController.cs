@@ -249,6 +249,7 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         private void changeScene(String filename)
         {
+            statePicker.setToDefault();
             guiElements.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(filename))

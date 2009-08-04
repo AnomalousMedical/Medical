@@ -39,14 +39,18 @@ namespace Medical.GUI
 
         public void startWizard()
         {
-            foreach (StatePickerPanel panel in panels)
-            {
-                panel.setToDefault();
-            }
             hidePanel();
             currentIndex = 0;
             showPanel();
             createdState = null;
+        }
+
+        public void setToDefault()
+        {
+            foreach (StatePickerPanel panel in panels)
+            {
+                panel.setToDefault();
+            }
         }
 
         private void showPanel()
@@ -63,22 +67,18 @@ namespace Medical.GUI
                 if (currentIndex == panels.Count - 1)
                 {
                     nextButton.Visible = false;
-                    finishButton.Visible = true;
                 }
                 else
                 {
                     nextButton.Visible = true;
-                    finishButton.Visible = false;
                 }
                 if (currentIndex == 0)
                 {
                     previousButton.Visible = false;
-                    cancelButton.Visible = true;
                 }
                 else
                 {
                     previousButton.Visible = true;
-                    cancelButton.Visible = false;
                 }
                 updatePanel = true;
             }
