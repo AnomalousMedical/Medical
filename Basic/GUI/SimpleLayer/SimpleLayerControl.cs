@@ -47,6 +47,8 @@ namespace Medical.GUI
                     leftEminence.smoothBlend(1.0f);
                     rightEminence.smoothBlend(1.0f);
                 }
+                TransparencyInterface maxillarySinus = group.getTransparencyObject("Maxillary Sinus");
+                maxillarySinus.smoothBlend(1.0f);
             }
         }
 
@@ -64,6 +66,8 @@ namespace Medical.GUI
                     leftEminence.smoothBlend(0.7f);
                     rightEminence.smoothBlend(0.7f);
                 }
+                TransparencyInterface maxillarySinus = group.getTransparencyObject("Maxillary Sinus");
+                maxillarySinus.smoothBlend(0.7f);
             }
         }
 
@@ -81,6 +85,8 @@ namespace Medical.GUI
                     leftEminence.smoothBlend(0.0f);
                     rightEminence.smoothBlend(0.0f);
                 }
+                TransparencyInterface maxillarySinus = group.getTransparencyObject("Maxillary Sinus");
+                maxillarySinus.smoothBlend(0.0f);
             }
         }
 

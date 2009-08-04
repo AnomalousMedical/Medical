@@ -99,6 +99,9 @@ namespace Medical.GUI
             rightEminence.smoothBlend(eminanceAlpha);
             TransparencyInterface mandible = group.getTransparencyObject("Mandible");
             mandible.smoothBlend(bonesAlpha);
+            TransparencyInterface maxillarySinus = group.getTransparencyObject("Maxillary Sinus");
+            maxillarySinus.smoothBlend(bonesAlpha);
+
             group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
             for (int i = 1; i < 17; ++i)
             {
