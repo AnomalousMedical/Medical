@@ -29,7 +29,7 @@ namespace Medical.GUI
             topTeethOpaque.Checked = true;
             bottomTeethOpaque.Checked = true;
             eminenceVisible.Checked = true;
-            skullInteriorOpaque.Checked = true;
+            tmjDiscsOpaque.Checked = true;
             skinOpaque.Checked = true;
         }
 
@@ -84,33 +84,39 @@ namespace Medical.GUI
             }
         }
 
-        private void skullInteriorOpaque_CheckedChanged(object sender, EventArgs e)
+        private void discsOpaque_CheckedChanged(object sender, EventArgs e)
         {
-            if (skullInteriorOpaque.Checked)
+            if (tmjDiscsOpaque.Checked)
             {
-                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
-                skull.smoothBlend(1.0f);
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
+                TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
+                leftDisc.smoothBlend(1.0f);
+                TransparencyInterface rightDisc = group.getTransparencyObject("Right TMJ Disc");
+                rightDisc.smoothBlend(1.0f);
             }
         }
 
-        private void skullInteriorTransparent_CheckedChanged(object sender, EventArgs e)
+        private void discsTransparent_CheckedChanged(object sender, EventArgs e)
         {
-            if (skullInteriorTransparent.Checked)
+            if (tmjDiscsTransparent.Checked)
             {
-                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
-                skull.smoothBlend(0.7f);
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
+                TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
+                leftDisc.smoothBlend(0.7f);
+                TransparencyInterface rightDisc = group.getTransparencyObject("Right TMJ Disc");
+                rightDisc.smoothBlend(0.7f);
             }
         }
 
-        private void skullInteriorHidden_CheckedChanged(object sender, EventArgs e)
+        private void discsHidden_CheckedChanged(object sender, EventArgs e)
         {
-            if (skullInteriorHidden.Checked)
+            if (tmjDiscsHidden.Checked)
             {
-                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-                TransparencyInterface skull = group.getTransparencyObject("Skull Interior");
-                skull.smoothBlend(0.0f);
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
+                TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
+                leftDisc.smoothBlend(0.0f);
+                TransparencyInterface rightDisc = group.getTransparencyObject("Right TMJ Disc");
+                rightDisc.smoothBlend(0.0f);
             }
         }
 

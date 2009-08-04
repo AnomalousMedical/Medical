@@ -28,23 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.skinButton = new System.Windows.Forms.RadioButton();
             this.transparentSkinButton = new System.Windows.Forms.RadioButton();
-            this.bonesButton = new System.Windows.Forms.RadioButton();
             this.fossaCutAwayButton = new System.Windows.Forms.RadioButton();
+            this.bonesButton = new System.Windows.Forms.RadioButton();
             this.transparentBonesButton = new System.Windows.Forms.RadioButton();
             this.teethButton = new System.Windows.Forms.RadioButton();
             this.topTeethButton = new System.Windows.Forms.RadioButton();
             this.bottomTeethButton = new System.Windows.Forms.RadioButton();
+            this.bonesAndDiscButton = new System.Windows.Forms.RadioButton();
+            this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.skinButton);
+            this.flowLayoutPanel1.Controls.Add(this.transparentSkinButton);
+            this.flowLayoutPanel1.Controls.Add(this.bonesAndDiscButton);
+            this.flowLayoutPanel1.Controls.Add(this.fossaCutAwayButton);
+            this.flowLayoutPanel1.Controls.Add(this.bonesButton);
+            this.flowLayoutPanel1.Controls.Add(this.transparentBonesButton);
+            this.flowLayoutPanel1.Controls.Add(this.teethButton);
+            this.flowLayoutPanel1.Controls.Add(this.topTeethButton);
+            this.flowLayoutPanel1.Controls.Add(this.bottomTeethButton);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(1, 0);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(156, 235);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // skinButton
             // 
             this.skinButton.AutoSize = true;
-            this.skinButton.Location = new System.Drawing.Point(6, 7);
+            this.skinButton.Location = new System.Drawing.Point(3, 3);
             this.skinButton.Name = "skinButton";
             this.skinButton.Size = new System.Drawing.Size(46, 17);
-            this.skinButton.TabIndex = 0;
+            this.skinButton.TabIndex = 8;
             this.skinButton.TabStop = true;
             this.skinButton.Text = "Skin";
             this.skinButton.UseVisualStyleBackColor = true;
@@ -53,46 +73,46 @@
             // transparentSkinButton
             // 
             this.transparentSkinButton.AutoSize = true;
-            this.transparentSkinButton.Location = new System.Drawing.Point(6, 31);
+            this.transparentSkinButton.Location = new System.Drawing.Point(3, 26);
             this.transparentSkinButton.Name = "transparentSkinButton";
             this.transparentSkinButton.Size = new System.Drawing.Size(106, 17);
-            this.transparentSkinButton.TabIndex = 1;
+            this.transparentSkinButton.TabIndex = 9;
             this.transparentSkinButton.TabStop = true;
             this.transparentSkinButton.Text = "Transparent Skin";
             this.transparentSkinButton.UseVisualStyleBackColor = true;
             this.transparentSkinButton.CheckedChanged += new System.EventHandler(this.transparentSkinButton_CheckedChanged);
             // 
-            // bonesButton
-            // 
-            this.bonesButton.AutoSize = true;
-            this.bonesButton.Location = new System.Drawing.Point(6, 55);
-            this.bonesButton.Name = "bonesButton";
-            this.bonesButton.Size = new System.Drawing.Size(55, 17);
-            this.bonesButton.TabIndex = 2;
-            this.bonesButton.TabStop = true;
-            this.bonesButton.Text = "Bones";
-            this.bonesButton.UseVisualStyleBackColor = true;
-            this.bonesButton.CheckedChanged += new System.EventHandler(this.bonesButton_CheckedChanged);
-            // 
             // fossaCutAwayButton
             // 
             this.fossaCutAwayButton.AutoSize = true;
-            this.fossaCutAwayButton.Location = new System.Drawing.Point(6, 79);
+            this.fossaCutAwayButton.Location = new System.Drawing.Point(3, 72);
             this.fossaCutAwayButton.Name = "fossaCutAwayButton";
             this.fossaCutAwayButton.Size = new System.Drawing.Size(101, 17);
-            this.fossaCutAwayButton.TabIndex = 3;
+            this.fossaCutAwayButton.TabIndex = 11;
             this.fossaCutAwayButton.TabStop = true;
             this.fossaCutAwayButton.Text = "Fossa Cut Away";
             this.fossaCutAwayButton.UseVisualStyleBackColor = true;
             this.fossaCutAwayButton.CheckedChanged += new System.EventHandler(this.fossaCutAwayButton_CheckedChanged);
             // 
+            // bonesButton
+            // 
+            this.bonesButton.AutoSize = true;
+            this.bonesButton.Location = new System.Drawing.Point(3, 95);
+            this.bonesButton.Name = "bonesButton";
+            this.bonesButton.Size = new System.Drawing.Size(55, 17);
+            this.bonesButton.TabIndex = 10;
+            this.bonesButton.TabStop = true;
+            this.bonesButton.Text = "Bones";
+            this.bonesButton.UseVisualStyleBackColor = true;
+            this.bonesButton.CheckedChanged += new System.EventHandler(this.bonesButton_CheckedChanged);
+            // 
             // transparentBonesButton
             // 
             this.transparentBonesButton.AutoSize = true;
-            this.transparentBonesButton.Location = new System.Drawing.Point(6, 103);
+            this.transparentBonesButton.Location = new System.Drawing.Point(3, 118);
             this.transparentBonesButton.Name = "transparentBonesButton";
             this.transparentBonesButton.Size = new System.Drawing.Size(115, 17);
-            this.transparentBonesButton.TabIndex = 4;
+            this.transparentBonesButton.TabIndex = 12;
             this.transparentBonesButton.TabStop = true;
             this.transparentBonesButton.Text = "Transparent Bones";
             this.transparentBonesButton.UseVisualStyleBackColor = true;
@@ -101,10 +121,10 @@
             // teethButton
             // 
             this.teethButton.AutoSize = true;
-            this.teethButton.Location = new System.Drawing.Point(6, 127);
+            this.teethButton.Location = new System.Drawing.Point(3, 141);
             this.teethButton.Name = "teethButton";
             this.teethButton.Size = new System.Drawing.Size(77, 17);
-            this.teethButton.TabIndex = 5;
+            this.teethButton.TabIndex = 13;
             this.teethButton.TabStop = true;
             this.teethButton.Text = "Teeth Only";
             this.teethButton.UseVisualStyleBackColor = true;
@@ -113,10 +133,10 @@
             // topTeethButton
             // 
             this.topTeethButton.AutoSize = true;
-            this.topTeethButton.Location = new System.Drawing.Point(6, 151);
+            this.topTeethButton.Location = new System.Drawing.Point(3, 164);
             this.topTeethButton.Name = "topTeethButton";
             this.topTeethButton.Size = new System.Drawing.Size(75, 17);
-            this.topTeethButton.TabIndex = 6;
+            this.topTeethButton.TabIndex = 14;
             this.topTeethButton.TabStop = true;
             this.topTeethButton.Text = "Top Teeth";
             this.topTeethButton.UseVisualStyleBackColor = true;
@@ -125,14 +145,26 @@
             // bottomTeethButton
             // 
             this.bottomTeethButton.AutoSize = true;
-            this.bottomTeethButton.Location = new System.Drawing.Point(6, 175);
+            this.bottomTeethButton.Location = new System.Drawing.Point(3, 187);
             this.bottomTeethButton.Name = "bottomTeethButton";
             this.bottomTeethButton.Size = new System.Drawing.Size(86, 17);
-            this.bottomTeethButton.TabIndex = 7;
+            this.bottomTeethButton.TabIndex = 15;
             this.bottomTeethButton.TabStop = true;
             this.bottomTeethButton.Text = "BottomTeeth";
             this.bottomTeethButton.UseVisualStyleBackColor = true;
             this.bottomTeethButton.CheckedChanged += new System.EventHandler(this.bottomTeethButton_CheckedChanged);
+            // 
+            // bonesAndDiscButton
+            // 
+            this.bonesAndDiscButton.AutoSize = true;
+            this.bonesAndDiscButton.Location = new System.Drawing.Point(3, 49);
+            this.bonesAndDiscButton.Name = "bonesAndDiscButton";
+            this.bonesAndDiscButton.Size = new System.Drawing.Size(100, 17);
+            this.bonesAndDiscButton.TabIndex = 16;
+            this.bonesAndDiscButton.TabStop = true;
+            this.bonesAndDiscButton.Text = "Bones and Disc";
+            this.bonesAndDiscButton.UseVisualStyleBackColor = true;
+            this.bonesAndDiscButton.CheckedChanged += new System.EventHandler(this.bonesAndDiscButton_CheckedChanged);
             // 
             // PredefinedLayerControl
             // 
@@ -140,32 +172,29 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(157, 264);
-            this.Controls.Add(this.bottomTeethButton);
-            this.Controls.Add(this.topTeethButton);
-            this.Controls.Add(this.teethButton);
-            this.Controls.Add(this.transparentBonesButton);
-            this.Controls.Add(this.fossaCutAwayButton);
-            this.Controls.Add(this.bonesButton);
-            this.Controls.Add(this.transparentSkinButton);
-            this.Controls.Add(this.skinButton);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "PredefinedLayerControl";
             this.Text = "Predefined Layers";
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RadioButton skinButton;
-        private System.Windows.Forms.RadioButton transparentSkinButton;
-        private System.Windows.Forms.RadioButton bonesButton;
-        private System.Windows.Forms.RadioButton fossaCutAwayButton;
-        private System.Windows.Forms.RadioButton transparentBonesButton;
-        private System.Windows.Forms.RadioButton teethButton;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.RadioButton topTeethButton;
+        private System.Windows.Forms.RadioButton teethButton;
+        private System.Windows.Forms.RadioButton transparentBonesButton;
+        private System.Windows.Forms.RadioButton fossaCutAwayButton;
+        private System.Windows.Forms.RadioButton bonesButton;
+        private System.Windows.Forms.RadioButton transparentSkinButton;
+        private System.Windows.Forms.RadioButton skinButton;
         private System.Windows.Forms.RadioButton bottomTeethButton;
+        private System.Windows.Forms.RadioButton bonesAndDiscButton;
+
     }
 }

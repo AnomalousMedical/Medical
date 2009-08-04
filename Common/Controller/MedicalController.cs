@@ -89,7 +89,7 @@ namespace Medical
             pluginManager.initializePlugins();
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
 
-            PhysSDK.Instance.setParameter(PhysParameter.NX_SKIN_WIDTH, 0.04f);
+            PhysSDK.Instance.setParameter(PhysParameter.NX_SKIN_WIDTH, 0.00f);
 
             //Intialize the platform
             systemTimer = pluginManager.PlatformPlugin.createTimer();

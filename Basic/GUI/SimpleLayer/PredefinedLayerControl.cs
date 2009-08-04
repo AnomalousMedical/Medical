@@ -20,7 +20,7 @@ namespace Medical.GUI
         {
             if (skinButton.Checked)
             {
-                setAlphas(1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+                setAlphas(1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
 
@@ -28,7 +28,15 @@ namespace Medical.GUI
         {
             if (transparentSkinButton.Checked)
             {
-                setAlphas(0.7f, 1.0f, 1.0f, 1.0f, 1.0f);
+                setAlphas(0.7f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+            }
+        }
+
+        private void bonesAndDiscButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bonesAndDiscButton.Checked)
+            {
+                setAlphas(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
 
@@ -36,7 +44,7 @@ namespace Medical.GUI
         {
             if (bonesButton.Checked)
             {
-                setAlphas(0.0f, 1.0f, 1.0f, 1.0f, 1.0f);
+                setAlphas(0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f);
             }
         }
 
@@ -44,7 +52,7 @@ namespace Medical.GUI
         {
             if (fossaCutAwayButton.Checked)
             {
-                setAlphas(0.0f, 1.0f, 0.0f, 1.0f, 1.0f);
+                setAlphas(0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f);
             }
         }
 
@@ -52,7 +60,7 @@ namespace Medical.GUI
         {
             if (transparentBonesButton.Checked)
             {
-                setAlphas(0.0f, 0.7f, 0.7f, 1.0f, 1.0f);
+                setAlphas(0.0f, 0.7f, 0.7f, 1.0f, 1.0f, 0.0f);
             }
         }
 
@@ -60,7 +68,7 @@ namespace Medical.GUI
         {
             if (teethButton.Checked)
             {
-                setAlphas(0.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+                setAlphas(0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
             }
         }
 
@@ -68,7 +76,7 @@ namespace Medical.GUI
         {
             if (topTeethButton.Checked)
             {
-                setAlphas(0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+                setAlphas(0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
             }
         }
 
@@ -76,11 +84,11 @@ namespace Medical.GUI
         {
             if (bottomTeethButton.Checked)
             {
-                setAlphas(0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+                setAlphas(0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
             }
         }
 
-        private void setAlphas(float skinAlpha, float bonesAlpha, float eminanceAlpha, float topTeethAlpha, float bottomTeethAlpha)
+        private void setAlphas(float skinAlpha, float bonesAlpha, float eminanceAlpha, float topTeethAlpha, float bottomTeethAlpha, float discAlpha)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             TransparencyInterface skull = group.getTransparencyObject("Skull");
@@ -89,8 +97,6 @@ namespace Medical.GUI
             TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
             leftEminence.smoothBlend(eminanceAlpha);
             rightEminence.smoothBlend(eminanceAlpha);
-            TransparencyInterface skullInterior = group.getTransparencyObject("Skull Interior");
-            skullInterior.smoothBlend(bonesAlpha);
             TransparencyInterface mandible = group.getTransparencyObject("Mandible");
             mandible.smoothBlend(bonesAlpha);
             group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
@@ -102,6 +108,7 @@ namespace Medical.GUI
             {
                 group.getTransparencyObject("Tooth " + i).smoothBlend(bottomTeethAlpha);
             }
+            
             group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
             TransparencyInterface skin = group.getTransparencyObject("Skin");
             skin.smoothBlend(skinAlpha);
@@ -111,6 +118,12 @@ namespace Medical.GUI
             rightEye.smoothBlend(skinAlpha);
             TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
             eyebrowsAndEyelashes.smoothBlend(skinAlpha);
+
+            group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
+            TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
+            leftDisc.smoothBlend(discAlpha);
+            TransparencyInterface rightDisc = group.getTransparencyObject("Right TMJ Disc");
+            rightDisc.smoothBlend(discAlpha);
         }
     }
 }
