@@ -32,26 +32,26 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.centerTrackBar = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.rightDiscOffset = new System.Windows.Forms.TrackBar();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rightRDAOffset = new System.Windows.Forms.TrackBar();
+            this.rightDiscPositionSlider = new System.Windows.Forms.TrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.leftRDAOffset = new System.Windows.Forms.TrackBar();
             this.panel4 = new System.Windows.Forms.Panel();
             this.leftDiscOffset = new System.Windows.Forms.TrackBar();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.rightDiscPositionSlider = new System.Windows.Forms.TrackBar();
             this.leftDiscPositionSlider = new System.Windows.Forms.TrackBar();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
@@ -61,12 +61,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightDiscOffset)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightRDAOffset)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightDiscPositionSlider)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftRDAOffset)).BeginInit();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightDiscPositionSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscPositionSlider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,6 +114,17 @@
             this.panel1.Size = new System.Drawing.Size(206, 192);
             this.panel1.TabIndex = 11;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.Color.Blue;
+            this.label3.Location = new System.Drawing.Point(125, 70);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(78, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Horizontal Shift";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -150,6 +161,39 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Right Disc";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label9.Location = new System.Drawing.Point(8, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Position";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label4.Location = new System.Drawing.Point(8, 46);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(64, 13);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "RDA Space";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(8, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(62, 13);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Disc Space";
             // 
             // panel3
             // 
@@ -193,6 +237,18 @@
             this.rightRDAOffset.TickFrequency = 10000;
             this.rightRDAOffset.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
+            // rightDiscPositionSlider
+            // 
+            this.rightDiscPositionSlider.LargeChange = 100;
+            this.rightDiscPositionSlider.Location = new System.Drawing.Point(88, 14);
+            this.rightDiscPositionSlider.Maximum = 10000;
+            this.rightDiscPositionSlider.Name = "rightDiscPositionSlider";
+            this.rightDiscPositionSlider.Size = new System.Drawing.Size(103, 45);
+            this.rightDiscPositionSlider.SmallChange = 1000;
+            this.rightDiscPositionSlider.TabIndex = 27;
+            this.rightDiscPositionSlider.TickFrequency = 10000;
+            this.rightDiscPositionSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label8);
@@ -207,6 +263,39 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Left Disc";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.Transparent;
+            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label8.Location = new System.Drawing.Point(6, 19);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(44, 13);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "Position";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label6.Location = new System.Drawing.Point(6, 44);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 13);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "RDA Space";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label7.Location = new System.Drawing.Point(8, 76);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(62, 13);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "Disc Space";
             // 
             // panel6
             // 
@@ -250,98 +339,9 @@
             this.leftDiscOffset.TickFrequency = 10000;
             this.leftDiscOffset.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.Blue;
-            this.label3.Location = new System.Drawing.Point(125, 70);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Horizontal Shift";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(8, 46);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
-            this.label4.TabIndex = 22;
-            this.label4.Text = "RDA Space";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(8, 80);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 13);
-            this.label5.TabIndex = 21;
-            this.label5.Text = "Disc Space";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label6.Location = new System.Drawing.Point(6, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(64, 13);
-            this.label6.TabIndex = 24;
-            this.label6.Text = "RDA Space";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(8, 76);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(62, 13);
-            this.label7.TabIndex = 23;
-            this.label7.Text = "Disc Space";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label8.Location = new System.Drawing.Point(6, 19);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(44, 13);
-            this.label8.TabIndex = 25;
-            this.label8.Text = "Position";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(8, 22);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(44, 13);
-            this.label9.TabIndex = 26;
-            this.label9.Text = "Position";
-            // 
-            // rightDiscPositionSlider
-            // 
-            this.rightDiscPositionSlider.LargeChange = 2000;
-            this.rightDiscPositionSlider.Location = new System.Drawing.Point(88, 14);
-            this.rightDiscPositionSlider.Maximum = 10000;
-            this.rightDiscPositionSlider.Name = "rightDiscPositionSlider";
-            this.rightDiscPositionSlider.Size = new System.Drawing.Size(103, 45);
-            this.rightDiscPositionSlider.SmallChange = 1000;
-            this.rightDiscPositionSlider.TabIndex = 27;
-            this.rightDiscPositionSlider.TickFrequency = 10000;
-            this.rightDiscPositionSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
             // leftDiscPositionSlider
             // 
-            this.leftDiscPositionSlider.LargeChange = 2000;
+            this.leftDiscPositionSlider.LargeChange = 100;
             this.leftDiscPositionSlider.Location = new System.Drawing.Point(88, 12);
             this.leftDiscPositionSlider.Maximum = 10000;
             this.leftDiscPositionSlider.Name = "leftDiscPositionSlider";
@@ -382,6 +382,7 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightRDAOffset)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightDiscPositionSlider)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -390,7 +391,6 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightDiscPositionSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftDiscPositionSlider)).EndInit();
             this.ResumeLayout(false);
 

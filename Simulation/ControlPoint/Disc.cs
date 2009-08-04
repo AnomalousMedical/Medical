@@ -157,7 +157,7 @@ namespace Medical
             if (controlPoint.CurrentLocation >= discPopLocation)
             {
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
-                Quaternion rotation = controlPoint.MandibleBoneRotation * controlPoint.MandibleRotation;
+                Quaternion rotation = Quaternion.Identity;//controlPoint.MandibleBoneRotation * controlPoint.MandibleRotation;
                 updatePosition(ref translation, ref rotation);
             }
             else
