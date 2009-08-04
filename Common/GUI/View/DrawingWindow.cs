@@ -200,7 +200,10 @@ namespace Medical
         {
             foreach (OSWindowListener listener in listeners)
             {
-                listener.resized(this);
+                if (this.Size.Width > 0 && this.Size.Height > 0)
+                {
+                    listener.resized(this);
+                }
             }
             base.OnResize(e);
         }
