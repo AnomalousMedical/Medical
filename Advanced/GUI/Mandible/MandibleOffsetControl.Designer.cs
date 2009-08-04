@@ -35,14 +35,14 @@
             this.leftForwardBack = new System.Windows.Forms.TrackBar();
             this.bothForwardBack = new System.Windows.Forms.TrackBar();
             this.rightForwardBack = new System.Windows.Forms.TrackBar();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.rightOffset = new System.Windows.Forms.NumericUpDown();
+            this.leftOffset = new System.Windows.Forms.NumericUpDown();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).BeginInit();
             this.SuspendLayout();
             // 
             // distortionButton
@@ -126,19 +126,41 @@
             this.rightForwardBack.TickFrequency = 10000;
             this.rightForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
-            // numericUpDown1
+            // rightOffset
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(2, 5);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown1.TabIndex = 7;
+            this.rightOffset.DecimalPlaces = 8;
+            this.rightOffset.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.rightOffset.Location = new System.Drawing.Point(2, 5);
+            this.rightOffset.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.rightOffset.Name = "rightOffset";
+            this.rightOffset.Size = new System.Drawing.Size(120, 20);
+            this.rightOffset.TabIndex = 7;
             // 
-            // numericUpDown2
+            // leftOffset
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(140, 5);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-            this.numericUpDown2.TabIndex = 8;
+            this.leftOffset.DecimalPlaces = 8;
+            this.leftOffset.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.leftOffset.Location = new System.Drawing.Point(140, 5);
+            this.leftOffset.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.leftOffset.Name = "leftOffset";
+            this.leftOffset.Size = new System.Drawing.Size(120, 20);
+            this.leftOffset.TabIndex = 8;
             // 
             // MandibleOffsetControl
             // 
@@ -146,8 +168,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(281, 320);
-            this.Controls.Add(this.numericUpDown2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.leftOffset);
+            this.Controls.Add(this.rightOffset);
             this.Controls.Add(this.leftForwardBack);
             this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.panel1);
@@ -164,8 +186,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -180,7 +202,7 @@
         private System.Windows.Forms.TrackBar leftForwardBack;
         private System.Windows.Forms.TrackBar bothForwardBack;
         private System.Windows.Forms.TrackBar rightForwardBack;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown rightOffset;
+        private System.Windows.Forms.NumericUpDown leftOffset;
     }
 }

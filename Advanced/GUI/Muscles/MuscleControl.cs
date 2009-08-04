@@ -199,6 +199,7 @@ namespace Medical.GUI
             MuscleGroup rightElevators = new MuscleGroup("All Elevators");
             rightElevators.setActivation(rightMasseter.Tag.ToString(), true);
             rightElevators.setActivation(rightTemporalis.Tag.ToString(), true);
+            rightElevators.setActivation(rightMedialPterygoid.Tag.ToString(), true);
             rightMuscleGroups.Items.Add(rightElevators);
 
             MuscleGroup rightAllGroups = new MuscleGroup("All Groups");
@@ -219,6 +220,7 @@ namespace Medical.GUI
             MuscleGroup leftElevators = new MuscleGroup("All Elevators");
             leftElevators.setActivation(leftMasseter.Tag.ToString(), true);
             leftElevators.setActivation(leftTemporalis.Tag.ToString(), true);
+            leftElevators.setActivation(leftMedialPterygoid.Tag.ToString(), true);
             leftMuscleGroups.Items.Add(leftElevators);
 
             MuscleGroup leftAllGroups = new MuscleGroup("All Groups");

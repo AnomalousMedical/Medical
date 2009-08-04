@@ -22,9 +22,24 @@ namespace Medical.GUI
         public MandibleOffsetControl()
         {
             InitializeComponent();
-            leftForwardBack.ValueChanged += offsetValueChanged;
-            rightForwardBack.ValueChanged += offsetValueChanged;
+            leftForwardBack.ValueChanged += sliderValueChanged;
+            rightForwardBack.ValueChanged += sliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
+            leftOffset.ValueChanged += offset_ValueChanged;
+            rightOffset.ValueChanged += offset_ValueChanged;
+        }
+
+        void offset_ValueChanged(object sender, EventArgs e)
+        {
+            if (allowUpdates)
+            {
+                allowUpdates = false;
+                leftCP.setLocation((float)leftOffset.Value);
+                rightCP.setLocation((float)rightOffset.Value);
+                rightForwardBack.Value = (int)(rightCP.CurrentLocation * rightForwardBack.Maximum);
+                leftForwardBack.Value = (int)(leftCP.CurrentLocation * leftForwardBack.Maximum);
+                allowUpdates = true;
+            }
         }
 
         protected override void sceneLoaded(SimScene scene)
@@ -37,6 +52,9 @@ namespace Medical.GUI
             {
                 leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
                 rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
+                bothForwardBack.Value = rightForwardBack.Value;
+                leftOffset.Value = (decimal)leftCP.getNeutralLocation();
+                rightOffset.Value = (decimal)rightCP.getNeutralLocation();
             }
             bothForwardBack.Value = rightForwardBack.Value;
             allowUpdates = true;
@@ -48,12 +66,16 @@ namespace Medical.GUI
             rightCP = null;
         }
 
-        void offsetValueChanged(object sender, EventArgs e)
+        void sliderValueChanged(object sender, EventArgs e)
         {
             if (allowUpdates)
             {
+                allowUpdates = false;
                 leftCP.setLocation(leftForwardBack.Value / (float)leftForwardBack.Maximum);
                 rightCP.setLocation(rightForwardBack.Value / (float)rightForwardBack.Maximum);
+                leftOffset.Value = (decimal)leftCP.CurrentLocation;
+                rightOffset.Value = (decimal)rightCP.CurrentLocation;
+                allowUpdates = true;
             }
         }
 
@@ -65,7 +87,7 @@ namespace Medical.GUI
                 leftForwardBack.Value = bothForwardBack.Value;
                 rightForwardBack.Value = bothForwardBack.Value;
                 allowUpdates = true;
-                offsetValueChanged(null, null);
+                sliderValueChanged(null, null);
             }
         }
 
@@ -75,8 +97,10 @@ namespace Medical.GUI
             rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
             leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
             bothForwardBack.Value = rightForwardBack.Value;
+            leftOffset.Value = (decimal)leftCP.getNeutralLocation();
+            rightOffset.Value = (decimal)rightCP.getNeutralLocation();
             allowUpdates = true;
-            offsetValueChanged(sender, e);
+            sliderValueChanged(sender, e);
         }   
     }
 }
