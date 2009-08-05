@@ -44,8 +44,19 @@ namespace Medical
         [Editable]
         private Vector3 horizontalOffset = Vector3.Zero;
 
+        //The location that the disc starts to move with the condyle.
         [Editable]
         private float discPopLocation = 0.0f;
+
+        //The offset from the discPopLocation where the condyle starts to go under the disc.
+        [Editable]
+        private float discBackOffset = 0.14f;
+
+        [Editable]
+        private float popAdditionalOffsetPercent = 0.5f;
+
+        [Editable]
+        private bool locked = false;
 
         [Editable]
         String controlPointObject;
@@ -154,18 +165,16 @@ namespace Medical
         public override void update(Clock clock, EventManager eventManager)
         {
             float location = controlPoint.CurrentLocation;
-            if (controlPoint.CurrentLocation >= discPopLocation)
+            if (controlPoint.CurrentLocation >= discPopLocation && !locked)
             {
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
-                Quaternion rotation = Quaternion.Identity;//controlPoint.MandibleBoneRotation * controlPoint.MandibleRotation;
-                updatePosition(ref translation, ref rotation);
+                updateTranslation(ref translation);
             }
             else
             {
                 location = discPopLocation;
                 Vector3 offset = fossa.getPosition(discPopLocation) + this.getOffset(discPopLocation) + endpointOffset;
-                Quaternion rotation = Quaternion.Identity;
-                updatePosition(ref offset, ref rotation);
+                updateTranslation(ref offset);
             }
             foreach (DiscBonePair bone in bones)
             {
@@ -185,9 +194,13 @@ namespace Medical
 
         private Vector3 getOffset(float location)
         {
-            if (location < discPopLocation)
+            if (location < discPopLocation - discBackOffset)
             {
                 return rdaOffset + horizontalOffset;
+            }
+            else if (location < discPopLocation)
+            {
+                return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
             }
             else
             {
@@ -285,6 +298,18 @@ namespace Medical
                 {
                     controlPoint.positionModified();
                 }
+            }
+        }
+
+        public bool Locked
+        {
+            get
+            {
+                return locked;
+            }
+            set
+            {
+                locked = value;
             }
         }
     }

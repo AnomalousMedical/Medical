@@ -89,7 +89,26 @@ namespace Medical.GUI
             rightRDAOffset.Value = (int)(rightRDA * -rightRDAOffset.Maximum);
 
             centerTrackBar.Value = 0;
+
+            rightDiscLocked.Checked = this.rightDisc.Locked;
+            leftDiscLocked.Checked = this.leftDisc.Locked;
             allowUpdates = true;
+        }
+
+        private void rightDiscLocked_CheckedChanged(object sender, EventArgs e)
+        {
+            if (allowUpdates)
+            {
+                rightDisc.Locked = rightDiscLocked.Checked;
+            }
+        }
+
+        private void leftDiscLocked_CheckedChanged(object sender, EventArgs e)
+        {
+            if (allowUpdates)
+            {
+                leftDisc.Locked = leftDiscLocked.Checked;
+            }
         }
     }
 }

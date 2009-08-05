@@ -53,6 +53,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.leftDiscOffset = new System.Windows.Forms.TrackBar();
             this.leftDiscPositionSlider = new System.Windows.Forms.TrackBar();
+            this.rightDiscLocked = new System.Windows.Forms.CheckBox();
+            this.leftDiscLocked = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
             this.panel1.SuspendLayout();
@@ -72,7 +74,7 @@
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(68, 471);
+            this.distortionButton.Location = new System.Drawing.Point(53, 503);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(125, 23);
             this.distortionButton.TabIndex = 12;
@@ -84,7 +86,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(111)))), ((int)(((byte)(243)))));
             this.panel2.Controls.Add(this.centerTrackBar);
-            this.panel2.Location = new System.Drawing.Point(68, 440);
+            this.panel2.Location = new System.Drawing.Point(53, 472);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(125, 25);
             this.panel2.TabIndex = 13;
@@ -149,6 +151,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rightDiscLocked);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label5);
@@ -157,7 +160,7 @@
             this.groupBox1.Controls.Add(this.rightDiscPositionSlider);
             this.groupBox1.Location = new System.Drawing.Point(8, 198);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 117);
+            this.groupBox1.Size = new System.Drawing.Size(200, 132);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Right Disc";
@@ -251,15 +254,16 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.leftDiscLocked);
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.panel6);
             this.groupBox2.Controls.Add(this.panel4);
             this.groupBox2.Controls.Add(this.leftDiscPositionSlider);
-            this.groupBox2.Location = new System.Drawing.Point(8, 321);
+            this.groupBox2.Location = new System.Drawing.Point(8, 336);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 113);
+            this.groupBox2.Size = new System.Drawing.Size(200, 126);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Left Disc";
@@ -351,6 +355,28 @@
             this.leftDiscPositionSlider.TickFrequency = 10000;
             this.leftDiscPositionSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
+            // rightDiscLocked
+            // 
+            this.rightDiscLocked.AutoSize = true;
+            this.rightDiscLocked.Location = new System.Drawing.Point(11, 109);
+            this.rightDiscLocked.Name = "rightDiscLocked";
+            this.rightDiscLocked.Size = new System.Drawing.Size(62, 17);
+            this.rightDiscLocked.TabIndex = 28;
+            this.rightDiscLocked.Text = "Locked";
+            this.rightDiscLocked.UseVisualStyleBackColor = true;
+            this.rightDiscLocked.CheckedChanged += new System.EventHandler(this.rightDiscLocked_CheckedChanged);
+            // 
+            // leftDiscLocked
+            // 
+            this.leftDiscLocked.AutoSize = true;
+            this.leftDiscLocked.Location = new System.Drawing.Point(8, 106);
+            this.leftDiscLocked.Name = "leftDiscLocked";
+            this.leftDiscLocked.Size = new System.Drawing.Size(62, 17);
+            this.leftDiscLocked.TabIndex = 29;
+            this.leftDiscLocked.Text = "Locked";
+            this.leftDiscLocked.UseVisualStyleBackColor = true;
+            this.leftDiscLocked.CheckedChanged += new System.EventHandler(this.leftDiscLocked_CheckedChanged);
+            // 
             // DiskControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,5 +449,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TrackBar rightDiscPositionSlider;
         private System.Windows.Forms.TrackBar leftDiscPositionSlider;
+        private System.Windows.Forms.CheckBox rightDiscLocked;
+        private System.Windows.Forms.CheckBox leftDiscLocked;
     }
 }
