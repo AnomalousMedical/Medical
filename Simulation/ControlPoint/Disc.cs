@@ -213,6 +213,17 @@ namespace Medical
                     float rotBlend = (location - oneOClockPosition) / rotationRange;
                     popLocationRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
                 }
+                else
+                {
+                    if (location >= nineOClockPosition)
+                    {
+                        popLocationRotation = nineOClockRotationQuat;
+                    }
+                    if (location <= oneOClockPosition)
+                    {
+                        popLocationRotation = startingRot;
+                    }
+                }
                 if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
                 {
                     updateRotation(ref popLocationRotation);
