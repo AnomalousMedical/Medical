@@ -99,6 +99,22 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
+        Bone medialPoleBone;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Bone lateralPoleBone;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 medialPoleBoneOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 lateralPoleBoneOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
         Fossa fossa;
 
         [DoNotCopy]
@@ -154,6 +170,11 @@ namespace Medical
                             bones.Add(new DiscBonePair(bone, current));
                             current += delta;
                         }
+                        //TEMP TEMP TEMP TEMP TEMP REMOVE EMENENCE REPLACE HACK HACK
+                        medialPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "MedialPoleControl2");
+                        medialPoleBone.setManuallyControlled(true);
+                        lateralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "LateralPoleControl2");
+                        lateralPoleBone.setManuallyControlled(true);
                     }
                 }
                 else
@@ -183,7 +204,10 @@ namespace Medical
 
         protected override void link()
         {
-            endpointOffset = this.Owner.Translation - (controlPoint.MandibleBonePosition + controlPoint.MandibleTranslation);
+            Vector3 endpointBoneWorld = controlPoint.MandibleBonePosition + controlPoint.MandibleTranslation;
+            endpointOffset = this.Owner.Translation - endpointBoneWorld;
+            medialPoleBoneOffset = medialPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
+            lateralPoleBoneOffset = lateralPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
         }
 
         protected override void destroy()
@@ -193,6 +217,14 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
+            //pole updates
+            Vector3 medialTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + medialPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
+            medialPoleBone.setPosition(medialTranslation);
+            medialPoleBone.needUpdate(true);
+            Vector3 lateralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + lateralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
+            lateralPoleBone.setPosition(lateralTranslation);
+            lateralPoleBone.needUpdate(true);
+
             float location = controlPoint.CurrentLocation;
             if (controlPoint.CurrentLocation >= discPopLocation && !locked)
             {
