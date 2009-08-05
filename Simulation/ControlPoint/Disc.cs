@@ -9,6 +9,7 @@ using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using Engine.Attributes;
+using Logging;
 
 namespace Medical
 {
@@ -26,6 +27,8 @@ namespace Medical
 
     public class Disc : Behavior
     {
+        private const float DEG_TO_RAD = 0.0174532925f;
+
         [Editable]
         private Vector3 normalDiscOffset = Vector3.UnitY * -0.302f;
 
@@ -59,6 +62,15 @@ namespace Medical
         private bool locked = false;
 
         [Editable]
+        private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 60.0f);
+
+        [Editable]
+        private float nineOClockPosition = .7368f;
+
+        [Editable]
+        private float oneOClockPosition = .5132f;
+
+        [Editable]
         String controlPointObject;
 
         [Editable]
@@ -89,10 +101,27 @@ namespace Medical
         [DoNotSave]
         Fossa fossa;
 
+        [DoNotCopy]
+        [DoNotSave]
+        Quaternion nineOClockRotationQuat;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Quaternion startingRot;
+
+        [DoNotCopy]
+        [DoNotSave]
+        float rotationRange;
+
         private ControlPointBehavior controlPoint;
 
         protected override void constructed()
         {
+            Vector3 rotRad = nineOClockRotation * DEG_TO_RAD;
+            nineOClockRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
+            startingRot = this.Owner.Rotation;
+            rotationRange = nineOClockPosition - oneOClockPosition;
+
             DiscController.addDisc(this);
             SimObject controlPointObj = Owner.getOtherSimObject(controlPointObject);
             if (controlPointObj != null)
@@ -173,8 +202,27 @@ namespace Medical
             else
             {
                 location = discPopLocation;
-                Vector3 offset = fossa.getPosition(discPopLocation) + this.getOffset(discPopLocation) + endpointOffset;
-                updateTranslation(ref offset);
+                //Vector3 offset = fossa.getPosition(discPopLocation) + this.getOffset(discPopLocation) + endpointOffset;
+                //updateTranslation(ref offset);
+                Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
+                updateTranslation(ref translation);
+
+                Quaternion popLocationRotation = Quaternion.Identity;
+                if (location < nineOClockPosition && location > oneOClockPosition)
+                {
+                    float rotBlend = (location - oneOClockPosition) / rotationRange;
+                    popLocationRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
+                }
+                if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
+                {
+                    updateRotation(ref popLocationRotation);
+                }
+                else
+                {
+                    float rotBlend = (controlPoint.CurrentLocation - discPopLocation + discBackOffset) / discBackOffset;
+                    Quaternion slipRotation = popLocationRotation.slerp(ref startingRot, rotBlend);
+                    updateRotation(ref slipRotation);
+                }
             }
             foreach (DiscBonePair bone in bones)
             {
@@ -187,7 +235,7 @@ namespace Medical
                 {
                     loc = 1.0f;
                 }
-                bone.bone.setPosition(fossa.getPosition(loc) - Owner.Translation);
+                bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
                 bone.bone.needUpdate(true);
             }
         }
