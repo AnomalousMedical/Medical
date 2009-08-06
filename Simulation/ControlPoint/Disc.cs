@@ -219,10 +219,10 @@ namespace Medical
         {
             //pole updates
             Vector3 medialTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + medialPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
-            medialPoleBone.setPosition(medialTranslation);
+            medialPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), medialTranslation));
             medialPoleBone.needUpdate(true);
             Vector3 lateralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + lateralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
-            lateralPoleBone.setPosition(lateralTranslation);
+            lateralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), lateralTranslation));
             lateralPoleBone.needUpdate(true);
 
             float location = controlPoint.CurrentLocation;
