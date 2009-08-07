@@ -55,7 +55,7 @@ namespace Medical
             {
                 circleHelper.setColor(color);
             }
-            circleHelper.drawCircle(ref origin, ref xAxis, ref yAxis, radius);
+            circleHelper.drawCircle(origin, xAxis, yAxis, radius);
         }
 
         public bool isSelected()

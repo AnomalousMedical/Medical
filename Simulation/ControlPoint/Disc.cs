@@ -107,11 +107,27 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
+        Bone ventralPoleBone;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Bone posteriorPoleBone;
+
+        [DoNotCopy]
+        [DoNotSave]
         Vector3 medialPoleBoneOffset;
 
         [DoNotCopy]
         [DoNotSave]
         Vector3 lateralPoleBoneOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 ventralPoleBoneOffset;
+
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 posteriorPoleBoneOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -162,7 +178,7 @@ namespace Medical
                     {
                         SkeletonInstance skeleton = entity.getSkeleton();
                         float current = -0.1f;
-                        float delta = 0.025f;
+                        float delta = 0.013f;
                         for (int i = 1; skeleton.hasBone(boneBaseName + i); ++i)
                         {
                             Bone bone = skeleton.getBone(boneBaseName + i);
@@ -175,6 +191,10 @@ namespace Medical
                         medialPoleBone.setManuallyControlled(true);
                         lateralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "LateralPoleControl2");
                         lateralPoleBone.setManuallyControlled(true);
+                        ventralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "VentralPoleControl");
+                        ventralPoleBone.setManuallyControlled(true);
+                        posteriorPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPole");
+                        posteriorPoleBone.setManuallyControlled(true);
                     }
                 }
                 else
@@ -208,6 +228,8 @@ namespace Medical
             endpointOffset = this.Owner.Translation - endpointBoneWorld;
             medialPoleBoneOffset = medialPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
             lateralPoleBoneOffset = lateralPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
+            ventralPoleBoneOffset = ventralPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
+            posteriorPoleBoneOffset = posteriorPoleBone.getDerivedPosition() - bones[0].bone.getDerivedPosition();
         }
 
         protected override void destroy()
@@ -224,6 +246,9 @@ namespace Medical
             Vector3 lateralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + lateralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
             lateralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), lateralTranslation));
             lateralPoleBone.needUpdate(true);
+            Vector3 ventralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + ventralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
+            ventralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), ventralTranslation));
+            ventralPoleBone.needUpdate(true);
 
             float location = controlPoint.CurrentLocation;
             if (controlPoint.CurrentLocation >= discPopLocation && !locked)
@@ -239,33 +264,33 @@ namespace Medical
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
                 updateTranslation(ref translation);
 
-                Quaternion popLocationRotation = Quaternion.Identity;
-                if (location < nineOClockPosition && location > oneOClockPosition)
-                {
-                    float rotBlend = (location - oneOClockPosition) / rotationRange;
-                    popLocationRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
-                }
-                else
-                {
-                    if (location >= nineOClockPosition)
-                    {
-                        popLocationRotation = nineOClockRotationQuat;
-                    }
-                    if (location <= oneOClockPosition)
-                    {
-                        popLocationRotation = startingRot;
-                    }
-                }
-                if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
-                {
-                    updateRotation(ref popLocationRotation);
-                }
-                else
-                {
-                    float rotBlend = (controlPoint.CurrentLocation - discPopLocation + discBackOffset) / discBackOffset;
-                    Quaternion slipRotation = popLocationRotation.slerp(ref startingRot, rotBlend);
-                    updateRotation(ref slipRotation);
-                }
+                //Quaternion popLocationRotation = Quaternion.Identity;
+                //if (location < nineOClockPosition && location > oneOClockPosition)
+                //{
+                //    float rotBlend = (location - oneOClockPosition) / rotationRange;
+                //    popLocationRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
+                //}
+                //else
+                //{
+                //    if (location >= nineOClockPosition)
+                //    {
+                //        popLocationRotation = nineOClockRotationQuat;
+                //    }
+                //    if (location <= oneOClockPosition)
+                //    {
+                //        popLocationRotation = startingRot;
+                //    }
+                //}
+                //if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
+                //{
+                //    updateRotation(ref popLocationRotation);
+                //}
+                //else
+                //{
+                //    float rotBlend = (controlPoint.CurrentLocation - discPopLocation + discBackOffset) / discBackOffset;
+                //    Quaternion slipRotation = popLocationRotation.slerp(ref startingRot, rotBlend);
+                //    updateRotation(ref slipRotation);
+                //}
             }
             foreach (DiscBonePair bone in bones)
             {
@@ -281,6 +306,17 @@ namespace Medical
                 bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
                 bone.bone.needUpdate(true);
             }
+
+            //Vector3 posteriorTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + posteriorPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
+            //posteriorPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), posteriorTranslation));
+            //posteriorPoleBone.needUpdate(true);
+            Vector3 additionalOffset = Vector3.UnitY * -0.2f;
+            if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
+            {
+                additionalOffset = Vector3.Zero * -0.05f;
+            }
+            posteriorPoleBone.setPosition(bones[0].bone.getDerivedPosition() + posteriorPoleBoneOffset + additionalOffset);
+            posteriorPoleBone.needUpdate(true);
         }
 
         private Vector3 getOffset(float location)
