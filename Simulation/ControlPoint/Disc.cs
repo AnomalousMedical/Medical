@@ -25,8 +25,24 @@ namespace Medical
         }
     }
 
-    public class Disc : Behavior
+public class Disc : Behavior
+{
+        
+#if DEBUG_KEYS
+
+    enum DiscEvents
     {
+        PrintBoneLocations,
+    }
+
+        static Disc()
+        {
+            MessageEvent printDebugInfo = new MessageEvent(DiscEvents.PrintBoneLocations);
+            printDebugInfo.addButton(KeyboardButtonCode.KC_L);
+            DefaultEvents.registerDefaultEvent(printDebugInfo);
+        }
+#endif
+
         private const float DEG_TO_RAD = 0.0174532925f;
 
         [Editable]
@@ -328,6 +344,32 @@ namespace Medical
 
             
             posteriorPoleBone.needUpdate(true);
+
+#if DEBUG_KEYS
+            if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)
+            {
+                Log.Default.debug("\nBone position -- {0}", boneBaseName);
+                SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
+                if (node != null)
+                {
+                    Entity entity = node.getNodeObject(entityName) as Entity;
+                    if (entity != null)
+                    {
+                        if (entity.hasSkeleton())
+                        {
+                            SkeletonInstance skeleton = entity.getSkeleton();
+                            for(ushort i = 0; i < skeleton.getNumBones(); ++i)
+                            {
+                                Bone bone = skeleton.getBone(i);
+                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
+                                Log.Default.debug("Bone {0} - {1}, {2}, {3}", bone.getName(), loc.x, -loc.z, loc.y);
+                            }    
+                        }
+                    }
+                }
+                Log.Default.debug("End Bone position -- {0}\n", boneBaseName);
+            }
+#endif
         }
 
         private Vector3 getOffset(float location)
