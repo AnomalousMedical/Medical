@@ -62,7 +62,10 @@ namespace Medical
         private bool locked = false;
 
         [Editable]
-        private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 120.0f);
+        private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 110.0f);
+
+        [Editable]
+        private Vector3 nineOClockCounterRotation = new Vector3(0.0f, 0.0f, -50.0f);
 
         [Editable]
         private float nineOClockPosition = .7368f;
@@ -139,6 +142,10 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
+        Quaternion nineOClockCounterRotationQuat;
+
+        [DoNotCopy]
+        [DoNotSave]
         Quaternion startingRot;
 
         [DoNotCopy]
@@ -151,6 +158,8 @@ namespace Medical
         {
             Vector3 rotRad = nineOClockRotation * DEG_TO_RAD;
             nineOClockRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
+            rotRad = nineOClockCounterRotation * DEG_TO_RAD;
+            nineOClockCounterRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
             startingRot = this.Owner.Rotation;
             rotationRange = nineOClockPosition - oneOClockPosition;
 
@@ -260,39 +269,46 @@ namespace Medical
             else
             {
                 location = discPopLocation;
-                //Vector3 offset = fossa.getPosition(discPopLocation) + this.getOffset(discPopLocation) + endpointOffset;
-                //updateTranslation(ref offset);
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
                 updateTranslation(ref translation);
 
-                Quaternion popLocationRotation = Quaternion.Identity;
+                Quaternion posteriorPopRotation = Quaternion.Identity;
+                Quaternion counterPopRotation = Quaternion.Identity;
                 if (location < nineOClockPosition && location > oneOClockPosition)
                 {
                     float rotBlend = (location - oneOClockPosition) / rotationRange;
-                    popLocationRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
+                    posteriorPopRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
+                    counterPopRotation = startingRot.slerp(ref nineOClockCounterRotationQuat, rotBlend);
                 }
                 else
                 {
                     if (location >= nineOClockPosition)
                     {
-                        popLocationRotation = nineOClockRotationQuat;
+                        posteriorPopRotation = nineOClockRotationQuat;
+                        counterPopRotation = nineOClockCounterRotationQuat;
                     }
                     if (location <= oneOClockPosition)
                     {
-                        popLocationRotation = startingRot;
+                        posteriorPopRotation = startingRot;
+                        counterPopRotation = startingRot;
                     }
                 }
                 if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
                 {
-                    posteriorPoleRotator.setOrientation(popLocationRotation);
+                    posteriorPoleRotator.setOrientation(posteriorPopRotation);
                     posteriorPoleRotator.needUpdate(true);
+                    posteriorPoleBone.setOrientation(counterPopRotation);
+                    posteriorPoleBone.needUpdate(true);
                 }
                 else
                 {
                     float rotBlend = (controlPoint.CurrentLocation - discPopLocation + discBackOffset) / discBackOffset;
-                    Quaternion slipRotation = popLocationRotation.slerp(ref startingRot, rotBlend);
-                    posteriorPoleRotator.setOrientation(popLocationRotation);
+                    Quaternion posteriorSlipRotation = posteriorPopRotation.slerp(ref startingRot, rotBlend);
+                    posteriorPoleRotator.setOrientation(posteriorSlipRotation);
                     posteriorPoleRotator.needUpdate(true);
+                    Quaternion counterSlipRotation = counterPopRotation.slerp(ref startingRot, rotBlend);
+                    posteriorPoleBone.setOrientation(counterSlipRotation);
+                    posteriorPoleBone.needUpdate(true);
                 }
             }
             foreach (DiscBonePair bone in bones)
