@@ -6,7 +6,6 @@ using Engine;
 using Logging;
 using Medical.GUI;
 using OgrePlugin;
-using PhysXPlugin;
 using Engine.Platform;
 using Engine.Renderer;
 using System.Threading;
@@ -18,7 +17,7 @@ using Engine.Saving.XMLSaver;
 using Engine.Resources;
 using Medical.Properties;
 using System.IO;
-using PhysXWrapper;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -84,14 +83,13 @@ namespace Medical
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
             pluginManager.OnConfigureDefaultWindow = createWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(PhysXInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(Win32PlatformPlugin).Assembly);
             pluginManager.initializePlugins();
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
 
-            PhysSDK.Instance.setParameter(PhysParameter.NX_SKIN_WIDTH, 0.00f);
-
             //Intialize the platform
+            BulletInterface.Instance.ShapeMargin = 0.0f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
             mainTimer = new UpdateTimer(systemTimer, new WindowsFormsUpdate());
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;

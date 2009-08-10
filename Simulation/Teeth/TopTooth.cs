@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PhysXPlugin;
 using Engine.Editing;
 
 namespace Medical
@@ -11,14 +10,14 @@ namespace Medical
     {
         protected override void looseChanged(bool loose)
         {
-            if (loose)
-            {
-                actorElement.Actor.clearBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
-            }
-            else
-            {
-                actorElement.Actor.raiseBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
-            }
+            //if (loose)
+            //{
+            //    actorElement.Actor.clearBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
+            //}
+            //else
+            //{
+            //    actorElement.Actor.raiseBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
+            //}
         }
     }
 }

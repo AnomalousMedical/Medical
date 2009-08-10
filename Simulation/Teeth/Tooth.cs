@@ -6,10 +6,9 @@ using Engine;
 using Engine.Platform;
 using Engine.Editing;
 using OgrePlugin;
-using PhysXPlugin;
 using OgreWrapper;
 using Engine.Attributes;
-using PhysXWrapper;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -36,11 +35,11 @@ namespace Medical
         protected bool loose = false;
 
         protected SceneNodeElement sceneNodeElement;
-        protected PhysActorElement actorElement;
         protected Entity entity;
-        protected PhysD6JointElement joint;
 
         private TransparencyInterface transparency;
+        private RigidBody actorElement;
+        private Generic6DofConstraintElement joint;
 
         protected override void constructed()
         {
@@ -58,12 +57,12 @@ namespace Medical
                     blacklist("Could not find Entity {0}.", entityName);
                 }
             }
-            actorElement = Owner.getElement(actorName) as PhysActorElement;
+            actorElement = Owner.getElement(actorName) as RigidBody;
             if (actorElement == null)
             {
                 blacklist("Could not find Actor {0}.", actorName);
             }
-            joint = Owner.getElement(jointName) as PhysD6JointElement;
+            joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
             if (joint == null)
             {
                 blacklist("Could not find Joint {0}.", jointName);
@@ -99,7 +98,7 @@ namespace Medical
                 if (this.extracted && !value)
                 {
                     extracted = false;
-                    actorElement.Actor.clearActorFlag(PhysXWrapper.ActorFlag.NX_AF_DISABLE_COLLISION);
+                    actorElement.clearCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(true);
                     transparency.DisableOnHidden = true;
                 }
@@ -107,7 +106,7 @@ namespace Medical
                 else if (!this.extracted && value)
                 {
                     extracted = true;
-                    actorElement.Actor.raiseActorFlag(PhysXWrapper.ActorFlag.NX_AF_DISABLE_COLLISION);
+                    actorElement.raiseCollisionFlag(CollisionFlags.NoContactResponse);
                     entity.setVisible(false);
                     transparency.DisableOnHidden = false;
                 }

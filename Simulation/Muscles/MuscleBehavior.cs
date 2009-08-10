@@ -5,12 +5,11 @@ using System.Text;
 using Engine.Editing;
 using Engine.Attributes;
 using Engine;
-using PhysXWrapper;
 using Engine.Platform;
 using Engine.ObjectManagement;
-using PhysXPlugin;
 using Logging;
 using Engine.Renderer;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -25,7 +24,7 @@ namespace Medical
         [Editable]
         protected String actorName = "Actor";
 
-        protected PhysActorElement actor;
+        protected RigidBody actor;
         protected SimObject targetObject;
 
         [DoNotSave]
@@ -38,7 +37,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            actor = Owner.getElement(actorName) as PhysActorElement;
+            actor = Owner.getElement(actorName) as RigidBody;
             if (actor == null)
             {
                 blacklist("Cannot find actor {0}.", actorName);
@@ -63,7 +62,8 @@ namespace Medical
                 Vector3 location = targetObject.Translation - Owner.Translation;
                 location.normalize();
                 location *= force;
-                actor.Actor.addForce(ref location, ForceMode.NX_SMOOTH_IMPULSE, true);
+                actor.applyCentralImpulse(location);
+                actor.forceActivationState(ActivationState.ActiveTag);
             }
         }
 

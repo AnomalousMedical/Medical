@@ -9,8 +9,7 @@ using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using Engine.Attributes;
-using PhysXWrapper;
-using PhysXPlugin;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -38,11 +37,12 @@ namespace Medical
         [DoNotSave]
         [DoNotCopy]
         Vector3 offset;
-        PhysD6JointDesc jointDesc = new PhysD6JointDesc();
+
         [DoNotSave]
         [DoNotCopy]
         Vector3 lastPosition;
-        PhysD6JointElement joint;
+        
+        Generic6DofConstraintElement joint;
 
         protected override void constructed()
         {
@@ -91,10 +91,10 @@ namespace Medical
                 blacklist("Could not find Target SimObject {0}.", targetSimObject);
             }
 
-            joint = Owner.getElement(jointName) as PhysD6JointElement;
+            joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
             if (joint == null)
             {
-                blacklist("Could not find D6 Joint {0} in SimObject {1}.", jointName, Owner.Name);
+                blacklist("Could not find joint {0}.", jointName);
             }
         }
 
@@ -104,11 +104,7 @@ namespace Medical
             if (bonePos != lastPosition)
             {
                 this.updateScale(bone.getDerivedScale());
-
-                joint.RealJoint.saveToDesc(jointDesc);
-                jointDesc.set_LocalAnchor(0, bonePos + offset * Owner.Scale);
-                joint.RealJoint.loadFromDesc(jointDesc);
-
+                joint.setFrameOffsetA(bonePos + offset * Owner.Scale);
                 lastPosition = bonePos;
             }
         }

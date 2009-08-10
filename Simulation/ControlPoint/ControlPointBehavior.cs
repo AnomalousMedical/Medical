@@ -8,8 +8,7 @@ using Engine.Editing;
 using OgreWrapper;
 using OgrePlugin;
 using Engine.ObjectManagement;
-using PhysXWrapper;
-using PhysXPlugin;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -45,9 +44,8 @@ namespace Medical
 
         SimObject boneObject;
         Bone bone;
-        PhysD6JointElement joint;
+        Generic6DofConstraintElement joint;
         Vector3 lastPosition = Vector3.Zero;
-        PhysD6JointDesc jointDesc = new PhysD6JointDesc();
 
         Disc disc;
 
@@ -102,11 +100,6 @@ namespace Medical
             {
                 blacklist("Could not find Target SimObject {0}.", boneSimObject);
             }
-            joint = Owner.getElement(jointName) as PhysD6JointElement;
-            if (joint == null)
-            {
-                blacklist("Could not find joint {0}.", jointName);
-            }
             SimObject discSimObject = Owner.getOtherSimObject(discObject);
             if (discSimObject != null)
             {
@@ -119,6 +112,11 @@ namespace Medical
             else
             {
                 blacklist("Could not find Disc SimObject {0}.", discObject);
+            }
+            joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
+            if (joint == null)
+            {
+                blacklist("Could not find joint {0}.", jointName);
             }
 
             ControlPointController.addControlPoint(this);
@@ -134,10 +132,8 @@ namespace Medical
             Vector3 bonePos = bone.getDerivedPosition();
             if (bonePos != lastPosition)
             {
-                joint.RealJoint.saveToDesc(jointDesc);
-                jointDesc.set_LocalAnchor(1, bonePos);
-                joint.RealJoint.loadFromDesc(jointDesc);
-
+                Vector3 position = Quaternion.quatRotate(boneObject.Rotation, bonePos) + boneObject.Translation;
+                joint.setFrameOffsetB(bone.getDerivedPosition());
                 lastPosition = bonePos;
             }
             if (translate)
