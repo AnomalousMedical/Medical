@@ -21,11 +21,5 @@ namespace Medical
             //    actorElement.raiseCollisionFlag(CollisionFlags.KinematicObject);
             //}
         }
-
-        protected override void offsetChanged(Vector3 offset)
-        {
-            joint.setFrameOffsetA(startingLocation + offset);
-            //joint.setFrameOffsetA(startingLocation + Quaternion.quatRotate(joint.getFrameOffsetBasisA(), offset));
-        }
     }
 }

@@ -41,7 +41,9 @@ namespace Medical
         protected RigidBody actorElement;
         protected Generic6DofConstraintElement joint;
         protected Vector3 startingLocation;
+        private Quaternion startingRotation;
         private Vector3 offset = Vector3.Zero;
+        private Quaternion rotationOffset = Quaternion.Identity;
 
         protected override void constructed()
         {
@@ -70,6 +72,7 @@ namespace Medical
                 blacklist("Could not find Joint {0}.", jointName);
             }
             startingLocation = joint.getFrameOffsetOriginA();
+            startingRotation = joint.getFrameOffsetBasisB();
             transparency = Owner.getElement(transparencyInterface) as TransparencyInterface;
             if (transparency == null)
             {
@@ -86,8 +89,6 @@ namespace Medical
         {
 
         }
-
-        protected abstract void offsetChanged(Vector3 offset);
 
         protected abstract void looseChanged(bool loose);
 
@@ -118,12 +119,6 @@ namespace Medical
             }
         }
 
-        public void addOffset(Vector3 add)
-        {
-            offset += add;
-            offsetChanged(offset);
-        }
-
         [DoNotCopy]
         public bool Loose
         {
@@ -148,7 +143,21 @@ namespace Medical
             set
             {
                 offset = value;
-                offsetChanged(value);
+                joint.setFrameOffsetA(startingLocation + offset);
+            }
+        }
+
+        [DoNotCopy]
+        public Quaternion Rotation
+        {
+            get
+            {
+                return rotationOffset;
+            }
+            set
+            {
+                rotationOffset = value;
+                joint.setFrameOffsetB(rotationOffset * startingRotation);
             }
         }
     }

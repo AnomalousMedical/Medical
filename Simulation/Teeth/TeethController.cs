@@ -36,7 +36,7 @@ namespace Medical
             TeethState state = new TeethState();
             foreach (Tooth tooth in teeth.Values)
             {
-                state.addPosition(new ToothState(tooth.Owner.Name, tooth.Extracted, tooth.Offset));
+                state.addPosition(new ToothState(tooth.Owner.Name, tooth.Extracted, tooth.Offset, tooth.Rotation));
             }
             return state;
         }

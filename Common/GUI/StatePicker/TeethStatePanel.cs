@@ -26,7 +26,7 @@ namespace Medical.GUI
                 CheckBox checkBox = control as CheckBox;
                 if (checkBox != null)
                 {
-                    teethState.addPosition(new ToothState(checkBox.Tag.ToString(), checkBox.Checked, Vector3.Zero));
+                    teethState.addPosition(new ToothState(checkBox.Tag.ToString(), checkBox.Checked, Vector3.Zero, Quaternion.Identity));
                 }
             }
         }

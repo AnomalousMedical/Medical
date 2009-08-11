@@ -15,12 +15,14 @@ namespace Medical
         private bool extracted;
         private Vector3 offset;
         private String name;
+        private Quaternion rotation;
 
-        public ToothState(String name, bool extracted, Vector3 offset)
+        public ToothState(String name, bool extracted, Vector3 offset, Quaternion rotation)
         {
             this.name = name;
             this.extracted = extracted;
             this.offset = offset;
+            this.rotation = rotation;
         }
 
         public void blend(ToothState end, float percent)
@@ -28,6 +30,7 @@ namespace Medical
             Tooth tooth = TeethController.getTooth(name);
             tooth.Extracted = this.Extracted;
             tooth.Offset = this.offset.lerp(ref end.offset, ref percent);
+            tooth.Rotation = this.rotation.slerp(ref end.rotation, percent);
         }
 
         public bool Extracted
@@ -54,6 +57,18 @@ namespace Medical
             }
         }
 
+        public Quaternion Rotation
+        {
+            get
+            {
+                return rotation;
+            }
+            set
+            {
+                rotation = value;
+            }
+        }
+
         public String Name
         {
             get
@@ -67,12 +82,14 @@ namespace Medical
         private const string EXTRACTED = "Extracted";
         private const string OFFSET = "Offset";
         private const string NAME = "Name";
+        private const string ROTATION = "Rotation";
 
         protected ToothState(LoadInfo info)
         {
             name = info.GetString(NAME);
             extracted = info.GetBoolean(EXTRACTED);
             offset = info.GetVector3(OFFSET);
+            rotation = info.GetQuaternion(ROTATION);
         }
 
         public void getInfo(SaveInfo info)
@@ -80,6 +97,7 @@ namespace Medical
             info.AddValue(NAME, name);
             info.AddValue(EXTRACTED, extracted);
             info.AddValue(OFFSET, offset);
+            info.AddValue(ROTATION, rotation);
         }
 
         #endregion

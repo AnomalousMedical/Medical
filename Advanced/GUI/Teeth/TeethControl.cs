@@ -19,9 +19,13 @@ namespace Medical.GUI
         public TeethControl()
         {
             InitializeComponent();
-            recessUpDown.ValueChanged += recessUpDown_ValueChanged;
-            leftRightUpDown.ValueChanged += recessUpDown_ValueChanged;
-            forwardBackUpDown.ValueChanged += recessUpDown_ValueChanged;
+            recessUpDown.ValueChanged += offsetValueChanged;
+            leftRightUpDown.ValueChanged += offsetValueChanged;
+            forwardBackUpDown.ValueChanged += offsetValueChanged;
+
+            numericUpDown1.ValueChanged += rotateValueChanged;
+            numericUpDown2.ValueChanged += rotateValueChanged;
+            numericUpDown3.ValueChanged += rotateValueChanged;
         }
 
         public void initialize(MedicalController medicalController)
@@ -62,19 +66,7 @@ namespace Medical.GUI
             }
         }
 
-        private void upButton_Click(object sender, EventArgs e)
-        {
-            foreach (CheckBox control in teethPanel.Controls)
-            {
-                if (control.Checked)
-                {
-                    Tooth tooth = TeethController.getTooth(control.Tag.ToString());
-                    tooth.addOffset(Vector3.UnitY);
-                }
-            }
-        }
-
-        void recessUpDown_ValueChanged(object sender, EventArgs e)
+        void offsetValueChanged(object sender, EventArgs e)
         {
             Vector3 offset = new Vector3((float)leftRightUpDown.Value, (float)recessUpDown.Value, (float)forwardBackUpDown.Value);
             foreach (CheckBox control in teethPanel.Controls)
@@ -83,6 +75,19 @@ namespace Medical.GUI
                 {
                     Tooth tooth = TeethController.getTooth(control.Tag.ToString());
                     tooth.Offset = offset;
+                }
+            }
+        }
+
+        void rotateValueChanged(object sender, EventArgs e)
+        {
+            Quaternion rot = new Quaternion((float)numericUpDown1.Value, (float)numericUpDown2.Value, (float)numericUpDown3.Value);
+            foreach (CheckBox control in teethPanel.Controls)
+            {
+                if (control.Checked)
+                {
+                    Tooth tooth = TeethController.getTooth(control.Tag.ToString());
+                    tooth.Rotation = rot;
                 }
             }
         }
