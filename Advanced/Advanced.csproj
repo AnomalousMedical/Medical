@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Controller\AdvancedController.cs" />
     <Compile Include="Controller\MuscleGroup.cs" />
+    <Compile Include="Controller\TeethSelectionGroup.cs" />
     <Compile Include="GUI\AdvancedForm.cs">
       <SubType>Form</SubType>
     </Compile>

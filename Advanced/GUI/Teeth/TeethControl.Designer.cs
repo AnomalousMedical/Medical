@@ -30,8 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TeethControl));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.moveButton = new System.Windows.Forms.ToolStripButton();
-            this.rotateButton = new System.Windows.Forms.ToolStripButton();
             this.removeButton = new System.Windows.Forms.ToolStripButton();
             this.restoreButton = new System.Windows.Forms.ToolStripButton();
             this.teethPanel = new System.Windows.Forms.Panel();
@@ -69,60 +67,43 @@
             this.tooth1 = new System.Windows.Forms.CheckBox();
             this.forwardBackUpDown = new System.Windows.Forms.NumericUpDown();
             this.leftRightUpDown = new System.Windows.Forms.NumericUpDown();
-            this.recessUpDown = new System.Windows.Forms.NumericUpDown();
+            this.upDownUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.yawUpDown = new System.Windows.Forms.NumericUpDown();
+            this.rollUpDown = new System.Windows.Forms.NumericUpDown();
+            this.pitchUpDown = new System.Windows.Forms.NumericUpDown();
+            this.resetButton = new System.Windows.Forms.Button();
+            this.selectionSetCombo = new System.Windows.Forms.ToolStripComboBox();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftRightUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.recessUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownUpDown)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yawUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pitchUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.moveButton,
-            this.rotateButton,
             this.removeButton,
-            this.restoreButton});
+            this.restoreButton,
+            this.selectionSetCombo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(260, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // moveButton
-            // 
-            this.moveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moveButton.Image = ((System.Drawing.Image)(resources.GetObject("moveButton.Image")));
-            this.moveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(41, 22);
-            this.moveButton.Text = "Move";
-            // 
-            // rotateButton
-            // 
-            this.rotateButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.rotateButton.Image = ((System.Drawing.Image)(resources.GetObject("rotateButton.Image")));
-            this.rotateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.rotateButton.Name = "rotateButton";
-            this.rotateButton.Size = new System.Drawing.Size(45, 22);
-            this.rotateButton.Text = "Rotate";
             // 
             // removeButton
             // 
@@ -743,28 +724,28 @@
             this.leftRightUpDown.Size = new System.Drawing.Size(57, 20);
             this.leftRightUpDown.TabIndex = 2;
             // 
-            // recessUpDown
+            // upDownUpDown
             // 
-            this.recessUpDown.DecimalPlaces = 3;
-            this.recessUpDown.Increment = new decimal(new int[] {
+            this.upDownUpDown.DecimalPlaces = 3;
+            this.upDownUpDown.Increment = new decimal(new int[] {
             33,
             0,
             0,
             196608});
-            this.recessUpDown.Location = new System.Drawing.Point(9, 40);
-            this.recessUpDown.Maximum = new decimal(new int[] {
+            this.upDownUpDown.Location = new System.Drawing.Point(9, 40);
+            this.upDownUpDown.Maximum = new decimal(new int[] {
             1089,
             0,
             0,
             196608});
-            this.recessUpDown.Minimum = new decimal(new int[] {
+            this.upDownUpDown.Minimum = new decimal(new int[] {
             1089,
             0,
             0,
             -2147287040});
-            this.recessUpDown.Name = "recessUpDown";
-            this.recessUpDown.Size = new System.Drawing.Size(57, 20);
-            this.recessUpDown.TabIndex = 1;
+            this.upDownUpDown.Name = "upDownUpDown";
+            this.upDownUpDown.Size = new System.Drawing.Size(57, 20);
+            this.upDownUpDown.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -772,7 +753,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.forwardBackUpDown);
-            this.groupBox1.Controls.Add(this.recessUpDown);
+            this.groupBox1.Controls.Add(this.upDownUpDown);
             this.groupBox1.Controls.Add(this.leftRightUpDown);
             this.groupBox1.Location = new System.Drawing.Point(30, 536);
             this.groupBox1.Name = "groupBox1";
@@ -780,24 +761,6 @@
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Move";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Recess";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Right/Left";
             // 
             // label3
             // 
@@ -808,14 +771,32 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Front/Back";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(69, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(55, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Right/Left";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Up/Down";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.numericUpDown1);
-            this.groupBox2.Controls.Add(this.numericUpDown2);
-            this.groupBox2.Controls.Add(this.numericUpDown3);
+            this.groupBox2.Controls.Add(this.yawUpDown);
+            this.groupBox2.Controls.Add(this.rollUpDown);
+            this.groupBox2.Controls.Add(this.pitchUpDown);
             this.groupBox2.Location = new System.Drawing.Point(30, 612);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(200, 70);
@@ -828,96 +809,111 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(132, 21);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(61, 13);
+            this.label4.Size = new System.Drawing.Size(28, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Front/Back";
+            this.label4.Text = "Yaw";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(69, 21);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
+            this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 5;
-            this.label5.Text = "Right/Left";
+            this.label5.Text = "Pitch";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(9, 21);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.Size = new System.Drawing.Size(25, 13);
             this.label6.TabIndex = 4;
-            this.label6.Text = "Recess";
+            this.label6.Text = "Roll";
             // 
-            // numericUpDown1
+            // yawUpDown
             // 
-            this.numericUpDown1.DecimalPlaces = 3;
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.yawUpDown.DecimalPlaces = 3;
+            this.yawUpDown.Increment = new decimal(new int[] {
             33,
             0,
             0,
             196608});
-            this.numericUpDown1.Location = new System.Drawing.Point(135, 40);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.yawUpDown.Location = new System.Drawing.Point(135, 40);
+            this.yawUpDown.Maximum = new decimal(new int[] {
             6303,
             0,
             0,
             196608});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.yawUpDown.Minimum = new decimal(new int[] {
             6303,
             0,
             0,
             -2147287040});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown1.TabIndex = 3;
+            this.yawUpDown.Name = "yawUpDown";
+            this.yawUpDown.Size = new System.Drawing.Size(57, 20);
+            this.yawUpDown.TabIndex = 3;
             // 
-            // numericUpDown2
+            // rollUpDown
             // 
-            this.numericUpDown2.DecimalPlaces = 3;
-            this.numericUpDown2.Increment = new decimal(new int[] {
+            this.rollUpDown.DecimalPlaces = 3;
+            this.rollUpDown.Increment = new decimal(new int[] {
             33,
             0,
             0,
             196608});
-            this.numericUpDown2.Location = new System.Drawing.Point(9, 40);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.rollUpDown.Location = new System.Drawing.Point(9, 40);
+            this.rollUpDown.Maximum = new decimal(new int[] {
             6303,
             0,
             0,
             196608});
-            this.numericUpDown2.Minimum = new decimal(new int[] {
+            this.rollUpDown.Minimum = new decimal(new int[] {
             6303,
             0,
             0,
             -2147287040});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown2.TabIndex = 1;
+            this.rollUpDown.Name = "rollUpDown";
+            this.rollUpDown.Size = new System.Drawing.Size(57, 20);
+            this.rollUpDown.TabIndex = 1;
             // 
-            // numericUpDown3
+            // pitchUpDown
             // 
-            this.numericUpDown3.DecimalPlaces = 3;
-            this.numericUpDown3.Increment = new decimal(new int[] {
+            this.pitchUpDown.DecimalPlaces = 3;
+            this.pitchUpDown.Increment = new decimal(new int[] {
             33,
             0,
             0,
             196608});
-            this.numericUpDown3.Location = new System.Drawing.Point(72, 40);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.pitchUpDown.Location = new System.Drawing.Point(72, 40);
+            this.pitchUpDown.Maximum = new decimal(new int[] {
             6303,
             0,
             0,
             196608});
-            this.numericUpDown3.Minimum = new decimal(new int[] {
+            this.pitchUpDown.Minimum = new decimal(new int[] {
             6303,
             0,
             0,
             -2147287040});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(57, 20);
-            this.numericUpDown3.TabIndex = 2;
+            this.pitchUpDown.Name = "pitchUpDown";
+            this.pitchUpDown.Size = new System.Drawing.Size(57, 20);
+            this.pitchUpDown.TabIndex = 2;
+            // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(93, 688);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(75, 23);
+            this.resetButton.TabIndex = 8;
+            this.resetButton.Text = "Reset";
+            this.resetButton.UseVisualStyleBackColor = true;
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
+            // selectionSetCombo
+            // 
+            this.selectionSetCombo.Name = "selectionSetCombo";
+            this.selectionSetCombo.Size = new System.Drawing.Size(121, 25);
             // 
             // TeethControl
             // 
@@ -925,6 +921,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(260, 719);
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.teethPanel);
@@ -941,14 +938,14 @@
             this.teethPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftRightUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.recessUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownUpDown)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yawUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rollUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pitchUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -957,8 +954,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton moveButton;
-        private System.Windows.Forms.ToolStripButton rotateButton;
         private System.Windows.Forms.Panel teethPanel;
         private System.Windows.Forms.CheckBox tooth1;
         private System.Windows.Forms.CheckBox tooth2;
@@ -996,7 +991,7 @@
         private System.Windows.Forms.ToolStripButton restoreButton;
         private System.Windows.Forms.NumericUpDown forwardBackUpDown;
         private System.Windows.Forms.NumericUpDown leftRightUpDown;
-        private System.Windows.Forms.NumericUpDown recessUpDown;
+        private System.Windows.Forms.NumericUpDown upDownUpDown;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -1005,9 +1000,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown yawUpDown;
+        private System.Windows.Forms.NumericUpDown rollUpDown;
+        private System.Windows.Forms.NumericUpDown pitchUpDown;
+        private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.ToolStripComboBox selectionSetCombo;
 
     }
 }
