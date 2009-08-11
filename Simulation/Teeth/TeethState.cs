@@ -15,9 +15,9 @@ namespace Medical
 
         }
 
-        public void addPosition(String disc, ToothState state)
+        public void addPosition(ToothState state)
         {
-            teeth.Add(disc, state);
+            teeth.Add(state.Name, state);
         }
 
         public void blend(TeethState target, float percent)
@@ -26,7 +26,7 @@ namespace Medical
             {
                 ToothState start = teeth[key];
                 ToothState end = target.teeth[key];
-                TeethController.getTooth(key).Extracted = start.Extracted;
+                start.blend(end, percent);
             }
         }
 

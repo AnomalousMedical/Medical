@@ -38,8 +38,10 @@ namespace Medical
         protected Entity entity;
 
         private TransparencyInterface transparency;
-        private RigidBody actorElement;
-        private Generic6DofConstraintElement joint;
+        protected RigidBody actorElement;
+        protected Generic6DofConstraintElement joint;
+        protected Vector3 startingLocation;
+        private Vector3 offset = Vector3.Zero;
 
         protected override void constructed()
         {
@@ -67,6 +69,7 @@ namespace Medical
             {
                 blacklist("Could not find Joint {0}.", jointName);
             }
+            startingLocation = joint.getFrameOffsetOriginA();
             transparency = Owner.getElement(transparencyInterface) as TransparencyInterface;
             if (transparency == null)
             {
@@ -83,6 +86,8 @@ namespace Medical
         {
 
         }
+
+        protected abstract void offsetChanged(Vector3 offset);
 
         protected abstract void looseChanged(bool loose);
 
@@ -113,6 +118,12 @@ namespace Medical
             }
         }
 
+        public void addOffset(Vector3 add)
+        {
+            offset += add;
+            offsetChanged(offset);
+        }
+
         [DoNotCopy]
         public bool Loose
         {
@@ -124,6 +135,20 @@ namespace Medical
             {
                 loose = value;
                 looseChanged(loose);
+            }
+        }
+
+        [DoNotCopy]
+        public Vector3 Offset
+        {
+            get
+            {
+                return offset;
+            }
+            set
+            {
+                offset = value;
+                offsetChanged(value);
             }
         }
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Editing;
+using BulletPlugin;
+using Engine;
 
 namespace Medical
 {
@@ -12,12 +14,18 @@ namespace Medical
         {
             //if (loose)
             //{
-            //    actorElement.Actor.clearBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
+            //    actorElement.clearCollisionFlag(CollisionFlags.KinematicObject);
             //}
             //else
             //{
-            //    actorElement.Actor.raiseBodyFlag(PhysXWrapper.BodyFlag.NX_BF_KINEMATIC);
+            //    actorElement.raiseCollisionFlag(CollisionFlags.KinematicObject);
             //}
+        }
+
+        protected override void offsetChanged(Vector3 offset)
+        {
+            joint.setFrameOffsetA(startingLocation + offset);
+            //joint.setFrameOffsetA(startingLocation + Quaternion.quatRotate(joint.getFrameOffsetBasisA(), offset));
         }
     }
 }

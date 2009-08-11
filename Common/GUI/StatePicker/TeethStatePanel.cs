@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -25,7 +26,7 @@ namespace Medical.GUI
                 CheckBox checkBox = control as CheckBox;
                 if (checkBox != null)
                 {
-                    teethState.addPosition(checkBox.Tag.ToString(), new ToothState(checkBox.Checked));
+                    teethState.addPosition(new ToothState(checkBox.Tag.ToString(), checkBox.Checked, Vector3.Zero));
                 }
             }
         }
