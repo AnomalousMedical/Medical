@@ -74,6 +74,11 @@ namespace Medical
             return curve.interpolate(percentage);
         }
 
+        public Quaternion interpolateRotation(float percentage, float offset, Vector3 startingDirection)
+        {
+            return curve.interpolateRotation(percentage, offset, startingDirection);
+        }
+
         protected override void constructed()
         {
             targetObject = Owner.getOtherSimObject(targetSimObject);

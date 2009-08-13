@@ -237,6 +237,11 @@ namespace Medical
         {
             return Owner.Translation + translation.interpolate(position);
         }
+
+        public Quaternion getRotation(float position)
+        {
+            return translation.interpolateRotation(position, 0.01f, Vector3.Forward);
+        }
     }
 }
 /**
