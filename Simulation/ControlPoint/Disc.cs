@@ -81,7 +81,7 @@ public class Disc : Behavior
         private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 110.0f);
 
         [Editable]
-        private Vector3 nineOClockCounterRotation = new Vector3(0.0f, 0.0f, -50.0f);
+        private Vector3 nineOClockCounterRotation = new Vector3(0.0f, 0.0f, 50.0f);
 
         [Editable]
         private float nineOClockPosition = .7368f;
@@ -223,10 +223,10 @@ public class Disc : Behavior
                         posteriorPoleRotator = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPoleRotator");
                         posteriorPoleRotator.setManuallyControlled(true);
 
-                        if (boneBaseName == "RightEmenence")
-                        {
-                            //entity.setDisplaySkeleton(true);
-                        }
+                        //if (boneBaseName == "RightEmenence")
+                        //{
+                        //    entity.setDisplaySkeleton(true);
+                        //}
                     }
                 }
                 else
@@ -344,7 +344,6 @@ public class Disc : Behavior
                     loc = 1.0f;
                 }
                 bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
-                //bone.bone.setOrientation(fossa.getRotation(loc));
                 bone.bone.needUpdate(true);
             }
 
@@ -368,7 +367,9 @@ public class Disc : Behavior
                             {
                                 Bone bone = skeleton.getBone(i);
                                 Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
-                                Log.Default.debug("Bone {0} - {1}, {2}, {3}", bone.getName(), loc.x, -loc.z, loc.y);
+                                Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
+                                Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
+                                //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
                             }    
                         }
                     }
