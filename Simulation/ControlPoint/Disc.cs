@@ -222,6 +222,11 @@ public class Disc : Behavior
                         posteriorPoleBone.setManuallyControlled(true);
                         posteriorPoleRotator = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPoleRotator");
                         posteriorPoleRotator.setManuallyControlled(true);
+
+                        if (boneBaseName == "RightEmenence")
+                        {
+                            //entity.setDisplaySkeleton(true);
+                        }
                     }
                 }
                 else
@@ -339,6 +344,7 @@ public class Disc : Behavior
                     loc = 1.0f;
                 }
                 bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
+                //bone.bone.setOrientation(fossa.getRotation(loc));
                 bone.bone.needUpdate(true);
             }
 
