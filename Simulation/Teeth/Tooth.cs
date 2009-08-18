@@ -91,14 +91,14 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            //if (numContacts > 0)
-            //{
-            //    HighlightColor = Color.Red;
-            //}
-            //else
-            //{
-            //    HighlightColor = Color.Black;
-            //}
+            if (TeethController.HighlightContacts && numContacts > 0)
+            {
+                HighlightColor = Color.Blue;
+            }
+            else
+            {
+                HighlightColor = Color.White;
+            }
         }
 
         protected abstract void looseChanged(bool loose);
@@ -107,10 +107,7 @@ namespace Medical
         {
             set
             {
-                using (MaterialPtr material = entity.getSubEntity(0).getMaterial())
-                {
-                    material.Value.setSelfIllumination(ref value);
-                }
+                entity.getSubEntity(0).setCustomParameter(0, new Quaternion(value.r, value.g, value.b, value.a));
             }
         }
 

@@ -32,6 +32,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.removeButton = new System.Windows.Forms.ToolStripButton();
             this.restoreButton = new System.Windows.Forms.ToolStripButton();
+            this.selectionSetCombo = new System.Windows.Forms.ToolStripComboBox();
             this.teethPanel = new System.Windows.Forms.Panel();
             this.tooth32 = new System.Windows.Forms.CheckBox();
             this.tooth31 = new System.Windows.Forms.CheckBox();
@@ -80,7 +81,7 @@
             this.rollUpDown = new System.Windows.Forms.NumericUpDown();
             this.pitchUpDown = new System.Windows.Forms.NumericUpDown();
             this.resetButton = new System.Windows.Forms.Button();
-            this.selectionSetCombo = new System.Windows.Forms.ToolStripComboBox();
+            this.highlightCollisionCheckBox = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).BeginInit();
@@ -124,6 +125,11 @@
             this.restoreButton.Size = new System.Drawing.Size(50, 22);
             this.restoreButton.Text = "Restore";
             this.restoreButton.Click += new System.EventHandler(this.restoreButton_Click);
+            // 
+            // selectionSetCombo
+            // 
+            this.selectionSetCombo.Name = "selectionSetCombo";
+            this.selectionSetCombo.Size = new System.Drawing.Size(121, 25);
             // 
             // teethPanel
             // 
@@ -902,7 +908,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(93, 688);
+            this.resetButton.Location = new System.Drawing.Point(148, 688);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(75, 23);
             this.resetButton.TabIndex = 8;
@@ -910,10 +916,16 @@
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
-            // selectionSetCombo
+            // highlightCollisionCheckBox
             // 
-            this.selectionSetCombo.Name = "selectionSetCombo";
-            this.selectionSetCombo.Size = new System.Drawing.Size(121, 25);
+            this.highlightCollisionCheckBox.AutoSize = true;
+            this.highlightCollisionCheckBox.Location = new System.Drawing.Point(35, 692);
+            this.highlightCollisionCheckBox.Name = "highlightCollisionCheckBox";
+            this.highlightCollisionCheckBox.Size = new System.Drawing.Size(108, 17);
+            this.highlightCollisionCheckBox.TabIndex = 9;
+            this.highlightCollisionCheckBox.Text = "Highlight Collision";
+            this.highlightCollisionCheckBox.UseVisualStyleBackColor = true;
+            this.highlightCollisionCheckBox.CheckedChanged += new System.EventHandler(this.highlightCollisionCheckBox_CheckedChanged);
             // 
             // TeethControl
             // 
@@ -921,6 +933,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(260, 719);
+            this.Controls.Add(this.highlightCollisionCheckBox);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -1005,6 +1018,7 @@
         private System.Windows.Forms.NumericUpDown pitchUpDown;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.ToolStripComboBox selectionSetCombo;
+        private System.Windows.Forms.CheckBox highlightCollisionCheckBox;
 
     }
 }

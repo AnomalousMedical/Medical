@@ -169,5 +169,10 @@ namespace Medical.GUI
             }
             selectionSetCombo.Items.Add(group);
         }
+
+        private void highlightCollisionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            TeethController.HighlightContacts = highlightCollisionCheckBox.Checked;
+        }
     }
 }

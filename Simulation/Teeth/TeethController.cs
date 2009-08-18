@@ -9,6 +9,11 @@ namespace Medical
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
 
+        static TeethController()
+        {
+            HighlightContacts = false;
+        }
+
         public static void addTooth(String name, Tooth tooth)
         {
             teeth.Add(name, tooth);
@@ -48,5 +53,7 @@ namespace Medical
                 tooth.Loose = loose;
             }
         }
+
+        public static bool HighlightContacts { get; set; }
     }
 }
