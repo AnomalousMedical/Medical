@@ -81,9 +81,6 @@ public class Disc : Behavior
         private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 110.0f);
 
         [Editable]
-        private Vector3 nineOClockCounterRotation = new Vector3(0.0f, 0.0f, 50.0f);
-
-        [Editable]
         private float nineOClockPosition = .7368f;
 
         [Editable]
@@ -130,10 +127,6 @@ public class Disc : Behavior
 
         [DoNotCopy]
         [DoNotSave]
-        Bone posteriorPoleBone;
-
-        [DoNotCopy]
-        [DoNotSave]
         Bone posteriorPoleRotator;
 
         [DoNotCopy]
@@ -158,10 +151,6 @@ public class Disc : Behavior
 
         [DoNotCopy]
         [DoNotSave]
-        Quaternion nineOClockCounterRotationQuat;
-
-        [DoNotCopy]
-        [DoNotSave]
         Quaternion startingRot;
 
         [DoNotCopy]
@@ -174,8 +163,6 @@ public class Disc : Behavior
         {
             Vector3 rotRad = nineOClockRotation * DEG_TO_RAD;
             nineOClockRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
-            rotRad = nineOClockCounterRotation * DEG_TO_RAD;
-            nineOClockCounterRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
             startingRot = this.Owner.Rotation;
             rotationRange = nineOClockPosition - oneOClockPosition;
 
@@ -218,15 +205,13 @@ public class Disc : Behavior
                         lateralPoleBone.setManuallyControlled(true);
                         ventralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "VentralPoleControl");
                         ventralPoleBone.setManuallyControlled(true);
-                        posteriorPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPole");
-                        posteriorPoleBone.setManuallyControlled(true);
                         posteriorPoleRotator = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPoleRotator");
                         posteriorPoleRotator.setManuallyControlled(true);
 
-                        //if (boneBaseName == "RightEmenence")
-                        //{
-                        //    entity.setDisplaySkeleton(true);
-                        //}
+                        if (boneBaseName == "RightEmenence")
+                        {
+                            entity.setDisplaySkeleton(true);
+                        }
                     }
                 }
                 else
@@ -273,12 +258,15 @@ public class Disc : Behavior
             //pole updates
             Vector3 medialTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + medialPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
             medialPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), medialTranslation));
+            medialPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
             medialPoleBone.needUpdate(true);
             Vector3 lateralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + lateralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
             lateralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), lateralTranslation));
+            lateralPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
             lateralPoleBone.needUpdate(true);
             Vector3 ventralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + ventralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
             ventralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), ventralTranslation));
+            ventralPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
             ventralPoleBone.needUpdate(true);
 
             float location = controlPoint.CurrentLocation;
@@ -294,32 +282,26 @@ public class Disc : Behavior
                 updateTranslation(ref translation);
 
                 Quaternion posteriorPopRotation = Quaternion.Identity;
-                Quaternion counterPopRotation = Quaternion.Identity;
                 if (location < nineOClockPosition && location > oneOClockPosition)
                 {
                     float rotBlend = (location - oneOClockPosition) / rotationRange;
                     posteriorPopRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
-                    counterPopRotation = startingRot.slerp(ref nineOClockCounterRotationQuat, rotBlend);
                 }
                 else
                 {
                     if (location >= nineOClockPosition)
                     {
                         posteriorPopRotation = nineOClockRotationQuat;
-                        counterPopRotation = nineOClockCounterRotationQuat;
                     }
                     if (location <= oneOClockPosition)
                     {
                         posteriorPopRotation = startingRot;
-                        counterPopRotation = startingRot;
                     }
                 }
                 if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
                 {
                     posteriorPoleRotator.setOrientation(posteriorPopRotation);
                     posteriorPoleRotator.needUpdate(true);
-                    posteriorPoleBone.setOrientation(counterPopRotation);
-                    posteriorPoleBone.needUpdate(true);
                 }
                 else
                 {
@@ -327,9 +309,6 @@ public class Disc : Behavior
                     Quaternion posteriorSlipRotation = posteriorPopRotation.slerp(ref startingRot, rotBlend);
                     posteriorPoleRotator.setOrientation(posteriorSlipRotation);
                     posteriorPoleRotator.needUpdate(true);
-                    Quaternion counterSlipRotation = counterPopRotation.slerp(ref startingRot, rotBlend);
-                    posteriorPoleBone.setOrientation(counterSlipRotation);
-                    posteriorPoleBone.needUpdate(true);
                 }
             }
             foreach (DiscBonePair bone in bones)
@@ -346,9 +325,6 @@ public class Disc : Behavior
                 bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
                 bone.bone.needUpdate(true);
             }
-
-            
-            posteriorPoleBone.needUpdate(true);
 
 #if DEBUG_KEYS
             if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)

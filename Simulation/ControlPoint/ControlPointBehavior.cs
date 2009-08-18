@@ -202,7 +202,7 @@ namespace Medical
         {
             get
             {
-                return bone.getDerivedOrientation();
+                return bone.getDerivedOrientation() * boneObject.Rotation;
             }
         }
 
