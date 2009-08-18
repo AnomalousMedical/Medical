@@ -44,6 +44,7 @@ namespace Medical
         private Quaternion startingRotation;
         private Vector3 offset = Vector3.Zero;
         private Quaternion rotationOffset = Quaternion.Identity;
+        protected int numContacts = 0;
 
         protected override void constructed()
         {
@@ -71,8 +72,11 @@ namespace Medical
             {
                 blacklist("Could not find Joint {0}.", jointName);
             }
-            startingLocation = joint.getFrameOffsetOriginA();
-            startingRotation = joint.getFrameOffsetBasisB();
+            else
+            {
+                startingLocation = joint.getFrameOffsetOriginA();
+                startingRotation = joint.getFrameOffsetBasisB();
+            }
             transparency = Owner.getElement(transparencyInterface) as TransparencyInterface;
             if (transparency == null)
             {
@@ -87,10 +91,28 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-
+            //if (numContacts > 0)
+            //{
+            //    HighlightColor = Color.Red;
+            //}
+            //else
+            //{
+            //    HighlightColor = Color.Black;
+            //}
         }
 
         protected abstract void looseChanged(bool loose);
+
+        protected Color HighlightColor
+        {
+            set
+            {
+                using (MaterialPtr material = entity.getSubEntity(0).getMaterial())
+                {
+                    material.Value.setSelfIllumination(ref value);
+                }
+            }
+        }
 
         public bool Extracted
         {
