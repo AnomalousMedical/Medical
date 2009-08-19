@@ -43,8 +43,6 @@ namespace Medical
         }
 #endif
 
-        private const float DEG_TO_RAD = 0.0174532925f;
-
         [Editable]
         private Vector3 normalDiscOffset = Vector3.UnitY * -0.302f;
 
@@ -78,15 +76,6 @@ namespace Medical
         private bool locked = false;
 
         [Editable]
-        private Vector3 nineOClockRotation = new Vector3(0.0f, 0.0f, 110.0f);
-
-        [Editable]
-        private float nineOClockPosition = .7368f;
-
-        [Editable]
-        private float oneOClockPosition = .5132f;
-
-        [Editable]
         String controlPointObject;
 
         [Editable]
@@ -117,7 +106,7 @@ namespace Medical
         DiscLockedPoleControl ventralPole = new DiscLockedPoleControl();
 
         [Editable]
-        String posteriorBoneRotatorName;
+        DiscPosteriorPoleControl posteriorPole = new DiscPosteriorPoleControl();
 
         [DoNotCopy]
         [DoNotSave]
@@ -129,33 +118,12 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        Bone posteriorPoleRotator;
-
-        [DoNotCopy]
-        [DoNotSave]
         Fossa fossa;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Quaternion nineOClockRotationQuat;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Quaternion startingRot;
-
-        [DoNotCopy]
-        [DoNotSave]
-        float rotationRange;
 
         private ControlPointBehavior controlPoint;
 
         protected override void constructed()
         {
-            Vector3 rotRad = nineOClockRotation * DEG_TO_RAD;
-            nineOClockRotationQuat.setEuler(rotRad.x, rotRad.y, rotRad.z);
-            startingRot = this.Owner.Rotation;
-            rotationRange = nineOClockPosition - oneOClockPosition;
-
             DiscController.addDisc(this);
             SimObject controlPointObj = Owner.getOtherSimObject(controlPointObject);
             if (controlPointObj != null)
@@ -188,9 +156,6 @@ namespace Medical
                             bones.Add(new DiscBonePair(bone, current));
                             current += delta;
                         }
-                        //TEMP TEMP TEMP TEMP TEMP REMOVE EMENENCE REPLACE HACK HACK
-                        posteriorPoleRotator = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPoleRotator");
-                        posteriorPoleRotator.setManuallyControlled(true);
 
                         if (boneBaseName == "RightEmenence")
                         {
@@ -201,6 +166,7 @@ namespace Medical
                         medialPole.findBone(skeleton);
                         lateralPole.findBone(skeleton);
                         ventralPole.findBone(skeleton);
+                        posteriorPole.initialize(skeleton, Owner, controlPoint, this);
                     }
                 }
                 else
@@ -261,35 +227,7 @@ namespace Medical
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
                 updateTranslation(ref translation);
 
-                Quaternion posteriorPopRotation = Quaternion.Identity;
-                if (location < nineOClockPosition && location > oneOClockPosition)
-                {
-                    float rotBlend = (location - oneOClockPosition) / rotationRange;
-                    posteriorPopRotation = startingRot.slerp(ref nineOClockRotationQuat, rotBlend);
-                }
-                else
-                {
-                    if (location >= nineOClockPosition)
-                    {
-                        posteriorPopRotation = nineOClockRotationQuat;
-                    }
-                    if (location <= oneOClockPosition)
-                    {
-                        posteriorPopRotation = startingRot;
-                    }
-                }
-                if (controlPoint.CurrentLocation < discPopLocation - discBackOffset)
-                {
-                    posteriorPoleRotator.setOrientation(posteriorPopRotation);
-                    posteriorPoleRotator.needUpdate(true);
-                }
-                else
-                {
-                    float rotBlend = (controlPoint.CurrentLocation - discPopLocation + discBackOffset) / discBackOffset;
-                    Quaternion posteriorSlipRotation = posteriorPopRotation.slerp(ref startingRot, rotBlend);
-                    posteriorPoleRotator.setOrientation(posteriorSlipRotation);
-                    posteriorPoleRotator.needUpdate(true);
-                }
+                posteriorPole.update(location);
             }
             foreach (DiscBonePair bone in bones)
             {
@@ -429,6 +367,22 @@ namespace Medical
             set
             {
                 locked = value;
+            }
+        }
+
+        internal float DiscPopLocation
+        {
+            get
+            {
+                return discPopLocation;
+            }
+        }
+
+        internal float DiscBackOffset
+        {
+            get
+            {
+                return discBackOffset;
             }
         }
 
