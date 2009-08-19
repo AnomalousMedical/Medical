@@ -63,7 +63,7 @@ namespace Medical
 
         //The location that the disc starts to move with the condyle.
         [Editable]
-        private float discPopLocation = 0.0f;
+        private float discPopLocation = 0.5132f;
 
         //The offset from the discPopLocation where the condyle starts to go under the disc.
         [Editable]
@@ -298,6 +298,14 @@ namespace Medical
             }
         }
 
+        public float NormalPopLocation
+        {
+            get
+            {
+                return posteriorPole.OneOClockPosition;
+            }
+        }
+
         public float PopLocation
         {
             get
@@ -339,14 +347,6 @@ namespace Medical
             set
             {
                 locked = value;
-            }
-        }
-
-        internal float DiscPopLocation
-        {
-            get
-            {
-                return discPopLocation;
             }
         }
 

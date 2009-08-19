@@ -62,7 +62,7 @@ namespace Medical.GUI
             Enabled = leftDisc != null && rightDisc != null;
             if (Enabled)
             {
-                setSliders(leftDisc.DiscOffset.y, leftDisc.RDAOffset.y, rightDisc.DiscOffset.y, rightDisc.RDAOffset.y);
+                setSliders(leftDisc.PopLocation, leftDisc.DiscOffset.y, leftDisc.RDAOffset.y, rightDisc.PopLocation, rightDisc.DiscOffset.y, rightDisc.RDAOffset.y);
             }
         }
 
@@ -74,12 +74,12 @@ namespace Medical.GUI
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
-            setSliders(leftDisc.NormalDiscOffset.y, leftDisc.NormalRDAOffset.y, rightDisc.NormalDiscOffset.y, rightDisc.NormalRDAOffset.y);
+            setSliders(leftDisc.NormalPopLocation, leftDisc.NormalDiscOffset.y, leftDisc.NormalRDAOffset.y, rightDisc.NormalPopLocation, rightDisc.NormalDiscOffset.y, rightDisc.NormalRDAOffset.y);
             leftSideValueChanged(null, null);
             rightSideValueChanged(null, null);
         }
 
-        private void setSliders(float leftDisc, float leftRDA, float rightDisc, float rightRDA)
+        private void setSliders(float leftPosition, float leftDisc, float leftRDA, float rightPosition, float rightDisc, float rightRDA)
         {
             allowUpdates = false;
             leftDiscOffset.Value = (int)(leftDisc * -leftDiscOffset.Maximum);
@@ -92,6 +92,9 @@ namespace Medical.GUI
 
             rightDiscLocked.Checked = this.rightDisc.Locked;
             leftDiscLocked.Checked = this.leftDisc.Locked;
+
+            leftDiscPositionSlider.Value = (int)(leftPosition * leftDiscPositionSlider.Maximum);
+            rightDiscPositionSlider.Value = (int)(leftPosition * rightDiscPositionSlider.Maximum);
             allowUpdates = true;
         }
 

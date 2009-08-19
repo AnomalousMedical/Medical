@@ -94,17 +94,25 @@ namespace Medical
                     posteriorPopRotation = startingRot;
                 }
             }
-            if (controlPoint.CurrentLocation < disc.DiscPopLocation - disc.DiscBackOffset)
+            if (controlPoint.CurrentLocation < disc.PopLocation - disc.DiscBackOffset)
             {
                 posteriorPoleRotator.setOrientation(posteriorPopRotation);
                 posteriorPoleRotator.needUpdate(true);
             }
             else
             {
-                float rotBlend = (controlPoint.CurrentLocation - disc.DiscPopLocation + disc.DiscBackOffset) / disc.DiscBackOffset;
+                float rotBlend = (controlPoint.CurrentLocation - disc.PopLocation + disc.DiscBackOffset) / disc.DiscBackOffset;
                 Quaternion posteriorSlipRotation = posteriorPopRotation.slerp(ref startingRot, rotBlend);
                 posteriorPoleRotator.setOrientation(posteriorSlipRotation);
                 posteriorPoleRotator.needUpdate(true);
+            }
+        }
+
+        public float OneOClockPosition
+        {
+            get
+            {
+                return oneOClockPosition;
             }
         }
     }
