@@ -14,6 +14,7 @@ namespace Medical.GUI
         private BoneManipulator manipulator;
         private int blendDelta = 0;
         private int blendStart;
+        private bool allowUpdate = true;
 
         public BoneManipulatorSlider()
         {
@@ -24,6 +25,9 @@ namespace Medical.GUI
         public void initialize(BoneManipulator manipulator)
         {
             this.manipulator = manipulator;
+            allowUpdate = false;
+            valueTrackBar.Value = (int)(manipulator.Position * valueTrackBar.Maximum);
+            allowUpdate = true;
         }
 
         public void clearManipulator()
@@ -33,7 +37,10 @@ namespace Medical.GUI
 
         void valueTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            manipulator.setPosition((float)valueTrackBar.Value / valueTrackBar.Maximum);
+            if (allowUpdate)
+            {
+                manipulator.Position = (float)valueTrackBar.Value / valueTrackBar.Maximum;
+            }
         }
 
         public void startBlend(float blendTarget)
@@ -45,6 +52,11 @@ namespace Medical.GUI
         public void blend(float amount)
         {
             valueTrackBar.Value = blendStart + (int)(blendDelta * amount);
+        }
+
+        public void setToDefault()
+        {
+            valueTrackBar.Value = (int)(manipulator.DefaultPosition * valueTrackBar.Maximum);
         }
 
         public String LabelText

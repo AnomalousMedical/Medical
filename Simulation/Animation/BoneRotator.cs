@@ -51,5 +51,13 @@ namespace Medical
                 bone.needUpdate(true);
             }
         }
+
+        public override float DefaultPosition
+        {
+            get
+            {
+                return 0.0f;
+            }
+        }
     }
 }

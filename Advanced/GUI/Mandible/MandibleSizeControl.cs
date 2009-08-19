@@ -62,6 +62,14 @@ namespace Medical.GUI
             }
         }
 
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            foreach (BoneManipulatorSlider slider in sliderPanel.Controls)
+            {
+                slider.setToDefault();
+            }
+        }
+
         //void startRightTimer()
         //{
         //    controller.FullSpeedLoopUpdate += updateRightTimer;

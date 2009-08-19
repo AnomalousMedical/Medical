@@ -7,6 +7,7 @@ using Engine.Editing;
 using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using Engine.Attributes;
 
 namespace Medical
 {
@@ -18,12 +19,39 @@ namespace Medical
         [Editable]
         Vector3 endScale = Vector3.Zero;
 
+        [Editable]
+        float defaultPosition = 0.0f;
+
         public override void positionUpdated(float position, Bone bone)
         {
             if (bone != null)
             {
                 bone.setScale(startScale.lerp(ref endScale, ref position));
                 bone.needUpdate(true);
+            }
+        }
+
+        public override float DefaultPosition
+        {
+            get 
+            {
+                return defaultPosition;
+            }
+        }
+
+        [Editable]
+        [DoNotCopy]
+        public float DefaultXSetter
+        {
+            get
+            {
+                return 0;
+            }
+            set
+            {
+                float val = (value - endScale.x) / (startScale.x - endScale.x) - 1;
+                defaultPosition = Math.Abs(val);
+                Position = defaultPosition;
             }
         }
     }

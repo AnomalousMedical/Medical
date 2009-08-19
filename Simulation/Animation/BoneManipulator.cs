@@ -89,18 +89,25 @@ namespace Medical
             }
         }
 
-        public void setPosition(float position)
-        {
-            currentPosition = position;
-            positionUpdated(position, bone);
-        }
-
-        public float getPosition()
-        {
-            return currentPosition;
-        }
-
         public abstract void positionUpdated(float position, Bone bone);
+
+        public float Position
+        {
+            get
+            {
+                return currentPosition;
+            }
+            set
+            {
+                currentPosition = value;
+                positionUpdated(currentPosition, bone);
+            }
+        }
+
+        public abstract float DefaultPosition
+        {
+            get;
+        }
 
         public String UIName
         {

@@ -27,7 +27,7 @@ namespace Medical
                 float start = positions[key];
                 float end = target.positions[key];
                 float delta = end - start;
-                BoneManipulatorController.getManipulator(key).setPosition(start + delta * percent);
+                BoneManipulatorController.getManipulator(key).Position = start + delta * percent;
             }
         }
 

@@ -55,7 +55,7 @@ namespace Medical
             BoneManipulatorState state = new BoneManipulatorState();
             foreach (BoneManipulator manipulator in boneManipulators.Values)
             {
-                state.addPosition(manipulator.UIName, manipulator.getPosition());
+                state.addPosition(manipulator.UIName, manipulator.Position);
             }
             return state;
         }
