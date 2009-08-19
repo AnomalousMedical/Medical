@@ -73,6 +73,9 @@ namespace Medical
         private float popAdditionalOffsetPercent = 0.5f;
 
         [Editable]
+        Vector3 elevenOClockAdditionalOffset = Vector3.UnitZ * -0.1f;
+
+        [Editable]
         private bool locked = false;
 
         [Editable]
@@ -226,6 +229,10 @@ namespace Medical
             if (location < discPopLocation - discBackOffset)
             {
                 return rdaOffset + horizontalOffset;
+            }
+            else if (location < discPopLocation - discBackOffset / 2.0f)
+            {
+                return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset + elevenOClockAdditionalOffset; 
             }
             else if (location < discPopLocation)
             {
