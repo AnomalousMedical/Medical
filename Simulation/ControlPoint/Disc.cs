@@ -25,15 +25,15 @@ namespace Medical
         }
     }
 
-public class Disc : Behavior
-{
-        
+    public class Disc : Behavior
+    {
+
 #if DEBUG_KEYS
 
-    enum DiscEvents
-    {
-        PrintBoneLocations,
-    }
+        enum DiscEvents
+        {
+            PrintBoneLocations,
+        }
 
         static Disc()
         {
@@ -107,6 +107,20 @@ public class Disc : Behavior
         [Editable]
         String fossaName;
 
+        [Editable]
+        DiscLockedPoleControl medialPole = new DiscLockedPoleControl();
+
+        [Editable]
+        DiscLockedPoleControl lateralPole = new DiscLockedPoleControl();
+
+        [Editable]
+        DiscLockedPoleControl ventralPole = new DiscLockedPoleControl();
+
+        [Editable]
+        String posteriorBoneRotatorName;
+
+        [DoNotCopy]
+        [DoNotSave]
         Vector3 endpointOffset = Vector3.Zero;
 
         [DoNotCopy]
@@ -115,31 +129,7 @@ public class Disc : Behavior
 
         [DoNotCopy]
         [DoNotSave]
-        Bone medialPoleBone;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Bone lateralPoleBone;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Bone ventralPoleBone;
-
-        [DoNotCopy]
-        [DoNotSave]
         Bone posteriorPoleRotator;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Vector3 medialPoleBoneOffset;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Vector3 lateralPoleBoneOffset;
-
-        [DoNotCopy]
-        [DoNotSave]
-        Vector3 ventralPoleBoneOffset;
 
         [DoNotCopy]
         [DoNotSave]
@@ -199,12 +189,6 @@ public class Disc : Behavior
                             current += delta;
                         }
                         //TEMP TEMP TEMP TEMP TEMP REMOVE EMENENCE REPLACE HACK HACK
-                        medialPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "MedialPoleControl2");
-                        medialPoleBone.setManuallyControlled(true);
-                        lateralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "LateralPoleControl2");
-                        lateralPoleBone.setManuallyControlled(true);
-                        ventralPoleBone = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "VentralPoleControl");
-                        ventralPoleBone.setManuallyControlled(true);
                         posteriorPoleRotator = skeleton.getBone(boneBaseName.Replace("Emenence", "") + "PosteriorPoleRotator");
                         posteriorPoleRotator.setManuallyControlled(true);
 
@@ -212,6 +196,11 @@ public class Disc : Behavior
                         {
                             entity.setDisplaySkeleton(true);
                         }
+
+                        //real code
+                        medialPole.findBone(skeleton);
+                        lateralPole.findBone(skeleton);
+                        ventralPole.findBone(skeleton);
                     }
                 }
                 else
@@ -243,9 +232,9 @@ public class Disc : Behavior
         {
             Vector3 endpointBoneWorld = controlPoint.MandibleBonePosition + controlPoint.MandibleTranslation;
             endpointOffset = this.Owner.Translation - endpointBoneWorld;
-            medialPoleBoneOffset = medialPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
-            lateralPoleBoneOffset = lateralPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
-            ventralPoleBoneOffset = ventralPoleBone.getDerivedPosition() + Owner.Translation - endpointBoneWorld;
+            medialPole.initialize(controlPoint, Owner);
+            lateralPole.initialize(controlPoint, Owner);
+            ventralPole.initialize(controlPoint, Owner);
         }
 
         protected override void destroy()
@@ -256,18 +245,9 @@ public class Disc : Behavior
         public override void update(Clock clock, EventManager eventManager)
         {
             //pole updates
-            Vector3 medialTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + medialPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
-            medialPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), medialTranslation));
-            medialPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
-            medialPoleBone.needUpdate(true);
-            Vector3 lateralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + lateralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
-            lateralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), lateralTranslation));
-            lateralPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
-            lateralPoleBone.needUpdate(true);
-            Vector3 ventralTranslation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + ventralPoleBoneOffset) + controlPoint.MandibleTranslation - Owner.Translation;
-            ventralPoleBone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), ventralTranslation));
-            ventralPoleBone.setOrientation(controlPoint.MandibleBoneRotation);
-            ventralPoleBone.needUpdate(true);
+            medialPole.update();
+            lateralPole.update();
+            ventralPole.update();
 
             float location = controlPoint.CurrentLocation;
             if (controlPoint.CurrentLocation >= discPopLocation && !locked)
@@ -327,31 +307,7 @@ public class Disc : Behavior
             }
 
 #if DEBUG_KEYS
-            if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)
-            {
-                Log.Default.debug("\nBone position -- {0}", boneBaseName);
-                SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
-                if (node != null)
-                {
-                    Entity entity = node.getNodeObject(entityName) as Entity;
-                    if (entity != null)
-                    {
-                        if (entity.hasSkeleton())
-                        {
-                            SkeletonInstance skeleton = entity.getSkeleton();
-                            for(ushort i = 0; i < skeleton.getNumBones(); ++i)
-                            {
-                                Bone bone = skeleton.getBone(i);
-                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
-                                Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
-                                Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
-                                //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
-                            }    
-                        }
-                    }
-                }
-                Log.Default.debug("End Bone position -- {0}\n", boneBaseName);
-            }
+            processDebug(eventManager);
 #endif
         }
 
@@ -475,5 +431,36 @@ public class Disc : Behavior
                 locked = value;
             }
         }
+
+#if DEBUG_KEYS
+        private void processDebug(EventManager eventManager)
+        {
+            if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)
+            {
+                Log.Default.debug("\nBone position -- {0}", boneBaseName);
+                SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
+                if (node != null)
+                {
+                    Entity entity = node.getNodeObject(entityName) as Entity;
+                    if (entity != null)
+                    {
+                        if (entity.hasSkeleton())
+                        {
+                            SkeletonInstance skeleton = entity.getSkeleton();
+                            for (ushort i = 0; i < skeleton.getNumBones(); ++i)
+                            {
+                                Bone bone = skeleton.getBone(i);
+                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
+                                Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
+                                Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
+                                //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
+                            }
+                        }
+                    }
+                }
+                Log.Default.debug("End Bone position -- {0}\n", boneBaseName);
+            }
+        }
+#endif
     }
 }
