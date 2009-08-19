@@ -89,6 +89,7 @@
     <Compile Include="ControlPoint\DiscPosteriorPoleControl.cs" />
     <Compile Include="ControlPoint\DiscState.cs" />
     <Compile Include="ControlPoint\DiscStateProperties.cs" />
+    <Compile Include="ControlPoint\DiscTopSurface.cs" />
     <Compile Include="ControlPoint\Fossa.cs" />
     <Compile Include="ControlPoint\Disc.cs" />
     <Compile Include="ControlPoint\FossaController.cs" />

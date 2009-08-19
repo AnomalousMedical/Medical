@@ -88,9 +88,6 @@ namespace Medical
         String entityName = "Entity";
 
         [Editable]
-        String boneBaseName;
-
-        [Editable]
         String fossaObject;
 
         [Editable]
@@ -108,18 +105,19 @@ namespace Medical
         [Editable]
         DiscPosteriorPoleControl posteriorPole = new DiscPosteriorPoleControl();
 
+        [Editable]
+        DiscTopSurface topSurface = new DiscTopSurface();
+
         [DoNotCopy]
         [DoNotSave]
         Vector3 endpointOffset = Vector3.Zero;
 
         [DoNotCopy]
         [DoNotSave]
-        List<DiscBonePair> bones = new List<DiscBonePair>();
+        Fossa fossa;
 
         [DoNotCopy]
         [DoNotSave]
-        Fossa fossa;
-
         private ControlPointBehavior controlPoint;
 
         protected override void constructed()
@@ -138,46 +136,6 @@ namespace Medical
             {
                 blacklist("Could not find controlPointObject {0}.", controlPointObject);
             }
-            SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
-            if (node != null)
-            {
-                Entity entity = node.getNodeObject(entityName) as Entity;
-                if (entity != null)
-                {
-                    if (entity.hasSkeleton())
-                    {
-                        SkeletonInstance skeleton = entity.getSkeleton();
-                        float current = -0.1f;
-                        float delta = 0.013f;
-                        for (int i = 1; skeleton.hasBone(boneBaseName + i); ++i)
-                        {
-                            Bone bone = skeleton.getBone(boneBaseName + i);
-                            bone.setManuallyControlled(true);
-                            bones.Add(new DiscBonePair(bone, current));
-                            current += delta;
-                        }
-
-                        if (boneBaseName == "RightEmenence")
-                        {
-                            entity.setDisplaySkeleton(true);
-                        }
-
-                        //real code
-                        medialPole.findBone(skeleton);
-                        lateralPole.findBone(skeleton);
-                        ventralPole.findBone(skeleton);
-                        posteriorPole.initialize(skeleton, Owner, controlPoint, this);
-                    }
-                }
-                else
-                {
-                    blacklist("Could not find entity {0} in node {1}.", entityName, sceneNodeName);
-                }
-            }
-            else
-            {
-                blacklist("Could not find SceneNode {0}.", sceneNodeName);
-            }
 
             SimObject fossaSimObject = Owner.getOtherSimObject(fossaObject);
             if (fossaSimObject != null)
@@ -191,6 +149,32 @@ namespace Medical
             else
             {
                 blacklist("Could not find Fossa SimObject {0}.", fossaObject);
+            }
+
+            SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
+            if (node != null)
+            {
+                Entity entity = node.getNodeObject(entityName) as Entity;
+                if (entity != null)
+                {
+                    if (entity.hasSkeleton())
+                    {
+                        SkeletonInstance skeleton = entity.getSkeleton();
+                        medialPole.findBone(skeleton);
+                        lateralPole.findBone(skeleton);
+                        ventralPole.findBone(skeleton);
+                        posteriorPole.initialize(skeleton, Owner, controlPoint, this);
+                        topSurface.initialize(skeleton, fossa, Owner);
+                    }
+                }
+                else
+                {
+                    blacklist("Could not find entity {0} in node {1}.", entityName, sceneNodeName);
+                }
+            }
+            else
+            {
+                blacklist("Could not find SceneNode {0}.", sceneNodeName);
             }
         }
 
@@ -229,20 +213,8 @@ namespace Medical
 
                 posteriorPole.update(location);
             }
-            foreach (DiscBonePair bone in bones)
-            {
-                float loc = location + bone.offset;
-                if (loc < 0.0f)
-                {
-                    loc = 0.0f;
-                }
-                else if (loc > 1.0f)
-                {
-                    loc = 1.0f;
-                }
-                bone.bone.setPosition(Quaternion.quatRotate(Owner.Rotation.inverse(), fossa.getPosition(loc) - Owner.Translation));
-                bone.bone.needUpdate(true);
-            }
+
+            topSurface.update(location);
 
 #if DEBUG_KEYS
             processDebug(eventManager);
@@ -391,7 +363,7 @@ namespace Medical
         {
             if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)
             {
-                Log.Default.debug("\nBone position -- {0}", boneBaseName);
+                Log.Default.debug("\nBone position -- {0}", Owner.Name);
                 SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
                 if (node != null)
                 {
@@ -412,7 +384,7 @@ namespace Medical
                         }
                     }
                 }
-                Log.Default.debug("End Bone position -- {0}\n", boneBaseName);
+                Log.Default.debug("End Bone position -- {0}\n", Owner.Name);
             }
         }
 #endif
