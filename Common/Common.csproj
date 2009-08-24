@@ -247,6 +247,7 @@
     <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\View\TextWatermark.cs" />
     <Compile Include="GUI\View\TiledWatermark.cs" />
     <Compile Include="GUI\View\Watermark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

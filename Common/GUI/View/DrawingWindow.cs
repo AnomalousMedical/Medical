@@ -45,7 +45,8 @@ namespace Medical
             orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
-            watermark = new TiledWatermark(name + "Watermark", 150, 60);
+            //watermark = new TiledWatermark(name + "Watermark", 150, 60);
+            watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
         }
 
         public void recreateWindow()
