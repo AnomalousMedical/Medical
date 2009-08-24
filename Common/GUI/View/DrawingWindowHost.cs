@@ -120,6 +120,11 @@ namespace Medical
             drawingWindow.setRenderingMode(Engine.RenderingMode.Points);
         }
 
+        private void showStatsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            drawingWindow.showStats(true);
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);

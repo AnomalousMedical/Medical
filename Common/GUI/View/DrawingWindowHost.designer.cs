@@ -33,6 +33,7 @@
             this.changeBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renderingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wireframeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
@@ -44,7 +45,8 @@
             // 
             this.tabContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBackgroundColorToolStripMenuItem,
-            this.renderingModeToolStripMenuItem});
+            this.renderingModeToolStripMenuItem,
+            this.showStatsToolStripMenuItem});
             this.tabContextMenu.Name = "contextMenuStrip1";
             this.tabContextMenu.Size = new System.Drawing.Size(215, 70);
             // 
@@ -54,6 +56,13 @@
             this.changeBackgroundColorToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
             this.changeBackgroundColorToolStripMenuItem.Text = "Change Background Color";
             this.changeBackgroundColorToolStripMenuItem.Click += new System.EventHandler(this.changeBackgroundColorToolStripMenuItem_Click);
+            // 
+            // showStatsToolStripMenuItem
+            // 
+            this.showStatsToolStripMenuItem.Name = "showStatsToolStripMenuItem";
+            this.showStatsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.showStatsToolStripMenuItem.Text = "Show Stats";
+            this.showStatsToolStripMenuItem.Click += new System.EventHandler(this.showStatsToolStripMenuItem_Click);
             // 
             // renderingModeToolStripMenuItem
             // 
@@ -126,5 +135,6 @@
         private System.Windows.Forms.ToolStripMenuItem solidToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wireframeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pointToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showStatsToolStripMenuItem;
     }
 }

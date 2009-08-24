@@ -31,6 +31,7 @@ namespace Medical
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
         private SimScene scene;
+        private Watermark watermark = null;
 
         public DrawingWindow()
         {
@@ -44,6 +45,7 @@ namespace Medical
             orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
+            watermark = new TiledWatermark(name + "Watermark", 150, 60);
         }
 
         public void recreateWindow()
@@ -52,6 +54,24 @@ namespace Medical
             renderer.destroyRendererWindow(window);
             window = renderer.createRendererWindow(this, name);
             createCamera(mainTimer, scene);
+        }
+
+        public void createWatermark()
+        {
+            watermark.createOverlays();
+        }
+
+        public void destroyWatermark()
+        {
+            if (watermark != null)
+            {
+                watermark.destroyOverlays();
+            }
+        }
+
+        private void disposeCallback()
+        {
+            destroyWatermark();
         }
 
         #region OSWindow Members
@@ -109,6 +129,7 @@ namespace Medical
                 orbitCamera.setCamera(camera);
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
+                ((OgreCameraControl)camera).PreFindVisibleObjects += camera_PreFindVisibleObjects;
             }
             else
             {
@@ -120,12 +141,18 @@ namespace Medical
         {
             if (camera != null)
             {
+                ((OgreCameraControl)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
                 orbitCamera.setCamera(null);
                 window.destroyCamera(camera);
                 mainTimer.removeFixedUpdateListener(orbitCamera);
                 camera = null;
                 CameraResolver.removeMotionValidator(this);
             }
+        }
+
+        void camera_PreFindVisibleObjects(bool callingCameraRender)
+        {
+            watermark.setVisible(callingCameraRender);
         }
 
         public void setCamera(Vector3 position, Vector3 lookAt)
@@ -203,6 +230,7 @@ namespace Medical
                 if (this.Size.Width > 0 && this.Size.Height > 0)
                 {
                     listener.resized(this);
+                    watermark.sizeChanged(this.Size.Width, this.Size.Height);
                 }
             }
             base.OnResize(e);

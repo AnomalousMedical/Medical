@@ -28,6 +28,7 @@ namespace Medical.Controller
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
         private StatePicker statePicker = new StatePicker();
+        private Watermark watermark;
 
         /// <summary>
         /// Constructor.
@@ -113,6 +114,9 @@ namespace Medical.Controller
             }
 
             options = new Options();
+
+            Watermark.CreateResources();
+            drawingWindowController.showWatermarks(true);
 
             basicForm.Show();
             splash.Close();
