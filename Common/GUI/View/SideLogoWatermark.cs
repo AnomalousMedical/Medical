@@ -6,18 +6,16 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class TiledWatermark : Watermark
+    class SideLogoWatermark : Watermark
     {
         private PanelOverlayElement panel;
         private Overlay overlay;
         private String name;
         float markWidth = 100;
         float markHeight = 100;
-        float screenWidth = 100;
-        float screenHeight = 100;
         String materialName;
 
-        public TiledWatermark(String name, String materialName, float width, float height)
+        public SideLogoWatermark(String name, String materialName, float width, float height)
         {
             this.name = name;
             this.markWidth = width;
@@ -29,19 +27,18 @@ namespace Medical
         {
             overlay = OverlayManager.getInstance().create(name + "Overlay__");
             panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "StatsOverlayPanel__") as PanelOverlayElement;
-            panel.setUV(0, 0, screenWidth / markWidth, screenHeight / markHeight);
+            panel.setUV(0, 0, 1, 1);
+            panel.setVerticalAlignment(GuiVerticalAlignment.GVA_BOTTOM);
+            panel.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
             panel.setMaterialName(materialName);
             overlay.add2d(panel);
+            panel.setDimensions(markWidth, markHeight);
+            panel.setPosition(0, -markHeight);
         }
 
         public override void sizeChanged(float width, float height)
         {
-            screenWidth = width;
-            screenHeight = height;
-            if (panel != null)
-            {
-                panel.setUV(0, 0, width / markWidth, height / markHeight);
-            }
+            
         }
 
         public override void setVisible(bool visible)

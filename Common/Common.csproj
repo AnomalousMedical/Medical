@@ -234,6 +234,7 @@
       <DependentUpon>SavePatientDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\View\CameraSection.cs" />
+    <Compile Include="GUI\View\CenteredWatermark.cs" />
     <Compile Include="GUI\View\DrawingWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -247,6 +248,7 @@
     <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\View\SideLogoWatermark.cs" />
     <Compile Include="GUI\View\TextWatermark.cs" />
     <Compile Include="GUI\View\TiledWatermark.cs" />
     <Compile Include="GUI\View\Watermark.cs" />

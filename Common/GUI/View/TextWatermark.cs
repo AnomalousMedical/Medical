@@ -13,7 +13,6 @@ namespace Medical
         private Overlay overlay;
         private String name;
         float markHeight = 100;
-        float screenHeight = 100;
         String text;
 
         public TextWatermark(String name, String text, float height)
@@ -33,18 +32,15 @@ namespace Medical
             fpsTextArea.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
             fpsTextArea.setCharHeight(markHeight);
             fpsTextArea.setCaption(text);
-            fpsTextArea.setPosition(0.0f, screenHeight - markHeight);
+            fpsTextArea.setVerticalAlignment(GuiVerticalAlignment.GVA_BOTTOM);
+            fpsTextArea.setPosition(5.0f, -markHeight);
 
             overlay.add2d(statsPanel);
         }
 
         public override void sizeChanged(float width, float height)
         {
-            this.screenHeight = height;
-            if (fpsTextArea != null)
-            {
-                fpsTextArea.setPosition(5.0f, screenHeight - markHeight);
-            }
+            
         }
 
         public override void setVisible(bool visible)

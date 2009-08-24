@@ -6,18 +6,16 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class TiledWatermark : Watermark
+    class CenteredWatermark : Watermark
     {
         private PanelOverlayElement panel;
         private Overlay overlay;
         private String name;
         float markWidth = 100;
         float markHeight = 100;
-        float screenWidth = 100;
-        float screenHeight = 100;
         String materialName;
 
-        public TiledWatermark(String name, String materialName, float width, float height)
+        public CenteredWatermark(String name, String materialName, float width, float height)
         {
             this.name = name;
             this.markWidth = width;
@@ -29,18 +27,23 @@ namespace Medical
         {
             overlay = OverlayManager.getInstance().create(name + "Overlay__");
             panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "StatsOverlayPanel__") as PanelOverlayElement;
-            panel.setUV(0, 0, screenWidth / markWidth, screenHeight / markHeight);
+            panel.setUV(0, 0, 1, 1);
+            panel.setVerticalAlignment(GuiVerticalAlignment.GVA_CENTER);
+            panel.setHorizontalAlignment(GuiHorizontalAlignment.GHA_CENTER);
+            panel.setMetricsMode(GuiMetricsMode.GMM_RELATIVE);
             panel.setMaterialName(materialName);
             overlay.add2d(panel);
+            panel.setDimensions(markWidth, markHeight);
+            panel.setPosition(-markWidth / 2.0f, -markHeight / 2.0f);
         }
 
         public override void sizeChanged(float width, float height)
         {
-            screenWidth = width;
-            screenHeight = height;
-            if (panel != null)
+            if(panel != null)
             {
-                panel.setUV(0, 0, width / markWidth, height / markHeight);
+                float aspect = width / height;
+                panel.setDimensions(markWidth, markHeight * aspect);
+                panel.setPosition(-panel.getWidth() / 2.0f, -panel.getHeight() / 2.0f);
             }
         }
 
