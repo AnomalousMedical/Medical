@@ -47,7 +47,7 @@ namespace Medical
             window = renderer.createRendererWindow(this, name);
             //watermark = new TiledWatermark(name + "Watermark", "Watermark", 150, 60);
             //watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
-            //watermark = new SideLogoWatermark(name + "Watermark", "PiperClinic", 150, 60);
+            watermark = new SideLogoWatermark(name + "Watermark", "PiperClinic", 150, 60);
             //watermark = new CenteredWatermark(name + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
         }
 
