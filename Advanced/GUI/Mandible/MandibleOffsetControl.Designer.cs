@@ -37,17 +37,19 @@
             this.rightForwardBack = new System.Windows.Forms.TrackBar();
             this.rightOffset = new System.Windows.Forms.NumericUpDown();
             this.leftOffset = new System.Windows.Forms.NumericUpDown();
+            this.openTrackBar = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(67, 267);
+            this.distortionButton.Location = new System.Drawing.Point(68, 309);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(125, 23);
             this.distortionButton.TabIndex = 1;
@@ -162,12 +164,26 @@
             this.leftOffset.Size = new System.Drawing.Size(120, 20);
             this.leftOffset.TabIndex = 8;
             // 
+            // openTrackBar
+            // 
+            this.openTrackBar.LargeChange = 2000;
+            this.openTrackBar.Location = new System.Drawing.Point(25, 269);
+            this.openTrackBar.Maximum = 10000;
+            this.openTrackBar.Minimum = -3000;
+            this.openTrackBar.Name = "openTrackBar";
+            this.openTrackBar.Size = new System.Drawing.Size(206, 45);
+            this.openTrackBar.SmallChange = 1000;
+            this.openTrackBar.TabIndex = 9;
+            this.openTrackBar.TickFrequency = 10000;
+            this.openTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
             // MandibleOffsetControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(281, 320);
+            this.ClientSize = new System.Drawing.Size(281, 410);
+            this.Controls.Add(this.openTrackBar);
             this.Controls.Add(this.leftOffset);
             this.Controls.Add(this.rightOffset);
             this.Controls.Add(this.leftForwardBack);
@@ -188,6 +204,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +221,6 @@
         private System.Windows.Forms.TrackBar rightForwardBack;
         private System.Windows.Forms.NumericUpDown rightOffset;
         private System.Windows.Forms.NumericUpDown leftOffset;
+        private System.Windows.Forms.TrackBar openTrackBar;
     }
 }

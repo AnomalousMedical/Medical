@@ -27,6 +27,13 @@ namespace Medical.GUI
             bothForwardBack.ValueChanged += bothForwardBackChanged;
             leftOffset.ValueChanged += offset_ValueChanged;
             rightOffset.ValueChanged += offset_ValueChanged;
+            openTrackBar.ValueChanged += openTrackBar_ValueChanged;
+        }
+
+        void openTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            MuscleController.changeForce("MovingMuscleDynamic", 50.0f);
+            MuscleController.MovingTarget.Offset = new Vector3(0.0f, -openTrackBar.Value / (openTrackBar.Maximum / 30.0f), 0.0f);
         }
 
         void offset_ValueChanged(object sender, EventArgs e)

@@ -11,6 +11,7 @@ namespace Medical
         static Dictionary<String, MuscleBehavior> muscles = new Dictionary<string,MuscleBehavior>();
         static LinkedList<MuscleSequence> muscleSequences = new LinkedList<MuscleSequence>();
         private static MuscleSequence currentSequence = null;
+        private static MovingMuscleTarget movingTarget;
 
         internal static void addMuscle(String name, MuscleBehavior muscle)
         {
@@ -86,6 +87,18 @@ namespace Medical
         public static IEnumerable<MuscleSequence> getMuscleSequences()
         {
             return muscleSequences;
+        }
+
+        public static MovingMuscleTarget MovingTarget
+        {
+            get
+            {
+                return movingTarget;
+            }
+            internal set
+            {
+                movingTarget = value;
+            }
         }
     }
 }

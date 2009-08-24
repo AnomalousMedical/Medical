@@ -229,5 +229,10 @@ namespace Medical
                 return location;
             }
         }
+
+        public void setRotation(float rot)
+        {
+            joint.setLimit(3, rot, rot + 0.01f);
+        }
     }
 }

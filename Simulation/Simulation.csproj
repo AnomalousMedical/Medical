@@ -95,6 +95,7 @@
     <Compile Include="ControlPoint\FossaController.cs" />
     <Compile Include="ControlPoint\FossaPresetState.cs" />
     <Compile Include="ControlPoint\FossaState.cs" />
+    <Compile Include="Muscles\MovingMuscleTarget.cs" />
     <Compile Include="Muscles\MuscleBehavior.cs" />
     <Compile Include="Muscles\MuscleController.cs" />
     <Compile Include="Muscles\MuscleSequence.cs" />
