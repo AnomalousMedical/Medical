@@ -12,6 +12,7 @@ using Engine.Saving;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using Medical.Properties;
+using Logging;
 
 namespace Medical.Controller
 {
@@ -36,7 +37,6 @@ namespace Medical.Controller
         public BasicController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Basic");
-            constructStatePicker();
         }
 
         /// <summary>
@@ -117,6 +117,8 @@ namespace Medical.Controller
 
             Watermark.CreateResources();
             drawingWindowController.showWatermarks(true);
+
+            constructStatePicker();
 
             basicForm.Show();
             splash.Close();
@@ -284,161 +286,282 @@ namespace Medical.Controller
 
         private void constructStatePicker()
         {
-            statePicker.addPresetStateSet(createGrowthSet("Left", "left"), Resources.ResourceManager);
-            statePicker.addPresetStateSet(createGrowthSet("Right", "right"), Resources.ResourceManager);
-            statePicker.addPresetStateSet(createDegenerationSet("Left", "left"), Resources.ResourceManager);
-            statePicker.addPresetStateSet(createDegenerationSet("Right", "right"), Resources.ResourceManager);
+            //statePicker.addPresetStateSet(createGrowthSet("Left", "left"), Resources.ResourceManager);
+            //statePicker.addPresetStateSet(createGrowthSet("Right", "right"), Resources.ResourceManager);
+            //statePicker.addPresetStateSet(createDegenerationSet("Left", "left"), Resources.ResourceManager);
+            //statePicker.addPresetStateSet(createDegenerationSet("Right", "right"), Resources.ResourceManager);
+            PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", Resource.ResourceRoot + "/Presets/LeftGrowth");
+            loadPresetSet(leftGrowth);
+            statePicker.addPresetStateSet(leftGrowth);
+
+            PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", Resource.ResourceRoot + "/Presets/RightGrowth");
+            loadPresetSet(rightGrowth);
+            statePicker.addPresetStateSet(rightGrowth);
+
+            PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", Resource.ResourceRoot + "/Presets/LeftDegeneration");
+            loadPresetSet(leftDegeneration);
+            statePicker.addPresetStateSet(leftDegeneration);
+
+            PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", Resource.ResourceRoot + "/Presets/RightDegeneration");
+            loadPresetSet(rightDegeneration);
+            statePicker.addPresetStateSet(rightDegeneration);
+
             statePicker.addStatePanel(new DiscSpacePanel());
             statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
+            statePicker.setToDefault();
+        }
+
+        private void loadPresetSet(PresetStateSet presetStateSet)
+        {
+            if (Directory.Exists(presetStateSet.SourceDirectory))
+            {
+                using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
+                {
+                    String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
+                    foreach (String file in files)
+                    {
+                        XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
+                        BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                        if (preset != null)
+                        {
+                            presetStateSet.addPresetState(preset);
+                        }
+                        else
+                        {
+                            Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                        }
+                        reader.Close();
+                    }
+                }
+            }
         }
 
         private PresetStateSet createGrowthSet(String sidePretty, String sideBoneBase)
         {
+            if(!Directory.Exists(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth"))
+            {
+                Directory.CreateDirectory(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth");
+            }
+
             BoneManipulatorPresetState boneManipulatorPreset;
             String ramusHeight = sideBoneBase + "RamusHeightMandible";
             String condyleHeight = sideBoneBase + "CondyleHeightMandible";
             String condyleRotation = sideBoneBase + "CondyleRotationMandible";
             String mandibluarNotch = sideBoneBase + "MandibularNotchMandible";
             String antegonialNotch = sideBoneBase + "AntegonialNotchMandible";
-            PresetStateSet condyleGrowth = new PresetStateSet(sidePretty + " Condyle Growth");
+            PresetStateSet condyleGrowth = new PresetStateSet(sidePretty + " Condyle Growth", "");
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "GrowthNormal");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "GrowthNormal.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.1121006f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            XmlTextWriter writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 1", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation1");
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 1", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation1.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.2f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 2", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation2");
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 2", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation2.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.3f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 3", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation3");
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation 3", "Mild Deficiency", sidePretty + "GrowthMildNoCompensation3.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.4f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation", "Mild Deficiency", sidePretty + "GrowthMildCompensation");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation", "Mild Deficiency", sidePretty + "GrowthMildCompensation.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.4f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.4f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 1", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation1");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 1", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation1.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.7f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.2f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.7f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 2", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation2");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 2", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation2.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.7f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.7f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.8f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 3", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation3");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Condylar Compensation 3", "Moderate Deficiency", sidePretty + "GrowthModerateCompensation3.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.7f);
             boneManipulatorPreset.addPosition(condyleRotation, 1.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 1.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation", "Moderate Deficiency", sidePretty + "GrowthModerateNoCompensation");
+            boneManipulatorPreset = new BoneManipulatorPresetState("No Condylar Compensation", "Moderate Deficiency", sidePretty + "GrowthModerateNoCompensation.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1960605f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.7f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 1", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible1");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 1", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible1.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.09f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.95f);
             boneManipulatorPreset.addPosition(condyleRotation, 0.9f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.0f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.6f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 2", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible2");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 2", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible2.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.1f);
             boneManipulatorPreset.addPosition(condyleHeight, 0.98f);
             boneManipulatorPreset.addPosition(condyleRotation, 1.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.1f);
             boneManipulatorPreset.addPosition(antegonialNotch, 0.85f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 3", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible3");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Total Mandible 3", "Extreme Deficiency", sidePretty + "GrowthExtremeTotalMandible3.png");
             boneManipulatorPreset.addPosition(ramusHeight, 0.62f);
             boneManipulatorPreset.addPosition(condyleHeight, 1.0f);
             boneManipulatorPreset.addPosition(condyleRotation, 1.0f);
             boneManipulatorPreset.addPosition(mandibluarNotch, 0.25f);
             boneManipulatorPreset.addPosition(antegonialNotch, 1.0f);
             condyleGrowth.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Growth/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
             return condyleGrowth;
         }
 
         private PresetStateSet createDegenerationSet(String sidePretty, String sideBoneBase)
         {
+            if (!Directory.Exists(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration"))
+            {
+                Directory.CreateDirectory(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration");
+            }
+
             String condyleDegenerationMandible = sideBoneBase + "CondyleDegenerationMandible";
             String lateralPoleMandible = sideBoneBase + "LateralPoleMandible";
             String medialPoleScale = sideBoneBase + "MedialPoleScaleMandible";
             BoneManipulatorPresetState boneManipulatorPreset;
-            PresetStateSet condyleDegeneration = new PresetStateSet(sidePretty + " Condyle Degeneration");
+            PresetStateSet condyleDegeneration = new PresetStateSet(sidePretty + " Condyle Degeneration", "");
+            XmlTextWriter writer;
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "DegenerationNormal");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Normal", "Normal", sidePretty + "DegenerationNormal.png");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.0f);
             boneManipulatorPreset.addPosition(lateralPoleMandible, 0.0f);
             boneManipulatorPreset.addPosition(medialPoleScale, 0.0f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Mild Degeneration", "Total Degeneration", sidePretty + "DegenerationMild");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Mild Degeneration", "Total Degeneration", sidePretty + "DegenerationMild.png");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.2f);
             boneManipulatorPreset.addPosition(lateralPoleMandible, 0.2f);
             boneManipulatorPreset.addPosition(medialPoleScale, 0.2f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Moderate Degeneration", "Total Degeneration", sidePretty + "DegenerationModerate");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Moderate Degeneration", "Total Degeneration", sidePretty + "DegenerationModerate.png");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.4f);
             boneManipulatorPreset.addPosition(lateralPoleMandible, 0.4f);
             boneManipulatorPreset.addPosition(medialPoleScale, 0.4f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Severe Degeneration", "Total Degeneration", sidePretty + "DegenerationSevere");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Severe Degeneration", "Total Degeneration", sidePretty + "DegenerationSevere.png");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 0.7f);
             boneManipulatorPreset.addPosition(lateralPoleMandible, 0.7f);
             boneManipulatorPreset.addPosition(medialPoleScale, 0.7f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
-            boneManipulatorPreset = new BoneManipulatorPresetState("Extreme Degeneration", "Total Degeneration", sidePretty + "DegenerationExtreme");
+            boneManipulatorPreset = new BoneManipulatorPresetState("Extreme Degeneration", "Total Degeneration", sidePretty + "DegenerationExtreme.png");
             boneManipulatorPreset.addPosition(condyleDegenerationMandible, 1.0f);
             boneManipulatorPreset.addPosition(lateralPoleMandible, 1.0f);
             boneManipulatorPreset.addPosition(medialPoleScale, 1.0f);
             condyleDegeneration.addPresetState(boneManipulatorPreset);
+            writer = new XmlTextWriter(Resource.ResourceRoot + "/Presets/" + sidePretty + "Degeneration/" + boneManipulatorPreset.Name + ".pre", Encoding.Default);
+            writer.Formatting = Formatting.Indented;
+            saver.saveObject(boneManipulatorPreset, writer);
+            writer.Close();
 
             return condyleDegeneration;
         }

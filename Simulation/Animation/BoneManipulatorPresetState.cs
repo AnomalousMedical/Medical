@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -27,5 +28,23 @@ namespace Medical
                 state.BoneManipulator.addPosition(position, positions[position]);
             }
         }
+
+        #region Saveable Members
+
+        private const String POSITION_BASE = "Position";
+
+        protected BoneManipulatorPresetState(LoadInfo info)
+            :base(info)
+        {
+            info.RebuildDictionary<String, float>(POSITION_BASE, positions);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.ExtractDictionary<String, float>(POSITION_BASE, positions);
+        }
+
+        #endregion
     }
 }

@@ -30,10 +30,10 @@ namespace Medical.GUI
             item.Tag = panel;
         }
 
-        public void addPresetStateSet(PresetStateSet presetSet, ResourceManager imageResources)
+        public void addPresetStateSet(PresetStateSet presetSet)
         {
             PresetStatePanel panel = new PresetStatePanel();
-            panel.initialize(presetSet, imageResources);
+            panel.initialize(presetSet);
             addStatePanel(panel);
         }
 

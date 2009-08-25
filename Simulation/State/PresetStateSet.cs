@@ -8,11 +8,13 @@ namespace Medical
     public class PresetStateSet
     {
         private String name;
+        private String sourceDirectory;
         private List<PresetState> presets = new List<PresetState>();
 
-        public PresetStateSet(String name)
+        public PresetStateSet(String name, String sourceDirectory)
         {
             this.name = name;
+            this.sourceDirectory = sourceDirectory;
         }
 
         public void addPresetState(PresetState state)
@@ -33,6 +35,14 @@ namespace Medical
             get
             {
                 return name;
+            }
+        }
+
+        public String SourceDirectory
+        {
+            get
+            {
+                return sourceDirectory;
             }
         }
     }

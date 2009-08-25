@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Resources;
+using Engine.Resources;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -24,33 +26,39 @@ namespace Medical.GUI
             presetListView.LargeImageList.ImageSize = new Size(100, 100);
         }
 
-        public void initialize(PresetStateSet presetStateSet, ResourceManager imageResources)
+        public void initialize(PresetStateSet presetStateSet)
         {
-            this.Text = presetStateSet.Name;
-            foreach (PresetState state in presetStateSet.Presets)
+            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
             {
-                ListViewGroup group;
-                groups.TryGetValue(state.Category, out group);
-                if (group == null)
+                this.Text = presetStateSet.Name;
+                foreach (PresetState state in presetStateSet.Presets)
                 {
-                    group = new ListViewGroup(state.Category);
-                    groups.Add(state.Category, group);
-                    presetListView.Groups.Add(group);
-                }
-                if (!presetListView.LargeImageList.Images.ContainsKey(state.ImageName))
-                {
-                    Image image = imageResources.GetObject(state.ImageName) as Image;
-                    if(image != null)
+                    ListViewGroup group;
+                    groups.TryGetValue(state.Category, out group);
+                    if (group == null)
                     {
-                        presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                        group = new ListViewGroup(state.Category);
+                        groups.Add(state.Category, group);
+                        presetListView.Groups.Add(group);
                     }
+                    if (!presetListView.LargeImageList.Images.ContainsKey(state.ImageName))
+                    {
+                        using (Stream imageStream = archive.openStream(presetStateSet.SourceDirectory + "/" + state.ImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            Image image = Image.FromStream(imageStream);
+                            if (image != null)
+                            {
+                                presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                            }
+                        }
+                    }
+                    ListViewItem item = new ListViewItem(state.Name, state.ImageName);
+                    item.Tag = state;
+                    item.Group = group;
+                    presetListView.Items.Add(item);
                 }
-                ListViewItem item = new ListViewItem(state.Name, state.ImageName);
-                item.Tag = state;
-                item.Group = group;
-                presetListView.Items.Add(item);
+                defaultItem = presetListView.Items[0];
             }
-            defaultItem = presetListView.Items[0];
         }
 
         public override void applyToState(MedicalState state)
