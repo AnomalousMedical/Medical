@@ -33,7 +33,7 @@ namespace Medical
         String uiName;
 
         SkeletonInstance skeleton;
-        Bone bone;
+        protected Bone bone;
 
         protected override void constructed()
         {
@@ -89,7 +89,9 @@ namespace Medical
             }
         }
 
-        public abstract void positionUpdated(float position, Bone bone);
+        public abstract void positionUpdated(float position);
+
+        public abstract BoneManipulatorStateEntry createStateEntry();
 
         public float Position
         {
@@ -100,7 +102,7 @@ namespace Medical
             set
             {
                 currentPosition = value;
-                positionUpdated(currentPosition, bone);
+                positionUpdated(currentPosition);
             }
         }
 

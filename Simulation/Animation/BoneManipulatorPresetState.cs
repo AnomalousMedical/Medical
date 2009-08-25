@@ -8,7 +8,7 @@ namespace Medical
 {
     public class BoneManipulatorPresetState : PresetState
     {
-        private Dictionary<String, float> positions = new Dictionary<string, float>();
+        private List<BoneManipulatorStateEntry> positions = new List<BoneManipulatorStateEntry>();
 
         public BoneManipulatorPresetState(String name, String category, String imageName)
             :base(name, category, imageName)
@@ -16,16 +16,16 @@ namespace Medical
 
         }
 
-        public void addPosition(String manipulator, float position)
+        public void addPosition(BoneManipulatorStateEntry entry)
         {
-            positions.Add(manipulator, position);
+            positions.Add(entry);
         }
 
         public override void applyToState(MedicalState state)
         {
-            foreach (String position in positions.Keys)
+            foreach (BoneManipulatorStateEntry position in positions)
             {
-                state.BoneManipulator.addPosition(position, positions[position]);
+                state.BoneManipulator.addPosition(position.clone());
             }
         }
 
@@ -36,13 +36,13 @@ namespace Medical
         protected BoneManipulatorPresetState(LoadInfo info)
             :base(info)
         {
-            info.RebuildDictionary<String, float>(POSITION_BASE, positions);
+            info.RebuildList<BoneManipulatorStateEntry>(POSITION_BASE, positions);
         }
 
         public override void getInfo(SaveInfo info)
         {
             base.getInfo(info);
-            info.ExtractDictionary<String, float>(POSITION_BASE, positions);
+            info.ExtractList<BoneManipulatorStateEntry>(POSITION_BASE, positions);
         }
 
         #endregion

@@ -77,8 +77,11 @@
     <Compile Include="Animation\BoneManipulatorController.cs" />
     <Compile Include="Animation\BoneManipulatorPresetState.cs" />
     <Compile Include="Animation\BoneManipulatorState.cs" />
+    <Compile Include="Animation\BoneManipulatorStateEntry.cs" />
     <Compile Include="Animation\BoneRotator.cs" />
+    <Compile Include="Animation\BoneRotatorStateEntry.cs" />
     <Compile Include="Animation\BoneScalar.cs" />
+    <Compile Include="Animation\BoneScalarStateEntry.cs" />
     <Compile Include="Animation\InteractiveCurve.cs" />
     <Compile Include="Animation\FixedJointBoneFollower.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />

@@ -8,26 +8,23 @@ namespace Medical
 {
     public class BoneManipulatorState : Saveable
     {
-        private Dictionary<String, float> positions = new Dictionary<string, float>();
+        private Dictionary<String, BoneManipulatorStateEntry> positions = new Dictionary<string, BoneManipulatorStateEntry>();
 
         internal BoneManipulatorState()
         {
 
         }
 
-        public void addPosition(String manipulator, float position)
+        public void addPosition(BoneManipulatorStateEntry entry)
         {
-            positions.Add(manipulator, position);
+            positions.Add(entry.Name, entry);
         }
 
         public void blend(BoneManipulatorState target, float percent)
         {
             foreach (String key in positions.Keys)
             {
-                float start = positions[key];
-                float end = target.positions[key];
-                float delta = end - start;
-                BoneManipulatorController.getManipulator(key).Position = start + delta * percent;
+                positions[key].blend(target.positions[key], percent);
             }
         }
 
@@ -37,12 +34,12 @@ namespace Medical
 
         protected BoneManipulatorState(LoadInfo info)
         {
-            info.RebuildDictionary<String, float>(POSITIONS, positions);
+            info.RebuildDictionary<String, BoneManipulatorStateEntry>(POSITIONS, positions);
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.ExtractDictionary<String, float>(POSITIONS, positions);
+            info.ExtractDictionary<String, BoneManipulatorStateEntry>(POSITIONS, positions);
         }
 
         #endregion

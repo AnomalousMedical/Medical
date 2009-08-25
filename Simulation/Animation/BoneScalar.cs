@@ -8,6 +8,7 @@ using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using Engine.Attributes;
+using Logging;
 
 namespace Medical
 {
@@ -22,13 +23,18 @@ namespace Medical
         [Editable]
         float defaultPosition = 0.0f;
 
-        public override void positionUpdated(float position, Bone bone)
+        public override void positionUpdated(float position)
         {
             if (bone != null)
             {
                 bone.setScale(startScale.lerp(ref endScale, ref position));
                 bone.needUpdate(true);
             }
+        }
+
+        public override BoneManipulatorStateEntry createStateEntry()
+        {
+            return new BoneScalarStateEntry(UIName, Scale);
         }
 
         public override float DefaultPosition
@@ -52,6 +58,20 @@ namespace Medical
                 float val = (value - endScale.x) / (startScale.x - endScale.x) - 1;
                 defaultPosition = Math.Abs(val);
                 Position = defaultPosition;
+            }
+        }
+
+        [DoNotCopy]
+        public Vector3 Scale
+        {
+            get
+            {
+                return bone.getScale();
+            }
+            set
+            {
+                bone.setScale(value);
+                bone.needUpdate(true);
             }
         }
     }

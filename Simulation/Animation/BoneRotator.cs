@@ -24,11 +24,11 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        Vector3 startRotationRad;
+        Quaternion startRotQuat;
 
         [DoNotCopy]
         [DoNotSave]
-        Vector3 endRotationRad;
+        Quaternion endRotQuat;
 
         [DoNotCopy]
         [DoNotSave]
@@ -37,19 +37,25 @@ namespace Medical
         protected override void constructed()
         {
             base.constructed();
-            startRotationRad = startRotation * DEG_TO_RAD;
-            endRotationRad = endRotation * DEG_TO_RAD;
+            Vector3 startRotationRad = startRotation * DEG_TO_RAD;
+            Vector3 endRotationRad = endRotation * DEG_TO_RAD;
+            startRotQuat = new Quaternion(startRotationRad.x, startRotationRad.y, startRotationRad.z);
+            endRotQuat = new Quaternion(endRotQuat.x, endRotQuat.y, endRotQuat.z);
         }
 
-        public override void positionUpdated(float position, Bone bone)
+        public override void positionUpdated(float position)
         {
             if (bone != null)
             {
-                Vector3 newRot = startRotationRad.lerp(ref endRotationRad, ref position);
-                newRotQuat.setEuler(newRot.x, newRot.y, newRot.z);
+                Quaternion newRotQuat = startRotQuat.slerp(ref endRotQuat, position);
                 bone.setOrientation(newRotQuat);
                 bone.needUpdate(true);
             }
+        }
+
+        public override BoneManipulatorStateEntry createStateEntry()
+        {
+            return new BoneRotatorStateEntry(UIName, Rotation);
         }
 
         public override float DefaultPosition
@@ -57,6 +63,20 @@ namespace Medical
             get
             {
                 return 0.0f;
+            }
+        }
+
+        [DoNotCopy]
+        public Quaternion Rotation
+        {
+            get
+            {
+                return bone.getOrientation();
+            }
+            set
+            {
+                bone.setOrientation(value);
+                bone.needUpdate(true);
             }
         }
     }
