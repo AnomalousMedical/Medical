@@ -57,7 +57,10 @@ namespace Medical.GUI
                     item.Group = group;
                     presetListView.Items.Add(item);
                 }
-                defaultItem = presetListView.Items[0];
+                if (presetListView.Items.Count > 0)
+                {
+                    defaultItem = presetListView.Items[0];
+                }
             }
         }
 
