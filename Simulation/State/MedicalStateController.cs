@@ -17,11 +17,17 @@ namespace Medical
 
         private List<MedicalState> states = new List<MedicalState>();
 
+        public MedicalState createAndAddState(String name)
+        {
+            MedicalState state = createState(name);
+            addState(state);
+            return state;
+        }
+
         public MedicalState createState(String name)
         {
             MedicalState state = new MedicalState(name);
             state.update();
-            addState(state);
             return state;
         }
 

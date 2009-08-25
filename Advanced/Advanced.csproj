@@ -105,6 +105,12 @@
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.Designer.cs">
+      <DependentUpon>BonePresetSaveWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Teeth\TeethControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +141,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
       <DependentUpon>MuscleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SavePresetState\BonePresetSaveWindow.resx">
+      <DependentUpon>BonePresetSaveWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Teeth\TeethControl.resx">

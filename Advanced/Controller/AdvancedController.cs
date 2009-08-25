@@ -26,6 +26,7 @@ namespace Medical.Controller
         private MedicalStateController stateController = new MedicalStateController();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
+        private ImageRenderer imageRenderer;
 
         /// <summary>
         /// Constructor.
@@ -40,6 +41,10 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            if (drawingWindowController != null)
+            {
+                drawingWindowController.Dispose();
+            }
             if (medicalController != null)
             {
                 medicalController.Dispose();
@@ -66,6 +71,8 @@ namespace Medical.Controller
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
+            imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+
             guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
 
             //Add common gui elements
@@ -73,7 +80,7 @@ namespace Medical.Controller
             guiElements.addGUIElement(layersControl);
 
             PictureControl pictureControl = new PictureControl();
-            pictureControl.initialize(medicalController, drawingWindowController);
+            pictureControl.initialize(imageRenderer, drawingWindowController);
             guiElements.addGUIElement(pictureControl);
 
             stateGUI = new MedicalStateGUI();
@@ -104,6 +111,10 @@ namespace Medical.Controller
 
             FossaControl fossaControl = new FossaControl();
             guiElements.addGUIElement(fossaControl);
+
+            BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
+            bonePresetSaver.initialize(imageRenderer, stateController);
+            guiElements.addGUIElement(bonePresetSaver);
 
             newScene();
             
@@ -187,7 +198,7 @@ namespace Medical.Controller
 
         public void createMedicalState(string name)
         {
-            stateController.createState(name);
+            stateController.createAndAddState(name);
             stateGUI.CurrentBlend = stateController.getNumStates() - 1;
         }
 

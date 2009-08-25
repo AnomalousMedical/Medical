@@ -28,6 +28,13 @@ namespace Medical
             }
         }
 
+        public BoneManipulatorStateEntry getEntry(String name)
+        {
+            BoneManipulatorStateEntry ret;
+            positions.TryGetValue(name, out ret);
+            return ret;
+        }
+
         #region Saveable Members
 
         private const string POSITIONS = "Positions";

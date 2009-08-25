@@ -92,6 +92,7 @@
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
+    <Compile Include="Controller\ImageRenderer.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />

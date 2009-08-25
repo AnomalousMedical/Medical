@@ -12,7 +12,7 @@ using Medical.GUI;
 
 namespace Medical
 {
-    public class DrawingWindowController
+    public class DrawingWindowController : IDisposable
     {
         private List<DrawingWindowHost> cameras = new List<DrawingWindowHost>();
         private bool camerasActive = false;
@@ -355,5 +355,18 @@ namespace Medical
                 host.Close();
             }
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            foreach (DrawingWindowHost host in cameras)
+            {
+                host.DrawingWindow.Dispose();
+                host.Dispose();
+            }
+        }
+
+        #endregion
     }
 }

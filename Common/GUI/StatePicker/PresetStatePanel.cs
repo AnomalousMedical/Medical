@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Resources;
 using Engine.Resources;
 using System.IO;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -43,13 +44,20 @@ namespace Medical.GUI
                     }
                     if (!presetListView.LargeImageList.Images.ContainsKey(state.ImageName))
                     {
-                        using (Stream imageStream = archive.openStream(presetStateSet.SourceDirectory + "/" + state.ImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        try
                         {
-                            Image image = Image.FromStream(imageStream);
-                            if (image != null)
+                            using (Stream imageStream = archive.openStream(presetStateSet.SourceDirectory + "/" + state.ImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                             {
-                                presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                                Image image = Image.FromStream(imageStream);
+                                if (image != null)
+                                {
+                                    presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                                }
                             }
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Error("Could not open image preview file {0}.", presetStateSet.SourceDirectory + "/" + state.ImageName);
                         }
                     }
                     ListViewItem item = new ListViewItem(state.Name, state.ImageName);

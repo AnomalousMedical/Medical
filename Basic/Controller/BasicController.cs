@@ -29,7 +29,7 @@ namespace Medical.Controller
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
         private StatePicker statePicker = new StatePicker();
-        private Watermark watermark;
+        private ImageRenderer imageRenderer;
 
         /// <summary>
         /// Constructor.
@@ -44,9 +44,9 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
-            if (medicalController != null)
+            if (drawingWindowController != null)
             {
-                medicalController.Dispose();
+                drawingWindowController.Dispose();
             }
             if (basicForm != null)
             {
@@ -59,6 +59,10 @@ namespace Medical.Controller
             if (statePicker != null)
             {
                 statePicker.Dispose();
+            }
+            if (medicalController != null)
+            {
+                medicalController.Dispose();
             }
         }
 
@@ -78,6 +82,8 @@ namespace Medical.Controller
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
+            imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+
             guiElements = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
 
             //Add common gui elements
@@ -85,7 +91,7 @@ namespace Medical.Controller
             //guiElements.addGUIElement(layersControl);
 
             PictureControl pictureControl = new PictureControl();
-            pictureControl.initialize(medicalController, drawingWindowController);
+            pictureControl.initialize(imageRenderer, drawingWindowController);
             guiElements.addGUIElement(pictureControl);
 
             stateGUI = new MedicalStateGUI();
@@ -277,7 +283,7 @@ namespace Medical.Controller
             {
                 if (stateController.getNumStates() == 0)
                 {
-                    stateController.createState("Normal");
+                    stateController.createAndAddState("Normal");
                 }
                 stateController.addState(statePicker.CreatedState);
                 stateGUI.playAll();
