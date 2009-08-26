@@ -483,7 +483,15 @@
     <None Include="Resources\rightsemiflateminance.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EmbeddedWatermarks\PiperClinic.material" />
+    <EmbeddedResource Include="EmbeddedWatermarks\Tuffy.ttf" />
+    <EmbeddedResource Include="EmbeddedWatermarks\watermark.fontdef" />
+    <EmbeddedResource Include="EmbeddedWatermarks\watermark.material" />
     <None Include="Resources\mandiblediscspace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="EmbeddedWatermarks\PiperClinic.png" />
+    <EmbeddedResource Include="EmbeddedWatermarks\watermark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

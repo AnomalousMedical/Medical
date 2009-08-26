@@ -10,7 +10,9 @@ namespace Medical
     {
         public static void CreateResources()
         {
-            OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "FileSystem", "Watermark", false);
+            //OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "FileSystem", "Watermark", false);
+            //OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(Watermark).AssemblyQualifiedName, "EmbeddedResource", "Watermark", false);
             OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
         }
 

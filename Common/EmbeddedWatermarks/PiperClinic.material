@@ -1,0 +1,34 @@
+material PiperClinic
+{
+	technique
+	{
+		pass Draw
+		{
+			iteration once
+			
+			scene_blend alpha_blend
+
+			texture_unit Watermark
+			{
+				texture Medical.EmbeddedWatermarks.PiperClinic.png
+			}
+		}
+	}
+}
+material PiperClinicAlpha
+{
+	technique
+	{
+		pass Draw
+		{
+			iteration once
+			
+			scene_blend alpha_blend
+
+			texture_unit Watermark
+			{
+				texture Medical.EmbeddedWatermarks.watermark.png
+			}
+		}
+	}
+}

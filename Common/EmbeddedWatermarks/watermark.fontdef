@@ -1,0 +1,8 @@
+Watermark
+{
+	type 		truetype
+	source 		Medical.EmbeddedWatermarks.Tuffy.ttf
+	size 		32
+	resolution 	55
+}
+

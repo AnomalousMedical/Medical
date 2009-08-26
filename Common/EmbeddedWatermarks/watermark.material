@@ -1,0 +1,17 @@
+material Watermark
+{
+	technique
+	{
+		pass Draw
+		{
+			iteration once
+			
+			scene_blend alpha_blend
+
+			texture_unit Watermark
+			{
+				texture Medical.EmbeddedWatermarks.watermark.png
+			}
+		}
+	}
+}
