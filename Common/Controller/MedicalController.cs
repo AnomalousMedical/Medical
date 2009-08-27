@@ -76,7 +76,7 @@ namespace Medical
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
 
-            Resource.ResourceRoot = "s:/export";
+            Resource.ResourceRoot = "C:\\Users\\Andrew Piper\\Desktop\\New Folder\\TestResources.zip";
             Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
 
             hiddenEmbedWindow = new DrawingWindow();
@@ -163,14 +163,14 @@ namespace Medical
         /// </summary>
         /// <param name="filename">The file to load.</param>
         /// <returns>True if the scene was loaded, false on an error.</returns>
-        public bool openScene(String filename)
+        public bool openScene(Stream file)
         {
             medicalScene.destroyScene();
             XmlTextReader textReader = null;
             ScenePackage scenePackage = null;
             try
             {
-                textReader = new XmlTextReader(filename);
+                textReader = new XmlTextReader(file);
                 scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
             }
             finally

@@ -145,7 +145,17 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         public void open(String filename)
         {
-            changeScene(filename);
+            using (Archive sceneArchive = FileSystem.OpenArchive(Path.GetDirectoryName(filename)))
+            {
+                if (sceneArchive.exists(filename))
+                {
+                    using (Stream stream = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    {
+                        changeScene(stream);
+                    }
+                }
+                stateController.clearStates();
+            }
         }
 
         public void newScene()
@@ -251,26 +261,35 @@ namespace Medical.Controller
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private void changeScene(String filename)
+        private bool changeScene(Stream file)
         {
             guiElements.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
-            if (medicalController.openScene(filename))
+            if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+                return true;
             }
             else
             {
-                MessageBox.Show(String.Format("Could not open scene {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
         private void loadDefaultScene()
         {
-            if (File.Exists(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml"))
+            String sceneFileName = "/Scenes/MasterScene.sim.xml";
+            using (Archive sceneArchive = FileSystem.OpenArchive(Resource.ResourceRoot))
             {
-                changeScene(Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml");
+                if (sceneArchive.exists(Resource.ResourceRoot + sceneFileName))
+                {
+                    using (Stream stream = sceneArchive.openStream(Resource.ResourceRoot + sceneFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    {
+                        changeScene(stream);
+                    }
+                }
+                stateController.clearStates();
             }
         }
     }

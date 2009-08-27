@@ -147,11 +147,17 @@ namespace Medical.Controller
         /// </summary>
         public void openDefaultScene()
         {
-            if (File.Exists(Resource.ResourceRoot + sceneFileName))
+            using (Archive sceneArchive = FileSystem.OpenArchive(Resource.ResourceRoot))
             {
-                changeScene(Resource.ResourceRoot + sceneFileName);
+                if (sceneArchive.exists(Resource.ResourceRoot + sceneFileName))
+                {
+                    using (Stream stream = sceneArchive.openStream(Resource.ResourceRoot + sceneFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    {
+                        changeScene(stream);
+                    }
+                }
+                stateController.clearStates();
             }
-            stateController.clearStates();
         }
 
         /// <summary>
@@ -259,19 +265,20 @@ namespace Medical.Controller
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private void changeScene(String filename)
+        private bool changeScene(Stream file)
         {
             statePicker.setToDefault();
             guiElements.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
-            if (medicalController.openScene(filename))
+            if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+                return true;
             }
             else
             {
-                MessageBox.Show(String.Format("Could not open scene {0}.", filename), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
         }
 
@@ -321,25 +328,22 @@ namespace Medical.Controller
 
         private void loadPresetSet(PresetStateSet presetStateSet)
         {
-            if (Directory.Exists(presetStateSet.SourceDirectory))
+            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
             {
-                using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
+                String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
+                foreach (String file in files)
                 {
-                    String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
-                    foreach (String file in files)
+                    XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
+                    BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                    if (preset != null)
                     {
-                        XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
-                        BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
-                        if (preset != null)
-                        {
-                            presetStateSet.addPresetState(preset);
-                        }
-                        else
-                        {
-                            Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
-                        }
-                        reader.Close();
+                        presetStateSet.addPresetState(preset);
                     }
+                    else
+                    {
+                        Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                    }
+                    reader.Close();
                 }
             }
         }
