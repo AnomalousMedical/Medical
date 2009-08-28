@@ -29,7 +29,13 @@ namespace Medical
                 catch (Exception e)
                 {
                     Log.Default.printException(e);
-                    MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    String errorMessage = e.Message + "\n" + e.StackTrace;
+                    while (e.InnerException != null)
+                    {
+                        e = e.InnerException;
+                        errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
+                    }
+                    MessageBox.Show(errorMessage, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
