@@ -16,6 +16,8 @@ namespace Medical
         private static CameraSection cameraSection;
         private static ConfigSection program;
         private static ConfigSection resources;
+        private static String programDirectory;
+        private static String autoResourceRoot;
 
         public MedicalConfig(String docRoot)
         {
@@ -32,6 +34,24 @@ namespace Medical
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             resources = configFile.createOrRetrieveConfigSection("Resources", true);
+
+            String[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 0)
+            {
+                programDirectory = Path.GetDirectoryName(args[0]);
+            }
+            else
+            {
+                programDirectory = ".";
+            }
+            if (File.Exists(programDirectory + "/Articulometrics.zip"))
+            {
+                autoResourceRoot = programDirectory + "/Articulometrics.zip";
+            }
+            else
+            {
+                autoResourceRoot = ".";
+            }
         }
 
         public static String DocRoot
@@ -90,7 +110,7 @@ namespace Medical
         {
             get
             {
-                return resources.getValue("ResourceRoot", ".");
+                return resources.getValue("ResourceRoot", autoResourceRoot);
             }
             set
             {
