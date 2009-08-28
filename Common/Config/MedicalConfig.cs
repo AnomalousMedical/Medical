@@ -15,6 +15,7 @@ namespace Medical
         private static String camerasFile;
         private static CameraSection cameraSection;
         private static ConfigSection program;
+        private static ConfigSection resources;
 
         public MedicalConfig(String docRoot)
         {
@@ -30,6 +31,7 @@ namespace Medical
             cameraSection = new CameraSection(configFile);
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
+            resources = configFile.createOrRetrieveConfigSection("Resources", true);
         }
 
         public static String DocRoot
@@ -81,6 +83,18 @@ namespace Medical
             set
             {
                 program.setValue("SaveDirectory", value);
+            }
+        }
+
+        public static String ResourceRoot
+        {
+            get
+            {
+                return resources.getValue("ResourceRoot", ".");
+            }
+            set
+            {
+                resources.setValue("ResourceRoot", value);
             }
         }
 

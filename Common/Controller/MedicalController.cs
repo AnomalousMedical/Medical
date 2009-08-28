@@ -76,7 +76,7 @@ namespace Medical
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
 
-            Resource.ResourceRoot = "s:\\export";
+            Resource.ResourceRoot = MedicalConfig.ResourceRoot;
             Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
 
             hiddenEmbedWindow = new DrawingWindow();
