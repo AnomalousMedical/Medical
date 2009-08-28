@@ -15,7 +15,10 @@ namespace Medical
         private static String camerasFile;
         private static CameraSection cameraSection;
         private static ConfigSection program;
-        private static ConfigSection resources;
+
+        private static ConfigFile internalSettings = null;
+        private static ConfigSection resources = null;
+
         private static String programDirectory;
         private static String autoResourceRoot;
 
@@ -33,7 +36,6 @@ namespace Medical
             cameraSection = new CameraSection(configFile);
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
-            resources = configFile.createOrRetrieveConfigSection("Resources", true);
 
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 0)
@@ -51,6 +53,13 @@ namespace Medical
             else
             {
                 autoResourceRoot = ".";
+            }
+
+            if (File.Exists(programDirectory + "/override.ini"))
+            {
+                internalSettings = new ConfigFile(programDirectory + "/override.ini");
+                internalSettings.loadConfigFile();
+                resources = internalSettings.createOrRetrieveConfigSection("Resources");
             }
         }
 
@@ -110,11 +119,14 @@ namespace Medical
         {
             get
             {
-                return resources.getValue("ResourceRoot", autoResourceRoot);
-            }
-            set
-            {
-                resources.setValue("ResourceRoot", value);
+                if (internalSettings != null)
+                {
+                    return resources.getValue("ResourceRoot", autoResourceRoot);
+                }
+                else
+                {
+                    return autoResourceRoot;
+                }
             }
         }
 
