@@ -501,6 +501,7 @@
     <PostBuildEvent>copy $(ENGINE_HOME)\Release\cg.dll $(TargetDir)cg.dll
 copy $(ENGINE_HOME)\Release\OgreMain.dll $(TargetDir)OgreMain.dll
 copy $(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll $(TargetDir)Plugin_CgProgramManager.dll
-copy $(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll $(TargetDir)RenderSystem_Direct3D9.dll</PostBuildEvent>
+copy $(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll $(TargetDir)RenderSystem_Direct3D9.dll
+copy $(ENGINE_HOME)\Release\zzip.dll $(TargetDir)zzip.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -46,7 +46,11 @@ namespace Medical
             {
                 programDirectory = ".";
             }
-            if (File.Exists(programDirectory + "/Articulometrics.zip"))
+            if (File.Exists(programDirectory + "/Articulometrics.dat"))
+            {
+                autoResourceRoot = programDirectory + "/Articulometrics.dat";
+            }
+            else if (File.Exists(programDirectory + "/Articulometrics.zip"))
             {
                 autoResourceRoot = programDirectory + "/Articulometrics.zip";
             }
