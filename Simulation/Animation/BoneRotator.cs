@@ -40,7 +40,7 @@ namespace Medical
             Vector3 startRotationRad = startRotation * DEG_TO_RAD;
             Vector3 endRotationRad = endRotation * DEG_TO_RAD;
             startRotQuat = new Quaternion(startRotationRad.x, startRotationRad.y, startRotationRad.z);
-            endRotQuat = new Quaternion(endRotQuat.x, endRotQuat.y, endRotQuat.z);
+            endRotQuat = new Quaternion(endRotationRad.x, endRotationRad.y, endRotationRad.z);
         }
 
         public override void positionUpdated(float position)
