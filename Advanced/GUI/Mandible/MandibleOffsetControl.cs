@@ -28,11 +28,11 @@ namespace Medical.GUI
             leftOffset.ValueChanged += offset_ValueChanged;
             rightOffset.ValueChanged += offset_ValueChanged;
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
+            forceUpDown.ValueChanged += new EventHandler(forceUpDown_ValueChanged);
         }
 
         void openTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            MuscleController.changeForce("MovingMuscleDynamic", 50.0f);
             MuscleController.MovingTarget.Offset = new Vector3(0.0f, -openTrackBar.Value / (openTrackBar.Maximum / 30.0f), 0.0f);
         }
 
@@ -53,8 +53,9 @@ namespace Medical.GUI
         {
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
+            MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
             allowUpdates = false;
-            Enabled = leftCP != null && rightCP != null;
+            Enabled = leftCP != null && rightCP != null && movingMuscle != null;
             if (Enabled)
             {
                 leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
@@ -62,6 +63,7 @@ namespace Medical.GUI
                 bothForwardBack.Value = rightForwardBack.Value;
                 leftOffset.Value = (decimal)leftCP.getNeutralLocation();
                 rightOffset.Value = (decimal)rightCP.getNeutralLocation();
+                forceUpDown.Value = (decimal)movingMuscle.getForce();
             }
             bothForwardBack.Value = rightForwardBack.Value;
             allowUpdates = true;
@@ -108,6 +110,14 @@ namespace Medical.GUI
             rightOffset.Value = (decimal)rightCP.getNeutralLocation();
             allowUpdates = true;
             sliderValueChanged(sender, e);
-        }   
+        }
+
+        void forceUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (allowUpdates)
+            {
+                MuscleController.changeForce("MovingMuscleDynamic", (float)forceUpDown.Value);
+            }
+        }
     }
 }

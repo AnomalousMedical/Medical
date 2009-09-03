@@ -38,6 +38,8 @@
             this.rightOffset = new System.Windows.Forms.NumericUpDown();
             this.leftOffset = new System.Windows.Forms.NumericUpDown();
             this.openTrackBar = new System.Windows.Forms.TrackBar();
+            this.forceUpDown = new System.Windows.Forms.NumericUpDown();
+            this.forceLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
@@ -45,11 +47,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(68, 309);
+            this.distortionButton.Location = new System.Drawing.Point(66, 335);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(125, 23);
             this.distortionButton.TabIndex = 1;
@@ -177,12 +180,31 @@
             this.openTrackBar.TickFrequency = 10000;
             this.openTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
+            // forceUpDown
+            // 
+            this.forceUpDown.DecimalPlaces = 4;
+            this.forceUpDown.Location = new System.Drawing.Point(112, 309);
+            this.forceUpDown.Name = "forceUpDown";
+            this.forceUpDown.Size = new System.Drawing.Size(69, 20);
+            this.forceUpDown.TabIndex = 10;
+            // 
+            // forceLabel
+            // 
+            this.forceLabel.AutoSize = true;
+            this.forceLabel.Location = new System.Drawing.Point(72, 311);
+            this.forceLabel.Name = "forceLabel";
+            this.forceLabel.Size = new System.Drawing.Size(34, 13);
+            this.forceLabel.TabIndex = 11;
+            this.forceLabel.Text = "Force";
+            // 
             // MandibleOffsetControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(281, 410);
+            this.Controls.Add(this.forceLabel);
+            this.Controls.Add(this.forceUpDown);
             this.Controls.Add(this.openTrackBar);
             this.Controls.Add(this.leftOffset);
             this.Controls.Add(this.rightOffset);
@@ -205,6 +227,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,5 +245,7 @@
         private System.Windows.Forms.NumericUpDown rightOffset;
         private System.Windows.Forms.NumericUpDown leftOffset;
         private System.Windows.Forms.TrackBar openTrackBar;
+        private System.Windows.Forms.NumericUpDown forceUpDown;
+        private System.Windows.Forms.Label forceLabel;
     }
 }

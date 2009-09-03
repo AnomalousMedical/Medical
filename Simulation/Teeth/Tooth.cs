@@ -68,6 +68,7 @@ namespace Medical
                 blacklist("Could not find Actor {0}.", actorName);
             }
             actorElement.MaxContactDistance = 0.05f;
+            actorElement.setActivationState(ActivationState.DisableDeactivation);
             joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
             if (joint == null)
             {
