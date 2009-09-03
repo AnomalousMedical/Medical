@@ -116,6 +116,9 @@ namespace Medical.Controller
             bonePresetSaver.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(bonePresetSaver);
 
+            MovementStateControl movementState = new MovementStateControl();
+            guiElements.addGUIElement(movementState);
+
             newScene();
             
             if(!advancedForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))

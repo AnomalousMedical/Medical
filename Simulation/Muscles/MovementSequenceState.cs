@@ -13,11 +13,11 @@ namespace Medical.Muscles
         private Vector3 movingTargetPosition;
         private float muscleForce;
         private float duration;
-        private String name;
+        private float timeIndex;
+        private int index;
 
-        public MovementSequenceState(String name)
+        public MovementSequenceState()
         {
-            this.name = name;
             this.duration = 1.0f;
         }
 
@@ -34,13 +34,27 @@ namespace Medical.Muscles
 
         public void blend(MovementSequenceState targetState, float currentTime)
         {
-            float blendFactor = currentTime / duration;
+            float blendFactor = (currentTime - timeIndex) / duration;
             MuscleController.changeForce("MovingMuscleDynamic", muscleForce);
             MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref blendFactor);
+
             ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+            float delta = targetState.leftCPPosition - leftCPPosition;
+            leftCP.setLocation(leftCPPosition + delta * blendFactor);
+
             ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
-            leftCPPosition = leftCP.CurrentLocation;
-            rightCPPosition = rightCP.CurrentLocation;
+            delta = targetState.rightCPPosition - rightCPPosition;
+            rightCP.setLocation(rightCPPosition + delta * blendFactor);
+        }
+
+        /// <summary>
+        /// Determine if time is within this state.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public bool isTimePart(float time)
+        {
+            return time >= timeIndex && time < timeIndex + duration;
         }
 
         public float Duration
@@ -55,11 +69,31 @@ namespace Medical.Muscles
             }
         }
 
-        public String Name
+        /// <summary>
+        /// Internal tracking of where this sequence goes in the list. This is
+        /// the start time for the state.
+        /// </summary>
+        internal float TimeIndex
         {
             get
             {
-                return name;
+                return timeIndex;
+            }
+            set
+            {
+                timeIndex = value;
+            }
+        }
+
+        internal int Index
+        {
+            get
+            {
+                return index;
+            }
+            set
+            {
+                index = value;
             }
         }
     }

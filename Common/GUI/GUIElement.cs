@@ -13,6 +13,7 @@ namespace Medical.GUI
     {
         private ToolStripButton button;
         private GUIElementController controller;
+        private bool updating = false;
 
         public GUIElement()
         {
@@ -66,12 +67,20 @@ namespace Medical.GUI
 
         protected void subscribeToUpdates()
         {
-            controller.addUpdatingElement(this);
+            if (!updating)
+            {
+                controller.addUpdatingElement(this);
+                updating = true;
+            }
         }
 
         protected void unsubscribeFromUpdates()
         {
-            controller.removeUpdatingElement(this);
+            if (updating)
+            {
+                controller.removeUpdatingElement(this);
+                updating = false;
+            }
         }
 
         private void content_VisibleChanged(object sender, EventArgs e)

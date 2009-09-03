@@ -99,6 +99,12 @@
     <Compile Include="GUI\Mandible\MandibleSizeControl.Designer.cs">
       <DependentUpon>MandibleSizeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Mandible\MovementStateControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Mandible\MovementStateControl.Designer.cs">
+      <DependentUpon>MovementStateControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Mandible\MandibleSizeControl.resx">
       <DependentUpon>MandibleSizeControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Mandible\MovementStateControl.resx">
+      <DependentUpon>MovementStateControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
