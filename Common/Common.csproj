@@ -234,6 +234,10 @@
     <Compile Include="GUI\States\SavePatientDialog.Designer.cs">
       <DependentUpon>SavePatientDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\TimeTrackBar\TimeTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\TimeTrackBar\TrackBarMark.cs" />
     <Compile Include="GUI\View\CameraSection.cs" />
     <Compile Include="GUI\View\CenteredWatermark.cs" />
     <Compile Include="GUI\View\DrawingWindow.cs">

@@ -15,11 +15,14 @@ namespace Medical.GUI
     {
         private MovementSequence movementSequence = new MovementSequence("Test");
         private float time = 0.0f;
-        private bool playing;
 
         public MovementStateControl()
         {
             InitializeComponent();
+            timeTrackBar.addMark(new TrackBarMark(0.0f));
+            timeTrackBar.addMark(new TrackBarMark(0.3f));
+            timeTrackBar.addMark(new TrackBarMark(1.0f));
+            timeTrackBar.MaximumTime = 1.0f;
         }
 
         protected override void fixedLoopUpdate(Clock time)
