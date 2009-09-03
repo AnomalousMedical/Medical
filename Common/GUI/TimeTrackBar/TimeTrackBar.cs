@@ -55,13 +55,20 @@ namespace Medical.GUI
             Invalidate();
         }
 
-        public void removeState(MedicalState state)
+        public void removeMark(TrackBarMark mark)
         {
-
+            if (selectedState > 0 && selectedState < marks.Count)
+            {
+                selectedState = -1;
+            }
+            marks.Remove(mark);
+            calculateThumbPosition();
+            Invalidate();
         }
 
-        public void clearStates()
+        public void clearMarks()
         {
+            selectedState = -1;
             marks.Clear();
             currentTime = 0;
             calculateThumbPosition();
@@ -260,6 +267,22 @@ namespace Medical.GUI
             {
                 maximumTime = value;
                 calculateThumbPosition();
+            }
+        }
+
+        public TrackBarMark SelectedMark
+        {
+            get
+            {
+                if (selectedState > 0 && selectedState < marks.Count)
+                {
+                    return marks[selectedState];
+                }
+                return null;
+            }
+            set
+            {
+                selectedState = marks.IndexOf(value);
             }
         }
     }
