@@ -12,13 +12,11 @@ namespace Medical.Muscles
         private float rightCPPosition;
         private Vector3 movingTargetPosition;
         private float muscleForce;
-        private float duration;
-        private float timeIndex;
+        private float startTime;
         private int index;
 
         public MovementSequenceState()
         {
-            this.duration = 1.0f;
         }
 
         public void captureState()
@@ -32,9 +30,10 @@ namespace Medical.Muscles
             rightCPPosition = rightCP.CurrentLocation;
         }
 
-        public void blend(MovementSequenceState targetState, float currentTime)
+        internal void blend(MovementSequenceState targetState, float currentTime, float duration)
         {
-            float blendFactor = (currentTime - timeIndex) / duration;
+            float endTime = targetState.StartTime > startTime ? targetState.startTime - startTime : duration - startTime;
+            float blendFactor = (currentTime - startTime) / endTime;
             MuscleController.changeForce("MovingMuscleDynamic", muscleForce);
             MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref blendFactor);
 
@@ -48,52 +47,18 @@ namespace Medical.Muscles
         }
 
         /// <summary>
-        /// Determine if time is within this state.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public bool isTimePart(float time)
-        {
-            return time >= timeIndex && time < timeIndex + duration;
-        }
-
-        public float Duration
-        {
-            get
-            {
-                return duration;
-            }
-            set
-            {
-                duration = value;
-            }
-        }
-
-        /// <summary>
         /// Internal tracking of where this sequence goes in the list. This is
         /// the start time for the state.
         /// </summary>
-        internal float TimeIndex
+        public float StartTime
         {
             get
             {
-                return timeIndex;
+                return startTime;
             }
             set
             {
-                timeIndex = value;
-            }
-        }
-
-        internal int Index
-        {
-            get
-            {
-                return index;
-            }
-            set
-            {
-                index = value;
+                startTime = value;
             }
         }
     }

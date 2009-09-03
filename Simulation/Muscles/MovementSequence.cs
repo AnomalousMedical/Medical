@@ -5,32 +5,28 @@ using System.Text;
 
 namespace Medical.Muscles
 {
-    public class MovementSequence
+    public class MovementSequence : IComparer<MovementSequenceState>
     {
         String name;
-        private List<MovementSequenceState> states = new List<MovementSequenceState>();
+        private List<MovementSequenceState> states;
         private float duration;
         private int currentIndex = 0;
 
         public MovementSequence(String name)
         {
             this.name = name;
+            states = new List<MovementSequenceState>();
         }
 
         public void addState(MovementSequenceState state)
         {
-            if (states.Count > 0)
-            {
-                MovementSequenceState previous = states[states.Count - 1];
-                state.TimeIndex = previous.TimeIndex + previous.Duration;
-            }
-            else
-            {
-                state.TimeIndex = 0.0f;
-            }
-            state.Index = states.Count;
-            duration += state.Duration;
             states.Add(state);
+            sortStates();
+        }
+
+        public void sortStates()
+        {
+            states.Sort(this);
         }
 
         public void setPosition(float time)
@@ -38,36 +34,47 @@ namespace Medical.Muscles
             if (states.Count > 0)
             {
                 time %= duration;
-                MovementSequenceState currentState = states[currentIndex];
-                if (!currentState.isTimePart(time))
+                MovementSequenceState currentState = states[currentIndex]; ;
+                MovementSequenceState nextState;
+                if (currentIndex + 1 < states.Count)
                 {
-                    currentState = findStateForTime(time);
+                    nextState = states[currentIndex + 1];
+                    if (time < currentState.StartTime || time >= nextState.StartTime)
+                    {
+                        findStates(time, out currentState, out nextState);
+                    }
                 }
-                currentState.blend(findNextState(currentState), time);
+                else
+                {
+                    nextState = states[0];
+                    if (time < currentState.StartTime)
+                    {
+                        findStates(time, out currentState, out nextState);
+                    }
+                }
+                currentState.blend(nextState, time, duration);
             }
         }
 
-        private MovementSequenceState findStateForTime(float time)
+        private void findStates(float time, out MovementSequenceState currentState, out MovementSequenceState nextState)
         {
-            foreach (MovementSequenceState state in states)
+            int i;
+            for (i = 0; i < states.Count - 1; ++i)
             {
-                if (state.isTimePart(time))
+                if (time >= states[i].StartTime && time < states[i + 1].StartTime)
                 {
-                    return state;
+                    break;
                 }
             }
-            return states[0];
-        }
-
-        private MovementSequenceState findNextState(MovementSequenceState currentState)
-        {
-            if (currentState.Index + 1 < states.Count)
+            currentIndex = i;
+            currentState = states[currentIndex];
+            if (currentIndex + 1 < states.Count)
             {
-                return states[currentState.Index + 1];
+                nextState = states[currentIndex + 1];
             }
             else
             {
-                return states[0];
+                nextState = states[0];
             }
         }
 
@@ -85,6 +92,10 @@ namespace Medical.Muscles
             {
                 return duration;
             }
+            set
+            {
+                duration = value;
+            }
         }
 
         public String Name
@@ -94,5 +105,22 @@ namespace Medical.Muscles
                 return name;
             }
         }
+
+        #region IComparer<float> Members
+
+        public int Compare(MovementSequenceState x, MovementSequenceState y)
+        {
+            if (x.StartTime < y.StartTime)
+            {
+                return -1;
+            }
+            else if (x.StartTime > y.StartTime)
+            {
+                return 1;
+            }
+            return 0;
+        }
+
+        #endregion
     }
 }

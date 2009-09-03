@@ -19,10 +19,7 @@ namespace Medical.GUI
         public MovementStateControl()
         {
             InitializeComponent();
-            timeTrackBar.addMark(new TrackBarMark(0.0f));
-            timeTrackBar.addMark(new TrackBarMark(0.3f));
-            timeTrackBar.addMark(new TrackBarMark(1.0f));
-            timeTrackBar.MaximumTime = 1.0f;
+            movementSequence.Duration = 5.0f;
         }
 
         protected override void fixedLoopUpdate(Clock time)
@@ -35,8 +32,11 @@ namespace Medical.GUI
         private void addStateButton_Click(object sender, EventArgs e)
         {
             MovementSequenceState state = new MovementSequenceState();
+            state.StartTime = timeTrackBar.CurrentTime;
             state.captureState();
             movementSequence.addState(state);
+            timeTrackBar.addMark(new MovementStateTick(state));
+            timeTrackBar.MaximumTime = movementSequence.Duration;
         }
 
         private void playButton_Click(object sender, EventArgs e)

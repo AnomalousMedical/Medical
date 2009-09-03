@@ -105,6 +105,7 @@
     <Compile Include="GUI\Mandible\MovementStateControl.Designer.cs">
       <DependentUpon>MovementStateControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Mandible\MovementStateTick.cs" />
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>
     </Compile>

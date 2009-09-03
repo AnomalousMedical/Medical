@@ -22,12 +22,6 @@ namespace Medical.GUI
             Status = TrackMarkStatus.Normal;
         }
 
-        public TrackBarMark(float location)
-            :this()
-        {
-            this.location = location;
-        }
-
         public void render(Graphics g, Pen pen, Rectangle boundsRect, Rectangle renderRect, float maxValue)
         {
             switch(Status)
@@ -57,12 +51,12 @@ namespace Medical.GUI
 
         public int computeLocation(float maxValue, int boundsRectWidth)
         {
-            return maxValue != 0.0f ? (int)(location / maxValue * boundsRectWidth) : 0;
+            return maxValue != 0.0f ? (int)(Location / maxValue * boundsRectWidth) : 0;
         }
 
         public TrackMarkStatus Status { get; set; }
 
-        public float Location
+        public virtual float Location
         {
             get
             {
