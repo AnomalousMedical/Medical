@@ -50,12 +50,17 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.distortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDistortion = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveDistortion = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveDistortionAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.sequenceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newSequence = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSequence = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSequence = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSequenceAs = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.layoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oneWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -150,6 +155,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.distortionToolStripMenuItem,
+            this.sequenceToolStripMenuItem,
             this.windowToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -161,9 +167,6 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -172,42 +175,24 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // distortionToolStripMenuItem
             // 
             this.distortionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveStateToolStripMenuItem});
+            this.saveStateToolStripMenuItem,
+            this.openDistortion,
+            this.saveDistortion,
+            this.saveDistortionAs});
             this.distortionToolStripMenuItem.Name = "distortionToolStripMenuItem";
             this.distortionToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.distortionToolStripMenuItem.Text = "Distortion";
@@ -218,6 +203,66 @@
             this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.saveStateToolStripMenuItem.Text = "Save State";
             this.saveStateToolStripMenuItem.Click += new System.EventHandler(this.saveStateToolStripMenuItem_Click);
+            // 
+            // openDistortion
+            // 
+            this.openDistortion.Name = "openDistortion";
+            this.openDistortion.Size = new System.Drawing.Size(127, 22);
+            this.openDistortion.Text = "Open...";
+            this.openDistortion.Click += new System.EventHandler(this.openDistortion_Click);
+            // 
+            // saveDistortion
+            // 
+            this.saveDistortion.Name = "saveDistortion";
+            this.saveDistortion.Size = new System.Drawing.Size(127, 22);
+            this.saveDistortion.Text = "Save";
+            this.saveDistortion.Click += new System.EventHandler(this.saveDistortion_Click);
+            // 
+            // saveDistortionAs
+            // 
+            this.saveDistortionAs.Name = "saveDistortionAs";
+            this.saveDistortionAs.Size = new System.Drawing.Size(127, 22);
+            this.saveDistortionAs.Text = "Save As...";
+            this.saveDistortionAs.Click += new System.EventHandler(this.saveDistortionAs_Click);
+            // 
+            // sequenceToolStripMenuItem
+            // 
+            this.sequenceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newSequence,
+            this.openSequence,
+            this.saveSequence,
+            this.saveSequenceAs});
+            this.sequenceToolStripMenuItem.Name = "sequenceToolStripMenuItem";
+            this.sequenceToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.sequenceToolStripMenuItem.Text = "Sequence";
+            // 
+            // newSequence
+            // 
+            this.newSequence.Name = "newSequence";
+            this.newSequence.Size = new System.Drawing.Size(152, 22);
+            this.newSequence.Text = "New";
+            this.newSequence.Click += new System.EventHandler(this.newSequence_Click);
+            // 
+            // openSequence
+            // 
+            this.openSequence.Name = "openSequence";
+            this.openSequence.Size = new System.Drawing.Size(152, 22);
+            this.openSequence.Text = "Open...";
+            this.openSequence.Click += new System.EventHandler(this.openSequence_Click);
+            // 
+            // saveSequence
+            // 
+            this.saveSequence.Name = "saveSequence";
+            this.saveSequence.Size = new System.Drawing.Size(152, 22);
+            this.saveSequence.Text = "Save";
+            this.saveSequence.Click += new System.EventHandler(this.saveSequence_Click);
+            // 
+            // saveSequenceAs
+            // 
+            this.saveSequenceAs.Name = "saveSequenceAs";
+            this.saveSequenceAs.Size = new System.Drawing.Size(152, 22);
+            this.saveSequenceAs.Text = "Save As...";
+            this.saveSequenceAs.Click += new System.EventHandler(this.saveSequenceAs_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -297,8 +342,6 @@
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem distortionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveStateToolStripMenuItem;
@@ -309,7 +352,14 @@
         private System.Windows.Forms.ToolStripMenuItem twoWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem threeWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fourWindowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDistortion;
+        private System.Windows.Forms.ToolStripMenuItem saveDistortion;
+        private System.Windows.Forms.ToolStripMenuItem saveDistortionAs;
+        private System.Windows.Forms.ToolStripMenuItem sequenceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openSequence;
+        private System.Windows.Forms.ToolStripMenuItem newSequence;
+        private System.Windows.Forms.ToolStripMenuItem saveSequence;
+        private System.Windows.Forms.ToolStripMenuItem saveSequenceAs;
 
     }
 }

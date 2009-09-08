@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Engine.Saving;
 
 namespace Medical.Muscles
 {
-    public class MovementSequenceState
+    public class MovementSequenceState : Saveable
     {
         private float leftCPPosition;
         private float rightCPPosition;
         private Vector3 movingTargetPosition;
         private float muscleForce;
         private float startTime;
-        private int index;
 
         public MovementSequenceState()
         {
@@ -61,5 +61,33 @@ namespace Medical.Muscles
                 startTime = value;
             }
         }
+
+        #region Saveable Members
+
+        private const String LEFT_CP_POSITION = "leftCPPosition";
+        private const String RIGHT_CP_POSITION = "rightCPPosition";
+        private const String MOVING_TARGET_POSITION = "movingTargetPosition";
+        private const String MUSCLE_FORCE = "muscleForce";
+        private const String START_TIME = "startTime";
+
+        protected MovementSequenceState(LoadInfo info)
+        {
+            leftCPPosition = info.GetFloat(LEFT_CP_POSITION);
+            rightCPPosition = info.GetFloat(RIGHT_CP_POSITION);
+            movingTargetPosition = info.GetVector3(MOVING_TARGET_POSITION);
+            muscleForce = info.GetFloat(MUSCLE_FORCE);
+            startTime = info.GetFloat(START_TIME);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue(LEFT_CP_POSITION, leftCPPosition);
+            info.AddValue(RIGHT_CP_POSITION, rightCPPosition);
+            info.AddValue(MOVING_TARGET_POSITION, movingTargetPosition);
+            info.AddValue(MUSCLE_FORCE, muscleForce);
+            info.AddValue(START_TIME, startTime);
+        }
+
+        #endregion
     }
 }

@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical.Muscles
 {
-    public class MovementSequence : IComparer<MovementSequenceState>
+    public class MovementSequence : IComparer<MovementSequenceState>, Saveable
     {
-        String name;
-        private List<MovementSequenceState> states;
+        private List<MovementSequenceState> states = new List<MovementSequenceState>();
         private float duration;
         private int currentIndex = 0;
+        private String name = "";
 
-        public MovementSequence(String name)
+        public MovementSequence()
         {
-            this.name = name;
-            states = new List<MovementSequenceState>();
+            
         }
 
         public void addState(MovementSequenceState state)
@@ -110,6 +110,18 @@ namespace Medical.Muscles
             {
                 return name;
             }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public IEnumerable<MovementSequenceState> States
+        {
+            get
+            {
+                return states;
+            }
         }
 
         #region IComparer<float> Members
@@ -125,6 +137,28 @@ namespace Medical.Muscles
                 return 1;
             }
             return 0;
+        }
+
+        #endregion
+
+        #region Saveable Members
+
+        private const String STATES = "State";
+        private const String DURATION = "Duration";
+        private const String NAME = "Name";
+
+        protected MovementSequence(LoadInfo info)
+        {
+            info.RebuildList<MovementSequenceState>(STATES, states);
+            duration = info.GetFloat(DURATION);
+            name = info.GetString(NAME);
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.AddValue(NAME, name);
+            info.AddValue(DURATION, duration);
+            info.ExtractList<MovementSequenceState>(STATES, states);
         }
 
         #endregion

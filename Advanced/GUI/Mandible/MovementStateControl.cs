@@ -13,19 +13,36 @@ namespace Medical.GUI
 {
     public partial class MovementStateControl : GUIElement
     {
-        private MovementSequence movementSequence = new MovementSequence("Test");
+        private MovementSequence movementSequence;
         private float time = 0.0f;
 
         public MovementStateControl()
         {
             InitializeComponent();
-            movementSequence.Duration = 5.0f;
             timeUpDown.ValueChanged += new EventHandler(timeUpDown_ValueChanged);
             timeTrackBar.MoveMarks = true;
             timeTrackBar.MarkMoved += new MarkMoved(timeTrackBar_MarkMoved);
             timeTrackBar.TickMenu = tickMenu;
             timeTrackBar.BarMenu = barMenu;
             timeTrackBar.TimeChanged += new TimeChanged(timeTrackBar_TimeChanged);
+        }
+
+        public MovementSequence Sequence
+        {
+            get
+            {
+                return movementSequence;
+            }
+            set
+            {
+                this.movementSequence = value;
+                timeTrackBar.clearMarks();
+                timeUpDown.Value = (decimal)movementSequence.Duration;
+                foreach (MovementSequenceState state in movementSequence.States)
+                {
+                    timeTrackBar.addMark(new MovementStateTick(state));
+                }
+            }
         }
 
         void timeTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
@@ -79,7 +96,6 @@ namespace Medical.GUI
             state.captureState();
             movementSequence.addState(state);
             timeTrackBar.addMark(new MovementStateTick(state));
-            timeTrackBar.MaximumTime = movementSequence.Duration;
         }
 
         private void lockButtonCheckChanged(object sender, EventArgs e)

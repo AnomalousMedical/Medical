@@ -11,6 +11,7 @@ using System.IO;
 using Engine.Resources;
 using System.Xml;
 using Engine.Saving.XMLSaver;
+using Medical.Muscles;
 
 namespace Medical.Controller
 {
@@ -27,6 +28,7 @@ namespace Medical.Controller
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private ImageRenderer imageRenderer;
+        private MovementStateControl movementState;
 
         /// <summary>
         /// Constructor.
@@ -116,7 +118,7 @@ namespace Medical.Controller
             bonePresetSaver.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(bonePresetSaver);
 
-            MovementStateControl movementState = new MovementStateControl();
+            movementState = new MovementStateControl();
             guiElements.addGUIElement(movementState);
 
             newScene();
@@ -125,6 +127,8 @@ namespace Medical.Controller
             {
                 drawingWindowController.createOneWaySplit();
             }
+
+            createNewSequence();
 
             advancedForm.Show();
             splash.Close();
@@ -257,6 +261,37 @@ namespace Medical.Controller
                 {
                     textReader.Close();
                 }
+            }
+        }
+
+        public void createNewSequence()
+        {
+            MovementSequence sequence = new MovementSequence();
+            sequence.Duration = 5.0f;
+            movementState.Sequence = sequence;
+        }
+
+        public void loadSequence(String filename)
+        {
+            using (Archive archive = FileSystem.OpenArchive(filename))
+            {
+                using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                {
+                    MovementSequence sequence = saver.restoreObject(new XmlTextReader(stream)) as MovementSequence;
+                    if (sequence != null)
+                    {
+                        movementState.Sequence = sequence;
+                    }
+                }
+            }
+        }
+
+        public void saveSequence(String filename)
+        {
+            using (XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default))
+            {
+                writer.Formatting = Formatting.Indented;
+                saver.saveObject(movementState.Sequence, writer);
             }
         }
 

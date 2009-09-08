@@ -14,6 +14,7 @@ namespace Medical.GUI
     {
         private AdvancedController controller;
         private FileTracker patientFileTracker = new FileTracker("*.pat|*.pat");
+        private FileTracker sequenceFileTracker = new FileTracker("*.seq|*.seq");
 
         public AdvancedForm()
         {
@@ -68,27 +69,7 @@ namespace Medical.GUI
             controller.setFourWindowLayout();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            patientFileTracker.saveFile(this);
-            if (patientFileTracker.lastDialogAccepted())
-            {
-                controller.saveMedicalState(patientFileTracker.getCurrentFile());
-                updateWindowTitle(patientFileTracker.getCurrentFile());
-            }
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            patientFileTracker.saveFileAs(this);
-            if (patientFileTracker.lastDialogAccepted())
-            {
-                controller.saveMedicalState(patientFileTracker.getCurrentFile());
-                updateWindowTitle(patientFileTracker.getCurrentFile());
-            }
-        }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void openDistortion_Click(object sender, EventArgs e)
         {
             patientFileTracker.openFile(this);
             if (patientFileTracker.lastDialogAccepted())
@@ -101,6 +82,58 @@ namespace Medical.GUI
             //{
             //    controller.open(fileTracker.getCurrentFile());
             //}
+        }
+
+        private void saveDistortion_Click(object sender, EventArgs e)
+        {
+            patientFileTracker.saveFile(this);
+            if (patientFileTracker.lastDialogAccepted())
+            {
+                controller.saveMedicalState(patientFileTracker.getCurrentFile());
+                updateWindowTitle(patientFileTracker.getCurrentFile());
+            }
+        }
+
+        private void saveDistortionAs_Click(object sender, EventArgs e)
+        {
+            patientFileTracker.saveFileAs(this);
+            if (patientFileTracker.lastDialogAccepted())
+            {
+                controller.saveMedicalState(patientFileTracker.getCurrentFile());
+                updateWindowTitle(patientFileTracker.getCurrentFile());
+            }
+        }
+
+        private void newSequence_Click(object sender, EventArgs e)
+        {
+            controller.createNewSequence();
+        }
+
+        private void openSequence_Click(object sender, EventArgs e)
+        {
+            sequenceFileTracker.openFile(this);
+            if (sequenceFileTracker.lastDialogAccepted())
+            {
+                controller.loadSequence(sequenceFileTracker.getCurrentFile());
+            }
+        }
+
+        private void saveSequence_Click(object sender, EventArgs e)
+        {
+            sequenceFileTracker.saveFile(this);
+            if (sequenceFileTracker.lastDialogAccepted())
+            {
+                controller.saveSequence(sequenceFileTracker.getCurrentFile());
+            }
+        }
+
+        private void saveSequenceAs_Click(object sender, EventArgs e)
+        {
+            sequenceFileTracker.saveFileAs(this);
+            if (sequenceFileTracker.lastDialogAccepted())
+            {
+                controller.saveSequence(sequenceFileTracker.getCurrentFile());
+            }
         }
     }
 }
