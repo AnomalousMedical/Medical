@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SavedCameraGUI));
             this.saveCameraButton = new System.Windows.Forms.Button();
             this.deleteCameraButton = new System.Windows.Forms.Button();
             this.activateButton = new System.Windows.Forms.Button();
@@ -109,6 +110,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SavedCameraGUI";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Cameras";

@@ -21,7 +21,7 @@ namespace Medical.GUI
             ToolStripName = "Default";
             this.VisibleChanged += new EventHandler(content_VisibleChanged);
             button = new ToolStripButton();
-            button.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            button.DisplayStyle = ToolStripItemDisplayStyle.Image;
             button.Click += new EventHandler(button_Click);
         }
 
@@ -106,6 +106,7 @@ namespace Medical.GUI
         {
             base.OnTextChanged(e);
             button.Text = this.Text;
+            button.Image = this.Icon.ToBitmap();
         }
 
         internal ToolStripButton Button

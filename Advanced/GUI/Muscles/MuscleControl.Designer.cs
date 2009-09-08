@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MuscleControl));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.bothSides = new System.Windows.Forms.ComboBox();
@@ -59,7 +61,6 @@
             this.rightTemporalis = new System.Windows.Forms.CheckBox();
             this.leftMasseter = new System.Windows.Forms.CheckBox();
             this.rightMasseter = new System.Windows.Forms.CheckBox();
-            this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -98,6 +99,15 @@
             this.tabPage1.Size = new System.Drawing.Size(251, 395);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
+            // 
+            // muscleSequenceView
+            // 
+            this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.muscleSequenceView.LargeImageList = null;
+            this.muscleSequenceView.Location = new System.Drawing.Point(3, 3);
+            this.muscleSequenceView.Name = "muscleSequenceView";
+            this.muscleSequenceView.Size = new System.Drawing.Size(245, 389);
+            this.muscleSequenceView.TabIndex = 0;
             // 
             // tabPage2
             // 
@@ -526,15 +536,6 @@
             this.rightMasseter.Text = "Masseter";
             this.rightMasseter.UseVisualStyleBackColor = true;
             // 
-            // muscleSequenceView
-            // 
-            this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.muscleSequenceView.LargeImageList = null;
-            this.muscleSequenceView.Location = new System.Drawing.Point(3, 3);
-            this.muscleSequenceView.Name = "muscleSequenceView";
-            this.muscleSequenceView.Size = new System.Drawing.Size(245, 389);
-            this.muscleSequenceView.TabIndex = 0;
-            // 
             // MuscleControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -543,6 +544,7 @@
             this.Controls.Add(this.tabControl1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MuscleControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Muscles";

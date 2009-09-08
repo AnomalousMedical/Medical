@@ -6,6 +6,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -26,6 +27,7 @@ namespace Medical.GUI
             this.dock = dock;
             this.toolStripContainer = toolStrip;
             controller.FixedLoopUpdate += fixedLoopUpdate;
+            toolStrip.Size = new Size(toolStrip.Size.Width, 40);
         }
 
         public void addGUIElement(GUIElement element)
@@ -35,6 +37,7 @@ namespace Medical.GUI
             if (!toolStrips.ContainsKey(element.ToolStripName))
             {
                 toolStrip = new ToolStrip();
+                toolStrip.ImageScalingSize = new Size(32, 32);
                 toolStrips.Add(element.ToolStripName, toolStrip);
                 toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
             }

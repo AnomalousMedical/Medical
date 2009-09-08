@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiskControl));
             this.distortionButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.centerTrackBar = new System.Windows.Forms.TrackBar();
@@ -36,6 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rightDiscLocked = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -45,6 +47,7 @@
             this.rightRDAOffset = new System.Windows.Forms.TrackBar();
             this.rightDiscPositionSlider = new System.Windows.Forms.TrackBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.leftDiscLocked = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -53,8 +56,6 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.leftDiscOffset = new System.Windows.Forms.TrackBar();
             this.leftDiscPositionSlider = new System.Windows.Forms.TrackBar();
-            this.rightDiscLocked = new System.Windows.Forms.CheckBox();
-            this.leftDiscLocked = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.centerTrackBar)).BeginInit();
             this.panel1.SuspendLayout();
@@ -165,6 +166,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Right Disc";
             // 
+            // rightDiscLocked
+            // 
+            this.rightDiscLocked.AutoSize = true;
+            this.rightDiscLocked.Location = new System.Drawing.Point(11, 109);
+            this.rightDiscLocked.Name = "rightDiscLocked";
+            this.rightDiscLocked.Size = new System.Drawing.Size(62, 17);
+            this.rightDiscLocked.TabIndex = 28;
+            this.rightDiscLocked.Text = "Locked";
+            this.rightDiscLocked.UseVisualStyleBackColor = true;
+            this.rightDiscLocked.CheckedChanged += new System.EventHandler(this.rightDiscLocked_CheckedChanged);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -268,6 +280,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Left Disc";
             // 
+            // leftDiscLocked
+            // 
+            this.leftDiscLocked.AutoSize = true;
+            this.leftDiscLocked.Location = new System.Drawing.Point(8, 106);
+            this.leftDiscLocked.Name = "leftDiscLocked";
+            this.leftDiscLocked.Size = new System.Drawing.Size(62, 17);
+            this.leftDiscLocked.TabIndex = 29;
+            this.leftDiscLocked.Text = "Locked";
+            this.leftDiscLocked.UseVisualStyleBackColor = true;
+            this.leftDiscLocked.CheckedChanged += new System.EventHandler(this.leftDiscLocked_CheckedChanged);
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -355,28 +378,6 @@
             this.leftDiscPositionSlider.TickFrequency = 10000;
             this.leftDiscPositionSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
-            // rightDiscLocked
-            // 
-            this.rightDiscLocked.AutoSize = true;
-            this.rightDiscLocked.Location = new System.Drawing.Point(11, 109);
-            this.rightDiscLocked.Name = "rightDiscLocked";
-            this.rightDiscLocked.Size = new System.Drawing.Size(62, 17);
-            this.rightDiscLocked.TabIndex = 28;
-            this.rightDiscLocked.Text = "Locked";
-            this.rightDiscLocked.UseVisualStyleBackColor = true;
-            this.rightDiscLocked.CheckedChanged += new System.EventHandler(this.rightDiscLocked_CheckedChanged);
-            // 
-            // leftDiscLocked
-            // 
-            this.leftDiscLocked.AutoSize = true;
-            this.leftDiscLocked.Location = new System.Drawing.Point(8, 106);
-            this.leftDiscLocked.Name = "leftDiscLocked";
-            this.leftDiscLocked.Size = new System.Drawing.Size(62, 17);
-            this.leftDiscLocked.TabIndex = 29;
-            this.leftDiscLocked.Text = "Locked";
-            this.leftDiscLocked.UseVisualStyleBackColor = true;
-            this.leftDiscLocked.CheckedChanged += new System.EventHandler(this.leftDiscLocked_CheckedChanged);
-            // 
             // DiskControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,6 +391,7 @@
             this.Controls.Add(this.panel2);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DiskControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Tag = "Disc";

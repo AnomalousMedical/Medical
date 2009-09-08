@@ -24,23 +24,20 @@ namespace Medical.GUI
             timeTrackBar.MoveMarks = true;
             timeTrackBar.MarkMoved += new MarkMoved(timeTrackBar_MarkMoved);
             timeTrackBar.TickMenu = tickMenu;
+            timeTrackBar.BarMenu = barMenu;
+            timeTrackBar.TimeChanged += new TimeChanged(timeTrackBar_TimeChanged);
+        }
+
+        void timeTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
+        {
+            movementSequence.setPosition((float)currentTime);
         }
 
         protected override void fixedLoopUpdate(Clock time)
         {
             base.fixedLoopUpdate(time);
             this.time += (float)time.Seconds;
-            movementSequence.setPosition(this.time);
-        }
-
-        private void addStateButton_Click(object sender, EventArgs e)
-        {
-            MovementSequenceState state = new MovementSequenceState();
-            state.StartTime = timeTrackBar.CurrentTime;
-            state.captureState();
-            movementSequence.addState(state);
-            timeTrackBar.addMark(new MovementStateTick(state));
-            timeTrackBar.MaximumTime = movementSequence.Duration;
+            timeTrackBar.CurrentTime = this.time % timeTrackBar.MaximumTime;
         }
 
         private void playButton_Click(object sender, EventArgs e)
@@ -73,6 +70,21 @@ namespace Medical.GUI
                 timeTrackBar.removeMark(tick);
                 movementSequence.deleteState(tick.State);
             }
+        }
+
+        private void addKeyStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MovementSequenceState state = new MovementSequenceState();
+            state.StartTime = timeTrackBar.BarMenuTime;
+            state.captureState();
+            movementSequence.addState(state);
+            timeTrackBar.addMark(new MovementStateTick(state));
+            timeTrackBar.MaximumTime = movementSequence.Duration;
+        }
+
+        private void lockButtonCheckChanged(object sender, EventArgs e)
+        {
+            timeTrackBar.MoveMarks = !lockButton.Checked;
         }
     }
 }

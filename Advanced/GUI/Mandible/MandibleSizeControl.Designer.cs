@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MandibleSizeControl));
             this.sliderPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.leftRamusHeightSlider = new Medical.GUI.BoneManipulatorSlider();
             this.leftCondyleHeightSlider = new Medical.GUI.BoneManipulatorSlider();
@@ -254,6 +255,7 @@
             this.Controls.Add(this.sliderPanel);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MandibleSizeControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Mandible Size";

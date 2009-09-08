@@ -37,6 +37,7 @@ namespace Medical.GUI
         private ContextMenuStrip tickMenu = null;
         private TrackBarMark menuTargetMark = null;
 
+        private Point barMenuLocation = new Point(0, 0);
         private ContextMenuStrip barMenu = null;
 
         public TimeTrackBar()
@@ -233,6 +234,7 @@ namespace Medical.GUI
                     }
                     else if(barMenu != null)
                     {
+                        barMenuLocation = e.Location;
                         barMenu.Show(this, e.Location);
                     }
                 }
@@ -392,6 +394,31 @@ namespace Medical.GUI
             set
             {
                 barMenu = value;
+            }
+        }
+
+        public Point BarMenuLocation
+        {
+            get
+            {
+                return barMenuLocation;
+            }
+        }
+
+        public float BarMenuTime
+        {
+            get
+            {
+                float time = barMenuLocation.X / (float)thumbValidZone * MaximumTime;
+                if (time < 0)
+                {
+                    time = 0;
+                }
+                else if (time > maximumTime)
+                {
+                    time = maximumTime;
+                }
+                return time;
             }
         }
     }
