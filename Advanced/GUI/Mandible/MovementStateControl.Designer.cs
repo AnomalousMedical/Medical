@@ -33,8 +33,8 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.timeTrackBar = new Medical.GUI.TimeTrackBar();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.timeUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // addStateButton
@@ -88,19 +88,19 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Duration (s)";
             // 
-            // numericUpDown1
+            // timeUpDown
             // 
-            this.numericUpDown1.DecimalPlaces = 2;
-            this.numericUpDown1.Location = new System.Drawing.Point(630, 32);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.timeUpDown.DecimalPlaces = 2;
+            this.timeUpDown.Location = new System.Drawing.Point(630, 32);
+            this.timeUpDown.Maximum = new decimal(new int[] {
             60,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(68, 20);
-            this.numericUpDown1.TabIndex = 5;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.timeUpDown.Name = "timeUpDown";
+            this.timeUpDown.Size = new System.Drawing.Size(68, 20);
+            this.timeUpDown.TabIndex = 5;
+            this.timeUpDown.Value = new decimal(new int[] {
             5,
             0,
             0,
@@ -111,7 +111,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 57);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.timeUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.timeTrackBar);
             this.Controls.Add(this.stopButton);
@@ -121,7 +121,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Name = "MovementStateControl";
             this.Text = "Movement State";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -134,6 +134,6 @@
         private System.Windows.Forms.Button stopButton;
         private TimeTrackBar timeTrackBar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown timeUpDown;
     }
 }

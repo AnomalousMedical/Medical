@@ -11,10 +11,12 @@ using System.Windows.Forms.VisualStyles;
 namespace Medical.GUI
 {
     public delegate void TimeChanged(TimeTrackBar trackBar, double currentTime);
+    public delegate void MarkMoved(TrackBarMark mark);
 
     public class TimeTrackBar : UserControl
     {
         public event TimeChanged TimeChanged;
+        public event MarkMoved MarkMoved;
 
         private Rectangle trackRectangle = new Rectangle();
         private Rectangle ticksRectangle = new Rectangle();
@@ -28,6 +30,9 @@ namespace Medical.GUI
         private List<TrackBarMark> marks = new List<TrackBarMark>();
         private int selectedState = -1;
         Pen pen = new Pen(Color.Black);
+        private TrackBarMark selectedMark = null;
+        bool selectedMarkMoved = false;
+        bool moveMarks = false;
 
         public TimeTrackBar()
         {
@@ -145,7 +150,8 @@ namespace Medical.GUI
         // Determine whether the user has clicked the track bar thumb.
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (findMarkAt(e.Location) == -1)
+            int mark = findMarkAt(e.Location);
+            if (mark == -1)
             {
                 if (this.thumbRectangle.Contains(e.Location))
                 {
@@ -156,27 +162,41 @@ namespace Medical.GUI
 
                 this.Invalidate();
             }
+            else
+            {
+                selectedMark = marks[mark];
+                selectedMarkMoved = false;
+                if (moveMarks)
+                {
+                    Cursor.Hide();
+                }
+            }
         }
 
         // Redraw the track bar thumb if the user has moved it.
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (thumbClicked == false)
+            if (selectedMark != null)
             {
-                int index = findMarkAt(e.Location);
-                if (index != -1)
+                if (selectedState > 0 && selectedState < marks.Count)
                 {
-                    if (selectedState > 0 && selectedState < marks.Count)
-                    {
-                        marks[selectedState].Status = TrackMarkStatus.Normal;
-                    }
-                    selectedState = index;
-                    marks[selectedState].Status = TrackMarkStatus.Selected;
-                    CurrentTime = marks[selectedState].Location;
-                    Invalidate();
+                    marks[selectedState].Status = TrackMarkStatus.Normal;
                 }
+                selectedState = marks.IndexOf(selectedMark);
+                marks[selectedState].Status = TrackMarkStatus.Selected;
+                Invalidate();
+                if (selectedMarkMoved)
+                {
+                    selectedMarkMoved = false;
+                    if (MarkMoved != null)
+                    {
+                        MarkMoved.Invoke(selectedMark);
+                    }
+                }
+                selectedMark = null;
+                Cursor.Show();
             }
-            else
+            else if(thumbClicked)
             {
                 if (e.Location.X > trackRectangle.X && e.Location.X < (trackRectangle.X + trackRectangle.Width - thumbRectangle.Width))
                 {
@@ -209,6 +229,20 @@ namespace Medical.GUI
             if (thumbClicked == true)
             {
                 CurrentTime = e.Location.X / (float)thumbValidZone * MaximumTime;
+            }
+            else if (selectedMark != null && moveMarks)
+            {
+                float location = e.Location.X / (float)thumbValidZone * MaximumTime;
+                if (location < 0.0)
+                {
+                    location = 0.0f;
+                }
+                if (location > maximumTime)
+                {
+                    location = maximumTime;
+                }
+                selectedMark.Location = location;
+                selectedMarkMoved = true;
             }
             // The cursor is passing over the track.
             else
@@ -267,6 +301,7 @@ namespace Medical.GUI
             {
                 maximumTime = value;
                 calculateThumbPosition();
+                this.Invalidate();
             }
         }
 
@@ -283,6 +318,18 @@ namespace Medical.GUI
             set
             {
                 selectedState = marks.IndexOf(value);
+            }
+        }
+
+        public bool MoveMarks
+        {
+            get
+            {
+                return moveMarks;
+            }
+            set
+            {
+                moveMarks = value;
             }
         }
     }

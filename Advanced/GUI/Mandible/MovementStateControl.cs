@@ -20,6 +20,9 @@ namespace Medical.GUI
         {
             InitializeComponent();
             movementSequence.Duration = 5.0f;
+            timeUpDown.ValueChanged += new EventHandler(timeUpDown_ValueChanged);
+            timeTrackBar.MoveMarks = true;
+            timeTrackBar.MarkMoved += new MarkMoved(timeTrackBar_MarkMoved);
         }
 
         protected override void fixedLoopUpdate(Clock time)
@@ -48,6 +51,17 @@ namespace Medical.GUI
         private void stopButton_Click(object sender, EventArgs e)
         {
             unsubscribeFromUpdates();
+        }
+
+        void timeUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            movementSequence.Duration = (float)timeUpDown.Value;
+            timeTrackBar.MaximumTime = movementSequence.Duration;
+        }
+
+        void timeTrackBar_MarkMoved(TrackBarMark mark)
+        {
+            movementSequence.sortStates();
         }
     }
 }
