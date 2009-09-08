@@ -29,43 +29,23 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalStateGUI));
-            this.pauseButton = new System.Windows.Forms.Button();
-            this.previousButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
             this.medicalStateTrackBar = new Medical.GUI.MedicalStateTrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.speedTrackBar = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.previousButton = new System.Windows.Forms.Button();
+            this.pauseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
-            // pauseButton
-            // 
-            this.pauseButton.Location = new System.Drawing.Point(82, 32);
-            this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(75, 23);
-            this.pauseButton.TabIndex = 3;
-            this.pauseButton.Text = "Pause";
-            this.pauseButton.UseVisualStyleBackColor = true;
-            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
-            // 
-            // previousButton
-            // 
-            this.previousButton.Location = new System.Drawing.Point(1, 32);
-            this.previousButton.Name = "previousButton";
-            this.previousButton.Size = new System.Drawing.Size(75, 23);
-            this.previousButton.TabIndex = 4;
-            this.previousButton.Text = "Previous";
-            this.previousButton.UseVisualStyleBackColor = true;
-            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
-            // 
             // nextButton
             // 
-            this.nextButton.Location = new System.Drawing.Point(164, 32);
+            this.nextButton.Image = global::Medical.Properties.Resources.Button_Last;
+            this.nextButton.Location = new System.Drawing.Point(77, 32);
             this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(75, 23);
+            this.nextButton.Size = new System.Drawing.Size(32, 32);
             this.nextButton.TabIndex = 5;
-            this.nextButton.Text = "Next";
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
@@ -83,7 +63,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(243, 37);
+            this.label1.Location = new System.Drawing.Point(114, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 7;
@@ -92,7 +72,7 @@
             // speedTrackBar
             // 
             this.speedTrackBar.LargeChange = 2;
-            this.speedTrackBar.Location = new System.Drawing.Point(272, 32);
+            this.speedTrackBar.Location = new System.Drawing.Point(143, 30);
             this.speedTrackBar.Maximum = 4;
             this.speedTrackBar.Name = "speedTrackBar";
             this.speedTrackBar.Size = new System.Drawing.Size(104, 45);
@@ -102,17 +82,38 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(371, 39);
+            this.label2.Location = new System.Drawing.Point(242, 37);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 9;
             this.label2.Text = "Fast";
             // 
+            // previousButton
+            // 
+            this.previousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.previousButton.Image = global::Medical.Properties.Resources.Button_First;
+            this.previousButton.Location = new System.Drawing.Point(1, 32);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.Size = new System.Drawing.Size(32, 32);
+            this.previousButton.TabIndex = 4;
+            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
+            // pauseButton
+            // 
+            this.pauseButton.Image = global::Medical.Properties.Resources.Button_Pause;
+            this.pauseButton.Location = new System.Drawing.Point(39, 32);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.Size = new System.Drawing.Size(32, 32);
+            this.pauseButton.TabIndex = 3;
+            this.pauseButton.UseVisualStyleBackColor = true;
+            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
+            // 
             // MedicalStateGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 125);
+            this.ClientSize = new System.Drawing.Size(491, 65);
             this.Controls.Add(this.medicalStateTrackBar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

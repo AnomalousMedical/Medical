@@ -493,6 +493,30 @@
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedWatermarks\watermark.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-First-256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Last-256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Pause-256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Play-256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-First.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Last.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Play.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
