@@ -24,6 +24,12 @@ namespace Medical.Muscles
             sortStates();
         }
 
+        public void deleteState(MovementSequenceState movementSequenceState)
+        {
+            states.Remove(movementSequenceState);
+            currentIndex = 0;
+        }
+
         public void sortStates()
         {
             states.Sort(this);

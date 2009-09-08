@@ -23,6 +23,7 @@ namespace Medical.GUI
             timeUpDown.ValueChanged += new EventHandler(timeUpDown_ValueChanged);
             timeTrackBar.MoveMarks = true;
             timeTrackBar.MarkMoved += new MarkMoved(timeTrackBar_MarkMoved);
+            timeTrackBar.TickMenu = tickMenu;
         }
 
         protected override void fixedLoopUpdate(Clock time)
@@ -62,6 +63,16 @@ namespace Medical.GUI
         void timeTrackBar_MarkMoved(TrackBarMark mark)
         {
             movementSequence.sortStates();
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MovementStateTick tick = timeTrackBar.MenuTargetMark as MovementStateTick;
+            if (tick != null)
+            {
+                timeTrackBar.removeMark(tick);
+                movementSequence.deleteState(tick.State);
+            }
         }
     }
 }

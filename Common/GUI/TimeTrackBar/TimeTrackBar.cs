@@ -34,6 +34,11 @@ namespace Medical.GUI
         bool selectedMarkMoved = false;
         bool moveMarks = false;
 
+        private ContextMenuStrip tickMenu = null;
+        private TrackBarMark menuTargetMark = null;
+
+        private ContextMenuStrip barMenu = null;
+
         public TimeTrackBar()
         {
             this.DoubleBuffered = true;
@@ -150,25 +155,28 @@ namespace Medical.GUI
         // Determine whether the user has clicked the track bar thumb.
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            int mark = findMarkAt(e.Location);
-            if (mark == -1)
+            if (e.Button == MouseButtons.Left)
             {
-                if (this.thumbRectangle.Contains(e.Location))
+                int mark = findMarkAt(e.Location);
+                if (mark == -1)
                 {
-                    thumbClicked = true;
-                    thumbState = TrackBarThumbState.Pressed;
-                    Cursor.Hide();
-                }
+                    if (this.thumbRectangle.Contains(e.Location))
+                    {
+                        thumbClicked = true;
+                        thumbState = TrackBarThumbState.Pressed;
+                        Cursor.Hide();
+                    }
 
-                this.Invalidate();
-            }
-            else
-            {
-                selectedMark = marks[mark];
-                selectedMarkMoved = false;
-                if (moveMarks)
+                    this.Invalidate();
+                }
+                else
                 {
-                    Cursor.Hide();
+                    selectedMark = marks[mark];
+                    selectedMarkMoved = false;
+                    if (moveMarks)
+                    {
+                        Cursor.Hide();
+                    }
                 }
             }
         }
@@ -176,36 +184,58 @@ namespace Medical.GUI
         // Redraw the track bar thumb if the user has moved it.
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (selectedMark != null)
+            if (e.Button == MouseButtons.Left)
             {
-                if (selectedState > 0 && selectedState < marks.Count)
+                if (selectedMark != null)
                 {
-                    marks[selectedState].Status = TrackMarkStatus.Normal;
-                }
-                selectedState = marks.IndexOf(selectedMark);
-                marks[selectedState].Status = TrackMarkStatus.Selected;
-                Invalidate();
-                if (selectedMarkMoved)
-                {
-                    selectedMarkMoved = false;
-                    if (MarkMoved != null)
+                    if (selectedState > 0 && selectedState < marks.Count)
                     {
-                        MarkMoved.Invoke(selectedMark);
+                        marks[selectedState].Status = TrackMarkStatus.Normal;
+                    }
+                    selectedState = marks.IndexOf(selectedMark);
+                    marks[selectedState].Status = TrackMarkStatus.Selected;
+                    Invalidate();
+                    if (selectedMarkMoved)
+                    {
+                        selectedMarkMoved = false;
+                        if (MarkMoved != null)
+                        {
+                            MarkMoved.Invoke(selectedMark);
+                        }
+                    }
+                    selectedMark = null;
+                    Cursor.Show();
+                }
+                else if (thumbClicked)
+                {
+                    if (e.Location.X > trackRectangle.X && e.Location.X < (trackRectangle.X + trackRectangle.Width - thumbRectangle.Width))
+                    {
+                        thumbClicked = false;
+                        thumbState = TrackBarThumbState.Hot;
+                        this.Invalidate();
+                    }
+                    Cursor.Show();
+                    thumbClicked = false;
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                if (!thumbClicked && selectedMark == null)
+                {
+                    int mark = findMarkAt(e.Location);
+                    if (mark != -1)
+                    {
+                        if (tickMenu != null)
+                        {
+                            menuTargetMark = marks[mark];
+                            tickMenu.Show(this, e.Location);
+                        }
+                    }
+                    else if(barMenu != null)
+                    {
+                        barMenu.Show(this, e.Location);
                     }
                 }
-                selectedMark = null;
-                Cursor.Show();
-            }
-            else if(thumbClicked)
-            {
-                if (e.Location.X > trackRectangle.X && e.Location.X < (trackRectangle.X + trackRectangle.Width - thumbRectangle.Width))
-                {
-                    thumbClicked = false;
-                    thumbState = TrackBarThumbState.Hot;
-                    this.Invalidate();
-                }
-                Cursor.Show();
-                thumbClicked = false;
             }
         }
 
@@ -330,6 +360,38 @@ namespace Medical.GUI
             set
             {
                 moveMarks = value;
+            }
+        }
+
+        public TrackBarMark MenuTargetMark
+        {
+            get
+            {
+                return menuTargetMark;
+            }
+        }
+
+        public ContextMenuStrip TickMenu
+        {
+            get
+            {
+                return tickMenu;
+            }
+            set
+            {
+                tickMenu = value;
+            }
+        }
+
+        public ContextMenuStrip BarMenu
+        {
+            get
+            {
+                return barMenu;
+            }
+            set
+            {
+                barMenu = value;
             }
         }
     }

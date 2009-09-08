@@ -26,5 +26,13 @@ namespace Medical.GUI
                 state.StartTime = value;
             }
         }
+
+        public MovementSequenceState State
+        {
+            get
+            {
+                return state;
+            }
+        }
     }
 }

@@ -28,13 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.addStateButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.timeTrackBar = new Medical.GUI.TimeTrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.timeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.tickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).BeginInit();
+            this.tickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // addStateButton
@@ -71,13 +75,16 @@
             // 
             this.timeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.timeTrackBar.BarMenu = null;
             this.timeTrackBar.CurrentTime = 0F;
             this.timeTrackBar.Location = new System.Drawing.Point(12, -19);
             this.timeTrackBar.MaximumTime = 5F;
+            this.timeTrackBar.MoveMarks = false;
             this.timeTrackBar.Name = "timeTrackBar";
             this.timeTrackBar.SelectedMark = null;
             this.timeTrackBar.Size = new System.Drawing.Size(686, 47);
             this.timeTrackBar.TabIndex = 3;
+            this.timeTrackBar.TickMenu = null;
             // 
             // label1
             // 
@@ -106,6 +113,20 @@
             0,
             0});
             // 
+            // tickMenu
+            // 
+            this.tickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.tickMenu.Name = "tickMenu";
+            this.tickMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
             // MovementStateControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -122,6 +143,7 @@
             this.Name = "MovementStateControl";
             this.Text = "Movement State";
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).EndInit();
+            this.tickMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +157,7 @@
         private TimeTrackBar timeTrackBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown timeUpDown;
+        private System.Windows.Forms.ContextMenuStrip tickMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }
