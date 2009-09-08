@@ -110,9 +110,11 @@ namespace Medical.GUI
             upDownUpDown.Value = 0.0m;
             yawUpDown.Value = 0.0m;
             rollUpDown.Value = 0.0m;
-            allowUpdates = true;
             pitchUpDown.Value = 0.0m;
             forwardBackUpDown.Value = 0.0m;
+            allowUpdates = true;
+            offsetValueChanged(null, null);
+            rotateValueChanged(null, null);
         }
 
         void selectionSetCombo_SelectedIndexChanged(object sender, EventArgs e)
