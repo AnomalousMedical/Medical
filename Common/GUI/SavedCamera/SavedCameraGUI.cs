@@ -43,18 +43,23 @@ namespace Medical.GUI
 
         protected override void sceneLoaded(SimScene scene)
         {
-            SimSubScene defaultScene = scene.getDefaultSubScene();
-            if (defaultScene != null)
+            //SimSubScene defaultScene = scene.getDefaultSubScene();
+            //if (defaultScene != null)
+            //{
+            //    SimulationScene simScene = defaultScene.getSimElementManager<SimulationScene>();
+            //    if (simScene != null)
+            //    {
+            //        foreach (PredefinedCamera camera in simScene.getPredefinedCameras())
+            //        {
+            //            ListViewItem item = cameraNameList.Items.Add(camera.Name, camera.Name, 0);
+            //            item.Group = predefined;
+            //        }
+            //    }
+            //}
+            foreach (String name in drawingWindowController.getSceneCameraNames())
             {
-                SimulationScene simScene = defaultScene.getSimElementManager<SimulationScene>();
-                if (simScene != null)
-                {
-                    foreach (PredefinedCamera camera in simScene.getPredefinedCameras())
-                    {
-                        ListViewItem item = cameraNameList.Items.Add(camera.Name, camera.Name, 0);
-                        item.Group = predefined;
-                    }
-                }
+                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+                item.Group = predefined;
             }
             foreach (String name in drawingWindowController.getSavedCameraNames())
             {

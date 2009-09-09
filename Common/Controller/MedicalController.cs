@@ -49,6 +49,10 @@ namespace Medical
         //Serialization
         private XmlSaver xmlSaver = new XmlSaver();
 
+        //Scene
+        private String currentSceneFile;
+        private String currentSceneDirectory;
+
         #endregion Fields
 
         #region Events
@@ -163,29 +167,44 @@ namespace Medical
         /// </summary>
         /// <param name="filename">The file to load.</param>
         /// <returns>True if the scene was loaded, false on an error.</returns>
-        public bool openScene(Stream file)
+        public bool openScene(String filename)
         {
             medicalScene.destroyScene();
-            XmlTextReader textReader = null;
-            ScenePackage scenePackage = null;
-            try
+            using (Archive sceneArchive = FileSystem.OpenArchive(filename))
             {
-                textReader = new XmlTextReader(file);
-                scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
-            }
-            finally
-            {
-                if (textReader != null)
+                if (sceneArchive.exists(filename))
                 {
-                    textReader.Close();
+                    currentSceneFile = FileSystem.GetFileName(filename);
+                    currentSceneDirectory = FileSystem.GetDirectoryName(filename);
+                    using (Stream file = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    {
+                        XmlTextReader textReader = null;
+                        ScenePackage scenePackage = null;
+                        try
+                        {
+                            textReader = new XmlTextReader(file);
+                            scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
+                        }
+                        finally
+                        {
+                            if (textReader != null)
+                            {
+                                textReader.Close();
+                            }
+                        }
+                        if (scenePackage != null)
+                        {
+                            medicalScene.loadScene(scenePackage);
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
                 }
             }
-            if (scenePackage != null)
-            {
-                medicalScene.loadScene(scenePackage);
-                return true;
-            }
-            return false;
         }
 
         public void saveScene(String filename)
@@ -258,6 +277,22 @@ namespace Medical
             get
             {
                 return medicalScene.CurrentScene;
+            }
+        }
+
+        public String CurrentSceneFile
+        {
+            get
+            {
+                return currentSceneFile;
+            }
+        }
+
+        public String CurrentSceneDirectory
+        {
+            get
+            {
+                return currentSceneDirectory;
             }
         }
 

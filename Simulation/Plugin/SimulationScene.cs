@@ -10,8 +10,8 @@ namespace Medical
     public class SimulationScene : SimElementManager
     {
         private String name;
-        private Dictionary<String, PredefinedCamera> cameras = new Dictionary<String, PredefinedCamera>();
         private SimulationSceneFactory factory = new SimulationSceneFactory();
+        private String cameraFile = "";
 
         public SimulationScene(String name)
         {
@@ -20,35 +20,10 @@ namespace Medical
 
         #region Functions
 
-        internal void addCamera(String name, Vector3 translation, Vector3 lookAt)
-        {
-            cameras.Add(name, new PredefinedCamera(name, translation, lookAt));
-        }
-
-        public IEnumerable<PredefinedCamera> getPredefinedCameras()
-        {
-            return cameras.Values;
-        }
-
-        public bool contains(string cameraName)
-        {
-            return cameras.ContainsKey(cameraName);
-        }
-
-        public PredefinedCamera get(string cameraName)
-        {
-            PredefinedCamera camera;
-            cameras.TryGetValue(cameraName, out camera);
-            return camera;
-        }
-
         public SimElementManagerDefinition createDefinition()
         {
             SimulationSceneDefinition definition = new SimulationSceneDefinition(name);
-            foreach (PredefinedCamera camera in cameras.Values)
-            {
-                definition.addCamera(camera.Name, camera.Translation, camera.LookAt);
-            }
+            definition.CameraFile = cameraFile;
             return definition;
         }
 
@@ -73,5 +48,21 @@ namespace Medical
         }
 
         #endregion
+
+        #region Properties
+
+        public String CameraFile
+        {
+            get
+            {
+                return cameraFile;
+            }
+            set
+            {
+                cameraFile = value;
+            }
+        }
+
+        #endregion 
     }
 }

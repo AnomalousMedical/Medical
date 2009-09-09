@@ -15,8 +15,19 @@ namespace Medical
         private const String POSITION_ENTRY = "Position";
         private const String LOOK_AT_ENTRY = "LookAt";
 
+        public SavedCameraController()
+        {
+
+        }
+
         public SavedCameraController(String backingFile)
         {
+            changeBackingFile(backingFile);
+        }
+
+        public void changeBackingFile(String backingFile)
+        {
+            savedCameras.Clear();
             loading = true;
             savedCamerasFile = new ConfigFile(backingFile);
             savedCamerasFile.loadConfigFile();

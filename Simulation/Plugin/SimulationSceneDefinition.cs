@@ -22,7 +22,7 @@ namespace Medical
         }
 
         private String name;
-        private Dictionary<String, PredefinedCamera> cameras = new Dictionary<String, PredefinedCamera>();
+        private String cameraFile;
 
         public SimulationSceneDefinition(String name)
         {
@@ -39,23 +39,10 @@ namespace Medical
             }
         }
 
-        public void addCamera(String name, Vector3 translation, Vector3 lookAt)
-        {
-            PredefinedCamera camera = new PredefinedCamera(name, translation, lookAt);
-            cameras.Add(name, camera);
-            if (editInterface != null)
-            {
-                createCameraEditInterface(camera);
-            }
-        }
-
         public SimElementManager createSimElementManager()
         {
             SimulationScene scene = new SimulationScene(name);
-            foreach (PredefinedCamera camera in cameras.Values)
-            {
-                scene.addCamera(camera.Name, camera.Translation, camera.LookAt);
-            }
+            scene.CameraFile = cameraFile;
             return scene;
         }
 
@@ -71,10 +58,25 @@ namespace Medical
 
         #endregion
 
+        #region Properties
+
+        [Editable]
+        public String CameraFile
+        {
+            get
+            {
+                return cameraFile;
+            }
+            set
+            {
+                cameraFile = value;
+            }
+        }
+
+        #endregion
+
         #region EditInterface
 
-        private EditInterfaceCommand removeCameraCommand;
-        private EditInterfaceManager<PredefinedCamera> cameraEdits;
         private EditInterface editInterface;
 
         public EditInterface getEditInterface()
@@ -82,51 +84,8 @@ namespace Medical
             if (editInterface == null)
             {
                 editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, name + "Simulation Scene", null);
-                removeCameraCommand = new EditInterfaceCommand("Remove", removeCamera);
-                editInterface.addCommand(new EditInterfaceCommand("Add Predefined Camera", addCamera));
-                cameraEdits = new EditInterfaceManager<PredefinedCamera>(editInterface);
-                foreach (PredefinedCamera state in cameras.Values)
-                {
-                    createCameraEditInterface(state);
-                }
             }
             return editInterface;
-        }
-
-        private void addCamera(EditUICallback callback, EditInterfaceCommand command)
-        {
-            String name;
-            if (callback.getInputString("Enter the name of the camera.", out name, validateCameraName))
-            {
-                PredefinedCamera camera = new PredefinedCamera(name, Vector3.UnitX, Vector3.Zero);
-                cameras.Add(name, camera);
-                createCameraEditInterface(camera);
-            }
-        }
-
-        private bool validateCameraName(string input, out string newPrompt)
-        {
-            if (cameras.ContainsKey(name))
-            {
-                newPrompt = "Camera already exists please enter another name.";
-                return false;
-            }
-            newPrompt = "";
-            return true;
-        }
-
-        private void removeCamera(EditUICallback callback, EditInterfaceCommand command)
-        {
-            PredefinedCamera camera = cameraEdits.resolveSourceObject(callback.getSelectedEditInterface());
-            cameras.Remove(camera.Name);
-            cameraEdits.removeSubInterface(camera);
-        }
-
-        private void createCameraEditInterface(PredefinedCamera camera)
-        {
-            EditInterface edit = ReflectedEditInterface.createEditInterface(camera, ReflectedEditInterface.DefaultScanner, camera.Name + " - Predefined Camera", null);
-            edit.addCommand(removeCameraCommand);
-            cameraEdits.addSubInterface(camera, edit);
         }
 
         #endregion
@@ -134,18 +93,18 @@ namespace Medical
         #region Saveable Members
 
         private String NAME = "Name";
-        private String CAMERA_BASE = "Camera";
+        private String CAMERA_FILE = "CameraFile";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
             name = info.GetString(NAME);
-            info.RebuildDictionary<String, PredefinedCamera>(CAMERA_BASE, cameras);
+            cameraFile = info.GetString(CAMERA_FILE);
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue(NAME, name);
-            info.ExtractDictionary<String, PredefinedCamera>(CAMERA_BASE, cameras);
+            info.AddValue(CAMERA_FILE, cameraFile);
         }
 
         #endregion

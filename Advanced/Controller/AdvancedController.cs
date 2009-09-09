@@ -152,17 +152,8 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         public void open(String filename)
         {
-            using (Archive sceneArchive = FileSystem.OpenArchive(Path.GetDirectoryName(filename)))
-            {
-                if (sceneArchive.exists(filename))
-                {
-                    using (Stream stream = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                    {
-                        changeScene(stream);
-                    }
-                }
-                stateController.clearStates();
-            }
+            changeScene(filename);
+            stateController.clearStates();
         }
 
         public void newScene()
@@ -299,13 +290,13 @@ namespace Medical.Controller
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(Stream file)
+        private bool changeScene(String file)
         {
             guiElements.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
             {
-                drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene);
+                drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
                 return true;
             }
@@ -317,18 +308,9 @@ namespace Medical.Controller
 
         private void loadDefaultScene()
         {
-            String sceneFileName = "/Scenes/MasterScene.sim.xml";
-            using (Archive sceneArchive = FileSystem.OpenArchive(Resource.ResourceRoot))
-            {
-                if (sceneArchive.exists(Resource.ResourceRoot + sceneFileName))
-                {
-                    using (Stream stream = sceneArchive.openStream(Resource.ResourceRoot + sceneFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                    {
-                        changeScene(stream);
-                    }
-                }
-                stateController.clearStates();
-            }
+            String sceneFileName = Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml";
+            changeScene(sceneFileName);
+            stateController.clearStates();
         }
     }
 }

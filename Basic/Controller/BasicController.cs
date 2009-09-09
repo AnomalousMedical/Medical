@@ -147,17 +147,8 @@ namespace Medical.Controller
         /// </summary>
         public void openDefaultScene()
         {
-            using (Archive sceneArchive = FileSystem.OpenArchive(Resource.ResourceRoot))
-            {
-                if (sceneArchive.exists(Resource.ResourceRoot + sceneFileName))
-                {
-                    using (Stream stream = sceneArchive.openStream(Resource.ResourceRoot + sceneFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                    {
-                        changeScene(stream);
-                    }
-                }
-                stateController.clearStates();
-            }
+            changeScene(Resource.ResourceRoot + sceneFileName);
+            stateController.clearStates();
         }
 
         /// <summary>
@@ -265,14 +256,14 @@ namespace Medical.Controller
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(Stream file)
+        private bool changeScene(String file)
         {
             statePicker.setToDefault();
             guiElements.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
             {
-                drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene);
+                drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
                 return true;
             }
