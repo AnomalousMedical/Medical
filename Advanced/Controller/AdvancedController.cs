@@ -244,6 +244,7 @@ namespace Medical.Controller
                 if (states != null)
                 {
                     stateController.setStates(states);
+                    stateController.blend(0.0f);
                 }
             }
             finally
