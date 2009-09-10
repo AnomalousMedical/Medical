@@ -138,6 +138,21 @@ namespace Medical
             }
         }
 
+        public static String DefaultScene
+        {
+            get
+            {
+                if (internalSettings != null)
+                {
+                    return resources.getValue("DefaultScene", SceneDirectory + "/Male.sim.xml");
+                }
+                else
+                {
+                    return SceneDirectory + "/Male.sim.xml";
+                }
+            }
+        }
+
         public static EngineConfig EngineConfig { get; private set; }
 
         public static void save()

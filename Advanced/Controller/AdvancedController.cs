@@ -320,7 +320,7 @@ namespace Medical.Controller
 
         private void loadDefaultScene()
         {
-            String sceneFileName = Resource.ResourceRoot + "/Scenes/Male.sim.xml";
+            String sceneFileName = MedicalConfig.DefaultScene;
             changeScene(sceneFileName);
             stateController.clearStates();
         }
