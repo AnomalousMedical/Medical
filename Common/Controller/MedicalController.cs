@@ -93,7 +93,7 @@ namespace Medical
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
 
             //Intialize the platform
-            BulletInterface.Instance.ShapeMargin = 0.0f;
+            BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
             mainTimer = new UpdateTimer(systemTimer, new WindowsFormsUpdate());
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;

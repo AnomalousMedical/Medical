@@ -65,7 +65,7 @@ namespace Medical.GUI
             {
                 currentBitmap.Dispose();
             }
-            currentBitmap = renderer.renderImage(400, 400);
+            currentBitmap = renderer.renderImage(previewPicture.Size.Width, previewPicture.Size.Height);
             previewPicture.Image = currentBitmap;
         }
 
