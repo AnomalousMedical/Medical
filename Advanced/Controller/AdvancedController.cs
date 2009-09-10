@@ -29,6 +29,7 @@ namespace Medical.Controller
         private XmlSaver saver = new XmlSaver();
         private ImageRenderer imageRenderer;
         private MovementStateControl movementState;
+        private ScenePicker scenePicker = new ScenePicker();
 
         /// <summary>
         /// Constructor.
@@ -54,6 +55,10 @@ namespace Medical.Controller
             if (advancedForm != null)
             {
                 advancedForm.Dispose();
+            }
+            if (scenePicker != null)
+            {
+                scenePicker.Dispose();
             }
         }
 
@@ -93,6 +98,8 @@ namespace Medical.Controller
             savedCameraGUI.initialize(drawingWindowController);
             guiElements.addGUIElement(savedCameraGUI);
 
+            scenePicker.initialize();
+
             //Add specific gui elements
             DiskControl discControl = new DiskControl();
             guiElements.addGUIElement(discControl);
@@ -121,7 +128,7 @@ namespace Medical.Controller
             movementState = new MovementStateControl();
             guiElements.addGUIElement(movementState);
 
-            newScene();
+            loadDefaultScene();
             
             if(!advancedForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
@@ -158,8 +165,12 @@ namespace Medical.Controller
 
         public void newScene()
         {
-            loadDefaultScene();
-            stateController.clearStates();
+            scenePicker.ShowDialog(advancedForm);
+            if (scenePicker.DialogResult == DialogResult.OK)
+            {
+                changeScene(scenePicker.SelectedFileName);
+                stateController.clearStates();
+            }
         }
 
         public void setOneWindowLayout()
@@ -309,7 +320,7 @@ namespace Medical.Controller
 
         private void loadDefaultScene()
         {
-            String sceneFileName = Resource.ResourceRoot + "/Scenes/MasterScene.sim.xml";
+            String sceneFileName = Resource.ResourceRoot + "/Scenes/Male.sim.xml";
             changeScene(sceneFileName);
             stateController.clearStates();
         }

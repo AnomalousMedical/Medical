@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Engine;
+using Engine.Resources;
 
 namespace Medical
 {
@@ -22,6 +23,8 @@ namespace Medical
         private static String programDirectory;
         private static String autoResourceRoot;
 
+        private static String sceneDirectory;
+
         public MedicalConfig(String docRoot)
         {
             MedicalConfig.docRoot = docRoot;
@@ -36,6 +39,7 @@ namespace Medical
             cameraSection = new CameraSection(configFile);
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
+            sceneDirectory = "/Scenes";
 
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 0)
@@ -139,6 +143,14 @@ namespace Medical
         public static void save()
         {
             configFile.writeConfigFile();
+        }
+
+        public static String SceneDirectory
+        {
+            get
+            {
+                return Resource.ResourceRoot + sceneDirectory;
+            }
         }
 
     }

@@ -18,7 +18,7 @@ namespace Medical.Controller
 {
     public class BasicController : IDisposable
     {
-        private const String sceneFileName = "/Scenes/BasicScene.sim.xml";
+        private const String sceneFileName = "/Scenes/Male.sim.xml";
 
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
