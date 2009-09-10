@@ -214,7 +214,7 @@ namespace Medical.Controller
             {
                 textWriter = new XmlTextWriter(filename, Encoding.Default);
                 textWriter.Formatting = Formatting.Indented;
-                SavedMedicalStates states = stateController.getSavedState();
+                SavedMedicalStates states = stateController.getSavedState(medicalController.CurrentSceneFile);
                 saver.saveObject(states, textWriter);
             }
             finally

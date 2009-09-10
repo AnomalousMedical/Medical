@@ -228,7 +228,7 @@ namespace Medical.Controller
             {
                 textWriter = new XmlTextWriter(filename, Encoding.Default);
                 textWriter.Formatting = Formatting.Indented;
-                SavedMedicalStates states = stateController.getSavedState();
+                SavedMedicalStates states = stateController.getSavedState(medicalController.CurrentSceneFile);
                 saver.saveObject(states, textWriter);
             }
             finally
@@ -246,7 +246,6 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         public void openStates(String filename)
         {
-            loadDefaultScene();
             XmlTextReader textReader = null;
             try
             {
@@ -254,6 +253,7 @@ namespace Medical.Controller
                 SavedMedicalStates states = saver.restoreObject(textReader) as SavedMedicalStates;
                 if (states != null)
                 {
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     stateController.setStates(states);
                     stateController.blend(0.0f);
                 }

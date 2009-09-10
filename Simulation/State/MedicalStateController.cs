@@ -86,9 +86,9 @@ namespace Medical
             }
         }
 
-        public SavedMedicalStates getSavedState()
+        public SavedMedicalStates getSavedState(String currentSceneName)
         {
-            return new SavedMedicalStates(states);
+            return new SavedMedicalStates(states, currentSceneName);
         }
 
         public void setStates(SavedMedicalStates states)
