@@ -45,7 +45,7 @@ namespace Medical
             BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
             if (otherTooth != null)
             {
-                numContacts++;
+                collidingTeeth.Add(otherTooth);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Medical
             BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
             if (otherTooth != null)
             {
-                numContacts--;
+                collidingTeeth.Remove(otherTooth);
             }
         }
     }

@@ -38,7 +38,7 @@ namespace Medical
             TopTooth otherTooth = otherBody.Owner.getElement("Behavior") as TopTooth;
             if (otherTooth != null)
             {
-                numContacts++;
+                collidingTeeth.Add(otherTooth);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Medical
             TopTooth otherTooth = otherBody.Owner.getElement("Behavior") as TopTooth;
             if (otherTooth != null)
             {
-                numContacts--;
+                collidingTeeth.Remove(otherTooth);
             }
         }
     }

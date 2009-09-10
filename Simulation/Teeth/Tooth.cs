@@ -44,7 +44,8 @@ namespace Medical
         private Quaternion startingRotation;
         private Vector3 offset = Vector3.Zero;
         private Quaternion rotationOffset = Quaternion.Identity;
-        protected int numContacts = 0;
+
+        protected List<Tooth> collidingTeeth = new List<Tooth>(5);
 
         protected override void constructed()
         {
@@ -93,14 +94,20 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            if (TeethController.HighlightContacts && numContacts > 0)
+            bool highlight = false;
+            if (TeethController.HighlightContacts)
             {
-                HighlightColor = Color.Blue;
+                foreach (Tooth tooth in collidingTeeth)
+                {
+                    if (!tooth.Extracted)
+                    {
+                        highlight = true;
+                        break;
+                    }
+                }
             }
-            else
-            {
-                HighlightColor = Color.White;
-            }
+
+            HighlightColor = highlight ? Color.Blue : Color.White;
         }
 
         protected abstract void looseChanged(bool loose);
