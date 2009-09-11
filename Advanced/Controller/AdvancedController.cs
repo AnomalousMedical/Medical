@@ -215,6 +215,11 @@ namespace Medical.Controller
             return ret;
         }
 
+        public void createNewMedicalStates()
+        {
+            stateController.clearStates();
+        }
+
         public void createMedicalState(string name)
         {
             stateController.createAndAddState(name);

@@ -38,7 +38,7 @@ namespace Medical.GUI
             this.Close();
         }
 
-        private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void addStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.createMedicalState("Test");
         }
@@ -67,6 +67,11 @@ namespace Medical.GUI
         private void fourWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.setFourWindowLayout();
+        }
+
+        private void newDistortion_Click(object sender, EventArgs e)
+        {
+            controller.createNewMedicalStates();
         }
 
         private void openDistortion_Click(object sender, EventArgs e)
