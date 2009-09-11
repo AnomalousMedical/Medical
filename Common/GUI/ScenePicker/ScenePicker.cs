@@ -56,7 +56,14 @@ namespace Medical.GUI
         {
             get
             {
-                return MedicalConfig.SceneDirectory + "/" + sceneSelectionView.SelectedItems[0].Tag.ToString();
+                if (sceneSelectionView.SelectedItems.Count > 0)
+                {
+                    return MedicalConfig.SceneDirectory + "/" + sceneSelectionView.SelectedItems[0].Tag.ToString();
+                }
+                else
+                {
+                    return MedicalConfig.DefaultScene;
+                }
             }
         }
 
