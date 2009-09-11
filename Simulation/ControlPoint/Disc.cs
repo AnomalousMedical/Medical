@@ -210,7 +210,14 @@ namespace Medical
             }
             else
             {
-                location = discPopLocation;
+                if (controlPoint.CurrentLocation >= discPopLocation - discBackOffset && locked)
+                {
+                    location = controlPoint.CurrentLocation + discBackOffset;
+                }
+                else
+                {
+                    location = discPopLocation;
+                }
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
                 updateTranslation(ref translation);
 
@@ -226,21 +233,28 @@ namespace Medical
 
         private Vector3 getOffset(float location)
         {
-            if (location < discPopLocation - discBackOffset)
+            if (locked)
             {
                 return rdaOffset + horizontalOffset;
             }
-            else if (location < discPopLocation - discBackOffset / 1.5f)
-            {
-                return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset + elevenOClockAdditionalOffset; 
-            }
-            else if (location < discPopLocation)
-            {
-                return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
-            }
             else
             {
-                return discOffset + horizontalOffset;
+                if (location < discPopLocation - discBackOffset)
+                {
+                    return rdaOffset + horizontalOffset;
+                }
+                else if (location < discPopLocation - discBackOffset / 1.5f)
+                {
+                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset + elevenOClockAdditionalOffset;
+                }
+                else if (location < discPopLocation)
+                {
+                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
+                }
+                else
+                {
+                    return discOffset + horizontalOffset;
+                }
             }
         }
 
