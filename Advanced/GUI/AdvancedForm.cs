@@ -47,6 +47,7 @@ namespace Medical.GUI
         {
             controller.newScene();
             clearWindowTitle();
+            patientFileTracker.clearCurrentFile();
         }
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,6 +73,8 @@ namespace Medical.GUI
         private void newDistortion_Click(object sender, EventArgs e)
         {
             controller.createNewMedicalStates();
+            clearWindowTitle();
+            patientFileTracker.clearCurrentFile();
         }
 
         private void openDistortion_Click(object sender, EventArgs e)

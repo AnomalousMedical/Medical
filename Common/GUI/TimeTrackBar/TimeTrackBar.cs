@@ -47,6 +47,7 @@ namespace Medical.GUI
             this.Size = new System.Drawing.Size(150, 47);
             currentTime = 0.0f;
             maximumTime = 0.0f;
+            ChangeTimeOnSelection = false;
 
             // Calculate the initial sizes of the bar, 
             // thumb and ticks.
@@ -203,6 +204,10 @@ namespace Medical.GUI
                         {
                             MarkMoved.Invoke(selectedMark);
                         }
+                    }
+                    if (ChangeTimeOnSelection)
+                    {
+                        CurrentTime = selectedMark.Location;
                     }
                     selectedMark = null;
                     Cursor.Show();
@@ -364,6 +369,12 @@ namespace Medical.GUI
                 moveMarks = value;
             }
         }
+
+        /// <summary>
+        /// Set this to true to change the time to the selected mark when a
+        /// timer mark is selected.
+        /// </summary>
+        public bool ChangeTimeOnSelection { get; set; }
 
         public TrackBarMark MenuTargetMark
         {

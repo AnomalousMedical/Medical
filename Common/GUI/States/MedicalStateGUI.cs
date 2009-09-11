@@ -18,11 +18,12 @@ namespace Medical.GUI
         private bool playing = false;
         private double targetTime = 0.0f;
         private double playbackSpeed = 1.0f;
+        private Dictionary<MedicalState, MedicalStateTrackMark> trackMarks = new Dictionary<MedicalState, MedicalStateTrackMark>();
 
         public MedicalStateGUI()
         {
             InitializeComponent();
-            medicalStateTrackBar.CurrentBlendChanged += new CurrentBlendChanged(medicalStateTrackBar_CurrentBlendChanged);
+            stateTrackBar.TimeChanged += new TimeChanged(stateTrackBar_TimeChanged);
         }
 
         public void initialize(MedicalStateController stateController)
@@ -35,7 +36,7 @@ namespace Medical.GUI
 
         public void next()
         {
-            int blend = (int)medicalStateTrackBar.CurrentBlend;
+            int blend = (int)stateTrackBar.CurrentTime;
             int numStates = stateController.getNumStates();
             if (blend < numStates && numStates > 1)
             {
@@ -45,8 +46,8 @@ namespace Medical.GUI
 
         public void previous()
         {
-            int blend = (int)medicalStateTrackBar.CurrentBlend;
-            if (blend != medicalStateTrackBar.CurrentBlend)
+            int blend = (int)stateTrackBar.CurrentTime;
+            if (blend != stateTrackBar.CurrentTime)
             {
                 startPlayback(blend, -1.0);
             }
@@ -70,34 +71,41 @@ namespace Medical.GUI
             }
         }
 
-        void medicalStateTrackBar_CurrentBlendChanged(MedicalStateTrackBar trackBar, double currentTime)
+        void stateTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
         {
             stateController.blend((float)currentTime);
         }
 
         void MedicalStates_StatesCleared(MedicalStateController controller)
         {
-            medicalStateTrackBar.clearStates();
+            stateTrackBar.clearMarks();
         }
 
         void MedicalStates_StateRemoved(MedicalStateController controller, MedicalState state, int index)
         {
-            medicalStateTrackBar.removeState(state);
+            MedicalStateTrackMark mark;
+            trackMarks.TryGetValue(state, out mark);
+            if (mark != null)
+            {
+                stateTrackBar.removeMark(mark);
+            }
         }
 
         void MedicalStates_StateAdded(MedicalStateController controller, MedicalState state, int index)
         {
-            medicalStateTrackBar.Enabled = controller.getNumStates() > 1;
-            if (medicalStateTrackBar.Enabled)
+            stateTrackBar.Enabled = controller.getNumStates() > 1;
+            if (stateTrackBar.Enabled)
             {
-                medicalStateTrackBar.MaxBlend = controller.getNumStates() - 1;
+                stateTrackBar.MaximumTime = controller.getNumStates() - 1;
             }
-            medicalStateTrackBar.addState(state, index);
+            MedicalStateTrackMark mark = new MedicalStateTrackMark(state);
+            mark.Location = index;
+            stateTrackBar.addMark(mark);
         }
 
         protected override void fixedLoopUpdate(Clock time)
         {
-            double nextTime = medicalStateTrackBar.CurrentBlend + time.Seconds * playbackSpeed;
+            double nextTime = stateTrackBar.CurrentTime + time.Seconds * playbackSpeed;
             if (playbackSpeed > 0)
             {
                 if (nextTime > targetTime)
@@ -114,7 +122,7 @@ namespace Medical.GUI
                     pause();
                 }
             }
-            medicalStateTrackBar.CurrentBlend = nextTime;
+            stateTrackBar.CurrentTime = (float)nextTime;
         }
 
         private void playAllButton_Click(object sender, EventArgs e)
@@ -169,11 +177,11 @@ namespace Medical.GUI
         {
             get
             {
-                return medicalStateTrackBar.CurrentBlend;
+                return stateTrackBar.CurrentTime;
             }
             set
             {
-                medicalStateTrackBar.CurrentBlend = value;
+                stateTrackBar.CurrentTime = (float)value;
             }
         }
     }

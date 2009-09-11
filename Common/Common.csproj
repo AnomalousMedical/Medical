@@ -224,10 +224,7 @@
     <Compile Include="GUI\States\MedicalStateGUI.Designer.cs">
       <DependentUpon>MedicalStateGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\States\MedicalStateMark.cs" />
-    <Compile Include="GUI\States\MedicalStateTrackBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="GUI\States\MedicalStateTrackMark.cs" />
     <Compile Include="GUI\States\OpenPatientDialog.cs">
       <SubType>Form</SubType>
     </Compile>

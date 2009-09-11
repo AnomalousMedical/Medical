@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalStateGUI));
             this.nextButton = new System.Windows.Forms.Button();
-            this.medicalStateTrackBar = new Medical.GUI.MedicalStateTrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.speedTrackBar = new System.Windows.Forms.TrackBar();
             this.label2 = new System.Windows.Forms.Label();
             this.previousButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
+            this.stateTrackBar = new Medical.GUI.TimeTrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,17 +48,6 @@
             this.nextButton.TabIndex = 5;
             this.nextButton.UseVisualStyleBackColor = true;
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
-            // 
-            // medicalStateTrackBar
-            // 
-            this.medicalStateTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.medicalStateTrackBar.CurrentBlend = 0;
-            this.medicalStateTrackBar.Location = new System.Drawing.Point(1, -16);
-            this.medicalStateTrackBar.MaxBlend = 60;
-            this.medicalStateTrackBar.Name = "medicalStateTrackBar";
-            this.medicalStateTrackBar.Size = new System.Drawing.Size(487, 47);
-            this.medicalStateTrackBar.TabIndex = 1;
             // 
             // label1
             // 
@@ -109,12 +98,28 @@
             this.pauseButton.UseVisualStyleBackColor = true;
             this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
             // 
+            // stateTrackBar
+            // 
+            this.stateTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.stateTrackBar.BarMenu = null;
+            this.stateTrackBar.ChangeTimeOnSelection = true;
+            this.stateTrackBar.CurrentTime = 0F;
+            this.stateTrackBar.Location = new System.Drawing.Point(1, -15);
+            this.stateTrackBar.MaximumTime = 1F;
+            this.stateTrackBar.MoveMarks = false;
+            this.stateTrackBar.Name = "stateTrackBar";
+            this.stateTrackBar.SelectedMark = null;
+            this.stateTrackBar.Size = new System.Drawing.Size(486, 47);
+            this.stateTrackBar.TabIndex = 10;
+            this.stateTrackBar.TickMenu = null;
+            // 
             // MedicalStateGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(491, 65);
-            this.Controls.Add(this.medicalStateTrackBar);
+            this.Controls.Add(this.stateTrackBar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.speedTrackBar);
@@ -138,9 +143,9 @@
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button previousButton;
         private System.Windows.Forms.Button nextButton;
-        private MedicalStateTrackBar medicalStateTrackBar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar speedTrackBar;
         private System.Windows.Forms.Label label2;
+        private TimeTrackBar stateTrackBar;
     }
 }
