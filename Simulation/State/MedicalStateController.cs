@@ -24,6 +24,13 @@ namespace Medical
             return state;
         }
 
+        public MedicalState createAndInsertState(int index, string name)
+        {
+            MedicalState state = createState(name);
+            insertState(index, state);
+            return state;
+        }
+
         public MedicalState createState(String name)
         {
             MedicalState state = new MedicalState(name);
@@ -37,6 +44,23 @@ namespace Medical
             if (StateAdded != null)
             {
                 StateAdded.Invoke(this, state, states.Count - 1);
+            }
+        }
+
+        public void insertState(int index, MedicalState state)
+        {
+            if (index < states.Count)
+            {
+                states.Insert(index, state);
+            }
+            else
+            {
+                states.Add(state);
+                index = states.Count - 1;
+            }
+            if (StateAdded != null)
+            {
+                StateAdded.Invoke(this, state, index);
             }
         }
 

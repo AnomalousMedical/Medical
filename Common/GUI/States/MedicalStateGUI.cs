@@ -11,6 +11,8 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
+    public delegate MedicalState CreateStateCallback(int stateIndex);
+
     public partial class MedicalStateGUI : GUIElement
     {
         private MedicalStateController stateController;
@@ -19,6 +21,7 @@ namespace Medical.GUI
         private double targetTime = 0.0f;
         private double playbackSpeed = 1.0f;
         private Dictionary<MedicalState, MedicalStateTrackMark> trackMarks = new Dictionary<MedicalState, MedicalStateTrackMark>();
+        private CreateStateCallback createStateCallback = null;
 
         public MedicalStateGUI()
         {
@@ -101,10 +104,14 @@ namespace Medical.GUI
 
         void MedicalStates_StateAdded(MedicalStateController controller, MedicalState state, int index)
         {
-            stateTrackBar.Enabled = controller.getNumStates() > 1;
-            if (stateTrackBar.Enabled)
+            //stateTrackBar.Enabled = controller.getNumStates() > 1;
+            stateTrackBar.MaximumTime = controller.getNumStates() - 1;
+            foreach (MedicalStateTrackMark reindex in trackMarks.Values)
             {
-                stateTrackBar.MaximumTime = controller.getNumStates() - 1;
+                if (reindex.Location >= index)
+                {
+                    reindex.Location++;
+                }
             }
             MedicalStateTrackMark mark = new MedicalStateTrackMark(state);
             mark.Location = index;
@@ -194,10 +201,40 @@ namespace Medical.GUI
             }
         }
 
+        public CreateStateCallback CreateStateCallback
+        {
+            get
+            {
+                return createStateCallback;
+            }
+            set
+            {
+                createStateCallback = value;
+                if (createStateCallback != null)
+                {
+                    stateTrackBar.BarMenu = barMenu;
+                }
+                else
+                {
+                    stateTrackBar.BarMenu = null;
+                }
+            }
+        }
+
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MedicalStateTrackMark mark = stateTrackBar.MenuTargetMark as MedicalStateTrackMark;
             stateController.removeState(mark.State);
+        }
+
+        private void appendStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            createStateCallback.Invoke(stateController.getNumStates());
+        }
+
+        private void insertStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            createStateCallback.Invoke((int)stateTrackBar.BarMenuTime + 1);
         }
     }
 }

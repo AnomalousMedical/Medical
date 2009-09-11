@@ -39,8 +39,12 @@
             this.stateTrackBar = new Medical.GUI.TimeTrackBar();
             this.trackMarkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.appendStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.trackMarkMenu.SuspendLayout();
+            this.barMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // nextButton
@@ -123,14 +127,36 @@
             this.trackMarkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteToolStripMenuItem});
             this.trackMarkMenu.Name = "trackMarkMenu";
-            this.trackMarkMenu.Size = new System.Drawing.Size(153, 48);
+            this.trackMarkMenu.Size = new System.Drawing.Size(108, 26);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // barMenu
+            // 
+            this.barMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.appendStateToolStripMenuItem,
+            this.insertStateToolStripMenuItem});
+            this.barMenu.Name = "barMenu";
+            this.barMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // appendStateToolStripMenuItem
+            // 
+            this.appendStateToolStripMenuItem.Name = "appendStateToolStripMenuItem";
+            this.appendStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.appendStateToolStripMenuItem.Text = "Append State";
+            this.appendStateToolStripMenuItem.Click += new System.EventHandler(this.appendStateToolStripMenuItem_Click);
+            // 
+            // insertStateToolStripMenuItem
+            // 
+            this.insertStateToolStripMenuItem.Name = "insertStateToolStripMenuItem";
+            this.insertStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.insertStateToolStripMenuItem.Text = "Insert State";
+            this.insertStateToolStripMenuItem.Click += new System.EventHandler(this.insertStateToolStripMenuItem_Click);
             // 
             // MedicalStateGUI
             // 
@@ -152,6 +178,7 @@
             this.Text = "States";
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).EndInit();
             this.trackMarkMenu.ResumeLayout(false);
+            this.barMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,5 +195,8 @@
         private TimeTrackBar stateTrackBar;
         private System.Windows.Forms.ContextMenuStrip trackMarkMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip barMenu;
+        private System.Windows.Forms.ToolStripMenuItem appendStateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertStateToolStripMenuItem;
     }
 }

@@ -92,6 +92,7 @@ namespace Medical.Controller
 
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController);
+            stateGUI.CreateStateCallback = createStateCallback;
             guiElements.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
@@ -328,6 +329,11 @@ namespace Medical.Controller
             String sceneFileName = MedicalConfig.DefaultScene;
             changeScene(sceneFileName);
             stateController.clearStates();
+        }
+
+        private MedicalState createStateCallback(int index)
+        {
+            return stateController.createAndInsertState(index, "Auto");
         }
     }
 }
