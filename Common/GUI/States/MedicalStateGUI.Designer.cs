@@ -42,6 +42,7 @@
             this.barMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.appendStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertStateAtStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.trackMarkMenu.SuspendLayout();
             this.barMenu.SuspendLayout();
@@ -139,24 +140,32 @@
             // barMenu
             // 
             this.barMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.appendStateToolStripMenuItem,
-            this.insertStateToolStripMenuItem});
+            this.insertStateToolStripMenuItem,
+            this.insertStateAtStartToolStripMenuItem,
+            this.appendStateToolStripMenuItem});
             this.barMenu.Name = "barMenu";
-            this.barMenu.Size = new System.Drawing.Size(153, 70);
+            this.barMenu.Size = new System.Drawing.Size(186, 92);
             // 
             // appendStateToolStripMenuItem
             // 
             this.appendStateToolStripMenuItem.Name = "appendStateToolStripMenuItem";
-            this.appendStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.appendStateToolStripMenuItem.Text = "Append State";
+            this.appendStateToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.appendStateToolStripMenuItem.Text = "Append State To End";
             this.appendStateToolStripMenuItem.Click += new System.EventHandler(this.appendStateToolStripMenuItem_Click);
             // 
             // insertStateToolStripMenuItem
             // 
             this.insertStateToolStripMenuItem.Name = "insertStateToolStripMenuItem";
-            this.insertStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.insertStateToolStripMenuItem.Text = "Insert State";
+            this.insertStateToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.insertStateToolStripMenuItem.Text = "Insert State Here";
             this.insertStateToolStripMenuItem.Click += new System.EventHandler(this.insertStateToolStripMenuItem_Click);
+            // 
+            // insertStateAtStartToolStripMenuItem
+            // 
+            this.insertStateAtStartToolStripMenuItem.Name = "insertStateAtStartToolStripMenuItem";
+            this.insertStateAtStartToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.insertStateAtStartToolStripMenuItem.Text = "Insert State At Start";
+            this.insertStateAtStartToolStripMenuItem.Click += new System.EventHandler(this.insertStateAtStartToolStripMenuItem_Click);
             // 
             // MedicalStateGUI
             // 
@@ -198,5 +207,6 @@
         private System.Windows.Forms.ContextMenuStrip barMenu;
         private System.Windows.Forms.ToolStripMenuItem appendStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertStateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertStateAtStartToolStripMenuItem;
     }
 }

@@ -98,6 +98,10 @@ namespace Medical.GUI
                         reindex.Location--;
                     }
                 }
+                if (stateTrackBar.CurrentTime > index)
+                {
+                    stateTrackBar.CurrentTime -= 1;
+                }
                 stateTrackBar.MaximumTime = controller.getNumStates() - 1;
             }
         }
@@ -235,6 +239,11 @@ namespace Medical.GUI
         private void insertStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             createStateCallback.Invoke((int)stateTrackBar.BarMenuTime + 1);
+        }
+
+        private void insertStateAtStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            createStateCallback.Invoke(0);
         }
     }
 }
