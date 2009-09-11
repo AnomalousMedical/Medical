@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalStateGUI));
             this.nextButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -36,7 +37,10 @@
             this.previousButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.stateTrackBar = new Medical.GUI.TimeTrackBar();
+            this.trackMarkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
+            this.trackMarkMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // nextButton
@@ -112,7 +116,21 @@
             this.stateTrackBar.SelectedMark = null;
             this.stateTrackBar.Size = new System.Drawing.Size(486, 47);
             this.stateTrackBar.TabIndex = 10;
-            this.stateTrackBar.TickMenu = null;
+            this.stateTrackBar.TickMenu = this.trackMarkMenu;
+            // 
+            // trackMarkMenu
+            // 
+            this.trackMarkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem});
+            this.trackMarkMenu.Name = "trackMarkMenu";
+            this.trackMarkMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // MedicalStateGUI
             // 
@@ -133,6 +151,7 @@
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
             this.Text = "States";
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).EndInit();
+            this.trackMarkMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,5 +166,7 @@
         private System.Windows.Forms.TrackBar speedTrackBar;
         private System.Windows.Forms.Label label2;
         private TimeTrackBar stateTrackBar;
+        private System.Windows.Forms.ContextMenuStrip trackMarkMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
     }
 }

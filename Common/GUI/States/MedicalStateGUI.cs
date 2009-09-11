@@ -88,6 +88,14 @@ namespace Medical.GUI
             if (mark != null)
             {
                 stateTrackBar.removeMark(mark);
+                foreach (MedicalStateTrackMark reindex in trackMarks.Values)
+                {
+                    if (reindex.Location > index)
+                    {
+                        reindex.Location--;
+                    }
+                }
+                stateTrackBar.MaximumTime = controller.getNumStates() - 1;
             }
         }
 
@@ -101,6 +109,7 @@ namespace Medical.GUI
             MedicalStateTrackMark mark = new MedicalStateTrackMark(state);
             mark.Location = index;
             stateTrackBar.addMark(mark);
+            trackMarks.Add(state, mark);
         }
 
         protected override void fixedLoopUpdate(Clock time)
@@ -183,6 +192,12 @@ namespace Medical.GUI
             {
                 stateTrackBar.CurrentTime = (float)value;
             }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MedicalStateTrackMark mark = stateTrackBar.MenuTargetMark as MedicalStateTrackMark;
+            stateController.removeState(mark.State);
         }
     }
 }
