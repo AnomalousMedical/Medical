@@ -384,6 +384,7 @@ namespace Medical
         {
             if (eventManager[DiscEvents.PrintBoneLocations].FirstFrameDown)
             {
+                Log.Default.debug("\nCP position -- {0} {1}", Owner.Name, controlPoint.Owner.Translation);
                 Log.Default.debug("\nBone position -- {0}", Owner.Name);
                 SceneNodeElement node = Owner.getElement(sceneNodeName) as SceneNodeElement;
                 if (node != null)

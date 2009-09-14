@@ -77,44 +77,6 @@ namespace Medical
             destroyWatermark();
         }
 
-        #region OSWindow Members
-
-        public void addListener(OSWindowListener listener)
-        {
-            listeners.Add(listener);
-        }
-
-        public void removeListener(OSWindowListener listener)
-        {
-            listeners.Remove(listener);
-        }
-
-        public IntPtr WindowHandle
-        {
-            get
-            {
-                return this.Handle;
-            }
-        }
-
-        public int WindowWidth
-        {
-            get
-            {
-                return this.Width;
-            }
-        }
-
-        public int WindowHeight
-        {
-            get
-            {
-                return this.Height;
-            }
-        }
-
-        #endregion
-
         public void createCamera(UpdateTimer mainTimer, SimScene scene)
         {
             this.scene = scene;
@@ -226,6 +188,18 @@ namespace Medical
             }
         }
 
+        public bool AllowRotation
+        {
+            get
+            {
+                return orbitCamera.AllowRotation;
+            }
+            set
+            {
+                orbitCamera.AllowRotation = value;
+            }
+        }
+
         protected override void OnResize(EventArgs e)
         {
             foreach (OSWindowListener listener in listeners)
@@ -269,6 +243,44 @@ namespace Medical
             }
             base.OnHandleDestroyed(e);
         }
+
+        #region OSWindow Members
+
+        public void addListener(OSWindowListener listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void removeListener(OSWindowListener listener)
+        {
+            listeners.Remove(listener);
+        }
+
+        public IntPtr WindowHandle
+        {
+            get
+            {
+                return this.Handle;
+            }
+        }
+
+        public int WindowWidth
+        {
+            get
+            {
+                return this.Width;
+            }
+        }
+
+        public int WindowHeight
+        {
+            get
+            {
+                return this.Height;
+            }
+        }
+
+        #endregion
 
         #region CameraMotionValidator Members
 

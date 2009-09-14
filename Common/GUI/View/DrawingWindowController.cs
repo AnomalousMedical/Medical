@@ -26,6 +26,7 @@ namespace Medical
         private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
         private bool watermarks = false;
+        private bool allowRotation = true;
 
         public DrawingWindowController(String camerasFile)
         {
@@ -75,6 +76,7 @@ namespace Medical
         {
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
             cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
+            cameraHost.DrawingWindow.AllowRotation = allowRotation;
             cameras.Add(cameraHost);
             if (camerasActive)
             {
@@ -359,6 +361,18 @@ namespace Medical
             foreach (DrawingWindowHost host in listCopy)
             {
                 host.Close();
+            }
+        }
+
+        public bool AllowRotation
+        {
+            get
+            {
+                return allowRotation;
+            }
+            set
+            {
+                allowRotation = value;
             }
         }
 

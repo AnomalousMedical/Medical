@@ -66,6 +66,8 @@ namespace Medical
         private Vector3 startTranslation = Vector3.Zero;
         private float totalTime = 0.0f;
 
+        private bool allowRotation = true;
+
         public OrbitCameraController(CameraControl camera, EventManager eventManager)
         {
             this.camera = camera;
@@ -174,7 +176,7 @@ namespace Medical
                     }
                     updateTranslation(normalDirection * orbitDistance + lookAt);
                 }
-                else if (events[CameraEvents.RotateCamera].Down)
+                else if (allowRotation && events[CameraEvents.RotateCamera].Down)
                 {
                     yaw += mouseCoords.x / -100.0f;
                     pitch += mouseCoords.y / 100.0f;
@@ -332,6 +334,18 @@ namespace Medical
             set
             {
                 motionValidator = value;
+            }
+        }
+
+        public bool AllowRotation
+        {
+            get
+            {
+                return allowRotation;
+            }
+            set
+            {
+                allowRotation = value;
             }
         }
     }

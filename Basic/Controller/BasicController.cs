@@ -78,6 +78,7 @@ namespace Medical.Controller
             medicalController.intialize(basicForm);
 
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
+            drawingWindowController.AllowRotation = false;
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
