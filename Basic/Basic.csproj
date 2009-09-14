@@ -93,6 +93,12 @@
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SimpleLayer\LayerSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\SimpleLayer\LayerSlider.Designer.cs">
+      <DependentUpon>LayerSlider.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SimpleLayer\PredefinedLayerControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
       <DependentUpon>MuscleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SimpleLayer\LayerSlider.resx">
+      <DependentUpon>LayerSlider.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleLayer\PredefinedLayerControl.resx">

@@ -28,429 +28,168 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.skullHidden = new System.Windows.Forms.RadioButton();
-            this.skullTransparent = new System.Windows.Forms.RadioButton();
-            this.skullOpaque = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.mandibleHidden = new System.Windows.Forms.RadioButton();
-            this.mandibleTransparent = new System.Windows.Forms.RadioButton();
-            this.mandibleOpaque = new System.Windows.Forms.RadioButton();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.topTeethHidden = new System.Windows.Forms.RadioButton();
-            this.topTeethTransparent = new System.Windows.Forms.RadioButton();
-            this.topTeethOpaque = new System.Windows.Forms.RadioButton();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.bottomTeethHidden = new System.Windows.Forms.RadioButton();
-            this.bottomTeethTransparent = new System.Windows.Forms.RadioButton();
-            this.bottomTeethOpaque = new System.Windows.Forms.RadioButton();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.eminenceHidden = new System.Windows.Forms.RadioButton();
-            this.eminenceVisible = new System.Windows.Forms.RadioButton();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.skinHidden = new System.Windows.Forms.RadioButton();
-            this.skinTransparent = new System.Windows.Forms.RadioButton();
-            this.skinOpaque = new System.Windows.Forms.RadioButton();
-            this.tmjDiscsOpaque = new System.Windows.Forms.RadioButton();
-            this.tmjDiscsTransparent = new System.Windows.Forms.RadioButton();
-            this.tmjDiscsHidden = new System.Windows.Forms.RadioButton();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.showEminence = new System.Windows.Forms.CheckBox();
+            this.skinSlider = new Medical.GUI.LayerSlider();
+            this.muscleSlider = new Medical.GUI.LayerSlider();
+            this.tmjSlider = new Medical.GUI.LayerSlider();
+            this.skullSlider = new Medical.GUI.LayerSlider();
+            this.mandibleSlider = new Medical.GUI.LayerSlider();
+            this.hyoidSlider = new Medical.GUI.LayerSlider();
+            this.spineSlider = new Medical.GUI.LayerSlider();
+            this.topTeethSlider = new Medical.GUI.LayerSlider();
+            this.bottomTeethSlider = new Medical.GUI.LayerSlider();
+            this.flowLayoutPanel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // flowLayoutPanel2
             // 
-            this.groupBox1.Controls.Add(this.skullHidden);
-            this.groupBox1.Controls.Add(this.skullTransparent);
-            this.groupBox1.Controls.Add(this.skullOpaque);
-            this.groupBox1.Location = new System.Drawing.Point(13, 103);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(125, 91);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Skull";
+            this.flowLayoutPanel2.AutoSize = true;
+            this.flowLayoutPanel2.Controls.Add(this.skinSlider);
+            this.flowLayoutPanel2.Controls.Add(this.muscleSlider);
+            this.flowLayoutPanel2.Controls.Add(this.tmjSlider);
+            this.flowLayoutPanel2.Controls.Add(this.panel1);
+            this.flowLayoutPanel2.Controls.Add(this.mandibleSlider);
+            this.flowLayoutPanel2.Controls.Add(this.hyoidSlider);
+            this.flowLayoutPanel2.Controls.Add(this.spineSlider);
+            this.flowLayoutPanel2.Controls.Add(this.topTeethSlider);
+            this.flowLayoutPanel2.Controls.Add(this.bottomTeethSlider);
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(2, 0);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(117, 592);
+            this.flowLayoutPanel2.TabIndex = 7;
             // 
-            // skullHidden
+            // panel1
             // 
-            this.skullHidden.AutoSize = true;
-            this.skullHidden.Location = new System.Drawing.Point(7, 68);
-            this.skullHidden.Name = "skullHidden";
-            this.skullHidden.Size = new System.Drawing.Size(59, 17);
-            this.skullHidden.TabIndex = 2;
-            this.skullHidden.TabStop = true;
-            this.skullHidden.Text = "Hidden";
-            this.skullHidden.UseVisualStyleBackColor = true;
-            this.skullHidden.CheckedChanged += new System.EventHandler(this.skullHidden_CheckedChanged);
+            this.panel1.Controls.Add(this.showEminence);
+            this.panel1.Controls.Add(this.skullSlider);
+            this.panel1.Location = new System.Drawing.Point(3, 183);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(111, 83);
+            this.panel1.TabIndex = 8;
             // 
-            // skullTransparent
+            // showEminence
             // 
-            this.skullTransparent.AutoSize = true;
-            this.skullTransparent.Location = new System.Drawing.Point(7, 44);
-            this.skullTransparent.Name = "skullTransparent";
-            this.skullTransparent.Size = new System.Drawing.Size(82, 17);
-            this.skullTransparent.TabIndex = 1;
-            this.skullTransparent.TabStop = true;
-            this.skullTransparent.Text = "Transparent";
-            this.skullTransparent.UseVisualStyleBackColor = true;
-            this.skullTransparent.CheckedChanged += new System.EventHandler(this.skullTransparent_CheckedChanged);
+            this.showEminence.AutoSize = true;
+            this.showEminence.Checked = true;
+            this.showEminence.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEminence.Location = new System.Drawing.Point(3, 64);
+            this.showEminence.Name = "showEminence";
+            this.showEminence.Size = new System.Drawing.Size(103, 17);
+            this.showEminence.TabIndex = 3;
+            this.showEminence.Text = "Show Eminence";
+            this.showEminence.UseVisualStyleBackColor = true;
+            this.showEminence.CheckedChanged += new System.EventHandler(this.showEminence_CheckedChanged);
             // 
-            // skullOpaque
+            // skinSlider
             // 
-            this.skullOpaque.AutoSize = true;
-            this.skullOpaque.Location = new System.Drawing.Point(7, 20);
-            this.skullOpaque.Name = "skullOpaque";
-            this.skullOpaque.Size = new System.Drawing.Size(63, 17);
-            this.skullOpaque.TabIndex = 0;
-            this.skullOpaque.TabStop = true;
-            this.skullOpaque.Text = "Opaque";
-            this.skullOpaque.UseVisualStyleBackColor = true;
-            this.skullOpaque.CheckedChanged += new System.EventHandler(this.skullOpaque_CheckedChanged);
+            this.skinSlider.LabelText = "Skin";
+            this.skinSlider.Location = new System.Drawing.Point(3, 3);
+            this.skinSlider.Name = "skinSlider";
+            this.skinSlider.Size = new System.Drawing.Size(107, 54);
+            this.skinSlider.TabIndex = 0;
             // 
-            // groupBox2
+            // muscleSlider
             // 
-            this.groupBox2.Controls.Add(this.mandibleHidden);
-            this.groupBox2.Controls.Add(this.mandibleTransparent);
-            this.groupBox2.Controls.Add(this.mandibleOpaque);
-            this.groupBox2.Location = new System.Drawing.Point(12, 365);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(125, 91);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Mandible";
+            this.muscleSlider.LabelText = "Muscles";
+            this.muscleSlider.Location = new System.Drawing.Point(3, 63);
+            this.muscleSlider.Name = "muscleSlider";
+            this.muscleSlider.Size = new System.Drawing.Size(107, 54);
+            this.muscleSlider.TabIndex = 1;
             // 
-            // mandibleHidden
+            // tmjSlider
             // 
-            this.mandibleHidden.AutoSize = true;
-            this.mandibleHidden.Location = new System.Drawing.Point(7, 68);
-            this.mandibleHidden.Name = "mandibleHidden";
-            this.mandibleHidden.Size = new System.Drawing.Size(59, 17);
-            this.mandibleHidden.TabIndex = 2;
-            this.mandibleHidden.TabStop = true;
-            this.mandibleHidden.Text = "Hidden";
-            this.mandibleHidden.UseVisualStyleBackColor = true;
-            this.mandibleHidden.CheckedChanged += new System.EventHandler(this.mandibleHidden_CheckedChanged);
+            this.tmjSlider.LabelText = "TMJ Discs";
+            this.tmjSlider.Location = new System.Drawing.Point(3, 123);
+            this.tmjSlider.Name = "tmjSlider";
+            this.tmjSlider.Size = new System.Drawing.Size(107, 54);
+            this.tmjSlider.TabIndex = 3;
             // 
-            // mandibleTransparent
+            // skullSlider
             // 
-            this.mandibleTransparent.AutoSize = true;
-            this.mandibleTransparent.Location = new System.Drawing.Point(7, 44);
-            this.mandibleTransparent.Name = "mandibleTransparent";
-            this.mandibleTransparent.Size = new System.Drawing.Size(82, 17);
-            this.mandibleTransparent.TabIndex = 1;
-            this.mandibleTransparent.TabStop = true;
-            this.mandibleTransparent.Text = "Transparent";
-            this.mandibleTransparent.UseVisualStyleBackColor = true;
-            this.mandibleTransparent.CheckedChanged += new System.EventHandler(this.mandibleTransparent_CheckedChanged);
+            this.skullSlider.LabelText = "Skull";
+            this.skullSlider.Location = new System.Drawing.Point(3, 3);
+            this.skullSlider.Name = "skullSlider";
+            this.skullSlider.Size = new System.Drawing.Size(107, 54);
+            this.skullSlider.TabIndex = 2;
             // 
-            // mandibleOpaque
+            // mandibleSlider
             // 
-            this.mandibleOpaque.AutoSize = true;
-            this.mandibleOpaque.Location = new System.Drawing.Point(7, 20);
-            this.mandibleOpaque.Name = "mandibleOpaque";
-            this.mandibleOpaque.Size = new System.Drawing.Size(63, 17);
-            this.mandibleOpaque.TabIndex = 0;
-            this.mandibleOpaque.TabStop = true;
-            this.mandibleOpaque.Text = "Opaque";
-            this.mandibleOpaque.UseVisualStyleBackColor = true;
-            this.mandibleOpaque.CheckedChanged += new System.EventHandler(this.mandibleOpaque_CheckedChanged);
+            this.mandibleSlider.LabelText = "Mandible";
+            this.mandibleSlider.Location = new System.Drawing.Point(3, 272);
+            this.mandibleSlider.Name = "mandibleSlider";
+            this.mandibleSlider.Size = new System.Drawing.Size(107, 54);
+            this.mandibleSlider.TabIndex = 4;
             // 
-            // groupBox3
+            // hyoidSlider
             // 
-            this.groupBox3.Controls.Add(this.topTeethHidden);
-            this.groupBox3.Controls.Add(this.topTeethTransparent);
-            this.groupBox3.Controls.Add(this.topTeethOpaque);
-            this.groupBox3.Location = new System.Drawing.Point(13, 465);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(125, 91);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Top Teeth";
+            this.hyoidSlider.LabelText = "Hyoid";
+            this.hyoidSlider.Location = new System.Drawing.Point(3, 332);
+            this.hyoidSlider.Name = "hyoidSlider";
+            this.hyoidSlider.Size = new System.Drawing.Size(107, 54);
+            this.hyoidSlider.TabIndex = 8;
             // 
-            // topTeethHidden
+            // spineSlider
             // 
-            this.topTeethHidden.AutoSize = true;
-            this.topTeethHidden.Location = new System.Drawing.Point(7, 68);
-            this.topTeethHidden.Name = "topTeethHidden";
-            this.topTeethHidden.Size = new System.Drawing.Size(59, 17);
-            this.topTeethHidden.TabIndex = 2;
-            this.topTeethHidden.TabStop = true;
-            this.topTeethHidden.Text = "Hidden";
-            this.topTeethHidden.UseVisualStyleBackColor = true;
-            this.topTeethHidden.CheckedChanged += new System.EventHandler(this.teethHidden_CheckedChanged);
+            this.spineSlider.LabelText = "Spine";
+            this.spineSlider.Location = new System.Drawing.Point(3, 392);
+            this.spineSlider.Name = "spineSlider";
+            this.spineSlider.Size = new System.Drawing.Size(107, 54);
+            this.spineSlider.TabIndex = 5;
             // 
-            // topTeethTransparent
+            // topTeethSlider
             // 
-            this.topTeethTransparent.AutoSize = true;
-            this.topTeethTransparent.Location = new System.Drawing.Point(7, 44);
-            this.topTeethTransparent.Name = "topTeethTransparent";
-            this.topTeethTransparent.Size = new System.Drawing.Size(82, 17);
-            this.topTeethTransparent.TabIndex = 1;
-            this.topTeethTransparent.TabStop = true;
-            this.topTeethTransparent.Text = "Transparent";
-            this.topTeethTransparent.UseVisualStyleBackColor = true;
-            this.topTeethTransparent.CheckedChanged += new System.EventHandler(this.teethTransparent_CheckedChanged);
+            this.topTeethSlider.LabelText = "Top Teeth";
+            this.topTeethSlider.Location = new System.Drawing.Point(3, 452);
+            this.topTeethSlider.Name = "topTeethSlider";
+            this.topTeethSlider.Size = new System.Drawing.Size(107, 54);
+            this.topTeethSlider.TabIndex = 6;
             // 
-            // topTeethOpaque
+            // bottomTeethSlider
             // 
-            this.topTeethOpaque.AutoSize = true;
-            this.topTeethOpaque.Location = new System.Drawing.Point(7, 20);
-            this.topTeethOpaque.Name = "topTeethOpaque";
-            this.topTeethOpaque.Size = new System.Drawing.Size(63, 17);
-            this.topTeethOpaque.TabIndex = 0;
-            this.topTeethOpaque.TabStop = true;
-            this.topTeethOpaque.Text = "Opaque";
-            this.topTeethOpaque.UseVisualStyleBackColor = true;
-            this.topTeethOpaque.CheckedChanged += new System.EventHandler(this.teethOpaque_CheckedChanged);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.bottomTeethHidden);
-            this.groupBox4.Controls.Add(this.bottomTeethTransparent);
-            this.groupBox4.Controls.Add(this.bottomTeethOpaque);
-            this.groupBox4.Location = new System.Drawing.Point(13, 562);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(125, 91);
-            this.groupBox4.TabIndex = 5;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Bottom Teeth";
-            // 
-            // bottomTeethHidden
-            // 
-            this.bottomTeethHidden.AutoSize = true;
-            this.bottomTeethHidden.Location = new System.Drawing.Point(7, 68);
-            this.bottomTeethHidden.Name = "bottomTeethHidden";
-            this.bottomTeethHidden.Size = new System.Drawing.Size(59, 17);
-            this.bottomTeethHidden.TabIndex = 2;
-            this.bottomTeethHidden.TabStop = true;
-            this.bottomTeethHidden.Text = "Hidden";
-            this.bottomTeethHidden.UseVisualStyleBackColor = true;
-            this.bottomTeethHidden.CheckedChanged += new System.EventHandler(this.bottomTeethHidden_CheckedChanged);
-            // 
-            // bottomTeethTransparent
-            // 
-            this.bottomTeethTransparent.AutoSize = true;
-            this.bottomTeethTransparent.Location = new System.Drawing.Point(7, 44);
-            this.bottomTeethTransparent.Name = "bottomTeethTransparent";
-            this.bottomTeethTransparent.Size = new System.Drawing.Size(82, 17);
-            this.bottomTeethTransparent.TabIndex = 1;
-            this.bottomTeethTransparent.TabStop = true;
-            this.bottomTeethTransparent.Text = "Transparent";
-            this.bottomTeethTransparent.UseVisualStyleBackColor = true;
-            this.bottomTeethTransparent.CheckedChanged += new System.EventHandler(this.bottomTeethTransparent_CheckedChanged);
-            // 
-            // bottomTeethOpaque
-            // 
-            this.bottomTeethOpaque.AutoSize = true;
-            this.bottomTeethOpaque.Location = new System.Drawing.Point(7, 20);
-            this.bottomTeethOpaque.Name = "bottomTeethOpaque";
-            this.bottomTeethOpaque.Size = new System.Drawing.Size(63, 17);
-            this.bottomTeethOpaque.TabIndex = 0;
-            this.bottomTeethOpaque.TabStop = true;
-            this.bottomTeethOpaque.Text = "Opaque";
-            this.bottomTeethOpaque.UseVisualStyleBackColor = true;
-            this.bottomTeethOpaque.CheckedChanged += new System.EventHandler(this.bottomTeethOpaque_CheckedChanged);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.eminenceHidden);
-            this.groupBox6.Controls.Add(this.eminenceVisible);
-            this.groupBox6.Location = new System.Drawing.Point(13, 293);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(125, 66);
-            this.groupBox6.TabIndex = 4;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Eminence";
-            // 
-            // eminenceHidden
-            // 
-            this.eminenceHidden.AutoSize = true;
-            this.eminenceHidden.Location = new System.Drawing.Point(7, 44);
-            this.eminenceHidden.Name = "eminenceHidden";
-            this.eminenceHidden.Size = new System.Drawing.Size(59, 17);
-            this.eminenceHidden.TabIndex = 1;
-            this.eminenceHidden.TabStop = true;
-            this.eminenceHidden.Text = "Hidden";
-            this.eminenceHidden.UseVisualStyleBackColor = true;
-            this.eminenceHidden.CheckedChanged += new System.EventHandler(this.eminenceHidden_CheckedChanged);
-            // 
-            // eminenceVisible
-            // 
-            this.eminenceVisible.AutoSize = true;
-            this.eminenceVisible.Location = new System.Drawing.Point(7, 20);
-            this.eminenceVisible.Name = "eminenceVisible";
-            this.eminenceVisible.Size = new System.Drawing.Size(55, 17);
-            this.eminenceVisible.TabIndex = 0;
-            this.eminenceVisible.TabStop = true;
-            this.eminenceVisible.Text = "Visible";
-            this.eminenceVisible.UseVisualStyleBackColor = true;
-            this.eminenceVisible.CheckedChanged += new System.EventHandler(this.eminenceVisible_CheckedChanged);
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.skinHidden);
-            this.groupBox7.Controls.Add(this.skinTransparent);
-            this.groupBox7.Controls.Add(this.skinOpaque);
-            this.groupBox7.Location = new System.Drawing.Point(12, 6);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(125, 91);
-            this.groupBox7.TabIndex = 3;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Skin";
-            // 
-            // skinHidden
-            // 
-            this.skinHidden.AutoSize = true;
-            this.skinHidden.Location = new System.Drawing.Point(7, 68);
-            this.skinHidden.Name = "skinHidden";
-            this.skinHidden.Size = new System.Drawing.Size(59, 17);
-            this.skinHidden.TabIndex = 2;
-            this.skinHidden.TabStop = true;
-            this.skinHidden.Text = "Hidden";
-            this.skinHidden.UseVisualStyleBackColor = true;
-            this.skinHidden.CheckedChanged += new System.EventHandler(this.skinHidden_CheckedChanged);
-            // 
-            // skinTransparent
-            // 
-            this.skinTransparent.AutoSize = true;
-            this.skinTransparent.Location = new System.Drawing.Point(7, 44);
-            this.skinTransparent.Name = "skinTransparent";
-            this.skinTransparent.Size = new System.Drawing.Size(82, 17);
-            this.skinTransparent.TabIndex = 1;
-            this.skinTransparent.TabStop = true;
-            this.skinTransparent.Text = "Transparent";
-            this.skinTransparent.UseVisualStyleBackColor = true;
-            this.skinTransparent.CheckedChanged += new System.EventHandler(this.skinTransparent_CheckedChanged);
-            // 
-            // skinOpaque
-            // 
-            this.skinOpaque.AutoSize = true;
-            this.skinOpaque.Location = new System.Drawing.Point(7, 20);
-            this.skinOpaque.Name = "skinOpaque";
-            this.skinOpaque.Size = new System.Drawing.Size(63, 17);
-            this.skinOpaque.TabIndex = 0;
-            this.skinOpaque.TabStop = true;
-            this.skinOpaque.Text = "Opaque";
-            this.skinOpaque.UseVisualStyleBackColor = true;
-            this.skinOpaque.CheckedChanged += new System.EventHandler(this.skinOpaque_CheckedChanged);
-            // 
-            // tmjDiscsOpaque
-            // 
-            this.tmjDiscsOpaque.AutoSize = true;
-            this.tmjDiscsOpaque.Location = new System.Drawing.Point(7, 20);
-            this.tmjDiscsOpaque.Name = "tmjDiscsOpaque";
-            this.tmjDiscsOpaque.Size = new System.Drawing.Size(63, 17);
-            this.tmjDiscsOpaque.TabIndex = 0;
-            this.tmjDiscsOpaque.TabStop = true;
-            this.tmjDiscsOpaque.Text = "Opaque";
-            this.tmjDiscsOpaque.UseVisualStyleBackColor = true;
-            this.tmjDiscsOpaque.CheckedChanged += new System.EventHandler(this.discsOpaque_CheckedChanged);
-            // 
-            // tmjDiscsTransparent
-            // 
-            this.tmjDiscsTransparent.AutoSize = true;
-            this.tmjDiscsTransparent.Location = new System.Drawing.Point(7, 44);
-            this.tmjDiscsTransparent.Name = "tmjDiscsTransparent";
-            this.tmjDiscsTransparent.Size = new System.Drawing.Size(82, 17);
-            this.tmjDiscsTransparent.TabIndex = 1;
-            this.tmjDiscsTransparent.TabStop = true;
-            this.tmjDiscsTransparent.Text = "Transparent";
-            this.tmjDiscsTransparent.UseVisualStyleBackColor = true;
-            this.tmjDiscsTransparent.CheckedChanged += new System.EventHandler(this.discsTransparent_CheckedChanged);
-            // 
-            // tmjDiscsHidden
-            // 
-            this.tmjDiscsHidden.AutoSize = true;
-            this.tmjDiscsHidden.Location = new System.Drawing.Point(7, 68);
-            this.tmjDiscsHidden.Name = "tmjDiscsHidden";
-            this.tmjDiscsHidden.Size = new System.Drawing.Size(59, 17);
-            this.tmjDiscsHidden.TabIndex = 2;
-            this.tmjDiscsHidden.TabStop = true;
-            this.tmjDiscsHidden.Text = "Hidden";
-            this.tmjDiscsHidden.UseVisualStyleBackColor = true;
-            this.tmjDiscsHidden.CheckedChanged += new System.EventHandler(this.discsHidden_CheckedChanged);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.tmjDiscsHidden);
-            this.groupBox5.Controls.Add(this.tmjDiscsTransparent);
-            this.groupBox5.Controls.Add(this.tmjDiscsOpaque);
-            this.groupBox5.Location = new System.Drawing.Point(13, 196);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(125, 91);
-            this.groupBox5.TabIndex = 3;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "TMJ Discs";
+            this.bottomTeethSlider.LabelText = "Bottom Teeth";
+            this.bottomTeethSlider.Location = new System.Drawing.Point(3, 512);
+            this.bottomTeethSlider.Name = "bottomTeethSlider";
+            this.bottomTeethSlider.Size = new System.Drawing.Size(107, 54);
+            this.bottomTeethSlider.TabIndex = 7;
             // 
             // SimpleLayerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(150, 660);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(393, 617);
+            this.Controls.Add(this.flowLayoutPanel2);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "SimpleLayerControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Layers";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton skullHidden;
-        private System.Windows.Forms.RadioButton skullTransparent;
-        private System.Windows.Forms.RadioButton skullOpaque;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton mandibleHidden;
-        private System.Windows.Forms.RadioButton mandibleTransparent;
-        private System.Windows.Forms.RadioButton mandibleOpaque;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.RadioButton topTeethHidden;
-        private System.Windows.Forms.RadioButton topTeethTransparent;
-        private System.Windows.Forms.RadioButton topTeethOpaque;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.RadioButton bottomTeethHidden;
-        private System.Windows.Forms.RadioButton bottomTeethTransparent;
-        private System.Windows.Forms.RadioButton bottomTeethOpaque;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.RadioButton eminenceHidden;
-        private System.Windows.Forms.RadioButton eminenceVisible;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.RadioButton skinHidden;
-        private System.Windows.Forms.RadioButton skinTransparent;
-        private System.Windows.Forms.RadioButton skinOpaque;
-        private System.Windows.Forms.RadioButton tmjDiscsOpaque;
-        private System.Windows.Forms.RadioButton tmjDiscsTransparent;
-        private System.Windows.Forms.RadioButton tmjDiscsHidden;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private LayerSlider skinSlider;
+        private LayerSlider muscleSlider;
+        private LayerSlider skullSlider;
+        private LayerSlider tmjSlider;
+        private LayerSlider mandibleSlider;
+        private LayerSlider spineSlider;
+        private LayerSlider topTeethSlider;
+        private LayerSlider bottomTeethSlider;
+        private LayerSlider hyoidSlider;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.CheckBox showEminence;
 
     }
 }
