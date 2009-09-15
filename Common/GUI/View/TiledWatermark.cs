@@ -27,8 +27,8 @@ namespace Medical
 
         public override void createOverlays()
         {
-            overlay = OverlayManager.getInstance().create(name + "Overlay__");
-            panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "StatsOverlayPanel__") as PanelOverlayElement;
+            overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
+            panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
             panel.setUV(0, 0, screenWidth / markWidth, screenHeight / markHeight);
             panel.setMaterialName(materialName);
             overlay.add2d(panel);

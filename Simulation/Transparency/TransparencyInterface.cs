@@ -90,7 +90,7 @@ namespace Medical
                         entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));
                         break;
                     case RenderGroup.Skin:
-                        entity.setRenderQueueGroup((byte)(200 + renderGroupOffset));
+                        entity.setRenderQueueGroup((byte)(100 + renderGroupOffset));
                         break;
                     case RenderGroup.Spine:
                         entity.setRenderQueueGroup((byte)(20 + renderGroupOffset));

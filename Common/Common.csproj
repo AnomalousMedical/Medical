@@ -96,6 +96,7 @@
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
+    <Compile Include="Controller\Navigation\NavigationController.cs" />
     <Compile Include="Controller\WindowsFormsUpdate.cs" />
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>
@@ -152,6 +153,11 @@
     <Compile Include="GUI\MuscleSequence\MuscleSequenceView.Designer.cs">
       <DependentUpon>MuscleSequenceView.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Navigation\NavigationOverlay.cs" />
+    <Compile Include="GUI\Navigation\NavigationButton.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUI\Navigation\OverlayRect.cs" />
     <Compile Include="GUI\Picture\PictureWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -523,9 +529,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button-Play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="EmbeddedArtwork\Arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
