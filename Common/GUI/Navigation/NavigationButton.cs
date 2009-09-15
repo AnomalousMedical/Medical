@@ -5,14 +5,19 @@ using System.Text;
 using OgreWrapper;
 using Engine.Platform;
 using Engine;
+using Logging;
 
 namespace Medical
 {
+    delegate void NavigationButtonClicked(NavigationButton source);
+
     /// <summary>
     /// This is a button class using ogre overlays.
     /// </summary>
     class NavigationButton : IDisposable
     {
+        public event NavigationButtonClicked Clicked;
+
         private OverlayRect normalCoords;
         private OverlayRect hoverCoords;
         private OverlayRect pressedCoords;
@@ -36,8 +41,9 @@ namespace Medical
             OverlayManager.getInstance().destroyOverlayElement(button);
         }
 
-        internal void process(Vector3 mousePos, bool leftButtonClicked, float vpWidth, float vpHeight)
+        internal bool process(Vector3 mousePos, bool leftButtonClicked, float vpWidth, float vpHeight)
         {
+            bool clickingOn = false;
             float xPos = 0.0f;
             float yPos = 0.0f;
             switch (button.getHorizontalAlignment())
@@ -65,6 +71,7 @@ namespace Medical
                 if (leftButtonClicked)
                 {
                     button.setUV(pressedCoords.X0, pressedCoords.Y0, pressedCoords.X1, pressedCoords.Y1);
+                    clickingOn = true;
                 }
                 else
                 {
@@ -74,6 +81,15 @@ namespace Medical
             else
             {
                 button.setUV(normalCoords.X0, normalCoords.Y0, normalCoords.X1, normalCoords.Y1);
+            }
+            return clickingOn;
+        }
+
+        internal void fireClickEvent()
+        {
+            if (Clicked != null)
+            {
+                Clicked.Invoke(this);
             }
         }
 
@@ -150,6 +166,8 @@ namespace Medical
                 button.setPosition(boundsRect.X0, boundsRect.Y0);
             }
         }
+
+        public NavigationState State { get; set; }
 
         internal PanelOverlayElement PanelElement
         {

@@ -102,5 +102,10 @@ namespace Medical
         {
             return savedCameras.Keys;
         }
+
+        public IEnumerable<SavedCameraDefinition> getSavedCameras()
+        {
+            return savedCameras.Values;
+        }
     }
 }

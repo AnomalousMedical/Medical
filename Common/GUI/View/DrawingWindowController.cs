@@ -27,6 +27,7 @@ namespace Medical
         private DrawingWindowHost activeDrawingWindow = null;
         private bool watermarks = false;
         private bool allowRotation = true;
+        private NavigationController navigationController = new NavigationController();
 
         public DrawingWindowController(String camerasFile)
         {
@@ -75,7 +76,7 @@ namespace Medical
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
         {
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
-            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
+            cameraHost.DrawingWindow.initialize(name, navigationController, eventManager, rendererPlugin, translation, lookAt);
             cameraHost.DrawingWindow.AllowRotation = allowRotation;
             cameras.Add(cameraHost);
             if (camerasActive)
@@ -269,6 +270,7 @@ namespace Medical
             {
                 SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                 sceneCameras.changeBackingFile(sceneDirectory + '/' + medicalScene.CameraFile);
+                TEMP_createNavigationState();
             }
             foreach (DrawingWindowHost host in cameras)
             {
@@ -277,6 +279,21 @@ namespace Medical
             camerasActive = true;
             this.mainTimer = mainTimer;
             this.scene = scene;
+        }
+
+        private void TEMP_createNavigationState()
+        {
+            NavigationState previousState = null;
+            foreach(SavedCameraDefinition def in sceneCameras.getSavedCameras())
+            {
+                NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
+                navigationController.addState(state);
+                if (previousState != null)
+                {
+                    state.addAdjacentState(previousState);
+                }
+                previousState = state;
+            }
         }
 
         public void showStats(bool show)

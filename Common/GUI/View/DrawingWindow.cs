@@ -40,7 +40,7 @@ namespace Medical
             InitializeComponent();
         }
 
-        internal void initialize(string name, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
+        internal void initialize(string name, NavigationController navigationController, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
         {
             this.name = name;
             this.renderer = renderer;
@@ -49,8 +49,9 @@ namespace Medical
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
             watermark = new TiledWatermark(name + "Watermark", "Watermark", 150, 60);
-            navigation = new NavigationOverlay(name, eventManager, this);
+            navigation = new NavigationOverlay(name, eventManager, this, navigationController, orbitCamera);
             navigation.ShowOverlay = true;
+            navigation.setNavigationState(navigationController.findClosestState(translation));
             //watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
             //watermark = new SideLogoWatermark(name + "Watermark", "PiperClinic", 150, 60);
             //watermark = new CenteredWatermark(name + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
