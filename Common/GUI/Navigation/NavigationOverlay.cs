@@ -20,11 +20,10 @@ namespace Medical
         private List<NavigationButton> buttons = new List<NavigationButton>();
         private bool showOverlay = false;
         private EventManager eventManager;
-        private CameraMotionValidator motionValidator = null;
         private NavigationButton currentButton = null;
         private NavigationController navigationController;
         private String name;
-        private OrbitCameraController orbitCamera;
+        private DrawingWindow window;
 
         static NavigationOverlay()
         {
@@ -36,13 +35,12 @@ namespace Medical
             DefaultEvents.registerDefaultEvent(clickButton);
         }
 
-        public NavigationOverlay(String name, EventManager eventManager, CameraMotionValidator motionValidator, NavigationController navigationController, OrbitCameraController orbitCamera)
+        public NavigationOverlay(String name, EventManager eventManager, DrawingWindow window, NavigationController navigationController)
         {
             this.name = name;
             this.eventManager = eventManager;
-            this.motionValidator = motionValidator;
             this.navigationController = navigationController;
-            this.orbitCamera = orbitCamera;
+            this.window = window;
 
             mainOverlay = OverlayManager.getInstance().create(name + "_NavigationOverlay");
             //NavigationButton rightButton = new NavigationButton(name + "_RightButton", "NavigationArrow", new OverlayRect(-40, -20, 40, 40), new OverlayRect(0f, 0f, .25f, .5f), new OverlayRect(.25f, 0f, .5f, .5f), new OverlayRect(.5f, 0f, .75f, .5f));
@@ -93,9 +91,7 @@ namespace Medical
             buttons.Clear();
             foreach (NavigationState adjacent in state.AdjacentStates)
             {
-                NavigationButton navButton = new NavigationButton(name + "_Navigation_" + state.Name, "NavigationArrow", new OverlayRect(-20, -40, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
-                navButton.HorizontalAlignment = GuiHorizontalAlignment.GHA_CENTER;
-                navButton.VerticalAlignment = GuiVerticalAlignment.GVA_BOTTOM;
+                NavigationButton navButton = new NavigationButton(name + "_Navigation_" + state.Name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
                 navButton.Clicked += new NavigationButtonClicked(navButton_Clicked);
                 navButton.State = adjacent;
                 mainOverlay.add2d(navButton.PanelElement);
@@ -129,6 +125,36 @@ namespace Medical
         /// <param name="visible"></param>
         internal void setVisible(bool visible)
         {
+            if (visible)
+            {
+                Matrix4x4 view = window.ViewMatrix;
+                Matrix4x4 proj = window.ProjectionMatrix;
+                foreach (NavigationButton button in buttons)
+                {
+                    Vector3 screenPos = proj * (view * (button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized()));
+                    screenPos.x = screenPos.x / 2.0f + 0.5f;
+                    screenPos.y = 1 - (screenPos.y / 2.0f + 0.5f);
+                    screenPos.x *= window.getMouseAreaWidth() - 20;
+                    screenPos.y *= window.getMouseAreaHeight() - 20;
+                    if (screenPos.x < 0)
+                    {
+                        screenPos.x = 0;
+                    }
+                    else if (screenPos.x > window.getMouseAreaWidth() - 40)
+                    {
+                        screenPos.x = window.getMouseAreaWidth() - 40;
+                    }
+                    if (screenPos.y < 0)
+                    {
+                        screenPos.y = 0;
+                    }
+                    else if (screenPos.y > window.getMouseAreaHeight() - 40)
+                    {
+                        screenPos.y = window.getMouseAreaHeight() - 40;
+                    }
+                    button.BoundsRect = new OverlayRect(screenPos.x, screenPos.y, button.BoundsRect.X1, button.BoundsRect.Y1);
+                }
+            }
             if (showOverlay && visible && !mainOverlay.isVisible())
             {
                 mainOverlay.show();
@@ -141,7 +167,7 @@ namespace Medical
 
         void navButton_Clicked(NavigationButton source)
         {
-            orbitCamera.setNewPosition(source.State.Translation, source.State.LookAt);
+            window.setNewPosition(source.State.Translation, source.State.LookAt);
             setNavigationState(source.State);
         }
 
@@ -168,12 +194,12 @@ namespace Medical
                 }
                 bool mouseClicked = eventManager[NavigationEvents.ClickButton].Down || firstFrame || eventManager[NavigationEvents.ClickButton].FirstFrameUp;
                 Vector3 mouseCoords = eventManager.Mouse.getAbsMouse();
-                if (motionValidator != null && motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y))
+                if (window.allowMotion((int)mouseCoords.x, (int)mouseCoords.y))
                 {
-                    motionValidator.getLocalCoords(ref mouseCoords.x, ref mouseCoords.y);
+                    window.getLocalCoords(ref mouseCoords.x, ref mouseCoords.y);
                     foreach (NavigationButton button in buttons)
                     {
-                        if (button.process(mouseCoords, mouseClicked, motionValidator.getMouseAreaWidth(), motionValidator.getMouseAreaHeight()))
+                        if (button.process(mouseCoords, mouseClicked, window.getMouseAreaWidth(), window.getMouseAreaHeight()))
                         {
                             if (eventManager[NavigationEvents.ClickButton].FirstFrameDown)
                             {

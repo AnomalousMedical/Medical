@@ -348,5 +348,13 @@ namespace Medical
                 allowRotation = value;
             }
         }
+
+        public float OrbitDistance
+        {
+            get
+            {
+                return orbitDistance;
+            }
+        }
     }
 }

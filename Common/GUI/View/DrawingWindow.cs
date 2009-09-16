@@ -49,7 +49,7 @@ namespace Medical
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
             watermark = new TiledWatermark(name + "Watermark", "Watermark", 150, 60);
-            navigation = new NavigationOverlay(name, eventManager, this, navigationController, orbitCamera);
+            navigation = new NavigationOverlay(name, eventManager, this, navigationController);
             navigation.ShowOverlay = true;
             navigation.setNavigationState(navigationController.findClosestState(translation));
             //watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
@@ -165,6 +165,11 @@ namespace Medical
             }
         }
 
+        public void setNewPosition(Vector3 translation, Vector3 lookAt)
+        {
+            orbitCamera.setNewPosition(translation, lookAt);
+        }
+
         public void updateRender(bool swapBuffers)
         {
             camera.update(swapBuffers);
@@ -199,6 +204,30 @@ namespace Medical
             get
             {
                 return ((OgreCameraControl)camera).Camera;
+            }
+        }
+
+        public Matrix4x4 ViewMatrix
+        {
+            get
+            {
+                return camera.ViewMatrix;
+            }
+        }
+
+        public Matrix4x4 ProjectionMatrix
+        {
+            get
+            {
+                return camera.ProjectionMatrix;
+            }
+        }
+
+        public float OrbitDistance
+        {
+            get
+            {
+                return orbitCamera.OrbitDistance;
             }
         }
 
