@@ -91,7 +91,7 @@ namespace Medical
             buttons.Clear();
             foreach (NavigationState adjacent in state.AdjacentStates)
             {
-                NavigationButton navButton = new NavigationButton(name + "_Navigation_" + state.Name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
+                NavigationButton navButton = new NavigationButton(name + "_Navigation_" + adjacent.Name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
                 navButton.Clicked += new NavigationButtonClicked(navButton_Clicked);
                 navButton.State = adjacent;
                 mainOverlay.add2d(navButton.PanelElement);
@@ -127,13 +127,10 @@ namespace Medical
         {
             if (visible)
             {
-                Matrix4x4 view = window.ViewMatrix;
-                Matrix4x4 proj = window.ProjectionMatrix;
+                //temporary compute here
                 foreach (NavigationButton button in buttons)
                 {
-                    Vector3 screenPos = proj * (view * (button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized()));
-                    screenPos.x = screenPos.x / 2.0f + 0.5f;
-                    screenPos.y = 1 - (screenPos.y / 2.0f + 0.5f);
+                    Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
                     screenPos.x *= window.getMouseAreaWidth() - 20;
                     screenPos.y *= window.getMouseAreaHeight() - 20;
                     if (screenPos.x < 0)

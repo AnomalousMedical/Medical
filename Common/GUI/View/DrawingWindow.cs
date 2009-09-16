@@ -175,6 +175,16 @@ namespace Medical
             camera.update(swapBuffers);
         }
 
+        public Vector3 getScreenPosition(Vector3 worldPosition)
+        {
+            Matrix4x4 proj = camera.ProjectionMatrix;
+            Matrix4x4 view = camera.ViewMatrix;
+            Vector3 screenPos = proj * (view * worldPosition);
+            screenPos.x = screenPos.x / 2.0f + 0.5f;
+            screenPos.y = 1 - (screenPos.y / 2.0f + 0.5f);
+            return screenPos;
+        }
+
         public String CameraName
         {
             get

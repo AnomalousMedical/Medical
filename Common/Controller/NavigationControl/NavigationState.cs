@@ -12,6 +12,7 @@ namespace Medical
         private List<NavigationState> adjacentStates = new List<NavigationState>();
         private Vector3 lookAt;
         private Vector3 translation;
+        private float visualRadius = 10.0f;
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation)
         {
@@ -22,7 +23,19 @@ namespace Medical
 
         public void addAdjacentState(NavigationState adjacent)
         {
-            adjacentStates.Add(adjacent);
+            if (adjacent != null && !adjacentStates.Contains(adjacent))
+            {
+                adjacentStates.Add(adjacent);
+            }
+        }
+
+        public void addTwoWayAdjacentState(NavigationState adjacent)
+        {
+            if (adjacent != null)
+            {
+                addAdjacentState(adjacent);
+                adjacent.addAdjacentState(this);
+            }
         }
 
         public void removeAdjacentState(NavigationState adjacent)
@@ -59,6 +72,18 @@ namespace Medical
             get
             {
                 return name;
+            }
+        }
+
+        public float VisualRadius
+        {
+            get
+            {
+                return visualRadius;
+            }
+            set
+            {
+                visualRadius = value;
             }
         }
     }
