@@ -7,7 +7,7 @@ using Logging;
 
 namespace Medical
 {
-    class NavigationController
+    public class NavigationController
     {
         private Dictionary<String, NavigationState> navigationStates = new Dictionary<String, NavigationState>();
 

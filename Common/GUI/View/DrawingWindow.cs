@@ -32,7 +32,6 @@ namespace Medical
         private RenderingMode renderingMode = RenderingMode.Solid;
         private SimScene scene;
         private Watermark watermark = null;
-        private NavigationOverlay navigation;
         private EventManager eventManager;
 
         public DrawingWindow()
@@ -40,7 +39,7 @@ namespace Medical
             InitializeComponent();
         }
 
-        internal void initialize(string name, NavigationController navigationController, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
+        internal void initialize(string name, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
         {
             this.name = name;
             this.renderer = renderer;
@@ -49,9 +48,6 @@ namespace Medical
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
             watermark = new TiledWatermark(name + "Watermark", "Watermark", 150, 60);
-            navigation = new NavigationOverlay(name, eventManager, this, navigationController);
-            navigation.ShowOverlay = true;
-            navigation.setNavigationState(navigationController.findClosestState(translation));
             //watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
             //watermark = new SideLogoWatermark(name + "Watermark", "PiperClinic", 150, 60);
             //watermark = new CenteredWatermark(name + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
@@ -81,10 +77,6 @@ namespace Medical
         private void disposeCallback()
         {
             destroyWatermark();
-            if (navigation != null)
-            {
-                navigation.Dispose();
-            }
         }
 
         public void createCamera(UpdateTimer mainTimer, SimScene scene)
@@ -101,7 +93,6 @@ namespace Medical
                 camera.setFarClipDistance(1000.0f);
                 camera.setRenderingMode(renderingMode);
                 mainTimer.addFixedUpdateListener(orbitCamera);
-                mainTimer.addFixedUpdateListener(navigation);
                 orbitCamera.setCamera(camera);
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
@@ -121,7 +112,6 @@ namespace Medical
                 orbitCamera.setCamera(null);
                 window.destroyCamera(camera);
                 mainTimer.removeFixedUpdateListener(orbitCamera);
-                mainTimer.removeFixedUpdateListener(navigation);
                 camera = null;
                 CameraResolver.removeMotionValidator(this);
             }
@@ -130,8 +120,6 @@ namespace Medical
         void camera_PreFindVisibleObjects(bool callingCameraRender)
         {
             watermark.setVisible(callingCameraRender);
-            Vector3 mousePos = eventManager.Mouse.getAbsMouse();
-            navigation.setVisible(callingCameraRender && this.allowMotion((int)mousePos.x, (int)mousePos.y));
         }
 
         public void setCamera(Vector3 position, Vector3 lookAt)

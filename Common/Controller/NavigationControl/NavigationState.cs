@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    class NavigationState
+    public class NavigationState
     {
         private String name;
         private List<NavigationState> adjacentStates = new List<NavigationState>();

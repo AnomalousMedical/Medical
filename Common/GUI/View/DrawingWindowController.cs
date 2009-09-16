@@ -27,7 +27,6 @@ namespace Medical
         private DrawingWindowHost activeDrawingWindow = null;
         private bool watermarks = false;
         private bool allowRotation = true;
-        private NavigationController navigationController = new NavigationController();
 
         public DrawingWindowController(String camerasFile)
         {
@@ -76,7 +75,7 @@ namespace Medical
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
         {
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
-            cameraHost.DrawingWindow.initialize(name, navigationController, eventManager, rendererPlugin, translation, lookAt);
+            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
             cameraHost.DrawingWindow.AllowRotation = allowRotation;
             cameras.Add(cameraHost);
             if (camerasActive)
@@ -270,7 +269,6 @@ namespace Medical
             {
                 SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                 sceneCameras.changeBackingFile(sceneDirectory + '/' + medicalScene.CameraFile);
-                TEMP_createNavigationState();
             }
             foreach (DrawingWindowHost host in cameras)
             {
@@ -279,102 +277,6 @@ namespace Medical
             camerasActive = true;
             this.mainTimer = mainTimer;
             this.scene = scene;
-        }
-
-        private void TEMP_createNavigationState()
-        {
-            foreach(SavedCameraDefinition def in sceneCameras.getSavedCameras())
-            {
-                NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
-                navigationController.addState(state);
-            }
-            //setup adjacent states
-            //outer shell
-            NavigationState target = navigationController.getState("Midline anterior");
-            target.addTwoWayAdjacentState(navigationController.getState("Midline anterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline anteroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Right lateral"));
-            target.addTwoWayAdjacentState(navigationController.getState("Left lateral"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint anterior"));
-
-            target = navigationController.getState("Left lateral");
-            target.addTwoWayAdjacentState(navigationController.getState("Left laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posterior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline anterior"));
-
-            target = navigationController.getState("Right lateral");
-            target.addTwoWayAdjacentState(navigationController.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posterior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline anterior"));
-
-            target = navigationController.getState("Midline anterosuperior");
-            target.addTwoWayAdjacentState(navigationController.getState("Midline superior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Left laterosuperior"));
-
-            target = navigationController.getState("Midline superior");
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posterosuperior"));
-
-            target = navigationController.getState("Midline posterosuperior");
-            target.addTwoWayAdjacentState(navigationController.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Left laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posterior"));
-
-            target = navigationController.getState("Midline posterior");
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posteroinferior"));
-
-            target = navigationController.getState("Midline anteroinferior");
-            target.addTwoWayAdjacentState(navigationController.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Midline submental"));
-
-            target = navigationController.getState("Midline submental");
-            target.addTwoWayAdjacentState(navigationController.getState("Midline posteroinferior"));
-
-            target = navigationController.getState("Midline posteroinferior");
-            target.addTwoWayAdjacentState(navigationController.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint posterior"));
-
-            target = navigationController.getState("Midline posterosuperior");
-            target.addTwoWayAdjacentState(navigationController.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationController.getState("Left laterosuperior"));
-
-            //Occlusion
-            target = navigationController.getState("Occlusion joint posterior");
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition anterior lingual"));
-
-            target = navigationController.getState("Occlusion joint anterior");
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition anterior labial"));
-
-            target = navigationController.getState("Occlusion joint left");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior buccal"));
-
-            target = navigationController.getState("Occlusion joint right");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior buccal"));
-
-            //Dentition
-            target = navigationController.getState("Dentition anterior labial");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior buccal"));
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior buccal"));
-
-            target = navigationController.getState("Dentition left posterior buccal");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior lingual"));
-
-            target = navigationController.getState("Dentition right posterior buccal");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior lingual"));
-
-            target = navigationController.getState("Dentition anterior lingual");
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior lingual"));
-            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior lingual"));
         }
 
         public void showStats(bool show)
