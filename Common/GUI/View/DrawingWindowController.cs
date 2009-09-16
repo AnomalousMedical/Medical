@@ -289,6 +289,7 @@ namespace Medical
                 navigationController.addState(state);
             }
             //setup adjacent states
+            //outer shell
             NavigationState target = navigationController.getState("Midline anterior");
             target.addTwoWayAdjacentState(navigationController.getState("Midline anterosuperior"));
             target.addTwoWayAdjacentState(navigationController.getState("Midline anteroinferior"));
@@ -337,28 +338,43 @@ namespace Medical
             target = navigationController.getState("Midline posteroinferior");
             target.addTwoWayAdjacentState(navigationController.getState("Left lateroinferior"));
             target.addTwoWayAdjacentState(navigationController.getState("RightLateroinferior"));
+            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint posterior"));
 
             target = navigationController.getState("Midline posterosuperior");
             target.addTwoWayAdjacentState(navigationController.getState("Right laterosuperior"));
             target.addTwoWayAdjacentState(navigationController.getState("Left laterosuperior"));
 
-            //target.addTwoWayAdjacentState(navigationController.getState(""));
-            //NavigationState target = navigationController.getState("Midline anterior");
-            //NavigationState adjacent = navigationController.getState("Midline anterosuperior");
-            //adjacent.addAdjacentState(target);
-            //target.addAdjacentState(adjacent);
-            //adjacent = navigationController.getState("Midline anteroinferior");
-            //adjacent.addAdjacentState(target);
-            //target.addAdjacentState(adjacent);
-            //adjacent = navigationController.getState("Right lateral");
-            //adjacent.addAdjacentState(target);
-            //target.addAdjacentState(adjacent);
-            //adjacent = navigationController.getState("Left lateral");
-            //adjacent.addAdjacentState(target);
-            //target.addAdjacentState(adjacent);
-            //adjacent = navigationController.getState("Occlusion joint anterior");
-            //adjacent.addAdjacentState(target);
-            //target.addAdjacentState(adjacent);
+            //Occlusion
+            target = navigationController.getState("Occlusion joint posterior");
+            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint left"));
+            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint right"));
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition anterior lingual"));
+
+            target = navigationController.getState("Occlusion joint anterior");
+            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint left"));
+            target.addTwoWayAdjacentState(navigationController.getState("Occlusion joint right"));
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition anterior labial"));
+
+            target = navigationController.getState("Occlusion joint left");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior buccal"));
+
+            target = navigationController.getState("Occlusion joint right");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior buccal"));
+
+            //Dentition
+            target = navigationController.getState("Dentition anterior labial");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior buccal"));
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior buccal"));
+
+            target = navigationController.getState("Dentition left posterior buccal");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior lingual"));
+
+            target = navigationController.getState("Dentition right posterior buccal");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior lingual"));
+
+            target = navigationController.getState("Dentition anterior lingual");
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior lingual"));
+            target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior lingual"));
         }
 
         public void showStats(bool show)
