@@ -97,6 +97,7 @@
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\WindowsFormsUpdate.cs" />

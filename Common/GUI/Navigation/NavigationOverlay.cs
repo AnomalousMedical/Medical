@@ -26,19 +26,61 @@ namespace Medical
         private DrawingWindow window;
         private Vector3 lastLookAt = Vector3.Zero;
         private Vector3 lastCameraPos = Vector3.Zero;
+        private int lastWindowWidth = 0;
+        private int lastWindowHeight = 0;
 
         static NavigationOverlay()
         {
-            OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/GUI", "EngineArchive", "Embedded", false);
-            OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-
             MessageEvent clickButton = new MessageEvent(NavigationEvents.ClickButton);
             clickButton.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(clickButton);
         }
 
+        static bool resourcesLoaded = false;
+
+        static void loadResources()
+        {
+            if (!resourcesLoaded)
+            {
+                OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/GUI", "EngineArchive", "Embedded", false);
+                OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+                resourcesLoaded = true;
+            }
+        }
+
+        public static NavigationButton CreateRightButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.0f, .25f, 0.25f), new OverlayRect(.25f, 0.0f, .5f, 0.25f), new OverlayRect(.5f, 0.0f, .75f, 0.25f));
+        }
+
+        public static NavigationButton CreateLeftButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0.25f, 0.0f, 0.0f, 0.25f), new OverlayRect(.5f, 0.0f, .25f, 0.25f), new OverlayRect(.75f, 0.0f, .5f, 0.25f));
+        }
+
+        public static NavigationButton CreateUpButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.25f, .25f, 0.5f), new OverlayRect(.25f, 0.25f, .5f, 0.5f), new OverlayRect(.5f, 0.25f, .75f, 0.5f));
+        }
+
+        public static NavigationButton CreateDownButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.5f, .25f, 0.25f), new OverlayRect(.25f, 0.5f, .5f, 0.25f), new OverlayRect(.5f, 0.5f, .75f, 0.25f));
+        }
+
+        public static NavigationButton CreateZoomInButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.5f, .25f, 0.75f), new OverlayRect(.25f, 0.5f, .5f, 0.75f), new OverlayRect(.5f, 0.5f, .75f, 0.75f));
+        }
+
+        public static NavigationButton CreateZoomOutButton(String name)
+        {
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.75f, .25f, 1.0f), new OverlayRect(.25f, 0.75f, .5f, 1.0f), new OverlayRect(.5f, 0.75f, .75f, 1.0f));
+        }
+
         public NavigationOverlay(String name, DrawingWindow window, NavigationController navigationController)
         {
+            loadResources();
             this.name = name;
             this.eventManager = navigationController.EventManager;
             this.navigationController = navigationController;
@@ -67,9 +109,32 @@ namespace Medical
                 button.Dispose();
             }
             buttons.Clear();
-            foreach (NavigationState adjacent in state.AdjacentStates)
+            foreach (NavigationLink link in state.AdjacentStates)
             {
-                NavigationButton navButton = new NavigationButton(name + "_Navigation_" + adjacent.Name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
+                NavigationState adjacent = link.Destination;
+                NavigationButton navButton = null;
+                switch(link.Button)
+                {
+                    case NavigationButtons.Down:
+                        navButton = CreateDownButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                    case NavigationButtons.Up:
+                        navButton = CreateUpButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                    case NavigationButtons.Right:
+                        navButton = CreateRightButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                    case NavigationButtons.Left:
+                        navButton = CreateLeftButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                    case NavigationButtons.ZoomIn:
+                        navButton = CreateZoomInButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                    case NavigationButtons.ZoomOut:
+                        navButton = CreateZoomOutButton(name + "_Navigation_" + adjacent.Name);
+                        break;
+                }
+                 
                 navButton.Clicked += new NavigationButtonClicked(navButton_Clicked);
                 navButton.State = adjacent;
                 mainOverlay.add2d(navButton.PanelElement);
@@ -107,7 +172,7 @@ namespace Medical
         internal void setVisible(bool visible)
         {
             //Ensure that the buttons are in the correct positions.
-            if (visible && ShowOverlay && (window.LookAt != lastLookAt || window.Translation != lastCameraPos))
+            if (visible && ShowOverlay && (window.LookAt != lastLookAt || window.Translation != lastCameraPos || window.RenderWidth != lastWindowWidth || window.RenderHeight != lastWindowHeight))
             {
                 foreach (NavigationButton button in buttons)
                 {
@@ -134,6 +199,8 @@ namespace Medical
                 }
                 lastLookAt = window.LookAt;
                 lastCameraPos = window.Translation;
+                lastWindowWidth = window.RenderWidth;
+                lastWindowHeight = window.RenderHeight;
             }
 
             if (showOverlay && visible && !mainOverlay.isVisible())

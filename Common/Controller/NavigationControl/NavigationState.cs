@@ -9,7 +9,7 @@ namespace Medical
     public class NavigationState
     {
         private String name;
-        private List<NavigationState> adjacentStates = new List<NavigationState>();
+        private List<NavigationLink> adjacentStates = new List<NavigationLink>();
         private Vector3 lookAt;
         private Vector3 translation;
         private float visualRadius = 10.0f;
@@ -21,29 +21,58 @@ namespace Medical
             this.lookAt = lookAt;
         }
 
-        public void addAdjacentState(NavigationState adjacent)
+        public void addAdjacentState(NavigationState adjacent, NavigationButtons button)
         {
-            if (adjacent != null && !adjacentStates.Contains(adjacent))
+            if (adjacent != null)
             {
-                adjacentStates.Add(adjacent);
+                bool allowAdd = true;
+                foreach (NavigationLink link in adjacentStates)
+                {
+                    if (link.Destination == adjacent)
+                    {
+                        allowAdd = false;
+                        break;
+                    }
+                }
+                if (allowAdd)
+                {
+                    adjacentStates.Add(new NavigationLink(adjacent, button));
+                }
+            }
+        }
+
+        public void addTwoWayAdjacentState(NavigationState adjacent, NavigationButtons button)
+        {
+            if (adjacent != null)
+            {
+                addAdjacentState(adjacent, button);
+                adjacent.addAdjacentState(this, NavigationLink.GetOppositeButton(button));
             }
         }
 
         public void addTwoWayAdjacentState(NavigationState adjacent)
         {
-            if (adjacent != null)
-            {
-                addAdjacentState(adjacent);
-                adjacent.addAdjacentState(this);
-            }
+            addTwoWayAdjacentState(adjacent, NavigationButtons.Up);
         }
 
         public void removeAdjacentState(NavigationState adjacent)
         {
-            adjacentStates.Remove(adjacent);
+            NavigationLink matchingLink = null;
+            foreach (NavigationLink link in adjacentStates)
+            {
+                if (link.Destination == adjacent)
+                {
+                    matchingLink = link;
+                    break;
+                }
+            }
+            if (matchingLink != null)
+            {
+                adjacentStates.Remove(matchingLink);
+            }
         }
 
-        public IEnumerable<NavigationState> AdjacentStates
+        internal IEnumerable<NavigationLink> AdjacentStates
         {
             get
             {
