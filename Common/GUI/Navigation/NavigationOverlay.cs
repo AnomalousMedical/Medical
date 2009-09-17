@@ -24,6 +24,8 @@ namespace Medical
         private NavigationController navigationController;
         private String name;
         private DrawingWindow window;
+        private Vector3 lastLookAt = Vector3.Zero;
+        private Vector3 lastCameraPos = Vector3.Zero;
 
         static NavigationOverlay()
         {
@@ -73,6 +75,8 @@ namespace Medical
                 mainOverlay.add2d(navButton.PanelElement);
                 buttons.Add(navButton);
             }
+            //Force the buttons to update
+            lastCameraPos = Vector3.Zero;
         }
 
         /// <summary>
@@ -101,9 +105,9 @@ namespace Medical
         /// <param name="visible"></param>
         internal void setVisible(bool visible)
         {
-            if (visible)
+            //Ensure that the buttons are in the correct positions.
+            if (visible && (window.LookAt != lastLookAt || window.Translation != lastCameraPos))
             {
-                //temporary compute here, move this to update or somewhere else
                 foreach (NavigationButton button in buttons)
                 {
                     Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
@@ -127,7 +131,10 @@ namespace Medical
                     }
                     button.BoundsRect = new OverlayRect(screenPos.x, screenPos.y, button.BoundsRect.X1, button.BoundsRect.Y1);
                 }
+                lastLookAt = window.LookAt;
+                lastCameraPos = window.Translation;
             }
+
             if (showOverlay && visible && !mainOverlay.isVisible())
             {
                 mainOverlay.show();
