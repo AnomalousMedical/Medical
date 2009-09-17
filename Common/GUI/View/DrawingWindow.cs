@@ -184,8 +184,8 @@ namespace Medical
             Matrix4x4 proj = camera.ProjectionMatrix;
             Matrix4x4 view = camera.ViewMatrix;
             Vector3 screenPos = proj * (view * worldPosition);
-            screenPos.x = screenPos.x / 2.0f + 0.5f;
-            screenPos.y = 1 - (screenPos.y / 2.0f + 0.5f);
+            screenPos.x = (screenPos.x / 2.0f + 0.5f) * camera.RenderWidth;
+            screenPos.y = (1 - (screenPos.y / 2.0f + 0.5f)) * camera.RenderHeight;
             return screenPos;
         }
 
@@ -218,6 +218,22 @@ namespace Medical
             get
             {
                 return ((OgreCameraControl)camera).Camera;
+            }
+        }
+
+        public int RenderWidth
+        {
+            get
+            {
+                return camera.RenderWidth;
+            }
+        }
+
+        public int RenderHeight
+        {
+            get
+            {
+                return camera.RenderHeight;
             }
         }
 

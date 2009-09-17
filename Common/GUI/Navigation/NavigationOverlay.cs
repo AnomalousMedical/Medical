@@ -77,6 +77,7 @@ namespace Medical
             }
             //Force the buttons to update
             lastCameraPos = Vector3.Zero;
+            Log.Debug("Current state is {0}.", state.Name);
         }
 
         /// <summary>
@@ -111,21 +112,21 @@ namespace Medical
                 foreach (NavigationButton button in buttons)
                 {
                     Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
-                    screenPos.x *= window.getMouseAreaWidth() - 20;
-                    screenPos.y *= window.getMouseAreaHeight() - 20;
+                    screenPos.x -= 20;
+                    screenPos.y -= 20;
                     if (screenPos.x < 0)
                     {
                         screenPos.x = 0;
                     }
                     else if (screenPos.x > window.getMouseAreaWidth() - 40)
                     {
-                        screenPos.x = window.getMouseAreaWidth() - 40;
+                        screenPos.x = window.RenderWidth - 40;
                     }
                     if (screenPos.y < 0)
                     {
                         screenPos.y = 0;
                     }
-                    else if (screenPos.y > window.getMouseAreaHeight() - 40)
+                    else if (screenPos.y > window.RenderHeight - 40)
                     {
                         screenPos.y = window.getMouseAreaHeight() - 40;
                     }
@@ -200,6 +201,7 @@ namespace Medical
                             if (eventManager[NavigationEvents.ClickButton].FirstFrameDown)
                             {
                                 currentButton = button;
+                                Log.Debug("Clicking {0}.", button.State.Name);
                             }
                             else if (eventManager[NavigationEvents.ClickButton].FirstFrameUp && currentButton == button)
                             {
