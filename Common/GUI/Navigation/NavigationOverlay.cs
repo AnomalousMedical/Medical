@@ -106,7 +106,7 @@ namespace Medical
         internal void setVisible(bool visible)
         {
             //Ensure that the buttons are in the correct positions.
-            if (visible && (window.LookAt != lastLookAt || window.Translation != lastCameraPos))
+            if (visible && ShowOverlay && (window.LookAt != lastLookAt || window.Translation != lastCameraPos))
             {
                 foreach (NavigationButton button in buttons)
                 {
