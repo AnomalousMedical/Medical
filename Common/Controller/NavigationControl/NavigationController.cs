@@ -12,12 +12,12 @@ namespace Medical
 {
     public class NavigationController
     {
-        private Dictionary<String, NavigationState> navigationStates = new Dictionary<String, NavigationState>();
         private DrawingWindowController windowController;
         private EventManager eventManager;
         private UpdateTimer timer;
         private Dictionary<DrawingWindow, NavigationOverlay> overlays = new Dictionary<DrawingWindow,NavigationOverlay>();
         private bool showOverlays = false;
+        private NavigationStateSet navigationSet;
 
         public NavigationController(DrawingWindowController windowController, EventManager eventManager, UpdateTimer timer)
         {
@@ -28,46 +28,22 @@ namespace Medical
             windowController.WindowDestroyed += windowController_WindowDestroyed;
         }
 
-        public void addState(NavigationState state)
-        {
-            navigationStates.Add(state.Name, state);
-        }
-
-        public void removeState(NavigationState state)
-        {
-            navigationStates.Remove(state.Name);
-        }
-
-        public void clearStates()
-        {
-            navigationStates.Clear();
-        }
-
         public NavigationState getState(String name)
         {
-            NavigationState state;
-            navigationStates.TryGetValue(name, out state);
-            if (state == null)
+            if (navigationSet != null)
             {
-                Log.Warning("Could not find Navigation State \"{0}\".", name);
+                return navigationSet.getState(name);
             }
-            return state;
+            return null;
         }
 
         public NavigationState findClosestState(Vector3 position)
         {
-            NavigationState closest = null;
-            float closestDistanceSq = float.MaxValue;
-            foreach (NavigationState state in navigationStates.Values)
+            if (navigationSet != null)
             {
-                float distanceSq = (position - state.Translation).length2();
-                if (distanceSq < closestDistanceSq)
-                {
-                    closestDistanceSq = distanceSq;
-                    closest = state;
-                }
+                return navigationSet.findClosestState(position);
             }
-            return closest;
+            return null;
         }
 
         public EventManager EventManager
@@ -83,6 +59,18 @@ namespace Medical
             get
             {
                 return timer;
+            }
+        }
+
+        public NavigationStateSet NavigationSet
+        {
+            get
+            {
+                return navigationSet;
+            }
+            set
+            {
+                navigationSet = value;
             }
         }
 
