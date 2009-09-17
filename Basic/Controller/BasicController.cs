@@ -644,6 +644,7 @@ namespace Medical.Controller
             target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Right);
             target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Left);
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Submental"), NavigationButtons.Down);
+            target.addAdjacentState(navigationSet.getState("Occlusion Joint Anterior"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Midline Submental");
             target.addAdjacentState(navigationSet.getState("Midline Posteroinferior"), NavigationButtons.Down);
