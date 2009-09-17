@@ -137,5 +137,11 @@ namespace Medical.GUI
         {
             controller.showOptions();
         }
+
+        private void navigationButton_Click(object sender, EventArgs e)
+        {
+            controller.ShowNavigation = !navigationButton.Checked;
+            navigationButton.Checked = controller.ShowNavigation;
+        }
     }
 }

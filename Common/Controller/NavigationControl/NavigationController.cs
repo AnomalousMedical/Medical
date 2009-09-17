@@ -5,6 +5,8 @@ using System.Text;
 using Engine;
 using Logging;
 using Engine.Platform;
+using System.Drawing;
+using Medical.Properties;
 
 namespace Medical
 {
@@ -15,6 +17,7 @@ namespace Medical
         private EventManager eventManager;
         private UpdateTimer timer;
         private Dictionary<DrawingWindow, NavigationOverlay> overlays = new Dictionary<DrawingWindow,NavigationOverlay>();
+        private bool showOverlays = false;
 
         public NavigationController(DrawingWindowController windowController, EventManager eventManager, UpdateTimer timer)
         {
@@ -51,14 +54,6 @@ namespace Medical
             return state;
         }
 
-        //public void initializeNavigation()
-        //{
-        //    foreach (DrawingWindow window in overlays.Keys)
-        //    {
-        //        overlays[window].setNavigationState(findClosestState(window.Translation));
-        //    }
-        //}
-
         public NavigationState findClosestState(Vector3 position)
         {
             NavigationState closest = null;
@@ -94,7 +89,7 @@ namespace Medical
         void windowController_WindowCreated(DrawingWindow window)
         {
             NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
-            overlay.ShowOverlay = true;
+            overlay.ShowOverlay = showOverlays;
             overlay.setNavigationState(findClosestState(window.Translation));
             overlays.Add(window, overlay);
         }
@@ -102,7 +97,24 @@ namespace Medical
         void windowController_WindowDestroyed(DrawingWindow window)
         {
             NavigationOverlay overlay = overlays[window];
+            overlays.Remove(window);
             overlay.Dispose();
+        }
+
+        public bool ShowOverlays
+        {
+            get
+            {
+                return showOverlays;
+            }
+            set
+            {
+                showOverlays = value;
+                foreach (NavigationOverlay overlay in overlays.Values)
+                {
+                    overlay.ShowOverlay = showOverlays;
+                }
+            }
         }
     }
 }

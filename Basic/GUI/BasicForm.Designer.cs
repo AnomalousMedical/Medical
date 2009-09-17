@@ -50,8 +50,12 @@
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.navigationButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -67,13 +71,17 @@
             // 
             // toolStripContainer.ContentPanel
             // 
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(711, 1);
+            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(711, 0);
             this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Top;
             this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer.Name = "toolStripContainer";
             this.toolStripContainer.Size = new System.Drawing.Size(711, 26);
             this.toolStripContainer.TabIndex = 1;
             this.toolStripContainer.Text = "toolStripContainer1";
+            // 
+            // toolStripContainer.TopToolStripPanel
+            // 
+            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
             // 
             // dockPanel
             // 
@@ -262,6 +270,27 @@
             this.fourWindowsToolStripMenuItem.Text = "Four Windows";
             this.fourWindowsToolStripMenuItem.Click += new System.EventHandler(this.fourWindowsToolStripMenuItem_Click);
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.navigationButton});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(79, 39);
+            this.toolStrip1.TabIndex = 0;
+            // 
+            // navigationButton
+            // 
+            this.navigationButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.navigationButton.Image = ((System.Drawing.Image)(resources.GetObject("navigationButton.Image")));
+            this.navigationButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.navigationButton.Name = "navigationButton";
+            this.navigationButton.Size = new System.Drawing.Size(36, 36);
+            this.navigationButton.Text = "Navigation";
+            this.navigationButton.Click += new System.EventHandler(this.navigationButton_Click);
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -277,10 +306,14 @@
             this.Name = "BasicForm";
             this.Text = "Articulometics Basic";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+            this.toolStripContainer.TopToolStripPanel.PerformLayout();
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,5 +340,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton navigationButton;
     }
 }

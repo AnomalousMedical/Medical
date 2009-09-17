@@ -255,6 +255,18 @@ namespace Medical.Controller
             }
         }
 
+        public bool ShowNavigation
+        {
+            get
+            {
+                return navigationController.ShowOverlays;
+            }
+            set
+            {
+                navigationController.ShowOverlays = value;
+            }
+        }
+
         /// <summary>
         /// Change the scene to the specified filename.
         /// </summary>
