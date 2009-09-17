@@ -35,41 +35,17 @@ namespace Medical
             DefaultEvents.registerDefaultEvent(clickButton);
         }
 
-        public NavigationOverlay(String name, EventManager eventManager, DrawingWindow window, NavigationController navigationController)
+        public NavigationOverlay(String name, DrawingWindow window, NavigationController navigationController)
         {
             this.name = name;
-            this.eventManager = eventManager;
+            this.eventManager = navigationController.EventManager;
             this.navigationController = navigationController;
             this.window = window;
+            window.CameraCreated += new DrawingWindowEvent(window_CameraCreated);
+            window.CameraDestroyed += new DrawingWindowEvent(window_CameraDestroyed);
+            window.PreFindVisibleObjects += new OgrePlugin.OgreCameraCallback(window_PreFindVisibleObjects);
 
             mainOverlay = OverlayManager.getInstance().create(name + "_NavigationOverlay");
-            //NavigationButton rightButton = new NavigationButton(name + "_RightButton", "NavigationArrow", new OverlayRect(-40, -20, 40, 40), new OverlayRect(0f, 0f, .25f, .5f), new OverlayRect(.25f, 0f, .5f, .5f), new OverlayRect(.5f, 0f, .75f, .5f));
-            //rightButton.HorizontalAlignment = GuiHorizontalAlignment.GHA_RIGHT;
-            //rightButton.VerticalAlignment = GuiVerticalAlignment.GVA_CENTER;
-            //rightButton.Clicked += new NavigationButtonClicked(rightButton_Clicked);
-            //mainOverlay.add2d(rightButton.PanelElement);
-            //buttons.Add(rightButton);
-
-            //NavigationButton leftButton = new NavigationButton(name + "_LeftButton", "NavigationArrow", new OverlayRect(0, -20, 40, 40), new OverlayRect(.25f, 0f, 0f, .5f), new OverlayRect(.5f, 0f, .25f, .5f), new OverlayRect(.75f, 0f, .5f, .5f));
-            //leftButton.HorizontalAlignment = GuiHorizontalAlignment.GHA_LEFT;
-            //leftButton.VerticalAlignment = GuiVerticalAlignment.GVA_CENTER;
-            //leftButton.Clicked += new NavigationButtonClicked(leftButton_Clicked);
-            //mainOverlay.add2d(leftButton.PanelElement);
-            //buttons.Add(leftButton);
-
-            //NavigationButton upButton = new NavigationButton(name + "_UpButton", "NavigationArrow", new OverlayRect(-20, 0, 40, 40), new OverlayRect(0f, .5f, .25f, 1.0f), new OverlayRect(.5f, .5f, .75f, 1.0f), new OverlayRect(.75f, .5f, .5f, 1.0f));
-            //upButton.HorizontalAlignment = GuiHorizontalAlignment.GHA_CENTER;
-            //upButton.VerticalAlignment = GuiVerticalAlignment.GVA_TOP;
-            //upButton.Clicked += new NavigationButtonClicked(upButton_Clicked);
-            //mainOverlay.add2d(upButton.PanelElement);
-            //buttons.Add(upButton);
-
-            //NavigationButton downButton = new NavigationButton(name + "_DownButton", "NavigationArrow", new OverlayRect(-20, -40, 40, 40), new OverlayRect(0f, 1.0f, .25f, 0.5f), new OverlayRect(.5f, 1.0f, .75f, 0.5f), new OverlayRect(.75f, 1.0f, .5f, 0.5f));
-            //downButton.HorizontalAlignment = GuiHorizontalAlignment.GHA_CENTER;
-            //downButton.VerticalAlignment = GuiVerticalAlignment.GVA_BOTTOM;
-            //downButton.Clicked += new NavigationButtonClicked(downButton_Clicked);
-            //mainOverlay.add2d(downButton.PanelElement);
-            //buttons.Add(downButton);
         }
 
         public void Dispose()
@@ -127,7 +103,7 @@ namespace Medical
         {
             if (visible)
             {
-                //temporary compute here
+                //temporary compute here, move this to update or somewhere else
                 foreach (NavigationButton button in buttons)
                 {
                     Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
@@ -166,6 +142,22 @@ namespace Medical
         {
             window.setNewPosition(source.State.Translation, source.State.LookAt);
             setNavigationState(source.State);
+        }
+
+        void window_CameraCreated(DrawingWindow window)
+        {
+            navigationController.Timer.addFixedUpdateListener(this);
+        }
+
+        void window_CameraDestroyed(DrawingWindow window)
+        {
+            navigationController.Timer.removeFixedUpdateListener(this);
+        }
+
+        void window_PreFindVisibleObjects(bool callingCameraRender)
+        {
+            Vector3 mousePos = eventManager.Mouse.getAbsMouse();
+            this.setVisible(callingCameraRender && window.allowMotion((int)mousePos.x, (int)mousePos.y));
         }
 
         #region UpdateListener Members

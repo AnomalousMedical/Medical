@@ -12,8 +12,13 @@ using Medical.GUI;
 
 namespace Medical
 {
+    public delegate void DrawingWindowEvent(DrawingWindow window);
+
     public class DrawingWindowController : IDisposable
     {
+        public event DrawingWindowEvent WindowCreated;
+        public event DrawingWindowEvent WindowDestroyed;
+
         private List<DrawingWindowHost> cameras = new List<DrawingWindowHost>();
         private bool camerasActive = false;
         private bool showStatsActive = false;
@@ -78,6 +83,12 @@ namespace Medical
             cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
             cameraHost.DrawingWindow.AllowRotation = allowRotation;
             cameras.Add(cameraHost);
+            
+            if (WindowCreated != null)
+            {
+                WindowCreated.Invoke(cameraHost.DrawingWindow);
+            }
+            
             if (camerasActive)
             {
                 cameraHost.DrawingWindow.createCamera(mainTimer, scene);
@@ -352,6 +363,10 @@ namespace Medical
 
         internal void _alertCameraDestroyed(DrawingWindowHost host)
         {
+            if (WindowDestroyed != null)
+            {
+                WindowDestroyed.Invoke(host.DrawingWindow);
+            }
             cameras.Remove(host);
         }
 
@@ -373,6 +388,14 @@ namespace Medical
             set
             {
                 allowRotation = value;
+            }
+        }
+
+        public SavedCameraController SceneCameras
+        {
+            get
+            {
+                return sceneCameras;
             }
         }
 

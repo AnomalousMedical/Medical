@@ -21,6 +21,10 @@ namespace Medical
 {
     public partial class DrawingWindow : UserControl, OSWindow, CameraMotionValidator
     {
+        public event DrawingWindowEvent CameraCreated;
+        public event DrawingWindowEvent CameraDestroyed;
+        public event OgreCameraCallback PreFindVisibleObjects;
+
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private RendererWindow window;
         private String name;
@@ -97,6 +101,10 @@ namespace Medical
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
                 ((OgreCameraControl)camera).PreFindVisibleObjects += camera_PreFindVisibleObjects;
+                if (CameraCreated != null)
+                {
+                    CameraCreated.Invoke(this);
+                }
             }
             else
             {
@@ -108,6 +116,10 @@ namespace Medical
         {
             if (camera != null)
             {
+                if (CameraDestroyed != null)
+                {
+                    CameraDestroyed.Invoke(this);
+                }
                 ((OgreCameraControl)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
                 orbitCamera.setCamera(null);
                 window.destroyCamera(camera);
@@ -120,6 +132,10 @@ namespace Medical
         void camera_PreFindVisibleObjects(bool callingCameraRender)
         {
             watermark.setVisible(callingCameraRender);
+            if (PreFindVisibleObjects != null)
+            {
+                PreFindVisibleObjects.Invoke(callingCameraRender);
+            }
         }
 
         public void setCamera(Vector3 position, Vector3 lookAt)

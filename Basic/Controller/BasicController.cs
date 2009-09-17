@@ -13,6 +13,7 @@ using Engine.Saving.XMLSaver;
 using System.Xml;
 using Medical.Properties;
 using Logging;
+using Engine.ObjectManagement;
 
 namespace Medical.Controller
 {
@@ -28,7 +29,7 @@ namespace Medical.Controller
         private Options options = null;
         private StatePicker statePicker = new StatePicker();
         private ImageRenderer imageRenderer;
-        private NavigationController navigationController = new NavigationController();
+        private NavigationController navigationController;
 
         /// <summary>
         /// Constructor.
@@ -81,6 +82,8 @@ namespace Medical.Controller
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.AllowRotation = false;
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+
+            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
 
@@ -265,6 +268,7 @@ namespace Medical.Controller
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+                TEMP_createNavigationState(drawingWindowController.SceneCameras);
                 return true;
             }
             else
@@ -576,13 +580,14 @@ namespace Medical.Controller
             return condyleDegeneration;
         }
 
-        private void TEMP_createNavigationState()
+        private void TEMP_createNavigationState(SavedCameraController sceneCameras)
         {
-            //foreach (SavedCameraDefinition def in sceneCameras.getSavedCameras())
-            //{
-            //    NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
-            //    navigationController.addState(state);
-            //}
+            navigationController.clearStates();
+            foreach (SavedCameraDefinition def in sceneCameras.getSavedCameras())
+            {
+                NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
+                navigationController.addState(state);
+            }
             //setup adjacent states
             //outer shell
             NavigationState target = navigationController.getState("Midline anterior");
@@ -671,5 +676,28 @@ namespace Medical.Controller
             target.addTwoWayAdjacentState(navigationController.getState("Dentition left posterior lingual"));
             target.addTwoWayAdjacentState(navigationController.getState("Dentition right posterior lingual"));
         }
+        /**
+         * Code for navigation states
+//create
+navigation = new NavigationOverlay(name, eventManager, this, navigationController);
+navigation.ShowOverlay = true;
+navigation.setNavigationState(navigationController.findClosestState(translation));
+
+//destroy
+if (navigation != null)
+{
+    navigation.Dispose();
+}
+
+//create camera (scene created)
+mainTimer.addFixedUpdateListener(navigation);
+
+//destroy camera (scene destroyed)
+mainTimer.removeFixedUpdateListener(navigation);
+
+//pre find visible
+Vector3 mousePos = eventManager.Mouse.getAbsMouse();
+navigation.setVisible(callingCameraRender && this.allowMotion((int)mousePos.x, (int)mousePos.y));
+         */
     }
 }
