@@ -602,91 +602,91 @@ namespace Medical.Controller
             }
             //setup adjacent states
             //outer shell
-            NavigationState target = navigationSet.getState("Midline anterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline anterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline anteroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Right lateral"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Left lateral"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint anterior"));
+            NavigationState target = navigationSet.getState("Midline Anterior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anteroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateral"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateral"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Anterior"));
 
-            target = navigationSet.getState("Left lateral");
-            target.addTwoWayAdjacentState(navigationSet.getState("Left laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posterior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline anterior"));
+            target = navigationSet.getState("Left Lateral");
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"));
 
-            target = navigationSet.getState("Right lateral");
-            target.addTwoWayAdjacentState(navigationSet.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posterior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline anterior"));
+            target = navigationSet.getState("Right Lateral");
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"));
 
-            target = navigationSet.getState("Midline anterosuperior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline superior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Left laterosuperior"));
+            target = navigationSet.getState("Midline Anterosuperior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Superior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"));
 
-            target = navigationSet.getState("Midline superior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posterosuperior"));
+            target = navigationSet.getState("Midline Superior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterosuperior"));
 
-            target = navigationSet.getState("Midline posterosuperior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Left laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posterior"));
+            target = navigationSet.getState("Midline Posterosuperior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"));
 
-            target = navigationSet.getState("Midline posterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posteroinferior"));
+            target = navigationSet.getState("Midline Posterior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posteroinferior"));
 
-            target = navigationSet.getState("Midline anteroinferior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline submental"));
+            target = navigationSet.getState("Midline Anteroinferior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Submental"));
 
-            target = navigationSet.getState("Midline submental");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline posteroinferior"));
+            target = navigationSet.getState("Midline Submental");
+            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posteroinferior"));
 
-            target = navigationSet.getState("Midline posteroinferior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Left lateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("RightLateroinferior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint posterior"));
+            target = navigationSet.getState("Midline Posteroinferior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Posterior"));
 
-            target = navigationSet.getState("Midline posterosuperior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Right laterosuperior"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Left laterosuperior"));
+            target = navigationSet.getState("Midline Posterosuperior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"));
 
             //Occlusion
-            target = navigationSet.getState("Occlusion joint posterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition anterior lingual"));
+            target = navigationSet.getState("Occlusion Joint Posterior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Lingual"));
 
-            target = navigationSet.getState("Occlusion joint anterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint left"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion joint right"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition anterior labial"));
+            target = navigationSet.getState("Occlusion Joint Anterior");
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Labial"));
 
-            target = navigationSet.getState("Occlusion joint left");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition left posterior buccal"));
+            target = navigationSet.getState("Occlusion Joint Left");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"));
 
-            target = navigationSet.getState("Occlusion joint right");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition right posterior buccal"));
+            target = navigationSet.getState("Occlusion Joint Right");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"));
 
             //Dentition
-            target = navigationSet.getState("Dentition anterior labial");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition left posterior buccal"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition right posterior buccal"));
+            target = navigationSet.getState("Dentition Anterior Labial");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"));
 
-            target = navigationSet.getState("Dentition left posterior buccal");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition left posterior lingual"));
+            target = navigationSet.getState("Dentition Left Posterior Buccal");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"));
 
-            target = navigationSet.getState("Dentition right posterior buccal");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition right posterior lingual"));
+            target = navigationSet.getState("Dentition Right Posterior Buccal");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"));
 
-            target = navigationSet.getState("Dentition anterior lingual");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition left posterior lingual"));
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition right posterior lingual"));
+            target = navigationSet.getState("Dentition Anterior Lingual");
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"));
+            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"));
 
             return navigationSet;
         }
