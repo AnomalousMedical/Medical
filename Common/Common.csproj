@@ -499,11 +499,9 @@
     <None Include="Resources\rightsemiflateminance.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EmbeddedWatermarks\watermark.material" />
     <None Include="Resources\mandiblediscspace.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EmbeddedWatermarks\watermark.png" />
     <EmbeddedResource Include="GUI\ScenePicker\ScenePicker.resx">
       <DependentUpon>ScenePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
