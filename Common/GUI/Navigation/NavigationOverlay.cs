@@ -16,8 +16,8 @@ namespace Medical
 
     class NavigationOverlay : IDisposable, UpdateListener
     {
-        private const int BUTTON_WIDTH = 20;
-        private const int BUTTON_HEIGHT = 20;
+        private const int BUTTON_WIDTH = 30;
+        private const int BUTTON_HEIGHT = 30;
         private const int BUTTON_HALF_WIDTH = BUTTON_WIDTH / 2;
         private const int BUTTON_HALF_HEIGHT = BUTTON_HEIGHT / 2;
 
