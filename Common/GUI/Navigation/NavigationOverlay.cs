@@ -16,6 +16,11 @@ namespace Medical
 
     class NavigationOverlay : IDisposable, UpdateListener
     {
+        private const int BUTTON_WIDTH = 20;
+        private const int BUTTON_HEIGHT = 20;
+        private const int BUTTON_HALF_WIDTH = BUTTON_WIDTH / 2;
+        private const int BUTTON_HALF_HEIGHT = BUTTON_HEIGHT / 2;
+
         private Overlay mainOverlay;
         private List<NavigationButton> buttons = new List<NavigationButton>();
         private bool showOverlay = false;
@@ -50,32 +55,32 @@ namespace Medical
 
         public static NavigationButton CreateRightButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.0f, .25f, 0.25f), new OverlayRect(.25f, 0.0f, .5f, 0.25f), new OverlayRect(.5f, 0.0f, .75f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.0f, .25f, 0.25f), new OverlayRect(.25f, 0.0f, .5f, 0.25f), new OverlayRect(.5f, 0.0f, .75f, 0.25f));
         }
 
         public static NavigationButton CreateLeftButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0.25f, 0.0f, 0.0f, 0.25f), new OverlayRect(.5f, 0.0f, .25f, 0.25f), new OverlayRect(.75f, 0.0f, .5f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0.25f, 0.0f, 0.0f, 0.25f), new OverlayRect(.5f, 0.0f, .25f, 0.25f), new OverlayRect(.75f, 0.0f, .5f, 0.25f));
         }
 
         public static NavigationButton CreateUpButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.25f, .25f, 0.5f), new OverlayRect(.25f, 0.25f, .5f, 0.5f), new OverlayRect(.5f, 0.25f, .75f, 0.5f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.25f, .25f, 0.5f), new OverlayRect(.25f, 0.25f, .5f, 0.5f), new OverlayRect(.5f, 0.25f, .75f, 0.5f));
         }
 
         public static NavigationButton CreateDownButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.5f, .25f, 0.25f), new OverlayRect(.25f, 0.5f, .5f, 0.25f), new OverlayRect(.5f, 0.5f, .75f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.5f, .25f, 0.25f), new OverlayRect(.25f, 0.5f, .5f, 0.25f), new OverlayRect(.5f, 0.5f, .75f, 0.25f));
         }
 
         public static NavigationButton CreateZoomInButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.5f, .25f, 0.75f), new OverlayRect(.25f, 0.5f, .5f, 0.75f), new OverlayRect(.5f, 0.5f, .75f, 0.75f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.5f, .25f, 0.75f), new OverlayRect(.25f, 0.5f, .5f, 0.75f), new OverlayRect(.5f, 0.5f, .75f, 0.75f));
         }
 
         public static NavigationButton CreateZoomOutButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, 40, 40), new OverlayRect(0f, 0.75f, .25f, 1.0f), new OverlayRect(.25f, 0.75f, .5f, 1.0f), new OverlayRect(.5f, 0.75f, .75f, 1.0f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.75f, .25f, 1.0f), new OverlayRect(.25f, 0.75f, .5f, 1.0f), new OverlayRect(.5f, 0.75f, .75f, 1.0f));
         }
 
         public NavigationOverlay(String name, DrawingWindow window, NavigationController navigationController)
@@ -177,23 +182,23 @@ namespace Medical
                 foreach (NavigationButton button in buttons)
                 {
                     Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
-                    screenPos.x -= 20;
-                    screenPos.y -= 20;
+                    screenPos.x -= BUTTON_HALF_WIDTH;
+                    screenPos.y -= BUTTON_HALF_HEIGHT;
                     if (screenPos.x < 0)
                     {
                         screenPos.x = 0;
                     }
-                    else if (screenPos.x > window.getMouseAreaWidth() - 40)
+                    else if (screenPos.x > window.getMouseAreaWidth() - BUTTON_WIDTH)
                     {
-                        screenPos.x = window.RenderWidth - 40;
+                        screenPos.x = window.RenderWidth - BUTTON_WIDTH;
                     }
                     if (screenPos.y < 0)
                     {
                         screenPos.y = 0;
                     }
-                    else if (screenPos.y > window.RenderHeight - 40)
+                    else if (screenPos.y > window.RenderHeight - BUTTON_HEIGHT)
                     {
-                        screenPos.y = window.getMouseAreaHeight() - 40;
+                        screenPos.y = window.getMouseAreaHeight() - BUTTON_HEIGHT;
                     }
                     button.BoundsRect = new OverlayRect(screenPos.x, screenPos.y, button.BoundsRect.X1, button.BoundsRect.Y1);
                 }
