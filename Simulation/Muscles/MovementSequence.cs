@@ -40,12 +40,12 @@ namespace Medical.Muscles
             if (states.Count > 0)
             {
                 time %= duration;
-                MovementSequenceState currentState = states[currentIndex]; ;
+                MovementSequenceState currentState = states[currentIndex];
                 MovementSequenceState nextState;
                 if (currentIndex + 1 < states.Count)
                 {
                     nextState = states[currentIndex + 1];
-                    if (time < currentState.StartTime || time >= nextState.StartTime)
+                    if (time <= currentState.StartTime || time > nextState.StartTime)
                     {
                         findStates(time, out currentState, out nextState);
                     }
@@ -53,7 +53,7 @@ namespace Medical.Muscles
                 else
                 {
                     nextState = states[0];
-                    if (time < currentState.StartTime)
+                    if (time <= currentState.StartTime)
                     {
                         findStates(time, out currentState, out nextState);
                     }
@@ -67,7 +67,7 @@ namespace Medical.Muscles
             int i;
             for (i = 0; i < states.Count - 1; ++i)
             {
-                if (time >= states[i].StartTime && time < states[i + 1].StartTime)
+                if (time > states[i].StartTime && time <= states[i + 1].StartTime)
                 {
                     break;
                 }
