@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Engine.Saving;
+using Logging;
 
 namespace Medical.Muscles
 {
@@ -32,10 +33,25 @@ namespace Medical.Muscles
 
         internal void blend(MovementSequenceState targetState, float currentTime, float duration)
         {
-            float endTime = targetState.StartTime > startTime ? targetState.startTime - startTime : duration - startTime;
-            float blendFactor = (currentTime - startTime) / endTime;
+            float endTime;
+            float blendFactor;
+            if (targetState.startTime > startTime)
+            {
+                endTime = targetState.startTime - startTime;
+                blendFactor = (currentTime - startTime) / endTime;
+            }
+            else
+            {
+                endTime = targetState.startTime + duration - startTime;
+                if (currentTime < startTime)
+                {
+                    currentTime += duration;
+                }
+                blendFactor = (currentTime - startTime) / endTime;
+            }
             MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
             MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
+            //MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref blendFactor);
 
             ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
             float delta = targetState.leftCPPosition - leftCPPosition;
