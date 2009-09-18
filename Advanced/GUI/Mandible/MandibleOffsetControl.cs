@@ -21,31 +21,21 @@ namespace Medical.GUI
         private MovingMuscleTarget movingMuscleTarget;
         private bool allowSceneUpdates = true;
         private bool allowUIUpdates = true;
+        private bool allowSyncronization = true;
 
         public MandibleOffsetControl()
         {
             InitializeComponent();
-            leftForwardBack.ValueChanged += sliderValueChanged;
-            rightForwardBack.ValueChanged += sliderValueChanged;
+            leftForwardBack.ValueChanged += leftSliderValueChanged;
+            rightForwardBack.ValueChanged += rightSliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
-            //leftOffset.ValueChanged += offset_ValueChanged;
-            //rightOffset.ValueChanged += offset_ValueChanged;
+            leftOffset.ValueChanged += leftOffset_ValueChanged;
+            rightOffset.ValueChanged += rightOffset_ValueChanged;
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
-            forceUpDown.ValueChanged += new EventHandler(forceUpDown_ValueChanged);
+            forceUpDown.ValueChanged += forceUpDown_ValueChanged;
+            openUpDown.ValueChanged += openUpDown_ValueChanged;
+            forceSlider.ValueChanged += forceSlider_ValueChanged;
         }
-
-        //void offset_ValueChanged(object sender, EventArgs e)
-        //{
-        //    if (allowSceneUpdates)
-        //    {
-        //        allowSceneUpdates = false;
-        //        leftCP.setLocation((float)leftOffset.Value);
-        //        rightCP.setLocation((float)rightOffset.Value);
-        //        rightForwardBack.Value = (int)(rightCP.CurrentLocation * rightForwardBack.Maximum);
-        //        leftForwardBack.Value = (int)(leftCP.CurrentLocation * leftForwardBack.Maximum);
-        //        allowSceneUpdates = true;
-        //    }
-        //}
 
         protected override void sceneLoaded(SimScene scene)
         {
@@ -58,12 +48,11 @@ namespace Medical.GUI
             if (Enabled)
             {
                 //setup ui
-                leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
-                rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
+                synchronizeLeftCP(leftCP, leftCP.getNeutralLocation());
+                synchronizeRightCP(rightCP, rightCP.getNeutralLocation());
                 bothForwardBack.Value = rightForwardBack.Value;
-                leftOffset.Value = (decimal)leftCP.getNeutralLocation();
-                rightOffset.Value = (decimal)rightCP.getNeutralLocation();
-                forceUpDown.Value = (decimal)movingMuscle.getForce();
+                synchronizeForce(movingMuscle, movingMuscle.getForce());
+                synchronizeMovingMuscleOffset(movingMuscleTarget, movingMuscleTarget.Offset);
 
                 //setup callbacks
                 movingMuscle.ForceChanged += movingMuscle_ForceChanged;
@@ -94,92 +83,168 @@ namespace Medical.GUI
             }
         }
 
-        void sliderValueChanged(object sender, EventArgs e)
-        {
-            if (allowSceneUpdates)
-            {
-                allowUIUpdates = false;
-                leftCP.setLocation(leftForwardBack.Value / (float)leftForwardBack.Maximum);
-                rightCP.setLocation(rightForwardBack.Value / (float)rightForwardBack.Maximum);
-                allowUIUpdates = true;
-                allowSceneUpdates = false;
-                leftOffset.Value = (decimal)leftCP.CurrentLocation;
-                rightOffset.Value = (decimal)rightCP.CurrentLocation;
-                allowSceneUpdates = true;
-            }
-        }
-
         void bothForwardBackChanged(object sender, EventArgs e)
         {
-            if (allowSceneUpdates)
-            {
-                allowSceneUpdates = false;
-                leftForwardBack.Value = bothForwardBack.Value;
-                rightForwardBack.Value = bothForwardBack.Value;
-                allowSceneUpdates = true;
-                sliderValueChanged(null, null);
-            }
+            float value = bothForwardBack.Value / (float)bothForwardBack.Maximum;
+            synchronizeLeftCP(bothForwardBack, value);
+            synchronizeRightCP(bothForwardBack, value);
         }
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
-            allowSceneUpdates = false;
-            rightForwardBack.Value = (int)(rightCP.getNeutralLocation() * rightForwardBack.Maximum);
-            leftForwardBack.Value = (int)(leftCP.getNeutralLocation() * leftForwardBack.Maximum);
+            synchronizeLeftCP(distortionButton, leftCP.getNeutralLocation());
+            synchronizeRightCP(distortionButton, rightCP.getNeutralLocation());
             bothForwardBack.Value = rightForwardBack.Value;
-            leftOffset.Value = (decimal)leftCP.getNeutralLocation();
-            rightOffset.Value = (decimal)rightCP.getNeutralLocation();
-            allowSceneUpdates = true;
-            sliderValueChanged(sender, e);
+            synchronizeMovingMuscleOffset(distortionButton, Vector3.Zero);
         }
-
-        void forceUpDown_ValueChanged(object sender, EventArgs e)
+        
+        //Synchronize methods
+        //Moving muscle force
+        void synchronizeForce(object sender, float force)
         {
-            if (allowSceneUpdates)
+            if (allowSyncronization)
             {
-                allowUIUpdates = false;
-                MuscleController.changeForce("MovingMuscleDynamic", (float)forceUpDown.Value);
-                allowUIUpdates = true;
+                allowSyncronization = false;
+                if (sender != movingMuscle)
+                {
+                    movingMuscle.changeForce(force);
+                }
+                if (sender != forceUpDown)
+                {
+                    forceUpDown.Value = (decimal)force;
+                }
+                if (sender != forceSlider)
+                {
+                    forceSlider.Value = (int)force;
+                }
+                allowSyncronization = true;
             }
-        }
-
-        void openTrackBar_ValueChanged(object sender, EventArgs e)
-        {
-            allowUIUpdates = false;
-            movingMuscleTarget.Offset = new Vector3(0.0f, -openTrackBar.Value / (openTrackBar.Maximum / 30.0f), 0.0f);
-            allowUIUpdates = true;
         }
 
         void movingMuscle_ForceChanged(MuscleBehavior source, float force)
         {
-            if (allowUIUpdates)
-            {
-                forceUpDown.Value = (decimal)force;
-            }
+            synchronizeForce(source, force);
         }
 
-        void rightCP_PositionChanged(ControlPointBehavior behavior, float position)
+        void forceUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (allowUIUpdates)
-            {
-                rightForwardBack.Value = (int)(position * rightForwardBack.Maximum);
-            }
+            synchronizeForce(forceUpDown, (float)forceUpDown.Value);
         }
 
-        void leftCP_PositionChanged(ControlPointBehavior behavior, float position)
+        void forceSlider_ValueChanged(object sender, EventArgs e)
         {
-            if (allowUIUpdates)
+            synchronizeForce(forceSlider, forceSlider.Value);
+        }
+
+        //Moving muscle offset
+        void synchronizeMovingMuscleOffset(object sender, Vector3 position)
+        {
+            if (allowSyncronization)
             {
-                leftForwardBack.Value = (int)(position * leftForwardBack.Maximum);
+                allowSyncronization = false;
+                if (sender != movingMuscleTarget)
+                {
+                    movingMuscleTarget.Offset = position;
+                }
+                if (sender != openTrackBar)
+                {
+                    openTrackBar.Value = (int)(position.y * (-openTrackBar.Minimum / 30.0f));
+                }
+                if (sender != openUpDown)
+                {
+                    openUpDown.Value = (decimal)position.y;
+                }
+                allowSyncronization = true;
             }
         }
 
         void movingMuscleTarget_OffsetChanged(MovingMuscleTarget source, Vector3 offset)
         {
-            if (allowUIUpdates)
+            synchronizeMovingMuscleOffset(source, offset);
+        }
+
+        void openTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeMovingMuscleOffset(openTrackBar, new Vector3(0.0f, openTrackBar.Value / (-openTrackBar.Minimum / 30.0f), 0.0f));
+        }
+
+        void openUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeMovingMuscleOffset(openUpDown, new Vector3(0.0f, (float)openUpDown.Value, 0.0f));
+        }
+
+        //Left CP Position
+        void synchronizeLeftCP(object sender, float position)
+        {
+            if (allowSyncronization)
             {
-                openTrackBar.Value = (int)(-offset.y * (openTrackBar.Maximum / 30.0f));
+                allowSyncronization = false;
+                if (sender != leftCP)
+                {
+                    leftCP.setLocation(position);
+                }
+                if (sender != leftForwardBack)
+                {
+                    leftForwardBack.Value = (int)(position * leftForwardBack.Maximum);
+                }
+                if (sender != leftOffset)
+                {
+                    leftOffset.Value = (decimal)position;
+                }
+                allowSyncronization = true;
             }
+        }
+
+        void leftCP_PositionChanged(ControlPointBehavior behavior, float position)
+        {
+            synchronizeLeftCP(leftCP, position);
+        }
+
+        void leftOffset_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeLeftCP(leftOffset, (float)leftOffset.Value);
+        }
+
+        void leftSliderValueChanged(object sender, EventArgs e)
+        {
+            synchronizeLeftCP(leftForwardBack, leftForwardBack.Value / (float)leftForwardBack.Maximum);
+        }
+
+        //Right CP Position
+        void synchronizeRightCP(object sender, float position)
+        {
+            if (allowSyncronization)
+            {
+                allowSyncronization = false;
+                if (sender != rightCP)
+                {
+                    rightCP.setLocation(position);
+                }
+                if (sender != rightForwardBack)
+                {
+                    rightForwardBack.Value = (int)(position * rightForwardBack.Maximum);
+                }
+                if (sender != leftOffset)
+                {
+                    rightOffset.Value = (decimal)position;
+                }
+                allowSyncronization = true;
+            }
+        }
+
+        void rightCP_PositionChanged(ControlPointBehavior behavior, float position)
+        {
+            synchronizeRightCP(rightCP, position);
+        }
+
+        void rightOffset_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeRightCP(rightOffset, (float)rightOffset.Value);
+        }
+
+        void rightSliderValueChanged(object sender, EventArgs e)
+        {
+            synchronizeRightCP(rightForwardBack, rightForwardBack.Value / (float)rightForwardBack.Maximum);
         }
     }
 }

@@ -208,9 +208,6 @@
     <None Include="Resources\leftcondyleresize.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\mandibletranslation.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\middleLeftSide.PNG" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +325,7 @@
     <None Include="Resources\tooth9.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\mandibletranslation1.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
