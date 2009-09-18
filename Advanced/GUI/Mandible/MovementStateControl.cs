@@ -79,6 +79,15 @@ namespace Medical.GUI
             movementSequence.sortStates();
         }
 
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MovementStateTick tick = timeTrackBar.MenuTargetMark as MovementStateTick;
+            if (tick != null)
+            {
+                tick.State.captureState();
+            }
+        }
+
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MovementStateTick tick = timeTrackBar.MenuTargetMark as MovementStateTick;

@@ -40,6 +40,7 @@
             this.barMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addKeyStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lockButton = new System.Windows.Forms.CheckBox();
+            this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).BeginInit();
             this.tickMenu.SuspendLayout();
             this.barMenu.SuspendLayout();
@@ -70,6 +71,7 @@
             this.timeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.timeTrackBar.BarMenu = null;
+            this.timeTrackBar.ChangeTimeOnSelection = false;
             this.timeTrackBar.CurrentTime = 0F;
             this.timeTrackBar.Location = new System.Drawing.Point(12, -19);
             this.timeTrackBar.MaximumTime = 5F;
@@ -112,14 +114,15 @@
             // tickMenu
             // 
             this.tickMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.updateToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.tickMenu.Name = "tickMenu";
-            this.tickMenu.Size = new System.Drawing.Size(108, 26);
+            this.tickMenu.Size = new System.Drawing.Size(153, 70);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
@@ -149,6 +152,13 @@
             this.lockButton.Text = "Lock";
             this.lockButton.UseVisualStyleBackColor = true;
             this.lockButton.CheckedChanged += new System.EventHandler(this.lockButtonCheckChanged);
+            // 
+            // updateToolStripMenuItem
+            // 
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateToolStripMenuItem.Text = "Update";
+            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
             // 
             // MovementStateControl
             // 
@@ -186,5 +196,6 @@
         private System.Windows.Forms.ContextMenuStrip barMenu;
         private System.Windows.Forms.ToolStripMenuItem addKeyStateToolStripMenuItem;
         private System.Windows.Forms.CheckBox lockButton;
+        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
     }
 }
