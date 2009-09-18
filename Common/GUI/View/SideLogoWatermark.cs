@@ -6,7 +6,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class SideLogoWatermark : Watermark
+    public class SideLogoWatermark : Watermark
     {
         private PanelOverlayElement panel;
         private Overlay overlay;
@@ -25,8 +25,8 @@ namespace Medical
 
         public override void createOverlays()
         {
-            overlay = OverlayManager.getInstance().create(name + "Overlay__");
-            panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "StatsOverlayPanel__") as PanelOverlayElement;
+            overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
+            panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
             panel.setUV(0, 0, 1, 1);
             panel.setVerticalAlignment(GuiVerticalAlignment.GVA_BOTTOM);
             panel.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
@@ -67,6 +67,11 @@ namespace Medical
                 panel = null;
                 overlay = null;
             }
+        }
+
+        public override Watermark clone(String newName)
+        {
+            return new SideLogoWatermark(newName, materialName, markWidth, markHeight);
         }
     }
 }

@@ -6,7 +6,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class TextWatermark : Watermark
+    public class TextWatermark : Watermark
     {
         private PanelOverlayElement statsPanel;
         private TextAreaOverlayElement fpsTextArea;
@@ -24,9 +24,9 @@ namespace Medical
 
         public override void createOverlays()
         {
-            overlay = OverlayManager.getInstance().create(name + "Overlay__");
-            statsPanel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "StatsOverlayPanel__") as PanelOverlayElement;
-            fpsTextArea = OverlayManager.getInstance().createOverlayElement(TextAreaOverlayElement.TypeName, name + "StatsFpsText__") as TextAreaOverlayElement;
+            overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
+            statsPanel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
+            fpsTextArea = OverlayManager.getInstance().createOverlayElement(TextAreaOverlayElement.TypeName, name + "_WatermarkText") as TextAreaOverlayElement;
             statsPanel.addChild(fpsTextArea);
             fpsTextArea.setFontName("Watermark");
             fpsTextArea.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
@@ -71,6 +71,11 @@ namespace Medical
                 fpsTextArea = null;
                 overlay = null;
             }
+        }
+
+        public override Watermark clone(String newName)
+        {
+            return new TextWatermark(newName, text, markHeight);
         }
     }
 }

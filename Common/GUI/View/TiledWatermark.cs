@@ -6,7 +6,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class TiledWatermark : Watermark
+    public class TiledWatermark : Watermark
     {
         private PanelOverlayElement panel;
         private Overlay overlay;
@@ -70,6 +70,11 @@ namespace Medical
                 panel = null;
                 overlay = null;
             }
+        }
+
+        public override Watermark clone(String newName)
+        {
+            return new TiledWatermark(newName, materialName, markWidth, markHeight);
         }
     }
 }

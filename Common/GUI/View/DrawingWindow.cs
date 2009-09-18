@@ -35,7 +35,6 @@ namespace Medical
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
         private SimScene scene;
-        private Watermark watermark = null;
         private EventManager eventManager;
 
         public DrawingWindow()
@@ -51,10 +50,6 @@ namespace Medical
             orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
             orbitCamera.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
-            watermark = new TiledWatermark(name + "Watermark", "Watermark", 150, 60);
-            //watermark = new TextWatermark(name + "Watermark", "Piper Clinic Copyright 2009", 32);
-            //watermark = new SideLogoWatermark(name + "Watermark", "PiperClinic", 150, 60);
-            //watermark = new CenteredWatermark(name + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
         }
 
         public void recreateWindow()
@@ -65,22 +60,9 @@ namespace Medical
             createCamera(mainTimer, scene);
         }
 
-        public void createWatermark()
-        {
-            watermark.createOverlays();
-        }
-
-        public void destroyWatermark()
-        {
-            if (watermark != null)
-            {
-                watermark.destroyOverlays();
-            }
-        }
-
         private void disposeCallback()
         {
-            destroyWatermark();
+            
         }
 
         public void createCamera(UpdateTimer mainTimer, SimScene scene)
@@ -131,7 +113,6 @@ namespace Medical
 
         void camera_PreFindVisibleObjects(bool callingCameraRender)
         {
-            watermark.setVisible(callingCameraRender);
             if (PreFindVisibleObjects != null)
             {
                 PreFindVisibleObjects.Invoke(callingCameraRender);
@@ -280,7 +261,6 @@ namespace Medical
                 if (this.Size.Width > 0 && this.Size.Height > 0)
                 {
                     listener.resized(this);
-                    watermark.sizeChanged(this.Size.Width, this.Size.Height);
                 }
             }
             base.OnResize(e);

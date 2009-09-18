@@ -30,7 +30,6 @@ namespace Medical
         private SavedCameraController sceneCameras = new SavedCameraController();
         private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
-        private bool watermarks = false;
         private bool allowRotation = true;
 
         public DrawingWindowController(String camerasFile)
@@ -44,28 +43,6 @@ namespace Medical
             dock.ActiveDocumentChanged += new EventHandler(dock_ActiveDocumentChanged);
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
-        }
-
-        public void showWatermarks(bool show)
-        {
-            if (watermarks != show)
-            {
-                watermarks = show;
-                if (watermarks)
-                {
-                    foreach (DrawingWindowHost host in cameras)
-                    {
-                        host.DrawingWindow.createWatermark();
-                    }
-                }
-                else
-                {
-                    foreach (DrawingWindowHost host in cameras)
-                    {
-                        host.DrawingWindow.destroyWatermark();
-                    }
-                }
-            }
         }
 
         void dock_ActiveDocumentChanged(object sender, EventArgs e)
@@ -94,10 +71,6 @@ namespace Medical
                 cameraHost.DrawingWindow.createCamera(mainTimer, scene);
             }
             cameraHost.DrawingWindow.showStats(showStatsActive);
-            if (watermarks)
-            {
-                cameraHost.DrawingWindow.createWatermark();
-            }
             return cameraHost;
         }
 

@@ -30,6 +30,7 @@ namespace Medical.Controller
         private StatePicker statePicker = new StatePicker();
         private ImageRenderer imageRenderer;
         private NavigationController navigationController;
+        private WatermarkController watermarkController;
 
         /// <summary>
         /// Constructor.
@@ -85,6 +86,14 @@ namespace Medical.Controller
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "FileSystem", "Watermark", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            //Watermark watermark = new TiledWatermark("Source" + "Watermark", "Watermark", 150, 60);
+            //Watermark watermark = new TextWatermark("Source" + "Watermark", "Piper Clinic Copyright 2009", 32);
+            Watermark watermark = new SideLogoWatermark("Source" + "Watermark", "PiperClinic", 150, 60);
+            //Watermark watermark = new CenteredWatermark("Source" + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
+            watermarkController = new WatermarkController(watermark, drawingWindowController);
+
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
 
             guiElements = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
@@ -123,9 +132,6 @@ namespace Medical.Controller
             }
 
             options = new Options();
-
-            Watermark.CreateResources();
-            drawingWindowController.showWatermarks(true);
 
             constructStatePicker();
 
