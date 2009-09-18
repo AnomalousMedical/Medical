@@ -9,11 +9,18 @@ using OgreWrapper;
 using OgrePlugin;
 using Engine.ObjectManagement;
 using BulletPlugin;
+using Engine.Attributes;
 
 namespace Medical
 {
+    public delegate void CPPositionChanged(ControlPointBehavior behavior, float position);
+
     public class ControlPointBehavior : Behavior
     {
+        [DoNotSave]
+        [DoNotCopy]
+        public event CPPositionChanged PositionChanged;
+
         [Editable]
         String boneSimObject;
 
@@ -183,6 +190,10 @@ namespace Medical
         {
             Vector3 newLocation = disc.getPosition(location);
             this.updateTranslation(ref newLocation);
+            if (PositionChanged != null)
+            {
+                PositionChanged.Invoke(this, location);
+            }
         }
 
         public float getNeutralLocation()

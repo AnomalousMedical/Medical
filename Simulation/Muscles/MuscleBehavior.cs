@@ -13,8 +13,14 @@ using BulletPlugin;
 
 namespace Medical
 {
+    public delegate void MuscleForceChanged(MuscleBehavior source, float force);
+
     public class MuscleBehavior : Behavior
     {
+        [DoNotSave]
+        [DoNotCopy]
+        public event MuscleForceChanged ForceChanged;
+
         [Editable]
         protected String targetSimObject;
 
@@ -89,6 +95,10 @@ namespace Medical
         public void changeForce(float force)
         {
             this.force = force;
+            if (ForceChanged != null)
+            {
+                ForceChanged.Invoke(this, force);
+            }
         }
 
         public float getForce()

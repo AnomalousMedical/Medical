@@ -34,8 +34,8 @@ namespace Medical.Muscles
         {
             float endTime = targetState.StartTime > startTime ? targetState.startTime - startTime : duration - startTime;
             float blendFactor = (currentTime - startTime) / endTime;
-            MuscleController.changeForce("MovingMuscleDynamic", muscleForce);
-            MuscleController.MovingTarget.Offset = movingTargetPosition.lerp(ref targetState.movingTargetPosition, ref blendFactor);
+            MuscleController.changeForce("MovingMuscleDynamic", targetState.muscleForce);
+            MuscleController.MovingTarget.Offset = targetState.movingTargetPosition;
 
             ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
             float delta = targetState.leftCPPosition - leftCPPosition;

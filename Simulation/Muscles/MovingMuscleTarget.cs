@@ -10,8 +10,14 @@ using Engine.Platform;
 
 namespace Medical
 {
+    public delegate void MovingMuscleTargetOffsetChanged(MovingMuscleTarget source, Vector3 offset);
+
     public class MovingMuscleTarget : Interface
     {
+        [DoNotSave]
+        [DoNotCopy]
+        public event MovingMuscleTargetOffsetChanged OffsetChanged;
+
         private Vector3 startingPosition;
 
         protected override void link()
@@ -36,6 +42,10 @@ namespace Medical
             {
                 Vector3 newPos = startingPosition + value;
                 updateTranslation(ref newPos);
+                if (OffsetChanged != null)
+                {
+                    OffsetChanged.Invoke(this, value);
+                }
             }
         }
     }
