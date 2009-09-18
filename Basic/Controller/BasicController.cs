@@ -621,6 +621,7 @@ namespace Medical.Controller
             target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.ZoomIn);
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Right);
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Left);
+            target.addTwoWayAdjacentState(navigationSet.getState("Left TMJ"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Right Lateral");
             target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Up);
@@ -628,6 +629,7 @@ namespace Medical.Controller
             target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.ZoomIn);
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Left);
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Right);
+            target.addTwoWayAdjacentState(navigationSet.getState("Right TMJ"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Midline Anterosuperior");
             target.addTwoWayAdjacentState(navigationSet.getState("Midline Superior"), NavigationButtons.Up);
