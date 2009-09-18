@@ -43,7 +43,7 @@ namespace Medical
             endRotQuat = new Quaternion(endRotationRad.x, endRotationRad.y, endRotationRad.z);
         }
 
-        public override void positionUpdated(float position)
+        protected override void positionUpdated(float position)
         {
             if (bone != null)
             {

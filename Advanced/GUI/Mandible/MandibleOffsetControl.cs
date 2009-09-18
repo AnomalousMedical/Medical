@@ -19,8 +19,6 @@ namespace Medical.GUI
         private ControlPointBehavior rightCP;
         private MuscleBehavior movingMuscle;
         private MovingMuscleTarget movingMuscleTarget;
-        private bool allowSceneUpdates = true;
-        private bool allowUIUpdates = true;
         private bool allowSyncronization = true;
 
         public MandibleOffsetControl()
@@ -43,7 +41,6 @@ namespace Medical.GUI
             rightCP = ControlPointController.getControlPoint("RightCP");
             movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
             movingMuscleTarget = MuscleController.MovingTarget;
-            allowSceneUpdates = false;
             Enabled = leftCP != null && rightCP != null && movingMuscle != null && movingMuscleTarget != null;
             if (Enabled)
             {
@@ -60,8 +57,6 @@ namespace Medical.GUI
                 rightCP.PositionChanged += rightCP_PositionChanged;
                 movingMuscleTarget.OffsetChanged += movingMuscleTarget_OffsetChanged;
             }
-            bothForwardBack.Value = rightForwardBack.Value;
-            allowSceneUpdates = true;
         }
 
         protected override void sceneUnloading()

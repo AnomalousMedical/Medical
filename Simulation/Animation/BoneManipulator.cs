@@ -8,6 +8,7 @@ using OgreWrapper;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using Logging;
+using Engine.Attributes;
 
 namespace Medical
 {
@@ -89,7 +90,7 @@ namespace Medical
             }
         }
 
-        public abstract void positionUpdated(float position);
+        protected abstract void positionUpdated(float position);
 
         public abstract BoneManipulatorStateEntry createStateEntry();
 

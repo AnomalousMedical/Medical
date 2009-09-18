@@ -12,9 +12,7 @@ namespace Medical.GUI
     public partial class BoneManipulatorSlider : UserControl
     {
         private BoneManipulator manipulator;
-        private int blendDelta = 0;
-        private int blendStart;
-        private bool allowUpdate = true;
+        private bool allowSynchronization = true;
 
         public BoneManipulatorSlider()
         {
@@ -25,38 +23,20 @@ namespace Medical.GUI
         public void initialize(BoneManipulator manipulator)
         {
             this.manipulator = manipulator;
-            allowUpdate = false;
-            valueTrackBar.Value = (int)(manipulator.Position * valueTrackBar.Maximum);
-            allowUpdate = true;
+            synchronizeValue(manipulator, manipulator.Position);
         }
 
         public void clearManipulator()
         {
-            this.manipulator = null;
-        }
-
-        void valueTrackBar_ValueChanged(object sender, EventArgs e)
-        {
-            if (allowUpdate)
+            if (manipulator != null)
             {
-                manipulator.Position = (float)valueTrackBar.Value / valueTrackBar.Maximum;
+                this.manipulator = null;
             }
-        }
-
-        public void startBlend(float blendTarget)
-        {
-            blendStart = valueTrackBar.Value;
-            blendDelta = (int)(blendTarget * valueTrackBar.Maximum) - valueTrackBar.Value;
-        }
-
-        public void blend(float amount)
-        {
-            valueTrackBar.Value = blendStart + (int)(blendDelta * amount);
         }
 
         public void setToDefault()
         {
-            valueTrackBar.Value = (int)(manipulator.DefaultPosition * valueTrackBar.Maximum);
+            synchronizeValue(this, manipulator.DefaultPosition);
         }
 
         public String LabelText
@@ -79,7 +59,29 @@ namespace Medical.GUI
             }
             set
             {
-                valueTrackBar.Value = (int)(value * valueTrackBar.Maximum);
+                synchronizeValue(this, value);
+            }
+        }
+
+        void valueTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeValue(valueTrackBar, (float)valueTrackBar.Value / valueTrackBar.Maximum);
+        }
+
+        private void synchronizeValue(object sender, float value)
+        {
+            if (allowSynchronization)
+            {
+                allowSynchronization = false;
+                if (manipulator != null && sender != manipulator)
+                {
+                    manipulator.Position = value;
+                }
+                if (sender != valueTrackBar)
+                {
+                    valueTrackBar.Value = (int)(value * valueTrackBar.Maximum);
+                }
+                allowSynchronization = true;
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Medical
         [Editable]
         float defaultPosition = 0.0f;
 
-        public override void positionUpdated(float position)
+        protected override void positionUpdated(float position)
         {
             if (bone != null)
             {
