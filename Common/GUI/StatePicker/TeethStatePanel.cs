@@ -16,6 +16,19 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Text = "Teeth";
+            foreach (Control control in this.Controls)
+            {
+                CheckBox checkBox = control as CheckBox;
+                if (checkBox != null)
+                {
+                    checkBox.CheckedChanged += new EventHandler(checkBox_CheckedChanged);
+                }
+            }
+        }
+
+        void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            showChanges();
         }
 
         public override void applyToState(MedicalState state)

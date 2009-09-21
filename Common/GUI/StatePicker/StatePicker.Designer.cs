@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.navigatorList = new System.Windows.Forms.ListView();
+            this.nameColumn = new System.Windows.Forms.ColumnHeader();
             this.buttonPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.finishButton = new System.Windows.Forms.Button();
             this.nextButton = new System.Windows.Forms.Button();
             this.previousButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.statePickerPanelHost = new System.Windows.Forms.Panel();
-            this.nameColumn = new System.Windows.Forms.ColumnHeader();
             this.buttonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +52,11 @@
             this.navigatorList.TabIndex = 0;
             this.navigatorList.UseCompatibleStateImageBehavior = false;
             this.navigatorList.View = System.Windows.Forms.View.Details;
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.Text = "Name";
+            this.nameColumn.Width = 100;
             // 
             // buttonPanel
             // 
@@ -115,11 +120,6 @@
             this.statePickerPanelHost.Size = new System.Drawing.Size(488, 414);
             this.statePickerPanelHost.TabIndex = 2;
             // 
-            // nameColumn
-            // 
-            this.nameColumn.Text = "Name";
-            this.nameColumn.Width = 100;
-            // 
             // StatePicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,6 +129,7 @@
             this.Controls.Add(this.navigatorList);
             this.Controls.Add(this.buttonPanel);
             this.Name = "StatePicker";
+            this.ShowInTaskbar = false;
             this.Text = "StatePicker";
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);

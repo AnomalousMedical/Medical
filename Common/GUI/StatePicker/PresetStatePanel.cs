@@ -25,6 +25,12 @@ namespace Medical.GUI
             presetListView.LargeImageList = new ImageList();
             presetListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
             presetListView.LargeImageList.ImageSize = new Size(100, 100);
+            presetListView.SelectedIndexChanged += new EventHandler(presetListView_SelectedIndexChanged);
+        }
+
+        void presetListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            showChanges();
         }
 
         public void initialize(PresetStateSet presetStateSet)

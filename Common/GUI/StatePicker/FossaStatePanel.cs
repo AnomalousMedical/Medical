@@ -67,6 +67,7 @@ namespace Medical.GUI
             if (rightEminenceNormal.Checked)
             {
                 rightEminanceImage.Image = Resources.rightnormaleminance;
+                showChanges();
             }
         }
 
@@ -75,6 +76,7 @@ namespace Medical.GUI
             if (rightEminenceModerate.Checked)
             {
                 rightEminanceImage.Image = Resources.rightsemiflateminance;
+                showChanges();
             }
         }
 
@@ -82,6 +84,7 @@ namespace Medical.GUI
         {
             if (rightEminenceSevere.Checked)
             {
+                showChanges();
                 rightEminanceImage.Image = Resources.rightflateminance;
             }
         }
@@ -91,6 +94,7 @@ namespace Medical.GUI
             if (leftEminenceNormal.Checked)
             {
                 leftEminanceImage.Image = Resources.leftnormaleminance;
+                showChanges();
             }
         }
 
@@ -99,6 +103,7 @@ namespace Medical.GUI
             if (leftEminenceModerate.Checked)
             {
                 leftEminanceImage.Image = Resources.leftsemiflateminance;
+                showChanges();
             }
         }
 
@@ -107,6 +112,7 @@ namespace Medical.GUI
             if (leftEminenceSevere.Checked)
             {
                 leftEminanceImage.Image = Resources.leftflateminance;
+                showChanges();
             }
         }
     }

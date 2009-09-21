@@ -31,6 +31,7 @@ namespace Medical.Controller
         private ImageRenderer imageRenderer;
         private NavigationController navigationController;
         private WatermarkController watermarkController;
+        private TemporaryStateBlender temporaryStateBlender;
 
         /// <summary>
         /// Constructor.
@@ -85,6 +86,8 @@ namespace Medical.Controller
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+
+            temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "FileSystem", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
@@ -297,21 +300,28 @@ namespace Medical.Controller
 
         internal void showStatePicker()
         {
-            statePicker.startWizard();
-            statePicker.ShowDialog(basicForm);
-            if (statePicker.WizardFinished)
+            if (!statePicker.Visible)
             {
                 if (stateController.getNumStates() == 0)
                 {
                     stateController.createAndAddState("Normal");
                 }
-                stateController.addState(statePicker.CreatedState);
-                stateGUI.playAll();
+                statePicker.startWizard();
+                statePicker.Show(basicForm);
             }
+        }
+
+        void statePicker_StateCreated(MedicalState state)
+        {
+            stateController.addState(statePicker.CreatedState);
+            stateGUI.CurrentBlend = stateController.getNumStates() - 1;
         }
 
         private void constructStatePicker()
         {
+            statePicker.initialize(temporaryStateBlender);
+            statePicker.StateCreated += statePicker_StateCreated;
+
             //statePicker.addPresetStateSet(createGrowthSet("Left", "left"));
             //statePicker.addPresetStateSet(createGrowthSet("Right", "right"));
             //statePicker.addPresetStateSet(createDegenerationSet("Left", "left"));
@@ -688,29 +698,16 @@ namespace Medical.Controller
             target = navigationSet.getState("Dentition Anterior Labial");
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"), NavigationButtons.Right);
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Anterior Labial"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Dentition Left Posterior Buccal");
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Left"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Dentition Right Posterior Buccal");
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Right"), NavigationButtons.ZoomIn);
 
             target = navigationSet.getState("Dentition Anterior Lingual");
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Left);
             target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Anterior Lingual"), NavigationButtons.ZoomIn);
-
-            //Teeth Magnified
-            target = navigationSet.getState("Teeth Magnified Anterior Labial");
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Right"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Left"), NavigationButtons.Right);
-
-            target = navigationSet.getState("Teeth Magnified Anterior Lingual");
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Right"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Teeth Magnified Left"), NavigationButtons.Left);
 
             //Joint Left
             target = navigationSet.getState("Left TMJ");

@@ -11,9 +11,16 @@ namespace Medical.GUI
 {
     public partial class StatePickerPanel : UserControl
     {
+        protected StatePicker parentPicker;
+
         public StatePickerPanel()
         {
             InitializeComponent();
+        }
+
+        public void setStatePicker(StatePicker parentPicker)
+        {
+            this.parentPicker = parentPicker;
         }
 
         public virtual void applyToState(MedicalState state)
@@ -24,6 +31,11 @@ namespace Medical.GUI
         public virtual void setToDefault()
         {
 
+        }
+
+        protected void showChanges()
+        {
+            parentPicker.showChanges();
         }
     }
 }

@@ -10,12 +10,17 @@ using System.Resources;
 
 namespace Medical.GUI
 {
+    public delegate void MedicalStateCreated(MedicalState state);
+
     public partial class StatePicker : Form
     {
+        public event MedicalStateCreated StateCreated;
+
         private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
         int currentIndex = 0;
         MedicalState createdState;
         private bool updatePanel = true;
+        TemporaryStateBlender stateBlender;
 
         public StatePicker()
         {
@@ -23,8 +28,14 @@ namespace Medical.GUI
             navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);
         }
 
+        public void initialize(TemporaryStateBlender stateBlender)
+        {
+            this.stateBlender = stateBlender;
+        }
+
         public void addStatePanel(StatePickerPanel panel)
         {
+            panel.setStatePicker(this);
             panels.Add(panel);
             ListViewItem item = navigatorList.Items.Add(panel.Text, panel.Text, panel.Text);
             item.Tag = panel;
@@ -51,6 +62,16 @@ namespace Medical.GUI
             {
                 panel.setToDefault();
             }
+        }
+
+        internal void showChanges()
+        {
+            createdState = new MedicalState("Test");
+            foreach (StatePickerPanel panel in panels)
+            {
+                panel.applyToState(createdState);
+            }
+            stateBlender.startTemporaryBlend(createdState);
         }
 
         private void showPanel()
@@ -110,6 +131,11 @@ namespace Medical.GUI
             {
                 panel.applyToState(createdState);
             }
+            stateBlender.stopBlend();
+            if (StateCreated != null)
+            {
+                StateCreated.Invoke(createdState);
+            }
             this.Close();
         }
 
@@ -142,6 +168,13 @@ namespace Medical.GUI
             {
                 return createdState;
             }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            e.Cancel = true;
+            this.Hide();
         }
     }
 }
