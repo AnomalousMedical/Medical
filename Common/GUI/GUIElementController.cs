@@ -21,7 +21,8 @@ namespace Medical.GUI
         private List<GUIElement> updatingGUIElements = new List<GUIElement>();
         private DockPanel dock;
         private ToolStripContainer toolStripContainer;
-        private Dictionary<String, ToolStrip> toolStrips = new Dictionary<string, ToolStrip>();
+        private SortedDictionary<String, ToolStrip> toolStrips = new SortedDictionary<string, ToolStrip>();
+        private bool enabled = false;
 
         public GUIElementController(DockPanel dock, ToolStripContainer toolStrip, MedicalController controller)
         {
@@ -31,12 +32,22 @@ namespace Medical.GUI
             toolStrip.Size = new Size(toolStrip.Size.Width, 40);
         }
 
-        public void saveWindows(String filename)
+        /// <summary>
+        /// Save the windows to a file.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void saveWindowFile(String filename)
         {
             dock.SaveAsXml(filename);
         }
 
-        public bool restoreWindows(String filename, DeserializeDockContent callback)
+        /// <summary>
+        /// Restore the windows from a file.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="callback"></param>
+        /// <returns></returns>
+        public bool restoreWindowFile(String filename, DeserializeDockContent callback)
         {
             bool restore = File.Exists(filename);
             if (restore)
@@ -54,6 +65,32 @@ namespace Medical.GUI
                 dock.LoadFromXml(filename, callback);
             }
             return restore;
+        }
+
+        /// <summary>
+        /// Hide the GUIElements controlled by this controller.
+        /// </summary>
+        public void hideWindows()
+        {
+            foreach (GUIElement element in guiElements)
+            {
+                element.RestoreFromHidden = element.Visible;
+                element.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Restore all elements hidden by hideWindows().
+        /// </summary>
+        public void restoreHiddenWindows()
+        {
+            foreach (GUIElement element in guiElements)
+            {
+                if (element.RestoreFromHidden)
+                {
+                    element.Show(dock);
+                }
+            }
         }
 
         public IDockContent ActiveDocument
@@ -89,7 +126,10 @@ namespace Medical.GUI
                 toolStrip = new ToolStrip();
                 toolStrip.ImageScalingSize = new Size(32, 32);
                 toolStrips.Add(element.ToolStripName, toolStrip);
-                toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+                if (enabled)
+                {
+                    toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+                }
             }
             else
             {
@@ -146,6 +186,35 @@ namespace Medical.GUI
             foreach (GUIElement element in guiElements)
             {
                 element.callSceneLoaded(scene);
+            }
+        }
+
+        public bool EnableToolbars
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                if (enabled != value)
+                {
+                    enabled = value;
+                    if (enabled)
+                    {
+                        foreach (ToolStrip toolStrip in toolStrips.Values)
+                        {
+                            toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+                        }
+                    }
+                    else
+                    {
+                        foreach (ToolStrip toolStrip in toolStrips.Values)
+                        {
+                            toolStripContainer.TopToolStripPanel.Controls.Remove(toolStrip);
+                        }
+                    }
+                }
             }
         }
 

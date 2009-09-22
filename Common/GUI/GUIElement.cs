@@ -117,6 +117,13 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// This will be true if the window was hidden using hideWindows because
+        /// it was visible when the function was called. Allows
+        /// restoreHiddenWindows to work properly.
+        /// </summary>
+        internal bool RestoreFromHidden { get; set; }
+
         private void InitializeComponent()
         {
             this.SuspendLayout();
@@ -128,7 +135,6 @@ namespace Medical.GUI
             this.HideOnClose = true;
             this.Name = "GUIElement";
             this.ResumeLayout(false);
-
         }
     }
 }

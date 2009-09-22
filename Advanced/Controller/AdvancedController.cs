@@ -81,6 +81,7 @@ namespace Medical.Controller
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
 
             guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
+            guiElements.EnableToolbars = true;
 
             //Add common gui elements
             LayersControl layersControl = new LayersControl();
@@ -131,7 +132,7 @@ namespace Medical.Controller
 
             loadDefaultScene();
 
-            if (!guiElements.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
@@ -149,7 +150,7 @@ namespace Medical.Controller
         public void stop()
         {
             medicalController.shutdown();
-            guiElements.saveWindows(MedicalConfig.WindowsFile);
+            guiElements.saveWindowFile(MedicalConfig.WindowsFile);
             drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }

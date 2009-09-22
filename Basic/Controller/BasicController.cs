@@ -22,7 +22,8 @@ namespace Medical.Controller
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
-        private GUIElementController guiElements;
+        private GUIElementController viewMode;
+        private GUIElementController distortMode;
         private MedicalStateController stateController = new MedicalStateController();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
@@ -99,9 +100,8 @@ namespace Medical.Controller
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
 
-            guiElements = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
-
-            //Add common gui elements
+            //Configure view mode
+            viewMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
             //LayersControl layersControl = new LayersControl();
             //guiElements.addGUIElement(layersControl);
 
@@ -111,32 +111,35 @@ namespace Medical.Controller
 
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController);
-            guiElements.addGUIElement(stateGUI);
+            viewMode.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
             savedCameraGUI.initialize(drawingWindowController);
-            guiElements.addGUIElement(savedCameraGUI);
+            viewMode.addGUIElement(savedCameraGUI);
 
             //Add specific gui elements
             MuscleControl muscleControl = new MuscleControl();
-            guiElements.addGUIElement(muscleControl);
+            viewMode.addGUIElement(muscleControl);
 
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
-            guiElements.addGUIElement(simpleLayer);
+            viewMode.addGUIElement(simpleLayer);
 
             PredefinedLayerControl predefinedLayers = new PredefinedLayerControl();
-            guiElements.addGUIElement(predefinedLayers);
+            viewMode.addGUIElement(predefinedLayers);
+            viewMode.EnableToolbars = true;
+
+            //Configure distort mode
+            distortMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
+            constructStatePicker();
 
             openDefaultScene();
 
-            if (!guiElements.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
 
             options = new Options();
-
-            constructStatePicker();
 
             basicForm.Show();
             splash.Close();
@@ -149,7 +152,7 @@ namespace Medical.Controller
         public void stop()
         {
             medicalController.shutdown();
-            guiElements.saveWindows(MedicalConfig.WindowsFile);
+            viewMode.saveWindowFile(MedicalConfig.WindowsFile);
             drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }
@@ -172,7 +175,7 @@ namespace Medical.Controller
         public DockContent getDockContent(String persistString)
         {
             DockContent ret = null;
-            ret = guiElements.restoreWindow(persistString);
+            ret = viewMode.restoreWindow(persistString);
             if (ret == null)
             {
                 String name;
@@ -283,12 +286,12 @@ namespace Medical.Controller
         private bool changeScene(String file)
         {
             statePicker.setToDefault();
-            guiElements.alertGUISceneUnloading();
+            viewMode.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
-                guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+                viewMode.alertGUISceneLoaded(medicalController.CurrentScene);
                 navigationController.NavigationSet = TEMP_createNavigationState(drawingWindowController.SceneCameras);
                 return true;
             }
@@ -302,19 +305,28 @@ namespace Medical.Controller
         {
             if (!statePicker.Visible)
             {
+                basicForm.SuspendLayout();
                 if (stateController.getNumStates() == 0)
                 {
                     stateController.createAndAddState("Normal");
                 }
                 statePicker.startWizard();
-                statePicker.Show(basicForm);
+                viewMode.hideWindows();
+                viewMode.EnableToolbars = false;
+                statePicker.Show(distortMode.DockPanel);
+                basicForm.ResumeLayout();
             }
         }
 
         void statePicker_StateCreated(MedicalState state)
         {
+            basicForm.SuspendLayout();
             stateController.addState(statePicker.CreatedState);
             stateGUI.CurrentBlend = stateController.getNumStates() - 1;
+            distortMode.hideWindows();
+            viewMode.EnableToolbars = true;
+            viewMode.restoreHiddenWindows();
+            basicForm.ResumeLayout();
         }
 
         private void constructStatePicker()
@@ -347,6 +359,8 @@ namespace Medical.Controller
             statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
             statePicker.setToDefault();
+
+            distortMode.addGUIElement(statePicker);
         }
 
         private void loadPresetSet(PresetStateSet presetStateSet)

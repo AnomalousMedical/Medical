@@ -194,13 +194,13 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\FossaStatePanel.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\FossaStatePanel.Designer.cs">
       <DependentUpon>FossaStatePanel.cs</DependentUpon>

@@ -26,8 +26,8 @@ namespace Medical.GUI
 
         public override void setToDefault()
         {
-            rightEminenceNormal.Checked = true;
-            leftEminenceNormal.Checked = true;
+            //rightEminenceNormal.Checked = true;
+            //leftEminenceNormal.Checked = true;
         }
 
         private void getRightFossaState(FossaState fossaState)

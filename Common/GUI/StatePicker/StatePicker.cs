@@ -12,7 +12,7 @@ namespace Medical.GUI
 {
     public delegate void MedicalStateCreated(MedicalState state);
 
-    public partial class StatePicker : Form
+    public partial class StatePicker : GUIElement
     {
         public event MedicalStateCreated StateCreated;
 
@@ -33,19 +33,21 @@ namespace Medical.GUI
             this.stateBlender = stateBlender;
         }
 
-        public void addStatePanel(StatePickerPanel panel)
+        public StatePickerPanel addStatePanel(StatePickerPanel panel)
         {
             panel.setStatePicker(this);
             panels.Add(panel);
             ListViewItem item = navigatorList.Items.Add(panel.Text, panel.Text, panel.Text);
             item.Tag = panel;
+            return panel;
         }
 
-        public void addPresetStateSet(PresetStateSet presetSet)
+        public PresetStatePanel addPresetStateSet(PresetStateSet presetSet)
         {
             PresetStatePanel panel = new PresetStatePanel();
             panel.initialize(presetSet);
             addStatePanel(panel);
+            return panel;
         }
 
         public void startWizard()

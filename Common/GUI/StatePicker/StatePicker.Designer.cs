@@ -43,15 +43,14 @@
             // 
             this.navigatorList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn});
-            this.navigatorList.Dock = System.Windows.Forms.DockStyle.Left;
+            this.navigatorList.Dock = System.Windows.Forms.DockStyle.Top;
             this.navigatorList.HideSelection = false;
             this.navigatorList.Location = new System.Drawing.Point(0, 0);
             this.navigatorList.MultiSelect = false;
             this.navigatorList.Name = "navigatorList";
-            this.navigatorList.Size = new System.Drawing.Size(136, 414);
+            this.navigatorList.Size = new System.Drawing.Size(624, 98);
             this.navigatorList.TabIndex = 0;
             this.navigatorList.UseCompatibleStateImageBehavior = false;
-            this.navigatorList.View = System.Windows.Forms.View.Details;
             // 
             // nameColumn
             // 
@@ -115,9 +114,9 @@
             // 
             this.statePickerPanelHost.AutoScroll = true;
             this.statePickerPanelHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statePickerPanelHost.Location = new System.Drawing.Point(136, 0);
+            this.statePickerPanelHost.Location = new System.Drawing.Point(0, 98);
             this.statePickerPanelHost.Name = "statePickerPanelHost";
-            this.statePickerPanelHost.Size = new System.Drawing.Size(488, 414);
+            this.statePickerPanelHost.Size = new System.Drawing.Size(624, 316);
             this.statePickerPanelHost.TabIndex = 2;
             // 
             // StatePicker
@@ -125,12 +124,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 444);
+            this.CloseButton = false;
+            this.CloseButtonVisible = false;
             this.Controls.Add(this.statePickerPanelHost);
             this.Controls.Add(this.navigatorList);
             this.Controls.Add(this.buttonPanel);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "StatePicker";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.ShowInTaskbar = false;
-            this.Text = "StatePicker";
+            this.Text = "Distortion Wizard";
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

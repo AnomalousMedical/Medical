@@ -63,7 +63,6 @@
             this.rightEminenceSevere.Name = "rightEminenceSevere";
             this.rightEminenceSevere.Size = new System.Drawing.Size(59, 17);
             this.rightEminenceSevere.TabIndex = 2;
-            this.rightEminenceSevere.TabStop = true;
             this.rightEminenceSevere.Text = "Severe";
             this.rightEminenceSevere.UseVisualStyleBackColor = true;
             this.rightEminenceSevere.CheckedChanged += new System.EventHandler(this.rightEminenceSevere_CheckedChanged);
@@ -75,7 +74,6 @@
             this.rightEminenceModerate.Name = "rightEminenceModerate";
             this.rightEminenceModerate.Size = new System.Drawing.Size(70, 17);
             this.rightEminenceModerate.TabIndex = 1;
-            this.rightEminenceModerate.TabStop = true;
             this.rightEminenceModerate.Text = "Moderate";
             this.rightEminenceModerate.UseVisualStyleBackColor = true;
             this.rightEminenceModerate.CheckedChanged += new System.EventHandler(this.rightEminenceModerate_CheckedChanged);
@@ -83,6 +81,7 @@
             // rightEminenceNormal
             // 
             this.rightEminenceNormal.AutoSize = true;
+            this.rightEminenceNormal.Checked = true;
             this.rightEminenceNormal.Location = new System.Drawing.Point(6, 19);
             this.rightEminenceNormal.Name = "rightEminenceNormal";
             this.rightEminenceNormal.Size = new System.Drawing.Size(58, 17);
@@ -111,7 +110,6 @@
             this.leftEminenceSevere.Name = "leftEminenceSevere";
             this.leftEminenceSevere.Size = new System.Drawing.Size(59, 17);
             this.leftEminenceSevere.TabIndex = 2;
-            this.leftEminenceSevere.TabStop = true;
             this.leftEminenceSevere.Text = "Severe";
             this.leftEminenceSevere.UseVisualStyleBackColor = true;
             this.leftEminenceSevere.CheckedChanged += new System.EventHandler(this.leftEminenceSevere_CheckedChanged);
@@ -123,7 +121,6 @@
             this.leftEminenceModerate.Name = "leftEminenceModerate";
             this.leftEminenceModerate.Size = new System.Drawing.Size(70, 17);
             this.leftEminenceModerate.TabIndex = 1;
-            this.leftEminenceModerate.TabStop = true;
             this.leftEminenceModerate.Text = "Moderate";
             this.leftEminenceModerate.UseVisualStyleBackColor = true;
             this.leftEminenceModerate.CheckedChanged += new System.EventHandler(this.leftEminenceModerate_CheckedChanged);
@@ -131,6 +128,7 @@
             // leftEminenceNormal
             // 
             this.leftEminenceNormal.AutoSize = true;
+            this.leftEminenceNormal.Checked = true;
             this.leftEminenceNormal.Location = new System.Drawing.Point(6, 19);
             this.leftEminenceNormal.Name = "leftEminenceNormal";
             this.leftEminenceNormal.Size = new System.Drawing.Size(58, 17);
@@ -160,12 +158,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(282, 245);
             this.Controls.Add(this.leftEminanceImage);
             this.Controls.Add(this.rightEminanceImage);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Name = "FossaStatePanel";
-            this.Size = new System.Drawing.Size(298, 281);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
