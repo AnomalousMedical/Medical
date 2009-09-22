@@ -19,62 +19,15 @@ namespace Medical.GUI
         protected FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
         private String windowDefaultText;
         private const String TITLE_FORMAT = "{0} - {1}";
-        private DockPanel dockPanel;
-        private ToolStripContainer toolStrip;
 
         public MedicalForm()
         {
 
         }
 
-        protected void initialize(DockPanel dockPanel, ToolStripContainer toolStrip, String windowDefaultText)
+        protected void initialize(String windowDefaultText)
         {
             this.windowDefaultText = windowDefaultText;
-            this.dockPanel = dockPanel;
-            this.toolStrip = toolStrip;
-        }
-
-        public void saveWindows(String filename)
-        {
-            dockPanel.SaveAsXml(filename);
-        }
-
-        public bool restoreWindows(String filename, DeserializeDockContent callback)
-        {
-            bool restore = File.Exists(filename);
-            if (restore)
-            {
-                //Close all windows
-                for (int index = dockPanel.Contents.Count - 1; index >= 0; index--)
-                {
-                    IDockContent content = dockPanel.Contents[index] as IDockContent;
-                    if (content != null)
-                    {
-                        content.DockHandler.Close();
-                    }
-                }
-                //Load the file
-                dockPanel.LoadFromXml(filename, callback);
-            }
-            return restore;
-        }
-
-        public IDockContent ActiveDocument
-        {
-            get
-            {
-                return dockPanel.ActiveDocument;
-            }
-        }
-
-        internal void showDockContent(DockContent content)
-        {
-            content.Show(dockPanel);
-        }
-
-        internal void hideDockContent(DockContent content)
-        {
-            content.DockHandler.Hide();
         }
 
         #region OSWindow Members
@@ -157,22 +110,6 @@ namespace Medical.GUI
         protected void clearWindowTitle()
         {
             Text = windowDefaultText;
-        }
-
-        public DockPanel DockPanel
-        {
-            get
-            {
-                return dockPanel;
-            }
-        }
-
-        public ToolStripContainer ToolStrip
-        {
-            get
-            {
-                return toolStrip;
-            }
         }
     }
 }

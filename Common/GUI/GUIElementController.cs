@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
 using System.Drawing;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -28,6 +29,55 @@ namespace Medical.GUI
             this.toolStripContainer = toolStrip;
             controller.FixedLoopUpdate += fixedLoopUpdate;
             toolStrip.Size = new Size(toolStrip.Size.Width, 40);
+        }
+
+        public void saveWindows(String filename)
+        {
+            dock.SaveAsXml(filename);
+        }
+
+        public bool restoreWindows(String filename, DeserializeDockContent callback)
+        {
+            bool restore = File.Exists(filename);
+            if (restore)
+            {
+                //Close all windows
+                for (int index = dock.Contents.Count - 1; index >= 0; index--)
+                {
+                    IDockContent content = dock.Contents[index] as IDockContent;
+                    if (content != null)
+                    {
+                        content.DockHandler.Close();
+                    }
+                }
+                //Load the file
+                dock.LoadFromXml(filename, callback);
+            }
+            return restore;
+        }
+
+        public IDockContent ActiveDocument
+        {
+            get
+            {
+                return dock.ActiveDocument;
+            }
+        }
+
+        public DockPanel DockPanel
+        {
+            get
+            {
+                return dock;
+            }
+        }
+
+        public ToolStripContainer ToolStrip
+        {
+            get
+            {
+                return toolStripContainer;
+            }
         }
 
         public void addGUIElement(GUIElement element)

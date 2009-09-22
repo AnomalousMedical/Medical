@@ -129,7 +129,7 @@ namespace Medical.Controller
 
             openDefaultScene();
 
-            if (!basicForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+            if (!guiElements.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
@@ -149,7 +149,7 @@ namespace Medical.Controller
         public void stop()
         {
             medicalController.shutdown();
-            basicForm.saveWindows(MedicalConfig.WindowsFile);
+            guiElements.saveWindows(MedicalConfig.WindowsFile);
             drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }

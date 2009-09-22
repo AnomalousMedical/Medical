@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
 using System.IO;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
@@ -20,7 +21,7 @@ namespace Medical.GUI
         public BasicForm()
         {
             InitializeComponent();
-            this.initialize(dockPanel, toolStripContainer, Text);
+            this.initialize(Text);
         }
 
         /// <summary>
@@ -41,6 +42,22 @@ namespace Medical.GUI
         public void initialize(BasicController controller)
         {
             this.controller = controller;
+        }
+
+        public ToolStripContainer ToolStrip
+        {
+            get
+            {
+                return toolStripContainer;
+            }
+        }
+
+        public DockPanel DockPanel
+        {
+            get
+            {
+                return dockPanel;
+            }
         }
 
         protected override void OnClosing(CancelEventArgs e)

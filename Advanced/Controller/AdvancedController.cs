@@ -130,8 +130,8 @@ namespace Medical.Controller
             guiElements.addGUIElement(movementState);
 
             loadDefaultScene();
-            
-            if(!advancedForm.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
+
+            if (!guiElements.restoreWindows(MedicalConfig.WindowsFile, getDockContent))
             {
                 drawingWindowController.createOneWaySplit();
             }
@@ -149,7 +149,7 @@ namespace Medical.Controller
         public void stop()
         {
             medicalController.shutdown();
-            advancedForm.saveWindows(MedicalConfig.WindowsFile);
+            guiElements.saveWindows(MedicalConfig.WindowsFile);
             drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }
