@@ -167,7 +167,7 @@ namespace Medical
             }
         }
 
-        public NavigationState State { get; set; }
+        public NavigationLink Link { get; set; }
 
         internal PanelOverlayElement PanelElement
         {

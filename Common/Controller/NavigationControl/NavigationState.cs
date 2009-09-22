@@ -12,7 +12,6 @@ namespace Medical
         private List<NavigationLink> adjacentStates = new List<NavigationLink>();
         private Vector3 lookAt;
         private Vector3 translation;
-        private float visualRadius = 10.0f;
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation)
         {
@@ -101,18 +100,6 @@ namespace Medical
             get
             {
                 return name;
-            }
-        }
-
-        public float VisualRadius
-        {
-            get
-            {
-                return visualRadius;
-            }
-            set
-            {
-                visualRadius = value;
             }
         }
     }

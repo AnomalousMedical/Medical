@@ -39,6 +39,7 @@ namespace Medical
 
         private NavigationState destination;
         private NavigationButtons button;
+        private float visualRadius = 10.0f;
 
         public NavigationLink(NavigationState destination, NavigationButtons button)
         {
@@ -59,6 +60,18 @@ namespace Medical
             get
             {
                 return destination;
+            }
+        }
+
+        public float VisualRadius
+        {
+            get
+            {
+                return visualRadius;
+            }
+            set
+            {
+                visualRadius = value;
             }
         }
     }

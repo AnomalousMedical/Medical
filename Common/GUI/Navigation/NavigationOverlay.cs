@@ -141,7 +141,7 @@ namespace Medical
                 }
                  
                 navButton.Clicked += new NavigationButtonClicked(navButton_Clicked);
-                navButton.State = adjacent;
+                navButton.Link = link;
                 mainOverlay.add2d(navButton.PanelElement);
                 buttons.Add(navButton);
             }
@@ -181,7 +181,7 @@ namespace Medical
             {
                 foreach (NavigationButton button in buttons)
                 {
-                    Vector3 screenPos = window.getScreenPosition(button.State.LookAt + (button.State.Translation - button.State.LookAt).normalized() * button.State.VisualRadius);
+                    Vector3 screenPos = window.getScreenPosition(button.Link.Destination.LookAt + (button.Link.Destination.Translation - button.Link.Destination.LookAt).normalized() * button.Link.VisualRadius);
                     screenPos.x -= BUTTON_HALF_WIDTH;
                     screenPos.y -= BUTTON_HALF_HEIGHT;
                     if (screenPos.x < 0)
@@ -220,8 +220,8 @@ namespace Medical
 
         void navButton_Clicked(NavigationButton source)
         {
-            window.setNewPosition(source.State.Translation, source.State.LookAt);
-            setNavigationState(source.State);
+            window.setNewPosition(source.Link.Destination.Translation, source.Link.Destination.LookAt);
+            setNavigationState(source.Link.Destination);
         }
 
         void window_CameraCreated(DrawingWindow window)
@@ -273,7 +273,7 @@ namespace Medical
                             if (eventManager[NavigationEvents.ClickButton].FirstFrameDown)
                             {
                                 currentButton = button;
-                                Log.Debug("Clicking {0}.", button.State.Name);
+                                Log.Debug("Clicking {0}.", button.Link.Destination.Name);
                             }
                             else if (eventManager[NavigationEvents.ClickButton].FirstFrameUp && currentButton == button)
                             {
