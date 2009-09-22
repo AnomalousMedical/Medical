@@ -316,7 +316,7 @@ namespace Medical.Controller
 
         void statePicker_StateCreated(MedicalState state)
         {
-            stateController.addState(statePicker.CreatedState);
+            stateController.addState(state);
             stateGUI.CurrentBlend = stateController.getNumStates() - 1;
         }
 

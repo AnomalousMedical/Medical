@@ -20,7 +20,6 @@ namespace Medical.GUI
 
         private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
         int currentIndex = 0;
-        MedicalState createdState;
         private bool updatePanel = true;
         TemporaryStateBlender stateBlender;
 
@@ -54,10 +53,10 @@ namespace Medical.GUI
 
         public void startWizard()
         {
+            stateBlender.recordUndoState();
             hidePanel();
             currentIndex = 0;
             showPanel();
-            createdState = null;
         }
 
         public void setToDefault()
@@ -70,7 +69,7 @@ namespace Medical.GUI
 
         internal void showChanges(bool immediate)
         {
-            createdState = new MedicalState("Test");
+            MedicalState createdState = new MedicalState("Test");
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
@@ -137,7 +136,7 @@ namespace Medical.GUI
 
         private void finishButton_Click(object sender, EventArgs e)
         {
-            createdState = new MedicalState("Test");
+            MedicalState createdState = new MedicalState("Test");
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
@@ -152,6 +151,7 @@ namespace Medical.GUI
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            stateBlender.blendToUndo();
             this.Close();
         }
 
@@ -162,22 +162,6 @@ namespace Medical.GUI
                 hidePanel();
                 currentIndex = navigatorList.SelectedIndices[0];
                 showPanel();
-            }
-        }
-
-        public bool WizardFinished
-        {
-            get
-            {
-                return createdState != null;
-            }
-        }
-
-        public MedicalState CreatedState
-        {
-            get
-            {
-                return createdState;
             }
         }
 

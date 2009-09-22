@@ -10,8 +10,12 @@ using Medical.Properties;
 
 namespace Medical
 {
+    public delegate void NavigationControllerEvent(NavigationController controller);
+
     public class NavigationController
     {
+        public event NavigationControllerEvent NavigationStateSetChanged;
+
         private DrawingWindowController windowController;
         private EventManager eventManager;
         private UpdateTimer timer;
@@ -70,7 +74,14 @@ namespace Medical
             }
             set
             {
-                navigationSet = value;
+                if (navigationSet != value)
+                {
+                    navigationSet = value;
+                    if (NavigationStateSetChanged != null)
+                    {
+                        NavigationStateSetChanged.Invoke(this);
+                    }
+                }
             }
         }
 

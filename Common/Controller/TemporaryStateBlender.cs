@@ -14,6 +14,7 @@ namespace Medical
         private float currentBlend;
         private bool blending = false;
         MedicalStateController stateController;
+        private MedicalState undoState;
 
         public TemporaryStateBlender(UpdateTimer mainTimer, MedicalStateController stateController)
         {
@@ -33,6 +34,16 @@ namespace Medical
         public void stopBlend()
         {
             blending = false;
+        }
+
+        public void recordUndoState()
+        {
+            undoState = stateController.createState("Undo");
+        }
+
+        public void blendToUndo()
+        {
+            startTemporaryBlend(undoState);
         }
 
         #region UpdateListener Members
