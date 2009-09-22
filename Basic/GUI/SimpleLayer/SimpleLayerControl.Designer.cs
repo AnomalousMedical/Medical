@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleLayerControl));
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.showEminence = new System.Windows.Forms.CheckBox();
             this.skinSlider = new Medical.GUI.LayerSlider();
             this.muscleSlider = new Medical.GUI.LayerSlider();
             this.tmjSlider = new Medical.GUI.LayerSlider();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.showEminence = new System.Windows.Forms.CheckBox();
             this.skullSlider = new Medical.GUI.LayerSlider();
             this.mandibleSlider = new Medical.GUI.LayerSlider();
             this.hyoidSlider = new Medical.GUI.LayerSlider();
@@ -62,28 +63,6 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(117, 592);
             this.flowLayoutPanel2.TabIndex = 7;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.showEminence);
-            this.panel1.Controls.Add(this.skullSlider);
-            this.panel1.Location = new System.Drawing.Point(3, 183);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(111, 83);
-            this.panel1.TabIndex = 8;
-            // 
-            // showEminence
-            // 
-            this.showEminence.AutoSize = true;
-            this.showEminence.Checked = true;
-            this.showEminence.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showEminence.Location = new System.Drawing.Point(3, 64);
-            this.showEminence.Name = "showEminence";
-            this.showEminence.Size = new System.Drawing.Size(103, 17);
-            this.showEminence.TabIndex = 3;
-            this.showEminence.Text = "Show Eminence";
-            this.showEminence.UseVisualStyleBackColor = true;
-            this.showEminence.CheckedChanged += new System.EventHandler(this.showEminence_CheckedChanged);
-            // 
             // skinSlider
             // 
             this.skinSlider.LabelText = "Skin";
@@ -107,6 +86,28 @@
             this.tmjSlider.Name = "tmjSlider";
             this.tmjSlider.Size = new System.Drawing.Size(107, 54);
             this.tmjSlider.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.showEminence);
+            this.panel1.Controls.Add(this.skullSlider);
+            this.panel1.Location = new System.Drawing.Point(3, 183);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(111, 83);
+            this.panel1.TabIndex = 8;
+            // 
+            // showEminence
+            // 
+            this.showEminence.AutoSize = true;
+            this.showEminence.Checked = true;
+            this.showEminence.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEminence.Location = new System.Drawing.Point(3, 64);
+            this.showEminence.Name = "showEminence";
+            this.showEminence.Size = new System.Drawing.Size(103, 17);
+            this.showEminence.TabIndex = 3;
+            this.showEminence.Text = "Show Eminence";
+            this.showEminence.UseVisualStyleBackColor = true;
+            this.showEminence.CheckedChanged += new System.EventHandler(this.showEminence_CheckedChanged);
             // 
             // skullSlider
             // 
@@ -165,6 +166,7 @@
             this.Controls.Add(this.flowLayoutPanel2);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SimpleLayerControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Layers";
