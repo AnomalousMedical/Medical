@@ -33,9 +33,9 @@ namespace Medical.GUI
 
         }
 
-        protected void showChanges()
+        protected void showChanges(bool immediate)
         {
-            parentPicker.showChanges();
+            parentPicker.showChanges(immediate);
         }
     }
 }

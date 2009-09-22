@@ -30,7 +30,7 @@ namespace Medical.GUI
 
         void presetListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showChanges();
+            showChanges(false);
         }
 
         public void initialize(PresetStateSet presetStateSet)

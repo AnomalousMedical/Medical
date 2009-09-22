@@ -66,14 +66,21 @@ namespace Medical.GUI
             }
         }
 
-        internal void showChanges()
+        internal void showChanges(bool immediate)
         {
             createdState = new MedicalState("Test");
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
             }
-            stateBlender.startTemporaryBlend(createdState);
+            if (immediate)
+            {
+                createdState.blend(1.0f, createdState);
+            }
+            else
+            {
+                stateBlender.startTemporaryBlend(createdState);
+            }
         }
 
         private void showPanel()

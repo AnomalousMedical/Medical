@@ -28,7 +28,7 @@ namespace Medical.GUI
 
         void checkBox_CheckedChanged(object sender, EventArgs e)
         {
-            showChanges();
+            showChanges(true);
         }
 
         public override void applyToState(MedicalState state)
