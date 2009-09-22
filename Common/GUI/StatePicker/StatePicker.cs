@@ -11,10 +11,12 @@ using System.Resources;
 namespace Medical.GUI
 {
     public delegate void MedicalStateCreated(MedicalState state);
+    public delegate void StatePickerFinished();
 
     public partial class StatePicker : GUIElement
     {
         public event MedicalStateCreated StateCreated;
+        public event StatePickerFinished Finished;
 
         private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
         int currentIndex = 0;
@@ -182,6 +184,10 @@ namespace Medical.GUI
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
+            if (Finished != null)
+            {
+                Finished.Invoke();
+            }
             e.Cancel = true;
             this.Hide();
         }

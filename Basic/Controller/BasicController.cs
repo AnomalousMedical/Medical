@@ -102,12 +102,10 @@ namespace Medical.Controller
 
             //Configure view mode
             viewMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
-            //LayersControl layersControl = new LayersControl();
-            //guiElements.addGUIElement(layersControl);
 
-            //PictureControl pictureControl = new PictureControl();
-            //pictureControl.initialize(imageRenderer, drawingWindowController);
-            //guiElements.addGUIElement(pictureControl);
+            PictureControl pictureControl = new PictureControl();
+            pictureControl.initialize(imageRenderer, drawingWindowController);
+            viewMode.addGUIElement(pictureControl);
 
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController);
@@ -124,8 +122,6 @@ namespace Medical.Controller
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
             viewMode.addGUIElement(simpleLayer);
 
-            PredefinedLayerControl predefinedLayers = new PredefinedLayerControl();
-            viewMode.addGUIElement(predefinedLayers);
             viewMode.EnableToolbars = true;
 
             //Configure distort mode
@@ -320,9 +316,13 @@ namespace Medical.Controller
 
         void statePicker_StateCreated(MedicalState state)
         {
-            basicForm.SuspendLayout();
             stateController.addState(statePicker.CreatedState);
             stateGUI.CurrentBlend = stateController.getNumStates() - 1;
+        }
+
+        void statePicker_Finished()
+        {
+            basicForm.SuspendLayout();
             distortMode.hideWindows();
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
@@ -333,6 +333,7 @@ namespace Medical.Controller
         {
             statePicker.initialize(temporaryStateBlender);
             statePicker.StateCreated += statePicker_StateCreated;
+            statePicker.Finished += statePicker_Finished;
 
             //statePicker.addPresetStateSet(createGrowthSet("Left", "left"));
             //statePicker.addPresetStateSet(createGrowthSet("Right", "right"));

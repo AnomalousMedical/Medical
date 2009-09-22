@@ -101,6 +101,7 @@
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />
+    <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />
     <Compile Include="Controller\WindowsFormsUpdate.cs" />
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
@@ -194,13 +195,13 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\FossaStatePanel.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\FossaStatePanel.Designer.cs">
       <DependentUpon>FossaStatePanel.cs</DependentUpon>
