@@ -37,7 +37,6 @@ namespace Medical.GUI
         {
             using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
             {
-                this.Text = presetStateSet.Name;
                 foreach (PresetState state in presetStateSet.Presets)
                 {
                     ListViewGroup group;
@@ -76,6 +75,13 @@ namespace Medical.GUI
                     defaultItem = presetListView.Items[0];
                 }
             }
+        }
+
+        public void clear()
+        {
+            groups.Clear();
+            presetListView.Groups.Clear();
+            presetListView.Items.Clear();
         }
 
         public override void applyToState(MedicalState state)

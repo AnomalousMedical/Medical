@@ -46,6 +46,7 @@ namespace Medical.GUI
         public PresetStatePanel addPresetStateSet(PresetStateSet presetSet)
         {
             PresetStatePanel panel = new PresetStatePanel();
+            panel.Text = presetSet.Name;
             panel.initialize(presetSet);
             addStatePanel(panel);
             return panel;

@@ -52,9 +52,9 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.distortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.newDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.openDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.saveDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.saveDistortionAs = new System.Windows.Forms.ToolStripMenuItem();
@@ -177,14 +177,14 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.newToolStripMenuItem.Text = "Change Scene";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -201,13 +201,6 @@
             this.distortionToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.distortionToolStripMenuItem.Text = "Distortion";
             // 
-            // newDistortion
-            // 
-            this.newDistortion.Name = "newDistortion";
-            this.newDistortion.Size = new System.Drawing.Size(168, 22);
-            this.newDistortion.Text = "New";
-            this.newDistortion.Click += new System.EventHandler(this.newDistortion_Click);
-            // 
             // saveStateToolStripMenuItem
             // 
             this.saveStateToolStripMenuItem.Name = "saveStateToolStripMenuItem";
@@ -219,6 +212,13 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(165, 6);
+            // 
+            // newDistortion
+            // 
+            this.newDistortion.Name = "newDistortion";
+            this.newDistortion.Size = new System.Drawing.Size(168, 22);
+            this.newDistortion.Text = "New";
+            this.newDistortion.Click += new System.EventHandler(this.newDistortion_Click);
             // 
             // openDistortion
             // 
@@ -255,28 +255,28 @@
             // newSequence
             // 
             this.newSequence.Name = "newSequence";
-            this.newSequence.Size = new System.Drawing.Size(152, 22);
+            this.newSequence.Size = new System.Drawing.Size(123, 22);
             this.newSequence.Text = "New";
             this.newSequence.Click += new System.EventHandler(this.newSequence_Click);
             // 
             // openSequence
             // 
             this.openSequence.Name = "openSequence";
-            this.openSequence.Size = new System.Drawing.Size(152, 22);
+            this.openSequence.Size = new System.Drawing.Size(123, 22);
             this.openSequence.Text = "Open...";
             this.openSequence.Click += new System.EventHandler(this.openSequence_Click);
             // 
             // saveSequence
             // 
             this.saveSequence.Name = "saveSequence";
-            this.saveSequence.Size = new System.Drawing.Size(152, 22);
+            this.saveSequence.Size = new System.Drawing.Size(123, 22);
             this.saveSequence.Text = "Save";
             this.saveSequence.Click += new System.EventHandler(this.saveSequence_Click);
             // 
             // saveSequenceAs
             // 
             this.saveSequenceAs.Name = "saveSequenceAs";
-            this.saveSequenceAs.Size = new System.Drawing.Size(152, 22);
+            this.saveSequenceAs.Size = new System.Drawing.Size(123, 22);
             this.saveSequenceAs.Text = "Save As...";
             this.saveSequenceAs.Click += new System.EventHandler(this.saveSequenceAs_Click);
             // 
@@ -296,7 +296,7 @@
             this.threeWindowsToolStripMenuItem,
             this.fourWindowToolStripMenuItem});
             this.layoutToolStripMenuItem.Name = "layoutToolStripMenuItem";
-            this.layoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.layoutToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.layoutToolStripMenuItem.Text = "Layout";
             // 
             // oneWindowToolStripMenuItem
@@ -340,7 +340,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "AdvancedForm";
-            this.Text = "Articulometrics Advanced";
+            this.Text = "Articulometrics Research";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.toolStripContainer.ResumeLayout(false);
             this.toolStripContainer.PerformLayout();

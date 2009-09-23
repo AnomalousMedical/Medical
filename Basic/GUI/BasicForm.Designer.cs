@@ -304,7 +304,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BasicForm";
-            this.Text = "Articulometics Basic";
+            this.Text = "Articulometics Clinical";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer.TopToolStripPanel.PerformLayout();

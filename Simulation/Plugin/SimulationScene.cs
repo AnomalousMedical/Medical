@@ -12,6 +12,7 @@ namespace Medical
         private String name;
         private SimulationSceneFactory factory = new SimulationSceneFactory();
         private String cameraFile = "";
+        private String presetDirectory;
 
         public SimulationScene(String name)
         {
@@ -24,6 +25,7 @@ namespace Medical
         {
             SimulationSceneDefinition definition = new SimulationSceneDefinition(name);
             definition.CameraFile = cameraFile;
+            definition.PresetDirectory = presetDirectory;
             return definition;
         }
 
@@ -60,6 +62,18 @@ namespace Medical
             set
             {
                 cameraFile = value;
+            }
+        }
+
+        public String PresetDirectory
+        {
+            get
+            {
+                return presetDirectory;
+            }
+            set
+            {
+                presetDirectory = value;
             }
         }
 

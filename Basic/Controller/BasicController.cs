@@ -33,6 +33,11 @@ namespace Medical.Controller
         private NavigationController navigationController;
         private WatermarkController watermarkController;
         private TemporaryStateBlender temporaryStateBlender;
+        private PresetStatePanel leftGrowthPanel;
+        private PresetStatePanel rightGrowthPanel;
+        private PresetStatePanel leftDegenerationPanel;
+        private PresetStatePanel rightDegenerationPanel;
+        private String lastDistortionDirectory = "";
 
         /// <summary>
         /// Constructor.
@@ -297,6 +302,13 @@ namespace Medical.Controller
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 viewMode.alertGUISceneLoaded(medicalController.CurrentScene);
                 navigationController.NavigationSet = TEMP_createNavigationState(drawingWindowController.SceneCameras);
+
+                SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+                if (defaultScene != null)
+                {
+                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
+                }
                 return true;
             }
             else
@@ -343,21 +355,21 @@ namespace Medical.Controller
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", Resource.ResourceRoot + "/Presets/LeftGrowth");
-            loadPresetSet(leftGrowth);
-            statePicker.addPresetStateSet(leftGrowth);
+            leftGrowthPanel = new PresetStatePanel();
+            leftGrowthPanel.Text = "Left Condyle Growth";
+            statePicker.addStatePanel(leftGrowthPanel);
 
-            PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", Resource.ResourceRoot + "/Presets/RightGrowth");
-            loadPresetSet(rightGrowth);
-            statePicker.addPresetStateSet(rightGrowth);
+            rightGrowthPanel = new PresetStatePanel();
+            rightGrowthPanel.Text = "Right Condyle Growth";
+            statePicker.addStatePanel(rightGrowthPanel);
 
-            PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", Resource.ResourceRoot + "/Presets/LeftDegeneration");
-            loadPresetSet(leftDegeneration);
-            statePicker.addPresetStateSet(leftDegeneration);
+            leftDegenerationPanel = new PresetStatePanel();
+            leftDegenerationPanel.Text = "Left Condyle Degeneration";
+            statePicker.addStatePanel(leftDegenerationPanel);
 
-            PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", Resource.ResourceRoot + "/Presets/RightDegeneration");
-            loadPresetSet(rightDegeneration);
-            statePicker.addPresetStateSet(rightDegeneration);
+            rightDegenerationPanel = new PresetStatePanel();
+            rightDegenerationPanel.Text = "Right Condyle Degeneration";
+            statePicker.addStatePanel(rightDegenerationPanel);
 
             statePicker.addStatePanel(new DiscSpacePanel());
             statePicker.addStatePanel(new FossaStatePanel());
@@ -365,6 +377,29 @@ namespace Medical.Controller
             statePicker.setToDefault();
 
             distortMode.addGUIElement(statePicker);
+        }
+        
+        private void updateStatePicker(String rootDirectory)
+        {
+            PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", rootDirectory + "/LeftGrowth");
+            loadPresetSet(leftGrowth);
+            leftGrowthPanel.clear();
+            leftGrowthPanel.initialize(leftGrowth);
+
+            PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", rootDirectory + "/RightGrowth");
+            loadPresetSet(rightGrowth);
+            rightGrowthPanel.clear();
+            rightGrowthPanel.initialize(rightGrowth);
+
+            PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", rootDirectory + "/LeftDegeneration");
+            loadPresetSet(leftDegeneration);
+            leftDegenerationPanel.clear();
+            leftDegenerationPanel.initialize(leftDegeneration);
+
+            PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", rootDirectory + "/RightDegeneration");
+            loadPresetSet(rightDegeneration);
+            rightDegenerationPanel.clear();
+            rightDegenerationPanel.initialize(rightDegeneration);
         }
 
         private void loadPresetSet(PresetStateSet presetStateSet)

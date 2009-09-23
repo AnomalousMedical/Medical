@@ -18,7 +18,6 @@ namespace Medical.GUI
             this.backgroundImage = backgroundImage;
             this.ProgressMaximum = 100;
             this.ProgressMinimum = 0;
-            this.TopMost = true;
         }
 
         public void fadeIn()
