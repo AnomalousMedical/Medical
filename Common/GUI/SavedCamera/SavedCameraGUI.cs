@@ -13,9 +13,10 @@ namespace Medical.GUI
 {
     public partial class SavedCameraGUI : GUIElement
     {
-        private DrawingWindowController drawingWindowController;
         private ListViewGroup predefined = new ListViewGroup("Predefined");
         private ListViewGroup userDefined = new ListViewGroup("User Defined");
+        private SavedCameraController userCameras;
+        private DrawingWindowController windowController;
 
         public SavedCameraGUI()
         {
@@ -26,42 +27,15 @@ namespace Medical.GUI
             cameraNameList.Groups.Add(userDefined);
         }
 
-        public void initialize(DrawingWindowController drawingWindowController)
+        public void initialize(DrawingWindowController windowController, String camerasFile)
         {
-            this.drawingWindowController = drawingWindowController;
-            //foreach (String name in PredefinedCameraController.getCameraNameList())
-            //{
-            //    ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-            //    item.Group = defaultGroup;
-            //}
-            //foreach (String name in drawingWindowController.getSavedCameraNames())
-            //{
-            //    ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-            //    item.Group = userDefined;
-            //}
+            this.windowController = windowController;
+            userCameras = new SavedCameraController(camerasFile);
         }
 
         protected override void sceneLoaded(SimScene scene)
         {
-            //SimSubScene defaultScene = scene.getDefaultSubScene();
-            //if (defaultScene != null)
-            //{
-            //    SimulationScene simScene = defaultScene.getSimElementManager<SimulationScene>();
-            //    if (simScene != null)
-            //    {
-            //        foreach (PredefinedCamera camera in simScene.getPredefinedCameras())
-            //        {
-            //            ListViewItem item = cameraNameList.Items.Add(camera.Name, camera.Name, 0);
-            //            item.Group = predefined;
-            //        }
-            //    }
-            //}
-            foreach (String name in drawingWindowController.getSceneCameraNames())
-            {
-                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-                item.Group = predefined;
-            }
-            foreach (String name in drawingWindowController.getSavedCameraNames())
+            foreach (String name in userCameras.getSavedCameraNames())
             {
                 ListViewItem item = cameraNameList.Items.Add(name, name, 0);
                 item.Group = userDefined;
@@ -90,12 +64,14 @@ namespace Medical.GUI
             InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm(), validateSaveCameraName);
             if (result.ok)
             {
-                drawingWindowController.saveCamera(result.text);
+                DrawingWindowHost currentWindow = windowController.getActiveWindow();
+                userCameras.addOrUpdateSavedCamera(new SavedCameraDefinition(result.text, currentWindow.DrawingWindow.Translation, currentWindow.DrawingWindow.LookAt));
                 if (!cameraNameList.Items.ContainsKey(result.text))
                 {
                     ListViewItem item = cameraNameList.Items.Add(result.text, result.text, 0);
                     item.Group = userDefined;
                 }
+                userCameras.saveCameras();
             }
         }
 
@@ -139,11 +115,12 @@ namespace Medical.GUI
                 ListViewItem item = cameraNameList.SelectedItems[0];
                 if (item.Group == predefined)
                 {
-                    drawingWindowController.restorePredefinedCamera(item.Text);
+                    
                 }
                 else
                 {
-                    drawingWindowController.restoreSavedCamera(item.Text);
+                    SavedCameraDefinition def = userCameras.getSavedCamera(item.Text);
+                    windowController.getActiveWindow().DrawingWindow.setCamera(def.Position, def.LookAt);
                 }
             }
         }
@@ -153,7 +130,7 @@ namespace Medical.GUI
             if (cameraNameList.SelectedItems.Count > 0)
             {
                 String selectedItem = cameraNameList.SelectedItems[0].Text;
-                if (drawingWindowController.destroySavedCamera(selectedItem))
+                if (userCameras.removeSavedCamera(selectedItem))
                 {
                     cameraNameList.Items.RemoveByKey(selectedItem);
                 }

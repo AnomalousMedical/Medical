@@ -79,7 +79,7 @@ namespace Medical.Controller
 
             splashScreen.stepProgress(10);
 
-            drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
+            drawingWindowController = new DrawingWindowController();
             drawingWindowController.initialize(developerForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
@@ -101,7 +101,7 @@ namespace Medical.Controller
             guiElements.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController);
+            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile);
             guiElements.addGUIElement(savedCameraGUI);
 
             scenePicker.initialize();
@@ -140,7 +140,7 @@ namespace Medical.Controller
 
             if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
-                drawingWindowController.createOneWaySplit();
+                setOneWindowLayout();
             }
 
             createNewSequence();
@@ -160,7 +160,6 @@ namespace Medical.Controller
         {
             medicalController.shutdown();
             guiElements.saveWindowFile(MedicalConfig.WindowsFile);
-            drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }
 
@@ -186,22 +185,26 @@ namespace Medical.Controller
 
         public void setOneWindowLayout()
         {
-            drawingWindowController.createOneWaySplit();
+            DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet();
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            oneWindow.addPreset(preset);
+
+            drawingWindowController.createFromPresets(oneWindow);
         }
 
         public void setTwoWindowLayout()
         {
-            drawingWindowController.createTwoWaySplit();
+            
         }
 
         public void setThreeWindowLayout()
         {
-            drawingWindowController.createThreeWayUpperSplit();
+            
         }
 
         public void setFourWindowLayout()
         {
-            drawingWindowController.createFourWaySplit();
+            
         }
 
         /// <summary>

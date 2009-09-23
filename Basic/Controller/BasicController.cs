@@ -90,7 +90,7 @@ namespace Medical.Controller
 
             splashScreen.stepProgress(10);
 
-            drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
+            drawingWindowController = new DrawingWindowController();
             drawingWindowController.AllowRotation = false;
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
@@ -120,7 +120,7 @@ namespace Medical.Controller
             viewMode.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController);
+            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile);
             viewMode.addGUIElement(savedCameraGUI);
 
             //Add specific gui elements
@@ -142,7 +142,7 @@ namespace Medical.Controller
 
             if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
-                drawingWindowController.createOneWaySplit();
+                setOneWindowLayout();
             }
 
             options = new Options();
@@ -162,7 +162,6 @@ namespace Medical.Controller
         {
             medicalController.shutdown();
             viewMode.saveWindowFile(MedicalConfig.WindowsFile);
-            drawingWindowController.saveCameraFile();
             drawingWindowController.destroyCameras();
         }
 
@@ -208,22 +207,26 @@ namespace Medical.Controller
 
         public void setOneWindowLayout()
         {
-            drawingWindowController.createOneWaySplit();
+            DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet();
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            oneWindow.addPreset(preset);
+
+            drawingWindowController.createFromPresets(oneWindow);
         }
 
         public void setTwoWindowLayout()
         {
-            drawingWindowController.createTwoWaySplit();
+            
         }
 
         public void setThreeWindowLayout()
         {
-            drawingWindowController.createThreeWayUpperSplit();
+            
         }
 
         public void setFourWindowLayout()
         {
-            drawingWindowController.createFourWaySplit();
+            
         }
 
         public void saveMedicalState(String filename)
@@ -301,12 +304,12 @@ namespace Medical.Controller
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 viewMode.alertGUISceneLoaded(medicalController.CurrentScene);
-                navigationController.NavigationSet = TEMP_createNavigationState(drawingWindowController.SceneCameras);
 
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    navigationController.NavigationSet = TEMP_createNavigationState(medicalScene);
                     updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                 }
                 return true;
@@ -424,8 +427,10 @@ namespace Medical.Controller
             }
         }
 
-        private static NavigationStateSet TEMP_createNavigationState(SavedCameraController sceneCameras)
+        private NavigationStateSet TEMP_createNavigationState(SimulationScene medicalScene)
         {
+            SavedCameraController sceneCameras = new SavedCameraController(medicalController.CurrentSceneDirectory + '/' + medicalScene.CameraFile);
+
             NavigationStateSet navigationSet = new NavigationStateSet();
             foreach (SavedCameraDefinition def in sceneCameras.getSavedCameras())
             {

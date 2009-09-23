@@ -26,15 +26,13 @@ namespace Medical
         private SimScene scene;
         private EventManager eventManager;
         private RendererPlugin rendererPlugin;
-        private SavedCameraController userCameras;
-        private SavedCameraController sceneCameras = new SavedCameraController();
         private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
         private bool allowRotation = true;
 
-        public DrawingWindowController(String camerasFile)
+        public DrawingWindowController()
         {
-            userCameras = new SavedCameraController(camerasFile);
+            
         }
 
         public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
@@ -82,152 +80,17 @@ namespace Medical
             }
         }
 
-        public void createFourWaySplit()
+        public void createFromPresets(DrawingWindowPresetSet presets)
         {
-            CameraSection cameraSection = MedicalConfig.CameraSection;
-            SavedCameraDefinition camera;
             closeAllWindows();
-
-            DrawingWindowHost camera1;
-            if (sceneCameras.hasSavedCamera("Front"))
+            foreach(DrawingWindowPreset preset in presets.getPresetEnum())
             {
-                camera = sceneCameras.getSavedCamera("Front");
-                camera1 = addCamera("Camera 1", camera.Position, camera.LookAt);
+                DrawingWindowHost camera = addCamera(preset.Name, preset.Position, preset.LookAt);
             }
-            else
+            foreach (DrawingWindowHost host in cameras)
             {
-                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
+                host.Show(dock);
             }
-            camera1.Show(dock);
-
-            DrawingWindowHost camera2;
-            if (sceneCameras.hasSavedCamera("Back"))
-            {
-                camera = sceneCameras.getSavedCamera("Back");
-                camera2 = addCamera("Camera 2", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
-            }
-            camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
-
-            DrawingWindowHost camera3;
-            if (sceneCameras.hasSavedCamera("Right"))
-            {
-                camera = sceneCameras.getSavedCamera("Right");
-                camera3 = addCamera("Camera 3", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
-            }
-            camera3.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
-
-            DrawingWindowHost camera4;
-            if (sceneCameras.hasSavedCamera("Left"))
-            {
-                camera = sceneCameras.getSavedCamera("Left");
-                camera4 = addCamera("Camera 4", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera4 = addCamera("Camera 4", cameraSection.LeftCameraPosition, cameraSection.LeftCameraLookAt);
-            }
-            camera4.Show(camera2.Pane, DockAlignment.Bottom, 0.5);
-        }
-
-        public void createThreeWayUpperSplit()
-        {
-            CameraSection cameraSection = MedicalConfig.CameraSection;
-            SavedCameraDefinition camera;
-            closeAllWindows();
-
-            DrawingWindowHost camera1;
-            if (sceneCameras.hasSavedCamera("Front"))
-            {
-                camera = sceneCameras.getSavedCamera("Front");
-                camera1 = addCamera("Camera 1", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            }
-            camera1.Show(dock);
-
-            DrawingWindowHost camera2;
-            if (sceneCameras.hasSavedCamera("Back"))
-            {
-                camera = sceneCameras.getSavedCamera("Back");
-                camera2 = addCamera("Camera 2", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
-            }
-            camera2.Show(camera1.Pane, DockAlignment.Bottom, 0.5);
-
-            DrawingWindowHost camera3;
-            if (sceneCameras.hasSavedCamera("Right"))
-            {
-                camera = sceneCameras.getSavedCamera("Right");
-                camera3 = addCamera("Camera 3", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera3 = addCamera("Camera 3", cameraSection.RightCameraPosition, cameraSection.RightCameraLookAt);
-            }
-            camera3.Show(camera2.Pane, DockAlignment.Right, 0.5);
-        }
-
-        public void createTwoWaySplit()
-        {
-            CameraSection cameraSection = MedicalConfig.CameraSection;
-            SavedCameraDefinition camera;
-            closeAllWindows();
-
-            DrawingWindowHost camera1;
-            if (sceneCameras.hasSavedCamera("Front"))
-            {
-                camera = sceneCameras.getSavedCamera("Front");
-                camera1 = addCamera("Camera 1", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            }
-            camera1.Show(dock);
-
-            DrawingWindowHost camera2;
-            if (sceneCameras.hasSavedCamera("Back"))
-            {
-                camera = sceneCameras.getSavedCamera("Back");
-                camera2 = addCamera("Camera 2", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera2 = addCamera("Camera 2", cameraSection.BackCameraPosition, cameraSection.BackCameraLookAt);
-            }
-            camera2.Show(camera1.Pane, DockAlignment.Right, 0.5);
-        }
-
-        public void createOneWaySplit()
-        {
-            CameraSection cameraSection = MedicalConfig.CameraSection;
-            SavedCameraDefinition camera;
-            closeAllWindows();
-
-            DrawingWindowHost camera1;
-            if (sceneCameras.hasSavedCamera("Front"))
-            {
-                camera = sceneCameras.getSavedCamera("Front");
-                camera1 = addCamera("Camera 1", camera.Position, camera.LookAt);
-            }
-            else
-            {
-                camera1 = addCamera("Camera 1", cameraSection.FrontCameraPosition, cameraSection.FrontCameraLookAt);
-            }
-            camera1.Show(dock);
         }
 
         public DrawingWindowHost createDrawingWindowHost(String name, Vector3 translation, Vector3 lookAt)
@@ -248,12 +111,6 @@ namespace Medical
 
         public void createCameras(UpdateTimer mainTimer, SimScene scene, String sceneDirectory)
         {
-            SimSubScene defaultScene = scene.getDefaultSubScene();
-            if (defaultScene != null)
-            {
-                SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                sceneCameras.changeBackingFile(sceneDirectory + '/' + medicalScene.CameraFile);
-            }
             foreach (DrawingWindowHost host in cameras)
             {
                 host.DrawingWindow.createCamera(mainTimer, scene);
@@ -272,66 +129,9 @@ namespace Medical
             showStatsActive = show;
         }
 
-        public void restoreSavedCamera(String cameraName)
-        {
-            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
-            if (activeWindow != null && userCameras.hasSavedCamera(cameraName))
-            {
-                SavedCameraDefinition cameraDef = userCameras.getSavedCamera(cameraName);
-                activeWindow.DrawingWindow.setCamera(cameraDef.Position, cameraDef.LookAt);
-            }
-        }
-
-        public void restorePredefinedCamera(String cameraName)
-        {
-            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
-            if (activeWindow != null && sceneCameras.hasSavedCamera(cameraName))
-            {
-                SavedCameraDefinition camera = sceneCameras.getSavedCamera(cameraName);
-                activeWindow.DrawingWindow.setCamera(camera.Position, camera.LookAt);
-            }
-        }
-
         public DrawingWindowHost getActiveWindow()
         {
             return activeDrawingWindow;
-        }
-
-        public IEnumerable<String> getSavedCameraNames()
-        {
-            return userCameras.getSavedCameraNames();
-        }
-
-        public IEnumerable<String> getSceneCameraNames()
-        {
-            return sceneCameras.getSavedCameraNames();
-        }
-
-        public bool saveCamera(String name)
-        {
-            DrawingWindowHost activeWindow = dock.ActiveDocument as DrawingWindowHost;
-            if (activeWindow != null)
-            {
-                SavedCameraDefinition cam = new SavedCameraDefinition(name, activeWindow.DrawingWindow.Translation, activeWindow.DrawingWindow.LookAt);
-                userCameras.addOrUpdateSavedCamera(cam);
-                return true;
-            }
-            return false;
-        }
-
-        public bool destroySavedCamera(String name)
-        {
-            return userCameras.removeSavedCamera(name);
-        }
-
-        public bool hasSavedCamera(String name)
-        {
-            return userCameras.hasSavedCamera(name);
-        }
-
-        public void saveCameraFile()
-        {
-            userCameras.saveCameras();
         }
 
         internal void _alertCameraDestroyed(DrawingWindowHost host)
@@ -361,14 +161,6 @@ namespace Medical
             set
             {
                 allowRotation = value;
-            }
-        }
-
-        public SavedCameraController SceneCameras
-        {
-            get
-            {
-                return sceneCameras;
             }
         }
 
