@@ -90,7 +90,7 @@ namespace Medical.Controller
 
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "FileSystem", "Watermark", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             //Watermark watermark = new TiledWatermark("Source" + "Watermark", "Watermark", 150, 60);
             //Watermark watermark = new TextWatermark("Source" + "Watermark", "Piper Clinic Copyright 2009", 32);
