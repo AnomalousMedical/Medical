@@ -327,7 +327,9 @@ namespace Medical.Controller
                 SavedMedicalStates states = saver.restoreObject(textReader) as SavedMedicalStates;
                 if (states != null)
                 {
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     stateController.setStates(states);
+                    stateController.blend(0.0f);
                 }
             }
             finally
