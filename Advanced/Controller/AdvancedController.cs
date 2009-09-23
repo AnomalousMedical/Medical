@@ -123,10 +123,6 @@ namespace Medical.Controller
             FossaControl fossaControl = new FossaControl();
             guiElements.addGUIElement(fossaControl);
 
-            BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
-            bonePresetSaver.initialize(imageRenderer, stateController);
-            guiElements.addGUIElement(bonePresetSaver);
-
             movementState = new MovementStateControl();
             guiElements.addGUIElement(movementState);
 
