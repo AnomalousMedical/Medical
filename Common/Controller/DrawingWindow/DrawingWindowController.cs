@@ -9,6 +9,7 @@ using Engine.Platform;
 using Engine.Renderer;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.GUI;
+using Logging;
 
 namespace Medical
 {
@@ -19,7 +20,7 @@ namespace Medical
         public event DrawingWindowEvent WindowCreated;
         public event DrawingWindowEvent WindowDestroyed;
 
-        private List<DrawingWindowHost> cameras = new List<DrawingWindowHost>();
+        private Dictionary<String, DrawingWindowHost> cameras = new Dictionary<String, DrawingWindowHost>();
         private bool camerasActive = false;
         private bool showStatsActive = false;
         private UpdateTimer mainTimer;
@@ -35,6 +36,15 @@ namespace Medical
             
         }
 
+        public void Dispose()
+        {
+            foreach (DrawingWindowHost host in cameras.Values)
+            {
+                host.DrawingWindow.Dispose();
+                host.Dispose();
+            }
+        }
+
         public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
             this.dock = dock;
@@ -43,38 +53,9 @@ namespace Medical
             this.rendererPlugin = rendererPlugin;
         }
 
-        void dock_ActiveDocumentChanged(object sender, EventArgs e)
-        {
-            DrawingWindowHost changed = dock.ActiveDocument as DrawingWindowHost;
-            if (changed != null)
-            {
-                activeDrawingWindow = changed;
-            }
-        }
-
-        private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
-        {
-            DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
-            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
-            cameraHost.DrawingWindow.AllowRotation = allowRotation;
-            cameras.Add(cameraHost);
-            
-            if (WindowCreated != null)
-            {
-                WindowCreated.Invoke(cameraHost.DrawingWindow);
-            }
-            
-            if (camerasActive)
-            {
-                cameraHost.DrawingWindow.createCamera(mainTimer, scene);
-            }
-            cameraHost.DrawingWindow.showStats(showStatsActive);
-            return cameraHost;
-        }
-
         public void recreateAllWindows()
         {
-            foreach (DrawingWindowHost host in cameras)
+            foreach (DrawingWindowHost host in cameras.Values)
             {
                 host.DrawingWindow.recreateWindow();
             }
@@ -83,13 +64,46 @@ namespace Medical
         public void createFromPresets(DrawingWindowPresetSet presets)
         {
             closeAllWindows();
+            DrawingWindowHost camera;
             foreach(DrawingWindowPreset preset in presets.getPresetEnum())
             {
-                DrawingWindowHost camera = addCamera(preset.Name, preset.Position, preset.LookAt);
+                camera = addCamera(preset.Name, preset.Position, preset.LookAt);
             }
-            foreach (DrawingWindowHost host in cameras)
+            DrawingWindowHost parent;
+            foreach (DrawingWindowPreset preset in presets.getPresetEnum())
             {
-                host.Show(dock);
+                camera = cameras[preset.Name];
+                parent = null;
+                if (preset.ParentWindow != null)
+                {
+                    cameras.TryGetValue(preset.ParentWindow, out parent);
+                    if (parent == null)
+                    {
+                        Log.Warning("Could not find parent window {0} for window {1}.", preset.ParentWindow, preset.Name);
+                    }
+                }
+                if (parent == null)
+                {
+                    camera.Show(dock);
+                }
+                else
+                {
+                    switch (preset.WindowPosition)
+                    {
+                        case DrawingWindowPosition.Bottom:
+                            camera.Show(parent.Pane, DockAlignment.Bottom, 0.5);
+                            break;
+                        case DrawingWindowPosition.Top:
+                            camera.Show(parent.Pane, DockAlignment.Top, 0.5);
+                            break;
+                        case DrawingWindowPosition.Left:
+                            camera.Show(parent.Pane, DockAlignment.Left, 0.5);
+                            break;
+                        case DrawingWindowPosition.Right:
+                            camera.Show(parent.Pane, DockAlignment.Right, 0.5);
+                            break;
+                    }
+                }
             }
         }
 
@@ -100,7 +114,7 @@ namespace Medical
 
         public void destroyCameras()
         {
-            foreach (DrawingWindowHost host in cameras)
+            foreach (DrawingWindowHost host in cameras.Values)
             {
                 host.DrawingWindow.destroyCamera();
             }
@@ -111,7 +125,7 @@ namespace Medical
 
         public void createCameras(UpdateTimer mainTimer, SimScene scene, String sceneDirectory)
         {
-            foreach (DrawingWindowHost host in cameras)
+            foreach (DrawingWindowHost host in cameras.Values)
             {
                 host.DrawingWindow.createCamera(mainTimer, scene);
             }
@@ -122,7 +136,7 @@ namespace Medical
 
         public void showStats(bool show)
         {
-            foreach (DrawingWindowHost host in cameras)
+            foreach (DrawingWindowHost host in cameras.Values)
             {
                 host.DrawingWindow.showStats(show);
             }
@@ -132,24 +146,6 @@ namespace Medical
         public DrawingWindowHost getActiveWindow()
         {
             return activeDrawingWindow;
-        }
-
-        internal void _alertCameraDestroyed(DrawingWindowHost host)
-        {
-            if (WindowDestroyed != null)
-            {
-                WindowDestroyed.Invoke(host.DrawingWindow);
-            }
-            cameras.Remove(host);
-        }
-
-        private void closeAllWindows()
-        {
-            List<DrawingWindowHost> listCopy = new List<DrawingWindowHost>(cameras);
-            foreach (DrawingWindowHost host in listCopy)
-            {
-                host.Close();
-            }
         }
 
         public bool AllowRotation
@@ -164,17 +160,51 @@ namespace Medical
             }
         }
 
-        #region IDisposable Members
-
-        public void Dispose()
+        internal void _alertCameraDestroyed(DrawingWindowHost host)
         {
-            foreach (DrawingWindowHost host in cameras)
+            if (WindowDestroyed != null)
             {
-                host.DrawingWindow.Dispose();
-                host.Dispose();
+                WindowDestroyed.Invoke(host.DrawingWindow);
+            }
+            cameras.Remove(host.DrawingWindow.CameraName);
+        }
+
+        private void dock_ActiveDocumentChanged(object sender, EventArgs e)
+        {
+            DrawingWindowHost changed = dock.ActiveDocument as DrawingWindowHost;
+            if (changed != null)
+            {
+                activeDrawingWindow = changed;
             }
         }
 
-        #endregion
+        private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
+        {
+            DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
+            cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
+            cameraHost.DrawingWindow.AllowRotation = allowRotation;
+            cameras.Add(cameraHost.DrawingWindow.CameraName, cameraHost);
+
+            if (WindowCreated != null)
+            {
+                WindowCreated.Invoke(cameraHost.DrawingWindow);
+            }
+
+            if (camerasActive)
+            {
+                cameraHost.DrawingWindow.createCamera(mainTimer, scene);
+            }
+            cameraHost.DrawingWindow.showStats(showStatsActive);
+            return cameraHost;
+        }
+
+        private void closeAllWindows()
+        {
+            List<DrawingWindowHost> listCopy = new List<DrawingWindowHost>(cameras.Values);
+            foreach (DrawingWindowHost host in listCopy)
+            {
+                host.Close();
+            }
+        }
     }
 }

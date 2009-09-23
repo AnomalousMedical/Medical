@@ -194,17 +194,59 @@ namespace Medical.Controller
 
         public void setTwoWindowLayout()
         {
-            
+            DrawingWindowPresetSet twoWindows = new DrawingWindowPresetSet();
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            twoWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = DrawingWindowPosition.Right;
+            twoWindows.addPreset(preset);
+
+            drawingWindowController.createFromPresets(twoWindows);
         }
 
         public void setThreeWindowLayout()
         {
-            
+            DrawingWindowPresetSet threeWindows = new DrawingWindowPresetSet();
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            threeWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = DrawingWindowPosition.Bottom;
+            threeWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 2";
+            preset.WindowPosition = DrawingWindowPosition.Right;
+            threeWindows.addPreset(preset);
+
+            drawingWindowController.createFromPresets(threeWindows);
         }
 
         public void setFourWindowLayout()
         {
-            
+            DrawingWindowPresetSet fourWindows = new DrawingWindowPresetSet();
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            fourWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = DrawingWindowPosition.Right;
+            fourWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = DrawingWindowPosition.Bottom;
+            fourWindows.addPreset(preset);
+
+            preset = new DrawingWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 2";
+            preset.WindowPosition = DrawingWindowPosition.Bottom;
+            fourWindows.addPreset(preset);
+
+            drawingWindowController.createFromPresets(fourWindows);
         }
 
         /// <summary>
