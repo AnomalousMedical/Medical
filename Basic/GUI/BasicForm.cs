@@ -127,7 +127,7 @@ namespace Medical.GUI
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.openDefaultScene();
+            controller.newScene();
         }
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)

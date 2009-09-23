@@ -38,6 +38,7 @@ namespace Medical.Controller
         private PresetStatePanel leftDegenerationPanel;
         private PresetStatePanel rightDegenerationPanel;
         private String lastDistortionDirectory = "";
+        private ScenePicker scenePicker;
 
         /// <summary>
         /// Constructor.
@@ -71,6 +72,10 @@ namespace Medical.Controller
             if (medicalController != null)
             {
                 medicalController.Dispose();
+            }
+            if (scenePicker != null)
+            {
+                scenePicker.Dispose();
             }
         }
 
@@ -123,6 +128,9 @@ namespace Medical.Controller
             savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
             viewMode.addGUIElement(savedCameraGUI);
 
+            scenePicker = new ScenePicker();
+            scenePicker.initialize();
+
             //Add specific gui elements
             MuscleControl muscleControl = new MuscleControl();
             viewMode.addGUIElement(muscleControl);
@@ -172,6 +180,16 @@ namespace Medical.Controller
         {
             changeScene(MedicalConfig.DefaultScene);
             stateController.clearStates();
+        }
+
+        public void newScene()
+        {
+            scenePicker.ShowDialog(basicForm);
+            if (scenePicker.DialogResult == DialogResult.OK)
+            {
+                changeScene(scenePicker.SelectedFileName);
+                stateController.clearStates();
+            }
         }
 
         /// <summary>

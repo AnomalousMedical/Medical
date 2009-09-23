@@ -30,7 +30,7 @@ namespace Medical.Controller
         private XmlSaver saver = new XmlSaver();
         private ImageRenderer imageRenderer;
         private MovementStateControl movementState;
-        private ScenePicker scenePicker = new ScenePicker();
+        private ScenePicker scenePicker;
 
         /// <summary>
         /// Constructor.
@@ -104,6 +104,7 @@ namespace Medical.Controller
             savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, null);
             guiElements.addGUIElement(savedCameraGUI);
 
+            scenePicker = new ScenePicker();
             scenePicker.initialize();
 
             //Add specific gui elements
