@@ -120,7 +120,7 @@ namespace Medical.Controller
             viewMode.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile);
+            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
             viewMode.addGUIElement(savedCameraGUI);
 
             //Add specific gui elements

@@ -101,7 +101,7 @@ namespace Medical.Controller
             guiElements.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile);
+            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, null);
             guiElements.addGUIElement(savedCameraGUI);
 
             scenePicker.initialize();

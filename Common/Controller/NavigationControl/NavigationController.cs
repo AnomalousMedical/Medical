@@ -41,6 +41,16 @@ namespace Medical
             return null;
         }
 
+        public void setNavigationState(String name, DrawingWindow window)
+        {
+            NavigationState state = getState(name);
+            if (state != null)
+            {
+                window.setCamera(state.Translation, state.LookAt);
+                overlays[window].setNavigationState(state);
+            }
+        }
+
         public NavigationState findClosestState(Vector3 position)
         {
             if (navigationSet != null)

@@ -17,6 +17,7 @@ namespace Medical.GUI
         private ListViewGroup userDefined = new ListViewGroup("User Defined");
         private SavedCameraController userCameras;
         private DrawingWindowController windowController;
+        private NavigationController navigation;
 
         public SavedCameraGUI()
         {
@@ -27,10 +28,15 @@ namespace Medical.GUI
             cameraNameList.Groups.Add(userDefined);
         }
 
-        public void initialize(DrawingWindowController windowController, String camerasFile)
+        public void initialize(DrawingWindowController windowController, String camerasFile, NavigationController navigation)
         {
             this.windowController = windowController;
             userCameras = new SavedCameraController(camerasFile);
+            if (navigation != null)
+            {
+                this.navigation = navigation;
+                navigation.NavigationStateSetChanged += navigation_NavigationStateSetChanged;
+            }
         }
 
         protected override void sceneLoaded(SimScene scene)
@@ -49,6 +55,15 @@ namespace Medical.GUI
             base.sceneUnloading();
         }
 
+        void navigation_NavigationStateSetChanged(NavigationController controller)
+        {
+            foreach (String name in controller.NavigationSet.StateNames)
+            {
+                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+                item.Group = predefined;
+            }
+        }
+
         private void activateButton_Click(object sender, EventArgs e)
         {
             activateSelectedCamera();
@@ -57,22 +72,6 @@ namespace Medical.GUI
         private void deleteCameraButton_Click(object sender, EventArgs e)
         {
             deleteSelectedCamera();
-        }
-
-        private void saveCameraButton_Click(object sender, EventArgs e)
-        {
-            InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm(), validateSaveCameraName);
-            if (result.ok)
-            {
-                DrawingWindowHost currentWindow = windowController.getActiveWindow();
-                userCameras.addOrUpdateSavedCamera(new SavedCameraDefinition(result.text, currentWindow.DrawingWindow.Translation, currentWindow.DrawingWindow.LookAt));
-                if (!cameraNameList.Items.ContainsKey(result.text))
-                {
-                    ListViewItem item = cameraNameList.Items.Add(result.text, result.text, 0);
-                    item.Group = userDefined;
-                }
-                userCameras.saveCameras();
-            }
         }
 
         private bool validateSaveCameraName(string input, out string error)
@@ -115,13 +114,29 @@ namespace Medical.GUI
                 ListViewItem item = cameraNameList.SelectedItems[0];
                 if (item.Group == predefined)
                 {
-                    
+                    navigation.setNavigationState(item.Text, windowController.getActiveWindow().DrawingWindow);
                 }
                 else
                 {
                     SavedCameraDefinition def = userCameras.getSavedCamera(item.Text);
                     windowController.getActiveWindow().DrawingWindow.setCamera(def.Position, def.LookAt);
                 }
+            }
+        }
+
+        private void saveCameraButton_Click(object sender, EventArgs e)
+        {
+            InputResult result = InputBox.GetInput("Save Camera", "Enter a name for the saved camera.", this.FindForm(), validateSaveCameraName);
+            if (result.ok)
+            {
+                DrawingWindowHost currentWindow = windowController.getActiveWindow();
+                userCameras.addOrUpdateSavedCamera(new SavedCameraDefinition(result.text, currentWindow.DrawingWindow.Translation, currentWindow.DrawingWindow.LookAt));
+                if (!cameraNameList.Items.ContainsKey(result.text))
+                {
+                    ListViewItem item = cameraNameList.Items.Add(result.text, result.text, 0);
+                    item.Group = userDefined;
+                }
+                userCameras.saveCameras();
             }
         }
 
@@ -134,6 +149,7 @@ namespace Medical.GUI
                 {
                     cameraNameList.Items.RemoveByKey(selectedItem);
                 }
+                userCameras.saveCameras();
             }
         }
     }

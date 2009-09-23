@@ -52,5 +52,12 @@ namespace Medical
             }
             return closest;
         }
+        public IEnumerable<String> StateNames
+        {
+            get
+            {
+                return navigationStates.Keys;
+            }
+        }
     }
 }
