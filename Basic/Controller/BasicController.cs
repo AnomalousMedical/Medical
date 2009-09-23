@@ -74,7 +74,7 @@ namespace Medical.Controller
         /// </summary>
         public void go()
         {
-            SplashScreen splash = new SplashScreen();
+            BasicSplashScreen splash = new BasicSplashScreen();
             splash.Show();
 
             basicForm = new BasicForm();

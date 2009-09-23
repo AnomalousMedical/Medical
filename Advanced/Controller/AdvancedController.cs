@@ -67,7 +67,7 @@ namespace Medical.Controller
         /// </summary>
         public void go()
         {
-            SplashScreen splash = new SplashScreen();
+            AdvancedSplashScreen splash = new AdvancedSplashScreen();
             splash.Show();
 
             advancedForm = new AdvancedForm();

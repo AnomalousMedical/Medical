@@ -59,5 +59,12 @@ namespace Medical.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap articulometricsdeveloper {
+            get {
+                object obj = ResourceManager.GetObject("articulometricsdeveloper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
