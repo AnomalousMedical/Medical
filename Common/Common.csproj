@@ -89,6 +89,7 @@
     <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
@@ -248,24 +249,23 @@
     </Compile>
     <Compile Include="GUI\TimeTrackBar\TrackBarMark.cs" />
     <Compile Include="GUI\View\CameraSection.cs" />
-    <Compile Include="GUI\View\CenteredWatermark.cs" />
     <Compile Include="GUI\View\DrawingWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindow.designer.cs">
       <DependentUpon>DrawingWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\View\DrawingWindowController.cs" />
     <Compile Include="GUI\View\DrawingWindowHost.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\View\SideLogoWatermark.cs" />
-    <Compile Include="GUI\View\TextWatermark.cs" />
-    <Compile Include="GUI\View\TiledWatermark.cs" />
-    <Compile Include="GUI\View\Watermark.cs" />
+    <Compile Include="GUI\Watermark\CenteredWatermark.cs" />
+    <Compile Include="GUI\Watermark\SideLogoWatermark.cs" />
+    <Compile Include="GUI\Watermark\TextWatermark.cs" />
+    <Compile Include="GUI\Watermark\TiledWatermark.cs" />
+    <Compile Include="GUI\Watermark\Watermark.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

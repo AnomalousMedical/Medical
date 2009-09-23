@@ -147,7 +147,7 @@ namespace Medical
             }
             //Force the buttons to update
             lastCameraPos = Vector3.Zero;
-            Log.Debug("Current state is {0}.", state.Name);
+            //Log.Debug("Current state is {0}.", state.Name);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Medical
                             if (eventManager[NavigationEvents.ClickButton].FirstFrameDown)
                             {
                                 currentButton = button;
-                                Log.Debug("Clicking {0}.", button.Link.Destination.Name);
+                                //Log.Debug("Clicking {0}.", button.Link.Destination.Name);
                             }
                             else if (eventManager[NavigationEvents.ClickButton].FirstFrameUp && currentButton == button)
                             {
