@@ -33,9 +33,9 @@ namespace Medical.GUI
             this.Shown += new EventHandler(LoadingDialog_Shown);
         }
 
-        public void stepProgress()
+        public void stepProgress(int amount)
         {
-            currentStep += progressBar.Step;
+            currentStep += amount;
         }
 
         public void fadeAway()
@@ -71,6 +71,7 @@ namespace Medical.GUI
             }
             if (progressBar.Value < currentStep)
             {
+                progressBar.Step = currentStep - progressBar.Value;
                 progressBar.PerformStep();
             }
         }

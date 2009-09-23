@@ -12,6 +12,7 @@ using Engine.Resources;
 using System.Xml;
 using Engine.Saving.XMLSaver;
 using Medical.Muscles;
+using Medical.Properties;
 
 namespace Medical.Controller
 {
@@ -67,13 +68,16 @@ namespace Medical.Controller
         /// </summary>
         public void go()
         {
-            DeveloperSplashScreen splash = new DeveloperSplashScreen();
-            splash.Show();
+            ProgressDialog splashScreen = new ProgressDialog(Resources.articulometricsdeveloper);
+            splashScreen.fadeIn();
+            splashScreen.ProgressMaximum = 100;
 
             developerForm = new DeveloperForm();
             developerForm.initialize(this);
             medicalController = new MedicalController();
             medicalController.intialize(developerForm);
+
+            splashScreen.stepProgress(10);
 
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.initialize(developerForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
@@ -130,6 +134,8 @@ namespace Medical.Controller
             movementState = new MovementStateControl();
             guiElements.addGUIElement(movementState);
 
+            splashScreen.stepProgress(70);
+
             loadDefaultScene();
 
             if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
@@ -139,8 +145,11 @@ namespace Medical.Controller
 
             createNewSequence();
 
+            splashScreen.stepProgress(20);
+
             developerForm.Show();
-            splash.Close();
+            developerForm.Activate();
+            splashScreen.fadeAway();
             medicalController.start();
         }
 

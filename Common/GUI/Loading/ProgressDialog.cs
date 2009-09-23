@@ -18,7 +18,6 @@ namespace Medical.GUI
             this.backgroundImage = backgroundImage;
             this.ProgressMaximum = 100;
             this.ProgressMinimum = 0;
-            this.ProgressStep = 10;
             this.TopMost = true;
         }
 
@@ -27,7 +26,6 @@ namespace Medical.GUI
             currentDialog = new LoadingDialog(backgroundImage);
             currentDialog.ProgressMaximum = ProgressMaximum;
             currentDialog.ProgressMinimum = ProgressMinimum;
-            currentDialog.ProgressStep = ProgressStep;
             currentDialog.TopMost = TopMost;
             Thread loadThread = new Thread(doFadeIn);
             loadThread.Name = "Load Dialog Thread";
@@ -36,7 +34,13 @@ namespace Medical.GUI
 
         void doFadeIn()
         {
-            Application.Run(currentDialog);
+            //currentDialog.Show();
+            //while (currentDialog.Visible)
+            //{
+            //    Application.DoEvents();
+            //    Thread.Sleep(10);
+            //}
+            currentDialog.ShowDialog();
             System.Console.WriteLine("Load Dialog thread closed");
         }
 
@@ -45,14 +49,13 @@ namespace Medical.GUI
             currentDialog.fadeAway();
         }
 
-        public void stepProgress()
+        public void stepProgress(int amount)
         {
-            currentDialog.stepProgress();
+            currentDialog.stepProgress(amount);
         }
 
         public int ProgressMaximum { get; set; }
         public int ProgressMinimum { get; set; }
-        public int ProgressStep { get; set; }
         public bool TopMost { get; set; }
     }
 }

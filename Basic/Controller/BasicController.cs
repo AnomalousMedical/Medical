@@ -74,13 +74,16 @@ namespace Medical.Controller
         /// </summary>
         public void go()
         {
-            BasicSplashScreen splash = new BasicSplashScreen();
-            splash.Show();
+            ProgressDialog splashScreen = new ProgressDialog(Resources.articulometricsclinic);
+            splashScreen.fadeIn();
+            splashScreen.ProgressMaximum = 100;
 
             basicForm = new BasicForm();
             basicForm.initialize(this);
             medicalController = new MedicalController();
             medicalController.intialize(basicForm);
+
+            splashScreen.stepProgress(10);
 
             drawingWindowController = new DrawingWindowController(MedicalConfig.CamerasFile);
             drawingWindowController.AllowRotation = false;
@@ -128,6 +131,8 @@ namespace Medical.Controller
             distortMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
             constructStatePicker();
 
+            splashScreen.stepProgress(70);
+
             openDefaultScene();
 
             if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
@@ -137,8 +142,11 @@ namespace Medical.Controller
 
             options = new Options();
 
+            splashScreen.stepProgress(20);
+
             basicForm.Show();
-            splash.Close();
+            basicForm.Activate();
+            splashScreen.fadeAway();
             medicalController.start();
         }
 
