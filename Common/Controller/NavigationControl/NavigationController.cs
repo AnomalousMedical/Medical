@@ -99,7 +99,11 @@ namespace Medical
         {
             NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
             overlay.ShowOverlay = showOverlays;
-            overlay.setNavigationState(findClosestState(window.Translation));
+            NavigationState closestState = findClosestState(window.Translation);
+            if (closestState != null)
+            {
+                overlay.setNavigationState(closestState);
+            }
             overlays.Add(window, overlay);
         }
 

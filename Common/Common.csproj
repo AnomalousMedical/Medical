@@ -101,6 +101,7 @@
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />

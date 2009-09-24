@@ -22,6 +22,11 @@ namespace Medical
 
         public void addAdjacentState(NavigationState adjacent, NavigationButtons button)
         {
+            addAdjacentState(adjacent, button, 10.0f);
+        }
+
+        public void addAdjacentState(NavigationState adjacent, NavigationButtons button, float radius)
+        {
             if (adjacent != null)
             {
                 bool allowAdd = true;
@@ -35,7 +40,7 @@ namespace Medical
                 }
                 if (allowAdd)
                 {
-                    adjacentStates.Add(new NavigationLink(adjacent, button));
+                    adjacentStates.Add(new NavigationLink(adjacent, button, radius));
                 }
             }
         }
@@ -71,14 +76,6 @@ namespace Medical
             }
         }
 
-        internal IEnumerable<NavigationLink> AdjacentStates
-        {
-            get
-            {
-                return adjacentStates;
-            }
-        }
-
         public Vector3 LookAt
         {
             get
@@ -100,6 +97,14 @@ namespace Medical
             get
             {
                 return name;
+            }
+        }
+
+        internal IEnumerable<NavigationLink> AdjacentStates
+        {
+            get
+            {
+                return adjacentStates;
             }
         }
     }

@@ -371,7 +371,25 @@ namespace Medical.Controller
                 if (defaultScene != null)
                 {
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                    navigationController.NavigationSet = TEMP_createNavigationState(medicalScene);
+                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
+                    using (Archive archive = FileSystem.OpenArchive(cameraFile))
+                    {
+                        if(archive.exists(cameraFile))
+                        {
+                            try
+                            {
+                                using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                                {
+                                    NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
+                                    navigationController.NavigationSet = navigation;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                            }
+                        }
+                    }
                     updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                 }
                 return true;
@@ -491,178 +509,196 @@ namespace Medical.Controller
 
         private NavigationStateSet TEMP_createNavigationState(SimulationScene medicalScene)
         {
-            SavedCameraController sceneCameras = new SavedCameraController(medicalController.CurrentSceneDirectory + '/' + medicalScene.CameraFile);
-
-            NavigationStateSet navigationSet = new NavigationStateSet();
-            foreach (SavedCameraDefinition def in sceneCameras.getSavedCameras())
+            if (File.Exists(MedicalConfig.DocRoot + "/CameraDump.xml"))
             {
-                NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
-                navigationSet.addState(state);
+                Log.Info("Reading navigation from XML.");
+                using(XmlTextReader xmlReader = new XmlTextReader(MedicalConfig.DocRoot + "/CameraDump.xml"))
+                {
+                    return NavigationSerializer.readNavigationStateSet(xmlReader);
+                }
             }
-            //setup adjacent states
-            //outer shell
-            NavigationState target = navigationSet.getState("Midline Anterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterosuperior"), NavigationButtons.Up);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anteroinferior"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateral"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateral"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Anterior"), NavigationButtons.ZoomIn);
+            else
+            {
+                Log.Info("Generating navigation from code.");
+                SavedCameraController sceneCameras = new SavedCameraController(medicalController.CurrentSceneDirectory + '/' + medicalScene.CameraFile);
 
-            target = navigationSet.getState("Left Lateral");
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Up);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.ZoomIn);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left TMJ"), NavigationButtons.ZoomIn);
+                NavigationStateSet navigationSet = new NavigationStateSet();
+                foreach (SavedCameraDefinition def in sceneCameras.getSavedCameras())
+                {
+                    NavigationState state = new NavigationState(def.Name, def.LookAt, def.Position);
+                    navigationSet.addState(state);
+                }
+                //setup adjacent states
+                //outer shell
+                NavigationState target = navigationSet.getState("Midline Anterior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterosuperior"), NavigationButtons.Up);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Anteroinferior"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Lateral"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Lateral"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Anterior"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Right Lateral");
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Up);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.ZoomIn);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right TMJ"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Left Lateral");
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Up);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.ZoomIn);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left TMJ"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Midline Anterosuperior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Superior"), NavigationButtons.Up);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Right);
+                target = navigationSet.getState("Right Lateral");
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Up);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.ZoomIn);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Anterior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right TMJ"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Midline Superior");
-            target.addAdjacentState(navigationSet.getState("Midline Posterosuperior"), NavigationButtons.Up);
+                target = navigationSet.getState("Midline Anterosuperior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Superior"), NavigationButtons.Up);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Right);
 
-            target = navigationSet.getState("Midline Posterosuperior");
-            target.addAdjacentState(navigationSet.getState("Midline Superior"), NavigationButtons.Up);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Down);
+                target = navigationSet.getState("Midline Superior");
+                target.addAdjacentState(navigationSet.getState("Midline Posterosuperior"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Midline Posterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Posteroinferior"), NavigationButtons.Down);
+                target = navigationSet.getState("Midline Posterosuperior");
+                target.addAdjacentState(navigationSet.getState("Midline Superior"), NavigationButtons.Up);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Posterior"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Midline Anteroinferior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Midline Submental"), NavigationButtons.Down);
-            target.addAdjacentState(navigationSet.getState("Occlusion Joint Anterior"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Midline Posterior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Posteroinferior"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Midline Submental");
-            target.addAdjacentState(navigationSet.getState("Midline Posteroinferior"), NavigationButtons.Down);
+                target = navigationSet.getState("Midline Anteroinferior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Midline Submental"), NavigationButtons.Down);
+                target.addAdjacentState(navigationSet.getState("Occlusion Joint Anterior"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Midline Posteroinferior");
-            target.addAdjacentState(navigationSet.getState("Midline Submental"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Posterior"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Midline Submental");
+                target.addAdjacentState(navigationSet.getState("Midline Posteroinferior"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Midline Posterosuperior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Left);
+                target = navigationSet.getState("Midline Posteroinferior");
+                target.addAdjacentState(navigationSet.getState("Midline Submental"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Lateroinferior"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Lateroinferior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Posterior"), NavigationButtons.ZoomIn);
 
-            //Occlusion
-            target = navigationSet.getState("Occlusion Joint Posterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Lingual"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Midline Posterosuperior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Right Laterosuperior"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Left Laterosuperior"), NavigationButtons.Left);
 
-            target = navigationSet.getState("Occlusion Joint Anterior");
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Labial"), NavigationButtons.ZoomIn);
+                //Occlusion
+                target = navigationSet.getState("Occlusion Joint Posterior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Lingual"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Occlusion Joint Left");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Occlusion Joint Anterior");
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Left"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Occlusion Joint Right"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Anterior Labial"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Occlusion Joint Right");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Occlusion Joint Left");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"), NavigationButtons.ZoomIn);
 
-            //Dentition
-            target = navigationSet.getState("Dentition Anterior Labial");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"), NavigationButtons.Left);
+                target = navigationSet.getState("Occlusion Joint Right");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Dentition Left Posterior Buccal");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Right);
+                //Dentition
+                target = navigationSet.getState("Dentition Anterior Labial");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Buccal"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Buccal"), NavigationButtons.Left);
 
-            target = navigationSet.getState("Dentition Right Posterior Buccal");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Left);
+                target = navigationSet.getState("Dentition Left Posterior Buccal");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Right);
 
-            target = navigationSet.getState("Dentition Anterior Lingual");
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Right);
+                target = navigationSet.getState("Dentition Right Posterior Buccal");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Left);
 
-            //Joint Left
-            target = navigationSet.getState("Left TMJ");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Dentition Anterior Lingual");
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Left Posterior Lingual"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Dentition Right Posterior Lingual"), NavigationButtons.Right);
 
-            target = navigationSet.getState("Joint Lat Left");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
+                //Joint Left
+                target = navigationSet.getState("Left TMJ");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Joint Med Left");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
+                target = navigationSet.getState("Joint Lat Left");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Joint Sup Left");
-            target.addAdjacentState(navigationSet.getState("Joint Med Left"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Down);
-            target.addAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Med Left");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Joint Ant Left");
-            target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Sup Left");
+                target.addAdjacentState(navigationSet.getState("Joint Med Left"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Down);
+                target.addAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Joint Post Left");
-            target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
+                target = navigationSet.getState("Joint Ant Left");
+                target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Joint Inf Left");
-            target.addAdjacentState(navigationSet.getState("Joint Med Left"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Post Left");
+                target.addAdjacentState(navigationSet.getState("Joint Sup Left"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Left"), NavigationButtons.Down);
 
-            //Joint Right
-            target = navigationSet.getState("Right TMJ");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.ZoomIn);
+                target = navigationSet.getState("Joint Inf Left");
+                target.addAdjacentState(navigationSet.getState("Joint Med Left"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Lat Left"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Post Left"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Left"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Joint Lat Right");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Right);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
+                //Joint Right
+                target = navigationSet.getState("Right TMJ");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.ZoomIn);
 
-            target = navigationSet.getState("Joint Med Right");
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Left);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
+                target = navigationSet.getState("Joint Lat Right");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Right);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Joint Sup Right");
-            target.addAdjacentState(navigationSet.getState("Joint Med Right"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Down);
-            target.addAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Med Right");
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Left);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
 
-            target = navigationSet.getState("Joint Ant Right");
-            target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Sup Right");
+                target.addAdjacentState(navigationSet.getState("Joint Med Right"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Down);
+                target.addAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Joint Post Right");
-            target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
-            target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
+                target = navigationSet.getState("Joint Ant Right");
+                target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
 
-            target = navigationSet.getState("Joint Inf Right");
-            target.addAdjacentState(navigationSet.getState("Joint Med Right"), NavigationButtons.Left);
-            target.addAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.Right);
-            target.addAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Down);
-            target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Up);
+                target = navigationSet.getState("Joint Post Right");
+                target.addAdjacentState(navigationSet.getState("Joint Sup Right"), NavigationButtons.Up);
+                target.addAdjacentState(navigationSet.getState("Joint Inf Right"), NavigationButtons.Down);
 
-            return navigationSet;
+                target = navigationSet.getState("Joint Inf Right");
+                target.addAdjacentState(navigationSet.getState("Joint Med Right"), NavigationButtons.Left);
+                target.addAdjacentState(navigationSet.getState("Joint Lat Right"), NavigationButtons.Right);
+                target.addAdjacentState(navigationSet.getState("Joint Post Right"), NavigationButtons.Down);
+                target.addTwoWayAdjacentState(navigationSet.getState("Joint Ant Right"), NavigationButtons.Up);
+
+                using (XmlTextWriter xmlWriter = new XmlTextWriter(MedicalConfig.DocRoot + "/CameraDump.xml", Encoding.Unicode))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+                    NavigationSerializer.writeNavigationStateSet(navigationSet, xmlWriter);
+                }
+
+                return navigationSet;
+            }
         }
         /**
          * Code for navigation states

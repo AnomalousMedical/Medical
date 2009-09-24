@@ -47,6 +47,13 @@ namespace Medical
             this.button = button;
         }
 
+        public NavigationLink(NavigationState destination, NavigationButtons button, float visualRadius)
+        {
+            this.destination = destination;
+            this.button = button;
+            this.visualRadius = visualRadius;
+        }
+
         public NavigationButtons Button
         {
             get
