@@ -254,6 +254,18 @@ namespace Medical
             }
         }
 
+        public bool AllowZoom
+        {
+            get
+            {
+                return orbitCamera.AllowZoom;
+            }
+            set
+            {
+                orbitCamera.AllowZoom = value;
+            }
+        }
+
         protected override void OnResize(EventArgs e)
         {
             foreach (OSWindowListener listener in listeners)

@@ -30,6 +30,7 @@ namespace Medical
         private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
         private bool allowRotation = true;
+        private bool allowZoom = true;
 
         public DrawingWindowController()
         {
@@ -160,6 +161,18 @@ namespace Medical
             }
         }
 
+        public bool AllowZoom
+        {
+            get
+            {
+                return allowZoom;
+            }
+            set
+            {
+                allowZoom = value;
+            }
+        }
+
         internal void _alertCameraDestroyed(DrawingWindowHost host)
         {
             if (WindowDestroyed != null)
@@ -183,6 +196,7 @@ namespace Medical
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
             cameraHost.DrawingWindow.initialize(name, eventManager, rendererPlugin, translation, lookAt);
             cameraHost.DrawingWindow.AllowRotation = allowRotation;
+            cameraHost.DrawingWindow.AllowZoom = allowZoom;
             cameras.Add(cameraHost.DrawingWindow.CameraName, cameraHost);
 
             if (WindowCreated != null)

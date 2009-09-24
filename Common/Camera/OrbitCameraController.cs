@@ -67,6 +67,7 @@ namespace Medical
         private float totalTime = 0.0f;
 
         private bool allowRotation = true;
+        private bool allowZoom = true;
 
         public OrbitCameraController(CameraControl camera, EventManager eventManager)
         {
@@ -163,7 +164,7 @@ namespace Medical
 
                     updateTranslation(lookAt + normalDirection * orbitDistance);
                 }
-                else if (events[CameraEvents.ZoomCamera].Down)
+                else if (allowZoom && events[CameraEvents.ZoomCamera].Down)
                 {
                     orbitDistance += mouseCoords.y;
                     if (orbitDistance < 0.2f)
@@ -203,11 +204,15 @@ namespace Medical
             }
             if (activeWindow)
             {
-                if (mouseCoords.z != 0)
+                if (allowZoom && mouseCoords.z != 0)
                 {
                     if (mouseCoords.z < 0)
                     {
                         orbitDistance += 3.6f;
+                        if (orbitDistance > 500.0f)
+                        {
+                            orbitDistance = 500.0f;
+                        }
                     }
                     else if (mouseCoords.z > 0)
                     {
@@ -346,6 +351,18 @@ namespace Medical
             set
             {
                 allowRotation = value;
+            }
+        }
+
+        public bool AllowZoom
+        {
+            get
+            {
+                return allowZoom;
+            }
+            set
+            {
+                allowZoom = value;
             }
         }
 

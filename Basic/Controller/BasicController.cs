@@ -97,6 +97,7 @@ namespace Medical.Controller
 
             drawingWindowController = new DrawingWindowController();
             drawingWindowController.AllowRotation = false;
+            drawingWindowController.AllowZoom = false;
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
