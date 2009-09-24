@@ -33,6 +33,8 @@ namespace Medical.GUI
 
         }
 
+        public String NavigationState { get; set; }
+
         protected void showChanges(bool immediate)
         {
             parentPicker.showChanges(immediate);

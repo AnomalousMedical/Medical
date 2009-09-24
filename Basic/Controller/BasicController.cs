@@ -409,7 +409,7 @@ namespace Medical.Controller
                 {
                     stateController.createAndAddState("Normal");
                 }
-                statePicker.startWizard();
+                statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
                 statePicker.Show(distortMode.DockPanel);
@@ -434,24 +434,28 @@ namespace Medical.Controller
 
         private void constructStatePicker()
         {
-            statePicker.initialize(temporaryStateBlender);
+            statePicker.initialize(temporaryStateBlender, navigationController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
             leftGrowthPanel = new PresetStatePanel();
             leftGrowthPanel.Text = "Left Condyle Growth";
+            leftGrowthPanel.NavigationState = "Left Lateral";
             statePicker.addStatePanel(leftGrowthPanel);
 
             rightGrowthPanel = new PresetStatePanel();
             rightGrowthPanel.Text = "Right Condyle Growth";
+            rightGrowthPanel.NavigationState = "Right Lateral";
             statePicker.addStatePanel(rightGrowthPanel);
 
             leftDegenerationPanel = new PresetStatePanel();
             leftDegenerationPanel.Text = "Left Condyle Degeneration";
+            leftDegenerationPanel.NavigationState = "Left TMJ";
             statePicker.addStatePanel(leftDegenerationPanel);
 
             rightDegenerationPanel = new PresetStatePanel();
             rightDegenerationPanel.Text = "Right Condyle Degeneration";
+            rightDegenerationPanel.NavigationState = "Right TMJ";
             statePicker.addStatePanel(rightDegenerationPanel);
 
             statePicker.addStatePanel(new DiscSpacePanel());

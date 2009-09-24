@@ -22,6 +22,8 @@ namespace Medical.GUI
         int currentIndex = 0;
         private bool updatePanel = true;
         TemporaryStateBlender stateBlender;
+        NavigationController navigationController;
+        private DrawingWindow currentDrawingWindow;
 
         public StatePicker()
         {
@@ -29,9 +31,10 @@ namespace Medical.GUI
             navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);
         }
 
-        public void initialize(TemporaryStateBlender stateBlender)
+        public void initialize(TemporaryStateBlender stateBlender, NavigationController navigationController)
         {
             this.stateBlender = stateBlender;
+            this.navigationController = navigationController;
         }
 
         public StatePickerPanel addStatePanel(StatePickerPanel panel)
@@ -52,8 +55,9 @@ namespace Medical.GUI
             return panel;
         }
 
-        public void startWizard()
+        public void startWizard(DrawingWindow controllingWindow)
         {
+            currentDrawingWindow = controllingWindow;
             stateBlender.recordUndoState();
             hidePanel();
             currentIndex = 0;
@@ -111,6 +115,10 @@ namespace Medical.GUI
                 else
                 {
                     previousButton.Visible = true;
+                }
+                if (panel.NavigationState != null)
+                {
+                    navigationController.setNavigationState(panel.NavigationState, currentDrawingWindow);
                 }
                 updatePanel = true;
             }

@@ -636,6 +636,7 @@
             this.Controls.Add(this.tooth2);
             this.Controls.Add(this.tooth1);
             this.Name = "TeethStatePanel";
+            this.NavigationState = "Occlusion Joint Anterior";
             this.Size = new System.Drawing.Size(387, 408);
             this.ResumeLayout(false);
             this.PerformLayout();

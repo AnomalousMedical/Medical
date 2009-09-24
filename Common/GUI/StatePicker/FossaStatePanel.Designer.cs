@@ -158,12 +158,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 245);
             this.Controls.Add(this.leftEminanceImage);
             this.Controls.Add(this.rightEminanceImage);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Name = "FossaStatePanel";
+            this.NavigationState = "Left TMJ";
+            this.Size = new System.Drawing.Size(282, 245);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox7.ResumeLayout(false);
