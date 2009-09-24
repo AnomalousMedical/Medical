@@ -206,6 +206,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(259, 482);
             this.Controls.Add(this.outDirBrowseButton);
             this.Controls.Add(this.outputDirectoryText);
