@@ -57,10 +57,13 @@ namespace Medical.GUI
 
         void navigation_NavigationStateSetChanged(NavigationController controller)
         {
-            foreach (String name in controller.NavigationSet.StateNames)
+            foreach (NavigationState state in controller.NavigationSet.States)
             {
-                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-                item.Group = predefined;
+                if (!state.Hidden)
+                {
+                    ListViewItem item = cameraNameList.Items.Add(state.Name, state.Name, 0);
+                    item.Group = predefined;
+                }
             }
         }
 

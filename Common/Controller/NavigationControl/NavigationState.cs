@@ -12,12 +12,14 @@ namespace Medical
         private List<NavigationLink> adjacentStates = new List<NavigationLink>();
         private Vector3 lookAt;
         private Vector3 translation;
+        private bool hidden;
 
-        public NavigationState(String name, Vector3 lookAt, Vector3 translation)
+        public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden)
         {
             this.name = name;
             this.translation = translation;
             this.lookAt = lookAt;
+            this.hidden = hidden;
         }
 
         public void addAdjacentState(NavigationState adjacent, NavigationButtons button)
@@ -97,6 +99,18 @@ namespace Medical
             get
             {
                 return name;
+            }
+        }
+
+        public bool Hidden
+        {
+            get
+            {
+                return hidden;
+            }
+            set
+            {
+                hidden = value;
             }
         }
 

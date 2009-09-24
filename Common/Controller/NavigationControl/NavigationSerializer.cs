@@ -19,6 +19,7 @@ namespace Medical
         private const String DESTINATION = "Destination";
         private const String SOURCE = "Source";
         private const String VISUAL_RADIUS = "VisualRadius";
+        private const String HIDDEN = "Hidden";
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -29,6 +30,7 @@ namespace Medical
                 xmlWriter.WriteElementString(NAME, state.Name);
                 xmlWriter.WriteElementString(TRANSLATION, state.Translation.ToString());
                 xmlWriter.WriteElementString(LOOK_AT, state.LookAt.ToString());
+                xmlWriter.WriteElementString(HIDDEN, state.Hidden.ToString());
                 xmlWriter.WriteEndElement();
             }
 
@@ -73,6 +75,7 @@ namespace Medical
             String name = null;
             Vector3 position = Vector3.UnitZ;
             Vector3 lookAt = Vector3.Zero;
+            bool hidden = false;
             while (!isEndElement(xmlReader, NAVIGATION_STATE) && xmlReader.Read())
             {
                 if (isValidElement(xmlReader))
@@ -89,11 +92,15 @@ namespace Medical
                     {
                         lookAt = new Vector3(xmlReader.ReadElementContentAsString());
                     }
+                    else if (xmlReader.Name == HIDDEN)
+                    {
+                        hidden = xmlReader.ReadElementContentAsBoolean();
+                    }
                 }
             }
             if (name != null)
             {
-                set.addState(new NavigationState(name, lookAt, position));
+                set.addState(new NavigationState(name, lookAt, position, hidden));
             }
         }
 
