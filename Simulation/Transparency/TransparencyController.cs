@@ -34,7 +34,9 @@ namespace Medical
 
         public static TransparencyGroup getTransparencyGroup(RenderGroup group)
         {
-            return groups[group];
+            TransparencyGroup ret = null;
+            groups.TryGetValue(group, out ret);
+            return ret;
         }
 
         public static IEnumerable<TransparencyGroup> getGroupIter()

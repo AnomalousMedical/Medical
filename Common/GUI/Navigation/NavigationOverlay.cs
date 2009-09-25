@@ -33,6 +33,7 @@ namespace Medical
         private Vector3 lastCameraPos = Vector3.Zero;
         private int lastWindowWidth = 0;
         private int lastWindowHeight = 0;
+        private NavigationState currentState;
 
         static NavigationOverlay()
         {
@@ -108,6 +109,7 @@ namespace Medical
 
         public void setNavigationState(NavigationState state)
         {
+            currentState = state;
             foreach (NavigationButton button in buttons)
             {
                 mainOverlay.remove2d(button.PanelElement);
@@ -148,6 +150,11 @@ namespace Medical
             //Force the buttons to update
             lastCameraPos = Vector3.Zero;
             //Log.Debug("Current state is {0}.", state.Name);
+        }
+
+        public NavigationState getNavigationState()
+        {
+            return currentState;
         }
 
         /// <summary>

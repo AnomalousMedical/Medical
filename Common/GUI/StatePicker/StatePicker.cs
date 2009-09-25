@@ -24,6 +24,9 @@ namespace Medical.GUI
         TemporaryStateBlender stateBlender;
         NavigationController navigationController;
         private DrawingWindow currentDrawingWindow;
+        private LayerController layerController;
+        private LayerState layerStatusBeforeShown;
+        private String navigationStateBeforeShown;
 
         public StatePicker()
         {
@@ -31,10 +34,11 @@ namespace Medical.GUI
             navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);
         }
 
-        public void initialize(TemporaryStateBlender stateBlender, NavigationController navigationController)
+        public void initialize(TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
         {
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
+            this.layerController = layerController;
         }
 
         public StatePickerPanel addStatePanel(StatePickerPanel panel)
@@ -57,7 +61,10 @@ namespace Medical.GUI
 
         public void startWizard(DrawingWindow controllingWindow)
         {
+            layerStatusBeforeShown = new LayerState("Temp");
+            layerStatusBeforeShown.captureState();
             currentDrawingWindow = controllingWindow;
+            navigationStateBeforeShown = navigationController.getNavigationState(currentDrawingWindow).Name;
             stateBlender.recordUndoState();
             hidePanel();
             currentIndex = 0;
@@ -120,6 +127,10 @@ namespace Medical.GUI
                 {
                     navigationController.setNavigationState(panel.NavigationState, currentDrawingWindow);
                 }
+                if (panel.LayerState != null)
+                {
+                    layerController.applyLayerState(panel.LayerState);
+                }
                 updatePanel = true;
             }
         }
@@ -177,6 +188,8 @@ namespace Medical.GUI
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
+            layerStatusBeforeShown.apply();
+            navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
             if (Finished != null)
             {
                 Finished.Invoke();

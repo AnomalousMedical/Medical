@@ -37,8 +37,8 @@ namespace Medical.Controller
         private PresetStatePanel rightGrowthPanel;
         private PresetStatePanel leftDegenerationPanel;
         private PresetStatePanel rightDegenerationPanel;
-        private String lastDistortionDirectory = "";
         private ScenePicker scenePicker;
+        private LayerController layerController;
 
         /// <summary>
         /// Constructor.
@@ -101,6 +101,7 @@ namespace Medical.Controller
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+            layerController = new LayerController();
 
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
@@ -372,6 +373,8 @@ namespace Medical.Controller
                 if (defaultScene != null)
                 {
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
+                    layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     using (Archive archive = FileSystem.OpenArchive(cameraFile))
                     {
@@ -435,28 +438,32 @@ namespace Medical.Controller
 
         private void constructStatePicker()
         {
-            statePicker.initialize(temporaryStateBlender, navigationController);
+            statePicker.initialize(temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
             leftGrowthPanel = new PresetStatePanel();
             leftGrowthPanel.Text = "Left Condyle Growth";
             leftGrowthPanel.NavigationState = "Left Lateral";
+            leftGrowthPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(leftGrowthPanel);
 
             rightGrowthPanel = new PresetStatePanel();
             rightGrowthPanel.Text = "Right Condyle Growth";
             rightGrowthPanel.NavigationState = "Right Lateral";
+            rightGrowthPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(rightGrowthPanel);
 
             leftDegenerationPanel = new PresetStatePanel();
             leftDegenerationPanel.Text = "Left Condyle Degeneration";
             leftDegenerationPanel.NavigationState = "Left TMJ";
+            leftDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(leftDegenerationPanel);
 
             rightDegenerationPanel = new PresetStatePanel();
             rightDegenerationPanel.Text = "Right Condyle Degeneration";
             rightDegenerationPanel.NavigationState = "Right TMJ";
+            rightDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(rightDegenerationPanel);
 
             statePicker.addStatePanel(new DiscSpacePanel());

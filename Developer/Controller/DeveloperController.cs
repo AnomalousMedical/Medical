@@ -13,6 +13,7 @@ using System.Xml;
 using Engine.Saving.XMLSaver;
 using Medical.Muscles;
 using Medical.Properties;
+using Engine.ObjectManagement;
 
 namespace Medical.Controller
 {
@@ -31,6 +32,7 @@ namespace Medical.Controller
         private ImageRenderer imageRenderer;
         private MovementStateControl movementState;
         private ScenePicker scenePicker = new ScenePicker();
+        private LayerController layerController;
 
         /// <summary>
         /// Constructor.
@@ -83,6 +85,7 @@ namespace Medical.Controller
             drawingWindowController.initialize(developerForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+            layerController = new LayerController();
 
             guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);
             guiElements.EnableToolbars = true;
@@ -127,12 +130,16 @@ namespace Medical.Controller
             FossaControl fossaControl = new FossaControl();
             guiElements.addGUIElement(fossaControl);
 
+            movementState = new MovementStateControl();
+            guiElements.addGUIElement(movementState);
+
             BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
             bonePresetSaver.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(bonePresetSaver);
 
-            movementState = new MovementStateControl();
-            guiElements.addGUIElement(movementState);
+            PresetLayerEditor presetLayers = new PresetLayerEditor();
+            presetLayers.initialize(layerController);
+            guiElements.addGUIElement(presetLayers);
 
             splashScreen.stepProgress(70);
 
@@ -371,6 +378,14 @@ namespace Medical.Controller
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+
+                SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+                if (defaultScene != null)
+                {
+                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
+                    layerController.loadLayerStateSet(layersFile);
+                }
                 return true;
             }
             else

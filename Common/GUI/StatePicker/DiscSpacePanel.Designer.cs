@@ -141,6 +141,7 @@
             this.Controls.Add(this.horizontalDisc);
             this.Controls.Add(this.leftDiscSpace);
             this.Controls.Add(this.rightDiscSpace);
+            this.LayerState = "DiscLayers";
             this.Name = "DiscSpacePanel";
             this.NavigationState = "Left TMJ";
             this.Size = new System.Drawing.Size(364, 294);

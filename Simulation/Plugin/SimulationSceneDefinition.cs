@@ -24,6 +24,7 @@ namespace Medical
         private String name;
         private String cameraFile;
         private String presetDirectory;
+        private String layersFile;
 
         public SimulationSceneDefinition(String name)
         {
@@ -45,6 +46,7 @@ namespace Medical
             SimulationScene scene = new SimulationScene(name);
             scene.CameraFile = cameraFile;
             scene.PresetDirectory = presetDirectory;
+            scene.LayersFile = layersFile;
             return scene;
         }
 
@@ -88,6 +90,19 @@ namespace Medical
             }
         }
 
+        [Editable]
+        public String LayersFile
+        {
+            get
+            {
+                return layersFile;
+            }
+            set
+            {
+                layersFile = value;
+            }
+        }
+
         #endregion
 
         #region EditInterface
@@ -107,15 +122,17 @@ namespace Medical
 
         #region Saveable Members
 
-        private String NAME = "Name";
-        private String CAMERA_FILE = "CameraFile";
-        private String PRESET_DIRECTORY = "PresetDirectory";
+        private const String NAME = "Name";
+        private const String CAMERA_FILE = "CameraFile";
+        private const String PRESET_DIRECTORY = "PresetDirectory";
+        private const String LAYERS_FILE = "LayersFile";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
             name = info.GetString(NAME);
             cameraFile = info.GetString(CAMERA_FILE);
             presetDirectory = info.GetString(PRESET_DIRECTORY);
+            layersFile = info.GetString(LAYERS_FILE);
         }
 
         public void getInfo(SaveInfo info)
@@ -123,6 +140,7 @@ namespace Medical
             info.AddValue(NAME, name);
             info.AddValue(CAMERA_FILE, cameraFile);
             info.AddValue(PRESET_DIRECTORY, presetDirectory);
+            info.AddValue(LAYERS_FILE, layersFile);
         }
 
         #endregion

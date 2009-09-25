@@ -35,6 +35,8 @@ namespace Medical.GUI
 
         public String NavigationState { get; set; }
 
+        public String LayerState { get; set; }
+
         protected void showChanges(bool immediate)
         {
             parentPicker.showChanges(immediate);

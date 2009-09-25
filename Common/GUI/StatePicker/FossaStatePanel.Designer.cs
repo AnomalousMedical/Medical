@@ -162,6 +162,7 @@
             this.Controls.Add(this.rightEminanceImage);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
+            this.LayerState = "FossaLayers";
             this.Name = "FossaStatePanel";
             this.NavigationState = "Left TMJ";
             this.Size = new System.Drawing.Size(282, 245);

@@ -96,6 +96,10 @@
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\ImageRenderer.cs" />
+    <Compile Include="Controller\Layers\LayerController.cs" />
+    <Compile Include="Controller\Layers\LayerEntry.cs" />
+    <Compile Include="Controller\Layers\LayerState.cs" />
+    <Compile Include="Controller\Layers\LayerStateSet.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />

@@ -51,6 +51,11 @@ namespace Medical
             }
         }
 
+        public NavigationState getNavigationState(DrawingWindow window)
+        {
+            return overlays[window].getNavigationState();
+        }
+
         public NavigationState findClosestState(Vector3 position)
         {
             if (navigationSet != null)
