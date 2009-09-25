@@ -205,42 +205,54 @@ namespace Medical.GUI
                 oldName = "right";
                 newName = "left";
             }
-            sourceDirectory = outputDirectoryText.Text + "/" + sourceDirectory + "Growth";
+            String prompt = String.Format("This will copy the contents of the {0} side to the {1} side. Are you sure you want to do this", oldName, newName);
+            if (MessageBox.Show(this, prompt, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
+                {
+                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Growth", outputDirectoryText.Text + "/" + destDirectory + "Growth", oldName, newName, archive);
+                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Degeneration", outputDirectoryText.Text + "/" + destDirectory + "Degeneration", oldName, newName, archive);
+                }
+                MessageBox.Show(this, "Finished copying sides.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void doCopy(String sourceDirectory, String destDirectory, String oldName, String newName, Archive archive)
+        {
             if (!Directory.Exists(sourceDirectory))
             {
                 Directory.CreateDirectory(sourceDirectory);
             }
-            destDirectory = outputDirectoryText.Text + "/" + destDirectory + "Growth";
-
-            using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
+            if (!Directory.Exists(destDirectory))
             {
-                String[] files = archive.listFiles(sourceDirectory, "*.pre", false);
-                foreach (String file in files)
+                Directory.CreateDirectory(destDirectory);
+            }
+            String[] files = archive.listFiles(sourceDirectory, "*.pre", false);
+            foreach (String file in files)
+            {
+                using (XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
                 {
-                    using(XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                    BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                    if (preset != null)
                     {
-                        BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
-                        if (preset != null)
+                        preset.changeSide(oldName, newName);
+                        using (Stream stream = archive.openStream(sourceDirectory + "/" + preset.ImageName, Engine.Resources.FileMode.Open))
                         {
-                            preset.changeSide(oldName, newName);
-                            using(Stream stream = archive.openStream(sourceDirectory + "/" + preset.ImageName, Engine.Resources.FileMode.Open))
+                            using (Bitmap bitmap = new Bitmap(stream))
                             {
-                                using (Bitmap bitmap = new Bitmap(stream))
-                                {
-                                    bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                    bitmap.Save(destDirectory + "/" + preset.ImageName);
-                                }
-                            }
-                            using (XmlTextWriter textWriter = new XmlTextWriter(destDirectory + "/" + file.Substring(sourceDirectory.Length), Encoding.ASCII))
-                            {
-                                textWriter.Formatting = Formatting.Indented;
-                                saver.saveObject(preset, textWriter);
+                                bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                bitmap.Save(destDirectory + "/" + preset.ImageName);
                             }
                         }
-                        else
+                        using (XmlTextWriter textWriter = new XmlTextWriter(destDirectory + "/" + file.Substring(sourceDirectory.Length), Encoding.ASCII))
                         {
-                            Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                            textWriter.Formatting = Formatting.Indented;
+                            saver.saveObject(preset, textWriter);
                         }
+                    }
+                    else
+                    {
+                        Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
                     }
                 }
             }
