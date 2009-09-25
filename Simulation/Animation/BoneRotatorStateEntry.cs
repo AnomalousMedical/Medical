@@ -37,6 +37,13 @@ namespace Medical
             }
         }
 
+        public void changeSide(String oldName, String newName)
+        {
+            name = name.Replace(oldName, newName);
+            Vector3 euler = rotation.getEuler();
+            rotation.setEuler(euler.x, -euler.y, -euler.z);
+        }
+
         #region Saveable Members
 
         private const String NAME = "Name";

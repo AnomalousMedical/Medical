@@ -45,6 +45,7 @@
             this.outputDirectoryText = new System.Windows.Forms.TextBox();
             this.outDirBrowseButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.copySideButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.previewPicture)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -202,12 +203,23 @@
             this.folderBrowserDialog.Description = "Select the root folder to save presets into.";
             this.folderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+            // copySideButton
+            // 
+            this.copySideButton.Location = new System.Drawing.Point(160, 424);
+            this.copySideButton.Name = "copySideButton";
+            this.copySideButton.Size = new System.Drawing.Size(75, 23);
+            this.copySideButton.TabIndex = 16;
+            this.copySideButton.Text = "Copy Side";
+            this.copySideButton.UseVisualStyleBackColor = true;
+            this.copySideButton.Click += new System.EventHandler(this.copySideButton_Click);
+            // 
             // BonePresetSaveWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(259, 482);
+            this.Controls.Add(this.copySideButton);
             this.Controls.Add(this.outDirBrowseButton);
             this.Controls.Add(this.outputDirectoryText);
             this.Controls.Add(this.label3);
@@ -255,5 +267,6 @@
         private System.Windows.Forms.TextBox outputDirectoryText;
         private System.Windows.Forms.Button outDirBrowseButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.Button copySideButton;
     }
 }

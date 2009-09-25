@@ -13,5 +13,7 @@ namespace Medical
         BoneManipulatorStateEntry clone();
 
         String Name { get; }
+
+        void changeSide(String oldName, String newName);
     }
 }

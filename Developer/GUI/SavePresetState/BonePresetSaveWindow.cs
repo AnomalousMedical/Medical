@@ -11,6 +11,7 @@ using Engine.Resources;
 using System.IO;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -191,6 +192,60 @@ namespace Medical.GUI
             }
         }
 
+        private void copySideToOther()
+        {
+            String sourceDirectory = "Left";
+            String destDirectory = "Right";
+            String oldName = "left";
+            String newName = "right";
+            if (rightSideSource.Checked)
+            {
+                sourceDirectory = "Right";
+                destDirectory = "Left";
+                oldName = "right";
+                newName = "left";
+            }
+            sourceDirectory = outputDirectoryText.Text + "/" + sourceDirectory + "Growth";
+            if (!Directory.Exists(sourceDirectory))
+            {
+                Directory.CreateDirectory(sourceDirectory);
+            }
+            destDirectory = outputDirectoryText.Text + "/" + destDirectory + "Growth";
+
+            using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
+            {
+                String[] files = archive.listFiles(sourceDirectory, "*.pre", false);
+                foreach (String file in files)
+                {
+                    using(XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                    {
+                        BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                        if (preset != null)
+                        {
+                            preset.changeSide(oldName, newName);
+                            using(Stream stream = archive.openStream(sourceDirectory + "/" + preset.ImageName, Engine.Resources.FileMode.Open))
+                            {
+                                using (Bitmap bitmap = new Bitmap(stream))
+                                {
+                                    bitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                    bitmap.Save(destDirectory + "/" + preset.ImageName);
+                                }
+                            }
+                            using (XmlTextWriter textWriter = new XmlTextWriter(destDirectory + "/" + file.Substring(sourceDirectory.Length), Encoding.ASCII))
+                            {
+                                textWriter.Formatting = Formatting.Indented;
+                                saver.saveObject(preset, textWriter);
+                            }
+                        }
+                        else
+                        {
+                            Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                        }
+                    }
+                }
+            }
+        }
+
         private void ensureDirectory()
         {
             if (!Directory.Exists(outputDirectoryText.Text))
@@ -207,6 +262,11 @@ namespace Medical.GUI
             {
                 outputDirectoryText.Text = folderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void copySideButton_Click(object sender, EventArgs e)
+        {
+            copySideToOther();
         }
     }
 }

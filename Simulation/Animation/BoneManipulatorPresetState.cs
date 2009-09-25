@@ -29,6 +29,19 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Change the side of this manipulator. Assists in easy copying of data from one side to the other.
+        /// </summary>
+        /// <param name="oldName">The old base name.</param>
+        /// <param name="newName">The new base name.</param>
+        public void changeSide(String oldName, String newName)
+        {
+            foreach (BoneManipulatorStateEntry entry in positions)
+            {
+                entry.changeSide(oldName, newName);
+            }
+        }
+
         #region Saveable Members
 
         private const String POSITION_BASE = "Position";

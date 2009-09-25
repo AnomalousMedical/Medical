@@ -37,6 +37,11 @@ namespace Medical
             }
         }
 
+        public void changeSide(String oldName, String newName)
+        {
+            name = name.Replace(oldName, newName);
+        }
+
         #region Saveable Members
 
         private const String NAME = "Name";
