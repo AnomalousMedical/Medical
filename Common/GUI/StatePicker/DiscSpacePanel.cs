@@ -12,6 +12,11 @@ namespace Medical.GUI
 {
     public partial class DiscSpacePanel : StatePickerPanel
     {
+        private bool allowUpdates = false;
+        private int horizontalStart = 0;
+        private int rightStart = 0;
+        private int leftStart = 0;
+
         public DiscSpacePanel()
         {
             InitializeComponent();
@@ -127,6 +132,22 @@ namespace Medical.GUI
         public override void setToDefault()
         {
 
+        }
+
+        public override void recordOpeningState()
+        {
+            horizontalStart = horizontalDisc.Value;
+            leftStart = leftDiscSpace.Value;
+            rightStart = rightDiscSpace.Value;
+        }
+
+        public override void resetToOpeningState()
+        {
+            allowUpdates = false;
+            horizontalDisc.Value = horizontalStart;
+            leftDiscSpace.Value = leftStart;
+            rightDiscSpace.Value = rightStart;
+            allowUpdates = true;
         }
     }
 }

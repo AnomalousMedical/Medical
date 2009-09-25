@@ -33,6 +33,16 @@ namespace Medical.GUI
 
         }
 
+        public virtual void recordOpeningState()
+        {
+
+        }
+
+        public virtual void resetToOpeningState()
+        {
+
+        }
+
         public String NavigationState { get; set; }
 
         public String LayerState { get; set; }

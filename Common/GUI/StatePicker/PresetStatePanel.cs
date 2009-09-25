@@ -17,6 +17,8 @@ namespace Medical.GUI
     {
         private Dictionary<String, ListViewGroup> groups = new Dictionary<string, ListViewGroup>();
         private ListViewItem defaultItem = null;
+        private ListViewItem openingItem = null; //the item that was selected when this ui was opened.
+        private bool allowUpdates = true;
 
         public PresetStatePanel()
         {
@@ -30,7 +32,10 @@ namespace Medical.GUI
 
         void presetListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            showChanges(false);
+            if (allowUpdates)
+            {
+                showChanges(false);
+            }
         }
 
         public void initialize(PresetStateSet presetStateSet)
@@ -101,6 +106,25 @@ namespace Medical.GUI
         public override void setToDefault()
         {
             
+        }
+
+        public override void recordOpeningState()
+        {
+            if (presetListView.SelectedItems.Count > 0)
+            {
+                openingItem = presetListView.SelectedItems[0];
+            }
+        }
+
+        public override void resetToOpeningState()
+        {
+            allowUpdates = false;
+            presetListView.SelectedItems.Clear();
+            if (openingItem != null)
+            {
+                openingItem.Selected = true;
+            }
+            allowUpdates = true;
         }
     }
 }

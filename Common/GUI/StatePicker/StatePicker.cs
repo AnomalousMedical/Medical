@@ -66,6 +66,10 @@ namespace Medical.GUI
             currentDrawingWindow = controllingWindow;
             navigationStateBeforeShown = navigationController.getNavigationState(currentDrawingWindow).Name;
             stateBlender.recordUndoState();
+            foreach (StatePickerPanel panel in panels)
+            {
+                panel.recordOpeningState();
+            }
             hidePanel();
             currentIndex = 0;
             showPanel();
@@ -172,6 +176,10 @@ namespace Medical.GUI
         private void cancelButton_Click(object sender, EventArgs e)
         {
             stateBlender.blendToUndo();
+            foreach (StatePickerPanel panel in panels)
+            {
+                panel.resetToOpeningState();
+            }
             this.Close();
         }
 
