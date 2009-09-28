@@ -115,5 +115,15 @@ namespace Medical.GUI
                 showChanges(false);
             }
         }
+
+        public override void recordOpeningState()
+        {
+            base.recordOpeningState();
+        }
+
+        public override void resetToOpeningState()
+        {
+            base.resetToOpeningState();
+        }
     }
 }
