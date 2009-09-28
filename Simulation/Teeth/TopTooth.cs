@@ -40,6 +40,24 @@ namespace Medical
             actorElement.ContactEnded -= actorElement_ContactEnded;
         }
 
+        protected override void applyAdaptation(ToothType type, bool adapt)
+        {
+            if (adapt)
+            {
+                if (type == ToothType.Top && collidingTeeth.Count > 0)
+                {
+                    joint.setLinearLowerLimit(new Vector3(-1.0f, -1.0f, -1.0f));
+                    joint.setLinearUpperLimit(new Vector3(1.0f, 1.0f, 1.0f));
+                }
+            }
+            else
+            {
+                Offset = Owner.Translation - Owner.getOtherSimObject("TopToothAnchor").Translation - startingLocation;
+                joint.setLinearLowerLimit(Vector3.Zero);
+                joint.setLinearUpperLimit(Vector3.Zero);
+            }
+        }
+
         void actorElement_ContactStarted(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
         {
             BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;

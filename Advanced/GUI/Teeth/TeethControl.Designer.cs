@@ -82,6 +82,7 @@
             this.pitchUpDown = new System.Windows.Forms.NumericUpDown();
             this.resetButton = new System.Windows.Forms.Button();
             this.highlightCollisionCheckBox = new System.Windows.Forms.CheckBox();
+            this.adaptButton = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).BeginInit();
@@ -927,12 +928,25 @@
             this.highlightCollisionCheckBox.UseVisualStyleBackColor = true;
             this.highlightCollisionCheckBox.CheckedChanged += new System.EventHandler(this.highlightCollisionCheckBox_CheckedChanged);
             // 
+            // adaptButton
+            // 
+            this.adaptButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this.adaptButton.AutoSize = true;
+            this.adaptButton.Location = new System.Drawing.Point(35, 718);
+            this.adaptButton.Name = "adaptButton";
+            this.adaptButton.Size = new System.Drawing.Size(45, 23);
+            this.adaptButton.TabIndex = 10;
+            this.adaptButton.Text = "Adapt";
+            this.adaptButton.UseVisualStyleBackColor = true;
+            this.adaptButton.CheckedChanged += new System.EventHandler(this.adaptButton_CheckedChanged);
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(260, 719);
+            this.ClientSize = new System.Drawing.Size(260, 747);
+            this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.highlightCollisionCheckBox);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.groupBox2);
@@ -1020,6 +1034,7 @@
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.ToolStripComboBox selectionSetCombo;
         private System.Windows.Forms.CheckBox highlightCollisionCheckBox;
+        private System.Windows.Forms.CheckBox adaptButton;
 
     }
 }

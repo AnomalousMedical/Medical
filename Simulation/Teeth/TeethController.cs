@@ -36,6 +36,14 @@ namespace Medical
             return ret;
         }
 
+        public static void adaptTeeth()
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                tooth.adapt();
+            }
+        }
+
         public static TeethState createTeethState()
         {
             TeethState state = new TeethState();

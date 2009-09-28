@@ -6,6 +6,7 @@ using Engine.Editing;
 using Engine;
 using Logging;
 using BulletPlugin;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -31,6 +32,25 @@ namespace Medical
             base.destroy();
             actorElement.ContactStarted -= actorElement_ContactStarted;
             actorElement.ContactEnded -= actorElement_ContactEnded;
+        }
+
+        protected override void applyAdaptation(ToothType type, bool adapt)
+        {
+            if (adapt)
+            {
+                if (type == ToothType.Bottom && collidingTeeth.Count > 0)
+                {
+                    joint.setLinearLowerLimit(new Vector3(-1.0f, -1.0f, -1.0f));
+                    joint.setLinearUpperLimit(new Vector3(1.0f, 1.0f, 1.0f));
+                }
+            }
+            else
+            {
+                SimObject other = Owner.getOtherSimObject("Mandible");
+                Offset = Quaternion.quatRotate(other.Rotation.inverse(), Owner.Translation - other.Translation) - startingLocation;
+                joint.setLinearLowerLimit(Vector3.Zero);
+                joint.setLinearUpperLimit(Vector3.Zero);
+            }
         }
 
         void actorElement_ContactStarted(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)

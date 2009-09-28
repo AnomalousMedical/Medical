@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine.ObjectManagement;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -36,6 +37,14 @@ namespace Medical.GUI
         public void initialize(MedicalController medicalController)
         {
             this.medicalController = medicalController;
+        }
+
+        protected override void fixedLoopUpdate(Clock time)
+        {
+            if (adaptButton.Checked)
+            {
+                TeethController.adaptTeeth();
+            }
         }
 
         protected override void sceneLoaded(SimScene scene)
@@ -175,6 +184,18 @@ namespace Medical.GUI
         private void highlightCollisionCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             TeethController.HighlightContacts = highlightCollisionCheckBox.Checked;
+        }
+
+        private void adaptButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (adaptButton.Checked)
+            {
+                this.subscribeToUpdates();
+            }
+            else
+            {
+                this.unsubscribeFromUpdates();
+            }
         }
     }
 }

@@ -12,6 +12,12 @@ using BulletPlugin;
 
 namespace Medical
 {
+    public enum ToothType
+    {
+        Top,
+        Bottom,
+    }
+
     public abstract class Tooth : Behavior
     {
         [Editable]
@@ -44,7 +50,9 @@ namespace Medical
         private Quaternion startingRotation;
         private Vector3 offset = Vector3.Zero;
         private Quaternion rotationOffset = Quaternion.Identity;
+        private int adaptTeeth = 0;
 
+        [DoNotCopy]
         protected List<Tooth> collidingTeeth = new List<Tooth>(5);
 
         protected override void constructed()
@@ -106,12 +114,54 @@ namespace Medical
                     }
                 }
             }
+            if (adaptTeeth > 0)
+            {
+                switch (adaptTeeth)
+                {
+                    case 1:
+                        applyAdaptation(ToothType.Top, true);
+                        break;
+                    case 2:
+                        applyAdaptation(ToothType.Top, false);
+                        break;
+                    case 3:
+                        applyAdaptation(ToothType.Bottom, true);
+                        break;
+                    case 4:
+                        applyAdaptation(ToothType.Bottom, false);
+                        break;
+                    default:
+                        adaptTeeth = -1;
+                        break;
+                }
+                adaptTeeth++;
+            }
 
             HighlightColor = highlight ? Color.Blue : Color.White;
         }
 
         protected abstract void looseChanged(bool loose);
 
+        /// <summary>
+        /// Adapt the teeth. Will not start if already running. Returns true if adaptation started sucessfully.
+        /// </summary>
+        /// <returns>True if the adaptation process started sucessfully.</returns>
+        public bool adapt()
+        {
+            if (!Extracted && adaptTeeth == 0)
+            {
+                adaptTeeth = 1;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        protected abstract void applyAdaptation(ToothType type, bool adapt);
+
+        [DoNotCopy]
         protected Color HighlightColor
         {
             set
@@ -120,6 +170,7 @@ namespace Medical
             }
         }
 
+        [DoNotCopy]
         public bool Extracted
         {
             get
