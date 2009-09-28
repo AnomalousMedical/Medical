@@ -50,7 +50,7 @@ namespace Medical
             {
                 SimObject other = Owner.getOtherSimObject("Mandible");
                 Offset = Quaternion.quatRotate(other.Rotation.inverse(), Owner.Translation - other.Translation) - startingLocation;
-                //Rotation = Owner.Rotation * startingRotation.inverse() * other.Rotation.inverse();
+                Rotation = other.Rotation.inverse() * Owner.Rotation * startingRotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);
                 joint.setLinearUpperLimit(Vector3.Zero);
                 joint.setAngularLowerLimit(Vector3.Zero);
