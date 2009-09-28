@@ -6,6 +6,7 @@ using Engine.Editing;
 using BulletPlugin;
 using Engine;
 using OgreWrapper;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -48,13 +49,19 @@ namespace Medical
                 {
                     joint.setLinearLowerLimit(new Vector3(-1.0f, -1.0f, -1.0f));
                     joint.setLinearUpperLimit(new Vector3(1.0f, 1.0f, 1.0f));
+                    joint.setAngularLowerLimit(new Vector3(-3.14f, -3.14f, -3.14f));
+                    joint.setAngularUpperLimit(new Vector3(3.14f, 3.14f, 3.14f));
                 }
             }
             else
             {
-                Offset = Owner.Translation - Owner.getOtherSimObject("TopToothAnchor").Translation - startingLocation;
+                SimObject otherSimObject = Owner.getOtherSimObject("TopToothAnchor");
+                Offset = Owner.Translation - otherSimObject.Translation - startingLocation;
+                Rotation = Owner.Rotation * startingRotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);
                 joint.setLinearUpperLimit(Vector3.Zero);
+                joint.setAngularLowerLimit(Vector3.Zero);
+                joint.setAngularUpperLimit(Vector3.Zero);
             }
         }
 

@@ -42,14 +42,19 @@ namespace Medical
                 {
                     joint.setLinearLowerLimit(new Vector3(-1.0f, -1.0f, -1.0f));
                     joint.setLinearUpperLimit(new Vector3(1.0f, 1.0f, 1.0f));
+                    joint.setAngularLowerLimit(new Vector3(-3.14f, -3.14f, -3.14f));
+                    joint.setAngularUpperLimit(new Vector3(3.14f, 3.14f, 3.14f));
                 }
             }
             else
             {
                 SimObject other = Owner.getOtherSimObject("Mandible");
                 Offset = Quaternion.quatRotate(other.Rotation.inverse(), Owner.Translation - other.Translation) - startingLocation;
+                //Rotation = Owner.Rotation * startingRotation.inverse() * other.Rotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);
                 joint.setLinearUpperLimit(Vector3.Zero);
+                joint.setAngularLowerLimit(Vector3.Zero);
+                joint.setAngularUpperLimit(Vector3.Zero);
             }
         }
 
