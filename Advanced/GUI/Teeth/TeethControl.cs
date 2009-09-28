@@ -56,6 +56,12 @@ namespace Medical.GUI
             }
         }
 
+        protected override void sceneUnloading()
+        {
+            base.sceneUnloading();
+            adaptButton.Checked = false;
+        }
+
         private void removeButton_Click(object sender, EventArgs e)
         {
             foreach (CheckBox control in teethPanel.Controls)

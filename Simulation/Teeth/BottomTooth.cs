@@ -48,7 +48,7 @@ namespace Medical
             }
             else
             {
-                SimObject other = Owner.getOtherSimObject("Mandible");
+                SimObject other = joint.RigidBodyA.Owner;
                 Offset = Quaternion.quatRotate(other.Rotation.inverse(), Owner.Translation - other.Translation) - startingLocation;
                 Rotation = other.Rotation.inverse() * Owner.Rotation * startingRotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);

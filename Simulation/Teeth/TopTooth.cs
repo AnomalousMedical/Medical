@@ -55,7 +55,7 @@ namespace Medical
             }
             else
             {
-                SimObject otherSimObject = Owner.getOtherSimObject("TopToothAnchor");
+                SimObject otherSimObject = joint.RigidBodyA.Owner;
                 Offset = Owner.Translation - otherSimObject.Translation - startingLocation;
                 Rotation = Owner.Rotation * startingRotation.inverse();
                 joint.setLinearLowerLimit(Vector3.Zero);
