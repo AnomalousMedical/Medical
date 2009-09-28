@@ -83,6 +83,7 @@
             this.resetButton = new System.Windows.Forms.Button();
             this.highlightCollisionCheckBox = new System.Windows.Forms.CheckBox();
             this.adaptButton = new System.Windows.Forms.CheckBox();
+            this.stopOnContactCheck = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).BeginInit();
@@ -940,12 +941,25 @@
             this.adaptButton.UseVisualStyleBackColor = true;
             this.adaptButton.CheckedChanged += new System.EventHandler(this.adaptButton_CheckedChanged);
             // 
+            // stopOnContactCheck
+            // 
+            this.stopOnContactCheck.AutoSize = true;
+            this.stopOnContactCheck.Checked = true;
+            this.stopOnContactCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.stopOnContactCheck.Location = new System.Drawing.Point(86, 722);
+            this.stopOnContactCheck.Name = "stopOnContactCheck";
+            this.stopOnContactCheck.Size = new System.Drawing.Size(118, 17);
+            this.stopOnContactCheck.TabIndex = 11;
+            this.stopOnContactCheck.Text = "Stop on full contact";
+            this.stopOnContactCheck.UseVisualStyleBackColor = true;
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(260, 747);
+            this.Controls.Add(this.stopOnContactCheck);
             this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.highlightCollisionCheckBox);
             this.Controls.Add(this.resetButton);
@@ -1035,6 +1049,7 @@
         private System.Windows.Forms.ToolStripComboBox selectionSetCombo;
         private System.Windows.Forms.CheckBox highlightCollisionCheckBox;
         private System.Windows.Forms.CheckBox adaptButton;
+        private System.Windows.Forms.CheckBox stopOnContactCheck;
 
     }
 }

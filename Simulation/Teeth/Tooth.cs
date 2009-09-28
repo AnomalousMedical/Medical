@@ -105,14 +105,7 @@ namespace Medical
             bool highlight = false;
             if (TeethController.HighlightContacts)
             {
-                foreach (Tooth tooth in collidingTeeth)
-                {
-                    if (!tooth.Extracted)
-                    {
-                        highlight = true;
-                        break;
-                    }
-                }
+                highlight = MakingContact;
             }
             if (adaptTeeth > 0)
             {
@@ -237,6 +230,22 @@ namespace Medical
             {
                 rotationOffset = value;
                 joint.setFrameOffsetA(rotationOffset * startingRotation);
+            }
+        }
+
+        [DoNotCopy]
+        public bool MakingContact
+        {
+            get
+            {
+                foreach (Tooth tooth in collidingTeeth)
+                {
+                    if (!tooth.Extracted)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
     }

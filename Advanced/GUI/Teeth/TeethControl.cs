@@ -44,6 +44,10 @@ namespace Medical.GUI
             if (adaptButton.Checked)
             {
                 TeethController.adaptTeeth();
+                if (stopOnContactCheck.Checked && TeethController.allTeethTouching())
+                {
+                    adaptButton.Checked = false;
+                }
             }
         }
 
@@ -196,7 +200,14 @@ namespace Medical.GUI
         {
             if (adaptButton.Checked)
             {
-                this.subscribeToUpdates();
+                if (!(stopOnContactCheck.Checked && TeethController.allTeethTouching()))
+                {
+                    this.subscribeToUpdates();
+                }
+                else
+                {
+                    adaptButton.Checked = false;
+                }
             }
             else
             {
