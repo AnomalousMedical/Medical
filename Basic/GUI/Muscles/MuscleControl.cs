@@ -21,12 +21,14 @@ namespace Medical.GUI
     {
         private XmlSaver xmlSaver = new XmlSaver();
         private MovementSequence currentSequence;
+        private String currentSequenceFile;
         private float time;
 
         public MuscleControl()
         {
             InitializeComponent();
-            muscleSequenceView.SequenceActivated += new MuscleSequenceActivated(muscleSequenceView_SequenceActivated);
+            muscleSequenceView.SequenceActivated += new MuscleSequenceEvent(muscleSequenceView_SequenceActivated);
+            muscleSequenceView.SequenceSelected += new MuscleSequenceEvent(muscleSequenceView_SequenceSelected);
             playbackTrackBar.TimeChanged += new TimeChanged(playbackTrackBar_TimeChanged);
         }
 
@@ -35,6 +37,18 @@ namespace Medical.GUI
             time = 0.0f;
             playbackTrackBar.CurrentTime = 0.0f;
             unsubscribeFromUpdates();
+        }
+
+        public void startPlayback()
+        {
+            if (currentSequence == null && currentSequenceFile != null)
+            {
+                loadSequence();
+            }
+            if (currentSequence != null)
+            {
+                subscribeToUpdates();
+            }
         }
 
         void playbackTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
@@ -47,20 +61,14 @@ namespace Medical.GUI
 
         void muscleSequenceView_SequenceActivated(string sequenceText, string sequenceFile)
         {
-            using (Archive archive = FileSystem.OpenArchive(sequenceFile))
-            {
-                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(sequenceFile, FileMode.Open, FileAccess.Read)))
-                {
-                    currentSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
-                }
-            }
-            playbackPanel.Enabled = currentSequence != null;
-            if(playbackPanel.Enabled)
-            {
-                playbackTrackBar.MaximumTime = currentSequence.Duration;
-                playbackTrackBar.CurrentTime = 0;
-                time = 0.0f;
-            }
+            startPlayback();
+        }
+
+        void muscleSequenceView_SequenceSelected(string sequenceText, string sequenceFile)
+        {
+            stopPlayback();
+            currentSequence = null;
+            currentSequenceFile = sequenceFile;
         }
 
         protected override void sceneLoaded(SimScene scene)
@@ -87,12 +95,30 @@ namespace Medical.GUI
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            subscribeToUpdates();
+            startPlayback();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
             stopPlayback();
+        }
+
+        private void loadSequence()
+        {
+            using (Archive archive = FileSystem.OpenArchive(currentSequenceFile))
+            {
+                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(currentSequenceFile, FileMode.Open, FileAccess.Read)))
+                {
+                    currentSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                }
+            }
+            playbackPanel.Enabled = currentSequence != null;
+            if (playbackPanel.Enabled)
+            {
+                playbackTrackBar.MaximumTime = currentSequence.Duration;
+                playbackTrackBar.CurrentTime = 0;
+                time = 0.0f;
+            }
         }
     }
 }

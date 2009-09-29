@@ -13,17 +13,19 @@ using Medical.Muscles;
 
 namespace Medical.GUI
 {
-    public delegate void MuscleSequenceActivated(String sequenceText, String sequenceFile);
+    public delegate void MuscleSequenceEvent(String sequenceText, String sequenceFile);
 
     public partial class MuscleSequenceView : UserControl
     {
         private Dictionary<String, ListViewGroup> groups = new Dictionary<string, ListViewGroup>();
-        public event MuscleSequenceActivated SequenceActivated;
+        public event MuscleSequenceEvent SequenceActivated;
+        public event MuscleSequenceEvent SequenceSelected;
 
         public MuscleSequenceView()
         {
             InitializeComponent();
             muscleStateList.ItemActivate += new EventHandler(muscleStateList_ItemActivate);
+            muscleStateList.SelectedIndexChanged += new EventHandler(muscleStateList_SelectedIndexChanged);
             muscleStateList.Columns.Add("Name", -2, HorizontalAlignment.Left);
         }
 
@@ -60,6 +62,22 @@ namespace Medical.GUI
             {
                 ListViewItem selected = muscleStateList.SelectedItems[0];
                 SequenceActivated.Invoke(selected.Text, selected.Tag.ToString());
+            }
+        }
+
+        void muscleStateList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SequenceSelected != null)
+            {
+                if (muscleStateList.SelectedItems.Count > 0)
+                {
+                    ListViewItem selected = muscleStateList.SelectedItems[0];
+                    SequenceSelected.Invoke(selected.Text, selected.Tag.ToString());
+                }
+                else
+                {
+                    SequenceSelected.Invoke(null, null);
+                }
             }
         }
 
