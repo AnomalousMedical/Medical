@@ -78,7 +78,10 @@ namespace Medical.GUI
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            muscleStateList.Columns[0].Width = -2;
+            if (muscleStateList != null && muscleStateList.Columns.Count > 0)
+            {
+                muscleStateList.Columns[0].Width = -2;
+            }
         }
     }
 }

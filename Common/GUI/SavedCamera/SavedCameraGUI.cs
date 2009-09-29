@@ -159,7 +159,10 @@ namespace Medical.GUI
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            cameraNameList.Columns[0].Width = -2;
+            if (cameraNameList != null)
+            {
+                cameraNameList.Columns[0].Width = -2;
+            }
         }
     }
 }
