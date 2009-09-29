@@ -155,5 +155,11 @@ namespace Medical.GUI
                 userCameras.saveCameras();
             }
         }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            cameraNameList.Columns[0].Width = -2;
+        }
     }
 }

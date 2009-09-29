@@ -14,6 +14,7 @@ namespace Medical
         private String cameraFile = "";
         private String presetDirectory;
         private String layersFile;
+        private String sequenceDirectory;
 
         public SimulationScene(String name)
         {
@@ -28,6 +29,7 @@ namespace Medical
             definition.CameraFile = cameraFile;
             definition.PresetDirectory = presetDirectory;
             definition.LayersFile = layersFile;
+            definition.SequenceDirectory = sequenceDirectory;
             return definition;
         }
 
@@ -88,6 +90,18 @@ namespace Medical
             set
             {
                 layersFile = value;
+            }
+        }
+
+        public String SequenceDirectory
+        {
+            get
+            {
+                return sequenceDirectory;
+            }
+            set
+            {
+                sequenceDirectory = value;
             }
         }
 

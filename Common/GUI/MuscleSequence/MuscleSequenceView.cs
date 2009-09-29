@@ -7,37 +7,45 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.Properties;
+using Engine.Resources;
+using Engine.Saving.XMLSaver;
+using Medical.Muscles;
 
 namespace Medical.GUI
 {
+    public delegate void MuscleSequenceActivated(String sequenceText, String sequenceFile);
+
     public partial class MuscleSequenceView : UserControl
     {
         private Dictionary<String, ListViewGroup> groups = new Dictionary<string, ListViewGroup>();
+        public event MuscleSequenceActivated SequenceActivated;
 
         public MuscleSequenceView()
         {
             InitializeComponent();
             muscleStateList.ItemActivate += new EventHandler(muscleStateList_ItemActivate);
+            muscleStateList.Columns.Add("Name", -2, HorizontalAlignment.Left);
         }
 
-        public void initializeSequences()
+        public void initializeSequences(SimulationScene simScene, String sceneDirectory)
         {
             groups.Clear();
             muscleStateList.Groups.Clear();
-            foreach (MuscleSequence sequence in MuscleController.getMuscleSequences())
+            String sequenceDir = sceneDirectory + "/" + simScene.SequenceDirectory;
+            using (Archive archive = FileSystem.OpenArchive(sequenceDir))
             {
-                ListViewItem listViewItem = new ListViewItem(sequence.SequenceName, sequence.IconName);
-                listViewItem.Tag = sequence;
-                ListViewGroup group;
-                groups.TryGetValue(sequence.GroupName, out group);
-                if (group == null)
+                foreach (String directory in archive.listDirectories(sequenceDir, false))
                 {
-                    group = new ListViewGroup(sequence.GroupName, sequence.GroupName);
-                    groups.Add(sequence.GroupName, group);
+                    ListViewGroup group = new ListViewGroup(archive.getFileInfo(directory).Name);
                     muscleStateList.Groups.Add(group);
+                    foreach (String file in archive.listFiles(directory, false))
+                    {
+                        String fileName = archive.getFileInfo(file).Name;
+                        ListViewItem listViewItem = new ListViewItem(fileName.Substring(0, fileName.Length - 4), group);
+                        listViewItem.Tag = file;
+                        muscleStateList.Items.Add(listViewItem);
+                    }
                 }
-                listViewItem.Group = group;
-                muscleStateList.Items.Add(listViewItem);
             }
         }
 
@@ -48,9 +56,10 @@ namespace Medical.GUI
 
         void muscleStateList_ItemActivate(object sender, EventArgs e)
         {
-            if (muscleStateList.SelectedItems.Count > 0)
+            if (muscleStateList.SelectedItems.Count > 0 && SequenceActivated != null)
             {
-                ((MuscleSequence)muscleStateList.SelectedItems[0].Tag).activate();
+                ListViewItem selected = muscleStateList.SelectedItems[0];
+                SequenceActivated.Invoke(selected.Text, selected.Tag.ToString());
             }
         }
 
@@ -64,6 +73,12 @@ namespace Medical.GUI
             {
                 muscleStateList.LargeImageList = value;
             }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            muscleStateList.Columns[0].Width = -2;
         }
     }
 }

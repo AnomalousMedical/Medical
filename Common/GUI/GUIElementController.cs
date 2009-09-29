@@ -23,6 +23,7 @@ namespace Medical.GUI
         private ToolStripContainer toolStripContainer;
         private SortedDictionary<String, ToolStrip> toolStrips = new SortedDictionary<string, ToolStrip>();
         private bool enabled = false;
+        private MedicalController medicalController;
 
         public GUIElementController(DockPanel dock, ToolStripContainer toolStrip, MedicalController controller)
         {
@@ -30,6 +31,7 @@ namespace Medical.GUI
             this.toolStripContainer = toolStrip;
             controller.FixedLoopUpdate += fixedLoopUpdate;
             toolStrip.Size = new Size(toolStrip.Size.Width, 40);
+            this.medicalController = controller;
         }
 
         /// <summary>
@@ -114,6 +116,14 @@ namespace Medical.GUI
             get
             {
                 return toolStripContainer;
+            }
+        }
+
+        public MedicalController MedicalController
+        {
+            get
+            {
+                return medicalController;
             }
         }
 

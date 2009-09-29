@@ -43,6 +43,7 @@
             this.muscleStateList.TabIndex = 14;
             this.muscleStateList.TileSize = new System.Drawing.Size(100, 100);
             this.muscleStateList.UseCompatibleStateImageBehavior = false;
+            this.muscleStateList.View = System.Windows.Forms.View.Details;
             // 
             // MuscleSequenceView
             // 

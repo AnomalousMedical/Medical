@@ -117,6 +117,14 @@ namespace Medical.GUI
             }
         }
 
+        public MedicalController MedicalController
+        {
+            get
+            {
+                return controller.MedicalController;
+            }
+        }
+
         /// <summary>
         /// This will be true if the window was hidden using hideWindows because
         /// it was visible when the function was called. Allows

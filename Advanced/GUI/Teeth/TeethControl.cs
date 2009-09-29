@@ -43,7 +43,14 @@ namespace Medical.GUI
         {
             if (adaptButton.Checked)
             {
-                TeethController.adaptTeeth();
+                foreach (CheckBox control in teethPanel.Controls)
+                {
+                    if (control.Checked)
+                    {
+                        TeethController.adaptSingleTooth(control.Tag.ToString());
+                    }
+                }
+                //TeethController.adaptAllTeeth();
                 if (stopOnContactCheck.Checked && TeethController.allTeethTouching())
                 {
                     adaptButton.Checked = false;

@@ -118,8 +118,8 @@ namespace Medical.Controller
             mandibleSize.initialize(medicalController);
             guiElements.addGUIElement(mandibleSize);
 
-            MuscleControl muscleControl = new MuscleControl();
-            guiElements.addGUIElement(muscleControl);
+            //MuscleControl muscleControl = new MuscleControl();
+            //guiElements.addGUIElement(muscleControl);
 
             TeethControl teethControl = new TeethControl();
             teethControl.initialize(medicalController);

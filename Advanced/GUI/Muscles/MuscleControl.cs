@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -73,7 +74,12 @@ namespace Medical.GUI
                 setRightMuscleGroup(group);
             }
 
-            muscleSequenceView.initializeSequences();
+            SimSubScene defaultScene = scene.getDefaultSubScene();
+            if (defaultScene != null)
+            {
+                SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                muscleSequenceView.initializeSequences(medicalScene, MedicalController.CurrentSceneDirectory);
+            }
         }
 
         protected override void sceneUnloading()
@@ -240,7 +246,6 @@ namespace Medical.GUI
             {
                 bothSides.Items.Add(obj.ToString());
             }
-
         }
     }
 }

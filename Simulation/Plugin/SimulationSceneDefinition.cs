@@ -25,6 +25,7 @@ namespace Medical
         private String cameraFile;
         private String presetDirectory;
         private String layersFile;
+        private String sequenceDirectory;
 
         public SimulationSceneDefinition(String name)
         {
@@ -47,6 +48,7 @@ namespace Medical
             scene.CameraFile = cameraFile;
             scene.PresetDirectory = presetDirectory;
             scene.LayersFile = layersFile;
+            scene.SequenceDirectory = sequenceDirectory;
             return scene;
         }
 
@@ -103,6 +105,19 @@ namespace Medical
             }
         }
 
+        [Editable]
+        public String SequenceDirectory
+        {
+            get
+            {
+                return sequenceDirectory;
+            }
+            set
+            {
+                sequenceDirectory = value;
+            }
+        }
+
         #endregion
 
         #region EditInterface
@@ -126,6 +141,7 @@ namespace Medical
         private const String CAMERA_FILE = "CameraFile";
         private const String PRESET_DIRECTORY = "PresetDirectory";
         private const String LAYERS_FILE = "LayersFile";
+        private const String SEQUENCE_DIRECTORY = "SequenceDirectory";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
@@ -133,6 +149,7 @@ namespace Medical
             cameraFile = info.GetString(CAMERA_FILE);
             presetDirectory = info.GetString(PRESET_DIRECTORY);
             layersFile = info.GetString(LAYERS_FILE);
+            sequenceDirectory = info.GetString(SEQUENCE_DIRECTORY);
         }
 
         public void getInfo(SaveInfo info)
@@ -141,6 +158,7 @@ namespace Medical
             info.AddValue(CAMERA_FILE, cameraFile);
             info.AddValue(PRESET_DIRECTORY, presetDirectory);
             info.AddValue(LAYERS_FILE, layersFile);
+            info.AddValue(SEQUENCE_DIRECTORY, sequenceDirectory);
         }
 
         #endregion

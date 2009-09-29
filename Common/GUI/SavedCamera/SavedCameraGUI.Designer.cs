@@ -96,7 +96,7 @@
             // Camera
             // 
             this.Camera.Text = "Camera";
-            this.Camera.Width = 158;
+            this.Camera.Width = 307;
             // 
             // SavedCameraGUI
             // 

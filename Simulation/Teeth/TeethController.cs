@@ -36,12 +36,17 @@ namespace Medical
             return ret;
         }
 
-        public static void adaptTeeth()
+        public static void adaptAllTeeth()
         {
             foreach (Tooth tooth in teeth.Values)
             {
                 tooth.adapt();
             }
+        }
+
+        public static void adaptSingleTooth(String name)
+        {
+            teeth[name].adapt();
         }
 
         /// <summary>
