@@ -31,16 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MuscleControl));
             this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
             this.playbackPanel = new System.Windows.Forms.Panel();
-            this.playbackTrackBar = new Medical.GUI.TimeTrackBar();
-            this.playButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
+            this.playButton = new System.Windows.Forms.Button();
+            this.playbackTrackBar = new Medical.GUI.TimeTrackBar();
             this.playbackPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // muscleSequenceView
             // 
             this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.muscleSequenceView.LargeImageList = null;
             this.muscleSequenceView.Location = new System.Drawing.Point(0, 0);
             this.muscleSequenceView.Name = "muscleSequenceView";
             this.muscleSequenceView.Size = new System.Drawing.Size(236, 514);
@@ -57,21 +56,15 @@
             this.playbackPanel.Size = new System.Drawing.Size(236, 85);
             this.playbackPanel.TabIndex = 14;
             // 
-            // playbackTrackBar
+            // stopButton
             // 
-            this.playbackTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.playbackTrackBar.BarMenu = null;
-            this.playbackTrackBar.ChangeTimeOnSelection = false;
-            this.playbackTrackBar.CurrentTime = 0F;
-            this.playbackTrackBar.Location = new System.Drawing.Point(3, 3);
-            this.playbackTrackBar.MaximumTime = 0F;
-            this.playbackTrackBar.MoveMarks = false;
-            this.playbackTrackBar.Name = "playbackTrackBar";
-            this.playbackTrackBar.SelectedMark = null;
-            this.playbackTrackBar.Size = new System.Drawing.Size(230, 47);
-            this.playbackTrackBar.TabIndex = 1;
-            this.playbackTrackBar.TickMenu = null;
+            this.stopButton.Location = new System.Drawing.Point(86, 57);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 3;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -83,15 +76,22 @@
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
             // 
-            // stopButton
+            // playbackTrackBar
             // 
-            this.stopButton.Location = new System.Drawing.Point(86, 57);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(75, 23);
-            this.stopButton.TabIndex = 3;
-            this.stopButton.Text = "Stop";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            this.playbackTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.playbackTrackBar.BarMenu = null;
+            this.playbackTrackBar.ChangeTimeOnSelection = false;
+            this.playbackTrackBar.CurrentTime = 0F;
+            this.playbackTrackBar.Location = new System.Drawing.Point(3, 3);
+            this.playbackTrackBar.MaximumTime = 1F;
+            this.playbackTrackBar.MoveMarks = false;
+            this.playbackTrackBar.MoveThumb = false;
+            this.playbackTrackBar.Name = "playbackTrackBar";
+            this.playbackTrackBar.SelectedMark = null;
+            this.playbackTrackBar.Size = new System.Drawing.Size(230, 47);
+            this.playbackTrackBar.TabIndex = 1;
+            this.playbackTrackBar.TickMenu = null;
             // 
             // MuscleControl
             // 

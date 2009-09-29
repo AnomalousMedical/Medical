@@ -49,12 +49,6 @@ namespace Medical.GUI
             leftMuscleGroups.SelectedValueChanged += new EventHandler(leftMuscleGroups_SelectedValueChanged);
             bothSides.SelectedValueChanged += new EventHandler(bothSides_SelectedValueChanged);
             setupMuscleGroups();
-
-            muscleSequenceView.LargeImageList = new ImageList();
-            muscleSequenceView.LargeImageList.ImageSize = new Size(108, 120);
-            muscleSequenceView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            muscleSequenceView.LargeImageList.Images.Add("OpenIcon", Resources.openmuscle);
-            muscleSequenceView.LargeImageList.Images.Add("CloseIcon", Resources.clenchedmuscle);
         }
 
         protected override void sceneLoaded(SimScene scene)

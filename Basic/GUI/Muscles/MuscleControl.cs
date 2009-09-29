@@ -43,11 +43,6 @@ namespace Medical.GUI
         public MuscleControl()
         {
             InitializeComponent();
-            muscleSequenceView.LargeImageList = new ImageList();
-            muscleSequenceView.LargeImageList.ImageSize = new Size(108, 120);
-            muscleSequenceView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            muscleSequenceView.LargeImageList.Images.Add("OpenIcon", Resources.openmuscle);
-            muscleSequenceView.LargeImageList.Images.Add("CloseIcon", Resources.clenchedmuscle);
             muscleSequenceView.SequenceActivated += new MuscleSequenceActivated(muscleSequenceView_SequenceActivated);
             playbackTrackBar.TimeChanged += new TimeChanged(playbackTrackBar_TimeChanged);
         }

@@ -36,7 +36,9 @@
             this.muscleStateList.BackColor = System.Drawing.SystemColors.Window;
             this.muscleStateList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.muscleStateList.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.muscleStateList.HideSelection = false;
             this.muscleStateList.Location = new System.Drawing.Point(0, 0);
+            this.muscleStateList.MultiSelect = false;
             this.muscleStateList.Name = "muscleStateList";
             this.muscleStateList.Size = new System.Drawing.Size(150, 150);
             this.muscleStateList.Sorting = System.Windows.Forms.SortOrder.Ascending;

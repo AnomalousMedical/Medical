@@ -63,18 +63,6 @@ namespace Medical.GUI
             }
         }
 
-        public ImageList LargeImageList
-        {
-            get
-            {
-                return muscleStateList.LargeImageList;
-            }
-            set
-            {
-                muscleStateList.LargeImageList = value;
-            }
-        }
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);

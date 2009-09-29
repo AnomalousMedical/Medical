@@ -33,6 +33,7 @@ namespace Medical.GUI
         private TrackBarMark selectedMark = null;
         bool selectedMarkMoved = false;
         bool moveMarks = false;
+        bool moveThumb = true;
 
         private ContextMenuStrip tickMenu = null;
         private TrackBarMark menuTargetMark = null;
@@ -162,14 +163,13 @@ namespace Medical.GUI
                 int mark = findMarkAt(e.Location);
                 if (mark == -1)
                 {
-                    if (this.thumbRectangle.Contains(e.Location))
+                    if (moveThumb && this.thumbRectangle.Contains(e.Location))
                     {
                         thumbClicked = true;
                         thumbState = TrackBarThumbState.Pressed;
                         Cursor.Hide();
+                        this.Invalidate();
                     }
-
-                    this.Invalidate();
                 }
                 else
                 {
@@ -367,6 +367,18 @@ namespace Medical.GUI
             set
             {
                 moveMarks = value;
+            }
+        }
+
+        public bool MoveThumb
+        {
+            get
+            {
+                return moveThumb;
+            }
+            set
+            {
+                moveThumb = value;
             }
         }
 

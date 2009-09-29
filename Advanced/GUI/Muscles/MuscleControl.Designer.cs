@@ -103,7 +103,6 @@
             // muscleSequenceView
             // 
             this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.muscleSequenceView.LargeImageList = null;
             this.muscleSequenceView.Location = new System.Drawing.Point(3, 3);
             this.muscleSequenceView.Name = "muscleSequenceView";
             this.muscleSequenceView.Size = new System.Drawing.Size(245, 389);
