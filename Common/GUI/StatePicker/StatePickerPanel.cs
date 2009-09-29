@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -41,6 +42,24 @@ namespace Medical.GUI
         public virtual void resetToOpeningState()
         {
 
+        }
+
+        /// <summary>
+        /// Set the state of the muscles and other scene elements as appropriate
+        /// for this panel's editing. By default this will reset the muscles as
+        /// they are when the scene starts.
+        /// </summary>
+        public virtual void modifyScene()
+        {
+            ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+            ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
+            MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
+            MovingMuscleTarget movingMuscleTarget = MuscleController.MovingTarget;
+
+            leftCP.setLocation(leftCP.getNeutralLocation());
+            rightCP.setLocation(rightCP.getNeutralLocation());
+            movingMuscle.changeForce(6.0f);
+            movingMuscleTarget.Offset = Vector3.Zero;
         }
 
         public String NavigationState { get; set; }

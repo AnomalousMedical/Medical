@@ -79,5 +79,18 @@ namespace Medical.GUI
                 }
             }
         }
+
+        public override void modifyScene()
+        {
+            ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+            ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
+            MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
+            MovingMuscleTarget movingMuscleTarget = MuscleController.MovingTarget;
+
+            leftCP.setLocation(leftCP.getNeutralLocation());
+            rightCP.setLocation(rightCP.getNeutralLocation());
+            movingMuscle.changeForce(1.0f);
+            movingMuscleTarget.Offset = Vector3.Zero;
+        }
     }
 }

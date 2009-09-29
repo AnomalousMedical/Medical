@@ -135,6 +135,7 @@ namespace Medical.GUI
                 {
                     layerController.applyLayerState(panel.LayerState);
                 }
+                panel.modifyScene();
                 updatePanel = true;
             }
         }
