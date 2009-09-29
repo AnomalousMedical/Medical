@@ -19,23 +19,6 @@ namespace Medical.GUI
 {
     public partial class MuscleControl : GUIElement
     {
-        private const String RightTemporalisDynamic = "RightTemporalisDynamic";
-        private const String RightMasseterDynamic = "RightMasseterDynamic";
-        private const String RightMedialPterygoidDynamic = "RightMedialPterygoidDynamic";
-        private const String RightLateralPterygoidDynamic = "RightLateralPterygoidDynamic";
-        private const String RightDigastricDynamic = "RightDigastricDynamic";
-
-        private const String LeftTemporalisDynamic = "LeftTemporalisDynamic";
-        private const String LeftMasseterDynamic = "LeftMasseterDynamic";
-        private const String LeftMedialPterygoidDynamic = "LeftMedialPterygoidDynamic";
-        private const String LeftLateralPterygoidDynamic = "LeftLateralPterygoidDynamic";
-        private const String LeftDigastricDynamic = "LeftDigastricDynamic";
-
-        private const float CP_MOVE_SPEED = 0.25f;
-
-        private ControlPointBehavior leftCP;
-        private ControlPointBehavior rightCP;
-
         private XmlSaver xmlSaver = new XmlSaver();
         private MovementSequence currentSequence;
         private float time;
@@ -75,9 +58,6 @@ namespace Medical.GUI
 
         protected override void sceneLoaded(SimScene scene)
         {
-            leftCP = ControlPointController.getControlPoint("LeftCP");
-            rightCP = ControlPointController.getControlPoint("RightCP");
-            this.Enabled = leftCP != null && rightCP != null;
             SimSubScene defaultScene = scene.getDefaultSubScene();
             if (defaultScene != null)
             {
@@ -88,8 +68,6 @@ namespace Medical.GUI
 
         protected override void sceneUnloading()
         {
-            leftCP = null;
-            rightCP = null;
             muscleSequenceView.clearSequences();
         }
 
