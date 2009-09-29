@@ -39,6 +39,7 @@ namespace Medical.Controller
         private PresetStatePanel rightDegenerationPanel;
         private ScenePicker scenePicker;
         private LayerController layerController;
+        private MuscleControl muscleControl;
 
         /// <summary>
         /// Constructor.
@@ -134,7 +135,7 @@ namespace Medical.Controller
             scenePicker.initialize();
 
             //Add specific gui elements
-            MuscleControl muscleControl = new MuscleControl();
+            muscleControl = new MuscleControl();
             viewMode.addGUIElement(muscleControl);
 
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
@@ -413,9 +414,10 @@ namespace Medical.Controller
                 {
                     stateController.createAndAddState("Normal");
                 }
-                statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
+                muscleControl.stopPlayback();
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
+                statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
                 statePicker.Show(distortMode.DockPanel);
                 basicForm.ResumeLayout();
             }

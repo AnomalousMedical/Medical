@@ -30,6 +30,13 @@ namespace Medical.GUI
             playbackTrackBar.TimeChanged += new TimeChanged(playbackTrackBar_TimeChanged);
         }
 
+        public void stopPlayback()
+        {
+            time = 0.0f;
+            playbackTrackBar.CurrentTime = 0.0f;
+            unsubscribeFromUpdates();
+        }
+
         void playbackTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
         {
             if (currentSequence != null)
@@ -80,13 +87,12 @@ namespace Medical.GUI
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            time = 0.0f;
             subscribeToUpdates();
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            unsubscribeFromUpdates();
+            stopPlayback();
         }
     }
 }

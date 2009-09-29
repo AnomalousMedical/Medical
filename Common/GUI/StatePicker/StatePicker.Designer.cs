@@ -59,15 +59,16 @@
             // 
             // buttonPanel
             // 
+            this.buttonPanel.AutoSize = true;
             this.buttonPanel.Controls.Add(this.finishButton);
             this.buttonPanel.Controls.Add(this.nextButton);
             this.buttonPanel.Controls.Add(this.previousButton);
             this.buttonPanel.Controls.Add(this.cancelButton);
             this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 414);
+            this.buttonPanel.Location = new System.Drawing.Point(0, 415);
             this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Size = new System.Drawing.Size(624, 30);
+            this.buttonPanel.Size = new System.Drawing.Size(624, 29);
             this.buttonPanel.TabIndex = 1;
             // 
             // finishButton
@@ -116,7 +117,7 @@
             this.statePickerPanelHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statePickerPanelHost.Location = new System.Drawing.Point(0, 98);
             this.statePickerPanelHost.Name = "statePickerPanelHost";
-            this.statePickerPanelHost.Size = new System.Drawing.Size(624, 316);
+            this.statePickerPanelHost.Size = new System.Drawing.Size(624, 317);
             this.statePickerPanelHost.TabIndex = 2;
             // 
             // StatePicker
@@ -137,6 +138,7 @@
             this.Text = "Distortion Wizard";
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
