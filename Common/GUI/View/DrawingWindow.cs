@@ -29,26 +29,24 @@ namespace Medical
         private RendererWindow window;
         private String name;
         private CameraControl camera;
-        private OrbitCameraController orbitCamera;
+        private CameraMover cameraMover;
         private RendererPlugin renderer;
         private bool showSceneStats = false;
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
         private SimScene scene;
-        private EventManager eventManager;
 
         public DrawingWindow()
         {
             InitializeComponent();
         }
 
-        internal void initialize(string name, EventManager eventManager, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
+        internal void initialize(string name, CameraMover cameraMover, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
         {
             this.name = name;
             this.renderer = renderer;
-            this.eventManager = eventManager;
-            orbitCamera = new OrbitCameraController(translation, lookAt, eventManager);
-            orbitCamera.MotionValidator = this;
+            this.cameraMover = cameraMover;
+            cameraMover.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
         }
 
@@ -72,14 +70,14 @@ namespace Medical
             if (defaultScene != null)
             {
                 this.mainTimer = mainTimer;
-                camera = window.createCamera(defaultScene, name, orbitCamera.Translation, orbitCamera.LookAt);
+                camera = window.createCamera(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
                 camera.BackgroundColor = Engine.Color.FromARGB(BackColor.ToArgb());
                 camera.addLight();
                 camera.setNearClipDistance(1.0f);
                 camera.setFarClipDistance(1000.0f);
                 camera.setRenderingMode(renderingMode);
-                mainTimer.addFixedUpdateListener(orbitCamera);
-                orbitCamera.setCamera(camera);
+                mainTimer.addFixedUpdateListener(cameraMover);
+                cameraMover.setCamera(camera);
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
                 ((OgreCameraControl)camera).PreFindVisibleObjects += camera_PreFindVisibleObjects;
@@ -103,9 +101,9 @@ namespace Medical
                     CameraDestroyed.Invoke(this);
                 }
                 ((OgreCameraControl)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
-                orbitCamera.setCamera(null);
+                cameraMover.setCamera(null);
                 window.destroyCamera(camera);
-                mainTimer.removeFixedUpdateListener(orbitCamera);
+                mainTimer.removeFixedUpdateListener(cameraMover);
                 camera = null;
                 CameraResolver.removeMotionValidator(this);
             }
@@ -121,7 +119,7 @@ namespace Medical
 
         public void setCamera(Vector3 position, Vector3 lookAt)
         {
-            orbitCamera.setNewPosition(position, lookAt);
+            cameraMover.setNewPosition(position, lookAt);
         }
 
         public void setEnabled(bool enabled)
@@ -152,7 +150,7 @@ namespace Medical
 
         public void setNewPosition(Vector3 translation, Vector3 lookAt)
         {
-            orbitCamera.setNewPosition(translation, lookAt);
+            cameraMover.setNewPosition(translation, lookAt);
         }
 
         public void updateRender(bool swapBuffers)
@@ -182,7 +180,7 @@ namespace Medical
         {
             get
             {
-                return orbitCamera.Translation;
+                return cameraMover.Translation;
             }
         }
 
@@ -190,7 +188,7 @@ namespace Medical
         {
             get
             {
-                return orbitCamera.LookAt;
+                return cameraMover.LookAt;
             }
         }
 
@@ -238,7 +236,7 @@ namespace Medical
         {
             get
             {
-                return orbitCamera.OrbitDistance;
+                return cameraMover.OrbitDistance;
             }
         }
 
@@ -246,11 +244,11 @@ namespace Medical
         {
             get
             {
-                return orbitCamera.AllowRotation;
+                return cameraMover.AllowRotation;
             }
             set
             {
-                orbitCamera.AllowRotation = value;
+                cameraMover.AllowRotation = value;
             }
         }
 
@@ -258,11 +256,11 @@ namespace Medical
         {
             get
             {
-                return orbitCamera.AllowZoom;
+                return cameraMover.AllowZoom;
             }
             set
             {
-                orbitCamera.AllowZoom = value;
+                cameraMover.AllowZoom = value;
             }
         }
 

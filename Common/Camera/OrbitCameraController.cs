@@ -14,7 +14,7 @@ namespace Medical
         ZoomCamera,
     }
 
-    public class OrbitCameraController : UpdateListener
+    public class OrbitCameraController : CameraMover
     {
         #region Static
 
@@ -87,7 +87,7 @@ namespace Medical
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
-        public void sendUpdate(Clock clock)
+        public override void sendUpdate(Clock clock)
         {
             if (camera != null)
             {
@@ -228,12 +228,12 @@ namespace Medical
             }
         }
 
-        public void loopStarting()
+        public override void loopStarting()
         {
 
         }
 
-        public void exceededMaxDelta()
+        public override void exceededMaxDelta()
         {
 
         }
@@ -242,7 +242,7 @@ namespace Medical
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
         /// <param name="camera">The camera to use.</param>
-        public void setCamera(CameraControl camera)
+        public override void setCamera(CameraControl camera)
         {
             this.camera = camera;
         }
@@ -252,7 +252,7 @@ namespace Medical
         /// </summary>
         /// <param name="position">The position to set the camera at.</param>
         /// <param name="lookAt">The look at point of the camera.</param>
-        public void setNewPosition(Vector3 position, Vector3 lookAt)
+        public override void setNewPosition(Vector3 position, Vector3 lookAt)
         {
             if (camera != null)
             {
@@ -314,7 +314,7 @@ namespace Medical
             this.translation = translation;
         }
 
-        public Vector3 Translation
+        public override Vector3 Translation
         {
             get
             {
@@ -322,7 +322,7 @@ namespace Medical
             }
         }
 
-        public Vector3 LookAt
+        public override Vector3 LookAt
         {
             get
             {
@@ -330,7 +330,7 @@ namespace Medical
             }
         }
 
-        public CameraMotionValidator MotionValidator
+        public override CameraMotionValidator MotionValidator
         {
             get
             {
@@ -342,7 +342,7 @@ namespace Medical
             }
         }
 
-        public bool AllowRotation
+        public override bool AllowRotation
         {
             get
             {
@@ -354,7 +354,7 @@ namespace Medical
             }
         }
 
-        public bool AllowZoom
+        public override bool AllowZoom
         {
             get
             {
@@ -366,7 +366,7 @@ namespace Medical
             }
         }
 
-        public float OrbitDistance
+        public override float OrbitDistance
         {
             get
             {

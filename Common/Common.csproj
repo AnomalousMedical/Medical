@@ -84,6 +84,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\CameraMover.cs" />
     <Compile Include="Camera\OrbitCameraController.cs" />
     <Compile Include="Camera\SavedCameraController.cs" />
     <Compile Include="Camera\SavedCameraDefinition.cs" />
@@ -231,6 +232,12 @@
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanel.Designer.cs">
       <DependentUpon>StatePickerPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\TeethAdaptationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\TeethAdaptationPanel.Designer.cs">
+      <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\TeethStatePanel.cs">
       <SubType>UserControl</SubType>
@@ -514,6 +521,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\TeethAdaptationPanel.resx">
+      <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
