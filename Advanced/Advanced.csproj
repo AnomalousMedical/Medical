@@ -75,6 +75,12 @@
     <Compile Include="GUI\AdvancedForm.Designer.cs">
       <DependentUpon>AdvancedForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Disk\DiscPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Disk\DiscPanel.Designer.cs">
+      <DependentUpon>DiscPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Disk\DiskControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AdvancedForm.resx">
       <DependentUpon>AdvancedForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Disk\DiscPanel.resx">
+      <DependentUpon>DiscPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Disk\DiskControl.resx">

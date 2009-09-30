@@ -14,104 +14,66 @@ namespace Medical.GUI
 {
     public partial class DiskControl : GUIElement
     {
-        private Disc leftDisc;
-        private Disc rightDisc;
-
-        private bool allowUpdates = true;
+        private bool allowSynchronization = true;
 
         public DiskControl()
         {
             InitializeComponent();
-            leftDiscPositionSlider.ValueChanged += leftSideValueChanged;
-            leftDiscOffset.ValueChanged += leftSideValueChanged;
-            leftRDAOffset.ValueChanged += leftSideValueChanged;
-            centerTrackBar.ValueChanged += leftSideValueChanged;
-
-            rightDiscPositionSlider.ValueChanged += rightSideValueChanged;
-            rightDiscOffset.ValueChanged += rightSideValueChanged;
-            rightRDAOffset.ValueChanged += rightSideValueChanged;
-            centerTrackBar.ValueChanged += rightSideValueChanged;
-        }
-
-        void leftSideValueChanged(object sender, EventArgs e)
-        {
-            if (allowUpdates)
-            {
-                leftDisc.RDAOffset = new Vector3(0.0f, leftRDAOffset.Value / -(float)leftRDAOffset.Maximum, 0.0f);
-                leftDisc.DiscOffset = new Vector3(0.0f, leftDiscOffset.Value / -(float)leftDiscOffset.Maximum, 0.0f);
-                leftDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
-                leftDisc.PopLocation = leftDiscPositionSlider.Value / (float)leftDiscPositionSlider.Maximum;
-            }
-        }
-
-        void rightSideValueChanged(object sender, EventArgs e)
-        {
-            if (allowUpdates)
-            {
-                rightDisc.RDAOffset = new Vector3(0.0f, rightRDAOffset.Value / -(float)rightRDAOffset.Maximum, 0.0f);
-                rightDisc.DiscOffset = new Vector3(0.0f, rightDiscOffset.Value / -(float)rightDiscOffset.Maximum, 0.0f);
-                rightDisc.HorizontalOffset = new Vector3(centerTrackBar.Value / (float)centerTrackBar.Maximum, 0.0f, 0.0f);
-                rightDisc.PopLocation = rightDiscPositionSlider.Value / (float)rightDiscPositionSlider.Maximum;
-            }
+            horizontalOffsetTrackBar.ValueChanged += new EventHandler(horizontalOffsetTrackBar_ValueChanged);
+            horizontalOffsetUpDown.ValueChanged += new EventHandler(horizontalOffsetUpDown_ValueChanged);
         }
 
         protected override void sceneLoaded(SimScene scene)
         {
-            leftDisc = DiscController.getDisc("LeftTMJDisc");
-            rightDisc = DiscController.getDisc("RightTMJDisc");
-            Enabled = leftDisc != null && rightDisc != null;
-            if (Enabled)
-            {
-                setSliders(leftDisc.PopLocation, leftDisc.DiscOffset.y, leftDisc.RDAOffset.y, rightDisc.PopLocation, rightDisc.DiscOffset.y, rightDisc.RDAOffset.y);
-            }
+            leftDiscPanel.sceneLoaded();
+            rightDiscPanel.sceneLoaded();
         }
 
         protected override void sceneUnloading()
         {
-            leftDisc = null;
-            rightDisc = null;
+            leftDiscPanel.sceneUnloaded();
+            rightDiscPanel.sceneUnloaded();
         }
 
         private void distortionButton_Click(object sender, EventArgs e)
         {
-            setSliders(leftDisc.NormalPopLocation, leftDisc.NormalDiscOffset.y, leftDisc.NormalRDAOffset.y, rightDisc.NormalPopLocation, rightDisc.NormalDiscOffset.y, rightDisc.NormalRDAOffset.y);
-            leftSideValueChanged(null, null);
-            rightSideValueChanged(null, null);
+            leftDiscPanel.reset();
+            rightDiscPanel.reset();
+            synchronizeHorizontalOffset(null, 0.0f);
         }
 
-        private void setSliders(float leftPosition, float leftDisc, float leftRDA, float rightPosition, float rightDisc, float rightRDA)
+        //Synchronize Horizontal Offset
+        private void synchronizeHorizontalOffset(object sender, float offset)
         {
-            allowUpdates = false;
-            leftDiscOffset.Value = (int)(leftDisc * -leftDiscOffset.Maximum);
-            leftRDAOffset.Value = (int)(leftRDA * -leftRDAOffset.Maximum);
-
-            rightDiscOffset.Value = (int)(rightDisc * -rightDiscOffset.Maximum);
-            rightRDAOffset.Value = (int)(rightRDA * -rightRDAOffset.Maximum);
-
-            centerTrackBar.Value = 0;
-
-            rightDiscLocked.Checked = this.rightDisc.Locked;
-            leftDiscLocked.Checked = this.leftDisc.Locked;
-
-            leftDiscPositionSlider.Value = (int)(leftPosition * leftDiscPositionSlider.Maximum);
-            rightDiscPositionSlider.Value = (int)(leftPosition * rightDiscPositionSlider.Maximum);
-            allowUpdates = true;
-        }
-
-        private void rightDiscLocked_CheckedChanged(object sender, EventArgs e)
-        {
-            if (allowUpdates)
+            if (allowSynchronization)
             {
-                rightDisc.Locked = rightDiscLocked.Checked;
+                allowSynchronization = false;
+                if (sender != rightDiscPanel.Disc)
+                {
+                    Vector3 vec3Offset = new Vector3(offset, 0.0f, 0.0f);
+                    rightDiscPanel.Disc.HorizontalOffset = vec3Offset;
+                    leftDiscPanel.Disc.HorizontalOffset = vec3Offset;
+                }
+                if (sender != horizontalOffsetTrackBar)
+                {
+                    horizontalOffsetTrackBar.Value = (int)(offset * horizontalOffsetTrackBar.Maximum);
+                }
+                if (sender != horizontalOffsetUpDown)
+                {
+                    horizontalOffsetUpDown.Value = (decimal)offset;
+                }
+                allowSynchronization = true;
             }
         }
 
-        private void leftDiscLocked_CheckedChanged(object sender, EventArgs e)
+        void horizontalOffsetUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (allowUpdates)
-            {
-                leftDisc.Locked = leftDiscLocked.Checked;
-            }
+            synchronizeHorizontalOffset(horizontalOffsetUpDown, (float)horizontalOffsetUpDown.Value);
+        }
+
+        void horizontalOffsetTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeHorizontalOffset(horizontalOffsetTrackBar, horizontalOffsetTrackBar.Value / (float)horizontalOffsetTrackBar.Maximum);
         }
     }
 }
