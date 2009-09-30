@@ -44,7 +44,7 @@ namespace Medical.GUI
                     {
                         String fileName = archive.getFileInfo(file).Name;
                         ListViewItem listViewItem = new ListViewItem(fileName.Substring(0, fileName.Length - 4), group);
-                        listViewItem.Tag = file;
+                        listViewItem.Tag = archive.getFullPath(file);
                         muscleStateList.Items.Add(listViewItem);
                     }
                 }
