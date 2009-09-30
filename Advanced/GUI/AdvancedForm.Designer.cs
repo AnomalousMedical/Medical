@@ -69,6 +69,7 @@
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cloneSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -283,7 +284,8 @@
             // windowToolStripMenuItem
             // 
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.layoutToolStripMenuItem});
+            this.layoutToolStripMenuItem,
+            this.cloneSelectedToolStripMenuItem});
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
             this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.windowToolStripMenuItem.Text = "Window";
@@ -296,7 +298,7 @@
             this.threeWindowsToolStripMenuItem,
             this.fourWindowToolStripMenuItem});
             this.layoutToolStripMenuItem.Name = "layoutToolStripMenuItem";
-            this.layoutToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.layoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.layoutToolStripMenuItem.Text = "Layout";
             // 
             // oneWindowToolStripMenuItem
@@ -326,6 +328,13 @@
             this.fourWindowToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.fourWindowToolStripMenuItem.Text = "Four Windows";
             this.fourWindowToolStripMenuItem.Click += new System.EventHandler(this.fourWindowToolStripMenuItem_Click);
+            // 
+            // cloneSelectedToolStripMenuItem
+            // 
+            this.cloneSelectedToolStripMenuItem.Name = "cloneSelectedToolStripMenuItem";
+            this.cloneSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cloneSelectedToolStripMenuItem.Text = "Clone Selected";
+            this.cloneSelectedToolStripMenuItem.Click += new System.EventHandler(this.cloneSelectedToolStripMenuItem_Click);
             // 
             // AdvancedForm
             // 
@@ -378,6 +387,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveSequenceAs;
         private System.Windows.Forms.ToolStripMenuItem newDistortion;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem cloneSelectedToolStripMenuItem;
 
     }
 }

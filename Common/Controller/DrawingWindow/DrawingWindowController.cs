@@ -149,6 +149,13 @@ namespace Medical
             return activeDrawingWindow;
         }
 
+        public void cloneActiveWindow()
+        {
+            DrawingWindowHost host = getActiveWindow();
+            DrawingWindowHost cloneHost = addCloneCamera(host.Text + " Clone", host.DrawingWindow);
+            cloneHost.Show(host.Pane, DockAlignment.Right, 0.5);
+        }
+
         public bool AllowRotation
         {
             get
@@ -197,9 +204,23 @@ namespace Medical
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, cameraHost.DrawingWindow, eventManager);
             orbitCamera.AllowRotation = allowRotation;
             orbitCamera.AllowZoom = allowZoom;
-            cameraHost.DrawingWindow.initialize(name, orbitCamera, rendererPlugin, translation, lookAt);
-            cameras.Add(cameraHost.DrawingWindow.CameraName, cameraHost);
+            cameraHost.DrawingWindow.initialize(name, orbitCamera, rendererPlugin);
+            initializeCamera(cameraHost);
+            return cameraHost;
+        }
 
+        private DrawingWindowHost addCloneCamera(String name, DrawingWindow cloneWindow)
+        {
+            DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
+            CloneCamera cloneCamera = new CloneCamera(cloneWindow);
+            cameraHost.DrawingWindow.initialize(name, cloneCamera, rendererPlugin);
+            initializeCamera(cameraHost);
+            return cameraHost;
+        }
+
+        private void initializeCamera(DrawingWindowHost cameraHost)
+        {
+            cameras.Add(cameraHost.DrawingWindow.CameraName, cameraHost);
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(cameraHost.DrawingWindow);
@@ -210,7 +231,6 @@ namespace Medical
                 cameraHost.DrawingWindow.createCamera(mainTimer, scene);
             }
             cameraHost.DrawingWindow.showStats(showStatsActive);
-            return cameraHost;
         }
 
         private void closeAllWindows()

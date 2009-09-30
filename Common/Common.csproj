@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\CameraMover.cs" />
+    <Compile Include="Camera\CloneCamera.cs" />
     <Compile Include="Camera\OrbitCameraController.cs" />
     <Compile Include="Camera\SavedCameraController.cs" />
     <Compile Include="Camera\SavedCameraDefinition.cs" />
@@ -274,6 +275,9 @@
     </Compile>
     <Compile Include="GUI\View\DrawingWindow.designer.cs">
       <DependentUpon>DrawingWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\View\DrawingWindowCloneHost.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowHost.cs">
       <SubType>Form</SubType>
@@ -525,6 +529,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\TeethAdaptationPanel.resx">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\View\DrawingWindowCloneHost.resx">
+      <DependentUpon>DrawingWindowCloneHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

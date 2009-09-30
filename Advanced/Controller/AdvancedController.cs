@@ -180,6 +180,11 @@ namespace Medical.Controller
             }
         }
 
+        public void cloneActiveWindow()
+        {
+            drawingWindowController.cloneActiveWindow();
+        }
+
         public void setOneWindowLayout()
         {
             DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet();

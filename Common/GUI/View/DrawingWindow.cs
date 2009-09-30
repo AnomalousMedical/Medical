@@ -41,7 +41,7 @@ namespace Medical
             InitializeComponent();
         }
 
-        internal void initialize(string name, CameraMover cameraMover, RendererPlugin renderer, Vector3 translation, Vector3 lookAt)
+        internal void initialize(string name, CameraMover cameraMover, RendererPlugin renderer)
         {
             this.name = name;
             this.renderer = renderer;
