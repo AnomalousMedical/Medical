@@ -69,21 +69,13 @@ namespace Medical
         private bool allowRotation = true;
         private bool allowZoom = true;
 
-        public OrbitCameraController(CameraControl camera, EventManager eventManager)
-        {
-            this.camera = camera;
-            this.events = eventManager;
-            translation = camera.Translation;
-            lookAt = camera.LookAt;
-            computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
-        }
-
-        public OrbitCameraController(Vector3 translation, Vector3 lookAt, EventManager eventManager)
+        public OrbitCameraController(Vector3 translation, Vector3 lookAt, CameraMotionValidator motionValidator, EventManager eventManager)
         {
             this.camera = null;
             this.events = eventManager;
             this.translation = translation;
             this.lookAt = lookAt;
+            this.motionValidator = motionValidator;
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
@@ -228,16 +220,6 @@ namespace Medical
             }
         }
 
-        public override void loopStarting()
-        {
-
-        }
-
-        public override void exceededMaxDelta()
-        {
-
-        }
-
         /// <summary>
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
@@ -330,7 +312,7 @@ namespace Medical
             }
         }
 
-        public override CameraMotionValidator MotionValidator
+        public CameraMotionValidator MotionValidator
         {
             get
             {
@@ -342,7 +324,7 @@ namespace Medical
             }
         }
 
-        public override bool AllowRotation
+        public bool AllowRotation
         {
             get
             {
@@ -354,7 +336,7 @@ namespace Medical
             }
         }
 
-        public override bool AllowZoom
+        public bool AllowZoom
         {
             get
             {
@@ -363,14 +345,6 @@ namespace Medical
             set
             {
                 allowZoom = value;
-            }
-        }
-
-        public override float OrbitDistance
-        {
-            get
-            {
-                return orbitDistance;
             }
         }
     }

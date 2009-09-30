@@ -194,10 +194,10 @@ namespace Medical
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
         {
             DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
-            CameraMover cameraMover = new OrbitCameraController(translation, lookAt, eventManager);
-            cameraHost.DrawingWindow.initialize(name, cameraMover, rendererPlugin, translation, lookAt);
-            cameraHost.DrawingWindow.AllowRotation = allowRotation;
-            cameraHost.DrawingWindow.AllowZoom = allowZoom;
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, cameraHost.DrawingWindow, eventManager);
+            orbitCamera.AllowRotation = allowRotation;
+            orbitCamera.AllowZoom = allowZoom;
+            cameraHost.DrawingWindow.initialize(name, orbitCamera, rendererPlugin, translation, lookAt);
             cameras.Add(cameraHost.DrawingWindow.CameraName, cameraHost);
 
             if (WindowCreated != null)

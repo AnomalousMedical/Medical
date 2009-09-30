@@ -46,7 +46,6 @@ namespace Medical
             this.name = name;
             this.renderer = renderer;
             this.cameraMover = cameraMover;
-            cameraMover.MotionValidator = this;
             window = renderer.createRendererWindow(this, name);
         }
 
@@ -229,38 +228,6 @@ namespace Medical
             get
             {
                 return camera.ProjectionMatrix;
-            }
-        }
-
-        public float OrbitDistance
-        {
-            get
-            {
-                return cameraMover.OrbitDistance;
-            }
-        }
-
-        public bool AllowRotation
-        {
-            get
-            {
-                return cameraMover.AllowRotation;
-            }
-            set
-            {
-                cameraMover.AllowRotation = value;
-            }
-        }
-
-        public bool AllowZoom
-        {
-            get
-            {
-                return cameraMover.AllowZoom;
-            }
-            set
-            {
-                cameraMover.AllowZoom = value;
             }
         }
 

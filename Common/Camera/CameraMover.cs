@@ -24,9 +24,15 @@ namespace Medical
 
         #region UpdateListener Members
 
-        public abstract void exceededMaxDelta();
+        public virtual void exceededMaxDelta()
+        {
 
-        public abstract void loopStarting();
+        }
+
+        public virtual void loopStarting()
+        {
+
+        }
 
         public abstract void sendUpdate(Clock clock);
 
@@ -38,29 +44,6 @@ namespace Medical
         }
 
         public abstract Vector3 LookAt
-        {
-            get;
-        }
-
-        public abstract CameraMotionValidator MotionValidator
-        {
-            get;
-            set;
-        }
-
-        public abstract bool AllowRotation
-        {
-            get;
-            set;
-        }
-
-        public abstract bool AllowZoom
-        {
-            get;
-            set;
-        }
-
-        public abstract float OrbitDistance
         {
             get;
         }
