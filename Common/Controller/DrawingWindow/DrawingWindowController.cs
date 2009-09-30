@@ -152,8 +152,27 @@ namespace Medical
         public void cloneActiveWindow()
         {
             DrawingWindowHost host = getActiveWindow();
-            DrawingWindowHost cloneHost = addCloneCamera(host.Text + " Clone", host.DrawingWindow);
-            cloneHost.Show(host.Pane, DockAlignment.Right, 0.5);
+            String cloneName = host.Text + " Clone";
+            if (cameras.ContainsKey(cloneName))
+            {
+                MessageBox.Show(host, String.Format("Cannot create a clone. The window {0} already has a clone.", host.Text), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                DrawingWindowHost cloneHost = addCloneCamera(cloneName, host.DrawingWindow);
+                //cloneHost.Show(host.Pane, DockAlignment.Right, 0.5);
+                cloneHost.Show(dock);
+                cloneHost.Size = host.Size;
+            }
+        }
+
+        public void closeAllWindows()
+        {
+            List<DrawingWindowHost> listCopy = new List<DrawingWindowHost>(cameras.Values);
+            foreach (DrawingWindowHost host in listCopy)
+            {
+                host.Close();
+            }
         }
 
         public bool AllowRotation
@@ -211,7 +230,7 @@ namespace Medical
 
         private DrawingWindowHost addCloneCamera(String name, DrawingWindow cloneWindow)
         {
-            DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
+            DrawingWindowHost cameraHost = new DrawingWindowCloneHost(name, this);
             CloneCamera cloneCamera = new CloneCamera(cloneWindow);
             cameraHost.DrawingWindow.initialize(name, cloneCamera, rendererPlugin);
             initializeCamera(cameraHost);
@@ -231,15 +250,6 @@ namespace Medical
                 cameraHost.DrawingWindow.createCamera(mainTimer, scene);
             }
             cameraHost.DrawingWindow.showStats(showStatsActive);
-        }
-
-        private void closeAllWindows()
-        {
-            List<DrawingWindowHost> listCopy = new List<DrawingWindowHost>(cameras.Values);
-            foreach (DrawingWindowHost host in listCopy)
-            {
-                host.Close();
-            }
         }
     }
 }

@@ -155,9 +155,10 @@ namespace Medical.Controller
         /// </summary>
         public void stop()
         {
-            medicalController.shutdown();
             guiElements.saveWindowFile(MedicalConfig.WindowsFile);
             drawingWindowController.destroyCameras();
+            drawingWindowController.closeAllWindows();
+            medicalController.shutdown();
         }
 
         /// <summary>

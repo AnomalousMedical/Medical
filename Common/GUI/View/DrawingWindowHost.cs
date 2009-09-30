@@ -146,13 +146,5 @@ namespace Medical
         {
             return String.Format(PERSIST_STRING, typeof(DrawingWindowHost).ToString(), drawingWindow.CameraName, drawingWindow.Translation, drawingWindow.LookAt);
         }
-
-        public virtual bool IsClone
-        {
-            get
-            {
-                return false;
-            }
-        }
     }
 }
