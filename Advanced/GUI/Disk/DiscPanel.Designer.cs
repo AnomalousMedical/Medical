@@ -55,6 +55,11 @@
             this.discOffsetUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.discOffsetUpDown.DecimalPlaces = 4;
+            this.discOffsetUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.discOffsetUpDown.Location = new System.Drawing.Point(191, 71);
             this.discOffsetUpDown.Maximum = new decimal(new int[] {
             0,
@@ -75,6 +80,11 @@
             this.rdaOffsetUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.rdaOffsetUpDown.DecimalPlaces = 4;
+            this.rdaOffsetUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.rdaOffsetUpDown.Location = new System.Drawing.Point(191, 37);
             this.rdaOffsetUpDown.Maximum = new decimal(new int[] {
             0,
@@ -95,6 +105,11 @@
             this.discPopUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.discPopUpDown.DecimalPlaces = 4;
+            this.discPopUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.discPopUpDown.Location = new System.Drawing.Point(191, 4);
             this.discPopUpDown.Maximum = new decimal(new int[] {
             1,

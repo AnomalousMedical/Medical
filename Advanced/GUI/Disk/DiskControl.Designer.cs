@@ -33,14 +33,14 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.horizontalOffsetTrackBar = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rightDiscPanel = new Medical.GUI.DiscPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.leftDiscPanel = new Medical.GUI.DiscPanel();
             this.horizontalOffsetUpDown = new System.Windows.Forms.NumericUpDown();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.leftDiscPanel = new Medical.GUI.DiscPanel();
-            this.rightDiscPanel = new Medical.GUI.DiscPanel();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.horizontalOffsetTrackBar)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -91,6 +91,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Right Disc";
             // 
+            // rightDiscPanel
+            // 
+            this.rightDiscPanel.DiscName = "RightTMJDisc";
+            this.rightDiscPanel.Location = new System.Drawing.Point(4, 12);
+            this.rightDiscPanel.Name = "rightDiscPanel";
+            this.rightDiscPanel.Size = new System.Drawing.Size(255, 116);
+            this.rightDiscPanel.TabIndex = 0;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.leftDiscPanel);
@@ -101,9 +109,22 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Left Disc";
             // 
+            // leftDiscPanel
+            // 
+            this.leftDiscPanel.DiscName = "LeftTMJDisc";
+            this.leftDiscPanel.Location = new System.Drawing.Point(3, 11);
+            this.leftDiscPanel.Name = "leftDiscPanel";
+            this.leftDiscPanel.Size = new System.Drawing.Size(255, 116);
+            this.leftDiscPanel.TabIndex = 0;
+            // 
             // horizontalOffsetUpDown
             // 
             this.horizontalOffsetUpDown.DecimalPlaces = 4;
+            this.horizontalOffsetUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
             this.horizontalOffsetUpDown.Location = new System.Drawing.Point(172, 474);
             this.horizontalOffsetUpDown.Maximum = new decimal(new int[] {
             1,
@@ -163,22 +184,6 @@
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "Disc Space";
-            // 
-            // leftDiscPanel
-            // 
-            this.leftDiscPanel.DiscName = "LeftTMJDisc";
-            this.leftDiscPanel.Location = new System.Drawing.Point(3, 11);
-            this.leftDiscPanel.Name = "leftDiscPanel";
-            this.leftDiscPanel.Size = new System.Drawing.Size(255, 116);
-            this.leftDiscPanel.TabIndex = 0;
-            // 
-            // rightDiscPanel
-            // 
-            this.rightDiscPanel.DiscName = "RightTMJDisc";
-            this.rightDiscPanel.Location = new System.Drawing.Point(4, 12);
-            this.rightDiscPanel.Name = "rightDiscPanel";
-            this.rightDiscPanel.Size = new System.Drawing.Size(255, 116);
-            this.rightDiscPanel.TabIndex = 0;
             // 
             // DiskControl
             // 

@@ -133,6 +133,7 @@ namespace Medical.Controller
             movementState = new MovementStateControl();
             guiElements.addGUIElement(movementState);
 
+            //Editor
             BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
             bonePresetSaver.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(bonePresetSaver);
@@ -140,6 +141,10 @@ namespace Medical.Controller
             PresetLayerEditor presetLayers = new PresetLayerEditor();
             presetLayers.initialize(layerController);
             guiElements.addGUIElement(presetLayers);
+
+            DiscPresetEditor discPresetEditor = new DiscPresetEditor();
+            discPresetEditor.initialize(imageRenderer, stateController);
+            guiElements.addGUIElement(discPresetEditor);
 
             splashScreen.stepProgress(70);
 

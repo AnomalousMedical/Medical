@@ -74,6 +74,18 @@
     <Compile Include="GUI\DeveloperForm.Designer.cs">
       <DependentUpon>DeveloperForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.Designer.cs">
+      <DependentUpon>DiscPresetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PicturePreviewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\PicturePreviewPanel.Designer.cs">
+      <DependentUpon>PicturePreviewPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +102,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\DeveloperForm.resx">
       <DependentUpon>DeveloperForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\DiscPresetEditor\DiscPresetEditor.resx">
+      <DependentUpon>DiscPresetEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PicturePreviewPanel.resx">
+      <DependentUpon>PicturePreviewPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PresetLayerEditor\PresetLayerEditor.resx">

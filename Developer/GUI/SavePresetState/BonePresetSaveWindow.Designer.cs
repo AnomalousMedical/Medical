@@ -32,11 +32,8 @@
             this.categoryText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.previewPicture = new System.Windows.Forms.PictureBox();
             this.typeCombo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.refreshImageButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rightSideSource = new System.Windows.Forms.RadioButton();
@@ -46,7 +43,7 @@
             this.outDirBrowseButton = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.copySideButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.previewPicture)).BeginInit();
+            this.picturePreviewPanel = new Medical.GUI.PicturePreviewPanel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,14 +79,6 @@
             this.label2.TabIndex = 3;
             this.label2.Text = "Category";
             // 
-            // previewPicture
-            // 
-            this.previewPicture.Location = new System.Drawing.Point(3, 168);
-            this.previewPicture.Name = "previewPicture";
-            this.previewPicture.Size = new System.Drawing.Size(250, 250);
-            this.previewPicture.TabIndex = 4;
-            this.previewPicture.TabStop = false;
-            // 
             // typeCombo
             // 
             this.typeCombo.FormattingEnabled = true;
@@ -110,28 +99,9 @@
             this.label4.TabIndex = 8;
             this.label4.Text = "Type";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 152);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(77, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Image Preview";
-            // 
-            // refreshImageButton
-            // 
-            this.refreshImageButton.Location = new System.Drawing.Point(3, 424);
-            this.refreshImageButton.Name = "refreshImageButton";
-            this.refreshImageButton.Size = new System.Drawing.Size(89, 23);
-            this.refreshImageButton.TabIndex = 10;
-            this.refreshImageButton.Text = "Refresh Image";
-            this.refreshImageButton.UseVisualStyleBackColor = true;
-            this.refreshImageButton.Click += new System.EventHandler(this.refreshImageButton_Click);
-            // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(6, 456);
+            this.saveButton.Location = new System.Drawing.Point(4, 453);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 11;
@@ -205,7 +175,7 @@
             // 
             // copySideButton
             // 
-            this.copySideButton.Location = new System.Drawing.Point(160, 424);
+            this.copySideButton.Location = new System.Drawing.Point(86, 453);
             this.copySideButton.Name = "copySideButton";
             this.copySideButton.Size = new System.Drawing.Size(75, 23);
             this.copySideButton.TabIndex = 16;
@@ -213,23 +183,28 @@
             this.copySideButton.UseVisualStyleBackColor = true;
             this.copySideButton.Click += new System.EventHandler(this.copySideButton_Click);
             // 
+            // picturePreviewPanel
+            // 
+            this.picturePreviewPanel.Location = new System.Drawing.Point(2, 150);
+            this.picturePreviewPanel.Name = "picturePreviewPanel";
+            this.picturePreviewPanel.Size = new System.Drawing.Size(254, 298);
+            this.picturePreviewPanel.TabIndex = 17;
+            // 
             // BonePresetSaveWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(259, 482);
+            this.ClientSize = new System.Drawing.Size(264, 480);
+            this.Controls.Add(this.picturePreviewPanel);
             this.Controls.Add(this.copySideButton);
             this.Controls.Add(this.outDirBrowseButton);
             this.Controls.Add(this.outputDirectoryText);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.refreshImageButton);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.typeCombo);
-            this.Controls.Add(this.previewPicture);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryText);
@@ -238,9 +213,8 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "BonePresetSaveWindow";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
-            this.Text = "Bone Preset Saver";
+            this.Text = "Bone Preset Editor";
             this.ToolStripName = "Editing";
-            ((System.ComponentModel.ISupportInitialize)(this.previewPicture)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -254,11 +228,8 @@
         private System.Windows.Forms.TextBox categoryText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox previewPicture;
         private System.Windows.Forms.ComboBox typeCombo;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button refreshImageButton;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton rightSideSource;
@@ -268,5 +239,6 @@
         private System.Windows.Forms.Button outDirBrowseButton;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button copySideButton;
+        private PicturePreviewPanel picturePreviewPanel;
     }
 }

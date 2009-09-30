@@ -34,6 +34,13 @@ namespace Medical
             }
         }
 
+        public DiscStateProperties getPosition(String name)
+        {
+            DiscStateProperties prop;
+            discs.TryGetValue(name, out prop);
+            return prop;
+        }
+
         #region Saveable Members
 
         private const string POSITIONS = "Positions";

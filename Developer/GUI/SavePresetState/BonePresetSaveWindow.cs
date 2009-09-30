@@ -17,8 +17,6 @@ namespace Medical.GUI
 {
     public partial class BonePresetSaveWindow : GUIElement
     {
-        ImageRenderer renderer;
-        Bitmap currentBitmap;
         MedicalStateController stateController;
         private XmlSaver saver = new XmlSaver();
 
@@ -32,7 +30,7 @@ namespace Medical.GUI
 
         public void initialize(ImageRenderer renderer, MedicalStateController stateController)
         {
-            this.renderer = renderer;
+            picturePreviewPanel.initialize(renderer);
             this.stateController = stateController;
         }
 
@@ -54,22 +52,6 @@ namespace Medical.GUI
             {
                 MessageBox.Show(this, String.Format("Please fill in the name and category text."), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void refreshImageButton_Click(object sender, EventArgs e)
-        {
-            refreshImage();
-        }
-
-        private void refreshImage()
-        {
-            previewPicture.Image = null;
-            if (currentBitmap != null)
-            {
-                currentBitmap.Dispose();
-            }
-            currentBitmap = renderer.renderImage(previewPicture.Size.Width, previewPicture.Size.Height);
-            previewPicture.Image = currentBitmap;
         }
 
         private void saveGrowthDefect()
@@ -120,11 +102,7 @@ namespace Medical.GUI
                         textWriter.Formatting = Formatting.Indented;
                         saver.saveObject(presetBones, textWriter);
                     }
-                    if (currentBitmap == null)
-                    {
-                        refreshImage();
-                    }
-                    currentBitmap.Save(presetDirectory + "/" + presetBones.ImageName);
+                    picturePreviewPanel.saveBitmap(presetDirectory + "/" + presetBones.ImageName);
                     MessageBox.Show(this, String.Format("Saved preset to {0}.", presetFile), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (IOException e)
@@ -178,11 +156,7 @@ namespace Medical.GUI
                         textWriter.Formatting = Formatting.Indented;
                         saver.saveObject(presetBones, textWriter);
                     }
-                    if (currentBitmap == null)
-                    {
-                        refreshImage();
-                    }
-                    currentBitmap.Save(presetDirectory + "/" + presetBones.ImageName);
+                    picturePreviewPanel.saveBitmap(presetDirectory + "/" + presetBones.ImageName);
                     MessageBox.Show(this, String.Format("Saved preset to {0}.", presetFile), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (IOException e)

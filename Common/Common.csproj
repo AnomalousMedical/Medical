@@ -196,6 +196,12 @@
     <Compile Include="GUI\ScenePicker\ScenePicker.Designer.cs">
       <DependentUpon>ScenePicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\DiscPositionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\DiscPositionPanel.Designer.cs">
+      <DependentUpon>DiscPositionPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -504,6 +510,10 @@
   <ItemGroup>
     <EmbeddedResource Include="GUI\ScenePicker\ScenePicker.resx">
       <DependentUpon>ScenePicker.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
+      <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -37,6 +37,8 @@ namespace Medical.Controller
         private PresetStatePanel rightGrowthPanel;
         private PresetStatePanel leftDegenerationPanel;
         private PresetStatePanel rightDegenerationPanel;
+        private PresetStatePanel leftDiscPanel;
+        private PresetStatePanel rightDiscPanel;
         private ScenePicker scenePicker;
         private LayerController layerController;
         private MuscleControl muscleControl;
@@ -468,7 +470,19 @@ namespace Medical.Controller
             rightDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(rightDegenerationPanel);
 
-            statePicker.addStatePanel(new DiscSpacePanel());
+            leftDiscPanel = new PresetStatePanel();
+            leftDiscPanel.Text = "Left Disc";
+            leftDiscPanel.NavigationState = "Left TMJ";
+            leftDiscPanel.LayerState = "DiscLayers";
+            statePicker.addStatePanel(leftDiscPanel);
+
+            rightDiscPanel = new PresetStatePanel();
+            rightDiscPanel.Text = "Right Disc";
+            rightDiscPanel.NavigationState = "Right TMJ";
+            rightDiscPanel.LayerState = "DiscLayers";
+            statePicker.addStatePanel(rightDiscPanel);
+
+            //statePicker.addStatePanel(new DiscSpacePanel());
             statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
             statePicker.setToDefault();
@@ -497,6 +511,16 @@ namespace Medical.Controller
             loadPresetSet(rightDegeneration);
             rightDegenerationPanel.clear();
             rightDegenerationPanel.initialize(rightDegeneration);
+
+            PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
+            loadPresetSet(leftDisc);
+            leftDiscPanel.clear();
+            leftDiscPanel.initialize(leftDisc);
+
+            PresetStateSet rightDisc = new PresetStateSet("Right Disc", rootDirectory + "/RightDisc");
+            loadPresetSet(rightDisc);
+            rightDiscPanel.clear();
+            rightDiscPanel.initialize(rightDisc);
         }
 
         private void loadPresetSet(PresetStateSet presetStateSet)
@@ -507,7 +531,7 @@ namespace Medical.Controller
                 foreach (String file in files)
                 {
                     XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
-                    BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                    PresetState preset = saver.restoreObject(reader) as PresetState;
                     if (preset != null)
                     {
                         presetStateSet.addPresetState(preset);
