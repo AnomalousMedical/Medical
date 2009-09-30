@@ -51,11 +51,11 @@
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(53, 503);
+            this.distortionButton.Location = new System.Drawing.Point(90, 503);
             this.distortionButton.Name = "distortionButton";
-            this.distortionButton.Size = new System.Drawing.Size(125, 23);
+            this.distortionButton.Size = new System.Drawing.Size(76, 23);
             this.distortionButton.TabIndex = 12;
-            this.distortionButton.Text = "Make Normal";
+            this.distortionButton.Text = "Reset";
             this.distortionButton.UseVisualStyleBackColor = true;
             this.distortionButton.Click += new System.EventHandler(this.distortionButton_Click);
             // 
@@ -63,7 +63,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(111)))), ((int)(((byte)(243)))));
             this.panel2.Controls.Add(this.horizontalOffsetTrackBar);
-            this.panel2.Location = new System.Drawing.Point(53, 472);
+            this.panel2.Location = new System.Drawing.Point(44, 472);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(125, 25);
             this.panel2.TabIndex = 13;
@@ -104,7 +104,7 @@
             // horizontalOffsetUpDown
             // 
             this.horizontalOffsetUpDown.DecimalPlaces = 4;
-            this.horizontalOffsetUpDown.Location = new System.Drawing.Point(181, 474);
+            this.horizontalOffsetUpDown.Location = new System.Drawing.Point(172, 474);
             this.horizontalOffsetUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -126,7 +126,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(2, 0);
+            this.panel1.Location = new System.Drawing.Point(33, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(206, 192);
             this.panel1.TabIndex = 11;
