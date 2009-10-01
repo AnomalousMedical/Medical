@@ -22,6 +22,7 @@ namespace Medical.GUI
         public void setStatePicker(StatePickerController parentPicker)
         {
             this.parentPicker = parentPicker;
+            statePickerSet(parentPicker);
         }
 
         public virtual void applyToState(MedicalState state)
@@ -77,6 +78,11 @@ namespace Medical.GUI
         protected void showChanges(bool immediate)
         {
             parentPicker.showChanges(immediate);
+        }
+
+        protected virtual void statePickerSet(StatePickerController controller)
+        {
+
         }
     }
 }

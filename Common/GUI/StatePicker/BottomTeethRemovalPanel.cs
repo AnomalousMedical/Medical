@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Engine;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -91,6 +92,19 @@ namespace Medical.GUI
             rightCP.setLocation(rightCP.getNeutralLocation());
             movingMuscle.changeForce(1.0f);
             movingMuscleTarget.Offset = Vector3.Zero;
+        }
+
+        protected override void statePickerSet(StatePickerController controller)
+        {
+            parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.BottomTeethRemove);
+        }
+
+        internal override String NavigationImageKey
+        {
+            get
+            {
+                return "__BottomToothRemovalKey";
+            }
         }
     }
 }

@@ -67,6 +67,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BottomTeethRemove {
+            get {
+                object obj = ResourceManager.GetObject("BottomTeethRemove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Button_First {
             get {
                 object obj = ResourceManager.GetObject("Button_First", resourceCulture);
@@ -364,6 +371,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap tooth9 {
             get {
                 object obj = ResourceManager.GetObject("tooth9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TopTeethRemove {
+            get {
+                object obj = ResourceManager.GetObject("TopTeethRemove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
