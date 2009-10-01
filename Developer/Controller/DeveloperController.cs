@@ -146,6 +146,10 @@ namespace Medical.Controller
             discPresetEditor.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(discPresetEditor);
 
+            FossaPresetEditor fossaPresetEditor = new FossaPresetEditor();
+            fossaPresetEditor.initialize(imageRenderer, stateController);
+            guiElements.addGUIElement(fossaPresetEditor);
+
             splashScreen.stepProgress(70);
 
             loadDefaultScene();

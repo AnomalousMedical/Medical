@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
     public class FossaPresetState : PresetState
     {
-        private Dictionary<String, float> positions = new Dictionary<string, float>();
+        private String fossaName;
+        private float position;
 
         public FossaPresetState(String name, String category, String imageName)
             : base(name, category, imageName)
@@ -15,17 +17,59 @@ namespace Medical
 
         }
 
-        public void addPosition(String fossa, float position)
-        {
-            positions.Add(fossa, position);
-        }
-
         public override void applyToState(MedicalState state)
         {
-            foreach (String position in positions.Keys)
+            state.Fossa.addPosition(fossaName, position);
+        }
+
+        public void changeSide(string oldName, string newName)
+        {
+            fossaName = fossaName.Replace(oldName, newName);
+        }
+
+        public String FossaName
+        {
+            get
             {
-                state.Fossa.addPosition(position, positions[position]);
+                return fossaName;
+            }
+            set
+            {
+                fossaName = value;
             }
         }
+
+        public float Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+            }
+        }
+
+        #region Saveable
+
+        private const String FOSSA_NAME = "FossaName";
+        private const String POSITION = "Position";
+
+        protected FossaPresetState(LoadInfo info)
+            :base(info)
+        {
+            fossaName = info.GetString(FOSSA_NAME);
+            position = info.GetFloat(POSITION);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.AddValue(FOSSA_NAME, fossaName);
+            info.AddValue(POSITION, position);
+        }
+
+        #endregion Saveable
     }
 }

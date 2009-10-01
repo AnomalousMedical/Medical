@@ -17,7 +17,21 @@ namespace Medical
 
         public void addPosition(String fossa, float position)
         {
-            positions.Add(fossa, position);
+            if (positions.ContainsKey(fossa))
+            {
+                positions[fossa] = position;
+            }
+            else
+            {
+                positions.Add(fossa, position);
+            }
+        }
+
+        public float getPosition(String fossa)
+        {
+            float position;
+            positions.TryGetValue(fossa, out position);
+            return position;
         }
 
         public void blend(FossaState target, float percent)

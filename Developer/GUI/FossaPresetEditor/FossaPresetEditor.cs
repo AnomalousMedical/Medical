@@ -6,20 +6,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Xml;
 using Engine.Saving.XMLSaver;
 using Engine.Resources;
+using System.IO;
+using System.Xml;
 using Logging;
 
 namespace Medical.GUI
 {
-    public partial class DiscPresetEditor : GUIElement
+    public partial class FossaPresetEditor : GUIElement
     {
         private MedicalStateController stateController;
         private XmlSaver saver = new XmlSaver();
 
-        public DiscPresetEditor()
+        public FossaPresetEditor()
         {
             InitializeComponent();
             outputDirectoryText.Text = MedicalConfig.DocRoot + "/SavedPresets";
@@ -31,16 +31,6 @@ namespace Medical.GUI
             this.stateController = stateController;
         }
 
-        private void copySideButton_Click(object sender, EventArgs e)
-        {
-            copySideToOther();
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            save();
-        }
-
         private void save()
         {
             String sideName = "Left";
@@ -48,7 +38,7 @@ namespace Medical.GUI
             {
                 sideName = "Right";
             }
-            String presetDirectory = outputDirectoryText.Text + "/" + sideName + "Disc";
+            String presetDirectory = outputDirectoryText.Text + "/" + sideName + "Fossa";
             if (!Directory.Exists(presetDirectory))
             {
                 Directory.CreateDirectory(presetDirectory);
@@ -63,25 +53,22 @@ namespace Medical.GUI
 
             if (allowSave)
             {
-                String discName = sideName + "TMJDisc";
+                String fossaName = sideName + "Fossa";
                 MedicalState sourceState = stateController.createState(nameText.Text);
-                DiscStateProperties discSource = sourceState.Disc.getPosition(discName);
-                                
-                DiscPresetState discPreset = new DiscPresetState(discName, nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
-                discPreset.DiscOffset = discSource.DiscOffset;
-                discPreset.HorizontalOffset = discSource.HorizontalOffset;
-                discPreset.Locked = discSource.Locked;
-                discPreset.PopLocation = discSource.PopLocation;
-                discPreset.RdaOffset = discSource.RDAOffset;
+                FossaState fossaSource = sourceState.Fossa;
+
+                FossaPresetState fossaPreset = new FossaPresetState(nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
+                fossaPreset.FossaName = fossaName;
+                fossaPreset.Position = fossaSource.getPosition(fossaName);
 
                 try
                 {
                     using (XmlTextWriter textWriter = new XmlTextWriter(presetFile, Encoding.Default))
                     {
                         textWriter.Formatting = Formatting.Indented;
-                        saver.saveObject(discPreset, textWriter);
+                        saver.saveObject(fossaPreset, textWriter);
                     }
-                    picturePreviewPanel.saveBitmap(presetDirectory + "/" + discPreset.ImageName);
+                    picturePreviewPanel.saveBitmap(presetDirectory + "/" + fossaPreset.ImageName);
                     MessageBox.Show(this, String.Format("Saved preset to {0}.", presetFile), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (IOException e)
@@ -109,7 +96,7 @@ namespace Medical.GUI
             {
                 using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
                 {
-                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Disc", outputDirectoryText.Text + "/" + destDirectory + "Disc", oldName, newName, archive);
+                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Fossa", outputDirectoryText.Text + "/" + destDirectory + "Fossa", oldName, newName, archive);
                 }
                 MessageBox.Show(this, "Finished copying sides.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -130,7 +117,7 @@ namespace Medical.GUI
             {
                 using (XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
                 {
-                    DiscPresetState preset = saver.restoreObject(reader) as DiscPresetState;
+                    FossaPresetState preset = saver.restoreObject(reader) as FossaPresetState;
                     if (preset != null)
                     {
                         preset.changeSide(oldName, newName);
@@ -154,6 +141,16 @@ namespace Medical.GUI
                     }
                 }
             }
+        }
+
+        private void copySideButton_Click(object sender, EventArgs e)
+        {
+            copySideToOther();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            save();
         }
 
         private void ensureDirectory()

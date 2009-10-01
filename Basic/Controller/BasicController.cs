@@ -39,6 +39,8 @@ namespace Medical.Controller
         private PresetStatePanel rightDegenerationPanel;
         private PresetStatePanel leftDiscPanel;
         private PresetStatePanel rightDiscPanel;
+        private PresetStatePanel leftFossaPanel;
+        private PresetStatePanel rightFossaPanel;
         private ScenePicker scenePicker;
         private LayerController layerController;
         private MuscleControl muscleControl;
@@ -483,8 +485,20 @@ namespace Medical.Controller
             rightDiscPanel.LayerState = "DiscLayers";
             statePicker.addStatePanel(rightDiscPanel);
 
+            leftFossaPanel = new PresetStatePanel();
+            leftFossaPanel.Text = "Left Fossa";
+            leftFossaPanel.NavigationState = "Left TMJ";
+            leftFossaPanel.LayerState = "FossaLayers";
+            statePicker.addStatePanel(leftFossaPanel);
+
+            rightFossaPanel = new PresetStatePanel();
+            rightFossaPanel.Text = "Right Fossa";
+            rightFossaPanel.NavigationState = "Right TMJ";
+            rightFossaPanel.LayerState = "FossaLayers";
+            statePicker.addStatePanel(rightFossaPanel);
+
             //statePicker.addStatePanel(new DiscSpacePanel());
-            statePicker.addStatePanel(new FossaStatePanel());
+            //statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
             statePicker.setToDefault();
 
@@ -522,6 +536,16 @@ namespace Medical.Controller
             loadPresetSet(rightDisc);
             rightDiscPanel.clear();
             rightDiscPanel.initialize(rightDisc);
+
+            PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
+            loadPresetSet(leftFossa);
+            leftFossaPanel.clear();
+            leftFossaPanel.initialize(leftFossa);
+
+            PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
+            loadPresetSet(rightFossa);
+            rightFossaPanel.clear();
+            rightFossaPanel.initialize(rightFossa);
         }
 
         private void loadPresetSet(PresetStateSet presetStateSet)
