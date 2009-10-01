@@ -267,16 +267,26 @@ namespace Medical
                 //Starting position
                 startLookAt = this.lookAt;
                 startOrbitDistance = orbitDistance;
-                Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
-                Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
-                startRotation = yawRot * pitchRot;
 
                 //Target position
                 computeStartingValues(position - lookAt, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
-                yawRot = new Quaternion(Vector3.Up, targetYaw);
-                pitchRot = new Quaternion(Vector3.Left, targetPitch);
-                targetRotation = yawRot * pitchRot;
+
+                //Rotations
+                Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+                Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
+                Quaternion targetYawRot = new Quaternion(Vector3.Up, targetYaw);
+                Quaternion targetPitchRot = new Quaternion(Vector3.Left, targetPitch);
+                if (yaw < 0 && targetYaw > 0 && targetYaw - yaw > Math.PI)
+                {
+                    targetYawRot = new Quaternion(Vector3.Up, -targetYaw);
+                }
+                else if (yaw > 0 && targetYaw < 0 && yaw - targetYaw > Math.PI)
+                {
+                    yawRot = new Quaternion(Vector3.Up, -yaw);
+                }
+                startRotation = yawRot * pitchRot;
+                targetRotation = targetYawRot * targetPitchRot;
                 automaticMovement = true;
                 totalTime = 0.0f;
             }
