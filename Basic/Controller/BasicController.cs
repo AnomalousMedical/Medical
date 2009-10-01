@@ -496,7 +496,9 @@ namespace Medical.Controller
 
             //statePicker.addStatePanel(new DiscSpacePanel());
             //statePicker.addStatePanel(new FossaStatePanel());
-            statePicker.addStatePanel(new TeethStatePanel());
+            //statePicker.addStatePanel(new TeethStatePanel());
+            statePicker.addStatePanel(new BottomTeethRemovalPanel());
+            statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.setToDefault();
         }
         

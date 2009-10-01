@@ -198,6 +198,12 @@
     <Compile Include="GUI\ScenePicker\ScenePicker.Designer.cs">
       <DependentUpon>ScenePicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.Designer.cs">
+      <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\DiscPositionPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -258,6 +264,12 @@
     </Compile>
     <Compile Include="GUI\StatePicker\TeethStatePanel.Designer.cs">
       <DependentUpon>TeethStatePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.Designer.cs">
+      <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.cs">
       <SubType>Form</SubType>
@@ -536,6 +548,10 @@
       <DependentUpon>ScenePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\BottomTeethRemovalPanel.resx">
+      <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -550,6 +566,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\TeethAdaptationPanel.resx">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\TopTeethRemovalPanel.resx">
+      <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\View\DrawingWindowCloneHost.resx">
