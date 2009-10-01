@@ -66,6 +66,14 @@ namespace Medical.GUI
 
         public String LayerState { get; set; }
 
+        internal virtual String NavigationImageKey
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         protected void showChanges(bool immediate)
         {
             parentPicker.showChanges(immediate);

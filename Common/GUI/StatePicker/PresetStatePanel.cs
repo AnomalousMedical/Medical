@@ -24,9 +24,6 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
-            presetListView.LargeImageList = new ImageList();
-            presetListView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            presetListView.LargeImageList.ImageSize = new Size(100, 100);
             presetListView.SelectedIndexChanged += new EventHandler(presetListView_SelectedIndexChanged);
         }
 
@@ -40,6 +37,10 @@ namespace Medical.GUI
 
         public void initialize(PresetStateSet presetStateSet)
         {
+            if (presetListView.LargeImageList == null)
+            {
+                presetListView.LargeImageList = parentPicker.ImageList;
+            }
             using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
             {
                 foreach (PresetState state in presetStateSet.Presets)
@@ -52,25 +53,26 @@ namespace Medical.GUI
                         groups.Add(state.Category, group);
                         presetListView.Groups.Add(group);
                     }
-                    if (!presetListView.LargeImageList.Images.ContainsKey(state.ImageName))
+                    String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
+                    if (!presetListView.LargeImageList.Images.ContainsKey(fullImageName))
                     {
                         try
                         {
-                            using (Stream imageStream = archive.openStream(presetStateSet.SourceDirectory + "/" + state.ImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                            using (Stream imageStream = archive.openStream(fullImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                             {
                                 Image image = Image.FromStream(imageStream);
                                 if (image != null)
                                 {
-                                    presetListView.LargeImageList.Images.Add(state.ImageName, image);
+                                    presetListView.LargeImageList.Images.Add(fullImageName, image);
                                 }
                             }
                         }
                         catch (Exception e)
                         {
-                            Log.Error("Could not open image preview file {0}.", presetStateSet.SourceDirectory + "/" + state.ImageName);
+                            Log.Error("Could not open image preview file {0}.", fullImageName);
                         }
                     }
-                    ListViewItem item = new ListViewItem(state.Name, state.ImageName);
+                    ListViewItem item = new ListViewItem(state.Name, fullImageName);
                     item.Tag = state;
                     item.Group = group;
                     presetListView.Items.Add(item);
@@ -125,6 +127,22 @@ namespace Medical.GUI
                 openingItem.Selected = true;
             }
             allowUpdates = true;
+        }
+
+        internal override String NavigationImageKey
+        {
+            get
+            {
+                if (presetListView.SelectedItems.Count > 0)
+                {
+                    ListViewItem selected = presetListView.SelectedItems[0];
+                    return selected.ImageKey;
+                }
+                else
+                {
+                    return defaultItem.ImageKey;
+                }
+            }
         }
     }
 }

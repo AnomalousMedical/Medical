@@ -455,23 +455,11 @@ namespace Medical.Controller
             leftGrowthPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(leftGrowthPanel);
 
-            rightGrowthPanel = new PresetStatePanel();
-            rightGrowthPanel.Text = "Right Condyle Growth";
-            rightGrowthPanel.NavigationState = "Right Lateral";
-            rightGrowthPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(rightGrowthPanel);
-
             leftDegenerationPanel = new PresetStatePanel();
             leftDegenerationPanel.Text = "Left Condyle Degeneration";
             leftDegenerationPanel.NavigationState = "Left TMJ";
             leftDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(leftDegenerationPanel);
-
-            rightDegenerationPanel = new PresetStatePanel();
-            rightDegenerationPanel.Text = "Right Condyle Degeneration";
-            rightDegenerationPanel.NavigationState = "Right TMJ";
-            rightDegenerationPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(rightDegenerationPanel);
 
             leftDiscPanel = new PresetStatePanel();
             leftDiscPanel.Text = "Left Disc";
@@ -479,17 +467,29 @@ namespace Medical.Controller
             leftDiscPanel.LayerState = "DiscLayers";
             statePicker.addStatePanel(leftDiscPanel);
 
-            rightDiscPanel = new PresetStatePanel();
-            rightDiscPanel.Text = "Right Disc";
-            rightDiscPanel.NavigationState = "Right TMJ";
-            rightDiscPanel.LayerState = "DiscLayers";
-            statePicker.addStatePanel(rightDiscPanel);
-
             leftFossaPanel = new PresetStatePanel();
             leftFossaPanel.Text = "Left Fossa";
             leftFossaPanel.NavigationState = "Left TMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(leftFossaPanel);
+
+            rightGrowthPanel = new PresetStatePanel();
+            rightGrowthPanel.Text = "Right Condyle Growth";
+            rightGrowthPanel.NavigationState = "Right Lateral";
+            rightGrowthPanel.LayerState = "MandibleSizeLayers";
+            statePicker.addStatePanel(rightGrowthPanel);
+
+            rightDegenerationPanel = new PresetStatePanel();
+            rightDegenerationPanel.Text = "Right Condyle Degeneration";
+            rightDegenerationPanel.NavigationState = "Right TMJ";
+            rightDegenerationPanel.LayerState = "MandibleSizeLayers";
+            statePicker.addStatePanel(rightDegenerationPanel);
+
+            rightDiscPanel = new PresetStatePanel();
+            rightDiscPanel.Text = "Right Disc";
+            rightDiscPanel.NavigationState = "Right TMJ";
+            rightDiscPanel.LayerState = "DiscLayers";
+            statePicker.addStatePanel(rightDiscPanel);
 
             rightFossaPanel = new PresetStatePanel();
             rightFossaPanel.Text = "Right Fossa";

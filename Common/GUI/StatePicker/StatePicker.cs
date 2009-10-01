@@ -31,6 +31,9 @@ namespace Medical.GUI
         public StatePicker()
         {
             InitializeComponent();
+            navigatorList.LargeImageList = new ImageList();
+            navigatorList.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
+            navigatorList.LargeImageList.ImageSize = new Size(100, 100);
             navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);
         }
 
@@ -69,6 +72,8 @@ namespace Medical.GUI
             foreach (StatePickerPanel panel in panels)
             {
                 panel.recordOpeningState();
+                ListViewItem item = navigatorList.Items[panel.Text];
+                item.ImageKey = panel.NavigationImageKey;
             }
             hidePanel();
             currentIndex = 0;
@@ -83,12 +88,22 @@ namespace Medical.GUI
             }
         }
 
+        internal ImageList ImageList
+        {
+            get
+            {
+                return navigatorList.LargeImageList;
+            }
+        }
+
         internal void showChanges(bool immediate)
         {
             MedicalState createdState = new MedicalState("Test");
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
+                ListViewItem item = navigatorList.Items[panel.Text];
+                item.ImageKey = panel.NavigationImageKey;
             }
             if (immediate)
             {

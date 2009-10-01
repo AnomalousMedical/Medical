@@ -45,10 +45,11 @@
             this.nameColumn});
             this.navigatorList.Dock = System.Windows.Forms.DockStyle.Top;
             this.navigatorList.HideSelection = false;
+            this.navigatorList.LabelWrap = false;
             this.navigatorList.Location = new System.Drawing.Point(0, 0);
             this.navigatorList.MultiSelect = false;
             this.navigatorList.Name = "navigatorList";
-            this.navigatorList.Size = new System.Drawing.Size(624, 98);
+            this.navigatorList.Size = new System.Drawing.Size(624, 134);
             this.navigatorList.TabIndex = 0;
             this.navigatorList.UseCompatibleStateImageBehavior = false;
             // 
@@ -115,9 +116,9 @@
             // 
             this.statePickerPanelHost.AutoScroll = true;
             this.statePickerPanelHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statePickerPanelHost.Location = new System.Drawing.Point(0, 98);
+            this.statePickerPanelHost.Location = new System.Drawing.Point(0, 134);
             this.statePickerPanelHost.Name = "statePickerPanelHost";
-            this.statePickerPanelHost.Size = new System.Drawing.Size(624, 317);
+            this.statePickerPanelHost.Size = new System.Drawing.Size(624, 281);
             this.statePickerPanelHost.TabIndex = 2;
             // 
             // StatePicker
