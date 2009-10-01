@@ -109,8 +109,11 @@
             this.CloseButtonVisible = false;
             this.Controls.Add(this.panelHost);
             this.Controls.Add(this.buttonPanel);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "StatePickerPanelHost";
-            this.Text = "StatePickerProperties";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.Text = "Properties";
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

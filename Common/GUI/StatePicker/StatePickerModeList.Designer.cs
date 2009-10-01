@@ -59,7 +59,10 @@
             this.CloseButton = false;
             this.CloseButtonVisible = false;
             this.Controls.Add(this.navigatorList);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Name = "StatePickerModeList";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockTop;
             this.Text = "Distortion Wizard";
             this.ResumeLayout(false);
 

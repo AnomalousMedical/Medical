@@ -86,8 +86,8 @@ namespace Medical.GUI
 
         public void show()
         {
-            modeList.Show(guiElementController.DockPanel, DockState.DockTop);
-            panelHost.Show(guiElementController.DockPanel, DockState.DockLeft);
+            modeList.Show(guiElementController.DockPanel);
+            panelHost.Show(guiElementController.DockPanel);
         }
 
         public void close()
