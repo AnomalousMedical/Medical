@@ -12,14 +12,14 @@ namespace Medical.GUI
 {
     public partial class StatePickerPanel : UserControl
     {
-        protected StatePicker parentPicker;
+        protected StatePickerController parentPicker;
 
         public StatePickerPanel()
         {
             InitializeComponent();
         }
 
-        public void setStatePicker(StatePicker parentPicker)
+        public void setStatePicker(StatePickerController parentPicker)
         {
             this.parentPicker = parentPicker;
         }

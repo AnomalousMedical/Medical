@@ -228,11 +228,24 @@
     <Compile Include="GUI\StatePicker\StatePicker.Designer.cs">
       <DependentUpon>StatePicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerController.cs" />
+    <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerModeList.Designer.cs">
+      <DependentUpon>StatePickerModeList.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanel.Designer.cs">
       <DependentUpon>StatePickerPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerPanelHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerPanelHost.Designer.cs">
+      <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.cs">
       <SubType>UserControl</SubType>
@@ -525,6 +538,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\StatePickerModeList.resx">
+      <DependentUpon>StatePickerModeList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\StatePickerPanelHost.resx">
+      <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\TeethAdaptationPanel.resx">

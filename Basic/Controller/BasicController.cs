@@ -23,12 +23,11 @@ namespace Medical.Controller
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
         private GUIElementController viewMode;
-        private GUIElementController distortMode;
         private MedicalStateController stateController = new MedicalStateController();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
-        private StatePicker statePicker = new StatePicker();
+        private StatePickerController statePicker;
         private ImageRenderer imageRenderer;
         private NavigationController navigationController;
         private WatermarkController watermarkController;
@@ -148,7 +147,6 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
 
             //Configure distort mode
-            distortMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
             constructStatePicker();
 
             splashScreen.stepProgress(70);
@@ -423,7 +421,7 @@ namespace Medical.Controller
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
                 statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
-                statePicker.Show(distortMode.DockPanel);
+                statePicker.show();
                 basicForm.ResumeLayout();
             }
         }
@@ -437,7 +435,6 @@ namespace Medical.Controller
         void statePicker_Finished()
         {
             basicForm.SuspendLayout();
-            distortMode.hideWindows();
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
             basicForm.ResumeLayout();
@@ -445,7 +442,7 @@ namespace Medical.Controller
 
         private void constructStatePicker()
         {
-            statePicker.initialize(temporaryStateBlender, navigationController, layerController);
+            statePicker = new StatePickerController(new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController), temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
@@ -501,8 +498,6 @@ namespace Medical.Controller
             //statePicker.addStatePanel(new FossaStatePanel());
             statePicker.addStatePanel(new TeethStatePanel());
             statePicker.setToDefault();
-
-            distortMode.addGUIElement(statePicker);
         }
         
         private void updateStatePicker(String rootDirectory)

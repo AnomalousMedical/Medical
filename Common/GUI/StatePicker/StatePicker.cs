@@ -13,7 +13,7 @@ namespace Medical.GUI
     public delegate void MedicalStateCreated(MedicalState state);
     public delegate void StatePickerFinished();
 
-    public partial class StatePicker : GUIElement
+    partial class StatePicker : GUIElement
     {
         public event MedicalStateCreated StateCreated;
         public event StatePickerFinished Finished;
@@ -46,19 +46,10 @@ namespace Medical.GUI
 
         public StatePickerPanel addStatePanel(StatePickerPanel panel)
         {
-            panel.setStatePicker(this);
+//            panel.setStatePicker(this);
             panels.Add(panel);
             ListViewItem item = navigatorList.Items.Add(panel.Text, panel.Text, panel.Text);
             item.Tag = panel;
-            return panel;
-        }
-
-        public PresetStatePanel addPresetStateSet(PresetStateSet presetSet)
-        {
-            PresetStatePanel panel = new PresetStatePanel();
-            panel.Text = presetSet.Name;
-            panel.initialize(presetSet);
-            addStatePanel(panel);
             return panel;
         }
 
