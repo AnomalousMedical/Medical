@@ -228,12 +228,6 @@
     <Compile Include="GUI\StatePicker\PresetStatePanel.Designer.cs">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\StatePicker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\StatePicker\StatePicker.Designer.cs">
-      <DependentUpon>StatePicker.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\StatePicker\StatePickerController.cs" />
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
       <SubType>Form</SubType>
@@ -381,10 +375,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\PresetStatePanel.resx">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\StatePicker.resx">
-      <DependentUpon>StatePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\TeethStatePanel.resx">

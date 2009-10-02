@@ -8,6 +8,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
+    public delegate void MedicalStateCreated(MedicalState state);
+    public delegate void StatePickerFinished();
+
     public class StatePickerController : IDisposable
     {
         public event MedicalStateCreated StateCreated;
