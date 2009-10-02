@@ -269,7 +269,8 @@ namespace Medical
                 startOrbitDistance = orbitDistance;
 
                 //Target position
-                computeStartingValues(position - lookAt, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
+                Vector3 localVec = position - lookAt;
+                computeStartingValues(localVec, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
 
                 //Rotations
@@ -277,14 +278,32 @@ namespace Medical
                 Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
                 Quaternion targetYawRot = new Quaternion(Vector3.Up, targetYaw);
                 Quaternion targetPitchRot = new Quaternion(Vector3.Left, targetPitch);
-                if (yaw < 0 && targetYaw > 0 && targetYaw - yaw > Math.PI)
+                if (targetYaw < yaw)
                 {
-                    targetYawRot = new Quaternion(Vector3.Up, -targetYaw);
+                    float oneRotYaw = targetYaw + 2f * (float)Math.PI;
+                    float oneRotYawMinus180 = oneRotYaw - (float)Math.PI;
+                    if (yaw > oneRotYawMinus180 && yaw < oneRotYaw)
+                    {
+                        targetYawRot = new Quaternion(Vector3.Up, oneRotYaw);
+                    }
                 }
-                else if (yaw > 0 && targetYaw < 0 && yaw - targetYaw > Math.PI)
+                if (targetYaw > yaw)
                 {
-                    yawRot = new Quaternion(Vector3.Up, -yaw);
+                    float yawDifference = targetYaw - yaw;
+                    if (yawDifference > Math.PI)
+                    {
+                        float negRot = targetYaw - 2f * (float)Math.PI;
+                        targetYawRot = new Quaternion(Vector3.Up, negRot);
+                    }
                 }
+                //if (localVec.x >= 0 && yaw < 0 && targetYaw > 0 && targetYaw - yaw > Math.PI)
+                //{
+                //    targetYawRot = new Quaternion(Vector3.Up, -targetYaw);
+                //}
+                //else if (localVec.x <= 0 && yaw > 0 && targetYaw < 0 && yaw - targetYaw > Math.PI)
+                //{
+                //    yawRot = new Quaternion(Vector3.Up, -yaw);
+                //}
                 startRotation = yawRot * pitchRot;
                 targetRotation = targetYawRot * targetPitchRot;
                 automaticMovement = true;
@@ -308,7 +327,7 @@ namespace Medical
             yaw = Vector3.Backward.angle(ref localTrans);
             if (localTrans.x < 0)
             {
-                yaw = -yaw;
+                yaw += (float)Math.PI;
             }
 
             //Compute the pitch by rotating the local translation to -yaw.
