@@ -70,14 +70,12 @@ namespace Medical.GUI
             movingMuscleTarget.Offset = Vector3.Zero;
         }
 
-        public override void recordOpeningState()
+        protected override void onPanelClosing()
         {
-            
-        }
-
-        public override void resetToOpeningState()
-        {
-            
+            if (adaptButton.Checked)
+            {
+                adaptButton.Checked = false;
+            }
         }
     }
 }

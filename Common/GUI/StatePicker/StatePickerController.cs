@@ -218,6 +218,7 @@ namespace Medical.GUI
 
         private void hidePanel()
         {
+            panels[currentIndex].callPanelClosing();
             panelHost.hidePanel(panels[currentIndex]);
         }
     }
