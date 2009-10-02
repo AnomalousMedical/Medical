@@ -61,10 +61,6 @@ namespace Medical
         private CameraMotionValidator motionValidator = null;
 
         private bool automaticMovement = false;
-        //private Vector3 targetLookAt = Vector3.Zero;
-        //private Vector3 targetTranslation = Vector3.Zero;
-        //private Vector3 startLookAt = Vector3.Zero;
-        //private Vector3 startTranslation = Vector3.Zero;
         private float totalTime = 0.0f;
         private Vector3 startLookAt;
         private float startOrbitDistance;
@@ -77,7 +73,6 @@ namespace Medical
         Vector3 targetNormal;
         Vector3 targetRotatedUp;
         Vector3 targetRotatedLeft;
-        Vector3 targetPosition;
 
         private bool allowRotation = true;
         private bool allowZoom = true;
@@ -103,29 +98,20 @@ namespace Medical
                     {
                         totalTime = 1.0f;
                         automaticMovement = false;
-                        computeStartingValues(targetPosition - targetLookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
-                        this.lookAt = targetLookAt;
-                        updateTranslation(normalDirection * orbitDistance + lookAt);
-                        camera.LookAt = targetLookAt;
-                        //orbitDistance = targetOrbitDistance;
-                        //yaw = targetYaw;
-                        //pitch = targetPitch;
-                        //normalDirection = targetNormal;
-                        //rotatedUp = targetRotatedUp;
-                        //rotatedLeft = targetRotatedLeft;
-                    }
-                    else
-                    {
-                        this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
 
-                        //computeStartingValues(startTranslation.lerp(ref targetTranslation, ref totalTime) - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
-                        //camera.setOrthoWindowHeight(orbitDistance);
-                        Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
-                        Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                        float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
-                        updateTranslation(currentNormalDirection * currentOrbit + lookAt);
-                        camera.LookAt = lookAt;
+                        orbitDistance = targetOrbitDistance;
+                        yaw = targetYaw;
+                        pitch = targetPitch;
+                        normalDirection = targetNormal;
+                        rotatedUp = targetRotatedUp;
+                        rotatedLeft = targetRotatedLeft;
                     }
+                    this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
+                    Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
+                    Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+                    float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
+                    updateTranslation(currentNormalDirection * currentOrbit + lookAt);
+                    camera.LookAt = lookAt;
                 }
                 else
                 {
@@ -243,7 +229,6 @@ namespace Medical
                             orbitDistance = 0.0f;
                         }
                     }
-                    //camera.setOrthoWindowHeight(orbitDistance);
                     updateTranslation(normalDirection * orbitDistance + lookAt);
                 }
             }
@@ -281,7 +266,6 @@ namespace Medical
                 Vector3 localVec = position - lookAt;
                 computeStartingValues(localVec, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
-                this.targetPosition = position;
 
                 //Rotations
                 Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
@@ -306,14 +290,6 @@ namespace Medical
                         targetYawRot = new Quaternion(Vector3.Up, negRot);
                     }
                 }
-                //if (localVec.x >= 0 && yaw < 0 && targetYaw > 0 && targetYaw - yaw > Math.PI)
-                //{
-                //    targetYawRot = new Quaternion(Vector3.Up, -targetYaw);
-                //}
-                //else if (localVec.x <= 0 && yaw > 0 && targetYaw < 0 && yaw - targetYaw > Math.PI)
-                //{
-                //    yawRot = new Quaternion(Vector3.Up, -yaw);
-                //}
                 startRotation = yawRot * pitchRot;
                 targetRotation = targetYawRot * targetPitchRot;
                 automaticMovement = true;
