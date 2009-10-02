@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -36,17 +37,33 @@ namespace Medical
             return ret;
         }
 
-        public static void adaptAllTeeth()
+        public static void adaptAllTeeth(bool adapt)
         {
             foreach (Tooth tooth in teeth.Values)
             {
-                tooth.adapt();
+                tooth.Adapt = adapt;
             }
         }
 
-        public static void adaptSingleTooth(String name)
+        public static void adaptSingleTooth(String name, bool adapt)
         {
-            teeth[name].adapt();
+            teeth[name].Adapt = adapt;
+        }
+
+        public static void setAllOffsets(Vector3 value)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                tooth.Offset = value;
+            }
+        }
+
+        public static void setAllRotations(Quaternion value)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                tooth.Rotation = value;
+            }
         }
 
         /// <summary>

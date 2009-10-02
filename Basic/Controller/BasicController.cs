@@ -494,11 +494,9 @@ namespace Medical.Controller
             rightFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(rightFossaPanel);
 
-            //statePicker.addStatePanel(new DiscSpacePanel());
-            //statePicker.addStatePanel(new FossaStatePanel());
-            //statePicker.addStatePanel(new TeethStatePanel());
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
+            statePicker.addStatePanel(new TeethAdaptationPanel());
             statePicker.setToDefault();
         }
         

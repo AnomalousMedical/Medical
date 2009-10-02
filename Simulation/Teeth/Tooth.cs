@@ -124,7 +124,7 @@ namespace Medical
                         applyAdaptation(ToothType.Bottom, false);
                         break;
                     default:
-                        adaptTeeth = -1;
+                        adaptTeeth = 0;
                         break;
                 }
                 adaptTeeth++;
@@ -139,20 +139,50 @@ namespace Medical
         /// Adapt the teeth. Will not start if already running. Returns true if adaptation started sucessfully.
         /// </summary>
         /// <returns>True if the adaptation process started sucessfully.</returns>
-        public bool adapt()
-        {
-            if (!Extracted && adaptTeeth == 0)
-            {
-                adaptTeeth = 1;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //public bool adapt()
+        //{
+        //    if (!Extracted && adaptTeeth == 0)
+        //    {
+        //        adaptTeeth = 1;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         protected abstract void applyAdaptation(ToothType type, bool adapt);
+
+        [DoNotCopy]
+        public bool Adapt
+        {
+            get
+            {
+                return adaptTeeth > 0;
+            }
+            set
+            {
+                //Start adaptation or do nothing if started.
+                if (value)
+                {
+                    if (adaptTeeth == 0)
+                    {
+                        adaptTeeth = 1;
+                    }
+                }
+                //Stop adaptation or do nothing if stopped.
+                else
+                {
+                    if (adaptTeeth > 0)
+                    {
+                        adaptTeeth = 0;
+                        applyAdaptation(ToothType.Top, false);
+                        applyAdaptation(ToothType.Bottom, false);
+                    }
+                }
+            }
+        }
 
         [DoNotCopy]
         protected Color HighlightColor

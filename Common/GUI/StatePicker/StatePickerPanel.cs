@@ -71,7 +71,7 @@ namespace Medical.GUI
         {
             get
             {
-                return null;
+                return "";
             }
         }
 

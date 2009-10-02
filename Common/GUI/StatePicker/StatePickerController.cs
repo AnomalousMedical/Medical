@@ -118,6 +118,14 @@ namespace Medical.GUI
             }
         }
 
+        public TemporaryStateBlender StateBlender
+        {
+            get
+            {
+                return stateBlender;
+            }
+        }
+
         internal void showChanges(bool immediate)
         {
             MedicalState createdState = new MedicalState("Test");

@@ -30,6 +30,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<ToothState> StateEnum
+        {
+            get
+            {
+                return teeth.Values;
+            }
+        }
+
         #region Saveable Members
 
         private const string TEETH = "Teeth";

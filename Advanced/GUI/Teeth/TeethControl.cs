@@ -39,25 +39,6 @@ namespace Medical.GUI
             this.medicalController = medicalController;
         }
 
-        protected override void fixedLoopUpdate(Clock time)
-        {
-            if (adaptButton.Checked)
-            {
-                foreach (CheckBox control in teethPanel.Controls)
-                {
-                    if (control.Checked)
-                    {
-                        TeethController.adaptSingleTooth(control.Tag.ToString());
-                    }
-                }
-                //TeethController.adaptAllTeeth();
-                if (stopOnContactCheck.Checked && TeethController.allTeethTouching())
-                {
-                    adaptButton.Checked = false;
-                }
-            }
-        }
-
         protected override void sceneLoaded(SimScene scene)
         {
             foreach (CheckBox control in teethPanel.Controls)
@@ -207,18 +188,20 @@ namespace Medical.GUI
         {
             if (adaptButton.Checked)
             {
-                if (!(stopOnContactCheck.Checked && TeethController.allTeethTouching()))
+                foreach (CheckBox control in teethPanel.Controls)
                 {
-                    this.subscribeToUpdates();
-                }
-                else
-                {
-                    adaptButton.Checked = false;
+                    if (control.Checked)
+                    {
+                        TeethController.adaptSingleTooth(control.Tag.ToString(), true);
+                    }
                 }
             }
             else
             {
-                this.unsubscribeFromUpdates();
+                foreach (CheckBox control in teethPanel.Controls)
+                {
+                    TeethController.adaptSingleTooth(control.Tag.ToString(), false);
+                }
             }
         }
     }

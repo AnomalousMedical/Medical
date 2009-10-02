@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.adaptButton = new System.Windows.Forms.CheckBox();
+            this.undoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -44,13 +45,23 @@
             this.adaptButton.UseVisualStyleBackColor = true;
             this.adaptButton.CheckedChanged += new System.EventHandler(this.adaptButton_CheckedChanged);
             // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(56, 5);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(45, 23);
+            this.undoButton.TabIndex = 1;
+            this.undoButton.Text = "Undo";
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(56, 5);
+            this.resetButton.Location = new System.Drawing.Point(5, 35);
             this.resetButton.Name = "resetButton";
-            this.resetButton.Size = new System.Drawing.Size(45, 23);
-            this.resetButton.TabIndex = 1;
-            this.resetButton.Text = "Reset";
+            this.resetButton.Size = new System.Drawing.Size(96, 23);
+            this.resetButton.TabIndex = 2;
+            this.resetButton.Text = "Reset Occlusion";
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
@@ -59,8 +70,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.resetButton);
+            this.Controls.Add(this.undoButton);
             this.Controls.Add(this.adaptButton);
+            this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
+            this.NavigationState = "Dentition Anterior Labial";
             this.Size = new System.Drawing.Size(318, 286);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -70,6 +84,7 @@
         #endregion
 
         private System.Windows.Forms.CheckBox adaptButton;
+        private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.Button resetButton;
     }
 }

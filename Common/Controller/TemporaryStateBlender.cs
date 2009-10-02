@@ -46,6 +46,14 @@ namespace Medical
             startTemporaryBlend(undoState);
         }
 
+        public MedicalState UndoState
+        {
+            get
+            {
+                return undoState;
+            }
+        }
+
         #region UpdateListener Members
 
         public void exceededMaxDelta()
