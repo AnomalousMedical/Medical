@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -76,6 +77,7 @@ namespace Medical
         Vector3 targetNormal;
         Vector3 targetRotatedUp;
         Vector3 targetRotatedLeft;
+        Vector3 targetPosition;
 
         private bool allowRotation = true;
         private bool allowZoom = true;
@@ -101,22 +103,29 @@ namespace Medical
                     {
                         totalTime = 1.0f;
                         automaticMovement = false;
-                        orbitDistance = targetOrbitDistance;
-                        yaw = targetYaw;
-                        pitch = targetPitch;
-                        normalDirection = targetNormal;
-                        rotatedUp = targetRotatedUp;
-                        rotatedLeft = targetRotatedLeft;
+                        computeStartingValues(targetPosition - targetLookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+                        this.lookAt = targetLookAt;
+                        updateTranslation(normalDirection * orbitDistance + lookAt);
+                        camera.LookAt = targetLookAt;
+                        //orbitDistance = targetOrbitDistance;
+                        //yaw = targetYaw;
+                        //pitch = targetPitch;
+                        //normalDirection = targetNormal;
+                        //rotatedUp = targetRotatedUp;
+                        //rotatedLeft = targetRotatedLeft;
                     }
-                    this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
+                    else
+                    {
+                        this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
 
-                    //computeStartingValues(startTranslation.lerp(ref targetTranslation, ref totalTime) - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
-                    //camera.setOrthoWindowHeight(orbitDistance);
-                    Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
-                    Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                    float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
-                    updateTranslation(currentNormalDirection * currentOrbit + lookAt);
-                    camera.LookAt = lookAt;
+                        //computeStartingValues(startTranslation.lerp(ref targetTranslation, ref totalTime) - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
+                        //camera.setOrthoWindowHeight(orbitDistance);
+                        Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
+                        Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+                        float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
+                        updateTranslation(currentNormalDirection * currentOrbit + lookAt);
+                        camera.LookAt = lookAt;
+                    }
                 }
                 else
                 {
@@ -272,6 +281,7 @@ namespace Medical
                 Vector3 localVec = position - lookAt;
                 computeStartingValues(localVec, out targetOrbitDistance, out targetYaw, out targetPitch, out targetNormal, out targetRotatedUp, out targetRotatedLeft);
                 this.targetLookAt = lookAt;
+                this.targetPosition = position;
 
                 //Rotations
                 Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
@@ -327,7 +337,7 @@ namespace Medical
             yaw = Vector3.Backward.angle(ref localTrans);
             if (localTrans.x < 0)
             {
-                yaw += (float)Math.PI;
+                yaw = -yaw;
             }
 
             //Compute the pitch by rotating the local translation to -yaw.
