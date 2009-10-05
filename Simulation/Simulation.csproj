@@ -131,10 +131,12 @@
     <Compile Include="Tools\Rotation\RotateTool.cs" />
     <Compile Include="Tools\Rotation\RotationAxis.cs" />
     <Compile Include="Tools\ToolEvents.cs" />
+    <Compile Include="Transparency\TransparencyBlock.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />
     <Compile Include="Transparency\TransparencyGroup.cs" />
     <Compile Include="Transparency\TransparencyInterface.cs" />
     <Compile Include="Transparency\TransparencySubInterface.cs" />
+    <Compile Include="Transparency\TransparencyTracker.cs" />
     <Compile Include="Utility\NaturalSort.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

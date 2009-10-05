@@ -70,7 +70,7 @@ namespace Medical
             alphaMaterial.Value.setDiffuse(ref diffuse);
             if (disableOnHidden)
             {
-                entity.setVisible(alpha != 0.0f);
+                subEntity.setVisible(alpha != 0.0f);
             }
             if (alpha == 1.0f)
             {
