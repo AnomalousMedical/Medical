@@ -7,6 +7,8 @@ using Logging;
 using Engine.Platform;
 using System.Drawing;
 using Medical.Properties;
+using Engine.Resources;
+using System.Xml;
 
 namespace Medical
 {
@@ -30,6 +32,28 @@ namespace Medical
             this.windowController = windowController;
             windowController.WindowCreated += windowController_WindowCreated;
             windowController.WindowDestroyed += windowController_WindowDestroyed;
+        }
+
+        public void loadNavigationSet(String cameraFile)
+        {
+            using (Archive archive = FileSystem.OpenArchive(cameraFile))
+            {
+                if (archive.exists(cameraFile))
+                {
+                    try
+                    {
+                        using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                        {
+                            NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
+                            this.NavigationSet = navigation;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                    }
+                }
+            }
         }
 
         public NavigationState getState(String name)

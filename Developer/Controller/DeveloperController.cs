@@ -34,6 +34,8 @@ namespace Medical.Controller
         private ScenePicker scenePicker = new ScenePicker();
         private LayerController layerController;
 
+        private NavigationController navigationController;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -83,6 +85,8 @@ namespace Medical.Controller
 
             drawingWindowController = new DrawingWindowController();
             drawingWindowController.initialize(developerForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+
+            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
             layerController = new LayerController();
@@ -395,6 +399,8 @@ namespace Medical.Controller
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     layerController.loadLayerStateSet(layersFile);
+                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
+                    navigationController.loadNavigationSet(cameraFile);
                 }
                 return true;
             }

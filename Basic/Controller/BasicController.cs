@@ -380,24 +380,7 @@ namespace Medical.Controller
                     String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
-                    using (Archive archive = FileSystem.OpenArchive(cameraFile))
-                    {
-                        if(archive.exists(cameraFile))
-                        {
-                            try
-                            {
-                                using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
-                                {
-                                    NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
-                                    navigationController.NavigationSet = navigation;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Debug("Error loading navigation file.\n{0}", ex.Message);
-                            }
-                        }
-                    }
+                    navigationController.loadNavigationSet(cameraFile);
                     updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                 }
                 return true;

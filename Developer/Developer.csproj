@@ -86,6 +86,12 @@
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.Designer.cs">
       <DependentUpon>FossaPresetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\NavigationEditor\NavigationEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NavigationEditor\NavigationEditor.Designer.cs">
+      <DependentUpon>NavigationEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PicturePreviewPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
