@@ -134,6 +134,7 @@
     <Compile Include="Transparency\TransparencyController.cs" />
     <Compile Include="Transparency\TransparencyGroup.cs" />
     <Compile Include="Transparency\TransparencyInterface.cs" />
+    <Compile Include="Transparency\TransparencySubInterface.cs" />
     <Compile Include="Utility\NaturalSort.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
