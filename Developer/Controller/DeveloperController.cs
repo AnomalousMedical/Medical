@@ -154,6 +154,9 @@ namespace Medical.Controller
             fossaPresetEditor.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(fossaPresetEditor);
 
+            NavigationStateSelector navEditor = new NavigationStateSelector(navigationController, drawingWindowController);
+            guiElements.addGUIElement(navEditor);
+
             splashScreen.stepProgress(70);
 
             loadDefaultScene();

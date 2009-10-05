@@ -53,7 +53,7 @@ namespace Medical
             return closest;
         }
 
-        internal IEnumerable<String> StateNames
+        public IEnumerable<String> StateNames
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Medical
             }
         }
 
-        internal IEnumerable<NavigationState> States
+        public IEnumerable<NavigationState> States
         {
             get
             {

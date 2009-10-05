@@ -15,7 +15,7 @@ namespace Medical
         ZoomOut,
     }
 
-    class NavigationLink
+    public class NavigationLink
     {
         public static NavigationButtons GetOppositeButton(NavigationButtons button)
         {
@@ -59,6 +59,10 @@ namespace Medical
             get
             {
                 return button;
+            }
+            set
+            {
+                button = value;
             }
         }
 

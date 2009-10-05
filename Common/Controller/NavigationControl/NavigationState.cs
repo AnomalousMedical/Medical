@@ -84,6 +84,10 @@ namespace Medical
             {
                 return lookAt;
             }
+            set
+            {
+                lookAt = value;
+            }
         }
 
         public Vector3 Translation
@@ -92,6 +96,10 @@ namespace Medical
             {
                 return translation;
             }
+            set
+            {
+                translation = value;
+            }
         }
 
         public String Name
@@ -99,6 +107,10 @@ namespace Medical
             get
             {
                 return name;
+            }
+            set
+            {
+                name = value;
             }
         }
 
@@ -114,7 +126,7 @@ namespace Medical
             }
         }
 
-        internal IEnumerable<NavigationLink> AdjacentStates
+        public IEnumerable<NavigationLink> AdjacentStates
         {
             get
             {
