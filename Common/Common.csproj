@@ -228,6 +228,7 @@
     <Compile Include="GUI\StatePicker\PresetStatePanel.Designer.cs">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\SkullStatePicker.cs" />
     <Compile Include="GUI\StatePicker\StatePickerController.cs" />
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
       <SubType>Form</SubType>

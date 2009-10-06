@@ -27,22 +27,13 @@ namespace Medical.Controller
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
-        private StatePickerController statePicker;
         private ImageRenderer imageRenderer;
         private NavigationController navigationController;
         private WatermarkController watermarkController;
-        private TemporaryStateBlender temporaryStateBlender;
-        private PresetStatePanel leftGrowthPanel;
-        private PresetStatePanel rightGrowthPanel;
-        private PresetStatePanel leftDegenerationPanel;
-        private PresetStatePanel rightDegenerationPanel;
-        private PresetStatePanel leftDiscPanel;
-        private PresetStatePanel rightDiscPanel;
-        private PresetStatePanel leftFossaPanel;
-        private PresetStatePanel rightFossaPanel;
         private ScenePicker scenePicker;
         private LayerController layerController;
         private MuscleControl muscleControl;
+        private SkullStatePicker statePicker;
 
         /// <summary>
         /// Constructor.
@@ -107,8 +98,6 @@ namespace Medical.Controller
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
 
-            temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             //Watermark watermark = new TiledWatermark("Source" + "Watermark", "Watermark", 150, 60);
@@ -147,7 +136,9 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
 
             //Configure distort mode
-            constructStatePicker();
+            statePicker = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
+            statePicker.Finished += new StatePickerFinished(statePicker_Finished);
+            statePicker.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
 
             splashScreen.stepProgress(70);
 
@@ -381,7 +372,7 @@ namespace Medical.Controller
                     layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
-                    updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
+                    statePicker.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                 }
                 return true;
             }
@@ -404,7 +395,6 @@ namespace Medical.Controller
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
                 statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
-                statePicker.show();
                 basicForm.ResumeLayout();
             }
         }
@@ -421,131 +411,6 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
             basicForm.ResumeLayout();
-        }
-
-        private void constructStatePicker()
-        {
-            statePicker = new StatePickerController(new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController), temporaryStateBlender, navigationController, layerController);
-            statePicker.StateCreated += statePicker_StateCreated;
-            statePicker.Finished += statePicker_Finished;
-
-            leftGrowthPanel = new PresetStatePanel();
-            leftGrowthPanel.Text = "Left Condyle Growth";
-            leftGrowthPanel.NavigationState = "Left Lateral";
-            leftGrowthPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(leftGrowthPanel);
-
-            leftDegenerationPanel = new PresetStatePanel();
-            leftDegenerationPanel.Text = "Left Condyle Degeneration";
-            leftDegenerationPanel.NavigationState = "Left TMJ";
-            leftDegenerationPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(leftDegenerationPanel);
-
-            leftDiscPanel = new PresetStatePanel();
-            leftDiscPanel.Text = "Left Disc";
-            leftDiscPanel.NavigationState = "Left TMJ";
-            leftDiscPanel.LayerState = "DiscLayers";
-            statePicker.addStatePanel(leftDiscPanel);
-
-            leftFossaPanel = new PresetStatePanel();
-            leftFossaPanel.Text = "Left Fossa";
-            leftFossaPanel.NavigationState = "Left TMJ";
-            leftFossaPanel.LayerState = "FossaLayers";
-            statePicker.addStatePanel(leftFossaPanel);
-
-            rightGrowthPanel = new PresetStatePanel();
-            rightGrowthPanel.Text = "Right Condyle Growth";
-            rightGrowthPanel.NavigationState = "Right Lateral";
-            rightGrowthPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(rightGrowthPanel);
-
-            rightDegenerationPanel = new PresetStatePanel();
-            rightDegenerationPanel.Text = "Right Condyle Degeneration";
-            rightDegenerationPanel.NavigationState = "Right TMJ";
-            rightDegenerationPanel.LayerState = "MandibleSizeLayers";
-            statePicker.addStatePanel(rightDegenerationPanel);
-
-            rightDiscPanel = new PresetStatePanel();
-            rightDiscPanel.Text = "Right Disc";
-            rightDiscPanel.NavigationState = "Right TMJ";
-            rightDiscPanel.LayerState = "DiscLayers";
-            statePicker.addStatePanel(rightDiscPanel);
-
-            rightFossaPanel = new PresetStatePanel();
-            rightFossaPanel.Text = "Right Fossa";
-            rightFossaPanel.NavigationState = "Right TMJ";
-            rightFossaPanel.LayerState = "FossaLayers";
-            statePicker.addStatePanel(rightFossaPanel);
-
-            statePicker.addStatePanel(new BottomTeethRemovalPanel());
-            statePicker.addStatePanel(new TopTeethRemovalPanel());
-            statePicker.addStatePanel(new TeethAdaptationPanel());
-            statePicker.setToDefault();
-        }
-        
-        private void updateStatePicker(String rootDirectory)
-        {
-            PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", rootDirectory + "/LeftGrowth");
-            loadPresetSet(leftGrowth);
-            leftGrowthPanel.clear();
-            leftGrowthPanel.initialize(leftGrowth);
-
-            PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", rootDirectory + "/RightGrowth");
-            loadPresetSet(rightGrowth);
-            rightGrowthPanel.clear();
-            rightGrowthPanel.initialize(rightGrowth);
-
-            PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", rootDirectory + "/LeftDegeneration");
-            loadPresetSet(leftDegeneration);
-            leftDegenerationPanel.clear();
-            leftDegenerationPanel.initialize(leftDegeneration);
-
-            PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", rootDirectory + "/RightDegeneration");
-            loadPresetSet(rightDegeneration);
-            rightDegenerationPanel.clear();
-            rightDegenerationPanel.initialize(rightDegeneration);
-
-            PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
-            loadPresetSet(leftDisc);
-            leftDiscPanel.clear();
-            leftDiscPanel.initialize(leftDisc);
-
-            PresetStateSet rightDisc = new PresetStateSet("Right Disc", rootDirectory + "/RightDisc");
-            loadPresetSet(rightDisc);
-            rightDiscPanel.clear();
-            rightDiscPanel.initialize(rightDisc);
-
-            PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
-            loadPresetSet(leftFossa);
-            leftFossaPanel.clear();
-            leftFossaPanel.initialize(leftFossa);
-
-            PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
-            loadPresetSet(rightFossa);
-            rightFossaPanel.clear();
-            rightFossaPanel.initialize(rightFossa);
-        }
-
-        private void loadPresetSet(PresetStateSet presetStateSet)
-        {
-            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
-            {
-                String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
-                foreach (String file in files)
-                {
-                    XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
-                    PresetState preset = saver.restoreObject(reader) as PresetState;
-                    if (preset != null)
-                    {
-                        presetStateSet.addPresetState(preset);
-                    }
-                    else
-                    {
-                        Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
-                    }
-                    reader.Close();
-                }
-            }
         }
     }
 }
