@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Reflection;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -138,9 +139,9 @@ namespace Medical.GUI
             if (currentState.Name == nameText.Text || navController.getState(nameText.Text) == null)
             {
                 navController.NavigationSet.renameState(currentState, nameText.Text);
-                currentState.Translation.setValue(translationText.Text);
+                currentState.Translation = new Vector3(translationText.Text);
                 translationText.Text = currentState.Translation.ToString();
-                currentState.LookAt.setValue(lookAtText.Text);
+                currentState.LookAt = new Vector3(lookAtText.Text);
                 lookAtText.Text = currentState.LookAt.ToString();
                 currentState.Hidden = hiddenCheck.Checked;
                 currentStateItem.Text = currentState.Name;
