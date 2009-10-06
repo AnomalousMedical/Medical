@@ -24,6 +24,7 @@ namespace Medical
         private Dictionary<DrawingWindow, NavigationOverlay> overlays = new Dictionary<DrawingWindow,NavigationOverlay>();
         private bool showOverlays = false;
         private NavigationStateSet navigationSet;
+        private String currentCameraFile;
 
         public NavigationController(DrawingWindowController windowController, EventManager eventManager, UpdateTimer timer)
         {
@@ -36,6 +37,7 @@ namespace Medical
 
         public void loadNavigationSet(String cameraFile)
         {
+            currentCameraFile = cameraFile;
             using (Archive archive = FileSystem.OpenArchive(cameraFile))
             {
                 if (archive.exists(cameraFile))
@@ -53,6 +55,15 @@ namespace Medical
                         Log.Debug("Error loading navigation file.\n{0}", ex.Message);
                     }
                 }
+            }
+        }
+
+        public void saveNavigationSet(String cameraFile)
+        {
+            using (XmlTextWriter textWriter = new XmlTextWriter(cameraFile, Encoding.ASCII))
+            {
+                textWriter.Formatting = Formatting.Indented;
+                NavigationSerializer.writeNavigationStateSet(navigationSet, textWriter);
             }
         }
 
@@ -102,6 +113,14 @@ namespace Medical
             get
             {
                 return timer;
+            }
+        }
+
+        public String CurrentCameraFile
+        {
+            get
+            {
+                return currentCameraFile;
             }
         }
 

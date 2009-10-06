@@ -96,7 +96,7 @@ namespace Medical
         /// </summary>
         public void clearCurrentFile()
         {
-            currentFile = null;
+            setCurrentFile(null);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Medical
         /// </summary>
         public void invalidateCurrentFile()
         {
-            currentFile = null;
+            setCurrentFile(null);
         }
 
         /// <summary>
@@ -115,6 +115,17 @@ namespace Medical
         public String getCurrentFile()
         {
             return currentFile;
+        }
+
+        /// <summary>
+        /// Set the currently selected filename.
+        /// </summary>
+        /// <param name="filename">The filename.</param>
+        public void setCurrentFile(String filename)
+        {
+            currentFile = filename;
+            saveFileDialog.FileName = currentFile;
+            openFileDialog.FileName = currentFile;
         }
 
         /// <summary>

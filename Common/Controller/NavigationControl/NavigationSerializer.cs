@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    public class NavigationSerializer
+    class NavigationSerializer
     {
         private const String NAVIGATION_STATE_SET = "NavigationStateSet";
         private const String NAVIGATION_STATE = "NavigationState";

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Medical.GUI
 {
@@ -15,6 +16,8 @@ namespace Medical.GUI
         private DrawingWindowController drawingWindowController;
         private NavigationState currentState;
         private ListViewItem currentStateItem;
+        private FileTracker cameraFileTracker = new FileTracker("*.cam|*.cam");
+        private String titleFormat = "Nav Editor - {0}";
 
         public NavigationStateSelector(NavigationController navController, DrawingWindowController drawingWindowController)
         {
@@ -88,6 +91,8 @@ namespace Medical.GUI
 
         void navController_NavigationStateSetChanged(NavigationController controller)
         {
+            cameraFileTracker.setCurrentFile(controller.CurrentCameraFile);
+            setTitleText(controller.CurrentCameraFile);
             navigationStateView.Items.Clear();
             foreach (NavigationState state in controller.NavigationSet.States)
             {
@@ -106,6 +111,18 @@ namespace Medical.GUI
             if (linkView != null)
             {
                 linkView.Columns[0].Width = -2;
+            }
+        }
+
+        private void setTitleText(String filename)
+        {
+            if (filename != null)
+            {
+                this.Text = String.Format(titleFormat, filename);
+            }
+            else
+            {
+                this.Text = "Navigation State Editor";
             }
         }
 
@@ -224,12 +241,31 @@ namespace Medical.GUI
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            cameraFileTracker.saveFile(this);
+            if(cameraFileTracker.lastDialogAccepted())
+            {
+                navController.saveNavigationSet(cameraFileTracker.getCurrentFile());
+                setTitleText(cameraFileTracker.getCurrentFile());
+            }
+        }
 
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cameraFileTracker.saveFileAs(this);
+            if (cameraFileTracker.lastDialogAccepted())
+            {
+                navController.saveNavigationSet(cameraFileTracker.getCurrentFile());
+                setTitleText(cameraFileTracker.getCurrentFile());
+            }
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            cameraFileTracker.openFile(this);
+            if (cameraFileTracker.lastDialogAccepted())
+            {
+                navController.loadNavigationSet(cameraFileTracker.getCurrentFile());
+            }
         }
     }
 }
