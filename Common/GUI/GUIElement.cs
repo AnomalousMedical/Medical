@@ -106,6 +106,10 @@ namespace Medical.GUI
         {
             base.OnTextChanged(e);
             button.Text = this.Text;
+            if (button.Image != null)
+            {
+                button.Image.Dispose();
+            }
             button.Image = this.Icon.ToBitmap();
         }
 
