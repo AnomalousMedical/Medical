@@ -19,6 +19,18 @@ namespace Medical
         public void removeState(NavigationState state)
         {
             navigationStates.Remove(state.Name);
+            //break all links
+            foreach (NavigationState breakLinkState in navigationStates.Values)
+            {
+                breakLinkState.removeAdjacentState(state);
+            }
+        }
+
+        public void renameState(NavigationState state, String newName)
+        {
+            navigationStates.Remove(state.Name);
+            state.Name = newName;
+            addState(state);
         }
 
         public void clearStates()

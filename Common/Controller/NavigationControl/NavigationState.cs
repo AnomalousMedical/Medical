@@ -108,7 +108,7 @@ namespace Medical
             {
                 return name;
             }
-            set
+            internal set
             {
                 name = value;
             }

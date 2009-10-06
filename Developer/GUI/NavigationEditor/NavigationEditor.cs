@@ -23,11 +23,37 @@ namespace Medical.GUI
             this.drawingWindowController = drawingWindowController;
             navController.NavigationStateSetChanged += new NavigationControllerEvent(navController_NavigationStateSetChanged);
             navigationStateView.SelectedIndexChanged += new EventHandler(navigationStateView_SelectedIndexChanged);
+            navigationStateView.MouseClick += new MouseEventHandler(navigationStateView_MouseClick);
+            createStateMenu.Opening += new CancelEventHandler(createStateMenu_Opening);
+        }
+
+        void createStateMenu_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = navigationStateView.SelectedItems.Count != 0;
+        }
+
+        void navigationStateView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (navigationStateView.SelectedItems.Count == 0)
+                {
+                    createStateMenu.Show(navigationStateView.PointToScreen(e.Location));
+                }
+                else if (navigationStateView.SelectedItems.Count == 1)
+                {
+                    singleStateMenu.Show(navigationStateView.PointToScreen(e.Location));
+                }
+                else
+                {
+                    multipleStateMenu.Show(navigationStateView.PointToScreen(e.Location));
+                }
+            }
         }
 
         void navigationStateView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (navigationStateView.SelectedItems.Count > 0)
+            if (navigationStateView.SelectedItems.Count == 1)
             {
                 currentStateItem = navigationStateView.SelectedItems[0];
                 currentState = currentStateItem.Tag as NavigationState;
@@ -45,7 +71,7 @@ namespace Medical.GUI
                 useCurrentButton.Enabled = true;
                 linkView.Enabled = true;
             }
-            else
+            else if(navigationStateView.SelectedItems.Count == 0)
             {
                 currentState = null;
                 nameText.Text = "";
@@ -85,7 +111,20 @@ namespace Medical.GUI
 
         private void stateUpdate_Click(object sender, EventArgs e)
         {
-
+            if (navController.getState(nameText.Text) == null)
+            {
+                navController.NavigationSet.renameState(currentState, nameText.Text);
+                currentState.Translation.setValue(translationText.Text);
+                translationText.Text = currentState.Translation.ToString();
+                currentState.LookAt.setValue(lookAtText.Text);
+                lookAtText.Text = currentState.LookAt.ToString();
+                currentState.Hidden = hiddenCheck.Checked;
+                currentStateItem.Text = currentState.Name;
+            }
+            else
+            {
+                MessageBox.Show(this, String.Format("A state named {0} already exists. Please enter another.", nameText.Text), "Name Conflict", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void gotoButton_Click(object sender, EventArgs e)
@@ -110,6 +149,77 @@ namespace Medical.GUI
         private void showNavigationCheck_CheckedChanged(object sender, EventArgs e)
         {
             navController.ShowOverlays = showNavigationCheck.Checked;
+        }
+
+        private void createStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                InputResult result = InputBox.GetInput("Create State", "Enter a name for the new state.", this, validateStateName);
+                if (result.ok)
+                {
+                    NavigationState state = new NavigationState(result.text, window.DrawingWindow.LookAt, window.DrawingWindow.Translation, hiddenCheck.Checked);
+                    ListViewItem item = navigationStateView.Items.Add(state.Name, state.Name, 0);
+                    item.Tag = state;
+                    navController.NavigationSet.addState(state);
+                }
+            }
+        }
+
+        private bool validateStateName(String input, out String newPrompt)
+        {
+            if (navController.getState(input) != null)
+            {
+                newPrompt = String.Format("A state named {0} already exists. Please enter another name", input);
+                return false;
+            }
+            newPrompt = "";
+            return true;
+        }
+
+        private void destroyStateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            destroySelectedToolStripMenuItem_Click(sender, e);
+        }
+
+        private void destroySelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LinkedList<ListViewItem> toRemove = new LinkedList<ListViewItem>();
+            foreach (ListViewItem item in navigationStateView.SelectedItems)
+            {
+                toRemove.AddLast(item);
+                NavigationState state = item.Tag as NavigationState;
+                navController.NavigationSet.removeState(state);
+            }
+            foreach (ListViewItem item in toRemove)
+            {
+                navigationStateView.Items.Remove(item);
+            }
+        }
+
+        private void createLinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in navigationStateView.SelectedItems)
+            {
+                NavigationState state = item.Tag as NavigationState;
+                if (state != currentState)
+                {
+                    currentState.addAdjacentState(state, NavigationButtons.Down);
+                }
+            }
+        }
+
+        private void createTwoWayLinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in navigationStateView.SelectedItems)
+            {
+                NavigationState state = item.Tag as NavigationState;
+                if (state != currentState)
+                {
+                    currentState.addTwoWayAdjacentState(state, NavigationButtons.Down);
+                }
+            }
         }
     }
 }
