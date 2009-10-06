@@ -25,6 +25,16 @@ namespace Medical.GUI
             button.Click += new EventHandler(button_Click);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            if (button.Image != null)
+            {
+                button.Image.Dispose();
+            }
+            button.Dispose();
+        }
+
         internal void callSceneUnloading()
         {
             sceneUnloading();
