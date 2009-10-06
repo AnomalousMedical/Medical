@@ -128,7 +128,7 @@ namespace Medical.GUI
 
         private void stateUpdate_Click(object sender, EventArgs e)
         {
-            if (navController.getState(nameText.Text) == null)
+            if (currentState.Name == nameText.Text || navController.getState(nameText.Text) == null)
             {
                 navController.NavigationSet.renameState(currentState, nameText.Text);
                 currentState.Translation.setValue(translationText.Text);

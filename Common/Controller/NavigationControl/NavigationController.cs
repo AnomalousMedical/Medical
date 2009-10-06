@@ -60,7 +60,7 @@ namespace Medical
 
         public void saveNavigationSet(String cameraFile)
         {
-            using (XmlTextWriter textWriter = new XmlTextWriter(cameraFile, Encoding.ASCII))
+            using (XmlTextWriter textWriter = new XmlTextWriter(cameraFile, Encoding.Default))
             {
                 textWriter.Formatting = Formatting.Indented;
                 NavigationSerializer.writeNavigationStateSet(navigationSet, textWriter);

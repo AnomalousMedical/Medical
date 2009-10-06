@@ -19,7 +19,7 @@ namespace Medical
         private const String DESTINATION = "Destination";
         private const String SOURCE = "Source";
         private const String VISUAL_RADIUS = "VisualRadius";
-        private const String HIDDEN = "Hidden";
+        private const String HIDDEN = "IsHidden";
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -94,7 +94,7 @@ namespace Medical
                     }
                     else if (xmlReader.Name == HIDDEN)
                     {
-                        hidden = xmlReader.ReadElementContentAsBoolean();
+                        hidden = bool.Parse(xmlReader.ReadElementContentAsString());
                     }
                 }
             }
