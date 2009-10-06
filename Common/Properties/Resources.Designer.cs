@@ -60,6 +60,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AdaptationIcon {
+            get {
+                object obj = ResourceManager.GetObject("AdaptationIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap articulometrics {
             get {
                 object obj = ResourceManager.GetObject("articulometrics", resourceCulture);

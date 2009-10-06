@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Engine;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -70,12 +71,25 @@ namespace Medical.GUI
             movingMuscleTarget.Offset = Vector3.Zero;
         }
 
+        internal override string NavigationImageKey
+        {
+            get
+            {
+                return "__AdaptationIcon";
+            }
+        }
+
         protected override void onPanelClosing()
         {
             if (adaptButton.Checked)
             {
                 adaptButton.Checked = false;
             }
+        }
+
+        protected override void statePickerSet(StatePickerController controller)
+        {
+            parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.AdaptationIcon);
         }
     }
 }
