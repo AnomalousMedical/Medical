@@ -146,11 +146,6 @@ namespace Medical.GUI
             }
         }
 
-        private void showNavigationCheck_CheckedChanged(object sender, EventArgs e)
-        {
-            navController.ShowOverlays = showNavigationCheck.Checked;
-        }
-
         private void createStateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DrawingWindowHost window = drawingWindowController.getActiveWindow();
@@ -220,6 +215,21 @@ namespace Medical.GUI
                     currentState.addTwoWayAdjacentState(state, NavigationButtons.Down);
                 }
             }
+        }
+
+        private void navigationArrowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            navController.ShowOverlays = navigationArrowsToolStripMenuItem.Checked;
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

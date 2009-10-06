@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.navigationStateView = new System.Windows.Forms.ListView();
             this.nameColumn = new System.Windows.Forms.ColumnHeader();
+            this.createStateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.createStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,19 +50,23 @@
             this.radiusUpDown = new System.Windows.Forms.NumericUpDown();
             this.linkUpdate = new System.Windows.Forms.Button();
             this.useCurrentButton = new System.Windows.Forms.Button();
-            this.showNavigationCheck = new System.Windows.Forms.CheckBox();
             this.multipleStateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createTwoWayLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createStateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.createStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.destroySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.singleStateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.destroyStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.destroySelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.navigationArrowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createStateMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
             this.multipleStateMenu.SuspendLayout();
-            this.createStateMenu.SuspendLayout();
             this.singleStateMenu.SuspendLayout();
+            this.mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // navigationStateView
@@ -82,6 +88,20 @@
             // 
             this.nameColumn.Text = "State";
             this.nameColumn.Width = 270;
+            // 
+            // createStateMenu
+            // 
+            this.createStateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createStateToolStripMenuItem});
+            this.createStateMenu.Name = "createStateMenu";
+            this.createStateMenu.Size = new System.Drawing.Size(138, 26);
+            // 
+            // createStateToolStripMenuItem
+            // 
+            this.createStateToolStripMenuItem.Name = "createStateToolStripMenuItem";
+            this.createStateToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.createStateToolStripMenuItem.Text = "Create State";
+            this.createStateToolStripMenuItem.Click += new System.EventHandler(this.createStateToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -242,18 +262,6 @@
             this.useCurrentButton.UseVisualStyleBackColor = true;
             this.useCurrentButton.Click += new System.EventHandler(this.useCurrentButton_Click);
             // 
-            // showNavigationCheck
-            // 
-            this.showNavigationCheck.Appearance = System.Windows.Forms.Appearance.Button;
-            this.showNavigationCheck.AutoSize = true;
-            this.showNavigationCheck.Location = new System.Drawing.Point(2, 4);
-            this.showNavigationCheck.Name = "showNavigationCheck";
-            this.showNavigationCheck.Size = new System.Drawing.Size(98, 23);
-            this.showNavigationCheck.TabIndex = 28;
-            this.showNavigationCheck.Text = "Show Navigation";
-            this.showNavigationCheck.UseVisualStyleBackColor = true;
-            this.showNavigationCheck.CheckedChanged += new System.EventHandler(this.showNavigationCheck_CheckedChanged);
-            // 
             // multipleStateMenu
             // 
             this.multipleStateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -261,7 +269,7 @@
             this.createTwoWayLinkToolStripMenuItem,
             this.destroySelectedToolStripMenuItem});
             this.multipleStateMenu.Name = "multipleStateMenu";
-            this.multipleStateMenu.Size = new System.Drawing.Size(186, 92);
+            this.multipleStateMenu.Size = new System.Drawing.Size(186, 70);
             // 
             // createLinkToolStripMenuItem
             // 
@@ -277,19 +285,12 @@
             this.createTwoWayLinkToolStripMenuItem.Text = "Create Two Way Link";
             this.createTwoWayLinkToolStripMenuItem.Click += new System.EventHandler(this.createTwoWayLinkToolStripMenuItem_Click);
             // 
-            // createStateMenu
+            // destroySelectedToolStripMenuItem
             // 
-            this.createStateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createStateToolStripMenuItem});
-            this.createStateMenu.Name = "createStateMenu";
-            this.createStateMenu.Size = new System.Drawing.Size(138, 26);
-            // 
-            // createStateToolStripMenuItem
-            // 
-            this.createStateToolStripMenuItem.Name = "createStateToolStripMenuItem";
-            this.createStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.createStateToolStripMenuItem.Text = "Create State";
-            this.createStateToolStripMenuItem.Click += new System.EventHandler(this.createStateToolStripMenuItem_Click);
+            this.destroySelectedToolStripMenuItem.Name = "destroySelectedToolStripMenuItem";
+            this.destroySelectedToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.destroySelectedToolStripMenuItem.Text = "Destroy Selected";
+            this.destroySelectedToolStripMenuItem.Click += new System.EventHandler(this.destroySelectedToolStripMenuItem_Click);
             // 
             // singleStateMenu
             // 
@@ -301,16 +302,59 @@
             // destroyStateToolStripMenuItem
             // 
             this.destroyStateToolStripMenuItem.Name = "destroyStateToolStripMenuItem";
-            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.destroyStateToolStripMenuItem.Text = "Destroy State";
             this.destroyStateToolStripMenuItem.Click += new System.EventHandler(this.destroyStateToolStripMenuItem_Click);
             // 
-            // destroySelectedToolStripMenuItem
+            // mainMenu
             // 
-            this.destroySelectedToolStripMenuItem.Name = "destroySelectedToolStripMenuItem";
-            this.destroySelectedToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.destroySelectedToolStripMenuItem.Text = "Destroy Selected";
-            this.destroySelectedToolStripMenuItem.Click += new System.EventHandler(this.destroySelectedToolStripMenuItem_Click);
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.showToolStripMenuItem});
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(276, 24);
+            this.mainMenu.TabIndex = 28;
+            this.mainMenu.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToolStripMenuItem,
+            this.loadToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // loadToolStripMenuItem
+            // 
+            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.navigationArrowsToolStripMenuItem});
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.showToolStripMenuItem.Text = "Show";
+            // 
+            // navigationArrowsToolStripMenuItem
+            // 
+            this.navigationArrowsToolStripMenuItem.CheckOnClick = true;
+            this.navigationArrowsToolStripMenuItem.Name = "navigationArrowsToolStripMenuItem";
+            this.navigationArrowsToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.navigationArrowsToolStripMenuItem.Text = "Navigation Arrows";
+            this.navigationArrowsToolStripMenuItem.Click += new System.EventHandler(this.navigationArrowsToolStripMenuItem_Click);
             // 
             // NavigationStateSelector
             // 
@@ -318,7 +362,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(276, 691);
-            this.Controls.Add(this.showNavigationCheck);
+            this.Controls.Add(this.mainMenu);
             this.Controls.Add(this.useCurrentButton);
             this.Controls.Add(this.linkUpdate);
             this.Controls.Add(this.radiusUpDown);
@@ -338,14 +382,17 @@
             this.Controls.Add(this.navigationStateView);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "NavigationStateSelector";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Navigation State Editor";
             this.ToolStripName = "Editing";
+            this.createStateMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).EndInit();
             this.multipleStateMenu.ResumeLayout(false);
-            this.createStateMenu.ResumeLayout(false);
             this.singleStateMenu.ResumeLayout(false);
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,7 +419,6 @@
         private System.Windows.Forms.NumericUpDown radiusUpDown;
         private System.Windows.Forms.Button linkUpdate;
         private System.Windows.Forms.Button useCurrentButton;
-        private System.Windows.Forms.CheckBox showNavigationCheck;
         private System.Windows.Forms.ContextMenuStrip multipleStateMenu;
         private System.Windows.Forms.ToolStripMenuItem createLinkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createTwoWayLinkToolStripMenuItem;
@@ -381,6 +427,12 @@
         private System.Windows.Forms.ContextMenuStrip singleStateMenu;
         private System.Windows.Forms.ToolStripMenuItem destroyStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem destroySelectedToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem navigationArrowsToolStripMenuItem;
 
 
     }
