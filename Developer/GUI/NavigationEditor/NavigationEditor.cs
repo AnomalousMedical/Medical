@@ -309,12 +309,33 @@ namespace Medical.GUI
 
         private void deleteLinkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            LinkedList<ListViewItem> removeItems = new LinkedList<ListViewItem>();
+            foreach (ListViewItem item in linkView.SelectedItems)
+            {
+                removeItems.AddLast(item);
+                NavigationLink link = item.Tag as NavigationLink;
+                currentState.removeAdjacentState(link.Destination);
+            }
+            foreach (ListViewItem item in removeItems)
+            {
+                linkView.Items.Remove(item);
+            }
         }
 
         private void deleteTwoWayToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            LinkedList<ListViewItem> removeItems = new LinkedList<ListViewItem>();
+            foreach (ListViewItem item in linkView.SelectedItems)
+            {
+                removeItems.AddLast(item);
+                NavigationLink link = item.Tag as NavigationLink;
+                currentState.removeAdjacentState(link.Destination);
+                link.Destination.removeAdjacentState(currentState);
+            }
+            foreach (ListViewItem item in removeItems)
+            {
+                linkView.Items.Remove(item);
+            }
         }
 
         void linkMenu_Opening(object sender, CancelEventArgs e)
