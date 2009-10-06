@@ -46,7 +46,7 @@
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.buttonCombo = new System.Windows.Forms.ComboBox();
             this.radiusUpDown = new System.Windows.Forms.NumericUpDown();
             this.linkUpdate = new System.Windows.Forms.Button();
             this.useCurrentButton = new System.Windows.Forms.Button();
@@ -59,15 +59,19 @@
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.navigationArrowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteTwoWayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createStateMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
             this.multipleStateMenu.SuspendLayout();
             this.singleStateMenu.SuspendLayout();
             this.mainMenu.SuspendLayout();
+            this.linkMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // navigationStateView
@@ -190,6 +194,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.linkView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.linkView.ContextMenuStrip = this.linkMenu;
             this.linkView.HideSelection = false;
             this.linkView.Location = new System.Drawing.Point(0, 447);
             this.linkView.MultiSelect = false;
@@ -222,13 +227,13 @@
             this.label5.TabIndex = 23;
             this.label5.Text = "Visual Radius";
             // 
-            // comboBox1
+            // buttonCombo
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(86, 597);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(178, 21);
-            this.comboBox1.TabIndex = 24;
+            this.buttonCombo.FormattingEnabled = true;
+            this.buttonCombo.Location = new System.Drawing.Point(86, 597);
+            this.buttonCombo.Name = "buttonCombo";
+            this.buttonCombo.Size = new System.Drawing.Size(178, 21);
+            this.buttonCombo.TabIndex = 24;
             // 
             // radiusUpDown
             // 
@@ -251,6 +256,7 @@
             this.linkUpdate.TabIndex = 26;
             this.linkUpdate.Text = "Update";
             this.linkUpdate.UseVisualStyleBackColor = true;
+            this.linkUpdate.Click += new System.EventHandler(this.linkUpdate_Click);
             // 
             // useCurrentButton
             // 
@@ -331,14 +337,21 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -358,12 +371,27 @@
             this.navigationArrowsToolStripMenuItem.Text = "Navigation Arrows";
             this.navigationArrowsToolStripMenuItem.Click += new System.EventHandler(this.navigationArrowsToolStripMenuItem_Click);
             // 
-            // saveAsToolStripMenuItem
+            // linkMenu
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.linkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteLinkToolStripMenuItem,
+            this.deleteTwoWayToolStripMenuItem});
+            this.linkMenu.Name = "linkMenu";
+            this.linkMenu.Size = new System.Drawing.Size(160, 48);
+            // 
+            // deleteLinkToolStripMenuItem
+            // 
+            this.deleteLinkToolStripMenuItem.Name = "deleteLinkToolStripMenuItem";
+            this.deleteLinkToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.deleteLinkToolStripMenuItem.Text = "Delete";
+            this.deleteLinkToolStripMenuItem.Click += new System.EventHandler(this.deleteLinkToolStripMenuItem_Click);
+            // 
+            // deleteTwoWayToolStripMenuItem
+            // 
+            this.deleteTwoWayToolStripMenuItem.Name = "deleteTwoWayToolStripMenuItem";
+            this.deleteTwoWayToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.deleteTwoWayToolStripMenuItem.Text = "Delete Two Way";
+            this.deleteTwoWayToolStripMenuItem.Click += new System.EventHandler(this.deleteTwoWayToolStripMenuItem_Click);
             // 
             // NavigationStateSelector
             // 
@@ -375,7 +403,7 @@
             this.Controls.Add(this.useCurrentButton);
             this.Controls.Add(this.linkUpdate);
             this.Controls.Add(this.radiusUpDown);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.buttonCombo);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkView);
@@ -402,6 +430,7 @@
             this.singleStateMenu.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
+            this.linkMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -424,7 +453,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox buttonCombo;
         private System.Windows.Forms.NumericUpDown radiusUpDown;
         private System.Windows.Forms.Button linkUpdate;
         private System.Windows.Forms.Button useCurrentButton;
@@ -443,6 +472,9 @@
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem navigationArrowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip linkMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteLinkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteTwoWayToolStripMenuItem;
 
 
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -19,6 +20,9 @@ namespace Medical.GUI
         private FileTracker cameraFileTracker = new FileTracker("*.cam|*.cam");
         private String titleFormat = "Nav Editor - {0}";
 
+        private NavigationLink currentLink;
+        private ListViewItem currentLinkItem;
+
         public NavigationStateSelector(NavigationController navController, DrawingWindowController drawingWindowController)
         {
             InitializeComponent();
@@ -28,11 +32,13 @@ namespace Medical.GUI
             navigationStateView.SelectedIndexChanged += new EventHandler(navigationStateView_SelectedIndexChanged);
             navigationStateView.MouseClick += new MouseEventHandler(navigationStateView_MouseClick);
             createStateMenu.Opening += new CancelEventHandler(createStateMenu_Opening);
-        }
+            linkMenu.Opening += new CancelEventHandler(linkMenu_Opening);
+            linkView.SelectedIndexChanged += new EventHandler(linkView_SelectedIndexChanged);
 
-        void createStateMenu_Opening(object sender, CancelEventArgs e)
-        {
-            e.Cancel = navigationStateView.SelectedItems.Count != 0;
+            foreach (FieldInfo fieldInfo in typeof(NavigationButtons).GetFields(BindingFlags.Public | BindingFlags.Static))
+            {
+                buttonCombo.Items.Add(fieldInfo.Name);
+            }
         }
 
         void navigationStateView_MouseClick(object sender, MouseEventArgs e)
@@ -64,6 +70,7 @@ namespace Medical.GUI
                 translationText.Text = currentState.Translation.ToString();
                 lookAtText.Text = currentState.LookAt.ToString();
                 hiddenCheck.Checked = currentState.Hidden;
+                linkView.SelectedItems.Clear();
                 foreach (NavigationLink link in currentState.AdjacentStates)
                 {
                     ListViewItem item = linkView.Items.Add(link.Destination.Name, link.Destination.Name, 0);
@@ -266,6 +273,53 @@ namespace Medical.GUI
             {
                 navController.loadNavigationSet(cameraFileTracker.getCurrentFile());
             }
+        }
+
+        void createStateMenu_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = navigationStateView.SelectedItems.Count != 0;
+        }
+
+        //link
+
+        void linkView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (linkView.SelectedItems.Count > 0)
+            {
+                currentLinkItem = linkView.SelectedItems[0];
+                currentLink = currentLinkItem.Tag as NavigationLink;
+                buttonCombo.SelectedItem = currentLink.Button.ToString();
+                radiusUpDown.Value = (decimal)currentLink.VisualRadius;
+            }
+            else
+            {
+                currentLinkItem = null;
+                currentLink = null;
+            }
+        }
+
+        private void linkUpdate_Click(object sender, EventArgs e)
+        {
+            if (currentLink != null && buttonCombo.SelectedItem != null)
+            {
+                currentLink.Button = (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString());
+                currentLink.VisualRadius = (float)radiusUpDown.Value;
+            }
+        }
+
+        private void deleteLinkToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void deleteTwoWayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        void linkMenu_Opening(object sender, CancelEventArgs e)
+        {
+            e.Cancel = linkView.SelectedItems.Count == 0;
         }
     }
 }
