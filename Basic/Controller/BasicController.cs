@@ -398,6 +398,7 @@ namespace Medical.Controller
                 muscleControl.stopPlayback();
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
+                basicForm.setDistortionMode();
                 statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
                 basicForm.ResumeLayout();
             }
@@ -414,6 +415,7 @@ namespace Medical.Controller
             basicForm.SuspendLayout();
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
+            basicForm.setViewMode();
             basicForm.ResumeLayout();
         }
     }

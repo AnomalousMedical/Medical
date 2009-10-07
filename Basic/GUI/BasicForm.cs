@@ -44,6 +44,26 @@ namespace Medical.GUI
             this.controller = controller;
         }
 
+        public void setViewMode()
+        {
+            windowToolStripMenuItem.Visible = true;
+            toolsToolStripMenuItem.Visible = true;
+            distortionToolStripMenuItem.Visible = true;
+            newToolStripMenuItem.Visible = true;
+            openToolStripMenuItem.Visible = true;
+            saveToolStripMenuItem.Visible = true;
+        }
+
+        public void setDistortionMode()
+        {
+            windowToolStripMenuItem.Visible = false;
+            toolsToolStripMenuItem.Visible = false;
+            distortionToolStripMenuItem.Visible = false;
+            newToolStripMenuItem.Visible = false;
+            openToolStripMenuItem.Visible = false;
+            saveToolStripMenuItem.Visible = false;
+        }
+
         public ToolStripContainer ToolStrip
         {
             get
