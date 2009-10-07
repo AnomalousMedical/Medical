@@ -154,6 +154,11 @@ namespace Medical.GUI
             statePicker.show();
         }
 
+        public void close()
+        {
+            statePicker.close();
+        }
+
         public bool Visible
         {
             get

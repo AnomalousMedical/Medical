@@ -164,7 +164,11 @@ namespace Medical.Controller
         /// </summary>
         public void stop()
         {
-            viewMode.saveWindowFile(MedicalConfig.WindowsFile);
+            //Only save windows if the state picker is not active.
+            if (!statePicker.Visible)
+            {
+                viewMode.saveWindowFile(MedicalConfig.WindowsFile);
+            }
             drawingWindowController.destroyCameras();
             drawingWindowController.closeAllWindows();
             medicalController.shutdown();
