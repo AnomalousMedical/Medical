@@ -13,6 +13,8 @@ namespace Medical
         RotateCamera,
         PanCamera,
         ZoomCamera,
+        LockX,
+        LockY,
     }
 
     public class OrbitCameraController : CameraMover
@@ -37,6 +39,14 @@ namespace Medical
             zoomCamera.addButton(MouseButtonCode.MB_BUTTON1);
             zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(zoomCamera);
+
+            MessageEvent lockX = new MessageEvent(CameraEvents.LockX);
+            lockX.addButton(KeyboardButtonCode.KC_C);
+            DefaultEvents.registerDefaultEvent(lockX);
+
+            MessageEvent lockY = new MessageEvent(CameraEvents.LockY);
+            lockY.addButton(KeyboardButtonCode.KC_X);
+            DefaultEvents.registerDefaultEvent(lockY);
         }
 
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;
@@ -141,8 +151,14 @@ namespace Medical
                 if (events[CameraEvents.PanCamera].Down)
                 {
                     float scaleFactor = orbitDistance > 5.0f ? orbitDistance : 5.0f;
-                    lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
-                    lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
+                    if (events[CameraEvents.LockX].Up)
+                    {
+                        lookAt += rotatedLeft * (mouseCoords.x / (events.Mouse.getMouseAreaWidth() * SCROLL_SCALE) * scaleFactor);
+                    }
+                    if (events[CameraEvents.LockY].Up)
+                    {
+                        lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
+                    }
                     //Restrict look at position
                     if (lookAt.x > LOOK_AT_BOUND_MAX.x)
                     {
@@ -186,8 +202,14 @@ namespace Medical
                 }
                 else if (allowRotation && events[CameraEvents.RotateCamera].Down)
                 {
-                    yaw += mouseCoords.x / -100.0f;
-                    pitch += mouseCoords.y / 100.0f;
+                    if (events[CameraEvents.LockX].Up)
+                    {
+                        yaw += mouseCoords.x / -100.0f;
+                    }
+                    if (events[CameraEvents.LockY].Up)
+                    {
+                        pitch += mouseCoords.y / 100.0f;
+                    }
                     if (pitch > HALF_PI)
                     {
                         pitch = HALF_PI;
