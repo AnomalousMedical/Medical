@@ -19,6 +19,7 @@ namespace Medical.GUI
         private ListViewItem defaultItem = null;
         private ListViewItem openingItem = null; //the item that was selected when this ui was opened.
         private bool allowUpdates = true;
+        private LinkedList<Image> images = new LinkedList<Image>();
 
         public PresetStatePanel()
         {
@@ -65,6 +66,7 @@ namespace Medical.GUI
                                 {
                                     presetListView.LargeImageList.Images.Add(fullImageName, image);
                                 }
+                                images.AddLast(image);
                             }
                         }
                         catch (Exception e)
@@ -86,6 +88,10 @@ namespace Medical.GUI
 
         public void clear()
         {
+            foreach (Image image in images)
+            {
+                image.Dispose();
+            }
             groups.Clear();
             presetListView.Groups.Clear();
             presetListView.Items.Clear();
