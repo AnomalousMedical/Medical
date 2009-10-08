@@ -362,5 +362,13 @@ namespace Medical.Controller
             basicForm.setViewMode();
             basicForm.ResumeLayout();
         }
+
+        public DrawingWindowPresetController PresetWindows
+        {
+            get
+            {
+                return windowPresetController;
+            }
+        }
     }
 }

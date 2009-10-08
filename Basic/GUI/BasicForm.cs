@@ -152,22 +152,22 @@ namespace Medical.GUI
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.PresetWindows.setPresetSet("One Window");
         }
 
         private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.PresetWindows.setPresetSet("Two Windows");
         }
 
         private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.PresetWindows.setPresetSet("Three Windows");
         }
 
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            controller.PresetWindows.setPresetSet("Four Windows");
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
