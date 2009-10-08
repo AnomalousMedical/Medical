@@ -34,6 +34,7 @@ namespace Medical.Controller
         private LayerController layerController;
         private MuscleControl muscleControl;
         private SkullStatePicker statePicker;
+        private Watermark watermark;
 
         /// <summary>
         /// Constructor.
@@ -48,6 +49,10 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            if (watermark != null)
+            {
+                watermark.Dispose();
+            }
             if (drawingWindowController != null)
             {
                 drawingWindowController.Dispose();
@@ -102,11 +107,13 @@ namespace Medical.Controller
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             //Watermark watermark = new TiledWatermark("Source" + "Watermark", "Watermark", 150, 60);
             //Watermark watermark = new TextWatermark("Source" + "Watermark", "Piper Clinic Copyright 2009", 32);
-            Watermark watermark = new SideLogoWatermark("Source" + "Watermark", "PiperClinic", 150, 60);
+            watermark = new SideLogoWatermark("Source" + "Watermark", "PiperClinic", 150, 60);
+            watermark.createOverlays();
             //Watermark watermark = new CenteredWatermark("Source" + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
             watermarkController = new WatermarkController(watermark, drawingWindowController);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+            imageRenderer.Watermark = watermark;
 
             //Configure view mode
             viewMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);

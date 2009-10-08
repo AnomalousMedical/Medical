@@ -13,6 +13,7 @@ namespace Medical
     {
         private MedicalController controller;
         DrawingWindowController drawingWindowController;
+        private Watermark watermark;
 
         public ImageRenderer(MedicalController controller, DrawingWindowController drawingWindowController)
         {
@@ -53,6 +54,12 @@ namespace Medical
                         Viewport viewport = renderTexture.addViewport(camera);
                         viewport.setBackgroundColor(Engine.Color.FromARGB(drawingWindow.DrawingWindow.BackColor.ToArgb()));
 
+                        if (watermark != null)
+                        {
+                            watermark.sizeChanged(width, height);
+                            watermark.setVisible(true);
+                        }
+
                         renderTexture.update();
                         OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
                         System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
@@ -65,6 +72,11 @@ namespace Medical
                         }
                         bitmap.UnlockBits(bmpData);
 
+                        if (watermark != null)
+                        {
+                            watermark.setVisible(false);
+                        }
+
                         renderTexture.destroyViewport(viewport);
                         sceneManager.SceneManager.getRootSceneNode().removeChild(node);
                         sceneManager.SceneManager.destroyLight(light);
@@ -76,6 +88,18 @@ namespace Medical
                 }
             }
             return null;
+        }
+
+        public Watermark Watermark
+        {
+            get
+            {
+                return watermark;
+            }
+            set
+            {
+                watermark = value;
+            }
         }
     }
 }

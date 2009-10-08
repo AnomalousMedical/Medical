@@ -6,8 +6,13 @@ using OgreWrapper;
 
 namespace Medical
 {
-    public abstract class Watermark
+    public abstract class Watermark : IDisposable
     {
+        public void Dispose()
+        {
+            destroyOverlays();
+        }
+
         public abstract void createOverlays();
 
         public abstract void sizeChanged(float width, float height);
