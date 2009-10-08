@@ -93,6 +93,7 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
+    <Compile Include="Controller\DrawingWindow\DrawingWindowPresetController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetSet.cs" />
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />

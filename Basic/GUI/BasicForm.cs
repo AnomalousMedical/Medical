@@ -152,22 +152,22 @@ namespace Medical.GUI
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.setOneWindowLayout();
+            
         }
 
         private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.setTwoWindowLayout();
+            
         }
 
         private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.setThreeWindowLayout();
+            
         }
 
         private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.setFourWindowLayout();
+            
         }
 
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
