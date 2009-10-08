@@ -65,8 +65,8 @@ namespace Medical.GUI
                                 if (image != null)
                                 {
                                     presetListView.LargeImageList.Images.Add(fullImageName, image);
+                                    images.AddLast(image);
                                 }
-                                images.AddLast(image);
                             }
                         }
                         catch (Exception e)

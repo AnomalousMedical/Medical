@@ -13,6 +13,8 @@ namespace Medical.GUI
 {
     public partial class ScenePicker : Form
     {
+        private LinkedList<Image> images = new LinkedList<Image>();
+
         public ScenePicker()
         {
             InitializeComponent();
@@ -43,6 +45,7 @@ namespace Medical.GUI
                             {
                                 sceneSelectionView.LargeImageList.Images.Add(pictureFileName, image);
                                 listViewItem.ImageKey = pictureFileName;
+                                images.AddLast(image);
                             }
                         }
                     }
@@ -67,11 +70,17 @@ namespace Medical.GUI
             }
         }
 
-
-
-        void sceneSelectionView_ItemActivate(object sender, EventArgs e)
+        private void sceneSelectionView_ItemActivate(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
+        }
+
+        private void clearImages()
+        {
+            foreach (Image image in images)
+            {
+                image.Dispose();
+            }
         }
     }
 }
