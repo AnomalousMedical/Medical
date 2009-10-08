@@ -31,6 +31,8 @@ namespace Medical.GUI
 
         private XmlSaver saver = new XmlSaver();
 
+        private String lastRootDirectory;
+
         public SkullStatePicker(DockPanel dockPanel, ToolStripContainer toolStrip, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
@@ -102,45 +104,50 @@ namespace Medical.GUI
 
         public void updateStatePicker(String rootDirectory)
         {
-            PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", rootDirectory + "/LeftGrowth");
-            loadPresetSet(leftGrowth);
-            leftGrowthPanel.clear();
-            leftGrowthPanel.initialize(leftGrowth);
+            if (rootDirectory != lastRootDirectory)
+            {
+                lastRootDirectory = rootDirectory;
 
-            PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", rootDirectory + "/RightGrowth");
-            loadPresetSet(rightGrowth);
-            rightGrowthPanel.clear();
-            rightGrowthPanel.initialize(rightGrowth);
+                PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", rootDirectory + "/LeftGrowth");
+                loadPresetSet(leftGrowth);
+                leftGrowthPanel.clear();
+                leftGrowthPanel.initialize(leftGrowth);
 
-            PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", rootDirectory + "/LeftDegeneration");
-            loadPresetSet(leftDegeneration);
-            leftDegenerationPanel.clear();
-            leftDegenerationPanel.initialize(leftDegeneration);
+                PresetStateSet rightGrowth = new PresetStateSet("Right Condyle Growth", rootDirectory + "/RightGrowth");
+                loadPresetSet(rightGrowth);
+                rightGrowthPanel.clear();
+                rightGrowthPanel.initialize(rightGrowth);
 
-            PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", rootDirectory + "/RightDegeneration");
-            loadPresetSet(rightDegeneration);
-            rightDegenerationPanel.clear();
-            rightDegenerationPanel.initialize(rightDegeneration);
+                PresetStateSet leftDegeneration = new PresetStateSet("Left Condyle Degeneration", rootDirectory + "/LeftDegeneration");
+                loadPresetSet(leftDegeneration);
+                leftDegenerationPanel.clear();
+                leftDegenerationPanel.initialize(leftDegeneration);
 
-            PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
-            loadPresetSet(leftDisc);
-            leftDiscPanel.clear();
-            leftDiscPanel.initialize(leftDisc);
+                PresetStateSet rightDegeneration = new PresetStateSet("Right Condyle Degeneration", rootDirectory + "/RightDegeneration");
+                loadPresetSet(rightDegeneration);
+                rightDegenerationPanel.clear();
+                rightDegenerationPanel.initialize(rightDegeneration);
 
-            PresetStateSet rightDisc = new PresetStateSet("Right Disc", rootDirectory + "/RightDisc");
-            loadPresetSet(rightDisc);
-            rightDiscPanel.clear();
-            rightDiscPanel.initialize(rightDisc);
+                PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
+                loadPresetSet(leftDisc);
+                leftDiscPanel.clear();
+                leftDiscPanel.initialize(leftDisc);
 
-            PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
-            loadPresetSet(leftFossa);
-            leftFossaPanel.clear();
-            leftFossaPanel.initialize(leftFossa);
+                PresetStateSet rightDisc = new PresetStateSet("Right Disc", rootDirectory + "/RightDisc");
+                loadPresetSet(rightDisc);
+                rightDiscPanel.clear();
+                rightDiscPanel.initialize(rightDisc);
 
-            PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
-            loadPresetSet(rightFossa);
-            rightFossaPanel.clear();
-            rightFossaPanel.initialize(rightFossa);
+                PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
+                loadPresetSet(leftFossa);
+                leftFossaPanel.clear();
+                leftFossaPanel.initialize(leftFossa);
+
+                PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
+                loadPresetSet(rightFossa);
+                rightFossaPanel.clear();
+                rightFossaPanel.initialize(rightFossa);
+            }
         }
 
         public void setToDefault()

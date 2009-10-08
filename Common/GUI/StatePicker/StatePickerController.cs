@@ -51,6 +51,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            pickerImageList.Dispose();
             modeList.Dispose();
             panelHost.Dispose();
         }

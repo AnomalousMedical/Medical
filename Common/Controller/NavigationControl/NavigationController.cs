@@ -37,22 +37,25 @@ namespace Medical
 
         public void loadNavigationSet(String cameraFile)
         {
-            currentCameraFile = cameraFile;
-            using (Archive archive = FileSystem.OpenArchive(cameraFile))
+            if (cameraFile != currentCameraFile)
             {
-                if (archive.exists(cameraFile))
+                currentCameraFile = cameraFile;
+                using (Archive archive = FileSystem.OpenArchive(cameraFile))
                 {
-                    try
+                    if (archive.exists(cameraFile))
                     {
-                        using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                        try
                         {
-                            NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
-                            this.NavigationSet = navigation;
+                            using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                            {
+                                NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
+                                this.NavigationSet = navigation;
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                        catch (Exception ex)
+                        {
+                            Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                        }
                     }
                 }
             }

@@ -18,6 +18,8 @@ namespace Medical
         private LayerStateSet currentLayers;
         private XmlSaver xmlSaver = new XmlSaver();
 
+        private String lastLayersFile;
+
         public LayerController()
         {
 
@@ -40,16 +42,21 @@ namespace Medical
 
         public void loadLayerStateSet(String filename)
         {
-            using (Archive archive = FileSystem.OpenArchive(filename))
+            if (filename != lastLayersFile)
             {
-                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
+                lastLayersFile = filename;
+
+                using (Archive archive = FileSystem.OpenArchive(filename))
                 {
-                    LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet;
-                    if (states == null)
+                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                     {
-                        throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
+                        LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet;
+                        if (states == null)
+                        {
+                            throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
+                        }
+                        CurrentLayers = states;
                     }
-                    CurrentLayers = states;
                 }
             }
         }

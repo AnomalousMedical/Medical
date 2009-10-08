@@ -55,8 +55,14 @@ namespace Medical.Controller
 
         private void tempLoadPresets()
         {
-            DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet("One Window");
+            DrawingWindowPresetSet primary = new DrawingWindowPresetSet("Primary");
             DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            primary.addPreset(preset);
+            primary.Hidden = true;
+            addPresetSet(primary);
+
+            DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet("One Window");
+            preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
             oneWindow.addPreset(preset);
             addPresetSet(oneWindow);
 

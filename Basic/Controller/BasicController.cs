@@ -155,7 +155,7 @@ namespace Medical.Controller
 
             if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
-                windowPresetController.setPresetSet("");
+                windowPresetController.setPresetSet("Primary");
             }
 
             options = new Options();
@@ -232,8 +232,6 @@ namespace Medical.Controller
                 medicalController.MainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             }
         }
-
-        
 
         public void saveMedicalState(String filename)
         {
