@@ -35,6 +35,7 @@ namespace Medical.GUI
             createStateMenu.Opening += new CancelEventHandler(createStateMenu_Opening);
             linkMenu.Opening += new CancelEventHandler(linkMenu_Opening);
             linkView.SelectedIndexChanged += new EventHandler(linkView_SelectedIndexChanged);
+            navigationStateView.ItemActivate += new EventHandler(navigationStateView_ItemActivate);
 
             foreach (FieldInfo fieldInfo in typeof(NavigationButtons).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
@@ -159,6 +160,11 @@ namespace Medical.GUI
             {
                 navController.setNavigationState(currentState.Name, window.DrawingWindow);
             }
+        }
+
+        void navigationStateView_ItemActivate(object sender, EventArgs e)
+        {
+            gotoButton_Click(sender, e);
         }
 
         private void useCurrentButton_Click(object sender, EventArgs e)
@@ -342,6 +348,24 @@ namespace Medical.GUI
         void linkMenu_Opening(object sender, CancelEventArgs e)
         {
             e.Cancel = linkView.SelectedItems.Count == 0;
+        }
+
+        private void translationGoButton_Click(object sender, EventArgs e)
+        {
+            DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                window.DrawingWindow.setNewPosition(new Vector3(translationText.Text), window.DrawingWindow.LookAt);
+            }
+        }
+
+        private void lookAtGoButton_Click(object sender, EventArgs e)
+        {
+            DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                window.DrawingWindow.setNewPosition(window.DrawingWindow.Translation, new Vector3(lookAtText.Text));
+            }
         }
     }
 }

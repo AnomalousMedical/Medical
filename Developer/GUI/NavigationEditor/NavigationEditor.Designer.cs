@@ -44,6 +44,9 @@
             this.gotoButton = new System.Windows.Forms.Button();
             this.linkView = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.linkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteTwoWayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.buttonCombo = new System.Windows.Forms.ComboBox();
@@ -63,15 +66,14 @@
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.navigationArrowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.deleteLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteTwoWayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.translationGoButton = new System.Windows.Forms.Button();
+            this.lookAtGoButton = new System.Windows.Forms.Button();
             this.createStateMenu.SuspendLayout();
+            this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
             this.multipleStateMenu.SuspendLayout();
             this.singleStateMenu.SuspendLayout();
             this.mainMenu.SuspendLayout();
-            this.linkMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // navigationStateView
@@ -84,7 +86,7 @@
             this.navigationStateView.HideSelection = false;
             this.navigationStateView.Location = new System.Drawing.Point(0, 32);
             this.navigationStateView.Name = "navigationStateView";
-            this.navigationStateView.Size = new System.Drawing.Size(276, 293);
+            this.navigationStateView.Size = new System.Drawing.Size(274, 293);
             this.navigationStateView.TabIndex = 9;
             this.navigationStateView.UseCompatibleStateImageBehavior = false;
             this.navigationStateView.View = System.Windows.Forms.View.Details;
@@ -111,7 +113,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 331);
+            this.label1.Location = new System.Drawing.Point(5, 355);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 12;
@@ -120,7 +122,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 355);
+            this.label2.Location = new System.Drawing.Point(4, 379);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 13;
@@ -129,7 +131,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 378);
+            this.label3.Location = new System.Drawing.Point(5, 402);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 14;
@@ -138,7 +140,7 @@
             // hiddenCheck
             // 
             this.hiddenCheck.AutoSize = true;
-            this.hiddenCheck.Location = new System.Drawing.Point(7, 399);
+            this.hiddenCheck.Location = new System.Drawing.Point(7, 423);
             this.hiddenCheck.Name = "hiddenCheck";
             this.hiddenCheck.Size = new System.Drawing.Size(60, 17);
             this.hiddenCheck.TabIndex = 15;
@@ -147,29 +149,29 @@
             // 
             // nameText
             // 
-            this.nameText.Location = new System.Drawing.Point(74, 329);
+            this.nameText.Location = new System.Drawing.Point(74, 353);
             this.nameText.Name = "nameText";
             this.nameText.Size = new System.Drawing.Size(190, 20);
             this.nameText.TabIndex = 16;
             // 
             // translationText
             // 
-            this.translationText.Location = new System.Drawing.Point(74, 352);
+            this.translationText.Location = new System.Drawing.Point(74, 376);
             this.translationText.Name = "translationText";
-            this.translationText.Size = new System.Drawing.Size(190, 20);
+            this.translationText.Size = new System.Drawing.Size(168, 20);
             this.translationText.TabIndex = 17;
             // 
             // lookAtText
             // 
-            this.lookAtText.Location = new System.Drawing.Point(74, 375);
+            this.lookAtText.Location = new System.Drawing.Point(74, 399);
             this.lookAtText.Name = "lookAtText";
-            this.lookAtText.Size = new System.Drawing.Size(190, 20);
+            this.lookAtText.Size = new System.Drawing.Size(168, 20);
             this.lookAtText.TabIndex = 18;
             // 
             // stateUpdate
             // 
             this.stateUpdate.Enabled = false;
-            this.stateUpdate.Location = new System.Drawing.Point(5, 418);
+            this.stateUpdate.Location = new System.Drawing.Point(5, 327);
             this.stateUpdate.Name = "stateUpdate";
             this.stateUpdate.Size = new System.Drawing.Size(75, 23);
             this.stateUpdate.TabIndex = 19;
@@ -180,7 +182,7 @@
             // gotoButton
             // 
             this.gotoButton.Enabled = false;
-            this.gotoButton.Location = new System.Drawing.Point(86, 418);
+            this.gotoButton.Location = new System.Drawing.Point(86, 327);
             this.gotoButton.Name = "gotoButton";
             this.gotoButton.Size = new System.Drawing.Size(75, 23);
             this.gotoButton.TabIndex = 20;
@@ -199,7 +201,7 @@
             this.linkView.Location = new System.Drawing.Point(0, 447);
             this.linkView.MultiSelect = false;
             this.linkView.Name = "linkView";
-            this.linkView.Size = new System.Drawing.Size(276, 143);
+            this.linkView.Size = new System.Drawing.Size(274, 143);
             this.linkView.TabIndex = 21;
             this.linkView.UseCompatibleStateImageBehavior = false;
             this.linkView.View = System.Windows.Forms.View.Details;
@@ -208,6 +210,28 @@
             // 
             this.columnHeader1.Text = "Link";
             this.columnHeader1.Width = 270;
+            // 
+            // linkMenu
+            // 
+            this.linkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteLinkToolStripMenuItem,
+            this.deleteTwoWayToolStripMenuItem});
+            this.linkMenu.Name = "linkMenu";
+            this.linkMenu.Size = new System.Drawing.Size(160, 48);
+            // 
+            // deleteLinkToolStripMenuItem
+            // 
+            this.deleteLinkToolStripMenuItem.Name = "deleteLinkToolStripMenuItem";
+            this.deleteLinkToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.deleteLinkToolStripMenuItem.Text = "Delete";
+            this.deleteLinkToolStripMenuItem.Click += new System.EventHandler(this.deleteLinkToolStripMenuItem_Click);
+            // 
+            // deleteTwoWayToolStripMenuItem
+            // 
+            this.deleteTwoWayToolStripMenuItem.Name = "deleteTwoWayToolStripMenuItem";
+            this.deleteTwoWayToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.deleteTwoWayToolStripMenuItem.Text = "Delete Two Way";
+            this.deleteTwoWayToolStripMenuItem.Click += new System.EventHandler(this.deleteTwoWayToolStripMenuItem_Click);
             // 
             // label4
             // 
@@ -261,7 +285,7 @@
             // useCurrentButton
             // 
             this.useCurrentButton.Enabled = false;
-            this.useCurrentButton.Location = new System.Drawing.Point(167, 418);
+            this.useCurrentButton.Location = new System.Drawing.Point(73, 421);
             this.useCurrentButton.Name = "useCurrentButton";
             this.useCurrentButton.Size = new System.Drawing.Size(75, 23);
             this.useCurrentButton.TabIndex = 27;
@@ -320,7 +344,7 @@
             this.showToolStripMenuItem});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
-            this.mainMenu.Size = new System.Drawing.Size(276, 24);
+            this.mainMenu.Size = new System.Drawing.Size(274, 24);
             this.mainMenu.TabIndex = 28;
             this.mainMenu.Text = "menuStrip1";
             // 
@@ -371,34 +395,34 @@
             this.navigationArrowsToolStripMenuItem.Text = "Navigation Arrows";
             this.navigationArrowsToolStripMenuItem.Click += new System.EventHandler(this.navigationArrowsToolStripMenuItem_Click);
             // 
-            // linkMenu
+            // translationGoButton
             // 
-            this.linkMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.deleteLinkToolStripMenuItem,
-            this.deleteTwoWayToolStripMenuItem});
-            this.linkMenu.Name = "linkMenu";
-            this.linkMenu.Size = new System.Drawing.Size(160, 48);
+            this.translationGoButton.Location = new System.Drawing.Point(244, 374);
+            this.translationGoButton.Name = "translationGoButton";
+            this.translationGoButton.Size = new System.Drawing.Size(29, 23);
+            this.translationGoButton.TabIndex = 29;
+            this.translationGoButton.Text = "Go";
+            this.translationGoButton.UseVisualStyleBackColor = true;
+            this.translationGoButton.Click += new System.EventHandler(this.translationGoButton_Click);
             // 
-            // deleteLinkToolStripMenuItem
+            // lookAtGoButton
             // 
-            this.deleteLinkToolStripMenuItem.Name = "deleteLinkToolStripMenuItem";
-            this.deleteLinkToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.deleteLinkToolStripMenuItem.Text = "Delete";
-            this.deleteLinkToolStripMenuItem.Click += new System.EventHandler(this.deleteLinkToolStripMenuItem_Click);
-            // 
-            // deleteTwoWayToolStripMenuItem
-            // 
-            this.deleteTwoWayToolStripMenuItem.Name = "deleteTwoWayToolStripMenuItem";
-            this.deleteTwoWayToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.deleteTwoWayToolStripMenuItem.Text = "Delete Two Way";
-            this.deleteTwoWayToolStripMenuItem.Click += new System.EventHandler(this.deleteTwoWayToolStripMenuItem_Click);
+            this.lookAtGoButton.Location = new System.Drawing.Point(244, 398);
+            this.lookAtGoButton.Name = "lookAtGoButton";
+            this.lookAtGoButton.Size = new System.Drawing.Size(29, 23);
+            this.lookAtGoButton.TabIndex = 30;
+            this.lookAtGoButton.Text = "Go";
+            this.lookAtGoButton.UseVisualStyleBackColor = true;
+            this.lookAtGoButton.Click += new System.EventHandler(this.lookAtGoButton_Click);
             // 
             // NavigationStateSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(276, 691);
+            this.ClientSize = new System.Drawing.Size(274, 691);
+            this.Controls.Add(this.lookAtGoButton);
+            this.Controls.Add(this.translationGoButton);
             this.Controls.Add(this.mainMenu);
             this.Controls.Add(this.useCurrentButton);
             this.Controls.Add(this.linkUpdate);
@@ -425,12 +449,12 @@
             this.Text = "Navigation State Editor";
             this.ToolStripName = "Editing";
             this.createStateMenu.ResumeLayout(false);
+            this.linkMenu.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).EndInit();
             this.multipleStateMenu.ResumeLayout(false);
             this.singleStateMenu.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
-            this.linkMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -475,6 +499,8 @@
         private System.Windows.Forms.ContextMenuStrip linkMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteLinkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteTwoWayToolStripMenuItem;
+        private System.Windows.Forms.Button translationGoButton;
+        private System.Windows.Forms.Button lookAtGoButton;
 
 
     }
