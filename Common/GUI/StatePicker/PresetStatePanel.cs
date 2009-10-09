@@ -88,10 +88,7 @@ namespace Medical.GUI
 
         public void clear()
         {
-            foreach (Image image in images)
-            {
-                image.Dispose();
-            }
+            clearImages();
             groups.Clear();
             presetListView.Groups.Clear();
             presetListView.Items.Clear();
@@ -149,6 +146,15 @@ namespace Medical.GUI
                     return defaultItem.ImageKey;
                 }
             }
+        }
+
+        private void clearImages()
+        {
+            foreach (Image image in images)
+            {
+                image.Dispose();
+            }
+            images.Clear();
         }
     }
 }
