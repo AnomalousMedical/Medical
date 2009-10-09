@@ -95,7 +95,7 @@ namespace Medical
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
-            mainTimer = new UpdateTimer(systemTimer, new WindowsFormsUpdate());
+            mainTimer = new ManagedUpdateTimer(systemTimer, new WindowsFormsUpdate());
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
