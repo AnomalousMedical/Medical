@@ -66,6 +66,7 @@ namespace Medical.GUI
                                 {
                                     presetListView.LargeImageList.Images.Add(fullImageName, image);
                                     images.AddLast(image);
+                                    image.Tag = fullImageName;
                                 }
                             }
                         }
@@ -152,6 +153,7 @@ namespace Medical.GUI
         {
             foreach (Image image in images)
             {
+                parentPicker.ImageList.Images.RemoveByKey(image.Tag.ToString());
                 image.Dispose();
             }
             images.Clear();
