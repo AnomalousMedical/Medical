@@ -97,7 +97,7 @@ namespace Medical
             systemTimer = pluginManager.PlatformPlugin.createTimer();
             //mainTimer = new ManagedUpdateTimer(systemTimer, new WindowsFormsUpdate());
             Win32UpdateTimer win32Timer = new Win32UpdateTimer(systemTimer);
-            win32Timer.setSystemMessageListener(new WindowsFormsUpdate());
+            win32Timer.MessageReceived += new PumpMessageEvent(win32Timer_MessageReceived);
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
@@ -113,6 +113,12 @@ namespace Medical
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
+        }
+
+        void win32Timer_MessageReceived(ref WinMsg message)
+        {
+            Message msg = Message.Create(message.hwnd, message.message, message.wParam, message.lParam);
+            ManualMessagePump.pumpMessage(ref msg);
         }
 
         /// <summary>
