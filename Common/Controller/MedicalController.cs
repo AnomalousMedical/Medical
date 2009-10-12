@@ -95,7 +95,6 @@ namespace Medical
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
-            //mainTimer = new ManagedUpdateTimer(systemTimer, new WindowsFormsUpdate());
             Win32UpdateTimer win32Timer = new Win32UpdateTimer(systemTimer);
             win32Timer.MessageReceived += new PumpMessageEvent(win32Timer_MessageReceived);
             mainTimer = win32Timer;
