@@ -114,7 +114,6 @@
     <Compile Include="Controller\TemporaryStateBlender.cs" />
     <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />
-    <Compile Include="Controller\WindowsFormsUpdate.cs" />
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>

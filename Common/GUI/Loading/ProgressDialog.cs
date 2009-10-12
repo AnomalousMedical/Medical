@@ -33,12 +33,6 @@ namespace Medical.GUI
 
         void doFadeIn()
         {
-            //currentDialog.Show();
-            //while (currentDialog.Visible)
-            //{
-            //    Application.DoEvents();
-            //    Thread.Sleep(10);
-            //}
             currentDialog.ShowDialog();
             System.Console.WriteLine("Load Dialog thread closed");
         }
