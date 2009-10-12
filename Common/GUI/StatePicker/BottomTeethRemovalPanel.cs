@@ -54,7 +54,14 @@ namespace Medical.GUI
 
         public override void setToDefault()
         {
-
+            foreach (Control control in this.Controls)
+            {
+                CheckBox checkBox = control as CheckBox;
+                if (checkBox != null)
+                {
+                    checkBox.Checked = false;
+                }
+            }
         }
 
         public override void recordOpeningState()
