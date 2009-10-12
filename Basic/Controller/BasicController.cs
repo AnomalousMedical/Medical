@@ -322,6 +322,7 @@ namespace Medical.Controller
                     statePicker.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
                 }
+                statePicker.setToDefault();
                 return true;
             }
             else

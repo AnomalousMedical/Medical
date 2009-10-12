@@ -111,7 +111,13 @@ namespace Medical.GUI
 
         public override void setToDefault()
         {
-            
+            allowUpdates = false;
+            presetListView.SelectedItems.Clear();
+            if (defaultItem != null)
+            {
+                defaultItem.Selected = true;
+            }
+            allowUpdates = true;
         }
 
         public override void recordOpeningState()
