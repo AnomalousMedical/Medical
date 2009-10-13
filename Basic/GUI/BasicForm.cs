@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Medical.Controller;
 using System.IO;
 using WeifenLuo.WinFormsUI.Docking;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -17,6 +18,7 @@ namespace Medical.GUI
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
         private SavePatientDialog savePatient = new SavePatientDialog();
+        private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
 
         public BasicForm()
         {
@@ -179,6 +181,11 @@ namespace Medical.GUI
         {
             controller.ShowNavigation = !navigationButton.Checked;
             navigationButton.Checked = controller.ShowNavigation;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            aboutBox.ShowDialog(this);
         }
     }
 }

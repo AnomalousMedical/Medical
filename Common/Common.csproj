@@ -114,6 +114,12 @@
     <Compile Include="Controller\TemporaryStateBlender.cs" />
     <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />
+    <Compile Include="GUI\About\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\About\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\BoneManipulator\BoneManipulatorSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -535,6 +541,10 @@
     <None Include="Resources\mandiblediscspace.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\About\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\ScenePicker\ScenePicker.resx">
       <DependentUpon>ScenePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
