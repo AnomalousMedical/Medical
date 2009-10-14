@@ -21,7 +21,7 @@ namespace Medical.Controller
 
         public void process(Keys pressedKey, bool controlPressed)
         {
-            if((!requiresControl || requiresControl && controlPressed) && pressedKey == keyCode)
+            if(requiresControl == controlPressed && pressedKey == keyCode)
             {
                 execute();
             }
