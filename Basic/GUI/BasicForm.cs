@@ -19,15 +19,50 @@ namespace Medical.GUI
         private OpenPatientDialog openPatient = new OpenPatientDialog();
         private SavePatientDialog savePatient = new SavePatientDialog();
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
+        private ShortcutController shortcutController;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
             this.initialize(Text);
+            this.shortcutController = shortcuts;
+
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
             ShortcutEventCommand navigationShortcut = new ShortcutEventCommand("Navigation", Keys.Space, false);
             navigationShortcut.Execute += navigationShortcut_Execute;
             shortcutGroup.addShortcut(navigationShortcut);
+
+            ShortcutEventCommand newShortcut = new ShortcutEventCommand("New", Keys.N, true);
+            newShortcut.Execute += newShortcut_Execute;
+            shortcutGroup.addShortcut(newShortcut);
+
+            ShortcutEventCommand openShortcut = new ShortcutEventCommand("Open", Keys.O, true);
+            openShortcut.Execute += openShortcut_Execute;
+            shortcutGroup.addShortcut(openShortcut);
+
+            ShortcutEventCommand saveShortcut = new ShortcutEventCommand("Save", Keys.S, true);
+            saveShortcut.Execute += saveShortcut_Execute;
+            shortcutGroup.addShortcut(saveShortcut);
+
+            ShortcutEventCommand distortionShortcut = new ShortcutEventCommand("AddDistortion", Keys.D, true);
+            distortionShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(distortionShortcut_Execute);
+            shortcutGroup.addShortcut(distortionShortcut);
+
+            ShortcutEventCommand oneWindowShortcut = new ShortcutEventCommand("oneWindowShortcut", Keys.D1, true);
+            oneWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(oneWindowShortcut_Execute);
+            shortcutGroup.addShortcut(oneWindowShortcut);
+
+            ShortcutEventCommand twoWindowShortcut = new ShortcutEventCommand("twoWindowShortcut", Keys.D2, true);
+            twoWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(twoWindowShortcut_Execute);
+            shortcutGroup.addShortcut(twoWindowShortcut);
+
+            ShortcutEventCommand threeWindowShortcut = new ShortcutEventCommand("threeWindowShortcut", Keys.D3, true);
+            threeWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(threeWindowShortcut_Execute);
+            shortcutGroup.addShortcut(threeWindowShortcut);
+
+            ShortcutEventCommand fourWindowShortcut = new ShortcutEventCommand("fourWindowShortcut", Keys.D4, true);
+            fourWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(fourWindowShortcut_Execute);
+            shortcutGroup.addShortcut(fourWindowShortcut);
         }
 
         /// <summary>
@@ -151,9 +186,29 @@ namespace Medical.GUI
             controller.showStatePicker();
         }
 
+        void distortionShortcut_Execute()
+        {
+            addDistortionToolStripMenuItem_Click(null, null);
+        }
+
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.newScene();
+        }
+
+        void saveShortcut_Execute()
+        {
+            saveToolStripMenuItem_Click(null, null);
+        }
+
+        void openShortcut_Execute()
+        {
+            openToolStripMenuItem_Click(null, null);
+        }
+
+        void newShortcut_Execute()
+        {
+            newToolStripMenuItem_Click(null, null);
         }
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
@@ -176,6 +231,26 @@ namespace Medical.GUI
             controller.PresetWindows.setPresetSet("Four Windows");
         }
 
+        void fourWindowShortcut_Execute()
+        {
+            fourWindowsToolStripMenuItem_Click(null, null);
+        }
+
+        void threeWindowShortcut_Execute()
+        {
+            threeWindowsToolStripMenuItem_Click(null, null);
+        }
+
+        void twoWindowShortcut_Execute()
+        {
+            twoWindowsToolStripMenuItem_Click(null, null);
+        }
+
+        void oneWindowShortcut_Execute()
+        {
+            oneWindowToolStripMenuItem_Click(null, null);
+        }
+
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.showOptions();
@@ -195,6 +270,12 @@ namespace Medical.GUI
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             aboutBox.ShowDialog(this);
+        }
+
+        protected override void OnDeactivate(EventArgs e)
+        {
+            base.OnDeactivate(e);
+            shortcutController.resetButtons();
         }
     }
 }

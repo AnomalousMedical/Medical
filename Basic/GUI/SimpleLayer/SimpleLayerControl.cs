@@ -33,43 +33,43 @@ namespace Medical.GUI
         public void setupShortcuts(ShortcutController shortcutController)
         {
             ShortcutGroup group = shortcutController.createOrRetrieveGroup("LayerShortcuts");
-            ShortcutEventCommand skinToggle = new ShortcutEventCommand("SkinToggle", Keys.Q, true);
+            ShortcutEventCommand skinToggle = new ShortcutEventCommand("SkinToggle", Keys.F1, false);
             skinToggle.Execute += new ShortcutEventCommand.ExecuteEvent(skinToggle_Execute);
             group.addShortcut(skinToggle);
 
-            ShortcutEventCommand skullToggle = new ShortcutEventCommand("SkullToggle", Keys.T, true);
+            ShortcutEventCommand skullToggle = new ShortcutEventCommand("SkullToggle", Keys.F5, false);
             skullToggle.Execute += new ShortcutEventCommand.ExecuteEvent(skullToggle_Execute);
             group.addShortcut(skullToggle);
 
-            ShortcutEventCommand eminenceToggle = new ShortcutEventCommand("EminenceToggle", Keys.E, true);
+            ShortcutEventCommand eminenceToggle = new ShortcutEventCommand("EminenceToggle", Keys.F3, false);
             eminenceToggle.Execute += new ShortcutEventCommand.ExecuteEvent(eminenceToggle_Execute);
             group.addShortcut(eminenceToggle);
 
-            ShortcutEventCommand tmjToggle = new ShortcutEventCommand("TmjToggle", Keys.R, true);
+            ShortcutEventCommand tmjToggle = new ShortcutEventCommand("TmjToggle", Keys.F4, false);
             tmjToggle.Execute += new ShortcutEventCommand.ExecuteEvent(tmjToggle_Execute);
             group.addShortcut(tmjToggle);
 
-            ShortcutEventCommand mandibleToggle = new ShortcutEventCommand("TmjToggle", Keys.Y, true);
+            ShortcutEventCommand mandibleToggle = new ShortcutEventCommand("TmjToggle", Keys.F6, false);
             mandibleToggle.Execute += new ShortcutEventCommand.ExecuteEvent(mandibleToggle_Execute);
             group.addShortcut(mandibleToggle);
 
-            ShortcutEventCommand topTeethToggle = new ShortcutEventCommand("TopTeethToggle", Keys.O, true);
-            topTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(topTeethToggle_Execute);
-            group.addShortcut(topTeethToggle);
+            //ShortcutEventCommand topTeethToggle = new ShortcutEventCommand("TopTeethToggle", Keys.F9, true);
+            //topTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(topTeethToggle_Execute);
+            //group.addShortcut(topTeethToggle);
 
-            ShortcutEventCommand bottomTeethToggle = new ShortcutEventCommand("BottomTeethToggle", Keys.P, true);
-            bottomTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(bottomTeethToggle_Execute);
-            group.addShortcut(bottomTeethToggle);
+            //ShortcutEventCommand bottomTeethToggle = new ShortcutEventCommand("BottomTeethToggle", Keys.F10, true);
+            //bottomTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(bottomTeethToggle_Execute);
+            //group.addShortcut(bottomTeethToggle);
 
-            ShortcutEventCommand muscleToggle = new ShortcutEventCommand("MuscleToggle", Keys.W, true);
+            ShortcutEventCommand muscleToggle = new ShortcutEventCommand("MuscleToggle", Keys.F2, false);
             muscleToggle.Execute += new ShortcutEventCommand.ExecuteEvent(muscleToggle_Execute);
             group.addShortcut(muscleToggle);
 
-            ShortcutEventCommand spineToggle = new ShortcutEventCommand("SpineToggle", Keys.I, true);
+            ShortcutEventCommand spineToggle = new ShortcutEventCommand("SpineToggle", Keys.F8, false);
             spineToggle.Execute += new ShortcutEventCommand.ExecuteEvent(spineToggle_Execute);
             group.addShortcut(spineToggle);
 
-            ShortcutEventCommand hyoidToggle = new ShortcutEventCommand("HyoidToggle", Keys.U, true);
+            ShortcutEventCommand hyoidToggle = new ShortcutEventCommand("HyoidToggle", Keys.F7, false);
             hyoidToggle.Execute += new ShortcutEventCommand.ExecuteEvent(hyoidToggle_Execute);
             group.addShortcut(hyoidToggle);
         }

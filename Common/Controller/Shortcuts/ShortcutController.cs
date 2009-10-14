@@ -11,6 +11,7 @@ namespace Medical.Controller
     {
         private const int WM_KEYDOWN = 0x100;
         private const int WM_KEYUP = 0x101;
+        private const int WM_ACTIVATEAPP = 0x1c;
 
         private List<ShortcutGroup> groups = new List<ShortcutGroup>();
         private bool controlPressed = false;
@@ -39,7 +40,7 @@ namespace Medical.Controller
         {
             if (msg.Msg == WM_KEYDOWN)
             {
-                Keys pressedKey = (Keys)msg.WParam;       
+                Keys pressedKey = (Keys)msg.WParam;
                 if (pressedKey == Keys.ControlKey)
                 {
                     controlPressed = true;
@@ -47,6 +48,7 @@ namespace Medical.Controller
                 else if(pressedKey != lastKey)
                 {
                     lastKey = pressedKey;
+                    bool controlPressed = this.controlPressed;
                     foreach (ShortcutGroup group in groups)
                     {
                         group.process(pressedKey, controlPressed); 
@@ -65,6 +67,15 @@ namespace Medical.Controller
                     lastKey = Keys.None;
                 }
             }
+        }
+
+        /// <summary>
+        /// Call this when the app looses focus.
+        /// </summary>
+        public void resetButtons()
+        {
+            controlPressed = false;
+            lastKey = Keys.None;
         }
     }
 }

@@ -176,7 +176,10 @@ namespace Medical.Controller
 
         void medicalController_PumpMessage(ref Message msg)
         {
-            shortcutController.processShortcuts(ref msg);
+            if (!statePicker.Visible)
+            {
+                shortcutController.processShortcuts(ref msg);
+            }
         }
 
         /// <summary>
