@@ -112,6 +112,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SavedCameraGUI";
+            this.ShortcutKey = System.Windows.Forms.Keys.C;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Cameras";
             this.flowLayoutPanel1.ResumeLayout(false);

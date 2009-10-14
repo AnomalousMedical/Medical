@@ -8,6 +8,7 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using System.Drawing;
 using System.IO;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -32,6 +33,19 @@ namespace Medical.GUI
             controller.FixedLoopUpdate += fixedLoopUpdate;
             toolStrip.Size = new Size(toolStrip.Size.Width, 40);
             this.medicalController = controller;
+        }
+
+        public void setupShortcuts(ShortcutGroup shortcuts)
+        {
+            foreach (GUIElement element in guiElements)
+            {
+                if (element.ShortcutKey != Keys.None)
+                {
+                    ShortcutEventCommand elementCommand = new ShortcutEventCommand(element.Text, element.ShortcutKey, false);
+                    elementCommand.Execute += element.shortcutKeyPressed;
+                    shortcuts.addShortcut(elementCommand);
+                }
+            }
         }
 
         /// <summary>

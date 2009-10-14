@@ -266,6 +266,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureControl";
+            this.ShortcutKey = System.Windows.Forms.Keys.P;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Picture";
             this.flowLayoutPanel1.ResumeLayout(false);

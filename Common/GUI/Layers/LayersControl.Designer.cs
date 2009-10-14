@@ -52,6 +52,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LayersControl";
+            this.ShortcutKey = System.Windows.Forms.Keys.L;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
             this.Text = "Layers";
             this.ResumeLayout(false);

@@ -14,6 +14,7 @@ namespace Medical.GUI
         private ToolStripButton button;
         private GUIElementController controller;
         private bool updating = false;
+        private Keys shortcutKey = Keys.None;
 
         public GUIElement()
         {
@@ -23,6 +24,30 @@ namespace Medical.GUI
             button = new ToolStripButton();
             button.DisplayStyle = ToolStripItemDisplayStyle.Image;
             button.Click += new EventHandler(button_Click);
+        }
+
+        public Keys ShortcutKey
+        {
+            get
+            {
+                return shortcutKey;
+            }
+            set
+            {
+                shortcutKey = value;
+            }
+        }
+
+        public void shortcutKeyPressed()
+        {
+            if (this.Visible)
+            {
+                this.Hide();
+            }
+            else
+            {
+                controller.showDockContent(this);
+            }
         }
 
         protected override void Dispose(bool disposing)

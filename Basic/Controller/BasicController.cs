@@ -147,6 +147,7 @@ namespace Medical.Controller
             simpleLayer.setupShortcuts(shortcutController);
             viewMode.addGUIElement(simpleLayer);
 
+            viewMode.setupShortcuts(shortcutController.createOrRetrieveGroup("ViewMode"));
             viewMode.EnableToolbars = true;
 
             //Configure distort mode

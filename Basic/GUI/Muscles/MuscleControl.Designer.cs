@@ -104,6 +104,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MuscleControl";
+            this.ShortcutKey = System.Windows.Forms.Keys.V;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Muscles";
             this.ToolStripName = "Advanced";

@@ -40,9 +40,9 @@
             this.trackMarkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.barMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.appendStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertStateAtStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.appendStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.trackMarkMenu.SuspendLayout();
             this.barMenu.SuspendLayout();
@@ -117,6 +117,7 @@
             this.stateTrackBar.Location = new System.Drawing.Point(1, -15);
             this.stateTrackBar.MaximumTime = 1F;
             this.stateTrackBar.MoveMarks = false;
+            this.stateTrackBar.MoveThumb = true;
             this.stateTrackBar.Name = "stateTrackBar";
             this.stateTrackBar.SelectedMark = null;
             this.stateTrackBar.Size = new System.Drawing.Size(486, 47);
@@ -144,14 +145,7 @@
             this.insertStateAtStartToolStripMenuItem,
             this.appendStateToolStripMenuItem});
             this.barMenu.Name = "barMenu";
-            this.barMenu.Size = new System.Drawing.Size(186, 92);
-            // 
-            // appendStateToolStripMenuItem
-            // 
-            this.appendStateToolStripMenuItem.Name = "appendStateToolStripMenuItem";
-            this.appendStateToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.appendStateToolStripMenuItem.Text = "Append State To End";
-            this.appendStateToolStripMenuItem.Click += new System.EventHandler(this.appendStateToolStripMenuItem_Click);
+            this.barMenu.Size = new System.Drawing.Size(186, 70);
             // 
             // insertStateToolStripMenuItem
             // 
@@ -166,6 +160,13 @@
             this.insertStateAtStartToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.insertStateAtStartToolStripMenuItem.Text = "Insert State At Start";
             this.insertStateAtStartToolStripMenuItem.Click += new System.EventHandler(this.insertStateAtStartToolStripMenuItem_Click);
+            // 
+            // appendStateToolStripMenuItem
+            // 
+            this.appendStateToolStripMenuItem.Name = "appendStateToolStripMenuItem";
+            this.appendStateToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.appendStateToolStripMenuItem.Text = "Append State To End";
+            this.appendStateToolStripMenuItem.Click += new System.EventHandler(this.appendStateToolStripMenuItem_Click);
             // 
             // MedicalStateGUI
             // 
@@ -183,6 +184,7 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MedicalStateGUI";
+            this.ShortcutKey = System.Windows.Forms.Keys.S;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
             this.Text = "States";
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).EndInit();
