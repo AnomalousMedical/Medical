@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -55,6 +56,11 @@ namespace Medical
             this.Text = name;
             this.Name = name;
             this.controller = controller;
+            if (!OgreInterface.FoundOgreCore)
+            {
+                renderingModeToolStripMenuItem.Visible = false;
+                showStatsToolStripMenuItem.Visible = false;
+            }
         }
 
         public DrawingWindow DrawingWindow
@@ -128,17 +134,20 @@ namespace Medical
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (e.KeyCode == Keys.F6)
+            if (renderingModeToolStripMenuItem.Visible)
             {
-                drawingWindow.setRenderingMode(Engine.RenderingMode.Solid);
-            }
-            if (e.KeyCode == Keys.F7)
-            {
-                drawingWindow.setRenderingMode(Engine.RenderingMode.Wireframe);
-            }
-            if (e.KeyCode == Keys.F8)
-            {
-                drawingWindow.setRenderingMode(Engine.RenderingMode.Points);
+                if (e.KeyCode == Keys.F6)
+                {
+                    drawingWindow.setRenderingMode(Engine.RenderingMode.Solid);
+                }
+                if (e.KeyCode == Keys.F7)
+                {
+                    drawingWindow.setRenderingMode(Engine.RenderingMode.Wireframe);
+                }
+                if (e.KeyCode == Keys.F8)
+                {
+                    drawingWindow.setRenderingMode(Engine.RenderingMode.Points);
+                }
             }
         }
 
