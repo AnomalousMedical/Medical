@@ -36,7 +36,7 @@ namespace Medical.Controller
         private SkullStatePicker statePicker;
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
-        private ShortcutController shortcutController = new ShortcutController();
+        private ShortcutController shortcutController;
 
         /// <summary>
         /// Constructor.
@@ -90,7 +90,8 @@ namespace Medical.Controller
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
 
-            basicForm = new BasicForm();
+            shortcutController = new ShortcutController();
+            basicForm = new BasicForm(shortcutController);
             basicForm.initialize(this);
             medicalController = new MedicalController();
             medicalController.intialize(basicForm);

@@ -14,6 +14,7 @@ namespace Medical.Controller
 
         private List<ShortcutGroup> groups = new List<ShortcutGroup>();
         private bool controlPressed = false;
+        private Keys lastKey = Keys.None;
 
         public ShortcutController()
         {
@@ -38,13 +39,14 @@ namespace Medical.Controller
         {
             if (msg.Msg == WM_KEYDOWN)
             {
-                Keys pressedKey = (Keys)msg.WParam;
+                Keys pressedKey = (Keys)msg.WParam;       
                 if (pressedKey == Keys.ControlKey)
                 {
                     controlPressed = true;
                 }
-                else
+                else if(pressedKey != lastKey)
                 {
+                    lastKey = pressedKey;
                     foreach (ShortcutGroup group in groups)
                     {
                         group.process(pressedKey, controlPressed); 
@@ -53,9 +55,14 @@ namespace Medical.Controller
             }
             else if (msg.Msg == WM_KEYUP)
             {
-                if ((Keys)msg.WParam == Keys.ControlKey)
+                Keys pressedKey = (Keys)msg.WParam;
+                if (pressedKey == Keys.ControlKey)
                 {
                     controlPressed = false;
+                }
+                else if(pressedKey == lastKey)
+                {
+                    lastKey = Keys.None;
                 }
             }
         }

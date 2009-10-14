@@ -12,7 +12,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 
 namespace Medical.GUI
-{
+{    
     public partial class BasicForm : MedicalForm
     {
         private BasicController controller;
@@ -20,10 +20,14 @@ namespace Medical.GUI
         private SavePatientDialog savePatient = new SavePatientDialog();
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
 
-        public BasicForm()
+        public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
             this.initialize(Text);
+            ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
+            ShortcutEventCommand navigationShortcut = new ShortcutEventCommand("Navigation", Keys.Space, false);
+            navigationShortcut.Execute += navigationShortcut_Execute;
+            shortcutGroup.addShortcut(navigationShortcut);
         }
 
         /// <summary>
@@ -181,6 +185,11 @@ namespace Medical.GUI
         {
             controller.ShowNavigation = !navigationButton.Checked;
             navigationButton.Checked = controller.ShowNavigation;
+        }
+
+        void navigationShortcut_Execute()
+        {
+            navigationButton_Click(null, null);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
