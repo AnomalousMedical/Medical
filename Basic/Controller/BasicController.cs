@@ -371,6 +371,8 @@ namespace Medical.Controller
 
         void statePicker_Finished()
         {
+            //since this does not process when the state controller is visible just reset buttons.
+            shortcutController.resetButtons();
             basicForm.SuspendLayout();
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
