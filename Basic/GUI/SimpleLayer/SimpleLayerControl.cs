@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -27,6 +28,100 @@ namespace Medical.GUI
             muscleSlider.TransparencyChanged += changeMuscleTransparency;
             spineSlider.TransparencyChanged += changeSpineTransparency;
             hyoidSlider.TransparencyChanged += changeHyoidTransparency;
+        }
+
+        public void setupShortcuts(ShortcutController shortcutController)
+        {
+            ShortcutGroup group = shortcutController.createOrRetrieveGroup("LayerShortcuts");
+            ShortcutEventCommand skinToggle = new ShortcutEventCommand("SkinToggle", Keys.Q, true);
+            skinToggle.Execute += new ShortcutEventCommand.ExecuteEvent(skinToggle_Execute);
+            group.addShortcut(skinToggle);
+
+            ShortcutEventCommand skullToggle = new ShortcutEventCommand("SkullToggle", Keys.T, true);
+            skullToggle.Execute += new ShortcutEventCommand.ExecuteEvent(skullToggle_Execute);
+            group.addShortcut(skullToggle);
+
+            ShortcutEventCommand eminenceToggle = new ShortcutEventCommand("EminenceToggle", Keys.E, true);
+            eminenceToggle.Execute += new ShortcutEventCommand.ExecuteEvent(eminenceToggle_Execute);
+            group.addShortcut(eminenceToggle);
+
+            ShortcutEventCommand tmjToggle = new ShortcutEventCommand("TmjToggle", Keys.R, true);
+            tmjToggle.Execute += new ShortcutEventCommand.ExecuteEvent(tmjToggle_Execute);
+            group.addShortcut(tmjToggle);
+
+            ShortcutEventCommand mandibleToggle = new ShortcutEventCommand("TmjToggle", Keys.Y, true);
+            mandibleToggle.Execute += new ShortcutEventCommand.ExecuteEvent(mandibleToggle_Execute);
+            group.addShortcut(mandibleToggle);
+
+            ShortcutEventCommand topTeethToggle = new ShortcutEventCommand("TopTeethToggle", Keys.O, true);
+            topTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(topTeethToggle_Execute);
+            group.addShortcut(topTeethToggle);
+
+            ShortcutEventCommand bottomTeethToggle = new ShortcutEventCommand("BottomTeethToggle", Keys.P, true);
+            bottomTeethToggle.Execute += new ShortcutEventCommand.ExecuteEvent(bottomTeethToggle_Execute);
+            group.addShortcut(bottomTeethToggle);
+
+            ShortcutEventCommand muscleToggle = new ShortcutEventCommand("MuscleToggle", Keys.W, true);
+            muscleToggle.Execute += new ShortcutEventCommand.ExecuteEvent(muscleToggle_Execute);
+            group.addShortcut(muscleToggle);
+
+            ShortcutEventCommand spineToggle = new ShortcutEventCommand("SpineToggle", Keys.I, true);
+            spineToggle.Execute += new ShortcutEventCommand.ExecuteEvent(spineToggle_Execute);
+            group.addShortcut(spineToggle);
+
+            ShortcutEventCommand hyoidToggle = new ShortcutEventCommand("HyoidToggle", Keys.U, true);
+            hyoidToggle.Execute += new ShortcutEventCommand.ExecuteEvent(hyoidToggle_Execute);
+            group.addShortcut(hyoidToggle);
+        }
+
+        void eminenceToggle_Execute()
+        {
+            showEminence.Checked = !showEminence.Checked;
+        }
+
+        void hyoidToggle_Execute()
+        {
+            hyoidSlider.toggle();
+        }
+
+        void spineToggle_Execute()
+        {
+            spineSlider.toggle();
+        }
+
+        void muscleToggle_Execute()
+        {
+            muscleSlider.toggle();
+        }
+
+        void bottomTeethToggle_Execute()
+        {
+            bottomTeethSlider.toggle();
+        }
+
+        void topTeethToggle_Execute()
+        {
+            topTeethSlider.toggle();
+        }
+
+        void mandibleToggle_Execute()
+        {
+            mandibleSlider.toggle();
+        }
+
+        void tmjToggle_Execute()
+        {
+            tmjSlider.toggle();
+        }
+
+        void skullToggle_Execute()
+        {
+            skullSlider.toggle();
+        }
+
+        void skinToggle_Execute()
+        {
+            skinSlider.toggle();
         }
 
         protected override void sceneLoaded(SimScene scene)

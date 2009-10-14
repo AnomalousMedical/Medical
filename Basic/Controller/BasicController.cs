@@ -143,6 +143,7 @@ namespace Medical.Controller
             viewMode.addGUIElement(muscleControl);
 
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
+            simpleLayer.setupShortcuts(shortcutController);
             viewMode.addGUIElement(simpleLayer);
 
             viewMode.EnableToolbars = true;

@@ -21,6 +21,14 @@ namespace Medical.GUI
             transparencySlider.ValueChanged += new EventHandler(transparencySlider_ValueChanged);
         }
 
+        /// <summary>
+        /// Move the slider to the next value.
+        /// </summary>
+        public void toggle()
+        {
+            transparencySlider.Value = (transparencySlider.Value + 1) % (transparencySlider.Maximum + 1);
+        }
+
         public String LabelText
         {
             get
