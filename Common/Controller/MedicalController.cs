@@ -22,6 +22,7 @@ using BulletPlugin;
 namespace Medical
 {
     public delegate void LoopUpdate(Clock time);
+    public delegate void PumpMessage(ref Message msg);
 
     public class MedicalController : IDisposable
     {
@@ -59,6 +60,7 @@ namespace Medical
 
         public event LoopUpdate FullSpeedLoopUpdate;
         public event LoopUpdate FixedLoopUpdate;
+        public event PumpMessage PumpMessage;
 
         #endregion Events
 
@@ -118,6 +120,10 @@ namespace Medical
         {
             Message msg = Message.Create(message.hwnd, message.message, message.wParam, message.lParam);
             ManualMessagePump.pumpMessage(ref msg);
+            if (PumpMessage != null)
+            {
+                PumpMessage.Invoke(ref msg);
+            }
         }
 
         /// <summary>

@@ -111,6 +111,9 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
+    <Compile Include="Controller\Shortcuts\ShortcutCommand.cs" />
+    <Compile Include="Controller\Shortcuts\ShortcutController.cs" />
+    <Compile Include="Controller\Shortcuts\ShortcutGroup.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />
     <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />
