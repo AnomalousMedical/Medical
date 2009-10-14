@@ -18,6 +18,7 @@ namespace Medical.GUI
         private SavedCameraController userCameras;
         private DrawingWindowController windowController;
         private NavigationController navigation;
+        private bool allowCustomCameras = true;
 
         public SavedCameraGUI()
         {
@@ -39,12 +40,29 @@ namespace Medical.GUI
             }
         }
 
+        public bool AllowCustomCameras
+        {
+            get
+            {
+                return allowCustomCameras;
+            }
+            set
+            {
+                allowCustomCameras = value;
+                saveCameraButton.Visible = value;
+                deleteCameraButton.Visible = value;
+            }
+        }
+
         protected override void sceneLoaded(SimScene scene)
         {
-            foreach (String name in userCameras.getSavedCameraNames())
+            if (allowCustomCameras)
             {
-                ListViewItem item = cameraNameList.Items.Add(name, name, 0);
-                item.Group = userDefined;
+                foreach (String name in userCameras.getSavedCameraNames())
+                {
+                    ListViewItem item = cameraNameList.Items.Add(name, name, 0);
+                    item.Group = userDefined;
+                }
             }
             base.sceneLoaded(scene);
         }

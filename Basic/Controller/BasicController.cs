@@ -132,6 +132,7 @@ namespace Medical.Controller
             viewMode.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
+            savedCameraGUI.AllowCustomCameras = false;
             savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
             viewMode.addGUIElement(savedCameraGUI);
 
