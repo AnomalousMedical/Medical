@@ -56,32 +56,32 @@ namespace Medical
 
         public static NavigationButton CreateRightButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.0f, .25f, 0.25f), new OverlayRect(.25f, 0.0f, .5f, 0.25f), new OverlayRect(.5f, 0.0f, .75f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.6f, .2f, 0.8f), new OverlayRect(.2f, 0.6f, .4f, 0.8f), new OverlayRect(.4f, 0.6f, .6f, 0.8f));
         }
 
         public static NavigationButton CreateLeftButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0.25f, 0.0f, 0.0f, 0.25f), new OverlayRect(.5f, 0.0f, .25f, 0.25f), new OverlayRect(.75f, 0.0f, .5f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.4f, .2f, 0.6f), new OverlayRect(.2f, 0.4f, .4f, 0.6f), new OverlayRect(.4f, 0.4f, .6f, 0.6f));
         }
 
         public static NavigationButton CreateUpButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.25f, .25f, 0.5f), new OverlayRect(.25f, 0.25f, .5f, 0.5f), new OverlayRect(.5f, 0.25f, .75f, 0.5f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.0f, .2f, 0.2f), new OverlayRect(.2f, 0.0f, .4f, 0.2f), new OverlayRect(.4f, 0.0f, .6f, 0.2f));
         }
 
         public static NavigationButton CreateDownButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.5f, .25f, 0.25f), new OverlayRect(.25f, 0.5f, .5f, 0.25f), new OverlayRect(.5f, 0.5f, .75f, 0.25f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.2f, .2f, 0.4f), new OverlayRect(.2f, 0.2f, .4f, 0.4f), new OverlayRect(.4f, 0.2f, .6f, 0.4f));
         }
 
         public static NavigationButton CreateZoomInButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.5f, .25f, 0.75f), new OverlayRect(.25f, 0.5f, .5f, 0.75f), new OverlayRect(.5f, 0.5f, .75f, 0.75f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(.6f, 0.0f, .8f, 0.2f), new OverlayRect(.6f, 0.2f, .8f, 0.4f), new OverlayRect(.6f, 0.4f, .8f, 0.6f));
         }
 
         public static NavigationButton CreateZoomOutButton(String name)
         {
-            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.75f, .25f, 1.0f), new OverlayRect(.25f, 0.75f, .5f, 1.0f), new OverlayRect(.5f, 0.75f, .75f, 1.0f));
+            return new NavigationButton(name, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.8f, .2f, 1.0f), new OverlayRect(.2f, 0.8f, .4f, 1.0f), new OverlayRect(.4f, 0.8f, .6f, 1.0f));
         }
 
         public NavigationOverlay(String name, DrawingWindow window, NavigationController navigationController)
