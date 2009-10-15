@@ -34,6 +34,7 @@
             this.stopButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.playbackTrackBar = new Medical.GUI.TimeTrackBar();
+            this.nowPlayingLabel = new System.Windows.Forms.Label();
             this.playbackPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,23 +43,24 @@
             this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.muscleSequenceView.Location = new System.Drawing.Point(0, 0);
             this.muscleSequenceView.Name = "muscleSequenceView";
-            this.muscleSequenceView.Size = new System.Drawing.Size(236, 514);
+            this.muscleSequenceView.Size = new System.Drawing.Size(236, 492);
             this.muscleSequenceView.TabIndex = 13;
             // 
             // playbackPanel
             // 
+            this.playbackPanel.Controls.Add(this.nowPlayingLabel);
             this.playbackPanel.Controls.Add(this.stopButton);
             this.playbackPanel.Controls.Add(this.playButton);
             this.playbackPanel.Controls.Add(this.playbackTrackBar);
             this.playbackPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.playbackPanel.Location = new System.Drawing.Point(0, 514);
+            this.playbackPanel.Location = new System.Drawing.Point(0, 492);
             this.playbackPanel.Name = "playbackPanel";
-            this.playbackPanel.Size = new System.Drawing.Size(236, 85);
+            this.playbackPanel.Size = new System.Drawing.Size(236, 107);
             this.playbackPanel.TabIndex = 14;
             // 
             // stopButton
             // 
-            this.stopButton.Location = new System.Drawing.Point(86, 57);
+            this.stopButton.Location = new System.Drawing.Point(86, 76);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 3;
@@ -68,7 +70,7 @@
             // 
             // playButton
             // 
-            this.playButton.Location = new System.Drawing.Point(4, 57);
+            this.playButton.Location = new System.Drawing.Point(4, 76);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(75, 23);
             this.playButton.TabIndex = 2;
@@ -83,7 +85,7 @@
             this.playbackTrackBar.BarMenu = null;
             this.playbackTrackBar.ChangeTimeOnSelection = false;
             this.playbackTrackBar.CurrentTime = 0F;
-            this.playbackTrackBar.Location = new System.Drawing.Point(3, 3);
+            this.playbackTrackBar.Location = new System.Drawing.Point(3, 22);
             this.playbackTrackBar.MaximumTime = 1F;
             this.playbackTrackBar.MoveMarks = false;
             this.playbackTrackBar.MoveThumb = false;
@@ -92,6 +94,14 @@
             this.playbackTrackBar.Size = new System.Drawing.Size(230, 47);
             this.playbackTrackBar.TabIndex = 1;
             this.playbackTrackBar.TickMenu = null;
+            // 
+            // nowPlayingLabel
+            // 
+            this.nowPlayingLabel.AutoSize = true;
+            this.nowPlayingLabel.Location = new System.Drawing.Point(4, 7);
+            this.nowPlayingLabel.Name = "nowPlayingLabel";
+            this.nowPlayingLabel.Size = new System.Drawing.Size(0, 13);
+            this.nowPlayingLabel.TabIndex = 4;
             // 
             // MuscleControl
             // 
@@ -111,6 +121,7 @@
             this.Text = "Muscle Sequences";
             this.ToolStripName = "Manipulation";
             this.playbackPanel.ResumeLayout(false);
+            this.playbackPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -122,6 +133,7 @@
         private TimeTrackBar playbackTrackBar;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button playButton;
+        private System.Windows.Forms.Label nowPlayingLabel;
 
     }
 }

@@ -14,6 +14,7 @@ using Medical.Muscles;
 using Engine.Resources;
 using System.Xml;
 using Engine.Platform;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -69,6 +70,7 @@ namespace Medical.GUI
             stopPlayback();
             currentSequence = null;
             currentSequenceFile = sequenceFile;
+            nowPlayingLabel.Text = sequenceText;
         }
 
         protected override void sceneLoaded(SimScene scene)
@@ -105,12 +107,20 @@ namespace Medical.GUI
 
         private void loadSequence()
         {
-            using (Archive archive = FileSystem.OpenArchive(currentSequenceFile))
+            currentSequence = null;
+            try
             {
-                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(currentSequenceFile, FileMode.Open, FileAccess.Read)))
+                using (Archive archive = FileSystem.OpenArchive(currentSequenceFile))
                 {
-                    currentSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(currentSequenceFile, FileMode.Open, FileAccess.Read)))
+                    {
+                        currentSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Log.Error("Could not read muscle sequence {0}.\nReason: {1}.", currentSequenceFile, e.Message);
             }
             playbackPanel.Enabled = currentSequence != null;
             if (playbackPanel.Enabled)
