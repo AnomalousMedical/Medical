@@ -54,8 +54,10 @@ namespace Medical.GUI
                     shortcutEvent.UserData = state.Name;
                     shortcutEvent.Execute += shortcutEvent_Execute;
                     group.addShortcut(shortcutEvent);
+                    item.SubItems.Add("Ctrl + " + state.ShortcutKey.ToString());
                 }
             }
+            shortcutColumn.Width = 60;
         }
 
         void shortcutEvent_Execute(ShortcutEventCommand shortcut)

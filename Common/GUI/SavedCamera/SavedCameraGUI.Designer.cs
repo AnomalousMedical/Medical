@@ -35,6 +35,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.cameraNameList = new System.Windows.Forms.ListView();
             this.Camera = new System.Windows.Forms.ColumnHeader();
+            this.shortcutColumn = new System.Windows.Forms.ColumnHeader();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,7 +84,8 @@
             // cameraNameList
             // 
             this.cameraNameList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.Camera});
+            this.Camera,
+            this.shortcutColumn});
             this.cameraNameList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cameraNameList.Location = new System.Drawing.Point(0, 0);
             this.cameraNameList.MultiSelect = false;
@@ -96,7 +98,12 @@
             // Camera
             // 
             this.Camera.Text = "Camera";
-            this.Camera.Width = 307;
+            this.Camera.Width = 247;
+            // 
+            // shortcutColumn
+            // 
+            this.shortcutColumn.Text = "Shortcut";
+            this.shortcutColumn.Width = 0;
             // 
             // SavedCameraGUI
             // 
@@ -129,5 +136,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ListView cameraNameList;
         private System.Windows.Forms.ColumnHeader Camera;
+        private System.Windows.Forms.ColumnHeader shortcutColumn;
     }
 }
