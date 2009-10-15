@@ -259,6 +259,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 1;
+            this.ButtonText = "Picture";
             this.ClientSize = new System.Drawing.Size(142, 322);
             this.Controls.Add(this.flowLayoutPanel1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)

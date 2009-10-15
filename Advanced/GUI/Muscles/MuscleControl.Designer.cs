@@ -539,6 +539,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ButtonImageIndex = 4;
+            this.ButtonText = "Muscles";
             this.ClientSize = new System.Drawing.Size(259, 421);
             this.Controls.Add(this.tabControl1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)

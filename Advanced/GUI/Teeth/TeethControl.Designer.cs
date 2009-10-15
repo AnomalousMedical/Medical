@@ -958,6 +958,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 9;
+            this.ButtonText = "Teeth";
             this.ClientSize = new System.Drawing.Size(260, 747);
             this.Controls.Add(this.stopOnContactCheck);
             this.Controls.Add(this.adaptButton);

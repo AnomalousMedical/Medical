@@ -12,7 +12,7 @@ namespace Medical.GUI
 {
     public class GUIElement : DockContent
     {
-        private ToolStripButton button;
+        private ToolStripButton button = new ToolStripButton();
         private GUIElementController controller;
         private bool updating = false;
         private Keys shortcutKey = Keys.None;
@@ -22,7 +22,6 @@ namespace Medical.GUI
             InitializeComponent();
             ToolStripName = "Default";
             this.VisibleChanged += new EventHandler(content_VisibleChanged);
-            button = new ToolStripButton();
             button.DisplayStyle = ToolStripItemDisplayStyle.Image;
             button.Click += new EventHandler(button_Click);
         }
@@ -36,6 +35,30 @@ namespace Medical.GUI
             set
             {
                 shortcutKey = value;
+            }
+        }
+
+        public String ButtonText
+        {
+            get
+            {
+                return button.Text;
+            }
+            set
+            {
+                button.Text = value;
+            }
+        }
+
+        public int ButtonImageIndex
+        {
+            get
+            {
+                return button.ImageIndex;
+            }
+            set
+            {
+                button.ImageIndex = value;
             }
         }
 
@@ -152,16 +175,16 @@ namespace Medical.GUI
 
         public String ToolStripName { get; set; }
 
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-            button.Text = this.Text;
-            if (button.Image != null)
-            {
-                button.Image.Dispose();
-            }
-            button.Image = this.Icon.ToBitmap();
-        }
+        //protected override void OnTextChanged(EventArgs e)
+        //{
+        //    base.OnTextChanged(e);
+        //    button.Text = this.Text;
+        //    //if (button.Image != null)
+        //    //{
+        //    //    button.Image.Dispose();
+        //    //}
+        //    //button.Image = this.Icon.ToBitmap();
+        //}
 
         internal ToolStripButton Button
         {

@@ -18,6 +18,7 @@ using Engine.Resources;
 using Medical.Properties;
 using System.IO;
 using BulletPlugin;
+using System.Drawing;
 
 namespace Medical
 {
@@ -54,6 +55,9 @@ namespace Medical
         private String currentSceneFile;
         private String currentSceneDirectory;
 
+        //Tool Strip Images
+        private ImageList toolStripImages = new ImageList();
+
         #endregion Fields
 
         #region Events
@@ -77,6 +81,10 @@ namespace Medical
 
         public void intialize(OSWindow mainForm)
         {
+            toolStripImages.ColorDepth = ColorDepth.Depth32Bit;
+            toolStripImages.ImageSize = new Size(32, 32);
+            toolStripImages.Images.AddStrip(Resources.toolstrip);
+
             //Create the log.
             logListener = new LogFileListener();
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
@@ -154,6 +162,10 @@ namespace Medical
             if (hiddenEmbedWindow != null)
             {
                 hiddenEmbedWindow.Dispose();
+            }
+            if (toolStripImages != null)
+            {
+                toolStripImages.Dispose();
             }
 
             MedicalConfig.save();
@@ -308,6 +320,14 @@ namespace Medical
             get
             {
                 return currentSceneDirectory;
+            }
+        }
+
+        public ImageList ToolStripImages
+        {
+            get
+            {
+                return toolStripImages;
             }
         }
 

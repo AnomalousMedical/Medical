@@ -97,6 +97,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ButtonImageIndex = 4;
+            this.ButtonText = "Muscle Sequences";
             this.ClientSize = new System.Drawing.Size(236, 599);
             this.Controls.Add(this.muscleSequenceView);
             this.Controls.Add(this.playbackPanel);

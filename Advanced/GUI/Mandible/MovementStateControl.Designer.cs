@@ -76,6 +76,7 @@
             this.timeTrackBar.Location = new System.Drawing.Point(12, -19);
             this.timeTrackBar.MaximumTime = 5F;
             this.timeTrackBar.MoveMarks = false;
+            this.timeTrackBar.MoveThumb = true;
             this.timeTrackBar.Name = "timeTrackBar";
             this.timeTrackBar.SelectedMark = null;
             this.timeTrackBar.Size = new System.Drawing.Size(639, 47);
@@ -164,6 +165,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ButtonImageIndex = 4;
+            this.ButtonText = "Movement Sequence";
             this.ClientSize = new System.Drawing.Size(710, 57);
             this.Controls.Add(this.timeUpDown);
             this.Controls.Add(this.label1);

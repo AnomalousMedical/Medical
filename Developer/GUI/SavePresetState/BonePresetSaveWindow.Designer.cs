@@ -195,6 +195,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 8;
+            this.ButtonText = "Bone Preset Editor";
             this.ClientSize = new System.Drawing.Size(264, 480);
             this.Controls.Add(this.picturePreviewPanel);
             this.Controls.Add(this.copySideButton);

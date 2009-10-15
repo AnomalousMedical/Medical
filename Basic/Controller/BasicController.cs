@@ -14,6 +14,7 @@ using System.Xml;
 using Medical.Properties;
 using Logging;
 using Engine.ObjectManagement;
+using System.Drawing;
 
 namespace Medical.Controller
 {
@@ -94,10 +95,10 @@ namespace Medical.Controller
 
             shortcutController = new ShortcutController();
             basicForm = new BasicForm(shortcutController);
-            basicForm.initialize(this);
             medicalController = new MedicalController();
             medicalController.intialize(basicForm);
             medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
+            basicForm.initialize(this, medicalController.ToolStripImages);
 
             splashScreen.stepProgress(10);
 

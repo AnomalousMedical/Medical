@@ -27,6 +27,8 @@ namespace Medical.GUI
             this.initialize(Text);
             this.shortcutController = shortcuts;
 
+            navigationButton.ImageIndex = 5;
+
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
             ShortcutEventCommand navigationShortcut = new ShortcutEventCommand("Navigation", Keys.Space, false);
             navigationShortcut.Execute += navigationShortcut_Execute;
@@ -80,9 +82,10 @@ namespace Medical.GUI
             base.Dispose(disposing);
         }
 
-        public void initialize(BasicController controller)
+        public void initialize(BasicController controller, ImageList imageList)
         {
             this.controller = controller;
+            toolStrip1.ImageList = imageList;
         }
 
         public void setViewMode()

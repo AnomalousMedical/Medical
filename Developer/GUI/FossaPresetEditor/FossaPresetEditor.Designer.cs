@@ -167,6 +167,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ButtonImageIndex = 10;
+            this.ButtonText = "Fossa Preset Editor";
             this.ClientSize = new System.Drawing.Size(256, 459);
             this.Controls.Add(this.picturePreviewPanel);
             this.Controls.Add(this.copySideButton);

@@ -110,6 +110,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 3;
+            this.ButtonText = "Cameras";
             this.ClientSize = new System.Drawing.Size(311, 112);
             this.Controls.Add(this.cameraNameList);
             this.Controls.Add(this.flowLayoutPanel1);

@@ -173,6 +173,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 6;
+            this.ButtonText = "Disc Preset Editor";
             this.ClientSize = new System.Drawing.Size(259, 460);
             this.Controls.Add(this.picturePreviewPanel);
             this.Controls.Add(this.copySideButton);

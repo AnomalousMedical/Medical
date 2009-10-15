@@ -250,6 +250,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 8;
+            this.ButtonText = "Mandible Size";
             this.ClientSize = new System.Drawing.Size(259, 611);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.sliderPanel);

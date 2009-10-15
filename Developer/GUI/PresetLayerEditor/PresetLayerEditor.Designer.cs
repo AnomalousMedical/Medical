@@ -133,6 +133,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ButtonImageIndex = 0;
+            this.ButtonText = "Preset Layer Editor";
             this.ClientSize = new System.Drawing.Size(178, 349);
             this.Controls.Add(this.hiddenCheckBox);
             this.Controls.Add(this.loadButton);

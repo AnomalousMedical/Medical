@@ -82,6 +82,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.ButtonImageIndex = 10;
+            this.ButtonText = "Fossa";
             this.ClientSize = new System.Drawing.Size(284, 138);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.rightEminanceSlider);

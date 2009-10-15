@@ -148,6 +148,7 @@ namespace Medical.GUI
             if (!toolStrips.ContainsKey(element.ToolStripName))
             {
                 toolStrip = new ToolStrip();
+                toolStrip.ImageList = medicalController.ToolStripImages;
                 toolStrip.ImageScalingSize = new Size(32, 32);
                 toolStrips.Add(element.ToolStripName, toolStrip);
                 if (enabled)
