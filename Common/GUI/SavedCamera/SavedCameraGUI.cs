@@ -45,6 +45,7 @@ namespace Medical.GUI
         {
             ShortcutGroup group = shortcutController.createOrRetrieveGroup("Cameras");
             group.clearShortcuts();
+            bool foundShortcut = false;
             foreach (ListViewItem item in predefined.Items)
             {
                 NavigationState state = item.Tag as NavigationState;
@@ -55,9 +56,10 @@ namespace Medical.GUI
                     shortcutEvent.Execute += shortcutEvent_Execute;
                     group.addShortcut(shortcutEvent);
                     item.SubItems.Add("Ctrl + " + state.ShortcutKey.ToString());
+                    foundShortcut = true;
                 }
             }
-            shortcutColumn.Width = 60;
+            shortcutColumn.Width = foundShortcut ? 60 : 0;
         }
 
         void shortcutEvent_Execute(ShortcutEventCommand shortcut)
