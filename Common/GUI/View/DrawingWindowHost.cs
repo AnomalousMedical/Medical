@@ -61,6 +61,20 @@ namespace Medical
                 renderingModeToolStripMenuItem.Visible = false;
                 showStatsToolStripMenuItem.Visible = false;
             }
+            drawingWindow.SubTextChanged += new DrawingWindowEvent(drawingWindow_SubTextChanged);
+        }
+
+        void drawingWindow_SubTextChanged(DrawingWindow window)
+        {
+            String subText = window.SubText;
+            if (subText != null)
+            {
+                this.Text = String.Format("{0} - {1}", Name, window.SubText);
+            }
+            else
+            {
+                this.Text = this.Name;
+            }
         }
 
         public DrawingWindow DrawingWindow

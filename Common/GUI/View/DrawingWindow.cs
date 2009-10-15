@@ -24,6 +24,7 @@ namespace Medical
         public event DrawingWindowEvent CameraCreated;
         public event DrawingWindowEvent CameraDestroyed;
         public event OgreCameraCallback PreFindVisibleObjects;
+        public event DrawingWindowEvent SubTextChanged;
 
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private RendererWindow window;
@@ -35,6 +36,7 @@ namespace Medical
         private UpdateTimer mainTimer;
         private RenderingMode renderingMode = RenderingMode.Solid;
         private SimScene scene;
+        private String subText;
 
         public DrawingWindow()
         {
@@ -106,6 +108,25 @@ namespace Medical
                 mainTimer.removeFixedUpdateListener(cameraMover);
                 camera = null;
                 CameraResolver.removeMotionValidator(this);
+            }
+        }
+
+        public String SubText
+        {
+            get
+            {
+                return subText;
+            }
+            set
+            {
+                if (subText != value)
+                {
+                    subText = value;
+                    if (SubTextChanged != null)
+                    {
+                        SubTextChanged.Invoke(this);
+                    }
+                }
             }
         }
 
