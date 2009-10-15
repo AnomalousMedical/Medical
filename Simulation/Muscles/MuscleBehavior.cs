@@ -94,10 +94,13 @@ namespace Medical
 
         public void changeForce(float force)
         {
-            this.force = force;
-            if (ForceChanged != null)
+            if (this.force != force)
             {
-                ForceChanged.Invoke(this, force);
+                this.force = force;
+                if (ForceChanged != null)
+                {
+                    ForceChanged.Invoke(this, force);
+                }
             }
         }
 
