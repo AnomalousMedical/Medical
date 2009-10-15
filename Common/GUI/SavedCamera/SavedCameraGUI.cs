@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -38,6 +39,28 @@ namespace Medical.GUI
                 this.navigation = navigation;
                 navigation.NavigationStateSetChanged += navigation_NavigationStateSetChanged;
             }
+        }
+
+        public void createShortcuts(ShortcutController shortcutController)
+        {
+            ShortcutGroup group = shortcutController.createOrRetrieveGroup("Cameras");
+            group.clearShortcuts();
+            foreach (ListViewItem item in predefined.Items)
+            {
+                NavigationState state = item.Tag as NavigationState;
+                if (state.ShortcutKey != KeyCodes.None)
+                {
+                    ShortcutEventCommand shortcutEvent = new ShortcutEventCommand(state.Name, (Keys)state.ShortcutKey, true);
+                    shortcutEvent.UserData = state.Name;
+                    shortcutEvent.Execute += shortcutEvent_Execute;
+                    group.addShortcut(shortcutEvent);
+                }
+            }
+        }
+
+        void shortcutEvent_Execute(ShortcutEventCommand shortcut)
+        {
+            navigation.setNavigationState(shortcut.UserData.ToString(), windowController.getActiveWindow().DrawingWindow);
         }
 
         public bool AllowCustomCameras
@@ -81,6 +104,7 @@ namespace Medical.GUI
                 {
                     ListViewItem item = cameraNameList.Items.Add(state.Name, state.Name, 0);
                     item.Group = predefined;
+                    item.Tag = state;
                 }
             }
         }

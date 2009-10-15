@@ -20,6 +20,7 @@ namespace Medical
         private const String SOURCE = "Source";
         private const String VISUAL_RADIUS = "VisualRadius";
         private const String HIDDEN = "IsHidden";
+        private const String SHORTCUT_KEY = "ShortcutKey";
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -31,6 +32,7 @@ namespace Medical
                 xmlWriter.WriteElementString(TRANSLATION, state.Translation.ToString());
                 xmlWriter.WriteElementString(LOOK_AT, state.LookAt.ToString());
                 xmlWriter.WriteElementString(HIDDEN, state.Hidden.ToString());
+                xmlWriter.WriteElementString(SHORTCUT_KEY, state.ShortcutKey.ToString());
                 xmlWriter.WriteEndElement();
             }
 
@@ -76,6 +78,7 @@ namespace Medical
             Vector3 position = Vector3.UnitZ;
             Vector3 lookAt = Vector3.Zero;
             bool hidden = false;
+            KeyCodes shortcutKey = KeyCodes.None;
             while (!isEndElement(xmlReader, NAVIGATION_STATE) && xmlReader.Read())
             {
                 if (isValidElement(xmlReader))
@@ -96,11 +99,15 @@ namespace Medical
                     {
                         hidden = bool.Parse(xmlReader.ReadElementContentAsString());
                     }
+                    else if (xmlReader.Name == SHORTCUT_KEY)
+                    {
+                        shortcutKey = (KeyCodes)Enum.Parse(typeof(KeyCodes), xmlReader.ReadElementContentAsString());
+                    }
                 }
             }
             if (name != null)
             {
-                set.addState(new NavigationState(name, lookAt, position, hidden));
+                set.addState(new NavigationState(name, lookAt, position, hidden, shortcutKey));
             }
         }
 

@@ -95,6 +95,7 @@ namespace Medical
         {
             if (camera != null)
             {
+                Log.Debug("Destroying camera {0}.", name);
                 if (CameraDestroyed != null)
                 {
                     CameraDestroyed.Invoke(this);

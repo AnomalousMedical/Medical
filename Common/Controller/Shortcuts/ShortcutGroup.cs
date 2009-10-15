@@ -29,6 +29,11 @@ namespace Medical.Controller
             shortcuts.Remove(shortcut);
         }
 
+        public void clearShortcuts()
+        {
+            shortcuts.Clear();
+        }
+
         public void process(Keys pressedKey, bool ctrlPressed)
         {
             foreach (ShortcutCommand cmd in shortcuts)

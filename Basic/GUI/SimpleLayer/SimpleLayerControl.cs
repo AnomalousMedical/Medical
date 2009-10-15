@@ -74,52 +74,52 @@ namespace Medical.GUI
             group.addShortcut(hyoidToggle);
         }
 
-        void eminenceToggle_Execute()
+        void eminenceToggle_Execute(ShortcutEventCommand shortcut)
         {
             showEminence.Checked = !showEminence.Checked;
         }
 
-        void hyoidToggle_Execute()
+        void hyoidToggle_Execute(ShortcutEventCommand shortcut)
         {
             hyoidSlider.toggle();
         }
 
-        void spineToggle_Execute()
+        void spineToggle_Execute(ShortcutEventCommand shortcut)
         {
             spineSlider.toggle();
         }
 
-        void muscleToggle_Execute()
+        void muscleToggle_Execute(ShortcutEventCommand shortcut)
         {
             muscleSlider.toggle();
         }
 
-        void bottomTeethToggle_Execute()
+        void bottomTeethToggle_Execute(ShortcutEventCommand shortcut)
         {
             bottomTeethSlider.toggle();
         }
 
-        void topTeethToggle_Execute()
+        void topTeethToggle_Execute(ShortcutEventCommand shortcut)
         {
             topTeethSlider.toggle();
         }
 
-        void mandibleToggle_Execute()
+        void mandibleToggle_Execute(ShortcutEventCommand shortcut)
         {
             mandibleSlider.toggle();
         }
 
-        void tmjToggle_Execute()
+        void tmjToggle_Execute(ShortcutEventCommand shortcut)
         {
             tmjSlider.toggle();
         }
 
-        void skullToggle_Execute()
+        void skullToggle_Execute(ShortcutEventCommand shortcut)
         {
             skullSlider.toggle();
         }
 
-        void skinToggle_Execute()
+        void skinToggle_Execute(ShortcutEventCommand shortcut)
         {
             skinSlider.toggle();
         }

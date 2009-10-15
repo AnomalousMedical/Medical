@@ -186,7 +186,7 @@ namespace Medical.GUI
             controller.showStatePicker();
         }
 
-        void distortionShortcut_Execute()
+        void distortionShortcut_Execute(ShortcutEventCommand shortcut)
         {
             addDistortionToolStripMenuItem_Click(null, null);
         }
@@ -196,17 +196,17 @@ namespace Medical.GUI
             controller.newScene();
         }
 
-        void saveShortcut_Execute()
+        void saveShortcut_Execute(ShortcutEventCommand shortcut)
         {
             saveToolStripMenuItem_Click(null, null);
         }
 
-        void openShortcut_Execute()
+        void openShortcut_Execute(ShortcutEventCommand shortcut)
         {
             openToolStripMenuItem_Click(null, null);
         }
 
-        void newShortcut_Execute()
+        void newShortcut_Execute(ShortcutEventCommand shortcut)
         {
             newToolStripMenuItem_Click(null, null);
         }
@@ -231,22 +231,22 @@ namespace Medical.GUI
             controller.PresetWindows.setPresetSet("Four Windows");
         }
 
-        void fourWindowShortcut_Execute()
+        void fourWindowShortcut_Execute(ShortcutEventCommand shortcut)
         {
             fourWindowsToolStripMenuItem_Click(null, null);
         }
 
-        void threeWindowShortcut_Execute()
+        void threeWindowShortcut_Execute(ShortcutEventCommand shortcut)
         {
             threeWindowsToolStripMenuItem_Click(null, null);
         }
 
-        void twoWindowShortcut_Execute()
+        void twoWindowShortcut_Execute(ShortcutEventCommand shortcut)
         {
             twoWindowsToolStripMenuItem_Click(null, null);
         }
 
-        void oneWindowShortcut_Execute()
+        void oneWindowShortcut_Execute(ShortcutEventCommand shortcut)
         {
             oneWindowToolStripMenuItem_Click(null, null);
         }
@@ -262,7 +262,7 @@ namespace Medical.GUI
             navigationButton.Checked = controller.ShowNavigation;
         }
 
-        void navigationShortcut_Execute()
+        void navigationShortcut_Execute(ShortcutEventCommand shortcut)
         {
             navigationButton_Click(null, null);
         }

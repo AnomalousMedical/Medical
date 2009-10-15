@@ -6,6 +6,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -38,7 +39,7 @@ namespace Medical.GUI
             }
         }
 
-        public void shortcutKeyPressed()
+        public void shortcutKeyPressed(ShortcutEventCommand shortcut)
         {
             if (this.Visible)
             {

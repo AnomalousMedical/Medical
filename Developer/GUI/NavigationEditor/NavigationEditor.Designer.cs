@@ -68,6 +68,8 @@
             this.navigationArrowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.translationGoButton = new System.Windows.Forms.Button();
             this.lookAtGoButton = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.keyCombo = new System.Windows.Forms.ComboBox();
             this.createStateMenu.SuspendLayout();
             this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
@@ -198,7 +200,7 @@
             this.columnHeader1});
             this.linkView.ContextMenuStrip = this.linkMenu;
             this.linkView.HideSelection = false;
-            this.linkView.Location = new System.Drawing.Point(0, 447);
+            this.linkView.Location = new System.Drawing.Point(0, 478);
             this.linkView.MultiSelect = false;
             this.linkView.Name = "linkView";
             this.linkView.Size = new System.Drawing.Size(274, 143);
@@ -236,7 +238,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 597);
+            this.label4.Location = new System.Drawing.Point(5, 628);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 22;
@@ -245,7 +247,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 624);
+            this.label5.Location = new System.Drawing.Point(5, 655);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 13);
             this.label5.TabIndex = 23;
@@ -254,7 +256,7 @@
             // buttonCombo
             // 
             this.buttonCombo.FormattingEnabled = true;
-            this.buttonCombo.Location = new System.Drawing.Point(86, 597);
+            this.buttonCombo.Location = new System.Drawing.Point(86, 628);
             this.buttonCombo.Name = "buttonCombo";
             this.buttonCombo.Size = new System.Drawing.Size(178, 21);
             this.buttonCombo.TabIndex = 24;
@@ -262,7 +264,7 @@
             // radiusUpDown
             // 
             this.radiusUpDown.DecimalPlaces = 2;
-            this.radiusUpDown.Location = new System.Drawing.Point(86, 622);
+            this.radiusUpDown.Location = new System.Drawing.Point(86, 653);
             this.radiusUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -274,7 +276,7 @@
             // 
             // linkUpdate
             // 
-            this.linkUpdate.Location = new System.Drawing.Point(7, 653);
+            this.linkUpdate.Location = new System.Drawing.Point(7, 684);
             this.linkUpdate.Name = "linkUpdate";
             this.linkUpdate.Size = new System.Drawing.Size(75, 23);
             this.linkUpdate.TabIndex = 26;
@@ -415,12 +417,31 @@
             this.lookAtGoButton.UseVisualStyleBackColor = true;
             this.lookAtGoButton.Click += new System.EventHandler(this.lookAtGoButton_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(5, 450);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(98, 13);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "Shortcut Key Ctrl + ";
+            // 
+            // keyCombo
+            // 
+            this.keyCombo.FormattingEnabled = true;
+            this.keyCombo.Location = new System.Drawing.Point(103, 447);
+            this.keyCombo.Name = "keyCombo";
+            this.keyCombo.Size = new System.Drawing.Size(166, 21);
+            this.keyCombo.TabIndex = 32;
+            // 
             // NavigationStateSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(274, 691);
+            this.ClientSize = new System.Drawing.Size(274, 711);
+            this.Controls.Add(this.keyCombo);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.lookAtGoButton);
             this.Controls.Add(this.translationGoButton);
             this.Controls.Add(this.mainMenu);
@@ -501,6 +522,8 @@
         private System.Windows.Forms.ToolStripMenuItem deleteTwoWayToolStripMenuItem;
         private System.Windows.Forms.Button translationGoButton;
         private System.Windows.Forms.Button lookAtGoButton;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox keyCombo;
 
 
     }

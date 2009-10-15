@@ -37,6 +37,7 @@ namespace Medical.Controller
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
+        private SavedCameraGUI savedCameraGUI;
 
         /// <summary>
         /// Constructor.
@@ -131,7 +132,7 @@ namespace Medical.Controller
             stateGUI.initialize(stateController);
             viewMode.addGUIElement(stateGUI);
 
-            SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
+            savedCameraGUI = new SavedCameraGUI();
             savedCameraGUI.AllowCustomCameras = false;
             savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
             viewMode.addGUIElement(savedCameraGUI);
@@ -333,6 +334,7 @@ namespace Medical.Controller
                     layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
+                    savedCameraGUI.createShortcuts(shortcutController);
                     statePicker.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
                 }

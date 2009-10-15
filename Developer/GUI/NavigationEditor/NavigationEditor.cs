@@ -41,6 +41,11 @@ namespace Medical.GUI
             {
                 buttonCombo.Items.Add(fieldInfo.Name);
             }
+
+            foreach (FieldInfo fieldInfo in typeof(KeyCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
+            {
+                keyCombo.Items.Add(fieldInfo.Name);
+            }
         }
 
         void navigationStateView_MouseClick(object sender, MouseEventArgs e)
@@ -72,6 +77,7 @@ namespace Medical.GUI
                 translationText.Text = currentState.Translation.ToString();
                 lookAtText.Text = currentState.LookAt.ToString();
                 hiddenCheck.Checked = currentState.Hidden;
+                keyCombo.SelectedItem = currentState.ShortcutKey.ToString();
                 linkView.SelectedItems.Clear();
                 foreach (NavigationLink link in currentState.AdjacentStates)
                 {
@@ -82,6 +88,7 @@ namespace Medical.GUI
                 gotoButton.Enabled = true;
                 useCurrentButton.Enabled = true;
                 linkView.Enabled = true;
+                keyCombo.Enabled = true;
             }
             else if(navigationStateView.SelectedItems.Count == 0)
             {
@@ -90,11 +97,13 @@ namespace Medical.GUI
                 translationText.Text = "";
                 lookAtText.Text = "";
                 hiddenCheck.Checked = false;
+                keyCombo.SelectedItem = KeyCodes.None.ToString();
                 linkView.Items.Clear();
                 stateUpdate.Enabled = false;
                 gotoButton.Enabled = false;
                 useCurrentButton.Enabled = false;
                 linkView.Enabled = false;
+                keyCombo.Enabled = false;
             }
         }
 
@@ -145,6 +154,7 @@ namespace Medical.GUI
                 currentState.LookAt = new Vector3(lookAtText.Text);
                 lookAtText.Text = currentState.LookAt.ToString();
                 currentState.Hidden = hiddenCheck.Checked;
+                currentState.ShortcutKey = (KeyCodes)Enum.Parse(typeof(KeyCodes), keyCombo.SelectedItem.ToString());
                 currentStateItem.Text = currentState.Name;
             }
             else

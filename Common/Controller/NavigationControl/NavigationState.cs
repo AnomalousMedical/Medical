@@ -13,6 +13,7 @@ namespace Medical
         private Vector3 lookAt;
         private Vector3 translation;
         private bool hidden;
+        private KeyCodes shortcutKey = KeyCodes.None;
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden)
         {
@@ -20,6 +21,12 @@ namespace Medical
             this.translation = translation;
             this.lookAt = lookAt;
             this.hidden = hidden;
+        }
+
+        public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden, KeyCodes shortcutKey)
+            :this(name, lookAt, translation, hidden)
+        {
+            this.shortcutKey = shortcutKey;
         }
 
         public void addAdjacentState(NavigationState adjacent, NavigationButtons button)
@@ -123,6 +130,18 @@ namespace Medical
             set
             {
                 hidden = value;
+            }
+        }
+
+        public KeyCodes ShortcutKey
+        {
+            get
+            {
+                return shortcutKey;
+            }
+            set
+            {
+                shortcutKey = value;
             }
         }
 
