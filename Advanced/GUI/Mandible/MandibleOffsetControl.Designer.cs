@@ -30,9 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MandibleOffsetControl));
             this.distortionButton = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.leftForwardBack = new System.Windows.Forms.TrackBar();
             this.bothForwardBack = new System.Windows.Forms.TrackBar();
             this.rightForwardBack = new System.Windows.Forms.TrackBar();
@@ -41,7 +38,6 @@
             this.openTrackBar = new System.Windows.Forms.TrackBar();
             this.forceUpDown = new System.Windows.Forms.NumericUpDown();
             this.forceLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.forceSlider = new System.Windows.Forms.TrackBar();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -49,7 +45,10 @@
             this.label7 = new System.Windows.Forms.Label();
             this.openUpDown = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
@@ -59,6 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.forceSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.openUpDown)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // distortionButton
@@ -70,40 +70,6 @@
             this.distortionButton.Text = "Reset";
             this.distortionButton.UseVisualStyleBackColor = true;
             this.distortionButton.Click += new System.EventHandler(this.distortionButton_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(2, 29);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(206, 192);
-            this.panel1.TabIndex = 0;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Left";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 86);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Right";
             // 
             // leftForwardBack
             // 
@@ -207,17 +173,6 @@
             this.forceLabel.TabIndex = 11;
             this.forceLabel.Text = "Force";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(156, 4);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Opening";
-            // 
             // forceSlider
             // 
             this.forceSlider.LargeChange = 10;
@@ -307,6 +262,51 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Both";
             // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Location = new System.Drawing.Point(2, 29);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(206, 192);
+            this.panel1.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(156, 4);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Opening";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Left";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 86);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Right";
+            // 
             // MandibleOffsetControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,8 +337,6 @@
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Mandible Offset";
             this.ToolStripName = "Advanced";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).EndInit();
@@ -348,6 +346,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.forceSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.openUpDown)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

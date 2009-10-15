@@ -106,8 +106,8 @@
             this.Name = "MuscleControl";
             this.ShortcutKey = System.Windows.Forms.Keys.V;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
-            this.Text = "Muscles";
-            this.ToolStripName = "Advanced";
+            this.Text = "Muscle Sequences";
+            this.ToolStripName = "Manipulation";
             this.playbackPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -98,14 +98,25 @@ namespace Medical.GUI
 
         internal void _setController(GUIElementController controller)
         {
+            if (updating && controller != null)
+            {
+                this.controller.removeUpdatingElement(this);
+            }
             this.controller = controller;
+            if (updating)
+            {
+                this.controller.addUpdatingElement(this);
+            }
         }
 
         protected void subscribeToUpdates()
         {
             if (!updating)
             {
-                controller.addUpdatingElement(this);
+                if (controller != null)
+                {
+                    controller.addUpdatingElement(this);
+                }
                 updating = true;
             }
         }
@@ -114,7 +125,10 @@ namespace Medical.GUI
         {
             if (updating)
             {
-                controller.removeUpdatingElement(this);
+                if (controller != null)
+                {
+                    controller.removeUpdatingElement(this);
+                }
                 updating = false;
             }
         }

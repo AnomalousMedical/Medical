@@ -38,6 +38,7 @@ namespace Medical.Controller
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private SavedCameraGUI savedCameraGUI;
+        private SimpleMandibleControl simpleMandibleControl;
 
         /// <summary>
         /// Constructor.
@@ -147,6 +148,9 @@ namespace Medical.Controller
             SimpleLayerControl simpleLayer = new SimpleLayerControl();
             simpleLayer.setupShortcuts(shortcutController);
             viewMode.addGUIElement(simpleLayer);
+
+            simpleMandibleControl = new SimpleMandibleControl();
+            viewMode.addGUIElement(simpleMandibleControl);
 
             viewMode.setupShortcuts(shortcutController.createOrRetrieveGroup("ViewMode"));
             viewMode.EnableToolbars = true;
@@ -361,6 +365,7 @@ namespace Medical.Controller
                 viewMode.EnableToolbars = false;
                 basicForm.setDistortionMode();
                 statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
+                simpleMandibleControl.AllowSceneManipulation = false;
                 basicForm.ResumeLayout();
             }
         }
@@ -379,6 +384,7 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
             basicForm.setViewMode();
+            simpleMandibleControl.AllowSceneManipulation = true;
             basicForm.ResumeLayout();
         }
 

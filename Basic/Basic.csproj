@@ -105,6 +105,12 @@
     <Compile Include="GUI\SimpleLayer\SimpleLayerControl.Designer.cs">
       <DependentUpon>SimpleLayerControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.Designer.cs">
+      <DependentUpon>SimpleMandibleControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\BasicForm.resx">
@@ -125,6 +131,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleLayer\SimpleLayerControl.resx">
       <DependentUpon>SimpleLayerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SimpleMandibleControl\SimpleMandibleControl.resx">
+      <DependentUpon>SimpleMandibleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

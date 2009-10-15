@@ -84,6 +84,22 @@ namespace Medical
             return touching;
         }
 
+        /// <summary>
+        /// Returns true if any unextracted teeth are touching.
+        /// </summary>
+        /// <returns>True if any unextracted teeth are touching.</returns>
+        public static bool anyTeethTouching()
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                if (!tooth.Extracted && tooth.MakingContact)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static TeethState createTeethState()
         {
             TeethState state = new TeethState();
