@@ -29,18 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleMandibleControl));
-            this.forceUpDown = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
-            this.rightOffset = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.openUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.leftOffset = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.forceSlider = new System.Windows.Forms.TrackBar();
             this.bothForwardBack = new System.Windows.Forms.TrackBar();
-            this.forceLabel = new System.Windows.Forms.Label();
             this.leftForwardBack = new System.Windows.Forms.TrackBar();
             this.openTrackBar = new System.Windows.Forms.TrackBar();
             this.distortionButton = new System.Windows.Forms.Button();
@@ -49,24 +41,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.forceSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightForwardBack)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // forceUpDown
-            // 
-            this.forceUpDown.Location = new System.Drawing.Point(185, 283);
-            this.forceUpDown.Name = "forceUpDown";
-            this.forceUpDown.Size = new System.Drawing.Size(69, 20);
-            this.forceUpDown.TabIndex = 27;
             // 
             // label8
             // 
@@ -78,85 +58,6 @@
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 35;
             this.label8.Text = "Both";
-            // 
-            // rightOffset
-            // 
-            this.rightOffset.DecimalPlaces = 4;
-            this.rightOffset.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.rightOffset.Location = new System.Drawing.Point(196, 227);
-            this.rightOffset.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.rightOffset.Name = "rightOffset";
-            this.rightOffset.Size = new System.Drawing.Size(69, 20);
-            this.rightOffset.TabIndex = 24;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label7.Location = new System.Drawing.Point(4, 283);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(47, 13);
-            this.label7.TabIndex = 34;
-            this.label7.Text = "Opening";
-            // 
-            // openUpDown
-            // 
-            this.openUpDown.DecimalPlaces = 4;
-            this.openUpDown.Location = new System.Drawing.Point(52, 281);
-            this.openUpDown.Maximum = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            this.openUpDown.Minimum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            -2147483648});
-            this.openUpDown.Name = "openUpDown";
-            this.openUpDown.Size = new System.Drawing.Size(80, 20);
-            this.openUpDown.TabIndex = 33;
-            this.openUpDown.Value = new decimal(new int[] {
-            9,
-            0,
-            0,
-            0});
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(137, 285);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(34, 13);
-            this.label6.TabIndex = 32;
-            this.label6.Text = "Force";
-            // 
-            // leftOffset
-            // 
-            this.leftOffset.DecimalPlaces = 4;
-            this.leftOffset.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.leftOffset.Location = new System.Drawing.Point(196, 1);
-            this.leftOffset.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.leftOffset.Name = "leftOffset";
-            this.leftOffset.Size = new System.Drawing.Size(69, 20);
-            this.leftOffset.TabIndex = 25;
             // 
             // label4
             // 
@@ -180,19 +81,6 @@
             this.label5.TabIndex = 30;
             this.label5.Text = "Right";
             // 
-            // forceSlider
-            // 
-            this.forceSlider.LargeChange = 10;
-            this.forceSlider.Location = new System.Drawing.Point(234, 49);
-            this.forceSlider.Maximum = 100;
-            this.forceSlider.Name = "forceSlider";
-            this.forceSlider.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.forceSlider.Size = new System.Drawing.Size(45, 180);
-            this.forceSlider.SmallChange = 5;
-            this.forceSlider.TabIndex = 29;
-            this.forceSlider.TickFrequency = 10000;
-            this.forceSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
             // bothForwardBack
             // 
             this.bothForwardBack.LargeChange = 2000;
@@ -204,15 +92,6 @@
             this.bothForwardBack.TabIndex = 23;
             this.bothForwardBack.TickFrequency = 10000;
             this.bothForwardBack.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // forceLabel
-            // 
-            this.forceLabel.AutoSize = true;
-            this.forceLabel.Location = new System.Drawing.Point(231, 33);
-            this.forceLabel.Name = "forceLabel";
-            this.forceLabel.Size = new System.Drawing.Size(34, 13);
-            this.forceLabel.TabIndex = 28;
-            this.forceLabel.Text = "Force";
             // 
             // leftForwardBack
             // 
@@ -242,7 +121,7 @@
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(64, 309);
+            this.distortionButton.Location = new System.Drawing.Point(56, 278);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(125, 23);
             this.distortionButton.TabIndex = 20;
@@ -314,22 +193,14 @@
             this.ButtonImageIndex = 7;
             this.ButtonText = "Mandible Control";
             this.ClientSize = new System.Drawing.Size(396, 384);
-            this.Controls.Add(this.forceUpDown);
+            this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.rightOffset);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.openUpDown);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.leftOffset);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.forceSlider);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.bothForwardBack);
-            this.Controls.Add(this.forceLabel);
             this.Controls.Add(this.leftForwardBack);
             this.Controls.Add(this.openTrackBar);
-            this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.rightForwardBack);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
@@ -339,11 +210,6 @@
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Mandible Control";
             this.ToolStripName = "Manipulation";
-            ((System.ComponentModel.ISupportInitialize)(this.forceUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.forceSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.openTrackBar)).EndInit();
@@ -357,22 +223,14 @@
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown forceUpDown;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown rightOffset;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown openUpDown;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown leftOffset;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TrackBar forceSlider;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar bothForwardBack;
-        private System.Windows.Forms.Label forceLabel;
         private System.Windows.Forms.TrackBar leftForwardBack;
         private System.Windows.Forms.TrackBar openTrackBar;
         private System.Windows.Forms.Button distortionButton;

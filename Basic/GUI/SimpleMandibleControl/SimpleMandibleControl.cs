@@ -27,12 +27,7 @@ namespace Medical.GUI
             leftForwardBack.ValueChanged += leftSliderValueChanged;
             rightForwardBack.ValueChanged += rightSliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
-            leftOffset.ValueChanged += leftOffset_ValueChanged;
-            rightOffset.ValueChanged += rightOffset_ValueChanged;
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
-            forceUpDown.ValueChanged += forceUpDown_ValueChanged;
-            openUpDown.ValueChanged += openUpDown_ValueChanged;
-            forceSlider.ValueChanged += forceSlider_ValueChanged;
         }
 
         public bool AllowSceneManipulation
@@ -89,11 +84,9 @@ namespace Medical.GUI
                 synchronizeLeftCP(leftCP, leftCP.getNeutralLocation());
                 synchronizeRightCP(rightCP, rightCP.getNeutralLocation());
                 bothForwardBack.Value = rightForwardBack.Value;
-                synchronizeForce(movingMuscle, movingMuscle.getForce());
                 synchronizeMovingMuscleOffset(movingMuscleTarget, movingMuscleTarget.Offset);
 
                 //setup callbacks
-                movingMuscle.ForceChanged += movingMuscle_ForceChanged;
                 leftCP.PositionChanged += leftCP_PositionChanged;
                 rightCP.PositionChanged += rightCP_PositionChanged;
                 movingMuscleTarget.OffsetChanged += movingMuscleTarget_OffsetChanged;
@@ -109,7 +102,6 @@ namespace Medical.GUI
         {
             if (movingMuscle != null)
             {
-                movingMuscle.ForceChanged -= movingMuscle_ForceChanged;
                 movingMuscle = null;
             }
             if (leftCP != null)
@@ -145,43 +137,6 @@ namespace Medical.GUI
         }
         
         //Synchronize methods
-        //Moving muscle force
-        void synchronizeForce(object sender, float force)
-        {
-            if (allowSyncronization)
-            {
-                allowSyncronization = false;
-                if (sender != movingMuscle)
-                {
-                    movingMuscle.changeForce(force);
-                }
-                if (sender != forceUpDown)
-                {
-                    forceUpDown.Value = (decimal)force;
-                }
-                if (sender != forceSlider)
-                {
-                    forceSlider.Value = (int)force;
-                }
-                allowSyncronization = true;
-            }
-        }
-
-        void movingMuscle_ForceChanged(MuscleBehavior source, float force)
-        {
-            synchronizeForce(source, force);
-        }
-
-        void forceUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeForce(forceUpDown, (float)forceUpDown.Value);
-        }
-
-        void forceSlider_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeForce(forceSlider, forceSlider.Value);
-        }
-
         //Moving muscle offset
         void synchronizeMovingMuscleOffset(object sender, Vector3 position)
         {
@@ -196,10 +151,6 @@ namespace Medical.GUI
                 {
                     openTrackBar.Value = (int)(position.y * (-openTrackBar.Minimum / 30.0f));
                 }
-                if (sender != openUpDown)
-                {
-                    openUpDown.Value = (decimal)position.y;
-                }
                 allowSyncronization = true;
             }
         }
@@ -212,11 +163,6 @@ namespace Medical.GUI
         void openTrackBar_ValueChanged(object sender, EventArgs e)
         {
             synchronizeMovingMuscleOffset(openTrackBar, new Vector3(0.0f, openTrackBar.Value / (-openTrackBar.Minimum / 30.0f), 0.0f));
-        }
-
-        void openUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeMovingMuscleOffset(openUpDown, new Vector3(0.0f, (float)openUpDown.Value, 0.0f));
         }
 
         //Left CP Position
@@ -233,10 +179,6 @@ namespace Medical.GUI
                 {
                     leftForwardBack.Value = (int)(position * leftForwardBack.Maximum);
                 }
-                if (sender != leftOffset)
-                {
-                    leftOffset.Value = (decimal)position;
-                }
                 allowSyncronization = true;
             }
         }
@@ -244,11 +186,6 @@ namespace Medical.GUI
         void leftCP_PositionChanged(ControlPointBehavior behavior, float position)
         {
             synchronizeLeftCP(leftCP, position);
-        }
-
-        void leftOffset_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeLeftCP(leftOffset, (float)leftOffset.Value);
         }
 
         void leftSliderValueChanged(object sender, EventArgs e)
@@ -270,10 +207,6 @@ namespace Medical.GUI
                 {
                     rightForwardBack.Value = (int)(position * rightForwardBack.Maximum);
                 }
-                if (sender != leftOffset)
-                {
-                    rightOffset.Value = (decimal)position;
-                }
                 allowSyncronization = true;
             }
         }
@@ -281,11 +214,6 @@ namespace Medical.GUI
         void rightCP_PositionChanged(ControlPointBehavior behavior, float position)
         {
             synchronizeRightCP(rightCP, position);
-        }
-
-        void rightOffset_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeRightCP(rightOffset, (float)rightOffset.Value);
         }
 
         void rightSliderValueChanged(object sender, EventArgs e)
