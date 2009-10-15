@@ -19,6 +19,7 @@ namespace Medical.GUI
         private MovingMuscleTarget movingMuscleTarget;
         private bool allowSyncronization = true;
         private bool allowSceneManipulation = true;
+        private bool lowForce = true;
 
         public SimpleMandibleControl()
         {
@@ -59,11 +60,19 @@ namespace Medical.GUI
             //If teeth are touching and we are moving upward
             if (TeethController.anyTeethTouching() && movingMuscleTarget.Owner.Translation.y > movingMuscle.Owner.Translation.y - 5.5f)
             {
-                movingMuscle.changeForce(6.0f);
+                if (!lowForce)
+                {
+                    movingMuscle.changeForce(6.0f);
+                    lowForce = true;
+                }
             }
             else
             {
-                movingMuscle.changeForce(100.0f);
+                if (lowForce)
+                {
+                    movingMuscle.changeForce(100.0f);
+                    lowForce = false;
+                }
             }
         }
 
