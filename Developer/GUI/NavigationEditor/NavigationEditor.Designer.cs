@@ -70,25 +70,27 @@
             this.lookAtGoButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.keyCombo = new System.Windows.Forms.ComboBox();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.createStateMenu.SuspendLayout();
             this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
             this.multipleStateMenu.SuspendLayout();
             this.singleStateMenu.SuspendLayout();
             this.mainMenu.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // navigationStateView
             // 
-            this.navigationStateView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.navigationStateView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn});
             this.navigationStateView.ContextMenuStrip = this.createStateMenu;
+            this.navigationStateView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.navigationStateView.HideSelection = false;
-            this.navigationStateView.Location = new System.Drawing.Point(0, 32);
+            this.navigationStateView.Location = new System.Drawing.Point(0, 24);
             this.navigationStateView.Name = "navigationStateView";
-            this.navigationStateView.Size = new System.Drawing.Size(274, 293);
+            this.navigationStateView.Size = new System.Drawing.Size(274, 300);
             this.navigationStateView.TabIndex = 9;
             this.navigationStateView.UseCompatibleStateImageBehavior = false;
             this.navigationStateView.View = System.Windows.Forms.View.Details;
@@ -115,7 +117,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(5, 355);
+            this.label1.Location = new System.Drawing.Point(5, 31);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 12;
@@ -124,7 +126,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 379);
+            this.label2.Location = new System.Drawing.Point(4, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 13;
@@ -133,7 +135,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(5, 402);
+            this.label3.Location = new System.Drawing.Point(5, 78);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 14;
@@ -142,7 +144,7 @@
             // hiddenCheck
             // 
             this.hiddenCheck.AutoSize = true;
-            this.hiddenCheck.Location = new System.Drawing.Point(7, 423);
+            this.hiddenCheck.Location = new System.Drawing.Point(7, 99);
             this.hiddenCheck.Name = "hiddenCheck";
             this.hiddenCheck.Size = new System.Drawing.Size(60, 17);
             this.hiddenCheck.TabIndex = 15;
@@ -151,21 +153,21 @@
             // 
             // nameText
             // 
-            this.nameText.Location = new System.Drawing.Point(74, 353);
+            this.nameText.Location = new System.Drawing.Point(74, 29);
             this.nameText.Name = "nameText";
             this.nameText.Size = new System.Drawing.Size(190, 20);
             this.nameText.TabIndex = 16;
             // 
             // translationText
             // 
-            this.translationText.Location = new System.Drawing.Point(74, 376);
+            this.translationText.Location = new System.Drawing.Point(74, 52);
             this.translationText.Name = "translationText";
             this.translationText.Size = new System.Drawing.Size(168, 20);
             this.translationText.TabIndex = 17;
             // 
             // lookAtText
             // 
-            this.lookAtText.Location = new System.Drawing.Point(74, 399);
+            this.lookAtText.Location = new System.Drawing.Point(74, 75);
             this.lookAtText.Name = "lookAtText";
             this.lookAtText.Size = new System.Drawing.Size(168, 20);
             this.lookAtText.TabIndex = 18;
@@ -173,7 +175,7 @@
             // stateUpdate
             // 
             this.stateUpdate.Enabled = false;
-            this.stateUpdate.Location = new System.Drawing.Point(5, 327);
+            this.stateUpdate.Location = new System.Drawing.Point(5, 3);
             this.stateUpdate.Name = "stateUpdate";
             this.stateUpdate.Size = new System.Drawing.Size(75, 23);
             this.stateUpdate.TabIndex = 19;
@@ -184,7 +186,7 @@
             // gotoButton
             // 
             this.gotoButton.Enabled = false;
-            this.gotoButton.Location = new System.Drawing.Point(86, 327);
+            this.gotoButton.Location = new System.Drawing.Point(86, 3);
             this.gotoButton.Name = "gotoButton";
             this.gotoButton.Size = new System.Drawing.Size(75, 23);
             this.gotoButton.TabIndex = 20;
@@ -200,10 +202,10 @@
             this.columnHeader1});
             this.linkView.ContextMenuStrip = this.linkMenu;
             this.linkView.HideSelection = false;
-            this.linkView.Location = new System.Drawing.Point(0, 478);
+            this.linkView.Location = new System.Drawing.Point(0, 154);
             this.linkView.MultiSelect = false;
             this.linkView.Name = "linkView";
-            this.linkView.Size = new System.Drawing.Size(274, 143);
+            this.linkView.Size = new System.Drawing.Size(286, 143);
             this.linkView.TabIndex = 21;
             this.linkView.UseCompatibleStateImageBehavior = false;
             this.linkView.View = System.Windows.Forms.View.Details;
@@ -238,7 +240,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(5, 628);
+            this.label4.Location = new System.Drawing.Point(5, 304);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 22;
@@ -247,7 +249,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 655);
+            this.label5.Location = new System.Drawing.Point(5, 331);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 13);
             this.label5.TabIndex = 23;
@@ -256,7 +258,7 @@
             // buttonCombo
             // 
             this.buttonCombo.FormattingEnabled = true;
-            this.buttonCombo.Location = new System.Drawing.Point(86, 628);
+            this.buttonCombo.Location = new System.Drawing.Point(86, 304);
             this.buttonCombo.Name = "buttonCombo";
             this.buttonCombo.Size = new System.Drawing.Size(178, 21);
             this.buttonCombo.TabIndex = 24;
@@ -264,7 +266,7 @@
             // radiusUpDown
             // 
             this.radiusUpDown.DecimalPlaces = 2;
-            this.radiusUpDown.Location = new System.Drawing.Point(86, 653);
+            this.radiusUpDown.Location = new System.Drawing.Point(86, 329);
             this.radiusUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -276,7 +278,7 @@
             // 
             // linkUpdate
             // 
-            this.linkUpdate.Location = new System.Drawing.Point(7, 684);
+            this.linkUpdate.Location = new System.Drawing.Point(7, 360);
             this.linkUpdate.Name = "linkUpdate";
             this.linkUpdate.Size = new System.Drawing.Size(75, 23);
             this.linkUpdate.TabIndex = 26;
@@ -287,7 +289,7 @@
             // useCurrentButton
             // 
             this.useCurrentButton.Enabled = false;
-            this.useCurrentButton.Location = new System.Drawing.Point(73, 421);
+            this.useCurrentButton.Location = new System.Drawing.Point(73, 97);
             this.useCurrentButton.Name = "useCurrentButton";
             this.useCurrentButton.Size = new System.Drawing.Size(75, 23);
             this.useCurrentButton.TabIndex = 27;
@@ -353,6 +355,7 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.loadToolStripMenuItem});
@@ -363,21 +366,21 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -399,7 +402,7 @@
             // 
             // translationGoButton
             // 
-            this.translationGoButton.Location = new System.Drawing.Point(244, 374);
+            this.translationGoButton.Location = new System.Drawing.Point(244, 50);
             this.translationGoButton.Name = "translationGoButton";
             this.translationGoButton.Size = new System.Drawing.Size(29, 23);
             this.translationGoButton.TabIndex = 29;
@@ -409,7 +412,7 @@
             // 
             // lookAtGoButton
             // 
-            this.lookAtGoButton.Location = new System.Drawing.Point(244, 398);
+            this.lookAtGoButton.Location = new System.Drawing.Point(244, 74);
             this.lookAtGoButton.Name = "lookAtGoButton";
             this.lookAtGoButton.Size = new System.Drawing.Size(29, 23);
             this.lookAtGoButton.TabIndex = 30;
@@ -420,7 +423,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 450);
+            this.label6.Location = new System.Drawing.Point(5, 126);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(98, 13);
             this.label6.TabIndex = 31;
@@ -429,10 +432,45 @@
             // keyCombo
             // 
             this.keyCombo.FormattingEnabled = true;
-            this.keyCombo.Location = new System.Drawing.Point(103, 447);
+            this.keyCombo.Location = new System.Drawing.Point(103, 123);
             this.keyCombo.Name = "keyCombo";
             this.keyCombo.Size = new System.Drawing.Size(166, 21);
             this.keyCombo.TabIndex = 32;
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.stateUpdate);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.hiddenCheck);
+            this.panel1.Controls.Add(this.keyCombo);
+            this.panel1.Controls.Add(this.nameText);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.translationText);
+            this.panel1.Controls.Add(this.lookAtGoButton);
+            this.panel1.Controls.Add(this.lookAtText);
+            this.panel1.Controls.Add(this.translationGoButton);
+            this.panel1.Controls.Add(this.gotoButton);
+            this.panel1.Controls.Add(this.linkView);
+            this.panel1.Controls.Add(this.useCurrentButton);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.linkUpdate);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.radiusUpDown);
+            this.panel1.Controls.Add(this.buttonCombo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 324);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(274, 387);
+            this.panel1.TabIndex = 33;
             // 
             // NavigationStateSelector
             // 
@@ -442,28 +480,9 @@
             this.ButtonImageIndex = 5;
             this.ButtonText = "Navigation State Editor";
             this.ClientSize = new System.Drawing.Size(274, 711);
-            this.Controls.Add(this.keyCombo);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.lookAtGoButton);
-            this.Controls.Add(this.translationGoButton);
-            this.Controls.Add(this.mainMenu);
-            this.Controls.Add(this.useCurrentButton);
-            this.Controls.Add(this.linkUpdate);
-            this.Controls.Add(this.radiusUpDown);
-            this.Controls.Add(this.buttonCombo);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.linkView);
-            this.Controls.Add(this.gotoButton);
-            this.Controls.Add(this.stateUpdate);
-            this.Controls.Add(this.lookAtText);
-            this.Controls.Add(this.translationText);
-            this.Controls.Add(this.nameText);
-            this.Controls.Add(this.hiddenCheck);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.navigationStateView);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.mainMenu);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.MainMenuStrip = this.mainMenu;
@@ -478,6 +497,8 @@
             this.singleStateMenu.ResumeLayout(false);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -526,6 +547,8 @@
         private System.Windows.Forms.Button lookAtGoButton;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox keyCombo;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
 
 
     }

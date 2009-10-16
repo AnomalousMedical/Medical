@@ -377,5 +377,12 @@ namespace Medical.GUI
                 window.DrawingWindow.setNewPosition(window.DrawingWindow.Translation, new Vector3(lookAtText.Text));
             }
         }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationStateSet newSet = new NavigationStateSet();
+            navController.NavigationSet = newSet;
+            cameraFileTracker.clearCurrentFile();
+        }
     }
 }
