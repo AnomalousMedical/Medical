@@ -9,7 +9,7 @@ using System.ComponentModel;
 namespace Medical.GUI.Common
 {
     [DefaultEvent("Click")]
-    class FancyButton : UserControl
+    public class FancyButton : UserControl
     {
         private int currentIndex = 0;
         private int normalIndex = 0;
@@ -19,6 +19,7 @@ namespace Medical.GUI.Common
         public FancyButton()
         {
             Capture = false;
+            this.Size = new Size(32, 32);
         }
 
         public int NormalIndex

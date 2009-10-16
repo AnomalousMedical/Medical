@@ -87,5 +87,12 @@ namespace Medical.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap PlaybackButtons {
+            get {
+                object obj = ResourceManager.GetObject("PlaybackButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

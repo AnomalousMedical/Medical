@@ -179,7 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\articulometricsclinic.jpg" />
-    <None Include="Resources\basictoolstrip.png" />
+    <None Include="Resources\PlaybackButtons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
