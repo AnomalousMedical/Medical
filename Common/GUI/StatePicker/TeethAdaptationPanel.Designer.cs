@@ -74,7 +74,7 @@
             this.Controls.Add(this.adaptButton);
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
-            this.NavigationState = "Dentition Anterior Labial";
+            this.NavigationState = "Occlusion Anterior";
             this.Size = new System.Drawing.Size(318, 286);
             this.ResumeLayout(false);
             this.PerformLayout();
