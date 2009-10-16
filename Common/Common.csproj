@@ -136,6 +136,9 @@
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Common\FancyButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI\Common\InputBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -606,6 +609,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\toolstrip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StateButtons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

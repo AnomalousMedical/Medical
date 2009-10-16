@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Engine.Platform;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -26,6 +27,7 @@ namespace Medical.GUI
         public MedicalStateGUI()
         {
             InitializeComponent();
+            stateImageList.Images.AddStrip(Resources.StateButtons);
             stateTrackBar.TimeChanged += new TimeChanged(stateTrackBar_TimeChanged);
         }
 

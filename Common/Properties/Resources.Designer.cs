@@ -158,6 +158,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap StateButtons {
+            get {
+                object obj = ResourceManager.GetObject("StateButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap toolstrip {
             get {
                 object obj = ResourceManager.GetObject("toolstrip", resourceCulture);

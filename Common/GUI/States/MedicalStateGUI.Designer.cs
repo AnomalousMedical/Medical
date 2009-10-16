@@ -30,12 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MedicalStateGUI));
-            this.nextButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.stateImageList = new System.Windows.Forms.ImageList(this.components);
             this.speedTrackBar = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.previousButton = new System.Windows.Forms.Button();
-            this.pauseButton = new System.Windows.Forms.Button();
             this.stateTrackBar = new Medical.GUI.TimeTrackBar();
             this.trackMarkMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,29 +39,21 @@
             this.insertStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insertStateAtStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.appendStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.slowPanel = new System.Windows.Forms.Panel();
+            this.fastPanel = new System.Windows.Forms.Panel();
+            this.previousButton = new Medical.GUI.Common.FancyButton();
+            this.pauseButton = new Medical.GUI.Common.FancyButton();
+            this.nextButton = new Medical.GUI.Common.FancyButton();
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).BeginInit();
             this.trackMarkMenu.SuspendLayout();
             this.barMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // nextButton
+            // stateImageList
             // 
-            this.nextButton.Image = global::Medical.Properties.Resources.Button_Last;
-            this.nextButton.Location = new System.Drawing.Point(77, 32);
-            this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(32, 32);
-            this.nextButton.TabIndex = 5;
-            this.nextButton.UseVisualStyleBackColor = true;
-            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(114, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Slow";
+            this.stateImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.stateImageList.ImageSize = new System.Drawing.Size(32, 32);
+            this.stateImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // speedTrackBar
             // 
@@ -76,36 +64,6 @@
             this.speedTrackBar.Size = new System.Drawing.Size(104, 45);
             this.speedTrackBar.TabIndex = 8;
             this.speedTrackBar.Value = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(242, 37);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(27, 13);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "Fast";
-            // 
-            // previousButton
-            // 
-            this.previousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.previousButton.Image = global::Medical.Properties.Resources.Button_First;
-            this.previousButton.Location = new System.Drawing.Point(1, 32);
-            this.previousButton.Name = "previousButton";
-            this.previousButton.Size = new System.Drawing.Size(32, 32);
-            this.previousButton.TabIndex = 4;
-            this.previousButton.UseVisualStyleBackColor = true;
-            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
-            // 
-            // pauseButton
-            // 
-            this.pauseButton.Image = global::Medical.Properties.Resources.Button_Pause;
-            this.pauseButton.Location = new System.Drawing.Point(39, 32);
-            this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(32, 32);
-            this.pauseButton.TabIndex = 3;
-            this.pauseButton.UseVisualStyleBackColor = true;
-            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
             // 
             // stateTrackBar
             // 
@@ -168,6 +126,64 @@
             this.appendStateToolStripMenuItem.Text = "Append State To End";
             this.appendStateToolStripMenuItem.Click += new System.EventHandler(this.appendStateToolStripMenuItem_Click);
             // 
+            // slowPanel
+            // 
+            this.slowPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("slowPanel.BackgroundImage")));
+            this.slowPanel.Location = new System.Drawing.Point(115, 32);
+            this.slowPanel.Name = "slowPanel";
+            this.slowPanel.Size = new System.Drawing.Size(32, 32);
+            this.slowPanel.TabIndex = 11;
+            // 
+            // fastPanel
+            // 
+            this.fastPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("fastPanel.BackgroundImage")));
+            this.fastPanel.Location = new System.Drawing.Point(242, 32);
+            this.fastPanel.Name = "fastPanel";
+            this.fastPanel.Size = new System.Drawing.Size(32, 32);
+            this.fastPanel.TabIndex = 12;
+            // 
+            // previousButton
+            // 
+            this.previousButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("previousButton.BackgroundImage")));
+            this.previousButton.ClickIndex = 2;
+            this.previousButton.HoverIndex = 1;
+            this.previousButton.ImageHeight = 32;
+            this.previousButton.ImageWidth = 32;
+            this.previousButton.Location = new System.Drawing.Point(2, 30);
+            this.previousButton.Name = "previousButton";
+            this.previousButton.NormalIndex = 0;
+            this.previousButton.Size = new System.Drawing.Size(33, 33);
+            this.previousButton.TabIndex = 13;
+            this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
+            // 
+            // pauseButton
+            // 
+            this.pauseButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pauseButton.BackgroundImage")));
+            this.pauseButton.ClickIndex = 5;
+            this.pauseButton.HoverIndex = 4;
+            this.pauseButton.ImageHeight = 32;
+            this.pauseButton.ImageWidth = 32;
+            this.pauseButton.Location = new System.Drawing.Point(36, 30);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.NormalIndex = 3;
+            this.pauseButton.Size = new System.Drawing.Size(33, 33);
+            this.pauseButton.TabIndex = 14;
+            this.pauseButton.Click += new System.EventHandler(this.pauseButton_Click);
+            // 
+            // nextButton
+            // 
+            this.nextButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("nextButton.BackgroundImage")));
+            this.nextButton.ClickIndex = 8;
+            this.nextButton.HoverIndex = 7;
+            this.nextButton.ImageHeight = 32;
+            this.nextButton.ImageWidth = 32;
+            this.nextButton.Location = new System.Drawing.Point(71, 30);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.NormalIndex = 6;
+            this.nextButton.Size = new System.Drawing.Size(33, 33);
+            this.nextButton.TabIndex = 15;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
             // MedicalStateGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,13 +191,13 @@
             this.ButtonImageIndex = 2;
             this.ButtonText = "States";
             this.ClientSize = new System.Drawing.Size(491, 65);
-            this.Controls.Add(this.stateTrackBar);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.speedTrackBar);
             this.Controls.Add(this.nextButton);
-            this.Controls.Add(this.previousButton);
             this.Controls.Add(this.pauseButton);
+            this.Controls.Add(this.fastPanel);
+            this.Controls.Add(this.slowPanel);
+            this.Controls.Add(this.previousButton);
+            this.Controls.Add(this.stateTrackBar);
+            this.Controls.Add(this.speedTrackBar);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -199,12 +215,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button pauseButton;
-        private System.Windows.Forms.Button previousButton;
-        private System.Windows.Forms.Button nextButton;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TrackBar speedTrackBar;
-        private System.Windows.Forms.Label label2;
         private TimeTrackBar stateTrackBar;
         private System.Windows.Forms.ContextMenuStrip trackMarkMenu;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
@@ -212,5 +223,11 @@
         private System.Windows.Forms.ToolStripMenuItem appendStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertStateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insertStateAtStartToolStripMenuItem;
+        private System.Windows.Forms.ImageList stateImageList;
+        private System.Windows.Forms.Panel slowPanel;
+        private System.Windows.Forms.Panel fastPanel;
+        private Medical.GUI.Common.FancyButton previousButton;
+        private Medical.GUI.Common.FancyButton pauseButton;
+        private Medical.GUI.Common.FancyButton nextButton;
     }
 }
