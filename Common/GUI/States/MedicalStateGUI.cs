@@ -67,6 +67,11 @@ namespace Medical.GUI
             startPlayback(stateController.getNumStates() - 1, 1.0);
         }
 
+        public void setToEnd()
+        {
+            CurrentBlend = stateController.getNumStates() - 1;
+        }
+
         public void pause()
         {
             if (playing)

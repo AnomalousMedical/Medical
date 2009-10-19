@@ -364,6 +364,7 @@ namespace Medical.Controller
                 muscleControl.stopPlayback();
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
+                stateGUI.setToEnd();
                 basicForm.setDistortionMode();
                 statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
                 simpleMandibleControl.AllowSceneManipulation = false;
