@@ -76,16 +76,16 @@ namespace Medical.GUI
                 ImageFormat format = ImageFormat.Jpeg;
                 switch (saveDialog.FilterIndex)
                 {
-                    case 0:
+                    case 1:
                         format = ImageFormat.Jpeg;
                         break;
-                    case 1:
+                    case 2:
                         format = ImageFormat.Png;
                         break;
-                    case 2:
+                    case 3:
                         format = ImageFormat.Tiff;
                         break;
-                    case 3:
+                    case 4:
                         format = ImageFormat.Bmp;
                         break;
                 }
