@@ -9,11 +9,29 @@ using Engine.Attributes;
 using Engine.ObjectManagement;
 using OgreWrapper;
 using OgrePlugin;
+using Logging;
 
 namespace Medical
 {
+#if DEBUG_KEYS
+    public class Fossa : Behavior
+    {
+        enum FossaEvents
+        {
+            PrintBoneLocations,
+        }
+
+        static Fossa()
+        {
+            MessageEvent printDebugInfo = new MessageEvent(FossaEvents.PrintBoneLocations);
+            printDebugInfo.addButton(KeyboardButtonCode.KC_K);
+            DefaultEvents.registerDefaultEvent(printDebugInfo);
+        }
+#else
     public class Fossa : Interface
     {
+#endif
+
         [Editable]
         private String interactiveCurveName;
 
@@ -242,6 +260,39 @@ namespace Medical
         {
             return translation.interpolateRotation(position, 0.01f, Vector3.Forward);
         }
+
+#if DEBUG_KEYS
+        public override void update(Clock clock, EventManager eventManager)
+        {
+            if (eventManager[FossaEvents.PrintBoneLocations].FirstFrameDown)
+            {
+                Log.Default.debug("\nFossa position -- {0} {1}", Owner.Name, controlPoint.Owner.Translation);
+                Log.Default.debug("\nBone position -- {0}", Owner.Name);
+                SceneNodeElement node = eminanceSimObject.getElement(eminanceNodeName) as SceneNodeElement;
+                if (node != null)
+                {
+                    Entity entity = node.getNodeObject(eminanceEntityName) as Entity;
+                    if (entity != null)
+                    {
+                        if (entity.hasSkeleton())
+                        {
+                            SkeletonInstance skeleton = entity.getSkeleton();
+                            for (ushort i = 0; i < skeleton.getNumBones(); ++i)
+                            {
+                                Bone bone = skeleton.getBone(i);
+                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
+                                Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
+                                Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
+                                //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
+                            }
+                        }
+                    }
+                }
+                Log.Default.debug("End Bone position -- {0}\n", Owner.Name);
+            }
+        }
+#endif
+
     }
 }
 /**
