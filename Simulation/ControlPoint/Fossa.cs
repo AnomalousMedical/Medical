@@ -280,7 +280,7 @@ namespace Medical
                             for (ushort i = 0; i < skeleton.getNumBones(); ++i)
                             {
                                 Bone bone = skeleton.getBone(i);
-                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + Owner.Translation;
+                                Vector3 loc = Quaternion.quatRotate(Owner.Rotation, bone.getDerivedPosition()) + eminanceSimObject.Translation;
                                 Vector3 rot = bone.getOrientation().getEuler() * 57.2957795f;
                                 Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, loc.y, loc.z, rot.x, rot.y, rot.z);
                                 //Log.Default.debug("Bone \"{0}\"{1},{2},{3},{4},{5},{6}", bone.getName(), loc.x, -loc.z, loc.y, rot.x * -1.0f, rot.y, rot.z * -1.0f);
