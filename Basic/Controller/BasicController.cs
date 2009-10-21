@@ -245,8 +245,10 @@ namespace Medical.Controller
         {
             if (options.ShowDialog(basicForm) == DialogResult.OK)
             {
+                StatusController.SetStatus("Applying options...");
                 drawingWindowController.recreateAllWindows();
                 medicalController.MainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
+                StatusController.TaskCompleted();
             }
         }
 
