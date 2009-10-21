@@ -165,5 +165,10 @@ namespace Medical.GUI
         {
             controller.cloneActiveWindow();
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.showOptions();
+        }
     }
 }

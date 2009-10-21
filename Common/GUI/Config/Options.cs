@@ -16,6 +16,8 @@ namespace Medical.GUI
         public Options()
         {
             InitializeComponent();
+            tooltip.SetToolTip(antiAliasingCombo, "This option smooths out jagged edges. However, it comes with a performance penalty so it may cause the program to run more slowly.");
+            tooltip.SetToolTip(vsyncCheck, "This option will lock the refresh of the 3d scene to the monitor refresh. This will slow down the program causing it to use less resources.");
             Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
             if (configOptions.ContainsKey("Anti aliasing"))
             {

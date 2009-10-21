@@ -31,6 +31,7 @@ namespace Medical.Controller
         private ImageRenderer imageRenderer;
         private MovementStateControl movementState;
         private ScenePicker scenePicker;
+        private Options options = null;
 
         /// <summary>
         /// Constructor.
@@ -56,6 +57,10 @@ namespace Medical.Controller
             if (advancedForm != null)
             {
                 advancedForm.Dispose();
+            }
+            if (options != null)
+            {
+                options.Dispose();
             }
             if (scenePicker != null)
             {
@@ -141,6 +146,8 @@ namespace Medical.Controller
             }
 
             createNewSequence();
+
+            options = new Options();
 
             splashScreen.stepProgress(20);
 
@@ -250,6 +257,15 @@ namespace Medical.Controller
             fourWindows.addPreset(preset);
 
             drawingWindowController.createFromPresets(fourWindows);
+        }
+
+        public void showOptions()
+        {
+            if (options.ShowDialog(advancedForm) == DialogResult.OK)
+            {
+                drawingWindowController.recreateAllWindows();
+                medicalController.MainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
+            }
         }
 
         /// <summary>
