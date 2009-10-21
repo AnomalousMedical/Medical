@@ -39,29 +39,12 @@ namespace Medical.GUI
         {
             base.OnShown(e);
             antiAliasingCombo.SelectedItem = OgreConfig.FSAA.ToString();
-            if (OgreConfig.VSync)
-            {
-                vsyncButton.Checked = true;
-            }
-            else
-            {
-                frameCapButton.Checked = true;
-            }
-            fpsUpDown.Value = MedicalConfig.EngineConfig.MaxFPS;
+            vsyncCheck.Checked = OgreConfig.VSync;
         }
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            if (vsyncButton.Checked)
-            {
-                OgreConfig.VSync = true;
-                MedicalConfig.EngineConfig.MaxFPS = 0;
-            }
-            else
-            {
-                OgreConfig.VSync = false;
-                MedicalConfig.EngineConfig.MaxFPS = (int)fpsUpDown.Value;
-            }
+            OgreConfig.VSync = vsyncCheck.Checked;
             int value = 0;
             int.TryParse(antiAliasingCombo.SelectedItem.ToString(), out value);
             OgreConfig.FSAA = value;

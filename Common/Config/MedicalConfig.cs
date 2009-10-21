@@ -14,7 +14,6 @@ namespace Medical
         private static String docRoot;
         private static String windowsFile;
         private static String camerasFile;
-        private static CameraSection cameraSection;
         private static ConfigSection program;
 
         private static ConfigFile internalSettings = null;
@@ -36,7 +35,6 @@ namespace Medical
             }
             configFile = new ConfigFile(docRoot + "/config.ini");
             configFile.loadConfigFile();
-            cameraSection = new CameraSection(configFile);
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "/Scenes";
@@ -92,14 +90,6 @@ namespace Medical
             get
             {
                 return windowsFile;
-            }
-        }
-
-        public static CameraSection CameraSection
-        {
-            get
-            {
-                return cameraSection;
             }
         }
 

@@ -19,7 +19,7 @@ namespace Medical
         {
             get
             {
-                return section.getValue("MaxFPS", 120);
+                return section.getValue("MaxFPS", 0);
             }
             set
             {
