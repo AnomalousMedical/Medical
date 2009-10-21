@@ -153,6 +153,8 @@ namespace Medical.Controller
 
             advancedForm.Show();
             advancedForm.Activate();
+            advancedForm.Invalidate(true);
+
             splashScreen.fadeAway();
             medicalController.start();
         }

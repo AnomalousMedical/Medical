@@ -172,6 +172,8 @@ namespace Medical.Controller
 
             developerForm.Show();
             developerForm.Activate();
+            developerForm.Invalidate(true);
+
             splashScreen.fadeAway();
             medicalController.start();
         }
