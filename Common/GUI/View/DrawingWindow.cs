@@ -97,6 +97,7 @@ namespace Medical
         {
             if (camera != null)
             {
+                cameraMover.setCamera(null);
                 Log.Debug("Destroying camera {0}.", name);
                 if (CameraDestroyed != null)
                 {
@@ -172,11 +173,6 @@ namespace Medical
         public void setNewPosition(Vector3 translation, Vector3 lookAt)
         {
             cameraMover.setNewPosition(translation, lookAt);
-        }
-
-        public void updateRender(bool swapBuffers)
-        {
-            camera.update(swapBuffers);
         }
 
         public Vector3 getScreenPosition(Vector3 worldPosition)
