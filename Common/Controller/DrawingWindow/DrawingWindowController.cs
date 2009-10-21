@@ -54,6 +54,23 @@ namespace Medical
             this.rendererPlugin = rendererPlugin;
         }
 
+        public DrawingWindowHost restoreFromString(String persistString)
+        {
+            String name;
+            Vector3 translation, lookAt;
+            int bgColor;
+            if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt, out bgColor))
+            {
+                DrawingWindowHost host = this.createDrawingWindowHost(name, translation, lookAt);
+                host.DrawingWindow.BackColor = System.Drawing.Color.FromArgb(bgColor);
+                return host;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void recreateAllWindows()
         {
             foreach (DrawingWindowHost host in cameras.Values)

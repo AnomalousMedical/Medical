@@ -285,15 +285,7 @@ namespace Medical.Controller
             ret = guiElements.restoreWindow(persistString);
             if (ret == null)
             {
-                String name;
-                Vector3 translation, lookAt;
-                int bgColor;
-                if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt, out bgColor))
-                {
-                    DrawingWindowHost host = drawingWindowController.createDrawingWindowHost(name, translation, lookAt);
-                    host.DrawingWindow.BackColor = System.Drawing.Color.FromArgb(bgColor);
-                    ret = host;
-                }
+                ret = drawingWindowController.restoreFromString(persistString);
             }
             return ret;
         }
