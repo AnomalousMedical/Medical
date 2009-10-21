@@ -54,6 +54,8 @@
             this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -62,6 +64,8 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainStatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 492);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(711, 22);
@@ -316,6 +320,12 @@
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
+            // mainStatusLabel
+            // 
+            this.mainStatusLabel.Name = "mainStatusLabel";
+            this.mainStatusLabel.Size = new System.Drawing.Size(39, 17);
+            this.mainStatusLabel.Text = "Ready";
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -331,6 +341,8 @@
             this.Name = "BasicForm";
             this.Text = "Articulometics Clinical";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
             this.toolStripContainer.TopToolStripPanel.PerformLayout();
             this.toolStripContainer.ResumeLayout(false);
@@ -369,5 +381,6 @@
         private System.Windows.Forms.ToolStripButton navigationButton;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
     }
 }

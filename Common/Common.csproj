@@ -116,6 +116,7 @@
     <Compile Include="Controller\Shortcuts\ShortcutController.cs" />
     <Compile Include="Controller\Shortcuts\ShortcutEventCommand.cs" />
     <Compile Include="Controller\Shortcuts\ShortcutGroup.cs" />
+    <Compile Include="Controller\StatusController.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />
     <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />

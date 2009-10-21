@@ -65,6 +65,8 @@ namespace Medical.GUI
             ShortcutEventCommand fourWindowShortcut = new ShortcutEventCommand("fourWindowShortcut", Keys.D4, true);
             fourWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(fourWindowShortcut_Execute);
             shortcutGroup.addShortcut(fourWindowShortcut);
+
+            StatusController.StatusChanged += new StatusUpdater(StatusController_StatusChanged);
         }
 
         /// <summary>
@@ -156,6 +158,7 @@ namespace Medical.GUI
             if (savePatient.SaveFile)
             {
                 controller.saveMedicalState(savePatient.Filename);
+                StatusController.SetStatus(String.Format("File saved to {0}", savePatient.Filename));
             }
         }
 
@@ -279,6 +282,12 @@ namespace Medical.GUI
         {
             base.OnDeactivate(e);
             shortcutController.resetButtons();
+        }
+
+        void StatusController_StatusChanged(string status)
+        {
+            mainStatusLabel.Text = status;
+            Application.DoEvents();
         }
     }
 }

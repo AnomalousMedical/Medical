@@ -10,6 +10,7 @@ using Engine.Renderer;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.GUI;
 using Logging;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -81,6 +82,7 @@ namespace Medical
 
         public void createFromPresets(DrawingWindowPresetSet presets)
         {
+            StatusController.SetStatus("Recreating viewports...");
             closeAllWindows();
             DrawingWindowHost camera;
             foreach(DrawingWindowPreset preset in presets.getPresetEnum())
@@ -123,6 +125,7 @@ namespace Medical
                     }
                 }
             }
+            StatusController.TaskCompleted();
         }
 
         public DrawingWindowHost createDrawingWindowHost(String name, Vector3 translation, Vector3 lookAt)

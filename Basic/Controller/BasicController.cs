@@ -280,7 +280,6 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         public void openStates(String filename)
         {
-            openDefaultScene();
             XmlTextReader textReader = null;
             try
             {
@@ -320,6 +319,7 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         private bool changeScene(String file)
         {
+            StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
             statePicker.setToDefault();
             viewMode.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
@@ -341,10 +341,12 @@ namespace Medical.Controller
                     windowPresetController.loadPresetSet();
                 }
                 statePicker.setToDefault();
+                StatusController.TaskCompleted();
                 return true;
             }
             else
             {
+                StatusController.TaskCompleted();
                 return false;
             }
         }
