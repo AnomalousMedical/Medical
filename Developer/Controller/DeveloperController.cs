@@ -41,7 +41,7 @@ namespace Medical.Controller
         /// </summary>
         public DeveloperController()
         {
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Developer");
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Articulometrics/Developer");
         }
 
         /// <summary>
