@@ -282,9 +282,12 @@ namespace Medical.Controller
             {
                 String name;
                 Vector3 translation, lookAt;
-                if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt))
+                int bgColor;
+                if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt, out bgColor))
                 {
-                    ret = drawingWindowController.createDrawingWindowHost(name, translation, lookAt);
+                    DrawingWindowHost host = drawingWindowController.createDrawingWindowHost(name, translation, lookAt);
+                    host.DrawingWindow.BackColor = System.Drawing.Color.FromArgb(bgColor);
+                    ret = host;
                 }
             }
             return ret;

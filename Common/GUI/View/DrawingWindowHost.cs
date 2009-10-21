@@ -14,7 +14,7 @@ namespace Medical
 {
     public partial class DrawingWindowHost : DockContent
     {
-        private const String PERSIST_STRING = "{0}: {1}: {2}: {3}";
+        private const String PERSIST_STRING = "{0}: {1}: {2}: {3}: {4}";
         private static readonly char[] SEP = { ':' };
 
         /// <summary>
@@ -27,14 +27,15 @@ namespace Medical
         /// <param name="translation"></param>
         /// <param name="lookAt"></param>
         /// <returns>True if the window was sucessfully restored.</returns>
-        public static bool RestoreFromString(String persistString, out String name, out Vector3 translation, out Vector3 lookAt)
+        public static bool RestoreFromString(String persistString, out String name, out Vector3 translation, out Vector3 lookAt, out int bgColor)
         {
             String[] parsed = persistString.Split(SEP);
-            if (parsed.Length == 4 && parsed[0] == typeof(DrawingWindowHost).ToString())
+            if (parsed.Length == 5 && parsed[0] == typeof(DrawingWindowHost).ToString())
             {
                 name = parsed[1].Trim();
                 translation = new Vector3(parsed[2]);
                 lookAt = new Vector3(parsed[3]);
+                bgColor = int.Parse(parsed[4]);
                 return true;
             }
             else
@@ -42,6 +43,7 @@ namespace Medical
                 name = null;
                 translation = Vector3.Zero;
                 lookAt = Vector3.Zero;
+                bgColor = 0;
                 return false;
             }
         }
@@ -168,7 +170,7 @@ namespace Medical
 
         protected override string GetPersistString()
         {
-            return String.Format(PERSIST_STRING, typeof(DrawingWindowHost).ToString(), drawingWindow.CameraName, drawingWindow.Translation, drawingWindow.LookAt);
+            return String.Format(PERSIST_STRING, typeof(DrawingWindowHost).ToString(), drawingWindow.CameraName, drawingWindow.Translation, drawingWindow.LookAt, drawingWindow.BackColor.ToArgb());
         }
     }
 }
