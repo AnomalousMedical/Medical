@@ -59,7 +59,7 @@ namespace Medical
             if (!OgreInterface.FoundOgreCore)
             {
                 renderingModeToolStripMenuItem.Visible = false;
-                showStatsToolStripMenuItem.Visible = false;
+                //showStatsToolStripMenuItem.Visible = false;
             }
             drawingWindow.SubTextChanged += new DrawingWindowEvent(drawingWindow_SubTextChanged);
         }
@@ -142,7 +142,8 @@ namespace Medical
 
         private void showStatsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            drawingWindow.showStats(true);
+            showStatsToolStripMenuItem.Checked = !showStatsToolStripMenuItem.Checked;
+            drawingWindow.showStats(showStatsToolStripMenuItem.Checked);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
