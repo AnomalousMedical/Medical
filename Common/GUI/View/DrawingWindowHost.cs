@@ -16,6 +16,7 @@ namespace Medical
     {
         private const String PERSIST_STRING = "{0}: {1}: {2}: {3}: {4}";
         private static readonly char[] SEP = { ':' };
+        private DrawingWindow drawingWindow;
 
         /// <summary>
         /// This function will attempt to restore a DrawingWindowHost from a
@@ -63,6 +64,16 @@ namespace Medical
                 renderingModeToolStripMenuItem.Visible = false;
                 //showStatsToolStripMenuItem.Visible = false;
             }
+
+            // Create the drawing window here since it breaks the designer otherwise
+            drawingWindow = new Medical.DrawingWindow();
+            drawingWindow.BackColor = System.Drawing.Color.Black;
+            drawingWindow.Dock = System.Windows.Forms.DockStyle.Fill;
+            drawingWindow.Location = new System.Drawing.Point(0, 0);
+            drawingWindow.Name = "drawingWindow";
+            drawingWindow.Size = new System.Drawing.Size(284, 264);
+            drawingWindow.TabIndex = 0;
+            Controls.Add(this.drawingWindow);
             drawingWindow.SubTextChanged += new DrawingWindowEvent(drawingWindow_SubTextChanged);
         }
 

@@ -37,7 +37,6 @@
             this.wireframeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.drawingWindow = new Medical.DrawingWindow();
             this.tabContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,21 +97,11 @@
             this.pointToolStripMenuItem.Text = "Point";
             this.pointToolStripMenuItem.Click += new System.EventHandler(this.pointToolStripMenuItem_Click);
             // 
-            // drawingWindow
-            // 
-            this.drawingWindow.BackColor = System.Drawing.Color.Black;
-            this.drawingWindow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawingWindow.Location = new System.Drawing.Point(0, 0);
-            this.drawingWindow.Name = "drawingWindow";
-            this.drawingWindow.Size = new System.Drawing.Size(284, 264);
-            this.drawingWindow.TabIndex = 0;
-            // 
             // DrawingWindowHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Controls.Add(this.drawingWindow);
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
@@ -127,7 +116,6 @@
 
         #endregion
 
-        private DrawingWindow drawingWindow;
         private System.Windows.Forms.ContextMenuStrip tabContextMenu;
         private System.Windows.Forms.ToolStripMenuItem changeBackgroundColorToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialog;
