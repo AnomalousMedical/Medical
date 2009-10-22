@@ -52,9 +52,10 @@
             this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBackgroundColorToolStripMenuItem,
             this.showStatsToolStripMenuItem});
+            this.windowToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-            this.windowToolStripMenuItem.Text = "Viewport";
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.windowToolStripMenuItem.Text = "Window";
             // 
             // changeBackgroundColorToolStripMenuItem
             // 
