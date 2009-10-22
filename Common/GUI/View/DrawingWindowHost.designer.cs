@@ -28,26 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tabContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.changeBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.renderingModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.solidToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wireframeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pointToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.tabContextMenu.SuspendLayout();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeBackgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showStatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabContextMenu
+            // menuStrip1
             // 
-            this.tabContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.windowToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(284, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "windowMenuStrip";
+            this.menuStrip1.Visible = false;
+            // 
+            // windowToolStripMenuItem
+            // 
+            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.changeBackgroundColorToolStripMenuItem,
-            this.renderingModeToolStripMenuItem,
             this.showStatsToolStripMenuItem});
-            this.tabContextMenu.Name = "contextMenuStrip1";
-            this.tabContextMenu.Size = new System.Drawing.Size(215, 70);
+            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+            this.windowToolStripMenuItem.Text = "Viewport";
             // 
             // changeBackgroundColorToolStripMenuItem
             // 
@@ -63,66 +70,32 @@
             this.showStatsToolStripMenuItem.Text = "Show Stats";
             this.showStatsToolStripMenuItem.Click += new System.EventHandler(this.showStatsToolStripMenuItem_Click);
             // 
-            // renderingModeToolStripMenuItem
-            // 
-            this.renderingModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.solidToolStripMenuItem,
-            this.wireframeToolStripMenuItem,
-            this.pointToolStripMenuItem});
-            this.renderingModeToolStripMenuItem.Name = "renderingModeToolStripMenuItem";
-            this.renderingModeToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-            this.renderingModeToolStripMenuItem.Text = "Rendering Mode";
-            // 
-            // solidToolStripMenuItem
-            // 
-            this.solidToolStripMenuItem.Name = "solidToolStripMenuItem";
-            this.solidToolStripMenuItem.ShortcutKeyDisplayString = "F6";
-            this.solidToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.solidToolStripMenuItem.Text = "Solid";
-            this.solidToolStripMenuItem.Click += new System.EventHandler(this.solidToolStripMenuItem_Click);
-            // 
-            // wireframeToolStripMenuItem
-            // 
-            this.wireframeToolStripMenuItem.Name = "wireframeToolStripMenuItem";
-            this.wireframeToolStripMenuItem.ShortcutKeyDisplayString = "F7";
-            this.wireframeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.wireframeToolStripMenuItem.Text = "Wireframe";
-            this.wireframeToolStripMenuItem.Click += new System.EventHandler(this.wireframeToolStripMenuItem_Click);
-            // 
-            // pointToolStripMenuItem
-            // 
-            this.pointToolStripMenuItem.Name = "pointToolStripMenuItem";
-            this.pointToolStripMenuItem.ShortcutKeyDisplayString = "F8";
-            this.pointToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.pointToolStripMenuItem.Text = "Point";
-            this.pointToolStripMenuItem.Click += new System.EventHandler(this.pointToolStripMenuItem_Click);
-            // 
             // DrawingWindowHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 264);
+            this.Controls.Add(this.menuStrip1);
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "DrawingWindowHost";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
-            this.TabPageContextMenuStrip = this.tabContextMenu;
             this.Text = "SplitViewHost";
-            this.tabContextMenu.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip tabContextMenu;
-        private System.Windows.Forms.ToolStripMenuItem changeBackgroundColorToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialog;
-        private System.Windows.Forms.ToolStripMenuItem renderingModeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem solidToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wireframeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pointToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeBackgroundColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showStatsToolStripMenuItem;
     }
 }

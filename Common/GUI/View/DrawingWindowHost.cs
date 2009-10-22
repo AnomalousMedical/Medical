@@ -61,7 +61,7 @@ namespace Medical
             this.controller = controller;
             if (!OgreInterface.FoundOgreCore)
             {
-                renderingModeToolStripMenuItem.Visible = false;
+//                renderingModeToolStripMenuItem.Visible = false;
                 //showStatsToolStripMenuItem.Visible = false;
             }
 
@@ -162,21 +162,21 @@ namespace Medical
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (renderingModeToolStripMenuItem.Visible)
-            {
-                if (e.KeyCode == Keys.F6)
-                {
-                    drawingWindow.setRenderingMode(Engine.RenderingMode.Solid);
-                }
-                if (e.KeyCode == Keys.F7)
-                {
-                    drawingWindow.setRenderingMode(Engine.RenderingMode.Wireframe);
-                }
-                if (e.KeyCode == Keys.F8)
-                {
-                    drawingWindow.setRenderingMode(Engine.RenderingMode.Points);
-                }
-            }
+            //if (renderingModeToolStripMenuItem.Visible)
+            //{
+            //    if (e.KeyCode == Keys.F6)
+            //    {
+            //        drawingWindow.setRenderingMode(Engine.RenderingMode.Solid);
+            //    }
+            //    if (e.KeyCode == Keys.F7)
+            //    {
+            //        drawingWindow.setRenderingMode(Engine.RenderingMode.Wireframe);
+            //    }
+            //    if (e.KeyCode == Keys.F8)
+            //    {
+            //        drawingWindow.setRenderingMode(Engine.RenderingMode.Points);
+            //    }
+            //}
         }
 
         protected override string GetPersistString()
