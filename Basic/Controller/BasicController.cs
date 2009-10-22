@@ -128,6 +128,7 @@ namespace Medical.Controller
 
             PictureControl pictureControl = new PictureControl();
             pictureControl.initialize(imageRenderer, drawingWindowController);
+            pictureControl.createShortcuts(shortcutController);
             viewMode.addGUIElement(pictureControl);
 
             stateGUI = new MedicalStateGUI();

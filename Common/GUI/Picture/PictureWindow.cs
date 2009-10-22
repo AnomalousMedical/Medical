@@ -17,7 +17,6 @@ namespace Medical.GUI
     public partial class PictureWindow : DockContent
     {
         private static SaveFileDialog saveDialog = new SaveFileDialog();
-        private bool activateParentOnClose = false;
 
         static PictureWindow()
         {
@@ -102,7 +101,6 @@ namespace Medical.GUI
             {
                 try
                 {
-                    activateParentOnClose = true;
                     Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Text));
                 }
                 catch (Exception ex)
@@ -115,14 +113,11 @@ namespace Medical.GUI
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            //Hack for when the explorer window is opened to keep the main form from moving to the background.
-            if (activateParentOnClose)
+            //Prevent the main window from going into the background.
+            Form topLevel = DockPanel.TopLevelControl as Form;
+            if (topLevel != null)
             {
-                Form topLevel = DockPanel.TopLevelControl as Form;
-                if (topLevel != null)
-                {
-                    topLevel.Activate();
-                }
+                topLevel.Activate();
             }
         }
     }

@@ -11,6 +11,7 @@ using Engine;
 using OgreWrapper;
 using OgrePlugin;
 using System.Drawing.Imaging;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -28,6 +29,20 @@ namespace Medical.GUI
         {
             this.imageRenderer = imageRenderer;
             this.drawingWindowController = drawingWindowController;
+        }
+
+        public void createShortcuts(ShortcutController shortcuts)
+        {
+            ShortcutGroup group = shortcuts.createOrRetrieveGroup("RenderingShortcuts");
+
+            ShortcutEventCommand render = new ShortcutEventCommand("Render", Keys.F11, false);
+            render.Execute += new ShortcutEventCommand.ExecuteEvent(render_Execute);
+            group.addShortcut(render);
+        }
+
+        private void render_Execute(ShortcutEventCommand shortcut)
+        {
+            renderSingleButton_Click(null, null);
         }
 
         private void renderSingleButton_Click(object sender, EventArgs e)
