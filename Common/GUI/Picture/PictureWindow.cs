@@ -17,6 +17,7 @@ namespace Medical.GUI
     public partial class PictureWindow : DockContent
     {
         private static SaveFileDialog saveDialog = new SaveFileDialog();
+        private bool activateParentOnClose = false;
 
         static PictureWindow()
         {
@@ -70,7 +71,7 @@ namespace Medical.GUI
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = saveDialog.ShowDialog(this);
+            DialogResult result = saveDialog.ShowDialog(DockPanel.TopLevelControl);
             if (result == DialogResult.OK)
             {
                 ImageFormat format = ImageFormat.Jpeg;
@@ -101,11 +102,26 @@ namespace Medical.GUI
             {
                 try
                 {
+                    activateParentOnClose = true;
                     Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Text));
                 }
                 catch (Exception ex)
                 {
                     Log.Default.sendMessage("Exception occured when opening explorer.exe:\n{0}.", LogLevel.Error, "Medical", ex.Message);
+                }
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            //Hack for when the explorer window is opened to keep the main form from moving to the background.
+            if (activateParentOnClose)
+            {
+                Form topLevel = DockPanel.TopLevelControl as Form;
+                if (topLevel != null)
+                {
+                    topLevel.Activate();
                 }
             }
         }
