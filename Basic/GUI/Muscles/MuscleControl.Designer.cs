@@ -31,10 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MuscleControl));
             this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
             this.playbackPanel = new System.Windows.Forms.Panel();
+            this.stopButton = new Medical.GUI.Common.FancyButton();
             this.playButton = new Medical.GUI.Common.FancyButton();
             this.nowPlayingLabel = new System.Windows.Forms.Label();
             this.playbackTrackBar = new Medical.GUI.TimeTrackBar();
-            this.stopButton = new Medical.GUI.Common.FancyButton();
+            this.highlightTeeth = new System.Windows.Forms.CheckBox();
             this.playbackPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@
             // 
             // playbackPanel
             // 
+            this.playbackPanel.Controls.Add(this.highlightTeeth);
             this.playbackPanel.Controls.Add(this.stopButton);
             this.playbackPanel.Controls.Add(this.playButton);
             this.playbackPanel.Controls.Add(this.nowPlayingLabel);
@@ -57,6 +59,20 @@
             this.playbackPanel.Name = "playbackPanel";
             this.playbackPanel.Size = new System.Drawing.Size(236, 107);
             this.playbackPanel.TabIndex = 14;
+            // 
+            // stopButton
+            // 
+            this.stopButton.BackgroundImage = global::Medical.Properties.Resources.PlaybackButtons;
+            this.stopButton.ClickIndex = 5;
+            this.stopButton.HoverIndex = 4;
+            this.stopButton.ImageHeight = 32;
+            this.stopButton.ImageWidth = 32;
+            this.stopButton.Location = new System.Drawing.Point(39, 70);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.NormalIndex = 3;
+            this.stopButton.Size = new System.Drawing.Size(32, 32);
+            this.stopButton.TabIndex = 6;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
             // 
             // playButton
             // 
@@ -97,19 +113,16 @@
             this.playbackTrackBar.TabIndex = 1;
             this.playbackTrackBar.TickMenu = null;
             // 
-            // stopButton
+            // highlightTeeth
             // 
-            this.stopButton.BackgroundImage = global::Medical.Properties.Resources.PlaybackButtons;
-            this.stopButton.ClickIndex = 5;
-            this.stopButton.HoverIndex = 4;
-            this.stopButton.ImageHeight = 32;
-            this.stopButton.ImageWidth = 32;
-            this.stopButton.Location = new System.Drawing.Point(39, 70);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.NormalIndex = 3;
-            this.stopButton.Size = new System.Drawing.Size(32, 32);
-            this.stopButton.TabIndex = 6;
-            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            this.highlightTeeth.AutoSize = true;
+            this.highlightTeeth.Location = new System.Drawing.Point(78, 78);
+            this.highlightTeeth.Name = "highlightTeeth";
+            this.highlightTeeth.Size = new System.Drawing.Size(144, 17);
+            this.highlightTeeth.TabIndex = 7;
+            this.highlightTeeth.Text = "Highlight Teeth Collisions";
+            this.highlightTeeth.UseVisualStyleBackColor = true;
+            this.highlightTeeth.CheckedChanged += new System.EventHandler(this.highlightTeeth_CheckedChanged);
             // 
             // MuscleControl
             // 
@@ -142,6 +155,7 @@
         private System.Windows.Forms.Label nowPlayingLabel;
         private Medical.GUI.Common.FancyButton playButton;
         private Medical.GUI.Common.FancyButton stopButton;
+        private System.Windows.Forms.CheckBox highlightTeeth;
 
     }
 }

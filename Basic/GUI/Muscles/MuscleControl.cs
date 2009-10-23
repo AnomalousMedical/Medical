@@ -75,6 +75,7 @@ namespace Medical.GUI
 
         protected override void sceneLoaded(SimScene scene)
         {
+            highlightTeeth.Checked = TeethController.HighlightContacts;
             SimSubScene defaultScene = scene.getDefaultSubScene();
             if (defaultScene != null)
             {
@@ -129,6 +130,11 @@ namespace Medical.GUI
                 playbackTrackBar.CurrentTime = 0;
                 time = 0.0f;
             }
+        }
+
+        private void highlightTeeth_CheckedChanged(object sender, EventArgs e)
+        {
+            TeethController.HighlightContacts = highlightTeeth.Checked;
         }
     }
 }
