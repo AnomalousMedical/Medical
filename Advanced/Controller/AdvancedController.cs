@@ -109,6 +109,9 @@ namespace Medical.Controller
             savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, null);
             guiElements.addGUIElement(savedCameraGUI);
 
+            MeasurementGUI measurement = new MeasurementGUI();
+            guiElements.addGUIElement(measurement);
+
             scenePicker = new ScenePicker();
             scenePicker.initialize();
 

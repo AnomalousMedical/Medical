@@ -181,6 +181,18 @@
       <DependentUpon>LoadingDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Loading\ProgressDialog.cs" />
+    <Compile Include="GUI\Measurement\MeasurementGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Measurement\MeasurementGUI.Designer.cs">
+      <DependentUpon>MeasurementGUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Measurement\MeasurementView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Measurement\MeasurementView.Designer.cs">
+      <DependentUpon>MeasurementView.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MedicalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -562,6 +574,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Config\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Measurement\MeasurementGUI.resx">
+      <DependentUpon>MeasurementGUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Measurement\MeasurementView.resx">
+      <DependentUpon>MeasurementView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ScenePicker\ScenePicker.resx">

@@ -7,9 +7,12 @@ using Engine.Editing;
 using Engine.ObjectManagement;
 using Engine.Platform;
 using Logging;
+using Engine.Attributes;
 
 namespace Medical
 {
+    public delegate void MeasurementEvent(Measurement src);
+
     public class Measurement : Behavior
     {
         #if DEBUG_KEYS
@@ -34,7 +37,20 @@ namespace Medical
         [Editable]
         String measurementName;
 
+        [Editable]
+        Color color = Color.Blue;
+
         SimObject deltaSimObject;
+
+        [DoNotSave]
+        Vector3 lastLength = Vector3.ScaleIdentity * float.MinValue;
+
+        [DoNotSave]
+        float currentDelta;
+
+        [DoNotCopy]
+        [DoNotSave]
+        public event MeasurementEvent MeasurementChanged;
 
         protected override void link()
         {
@@ -43,13 +59,25 @@ namespace Medical
             {
                 blacklist("Cannot find delta sim object {0}.", deltaSimObjectName);
             }
+            MeasurementController.addMesurement(this);
+        }
+
+        protected override void destroy()
+        {
+            MeasurementController.removeMeasurement(this);
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            if (eventManager[MeasurementEvents.Print].FirstFrameDown)
+            Vector3 diff = deltaSimObject.Translation - Owner.Translation;
+            if (diff != lastLength)
             {
-                Log.Debug("{0} - {1}", MeasurementName, CurrentDelta);
+                lastLength = diff;
+                currentDelta = diff.length() * unitsToMM;
+                if (MeasurementChanged != null)
+                {
+                    MeasurementChanged.Invoke(this);
+                }
             }
         }
 
@@ -66,7 +94,7 @@ namespace Medical
         {
             get
             {
-                return (deltaSimObject.Translation - Owner.Translation).length() * unitsToMM;
+                return currentDelta;
             }
         }
 
@@ -80,6 +108,11 @@ namespace Medical
             {
                 measurementName = value;
             }
+        }
+
+        internal void draw(MeasurementDrawer drawer)
+        {
+            drawer.drawLine(color, Owner.Translation, deltaSimObject.Translation);
         }
     }
 }

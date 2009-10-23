@@ -103,6 +103,7 @@
     <Compile Include="ControlPoint\FossaState.cs" />
     <Compile Include="Measurement\Measurement.cs" />
     <Compile Include="Measurement\MeasurementController.cs" />
+    <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
     <Compile Include="Muscles\MovementSequence.cs" />
     <Compile Include="Muscles\MovementSequenceState.cs" />

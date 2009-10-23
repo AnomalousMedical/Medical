@@ -27,12 +27,10 @@ namespace Medical
             }
             translationOffset = Owner.Translation - targetSimObject.Translation;
             translationOffset = Quaternion.quatRotate(targetSimObject.Rotation.inverse(), translationOffset);
-            Log.Debug("{0} {1}", targetSimObjectName, translationOffset);
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            Log.Debug(Quaternion.quatRotate(targetSimObject.Rotation, translationOffset).ToString());
             updateTranslation(targetSimObject.Translation + Quaternion.quatRotate(targetSimObject.Rotation, translationOffset));
         }
     }
