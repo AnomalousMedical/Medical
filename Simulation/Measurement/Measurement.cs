@@ -40,6 +40,9 @@ namespace Medical
         [Editable]
         Color color = Color.Blue;
 
+        [Editable]
+        Vector3 measurementScale = Vector3.ScaleIdentity;
+
         SimObject deltaSimObject;
 
         [DoNotSave]
@@ -69,7 +72,7 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            Vector3 diff = deltaSimObject.Translation - Owner.Translation;
+            Vector3 diff = (deltaSimObject.Translation - Owner.Translation) * measurementScale;
             if (diff != lastLength)
             {
                 lastLength = diff;
