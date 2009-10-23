@@ -81,15 +81,6 @@ namespace Medical
             }
         }
 
-        public override void drawDebugInfo(Engine.Renderer.DebugDrawingSurface debugDrawing)
-        {
-            base.drawDebugInfo(debugDrawing);
-            debugDrawing.begin("Measurement", Engine.Renderer.DrawingType.LineList);
-            debugDrawing.setColor(new Color(1.0f, 0.0f, 1.0f));
-            debugDrawing.drawLine(Owner.Translation, deltaSimObject.Translation);
-            debugDrawing.end();
-        }
-
         public float CurrentDelta
         {
             get
