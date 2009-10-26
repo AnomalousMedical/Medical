@@ -28,28 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.adaptButton = new System.Windows.Forms.CheckBox();
             this.undoButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
+            this.adaptButton = new System.Windows.Forms.Button();
+            this.stopButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // adaptButton
-            // 
-            this.adaptButton.Appearance = System.Windows.Forms.Appearance.Button;
-            this.adaptButton.AutoSize = true;
-            this.adaptButton.Location = new System.Drawing.Point(5, 5);
-            this.adaptButton.Name = "adaptButton";
-            this.adaptButton.Size = new System.Drawing.Size(45, 23);
-            this.adaptButton.TabIndex = 0;
-            this.adaptButton.Text = "Adapt";
-            this.adaptButton.UseVisualStyleBackColor = true;
-            this.adaptButton.CheckedChanged += new System.EventHandler(this.adaptButton_CheckedChanged);
             // 
             // undoButton
             // 
-            this.undoButton.Location = new System.Drawing.Point(56, 5);
+            this.undoButton.Location = new System.Drawing.Point(5, 34);
             this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(45, 23);
+            this.undoButton.Size = new System.Drawing.Size(54, 23);
             this.undoButton.TabIndex = 1;
             this.undoButton.Text = "Undo";
             this.undoButton.UseVisualStyleBackColor = true;
@@ -57,7 +46,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(5, 35);
+            this.resetButton.Location = new System.Drawing.Point(65, 33);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(96, 23);
             this.resetButton.TabIndex = 2;
@@ -65,26 +54,48 @@
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
+            // adaptButton
+            // 
+            this.adaptButton.Location = new System.Drawing.Point(4, 4);
+            this.adaptButton.Name = "adaptButton";
+            this.adaptButton.Size = new System.Drawing.Size(75, 23);
+            this.adaptButton.TabIndex = 3;
+            this.adaptButton.Text = "Adapt";
+            this.adaptButton.UseVisualStyleBackColor = true;
+            this.adaptButton.Click += new System.EventHandler(this.adaptButton_Click);
+            // 
+            // stopButton
+            // 
+            this.stopButton.Enabled = false;
+            this.stopButton.Location = new System.Drawing.Point(86, 4);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 4;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
+            // 
             // TeethAdaptationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.stopButton);
+            this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.undoButton);
-            this.Controls.Add(this.adaptButton);
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
             this.NavigationState = "Occlusion Anterior";
             this.Size = new System.Drawing.Size(318, 286);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.CheckBox adaptButton;
         private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.Button adaptButton;
+        private System.Windows.Forms.Button stopButton;
     }
 }

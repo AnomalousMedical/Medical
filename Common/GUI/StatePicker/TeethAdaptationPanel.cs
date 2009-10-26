@@ -19,18 +19,6 @@ namespace Medical.GUI
             this.Text = "Teeth Adaptation";
         }
 
-        private void adaptButton_CheckedChanged(object sender, EventArgs e)
-        {
-            if (adaptButton.Checked)
-            {
-                TeethController.adaptAllTeeth(true);
-            }
-            else
-            {
-                TeethController.adaptAllTeeth(false);
-            }
-        }
-
         private void undoButton_Click(object sender, EventArgs e)
         {
             TeethState undo = parentPicker.StateBlender.UndoState.Teeth;
@@ -81,15 +69,39 @@ namespace Medical.GUI
 
         protected override void onPanelClosing()
         {
-            if (adaptButton.Checked)
+            if (AdaptMode)
             {
-                adaptButton.Checked = false;
+                AdaptMode = false;
             }
         }
 
         protected override void statePickerSet(StatePickerController controller)
         {
             parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.AdaptationIcon);
+        }
+
+        private void adaptButton_Click(object sender, EventArgs e)
+        {
+            AdaptMode = true;
+        }
+
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            AdaptMode = false;
+        }
+
+        private bool AdaptMode
+        {
+            get
+            {
+                return stopButton.Enabled;
+            }
+            set
+            {
+                TeethController.adaptAllTeeth(value);
+                stopButton.Enabled = value;
+                adaptButton.Enabled = !value;
+            }
         }
     }
 }
