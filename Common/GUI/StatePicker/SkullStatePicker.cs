@@ -40,6 +40,9 @@ namespace Medical.GUI
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
+            statePicker.addStatePanel(new BottomTeethRemovalPanel());
+            statePicker.addStatePanel(new TopTeethRemovalPanel());
+
             leftGrowthPanel = new PresetStatePanel();
             leftGrowthPanel.Text = "Left Condyle Growth";
             leftGrowthPanel.NavigationState = "Left Lateral";
@@ -88,8 +91,6 @@ namespace Medical.GUI
             rightFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(rightFossaPanel);
 
-            statePicker.addStatePanel(new BottomTeethRemovalPanel());
-            statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.addStatePanel(new TeethAdaptationPanel());
             statePicker.setToDefault();
         }
