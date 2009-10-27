@@ -12,6 +12,7 @@ namespace Medical
         private DiscState discState;
         private TeethState teethState;
         private FossaState fossaState;
+        private MedicalStateNotes notes;
 
         public MedicalState(String name)
         {
@@ -20,6 +21,7 @@ namespace Medical
             discState = new DiscState();
             teethState = new TeethState();
             fossaState = new FossaState();
+            notes = new MedicalStateNotes();
         }
 
         public void blend(float percent, MedicalState target)
@@ -78,6 +80,7 @@ namespace Medical
         private const string DISC_STATE = "DiscState";
         private const string TEETH_STATE = "TeethState";
         private const string FOSSA_STATE = "FossaState";
+        private const string NOTES = "Notes";
 
         protected MedicalState(LoadInfo info)
         {
@@ -85,6 +88,14 @@ namespace Medical
             discState = info.GetValue<DiscState>(DISC_STATE);
             teethState = info.GetValue<TeethState>(TEETH_STATE);
             fossaState = info.GetValue<FossaState>(FOSSA_STATE);
+            if (info.hasValue(NOTES))
+            {
+                notes = info.GetValue<MedicalStateNotes>(NOTES);
+            }
+            else
+            {
+                notes = new MedicalStateNotes();
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -93,6 +104,7 @@ namespace Medical
             info.AddValue(DISC_STATE, discState);
             info.AddValue(TEETH_STATE, teethState);
             info.AddValue(FOSSA_STATE, fossaState);
+            info.AddValue(NOTES, notes);
         }
 
         #endregion
