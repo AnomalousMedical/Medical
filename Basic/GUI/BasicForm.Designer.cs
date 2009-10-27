@@ -44,7 +44,6 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.distortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addDistortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -231,19 +230,9 @@
             // 
             // distortionToolStripMenuItem
             // 
-            this.distortionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addDistortionToolStripMenuItem});
             this.distortionToolStripMenuItem.Name = "distortionToolStripMenuItem";
             this.distortionToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.distortionToolStripMenuItem.Text = "Distortion";
-            // 
-            // addDistortionToolStripMenuItem
-            // 
-            this.addDistortionToolStripMenuItem.Name = "addDistortionToolStripMenuItem";
-            this.addDistortionToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.addDistortionToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-            this.addDistortionToolStripMenuItem.Text = "Add Distortion";
-            this.addDistortionToolStripMenuItem.Click += new System.EventHandler(this.addDistortionToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -366,7 +355,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem distortionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addDistortionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem layoutToolStripMenuItem;

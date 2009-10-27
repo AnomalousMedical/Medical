@@ -16,7 +16,7 @@ namespace Medical
 
         public DistortionController()
         {
-            
+            Visible = false;
         }
 
         public void addDistortionWizard(DistortionWizard wizard)
@@ -44,9 +44,18 @@ namespace Medical
         public void startWizard(String name, DrawingWindow displayWindow)
         {
             wizards[name].startWizard(displayWindow);
+            Visible = true;
         }
 
         public bool Visible { get; set; }
+
+        public IEnumerable<DistortionWizard> Wizards
+        {
+            get
+            {
+                return wizards.Values;
+            }
+        }
 
         internal void stateCreated(MedicalState state)
         {
@@ -58,6 +67,7 @@ namespace Medical
 
         internal void wizardFinished(DistortionWizard wizard)
         {
+            Visible = false;
             if (Finished != null)
             {
                 Finished.Invoke();

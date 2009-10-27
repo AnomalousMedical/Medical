@@ -161,6 +161,7 @@ namespace Medical.Controller
             distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
             mriWizard = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
             distortionController.addDistortionWizard(mriWizard);
+            basicForm.createDistortionMenu(distortionController.Wizards);
 
             splashScreen.stepProgress(70);
 

@@ -46,10 +46,6 @@ namespace Medical.GUI
             saveShortcut.Execute += saveShortcut_Execute;
             shortcutGroup.addShortcut(saveShortcut);
 
-            ShortcutEventCommand distortionShortcut = new ShortcutEventCommand("AddDistortion", Keys.D, true);
-            distortionShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(distortionShortcut_Execute);
-            shortcutGroup.addShortcut(distortionShortcut);
-
             ShortcutEventCommand oneWindowShortcut = new ShortcutEventCommand("oneWindowShortcut", Keys.D1, true);
             oneWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(oneWindowShortcut_Execute);
             shortcutGroup.addShortcut(oneWindowShortcut);
@@ -108,6 +104,25 @@ namespace Medical.GUI
             newToolStripMenuItem.Visible = false;
             openToolStripMenuItem.Visible = false;
             saveToolStripMenuItem.Visible = false;
+        }
+
+        public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
+        {
+            foreach (DistortionWizard wizard in wizards)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem(wizard.Name);
+                item.Click += distortionWizardItem_Click;
+                distortionToolStripMenuItem.DropDownItems.Add(item);
+            }
+        }
+
+        void distortionWizardItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            if (item != null)
+            {
+                controller.showStatePicker(item.Text);
+            }
         }
 
         public ToolStripContainer ToolStrip
@@ -185,16 +200,6 @@ namespace Medical.GUI
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void addDistortionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.showStatePicker("MRI Wizard");
-        }
-
-        void distortionShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            addDistortionToolStripMenuItem_Click(null, null);
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
