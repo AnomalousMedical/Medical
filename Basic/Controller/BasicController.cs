@@ -89,7 +89,7 @@ namespace Medical.Controller
         /// </summary>
         public void go()
         {
-            ProgressDialog splashScreen = new ProgressDialog(Resources.articulometricsclinic);
+            ProgressDialog splashScreen = new ProgressDialog(Resources.ArticulometricsSplash);
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
 

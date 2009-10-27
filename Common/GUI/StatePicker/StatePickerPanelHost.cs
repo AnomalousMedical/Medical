@@ -11,9 +11,9 @@ namespace Medical.GUI
 {
     public partial class StatePickerPanelHost : GUIElement
     {
-        private StatePickerController controller;
+        private StatePickerWizard controller;
 
-        public StatePickerPanelHost(StatePickerController controller)
+        public StatePickerPanelHost(StatePickerWizard controller)
         {
             InitializeComponent();
             this.controller = controller;

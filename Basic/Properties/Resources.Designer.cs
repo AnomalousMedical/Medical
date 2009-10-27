@@ -67,6 +67,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ArticulometricsSplash {
+            get {
+                object obj = ResourceManager.GetObject("ArticulometricsSplash", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clenchedmuscle {
             get {
                 object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);

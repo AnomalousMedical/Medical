@@ -11,9 +11,9 @@ namespace Medical.GUI
 {
     public partial class StatePickerModeList : GUIElement
     {
-        private StatePickerController stateController;
+        private StatePickerWizard stateController;
 
-        public StatePickerModeList(ImageList imageList, StatePickerController stateController)
+        public StatePickerModeList(ImageList imageList, StatePickerWizard stateController)
         {
             InitializeComponent();
             navigatorList.SelectedIndexChanged += new EventHandler(navigatorList_SelectedIndexChanged);

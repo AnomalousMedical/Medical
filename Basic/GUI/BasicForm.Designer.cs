@@ -32,6 +32,7 @@
             WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BasicForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.mainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.navigationButton = new System.Windows.Forms.ToolStripButton();
@@ -54,7 +55,6 @@
             this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1.SuspendLayout();
             this.toolStripContainer.TopToolStripPanel.SuspendLayout();
             this.toolStripContainer.SuspendLayout();
@@ -71,6 +71,12 @@
             this.statusStrip1.Size = new System.Drawing.Size(711, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // mainStatusLabel
+            // 
+            this.mainStatusLabel.Name = "mainStatusLabel";
+            this.mainStatusLabel.Size = new System.Drawing.Size(39, 17);
+            this.mainStatusLabel.Text = "Ready";
             // 
             // toolStripContainer
             // 
@@ -319,12 +325,6 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // mainStatusLabel
-            // 
-            this.mainStatusLabel.Name = "mainStatusLabel";
-            this.mainStatusLabel.Size = new System.Drawing.Size(39, 17);
-            this.mainStatusLabel.Text = "Ready";
             // 
             // BasicForm
             // 

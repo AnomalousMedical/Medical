@@ -75,7 +75,7 @@ namespace Medical.GUI
             }
         }
 
-        protected override void statePickerSet(StatePickerController controller)
+        protected override void statePickerSet(StatePickerWizard controller)
         {
             parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.AdaptationIcon);
         }

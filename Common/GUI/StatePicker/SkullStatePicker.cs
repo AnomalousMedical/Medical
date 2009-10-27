@@ -18,7 +18,7 @@ namespace Medical.GUI
         public event StatePickerFinished Finished;
 
         private TemporaryStateBlender temporaryStateBlender;
-        private StatePickerController statePicker;
+        private StatePickerWizard statePicker;
 
         private PresetStatePanel leftGrowthPanel;
         private PresetStatePanel rightGrowthPanel;
@@ -36,7 +36,7 @@ namespace Medical.GUI
         public SkullStatePicker(DockPanel dockPanel, ToolStripContainer toolStrip, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-            statePicker = new StatePickerController(new GUIElementController(dockPanel, toolStrip, medicalController), temporaryStateBlender, navigationController, layerController);
+            statePicker = new StatePickerWizard(new GUIElementController(dockPanel, toolStrip, medicalController), temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 

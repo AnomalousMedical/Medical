@@ -11,7 +11,7 @@ namespace Medical.GUI
     public delegate void MedicalStateCreated(MedicalState state);
     public delegate void StatePickerFinished();
 
-    public class StatePickerController : IDisposable
+    public class StatePickerWizard : IDisposable
     {
         public event MedicalStateCreated StateCreated;
         public event StatePickerFinished Finished;
@@ -31,7 +31,7 @@ namespace Medical.GUI
 
         private ImageList pickerImageList;
 
-        public StatePickerController(GUIElementController guiElementController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
+        public StatePickerWizard(GUIElementController guiElementController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
         {
             pickerImageList = new ImageList();
             pickerImageList.ColorDepth = ColorDepth.Depth32Bit;
