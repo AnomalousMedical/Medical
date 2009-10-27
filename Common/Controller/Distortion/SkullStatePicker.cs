@@ -10,13 +10,10 @@ using Logging;
 using Engine.Saving.XMLSaver;
 using Medical.GUI;
 
-namespace Medical.GUI
+namespace Medical
 {
-    public class SkullStatePicker : IDisposable
+    public class SkullStatePicker : DistortionWizard
     {
-        public event MedicalStateCreated StateCreated;
-        public event StatePickerFinished Finished;
-
         private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
 
@@ -95,7 +92,7 @@ namespace Medical.GUI
             statePicker.setToDefault();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             if (statePicker != null)
             {
@@ -103,7 +100,7 @@ namespace Medical.GUI
             }
         }
 
-        public void updateStatePicker(String rootDirectory)
+        public override void updateStatePicker(String rootDirectory)
         {
             if (rootDirectory != lastRootDirectory)
             {
@@ -151,12 +148,12 @@ namespace Medical.GUI
             }
         }
 
-        public void setToDefault()
+        public override void setToDefault()
         {
             statePicker.setToDefault();
         }
 
-        public void startWizard(DrawingWindow window)
+        public override void startWizard(DrawingWindow window)
         {
             statePicker.startWizard(window);
             statePicker.show();
@@ -172,6 +169,14 @@ namespace Medical.GUI
             get
             {
                 return statePicker.Visible;
+            }
+        }
+
+        public override String Name
+        {
+            get
+            {
+                return "MRI Wizard";
             }
         }
 
@@ -199,18 +204,12 @@ namespace Medical.GUI
 
         void statePicker_StateCreated(MedicalState state)
         {
-            if (StateCreated != null)
-            {
-                StateCreated.Invoke(state);
-            }
+            alertStateCreated(state);
         }
 
         void statePicker_Finished()
         {
-            if (Finished != null)
-            {
-                Finished.Invoke();
-            }
+            alertWizardFinished();
         }
     }
 }

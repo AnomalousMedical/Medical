@@ -34,7 +34,8 @@ namespace Medical.Controller
         private ScenePicker scenePicker;
         private LayerController layerController;
         private MuscleControl muscleControl;
-        private SkullStatePicker statePicker;
+        private DistortionController distortionController;
+        private SkullStatePicker mriWizard;
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
@@ -70,9 +71,9 @@ namespace Medical.Controller
             {
                 options.Dispose();
             }
-            if (statePicker != null)
+            if (mriWizard != null)
             {
-                statePicker.Dispose();
+                mriWizard.Dispose();
             }
             if (medicalController != null)
             {
@@ -113,11 +114,8 @@ namespace Medical.Controller
 
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            //Watermark watermark = new TiledWatermark("Source" + "Watermark", "Watermark", 150, 60);
-            //Watermark watermark = new TextWatermark("Source" + "Watermark", "Piper Clinic Copyright 2009", 32);
             watermark = new SideLogoWatermark("Source" + "Watermark", "PiperClinic", 150, 60);
             watermark.createOverlays();
-            //Watermark watermark = new CenteredWatermark("Source" + "Watermark", "PiperClinicAlpha", 1.0f, 0.4f);
             watermarkController = new WatermarkController(watermark, drawingWindowController);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
@@ -158,9 +156,11 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
 
             //Configure distort mode
-            statePicker = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
-            statePicker.Finished += new StatePickerFinished(statePicker_Finished);
-            statePicker.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
+            distortionController = new DistortionController();
+            distortionController.Finished += new StatePickerFinished(statePicker_Finished);
+            distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
+            mriWizard = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
+            distortionController.addDistortionWizard(mriWizard);
 
             splashScreen.stepProgress(70);
 
@@ -185,7 +185,7 @@ namespace Medical.Controller
 
         void medicalController_PumpMessage(ref Message msg)
         {
-            if (!statePicker.Visible)
+            if (!distortionController.Visible)
             {
                 shortcutController.processShortcuts(ref msg);
             }
@@ -197,7 +197,7 @@ namespace Medical.Controller
         public void stop()
         {
             //Only save windows if the state picker is not active.
-            if (!statePicker.Visible)
+            if (!distortionController.Visible)
             {
                 viewMode.saveWindowFile(MedicalConfig.WindowsFile);
             }
@@ -323,7 +323,7 @@ namespace Medical.Controller
         private bool changeScene(String file)
         {
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
-            statePicker.setToDefault();
+            distortionController.setToDefault();
             viewMode.alertGUISceneUnloading();
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
@@ -340,10 +340,10 @@ namespace Medical.Controller
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
                     savedCameraGUI.createShortcuts(shortcutController);
-                    statePicker.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
+                    distortionController.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
                 }
-                statePicker.setToDefault();
+                distortionController.setToDefault();
                 StatusController.TaskCompleted();
                 return true;
             }
@@ -354,9 +354,9 @@ namespace Medical.Controller
             }
         }
 
-        internal void showStatePicker()
+        internal void showStatePicker(String pickerName)
         {
-            if (!statePicker.Visible)
+            if (!distortionController.Visible)
             {
                 basicForm.SuspendLayout();
                 if (stateController.getNumStates() == 0)
@@ -368,7 +368,7 @@ namespace Medical.Controller
                 viewMode.EnableToolbars = false;
                 stateGUI.setToEnd();
                 basicForm.setDistortionMode();
-                statePicker.startWizard(drawingWindowController.getActiveWindow().DrawingWindow);
+                distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
                 simpleMandibleControl.AllowSceneManipulation = false;
                 basicForm.ResumeLayout();
             }

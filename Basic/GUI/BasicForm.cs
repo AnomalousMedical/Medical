@@ -189,7 +189,7 @@ namespace Medical.GUI
 
         private void addDistortionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controller.showStatePicker();
+            controller.showStatePicker("MRI Wizard");
         }
 
         void distortionShortcut_Execute(ShortcutEventCommand shortcut)

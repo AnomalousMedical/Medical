@@ -91,6 +91,7 @@
     <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetController.cs" />
@@ -249,6 +250,8 @@
     <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\Distortion\DistortionController.cs" />
+    <Compile Include="Controller\Distortion\DistortionWizard.cs" />
     <Compile Include="GUI\StatePicker\FossaStatePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -261,7 +264,6 @@
     <Compile Include="GUI\StatePicker\PresetStatePanel.Designer.cs">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\SkullStatePicker.cs" />
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
       <SubType>Form</SubType>
     </Compile>
