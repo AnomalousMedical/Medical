@@ -74,6 +74,14 @@ namespace Medical
             }
         }
 
+        public MedicalStateNotes Notes
+        {
+            get
+            {
+                return notes;
+            }
+        }
+
         #region Saveable Members
 
         private const string BONE_MANIPULATOR_STATE = "BoneManipulatorState";

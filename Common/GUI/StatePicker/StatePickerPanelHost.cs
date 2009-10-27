@@ -22,6 +22,10 @@ namespace Medical.GUI
         public void showPanel(StatePickerPanel panel)
         {
             panelHost.Controls.Add(panel);
+            if (panel.AutoSize == true)
+            {
+                panel.Dock = DockStyle.Fill;
+            }
         }
 
         public void hidePanel(StatePickerPanel panel)

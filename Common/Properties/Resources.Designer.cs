@@ -137,6 +137,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap NotesIcon {
+            get {
+                object obj = ResourceManager.GetObject("NotesIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap rightflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);

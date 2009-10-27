@@ -258,6 +258,12 @@
     <Compile Include="GUI\StatePicker\FossaStatePanel.Designer.cs">
       <DependentUpon>FossaStatePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\NotesPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\NotesPanel.Designer.cs">
+      <DependentUpon>NotesPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\PresetStatePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -598,6 +604,10 @@
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\NotesPanel.resx">
+      <DependentUpon>NotesPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\StatePickerModeList.resx">
       <DependentUpon>StatePickerModeList.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -645,6 +655,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\StateButtons.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NotesIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
