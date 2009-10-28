@@ -110,9 +110,9 @@ namespace Medical.GUI
 
         protected override void OnResize(EventArgs e)
         {
-            fileList.Columns[0].Width = (int)(fileList.Width * 0.35f);
-            fileList.Columns[1].Width = (int)(fileList.Width * 0.35f);
-            fileList.Columns[2].Width = (int)(fileList.Width * 0.3f);
+            fileList.Columns[0].Width = -1;
+            fileList.Columns[1].Width = -1;
+            fileList.Columns[2].Width = -1;
             base.OnResize(e);
         }
     }
