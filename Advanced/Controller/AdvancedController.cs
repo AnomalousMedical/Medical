@@ -13,6 +13,7 @@ using System.Xml;
 using Engine.Saving.XMLSaver;
 using Medical.Muscles;
 using Medical.Properties;
+using Engine.ObjectManagement;
 
 namespace Medical.Controller
 {
@@ -32,6 +33,8 @@ namespace Medical.Controller
         private MovementStateControl movementState;
         private ScenePicker scenePicker;
         private Options options = null;
+
+        private NavigationController navigationController;
 
         /// <summary>
         /// Constructor.
@@ -87,6 +90,8 @@ namespace Medical.Controller
             drawingWindowController = new DrawingWindowController();
             drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
+            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
 
             guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
@@ -106,7 +111,7 @@ namespace Medical.Controller
             guiElements.addGUIElement(stateGUI);
 
             SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, null);
+            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
             guiElements.addGUIElement(savedCameraGUI);
 
             MeasurementGUI measurement = new MeasurementGUI();
@@ -390,6 +395,17 @@ namespace Medical.Controller
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+
+                SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+                if (defaultScene != null)
+                {
+                    SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+                    //String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
+                    //layerController.loadLayerStateSet(layersFile);
+                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
+                    navigationController.loadNavigationSet(cameraFile);
+                }
+
                 return true;
             }
             else
