@@ -23,8 +23,9 @@ namespace Medical
         private OverlayRect pressedCoords;
         private OverlayRect boundsRect;
         private PanelOverlayElement button;
+        NavigationEvents shortcutEvent;
 
-        public NavigationButton(String name, String material, OverlayRect boundsRect, OverlayRect normalCoords, OverlayRect hoverCoords, OverlayRect pressedCoords)
+        public NavigationButton(String name, NavigationEvents shortcutEvent, String material, OverlayRect boundsRect, OverlayRect normalCoords, OverlayRect hoverCoords, OverlayRect pressedCoords)
         {
             button = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name) as PanelOverlayElement;
             button.setUV(normalCoords.X0, normalCoords.Y0, normalCoords.X1, normalCoords.Y1);
@@ -34,6 +35,7 @@ namespace Medical
             this.hoverCoords = hoverCoords;
             this.pressedCoords = pressedCoords;
             this.BoundsRect = boundsRect;
+            this.shortcutEvent = shortcutEvent;
         }
 
         public void Dispose()
@@ -70,7 +72,7 @@ namespace Medical
             {
                 if (leftButtonClicked)
                 {
-                    button.setUV(pressedCoords.X0, pressedCoords.Y0, pressedCoords.X1, pressedCoords.Y1);
+                    setPressedLook();
                     clickingOn = true;
                 }
                 else
@@ -80,9 +82,19 @@ namespace Medical
             }
             else
             {
-                button.setUV(normalCoords.X0, normalCoords.Y0, normalCoords.X1, normalCoords.Y1);
+                setNormalLook();
             }
             return clickingOn;
+        }
+
+        public void setPressedLook()
+        {
+            button.setUV(pressedCoords.X0, pressedCoords.Y0, pressedCoords.X1, pressedCoords.Y1);
+        }
+
+        public void setNormalLook()
+        {
+            button.setUV(normalCoords.X0, normalCoords.Y0, normalCoords.X1, normalCoords.Y1);
         }
 
         internal void fireClickEvent()
@@ -164,6 +176,14 @@ namespace Medical
                 boundsRect = value;
                 button.setDimensions(boundsRect.X1, boundsRect.Y1);
                 button.setPosition(boundsRect.X0, boundsRect.Y0);
+            }
+        }
+
+        public NavigationEvents ShortcutEvent
+        {
+            get
+            {
+                return shortcutEvent;
             }
         }
 
