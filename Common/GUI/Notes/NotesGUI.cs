@@ -6,29 +6,68 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Medical.Controller;
+using Logging;
 
 namespace Medical.GUI
 {
     public partial class NotesGUI : GUIElement
     {
-        MedicalStateController stateController;
+        private MedicalStateController stateController;
+        private ShortcutController shortcutController;
 
-        public NotesGUI(MedicalStateController stateController)
+        public NotesGUI(MedicalStateController stateController, ShortcutController shortcutController)
         {
             InitializeComponent();
+            this.shortcutController = shortcutController;
             this.stateController = stateController;
             stateController.StateChanged += stateController_StateChanged;
+            stateController.StatesCleared += stateController_StatesCleared;
+            notes.LostFocus += notes_LostFocus;
+            notes.GotFocus += notes_GotFocus;
         }
 
-        void stateController_StateChanged(MedicalState state)
+        private void notes_GotFocus(object sender, EventArgs e)
         {
-            notes.Rtf = state.Notes.Notes;
+            shortcutController.Enabled = false;
+        }
+
+        private void notes_LostFocus(object sender, EventArgs e)
+        {
+            shortcutController.Enabled = true;
+        }
+
+        private void stateController_StateChanged(MedicalState state)
+        {
+            if (notes.Enabled == false)
+            {
+                notes.Enabled = true;
+                datePicker.Enabled = true;
+            }
+            try
+            {
+                notes.Rtf = state.Notes.Notes;
+            }
+            catch (ArgumentException e)
+            {
+                Log.Warning("Error setting notes text.\n{0}", e.Message);
+                notes.Text = state.Notes.Notes;
+            }
             procedureType.Text = state.Notes.DataSource;
             DateTime date = state.Notes.ProcedureDate;
             if (date > datePicker.MinDate && date < datePicker.MaxDate)
             {
                 datePicker.Value = date;
             }
+        }
+
+        private void stateController_StatesCleared(MedicalStateController controller)
+        {
+            notes.Rtf = "";
+            datePicker.Value = DateTime.Today;
+            procedureType.Text = "";
+            notes.Enabled = false;
+            datePicker.Enabled = false;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

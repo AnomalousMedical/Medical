@@ -16,6 +16,7 @@ namespace Medical.Controller
         private List<ShortcutGroup> groups = new List<ShortcutGroup>();
         private bool controlPressed = false;
         private Keys lastKey = Keys.None;
+        private bool enabled = true;
 
         public ShortcutController()
         {
@@ -38,33 +39,36 @@ namespace Medical.Controller
 
         public void processShortcuts(ref Message msg)
         {
-            if (msg.Msg == WM_KEYDOWN)
+            if (enabled)
             {
-                Keys pressedKey = (Keys)msg.WParam;
-                if (pressedKey == Keys.ControlKey)
+                if (msg.Msg == WM_KEYDOWN)
                 {
-                    controlPressed = true;
-                }
-                else if(pressedKey != lastKey)
-                {
-                    lastKey = pressedKey;
-                    bool controlPressed = this.controlPressed;
-                    foreach (ShortcutGroup group in groups)
+                    Keys pressedKey = (Keys)msg.WParam;
+                    if (pressedKey == Keys.ControlKey)
                     {
-                        group.process(pressedKey, controlPressed); 
+                        controlPressed = true;
+                    }
+                    else if (pressedKey != lastKey)
+                    {
+                        lastKey = pressedKey;
+                        bool controlPressed = this.controlPressed;
+                        foreach (ShortcutGroup group in groups)
+                        {
+                            group.process(pressedKey, controlPressed);
+                        }
                     }
                 }
-            }
-            else if (msg.Msg == WM_KEYUP)
-            {
-                Keys pressedKey = (Keys)msg.WParam;
-                if (pressedKey == Keys.ControlKey)
+                else if (msg.Msg == WM_KEYUP)
                 {
-                    controlPressed = false;
-                }
-                else if(pressedKey == lastKey)
-                {
-                    lastKey = Keys.None;
+                    Keys pressedKey = (Keys)msg.WParam;
+                    if (pressedKey == Keys.ControlKey)
+                    {
+                        controlPressed = false;
+                    }
+                    else if (pressedKey == lastKey)
+                    {
+                        lastKey = Keys.None;
+                    }
                 }
             }
         }
@@ -76,6 +80,22 @@ namespace Medical.Controller
         {
             controlPressed = false;
             lastKey = Keys.None;
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                enabled = value;
+                if (enabled)
+                {
+                    resetButtons();
+                }
+            }
         }
     }
 }
