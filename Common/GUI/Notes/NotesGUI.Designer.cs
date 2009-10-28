@@ -44,7 +44,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 87);
+            this.label3.Location = new System.Drawing.Point(3, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 4;
@@ -62,9 +62,9 @@
             // procedureType
             // 
             this.procedureType.Enabled = false;
-            this.procedureType.Location = new System.Drawing.Point(9, 60);
+            this.procedureType.Location = new System.Drawing.Point(6, 59);
             this.procedureType.Name = "procedureType";
-            this.procedureType.Size = new System.Drawing.Size(197, 20);
+            this.procedureType.Size = new System.Drawing.Size(200, 20);
             this.procedureType.TabIndex = 3;
             // 
             // datePicker
@@ -99,7 +99,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 43);
+            this.label2.Location = new System.Drawing.Point(3, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 13);
             this.label2.TabIndex = 2;
