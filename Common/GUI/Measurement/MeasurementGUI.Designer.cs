@@ -66,7 +66,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ButtonImageIndex = 0;
+            this.ButtonImageIndex = 11;
             this.ButtonText = "Measurement";
             this.ClientSize = new System.Drawing.Size(222, 439);
             this.Controls.Add(this.measurementPanel);

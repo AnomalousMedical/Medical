@@ -8,14 +8,17 @@ namespace Medical
     public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStatesCleared(MedicalStateController controller);
+    public delegate void MedicalStateChanged(MedicalState state);
 
     public class MedicalStateController
     {
         public event MedicalStateAdded StateAdded;
         public event MedicalStateRemoved StateRemoved;
         public event MedicalStatesCleared StatesCleared;
+        public event MedicalStateChanged StateChanged;
 
         private List<MedicalState> states = new List<MedicalState>();
+        private int currentState = -1;
 
         public MedicalState createAndAddState(String name)
         {
@@ -76,6 +79,7 @@ namespace Medical
 
         public void clearStates()
         {
+            currentState = -1;
             states.Clear();
             if (StatesCleared != null)
             {
@@ -108,6 +112,14 @@ namespace Medical
             {
                 states[startState].blend(1.0f, states[startState]);
             }
+            if (startState != currentState)
+            {
+                currentState = startState;
+                if (StateChanged != null)
+                {
+                    StateChanged.Invoke(states[startState]);
+                }
+            }
         }
 
         public SavedMedicalStates getSavedState(String currentSceneName)
@@ -121,6 +133,18 @@ namespace Medical
             foreach (MedicalState state in states.getStates())
             {
                 addState(state);
+            }
+        }
+
+        public MedicalState CurrentState
+        {
+            get
+            {
+                if (currentState != -1)
+                {
+                    return states[currentState];
+                }
+                return null;
             }
         }
     }

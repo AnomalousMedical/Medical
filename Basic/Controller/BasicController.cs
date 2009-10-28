@@ -152,6 +152,8 @@ namespace Medical.Controller
             simpleMandibleControl = new SimpleMandibleControl();
             viewMode.addGUIElement(simpleMandibleControl);
 
+            viewMode.addGUIElement(new NotesGUI(stateController));
+
             viewMode.setupShortcuts(shortcutController.createOrRetrieveGroup("ViewMode"));
             viewMode.EnableToolbars = true;
 
