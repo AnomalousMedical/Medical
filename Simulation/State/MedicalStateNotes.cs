@@ -14,7 +14,7 @@ namespace Medical
 
         public MedicalStateNotes()
         {
-
+            procedureDate = DateTime.Now;
         }
 
         public DateTime ProcedureDate

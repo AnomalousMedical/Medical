@@ -364,7 +364,11 @@ namespace Medical.Controller
                 basicForm.SuspendLayout();
                 if (stateController.getNumStates() == 0)
                 {
-                    stateController.createAndAddState("Normal");
+                    MedicalState normalState = stateController.createAndAddState("Normal");
+                    normalState.Notes.Notes = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17 Normal\par
+}";
+                    normalState.Notes.DataSource = "Articulometrics";
                 }
                 muscleControl.stopPlayback();
                 viewMode.hideWindows();

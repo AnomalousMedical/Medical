@@ -23,6 +23,12 @@ namespace Medical.GUI
         void stateController_StateChanged(MedicalState state)
         {
             notes.Rtf = state.Notes.Notes;
+            procedureType.Text = state.Notes.DataSource;
+            DateTime date = state.Notes.ProcedureDate;
+            if (date > datePicker.MinDate && date < datePicker.MaxDate)
+            {
+                datePicker.Value = date;
+            }
         }
 
         private void saveButton_Click(object sender, EventArgs e)
