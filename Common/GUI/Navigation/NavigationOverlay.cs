@@ -17,6 +17,9 @@ namespace Medical
         Up,
         Down,
         None,
+        ZoomIn,
+        ZoomOut,
+        ChangeFocus,
     }
 
     class NavigationOverlay : IDisposable, UpdateListener
@@ -61,6 +64,18 @@ namespace Medical
             MessageEvent rightButton = new MessageEvent(NavigationEvents.Right);
             rightButton.addButton(KeyboardButtonCode.KC_RIGHT);
             DefaultEvents.registerDefaultEvent(rightButton);
+
+            MessageEvent zoomIn = new MessageEvent(NavigationEvents.ZoomIn);
+            zoomIn.addButton(KeyboardButtonCode.KC_EQUALS);
+            DefaultEvents.registerDefaultEvent(zoomIn);
+
+            MessageEvent zoomOut = new MessageEvent(NavigationEvents.ZoomOut);
+            zoomOut.addButton(KeyboardButtonCode.KC_MINUS);
+            DefaultEvents.registerDefaultEvent(zoomOut);
+
+            MessageEvent changeFocus = new MessageEvent(NavigationEvents.ChangeFocus);
+            changeFocus.addButton(KeyboardButtonCode.KC_TAB);
+            DefaultEvents.registerDefaultEvent(changeFocus);
         }
 
         static bool resourcesLoaded = false;
@@ -97,12 +112,12 @@ namespace Medical
 
         public static NavigationButton CreateZoomInButton(String name)
         {
-            return new NavigationButton(name, NavigationEvents.None, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(.6f, 0.0f, .8f, 0.2f), new OverlayRect(.6f, 0.2f, .8f, 0.4f), new OverlayRect(.6f, 0.4f, .8f, 0.6f));
+            return new NavigationButton(name, NavigationEvents.ZoomIn, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(.6f, 0.0f, .8f, 0.2f), new OverlayRect(.6f, 0.2f, .8f, 0.4f), new OverlayRect(.6f, 0.4f, .8f, 0.6f));
         }
 
         public static NavigationButton CreateZoomOutButton(String name)
         {
-            return new NavigationButton(name, NavigationEvents.None, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.8f, .2f, 1.0f), new OverlayRect(.2f, 0.8f, .4f, 1.0f), new OverlayRect(.4f, 0.8f, .6f, 1.0f));
+            return new NavigationButton(name, NavigationEvents.ZoomOut, "NavigationArrow", new OverlayRect(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT), new OverlayRect(0f, 0.8f, .2f, 1.0f), new OverlayRect(.2f, 0.8f, .4f, 1.0f), new OverlayRect(.4f, 0.8f, .6f, 1.0f));
         }
 
         public NavigationOverlay(String name, DrawingWindow window, NavigationController navigationController)
@@ -311,25 +326,32 @@ namespace Medical
                             }
                             break;
                         }
-                        else if (button.ShortcutEvent != NavigationEvents.None && (currentButton == null || button == currentButton))
+                        else if (window.Focused && button.ShortcutEvent != NavigationEvents.None && (currentButton == null || button == currentButton))
                         {
-                            if (eventManager[button.ShortcutEvent].FirstFrameDown)
+                            if (currentButton == null && eventManager[button.ShortcutEvent].Down)
                             {
                                 currentButton = button;
                                 button.setPressedLook();
                                 break;
                             }
-                            else if (eventManager[button.ShortcutEvent].Down)
+                            else if (eventManager[NavigationEvents.ChangeFocus].FirstFrameUp)
                             {
-                                button.setPressedLook();
-                                break;
-                            }
-                            else if (eventManager[button.ShortcutEvent].FirstFrameUp && button == currentButton)
-                            {
-                                button.setNormalLook();
-                                button.fireClickEvent();
                                 currentButton = null;
-                                break;
+                            }
+                            else if (button == currentButton)
+                            {
+                                if (eventManager[button.ShortcutEvent].Down)
+                                {
+                                    button.setPressedLook();
+                                    break;
+                                }
+                                else if (eventManager[button.ShortcutEvent].FirstFrameUp)
+                                {
+                                    button.setNormalLook();
+                                    button.fireClickEvent();
+                                    currentButton = null;
+                                    break;
+                                }
                             }
                         }
                     }
