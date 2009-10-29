@@ -33,6 +33,7 @@ namespace Medical.Controller
         private MovementStateControl movementState;
         private ScenePicker scenePicker = new ScenePicker();
         private LayerController layerController;
+        private Options options = null;
 
         private NavigationController navigationController;
 
@@ -60,6 +61,10 @@ namespace Medical.Controller
             if (developerForm != null)
             {
                 developerForm.Dispose();
+            }
+            if (options != null)
+            {
+                options.Dispose();
             }
             if (scenePicker != null)
             {
@@ -156,6 +161,8 @@ namespace Medical.Controller
 
             NavigationStateSelector navEditor = new NavigationStateSelector(navigationController, drawingWindowController);
             guiElements.addGUIElement(navEditor);
+
+            options = new Options();
 
             splashScreen.stepProgress(70);
 
@@ -377,6 +384,15 @@ namespace Medical.Controller
             {
                 writer.Formatting = Formatting.Indented;
                 saver.saveObject(movementState.Sequence, writer);
+            }
+        }
+
+        public void showOptions()
+        {
+            if (options.ShowDialog(developerForm) == DialogResult.OK)
+            {
+                drawingWindowController.recreateAllWindows();
+                medicalController.MainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
             }
         }
 

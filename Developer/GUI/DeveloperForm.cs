@@ -160,5 +160,10 @@ namespace Medical.GUI
                 controller.saveSequence(sequenceFileTracker.getCurrentFile());
             }
         }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            controller.showOptions();
+        }
     }
 }

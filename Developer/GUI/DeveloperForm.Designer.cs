@@ -69,6 +69,8 @@
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -158,6 +160,7 @@
             this.fileToolStripMenuItem,
             this.distortionToolStripMenuItem,
             this.sequenceToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.windowToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -255,28 +258,28 @@
             // newSequence
             // 
             this.newSequence.Name = "newSequence";
-            this.newSequence.Size = new System.Drawing.Size(123, 22);
+            this.newSequence.Size = new System.Drawing.Size(152, 22);
             this.newSequence.Text = "New";
             this.newSequence.Click += new System.EventHandler(this.newSequence_Click);
             // 
             // openSequence
             // 
             this.openSequence.Name = "openSequence";
-            this.openSequence.Size = new System.Drawing.Size(123, 22);
+            this.openSequence.Size = new System.Drawing.Size(152, 22);
             this.openSequence.Text = "Open...";
             this.openSequence.Click += new System.EventHandler(this.openSequence_Click);
             // 
             // saveSequence
             // 
             this.saveSequence.Name = "saveSequence";
-            this.saveSequence.Size = new System.Drawing.Size(123, 22);
+            this.saveSequence.Size = new System.Drawing.Size(152, 22);
             this.saveSequence.Text = "Save";
             this.saveSequence.Click += new System.EventHandler(this.saveSequence_Click);
             // 
             // saveSequenceAs
             // 
             this.saveSequenceAs.Name = "saveSequenceAs";
-            this.saveSequenceAs.Size = new System.Drawing.Size(123, 22);
+            this.saveSequenceAs.Size = new System.Drawing.Size(152, 22);
             this.saveSequenceAs.Text = "Save As...";
             this.saveSequenceAs.Click += new System.EventHandler(this.saveSequenceAs_Click);
             // 
@@ -326,6 +329,21 @@
             this.fourWindowToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.fourWindowToolStripMenuItem.Text = "Four Windows";
             this.fourWindowToolStripMenuItem.Click += new System.EventHandler(this.fourWindowToolStripMenuItem_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // DeveloperForm
             // 
@@ -378,6 +396,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveSequenceAs;
         private System.Windows.Forms.ToolStripMenuItem newDistortion;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 
     }
 }
