@@ -41,6 +41,7 @@ namespace Medical.GUI
             {
                 buttonCombo.Items.Add(fieldInfo.Name);
             }
+            buttonCombo.SelectedIndex = 0;
 
             foreach (FieldInfo fieldInfo in typeof(KeyCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
@@ -241,7 +242,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addAdjacentState(state, NavigationButtons.Down);
+                    currentState.addAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()));
                 }
             }
         }
@@ -253,7 +254,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addTwoWayAdjacentState(state, NavigationButtons.Down);
+                    currentState.addTwoWayAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()));
                 }
             }
         }
