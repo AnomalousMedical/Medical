@@ -14,8 +14,15 @@ namespace Medical
 
         public void addState(NavigationState state)
         {
-            navigationStates.Add(state.Name, state);
-            stateOrder.Add(state);
+            if(!navigationStates.ContainsKey(state.Name))
+            {
+                navigationStates.Add(state.Name, state);
+                stateOrder.Add(state);
+            }
+            else
+            {
+                Log.Warning("Attempted to add duplicate navigation state {0}.", state.Name);
+            }
         }
 
         public void removeState(NavigationState state)

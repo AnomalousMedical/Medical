@@ -216,6 +216,11 @@ namespace Medical.GUI
             }
         }
 
+        private void createButton_Click(object sender, EventArgs e)
+        {
+            createStateToolStripMenuItem_Click(sender, e);
+        }
+
         private bool validateStateName(String input, out String newPrompt)
         {
             if (navController.getState(input) != null)

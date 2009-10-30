@@ -72,6 +72,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.navigationStateView = new DragNDrop.DragAndDropListView();
             this.State = new System.Windows.Forms.ColumnHeader();
+            this.createButton = new System.Windows.Forms.Button();
             this.createStateMenu.SuspendLayout();
             this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
@@ -313,12 +314,12 @@
             this.singleStateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.destroyStateToolStripMenuItem});
             this.singleStateMenu.Name = "singleStateMenu";
-            this.singleStateMenu.Size = new System.Drawing.Size(153, 48);
+            this.singleStateMenu.Size = new System.Drawing.Size(144, 26);
             // 
             // destroyStateToolStripMenuItem
             // 
             this.destroyStateToolStripMenuItem.Name = "destroyStateToolStripMenuItem";
-            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.destroyStateToolStripMenuItem.Text = "Destroy State";
             this.destroyStateToolStripMenuItem.Click += new System.EventHandler(this.destroyStateToolStripMenuItem_Click);
             // 
@@ -427,6 +428,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.createButton);
             this.panel1.Controls.Add(this.stateUpdate);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label2);
@@ -460,6 +462,7 @@
             this.navigationStateView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.State});
             this.navigationStateView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.navigationStateView.HideSelection = false;
             this.navigationStateView.LineColor = System.Drawing.Color.Red;
             this.navigationStateView.Location = new System.Drawing.Point(0, 24);
             this.navigationStateView.Name = "navigationStateView";
@@ -472,6 +475,16 @@
             // 
             this.State.Text = "State";
             this.State.Width = 0;
+            // 
+            // createButton
+            // 
+            this.createButton.Location = new System.Drawing.Point(167, 3);
+            this.createButton.Name = "createButton";
+            this.createButton.Size = new System.Drawing.Size(75, 23);
+            this.createButton.TabIndex = 33;
+            this.createButton.Text = "Create";
+            this.createButton.UseVisualStyleBackColor = true;
+            this.createButton.Click += new System.EventHandler(this.createButton_Click);
             // 
             // NavigationStateSelector
             // 
@@ -550,6 +563,7 @@
         private System.Windows.Forms.Panel panel1;
         private DragNDrop.DragAndDropListView navigationStateView;
         private System.Windows.Forms.ColumnHeader State;
+        private System.Windows.Forms.Button createButton;
 
 
     }
