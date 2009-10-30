@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Reflection;
 using Engine;
+using DragNDrop;
 
 namespace Medical.GUI
 {
@@ -37,6 +38,8 @@ namespace Medical.GUI
             linkView.SelectedIndexChanged += new EventHandler(linkView_SelectedIndexChanged);
             navigationStateView.ItemActivate += new EventHandler(navigationStateView_ItemActivate);
 
+            navigationStateView.DragDrop += new DragEventHandler(navigationStateView_DragDrop);
+
             foreach (FieldInfo fieldInfo in typeof(NavigationButtons).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
                 buttonCombo.Items.Add(fieldInfo.Name);
@@ -46,6 +49,15 @@ namespace Medical.GUI
             foreach (FieldInfo fieldInfo in typeof(KeyCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
                 keyCombo.Items.Add(fieldInfo.Name);
+            }
+        }
+
+        void navigationStateView_DragDrop(object sender, DragEventArgs e)
+        {
+            DragItemData data = (DragItemData) e.Data.GetData(typeof(DragItemData).ToString());
+            foreach (ListViewItem item in data.DragItems)
+            {
+                navController.NavigationSet.moveState(item.Tag as NavigationState, item.Index);
             }
         }
 

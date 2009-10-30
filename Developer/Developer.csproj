@@ -80,6 +80,9 @@
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.Designer.cs">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\DragAndDropListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.cs">
       <SubType>Form</SubType>
     </Compile>

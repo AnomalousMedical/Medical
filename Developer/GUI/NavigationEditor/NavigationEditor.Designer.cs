@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.navigationStateView = new System.Windows.Forms.ListView();
-            this.nameColumn = new System.Windows.Forms.ColumnHeader();
             this.createStateMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,6 +59,7 @@
             this.destroyStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,8 +69,9 @@
             this.lookAtGoButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.keyCombo = new System.Windows.Forms.ComboBox();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.navigationStateView = new DragNDrop.DragAndDropListView();
+            this.State = new System.Windows.Forms.ColumnHeader();
             this.createStateMenu.SuspendLayout();
             this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
@@ -80,25 +80,6 @@
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // navigationStateView
-            // 
-            this.navigationStateView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.nameColumn});
-            this.navigationStateView.ContextMenuStrip = this.createStateMenu;
-            this.navigationStateView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.navigationStateView.HideSelection = false;
-            this.navigationStateView.Location = new System.Drawing.Point(0, 24);
-            this.navigationStateView.Name = "navigationStateView";
-            this.navigationStateView.Size = new System.Drawing.Size(274, 300);
-            this.navigationStateView.TabIndex = 9;
-            this.navigationStateView.UseCompatibleStateImageBehavior = false;
-            this.navigationStateView.View = System.Windows.Forms.View.Details;
-            // 
-            // nameColumn
-            // 
-            this.nameColumn.Text = "State";
-            this.nameColumn.Width = 270;
             // 
             // createStateMenu
             // 
@@ -332,12 +313,12 @@
             this.singleStateMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.destroyStateToolStripMenuItem});
             this.singleStateMenu.Name = "singleStateMenu";
-            this.singleStateMenu.Size = new System.Drawing.Size(144, 26);
+            this.singleStateMenu.Size = new System.Drawing.Size(153, 48);
             // 
             // destroyStateToolStripMenuItem
             // 
             this.destroyStateToolStripMenuItem.Name = "destroyStateToolStripMenuItem";
-            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.destroyStateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.destroyStateToolStripMenuItem.Text = "Destroy State";
             this.destroyStateToolStripMenuItem.Click += new System.EventHandler(this.destroyStateToolStripMenuItem_Click);
             // 
@@ -363,24 +344,31 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -437,13 +425,6 @@
             this.keyCombo.Size = new System.Drawing.Size(166, 21);
             this.keyCombo.TabIndex = 32;
             // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.stateUpdate);
@@ -471,6 +452,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(274, 387);
             this.panel1.TabIndex = 33;
+            // 
+            // navigationStateView
+            // 
+            this.navigationStateView.AllowDrop = true;
+            this.navigationStateView.AllowReorder = true;
+            this.navigationStateView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.State});
+            this.navigationStateView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.navigationStateView.LineColor = System.Drawing.Color.Red;
+            this.navigationStateView.Location = new System.Drawing.Point(0, 24);
+            this.navigationStateView.Name = "navigationStateView";
+            this.navigationStateView.Size = new System.Drawing.Size(274, 300);
+            this.navigationStateView.TabIndex = 34;
+            this.navigationStateView.UseCompatibleStateImageBehavior = false;
+            this.navigationStateView.View = System.Windows.Forms.View.Details;
+            // 
+            // State
+            // 
+            this.State.Text = "State";
+            this.State.Width = 0;
             // 
             // NavigationStateSelector
             // 
@@ -506,8 +507,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView navigationStateView;
-        private System.Windows.Forms.ColumnHeader nameColumn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -549,6 +548,8 @@
         private System.Windows.Forms.ComboBox keyCombo;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
+        private DragNDrop.DragAndDropListView navigationStateView;
+        private System.Windows.Forms.ColumnHeader State;
 
 
     }
