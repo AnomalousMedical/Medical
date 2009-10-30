@@ -259,7 +259,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()));
+                    currentState.addAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value);
                 }
             }
         }
@@ -271,7 +271,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addTwoWayAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()));
+                    currentState.addTwoWayAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value);
                 }
             }
         }

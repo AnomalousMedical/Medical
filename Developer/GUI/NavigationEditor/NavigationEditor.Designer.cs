@@ -70,9 +70,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.keyCombo = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.createButton = new System.Windows.Forms.Button();
             this.navigationStateView = new DragNDrop.DragAndDropListView();
             this.State = new System.Windows.Forms.ColumnHeader();
-            this.createButton = new System.Windows.Forms.Button();
             this.createStateMenu.SuspendLayout();
             this.linkMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radiusUpDown)).BeginInit();
@@ -257,6 +257,11 @@
             this.radiusUpDown.Name = "radiusUpDown";
             this.radiusUpDown.Size = new System.Drawing.Size(120, 20);
             this.radiusUpDown.TabIndex = 25;
+            this.radiusUpDown.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // linkUpdate
             // 
@@ -455,6 +460,16 @@
             this.panel1.Size = new System.Drawing.Size(274, 387);
             this.panel1.TabIndex = 33;
             // 
+            // createButton
+            // 
+            this.createButton.Location = new System.Drawing.Point(167, 3);
+            this.createButton.Name = "createButton";
+            this.createButton.Size = new System.Drawing.Size(75, 23);
+            this.createButton.TabIndex = 33;
+            this.createButton.Text = "Create";
+            this.createButton.UseVisualStyleBackColor = true;
+            this.createButton.Click += new System.EventHandler(this.createButton_Click);
+            // 
             // navigationStateView
             // 
             this.navigationStateView.AllowDrop = true;
@@ -475,16 +490,6 @@
             // 
             this.State.Text = "State";
             this.State.Width = 0;
-            // 
-            // createButton
-            // 
-            this.createButton.Location = new System.Drawing.Point(167, 3);
-            this.createButton.Name = "createButton";
-            this.createButton.Size = new System.Drawing.Size(75, 23);
-            this.createButton.TabIndex = 33;
-            this.createButton.Text = "Create";
-            this.createButton.UseVisualStyleBackColor = true;
-            this.createButton.Click += new System.EventHandler(this.createButton_Click);
             // 
             // NavigationStateSelector
             // 
