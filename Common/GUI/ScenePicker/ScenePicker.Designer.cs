@@ -76,6 +76,8 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.openButton);
             this.Name = "ScenePicker";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Choose Scene";
             this.ResumeLayout(false);
 

@@ -32,9 +32,9 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.zoomStrechButton = new System.Windows.Forms.ToolStripButton();
+            this.exploreButton = new System.Windows.Forms.ToolStripButton();
             this.picturePanel = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.exploreButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.picturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -72,6 +72,17 @@
             this.zoomStrechButton.Text = "Zoom";
             this.zoomStrechButton.Click += new System.EventHandler(this.zoomStrechButton_Click);
             // 
+            // exploreButton
+            // 
+            this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.exploreButton.Enabled = false;
+            this.exploreButton.Image = ((System.Drawing.Image)(resources.GetObject("exploreButton.Image")));
+            this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exploreButton.Name = "exploreButton";
+            this.exploreButton.Size = new System.Drawing.Size(49, 22);
+            this.exploreButton.Text = "Explore";
+            this.exploreButton.Click += new System.EventHandler(this.exploreButton_Click);
+            // 
             // picturePanel
             // 
             this.picturePanel.AutoScroll = true;
@@ -90,17 +101,6 @@
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
             // 
-            // exploreButton
-            // 
-            this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.exploreButton.Enabled = false;
-            this.exploreButton.Image = ((System.Drawing.Image)(resources.GetObject("exploreButton.Image")));
-            this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exploreButton.Name = "exploreButton";
-            this.exploreButton.Size = new System.Drawing.Size(49, 22);
-            this.exploreButton.Text = "Explore";
-            this.exploreButton.Click += new System.EventHandler(this.exploreButton_Click);
-            // 
             // PictureWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -110,6 +110,7 @@
             this.Controls.Add(this.toolStrip);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureWindow";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Document;
             this.Text = "PictureBox";

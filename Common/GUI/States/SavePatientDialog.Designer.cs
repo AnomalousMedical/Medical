@@ -100,6 +100,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "SavePatientDialog";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Save";
             this.ResumeLayout(false);
             this.PerformLayout();

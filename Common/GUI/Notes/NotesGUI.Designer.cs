@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotesGUI));
             this.label3 = new System.Windows.Forms.Label();
             this.notes = new System.Windows.Forms.RichTextBox();
             this.procedureType = new System.Windows.Forms.TextBox();
@@ -137,6 +138,7 @@
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NotesGUI";
             this.ShortcutKey = System.Windows.Forms.Keys.N;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;

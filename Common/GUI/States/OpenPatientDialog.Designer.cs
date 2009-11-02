@@ -33,8 +33,8 @@
             this.openButton = new System.Windows.Forms.Button();
             this.fileList = new System.Windows.Forms.ListView();
             this.lastName = new System.Windows.Forms.ColumnHeader();
-            this.dateModified = new System.Windows.Forms.ColumnHeader();
             this.firstName = new System.Windows.Forms.ColumnHeader();
+            this.dateModified = new System.Windows.Forms.ColumnHeader();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,14 +91,14 @@
             this.lastName.Text = "Last";
             this.lastName.Width = 134;
             // 
+            // firstName
+            // 
+            this.firstName.Text = "First";
+            // 
             // dateModified
             // 
             this.dateModified.Text = "DateModified";
             this.dateModified.Width = 184;
-            // 
-            // firstName
-            // 
-            this.firstName.Text = "First";
             // 
             // OpenPatientDialog
             // 
@@ -108,6 +108,7 @@
             this.Controls.Add(this.fileList);
             this.Controls.Add(this.panel1);
             this.Name = "OpenPatientDialog";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Open";
             this.panel1.ResumeLayout(false);

@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MuscleControl));
             this.muscleSequenceView = new Medical.GUI.MuscleSequenceView();
             this.playbackPanel = new System.Windows.Forms.Panel();
+            this.highlightTeeth = new System.Windows.Forms.CheckBox();
             this.stopButton = new Medical.GUI.Common.FancyButton();
             this.playButton = new Medical.GUI.Common.FancyButton();
             this.nowPlayingLabel = new System.Windows.Forms.Label();
             this.playbackTrackBar = new Medical.GUI.TimeTrackBar();
-            this.highlightTeeth = new System.Windows.Forms.CheckBox();
             this.playbackPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +59,17 @@
             this.playbackPanel.Name = "playbackPanel";
             this.playbackPanel.Size = new System.Drawing.Size(236, 107);
             this.playbackPanel.TabIndex = 14;
+            // 
+            // highlightTeeth
+            // 
+            this.highlightTeeth.AutoSize = true;
+            this.highlightTeeth.Location = new System.Drawing.Point(78, 78);
+            this.highlightTeeth.Name = "highlightTeeth";
+            this.highlightTeeth.Size = new System.Drawing.Size(144, 17);
+            this.highlightTeeth.TabIndex = 7;
+            this.highlightTeeth.Text = "Highlight Teeth Collisions";
+            this.highlightTeeth.UseVisualStyleBackColor = true;
+            this.highlightTeeth.CheckedChanged += new System.EventHandler(this.highlightTeeth_CheckedChanged);
             // 
             // stopButton
             // 
@@ -112,17 +123,6 @@
             this.playbackTrackBar.Size = new System.Drawing.Size(230, 47);
             this.playbackTrackBar.TabIndex = 1;
             this.playbackTrackBar.TickMenu = null;
-            // 
-            // highlightTeeth
-            // 
-            this.highlightTeeth.AutoSize = true;
-            this.highlightTeeth.Location = new System.Drawing.Point(78, 78);
-            this.highlightTeeth.Name = "highlightTeeth";
-            this.highlightTeeth.Size = new System.Drawing.Size(144, 17);
-            this.highlightTeeth.TabIndex = 7;
-            this.highlightTeeth.Text = "Highlight Teeth Collisions";
-            this.highlightTeeth.UseVisualStyleBackColor = true;
-            this.highlightTeeth.CheckedChanged += new System.EventHandler(this.highlightTeeth_CheckedChanged);
             // 
             // MuscleControl
             // 
