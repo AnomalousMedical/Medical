@@ -15,6 +15,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -33,32 +34,20 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BasicForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.navigationButton = new System.Windows.Forms.ToolStripButton();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.distortionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.layoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oneWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fourWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clinicalRibbon = new ComponentFactory.Krypton.Ribbon.KryptonRibbon();
+            this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
+            this.navigationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.layersTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.changeSceneMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.exitMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.kryptonRibbonGroup1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.showNavigationButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.saveMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.openMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.statusStrip1.SuspendLayout();
-            this.toolStripContainer.TopToolStripPanel.SuspendLayout();
-            this.toolStripContainer.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -77,43 +66,6 @@
             this.mainStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.mainStatusLabel.Text = "Ready";
             // 
-            // toolStripContainer
-            // 
-            // 
-            // toolStripContainer.ContentPanel
-            // 
-            this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(711, 1);
-            this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
-            this.toolStripContainer.Name = "toolStripContainer";
-            this.toolStripContainer.Size = new System.Drawing.Size(711, 26);
-            this.toolStripContainer.TabIndex = 1;
-            this.toolStripContainer.Text = "toolStripContainer1";
-            // 
-            // toolStripContainer.TopToolStripPanel
-            // 
-            this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip1);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.navigationButton});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(35, 25);
-            this.toolStrip1.TabIndex = 0;
-            // 
-            // navigationButton
-            // 
-            this.navigationButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.navigationButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.navigationButton.Name = "navigationButton";
-            this.navigationButton.Size = new System.Drawing.Size(23, 22);
-            this.navigationButton.Text = "Navigation";
-            this.navigationButton.Click += new System.EventHandler(this.navigationButton_Click);
-            // 
             // dockPanel
             // 
             this.dockPanel.ActiveAutoHideContent = null;
@@ -123,9 +75,9 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(0, 50);
+            this.dockPanel.Location = new System.Drawing.Point(0, 143);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(711, 442);
+            this.dockPanel.Size = new System.Drawing.Size(711, 349);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -172,148 +124,70 @@
             this.dockPanel.Skin = dockPanelSkin1;
             this.dockPanel.TabIndex = 12;
             // 
-            // menuStrip1
+            // clinicalRibbon
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.distortionToolStripMenuItem,
-            this.toolsToolStripMenuItem,
-            this.windowToolStripMenuItem,
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(711, 24);
-            this.menuStrip1.TabIndex = 14;
-            this.menuStrip1.Text = "menuStrip1";
+            this.clinicalRibbon.Name = "clinicalRibbon";
+            this.clinicalRibbon.RibbonAppButton.AppButtonImage = global::Medical.Properties.Resources.skull;
+            this.clinicalRibbon.RibbonAppButton.AppButtonMenuItems.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.changeSceneMenuItem,
+            this.openMenuItem,
+            this.saveMenuItem,
+            this.exitMenuItem});
+            this.clinicalRibbon.RibbonAppButton.AppButtonShowRecentDocs = false;
+            this.clinicalRibbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
+            this.navigationTab,
+            this.layersTab});
+            this.clinicalRibbon.SelectedTab = this.layersTab;
+            this.clinicalRibbon.Size = new System.Drawing.Size(711, 143);
+            this.clinicalRibbon.TabIndex = 15;
             // 
-            // fileToolStripMenuItem
+            // kryptonManager
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.exitToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.kryptonManager.GlobalPaletteMode = ComponentFactory.Krypton.Toolkit.PaletteModeManager.ProfessionalSystem;
             // 
-            // newToolStripMenuItem
+            // navigationTab
             // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.newToolStripMenuItem.Text = "New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            this.navigationTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.kryptonRibbonGroup1});
+            this.navigationTab.Text = "Navigation";
             // 
-            // openToolStripMenuItem
+            // layersTab
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.layersTab.Text = "Layers";
             // 
-            // saveToolStripMenuItem
+            // changeSceneMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.changeSceneMenuItem.Text = "Change Scene";
             // 
-            // exitToolStripMenuItem
+            // exitMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitMenuItem.Text = "Exit";
             // 
-            // distortionToolStripMenuItem
+            // kryptonRibbonGroup1
             // 
-            this.distortionToolStripMenuItem.Name = "distortionToolStripMenuItem";
-            this.distortionToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.distortionToolStripMenuItem.Text = "Distortion";
+            this.kryptonRibbonGroup1.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple1});
+            this.kryptonRibbonGroup1.TextLine1 = "On Screen";
             // 
-            // toolsToolStripMenuItem
+            // kryptonRibbonGroupTriple1
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.kryptonRibbonGroupTriple1.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.showNavigationButton});
             // 
-            // optionsToolStripMenuItem
+            // showNavigationButton
             // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            this.showNavigationButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
+            this.showNavigationButton.ImageLarge = global::Medical.Properties.Resources.NavIcon;
+            this.showNavigationButton.ImageSmall = global::Medical.Properties.Resources.NavIcon;
+            this.showNavigationButton.TextLine1 = "Show Navigation";
             // 
-            // windowToolStripMenuItem
+            // saveMenuItem
             // 
-            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.layoutToolStripMenuItem});
-            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.windowToolStripMenuItem.Text = "Window";
+            this.saveMenuItem.Text = "Save";
             // 
-            // layoutToolStripMenuItem
+            // openMenuItem
             // 
-            this.layoutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.oneWindowToolStripMenuItem,
-            this.twoWindowsToolStripMenuItem,
-            this.threeWindowsToolStripMenuItem,
-            this.fourWindowsToolStripMenuItem});
-            this.layoutToolStripMenuItem.Name = "layoutToolStripMenuItem";
-            this.layoutToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.layoutToolStripMenuItem.Text = "Layout";
-            // 
-            // oneWindowToolStripMenuItem
-            // 
-            this.oneWindowToolStripMenuItem.Name = "oneWindowToolStripMenuItem";
-            this.oneWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
-            this.oneWindowToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.oneWindowToolStripMenuItem.Text = "One Window";
-            this.oneWindowToolStripMenuItem.Click += new System.EventHandler(this.oneWindowToolStripMenuItem_Click);
-            // 
-            // twoWindowsToolStripMenuItem
-            // 
-            this.twoWindowsToolStripMenuItem.Name = "twoWindowsToolStripMenuItem";
-            this.twoWindowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
-            this.twoWindowsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.twoWindowsToolStripMenuItem.Text = "Two Windows";
-            this.twoWindowsToolStripMenuItem.Click += new System.EventHandler(this.twoWindowsToolStripMenuItem_Click);
-            // 
-            // threeWindowsToolStripMenuItem
-            // 
-            this.threeWindowsToolStripMenuItem.Name = "threeWindowsToolStripMenuItem";
-            this.threeWindowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-            this.threeWindowsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.threeWindowsToolStripMenuItem.Text = "Three Windows";
-            this.threeWindowsToolStripMenuItem.Click += new System.EventHandler(this.threeWindowsToolStripMenuItem_Click);
-            // 
-            // fourWindowsToolStripMenuItem
-            // 
-            this.fourWindowsToolStripMenuItem.Name = "fourWindowsToolStripMenuItem";
-            this.fourWindowsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D4)));
-            this.fourWindowsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.fourWindowsToolStripMenuItem.Text = "Four Windows";
-            this.fourWindowsToolStripMenuItem.Click += new System.EventHandler(this.fourWindowsToolStripMenuItem_Click);
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.openMenuItem.Text = "Open";
             // 
             // BasicForm
             // 
@@ -321,25 +195,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 514);
             this.Controls.Add(this.dockPanel);
-            this.Controls.Add(this.toolStripContainer);
+            this.Controls.Add(this.clinicalRibbon);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.menuStrip1;
             this.Name = "BasicForm";
             this.Text = "Articulometics Clinical";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
-            this.toolStripContainer.TopToolStripPanel.PerformLayout();
-            this.toolStripContainer.ResumeLayout(false);
-            this.toolStripContainer.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,27 +213,18 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripContainer toolStripContainer;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem distortionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem layoutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem oneWindowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem twoWindowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem threeWindowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem fourWindowsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton navigationButton;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
+        private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab layersTab;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem changeSceneMenuItem;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem exitMenuItem;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup1;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple1;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton showNavigationButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem openMenuItem;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveMenuItem;
     }
 }

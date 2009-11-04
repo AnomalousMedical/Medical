@@ -20,6 +20,8 @@ namespace Medical.GUI
         private SavePatientDialog savePatient = new SavePatientDialog();
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
         private ShortcutController shortcutController;
+        private ToolStrip toolStrip1 = new ToolStrip();
+        private ToolStripContainer toolStripContainer = new ToolStripContainer();
 
         public BasicForm(ShortcutController shortcuts)
         {
@@ -27,7 +29,7 @@ namespace Medical.GUI
             this.initialize(Text);
             this.shortcutController = shortcuts;
 
-            navigationButton.ImageIndex = 5;
+            //navigationButton.ImageIndex = 5;
 
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
             ShortcutEventCommand navigationShortcut = new ShortcutEventCommand("Navigation", Keys.Space, false);
@@ -63,6 +65,15 @@ namespace Medical.GUI
             shortcutGroup.addShortcut(fourWindowShortcut);
 
             StatusController.StatusChanged += new StatusUpdater(StatusController_StatusChanged);
+
+            //App menu
+            changeSceneMenuItem.Click += new EventHandler(changeSceneMenuItem_Click);
+            openMenuItem.Click += new EventHandler(openMenuItem_Click);
+            saveMenuItem.Click += new EventHandler(saveMenuItem_Click);
+            exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
+
+            //Navigation
+            showNavigationButton.Click += new EventHandler(showNavigationButton_Click);
         }
 
         /// <summary>
@@ -88,22 +99,22 @@ namespace Medical.GUI
 
         public void setViewMode()
         {
-            windowToolStripMenuItem.Visible = true;
-            toolsToolStripMenuItem.Visible = true;
-            distortionToolStripMenuItem.Visible = true;
-            newToolStripMenuItem.Visible = true;
-            openToolStripMenuItem.Visible = true;
-            saveToolStripMenuItem.Visible = true;
+            //windowToolStripMenuItem.Visible = true;
+            //toolsToolStripMenuItem.Visible = true;
+            //distortionToolStripMenuItem.Visible = true;
+            //newToolStripMenuItem.Visible = true;
+            //openToolStripMenuItem.Visible = true;
+            //saveToolStripMenuItem.Visible = true;
         }
 
         public void setDistortionMode()
         {
-            windowToolStripMenuItem.Visible = false;
-            toolsToolStripMenuItem.Visible = false;
-            distortionToolStripMenuItem.Visible = false;
-            newToolStripMenuItem.Visible = false;
-            openToolStripMenuItem.Visible = false;
-            saveToolStripMenuItem.Visible = false;
+            //windowToolStripMenuItem.Visible = false;
+            //toolsToolStripMenuItem.Visible = false;
+            //distortionToolStripMenuItem.Visible = false;
+            //newToolStripMenuItem.Visible = false;
+            //openToolStripMenuItem.Visible = false;
+            //saveToolStripMenuItem.Visible = false;
         }
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
@@ -112,7 +123,7 @@ namespace Medical.GUI
             {
                 ToolStripMenuItem item = new ToolStripMenuItem(wizard.Name);
                 item.Click += distortionWizardItem_Click;
-                distortionToolStripMenuItem.DropDownItems.Add(item);
+//                distortionToolStripMenuItem.DropDownItems.Add(item);
             }
         }
 
@@ -147,22 +158,10 @@ namespace Medical.GUI
             controller.stop();
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //fileTracker.openFile(this);
-            //if (fileTracker.lastDialogAccepted())
-            //{
-            //    controller.openStates(fileTracker.getCurrentFile());
-            //}
-            openPatient.listFiles(MedicalConfig.SaveDirectory);
-            openPatient.ShowDialog(this);
-            if (openPatient.FileChosen)
-            {
-                controller.openStates(openPatient.CurrentFile);
-            }
-        }
+        #region App Menu
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+
+        void saveMenuItem_Click(object sender, EventArgs e)
         {
             //InputResult result = InputBox.GetInput("Save", "Enter a file name", this, validateFileName);
             //if (result.ok)
@@ -174,6 +173,21 @@ namespace Medical.GUI
             {
                 controller.saveMedicalState(savePatient.Filename);
                 StatusController.SetStatus(String.Format("File saved to {0}", savePatient.Filename));
+            }
+        }
+
+        void openMenuItem_Click(object sender, EventArgs e)
+        {
+            //fileTracker.openFile(this);
+            //if (fileTracker.lastDialogAccepted())
+            //{
+            //    controller.openStates(fileTracker.getCurrentFile());
+            //}
+            openPatient.listFiles(MedicalConfig.SaveDirectory);
+            openPatient.ShowDialog(this);
+            if (openPatient.FileChosen)
+            {
+                controller.openStates(openPatient.CurrentFile);
             }
         }
 
@@ -197,30 +211,34 @@ namespace Medical.GUI
             return true;
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        void exitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        void changeSceneMenuItem_Click(object sender, EventArgs e)
         {
             controller.newScene();
         }
 
         void saveShortcut_Execute(ShortcutEventCommand shortcut)
         {
-            saveToolStripMenuItem_Click(null, null);
+            saveMenuItem_Click(null, null);
         }
 
         void openShortcut_Execute(ShortcutEventCommand shortcut)
         {
-            openToolStripMenuItem_Click(null, null);
+            openMenuItem_Click(null, null);
         }
 
         void newShortcut_Execute(ShortcutEventCommand shortcut)
         {
-            newToolStripMenuItem_Click(null, null);
+            changeSceneMenuItem_Click(null, null);
         }
+
+        #endregion App Menu
+
+        #region Window Management
 
         private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -267,16 +285,22 @@ namespace Medical.GUI
             controller.showOptions();
         }
 
-        private void navigationButton_Click(object sender, EventArgs e)
+        #endregion Window Management
+
+        #region Navigation
+
+        void showNavigationButton_Click(object sender, EventArgs e)
         {
-            controller.ShowNavigation = !navigationButton.Checked;
-            navigationButton.Checked = controller.ShowNavigation;
+            controller.ShowNavigation = showNavigationButton.Checked;
         }
 
         void navigationShortcut_Execute(ShortcutEventCommand shortcut)
         {
-            navigationButton_Click(null, null);
+            showNavigationButton.Checked = !showNavigationButton.Checked;
+            showNavigationButton_Click(null, null);
         }
+
+        #endregion Navigation
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {

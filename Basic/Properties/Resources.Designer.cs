@@ -81,6 +81,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap NavIcon {
+            get {
+                object obj = ResourceManager.GetObject("NavIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap neutralmuscle {
             get {
                 object obj = ResourceManager.GetObject("neutralmuscle", resourceCulture);
@@ -98,6 +105,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap PlaybackButtons {
             get {
                 object obj = ResourceManager.GetObject("PlaybackButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap skull {
+            get {
+                object obj = ResourceManager.GetObject("skull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
