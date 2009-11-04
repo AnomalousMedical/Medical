@@ -54,7 +54,6 @@ namespace Medical
         public DockContent()
         {
             page = new KryptonPage();
-            page.Text = this.Text;
             this.Dock = DockStyle.Fill;
             page.Controls.Add(this);
         }
@@ -102,6 +101,19 @@ namespace Medical
         public bool CloseButton { get; set; }
 
         public bool CloseButtonVisible { get; set; }
+
+        public override String Text
+        {
+            get
+            {
+                return page.Text;
+            }
+            set
+            {
+                page.Text = value;
+                page.TextTitle = value;
+            }
+        }
 
         internal KryptonPage Page
         {
