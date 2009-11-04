@@ -133,12 +133,12 @@
             this.ClientSize = new System.Drawing.Size(236, 599);
             this.Controls.Add(this.muscleSequenceView);
             this.Controls.Add(this.playbackPanel);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
-                        | Medical.DockAreas.DockRight)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MuscleControl";
             this.ShortcutKey = System.Windows.Forms.Keys.V;
-            this.ShowHint = Medical.DockState.DockLeft;
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Muscle Sequences";
             this.ToolStripName = "Manipulation";
             this.playbackPanel.ResumeLayout(false);

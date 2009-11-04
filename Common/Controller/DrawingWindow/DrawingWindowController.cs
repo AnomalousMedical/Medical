@@ -7,6 +7,7 @@ using Engine.ObjectManagement;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.Renderer;
+using WeifenLuo.WinFormsUI.Docking;
 using Medical.GUI;
 using Logging;
 using Medical.Controller;
@@ -27,7 +28,7 @@ namespace Medical
         private SimScene scene;
         private EventManager eventManager;
         private RendererPlugin rendererPlugin;
-        private DockArea dock;
+        private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
         private bool allowRotation = true;
         private bool allowZoom = true;
@@ -46,10 +47,10 @@ namespace Medical
             }
         }
 
-        public void initialize(DockArea dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
+        public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
             this.dock = dock;
-            //--UNCOMMENT dock.ActiveDocumentChanged += new EventHandler(dock_ActiveDocumentChanged);
+            dock.ActiveDocumentChanged += new EventHandler(dock_ActiveDocumentChanged);
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
         }
@@ -110,16 +111,16 @@ namespace Medical
                     switch (preset.WindowPosition)
                     {
                         case DrawingWindowPosition.Bottom:
-                            //--UNCOMMENT camera.Show(parent.Pane, DockAlignment.Bottom, 0.5);
+                            camera.Show(parent.Pane, DockAlignment.Bottom, 0.5);
                             break;
                         case DrawingWindowPosition.Top:
-                            //--UNCOMMENT camera.Show(parent.Pane, DockAlignment.Top, 0.5);
+                            camera.Show(parent.Pane, DockAlignment.Top, 0.5);
                             break;
                         case DrawingWindowPosition.Left:
-                            //--UNCOMMENT camera.Show(parent.Pane, DockAlignment.Left, 0.5);
+                            camera.Show(parent.Pane, DockAlignment.Left, 0.5);
                             break;
                         case DrawingWindowPosition.Right:
-                            //--UNCOMMENT camera.Show(parent.Pane, DockAlignment.Right, 0.5);
+                            camera.Show(parent.Pane, DockAlignment.Right, 0.5);
                             break;
                     }
                 }

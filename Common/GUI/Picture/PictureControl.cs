@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using OgreWrapper;
 using OgrePlugin;
@@ -57,7 +58,7 @@ namespace Medical.GUI
                     PictureWindow picture = new PictureWindow();
                     picture.initialize(bitmap);
                     picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
-                    //--UNCOMMENT picture.Show(DockPanel, DockState.Float);
+                    picture.Show(DockPanel, DockState.Float);
                 }
             }
         }

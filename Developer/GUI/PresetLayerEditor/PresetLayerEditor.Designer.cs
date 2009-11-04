@@ -144,8 +144,8 @@
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.layerList);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
-                        | Medical.DockAreas.DockRight)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "PresetLayerEditor";
             this.Text = "Preset Layer Editor";
             this.ToolStripName = "Editing";

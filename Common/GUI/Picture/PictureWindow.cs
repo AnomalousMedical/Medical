@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
@@ -69,7 +70,7 @@ namespace Medical.GUI
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = saveDialog.ShowDialog(this);
+            DialogResult result = saveDialog.ShowDialog(DockPanel.TopLevelControl);
             if (result == DialogResult.OK)
             {
                 ImageFormat format = ImageFormat.Jpeg;
@@ -113,11 +114,11 @@ namespace Medical.GUI
         {
             base.OnClosing(e);
             //Prevent the main window from going into the background.
-            //Form topLevel = DockPanel.TopLevelControl as Form;
-            //if (topLevel != null)
-            //{
-            //    topLevel.Activate();
-            //}
+            Form topLevel = DockPanel.TopLevelControl as Form;
+            if (topLevel != null)
+            {
+                topLevel.Activate();
+            }
         }
     }
 }

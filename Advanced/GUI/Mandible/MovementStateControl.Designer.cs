@@ -174,8 +174,8 @@
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.lockButton);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockTop)
-                        | Medical.DockAreas.DockBottom)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MovementStateControl";
             this.Text = "Movement Sequence";

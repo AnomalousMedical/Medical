@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.GUI;
+using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Windows.Forms;
 using System.IO;
@@ -168,7 +169,7 @@ namespace Medical.Controller
 
             openDefaultScene();
 
-            //--UNCOMMENT if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
                 windowPresetController.setPresetSet("Primary");
             }

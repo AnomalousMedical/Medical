@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
@@ -219,7 +220,6 @@ namespace Medical.GUI
             this.HideOnClose = true;
             this.Name = "GUIElement";
             this.ResumeLayout(false);
-
         }
     }
 }

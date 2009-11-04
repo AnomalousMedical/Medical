@@ -332,11 +332,11 @@
             this.Controls.Add(this.openTrackBar);
             this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.rightForwardBack);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
-                        | Medical.DockAreas.DockRight)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MandibleOffsetControl";
-            this.ShowHint = Medical.DockState.DockLeft;
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Mandible Offset";
             this.ToolStripName = "Advanced";
             ((System.ComponentModel.ISupportInitialize)(this.leftForwardBack)).EndInit();

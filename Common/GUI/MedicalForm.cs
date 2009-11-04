@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Engine.Platform;
 using Medical;
+using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
 
 namespace Medical.GUI

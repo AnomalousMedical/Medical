@@ -211,10 +211,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryText);
             this.Controls.Add(this.nameText);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
-                        | Medical.DockAreas.DockRight)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "BonePresetSaveWindow";
-            this.ShowHint = Medical.DockState.Float;
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
             this.Text = "Bone Preset Editor";
             this.ToolStripName = "Editing";
             this.groupBox1.ResumeLayout(false);

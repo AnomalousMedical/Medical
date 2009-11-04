@@ -89,11 +89,11 @@
             this.Controls.Add(this.rightEminanceSlider);
             this.Controls.Add(this.leftEminanceSlider);
             this.Controls.Add(this.label1);
-            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
-                        | Medical.DockAreas.DockRight)));
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FossaControl";
-            this.ShowHint = Medical.DockState.DockLeft;
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Fossa";
             this.ToolStripName = "Advanced";
             ((System.ComponentModel.ISupportInitialize)(this.rightEminanceSlider)).EndInit();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Threading;
 using System.IO;
@@ -147,7 +148,7 @@ namespace Medical.Controller
 
             loadDefaultScene();
 
-            //--UNCOMMENT if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
                 setOneWindowLayout();
             }
