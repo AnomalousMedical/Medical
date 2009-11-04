@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.GUI.Layers;
-using WeifenLuo.WinFormsUI.Docking;
 using Engine.ObjectManagement;
 
 namespace Medical.GUI

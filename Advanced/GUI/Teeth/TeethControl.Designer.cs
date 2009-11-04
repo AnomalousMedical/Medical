@@ -969,11 +969,11 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.teethPanel);
             this.Controls.Add(this.toolStrip1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
+                        | Medical.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.DockState.DockLeft;
             this.Text = "Teeth";
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);

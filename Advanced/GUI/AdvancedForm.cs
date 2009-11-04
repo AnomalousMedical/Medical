@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
@@ -16,6 +15,7 @@ namespace Medical.GUI
         private AdvancedController controller;
         private FileTracker patientFileTracker = new FileTracker("*.pat|*.pat");
         private FileTracker sequenceFileTracker = new FileTracker("*.seq|*.seq");
+        private DockArea dockArea;
 
         public AdvancedForm()
         {
@@ -36,11 +36,11 @@ namespace Medical.GUI
             }
         }
 
-        public DockPanel DockPanel
+        public DockArea DockPanel
         {
             get
             {
-                return dockPanel;
+                return dockArea;
             }
         }
 

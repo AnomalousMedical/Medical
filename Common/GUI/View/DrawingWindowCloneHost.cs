@@ -10,8 +10,8 @@ namespace Medical.GUI
         public DrawingWindowCloneHost(String name, DrawingWindowController controller)
             :base(name, controller)
         {
-            this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Float;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
+            this.DockAreas = DockAreas.Float;
+            this.ShowHint = DockState.Float;
         }
 
         protected override string GetPersistString()

@@ -202,12 +202,12 @@
             this.Controls.Add(this.leftForwardBack);
             this.Controls.Add(this.openTrackBar);
             this.Controls.Add(this.rightForwardBack);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
+                        | Medical.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SimpleMandibleControl";
             this.ShortcutKey = System.Windows.Forms.Keys.M;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.DockState.DockLeft;
             this.Text = "Mandible Control";
             this.ToolStripName = "Manipulation";
             ((System.ComponentModel.ISupportInitialize)(this.bothForwardBack)).EndInit();

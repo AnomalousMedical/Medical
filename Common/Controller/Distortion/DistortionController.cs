@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Medical.GUI;
 

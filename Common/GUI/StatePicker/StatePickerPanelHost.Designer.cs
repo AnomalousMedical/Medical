@@ -102,17 +102,15 @@
             // 
             // StatePickerPanelHost
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 509);
             this.CloseButton = false;
             this.CloseButtonVisible = false;
             this.Controls.Add(this.panelHost);
             this.Controls.Add(this.buttonPanel);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((DockAreas)(((DockAreas.Float | DockAreas.DockLeft)
+                        | DockAreas.DockRight)));
             this.Name = "StatePickerPanelHost";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = DockState.DockLeft;
             this.Text = "Properties";
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);

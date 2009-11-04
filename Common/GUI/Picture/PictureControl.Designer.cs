@@ -256,20 +256,18 @@
             // 
             // PictureControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonImageIndex = 1;
             this.ButtonText = "Picture";
             this.ClientSize = new System.Drawing.Size(142, 322);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
+            this.DockAreas = ((DockAreas)((((DockAreas.Float | DockAreas.DockLeft)
+                        | DockAreas.DockRight)
+                        | DockAreas.Document)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureControl";
             this.ShortcutKey = System.Windows.Forms.Keys.P;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            this.ShowHint = DockState.DockRight;
             this.Text = "Picture";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

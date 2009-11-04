@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
 using System.IO;
-using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 
 namespace Medical.GUI
@@ -20,10 +19,14 @@ namespace Medical.GUI
         private SavePatientDialog savePatient = new SavePatientDialog();
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
         private ShortcutController shortcutController;
+        private DockArea dockArea;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
+
+            dockArea = new DockArea(kryptonDockableWorkspace1, kryptonPanel1, this);
+
             this.initialize(Text);
             this.shortcutController = shortcuts;
 
@@ -133,11 +136,11 @@ namespace Medical.GUI
             }
         }
 
-        public DockPanel DockPanel
+        public DockArea DockPanel
         {
             get
             {
-                return dockPanel;
+                return dockArea;
             }
         }
 

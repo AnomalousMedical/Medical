@@ -543,11 +543,11 @@
             this.ButtonText = "Muscles";
             this.ClientSize = new System.Drawing.Size(259, 421);
             this.Controls.Add(this.tabControl1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
+                        | Medical.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MuscleControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.DockState.DockLeft;
             this.Text = "Muscles";
             this.ToolStripName = "Advanced";
             this.tabControl1.ResumeLayout(false);

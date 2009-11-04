@@ -33,6 +33,26 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ComponentFactory.Krypton.Docking, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Docking\bin\ComponentFactory.Krypton.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Navigator, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Navigator\bin\ComponentFactory.Krypton.Navigator.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Ribbon, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Ribbon\bin\ComponentFactory.Krypton.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Toolkit\bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Workspace, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Workspace\bin\ComponentFactory.Krypton.Workspace.dll</HintPath>
+    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
@@ -49,6 +69,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -60,10 +81,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.22263, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\DockPanel\Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AdvancedController.cs" />
@@ -82,44 +99,44 @@
       <DependentUpon>DiscPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Disk\DiskControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Disk\DiskControl.Designer.cs">
       <DependentUpon>DiskControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Fossa\FossaControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Fossa\FossaControl.Designer.cs">
       <DependentUpon>FossaControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleOffsetControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleOffsetControl.Designer.cs">
       <DependentUpon>MandibleOffsetControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleSizeControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleSizeControl.Designer.cs">
       <DependentUpon>MandibleSizeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MovementStateControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Mandible\MovementStateControl.Designer.cs">
       <DependentUpon>MovementStateControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MovementStateTick.cs" />
     <Compile Include="GUI\Muscles\MuscleControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
       <DependentUpon>TeethControl.cs</DependentUpon>

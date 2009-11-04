@@ -181,10 +181,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryText);
             this.Controls.Add(this.nameText);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
+                        | Medical.DockAreas.DockRight)));
             this.Name = "FossaPresetEditor";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.DockState.DockLeft;
             this.Text = "Fossa Preset Editor";
             this.ToolStripName = "Editing";
             this.groupBox1.ResumeLayout(false);

@@ -65,18 +65,16 @@
             // 
             // MeasurementGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 11;
             this.ButtonText = "Measurement";
             this.ClientSize = new System.Drawing.Size(222, 439);
             this.Controls.Add(this.measurementPanel);
             this.Controls.Add(this.panel1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.DockAreas)(((Medical.DockAreas.Float | Medical.DockAreas.DockLeft)
+                        | Medical.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MeasurementGUI";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            this.ShowHint = DockState.DockRight;
             this.Text = "Measurement";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

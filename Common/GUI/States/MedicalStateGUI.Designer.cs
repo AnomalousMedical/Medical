@@ -186,8 +186,6 @@
             // 
             // MedicalStateGUI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 2;
             this.ButtonText = "States";
             this.ClientSize = new System.Drawing.Size(491, 65);
@@ -198,12 +196,12 @@
             this.Controls.Add(this.previousButton);
             this.Controls.Add(this.stateTrackBar);
             this.Controls.Add(this.speedTrackBar);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.DockAreas = ((DockAreas)(((DockAreas.Float | DockAreas.DockTop)
+                        | DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MedicalStateGUI";
             this.ShortcutKey = System.Windows.Forms.Keys.S;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
+            this.ShowHint = DockState.DockBottom;
             this.Text = "States";
             ((System.ComponentModel.ISupportInitialize)(this.speedTrackBar)).EndInit();
             this.trackMarkMenu.ResumeLayout(false);

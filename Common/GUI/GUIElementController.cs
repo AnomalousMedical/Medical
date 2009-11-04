@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
@@ -20,13 +19,13 @@ namespace Medical.GUI
 
         private List<GUIElement> guiElements = new List<GUIElement>();
         private List<GUIElement> updatingGUIElements = new List<GUIElement>();
-        private DockPanel dock;
+        private DockArea dock;
         private ToolStripContainer toolStripContainer;
         private SortedDictionary<String, ToolStrip> toolStrips = new SortedDictionary<string, ToolStrip>();
         private bool enabled = false;
         private MedicalController medicalController;
 
-        public GUIElementController(DockPanel dock, ToolStripContainer toolStrip, MedicalController controller)
+        public GUIElementController(DockArea dock, ToolStripContainer toolStrip, MedicalController controller)
         {
             this.dock = dock;
             this.toolStripContainer = toolStrip;
@@ -63,25 +62,25 @@ namespace Medical.GUI
         /// <param name="filename"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public bool restoreWindowFile(String filename, DeserializeDockContent callback)
-        {
-            bool restore = File.Exists(filename);
-            if (restore)
-            {
-                //Close all windows
-                for (int index = dock.Contents.Count - 1; index >= 0; index--)
-                {
-                    IDockContent content = dock.Contents[index] as IDockContent;
-                    if (content != null)
-                    {
-                        content.DockHandler.Close();
-                    }
-                }
-                //Load the file
-                dock.LoadFromXml(filename, callback);
-            }
-            return restore;
-        }
+        //public bool restoreWindowFile(String filename, DeserializeDockContent callback)
+        //{
+        //    bool restore = File.Exists(filename);
+        //    if (restore)
+        //    {
+        //        //Close all windows
+        //        for (int index = dock.Contents.Count - 1; index >= 0; index--)
+        //        {
+        //            IDockContent content = dock.Contents[index] as IDockContent;
+        //            if (content != null)
+        //            {
+        //                content.DockHandler.Close();
+        //            }
+        //        }
+        //        //Load the file
+        //        dock.LoadFromXml(filename, callback);
+        //    }
+        //    return restore;
+        //}
 
         /// <summary>
         /// Hide the GUIElements controlled by this controller.
@@ -109,7 +108,7 @@ namespace Medical.GUI
             }
         }
 
-        public IDockContent ActiveDocument
+        public DockContent ActiveDocument
         {
             get
             {
@@ -117,7 +116,7 @@ namespace Medical.GUI
             }
         }
 
-        public DockPanel DockPanel
+        public DockArea DockPanel
         {
             get
             {

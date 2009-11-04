@@ -36,6 +36,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\BulletPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="ComponentFactory.Krypton.Docking, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Docking\bin\ComponentFactory.Krypton.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Navigator, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Navigator\bin\ComponentFactory.Krypton.Navigator.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Ribbon, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Ribbon\bin\ComponentFactory.Krypton.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Toolkit\bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Workspace, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Workspace\bin\ComponentFactory.Krypton.Workspace.dll</HintPath>
+    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
@@ -60,6 +80,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
@@ -70,10 +91,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.22263, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\DockPanel\Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
     <Reference Include="Win32Platform, Version=1.0.3418.16948, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Win32Platform.dll</HintPath>
@@ -92,6 +109,11 @@
     <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
+    <Compile Include="Controller\DockProvider\DockContent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\DockProvider\DockArea.cs">
+    </Compile>
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetController.cs" />
@@ -154,7 +176,7 @@
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\GUIElement.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\GUIElementController.cs" />
     <Compile Include="GUI\Layers\LayerEntry.cs">
@@ -164,7 +186,7 @@
       <DependentUpon>LayerEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Layers\LayersControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Layers\LayersControl.Designer.cs">
       <DependentUpon>LayersControl.cs</DependentUpon>
@@ -183,7 +205,7 @@
     </Compile>
     <Compile Include="GUI\Loading\ProgressDialog.cs" />
     <Compile Include="GUI\Measurement\MeasurementGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Measurement\MeasurementGUI.Designer.cs">
       <DependentUpon>MeasurementGUI.cs</DependentUpon>
@@ -209,25 +231,25 @@
     </Compile>
     <Compile Include="GUI\Navigation\OverlayRect.cs" />
     <Compile Include="GUI\Notes\NotesGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Notes\NotesGUI.Designer.cs">
       <DependentUpon>NotesGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Picture\PictureWindow.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Picture\PictureWindow.Designer.cs">
       <DependentUpon>PictureWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Picture\PictureControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Picture\PictureControl.Designer.cs">
       <DependentUpon>PictureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SavedCamera\SavedCameraGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\SavedCamera\SavedCameraGUI.Designer.cs">
       <DependentUpon>SavedCameraGUI.cs</DependentUpon>
@@ -277,7 +299,7 @@
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerModeList.Designer.cs">
       <DependentUpon>StatePickerModeList.cs</DependentUpon>
@@ -289,7 +311,6 @@
       <DependentUpon>StatePickerPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.Designer.cs">
       <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
@@ -314,7 +335,7 @@
       <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.Designer.cs">
       <DependentUpon>MedicalStateGUI.cs</DependentUpon>
@@ -344,10 +365,9 @@
       <DependentUpon>DrawingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowCloneHost.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowHost.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
@@ -638,6 +658,7 @@
       <DependentUpon>DrawingWindowCloneHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button-First.png" />
