@@ -97,37 +97,54 @@ namespace Medical
             }
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
         {
             controller._alertCameraDestroyed(this);
             notClosing = false;
             drawingWindow.destroyCamera();
-            base.OnClosing(e);
+
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            if (notClosing)
-            {
-                savedControls.Clear();
-                foreach (Control control in Controls)
-                {
-                    savedControls.Add(control);
-                }
-                this.Controls.Clear();
-            }
-            base.OnHandleDestroyed(e);
-        }
+        //protected override void OnClosing(CancelEventArgs e)
+        //{
+        //    controller._alertCameraDestroyed(this);
+        //    notClosing = false;
+        //    drawingWindow.destroyCamera();
+        //    base.OnClosing(e);
+        //}
 
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            foreach (Control control in savedControls)
-            {
-                Controls.Add(control);
-            }
-            savedControls.Clear();
-            base.OnHandleCreated(e);
-        }
+        //protected override void OnHandleDestroyed(EventArgs e)
+        //{
+        //    if (notClosing)
+        //    {
+        //        savedControls.Clear();
+        //        foreach (Control control in Controls)
+        //        {
+        //            savedControls.Add(control);
+        //        }
+        //        this.Controls.Clear();
+        //    }
+        //    base.OnHandleDestroyed(e);
+        //}
+
+        //protected override void OnHandleCreated(EventArgs e)
+        //{
+        //    foreach (Control control in savedControls)
+        //    {
+        //        Controls.Add(control);
+        //    }
+        //    savedControls.Clear();
+        //    base.OnHandleCreated(e);
+        //}
 
         private void changeBackgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {

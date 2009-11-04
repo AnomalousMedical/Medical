@@ -49,23 +49,28 @@ namespace Medical
     public class DockContent : UserControl
     {
         private KryptonPage page;
+        private DockArea dockArea;
 
         public DockContent()
         {
             page = new KryptonPage();
-            page.Controls.Add(this);
+            page.Text = this.Text;
             this.Dock = DockStyle.Fill;
+            page.Controls.Add(this);
         }
 
         public void Close()
         {
-            CancelEventArgs e = new CancelEventArgs();
-            OnClosing(e);
+            if (dockArea != null)
+            {
+                dockArea.close(this);
+                dockArea = null;
+            }
         }
 
         protected virtual void OnClosing(CancelEventArgs e)
         {
-
+            
         }
 
         protected virtual String GetPersistString()
@@ -75,15 +80,14 @@ namespace Medical
 
         public void Show(DockArea panel)
         {
+            this.dockArea = panel;
             panel.show(this);
         }
 
-        public void Show(DockArea panel, DockingEdge edge)
-        {
+        //public void Show(DockArea panel, DockingEdge edge)
+        //{
 
-        }
-
-        public DockContent Pane { get; set; }
+        //}
 
         public Icon Icon { get; set; }
 

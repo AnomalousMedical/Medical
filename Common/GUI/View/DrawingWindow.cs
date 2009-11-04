@@ -285,6 +285,7 @@ namespace Medical
             {
                 listener.closing(this);
             }
+            destroyCamera();
             if (window != null)
             {
                 renderer.destroyRendererWindow(window);

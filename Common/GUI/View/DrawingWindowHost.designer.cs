@@ -7,19 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -74,15 +61,14 @@
             // 
             // DrawingWindowHost
             // 
-            this.ClientSize = new System.Drawing.Size(284, 264);
             this.Controls.Add(this.menuStrip1);
-            this.DockAreas = DockAreas.Document;
+            this.DockAreas = Medical.DockAreas.Document;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DrawingWindowHost";
-            this.ShowHint = DockState.Document;
-            this.Text = "SplitViewHost";
+            this.ShowHint = Medical.DockState.Document;
+            this.Size = new System.Drawing.Size(1168, 587);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

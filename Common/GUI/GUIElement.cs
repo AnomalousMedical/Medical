@@ -219,6 +219,7 @@ namespace Medical.GUI
             this.HideOnClose = true;
             this.Name = "GUIElement";
             this.ResumeLayout(false);
+
         }
     }
 }

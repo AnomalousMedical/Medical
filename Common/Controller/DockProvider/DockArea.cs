@@ -32,6 +32,38 @@ namespace Medical
             dockingManager.AddToWorkspace("Workspace", pageArray);
         }
 
+        public void close(DockContent content)
+        {
+            dockingManager.RemovePage(content.Page, !content.HideOnClose);
+        }
+
+        public void show(DockContent content, DockAreas alignment)
+        {
+            pageArray[0] = content.Page;
+            DockingEdge edge = DockingEdge.Left;
+            switch(alignment)
+            {
+                case DockAreas.DockBottom:
+                    dockingManager.AddDockspace("Bottom", DockingEdge.Bottom, pageArray);
+                    break;
+                case DockAreas.DockTop:
+                    dockingManager.AddDockspace("Top", DockingEdge.Top, pageArray);
+                    break;
+                case DockAreas.DockLeft:
+                    dockingManager.AddDockspace("Left", DockingEdge.Left, pageArray);
+                    break;
+                case DockAreas.DockRight:
+                    dockingManager.AddDockspace("Right", DockingEdge.Right, pageArray);
+                    break;
+                case DockAreas.Document:
+                    dockingManager.AddToWorkspace("Workspace", pageArray);
+                    break;
+                case DockAreas.Float:
+                    dockingManager.AddFloatingWindow("Floating", pageArray);
+                    break;
+            }
+        }
+
         public DockContent ActiveDocument { get; set; }
 
         public void SaveAsXml(String filename)
