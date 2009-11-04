@@ -311,6 +311,7 @@
       <DependentUpon>StatePickerPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.Designer.cs">
       <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
@@ -365,6 +366,7 @@
       <DependentUpon>DrawingWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowCloneHost.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\View\DrawingWindowHost.cs">
       <SubType>UserControl</SubType>
@@ -658,7 +660,6 @@
       <DependentUpon>DrawingWindowCloneHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Button-First.png" />
