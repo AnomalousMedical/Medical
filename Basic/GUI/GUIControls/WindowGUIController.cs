@@ -25,6 +25,8 @@ namespace Medical.GUI
             form.threeWindowLayoutCommand.Execute += new EventHandler(threeWindowLayoutCommand_Execute);
             form.fourWindowLayoutCommand.Execute += new EventHandler(fourWindowLayoutCommand_Execute);
 
+            form.optionsCommand.Execute += new EventHandler(optionsCommand_Execute);
+
             drawingWindowController = basicController.DrawingWindowController;
             drawingWindowController.ActiveWindowChanged += new DrawingWindowEvent(drawingWindowController_ActiveWindowChanged);
 
@@ -100,6 +102,11 @@ namespace Medical.GUI
             {
                 window.DrawingWindow.BackColor = backgroundColorButton.SelectedColor;
             }
+        }
+
+        void optionsCommand_Execute(object sender, EventArgs e)
+        {
+            basicController.showOptions();
         }
     }
 }

@@ -185,7 +185,6 @@
     <None Include="Resources\articulometricsclinic.jpg" />
     <None Include="Resources\PlaybackButtons.png" />
     <None Include="Resources\ArticulometricsSplash.png" />
-    <None Include="Resources\NavIcon.png" />
     <None Include="Resources\AppButton.png" />
     <None Include="Resources\LayersBottomTeethLarge.png" />
     <None Include="Resources\LayersBottomTeethSmall.png" />
@@ -211,6 +210,14 @@
     <None Include="Resources\OneWindowLayout.png" />
     <None Include="Resources\ThreeWindowLayout.png" />
     <None Include="Resources\TwoWindowLayout.png" />
+    <None Include="Resources\OptionsIconLarge.png" />
+    <None Include="Resources\OptionsIconSmall.png" />
+    <None Include="Resources\BackgroundColorIconLarge.png" />
+    <None Include="Resources\BackgroundColorIconSmall.png" />
+    <None Include="Resources\WindowLayoutIconLarge.png" />
+    <None Include="Resources\WindowLayoutIconSmall.png" />
+    <None Include="Resources\NavIconLarge.png" />
+    <None Include="Resources\NavIconSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

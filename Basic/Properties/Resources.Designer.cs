@@ -81,6 +81,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BackgroundColorIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundColorIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap BackgroundColorIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundColorIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clenchedmuscle {
             get {
                 object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
@@ -221,9 +235,16 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap NavIcon {
+        internal static System.Drawing.Bitmap NavIconLarge {
             get {
-                object obj = ResourceManager.GetObject("NavIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("NavIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NavIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("NavIconSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -245,6 +266,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap openmuscle {
             get {
                 object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OptionsIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("OptionsIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OptionsIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("OptionsIconSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -280,6 +315,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap TwoWindowLayout {
             get {
                 object obj = ResourceManager.GetObject("TwoWindowLayout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap WindowLayoutIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("WindowLayoutIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap WindowLayoutIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("WindowLayoutIconSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
