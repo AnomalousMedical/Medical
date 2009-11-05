@@ -203,6 +203,8 @@
     <None Include="Resources\LayersTMJSmall.png" />
     <None Include="Resources\LayersTopTeethLarge.png" />
     <None Include="Resources\LayersTopTeethSmall.png" />
+    <None Include="Resources\TeethCollisionIconLarge.png" />
+    <None Include="Resources\TeethCollisionIconSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -77,6 +77,9 @@ namespace Medical.GUI
 
             //Navigation
             showNavigationButton.Click += new EventHandler(showNavigationButton_Click);
+
+            //Display
+            showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
         }
 
         /// <summary>
@@ -313,6 +316,15 @@ namespace Medical.GUI
         }
 
         #endregion Navigation
+
+        #region Display
+
+        void showTeethCollisionCommand_Execute(object sender, EventArgs e)
+        {
+            TeethController.HighlightContacts = showTeethCollisionCommand.Checked;
+        }
+
+        #endregion
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
