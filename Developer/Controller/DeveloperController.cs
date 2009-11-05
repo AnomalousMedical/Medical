@@ -148,7 +148,7 @@ namespace Medical.Controller
             guiElements.addGUIElement(bonePresetSaver);
 
             PresetLayerEditor presetLayers = new PresetLayerEditor();
-            presetLayers.initialize(layerController);
+            presetLayers.initialize(layerController, imageRenderer);
             guiElements.addGUIElement(presetLayers);
 
             DiscPresetEditor discPresetEditor = new DiscPresetEditor();

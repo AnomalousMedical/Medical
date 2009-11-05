@@ -15,6 +15,7 @@ namespace Medical.GUI
     {
         private LayerController layerController;
         private XmlSaver xmlSaver = new XmlSaver();
+        private ImageRenderer imageRenderer;
 
         public PresetLayerEditor()
         {
@@ -22,9 +23,10 @@ namespace Medical.GUI
             layerList.SelectedValueChanged += new EventHandler(layerList_SelectedValueChanged);
         }
 
-        public void initialize(LayerController layerController)
+        public void initialize(LayerController layerController, ImageRenderer imageRenderer)
         {
             this.layerController = layerController;
+            this.imageRenderer = imageRenderer;
             layerController.LayerStateSetChanged += layerController_LayerStateSetChanged;
         }
 
@@ -49,6 +51,15 @@ namespace Medical.GUI
                 String name = layerList.SelectedItem.ToString();
                 LayerState state = layerController.CurrentLayers.getState(name);
                 hiddenCheckBox.Checked = state.Hidden;
+                if (state.Thumbnail != null)
+                {
+                    Bitmap clone = new Bitmap(state.Thumbnail);
+                    ThumbnailImage = clone;
+                }
+                else
+                {
+                    ThumbnailImage = null;
+                }
             }
         }
 
@@ -94,6 +105,14 @@ namespace Medical.GUI
                 LayerState state = layerController.CurrentLayers.getState(name);
                 state.Hidden = hiddenCheckBox.Checked;
                 state.captureState();
+                if (ThumbnailImage != null)
+                {
+                    state.Thumbnail = new Bitmap(ThumbnailImage);
+                }
+                else
+                {
+                    ThumbnailImage = null;
+                }
             }
         }
 
@@ -133,6 +152,28 @@ namespace Medical.GUI
                 {
                     MessageBox.Show(this, String.Format("An error occured when saving the layer states.\n{0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void renderThumbnailButton_Click(object sender, EventArgs e)
+        {
+            Bitmap bitmap = imageRenderer.renderImage(thumbnailPanel.Width, thumbnailPanel.Height);
+            ThumbnailImage = bitmap;
+        }
+
+        private Bitmap ThumbnailImage
+        {
+            get
+            {
+                return thumbnailPanel.BackgroundImage as Bitmap;
+            }
+            set
+            {
+                if (thumbnailPanel.BackgroundImage != null)
+                {
+                    thumbnailPanel.BackgroundImage.Dispose();
+                }
+                thumbnailPanel.BackgroundImage = value;
             }
         }
     }

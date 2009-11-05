@@ -38,6 +38,9 @@
             this.loadButton = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.hiddenCheckBox = new System.Windows.Forms.CheckBox();
+            this.thumbnailPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.renderThumbnailButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // layerList
@@ -81,7 +84,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(9, 314);
+            this.saveButton.Location = new System.Drawing.Point(8, 410);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 4;
@@ -106,7 +109,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(92, 314);
+            this.loadButton.Location = new System.Drawing.Point(91, 410);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 6;
@@ -129,13 +132,42 @@
             this.hiddenCheckBox.Text = "Hidden";
             this.hiddenCheckBox.UseVisualStyleBackColor = true;
             // 
+            // thumbnailPanel
+            // 
+            this.thumbnailPanel.Location = new System.Drawing.Point(16, 317);
+            this.thumbnailPanel.Name = "thumbnailPanel";
+            this.thumbnailPanel.Size = new System.Drawing.Size(48, 48);
+            this.thumbnailPanel.TabIndex = 8;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 301);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Thumbnail";
+            // 
+            // renderThumbnailButton
+            // 
+            this.renderThumbnailButton.Location = new System.Drawing.Point(13, 371);
+            this.renderThumbnailButton.Name = "renderThumbnailButton";
+            this.renderThumbnailButton.Size = new System.Drawing.Size(107, 23);
+            this.renderThumbnailButton.TabIndex = 10;
+            this.renderThumbnailButton.Text = "Render Thumbnail";
+            this.renderThumbnailButton.UseVisualStyleBackColor = true;
+            this.renderThumbnailButton.Click += new System.EventHandler(this.renderThumbnailButton_Click);
+            // 
             // PresetLayerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 0;
             this.ButtonText = "Preset Layer Editor";
-            this.ClientSize = new System.Drawing.Size(178, 349);
+            this.ClientSize = new System.Drawing.Size(178, 440);
+            this.Controls.Add(this.renderThumbnailButton);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.thumbnailPanel);
             this.Controls.Add(this.hiddenCheckBox);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.updateButton);
@@ -166,5 +198,8 @@
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.CheckBox hiddenCheckBox;
+        private System.Windows.Forms.Panel thumbnailPanel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button renderThumbnailButton;
     }
 }

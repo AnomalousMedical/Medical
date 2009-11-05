@@ -6,13 +6,21 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class LayerStateSet : Saveable
+    public class LayerStateSet : Saveable, IDisposable
     {
         private Dictionary<String, LayerState> states = new Dictionary<string, LayerState>();
 
         public LayerStateSet()
         {
 
+        }
+
+        public void Dispose()
+        {
+            foreach (LayerState state in states.Values)
+            {
+                state.Dispose();
+            }
         }
 
         public void addState(LayerState state)
