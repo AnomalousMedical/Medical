@@ -25,6 +25,7 @@ namespace Medical.GUI
         private ToolStripContainer toolStripContainer = new ToolStripContainer();
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;
+        private NavigationGUIController navigationGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
@@ -35,10 +36,7 @@ namespace Medical.GUI
             //navigationButton.ImageIndex = 5;
 
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
-            ShortcutEventCommand navigationShortcut = new ShortcutEventCommand("Navigation", Keys.Space, false);
-            navigationShortcut.Execute += navigationShortcut_Execute;
-            shortcutGroup.addShortcut(navigationShortcut);
-
+            
             ShortcutEventCommand newShortcut = new ShortcutEventCommand("New", Keys.N, true);
             newShortcut.Execute += newShortcut_Execute;
             shortcutGroup.addShortcut(newShortcut);
@@ -51,22 +49,6 @@ namespace Medical.GUI
             saveShortcut.Execute += saveShortcut_Execute;
             shortcutGroup.addShortcut(saveShortcut);
 
-            ShortcutEventCommand oneWindowShortcut = new ShortcutEventCommand("oneWindowShortcut", Keys.D1, true);
-            oneWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(oneWindowShortcut_Execute);
-            shortcutGroup.addShortcut(oneWindowShortcut);
-
-            ShortcutEventCommand twoWindowShortcut = new ShortcutEventCommand("twoWindowShortcut", Keys.D2, true);
-            twoWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(twoWindowShortcut_Execute);
-            shortcutGroup.addShortcut(twoWindowShortcut);
-
-            ShortcutEventCommand threeWindowShortcut = new ShortcutEventCommand("threeWindowShortcut", Keys.D3, true);
-            threeWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(threeWindowShortcut_Execute);
-            shortcutGroup.addShortcut(threeWindowShortcut);
-
-            ShortcutEventCommand fourWindowShortcut = new ShortcutEventCommand("fourWindowShortcut", Keys.D4, true);
-            fourWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(fourWindowShortcut_Execute);
-            shortcutGroup.addShortcut(fourWindowShortcut);
-
             StatusController.StatusChanged += new StatusUpdater(StatusController_StatusChanged);
 
             //App menu
@@ -74,9 +56,6 @@ namespace Medical.GUI
             openMenuItem.Click += new EventHandler(openMenuItem_Click);
             saveMenuItem.Click += new EventHandler(saveMenuItem_Click);
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
-
-            //Navigation
-            showNavigationButton.Click += new EventHandler(showNavigationButton_Click);
         }
 
         /// <summary>
@@ -99,8 +78,9 @@ namespace Medical.GUI
         {
             this.controller = controller;
             toolStrip1.ImageList = imageList;
-            windowGUIController = new WindowGUIController(this, controller);
+            windowGUIController = new WindowGUIController(this, controller, shortcutController);
             layerGUIController = new LayerGUIController(this, controller);
+            navigationGUIController = new NavigationGUIController(this, controller, shortcutController);
         }
 
         public void setViewMode()
@@ -165,7 +145,6 @@ namespace Medical.GUI
         }
 
         #region App Menu
-
 
         void saveMenuItem_Click(object sender, EventArgs e)
         {
@@ -246,67 +225,12 @@ namespace Medical.GUI
 
         #region Window Management
 
-        private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.PresetWindows.setPresetSet("One Window");
-        }
-
-        private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.PresetWindows.setPresetSet("Two Windows");
-        }
-
-        private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.PresetWindows.setPresetSet("Three Windows");
-        }
-
-        private void fourWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.PresetWindows.setPresetSet("Four Windows");
-        }
-
-        void fourWindowShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            fourWindowsToolStripMenuItem_Click(null, null);
-        }
-
-        void threeWindowShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            threeWindowsToolStripMenuItem_Click(null, null);
-        }
-
-        void twoWindowShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            twoWindowsToolStripMenuItem_Click(null, null);
-        }
-
-        void oneWindowShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            oneWindowToolStripMenuItem_Click(null, null);
-        }
-
         private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controller.showOptions();
         }
 
         #endregion Window Management
-
-        #region Navigation
-
-        void showNavigationButton_Click(object sender, EventArgs e)
-        {
-            controller.ShowNavigation = showNavigationButton.Checked;
-        }
-
-        void navigationShortcut_Execute(ShortcutEventCommand shortcut)
-        {
-            showNavigationButton.Checked = !showNavigationButton.Checked;
-            showNavigationButton_Click(null, null);
-        }
-
-        #endregion Navigation
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {

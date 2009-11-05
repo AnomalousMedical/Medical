@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="GUI\GUIControls\LayerGUIMenu.cs" />
     <Compile Include="GUI\GUIControls\LayerGUISkullMenu.cs" />
+    <Compile Include="GUI\GUIControls\NavigationGUIController.cs" />
     <Compile Include="GUI\GUIControls\WindowGUIController.cs" />
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>

@@ -124,8 +124,8 @@
   <data name="clinicalRibbon.RibbonAppButton.AppButtonImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALCwAA
-        CwsBbQSEtwAABk5JREFUSEuVlHtMU1cYwNGwLC7LYua2yJLJFJmAgIDlIdQCFiiPUmQwQN5QXjqQZ4c8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALCgAA
+        CwoBv0NmUwAABk5JREFUSEuVlHtMU1cYwNGwLC7LYua2yJLJFJmAgIDlIdQCFiiPUmQwQN5QXjqQZ4c8
         y3NKAaFCAUuhBaGgBR+UCkUeFVEUCBMENnFOXTRmj+z9+EO/7+zebZoYZM6bnNzcnO/8ft93zznfGr0X
         PHYMi7Vvvqa/ft26V98iiGaE4KbHj2Gdvr7+D2vWrv3s8aNHdx6RV3/U6ibRm2Wht36DgZ7yzNDq1ECu
         y9NJT5a1Xbgfsz4+eM9y0j43khrlSTJivEhi8B4SG+BMov1ZJJzHvO/vzqjn7LYyeVGyer5u9k9juK42
@@ -155,11 +155,14 @@
         yf8G/wVxn4cg6nAxxAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="showNavigationCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
+  </metadata>
   <metadata name="showTeethCollisionCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>275, 17</value>
   </metadata>
   <metadata name="windowContextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>229, 56</value>
+    <value>425, 56</value>
   </metadata>
   <metadata name="oneWindowLayoutCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>489, 17</value>
@@ -171,7 +174,7 @@
     <value>909, 17</value>
   </metadata>
   <metadata name="fourWindowLayoutCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+    <value>213, 56</value>
   </metadata>
   <metadata name="kryptonManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>133, 17</value>
