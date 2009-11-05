@@ -60,6 +60,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AppButton {
+            get {
+                object obj = ResourceManager.GetObject("AppButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap articulometricsclinic {
             get {
                 object obj = ResourceManager.GetObject("articulometricsclinic", resourceCulture);
@@ -77,6 +84,132 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap clenchedmuscle {
             get {
                 object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersBottomTeethLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersBottomTeethLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersBottomTeethSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersBottomTeethSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersHyoidLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersHyoidLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersHyoidSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersHyoidSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersMandibleLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersMandibleLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersMandibleSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersMandibleSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersMuscleLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersMuscleLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersMuscleSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersMuscleSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSkinLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersSkinLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSkinSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersSkinSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSkullLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersSkullLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSkullSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersSkullSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSpineLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersSpineLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersSpineSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersSpineSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersTMJLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersTMJLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersTMJSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersTMJSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersTopTeethLarge {
+            get {
+                object obj = ResourceManager.GetObject("LayersTopTeethLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LayersTopTeethSmall {
+            get {
+                object obj = ResourceManager.GetObject("LayersTopTeethSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,13 +238,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap PlaybackButtons {
             get {
                 object obj = ResourceManager.GetObject("PlaybackButtons", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap skull {
-            get {
-                object obj = ResourceManager.GetObject("skull", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

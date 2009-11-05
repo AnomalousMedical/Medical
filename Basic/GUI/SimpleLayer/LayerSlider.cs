@@ -9,8 +9,6 @@ using System.Windows.Forms;
 
 namespace Medical.GUI
 {
-    public delegate void ChangeTransparency(float value);
-
     public partial class LayerSlider : UserControl
     {
         public event ChangeTransparency TransparencyChanged;

@@ -128,6 +128,7 @@ namespace Medical
         {
             Message msg = Message.Create(message.hwnd, message.message, message.wParam, message.lParam);
             ManualMessagePump.pumpMessage(ref msg);
+            ComponentFactory.Krypton.Toolkit.ManualMessagePump.pumpMessage(ref msg);
             if (PumpMessage != null)
             {
                 PumpMessage.Invoke(ref msg);

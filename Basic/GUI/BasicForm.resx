@@ -117,13 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="clinicalRibbon.RibbonAppButton.AppButtonImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        yf8G/wVxn4cg6nAxxAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="kryptonManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>133, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAA0AMDAQAAEABABoBgAA1gAAACAgEAABAAQA6AIAAD4HAAAYGBAAAQAEAOgBAAAmCgAAEBAQAAEA

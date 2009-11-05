@@ -10,6 +10,7 @@ using Medical.Controller;
 using System.IO;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
+using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {    
@@ -22,12 +23,14 @@ namespace Medical.GUI
         private ShortcutController shortcutController;
         private ToolStrip toolStrip1 = new ToolStrip();
         private ToolStripContainer toolStripContainer = new ToolStripContainer();
+        private LayerGUIController layerGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
             this.initialize(Text);
             this.shortcutController = shortcuts;
+            layerGUIController = new LayerGUIController(this);
 
             //navigationButton.ImageIndex = 5;
 
@@ -86,6 +89,7 @@ namespace Medical.GUI
             {
                 components.Dispose();
             }
+            layerGUIController.Dispose();
             openPatient.Dispose();
             savePatient.Dispose();
             base.Dispose(disposing);
@@ -149,6 +153,14 @@ namespace Medical.GUI
             get
             {
                 return dockPanel;
+            }
+        }
+
+        public LayerGUIController LayersTab
+        {
+            get
+            {
+                return layerGUIController;
             }
         }
 

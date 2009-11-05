@@ -118,20 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="skull" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\skull.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="clenchedmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clenchedmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="articulometricsclinic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\articulometricsclinic.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="neutralmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\neutralmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AppButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AppButton.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="openmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\openmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clenchedmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clenchedmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="PlaybackButtons" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\PlaybackButtons.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,7 +136,64 @@
   <data name="ArticulometricsSplash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ArticulometricsSplash.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="neutralmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\neutralmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="NavIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NavIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersBottomTeethLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersBottomTeethLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersBottomTeethSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersBottomTeethSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersHyoidLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersHyoidLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersHyoidSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersHyoidSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersMandibleLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersMandibleLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersMandibleSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersMandibleSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersMuscleLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersMuscleLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersMuscleSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersMuscleSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSkinLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSkinLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSkinSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSkinSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSkullLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSkullLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSkullSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSkullSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSpineLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSpineLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersSpineSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersSpineSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersTMJLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersTMJLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersTMJSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersTMJSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersTopTeethLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersTopTeethLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersTopTeethSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersTopTeethSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
