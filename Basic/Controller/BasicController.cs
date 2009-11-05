@@ -99,7 +99,6 @@ namespace Medical.Controller
             medicalController = new MedicalController();
             medicalController.intialize(basicForm);
             medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
-            basicForm.initialize(this, medicalController.ToolStripImages);
 
             splashScreen.stepProgress(10);
 
@@ -164,6 +163,8 @@ namespace Medical.Controller
             mriWizard = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
             distortionController.addDistortionWizard(mriWizard);
             basicForm.createDistortionMenu(distortionController.Wizards);
+
+            basicForm.initialize(this, medicalController.ToolStripImages);
 
             splashScreen.stepProgress(70);
 
@@ -404,6 +405,14 @@ namespace Medical.Controller
             get
             {
                 return windowPresetController;
+            }
+        }
+
+        public DrawingWindowController DrawingWindowController
+        {
+            get
+            {
+                return drawingWindowController;
             }
         }
     }

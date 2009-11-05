@@ -42,6 +42,7 @@
             this.exitMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.navigationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.displayTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.kryptonRibbonTab1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.kryptonContextMenuItems1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuRadioButton28 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
@@ -49,6 +50,7 @@
             this.kryptonContextMenuRadioButton29 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
             this.kryptonContextMenuItems2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuItem2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.twoWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.navigationOnScreenGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showNavigationButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -69,6 +71,22 @@
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.showTeethCollisionCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.windowPropertiesGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.backgroundColorButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
+            this.kryptonRibbonGroup1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.kryptonRibbonGroupButton1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.oneWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.threeWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.fourWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.windowContextMenu = new ComponentFactory.Krypton.Toolkit.KryptonContextMenu();
+            this.kryptonContextMenuHeading1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuHeading();
+            this.kryptonContextMenuItems3 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
+            this.kryptonContextMenuItem3 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.kryptonContextMenuItem4 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.kryptonContextMenuItem5 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.kryptonContextMenuItem6 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             this.SuspendLayout();
@@ -159,7 +177,8 @@
             this.clinicalRibbon.RibbonAppButton.AppButtonShowRecentDocs = false;
             this.clinicalRibbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.navigationTab,
-            this.displayTab});
+            this.displayTab,
+            this.kryptonRibbonTab1});
             this.clinicalRibbon.SelectedTab = this.displayTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(711, 143);
             this.clinicalRibbon.TabIndex = 15;
@@ -193,6 +212,12 @@
             this.teethGroup});
             this.displayTab.Text = "Display";
             // 
+            // kryptonRibbonTab1
+            // 
+            this.kryptonRibbonTab1.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.windowPropertiesGroup,
+            this.kryptonRibbonGroup1});
+            // 
             // kryptonManager
             // 
             this.kryptonManager.GlobalPaletteMode = ComponentFactory.Krypton.Toolkit.PaletteModeManager.ProfessionalSystem;
@@ -212,6 +237,11 @@
             // kryptonContextMenuItem2
             // 
             this.kryptonContextMenuItem2.Text = "Menu Item";
+            // 
+            // twoWindowLayoutCommand
+            // 
+            this.twoWindowLayoutCommand.ImageLarge = global::Medical.Properties.Resources.TwoWindowLayout;
+            this.twoWindowLayoutCommand.Text = "Two Windows";
             // 
             // navigationOnScreenGroup
             // 
@@ -347,6 +377,98 @@
             this.showTeethCollisionCommand.Text = "Show Teeth Collision";
             this.showTeethCollisionCommand.TextLine1 = "Show Teeth Collision";
             // 
+            // windowPropertiesGroup
+            // 
+            this.windowPropertiesGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple3});
+            this.windowPropertiesGroup.TextLine1 = "Properties";
+            // 
+            // kryptonRibbonGroupTriple3
+            // 
+            this.kryptonRibbonGroupTriple3.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.backgroundColorButton});
+            // 
+            // backgroundColorButton
+            // 
+            this.backgroundColorButton.RecentColors = new System.Drawing.Color[0];
+            this.backgroundColorButton.SelectedColor = System.Drawing.Color.Black;
+            this.backgroundColorButton.TextLine1 = "Background Color";
+            // 
+            // kryptonRibbonGroup1
+            // 
+            this.kryptonRibbonGroup1.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple4});
+            this.kryptonRibbonGroup1.TextLine1 = "Layout";
+            // 
+            // kryptonRibbonGroupTriple4
+            // 
+            this.kryptonRibbonGroupTriple4.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.kryptonRibbonGroupButton1});
+            // 
+            // kryptonRibbonGroupButton1
+            // 
+            this.kryptonRibbonGroupButton1.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.DropDown;
+            this.kryptonRibbonGroupButton1.KryptonContextMenu = this.windowContextMenu;
+            this.kryptonRibbonGroupButton1.TextLine1 = "Window Layout";
+            // 
+            // oneWindowLayoutCommand
+            // 
+            this.oneWindowLayoutCommand.ImageLarge = global::Medical.Properties.Resources.OneWindowLayout;
+            this.oneWindowLayoutCommand.Text = "One Window";
+            // 
+            // threeWindowLayoutCommand
+            // 
+            this.threeWindowLayoutCommand.ImageLarge = global::Medical.Properties.Resources.ThreeWindowLayout;
+            this.threeWindowLayoutCommand.Text = "Three Windows";
+            // 
+            // fourWindowLayoutCommand
+            // 
+            this.fourWindowLayoutCommand.ImageLarge = global::Medical.Properties.Resources.FourWindowLayout;
+            this.fourWindowLayoutCommand.Text = "Four Windows";
+            // 
+            // windowContextMenu
+            // 
+            this.windowContextMenu.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuHeading1,
+            this.kryptonContextMenuItems3});
+            // 
+            // kryptonContextMenuHeading1
+            // 
+            this.kryptonContextMenuHeading1.ExtraText = "";
+            this.kryptonContextMenuHeading1.Text = "Layouts";
+            // 
+            // kryptonContextMenuItems3
+            // 
+            this.kryptonContextMenuItems3.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuItem3,
+            this.kryptonContextMenuItem4,
+            this.kryptonContextMenuItem5,
+            this.kryptonContextMenuItem6});
+            // 
+            // kryptonContextMenuItem3
+            // 
+            this.kryptonContextMenuItem3.KryptonCommand = this.oneWindowLayoutCommand;
+            this.kryptonContextMenuItem3.LargeKryptonCommandImage = true;
+            this.kryptonContextMenuItem3.Text = "Menu Item";
+            // 
+            // kryptonContextMenuItem4
+            // 
+            this.kryptonContextMenuItem4.KryptonCommand = this.twoWindowLayoutCommand;
+            this.kryptonContextMenuItem4.LargeKryptonCommandImage = true;
+            this.kryptonContextMenuItem4.Text = "Menu Item";
+            // 
+            // kryptonContextMenuItem5
+            // 
+            this.kryptonContextMenuItem5.KryptonCommand = this.threeWindowLayoutCommand;
+            this.kryptonContextMenuItem5.LargeKryptonCommandImage = true;
+            this.kryptonContextMenuItem5.Text = "Menu Item";
+            // 
+            // kryptonContextMenuItem6
+            // 
+            this.kryptonContextMenuItem6.KryptonCommand = this.fourWindowLayoutCommand;
+            this.kryptonContextMenuItem6.LargeKryptonCommandImage = true;
+            this.kryptonContextMenuItem6.Text = "Menu Item";
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,6 +528,24 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup teethGroup;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple2;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton showTeethCollisionButton;
-        private ComponentFactory.Krypton.Toolkit.KryptonCommand showTeethCollisionCommand;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab kryptonRibbonTab1;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup windowPropertiesGroup;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple3;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup1;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple4;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton1;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenu windowContextMenu;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuHeading kryptonContextMenuHeading1;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems kryptonContextMenuItems3;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem3;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem4;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem5;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem6;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand oneWindowLayoutCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand twoWindowLayoutCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand threeWindowLayoutCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand fourWindowLayoutCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand showTeethCollisionCommand;
     }
 }

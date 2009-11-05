@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ComponentFactory.Krypton.Ribbon;
+using ComponentFactory.Krypton.Toolkit;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -20,7 +22,9 @@ namespace Medical.GUI
         private LayerGUIMenu topTeethMenu;
         private LayerGUIMenu bottomTeethMenu;
 
-        public LayerGUIController(BasicForm basicForm)
+        private KryptonCommand showTeethCollisionCommand;
+
+        public LayerGUIController(BasicForm basicForm, BasicController basicController)
         {
             skinMenu = new LayerGUIMenu(basicForm.layersSkinButton);
             skinMenu.TransparencyChanged += changeSkinTransparency;
@@ -48,6 +52,9 @@ namespace Medical.GUI
 
             bottomTeethMenu = new LayerGUIMenu(basicForm.layersBottomTeethButton);
             bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
+
+            showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
+            showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
         }
 
         public void Dispose()
@@ -65,6 +72,11 @@ namespace Medical.GUI
             {
                 layerController = value;
             }
+        }
+
+        void showTeethCollisionCommand_Execute(object sender, EventArgs e)
+        {
+            TeethController.HighlightContacts = showTeethCollisionCommand.Checked;
         }
 
         #region Transparency Helper Functions

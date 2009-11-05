@@ -88,6 +88,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap FourWindowLayout {
+            get {
+                object obj = ResourceManager.GetObject("FourWindowLayout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap LayersBottomTeethLarge {
             get {
                 object obj = ResourceManager.GetObject("LayersBottomTeethLarge", resourceCulture);
@@ -228,6 +235,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap OneWindowLayout {
+            get {
+                object obj = ResourceManager.GetObject("OneWindowLayout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap openmuscle {
             get {
                 object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
@@ -252,6 +266,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap TeethCollisionIconSmall {
             get {
                 object obj = ResourceManager.GetObject("TeethCollisionIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ThreeWindowLayout {
+            get {
+                object obj = ResourceManager.GetObject("ThreeWindowLayout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TwoWindowLayout {
+            get {
+                object obj = ResourceManager.GetObject("TwoWindowLayout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

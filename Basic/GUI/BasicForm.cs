@@ -24,13 +24,13 @@ namespace Medical.GUI
         private ToolStrip toolStrip1 = new ToolStrip();
         private ToolStripContainer toolStripContainer = new ToolStripContainer();
         private LayerGUIController layerGUIController;
+        private WindowGUIController windowGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
             this.initialize(Text);
             this.shortcutController = shortcuts;
-            layerGUIController = new LayerGUIController(this);
 
             //navigationButton.ImageIndex = 5;
 
@@ -77,9 +77,6 @@ namespace Medical.GUI
 
             //Navigation
             showNavigationButton.Click += new EventHandler(showNavigationButton_Click);
-
-            //Display
-            showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
         }
 
         /// <summary>
@@ -102,6 +99,8 @@ namespace Medical.GUI
         {
             this.controller = controller;
             toolStrip1.ImageList = imageList;
+            windowGUIController = new WindowGUIController(this, controller);
+            layerGUIController = new LayerGUIController(this, controller);
         }
 
         public void setViewMode()
@@ -156,14 +155,6 @@ namespace Medical.GUI
             get
             {
                 return dockPanel;
-            }
-        }
-
-        public LayerGUIController LayersTab
-        {
-            get
-            {
-                return layerGUIController;
             }
         }
 
@@ -316,15 +307,6 @@ namespace Medical.GUI
         }
 
         #endregion Navigation
-
-        #region Display
-
-        void showTeethCollisionCommand_Execute(object sender, EventArgs e)
-        {
-            TeethController.HighlightContacts = showTeethCollisionCommand.Checked;
-        }
-
-        #endregion
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {

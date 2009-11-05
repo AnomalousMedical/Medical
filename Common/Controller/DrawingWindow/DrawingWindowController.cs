@@ -20,6 +20,7 @@ namespace Medical
     {
         public event DrawingWindowEvent WindowCreated;
         public event DrawingWindowEvent WindowDestroyed;
+        public event DrawingWindowEvent ActiveWindowChanged;
 
         private Dictionary<String, DrawingWindowHost> cameras = new Dictionary<String, DrawingWindowHost>();
         private bool camerasActive = false;
@@ -234,6 +235,10 @@ namespace Medical
             if (changed != null)
             {
                 activeDrawingWindow = changed;
+                if (ActiveWindowChanged != null)
+                {
+                    ActiveWindowChanged.Invoke(activeDrawingWindow.DrawingWindow);
+                }
             }
         }
 
