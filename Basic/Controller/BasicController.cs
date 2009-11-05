@@ -123,11 +123,6 @@ namespace Medical.Controller
             //Configure view mode
             viewMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
 
-            PictureControl pictureControl = new PictureControl();
-            pictureControl.initialize(imageRenderer, drawingWindowController);
-            pictureControl.createShortcuts(shortcutController);
-            viewMode.addGUIElement(pictureControl);
-
             stateGUI = new MedicalStateGUI();
             stateGUI.initialize(stateController);
             viewMode.addGUIElement(stateGUI);
@@ -413,6 +408,14 @@ namespace Medical.Controller
             get
             {
                 return drawingWindowController;
+            }
+        }
+
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return imageRenderer;
             }
         }
     }

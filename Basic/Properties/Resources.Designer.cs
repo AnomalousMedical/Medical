@@ -109,6 +109,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ImageResolutionIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("ImageResolutionIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ImageResolutionIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("ImageResolutionIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap LayersBottomTeethLarge {
             get {
                 object obj = ResourceManager.GetObject("LayersBottomTeethLarge", resourceCulture);
@@ -287,6 +301,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap PlaybackButtons {
             get {
                 object obj = ResourceManager.GetObject("PlaybackButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RenderIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("RenderIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RenderIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("RenderIconSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

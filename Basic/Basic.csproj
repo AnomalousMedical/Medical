@@ -93,6 +93,7 @@
     <Compile Include="GUI\GUIControls\LayerGUIMenu.cs" />
     <Compile Include="GUI\GUIControls\LayerGUISkullMenu.cs" />
     <Compile Include="GUI\GUIControls\NavigationGUIController.cs" />
+    <Compile Include="GUI\GUIControls\RenderGUIController.cs" />
     <Compile Include="GUI\GUIControls\WindowGUIController.cs" />
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>
@@ -218,6 +219,10 @@
     <None Include="Resources\WindowLayoutIconSmall.png" />
     <None Include="Resources\NavIconLarge.png" />
     <None Include="Resources\NavIconSmall.png" />
+    <None Include="Resources\ImageResolutionIconLarge.png" />
+    <None Include="Resources\ImageResolutionIconSmall.png" />
+    <None Include="Resources\RenderIconLarge.png" />
+    <None Include="Resources\RenderIconSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

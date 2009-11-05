@@ -26,6 +26,7 @@ namespace Medical.GUI
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;
         private NavigationGUIController navigationGUIController;
+        private RenderGUIController renderGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
@@ -81,6 +82,7 @@ namespace Medical.GUI
             windowGUIController = new WindowGUIController(this, controller, shortcutController);
             layerGUIController = new LayerGUIController(this, controller);
             navigationGUIController = new NavigationGUIController(this, controller, shortcutController);
+            renderGUIController = new RenderGUIController(this, controller, shortcutController);
         }
 
         public void setViewMode()
