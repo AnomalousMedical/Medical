@@ -139,10 +139,6 @@ namespace Medical.Controller
             muscleControl = new MuscleControl();
             viewMode.addGUIElement(muscleControl);
 
-            SimpleLayerControl simpleLayer = new SimpleLayerControl();
-            simpleLayer.setupShortcuts(shortcutController);
-            viewMode.addGUIElement(simpleLayer);
-
             simpleMandibleControl = new SimpleMandibleControl();
             viewMode.addGUIElement(simpleMandibleControl);
 

@@ -80,7 +80,7 @@ namespace Medical.GUI
             this.controller = controller;
             toolStrip1.ImageList = imageList;
             windowGUIController = new WindowGUIController(this, controller, shortcutController);
-            layerGUIController = new LayerGUIController(this, controller);
+            layerGUIController = new LayerGUIController(this, controller, shortcutController);
             navigationGUIController = new NavigationGUIController(this, controller, shortcutController);
             renderGUIController = new RenderGUIController(this, controller, shortcutController);
         }

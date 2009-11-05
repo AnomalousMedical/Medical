@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
+using Medical.Controller;
+using System.Windows.Forms;
 
 namespace Medical.GUI
 {
@@ -47,9 +49,21 @@ namespace Medical.GUI
             mainButton.KryptonContextMenu = contextMenu;
         }
 
+        public virtual void createShortcuts(String name, ShortcutGroup shortcutGroup, Keys key)
+        {
+            ShortcutEventCommand shortcut = new ShortcutEventCommand(name, key, false);
+            shortcut.Execute += new ShortcutEventCommand.ExecuteEvent(shortcut_Execute);
+            shortcutGroup.addShortcut(shortcut);
+        }
+
         public void Dispose()
         {
             contextMenu.Dispose();
+        }
+
+        void shortcut_Execute(ShortcutEventCommand shortcut)
+        {
+            mainButton_Click(null, null);
         }
 
         void mainButton_Click(object sender, EventArgs e)

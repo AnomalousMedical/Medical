@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
+using System.Windows.Forms;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -25,6 +27,18 @@ namespace Medical.GUI
             showEminence.Checked = true;
             showEminence.CheckedChanged += new EventHandler(showEminence_CheckedChanged);
             contextMenu.Items.Add(showEminence);
+        }
+
+        public void createEminanceShortcut(String name, ShortcutGroup shortcutGroup, Keys key)
+        {
+            ShortcutEventCommand eminanceShortcut = new ShortcutEventCommand(name, key, false);
+            eminanceShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(eminanceShortcut_Execute);
+            shortcutGroup.addShortcut(eminanceShortcut);
+        }
+
+        void eminanceShortcut_Execute(ShortcutEventCommand shortcut)
+        {
+            showEminence.Checked = !showEminence.Checked;
         }
 
         public bool ShowEminance
