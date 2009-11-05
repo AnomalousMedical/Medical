@@ -10,8 +10,6 @@ namespace Medical.GUI
 {
     public class LayerGUIController : IDisposable
     {
-        private LayerController layerController;
-
         private LayerGUIMenu skinMenu;
         private LayerGUIMenu musclesMenu;
         private LayerGUISkullMenu skullMenu;
@@ -60,18 +58,6 @@ namespace Medical.GUI
         public void Dispose()
         {
             skinMenu.Dispose();
-        }
-
-        public LayerController LayerController
-        {
-            get
-            {
-                return layerController;
-            }
-            set
-            {
-                layerController = value;
-            }
         }
 
         void showTeethCollisionCommand_Execute(object sender, EventArgs e)
