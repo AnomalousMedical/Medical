@@ -56,13 +56,13 @@ namespace Medical.GUI
             hyoidMenu.createShortcuts("HyoidToggle", group, Keys.F8);
             hyoidMenu.TransparencyChanged += changeHyoidTransparency;
 
-            //topTeethMenu = new LayerGUIMenu(basicForm.layersTopTeethButton);
+            topTeethMenu = new LayerGUIMenu(basicForm.layersTopTeethButton);
             //topTeethMenu.createShortcuts("TopTeethToggle", group, Keys.F9);
-            //topTeethMenu.TransparencyChanged += changeTopToothTransparency;
+            topTeethMenu.TransparencyChanged += changeTopToothTransparency;
 
-            //bottomTeethMenu = new LayerGUIMenu(basicForm.layersBottomTeethButton);
+            bottomTeethMenu = new LayerGUIMenu(basicForm.layersBottomTeethButton);
             //bottomTeethMenu.createShortcuts("BottomTeethToggle", group, Keys.F10);
-            //bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
+            bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
 
             showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
             showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);

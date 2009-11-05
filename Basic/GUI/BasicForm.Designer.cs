@@ -194,7 +194,7 @@
             this.displayTab,
             this.kryptonRibbonTab1});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.kryptonRibbonTab1;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(711, 143);
             this.clinicalRibbon.TabIndex = 15;
             // 
