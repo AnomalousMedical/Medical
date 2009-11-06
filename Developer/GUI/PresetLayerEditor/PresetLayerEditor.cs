@@ -176,5 +176,20 @@ namespace Medical.GUI
                 thumbnailPanel.BackgroundImage = value;
             }
         }
+
+        private void mergeButton_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                try
+                {
+                    layerController.mergeLayerSet(openFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, String.Format("An error occured when saving the layer states.\n{0}", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

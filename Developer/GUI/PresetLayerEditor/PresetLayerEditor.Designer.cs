@@ -41,6 +41,7 @@
             this.thumbnailPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.renderThumbnailButton = new System.Windows.Forms.Button();
+            this.mergeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // layerList
@@ -158,13 +159,24 @@
             this.renderThumbnailButton.UseVisualStyleBackColor = true;
             this.renderThumbnailButton.Click += new System.EventHandler(this.renderThumbnailButton_Click);
             // 
+            // mergeButton
+            // 
+            this.mergeButton.Location = new System.Drawing.Point(9, 440);
+            this.mergeButton.Name = "mergeButton";
+            this.mergeButton.Size = new System.Drawing.Size(75, 23);
+            this.mergeButton.TabIndex = 11;
+            this.mergeButton.Text = "Merge";
+            this.mergeButton.UseVisualStyleBackColor = true;
+            this.mergeButton.Click += new System.EventHandler(this.mergeButton_Click);
+            // 
             // PresetLayerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 0;
             this.ButtonText = "Preset Layer Editor";
-            this.ClientSize = new System.Drawing.Size(178, 440);
+            this.ClientSize = new System.Drawing.Size(178, 471);
+            this.Controls.Add(this.mergeButton);
             this.Controls.Add(this.renderThumbnailButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.thumbnailPanel);
@@ -201,5 +213,6 @@
         private System.Windows.Forms.Panel thumbnailPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button renderThumbnailButton;
+        private System.Windows.Forms.Button mergeButton;
     }
 }

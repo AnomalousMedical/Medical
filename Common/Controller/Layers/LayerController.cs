@@ -61,6 +61,39 @@ namespace Medical
             }
         }
 
+        public void mergeLayerSet(String filename)
+        {
+            if (filename != lastLayersFile)
+            {
+                lastLayersFile = filename;
+
+                using (Archive archive = FileSystem.OpenArchive(filename))
+                {
+                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
+                    {
+                        using (LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet)
+                        {
+                            if (states == null)
+                            {
+                                throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
+                            }
+                            foreach (String name in states.LayerStateNames)
+                            {
+                                if (!currentLayers.hasState(name))
+                                {
+                                    currentLayers.addState(states.getState(name));
+                                }
+                            }
+                        }
+                        if (LayerStateSetChanged != null)
+                        {
+                            LayerStateSetChanged.Invoke(this);
+                        }
+                    }
+                }
+            }
+        }
+
         public LayerStateSet CurrentLayers
         {
             get
@@ -69,6 +102,10 @@ namespace Medical
             }
             set
             {
+                if (currentLayers != null)
+                {
+                    currentLayers.Dispose();
+                }
                 currentLayers = value;
                 if (LayerStateSetChanged != null)
                 {
