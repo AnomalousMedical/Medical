@@ -152,7 +152,7 @@ namespace Medical.GUI
 
         private void renderThumbnailButton_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = imageRenderer.renderImage(thumbnailPanel.Width, thumbnailPanel.Height, true, UGLY_BACK_COLOR);
+            Bitmap bitmap = imageRenderer.renderImage(thumbnailPanel.Width, thumbnailPanel.Height, true, UGLY_BACK_COLOR, 8);
             ThumbnailImage = bitmap;
         }
 

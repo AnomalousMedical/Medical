@@ -6,9 +6,19 @@ using System.Drawing;
 using OgrePlugin;
 using OgreWrapper;
 using System.Drawing.Imaging;
+using System.Drawing.Drawing2D;
 
 namespace Medical
 {
+    public class ImageException : Exception
+    {
+        public ImageException(String message)
+            :base(message)
+        {
+
+        }
+    }
+
     public class ImageRenderer
     {
         private MedicalController controller;
@@ -30,6 +40,34 @@ namespace Medical
         {
             DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
             return renderImage(width, height, makeBGTransparent, drawingWindow.DrawingWindow.BackColor);
+        }
+
+        public Bitmap renderImage(int width, int height, bool makeBGTransparent, int antiAliasMode)
+        {
+            DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
+            return renderImage(width, height, makeBGTransparent, drawingWindow.DrawingWindow.BackColor, antiAliasMode);
+        }
+
+        public Bitmap renderImage(int width, int height, bool makeBGTransparent, Color backColor, int antiAliasMode)
+        {
+            if (antiAliasMode < 1)
+            {
+                throw new ImageException("Cannot set an anti aliasing mode of less than 1.");
+            }
+            int aaWidth = width * antiAliasMode;
+            int aaHeight = height * antiAliasMode;
+            using (Bitmap largeImage = renderImage(aaWidth, aaHeight, makeBGTransparent, backColor))
+            {
+                Bitmap smallImage = new Bitmap(width, height);
+                using (Graphics graph = Graphics.FromImage(smallImage))
+                {
+                    graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                    graph.CompositingQuality = CompositingQuality.HighQuality;
+                    graph.SmoothingMode = SmoothingMode.AntiAlias;
+                    graph.DrawImage(largeImage, new Rectangle(0, 0, width, height));
+                }
+                return smallImage;
+            }
         }
 
         public Bitmap renderImage(int width, int height, bool makeBGTransparent, Color backColor)
