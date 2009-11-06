@@ -31,7 +31,6 @@
             this.layerList = new System.Windows.Forms.ListBox();
             this.addButton = new System.Windows.Forms.Button();
             this.removeButton = new System.Windows.Forms.Button();
-            this.previewButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.updateButton = new System.Windows.Forms.Button();
@@ -72,16 +71,6 @@
             this.removeButton.Text = "Remove";
             this.removeButton.UseVisualStyleBackColor = true;
             this.removeButton.Click += new System.EventHandler(this.removeButton_Click);
-            // 
-            // previewButton
-            // 
-            this.previewButton.Location = new System.Drawing.Point(92, 273);
-            this.previewButton.Name = "previewButton";
-            this.previewButton.Size = new System.Drawing.Size(75, 23);
-            this.previewButton.TabIndex = 3;
-            this.previewButton.Text = "Preview";
-            this.previewButton.UseVisualStyleBackColor = true;
-            this.previewButton.Click += new System.EventHandler(this.previewButton_Click);
             // 
             // saveButton
             // 
@@ -126,7 +115,7 @@
             // hiddenCheckBox
             // 
             this.hiddenCheckBox.AutoSize = true;
-            this.hiddenCheckBox.Location = new System.Drawing.Point(13, 253);
+            this.hiddenCheckBox.Location = new System.Drawing.Point(75, 300);
             this.hiddenCheckBox.Name = "hiddenCheckBox";
             this.hiddenCheckBox.Size = new System.Drawing.Size(60, 17);
             this.hiddenCheckBox.TabIndex = 7;
@@ -151,11 +140,11 @@
             // 
             // renderThumbnailButton
             // 
-            this.renderThumbnailButton.Location = new System.Drawing.Point(13, 371);
+            this.renderThumbnailButton.Location = new System.Drawing.Point(7, 371);
             this.renderThumbnailButton.Name = "renderThumbnailButton";
-            this.renderThumbnailButton.Size = new System.Drawing.Size(107, 23);
+            this.renderThumbnailButton.Size = new System.Drawing.Size(67, 23);
             this.renderThumbnailButton.TabIndex = 10;
-            this.renderThumbnailButton.Text = "Render Thumbnail";
+            this.renderThumbnailButton.Text = "Render";
             this.renderThumbnailButton.UseVisualStyleBackColor = true;
             this.renderThumbnailButton.Click += new System.EventHandler(this.renderThumbnailButton_Click);
             // 
@@ -184,7 +173,6 @@
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.updateButton);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.previewButton);
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.layerList);
@@ -203,7 +191,6 @@
         private System.Windows.Forms.ListBox layerList;
         private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Button removeButton;
-        private System.Windows.Forms.Button previewButton;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.Button updateButton;

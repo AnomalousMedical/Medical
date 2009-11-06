@@ -60,6 +60,8 @@ namespace Medical.GUI
                 {
                     ThumbnailImage = null;
                 }
+
+                layerController.applyLayerState(name);
             }
         }
 
@@ -113,15 +115,6 @@ namespace Medical.GUI
                 {
                     ThumbnailImage = null;
                 }
-            }
-        }
-
-        private void previewButton_Click(object sender, EventArgs e)
-        {
-            if (layerList.SelectedItem != null)
-            {
-                String name = layerList.SelectedItem.ToString();
-                layerController.applyLayerState(name);
             }
         }
 
