@@ -41,6 +41,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.renderThumbnailButton = new System.Windows.Forms.Button();
             this.mergeButton = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // layerList
@@ -124,7 +126,7 @@
             // 
             // thumbnailPanel
             // 
-            this.thumbnailPanel.Location = new System.Drawing.Point(16, 317);
+            this.thumbnailPanel.Location = new System.Drawing.Point(0, 0);
             this.thumbnailPanel.Name = "thumbnailPanel";
             this.thumbnailPanel.Size = new System.Drawing.Size(48, 48);
             this.thumbnailPanel.TabIndex = 8;
@@ -158,6 +160,16 @@
             this.mergeButton.UseVisualStyleBackColor = true;
             this.mergeButton.Click += new System.EventHandler(this.mergeButton_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.thumbnailPanel);
+            this.panel1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.panel1.Location = new System.Drawing.Point(16, 317);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(52, 52);
+            this.panel1.TabIndex = 13;
+            // 
             // PresetLayerEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,10 +177,10 @@
             this.ButtonImageIndex = 0;
             this.ButtonText = "Preset Layer Editor";
             this.ClientSize = new System.Drawing.Size(178, 471);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.mergeButton);
             this.Controls.Add(this.renderThumbnailButton);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.thumbnailPanel);
             this.Controls.Add(this.hiddenCheckBox);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.updateButton);
@@ -181,6 +193,7 @@
             this.Name = "PresetLayerEditor";
             this.Text = "Preset Layer Editor";
             this.ToolStripName = "Editing";
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,5 +214,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button renderThumbnailButton;
         private System.Windows.Forms.Button mergeButton;
+        private System.Windows.Forms.Panel panel1;
     }
 }

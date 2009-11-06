@@ -23,6 +23,17 @@ namespace Medical
 
         public Bitmap renderImage(int width, int height)
         {
+            return renderImage(width, height, false);
+        }
+
+        public Bitmap renderImage(int width, int height, bool makeBGTransparent)
+        {
+            DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
+            return renderImage(width, height, makeBGTransparent, drawingWindow.DrawingWindow.BackColor);
+        }
+
+        public Bitmap renderImage(int width, int height, bool makeBGTransparent, Color backColor)
+        {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
             DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
             if (sceneManager != null && drawingWindow != null)
@@ -52,7 +63,7 @@ namespace Medical
                         Light light = sceneManager.SceneManager.createLight("__PictureCameraLight");
                         node.attachObject(light);
                         Viewport viewport = renderTexture.addViewport(camera);
-                        viewport.setBackgroundColor(Engine.Color.FromARGB(drawingWindow.DrawingWindow.BackColor.ToArgb()));
+                        viewport.setBackgroundColor(Engine.Color.FromARGB(backColor.ToArgb()));
 
                         if (watermark != null)
                         {
@@ -82,6 +93,11 @@ namespace Medical
                         sceneManager.SceneManager.destroyLight(light);
                         sceneManager.SceneManager.destroySceneNode(node);
                         sceneManager.SceneManager.destroyCamera(camera);
+
+                        if (makeBGTransparent)
+                        {
+                            bitmap.MakeTransparent(backColor);
+                        }
 
                         return bitmap;
                     }
