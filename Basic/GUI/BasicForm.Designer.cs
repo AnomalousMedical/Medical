@@ -46,6 +46,8 @@
             this.showNavigationButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.showNavigationCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.displayTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.predefinedLayerGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.predefinedLayerGallery = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupGallery();
             this.kryptonRibbonGroup2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.customLayersButtons1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.layersSkinButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -249,9 +251,21 @@
             // displayTab
             // 
             this.displayTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.predefinedLayerGroup,
             this.kryptonRibbonGroup2,
             this.teethGroup});
             this.displayTab.Text = "Display";
+            // 
+            // predefinedLayerGroup
+            // 
+            this.predefinedLayerGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.predefinedLayerGallery});
+            this.predefinedLayerGroup.TextLine1 = "Predefined";
+            // 
+            // predefinedLayerGallery
+            // 
+            this.predefinedLayerGallery.ImageList = null;
+            this.predefinedLayerGallery.TextLine1 = "Predefined Layers";
             // 
             // kryptonRibbonGroup2
             // 
@@ -695,5 +709,7 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown renderHeightUpDown;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton renderButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand renderCommand;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup predefinedLayerGroup;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupGallery predefinedLayerGallery;
     }
 }

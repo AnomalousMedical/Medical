@@ -6,6 +6,7 @@ using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using Medical.Controller;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -22,6 +23,11 @@ namespace Medical.GUI
         private LayerGUIMenu bottomTeethMenu;
 
         private KryptonCommand showTeethCollisionCommand;
+
+        private LayerController layerController;
+        private KryptonRibbonGroupGallery predefinedLayerGallery;
+        private ImageList predefinedImageList;
+        private List<String> stateIndexes = new List<string>();
 
         public LayerGUIController(BasicForm basicForm, BasicController basicController, ShortcutController shortcuts)
         {
@@ -66,16 +72,46 @@ namespace Medical.GUI
 
             showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
             showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
+
+            //Predefined layers
+            layerController = basicController.LayerController;
+            layerController.LayerStateSetChanged += new LayerControllerEvent(LayerController_LayerStateSetChanged);
+            predefinedImageList = new ImageList();
+            predefinedImageList.ColorDepth = ColorDepth.Depth32Bit;
+            predefinedImageList.ImageSize = new Size(48, 48);
+            predefinedLayerGallery = basicForm.predefinedLayerGallery;
+            predefinedLayerGallery.ImageList = predefinedImageList;
+            predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
         }
 
         public void Dispose()
         {
             skinMenu.Dispose();
+            predefinedImageList.Dispose();
         }
 
         void showTeethCollisionCommand_Execute(object sender, EventArgs e)
         {
             TeethController.HighlightContacts = showTeethCollisionCommand.Checked;
+        }
+
+        void LayerController_LayerStateSetChanged(LayerController controller)
+        {
+            predefinedImageList.Images.Clear();
+            stateIndexes.Clear();
+            foreach (LayerState state in controller.CurrentLayers.LayerStates)
+            {
+                if (!state.Hidden && state.Thumbnail != null)
+                {
+                    predefinedImageList.Images.Add(state.Thumbnail);
+                    stateIndexes.Add(state.Name);
+                }
+            }
+        }
+
+        void predefinedLayerGallery_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            layerController.applyLayerState(stateIndexes[predefinedLayerGallery.SelectedIndex]);
         }
 
         #region Transparency Helper Functions

@@ -414,5 +414,13 @@ namespace Medical.Controller
                 return imageRenderer;
             }
         }
+
+        public LayerController LayerController
+        {
+            get
+            {
+                return layerController;
+            }
+        }
     }
 }

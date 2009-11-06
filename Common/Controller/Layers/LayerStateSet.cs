@@ -56,7 +56,15 @@ namespace Medical
             {
                 return states.Keys;
             }
-        } 
+        }
+
+        public IEnumerable<LayerState> LayerStates
+        {
+            get
+            {
+                return states.Values;
+            }
+        }
 
         #region Saveable Members
 
