@@ -13,7 +13,7 @@ namespace Medical.GUI
 {
     public partial class PresetLayerEditor : GUIElement
     {
-        private static Color UGLY_BACK_COLOR = Color.FromArgb(255, 0, 128);
+        private static Color BACK_COLOR = Color.FromArgb(240, 240, 240);
 
         private LayerController layerController;
         private XmlSaver xmlSaver = new XmlSaver();
@@ -152,7 +152,7 @@ namespace Medical.GUI
 
         private void renderThumbnailButton_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = imageRenderer.renderImage(thumbnailPanel.Width, thumbnailPanel.Height, true, UGLY_BACK_COLOR, 8);
+            Bitmap bitmap = imageRenderer.renderImage(thumbnailPanel.Width, thumbnailPanel.Height, true, BACK_COLOR, 8);
             ThumbnailImage = bitmap;
         }
 
