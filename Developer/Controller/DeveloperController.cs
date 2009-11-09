@@ -162,6 +162,9 @@ namespace Medical.Controller
             NavigationStateSelector navEditor = new NavigationStateSelector(navigationController, drawingWindowController);
             guiElements.addGUIElement(navEditor);
 
+            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer);
+            guiElements.addGUIElement(menuEditor);
+
             options = new Options();
 
             splashScreen.stepProgress(70);

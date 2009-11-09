@@ -7,17 +7,21 @@ using Logging;
 
 namespace Medical
 {
-    public class NavigationStateSet
+    public class NavigationStateSet : IDisposable
     {
         private Dictionary<String, NavigationState> navigationStates = new Dictionary<String, NavigationState>();
-        private List<NavigationState> stateOrder = new List<NavigationState>();
+        private NavigationMenus menus = new NavigationMenus();
+
+        public void Dispose()
+        {
+            menus.Dispose();
+        }
 
         public void addState(NavigationState state)
         {
             if(!navigationStates.ContainsKey(state.Name))
             {
                 navigationStates.Add(state.Name, state);
-                stateOrder.Add(state);
             }
             else
             {
@@ -28,7 +32,6 @@ namespace Medical
         public void removeState(NavigationState state)
         {
             navigationStates.Remove(state.Name);
-            stateOrder.Remove(state);
             //break all links
             foreach (NavigationState breakLinkState in navigationStates.Values)
             {
@@ -45,14 +48,12 @@ namespace Medical
 
         public void moveState(NavigationState state, int newIndex)
         {
-            stateOrder.Remove(state);
-            stateOrder.Insert(newIndex, state);
+            
         }
 
         public void clearStates()
         {
             navigationStates.Clear();
-            stateOrder.Clear();
         }
 
         public NavigationState getState(String name)
@@ -70,7 +71,7 @@ namespace Medical
         {
             NavigationState closest = null;
             float closestDistanceSq = float.MaxValue;
-            foreach (NavigationState state in stateOrder)
+            foreach (NavigationState state in navigationStates.Values)
             {
                 float distanceSq = (position - state.Translation).length2();
                 if (distanceSq < closestDistanceSq)
@@ -86,7 +87,15 @@ namespace Medical
         {
             get
             {
-                return stateOrder;
+                return navigationStates.Values;
+            }
+        }
+
+        public NavigationMenus Menus
+        {
+            get
+            {
+                return menus;
             }
         }
     }

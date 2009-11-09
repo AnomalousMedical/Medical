@@ -34,6 +34,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ComponentFactory.Krypton.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>E:\Development\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Toolkit\bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
@@ -50,6 +54,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -95,6 +100,12 @@
     <Compile Include="GUI\NavigationEditor\NavigationEditor.Designer.cs">
       <DependentUpon>NavigationEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.Designer.cs">
+      <DependentUpon>NavigationMenuEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PicturePreviewPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,6 +140,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\NavigationEditor\NavigationEditor.resx">
       <DependentUpon>NavigationEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\NavigationEditor\NavigationMenuEditor.resx">
+      <DependentUpon>NavigationMenuEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\PicturePreviewPanel.resx">

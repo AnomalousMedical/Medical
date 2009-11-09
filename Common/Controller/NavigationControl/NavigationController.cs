@@ -137,6 +137,10 @@ namespace Medical
             {
                 if (navigationSet != value)
                 {
+                    if (navigationSet != null)
+                    {
+                        navigationSet.Dispose();
+                    }
                     navigationSet = value;
                     if (NavigationStateSetChanged != null)
                     {

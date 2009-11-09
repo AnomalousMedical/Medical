@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Engine;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Drawing;
+using Logging;
 
 namespace Medical
 {
@@ -21,6 +25,12 @@ namespace Medical
         private const String VISUAL_RADIUS = "VisualRadius";
         private const String HIDDEN = "IsHidden";
         private const String SHORTCUT_KEY = "ShortcutKey";
+        private const String THUMBNAIL = "Thumbnail";
+
+        private const String NAVIGATION_MENU = "NavigationMenu";
+        private const String NAVIGATION_MENU_ENTRY = "NavigationMenuEntry";
+        private const String TEXT = "Text";
+        private const String BITMAP_SIZE = "Size";
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -48,7 +58,46 @@ namespace Medical
                     xmlWriter.WriteEndElement();
                 }
             }
+            xmlWriter.WriteStartElement(NAVIGATION_MENU);
+            foreach (NavigationMenuEntry entry in set.Menus.ParentEntries)
+            {
+                WriteNavMenuEntry(xmlWriter, entry);
+            }
+            xmlWriter.WriteEndElement();
 
+            xmlWriter.WriteEndElement();
+        }
+
+        public static void WriteNavMenuEntry(XmlWriter xmlWriter, NavigationMenuEntry entry)
+        {
+            xmlWriter.WriteStartElement(NAVIGATION_MENU_ENTRY);
+            xmlWriter.WriteElementString(TEXT, entry.Text);
+            if (entry.Thumbnail != null)
+            {
+                xmlWriter.WriteStartElement(THUMBNAIL);
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    entry.Thumbnail.Save(memStream, ImageFormat.Png);
+                    byte[] buffer = memStream.GetBuffer();
+                    xmlWriter.WriteAttributeString(BITMAP_SIZE, buffer.Length.ToString());
+                    xmlWriter.WriteBinHex(buffer, 0, buffer.Length);
+                }
+                xmlWriter.WriteEndElement();
+            }
+            if (entry.SubEntries != null)
+            {
+                foreach (NavigationMenuEntry subEntry in entry.SubEntries)
+                {
+                    WriteNavMenuEntry(xmlWriter, subEntry);
+                }
+            }
+            if (entry.States != null)
+            {
+                foreach (NavigationState state in entry.States)
+                {
+                    xmlWriter.WriteElementString(NAVIGATION_STATE, state.Name);
+                }
+            }
             xmlWriter.WriteEndElement();
         }
 
@@ -66,6 +115,10 @@ namespace Medical
                     else if (xmlReader.Name == LINK)
                     {
                         readNavigationLink(set, xmlReader);
+                    }
+                    else if (xmlReader.Name == NAVIGATION_MENU)
+                    {
+                        readNavigationMenu(set, xmlReader);
                     }
                 }
             }
@@ -145,6 +198,55 @@ namespace Medical
             {
                 sourceState.addAdjacentState(destState, button, radius);
             }
+        }
+
+        public static void readNavigationMenu(NavigationStateSet navStateSet, XmlReader xmlReader)
+        {
+            while (!isEndElement(xmlReader, NAVIGATION_MENU) && xmlReader.Read())
+            {
+                if(isValidElement(xmlReader))
+                {
+                    if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
+                    {
+                        readNavigationMenuParentEntry(navStateSet.Menus, xmlReader);
+                    }
+                }
+            }
+        }
+
+        public static void readNavigationMenuParentEntry(NavigationMenus menu, XmlReader xmlReader)
+        {
+            menu.addParentEntry(readNavMenuEntryData(xmlReader));
+        }
+
+        private static NavigationMenuEntry readNavMenuEntryData(XmlReader xmlReader)
+        {
+            NavigationMenuEntry menuEntry = new NavigationMenuEntry("");
+            while (!isEndElement(xmlReader, NAVIGATION_MENU_ENTRY) && xmlReader.Read())
+            {
+                if (isValidElement(xmlReader))
+                {
+                    if (xmlReader.Name == TEXT)
+                    {
+                        menuEntry.Text = xmlReader.ReadElementContentAsString();
+                    }
+                    else if (xmlReader.Name == THUMBNAIL)
+                    {
+                        int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
+                        byte[] buffer = new byte[size];
+                        xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
+                        using (MemoryStream memStream = new MemoryStream(buffer))
+                        {
+                            menuEntry.Thumbnail = new Bitmap(memStream);
+                        }
+                    }
+                    else if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
+                    {
+                        menuEntry.addSubEntry(readNavMenuEntryData(xmlReader));
+                    }
+                }
+            }
+            return menuEntry;
         }
 
         private static bool isEndElement(XmlReader xmlReader, String elementName)
