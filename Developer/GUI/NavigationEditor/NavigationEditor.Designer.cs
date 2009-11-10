@@ -1,6 +1,6 @@
 ﻿namespace Medical.GUI
 {
-    partial class NavigationStateSelector
+    partial class NavigationEditor
     {
         /// <summary>
         /// Required designer variable.

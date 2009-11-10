@@ -13,7 +13,7 @@ using DragNDrop;
 
 namespace Medical.GUI
 {
-    public partial class NavigationStateSelector : GUIElement
+    public partial class NavigationEditor : GUIElement
     {
         private NavigationController navController;
         private DrawingWindowController drawingWindowController;
@@ -24,8 +24,9 @@ namespace Medical.GUI
 
         private NavigationLink currentLink;
         private ListViewItem currentLinkItem;
+        private List<NavigationState> selectedStates = new List<NavigationState>();
 
-        public NavigationStateSelector(NavigationController navController, DrawingWindowController drawingWindowController)
+        public NavigationEditor(NavigationController navController, DrawingWindowController drawingWindowController)
         {
             InitializeComponent();
             this.navController = navController;
@@ -49,6 +50,19 @@ namespace Medical.GUI
             foreach (FieldInfo fieldInfo in typeof(KeyCodes).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
                 keyCombo.Items.Add(fieldInfo.Name);
+            }
+        }
+
+        public IEnumerable<NavigationState> SelectedStates
+        {
+            get
+            {
+                selectedStates.Clear();
+                foreach(ListViewItem selected in navigationStateView.SelectedItems)
+                {
+                    selectedStates.Add(selected.Tag as NavigationState);
+                }
+                return selectedStates;
             }
         }
 

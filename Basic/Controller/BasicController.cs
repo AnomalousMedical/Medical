@@ -423,5 +423,13 @@ namespace Medical.Controller
                 return layerController;
             }
         }
+
+        public NavigationController NavigationController
+        {
+            get
+            {
+                return navigationController;
+            }
+        }
     }
 }

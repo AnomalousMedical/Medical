@@ -208,18 +208,18 @@ namespace Medical
                 {
                     if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
                     {
-                        readNavigationMenuParentEntry(navStateSet.Menus, xmlReader);
+                        readNavigationMenuParentEntry(navStateSet, xmlReader);
                     }
                 }
             }
         }
 
-        public static void readNavigationMenuParentEntry(NavigationMenus menu, XmlReader xmlReader)
+        public static void readNavigationMenuParentEntry(NavigationStateSet navStateSet, XmlReader xmlReader)
         {
-            menu.addParentEntry(readNavMenuEntryData(xmlReader));
+            navStateSet.Menus.addParentEntry(readNavMenuEntryData(navStateSet, xmlReader));
         }
 
-        private static NavigationMenuEntry readNavMenuEntryData(XmlReader xmlReader)
+        private static NavigationMenuEntry readNavMenuEntryData(NavigationStateSet navStateSet, XmlReader xmlReader)
         {
             NavigationMenuEntry menuEntry = new NavigationMenuEntry("");
             while (!isEndElement(xmlReader, NAVIGATION_MENU_ENTRY) && xmlReader.Read())
@@ -242,10 +242,23 @@ namespace Medical
                     }
                     else if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
                     {
-                        menuEntry.addSubEntry(readNavMenuEntryData(xmlReader));
+                        menuEntry.addSubEntry(readNavMenuEntryData(navStateSet, xmlReader));
+                    }
+                    else if (xmlReader.Name == NAVIGATION_STATE)
+                    {
+                        NavigationState state = navStateSet.getState(xmlReader.ReadElementContentAsString());
+                        if (state != null)
+                        {
+                            menuEntry.addNavigationState(state);
+                        }
+                        else
+                        {
+                            Log.Error("Cannot load state {0} into menu {1} because the state was not found.", xmlReader.ReadElementContentAsString(), menuEntry.Text);
+                        }
                     }
                 }
             }
+            xmlReader.Read();
             return menuEntry;
         }
 

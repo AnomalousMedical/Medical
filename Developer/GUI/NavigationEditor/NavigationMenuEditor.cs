@@ -16,11 +16,13 @@ namespace Medical.GUI
         private NavigationMenus menus;
         ImageRenderer imageRenderer;
         private Point mouseDownLoc;
+        private NavigationEditor navigationEditor;
 
-        public NavigationMenuEditor(NavigationController navController, ImageRenderer imageRenderer)
+        public NavigationMenuEditor(NavigationController navController, ImageRenderer imageRenderer, NavigationEditor navigationEditor)
         {
             InitializeComponent();
             this.navController = navController;
+            this.navigationEditor = navigationEditor;
             navController.NavigationStateSetChanged += new NavigationControllerEvent(navController_NavigationStateSetChanged);
             this.imageRenderer = imageRenderer;
             emptySpaceMenu.Opening += new CancelEventHandler(emptySpaceMenu_Opening);
@@ -177,7 +179,18 @@ namespace Medical.GUI
 
         private void addStatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            TreeNode parentNode = menuTree.SelectedNode;
+            NavigationMenuEntry entry = parentNode.Tag as NavigationMenuEntry;
+            if (entry != null)
+            {
+                foreach (NavigationState state in navigationEditor.SelectedStates)
+                {
+                    menus.addState(entry, state);
+                    TreeNode node = new TreeNode(state.Name);
+                    node.Tag = state;
+                    parentNode.Nodes.Add(node);
+                }
+            }
         }
 
         private void addSubEntryToolStripMenuItem_Click(object sender, EventArgs e)

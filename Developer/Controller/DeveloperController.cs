@@ -159,10 +159,10 @@ namespace Medical.Controller
             fossaPresetEditor.initialize(imageRenderer, stateController);
             guiElements.addGUIElement(fossaPresetEditor);
 
-            NavigationStateSelector navEditor = new NavigationStateSelector(navigationController, drawingWindowController);
+            NavigationEditor navEditor = new NavigationEditor(navigationController, drawingWindowController);
             guiElements.addGUIElement(navEditor);
 
-            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer);
+            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor);
             guiElements.addGUIElement(menuEditor);
 
             options = new Options();

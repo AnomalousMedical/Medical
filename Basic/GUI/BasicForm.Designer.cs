@@ -103,6 +103,7 @@
             this.kryptonContextMenuRadioButton29 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
             this.kryptonContextMenuItems2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuItem2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.viewGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             this.SuspendLayout();
@@ -195,7 +196,6 @@
             this.navigationTab,
             this.displayTab,
             this.kryptonRibbonTab1});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(711, 143);
             this.clinicalRibbon.TabIndex = 15;
@@ -219,7 +219,8 @@
             // navigationTab
             // 
             this.navigationTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
-            this.navigationOnScreenGroup});
+            this.navigationOnScreenGroup,
+            this.viewGroup});
             this.navigationTab.Text = "Navigation";
             // 
             // navigationOnScreenGroup
@@ -617,6 +618,10 @@
             // 
             this.kryptonContextMenuItem2.Text = "Menu Item";
             // 
+            // viewGroup
+            // 
+            this.viewGroup.TextLine1 = "Views";
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -711,5 +716,6 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand renderCommand;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup predefinedLayerGroup;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupGallery predefinedLayerGallery;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup viewGroup;
     }
 }
