@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using System.Drawing;
 
 namespace Medical
 {
-    public class NavigationState
+    public class NavigationState : IDisposable
     {
         private String name;
         private List<NavigationLink> adjacentStates = new List<NavigationLink>();
@@ -14,6 +15,7 @@ namespace Medical
         private Vector3 translation;
         private bool hidden;
         private KeyCodes shortcutKey = KeyCodes.None;
+        private Bitmap thumbnail = null;
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden)
         {
@@ -21,6 +23,14 @@ namespace Medical
             this.translation = translation;
             this.lookAt = lookAt;
             this.hidden = hidden;
+        }
+
+        public void Dispose()
+        {
+            if (thumbnail != null)
+            {
+                thumbnail.Dispose();
+            }
         }
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden, KeyCodes shortcutKey)
@@ -132,6 +142,27 @@ namespace Medical
             set
             {
                 shortcutKey = value;
+            }
+        }
+
+        /// <summary>
+        /// Set the thumbnail of this state. This will not make a copy and will
+        /// dispose when finished. Make a copy if relying on the stored bitmap
+        /// is not good enough.
+        /// </summary>
+        public Bitmap Thumbnail
+        {
+            get
+            {
+                return thumbnail;
+            }
+            set
+            {
+                if (thumbnail != null)
+                {
+                    thumbnail.Dispose();
+                }
+                thumbnail = value;
             }
         }
 

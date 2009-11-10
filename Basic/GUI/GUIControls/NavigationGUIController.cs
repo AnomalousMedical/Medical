@@ -97,6 +97,7 @@ namespace Medical.GUI
                     KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(state.Name, activateState);
                     itemEntry.Tag = state;
                     menu.Items.Add(itemEntry);
+                    itemEntry.Image = state.Thumbnail;
                 }
             }
         }

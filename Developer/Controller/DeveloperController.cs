@@ -162,7 +162,7 @@ namespace Medical.Controller
             NavigationEditor navEditor = new NavigationEditor(navigationController, drawingWindowController);
             guiElements.addGUIElement(navEditor);
 
-            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor);
+            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor, drawingWindowController);
             guiElements.addGUIElement(menuEditor);
 
             options = new Options();

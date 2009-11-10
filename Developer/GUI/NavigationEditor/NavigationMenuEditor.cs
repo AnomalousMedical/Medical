@@ -17,10 +17,12 @@ namespace Medical.GUI
         ImageRenderer imageRenderer;
         private Point mouseDownLoc;
         private NavigationEditor navigationEditor;
+        DrawingWindowController drawingWindowController;
 
-        public NavigationMenuEditor(NavigationController navController, ImageRenderer imageRenderer, NavigationEditor navigationEditor)
+        public NavigationMenuEditor(NavigationController navController, ImageRenderer imageRenderer, NavigationEditor navigationEditor, DrawingWindowController drawingWindowController)
         {
             InitializeComponent();
+            this.drawingWindowController = drawingWindowController;
             this.navController = navController;
             this.navigationEditor = navigationEditor;
             navController.NavigationStateSetChanged += new NavigationControllerEvent(navController_NavigationStateSetChanged);
@@ -28,6 +30,20 @@ namespace Medical.GUI
             emptySpaceMenu.Opening += new CancelEventHandler(emptySpaceMenu_Opening);
             menuTree.MouseDown += new MouseEventHandler(menuTree_MouseDown);
             menuTree.AfterSelect += new TreeViewEventHandler(menuTree_AfterSelect);
+            menuTree.MouseDoubleClick += new MouseEventHandler(menuTree_MouseDoubleClick);
+        }
+
+        void menuTree_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeNode node = menuTree.GetNodeAt(e.Location);
+            if (node != null)
+            {
+                NavigationState state = node.Tag as NavigationState;
+                if (state != null)
+                {
+                    navController.setNavigationState(state.Name, drawingWindowController.getActiveWindow().DrawingWindow);
+                }
+            }
         }
 
         void menuTree_MouseDown(object sender, MouseEventArgs e)
@@ -128,6 +144,21 @@ namespace Medical.GUI
                     }
                     selected.Text = entry.Text;
                 }
+                else
+                {
+                    NavigationState state = selected.Tag as NavigationState;
+                    if (state != null)
+                    {
+                        if (thumbnailPanel.BackgroundImage != null)
+                        {
+                            state.Thumbnail = new Bitmap(thumbnailPanel.BackgroundImage);
+                        }
+                        else
+                        {
+                            state.Thumbnail = null;
+                        }
+                    }
+                }
             }
         }
 
@@ -147,6 +178,21 @@ namespace Medical.GUI
                     else
                     {
                         ThumbnailImage = null;
+                    }
+                }
+                else
+                {
+                    NavigationState state = selected.Tag as NavigationState;
+                    if (state != null)
+                    {
+                        if (state.Thumbnail != null)
+                        {
+                            ThumbnailImage = new Bitmap(state.Thumbnail);
+                        }
+                        else
+                        {
+                            ThumbnailImage = null;
+                        }
                     }
                 }
             }

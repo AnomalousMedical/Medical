@@ -43,6 +43,10 @@ namespace Medical
                 xmlWriter.WriteElementString(LOOK_AT, state.LookAt.ToString());
                 xmlWriter.WriteElementString(HIDDEN, state.Hidden.ToString());
                 xmlWriter.WriteElementString(SHORTCUT_KEY, state.ShortcutKey.ToString());
+                if (state.Thumbnail != null)
+                {
+                    writeThumbnail(xmlWriter, state.Thumbnail);
+                }
                 xmlWriter.WriteEndElement();
             }
 
@@ -74,15 +78,7 @@ namespace Medical
             xmlWriter.WriteElementString(TEXT, entry.Text);
             if (entry.Thumbnail != null)
             {
-                xmlWriter.WriteStartElement(THUMBNAIL);
-                using (MemoryStream memStream = new MemoryStream())
-                {
-                    entry.Thumbnail.Save(memStream, ImageFormat.Png);
-                    byte[] buffer = memStream.GetBuffer();
-                    xmlWriter.WriteAttributeString(BITMAP_SIZE, buffer.Length.ToString());
-                    xmlWriter.WriteBinHex(buffer, 0, buffer.Length);
-                }
-                xmlWriter.WriteEndElement();
+                writeThumbnail(xmlWriter, entry.Thumbnail);
             }
             if (entry.SubEntries != null)
             {
@@ -97,6 +93,19 @@ namespace Medical
                 {
                     xmlWriter.WriteElementString(NAVIGATION_STATE, state.Name);
                 }
+            }
+            xmlWriter.WriteEndElement();
+        }
+
+        private static void writeThumbnail(XmlWriter xmlWriter, Bitmap image)
+        {
+            xmlWriter.WriteStartElement(THUMBNAIL);
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                image.Save(memStream, ImageFormat.Png);
+                byte[] buffer = memStream.GetBuffer();
+                xmlWriter.WriteAttributeString(BITMAP_SIZE, buffer.Length.ToString());
+                xmlWriter.WriteBinHex(buffer, 0, buffer.Length);
             }
             xmlWriter.WriteEndElement();
         }
@@ -132,6 +141,7 @@ namespace Medical
             Vector3 lookAt = Vector3.Zero;
             bool hidden = false;
             KeyCodes shortcutKey = KeyCodes.None;
+            Bitmap thumbnail = null;
             while (!isEndElement(xmlReader, NAVIGATION_STATE) && xmlReader.Read())
             {
                 if (isValidElement(xmlReader))
@@ -156,11 +166,17 @@ namespace Medical
                     {
                         shortcutKey = (KeyCodes)Enum.Parse(typeof(KeyCodes), xmlReader.ReadElementContentAsString());
                     }
+                    else if (xmlReader.Name == THUMBNAIL)
+                    {
+                        thumbnail = readThumbnail(xmlReader);
+                    }
                 }
             }
             if (name != null)
             {
-                set.addState(new NavigationState(name, lookAt, position, hidden, shortcutKey));
+                NavigationState navState = new NavigationState(name, lookAt, position, hidden, shortcutKey);
+                navState.Thumbnail = thumbnail;
+                set.addState(navState);
             }
         }
 
@@ -232,13 +248,7 @@ namespace Medical
                     }
                     else if (xmlReader.Name == THUMBNAIL)
                     {
-                        int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
-                        byte[] buffer = new byte[size];
-                        xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
-                        using (MemoryStream memStream = new MemoryStream(buffer))
-                        {
-                            menuEntry.Thumbnail = new Bitmap(memStream);
-                        }
+                        menuEntry.Thumbnail = readThumbnail(xmlReader);
                     }
                     else if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
                     {
@@ -260,6 +270,17 @@ namespace Medical
             }
             xmlReader.Read();
             return menuEntry;
+        }
+
+        private static Bitmap readThumbnail(XmlReader xmlReader)
+        {
+            int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
+            byte[] buffer = new byte[size];
+            xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
+            using (MemoryStream memStream = new MemoryStream(buffer))
+            {
+                return new Bitmap(memStream);
+            }
         }
 
         private static bool isEndElement(XmlReader xmlReader, String elementName)

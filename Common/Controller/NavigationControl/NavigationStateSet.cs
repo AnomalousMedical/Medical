@@ -15,6 +15,10 @@ namespace Medical
         public void Dispose()
         {
             menus.Dispose();
+            foreach (NavigationState state in navigationStates.Values)
+            {
+                state.Dispose();
+            }
         }
 
         public void addState(NavigationState state)
