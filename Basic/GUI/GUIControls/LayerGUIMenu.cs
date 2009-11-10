@@ -21,6 +21,8 @@ namespace Medical.GUI
         protected KryptonContextMenuRadioButton transparentButton;
         protected KryptonContextMenuRadioButton hiddenButton;
 
+        private bool allowUpdates = true;
+
         public LayerGUIMenu(KryptonRibbonGroupButton mainButton)
         {
             contextMenu = new KryptonContextMenu();
@@ -61,6 +63,24 @@ namespace Medical.GUI
             contextMenu.Dispose();
         }
 
+        public void setAlpha(float alpha)
+        {
+            allowUpdates = false;
+            if (alpha >= 1.0f)
+            {
+                opaqueButton.Checked = true;
+            }
+            else if (alpha <= 0.0f)
+            {
+                hiddenButton.Checked = true;
+            }
+            else
+            {
+                transparentButton.Checked = true;
+            }
+            allowUpdates = true;
+        }
+
         void shortcut_Execute(ShortcutEventCommand shortcut)
         {
             mainButton_Click(null, null);
@@ -84,7 +104,7 @@ namespace Medical.GUI
 
         void opaqueButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (opaqueButton.Checked && TransparencyChanged != null)
+            if (allowUpdates && opaqueButton.Checked && TransparencyChanged != null)
             {
                 TransparencyChanged(1.0f);
             }
@@ -92,7 +112,7 @@ namespace Medical.GUI
 
         void transparentButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (transparentButton.Checked && TransparencyChanged != null)
+            if (allowUpdates && transparentButton.Checked && TransparencyChanged != null)
             {
                 TransparencyChanged(0.7f);
             }
@@ -100,7 +120,7 @@ namespace Medical.GUI
 
         void hiddenButton_CheckedChanged(object sender, EventArgs e)
         {
-            if (hiddenButton.Checked && TransparencyChanged != null)
+            if (allowUpdates && hiddenButton.Checked && TransparencyChanged != null)
             {
                 TransparencyChanged(0.0f);
             }

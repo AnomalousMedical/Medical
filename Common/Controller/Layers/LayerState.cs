@@ -99,6 +99,14 @@ namespace Medical
             }
         }
 
+        public IEnumerable<LayerEntry> Entries
+        {
+            get
+            {
+                return entries;
+            }
+        }
+
         #region Saveable Members
 
         private const string NAME = "Name";

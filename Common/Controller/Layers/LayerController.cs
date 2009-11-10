@@ -14,11 +14,13 @@ namespace Medical
     public class LayerController
     {
         public event LayerControllerEvent LayerStateSetChanged;
+        public event LayerControllerEvent CurrentLayerStateChanged;
 
         private LayerStateSet currentLayers;
         private XmlSaver xmlSaver = new XmlSaver();
 
         private String lastLayersFile;
+        private LayerState currentLayerState;
 
         public LayerController()
         {
@@ -27,8 +29,7 @@ namespace Medical
 
         public void applyLayerState(String name)
         {
-            LayerState state = currentLayers.getState(name);
-            state.apply();
+            CurrentLayerState = currentLayers.getState(name);
         }
 
         public void saveLayerStateSet(String filename)
@@ -106,10 +107,34 @@ namespace Medical
                 {
                     currentLayers.Dispose();
                 }
+                currentLayerState = null;
                 currentLayers = value;
                 if (LayerStateSetChanged != null)
                 {
                     LayerStateSetChanged.Invoke(this);
+                }
+            }
+        }
+
+        public LayerState CurrentLayerState
+        {
+            get
+            {
+                return currentLayerState;
+            }
+            set
+            {
+                if (currentLayerState != value)
+                {
+                    currentLayerState = value;
+                    if (currentLayerState != null)
+                    {
+                        currentLayerState.apply();
+                        if (CurrentLayerStateChanged != null)
+                        {
+                            CurrentLayerStateChanged.Invoke(this);
+                        }
+                    }
                 }
             }
         }

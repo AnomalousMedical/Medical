@@ -16,7 +16,7 @@ namespace Medical.GUI
         private LayerGUIMenu musclesMenu;
         private LayerGUISkullMenu skullMenu;
         private LayerGUIMenu mandibleMenu;
-        private LayerGUIMenu discsButton;
+        private LayerGUIMenu discsMenu;
         private LayerGUIMenu spineMenu;
         private LayerGUIMenu hyoidMenu;
         private LayerGUIMenu topTeethMenu;
@@ -50,9 +50,9 @@ namespace Medical.GUI
             mandibleMenu.createShortcuts("MandibleToggle", group, Keys.F5);
             mandibleMenu.TransparencyChanged += changeMandibleTransparency;
 
-            discsButton = new LayerGUIMenu(basicForm.layersDiscsButton);
-            discsButton.createShortcuts("DiscsToggle", group, Keys.F6);
-            discsButton.TransparencyChanged += changeDiscTransparency;
+            discsMenu = new LayerGUIMenu(basicForm.layersDiscsButton);
+            discsMenu.createShortcuts("DiscsToggle", group, Keys.F6);
+            discsMenu.TransparencyChanged += changeDiscTransparency;
 
             spineMenu = new LayerGUIMenu(basicForm.layersSpineButton);
             spineMenu.createShortcuts("SpineToggle", group, Keys.F7);
@@ -76,12 +76,68 @@ namespace Medical.GUI
             //Predefined layers
             layerController = basicController.LayerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(LayerController_LayerStateSetChanged);
+            layerController.CurrentLayerStateChanged += new LayerControllerEvent(layerController_CurrentLayerStateChanged);
             predefinedImageList = new ImageList();
             predefinedImageList.ColorDepth = ColorDepth.Depth32Bit;
             predefinedImageList.ImageSize = new Size(48, 48);
             predefinedLayerGallery = basicForm.predefinedLayerGallery;
             predefinedLayerGallery.ImageList = predefinedImageList;
             predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
+        }
+
+        void layerController_CurrentLayerStateChanged(LayerController controller)
+        {
+            foreach (LayerEntry layerEntry in controller.CurrentLayerState.Entries)
+            {
+                if (layerEntry.RenderGroup == RenderGroup.Skin && layerEntry.TransparencyObject == "Skin")
+                {
+                    skinMenu.setAlpha(layerEntry.AlphaValue);
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Muscles && layerEntry.TransparencyObject == "Left Masseter")
+                {
+                    musclesMenu.setAlpha(layerEntry.AlphaValue);
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Bones)
+                {
+                    if(layerEntry.TransparencyObject == "Skull")
+                    {
+                        skullMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Mandible")
+                    {
+                        mandibleMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Hyoid")
+                    {
+                        hyoidMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Spine)
+                {
+                    if (layerEntry.TransparencyObject == "C1")
+                    {
+                        spineMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.TMJ)
+                {
+                    if (layerEntry.TransparencyObject == "Left TMJ Disc")
+                    {
+                        discsMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Teeth)
+                {
+                    if (layerEntry.TransparencyObject == "Tooth 10")
+                    {
+                        topTeethMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Tooth 25")
+                    {
+                        bottomTeethMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+            }
         }
 
         public void Dispose()

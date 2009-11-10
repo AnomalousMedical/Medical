@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class LayerEntry : Saveable
+    public class LayerEntry : Saveable
     {
         private RenderGroup renderGroup;
         private String transparencyObject;
@@ -29,6 +29,30 @@ namespace Medical
                 {
                     obj.smoothBlend(alphaValue);
                 }
+            }
+        }
+
+        public RenderGroup RenderGroup
+        {
+            get
+            {
+                return renderGroup;
+            }
+        }
+
+        public String TransparencyObject
+        {
+            get
+            {
+                return transparencyObject;
+            }
+        }
+
+        public float AlphaValue
+        {
+            get
+            {
+                return alphaValue;
             }
         }
 
