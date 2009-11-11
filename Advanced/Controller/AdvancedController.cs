@@ -79,92 +79,99 @@ namespace Medical.Controller
             ProgressDialog splashScreen = new ProgressDialog(Resources.articulometricsresearch);
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
-
-            advancedForm = new AdvancedForm();
-            advancedForm.initialize(this);
-            medicalController = new MedicalController();
-            medicalController.intialize(advancedForm);
-
-            splashScreen.stepProgress(10);
-
-            drawingWindowController = new DrawingWindowController();
-            drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
-
-            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
-
-            imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
-
-            guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
-            guiElements.EnableToolbars = true;
-
-            //Add common gui elements
-            LayersControl layersControl = new LayersControl();
-            guiElements.addGUIElement(layersControl);
-
-            PictureControl pictureControl = new PictureControl();
-            pictureControl.initialize(imageRenderer, drawingWindowController);
-            guiElements.addGUIElement(pictureControl);
-
-            stateGUI = new MedicalStateGUI();
-            stateGUI.initialize(stateController);
-            stateGUI.CreateStateCallback = createStateCallback;
-            guiElements.addGUIElement(stateGUI);
-
-            SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
-            guiElements.addGUIElement(savedCameraGUI);
-
-            MeasurementGUI measurement = new MeasurementGUI();
-            guiElements.addGUIElement(measurement);
-
-            scenePicker = new ScenePicker();
-            scenePicker.initialize();
-
-            //Add specific gui elements
-            DiskControl discControl = new DiskControl();
-            guiElements.addGUIElement(discControl);
-            
-            MandibleOffsetControl mandibleOffset = new MandibleOffsetControl();
-            guiElements.addGUIElement(mandibleOffset);
-            
-            MandibleSizeControl mandibleSize = new MandibleSizeControl();
-            mandibleSize.initialize(medicalController);
-            guiElements.addGUIElement(mandibleSize);
-
-            //MuscleControl muscleControl = new MuscleControl();
-            //guiElements.addGUIElement(muscleControl);
-
-            TeethControl teethControl = new TeethControl();
-            teethControl.initialize(medicalController);
-            guiElements.addGUIElement(teethControl);
-
-            FossaControl fossaControl = new FossaControl();
-            guiElements.addGUIElement(fossaControl);
-
-            movementState = new MovementStateControl();
-            guiElements.addGUIElement(movementState);
-
-            splashScreen.stepProgress(70);
-
-            loadDefaultScene();
-
-            if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            try
             {
-                setOneWindowLayout();
+
+                advancedForm = new AdvancedForm();
+                advancedForm.initialize(this);
+                medicalController = new MedicalController();
+                medicalController.intialize(advancedForm);
+
+                splashScreen.stepProgress(10);
+
+                drawingWindowController = new DrawingWindowController();
+                drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+
+                navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+
+                imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+
+                guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
+                guiElements.EnableToolbars = true;
+
+                //Add common gui elements
+                LayersControl layersControl = new LayersControl();
+                guiElements.addGUIElement(layersControl);
+
+                PictureControl pictureControl = new PictureControl();
+                pictureControl.initialize(imageRenderer, drawingWindowController);
+                guiElements.addGUIElement(pictureControl);
+
+                stateGUI = new MedicalStateGUI();
+                stateGUI.initialize(stateController);
+                stateGUI.CreateStateCallback = createStateCallback;
+                guiElements.addGUIElement(stateGUI);
+
+                SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
+                savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
+                guiElements.addGUIElement(savedCameraGUI);
+
+                MeasurementGUI measurement = new MeasurementGUI();
+                guiElements.addGUIElement(measurement);
+
+                scenePicker = new ScenePicker();
+                scenePicker.initialize();
+
+                //Add specific gui elements
+                DiskControl discControl = new DiskControl();
+                guiElements.addGUIElement(discControl);
+
+                MandibleOffsetControl mandibleOffset = new MandibleOffsetControl();
+                guiElements.addGUIElement(mandibleOffset);
+
+                MandibleSizeControl mandibleSize = new MandibleSizeControl();
+                mandibleSize.initialize(medicalController);
+                guiElements.addGUIElement(mandibleSize);
+
+                //MuscleControl muscleControl = new MuscleControl();
+                //guiElements.addGUIElement(muscleControl);
+
+                TeethControl teethControl = new TeethControl();
+                teethControl.initialize(medicalController);
+                guiElements.addGUIElement(teethControl);
+
+                FossaControl fossaControl = new FossaControl();
+                guiElements.addGUIElement(fossaControl);
+
+                movementState = new MovementStateControl();
+                guiElements.addGUIElement(movementState);
+
+                splashScreen.stepProgress(70);
+
+                loadDefaultScene();
+
+                if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+                {
+                    setOneWindowLayout();
+                }
+
+                createNewSequence();
+
+                options = new Options();
+
+                splashScreen.stepProgress(20);
+
+                advancedForm.Show();
+                advancedForm.Activate();
+                advancedForm.Invalidate(true);
+
+                splashScreen.fadeAway();
+                medicalController.start();
             }
-
-            createNewSequence();
-
-            options = new Options();
-
-            splashScreen.stepProgress(20);
-
-            advancedForm.Show();
-            advancedForm.Activate();
-            advancedForm.Invalidate(true);
-
-            splashScreen.fadeAway();
-            medicalController.start();
+            finally
+            {
+                splashScreen.fadeAway();
+            }
         }
 
         /// <summary>

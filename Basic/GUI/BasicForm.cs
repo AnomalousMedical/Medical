@@ -27,6 +27,7 @@ namespace Medical.GUI
         private WindowGUIController windowGUIController;
         private NavigationGUIController navigationGUIController;
         private RenderGUIController renderGUIController;
+        private MandibleGUIController mandibleGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
@@ -83,6 +84,7 @@ namespace Medical.GUI
             layerGUIController = new LayerGUIController(this, controller, shortcutController);
             navigationGUIController = new NavigationGUIController(this, controller, shortcutController);
             renderGUIController = new RenderGUIController(this, controller, shortcutController);
+            mandibleGUIController = new MandibleGUIController(this, controller);
         }
 
         public void setViewMode()

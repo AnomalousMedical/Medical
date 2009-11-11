@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="GUI\GUIControls\LayerGUIMenu.cs" />
     <Compile Include="GUI\GUIControls\LayerGUISkullMenu.cs" />
+    <Compile Include="GUI\GUIControls\MandibleGUIController.cs" />
     <Compile Include="GUI\GUIControls\NavigationGUIController.cs" />
     <Compile Include="GUI\GUIControls\RenderGUIController.cs" />
     <Compile Include="GUI\GUIControls\WindowGUIController.cs" />
@@ -112,6 +113,12 @@
     </Compile>
     <Compile Include="GUI\SimpleLayer\SimpleLayerControl.Designer.cs">
       <DependentUpon>SimpleLayerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SimpleMandibleControl\MandibleControlSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\SimpleMandibleControl\MandibleControlSlider.Designer.cs">
+      <DependentUpon>MandibleControlSlider.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.cs">
       <SubType>Form</SubType>
@@ -135,6 +142,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleLayer\SimpleLayerControl.resx">
       <DependentUpon>SimpleLayerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SimpleMandibleControl\MandibleControlSlider.resx">
+      <DependentUpon>MandibleControlSlider.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleMandibleControl\SimpleMandibleControl.resx">
@@ -223,6 +234,16 @@
     <None Include="Resources\ImageResolutionIconSmall.png" />
     <None Include="Resources\RenderIconLarge.png" />
     <None Include="Resources\RenderIconSmall.png" />
+    <None Include="Resources\ManipVerticalClosed.png" />
+    <None Include="Resources\ManipVerticalOpen.png" />
+    <None Include="Resources\ManipLeftHorizontalBack.png" />
+    <None Include="Resources\ManipLeftHorizontalForward.png" />
+    <None Include="Resources\ManipRightHorizontalBack.png" />
+    <None Include="Resources\ManipRightHorizontalForward.png" />
+    <None Include="Resources\ManipHorizontalBothBack.png" />
+    <None Include="Resources\ManipHorizontalBothForward.png" />
+    <None Include="Resources\ManipResetLarge.png" />
+    <None Include="Resources\ManipResetSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

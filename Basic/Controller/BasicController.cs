@@ -18,8 +18,13 @@ using System.Drawing;
 
 namespace Medical.Controller
 {
+    public delegate void SceneEvent(SimScene scene);
+
     public class BasicController : IDisposable
     {
+        public event SceneEvent SceneLoaded;
+        public event SceneEvent SceneUnloading;
+
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
@@ -139,9 +144,6 @@ namespace Medical.Controller
             //Add specific gui elements
             muscleControl = new MuscleControl();
             viewMode.addGUIElement(muscleControl);
-
-            simpleMandibleControl = new SimpleMandibleControl();
-            viewMode.addGUIElement(simpleMandibleControl);
 
             viewMode.addGUIElement(new NotesGUI(stateController, shortcutController));
 
@@ -321,11 +323,19 @@ namespace Medical.Controller
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
             distortionController.setToDefault();
             viewMode.alertGUISceneUnloading();
+            if (SceneUnloading != null)
+            {
+                SceneUnloading.Invoke(medicalController.CurrentScene);
+            }
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 viewMode.alertGUISceneLoaded(medicalController.CurrentScene);
+                if (SceneLoaded != null)
+                {
+                    SceneLoaded.Invoke(medicalController.CurrentScene);
+                }
 
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
@@ -429,6 +439,14 @@ namespace Medical.Controller
             get
             {
                 return navigationController;
+            }
+        }
+
+        public MedicalController MedicalController
+        {
+            get
+            {
+                return medicalController;
             }
         }
     }

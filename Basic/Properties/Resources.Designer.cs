@@ -249,6 +249,76 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ManipHorizontalBothBack {
+            get {
+                object obj = ResourceManager.GetObject("ManipHorizontalBothBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipHorizontalBothForward {
+            get {
+                object obj = ResourceManager.GetObject("ManipHorizontalBothForward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipLeftHorizontalBack {
+            get {
+                object obj = ResourceManager.GetObject("ManipLeftHorizontalBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipLeftHorizontalForward {
+            get {
+                object obj = ResourceManager.GetObject("ManipLeftHorizontalForward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipResetLarge {
+            get {
+                object obj = ResourceManager.GetObject("ManipResetLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipResetSmall {
+            get {
+                object obj = ResourceManager.GetObject("ManipResetSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipRightHorizontalBack {
+            get {
+                object obj = ResourceManager.GetObject("ManipRightHorizontalBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipRightHorizontalForward {
+            get {
+                object obj = ResourceManager.GetObject("ManipRightHorizontalForward", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipVerticalClosed {
+            get {
+                object obj = ResourceManager.GetObject("ManipVerticalClosed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ManipVerticalOpen {
+            get {
+                object obj = ResourceManager.GetObject("ManipVerticalOpen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap NavIconLarge {
             get {
                 object obj = ResourceManager.GetObject("NavIconLarge", resourceCulture);
