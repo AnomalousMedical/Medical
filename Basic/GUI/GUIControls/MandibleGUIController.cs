@@ -113,9 +113,14 @@ namespace Medical.GUI
             if (Enabled)
             {
                 //setup ui
-                synchronizeLeftCP(leftCP, leftCP.getNeutralLocation());
-                synchronizeRightCP(rightCP, rightCP.getNeutralLocation());
+                float leftNeutral = leftCP.getNeutralLocation();
+                synchronizeLeftCP(leftCP, leftNeutral);
+                leftForwardBack.Minimum = (int)(leftNeutral * leftForwardBack.Maximum);
+                float rightNeutral = rightCP.getNeutralLocation();
+                synchronizeRightCP(rightCP, rightNeutral);
+                rightForwardBack.Minimum = (int)(rightNeutral * rightForwardBack.Maximum);
                 bothForwardBack.Value = rightForwardBack.Value;
+                bothForwardBack.Minimum = rightForwardBack.Minimum < leftForwardBack.Minimum ? rightForwardBack.Minimum : leftForwardBack.Minimum;
                 synchronizeMovingMuscleOffset(movingMuscleTarget, movingMuscleTarget.Offset);
 
                 //setup callbacks
