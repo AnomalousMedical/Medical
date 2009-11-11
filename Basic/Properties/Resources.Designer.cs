@@ -389,6 +389,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SequenceIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("SequenceIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SequenceIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("SequenceIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap TeethCollisionIconLarge {
             get {
                 object obj = ResourceManager.GetObject("TeethCollisionIconLarge", resourceCulture);

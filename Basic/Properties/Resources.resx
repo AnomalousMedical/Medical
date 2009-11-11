@@ -178,17 +178,17 @@
   <data name="WindowLayoutIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WindowLayoutIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PlaybackButtons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\PlaybackButtons.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="LayersHyoidLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LayersHyoidLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TeethCollisionIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TeethCollisionIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="WindowLayoutIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WindowLayoutIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ImageResolutionIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ImageResolutionIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ManipLeftHorizontalForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ManipLeftHorizontalForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BackgroundColorIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BackgroundColorIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -232,6 +232,9 @@
   <data name="LayersMandibleLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LayersMandibleLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ManipResetSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ManipResetSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="articulometricsclinic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\articulometricsclinic.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -256,11 +259,14 @@
   <data name="OptionsIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OptionsIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ManipLeftHorizontalForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ManipLeftHorizontalForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowLayoutIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowLayoutIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PlaybackButtons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlaybackButtons.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ImageResolutionIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ImageResolutionIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ManipResetLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ManipResetLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LayersSkullLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LayersSkullLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -271,10 +277,10 @@
   <data name="ManipHorizontalBothForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ManipHorizontalBothForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ManipResetLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ManipResetLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SequenceIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SequenceIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ManipResetSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ManipResetSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SequenceIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SequenceIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -37,7 +37,7 @@
             // amountTrackBar
             // 
             this.amountTrackBar.LargeChange = 2000;
-            this.amountTrackBar.Location = new System.Drawing.Point(66, 14);
+            this.amountTrackBar.Location = new System.Drawing.Point(66, 36);
             this.amountTrackBar.Maximum = 10000;
             this.amountTrackBar.Name = "amountTrackBar";
             this.amountTrackBar.Size = new System.Drawing.Size(136, 45);
@@ -62,14 +62,15 @@
             this.closedPicturePanel.Size = new System.Drawing.Size(60, 60);
             this.closedPicturePanel.TabIndex = 28;
             // 
-            // OpeningMandibleControl
+            // MandibleControlSlider
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.openPicturePanel);
             this.Controls.Add(this.closedPicturePanel);
             this.Controls.Add(this.amountTrackBar);
-            this.Name = "OpeningMandibleControl";
+            this.Name = "MandibleControlSlider";
             this.Size = new System.Drawing.Size(266, 64);
             ((System.ComponentModel.ISupportInitialize)(this.amountTrackBar)).EndInit();
             this.ResumeLayout(false);

@@ -102,6 +102,12 @@
     <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Playback\PlaybackRibbonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\Playback\PlaybackRibbonControl.Designer.cs">
+      <DependentUpon>PlaybackRibbonControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SimpleLayer\LayerSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +140,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
       <DependentUpon>MuscleControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Playback\PlaybackRibbonControl.resx">
+      <DependentUpon>PlaybackRibbonControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleLayer\LayerSlider.resx">
@@ -244,6 +254,8 @@
     <None Include="Resources\ManipHorizontalBothForward.png" />
     <None Include="Resources\ManipResetLarge.png" />
     <None Include="Resources\ManipResetSmall.png" />
+    <None Include="Resources\SequenceIconLarge.png" />
+    <None Include="Resources\SequenceIconSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
