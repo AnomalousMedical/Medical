@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {
@@ -13,102 +14,137 @@ namespace Medical.GUI
     {
         public event EventHandler ValueChanged;
 
+        private float minimum = 0.0f;
+        private float maximum = 0.0f;
+        private float sequentialChange = 0.0f;
+
+        private KryptonRibbonGroupButton previousButton;
+        private KryptonRibbonGroupButton nextButton;
+
         public MandibleControlSlider()
         {
             InitializeComponent();
-            amountTrackBar.ValueChanged += new EventHandler(amountTrackBar_ValueChanged);
+            amountTrackBar.TimeChanged += new TimeChanged(amountTrackBar_TimeChanged);
         }
 
-        void amountTrackBar_ValueChanged(object sender, EventArgs e)
+        public float Minimum
+        {
+            get
+            {
+                return minimum;
+            }
+            set
+            {
+                float oldTime = amountTrackBar.CurrentTime + minimum;
+                minimum = value;
+                amountTrackBar.CurrentTime = oldTime - minimum;
+                amountTrackBar.MaximumTime = maximum - minimum;
+            }
+        }
+
+        public float Maximum
+        {
+            get
+            {
+                return maximum;
+            }
+            set
+            {
+                maximum = value;
+                amountTrackBar.MaximumTime = maximum - minimum;
+            }
+        }
+
+        public float SequentialChange
+        {
+            get
+            {
+                return sequentialChange;
+            }
+            set
+            {
+                sequentialChange = value;
+            }
+        }
+
+        public float Value
+        {
+            get
+            {
+                return amountTrackBar.CurrentTime + minimum;
+            }
+            set
+            {
+                amountTrackBar.CurrentTime = value - minimum;
+            }
+        }
+
+        public KryptonRibbonGroupButton PreviousButton
+        {
+            get
+            {
+                return previousButton;
+            }
+            set
+            {
+                if (previousButton != null)
+                {
+                    previousButton.Click -= previousButton_Click;
+                }
+                previousButton = value;
+                if (previousButton != null)
+                {
+                    previousButton.Click += previousButton_Click;
+                }
+            }
+        }
+
+        public KryptonRibbonGroupButton NextButton
+        {
+            get
+            {
+                return nextButton;
+            }
+            set
+            {
+                if (nextButton != null)
+                {
+                    nextButton.Click -= nextButton_Click;
+                }
+                nextButton = value;
+                if (nextButton != null)
+                {
+                    nextButton.Click += nextButton_Click;
+                }
+            }
+        }
+
+        void amountTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
         {
             if (ValueChanged != null)
             {
-                ValueChanged.Invoke(this, e);
+                ValueChanged.Invoke(this, null);
             }
         }
 
-        public Image ClosedImage
+        void previousButton_Click(object sender, EventArgs e)
         {
-            get
+            float time = amountTrackBar.CurrentTime - sequentialChange;
+            if (time < 0.0f)
             {
-                return closedPicturePanel.BackgroundImage;
+                time = 0.0f;
             }
-            set
-            {
-                closedPicturePanel.BackgroundImage = value;
-            }
+            amountTrackBar.CurrentTime = time;
         }
 
-        public Image OpenImage 
-        { 
-            get
-            {
-                return openPicturePanel.BackgroundImage;
-            }
-            set
-            {
-                openPicturePanel.BackgroundImage = value;
-            }
-        }
-
-        public int Minimum
+        void nextButton_Click(object sender, EventArgs e)
         {
-            get
+            float time = amountTrackBar.CurrentTime + sequentialChange;
+            if (time > amountTrackBar.MaximumTime)
             {
-                return amountTrackBar.Minimum;
+                time = amountTrackBar.MaximumTime;
             }
-            set
-            {
-                amountTrackBar.Minimum = value;
-            }
-        }
-
-        public int Maximum
-        {
-            get
-            {
-                return amountTrackBar.Maximum;
-            }
-            set
-            {
-                amountTrackBar.Maximum = value;
-            }
-        }
-
-        public int SmallChange
-        {
-            get
-            {
-                return amountTrackBar.SmallChange;
-            }
-            set
-            {
-                amountTrackBar.SmallChange = value;
-            }
-        }
-
-        public int LargeChange
-        {
-            get
-            {
-                return amountTrackBar.LargeChange;
-            }
-            set
-            {
-                amountTrackBar.LargeChange = value;
-            }
-        }
-
-        public int Value
-        {
-            get
-            {
-                return amountTrackBar.Value;
-            }
-            set
-            {
-                amountTrackBar.Value = value;
-            }
+            amountTrackBar.CurrentTime = time;
         }
     }
 }

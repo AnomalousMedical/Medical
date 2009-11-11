@@ -28,61 +28,40 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.amountTrackBar = new System.Windows.Forms.TrackBar();
-            this.openPicturePanel = new System.Windows.Forms.Panel();
-            this.closedPicturePanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.amountTrackBar)).BeginInit();
+            this.amountTrackBar = new Medical.GUI.TimeTrackBar();
             this.SuspendLayout();
             // 
             // amountTrackBar
             // 
-            this.amountTrackBar.LargeChange = 2000;
-            this.amountTrackBar.Location = new System.Drawing.Point(66, 36);
-            this.amountTrackBar.Maximum = 10000;
+            this.amountTrackBar.BarMenu = null;
+            this.amountTrackBar.ChangeTimeOnSelection = false;
+            this.amountTrackBar.CurrentTime = 0F;
+            this.amountTrackBar.Location = new System.Drawing.Point(0, -19);
+            this.amountTrackBar.MaximumTime = 0F;
+            this.amountTrackBar.MoveMarks = false;
+            this.amountTrackBar.MoveThumb = true;
             this.amountTrackBar.Name = "amountTrackBar";
-            this.amountTrackBar.Size = new System.Drawing.Size(136, 45);
-            this.amountTrackBar.SmallChange = 1000;
-            this.amountTrackBar.TabIndex = 27;
-            this.amountTrackBar.TickFrequency = 10000;
-            this.amountTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            // 
-            // openPicturePanel
-            // 
-            this.openPicturePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.openPicturePanel.Location = new System.Drawing.Point(203, 1);
-            this.openPicturePanel.Name = "openPicturePanel";
-            this.openPicturePanel.Size = new System.Drawing.Size(60, 60);
-            this.openPicturePanel.TabIndex = 29;
-            // 
-            // closedPicturePanel
-            // 
-            this.closedPicturePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.closedPicturePanel.Location = new System.Drawing.Point(4, 1);
-            this.closedPicturePanel.Name = "closedPicturePanel";
-            this.closedPicturePanel.Size = new System.Drawing.Size(60, 60);
-            this.closedPicturePanel.TabIndex = 28;
+            this.amountTrackBar.SelectedMark = null;
+            this.amountTrackBar.Size = new System.Drawing.Size(79, 47);
+            this.amountTrackBar.TabIndex = 0;
+            this.amountTrackBar.TickMenu = null;
             // 
             // MandibleControlSlider
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Transparent;
-            this.Controls.Add(this.openPicturePanel);
-            this.Controls.Add(this.closedPicturePanel);
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.amountTrackBar);
             this.Name = "MandibleControlSlider";
-            this.Size = new System.Drawing.Size(266, 64);
-            ((System.ComponentModel.ISupportInitialize)(this.amountTrackBar)).EndInit();
+            this.Size = new System.Drawing.Size(180, 66);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TrackBar amountTrackBar;
-        private System.Windows.Forms.Panel closedPicturePanel;
-        private System.Windows.Forms.Panel openPicturePanel;
+        private TimeTrackBar amountTrackBar;
+
 
     }
 }

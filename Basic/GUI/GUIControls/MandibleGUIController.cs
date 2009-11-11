@@ -115,12 +115,15 @@ namespace Medical.GUI
                 //setup ui
                 float leftNeutral = leftCP.getNeutralLocation();
                 synchronizeLeftCP(leftCP, leftNeutral);
-                leftForwardBack.Minimum = (int)(leftNeutral * leftForwardBack.Maximum);
+                leftForwardBack.Minimum = leftNeutral;
+                leftForwardBack.SequentialChange = (leftForwardBack.Maximum - leftForwardBack.Minimum) / 10.0f;
                 float rightNeutral = rightCP.getNeutralLocation();
                 synchronizeRightCP(rightCP, rightNeutral);
-                rightForwardBack.Minimum = (int)(rightNeutral * rightForwardBack.Maximum);
+                rightForwardBack.Minimum = rightNeutral;
+                rightForwardBack.SequentialChange = (rightForwardBack.Maximum - rightForwardBack.Minimum) / 10.0f;
                 bothForwardBack.Value = rightForwardBack.Value;
                 bothForwardBack.Minimum = rightForwardBack.Minimum < leftForwardBack.Minimum ? rightForwardBack.Minimum : leftForwardBack.Minimum;
+                bothForwardBack.SequentialChange = rightForwardBack.SequentialChange;
                 synchronizeMovingMuscleOffset(movingMuscleTarget, movingMuscleTarget.Offset);
 
                 //setup callbacks
@@ -160,7 +163,7 @@ namespace Medical.GUI
 
         void bothForwardBackChanged(object sender, EventArgs e)
         {
-            float value = bothForwardBack.Value / (float)bothForwardBack.Maximum;
+            float value = bothForwardBack.Value;
             synchronizeLeftCP(bothForwardBack, value);
             synchronizeRightCP(bothForwardBack, value);
         }
@@ -224,7 +227,7 @@ namespace Medical.GUI
                 }
                 if (sender != leftForwardBack)
                 {
-                    leftForwardBack.Value = (int)(position * leftForwardBack.Maximum);
+                    leftForwardBack.Value = position;
                 }
                 allowSyncronization = true;
             }
@@ -237,7 +240,7 @@ namespace Medical.GUI
 
         void leftSliderValueChanged(object sender, EventArgs e)
         {
-            synchronizeLeftCP(leftForwardBack, leftForwardBack.Value / (float)leftForwardBack.Maximum);
+            synchronizeLeftCP(leftForwardBack, leftForwardBack.Value);
         }
 
         //Right CP Position
@@ -252,7 +255,7 @@ namespace Medical.GUI
                 }
                 if (sender != rightForwardBack)
                 {
-                    rightForwardBack.Value = (int)(position * rightForwardBack.Maximum);
+                    rightForwardBack.Value = position;
                 }
                 allowSyncronization = true;
             }
@@ -265,7 +268,7 @@ namespace Medical.GUI
 
         void rightSliderValueChanged(object sender, EventArgs e)
         {
-            synchronizeRightCP(rightForwardBack, rightForwardBack.Value / (float)rightForwardBack.Maximum);
+            synchronizeRightCP(rightForwardBack, rightForwardBack.Value);
         }
     }
 }
