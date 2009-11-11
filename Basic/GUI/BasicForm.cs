@@ -11,10 +11,12 @@ using System.IO;
 using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 using ComponentFactory.Krypton.Ribbon;
+using ComponentFactory.Krypton.Toolkit;
+using Engine.Platform;
 
 namespace Medical.GUI
 {    
-    public partial class BasicForm : MedicalForm
+    public partial class BasicForm : KryptonForm, OSWindow
     {
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
@@ -32,7 +34,6 @@ namespace Medical.GUI
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
-            this.initialize(Text);
             this.shortcutController = shortcuts;
 
             //navigationButton.ImageIndex = 5;
@@ -252,5 +253,72 @@ namespace Medical.GUI
             mainStatusLabel.Text = status;
             Application.DoEvents();
         }
+
+        #region OSWindow Members
+
+        private List<OSWindowListener> listeners = new List<OSWindowListener>();
+
+        public IntPtr WindowHandle
+        {
+            get
+            {
+                return this.Handle;
+            }
+        }
+
+        public int WindowWidth
+        {
+            get
+            {
+                return this.Width;
+            }
+        }
+
+        public int WindowHeight
+        {
+            get
+            {
+                return this.Height;
+            }
+        }
+
+        public void addListener(OSWindowListener listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void removeListener(OSWindowListener listener)
+        {
+            listeners.Remove(listener);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.resized(this);
+            }
+            base.OnResize(e);
+        }
+
+        protected override void OnMove(EventArgs e)
+        {
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.moved(this);
+            }
+            base.OnMove(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.closing(this);
+            }
+            base.OnHandleDestroyed(e);
+        }
+
+        #endregion
     }
 }
