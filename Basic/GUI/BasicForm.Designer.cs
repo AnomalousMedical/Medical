@@ -236,7 +236,7 @@
             this.simulationTab,
             this.sequencesTab,
             this.kryptonRibbonTab1});
-            this.clinicalRibbon.SelectedTab = this.simulationTab;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -888,7 +888,7 @@
             // 
             // kryptonManager
             // 
-            this.kryptonManager.GlobalPaletteMode = ComponentFactory.Krypton.Toolkit.PaletteModeManager.Office2007Black;
+            this.kryptonManager.GlobalPaletteMode = ComponentFactory.Krypton.Toolkit.PaletteModeManager.Office2007Silver;
             // 
             // kryptonContextMenuRadioButton28
             // 

@@ -6,6 +6,7 @@ using Medical.Controller;
 using ComponentFactory.Krypton.Toolkit;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Ribbon;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -17,10 +18,15 @@ namespace Medical.GUI
 
         private NavigationController navigationController;
         private KryptonRibbonGroup viewGroup;
+        private ImageList menuImageList = new ImageList();
+        private List<String> menuImageListIndex = new List<string>();
 
         public NavigationGUIController(BasicForm basicForm, BasicController basicController, ShortcutController shortcuts)
         {
             this.basicController = basicController;
+
+            menuImageList.ColorDepth = ColorDepth.Depth32Bit;
+            menuImageList.ImageSize = new Size(51, 38);
 
             showNavigationCommand = basicForm.showNavigationCommand;
             showNavigationCommand.Execute += new EventHandler(showNavigationCommand_Execute);
@@ -49,6 +55,8 @@ namespace Medical.GUI
         void navigationController_NavigationStateSetChanged(NavigationController controller)
         {
             viewGroup.Items.Clear();
+            menuImageList.Images.Clear();
+            menuImageListIndex.Clear();
             KryptonRibbonGroupTriple kryptonTriple = null;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
@@ -67,46 +75,102 @@ namespace Medical.GUI
 
                 if (topEntry.SubEntries != null)
                 {
-                    KryptonContextMenu itemMenu = new KryptonContextMenu();
-                    itemMenu.Items.Add(addSubMenuEntries(topEntry));
-                    itemButton.KryptonContextMenu = itemMenu;
+                    itemButton.KryptonContextMenu = createImageGallerySubMenu(topEntry);
                 }
             }
         }
 
-        KryptonContextMenuItemBase addSubMenuEntries(NavigationMenuEntry currentEntry)
+        KryptonContextMenu createImageGallerySubMenu(NavigationMenuEntry topEntry)
         {
-            KryptonContextMenuItems menuItems = new KryptonContextMenuItems();
+            KryptonContextMenu itemMenu = new KryptonContextMenu();
+            if (topEntry.SubEntries != null)
+            {
+                foreach (NavigationMenuEntry entry in topEntry.SubEntries)
+                {
+                    addEntriesAsImages(entry, itemMenu);
+                }
+            }
+            return itemMenu;
+        }
+
+        void addEntriesAsImages(NavigationMenuEntry currentEntry, KryptonContextMenu menu)
+        {
+            if (currentEntry.States != null)
+            {
+                KryptonContextMenuHeading heading = new KryptonContextMenuHeading(currentEntry.Text);
+                menu.Items.Add(heading);
+                KryptonContextMenuImageSelect imageSelect = new KryptonContextMenuImageSelect();
+                imageSelect.LineItems = 6;
+                imageSelect.ImageList = menuImageList;
+                imageSelect.ImageIndexStart = menuImageList.Images.Count;
+                imageSelect.SelectedIndexChanged += imageSelect_SelectedIndexChanged;
+                menu.Items.Add(imageSelect);
+                foreach (NavigationState state in currentEntry.States)
+                {
+                    menuImageList.Images.Add(state.Thumbnail);
+                    menuImageListIndex.Add(state.Name);
+                }
+                imageSelect.ImageIndexEnd = menuImageList.Images.Count - 1;
+            }
             if (currentEntry.SubEntries != null)
             {
                 foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
                 {
-                    KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(entry.Text);
-                    itemEntry.Image = entry.Thumbnail;
-                    menuItems.Items.Add(itemEntry);
-                    itemEntry.Items.Add(addSubMenuEntries(entry));
+                    addEntriesAsImages(entry, menu);
                 }
             }
-            if (currentEntry.States != null)
-            {
-                foreach (NavigationState state in currentEntry.States)
-                {
-                    KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(state.Name, activateState);
-                    itemEntry.Tag = state;
-                    menuItems.Items.Add(itemEntry);
-                    itemEntry.Image = state.Thumbnail;
-                }
-            }
-            return menuItems;
         }
 
-        void activateState(object sender, EventArgs e)
+        void imageSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KryptonContextMenuItem menuItem = sender as KryptonContextMenuItem;
-            if (menuItem != null)
+            KryptonContextMenuImageSelect imageSelect = sender as KryptonContextMenuImageSelect;
+            if (imageSelect.SelectedIndex != -1)
             {
-                navigationController.setNavigationState(menuItem.Text, basicController.DrawingWindowController.getActiveWindow().DrawingWindow);
+                navigationController.setNavigationState(menuImageListIndex[imageSelect.SelectedIndex], basicController.DrawingWindowController.getActiveWindow().DrawingWindow);
+                imageSelect.SelectedIndex = -1;
             }
         }
+
+        //KryptonContextMenu createSubMenuMenu(NavigationMenuEntry topEntry)
+        //{
+        //    KryptonContextMenu itemMenu = new KryptonContextMenu();
+        //    itemMenu.Items.Add(addEntriesAsSubMenus(topEntry));
+        //    return itemMenu;
+        //}
+
+        //KryptonContextMenuItemBase addEntriesAsSubMenus(NavigationMenuEntry currentEntry)
+        //{
+        //    KryptonContextMenuItems menuItems = new KryptonContextMenuItems();
+        //    if (currentEntry.SubEntries != null)
+        //    {
+        //        foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
+        //        {
+        //            KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(entry.Text);
+        //            itemEntry.Image = entry.Thumbnail;
+        //            menuItems.Items.Add(itemEntry);
+        //            itemEntry.Items.Add(addEntriesAsSubMenus(entry));
+        //        }
+        //    }
+        //    if (currentEntry.States != null)
+        //    {
+        //        foreach (NavigationState state in currentEntry.States)
+        //        {
+        //            KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(state.Name, activateState);
+        //            itemEntry.Tag = state;
+        //            menuItems.Items.Add(itemEntry);
+        //            itemEntry.Image = state.Thumbnail;
+        //        }
+        //    }
+        //    return menuItems;
+        //}
+
+        //void activateState(object sender, EventArgs e)
+        //{
+        //    KryptonContextMenuItem menuItem = sender as KryptonContextMenuItem;
+        //    if (menuItem != null)
+        //    {
+        //        navigationController.setNavigationState(menuItem.Text, basicController.DrawingWindowController.getActiveWindow().DrawingWindow);
+        //    }
+        //}
     }
 }
