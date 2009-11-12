@@ -36,6 +36,12 @@
             this.mainStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.clinicalRibbon = new ComponentFactory.Krypton.Ribbon.KryptonRibbon();
+            this.showNavigationQATButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton();
+            this.showNavigationCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.showTeethCollisionQATButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton();
+            this.showTeethCollisionCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.renderQATButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton();
+            this.renderCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.changeSceneMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.openMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.saveMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
@@ -44,7 +50,6 @@
             this.navigationOnScreenGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showNavigationButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.showNavigationCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.viewGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.displayTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.predefinedLayerGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
@@ -65,7 +70,6 @@
             this.teethGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.showTeethCollisionCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.simulationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.openingGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -113,7 +117,6 @@
             this.renderHeightUpDown = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown();
             this.kryptonRibbonGroupTriple6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.renderButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.renderCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonTab1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.windowPropertiesGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -223,6 +226,10 @@
             // 
             this.clinicalRibbon.AllowFormIntegrate = false;
             this.clinicalRibbon.Name = "clinicalRibbon";
+            this.clinicalRibbon.QATButtons.AddRange(new System.ComponentModel.Component[] {
+            this.showNavigationQATButton,
+            this.showTeethCollisionQATButton,
+            this.renderQATButton});
             this.clinicalRibbon.RibbonAppButton.AppButtonImage = ((System.Drawing.Image)(resources.GetObject("clinicalRibbon.RibbonAppButton.AppButtonImage")));
             this.clinicalRibbon.RibbonAppButton.AppButtonMenuItems.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
             this.changeSceneMenuItem,
@@ -240,9 +247,42 @@
             this.renderingTab,
             this.kryptonRibbonTab1});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.renderingTab;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
+            // 
+            // showNavigationQATButton
+            // 
+            this.showNavigationQATButton.KryptonCommand = this.showNavigationCommand;
+            // 
+            // showNavigationCommand
+            // 
+            this.showNavigationCommand.ImageLarge = global::Medical.Properties.Resources.NavIconLarge;
+            this.showNavigationCommand.ImageSmall = global::Medical.Properties.Resources.NavIconSmall;
+            this.showNavigationCommand.Text = "Show Navigation";
+            this.showNavigationCommand.TextLine1 = "Show Navigation";
+            // 
+            // showTeethCollisionQATButton
+            // 
+            this.showTeethCollisionQATButton.KryptonCommand = this.showTeethCollisionCommand;
+            // 
+            // showTeethCollisionCommand
+            // 
+            this.showTeethCollisionCommand.ImageLarge = global::Medical.Properties.Resources.TeethCollisionIconLarge;
+            this.showTeethCollisionCommand.ImageSmall = global::Medical.Properties.Resources.TeethCollisionIconSmall;
+            this.showTeethCollisionCommand.Text = "Show Teeth Collision";
+            this.showTeethCollisionCommand.TextLine1 = "Show Teeth Collision";
+            // 
+            // renderQATButton
+            // 
+            this.renderQATButton.KryptonCommand = this.renderCommand;
+            // 
+            // renderCommand
+            // 
+            this.renderCommand.ImageLarge = global::Medical.Properties.Resources.RenderIconLarge;
+            this.renderCommand.ImageSmall = global::Medical.Properties.Resources.RenderIconSmall;
+            this.renderCommand.Text = "Render";
+            this.renderCommand.TextLine1 = "Render";
             // 
             // changeSceneMenuItem
             // 
@@ -285,13 +325,6 @@
             this.showNavigationButton.ImageSmall = null;
             this.showNavigationButton.KryptonCommand = this.showNavigationCommand;
             this.showNavigationButton.TextLine1 = "Show Navigation";
-            // 
-            // showNavigationCommand
-            // 
-            this.showNavigationCommand.ImageLarge = global::Medical.Properties.Resources.NavIconLarge;
-            this.showNavigationCommand.ImageSmall = global::Medical.Properties.Resources.NavIconSmall;
-            this.showNavigationCommand.Text = "Show Navigation";
-            this.showNavigationCommand.TextLine1 = "Show Navigation";
             // 
             // viewGroup
             // 
@@ -424,13 +457,6 @@
             this.showTeethCollisionButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
             this.showTeethCollisionButton.KryptonCommand = this.showTeethCollisionCommand;
             this.showTeethCollisionButton.TextLine1 = "Show Teeth Collision";
-            // 
-            // showTeethCollisionCommand
-            // 
-            this.showTeethCollisionCommand.ImageLarge = global::Medical.Properties.Resources.TeethCollisionIconLarge;
-            this.showTeethCollisionCommand.ImageSmall = global::Medical.Properties.Resources.TeethCollisionIconSmall;
-            this.showTeethCollisionCommand.Text = "Show Teeth Collision";
-            this.showTeethCollisionCommand.TextLine1 = "Show Teeth Collision";
             // 
             // simulationTab
             // 
@@ -774,13 +800,6 @@
             // 
             this.renderButton.KryptonCommand = this.renderCommand;
             // 
-            // renderCommand
-            // 
-            this.renderCommand.ImageLarge = global::Medical.Properties.Resources.RenderIconLarge;
-            this.renderCommand.ImageSmall = global::Medical.Properties.Resources.RenderIconSmall;
-            this.renderCommand.Text = "Render";
-            this.renderCommand.TextLine1 = "Render";
-            // 
             // kryptonRibbonTab1
             // 
             this.kryptonRibbonTab1.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
@@ -1054,5 +1073,8 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton bothHorizontalOpenButton;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab renderingTab;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton renderingBackgroundColor;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton showNavigationQATButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton showTeethCollisionQATButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton renderQATButton;
     }
 }

@@ -59,6 +59,19 @@ namespace Medical.GUI
             openMenuItem.Click += new EventHandler(openMenuItem_Click);
             saveMenuItem.Click += new EventHandler(saveMenuItem_Click);
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
+
+            showNavigationQATButton.Click += new EventHandler(showNavigationQATButton_Click);
+            showTeethCollisionQATButton.Click += new EventHandler(showTeethCollisionQATButton_Click);
+        }
+
+        void showTeethCollisionQATButton_Click(object sender, EventArgs e)
+        {
+            showTeethCollisionCommand.Checked = !showTeethCollisionCommand.Checked;
+        }
+
+        void showNavigationQATButton_Click(object sender, EventArgs e)
+        {
+            showNavigationCommand.Checked = !showNavigationCommand.Checked;
         }
 
         /// <summary>
