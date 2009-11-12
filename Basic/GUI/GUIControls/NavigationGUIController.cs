@@ -68,26 +68,23 @@ namespace Medical.GUI
                 if (topEntry.SubEntries != null)
                 {
                     KryptonContextMenu itemMenu = new KryptonContextMenu();
-                    KryptonContextMenuItems topItems = new KryptonContextMenuItems();
-                    itemMenu.Items.Add(topItems);
+                    itemMenu.Items.Add(addSubMenuEntries(topEntry));
                     itemButton.KryptonContextMenu = itemMenu;
-                    addSubMenuEntries(topItems, topEntry);
                 }
             }
         }
 
-        void addSubMenuEntries(KryptonContextMenuItems menu, NavigationMenuEntry currentEntry)
+        KryptonContextMenuItemBase addSubMenuEntries(NavigationMenuEntry currentEntry)
         {
+            KryptonContextMenuItems menuItems = new KryptonContextMenuItems();
             if (currentEntry.SubEntries != null)
             {
                 foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
                 {
                     KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(entry.Text);
                     itemEntry.Image = entry.Thumbnail;
-                    menu.Items.Add(itemEntry);
-                    KryptonContextMenuItems subItems = new KryptonContextMenuItems();
-                    itemEntry.Items.Add(subItems);
-                    addSubMenuEntries(subItems, entry);
+                    menuItems.Items.Add(itemEntry);
+                    itemEntry.Items.Add(addSubMenuEntries(entry));
                 }
             }
             if (currentEntry.States != null)
@@ -96,10 +93,11 @@ namespace Medical.GUI
                 {
                     KryptonContextMenuItem itemEntry = new KryptonContextMenuItem(state.Name, activateState);
                     itemEntry.Tag = state;
-                    menu.Items.Add(itemEntry);
+                    menuItems.Items.Add(itemEntry);
                     itemEntry.Image = state.Thumbnail;
                 }
             }
+            return menuItems;
         }
 
         void activateState(object sender, EventArgs e)
