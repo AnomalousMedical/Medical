@@ -101,10 +101,11 @@
             this.kryptonRibbonGroupTriple13 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.kryptonRibbonGroupCustomControl5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupCustomControl();
             this.playbackRibbonControl = new Medical.GUI.Playback.PlaybackRibbonControl();
-            this.kryptonRibbonTab1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.renderingTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.pictureGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.renderImageSizeButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.renderingBackgroundColor = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
             this.kryptonRibbonGroupLines1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLines();
             this.kryptonRibbonGroupLabel1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
             this.renderWidthUpDown = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown();
@@ -113,6 +114,7 @@
             this.kryptonRibbonGroupTriple6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.renderButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.renderCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.kryptonRibbonTab1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.windowPropertiesGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.backgroundColorButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
@@ -235,8 +237,10 @@
             this.displayTab,
             this.simulationTab,
             this.sequencesTab,
+            this.renderingTab,
             this.kryptonRibbonTab1});
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedContext = null;
+            this.clinicalRibbon.SelectedTab = this.renderingTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -672,13 +676,11 @@
             this.playbackRibbonControl.TabIndex = 17;
             this.playbackRibbonControl.TabStop = false;
             // 
-            // kryptonRibbonTab1
+            // renderingTab
             // 
-            this.kryptonRibbonTab1.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
-            this.pictureGroup,
-            this.windowPropertiesGroup,
-            this.layoutGroup});
-            this.kryptonRibbonTab1.Text = "Window";
+            this.renderingTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.pictureGroup});
+            this.renderingTab.Text = "Rendering";
             // 
             // pictureGroup
             // 
@@ -691,7 +693,8 @@
             // kryptonRibbonGroupTriple5
             // 
             this.kryptonRibbonGroupTriple5.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.renderImageSizeButton});
+            this.renderImageSizeButton,
+            this.renderingBackgroundColor});
             // 
             // renderImageSizeButton
             // 
@@ -699,6 +702,12 @@
             this.renderImageSizeButton.ImageLarge = global::Medical.Properties.Resources.ImageResolutionIconLarge;
             this.renderImageSizeButton.ImageSmall = global::Medical.Properties.Resources.ImageResolutionIconSmall;
             this.renderImageSizeButton.TextLine1 = "Size";
+            // 
+            // renderingBackgroundColor
+            // 
+            this.renderingBackgroundColor.RecentColors = new System.Drawing.Color[0];
+            this.renderingBackgroundColor.SelectedColor = System.Drawing.Color.Black;
+            this.renderingBackgroundColor.TextLine1 = "Background Color";
             // 
             // kryptonRibbonGroupLines1
             // 
@@ -771,6 +780,13 @@
             this.renderCommand.ImageSmall = global::Medical.Properties.Resources.RenderIconSmall;
             this.renderCommand.Text = "Render";
             this.renderCommand.TextLine1 = "Render";
+            // 
+            // kryptonRibbonTab1
+            // 
+            this.kryptonRibbonTab1.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.windowPropertiesGroup,
+            this.layoutGroup});
+            this.kryptonRibbonTab1.Text = "Window";
             // 
             // windowPropertiesGroup
             // 
@@ -1036,5 +1052,7 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton leftHorizontalOpenButton;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton bothHorizontalCloseButton;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton bothHorizontalOpenButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab renderingTab;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton renderingBackgroundColor;
     }
 }

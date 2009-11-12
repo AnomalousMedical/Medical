@@ -28,11 +28,14 @@ namespace Medical.GUI
         private KryptonContextMenuRadioButton twelveMegapixel;
         private KryptonContextMenuRadioButton custom;
 
+        private KryptonRibbonGroupColorButton backgroundColorButton;
+
         public RenderGUIController(BasicForm form, BasicController basicController, ShortcutController shortcuts)
         {
             this.form = form;
             this.imageRenderer = basicController.ImageRenderer;
             this.drawingWindowController = basicController.DrawingWindowController;
+            backgroundColorButton = form.renderingBackgroundColor;
 
             width = form.renderWidthUpDown;
             height = form.renderHeightUpDown;
@@ -90,7 +93,7 @@ namespace Medical.GUI
             {
                 int width = (int)this.width.Value;
                 int height = (int)this.height.Value;
-                Bitmap bitmap = imageRenderer.renderImage(width, height);
+                Bitmap bitmap = imageRenderer.renderImage(width, height, false, backgroundColorButton.SelectedColor);
                 if (bitmap != null)
                 {
                     PictureWindow picture = new PictureWindow();
