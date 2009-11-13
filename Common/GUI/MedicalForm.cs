@@ -10,10 +10,11 @@ using Engine.Platform;
 using Medical;
 using WeifenLuo.WinFormsUI.Docking;
 using System.IO;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
-    public class MedicalForm : Form, OSWindow
+    public class MedicalForm : KryptonForm, OSWindow
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         protected FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");

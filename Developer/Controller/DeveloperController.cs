@@ -93,7 +93,7 @@ namespace Medical.Controller
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
-            imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+            imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             layerController = new LayerController();
 
             guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);

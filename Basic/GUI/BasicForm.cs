@@ -17,7 +17,7 @@ using ComponentFactory.Krypton.Navigator;
 
 namespace Medical.GUI
 {    
-    public partial class BasicForm : KryptonForm, OSWindow
+    public partial class BasicForm : MedicalForm
     {
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
@@ -32,6 +32,7 @@ namespace Medical.GUI
         private RenderGUIController renderGUIController;
         private MandibleGUIController mandibleGUIController;
         private SequencesGUIController sequencesGUIController;
+        private StateGUIController stateGUIController;
 
         public BasicForm(ShortcutController shortcuts)
         {
@@ -66,7 +67,18 @@ namespace Medical.GUI
             showTeethCollisionQATButton.Click += new EventHandler(showTeethCollisionQATButton_Click);
 
             //Hide navigators
-            //primaryNavigator.Visible = false;
+            primaryNavigator.Visible = false; 
+            primaryNavigator.Pages.Removed += new TypedHandler<KryptonPage>(Pages_Removed);
+            primaryNavigator.Pages.Inserted += new TypedHandler<KryptonPage>(Pages_Inserted);
+            primaryNavigator.Pages.Cleared += new EventHandler(Pages_Cleared);
+
+            //temporary
+            tempStateButton.Click += new EventHandler(tempStateButton_Click);
+        }
+
+        void tempStateButton_Click(object sender, EventArgs e)
+        {
+            controller.showStatePicker(tempStateButton.TextLine1);
         }
 
         void showTeethCollisionQATButton_Click(object sender, EventArgs e)
@@ -92,6 +104,7 @@ namespace Medical.GUI
             layerGUIController.Dispose();
             openPatient.Dispose();
             savePatient.Dispose();
+            stateGUIController.Dispose();
             base.Dispose(disposing);
         }
 
@@ -105,26 +118,17 @@ namespace Medical.GUI
             renderGUIController = new RenderGUIController(this, controller, shortcutController);
             mandibleGUIController = new MandibleGUIController(this, controller);
             sequencesGUIController = new SequencesGUIController(this, controller);
+            stateGUIController = new StateGUIController(this, controller);
         }
 
-        public void setViewMode()
+        public void addPrimaryNavigatorPage(KryptonPage page)
         {
-            //windowToolStripMenuItem.Visible = true;
-            //toolsToolStripMenuItem.Visible = true;
-            //distortionToolStripMenuItem.Visible = true;
-            //newToolStripMenuItem.Visible = true;
-            //openToolStripMenuItem.Visible = true;
-            //saveToolStripMenuItem.Visible = true;
+            primaryNavigator.Pages.Add(page);
         }
 
-        public void setDistortionMode()
+        public void removePrimaryNavigatorPage(KryptonPage page)
         {
-            //windowToolStripMenuItem.Visible = false;
-            //toolsToolStripMenuItem.Visible = false;
-            //distortionToolStripMenuItem.Visible = false;
-            //newToolStripMenuItem.Visible = false;
-            //openToolStripMenuItem.Visible = false;
-            //saveToolStripMenuItem.Visible = false;
+            primaryNavigator.Pages.Remove(page);
         }
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
@@ -273,73 +277,6 @@ namespace Medical.GUI
             Application.DoEvents();
         }
 
-        #region OSWindow Members
-
-        private List<OSWindowListener> listeners = new List<OSWindowListener>();
-
-        public IntPtr WindowHandle
-        {
-            get
-            {
-                return this.Handle;
-            }
-        }
-
-        public int WindowWidth
-        {
-            get
-            {
-                return this.Width;
-            }
-        }
-
-        public int WindowHeight
-        {
-            get
-            {
-                return this.Height;
-            }
-        }
-
-        public void addListener(OSWindowListener listener)
-        {
-            listeners.Add(listener);
-        }
-
-        public void removeListener(OSWindowListener listener)
-        {
-            listeners.Remove(listener);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            foreach (OSWindowListener listener in listeners)
-            {
-                listener.resized(this);
-            }
-            base.OnResize(e);
-        }
-
-        protected override void OnMove(EventArgs e)
-        {
-            foreach (OSWindowListener listener in listeners)
-            {
-                listener.moved(this);
-            }
-            base.OnMove(e);
-        }
-
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            foreach (OSWindowListener listener in listeners)
-            {
-                listener.closing(this);
-            }
-            base.OnHandleDestroyed(e);
-        }
-
-        #endregion
-
         private void buttonSpecExpandCollapse_Click(object sender, EventArgs e)
         {
             // Are we currently showing fully expanded?
@@ -355,6 +292,21 @@ namespace Medical.GUI
                 primaryNavigator.NavigatorMode = NavigatorMode.OutlookFull;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowLeft;
             }
+        }
+
+        void Pages_Cleared(object sender, EventArgs e)
+        {
+            primaryNavigator.Visible = false;
+        }
+
+        void Pages_Inserted(object sender, TypedCollectionEventArgs<KryptonPage> e)
+        {
+            primaryNavigator.Visible = primaryNavigator.Pages.Count > 0;
+        }
+
+        void Pages_Removed(object sender, TypedCollectionEventArgs<KryptonPage> e)
+        {
+            primaryNavigator.Visible = primaryNavigator.Pages.Count > 0;
         }
     }
 }

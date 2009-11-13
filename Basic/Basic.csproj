@@ -101,6 +101,7 @@
     <Compile Include="GUI\GUIControls\NavigationGUIController.cs" />
     <Compile Include="GUI\GUIControls\RenderGUIController.cs" />
     <Compile Include="GUI\GUIControls\SequencesGUIController.cs" />
+    <Compile Include="GUI\GUIControls\StateGUIController.cs" />
     <Compile Include="GUI\GUIControls\WindowGUIController.cs" />
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>

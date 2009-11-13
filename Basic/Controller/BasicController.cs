@@ -29,7 +29,6 @@ namespace Medical.Controller
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
         private MedicalStateController stateController = new MedicalStateController();
-        private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
         private ImageRenderer imageRenderer;
@@ -121,7 +120,7 @@ namespace Medical.Controller
             watermark.createOverlays();
             watermarkController = new WatermarkController(watermark, drawingWindowController);
 
-            imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+            imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
 
             scenePicker = new ScenePicker();
@@ -341,13 +340,7 @@ namespace Medical.Controller
             if (!distortionController.Visible)
             {
                 basicForm.SuspendLayout();
-                if (stateController.getNumStates() == 0)
-                {
-                    stateController.createNormalStateFromScene();
-                }
                 movementSequenceController.stopPlayback();
-                stateGUI.setToEnd();
-                basicForm.setDistortionMode();
                 distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
                 basicForm.ResumeLayout();
             }
@@ -355,8 +348,11 @@ namespace Medical.Controller
 
         void statePicker_StateCreated(MedicalState state)
         {
+            if (stateController.getNumStates() == 0)
+            {
+                stateController.createNormalStateFromScene();
+            }
             stateController.addState(state);
-            stateGUI.CurrentBlend = stateController.getNumStates() - 1;
         }
 
         void statePicker_Finished()
@@ -364,7 +360,6 @@ namespace Medical.Controller
             //since this does not process when the state controller is visible just reset buttons.
             shortcutController.resetButtons();
             basicForm.SuspendLayout();
-            basicForm.setViewMode();
             basicForm.ResumeLayout();
         }
 
@@ -421,6 +416,14 @@ namespace Medical.Controller
             get
             {
                 return movementSequenceController;
+            }
+        }
+
+        public MedicalStateController MedicalStateController
+        {
+            get
+            {
+                return stateController;
             }
         }
     }

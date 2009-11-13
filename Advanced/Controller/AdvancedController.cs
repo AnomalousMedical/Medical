@@ -94,7 +94,7 @@ namespace Medical.Controller
 
                 navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
-                imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
+                imageRenderer = new ImageRenderer(medicalController, drawingWindowController, null, null);
 
                 guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
                 guiElements.EnableToolbars = true;

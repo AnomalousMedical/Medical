@@ -70,6 +70,10 @@
             this.teethGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.kryptonRibbonTab2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.tempStateButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.simulationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.openingGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -139,12 +143,10 @@
             this.kryptonContextMenuItems2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuItem2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.primaryNavigator = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
-            this.statesPage = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.buttonSpecExpandCollapse = new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.primaryNavigator)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.statesPage)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -172,9 +174,9 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(86, 115);
+            this.dockPanel.Location = new System.Drawing.Point(103, 115);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(698, 427);
+            this.dockPanel.Size = new System.Drawing.Size(681, 427);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -241,12 +243,13 @@
             this.clinicalRibbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.navigationTab,
             this.displayTab,
+            this.kryptonRibbonTab2,
             this.simulationTab,
             this.sequencesTab,
             this.renderingTab,
             this.kryptonRibbonTab1});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.kryptonRibbonTab2;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -456,6 +459,27 @@
             this.showTeethCollisionButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
             this.showTeethCollisionButton.KryptonCommand = this.showTeethCollisionCommand;
             this.showTeethCollisionButton.TextLine1 = "Show Teeth Collision";
+            // 
+            // kryptonRibbonTab2
+            // 
+            this.kryptonRibbonTab2.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.kryptonRibbonGroup4});
+            this.kryptonRibbonTab2.Text = "Distortion";
+            // 
+            // kryptonRibbonGroup4
+            // 
+            this.kryptonRibbonGroup4.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple12});
+            this.kryptonRibbonGroup4.TextLine1 = "Temp";
+            // 
+            // kryptonRibbonGroupTriple12
+            // 
+            this.kryptonRibbonGroupTriple12.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.tempStateButton});
+            // 
+            // tempStateButton
+            // 
+            this.tempStateButton.TextLine1 = "MRI Wizard";
             // 
             // simulationTab
             // 
@@ -915,25 +939,9 @@
             this.primaryNavigator.Location = new System.Drawing.Point(0, 115);
             this.primaryNavigator.Name = "primaryNavigator";
             this.primaryNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
-            this.primaryNavigator.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
-            this.statesPage});
-            this.primaryNavigator.SelectedIndex = 0;
-            this.primaryNavigator.Size = new System.Drawing.Size(86, 427);
+            this.primaryNavigator.Size = new System.Drawing.Size(103, 427);
             this.primaryNavigator.TabIndex = 17;
             this.primaryNavigator.Text = "primaryNavigator";
-            // 
-            // statesPage
-            // 
-            this.statesPage.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
-            this.statesPage.Flags = 65535;
-            this.statesPage.LastVisibleSet = true;
-            this.statesPage.MinimumSize = new System.Drawing.Size(50, 50);
-            this.statesPage.Name = "statesPage";
-            this.statesPage.Size = new System.Drawing.Size(84, 368);
-            this.statesPage.Text = "States";
-            this.statesPage.TextTitle = "States";
-            this.statesPage.ToolTipTitle = "Page ToolTip";
-            this.statesPage.UniqueName = "23DC365692F843C123DC365692F843C1";
             // 
             // buttonSpecExpandCollapse
             // 
@@ -953,6 +961,7 @@
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BasicForm";
             this.Text = "Articulometics Clinical";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -960,7 +969,6 @@
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.primaryNavigator)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.statesPage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1075,7 +1083,10 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton renderQATButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab sequencesTab;
         private ComponentFactory.Krypton.Navigator.KryptonNavigator primaryNavigator;
-        private ComponentFactory.Krypton.Navigator.KryptonPage statesPage;
         private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab kryptonRibbonTab2;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple12;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton tempStateButton;
     }
 }
