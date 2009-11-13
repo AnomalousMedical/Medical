@@ -8,6 +8,7 @@ using Engine.Resources;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using Medical.Properties;
+using Medical.Muscles;
 
 namespace Medical.GUI
 {
@@ -15,6 +16,7 @@ namespace Medical.GUI
     {
         private KryptonRibbonTab sequenceTab;
         private MovementSequenceController sequenceController;
+        private KryptonRibbonGroupButton previousClickedButton;
 
         public SequencesGUIController(BasicForm form, BasicController basicController)
         {
@@ -55,7 +57,38 @@ namespace Medical.GUI
                         button.ImageSmall = sequenceInfo.Thumbnail;
                     }
                     button.ButtonType = GroupButtonType.Check;
+                    button.Click += new EventHandler(button_Click);
                     triple.Items.Add(button);
+                }
+            }
+        }
+
+        void button_Click(object sender, EventArgs e)
+        {
+            KryptonRibbonGroupButton currentButton = sender as KryptonRibbonGroupButton;
+            if (currentButton != null)
+            {
+                if (currentButton != previousClickedButton)
+                {
+                    if (previousClickedButton != null)
+                    {
+                        previousClickedButton.Checked = false;
+                    }
+                    MovementSequence sequence = sequenceController.loadSequence(currentButton.Tag.ToString());
+                    sequenceController.CurrentSequence = sequence;
+                    sequenceController.playCurrentSequence();
+                    previousClickedButton = currentButton;
+                }
+                else
+                {
+                    if (!previousClickedButton.Checked)
+                    {
+                        sequenceController.stopPlayback();
+                    }
+                    else
+                    {
+                        sequenceController.playCurrentSequence();
+                    }
                 }
             }
         }

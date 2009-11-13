@@ -24,6 +24,8 @@ namespace Medical.Controller
     {
         public event MovementSequenceEvent CurrentSequenceChanged;
         public event MovementSequenceEvent CurrentSequenceSetChanged;
+        public event MovementSequenceEvent PlaybackStarted;
+        public event MovementSequenceEvent PlaybackStopped;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private MovementSequence currentSequence;
@@ -114,10 +116,15 @@ namespace Medical.Controller
         /// </summary>
         public void playCurrentSequence()
         {
-            if (currentSequence != null)
+            if (currentSequence != null && !playing)
             {
                 currentTime = 0.0f;
-                subscibeToUpdates();
+                playing = true;
+                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
+                if (PlaybackStarted != null)
+                {
+                    PlaybackStarted.Invoke(this);
+                }
             }
         }
 
@@ -126,7 +133,19 @@ namespace Medical.Controller
         /// </summary>
         public void stopPlayback()
         {
-            unsubscribeFromUpdates();
+            if (playing)
+            {
+                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                playing = false;
+                if (currentSequence != null)
+                {
+                    currentSequence.setPosition(0.0f);
+                }
+                if (PlaybackStopped != null)
+                {
+                    PlaybackStopped.Invoke(this);
+                }
+            }
         }
 
         /// <summary>
@@ -163,6 +182,14 @@ namespace Medical.Controller
             }
         }
 
+        public bool Playing
+        {
+            get
+            {
+                return playing;
+            }
+        }
+
         /// <summary>
         /// Update function during playback.
         /// </summary>
@@ -172,30 +199,6 @@ namespace Medical.Controller
             currentTime += (float)time.Seconds;
             currentTime %= currentSequence.Duration;
             currentSequence.setPosition(currentTime);
-        }
-
-        /// <summary>
-        /// Helper function to start listening for updates.
-        /// </summary>
-        private void subscibeToUpdates()
-        {
-            if (!playing)
-            {
-                playing = true;
-                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
-            }
-        }
-
-        /// <summary>
-        /// Helper function to stop listening for updates.
-        /// </summary>
-        private void unsubscribeFromUpdates()
-        {
-            if (playing)
-            {
-                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
-                playing = false;
-            }
         }
     }
 }
