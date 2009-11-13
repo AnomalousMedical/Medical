@@ -23,7 +23,6 @@ namespace Medical.GUI
             this.sequenceTab = form.sequencesTab;
             this.sequenceController = basicController.MovementSequenceController;
 
-            sequenceController.CurrentSequenceChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceChanged);
             sequenceController.CurrentSequenceSetChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceSetChanged);
         }
 
@@ -91,11 +90,6 @@ namespace Medical.GUI
                     }
                 }
             }
-        }
-
-        void sequenceController_CurrentSequenceChanged(MovementSequenceController controller)
-        {
-            
         }
     }
 }
