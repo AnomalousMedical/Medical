@@ -48,9 +48,17 @@ namespace Medical
 
         public void apply()
         {
-            foreach(LayerEntry entry in entries)
+            foreach (LayerEntry entry in entries)
             {
                 entry.apply();
+            }
+        }
+
+        internal void applyTemporaryUndisruptive()
+        {
+            foreach (LayerEntry entry in entries)
+            {
+                entry.applyTemporaryUndisruptive();
             }
         }
 

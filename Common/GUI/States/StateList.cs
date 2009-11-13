@@ -30,10 +30,11 @@ namespace Medical.GUI
             imageProperties.CustomBackgroundColor = Engine.Color.Black;
             imageProperties.ShowWatermark = false;
             
-            imageProperties.UseCustomPosition = true;
-            imageProperties.CameraPosition = Vector3.Backward * 150.0f;
-            imageProperties.CameraLookAt = Vector3.Zero;
+            imageProperties.UseNavigationStatePosition = true;
+            imageProperties.NavigationStateName = "Midline Anterior";
 
+            imageProperties.OverrideLayers = true;
+            imageProperties.LayerState = "MandibleSizeLayers";
         }
 
         public StateList(MedicalStateController stateController, ImageRenderer imageRenderer)

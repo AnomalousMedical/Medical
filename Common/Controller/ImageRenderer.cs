@@ -8,6 +8,7 @@ using OgreWrapper;
 using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -167,16 +168,28 @@ namespace Medical
                 int height = properties.Height * properties.AntiAliasingMode;
 
                 //Camera position
-                Vector3 cameraPosition = properties.CameraPosition;
-                Vector3 cameraLookAt = properties.CameraLookAt;
-                if (properties.UseActiveViewportLocation)
+                Vector3 cameraPosition = drawingWindow.DrawingWindow.Translation;
+                Vector3 cameraLookAt = drawingWindow.DrawingWindow.LookAt;
+                if (!properties.UseActiveViewportLocation)
                 {
-                    cameraPosition = drawingWindow.DrawingWindow.Translation;
-                    cameraLookAt = drawingWindow.DrawingWindow.LookAt;
-                }
-                else if (properties.UseNavigationStatePosition)
-                {
-                    throw new NotImplementedException();
+                    if (properties.UseNavigationStatePosition)
+                    {
+                        NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
+                        if (state != null)
+                        {
+                            cameraPosition = state.Translation;
+                            cameraLookAt = state.LookAt;
+                        }
+                        else
+                        {
+                            Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
+                        }
+                    }
+                    else if (properties.UseCustomPosition)
+                    {
+                        cameraPosition = properties.CameraPosition;
+                        cameraLookAt = properties.CameraLookAt;
+                    }
                 }
 
                 //Watermark activation
@@ -184,6 +197,13 @@ namespace Medical
                 {
                     watermark.sizeChanged(width, height);
                     watermark.setVisible(true);
+                }
+
+                //Layer override
+                LayerState currentLayers = null;
+                if (properties.OverrideLayers)
+                {
+                    currentLayers = layerController.applyLayerStateTemporaryUndisruptive(properties.LayerState);
                 }
 
                 //Render
@@ -202,6 +222,12 @@ namespace Medical
                         graph.DrawImage(largeImage, new Rectangle(0, 0, properties.Width, properties.Height));
                     }
                     largeImage.Dispose();
+                }
+
+                //Turn off layer override
+                if (properties.OverrideLayers)
+                {
+                    layerController.restoreConditions(currentLayers);
                 }
 
                 //Watermark deactivation

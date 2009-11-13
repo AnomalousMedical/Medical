@@ -32,6 +32,36 @@ namespace Medical
             CurrentLayerState = currentLayers.getState(name);
         }
 
+        /// <summary>
+        /// Apply a layer state quicky without causing any disruption to the
+        /// current layering including any transitions currently in effect. This
+        /// will be valid until the next update. It is intended for use by the
+        /// ImageRenderer so images can be captured with transparency that is
+        /// different from the current transparency.
+        /// </summary>
+        /// <param name="name">The name of the state to apply.</param>
+        /// <returns>A LayerState that can restore the scene to how it was before this fuction was called.</returns>
+        public LayerState applyLayerStateTemporaryUndisruptive(String name)
+        {
+            LayerState currentConditions = new LayerState("CurrentConditions");
+            currentConditions.captureState();
+
+            LayerState tempState = currentLayers.getState(name);
+            tempState.applyTemporaryUndisruptive();
+
+            return currentConditions;
+        }
+
+        /// <summary>
+        /// Call this function to restore the old conditions that were returned
+        /// from applyLayerStateTemporaryUndisruptive.
+        /// </summary>
+        /// <param name="oldConditions"></param>
+        public void restoreConditions(LayerState oldConditions)
+        {
+            oldConditions.applyTemporaryUndisruptive();
+        }
+
         public void saveLayerStateSet(String filename)
         {
             using (XmlTextWriter xmlWriter = new XmlTextWriter(filename, Encoding.Unicode))

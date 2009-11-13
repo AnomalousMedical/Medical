@@ -32,6 +32,19 @@ namespace Medical
             }
         }
 
+        internal void applyTemporaryUndisruptive()
+        {
+            TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
+            if (group != null)
+            {
+                TransparencyInterface obj = group.getTransparencyObject(transparencyObject);
+                if (obj != null)
+                {
+                    obj.setAlpha(alphaValue);
+                }
+            }
+        }
+
         public RenderGroup RenderGroup
         {
             get
