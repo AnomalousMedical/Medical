@@ -93,6 +93,18 @@ namespace Medical
         }
 
         /// <summary>
+        /// Use the current setup of the scene to create a "normal" state.
+        /// </summary>
+        public void createNormalStateFromScene()
+        {
+            MedicalState normalState = this.createAndAddState("Normal");
+            normalState.Notes.Notes = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
+\viewkind4\uc1\pard\f0\fs17 Normal\par
+}";
+            normalState.Notes.DataSource = "Articulometrics";
+        }
+
+        /// <summary>
         /// Blend between two states. The whole number part determines the start
         /// state, the whole number + 1 is the destination state. The partial
         /// part is the percentage of blend between the two states. So 2.3 will

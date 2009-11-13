@@ -28,7 +28,6 @@ namespace Medical.Controller
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
-        private GUIElementController viewMode;
         private MedicalStateController stateController = new MedicalStateController();
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
@@ -43,7 +42,6 @@ namespace Medical.Controller
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
-        private SavedCameraGUI savedCameraGUI;
         private MovementSequenceController movementSequenceController;
 
         /// <summary>
@@ -126,26 +124,8 @@ namespace Medical.Controller
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController);
             imageRenderer.Watermark = watermark;
 
-            //Configure view mode
-            viewMode = new GUIElementController(basicForm.DockPanel, basicForm.ToolStrip, medicalController);
-
-            stateGUI = new MedicalStateGUI();
-            stateGUI.initialize(stateController);
-            viewMode.addGUIElement(stateGUI);
-
-            savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.AllowCustomCameras = false;
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
-            viewMode.addGUIElement(savedCameraGUI);
-
             scenePicker = new ScenePicker();
             scenePicker.initialize();
-
-            //Add specific gui elements
-            viewMode.addGUIElement(new NotesGUI(stateController, shortcutController));
-
-            viewMode.setupShortcuts(shortcutController.createOrRetrieveGroup("ViewMode"));
-            viewMode.EnableToolbars = true;
 
             //Configure distort mode
             distortionController = new DistortionController();
@@ -161,7 +141,7 @@ namespace Medical.Controller
 
             openDefaultScene();
 
-            if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            //if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
             {
                 windowPresetController.setPresetSet("Primary");
             }
@@ -194,7 +174,7 @@ namespace Medical.Controller
             //Only save windows if the state picker is not active.
             if (!distortionController.Visible)
             {
-                viewMode.saveWindowFile(MedicalConfig.WindowsFile);
+//                viewMode.saveWindowFile(MedicalConfig.WindowsFile);
             }
             drawingWindowController.destroyCameras();
             drawingWindowController.closeAllWindows();
@@ -226,16 +206,16 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="persistString">A string describing the window.</param>
         /// <returns>The matching DockContent or null if none is found.</returns>
-        public DockContent getDockContent(String persistString)
-        {
-            DockContent ret = null;
-            ret = viewMode.restoreWindow(persistString);
-            if (ret == null)
-            {
-                ret = drawingWindowController.restoreFromString(persistString);
-            }
-            return ret;
-        }
+        //public DockContent getDockContent(String persistString)
+        //{
+        //    DockContent ret = null;
+        //    ret = viewMode.restoreWindow(persistString);
+        //    if (ret == null)
+        //    {
+        //        ret = drawingWindowController.restoreFromString(persistString);
+        //    }
+        //    return ret;
+        //}
 
         public void showOptions()
         {
@@ -319,7 +299,6 @@ namespace Medical.Controller
         {
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
             distortionController.setToDefault();
-            viewMode.alertGUISceneUnloading();
             if (SceneUnloading != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
@@ -328,7 +307,6 @@ namespace Medical.Controller
             if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
-                viewMode.alertGUISceneLoaded(medicalController.CurrentScene);
                 if (SceneLoaded != null)
                 {
                     SceneLoaded.Invoke(medicalController.CurrentScene);
@@ -342,7 +320,6 @@ namespace Medical.Controller
                     layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
-                    savedCameraGUI.createShortcuts(shortcutController);
                     distortionController.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
@@ -366,15 +343,9 @@ namespace Medical.Controller
                 basicForm.SuspendLayout();
                 if (stateController.getNumStates() == 0)
                 {
-                    MedicalState normalState = stateController.createAndAddState("Normal");
-                    normalState.Notes.Notes = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
-\viewkind4\uc1\pard\f0\fs17 Normal\par
-}";
-                    normalState.Notes.DataSource = "Articulometrics";
+                    stateController.createNormalStateFromScene();
                 }
                 movementSequenceController.stopPlayback();
-                viewMode.hideWindows();
-                viewMode.EnableToolbars = false;
                 stateGUI.setToEnd();
                 basicForm.setDistortionMode();
                 distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
@@ -393,8 +364,6 @@ namespace Medical.Controller
             //since this does not process when the state controller is visible just reset buttons.
             shortcutController.resetButtons();
             basicForm.SuspendLayout();
-            viewMode.EnableToolbars = true;
-            viewMode.restoreHiddenWindows();
             basicForm.setViewMode();
             basicForm.ResumeLayout();
         }
