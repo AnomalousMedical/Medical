@@ -339,6 +339,10 @@ namespace Medical.Controller
         {
             if (!distortionController.Visible)
             {
+                if (stateController.getNumStates() == 0)
+                {
+                    stateController.createNormalStateFromScene();
+                }
                 basicForm.SuspendLayout();
                 movementSequenceController.stopPlayback();
                 distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
@@ -348,10 +352,6 @@ namespace Medical.Controller
 
         void statePicker_StateCreated(MedicalState state)
         {
-            if (stateController.getNumStates() == 0)
-            {
-                stateController.createNormalStateFromScene();
-            }
             stateController.addState(state);
         }
 

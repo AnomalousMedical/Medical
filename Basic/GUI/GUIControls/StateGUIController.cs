@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.Controller;
 using ComponentFactory.Krypton.Navigator;
+using System.Windows.Forms;
 
 namespace Medical.GUI
 {
@@ -22,6 +23,7 @@ namespace Medical.GUI
             
             MedicalStateController stateController = controller.MedicalStateController;
             stateList = new StateList(stateController, controller.ImageRenderer);
+            stateList.Dock = DockStyle.Fill;
             kryptonPage = new KryptonPage("States");
             kryptonPage.Controls.Add(stateList);
 
@@ -43,7 +45,7 @@ namespace Medical.GUI
 
         void stateController_StateRemoved(MedicalStateController controller, MedicalState state, int index)
         {
-            if (controller.getNumStates() == 0)
+            if (controller.getNumStates() == 1)
             {
                 removePage();
             }
@@ -51,7 +53,7 @@ namespace Medical.GUI
 
         void stateController_StateAdded(MedicalStateController controller, MedicalState state, int index)
         {
-            if (controller.getNumStates() == 1)
+            if (controller.getNumStates() == 2)
             {
                 addPage();
             }
