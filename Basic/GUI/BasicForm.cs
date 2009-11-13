@@ -13,6 +13,7 @@ using Medical.Properties;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using Engine.Platform;
+using ComponentFactory.Krypton.Navigator;
 
 namespace Medical.GUI
 {    
@@ -63,6 +64,9 @@ namespace Medical.GUI
 
             showNavigationQATButton.Click += new EventHandler(showNavigationQATButton_Click);
             showTeethCollisionQATButton.Click += new EventHandler(showTeethCollisionQATButton_Click);
+
+            //Hide navigators
+            //primaryNavigator.Visible = false;
         }
 
         void showTeethCollisionQATButton_Click(object sender, EventArgs e)
@@ -335,5 +339,22 @@ namespace Medical.GUI
         }
 
         #endregion
+
+        private void buttonSpecExpandCollapse_Click(object sender, EventArgs e)
+        {
+            // Are we currently showing fully expanded?
+            if (primaryNavigator.NavigatorMode == NavigatorMode.OutlookFull)
+            {
+                // Switch to mini mode and reverse direction of arrow
+                primaryNavigator.NavigatorMode = NavigatorMode.OutlookMini;
+                buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowRight;
+            }
+            else
+            {
+                // Switch to full mode and reverse direction of arrow
+                primaryNavigator.NavigatorMode = NavigatorMode.OutlookFull;
+                buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowLeft;
+            }
+        }
     }
 }

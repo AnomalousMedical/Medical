@@ -138,8 +138,13 @@
             this.kryptonContextMenuRadioButton29 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
             this.kryptonContextMenuItems2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuItem2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.primaryNavigator = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
+            this.statesPage = new ComponentFactory.Krypton.Navigator.KryptonPage();
+            this.buttonSpecExpandCollapse = new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.primaryNavigator)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statesPage)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -167,9 +172,9 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(0, 115);
+            this.dockPanel.Location = new System.Drawing.Point(86, 115);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(784, 427);
+            this.dockPanel.Size = new System.Drawing.Size(698, 427);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -241,7 +246,7 @@
             this.renderingTab,
             this.kryptonRibbonTab1});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.simulationTab;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -898,12 +903,52 @@
             // 
             this.kryptonContextMenuItem2.Text = "Menu Item";
             // 
+            // primaryNavigator
+            // 
+            this.primaryNavigator.AutoSize = true;
+            this.primaryNavigator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.primaryNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
+            this.primaryNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
+            this.buttonSpecExpandCollapse});
+            this.primaryNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
+            this.primaryNavigator.Dock = System.Windows.Forms.DockStyle.Left;
+            this.primaryNavigator.Location = new System.Drawing.Point(0, 115);
+            this.primaryNavigator.Name = "primaryNavigator";
+            this.primaryNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
+            this.primaryNavigator.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
+            this.statesPage});
+            this.primaryNavigator.SelectedIndex = 0;
+            this.primaryNavigator.Size = new System.Drawing.Size(86, 427);
+            this.primaryNavigator.TabIndex = 17;
+            this.primaryNavigator.Text = "primaryNavigator";
+            // 
+            // statesPage
+            // 
+            this.statesPage.AutoHiddenSlideSize = new System.Drawing.Size(200, 200);
+            this.statesPage.Flags = 65535;
+            this.statesPage.LastVisibleSet = true;
+            this.statesPage.MinimumSize = new System.Drawing.Size(50, 50);
+            this.statesPage.Name = "statesPage";
+            this.statesPage.Size = new System.Drawing.Size(84, 368);
+            this.statesPage.Text = "States";
+            this.statesPage.TextTitle = "States";
+            this.statesPage.ToolTipTitle = "Page ToolTip";
+            this.statesPage.UniqueName = "23DC365692F843C123DC365692F843C1";
+            // 
+            // buttonSpecExpandCollapse
+            // 
+            this.buttonSpecExpandCollapse.Type = ComponentFactory.Krypton.Toolkit.PaletteButtonSpecStyle.ArrowLeft;
+            this.buttonSpecExpandCollapse.TypeRestricted = ComponentFactory.Krypton.Navigator.PaletteNavButtonSpecStyle.ArrowLeft;
+            this.buttonSpecExpandCollapse.UniqueName = "31631F972A0E421F31631F972A0E421F";
+            this.buttonSpecExpandCollapse.Click += new System.EventHandler(this.buttonSpecExpandCollapse_Click);
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 564);
             this.Controls.Add(this.dockPanel);
+            this.Controls.Add(this.primaryNavigator);
             this.Controls.Add(this.clinicalRibbon);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -914,6 +959,8 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.primaryNavigator)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statesPage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1027,5 +1074,8 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton showTeethCollisionQATButton;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonQATButton renderQATButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab sequencesTab;
+        private ComponentFactory.Krypton.Navigator.KryptonNavigator primaryNavigator;
+        private ComponentFactory.Krypton.Navigator.KryptonPage statesPage;
+        private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
     }
 }
