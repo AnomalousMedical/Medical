@@ -134,6 +134,7 @@ namespace Medical.GUI
                 if (entry != null)
                 {
                     entry.Text = textText.Text;
+                    entry.LayerState = layerStateText.Text;
                     if (thumbnailPanel.BackgroundImage != null)
                     {
                         entry.Thumbnail = new Bitmap(thumbnailPanel.BackgroundImage);
@@ -171,6 +172,7 @@ namespace Medical.GUI
                 if (entry != null)
                 {
                     textText.Text = entry.Text;
+                    layerStateText.Text = entry.LayerState;
                     if (entry.Thumbnail != null)
                     {
                         ThumbnailImage = new Bitmap(entry.Thumbnail);

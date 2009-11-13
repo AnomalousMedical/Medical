@@ -45,6 +45,8 @@
             this.addStatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSubEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.layerStateText = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.emptySpaceMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.nodeMenu.SuspendLayout();
@@ -77,6 +79,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.layerStateText);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.textText);
             this.panel1.Controls.Add(this.thumbnailPanel);
             this.panel1.Controls.Add(this.updateButton);
@@ -102,9 +106,9 @@
             // thumbnailPanel
             // 
             this.thumbnailPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.thumbnailPanel.Location = new System.Drawing.Point(10, 90);
+            this.thumbnailPanel.Location = new System.Drawing.Point(10, 132);
             this.thumbnailPanel.Name = "thumbnailPanel";
-            this.thumbnailPanel.Size = new System.Drawing.Size(262, 134);
+            this.thumbnailPanel.Size = new System.Drawing.Size(262, 92);
             this.thumbnailPanel.TabIndex = 18;
             // 
             // updateButton
@@ -140,7 +144,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 74);
+            this.label2.Location = new System.Drawing.Point(3, 116);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 2;
@@ -192,6 +196,24 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
+            // layerStateText
+            // 
+            this.layerStateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.layerStateText.Location = new System.Drawing.Point(5, 89);
+            this.layerStateText.Name = "layerStateText";
+            this.layerStateText.Size = new System.Drawing.Size(275, 20);
+            this.layerStateText.TabIndex = 20;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Layer State";
+            // 
             // NavigationMenuEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -233,5 +255,7 @@
         private System.Windows.Forms.ToolStripMenuItem addStatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addSubEntryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.TextBox layerStateText;
+        private System.Windows.Forms.Label label3;
     }
 }

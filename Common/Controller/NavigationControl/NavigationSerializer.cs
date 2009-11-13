@@ -31,6 +31,7 @@ namespace Medical
         private const String NAVIGATION_MENU_ENTRY = "NavigationMenuEntry";
         private const String TEXT = "Text";
         private const String BITMAP_SIZE = "Size";
+        private const String LAYER_STATE = "LayerState";
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -76,6 +77,7 @@ namespace Medical
         {
             xmlWriter.WriteStartElement(NAVIGATION_MENU_ENTRY);
             xmlWriter.WriteElementString(TEXT, entry.Text);
+            xmlWriter.WriteElementString(LAYER_STATE, entry.LayerState);
             if (entry.Thumbnail != null)
             {
                 writeThumbnail(xmlWriter, entry.Thumbnail);
@@ -245,6 +247,10 @@ namespace Medical
                     if (xmlReader.Name == TEXT)
                     {
                         menuEntry.Text = xmlReader.ReadElementContentAsString();
+                    }
+                    else if (xmlReader.Name == LAYER_STATE)
+                    {
+                        menuEntry.LayerState = xmlReader.ReadElementContentAsString();
                     }
                     else if (xmlReader.Name == THUMBNAIL)
                     {

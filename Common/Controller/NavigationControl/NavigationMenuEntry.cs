@@ -68,6 +68,8 @@ namespace Medical
 
         public String Text { get; set; }
 
+        public String LayerState { get; set; }
+
         /// <summary>
         /// Set the thumbnail of this entry. The image is not copied, but will
         /// be disposed by this class. If a copy needs to be made make before

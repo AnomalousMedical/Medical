@@ -12,14 +12,27 @@ namespace Medical.GUI
 {
     public class NavigationGUIController
     {
+        private class MenuImageIndex
+        {
+            public MenuImageIndex(String entryName, String layerState)
+            {
+                this.EntryName = entryName;
+                this.LayerState = layerState;
+            }
+
+            public String EntryName { get; set; }
+            public String LayerState { get; set; }
+        }
+
         private BasicController basicController;
 
         private KryptonCommand showNavigationCommand;
 
         private NavigationController navigationController;
+        private LayerController layerController;
         private KryptonRibbonGroup viewGroup;
         private ImageList menuImageList = new ImageList();
-        private List<String> menuImageListIndex = new List<string>();
+        private List<MenuImageIndex> menuImageListIndex = new List<MenuImageIndex>();
 
         public NavigationGUIController(BasicForm basicForm, BasicController basicController, ShortcutController shortcuts)
         {
@@ -39,6 +52,8 @@ namespace Medical.GUI
             this.navigationController = basicController.NavigationController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
             viewGroup = basicForm.viewGroup;
+
+            this.layerController = basicController.LayerController;
         }
 
         void showNavigationCommand_Execute(object sender, EventArgs e)
@@ -108,7 +123,7 @@ namespace Medical.GUI
                 foreach (NavigationState state in currentEntry.States)
                 {
                     menuImageList.Images.Add(state.Thumbnail);
-                    menuImageListIndex.Add(state.Name);
+                    menuImageListIndex.Add(new MenuImageIndex(state.Name, currentEntry.LayerState));
                 }
                 imageSelect.ImageIndexEnd = menuImageList.Images.Count - 1;
             }
@@ -126,7 +141,12 @@ namespace Medical.GUI
             KryptonContextMenuImageSelect imageSelect = sender as KryptonContextMenuImageSelect;
             if (imageSelect.SelectedIndex != -1)
             {
-                navigationController.setNavigationState(menuImageListIndex[imageSelect.SelectedIndex], basicController.DrawingWindowController.getActiveWindow().DrawingWindow);
+                MenuImageIndex index = menuImageListIndex[imageSelect.SelectedIndex];
+                navigationController.setNavigationState(index.EntryName, basicController.DrawingWindowController.getActiveWindow().DrawingWindow);
+                if (index.LayerState != null)
+                {
+                    layerController.applyLayerState(index.LayerState);
+                }
                 imageSelect.SelectedIndex = -1;
             }
         }
