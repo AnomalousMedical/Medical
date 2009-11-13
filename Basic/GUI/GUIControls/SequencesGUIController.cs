@@ -13,52 +13,56 @@ namespace Medical.GUI
 {
     class SequencesGUIController
     {
-        private MedicalController medicalController;
         private KryptonRibbonTab sequenceTab;
+        private MovementSequenceController sequenceController;
 
         public SequencesGUIController(BasicForm form, BasicController basicController)
         {
-            this.medicalController = basicController.MedicalController;
             this.sequenceTab = form.sequencesTab;
+            this.sequenceController = basicController.MovementSequenceController;
 
-            basicController.SceneLoaded += new SceneEvent(basicController_SceneLoaded);
+            sequenceController.CurrentSequenceChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceChanged);
+            sequenceController.CurrentSequenceSetChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceSetChanged);
         }
 
-        void basicController_SceneLoaded(SimScene scene)
+        void sequenceController_CurrentSequenceSetChanged(MovementSequenceController controller)
         {
-            SimSubScene defaultScene = scene.getDefaultSubScene();
-            sequenceTab.Groups.Clear();
-            if (defaultScene != null)
+            MovementSequenceSet currentSet = controller.SequenceSet;
+            foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
-                SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-                String sequenceDir = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-                using (Archive archive = FileSystem.OpenArchive(sequenceDir))
+                KryptonRibbonGroup group = new KryptonRibbonGroup();
+                group.TextLine1 = sequenceGroup.Name;
+                sequenceTab.Groups.Add(group);
+                KryptonRibbonGroupTriple triple = null;
+                foreach (MovementSequenceInfo sequenceInfo in sequenceGroup.Sequences)
                 {
-                    foreach (String directory in archive.listDirectories(sequenceDir, false, false))
+                    if (triple == null || triple.Items.Count > 2)
                     {
-                        KryptonRibbonGroup group = new KryptonRibbonGroup();
-                        group.TextLine1 = archive.getFileInfo(directory).Name;
-                        sequenceTab.Groups.Add(group);
-                        KryptonRibbonGroupTriple triple = null;
-                        foreach (String file in archive.listFiles(directory, false))
-                        {
-                            if (triple == null || triple.Items.Count > 2)
-                            {
-                                triple = new KryptonRibbonGroupTriple();
-                                group.Items.Add(triple);
-                            }
-                            String fileName = archive.getFileInfo(file).Name;
-                            KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
-                            button.TextLine1 = fileName.Substring(0, fileName.Length - 4);
-                            button.Tag = archive.getFullPath(file);
-                            button.ImageLarge = Resources.SequenceIconLarge;
-                            button.ImageSmall = Resources.SequenceIconSmall;
-                            triple.Items.Add(button);
-                        }
-
+                        triple = new KryptonRibbonGroupTriple();
+                        group.Items.Add(triple);
                     }
+                    KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
+                    button.TextLine1 = sequenceInfo.Name;
+                    button.Tag = sequenceInfo.FileName;
+                    if (sequenceInfo.Thumbnail == null)
+                    {
+                        button.ImageLarge = Resources.SequenceIconLarge;
+                        button.ImageSmall = Resources.SequenceIconSmall;
+                    }
+                    else
+                    {
+                        button.ImageLarge = sequenceInfo.Thumbnail;
+                        button.ImageSmall = sequenceInfo.Thumbnail;
+                    }
+                    button.ButtonType = GroupButtonType.Check;
+                    triple.Items.Add(button);
                 }
             }
+        }
+
+        void sequenceController_CurrentSequenceChanged(MovementSequenceController controller)
+        {
+            
         }
     }
 }

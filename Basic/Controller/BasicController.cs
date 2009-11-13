@@ -38,14 +38,13 @@ namespace Medical.Controller
         private WatermarkController watermarkController;
         private ScenePicker scenePicker;
         private LayerController layerController;
-        private MuscleControl muscleControl;
         private DistortionController distortionController;
         private SkullStatePicker mriWizard;
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private SavedCameraGUI savedCameraGUI;
-        private SimpleMandibleControl simpleMandibleControl;
+        private MovementSequenceController movementSequenceController;
 
         /// <summary>
         /// Constructor.
@@ -115,6 +114,7 @@ namespace Medical.Controller
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
+            movementSequenceController = new MovementSequenceController(medicalController);
 
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
@@ -142,9 +142,6 @@ namespace Medical.Controller
             scenePicker.initialize();
 
             //Add specific gui elements
-            muscleControl = new MuscleControl();
-            viewMode.addGUIElement(muscleControl);
-
             viewMode.addGUIElement(new NotesGUI(stateController, shortcutController));
 
             viewMode.setupShortcuts(shortcutController.createOrRetrieveGroup("ViewMode"));
@@ -348,6 +345,8 @@ namespace Medical.Controller
                     savedCameraGUI.createShortcuts(shortcutController);
                     distortionController.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
+                    String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
+                    movementSequenceController.loadSequenceSet(sequenceDirectory);
                 }
                 distortionController.setToDefault();
                 StatusController.TaskCompleted();
@@ -373,13 +372,12 @@ namespace Medical.Controller
 }";
                     normalState.Notes.DataSource = "Articulometrics";
                 }
-                muscleControl.stopPlayback();
+                movementSequenceController.stopPlayback();
                 viewMode.hideWindows();
                 viewMode.EnableToolbars = false;
                 stateGUI.setToEnd();
                 basicForm.setDistortionMode();
                 distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
-                simpleMandibleControl.AllowSceneManipulation = false;
                 basicForm.ResumeLayout();
             }
         }
@@ -398,7 +396,6 @@ namespace Medical.Controller
             viewMode.EnableToolbars = true;
             viewMode.restoreHiddenWindows();
             basicForm.setViewMode();
-            simpleMandibleControl.AllowSceneManipulation = true;
             basicForm.ResumeLayout();
         }
 
@@ -447,6 +444,14 @@ namespace Medical.Controller
             get
             {
                 return medicalController;
+            }
+        }
+
+        public MovementSequenceController MovementSequenceController
+        {
+            get
+            {
+                return movementSequenceController;
             }
         }
     }

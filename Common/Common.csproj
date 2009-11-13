@@ -112,6 +112,10 @@
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalInterface.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceController.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
