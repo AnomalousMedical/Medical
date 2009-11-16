@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using System.Drawing;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Medical
 {
@@ -121,6 +123,7 @@ namespace Medical
         private const string TEETH_STATE = "TeethState";
         private const string FOSSA_STATE = "FossaState";
         private const string NOTES = "Notes";
+        private const string THUMBNAIL = "Thumbnail";
 
         protected MedicalState(LoadInfo info)
         {
@@ -136,6 +139,18 @@ namespace Medical
             {
                 notes = new MedicalStateNotes();
             }
+            if (info.hasValue(THUMBNAIL))
+            {
+                using (MemoryStream memStream = new MemoryStream(info.GetBlob(THUMBNAIL)))
+                {
+                    thumbnail = new Bitmap(memStream);
+                    memStream.Close();
+                }
+            }
+            else
+            {
+                thumbnail = null;
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -145,6 +160,15 @@ namespace Medical
             info.AddValue(TEETH_STATE, teethState);
             info.AddValue(FOSSA_STATE, fossaState);
             info.AddValue(NOTES, notes);
+            if (thumbnail != null)
+            {
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    thumbnail.Save(memStream, ImageFormat.Png);
+                    info.AddValue(THUMBNAIL, memStream.GetBuffer());
+                    memStream.Close();
+                }
+            }
         }
 
         #endregion
