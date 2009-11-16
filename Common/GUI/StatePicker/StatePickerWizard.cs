@@ -132,7 +132,7 @@ namespace Medical.GUI
 
         internal void showChanges(bool immediate)
         {
-            MedicalState createdState = new MedicalState("Test");
+            MedicalState createdState = new MedicalState("");
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);

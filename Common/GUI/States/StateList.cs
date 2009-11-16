@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 using Medical.Properties;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -75,11 +76,13 @@ namespace Medical.GUI
         void stateController_BlendingStopped(MedicalStateController controller)
         {
             ignoreIndexChanges = false;
+            StatusController.TaskCompleted();
         }
 
         void stateController_BlendingStarted(MedicalStateController controller)
         {
             ignoreIndexChanges = true;
+            StatusController.SetStatus("Blending...");
         }
     }
 }

@@ -32,6 +32,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.stateNameTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.procedureType = new System.Windows.Forms.TextBox();
             this.notes = new System.Windows.Forms.RichTextBox();
@@ -40,7 +42,7 @@
             // 
             // datePicker
             // 
-            this.datePicker.Location = new System.Drawing.Point(6, 16);
+            this.datePicker.Location = new System.Drawing.Point(6, 58);
             this.datePicker.Name = "datePicker";
             this.datePicker.Size = new System.Drawing.Size(200, 20);
             this.datePicker.TabIndex = 0;
@@ -48,7 +50,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 0);
+            this.label1.Location = new System.Drawing.Point(3, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 1;
@@ -57,7 +59,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 43);
+            this.label2.Location = new System.Drawing.Point(3, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 13);
             this.label2.TabIndex = 2;
@@ -65,6 +67,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.stateNameTextBox);
+            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.procedureType);
             this.panel1.Controls.Add(this.label1);
@@ -73,13 +77,30 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(273, 103);
+            this.panel1.Size = new System.Drawing.Size(273, 142);
             this.panel1.TabIndex = 3;
+            // 
+            // stateNameTextBox
+            // 
+            this.stateNameTextBox.Location = new System.Drawing.Point(6, 20);
+            this.stateNameTextBox.Name = "stateNameTextBox";
+            this.stateNameTextBox.Size = new System.Drawing.Size(200, 20);
+            this.stateNameTextBox.TabIndex = 6;
+            this.stateNameTextBox.Text = "Custom State";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "State Name";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 85);
+            this.label3.Location = new System.Drawing.Point(3, 127);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 4;
@@ -88,7 +109,7 @@
             // procedureType
             // 
             this.procedureType.Enabled = false;
-            this.procedureType.Location = new System.Drawing.Point(6, 59);
+            this.procedureType.Location = new System.Drawing.Point(6, 101);
             this.procedureType.Name = "procedureType";
             this.procedureType.Size = new System.Drawing.Size(200, 20);
             this.procedureType.TabIndex = 3;
@@ -96,9 +117,9 @@
             // notes
             // 
             this.notes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notes.Location = new System.Drawing.Point(0, 103);
+            this.notes.Location = new System.Drawing.Point(0, 142);
             this.notes.Name = "notes";
-            this.notes.Size = new System.Drawing.Size(273, 173);
+            this.notes.Size = new System.Drawing.Size(273, 179);
             this.notes.TabIndex = 4;
             this.notes.Text = "";
             // 
@@ -112,7 +133,7 @@
             this.LayerState = "MandibleSizeLayers";
             this.Name = "NotesPanel";
             this.NavigationState = "Midline Anterior";
-            this.Size = new System.Drawing.Size(273, 276);
+            this.Size = new System.Drawing.Size(273, 321);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -128,5 +149,7 @@
         private System.Windows.Forms.TextBox procedureType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RichTextBox notes;
+        private System.Windows.Forms.TextBox stateNameTextBox;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -30,6 +30,7 @@ namespace Medical.GUI
             state.Notes.DataSource = procedureType.Text;
             state.Notes.Notes = notes.Rtf;
             state.Notes.ProcedureDate = datePicker.Value;
+            state.Name = stateNameTextBox.Text;
         }
 
         protected override void statePickerSet(StatePickerWizard controller)
