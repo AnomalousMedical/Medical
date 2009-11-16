@@ -36,7 +36,7 @@ namespace Medical.GUI
             this.stateController = stateController;
             stateController.StateAdded += new MedicalStateAdded(MedicalStates_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(MedicalStates_StateRemoved);
-            stateController.StatesCleared += new MedicalStatesCleared(MedicalStates_StatesCleared);
+            stateController.StatesCleared += new MedicalStateEvent(MedicalStates_StatesCleared);
         }
 
         public void next()

@@ -8,15 +8,17 @@ namespace Medical
 {
     public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
-    public delegate void MedicalStatesCleared(MedicalStateController controller);
+    public delegate void MedicalStateEvent(MedicalStateController controller);
     public delegate void MedicalStateChanged(MedicalState state);
 
     public class MedicalStateController
     {
         public event MedicalStateAdded StateAdded;
         public event MedicalStateRemoved StateRemoved;
-        public event MedicalStatesCleared StatesCleared;
+        public event MedicalStateEvent StatesCleared;
         public event MedicalStateChanged StateChanged;
+        public event MedicalStateEvent BlendingStarted;
+        public event MedicalStateEvent BlendingStopped;
 
         private List<MedicalState> states = new List<MedicalState>();
         private int currentState = -1;
@@ -205,15 +207,23 @@ namespace Medical
             {
                 medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
                 playing = true;
+                if (BlendingStarted != null)
+                {
+                    BlendingStarted.Invoke(this);
+                }
             }
         }
 
-        public void pause()
+        public void stopBlending()
         {
             if (playing)
             {
                 medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
                 playing = false;
+                if (BlendingStopped != null)
+                {
+                    BlendingStopped.Invoke(this);
+                }
             }
         }
 
@@ -237,7 +247,7 @@ namespace Medical
                 if (nextTime > blendTarget)
                 {
                     nextTime = blendTarget;
-                    pause();
+                    stopBlending();
                 }
             }
             else if (blendSpeed < 0)
@@ -245,7 +255,7 @@ namespace Medical
                 if (nextTime < blendTarget)
                 {
                     nextTime = blendTarget;
-                    pause();
+                    stopBlending();
                 }
             }
             blend((float)nextTime);

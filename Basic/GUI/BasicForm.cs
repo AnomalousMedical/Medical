@@ -33,11 +33,14 @@ namespace Medical.GUI
         private MandibleGUIController mandibleGUIController;
         private SequencesGUIController sequencesGUIController;
         private StateGUIController stateGUIController;
+        private Size primaryNavigatorSize;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
             this.shortcutController = shortcuts;
+
+            primaryNavigatorSize = primaryNavigator.Size;
 
             //navigationButton.ImageIndex = 5;
 
@@ -285,12 +288,14 @@ namespace Medical.GUI
                 // Switch to mini mode and reverse direction of arrow
                 primaryNavigator.NavigatorMode = NavigatorMode.OutlookMini;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowRight;
+                primaryNavigator.MinimumSize = new Size(0, 0);
             }
             else
             {
                 // Switch to full mode and reverse direction of arrow
                 primaryNavigator.NavigatorMode = NavigatorMode.OutlookFull;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowLeft;
+                primaryNavigator.MinimumSize = primaryNavigatorSize;
             }
         }
 

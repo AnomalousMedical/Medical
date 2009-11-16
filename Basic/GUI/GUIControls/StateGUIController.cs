@@ -26,10 +26,11 @@ namespace Medical.GUI
             stateList.Dock = DockStyle.Fill;
             kryptonPage = new KryptonPage("States");
             kryptonPage.Controls.Add(stateList);
+            kryptonPage.TextTitle = "States";
 
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
-            stateController.StatesCleared += new MedicalStatesCleared(stateController_StatesCleared);
+            stateController.StatesCleared += new MedicalStateEvent(stateController_StatesCleared);
         }
 
         public void Dispose()

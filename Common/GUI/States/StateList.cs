@@ -16,6 +16,7 @@ namespace Medical.GUI
     {
         private MedicalStateController stateController;
         private Dictionary<MedicalState, KryptonListItem> entries = new Dictionary<MedicalState, KryptonListItem>();
+        private bool ignoreIndexChanges = false;
 
         public StateList(MedicalStateController stateController)
         {
@@ -24,8 +25,10 @@ namespace Medical.GUI
             this.stateController = stateController;
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
-            stateController.StatesCleared += new MedicalStatesCleared(stateController_StatesCleared);
+            stateController.StatesCleared += new MedicalStateEvent(stateController_StatesCleared);
             stateController.StateChanged += new MedicalStateChanged(stateController_StateChanged);
+            stateController.BlendingStarted += new MedicalStateEvent(stateController_BlendingStarted);
+            stateController.BlendingStopped += new MedicalStateEvent(stateController_BlendingStopped);
 
             stateListBox.SelectedIndexChanged += new EventHandler(stateListBox_SelectedIndexChanged);
         }
@@ -63,7 +66,20 @@ namespace Medical.GUI
 
         void stateController_StateChanged(MedicalState state)
         {
-            stateListBox.SelectedItem = entries[state];
+            if (!ignoreIndexChanges)
+            {
+                stateListBox.SelectedItem = entries[state];
+            }
+        }
+
+        void stateController_BlendingStopped(MedicalStateController controller)
+        {
+            ignoreIndexChanges = false;
+        }
+
+        void stateController_BlendingStarted(MedicalStateController controller)
+        {
+            ignoreIndexChanges = true;
         }
     }
 }
