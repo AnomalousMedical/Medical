@@ -16,28 +16,8 @@ namespace Medical.GUI
     {
         private MedicalStateController stateController;
         private Dictionary<MedicalState, KryptonListItem> entries = new Dictionary<MedicalState, KryptonListItem>();
-        private ImageRenderer imageRenderer;
 
-        private static ImageRendererProperties imageProperties = new ImageRendererProperties();
-
-        static StateList()
-        {
-            imageProperties.Width = 100;
-            imageProperties.Height = 100;
-            imageProperties.UseActiveViewportLocation = false;
-            imageProperties.AntiAliasingMode = 2;
-            imageProperties.UseWindowBackgroundColor = false;
-            imageProperties.CustomBackgroundColor = Engine.Color.Black;
-            imageProperties.ShowWatermark = false;
-            
-            imageProperties.UseNavigationStatePosition = true;
-            imageProperties.NavigationStateName = "Midline Anterior";
-
-            imageProperties.OverrideLayers = true;
-            imageProperties.LayerState = "MandibleSizeLayers";
-        }
-
-        public StateList(MedicalStateController stateController, ImageRenderer imageRenderer)
+        public StateList(MedicalStateController stateController)
         {
             InitializeComponent();
             
@@ -46,17 +26,13 @@ namespace Medical.GUI
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
             stateController.StatesCleared += new MedicalStatesCleared(stateController_StatesCleared);
             stateController.StateChanged += new MedicalStateChanged(stateController_StateChanged);
-
-            this.imageRenderer = imageRenderer;
         }
 
         void stateController_StateAdded(MedicalStateController controller, MedicalState state, int index)
         {
-            
-
             KryptonListItem entry = new KryptonListItem();
             entry.ShortText = state.Name;
-            entry.Image = imageRenderer.renderImage(imageProperties);
+            entry.Image = state.Thumbnail;
             entries.Add(state, entry);
             stateListBox.Items.Add(entry);
         }

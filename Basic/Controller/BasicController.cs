@@ -28,7 +28,7 @@ namespace Medical.Controller
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
-        private MedicalStateController stateController = new MedicalStateController();
+        private MedicalStateController stateController;
         private XmlSaver saver = new XmlSaver();
         private Options options = null;
         private ImageRenderer imageRenderer;
@@ -122,6 +122,7 @@ namespace Medical.Controller
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
+            stateController = new MedicalStateController(imageRenderer);
 
             scenePicker = new ScenePicker();
             scenePicker.initialize();

@@ -63,6 +63,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -119,11 +120,9 @@
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="State\MedicalState.cs" />
-    <Compile Include="State\MedicalStateController.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />
     <Compile Include="State\PresetState.cs" />
     <Compile Include="State\PresetStateSet.cs" />
-    <Compile Include="State\SavedMedicalStates.cs" />
     <Compile Include="Teeth\BottomTooth.cs" />
     <Compile Include="Teeth\TeethController.cs" />
     <Compile Include="Teeth\TeethState.cs" />

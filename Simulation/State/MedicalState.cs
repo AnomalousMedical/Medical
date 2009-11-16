@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using System.Drawing;
 
 namespace Medical
 {
-    public class MedicalState : Saveable
+    public class MedicalState : Saveable, IDisposable
     {
         private BoneManipulatorState boneState;
         private DiscState discState;
         private TeethState teethState;
         private FossaState fossaState;
         private MedicalStateNotes notes;
+        private Bitmap thumbnail;
 
         public MedicalState(String name)
         {
@@ -22,6 +24,14 @@ namespace Medical
             teethState = new TeethState();
             fossaState = new FossaState();
             notes = new MedicalStateNotes();
+        }
+
+        public void Dispose()
+        {
+            if (thumbnail != null)
+            {
+                thumbnail.Dispose();
+            }
         }
 
         public void blend(float percent, MedicalState target)
@@ -79,6 +89,28 @@ namespace Medical
             get
             {
                 return notes;
+            }
+        }
+
+        /// <summary>
+        /// Set the thumbnail for this state. This data is not copied and will
+        /// become managed by this class. Namely it will be disposed when this
+        /// state is disposed. If a copy of the image is needed otherwise you
+        /// must copy it manually.
+        /// </summary>
+        public Bitmap Thumbnail
+        {
+            get
+            {
+                return thumbnail;
+            }
+            set
+            {
+                if (thumbnail != null)
+                {
+                    thumbnail.Dispose();
+                }
+                thumbnail = value;
             }
         }
 

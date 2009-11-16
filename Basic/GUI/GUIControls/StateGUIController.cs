@@ -22,7 +22,7 @@ namespace Medical.GUI
             this.controller = controller;
             
             MedicalStateController stateController = controller.MedicalStateController;
-            stateList = new StateList(stateController, controller.ImageRenderer);
+            stateList = new StateList(stateController);
             stateList.Dock = DockStyle.Fill;
             kryptonPage = new KryptonPage("States");
             kryptonPage.Controls.Add(stateList);

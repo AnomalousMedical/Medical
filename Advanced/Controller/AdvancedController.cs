@@ -26,7 +26,7 @@ namespace Medical.Controller
         private DrawingWindowController drawingWindowController;
         private AdvancedForm advancedForm;
         private GUIElementController guiElements;
-        private MedicalStateController stateController = new MedicalStateController();
+        private MedicalStateController stateController;
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private ImageRenderer imageRenderer;
@@ -95,6 +95,7 @@ namespace Medical.Controller
                 navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
                 imageRenderer = new ImageRenderer(medicalController, drawingWindowController, null, null);
+                stateController = new MedicalStateController(imageRenderer);
 
                 guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.ToolStrip, medicalController);
                 guiElements.EnableToolbars = true;

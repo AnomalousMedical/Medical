@@ -174,9 +174,9 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(103, 115);
+            this.dockPanel.Location = new System.Drawing.Point(200, 115);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(681, 427);
+            this.dockPanel.Size = new System.Drawing.Size(584, 427);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -937,9 +937,10 @@
             this.primaryNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.primaryNavigator.Dock = System.Windows.Forms.DockStyle.Left;
             this.primaryNavigator.Location = new System.Drawing.Point(0, 115);
+            this.primaryNavigator.MinimumSize = new System.Drawing.Size(200, 0);
             this.primaryNavigator.Name = "primaryNavigator";
             this.primaryNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
-            this.primaryNavigator.Size = new System.Drawing.Size(103, 427);
+            this.primaryNavigator.Size = new System.Drawing.Size(200, 427);
             this.primaryNavigator.TabIndex = 17;
             this.primaryNavigator.Text = "primaryNavigator";
             // 

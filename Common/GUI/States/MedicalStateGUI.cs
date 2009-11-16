@@ -235,7 +235,7 @@ namespace Medical.GUI
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MedicalStateTrackMark mark = stateTrackBar.MenuTargetMark as MedicalStateTrackMark;
-            stateController.removeState(mark.State);
+            stateController.destroyState(mark.State);
         }
 
         private void appendStateToolStripMenuItem_Click(object sender, EventArgs e)

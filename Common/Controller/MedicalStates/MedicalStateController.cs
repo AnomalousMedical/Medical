@@ -19,6 +19,28 @@ namespace Medical
 
         private List<MedicalState> states = new List<MedicalState>();
         private int currentState = -1;
+        private ImageRenderer imageRenderer;
+        private ImageRendererProperties imageProperties;
+
+        public MedicalStateController(ImageRenderer imageRenderer)
+        {
+            this.imageRenderer = imageRenderer;
+
+            imageProperties = new ImageRendererProperties();
+            imageProperties.Width = 100;
+            imageProperties.Height = 100;
+            imageProperties.UseActiveViewportLocation = false;
+            imageProperties.AntiAliasingMode = 2;
+            imageProperties.UseWindowBackgroundColor = false;
+            imageProperties.CustomBackgroundColor = Engine.Color.Black;
+            imageProperties.ShowWatermark = false;
+
+            imageProperties.UseNavigationStatePosition = true;
+            imageProperties.NavigationStateName = "Midline Anterior";
+
+            imageProperties.OverrideLayers = true;
+            imageProperties.LayerState = "MandibleSizeLayers";
+        }
 
         public MedicalState createAndAddState(String name)
         {
@@ -38,12 +60,17 @@ namespace Medical
         {
             MedicalState state = new MedicalState(name);
             state.update();
+            state.Thumbnail = imageRenderer.renderImage(imageProperties);
             return state;
         }
 
         public void addState(MedicalState state)
         {
             states.Add(state);
+            if (state.Thumbnail == null)
+            {
+                state.Thumbnail = imageRenderer.renderImage(imageProperties);
+            }
             if (StateAdded != null)
             {
                 StateAdded.Invoke(this, state, states.Count - 1);
@@ -67,7 +94,7 @@ namespace Medical
             }
         }
 
-        public void removeState(MedicalState state)
+        public void destroyState(MedicalState state)
         {
             int index = states.IndexOf(state);
             states.RemoveAt(index);
@@ -75,11 +102,16 @@ namespace Medical
             {
                 StateRemoved.Invoke(this, state, index);
             }
+            state.Dispose();
         }
 
         public void clearStates()
         {
             currentState = -1;
+            foreach (MedicalState state in states)
+            {
+                state.Dispose();
+            }
             states.Clear();
             if (StatesCleared != null)
             {

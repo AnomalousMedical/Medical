@@ -26,7 +26,7 @@ namespace Medical.Controller
         private DrawingWindowController drawingWindowController;
         private DeveloperForm developerForm;
         private GUIElementController guiElements;
-        private MedicalStateController stateController = new MedicalStateController();
+        private MedicalStateController stateController;
         private MedicalStateGUI stateGUI;
         private XmlSaver saver = new XmlSaver();
         private ImageRenderer imageRenderer;
@@ -94,6 +94,7 @@ namespace Medical.Controller
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
+            stateController = new MedicalStateController(imageRenderer);
             layerController = new LayerController();
 
             guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);

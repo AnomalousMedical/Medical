@@ -36,7 +36,7 @@
             this.stateListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.stateListBox.Location = new System.Drawing.Point(0, 0);
             this.stateListBox.Name = "stateListBox";
-            this.stateListBox.Size = new System.Drawing.Size(222, 466);
+            this.stateListBox.Size = new System.Drawing.Size(236, 466);
             this.stateListBox.TabIndex = 0;
             // 
             // StateList
@@ -45,8 +45,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.stateListBox);
+            this.MinimumSize = new System.Drawing.Size(236, 0);
             this.Name = "StateList";
-            this.Size = new System.Drawing.Size(222, 466);
+            this.Size = new System.Drawing.Size(236, 466);
             this.ResumeLayout(false);
 
         }
