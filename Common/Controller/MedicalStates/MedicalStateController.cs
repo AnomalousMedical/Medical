@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -21,8 +22,14 @@ namespace Medical
         private int currentState = -1;
         private ImageRenderer imageRenderer;
         private ImageRendererProperties imageProperties;
+        private MedicalController medicalController;
 
-        public MedicalStateController(ImageRenderer imageRenderer)
+        private float blendLocation = 0.0f;
+        private float blendSpeed = 1.0f;
+        private float blendTarget = 0.0f;
+        private bool playing = false;
+
+        public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
         {
             this.imageRenderer = imageRenderer;
 
@@ -40,6 +47,8 @@ namespace Medical
 
             imageProperties.OverrideLayers = true;
             imageProperties.LayerState = "MandibleSizeLayers";
+
+            this.medicalController = medicalController;
         }
 
         public MedicalState createAndAddState(String name)
@@ -164,6 +173,7 @@ namespace Medical
                     StateChanged.Invoke(states[startState]);
                 }
             }
+            blendLocation = percent;
         }
 
         public SavedMedicalStates getSavedState(String currentSceneName)
@@ -180,6 +190,33 @@ namespace Medical
             }
         }
 
+        public void blendTo(int index, float speed)
+        {
+            if (index > blendTarget)
+            {
+                blendSpeed = speed;
+            }
+            else
+            {
+                blendSpeed = -speed;
+            }
+            blendTarget = index;
+            if (!playing)
+            {
+                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
+                playing = true;
+            }
+        }
+
+        public void pause()
+        {
+            if (playing)
+            {
+                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                playing = false;
+            }
+        }
+
         public MedicalState CurrentState
         {
             get
@@ -190,6 +227,28 @@ namespace Medical
                 }
                 return null;
             }
+        }
+
+        void medicalController_FixedLoopUpdate(Clock time)
+        {
+            double nextTime = blendLocation + time.Seconds * blendSpeed;
+            if (blendSpeed > 0)
+            {
+                if (nextTime > blendTarget)
+                {
+                    nextTime = blendTarget;
+                    pause();
+                }
+            }
+            else if (blendSpeed < 0)
+            {
+                if (nextTime < blendTarget)
+                {
+                    nextTime = blendTarget;
+                    pause();
+                }
+            }
+            blend((float)nextTime);
         }
     }
 }

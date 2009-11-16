@@ -26,6 +26,16 @@ namespace Medical.GUI
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
             stateController.StatesCleared += new MedicalStatesCleared(stateController_StatesCleared);
             stateController.StateChanged += new MedicalStateChanged(stateController_StateChanged);
+
+            stateListBox.SelectedIndexChanged += new EventHandler(stateListBox_SelectedIndexChanged);
+        }
+
+        void stateListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (stateListBox.SelectedIndices.Count > 0)
+            {
+                stateController.blendTo(stateListBox.SelectedIndices[0], 1.0f);
+            }
         }
 
         void stateController_StateAdded(MedicalStateController controller, MedicalState state, int index)
@@ -34,7 +44,7 @@ namespace Medical.GUI
             entry.ShortText = state.Name;
             entry.Image = state.Thumbnail;
             entries.Add(state, entry);
-            stateListBox.Items.Add(entry);
+            stateListBox.Items.Insert(index, entry);
         }
 
         void stateController_StateRemoved(MedicalStateController controller, MedicalState state, int index)
@@ -53,7 +63,7 @@ namespace Medical.GUI
 
         void stateController_StateChanged(MedicalState state)
         {
-            
+            stateListBox.SelectedItem = entries[state];
         }
     }
 }

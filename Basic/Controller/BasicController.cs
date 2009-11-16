@@ -122,7 +122,7 @@ namespace Medical.Controller
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
-            stateController = new MedicalStateController(imageRenderer);
+            stateController = new MedicalStateController(imageRenderer, medicalController);
 
             scenePicker = new ScenePicker();
             scenePicker.initialize();
