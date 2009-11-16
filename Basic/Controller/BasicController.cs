@@ -354,6 +354,7 @@ namespace Medical.Controller
         void statePicker_StateCreated(MedicalState state)
         {
             stateController.addState(state);
+            stateController.blend(stateController.getNumStates() - 1);
         }
 
         void statePicker_Finished()
