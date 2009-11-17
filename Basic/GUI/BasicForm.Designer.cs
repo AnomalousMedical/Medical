@@ -264,8 +264,8 @@
             // 
             this.showNavigationCommand.ImageLarge = global::Medical.Properties.Resources.NavIconLarge;
             this.showNavigationCommand.ImageSmall = global::Medical.Properties.Resources.NavIconSmall;
-            this.showNavigationCommand.Text = "Show Navigation";
-            this.showNavigationCommand.TextLine1 = "Show Navigation";
+            this.showNavigationCommand.Text = "Navigate";
+            this.showNavigationCommand.TextLine1 = "Navigate";
             // 
             // showTeethCollisionQATButton
             // 
@@ -333,7 +333,7 @@
             this.showNavigationButton.ImageLarge = null;
             this.showNavigationButton.ImageSmall = null;
             this.showNavigationButton.KryptonCommand = this.showNavigationCommand;
-            this.showNavigationButton.TextLine1 = "Show Navigation";
+            this.showNavigationButton.TextLine1 = "Navigate";
             // 
             // viewGroup
             // 
@@ -364,7 +364,7 @@
             this.customLayersButtons1,
             this.customLayersButtons2,
             this.customLayersButtons3});
-            this.kryptonRibbonGroup2.TextLine1 = "Custom Visibility";
+            this.kryptonRibbonGroup2.TextLine1 = "Custom";
             // 
             // customLayersButtons1
             // 
@@ -1015,7 +1015,6 @@
         private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
         private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab displayTab;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem changeSceneMenuItem;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem exitMenuItem;
@@ -1124,5 +1123,6 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton tempStateButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel leftInformationPanel;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel topInformationPanel;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
     }
 }
