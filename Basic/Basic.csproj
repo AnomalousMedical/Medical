@@ -270,6 +270,7 @@
     <None Include="Resources\OpenIconLarge.png" />
     <None Include="Resources\SaveLarge.png" />
     <None Include="Resources\ExitIcon.png" />
+    <None Include="Resources\SceneSelectLarge.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

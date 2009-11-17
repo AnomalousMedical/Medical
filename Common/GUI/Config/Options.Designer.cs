@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Options));
             this.graphicsGroup = new System.Windows.Forms.GroupBox();
             this.vsyncCheck = new System.Windows.Forms.CheckBox();
             this.antiAliasingCombo = new System.Windows.Forms.ComboBox();
@@ -107,6 +108,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.graphicsGroup);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Options";
             this.Text = "Options";
             this.graphicsGroup.ResumeLayout(false);

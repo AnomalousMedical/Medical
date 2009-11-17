@@ -431,6 +431,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SceneSelectLarge {
+            get {
+                object obj = ResourceManager.GetObject("SceneSelectLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap SequenceIconLarge {
             get {
                 object obj = ResourceManager.GetObject("SequenceIconLarge", resourceCulture);

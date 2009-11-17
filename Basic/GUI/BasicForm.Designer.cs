@@ -253,7 +253,7 @@
             this.renderingTab,
             this.windowTab});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.renderingTab;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -292,6 +292,7 @@
             // 
             // changeSceneMenuItem
             // 
+            this.changeSceneMenuItem.Image = global::Medical.Properties.Resources.SceneSelectLarge;
             this.changeSceneMenuItem.Text = "Change Scene";
             // 
             // openMenuItem
