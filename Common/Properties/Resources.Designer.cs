@@ -221,9 +221,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth10removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth10removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth11 {
             get {
                 object obj = ResourceManager.GetObject("tooth11", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth11removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth11removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -235,9 +249,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth12removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth12removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth13 {
             get {
                 object obj = ResourceManager.GetObject("tooth13", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth13removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth13removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -249,9 +277,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth14removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth14removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth15 {
             get {
                 object obj = ResourceManager.GetObject("tooth15", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth15removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth15removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +305,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth16removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth16removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth17 {
             get {
                 object obj = ResourceManager.GetObject("tooth17", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth17removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth17removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -277,9 +333,37 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth18removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth18removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth19 {
             get {
                 object obj = ResourceManager.GetObject("tooth19", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth19removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth19removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth1removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth1removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth1removed1 {
+            get {
+                object obj = ResourceManager.GetObject("tooth1removed1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -298,9 +382,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth20removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth20removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth21 {
             get {
                 object obj = ResourceManager.GetObject("tooth21", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth21removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth21removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -312,9 +410,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth22removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth22removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth23 {
             get {
                 object obj = ResourceManager.GetObject("tooth23", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth23removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth23removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -326,9 +438,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth24removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth24removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth25 {
             get {
                 object obj = ResourceManager.GetObject("tooth25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth25removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth25removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -340,9 +466,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth26removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth26removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth27 {
             get {
                 object obj = ResourceManager.GetObject("tooth27", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth27removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth27removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -354,9 +494,30 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth28removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth28removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth29 {
             get {
                 object obj = ResourceManager.GetObject("tooth29", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth29removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth29removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth2removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth2removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -375,9 +536,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth30removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth30removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth31 {
             get {
                 object obj = ResourceManager.GetObject("tooth31", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth31removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth31removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -389,9 +564,30 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth32removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth32removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth3removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth3removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth4 {
             get {
                 object obj = ResourceManager.GetObject("tooth4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth4removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth4removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -403,9 +599,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth5removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth5removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth6 {
             get {
                 object obj = ResourceManager.GetObject("tooth6", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth6removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth6removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -417,6 +627,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth7removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth7removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth8 {
             get {
                 object obj = ResourceManager.GetObject("tooth8", resourceCulture);
@@ -424,9 +641,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap tooth8removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth8removed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap tooth9 {
             get {
                 object obj = ResourceManager.GetObject("tooth9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tooth9removed {
+            get {
+                object obj = ResourceManager.GetObject("tooth9removed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

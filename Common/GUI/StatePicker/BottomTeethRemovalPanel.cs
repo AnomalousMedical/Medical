@@ -8,12 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using Engine;
 using Medical.Properties;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
     public partial class BottomTeethRemovalPanel : StatePickerPanel
     {
-        private Dictionary<CheckBox, bool> openCheckStatus = new Dictionary<CheckBox, bool>();
+        private Dictionary<KryptonCheckButton, bool> openCheckStatus = new Dictionary<KryptonCheckButton, bool>();
         private bool allowUpdates = true;
 
         public BottomTeethRemovalPanel()
@@ -21,7 +22,7 @@ namespace Medical.GUI
             InitializeComponent();
             foreach (Control control in this.Controls)
             {
-                CheckBox checkBox = control as CheckBox;
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
                     checkBox.CheckedChanged += new EventHandler(checkBox_CheckedChanged);
@@ -44,7 +45,7 @@ namespace Medical.GUI
             TeethState teethState = state.Teeth;
             foreach (Control control in this.Controls)
             {
-                CheckBox checkBox = control as CheckBox;
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
                     teethState.addPosition(new ToothState(checkBox.Tag.ToString(), checkBox.Checked, Vector3.Zero, Quaternion.Identity));
@@ -56,7 +57,7 @@ namespace Medical.GUI
         {
             foreach (Control control in this.Controls)
             {
-                CheckBox checkBox = control as CheckBox;
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
                     checkBox.Checked = false;
@@ -68,7 +69,7 @@ namespace Medical.GUI
         {
             foreach (Control control in this.Controls)
             {
-                CheckBox checkBox = control as CheckBox;
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
                     openCheckStatus[checkBox] = checkBox.Checked;
@@ -80,7 +81,7 @@ namespace Medical.GUI
         {
             foreach (Control control in this.Controls)
             {
-                CheckBox checkBox = control as CheckBox;
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
                     checkBox.Checked = openCheckStatus[checkBox];

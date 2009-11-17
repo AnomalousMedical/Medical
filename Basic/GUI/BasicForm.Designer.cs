@@ -252,8 +252,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.renderingTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -728,7 +727,7 @@
             this.renderingBackgroundColor.ImageLarge = global::Medical.Properties.Resources.BackgroundColorIconLarge;
             this.renderingBackgroundColor.ImageSmall = global::Medical.Properties.Resources.BackgroundColorIconSmall;
             this.renderingBackgroundColor.RecentColors = new System.Drawing.Color[0];
-            this.renderingBackgroundColor.SelectedColor = System.Drawing.Color.Black;
+            this.renderingBackgroundColor.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.renderingBackgroundColor.TextLine1 = "Background Color";
             // 
             // kryptonRibbonGroupLines1

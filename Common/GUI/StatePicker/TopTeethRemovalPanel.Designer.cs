@@ -29,316 +29,475 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.tooth16 = new System.Windows.Forms.CheckBox();
-            this.tooth15 = new System.Windows.Forms.CheckBox();
-            this.tooth14 = new System.Windows.Forms.CheckBox();
-            this.tooth13 = new System.Windows.Forms.CheckBox();
-            this.tooth12 = new System.Windows.Forms.CheckBox();
-            this.tooth11 = new System.Windows.Forms.CheckBox();
-            this.tooth10 = new System.Windows.Forms.CheckBox();
-            this.tooth9 = new System.Windows.Forms.CheckBox();
-            this.tooth8 = new System.Windows.Forms.CheckBox();
-            this.tooth7 = new System.Windows.Forms.CheckBox();
-            this.tooth6 = new System.Windows.Forms.CheckBox();
-            this.tooth5 = new System.Windows.Forms.CheckBox();
-            this.tooth4 = new System.Windows.Forms.CheckBox();
-            this.tooth3 = new System.Windows.Forms.CheckBox();
-            this.tooth2 = new System.Windows.Forms.CheckBox();
-            this.tooth1 = new System.Windows.Forms.CheckBox();
+            this.tooth1Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth2Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth3Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth4Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth5Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth6Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth7Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth8Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth9Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth10Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth11Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth12Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth13Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth14Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth15Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.tooth16Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(121, 100);
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(112, 98);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(26, 13);
             this.label1.TabIndex = 146;
             this.label1.Text = "Top";
             // 
-            // tooth16
+            // tooth1Button
             // 
-            this.tooth16.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth16.AutoSize = true;
-            this.tooth16.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth16.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth16.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth16.Image = global::Medical.Properties.Resources.tooth16;
-            this.tooth16.Location = new System.Drawing.Point(222, 216);
-            this.tooth16.Name = "tooth16";
-            this.tooth16.Size = new System.Drawing.Size(38, 37);
-            this.tooth16.TabIndex = 145;
-            this.tooth16.Tag = "Tooth16";
-            this.tooth16.UseVisualStyleBackColor = true;
+            this.tooth1Button.Location = new System.Drawing.Point(6, 216);
+            this.tooth1Button.Name = "tooth1Button";
+            this.tooth1Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth1Button.Size = new System.Drawing.Size(37, 37);
+            this.tooth1Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth1Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth1Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth1Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth1Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth1Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth1Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth1Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth1Button.TabIndex = 147;
+            this.tooth1Button.Tag = "Tooth01";
+            this.tooth1Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth1removed;
+            this.tooth1Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth1removed;
+            this.tooth1Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth1removed;
+            this.tooth1Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth1;
+            this.tooth1Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth1;
+            this.tooth1Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth1;
+            this.tooth1Button.Values.Text = "";
             // 
-            // tooth15
+            // tooth2Button
             // 
-            this.tooth15.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth15.AutoSize = true;
-            this.tooth15.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth15.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth15.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth15.Image = global::Medical.Properties.Resources.tooth15;
-            this.tooth15.Location = new System.Drawing.Point(220, 173);
-            this.tooth15.Name = "tooth15";
-            this.tooth15.Size = new System.Drawing.Size(42, 42);
-            this.tooth15.TabIndex = 144;
-            this.tooth15.Tag = "Tooth15";
-            this.tooth15.UseVisualStyleBackColor = true;
+            this.tooth2Button.Location = new System.Drawing.Point(6, 177);
+            this.tooth2Button.Name = "tooth2Button";
+            this.tooth2Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth2Button.Size = new System.Drawing.Size(45, 41);
+            this.tooth2Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth2Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth2Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth2Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth2Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth2Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth2Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth2Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth2Button.TabIndex = 148;
+            this.tooth2Button.Tag = "Tooth02";
+            this.tooth2Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth2removed;
+            this.tooth2Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth2removed;
+            this.tooth2Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth2removed;
+            this.tooth2Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth2;
+            this.tooth2Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth2;
+            this.tooth2Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth2;
+            this.tooth2Button.Values.Text = "";
             // 
-            // tooth14
+            // tooth3Button
             // 
-            this.tooth14.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth14.AutoSize = true;
-            this.tooth14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth14.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth14.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth14.Image = global::Medical.Properties.Resources.tooth14;
-            this.tooth14.Location = new System.Drawing.Point(215, 130);
-            this.tooth14.Name = "tooth14";
-            this.tooth14.Size = new System.Drawing.Size(45, 45);
-            this.tooth14.TabIndex = 143;
-            this.tooth14.Tag = "Tooth14";
-            this.tooth14.UseVisualStyleBackColor = true;
+            this.tooth3Button.Location = new System.Drawing.Point(8, 134);
+            this.tooth3Button.Name = "tooth3Button";
+            this.tooth3Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth3Button.Size = new System.Drawing.Size(45, 47);
+            this.tooth3Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth3Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth3Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth3Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth3Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth3Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth3Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth3Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth3Button.TabIndex = 149;
+            this.tooth3Button.Tag = "Tooth03";
+            this.tooth3Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth3removed;
+            this.tooth3Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth3removed;
+            this.tooth3Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth3removed;
+            this.tooth3Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth3;
+            this.tooth3Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth3;
+            this.tooth3Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth3;
+            this.tooth3Button.Values.Text = "";
             // 
-            // tooth13
+            // tooth4Button
             // 
-            this.tooth13.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth13.AutoSize = true;
-            this.tooth13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth13.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth13.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth13.Image = global::Medical.Properties.Resources.tooth13;
-            this.tooth13.Location = new System.Drawing.Point(215, 99);
-            this.tooth13.Name = "tooth13";
-            this.tooth13.Size = new System.Drawing.Size(34, 33);
-            this.tooth13.TabIndex = 142;
-            this.tooth13.Tag = "Tooth13";
-            this.tooth13.UseVisualStyleBackColor = true;
+            this.tooth4Button.Location = new System.Drawing.Point(14, 104);
+            this.tooth4Button.Name = "tooth4Button";
+            this.tooth4Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth4Button.Size = new System.Drawing.Size(39, 35);
+            this.tooth4Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth4Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth4Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth4Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth4Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth4Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth4Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth4Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth4Button.TabIndex = 150;
+            this.tooth4Button.Tag = "Tooth04";
+            this.tooth4Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth4removed;
+            this.tooth4Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth4removed;
+            this.tooth4Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth4removed;
+            this.tooth4Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth4;
+            this.tooth4Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth4;
+            this.tooth4Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth4;
+            this.tooth4Button.Values.Text = "";
             // 
-            // tooth12
+            // tooth5Button
             // 
-            this.tooth12.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth12.AutoSize = true;
-            this.tooth12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth12.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth12.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth12.Image = global::Medical.Properties.Resources.tooth12;
-            this.tooth12.Location = new System.Drawing.Point(207, 68);
-            this.tooth12.Name = "tooth12";
-            this.tooth12.Size = new System.Drawing.Size(37, 33);
-            this.tooth12.TabIndex = 141;
-            this.tooth12.Tag = "Tooth12";
-            this.tooth12.UseVisualStyleBackColor = true;
+            this.tooth5Button.Location = new System.Drawing.Point(20, 72);
+            this.tooth5Button.Name = "tooth5Button";
+            this.tooth5Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth5Button.Size = new System.Drawing.Size(40, 36);
+            this.tooth5Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth5Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth5Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth5Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth5Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth5Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth5Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth5Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth5Button.TabIndex = 151;
+            this.tooth5Button.Tag = "Tooth05";
+            this.tooth5Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth5removed;
+            this.tooth5Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth5removed;
+            this.tooth5Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth5removed;
+            this.tooth5Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth5;
+            this.tooth5Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth5;
+            this.tooth5Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth5;
+            this.tooth5Button.Values.Text = "";
             // 
-            // tooth11
+            // tooth6Button
             // 
-            this.tooth11.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth11.AutoSize = true;
-            this.tooth11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth11.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth11.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth11.Image = global::Medical.Properties.Resources.tooth11;
-            this.tooth11.Location = new System.Drawing.Point(192, 32);
-            this.tooth11.Name = "tooth11";
-            this.tooth11.Size = new System.Drawing.Size(33, 37);
-            this.tooth11.TabIndex = 140;
-            this.tooth11.Tag = "Tooth11";
-            this.tooth11.UseVisualStyleBackColor = true;
+            this.tooth6Button.Location = new System.Drawing.Point(31, 38);
+            this.tooth6Button.Name = "tooth6Button";
+            this.tooth6Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth6Button.Size = new System.Drawing.Size(36, 38);
+            this.tooth6Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth6Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth6Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth6Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth6Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth6Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth6Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth6Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth6Button.TabIndex = 152;
+            this.tooth6Button.Tag = "Tooth06";
+            this.tooth6Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth6removed;
+            this.tooth6Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth6removed;
+            this.tooth6Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth6removed;
+            this.tooth6Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth6;
+            this.tooth6Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth6;
+            this.tooth6Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth6;
+            this.tooth6Button.Values.Text = "";
             // 
-            // tooth10
+            // tooth7Button
             // 
-            this.tooth10.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth10.AutoSize = true;
-            this.tooth10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth10.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth10.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth10.Image = global::Medical.Properties.Resources.tooth10;
-            this.tooth10.Location = new System.Drawing.Point(164, 17);
-            this.tooth10.Name = "tooth10";
-            this.tooth10.Size = new System.Drawing.Size(29, 32);
-            this.tooth10.TabIndex = 139;
-            this.tooth10.Tag = "Tooth10";
-            this.tooth10.UseVisualStyleBackColor = true;
+            this.tooth7Button.Location = new System.Drawing.Point(58, 16);
+            this.tooth7Button.Name = "tooth7Button";
+            this.tooth7Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth7Button.Size = new System.Drawing.Size(32, 34);
+            this.tooth7Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth7Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth7Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth7Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth7Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth7Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth7Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth7Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth7Button.TabIndex = 153;
+            this.tooth7Button.Tag = "Tooth07";
+            this.tooth7Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth7removed;
+            this.tooth7Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth7removed;
+            this.tooth7Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth7removed;
+            this.tooth7Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth7;
+            this.tooth7Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth7;
+            this.tooth7Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth7;
+            this.tooth7Button.Values.Text = "";
             // 
-            // tooth9
+            // tooth8Button
             // 
-            this.tooth9.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth9.AutoSize = true;
-            this.tooth9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth9.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth9.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth9.Image = global::Medical.Properties.Resources.tooth9;
-            this.tooth9.Location = new System.Drawing.Point(133, 10);
-            this.tooth9.Name = "tooth9";
-            this.tooth9.Size = new System.Drawing.Size(33, 36);
-            this.tooth9.TabIndex = 138;
-            this.tooth9.Tag = "Tooth09";
-            this.tooth9.UseVisualStyleBackColor = true;
+            this.tooth8Button.Location = new System.Drawing.Point(88, 8);
+            this.tooth8Button.Name = "tooth8Button";
+            this.tooth8Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth8Button.Size = new System.Drawing.Size(39, 38);
+            this.tooth8Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth8Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth8Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth8Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth8Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth8Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth8Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth8Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth8Button.TabIndex = 154;
+            this.tooth8Button.Tag = "Tooth08";
+            this.tooth8Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth8removed;
+            this.tooth8Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth8removed;
+            this.tooth8Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth8removed;
+            this.tooth8Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth8;
+            this.tooth8Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth8;
+            this.tooth8Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth8;
+            this.tooth8Button.Values.Text = "";
             // 
-            // tooth8
+            // tooth9Button
             // 
-            this.tooth8.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth8.AutoSize = true;
-            this.tooth8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth8.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth8.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth8.Image = global::Medical.Properties.Resources.tooth8;
-            this.tooth8.Location = new System.Drawing.Point(99, 12);
-            this.tooth8.Name = "tooth8";
-            this.tooth8.Size = new System.Drawing.Size(35, 34);
-            this.tooth8.TabIndex = 137;
-            this.tooth8.Tag = "Tooth08";
-            this.tooth8.UseVisualStyleBackColor = true;
+            this.tooth9Button.Location = new System.Drawing.Point(124, 8);
+            this.tooth9Button.Name = "tooth9Button";
+            this.tooth9Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth9Button.Size = new System.Drawing.Size(39, 38);
+            this.tooth9Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth9Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth9Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth9Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth9Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth9Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth9Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth9Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth9Button.TabIndex = 155;
+            this.tooth9Button.Tag = "Tooth09";
+            this.tooth9Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth9removed;
+            this.tooth9Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth9removed;
+            this.tooth9Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth9removed;
+            this.tooth9Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth9;
+            this.tooth9Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth9;
+            this.tooth9Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth9;
+            this.tooth9Button.Values.Text = "";
             // 
-            // tooth7
+            // tooth10Button
             // 
-            this.tooth7.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth7.AutoSize = true;
-            this.tooth7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth7.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth7.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth7.Image = global::Medical.Properties.Resources.tooth7;
-            this.tooth7.Location = new System.Drawing.Point(68, 17);
-            this.tooth7.Name = "tooth7";
-            this.tooth7.Size = new System.Drawing.Size(33, 32);
-            this.tooth7.TabIndex = 136;
-            this.tooth7.Tag = "Tooth07";
-            this.tooth7.UseVisualStyleBackColor = true;
+            this.tooth10Button.Location = new System.Drawing.Point(159, 16);
+            this.tooth10Button.Name = "tooth10Button";
+            this.tooth10Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth10Button.Size = new System.Drawing.Size(32, 34);
+            this.tooth10Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth10Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth10Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth10Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth10Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth10Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth10Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth10Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth10Button.TabIndex = 156;
+            this.tooth10Button.Tag = "Tooth10";
+            this.tooth10Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth10removed;
+            this.tooth10Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth10removed;
+            this.tooth10Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth10removed;
+            this.tooth10Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth10;
+            this.tooth10Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth10;
+            this.tooth10Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth10;
+            this.tooth10Button.Values.Text = "";
             // 
-            // tooth6
+            // tooth11Button
             // 
-            this.tooth6.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth6.AutoSize = true;
-            this.tooth6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth6.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth6.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth6.Image = global::Medical.Properties.Resources.tooth6;
-            this.tooth6.Location = new System.Drawing.Point(36, 33);
-            this.tooth6.Name = "tooth6";
-            this.tooth6.Size = new System.Drawing.Size(33, 36);
-            this.tooth6.TabIndex = 135;
-            this.tooth6.Tag = "Tooth06";
-            this.tooth6.UseVisualStyleBackColor = true;
+            this.tooth11Button.Location = new System.Drawing.Point(181, 40);
+            this.tooth11Button.Name = "tooth11Button";
+            this.tooth11Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth11Button.Size = new System.Drawing.Size(36, 38);
+            this.tooth11Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth11Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth11Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth11Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth11Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth11Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth11Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth11Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth11Button.TabIndex = 157;
+            this.tooth11Button.Tag = "Tooth11";
+            this.tooth11Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth11removed;
+            this.tooth11Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth11removed;
+            this.tooth11Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth11removed;
+            this.tooth11Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth11;
+            this.tooth11Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth11;
+            this.tooth11Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth11;
+            this.tooth11Button.Values.Text = "";
             // 
-            // tooth5
+            // tooth12Button
             // 
-            this.tooth5.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth5.AutoSize = true;
-            this.tooth5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth5.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth5.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth5.Image = global::Medical.Properties.Resources.tooth5;
-            this.tooth5.Location = new System.Drawing.Point(25, 68);
-            this.tooth5.Name = "tooth5";
-            this.tooth5.Size = new System.Drawing.Size(35, 34);
-            this.tooth5.TabIndex = 134;
-            this.tooth5.Tag = "Tooth05";
-            this.tooth5.UseVisualStyleBackColor = true;
+            this.tooth12Button.Location = new System.Drawing.Point(191, 74);
+            this.tooth12Button.Name = "tooth12Button";
+            this.tooth12Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth12Button.Size = new System.Drawing.Size(40, 37);
+            this.tooth12Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth12Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth12Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth12Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth12Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth12Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth12Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth12Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth12Button.TabIndex = 158;
+            this.tooth12Button.Tag = "Tooth12";
+            this.tooth12Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth12removed;
+            this.tooth12Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth12removed;
+            this.tooth12Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth12removed;
+            this.tooth12Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth12;
+            this.tooth12Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth12;
+            this.tooth12Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth12;
+            this.tooth12Button.Values.Text = "";
             // 
-            // tooth4
+            // tooth13Button
             // 
-            this.tooth4.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth4.AutoSize = true;
-            this.tooth4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth4.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth4.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth4.Image = global::Medical.Properties.Resources.tooth4;
-            this.tooth4.Location = new System.Drawing.Point(16, 100);
-            this.tooth4.Name = "tooth4";
-            this.tooth4.Size = new System.Drawing.Size(37, 31);
-            this.tooth4.TabIndex = 133;
-            this.tooth4.Tag = "Tooth04";
-            this.tooth4.UseVisualStyleBackColor = true;
+            this.tooth13Button.Location = new System.Drawing.Point(201, 105);
+            this.tooth13Button.Name = "tooth13Button";
+            this.tooth13Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth13Button.Size = new System.Drawing.Size(40, 34);
+            this.tooth13Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth13Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth13Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth13Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth13Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth13Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth13Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth13Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth13Button.TabIndex = 159;
+            this.tooth13Button.Tag = "Tooth13";
+            this.tooth13Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth13removed;
+            this.tooth13Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth13removed;
+            this.tooth13Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth13removed;
+            this.tooth13Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth13;
+            this.tooth13Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth13;
+            this.tooth13Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth13;
+            this.tooth13Button.Values.Text = "";
             // 
-            // tooth3
+            // tooth14Button
             // 
-            this.tooth3.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth3.AutoSize = true;
-            this.tooth3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth3.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth3.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth3.Image = global::Medical.Properties.Resources.tooth3;
-            this.tooth3.Location = new System.Drawing.Point(9, 130);
-            this.tooth3.Name = "tooth3";
-            this.tooth3.Size = new System.Drawing.Size(44, 44);
-            this.tooth3.TabIndex = 132;
-            this.tooth3.Tag = "Tooth03";
-            this.tooth3.UseVisualStyleBackColor = true;
+            this.tooth14Button.Location = new System.Drawing.Point(201, 136);
+            this.tooth14Button.Name = "tooth14Button";
+            this.tooth14Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth14Button.Size = new System.Drawing.Size(46, 47);
+            this.tooth14Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth14Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth14Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth14Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth14Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth14Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth14Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth14Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth14Button.TabIndex = 160;
+            this.tooth14Button.Tag = "Tooth14";
+            this.tooth14Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth14removed;
+            this.tooth14Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth14removed;
+            this.tooth14Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth14removed;
+            this.tooth14Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth14;
+            this.tooth14Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth14;
+            this.tooth14Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth14;
+            this.tooth14Button.Values.Text = "";
             // 
-            // tooth2
+            // tooth15Button
             // 
-            this.tooth2.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth2.AutoSize = true;
-            this.tooth2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth2.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth2.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth2.Image = global::Medical.Properties.Resources.tooth2;
-            this.tooth2.Location = new System.Drawing.Point(6, 173);
-            this.tooth2.Name = "tooth2";
-            this.tooth2.Size = new System.Drawing.Size(44, 42);
-            this.tooth2.TabIndex = 131;
-            this.tooth2.Tag = "Tooth02";
-            this.tooth2.UseVisualStyleBackColor = true;
+            this.tooth15Button.Location = new System.Drawing.Point(204, 178);
+            this.tooth15Button.Name = "tooth15Button";
+            this.tooth15Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth15Button.Size = new System.Drawing.Size(45, 41);
+            this.tooth15Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth15Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth15Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth15Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth15Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth15Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth15Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth15Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth15Button.TabIndex = 161;
+            this.tooth15Button.Tag = "Tooth15";
+            this.tooth15Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth15removed;
+            this.tooth15Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth15removed;
+            this.tooth15Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth15removed;
+            this.tooth15Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth15;
+            this.tooth15Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth15;
+            this.tooth15Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth15;
+            this.tooth15Button.Values.Text = "";
             // 
-            // tooth1
+            // tooth16Button
             // 
-            this.tooth1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.tooth1.AutoSize = true;
-            this.tooth1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.tooth1.FlatAppearance.CheckedBackColor = System.Drawing.SystemColors.Highlight;
-            this.tooth1.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tooth1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tooth1.Image = global::Medical.Properties.Resources.tooth1;
-            this.tooth1.Location = new System.Drawing.Point(6, 217);
-            this.tooth1.Name = "tooth1";
-            this.tooth1.Size = new System.Drawing.Size(41, 36);
-            this.tooth1.TabIndex = 130;
-            this.tooth1.Tag = "Tooth01";
-            this.tooth1.UseVisualStyleBackColor = true;
+            this.tooth16Button.Location = new System.Drawing.Point(212, 216);
+            this.tooth16Button.Name = "tooth16Button";
+            this.tooth16Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth16Button.Size = new System.Drawing.Size(37, 37);
+            this.tooth16Button.StateCheckedPressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth16Button.StateCheckedTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth16Button.StateCommon.Back.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth16Button.StateCommon.Border.Draw = ComponentFactory.Krypton.Toolkit.InheritBool.False;
+            this.tooth16Button.StateCommon.Border.DrawBorders = ((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders)((((ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left)
+                        | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right)));
+            this.tooth16Button.StateCommon.Content.Padding = new System.Windows.Forms.Padding(2);
+            this.tooth16Button.StatePressed.Content.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
+            this.tooth16Button.StateTracking.Content.Padding = new System.Windows.Forms.Padding(2, 2, 0, 0);
+            this.tooth16Button.TabIndex = 162;
+            this.tooth16Button.Tag = "Tooth16";
+            this.tooth16Button.Values.ImageStates.ImageCheckedNormal = global::Medical.Properties.Resources.tooth16removed;
+            this.tooth16Button.Values.ImageStates.ImageCheckedPressed = global::Medical.Properties.Resources.tooth16removed;
+            this.tooth16Button.Values.ImageStates.ImageCheckedTracking = global::Medical.Properties.Resources.tooth16removed;
+            this.tooth16Button.Values.ImageStates.ImageNormal = global::Medical.Properties.Resources.tooth16;
+            this.tooth16Button.Values.ImageStates.ImagePressed = global::Medical.Properties.Resources.tooth16;
+            this.tooth16Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth16;
+            this.tooth16Button.Values.Text = "";
             // 
             // TopTeethRemovalPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.tooth13Button);
+            this.Controls.Add(this.tooth15Button);
+            this.Controls.Add(this.tooth9Button);
+            this.Controls.Add(this.tooth10Button);
+            this.Controls.Add(this.tooth11Button);
+            this.Controls.Add(this.tooth12Button);
+            this.Controls.Add(this.tooth14Button);
+            this.Controls.Add(this.tooth16Button);
+            this.Controls.Add(this.tooth8Button);
+            this.Controls.Add(this.tooth7Button);
+            this.Controls.Add(this.tooth6Button);
+            this.Controls.Add(this.tooth5Button);
+            this.Controls.Add(this.tooth4Button);
+            this.Controls.Add(this.tooth2Button);
+            this.Controls.Add(this.tooth3Button);
+            this.Controls.Add(this.tooth1Button);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.tooth16);
-            this.Controls.Add(this.tooth15);
-            this.Controls.Add(this.tooth14);
-            this.Controls.Add(this.tooth13);
-            this.Controls.Add(this.tooth12);
-            this.Controls.Add(this.tooth11);
-            this.Controls.Add(this.tooth10);
-            this.Controls.Add(this.tooth9);
-            this.Controls.Add(this.tooth8);
-            this.Controls.Add(this.tooth7);
-            this.Controls.Add(this.tooth6);
-            this.Controls.Add(this.tooth5);
-            this.Controls.Add(this.tooth4);
-            this.Controls.Add(this.tooth3);
-            this.Controls.Add(this.tooth2);
-            this.Controls.Add(this.tooth1);
             this.LayerState = "TopTeethLayers";
             this.Name = "TopTeethRemovalPanel";
             this.NavigationState = "Top Teeth";
-            this.Size = new System.Drawing.Size(268, 267);
+            this.Size = new System.Drawing.Size(257, 267);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -347,21 +506,21 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox tooth16;
-        private System.Windows.Forms.CheckBox tooth15;
-        private System.Windows.Forms.CheckBox tooth14;
-        private System.Windows.Forms.CheckBox tooth13;
-        private System.Windows.Forms.CheckBox tooth12;
-        private System.Windows.Forms.CheckBox tooth11;
-        private System.Windows.Forms.CheckBox tooth10;
-        private System.Windows.Forms.CheckBox tooth9;
-        private System.Windows.Forms.CheckBox tooth8;
-        private System.Windows.Forms.CheckBox tooth7;
-        private System.Windows.Forms.CheckBox tooth6;
-        private System.Windows.Forms.CheckBox tooth5;
-        private System.Windows.Forms.CheckBox tooth4;
-        private System.Windows.Forms.CheckBox tooth3;
-        private System.Windows.Forms.CheckBox tooth2;
-        private System.Windows.Forms.CheckBox tooth1;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth1Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth2Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth3Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth4Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth5Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth6Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth7Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth8Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth9Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth10Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth11Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth12Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth13Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth14Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth15Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth16Button;
     }
 }

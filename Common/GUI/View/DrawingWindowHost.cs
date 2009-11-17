@@ -67,7 +67,6 @@ namespace Medical
 
             // Create the drawing window here since it breaks the designer otherwise
             drawingWindow = new Medical.DrawingWindow();
-            drawingWindow.BackColor = System.Drawing.Color.Black;
             drawingWindow.Dock = System.Windows.Forms.DockStyle.Fill;
             drawingWindow.Location = new System.Drawing.Point(0, 0);
             drawingWindow.Name = "drawingWindow";

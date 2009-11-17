@@ -721,6 +721,105 @@
   <ItemGroup>
     <None Include="Resources\ExploreIconSmall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth1removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth2removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth3removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth4removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth5removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth6removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth7removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth8removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth9removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth10removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth11removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth12removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth13removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth14removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth15removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth16removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth17removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth18removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth19removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth20removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth21removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth22removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth23removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth24removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth25removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth26removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth27removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth28removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth29removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth30removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth31removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth32removed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tooth1removed1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
