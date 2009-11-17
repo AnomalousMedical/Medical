@@ -109,6 +109,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ExploreIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("ExploreIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap leftflateminance {
             get {
                 object obj = ResourceManager.GetObject("leftflateminance", resourceCulture);
@@ -144,6 +151,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ResizeDownSmall {
+            get {
+                object obj = ResourceManager.GetObject("ResizeDownSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ResizeUpSmall {
+            get {
+                object obj = ResourceManager.GetObject("ResizeUpSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap rightflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);
@@ -161,6 +182,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap rightsemiflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightsemiflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveSmall {
+            get {
+                object obj = ResourceManager.GetObject("SaveSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

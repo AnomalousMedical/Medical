@@ -134,6 +134,15 @@ namespace Medical.GUI
             primaryNavigator.Pages.Remove(page);
         }
 
+        public void enableViewMode(bool enabled)
+        {
+            distortionTab.Visible = enabled;
+            simulationTab.Visible = enabled;
+            sequencesTab.Visible = enabled;
+            renderingTab.Visible = enabled;
+            windowTab.Visible = enabled;
+        }
+
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
         {
             foreach (DistortionWizard wizard in wizards)

@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Diagnostics;
 using Logging;
+using Medical.Properties;
 
 namespace Medical.GUI
 {
@@ -59,6 +60,7 @@ namespace Medical.GUI
             pictureBox.SizeMode = PictureBoxSizeMode.Normal;
             pictureBox.Dock = DockStyle.None;
             zoomStrechButton.Text = "Full";
+            zoomStrechButton.Image = Resources.ResizeUpSmall;
         }
 
         void setResizeMode()
@@ -66,6 +68,7 @@ namespace Medical.GUI
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.Dock = DockStyle.Fill;
             zoomStrechButton.Text = "Resize";
+            zoomStrechButton.Image = Resources.ResizeDownSmall;
         }
 
         private void saveButton_Click(object sender, EventArgs e)

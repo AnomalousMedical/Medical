@@ -102,6 +102,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ExitIcon {
+            get {
+                object obj = ResourceManager.GetObject("ExitIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ExitIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("ExitIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap FourWindowLayout {
             get {
                 object obj = ResourceManager.GetObject("FourWindowLayout", resourceCulture);
@@ -347,6 +361,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap OpenIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("OpenIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OpenIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("OpenIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap openmuscle {
             get {
                 object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
@@ -385,6 +413,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap RenderIconSmall {
             get {
                 object obj = ResourceManager.GetObject("RenderIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveLarge {
+            get {
+                object obj = ResourceManager.GetObject("SaveLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveSmall {
+            get {
+                object obj = ResourceManager.GetObject("SaveSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

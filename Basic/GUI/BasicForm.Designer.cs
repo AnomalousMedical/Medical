@@ -70,7 +70,7 @@
             this.teethGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonTab2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.tempStateButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -115,7 +115,7 @@
             this.renderHeightUpDown = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown();
             this.kryptonRibbonGroupTriple6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.renderButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonTab1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.windowTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.windowPropertiesGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.backgroundColorButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
@@ -243,13 +243,13 @@
             this.clinicalRibbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.navigationTab,
             this.displayTab,
-            this.kryptonRibbonTab2,
+            this.distortionTab,
             this.simulationTab,
             this.sequencesTab,
             this.renderingTab,
-            this.kryptonRibbonTab1});
+            this.windowTab});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.kryptonRibbonTab2;
+            this.clinicalRibbon.SelectedTab = this.renderingTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -292,14 +292,17 @@
             // 
             // openMenuItem
             // 
+            this.openMenuItem.Image = global::Medical.Properties.Resources.OpenIconLarge;
             this.openMenuItem.Text = "Open";
             // 
             // saveMenuItem
             // 
+            this.saveMenuItem.Image = global::Medical.Properties.Resources.SaveLarge;
             this.saveMenuItem.Text = "Save";
             // 
             // exitMenuItem
             // 
+            this.exitMenuItem.Image = global::Medical.Properties.Resources.ExitIcon;
             this.exitMenuItem.Text = "Exit";
             // 
             // navigationTab
@@ -460,11 +463,11 @@
             this.showTeethCollisionButton.KryptonCommand = this.showTeethCollisionCommand;
             this.showTeethCollisionButton.TextLine1 = "Show Teeth Collision";
             // 
-            // kryptonRibbonTab2
+            // distortionTab
             // 
-            this.kryptonRibbonTab2.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.distortionTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
             this.kryptonRibbonGroup4});
-            this.kryptonRibbonTab2.Text = "Distortion";
+            this.distortionTab.Text = "Distortion";
             // 
             // kryptonRibbonGroup4
             // 
@@ -717,6 +720,8 @@
             // 
             // renderingBackgroundColor
             // 
+            this.renderingBackgroundColor.ImageLarge = global::Medical.Properties.Resources.BackgroundColorIconLarge;
+            this.renderingBackgroundColor.ImageSmall = global::Medical.Properties.Resources.BackgroundColorIconSmall;
             this.renderingBackgroundColor.RecentColors = new System.Drawing.Color[0];
             this.renderingBackgroundColor.SelectedColor = System.Drawing.Color.Black;
             this.renderingBackgroundColor.TextLine1 = "Background Color";
@@ -786,12 +791,12 @@
             // 
             this.renderButton.KryptonCommand = this.renderCommand;
             // 
-            // kryptonRibbonTab1
+            // windowTab
             // 
-            this.kryptonRibbonTab1.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.windowTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
             this.windowPropertiesGroup,
             this.layoutGroup});
-            this.kryptonRibbonTab1.Text = "Window";
+            this.windowTab.Text = "Window";
             // 
             // windowPropertiesGroup
             // 
@@ -1013,7 +1018,7 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup teethGroup;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple2;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton showTeethCollisionButton;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab kryptonRibbonTab1;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab windowTab;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup windowPropertiesGroup;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple3;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorButton;
@@ -1085,7 +1090,7 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab sequencesTab;
         private ComponentFactory.Krypton.Navigator.KryptonNavigator primaryNavigator;
         private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab kryptonRibbonTab2;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab distortionTab;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple12;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton tempStateButton;

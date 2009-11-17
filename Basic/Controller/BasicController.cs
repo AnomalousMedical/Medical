@@ -347,6 +347,7 @@ namespace Medical.Controller
                 basicForm.SuspendLayout();
                 movementSequenceController.stopPlayback();
                 distortionController.startWizard(pickerName, drawingWindowController.getActiveWindow().DrawingWindow);
+                basicForm.enableViewMode(false);
                 basicForm.ResumeLayout();
             }
         }
@@ -362,6 +363,7 @@ namespace Medical.Controller
             //since this does not process when the state controller is visible just reset buttons.
             shortcutController.resetButtons();
             basicForm.SuspendLayout();
+            basicForm.enableViewMode(true);
             basicForm.ResumeLayout();
         }
 

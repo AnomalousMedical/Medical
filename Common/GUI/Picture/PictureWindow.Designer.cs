@@ -30,11 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PictureWindow));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.picturePanel = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.zoomStrechButton = new System.Windows.Forms.ToolStripButton();
             this.exploreButton = new System.Windows.Forms.ToolStripButton();
-            this.picturePanel = new System.Windows.Forms.Panel();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.toolStrip.SuspendLayout();
             this.picturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -42,6 +42,7 @@
             // 
             // toolStrip
             // 
+            this.toolStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveButton,
             this.zoomStrechButton,
@@ -51,37 +52,6 @@
             this.toolStrip.Size = new System.Drawing.Size(345, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip1";
-            // 
-            // saveButton
-            // 
-            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.saveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveButton.Image")));
-            this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(35, 22);
-            this.saveButton.Text = "Save";
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // zoomStrechButton
-            // 
-            this.zoomStrechButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.zoomStrechButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomStrechButton.Image")));
-            this.zoomStrechButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomStrechButton.Name = "zoomStrechButton";
-            this.zoomStrechButton.Size = new System.Drawing.Size(43, 22);
-            this.zoomStrechButton.Text = "Zoom";
-            this.zoomStrechButton.Click += new System.EventHandler(this.zoomStrechButton_Click);
-            // 
-            // exploreButton
-            // 
-            this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.exploreButton.Enabled = false;
-            this.exploreButton.Image = ((System.Drawing.Image)(resources.GetObject("exploreButton.Image")));
-            this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exploreButton.Name = "exploreButton";
-            this.exploreButton.Size = new System.Drawing.Size(49, 22);
-            this.exploreButton.Text = "Explore";
-            this.exploreButton.Click += new System.EventHandler(this.exploreButton_Click);
             // 
             // picturePanel
             // 
@@ -100,6 +70,37 @@
             this.pictureBox.Size = new System.Drawing.Size(46, 44);
             this.pictureBox.TabIndex = 2;
             this.pictureBox.TabStop = false;
+            // 
+            // saveButton
+            // 
+            this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.saveButton.Image = global::Medical.Properties.Resources.SaveSmall;
+            this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(23, 22);
+            this.saveButton.Text = "Save";
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // zoomStrechButton
+            // 
+            this.zoomStrechButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.zoomStrechButton.Image = global::Medical.Properties.Resources.ResizeDownSmall;
+            this.zoomStrechButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomStrechButton.Name = "zoomStrechButton";
+            this.zoomStrechButton.Size = new System.Drawing.Size(23, 22);
+            this.zoomStrechButton.Text = "Zoom";
+            this.zoomStrechButton.Click += new System.EventHandler(this.zoomStrechButton_Click);
+            // 
+            // exploreButton
+            // 
+            this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.exploreButton.Enabled = false;
+            this.exploreButton.Image = global::Medical.Properties.Resources.ExploreIconSmall;
+            this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exploreButton.Name = "exploreButton";
+            this.exploreButton.Size = new System.Drawing.Size(23, 22);
+            this.exploreButton.Text = "Explore";
+            this.exploreButton.Click += new System.EventHandler(this.exploreButton_Click);
             // 
             // PictureWindow
             // 

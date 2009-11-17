@@ -263,6 +263,12 @@
     <None Include="Resources\ManipResetSmall.png" />
     <None Include="Resources\SequenceIconLarge.png" />
     <None Include="Resources\SequenceIconSmall.png" />
+    <None Include="Resources\OpenIconSmall.png" />
+    <None Include="Resources\SaveSmall.png" />
+    <None Include="Resources\ExitIconSmall.png" />
+    <None Include="Resources\OpenIconLarge.png" />
+    <None Include="Resources\SaveLarge.png" />
+    <None Include="Resources\ExitIcon.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
