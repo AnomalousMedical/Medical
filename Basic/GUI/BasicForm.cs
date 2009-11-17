@@ -25,7 +25,6 @@ namespace Medical.GUI
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
         private ShortcutController shortcutController;
         private ToolStrip toolStrip1 = new ToolStrip();
-        private ToolStripContainer toolStripContainer = new ToolStripContainer();
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;
         private NavigationGUIController navigationGUIController;
@@ -164,14 +163,6 @@ namespace Medical.GUI
             if (item != null)
             {
                 controller.showStatePicker(item.Text);
-            }
-        }
-
-        public ToolStripContainer ToolStrip
-        {
-            get
-            {
-                return toolStripContainer;
             }
         }
 
