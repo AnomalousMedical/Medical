@@ -271,6 +271,8 @@
     <None Include="Resources\SaveLarge.png" />
     <None Include="Resources\ExitIcon.png" />
     <None Include="Resources\SceneSelectLarge.png" />
+    <None Include="Resources\MRIWizardLarge.png" />
+    <None Include="Resources\MRIWizardSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

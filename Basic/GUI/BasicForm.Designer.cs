@@ -71,7 +71,7 @@
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
-            this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.wizardRibbonGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.tempStateButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.simulationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
@@ -470,14 +470,14 @@
             // distortionTab
             // 
             this.distortionTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
-            this.kryptonRibbonGroup4});
+            this.wizardRibbonGroup});
             this.distortionTab.Text = "Distortion";
             // 
-            // kryptonRibbonGroup4
+            // wizardRibbonGroup
             // 
-            this.kryptonRibbonGroup4.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.wizardRibbonGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple12});
-            this.kryptonRibbonGroup4.TextLine1 = "Temp";
+            this.wizardRibbonGroup.TextLine1 = "Wizards";
             // 
             // kryptonRibbonGroupTriple12
             // 
@@ -486,6 +486,8 @@
             // 
             // tempStateButton
             // 
+            this.tempStateButton.ImageLarge = global::Medical.Properties.Resources.MRIWizardLarge;
+            this.tempStateButton.ImageSmall = global::Medical.Properties.Resources.MRIWizardSmall;
             this.tempStateButton.TextLine1 = "MRI Wizard";
             // 
             // simulationTab
@@ -1116,7 +1118,7 @@
         private ComponentFactory.Krypton.Navigator.KryptonNavigator leftNavigator;
         private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab distortionTab;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup wizardRibbonGroup;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple12;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton tempStateButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel leftInformationPanel;

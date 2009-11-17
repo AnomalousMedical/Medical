@@ -333,6 +333,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap MRIWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("MRIWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap MRIWizardSmall {
+            get {
+                object obj = ResourceManager.GetObject("MRIWizardSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap NavIconLarge {
             get {
                 object obj = ResourceManager.GetObject("NavIconLarge", resourceCulture);
