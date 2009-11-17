@@ -252,7 +252,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.renderingTab;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 115);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -500,6 +500,7 @@
             // 
             // openingGroup
             // 
+            this.openingGroup.Image = global::Medical.Properties.Resources.ManipVerticalOpen;
             this.openingGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple7});
             this.openingGroup.TextLine1 = "Opening";
