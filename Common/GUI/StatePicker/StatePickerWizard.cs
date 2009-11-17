@@ -89,15 +89,15 @@ namespace Medical.GUI
 
         public void show()
         {
-            uiHost.setTopInformation(modeList);
             uiHost.setLeftInformation(panelHost);
+            uiHost.setTopInformation(modeList);
         }
 
         public void close()
         {
             hidePanel();
-            uiHost.setTopInformation(null);
             uiHost.setLeftInformation(null);
+            uiHost.setTopInformation(null);
             layerStatusBeforeShown.apply();
             navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
             if (Finished != null)

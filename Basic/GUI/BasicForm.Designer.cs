@@ -946,13 +946,14 @@
             this.leftNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
             this.leftNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
             this.buttonSpecExpandCollapse});
+            this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftNavigator.Location = new System.Drawing.Point(0, 115);
+            this.leftNavigator.Location = new System.Drawing.Point(0, 236);
             this.leftNavigator.MinimumSize = new System.Drawing.Size(200, 0);
             this.leftNavigator.Name = "leftNavigator";
             this.leftNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
-            this.leftNavigator.Size = new System.Drawing.Size(200, 427);
+            this.leftNavigator.Size = new System.Drawing.Size(200, 306);
             this.leftNavigator.TabIndex = 17;
             this.leftNavigator.Text = "primaryNavigator";
             // 
@@ -966,9 +967,9 @@
             // topInformationPanel
             // 
             this.topInformationPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topInformationPanel.Location = new System.Drawing.Point(200, 115);
+            this.topInformationPanel.Location = new System.Drawing.Point(0, 115);
             this.topInformationPanel.Name = "topInformationPanel";
-            this.topInformationPanel.Size = new System.Drawing.Size(584, 121);
+            this.topInformationPanel.Size = new System.Drawing.Size(784, 121);
             this.topInformationPanel.TabIndex = 19;
             // 
             // leftInformationPanel
@@ -986,8 +987,8 @@
             this.ClientSize = new System.Drawing.Size(784, 564);
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.leftInformationPanel);
-            this.Controls.Add(this.topInformationPanel);
             this.Controls.Add(this.leftNavigator);
+            this.Controls.Add(this.topInformationPanel);
             this.Controls.Add(this.clinicalRibbon);
             this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
