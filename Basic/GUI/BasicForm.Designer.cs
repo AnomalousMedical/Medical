@@ -264,8 +264,9 @@
             // 
             this.showNavigationCommand.ImageLarge = global::Medical.Properties.Resources.NavIconLarge;
             this.showNavigationCommand.ImageSmall = global::Medical.Properties.Resources.NavIconSmall;
-            this.showNavigationCommand.Text = "Navigate";
-            this.showNavigationCommand.TextLine1 = "Navigate";
+            this.showNavigationCommand.Text = "Show Navigation";
+            this.showNavigationCommand.TextLine1 = "Show";
+            this.showNavigationCommand.TextLine2 = "Navigation";
             // 
             // showTeethCollisionQATButton
             // 
@@ -318,9 +319,10 @@
             // 
             // navigationOnScreenGroup
             // 
+            this.navigationOnScreenGroup.DialogBoxLauncher = false;
             this.navigationOnScreenGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple1});
-            this.navigationOnScreenGroup.TextLine1 = "On Screen";
+            this.navigationOnScreenGroup.TextLine1 = "Screen";
             // 
             // kryptonRibbonGroupTriple1
             // 
@@ -337,6 +339,7 @@
             // 
             // viewGroup
             // 
+            this.viewGroup.DialogBoxLauncher = false;
             this.viewGroup.TextLine1 = "Views";
             // 
             // displayTab
@@ -349,6 +352,7 @@
             // 
             // predefinedLayerGroup
             // 
+            this.predefinedLayerGroup.DialogBoxLauncher = false;
             this.predefinedLayerGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.predefinedLayerGallery});
             this.predefinedLayerGroup.TextLine1 = "Predefined";
@@ -360,6 +364,7 @@
             // 
             // kryptonRibbonGroup2
             // 
+            this.kryptonRibbonGroup2.DialogBoxLauncher = false;
             this.kryptonRibbonGroup2.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.customLayersButtons1,
             this.customLayersButtons2,
@@ -452,6 +457,7 @@
             // 
             // teethGroup
             // 
+            this.teethGroup.DialogBoxLauncher = false;
             this.teethGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple2});
             this.teethGroup.TextLine1 = "Teeth";
@@ -465,7 +471,8 @@
             // 
             this.showTeethCollisionButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
             this.showTeethCollisionButton.KryptonCommand = this.showTeethCollisionCommand;
-            this.showTeethCollisionButton.TextLine1 = "Show Teeth Collision";
+            this.showTeethCollisionButton.TextLine1 = "Teeth";
+            this.showTeethCollisionButton.TextLine2 = "Collision";
             // 
             // distortionTab
             // 
@@ -475,6 +482,7 @@
             // 
             // wizardRibbonGroup
             // 
+            this.wizardRibbonGroup.DialogBoxLauncher = false;
             this.wizardRibbonGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple12});
             this.wizardRibbonGroup.TextLine1 = "Wizards";
@@ -502,6 +510,7 @@
             // 
             // openingGroup
             // 
+            this.openingGroup.DialogBoxLauncher = false;
             this.openingGroup.Image = global::Medical.Properties.Resources.ManipVerticalOpen;
             this.openingGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple7});
@@ -547,6 +556,7 @@
             // 
             // horizontalRightGroup
             // 
+            this.horizontalRightGroup.DialogBoxLauncher = false;
             this.horizontalRightGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple8});
             this.horizontalRightGroup.TextLine1 = "Horizontal Right";
@@ -591,6 +601,7 @@
             // 
             // horizontalLeftGroup
             // 
+            this.horizontalLeftGroup.DialogBoxLauncher = false;
             this.horizontalLeftGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple9});
             this.horizontalLeftGroup.TextLine1 = "Horizontal Left";
@@ -635,6 +646,7 @@
             // 
             // kryptonRibbonGroup1
             // 
+            this.kryptonRibbonGroup1.DialogBoxLauncher = false;
             this.kryptonRibbonGroup1.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple10});
             this.kryptonRibbonGroup1.TextLine1 = "Horizontal Both";
@@ -679,6 +691,7 @@
             // 
             // kryptonRibbonGroup3
             // 
+            this.kryptonRibbonGroup3.DialogBoxLauncher = false;
             this.kryptonRibbonGroup3.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple11});
             this.kryptonRibbonGroup3.TextLine1 = "Reset";
@@ -706,6 +719,7 @@
             // 
             // pictureGroup
             // 
+            this.pictureGroup.DialogBoxLauncher = false;
             this.pictureGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple5,
             this.kryptonRibbonGroupLines1,
@@ -807,6 +821,7 @@
             // 
             // windowPropertiesGroup
             // 
+            this.windowPropertiesGroup.DialogBoxLauncher = false;
             this.windowPropertiesGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple3});
             this.windowPropertiesGroup.TextLine1 = "Properties";
@@ -839,6 +854,7 @@
             // 
             // layoutGroup
             // 
+            this.layoutGroup.DialogBoxLauncher = false;
             this.layoutGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple4});
             this.layoutGroup.TextLine1 = "Layout";
