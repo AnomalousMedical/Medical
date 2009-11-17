@@ -135,7 +135,7 @@ namespace Medical.Controller
             distortionController.addDistortionWizard(mriWizard);
             basicForm.createDistortionMenu(distortionController.Wizards);
 
-            basicForm.initialize(this, medicalController.ToolStripImages);
+            basicForm.initialize(this);
 
             splashScreen.stepProgress(70);
 

@@ -24,7 +24,6 @@ namespace Medical.GUI
         private SavePatientDialog savePatient = new SavePatientDialog();
         private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
         private ShortcutController shortcutController;
-        private ToolStrip toolStrip1 = new ToolStrip();
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;
         private NavigationGUIController navigationGUIController;
@@ -114,10 +113,9 @@ namespace Medical.GUI
             base.Dispose(disposing);
         }
 
-        public void initialize(BasicController controller, ImageList imageList)
+        public void initialize(BasicController controller)
         {
             this.controller = controller;
-            toolStrip1.ImageList = imageList;
             windowGUIController = new WindowGUIController(this, controller, shortcutController);
             layerGUIController = new LayerGUIController(this, controller, shortcutController);
             navigationGUIController = new NavigationGUIController(this, controller, shortcutController);
