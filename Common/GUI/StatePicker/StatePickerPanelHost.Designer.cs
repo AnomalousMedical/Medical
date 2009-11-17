@@ -46,14 +46,14 @@
             this.buttonPanel.Controls.Add(this.cancelButton);
             this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.buttonPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 451);
+            this.buttonPanel.Location = new System.Drawing.Point(0, 480);
             this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Size = new System.Drawing.Size(244, 58);
+            this.buttonPanel.Size = new System.Drawing.Size(325, 29);
             this.buttonPanel.TabIndex = 2;
             // 
             // finishButton
             // 
-            this.finishButton.Location = new System.Drawing.Point(166, 3);
+            this.finishButton.Location = new System.Drawing.Point(247, 3);
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(75, 23);
             this.finishButton.TabIndex = 2;
@@ -63,7 +63,7 @@
             // 
             // nextButton
             // 
-            this.nextButton.Location = new System.Drawing.Point(85, 3);
+            this.nextButton.Location = new System.Drawing.Point(166, 3);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(75, 23);
             this.nextButton.TabIndex = 0;
@@ -73,7 +73,7 @@
             // 
             // previousButton
             // 
-            this.previousButton.Location = new System.Drawing.Point(4, 3);
+            this.previousButton.Location = new System.Drawing.Point(85, 3);
             this.previousButton.Name = "previousButton";
             this.previousButton.Size = new System.Drawing.Size(75, 23);
             this.previousButton.TabIndex = 1;
@@ -83,7 +83,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(166, 32);
+            this.cancelButton.Location = new System.Drawing.Point(4, 3);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 3;
@@ -97,23 +97,17 @@
             this.panelHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelHost.Location = new System.Drawing.Point(0, 0);
             this.panelHost.Name = "panelHost";
-            this.panelHost.Size = new System.Drawing.Size(244, 451);
+            this.panelHost.Size = new System.Drawing.Size(325, 480);
             this.panelHost.TabIndex = 3;
             // 
             // StatePickerPanelHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 509);
-            this.CloseButton = false;
-            this.CloseButtonVisible = false;
             this.Controls.Add(this.panelHost);
             this.Controls.Add(this.buttonPanel);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Name = "StatePickerPanelHost";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
-            this.Text = "Properties";
+            this.Size = new System.Drawing.Size(325, 509);
             this.buttonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

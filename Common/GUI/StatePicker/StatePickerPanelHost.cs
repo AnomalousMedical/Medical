@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Medical.GUI
 {
-    public partial class StatePickerPanelHost : GUIElement
+    public partial class StatePickerPanelHost : UserControl
     {
         private StatePickerWizard controller;
 
@@ -55,13 +55,6 @@ namespace Medical.GUI
             {
                 previousButton.Visible = value;
             }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            e.Cancel = true;
-            this.Hide();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

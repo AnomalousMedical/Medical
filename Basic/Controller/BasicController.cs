@@ -131,7 +131,7 @@ namespace Medical.Controller
             distortionController = new DistortionController();
             distortionController.Finished += new StatePickerFinished(statePicker_Finished);
             distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
-            mriWizard = new SkullStatePicker(basicForm.DockPanel, basicForm.ToolStrip, medicalController, stateController, navigationController, layerController);
+            mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController);
             distortionController.addDistortionWizard(mriWizard);
             basicForm.createDistortionMenu(distortionController.Wizards);
 

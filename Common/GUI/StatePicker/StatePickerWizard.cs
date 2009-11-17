@@ -27,12 +27,15 @@ namespace Medical.GUI
         private String navigationStateBeforeShown;
         private StatePickerModeList modeList;
         private StatePickerPanelHost panelHost;
-        private GUIElementController guiElementController;
 
         private ImageList pickerImageList;
 
-        public StatePickerWizard(GUIElementController guiElementController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
+        private StatePickerUIHost uiHost;
+
+        public StatePickerWizard(StatePickerUIHost uiHost, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
         {
+            this.uiHost = uiHost;
+
             pickerImageList = new ImageList();
             pickerImageList.ColorDepth = ColorDepth.Depth32Bit;
             pickerImageList.ImageSize = new Size(100, 100);
@@ -40,10 +43,6 @@ namespace Medical.GUI
             this.modeList = new StatePickerModeList(pickerImageList, this);
             this.panelHost = new StatePickerPanelHost(this);
 
-            guiElementController.addGUIElement(modeList);
-            guiElementController.addGUIElement(panelHost);
-
-            this.guiElementController = guiElementController;
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
             this.layerController = layerController;
@@ -90,14 +89,15 @@ namespace Medical.GUI
 
         public void show()
         {
-            modeList.Show(guiElementController.DockPanel);
-            panelHost.Show(guiElementController.DockPanel);
+            uiHost.setTopInformation(modeList);
+            uiHost.setLeftInformation(panelHost);
         }
 
         public void close()
         {
             hidePanel();
-            guiElementController.hideWindows();
+            uiHost.setTopInformation(null);
+            uiHost.setLeftInformation(null);
             layerStatusBeforeShown.apply();
             navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
             if (Finished != null)

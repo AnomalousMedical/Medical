@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace Medical.GUI
 {
-    public partial class StatePickerModeList : GUIElement
+    public partial class StatePickerModeList : UserControl
     {
         private StatePickerWizard stateController;
 
@@ -63,13 +63,6 @@ namespace Medical.GUI
             {
                 stateController.modeChanged(navigatorList.SelectedIndices[0]);
             }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            e.Cancel = true;
-            this.Hide();
         }
     }
 }

@@ -306,7 +306,7 @@
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerModeList.Designer.cs">
       <DependentUpon>StatePickerModeList.cs</DependentUpon>
@@ -318,11 +318,12 @@
       <DependentUpon>StatePickerPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.Designer.cs">
       <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerUIHost.cs" />
     <Compile Include="GUI\StatePicker\StatePickerWizard.cs" />
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.cs">
       <SubType>UserControl</SubType>

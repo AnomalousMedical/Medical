@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\BasicController.cs" />
+    <Compile Include="GUI\GUIControls\BasicStateWizardHost.cs" />
     <Compile Include="GUI\GUIControls\LayerGUIController.cs" />
     <Compile Include="GUI\BasicForm.cs">
       <SubType>Form</SubType>

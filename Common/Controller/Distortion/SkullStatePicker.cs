@@ -30,10 +30,10 @@ namespace Medical
 
         private String lastRootDirectory;
 
-        public SkullStatePicker(DockPanel dockPanel, ToolStripContainer toolStrip, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController)
+        public SkullStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-            statePicker = new StatePickerWizard(new GUIElementController(dockPanel, toolStrip, medicalController), temporaryStateBlender, navigationController, layerController);
+            statePicker = new StatePickerWizard(uiHost, temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 

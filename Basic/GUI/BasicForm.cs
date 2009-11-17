@@ -33,16 +33,16 @@ namespace Medical.GUI
         private MandibleGUIController mandibleGUIController;
         private SequencesGUIController sequencesGUIController;
         private StateGUIController stateGUIController;
-        private Size primaryNavigatorSize;
+        private Size leftNavigatorSize;
+        private BasicStateWizardHost stateWizardHost;
 
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
+            stateWizardHost = new BasicStateWizardHost(this);
             this.shortcutController = shortcuts;
 
-            primaryNavigatorSize = primaryNavigator.Size;
-
-            //navigationButton.ImageIndex = 5;
+            leftNavigatorSize = leftNavigator.Size;
 
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
             
@@ -70,10 +70,14 @@ namespace Medical.GUI
             showTeethCollisionQATButton.Click += new EventHandler(showTeethCollisionQATButton_Click);
 
             //Hide navigators
-            primaryNavigator.Visible = false; 
-            primaryNavigator.Pages.Removed += new TypedHandler<KryptonPage>(Pages_Removed);
-            primaryNavigator.Pages.Inserted += new TypedHandler<KryptonPage>(Pages_Inserted);
-            primaryNavigator.Pages.Cleared += new EventHandler(Pages_Cleared);
+            leftNavigator.Visible = false; 
+            leftNavigator.Pages.Removed += new TypedHandler<KryptonPage>(Pages_Removed);
+            leftNavigator.Pages.Inserted += new TypedHandler<KryptonPage>(Pages_Inserted);
+            leftNavigator.Pages.Cleared += new EventHandler(Pages_Cleared);
+
+            //Hide info panels
+            topInformationPanel.Visible = false;
+            leftInformationPanel.Visible = false;
 
             //temporary
             tempStateButton.Click += new EventHandler(tempStateButton_Click);
@@ -126,12 +130,12 @@ namespace Medical.GUI
 
         public void addPrimaryNavigatorPage(KryptonPage page)
         {
-            primaryNavigator.Pages.Add(page);
+            leftNavigator.Pages.Add(page);
         }
 
         public void removePrimaryNavigatorPage(KryptonPage page)
         {
-            primaryNavigator.Pages.Remove(page);
+            leftNavigator.Pages.Remove(page);
         }
 
         public void enableViewMode(bool enabled)
@@ -141,6 +145,7 @@ namespace Medical.GUI
             sequencesTab.Visible = enabled;
             renderingTab.Visible = enabled;
             windowTab.Visible = enabled;
+            leftNavigator.Visible = enabled && leftNavigator.Pages.Count > 0;
         }
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
@@ -175,6 +180,14 @@ namespace Medical.GUI
             get
             {
                 return dockPanel;
+            }
+        }
+
+        public BasicStateWizardHost StateWizardHost
+        {
+            get
+            {
+                return stateWizardHost;
             }
         }
 
@@ -292,35 +305,35 @@ namespace Medical.GUI
         private void buttonSpecExpandCollapse_Click(object sender, EventArgs e)
         {
             // Are we currently showing fully expanded?
-            if (primaryNavigator.NavigatorMode == NavigatorMode.OutlookFull)
+            if (leftNavigator.NavigatorMode == NavigatorMode.OutlookFull)
             {
                 // Switch to mini mode and reverse direction of arrow
-                primaryNavigator.NavigatorMode = NavigatorMode.OutlookMini;
+                leftNavigator.NavigatorMode = NavigatorMode.OutlookMini;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowRight;
-                primaryNavigator.MinimumSize = new Size(0, 0);
+                leftNavigator.MinimumSize = new Size(0, 0);
             }
             else
             {
                 // Switch to full mode and reverse direction of arrow
-                primaryNavigator.NavigatorMode = NavigatorMode.OutlookFull;
+                leftNavigator.NavigatorMode = NavigatorMode.OutlookFull;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowLeft;
-                primaryNavigator.MinimumSize = primaryNavigatorSize;
+                leftNavigator.MinimumSize = leftNavigatorSize;
             }
         }
 
         void Pages_Cleared(object sender, EventArgs e)
         {
-            primaryNavigator.Visible = false;
+            leftNavigator.Visible = false;
         }
 
         void Pages_Inserted(object sender, TypedCollectionEventArgs<KryptonPage> e)
         {
-            primaryNavigator.Visible = primaryNavigator.Pages.Count > 0;
+            leftNavigator.Visible = leftNavigator.Pages.Count > 0;
         }
 
         void Pages_Removed(object sender, TypedCollectionEventArgs<KryptonPage> e)
         {
-            primaryNavigator.Visible = primaryNavigator.Pages.Count > 0;
+            leftNavigator.Visible = leftNavigator.Pages.Count > 0;
         }
     }
 }
