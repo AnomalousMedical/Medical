@@ -12,10 +12,18 @@ namespace Medical.GUI
     /// but the functions give a general idea of how the controls should be laid
     /// out.
     /// </summary>
-    public interface StatePickerUIHost
+    public interface StatePickerUIHost : IDisposable
     {
+        void setStateWizardInfo(StatePickerWizard wizard, ImageList imageList);
+
         void setDataControl(Control control);
 
-        void setTopInformation(Control control);
+        void addMode(StatePickerPanel mode);
+
+        void updateImage(StatePickerPanel panel);
+
+        int SelectedIndex { get; set; }
+
+        bool Visible { get; set; }
     }
 }

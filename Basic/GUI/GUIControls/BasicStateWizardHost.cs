@@ -13,12 +13,30 @@ namespace Medical.GUI
         private BasicForm form;
         private KryptonPanel topInformationPanel;
         private KryptonPanel leftInformationPanel;
+        private StatePickerWizard wizard;
+        private ImageList imageList;
+        private StatePickerModeList modeList;
 
         public BasicStateWizardHost(BasicForm form)
         {
             this.form = form;
             topInformationPanel = form.topInformationPanel;
             leftInformationPanel = form.leftInformationPanel;
+        }
+
+        public void Dispose()
+        {
+            modeList.Dispose();
+        }
+
+        public void setStateWizardInfo(StatePickerWizard wizard, ImageList imageList)
+        {
+            this.wizard = wizard;
+            this.imageList = imageList;
+
+            //temp
+            modeList = new StatePickerModeList(imageList, wizard);
+            setTopInformation(modeList);
         }
 
         public void setDataControl(Control control)
@@ -29,15 +47,45 @@ namespace Medical.GUI
                 leftInformationPanel.Controls.Add(control);
                 leftInformationPanel.Size = control.Size;
                 control.Dock = DockStyle.Fill;
-                leftInformationPanel.Visible = true;
-            }
-            else
-            {
-                leftInformationPanel.Visible = false;
             }
         }
 
-        public void setTopInformation(Control control)
+        public void addMode(StatePickerPanel mode)
+        {
+            modeList.addMode(mode);
+        }
+
+        public void updateImage(StatePickerPanel panel)
+        {
+            modeList.updateImage(panel);
+        }
+
+        public int SelectedIndex
+        {
+            get
+            {
+                return modeList.SelectedIndex;
+            }
+            set
+            {
+                modeList.SelectedIndex = value;
+            }
+        }
+
+        public bool Visible
+        {
+            get
+            {
+                return leftInformationPanel.Visible;
+            }
+            set
+            {
+                leftInformationPanel.Visible = value;
+                topInformationPanel.Visible = value;
+            }
+        }
+
+        void setTopInformation(Control control)
         {
             topInformationPanel.Controls.Clear();
             if (control != null)
@@ -45,11 +93,6 @@ namespace Medical.GUI
                 topInformationPanel.Controls.Add(control);
                 topInformationPanel.Size = control.Size;
                 control.Dock = DockStyle.Fill;
-                topInformationPanel.Visible = true;
-            }
-            else
-            {
-                topInformationPanel.Visible = false;
             }
         }
     }

@@ -25,7 +25,6 @@ namespace Medical.GUI
         private LayerController layerController;
         private LayerState layerStatusBeforeShown;
         private String navigationStateBeforeShown;
-        private StatePickerModeList modeList;
         private StatePickerPanelHost panelHost;
 
         private ImageList pickerImageList;
@@ -40,18 +39,20 @@ namespace Medical.GUI
             pickerImageList.ColorDepth = ColorDepth.Depth32Bit;
             pickerImageList.ImageSize = new Size(100, 100);
 
-            this.modeList = new StatePickerModeList(pickerImageList, this);
             this.panelHost = new StatePickerPanelHost(this);
+            uiHost.setDataControl(panelHost);
 
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
             this.layerController = layerController;
+
+            uiHost.setStateWizardInfo(this, pickerImageList);
         }
 
         public void Dispose()
         {
             pickerImageList.Dispose();
-            modeList.Dispose();
+            uiHost.Dispose();
             panelHost.Dispose();
         }
 
@@ -59,7 +60,7 @@ namespace Medical.GUI
         {
             panel.setStatePicker(this);
             panels.Add(panel);
-            modeList.addMode(panel);
+            uiHost.addMode(panel);
         }
 
         public void startWizard(DrawingWindow controllingWindow)
@@ -72,7 +73,7 @@ namespace Medical.GUI
             foreach (StatePickerPanel panel in panels)
             {
                 panel.recordOpeningState();
-                modeList.updateImage(panel);
+                uiHost.updateImage(panel);
             }
             hidePanel();
             currentIndex = 0;
@@ -99,15 +100,13 @@ namespace Medical.GUI
 
         public void show()
         {
-            uiHost.setDataControl(panelHost);
-            uiHost.setTopInformation(modeList);
+            uiHost.Visible = true;
         }
 
         public void close()
         {
             hidePanel();
-            uiHost.setDataControl(null);
-            uiHost.setTopInformation(null);
+            uiHost.Visible = false;
             layerStatusBeforeShown.apply();
             navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
             if (Finished != null)
@@ -120,7 +119,7 @@ namespace Medical.GUI
         {
             get
             {
-                return modeList.Visible;
+                return uiHost.Visible;
             }
         }
 
@@ -146,7 +145,7 @@ namespace Medical.GUI
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
-                modeList.updateImage(panel);
+                uiHost.updateImage(panel);
             }
             if (immediate)
             {
@@ -202,7 +201,7 @@ namespace Medical.GUI
             if (updatePanel)
             {
                 hidePanel();
-                currentIndex = modeList.SelectedIndex;
+                currentIndex = uiHost.SelectedIndex;
                 showPanel();
             }
         }
@@ -214,7 +213,7 @@ namespace Medical.GUI
                 updatePanel = false;
                 StatePickerPanel panel = panels[currentIndex];
                 panelHost.showPanel(panel);
-                modeList.SelectedIndex = currentIndex;
+                uiHost.SelectedIndex = currentIndex;
                 panelHost.NextButtonVisible = !(currentIndex == panels.Count - 1);
                 panelHost.PreviousButtonVisible = !(currentIndex == 0);
                 if (panel.NavigationState != null)
