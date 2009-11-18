@@ -267,11 +267,29 @@
     <Compile Include="GUI\ScenePicker\ScenePicker.Designer.cs">
       <DependentUpon>ScenePicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\BoneManipulatorPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\BoneManipulatorPanel.Designer.cs">
+      <DependentUpon>BoneManipulatorPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.Designer.cs">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\LeftCondylarDegenrationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\LeftCondylarDegenrationPanel.Designer.cs">
+      <DependentUpon>LeftCondylarDegenrationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\LeftCondylarGrowthPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\LeftCondylarGrowthPanel.Designer.cs">
+      <DependentUpon>LeftCondylarGrowthPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\DiscPositionPanel.cs">
       <SubType>UserControl</SubType>
@@ -304,6 +322,18 @@
     </Compile>
     <Compile Include="GUI\StatePicker\PresetStatePanel.Designer.cs">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\RightCondylarDegenerationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\RightCondylarDegenerationPanel.Designer.cs">
+      <DependentUpon>RightCondylarDegenerationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\RightCondylarGrowthPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\RightCondylarGrowthPanel.Designer.cs">
+      <DependentUpon>RightCondylarGrowthPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\StatePickerModeList.cs">
       <SubType>UserControl</SubType>
@@ -647,12 +677,28 @@
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\LeftCondylarDegenrationPanel.resx">
+      <DependentUpon>LeftCondylarDegenrationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\LeftCondylarGrowthPanel.resx">
+      <DependentUpon>LeftCondylarGrowthPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\NotesPanel.resx">
       <DependentUpon>NotesPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\RightCondylarDegenerationPanel.resx">
+      <DependentUpon>RightCondylarDegenerationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\RightCondylarGrowthPanel.resx">
+      <DependentUpon>RightCondylarGrowthPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\StatePickerModeList.resx">
@@ -820,6 +866,66 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tooth1removed1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftAntegonialNotch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftAntegonialNotchDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftCondyleHeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftCondyleHeightSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftCondyleRotation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftCondyleRotationRotated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftMandibularNotch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftMandibularNotchDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftRamusHeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthLeftRamusHeightSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightAntegonialNotch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightAntegonialNotchDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightCondyleHeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightCondyleHeightSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightCondyleRotation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightCondyleRotationRotated.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightMandibularNotch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightMandibularNotchDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightRamusHeight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GrowthRightRamusHeightSmall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

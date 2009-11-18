@@ -116,6 +116,146 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap GrowthLeftAntegonialNotch {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftAntegonialNotch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftAntegonialNotchDistorted {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftAntegonialNotchDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftCondyleHeight {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftCondyleHeight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftCondyleHeightSmall {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftCondyleHeightSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftCondyleRotation {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftCondyleRotation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftCondyleRotationRotated {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftCondyleRotationRotated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftMandibularNotch {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftMandibularNotch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftMandibularNotchDistorted {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftMandibularNotchDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftRamusHeight {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftRamusHeight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthLeftRamusHeightSmall {
+            get {
+                object obj = ResourceManager.GetObject("GrowthLeftRamusHeightSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightAntegonialNotch {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightAntegonialNotch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightAntegonialNotchDistorted {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightAntegonialNotchDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightCondyleHeight {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightCondyleHeight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightCondyleHeightSmall {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightCondyleHeightSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightCondyleRotation {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightCondyleRotation", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightCondyleRotationRotated {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightCondyleRotationRotated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightMandibularNotch {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightMandibularNotch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightMandibularNotchDistorted {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightMandibularNotchDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightRamusHeight {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightRamusHeight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap GrowthRightRamusHeightSmall {
+            get {
+                object obj = ResourceManager.GetObject("GrowthRightRamusHeightSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap leftflateminance {
             get {
                 object obj = ResourceManager.GetObject("leftflateminance", resourceCulture);

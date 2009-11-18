@@ -26,6 +26,7 @@ namespace Medical.GUI
             ribbonGroup = new KryptonRibbonGroup();
             ribbonGroup.TextLine1 = " ";
             statePickerTab.Groups.Add(ribbonGroup);
+            ribbonGroup.AllowCollapsed = false;
 
             this.imageList = imageList;
             this.stateController = stateController;
@@ -42,6 +43,7 @@ namespace Medical.GUI
             {
                 currentTriple = new KryptonRibbonGroupTriple();
                 ribbonGroup.Items.Add(currentTriple);
+                currentTriple.MinimumSize = GroupItemSize.Large;
             }
             KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
             button.TextLine1 = panel.Text;

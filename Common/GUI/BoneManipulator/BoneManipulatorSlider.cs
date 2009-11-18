@@ -26,6 +26,11 @@ namespace Medical.GUI
             synchronizeValue(manipulator, manipulator.Position);
         }
 
+        public BoneManipulatorStateEntry createStateEntry()
+        {
+            return manipulator.createStateEntry();
+        }
+
         public void clearManipulator()
         {
             if (manipulator != null)
@@ -36,7 +41,10 @@ namespace Medical.GUI
 
         public void setToDefault()
         {
-            synchronizeValue(this, manipulator.DefaultPosition);
+            if (manipulator != null)
+            {
+                synchronizeValue(this, manipulator.DefaultPosition);
+            }
         }
 
         public String LabelText
@@ -55,7 +63,7 @@ namespace Medical.GUI
         {
             get
             {
-                return valueTrackBar.Value / valueTrackBar.Maximum;
+                return (float)valueTrackBar.Value / valueTrackBar.Maximum;
             }
             set
             {

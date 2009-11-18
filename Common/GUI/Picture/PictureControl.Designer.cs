@@ -45,7 +45,11 @@
             this.resolutionWidth = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.resolutionHeight = new System.Windows.Forms.NumericUpDown();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.transparentBGCheck = new System.Windows.Forms.CheckBox();
             this.renderSingleButton = new System.Windows.Forms.Button();
+            this.aaCombo = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -53,6 +57,7 @@
             this.flowLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionHeight)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -60,11 +65,12 @@
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
             this.flowLayoutPanel1.Controls.Add(this.sizeGroup);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Controls.Add(this.renderSingleButton);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(141, 322);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(141, 411);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // groupBox1
@@ -244,15 +250,60 @@
             0,
             0});
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.aaCombo);
+            this.groupBox2.Controls.Add(this.transparentBGCheck);
+            this.groupBox2.Location = new System.Drawing.Point(3, 296);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(131, 83);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Other";
+            // 
+            // transparentBGCheck
+            // 
+            this.transparentBGCheck.AutoSize = true;
+            this.transparentBGCheck.Location = new System.Drawing.Point(6, 63);
+            this.transparentBGCheck.Name = "transparentBGCheck";
+            this.transparentBGCheck.Size = new System.Drawing.Size(83, 17);
+            this.transparentBGCheck.TabIndex = 1;
+            this.transparentBGCheck.Text = "Transparent";
+            this.transparentBGCheck.UseVisualStyleBackColor = true;
+            // 
             // renderSingleButton
             // 
-            this.renderSingleButton.Location = new System.Drawing.Point(3, 296);
+            this.renderSingleButton.Location = new System.Drawing.Point(3, 385);
             this.renderSingleButton.Name = "renderSingleButton";
             this.renderSingleButton.Size = new System.Drawing.Size(90, 23);
             this.renderSingleButton.TabIndex = 7;
             this.renderSingleButton.Text = "Render";
             this.renderSingleButton.UseVisualStyleBackColor = true;
             this.renderSingleButton.Click += new System.EventHandler(this.renderSingleButton_Click);
+            // 
+            // aaCombo
+            // 
+            this.aaCombo.FormattingEnabled = true;
+            this.aaCombo.Items.AddRange(new object[] {
+            "None",
+            "2",
+            "4",
+            "8",
+            "16"});
+            this.aaCombo.Location = new System.Drawing.Point(6, 36);
+            this.aaCombo.Name = "aaCombo";
+            this.aaCombo.Size = new System.Drawing.Size(121, 21);
+            this.aaCombo.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Anti Aliasing";
             // 
             // PictureControl
             // 
@@ -261,7 +312,7 @@
             this.AutoScroll = true;
             this.ButtonImageIndex = 1;
             this.ButtonText = "Picture";
-            this.ClientSize = new System.Drawing.Size(142, 322);
+            this.ClientSize = new System.Drawing.Size(142, 426);
             this.Controls.Add(this.flowLayoutPanel1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
@@ -279,6 +330,8 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.resolutionWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.resolutionHeight)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,6 +356,10 @@
         private System.Windows.Forms.RadioButton megapixel10;
         private System.Windows.Forms.RadioButton megapixel12;
         private System.Windows.Forms.RadioButton custom;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox transparentBGCheck;
+        private System.Windows.Forms.ComboBox aaCombo;
+        private System.Windows.Forms.Label label3;
 
 
 

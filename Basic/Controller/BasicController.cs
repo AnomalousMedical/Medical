@@ -320,7 +320,7 @@ namespace Medical.Controller
                     layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
-                    distortionController.updateStatePicker(medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
+                    distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
                     movementSequenceController.loadSequenceSet(sequenceDirectory);

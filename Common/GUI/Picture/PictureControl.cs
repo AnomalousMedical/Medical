@@ -23,6 +23,7 @@ namespace Medical.GUI
         public PictureControl()
         {
             InitializeComponent();
+            aaCombo.SelectedIndex = 0;
         }
 
         public void initialize(ImageRenderer imageRenderer, DrawingWindowController drawingWindowController)
@@ -52,7 +53,8 @@ namespace Medical.GUI
             {
                 int width = (int)resolutionWidth.Value;
                 int height = (int)resolutionHeight.Value;
-                Bitmap bitmap = imageRenderer.renderImage(width, height);
+                int aa = (int)Math.Pow(2, aaCombo.SelectedIndex);
+                Bitmap bitmap = imageRenderer.renderImage(width, height, transparentBGCheck.Checked, aa);
                 if (bitmap != null)
                 {
                     PictureWindow picture = new PictureWindow();

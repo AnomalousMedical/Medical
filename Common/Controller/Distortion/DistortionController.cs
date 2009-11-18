@@ -5,6 +5,7 @@ using System.Text;
 using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Medical.GUI;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -33,11 +34,11 @@ namespace Medical
             }
         }
 
-        public void updateStatePicker(String presetDirectory)
+        public void sceneChanged(SimScene scene, String presetDirectory)
         {
             foreach (DistortionWizard wizard in wizards.Values)
             {
-                wizard.updateStatePicker(presetDirectory);
+                wizard.sceneChanged(scene, presetDirectory);
             }
         }
 

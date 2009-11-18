@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -13,7 +14,7 @@ namespace Medical
 
         public abstract void setToDefault();
 
-        public abstract void updateStatePicker(String presetDirectory);
+        public abstract void sceneChanged(SimScene scene, String presetDirectory);
 
         public abstract void startWizard(DrawingWindow displayWindow);
 

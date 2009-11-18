@@ -1,4 +1,6 @@
-﻿using System;
+﻿//#define USE_SLIDER_GUIS
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,7 @@ using System.Xml;
 using Logging;
 using Engine.Saving.XMLSaver;
 using Medical.GUI;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -17,10 +20,17 @@ namespace Medical
         private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
 
+#if USE_SLIDER_GUIS
+        private LeftCondylarGrowthPanel leftCondylarGrowthPanel;
+        private RightCondylarGrowthPanel rightCondylarGrowthPanel;
+        private LeftCondylarDegenrationPanel leftCondylarDegenerationPanel;
+        private RightCondylarDegenerationPanel rightCondylarDegenerationPanel;
+#else
         private PresetStatePanel leftGrowthPanel;
         private PresetStatePanel rightGrowthPanel;
         private PresetStatePanel leftDegenerationPanel;
         private PresetStatePanel rightDegenerationPanel;
+#endif
         private PresetStatePanel leftDiscPanel;
         private PresetStatePanel rightDiscPanel;
         private PresetStatePanel leftFossaPanel;
@@ -40,6 +50,13 @@ namespace Medical
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
 
+#if USE_SLIDER_GUIS
+            leftCondylarGrowthPanel = new LeftCondylarGrowthPanel();
+            statePicker.addStatePanel(leftCondylarGrowthPanel);
+
+            leftCondylarDegenerationPanel = new LeftCondylarDegenrationPanel();
+            statePicker.addStatePanel(leftCondylarDegenerationPanel);
+#else
             leftGrowthPanel = new PresetStatePanel();
             leftGrowthPanel.Text = "Left Condyle Growth";
             leftGrowthPanel.NavigationState = "Left Lateral";
@@ -51,6 +68,7 @@ namespace Medical
             leftDegenerationPanel.NavigationState = "Left TMJ";
             leftDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(leftDegenerationPanel);
+#endif
 
             leftDiscPanel = new PresetStatePanel();
             leftDiscPanel.Text = "Left Disc";
@@ -64,6 +82,13 @@ namespace Medical
             leftFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(leftFossaPanel);
 
+#if USE_SLIDER_GUIS
+            rightCondylarGrowthPanel = new RightCondylarGrowthPanel();
+            statePicker.addStatePanel(rightCondylarGrowthPanel);
+
+            rightCondylarDegenerationPanel = new RightCondylarDegenerationPanel();
+            statePicker.addStatePanel(rightCondylarDegenerationPanel);
+#else
             rightGrowthPanel = new PresetStatePanel();
             rightGrowthPanel.Text = "Right Condyle Growth";
             rightGrowthPanel.NavigationState = "Right Lateral";
@@ -75,6 +100,7 @@ namespace Medical
             rightDegenerationPanel.NavigationState = "Right TMJ";
             rightDegenerationPanel.LayerState = "MandibleSizeLayers";
             statePicker.addStatePanel(rightDegenerationPanel);
+#endif
 
             rightDiscPanel = new PresetStatePanel();
             rightDiscPanel.Text = "Right Disc";
@@ -103,12 +129,19 @@ namespace Medical
             }
         }
 
-        public override void updateStatePicker(String rootDirectory)
+        public override void sceneChanged(SimScene scene, String rootDirectory)
         {
+#if USE_SLIDER_GUIS
+            leftCondylarGrowthPanel.sceneLoaded(scene);
+            rightCondylarGrowthPanel.sceneLoaded(scene);
+            leftCondylarDegenerationPanel.sceneLoaded(scene);
+            rightCondylarDegenerationPanel.sceneLoaded(scene);
+#endif
             if (rootDirectory != lastRootDirectory)
             {
                 lastRootDirectory = rootDirectory;
 
+#if !USE_SLIDER_GUIS
                 PresetStateSet leftGrowth = new PresetStateSet("Left Condyle Growth", rootDirectory + "/LeftGrowth");
                 loadPresetSet(leftGrowth);
                 leftGrowthPanel.clear();
@@ -128,6 +161,7 @@ namespace Medical
                 loadPresetSet(rightDegeneration);
                 rightDegenerationPanel.clear();
                 rightDegenerationPanel.initialize(rightDegeneration);
+#endif
 
                 PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
                 loadPresetSet(leftDisc);
