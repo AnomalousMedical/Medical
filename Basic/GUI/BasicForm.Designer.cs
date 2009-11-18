@@ -251,7 +251,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.distortionTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -514,7 +514,7 @@
             // openingGroup
             // 
             this.openingGroup.DialogBoxLauncher = false;
-            this.openingGroup.Image = global::Medical.Properties.Resources.ManipVerticalOpen;
+            this.openingGroup.Image = global::Medical.Properties.Resources.OpeningGroupIcon;
             this.openingGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple7});
             this.openingGroup.TextLine1 = "Opening";
@@ -543,7 +543,7 @@
             this.openingMandibleSlider.BarMenu = null;
             this.openingMandibleSlider.ChangeTimeOnSelection = false;
             this.openingMandibleSlider.CurrentTime = 3F;
-            this.openingMandibleSlider.Location = new System.Drawing.Point(-192, 4);
+            this.openingMandibleSlider.Location = new System.Drawing.Point(56, 4);
             this.openingMandibleSlider.Maximum = 10F;
             this.openingMandibleSlider.MaximumTime = 13F;
             this.openingMandibleSlider.Minimum = -3F;
@@ -570,6 +570,7 @@
             // horizontalRightGroup
             // 
             this.horizontalRightGroup.DialogBoxLauncher = false;
+            this.horizontalRightGroup.Image = global::Medical.Properties.Resources.HorizontalRightGroupIcon;
             this.horizontalRightGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple8});
             this.horizontalRightGroup.TextLine1 = "Horizontal Right";
@@ -598,7 +599,7 @@
             this.rightHorizontalMandibleSlider.BarMenu = null;
             this.rightHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.rightHorizontalMandibleSlider.CurrentTime = 0F;
-            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(20, 4);
+            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(268, 4);
             this.rightHorizontalMandibleSlider.Maximum = 1F;
             this.rightHorizontalMandibleSlider.MaximumTime = 1F;
             this.rightHorizontalMandibleSlider.Minimum = 0F;
@@ -625,6 +626,7 @@
             // horizontalLeftGroup
             // 
             this.horizontalLeftGroup.DialogBoxLauncher = false;
+            this.horizontalLeftGroup.Image = global::Medical.Properties.Resources.HorizontalLeftGroupIcon;
             this.horizontalLeftGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple9});
             this.horizontalLeftGroup.TextLine1 = "Horizontal Left";
@@ -653,7 +655,7 @@
             this.leftHorizontalMandibleSlider.BarMenu = null;
             this.leftHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.leftHorizontalMandibleSlider.CurrentTime = 0F;
-            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(232, 4);
+            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(480, 4);
             this.leftHorizontalMandibleSlider.Maximum = 1F;
             this.leftHorizontalMandibleSlider.MaximumTime = 1F;
             this.leftHorizontalMandibleSlider.Minimum = 0F;
@@ -680,6 +682,7 @@
             // kryptonRibbonGroup1
             // 
             this.kryptonRibbonGroup1.DialogBoxLauncher = false;
+            this.kryptonRibbonGroup1.Image = global::Medical.Properties.Resources.HorizontalBothGroupIcon;
             this.kryptonRibbonGroup1.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple10});
             this.kryptonRibbonGroup1.TextLine1 = "Horizontal Both";
@@ -708,7 +711,7 @@
             this.bothHorizontalMandibleSlider.BarMenu = null;
             this.bothHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.bothHorizontalMandibleSlider.CurrentTime = 0F;
-            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(444, 4);
+            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(692, 4);
             this.bothHorizontalMandibleSlider.Maximum = 1F;
             this.bothHorizontalMandibleSlider.MaximumTime = 1F;
             this.bothHorizontalMandibleSlider.Minimum = 0F;
@@ -1074,7 +1077,6 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
         private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab displayTab;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem changeSceneMenuItem;
@@ -1185,5 +1187,6 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel leftInformationPanel;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel topInformationPanel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
     }
 }

@@ -270,6 +270,10 @@
     <None Include="Resources\SceneSelectLarge.png" />
     <None Include="Resources\MRIWizardLarge.png" />
     <None Include="Resources\MRIWizardSmall.png" />
+    <None Include="Resources\HorizontalBothGroupIcon.png" />
+    <None Include="Resources\HorizontalLeftGroupIcon.png" />
+    <None Include="Resources\HorizontalRightGroupIcon.png" />
+    <None Include="Resources\OpeningGroupIcon.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

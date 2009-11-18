@@ -323,6 +323,7 @@
     <Compile Include="GUI\StatePicker\StatePickerPanelHost.Designer.cs">
       <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\StatePickerRibbon.cs" />
     <Compile Include="GUI\StatePicker\StatePickerUIHost.cs" />
     <Compile Include="GUI\StatePicker\StatePickerWizard.cs" />
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.cs">

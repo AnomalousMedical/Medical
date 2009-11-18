@@ -123,6 +123,27 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap HorizontalBothGroupIcon {
+            get {
+                object obj = ResourceManager.GetObject("HorizontalBothGroupIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap HorizontalLeftGroupIcon {
+            get {
+                object obj = ResourceManager.GetObject("HorizontalLeftGroupIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap HorizontalRightGroupIcon {
+            get {
+                object obj = ResourceManager.GetObject("HorizontalRightGroupIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ImageResolutionIconLarge {
             get {
                 object obj = ResourceManager.GetObject("ImageResolutionIconLarge", resourceCulture);
@@ -385,6 +406,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap OpenIconSmall {
             get {
                 object obj = ResourceManager.GetObject("OpenIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OpeningGroupIcon {
+            get {
+                object obj = ResourceManager.GetObject("OpeningGroupIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
