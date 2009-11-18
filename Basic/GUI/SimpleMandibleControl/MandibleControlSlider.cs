@@ -10,7 +10,7 @@ using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {
-    public partial class MandibleControlSlider : UserControl
+    public class MandibleControlSlider : TimeTrackBar
     {
         public event EventHandler ValueChanged;
 
@@ -23,8 +23,8 @@ namespace Medical.GUI
 
         public MandibleControlSlider()
         {
-            InitializeComponent();
-            amountTrackBar.TimeChanged += new TimeChanged(amountTrackBar_TimeChanged);
+            //InitializeComponent();
+            this.TimeChanged += new TimeChanged(amountTrackBar_TimeChanged);
         }
 
         public float Minimum
@@ -35,10 +35,10 @@ namespace Medical.GUI
             }
             set
             {
-                float oldTime = amountTrackBar.CurrentTime + minimum;
+                float oldTime = this.CurrentTime + minimum;
                 minimum = value;
-                amountTrackBar.CurrentTime = oldTime - minimum;
-                amountTrackBar.MaximumTime = maximum - minimum;
+                this.CurrentTime = oldTime - minimum;
+                this.MaximumTime = maximum - minimum;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Medical.GUI
             set
             {
                 maximum = value;
-                amountTrackBar.MaximumTime = maximum - minimum;
+                this.MaximumTime = maximum - minimum;
             }
         }
 
@@ -71,11 +71,11 @@ namespace Medical.GUI
         {
             get
             {
-                return amountTrackBar.CurrentTime + minimum;
+                return this.CurrentTime + minimum;
             }
             set
             {
-                amountTrackBar.CurrentTime = value - minimum;
+                this.CurrentTime = value - minimum;
             }
         }
 
@@ -129,22 +129,22 @@ namespace Medical.GUI
 
         void previousButton_Click(object sender, EventArgs e)
         {
-            float time = amountTrackBar.CurrentTime - sequentialChange;
+            float time = this.CurrentTime - sequentialChange;
             if (time < 0.0f)
             {
                 time = 0.0f;
             }
-            amountTrackBar.CurrentTime = time;
+            this.CurrentTime = time;
         }
 
         void nextButton_Click(object sender, EventArgs e)
         {
-            float time = amountTrackBar.CurrentTime + sequentialChange;
-            if (time > amountTrackBar.MaximumTime)
+            float time = this.CurrentTime + sequentialChange;
+            if (time > this.MaximumTime)
             {
-                time = amountTrackBar.MaximumTime;
+                time = this.MaximumTime;
             }
-            amountTrackBar.CurrentTime = time;
+            this.CurrentTime = time;
         }
     }
 }

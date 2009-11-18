@@ -229,7 +229,6 @@
             // 
             // clinicalRibbon
             // 
-            this.clinicalRibbon.AllowFormIntegrate = false;
             this.clinicalRibbon.Name = "clinicalRibbon";
             this.clinicalRibbon.QATButtons.AddRange(new System.ComponentModel.Component[] {
             this.showNavigationQATButton,
@@ -252,8 +251,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.simulationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -537,16 +535,25 @@
             // openingMandibleSlider
             // 
             this.openingMandibleSlider.BackColor = System.Drawing.Color.Transparent;
-            this.openingMandibleSlider.Location = new System.Drawing.Point(55, 3);
+            this.openingMandibleSlider.BarMenu = null;
+            this.openingMandibleSlider.ChangeTimeOnSelection = false;
+            this.openingMandibleSlider.CurrentTime = 3F;
+            this.openingMandibleSlider.Location = new System.Drawing.Point(56, 4);
             this.openingMandibleSlider.Maximum = 10F;
+            this.openingMandibleSlider.MaximumTime = 13F;
             this.openingMandibleSlider.Minimum = -3F;
+            this.openingMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.openingMandibleSlider.MoveMarks = false;
+            this.openingMandibleSlider.MoveThumb = true;
             this.openingMandibleSlider.Name = "openingMandibleSlider";
             this.openingMandibleSlider.NextButton = this.verticalOpenButton;
             this.openingMandibleSlider.PreviousButton = this.verticalCloseButton;
+            this.openingMandibleSlider.SelectedMark = null;
             this.openingMandibleSlider.SequentialChange = 1F;
-            this.openingMandibleSlider.Size = new System.Drawing.Size(82, 64);
+            this.openingMandibleSlider.Size = new System.Drawing.Size(75, 61);
             this.openingMandibleSlider.TabIndex = 17;
             this.openingMandibleSlider.TabStop = false;
+            this.openingMandibleSlider.TickMenu = null;
             this.openingMandibleSlider.Value = 0F;
             // 
             // verticalOpenButton
@@ -582,16 +589,25 @@
             // rightHorizontalMandibleSlider
             // 
             this.rightHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
-            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(274, 3);
+            this.rightHorizontalMandibleSlider.BarMenu = null;
+            this.rightHorizontalMandibleSlider.ChangeTimeOnSelection = false;
+            this.rightHorizontalMandibleSlider.CurrentTime = 0F;
+            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(268, 4);
             this.rightHorizontalMandibleSlider.Maximum = 1F;
+            this.rightHorizontalMandibleSlider.MaximumTime = 1F;
             this.rightHorizontalMandibleSlider.Minimum = 0F;
+            this.rightHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.rightHorizontalMandibleSlider.MoveMarks = false;
+            this.rightHorizontalMandibleSlider.MoveThumb = true;
             this.rightHorizontalMandibleSlider.Name = "rightHorizontalMandibleSlider";
             this.rightHorizontalMandibleSlider.NextButton = this.rightHorizontalOpenButton;
             this.rightHorizontalMandibleSlider.PreviousButton = this.rightHorizontalCloseButton;
+            this.rightHorizontalMandibleSlider.SelectedMark = null;
             this.rightHorizontalMandibleSlider.SequentialChange = 0.1F;
-            this.rightHorizontalMandibleSlider.Size = new System.Drawing.Size(82, 64);
+            this.rightHorizontalMandibleSlider.Size = new System.Drawing.Size(75, 61);
             this.rightHorizontalMandibleSlider.TabIndex = 17;
             this.rightHorizontalMandibleSlider.TabStop = false;
+            this.rightHorizontalMandibleSlider.TickMenu = null;
             this.rightHorizontalMandibleSlider.Value = 0F;
             // 
             // rightHorizontalOpenButton
@@ -627,16 +643,25 @@
             // leftHorizontalMandibleSlider
             // 
             this.leftHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
-            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(493, 3);
+            this.leftHorizontalMandibleSlider.BarMenu = null;
+            this.leftHorizontalMandibleSlider.ChangeTimeOnSelection = false;
+            this.leftHorizontalMandibleSlider.CurrentTime = 0F;
+            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(405, 4);
             this.leftHorizontalMandibleSlider.Maximum = 1F;
+            this.leftHorizontalMandibleSlider.MaximumTime = 1F;
             this.leftHorizontalMandibleSlider.Minimum = 0F;
+            this.leftHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.leftHorizontalMandibleSlider.MoveMarks = false;
+            this.leftHorizontalMandibleSlider.MoveThumb = true;
             this.leftHorizontalMandibleSlider.Name = "leftHorizontalMandibleSlider";
             this.leftHorizontalMandibleSlider.NextButton = this.leftHorizontalOpenButton;
             this.leftHorizontalMandibleSlider.PreviousButton = this.leftHorizontalCloseButton;
+            this.leftHorizontalMandibleSlider.SelectedMark = null;
             this.leftHorizontalMandibleSlider.SequentialChange = 0.1F;
-            this.leftHorizontalMandibleSlider.Size = new System.Drawing.Size(82, 64);
+            this.leftHorizontalMandibleSlider.Size = new System.Drawing.Size(75, 61);
             this.leftHorizontalMandibleSlider.TabIndex = 17;
             this.leftHorizontalMandibleSlider.TabStop = false;
+            this.leftHorizontalMandibleSlider.TickMenu = null;
             this.leftHorizontalMandibleSlider.Value = 0F;
             // 
             // leftHorizontalOpenButton
@@ -672,16 +697,25 @@
             // bothHorizontalMandibleSlider
             // 
             this.bothHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
-            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(712, 3);
+            this.bothHorizontalMandibleSlider.BarMenu = null;
+            this.bothHorizontalMandibleSlider.ChangeTimeOnSelection = false;
+            this.bothHorizontalMandibleSlider.CurrentTime = 0F;
+            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(617, 4);
             this.bothHorizontalMandibleSlider.Maximum = 1F;
+            this.bothHorizontalMandibleSlider.MaximumTime = 1F;
             this.bothHorizontalMandibleSlider.Minimum = 0F;
+            this.bothHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.bothHorizontalMandibleSlider.MoveMarks = false;
+            this.bothHorizontalMandibleSlider.MoveThumb = true;
             this.bothHorizontalMandibleSlider.Name = "bothHorizontalMandibleSlider";
             this.bothHorizontalMandibleSlider.NextButton = this.bothHorizontalOpenButton;
             this.bothHorizontalMandibleSlider.PreviousButton = this.bothHorizontalCloseButton;
+            this.bothHorizontalMandibleSlider.SelectedMark = null;
             this.bothHorizontalMandibleSlider.SequentialChange = 0.1F;
-            this.bothHorizontalMandibleSlider.Size = new System.Drawing.Size(82, 64);
+            this.bothHorizontalMandibleSlider.Size = new System.Drawing.Size(75, 61);
             this.bothHorizontalMandibleSlider.TabIndex = 17;
             this.bothHorizontalMandibleSlider.TabStop = false;
+            this.bothHorizontalMandibleSlider.TickMenu = null;
             this.bothHorizontalMandibleSlider.Value = 0F;
             // 
             // bothHorizontalOpenButton

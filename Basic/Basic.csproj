@@ -131,9 +131,6 @@
     <Compile Include="GUI\SimpleMandibleControl\MandibleControlSlider.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\SimpleMandibleControl\MandibleControlSlider.Designer.cs">
-      <DependentUpon>MandibleControlSlider.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.cs">
       <SubType>Form</SubType>
     </Compile>
