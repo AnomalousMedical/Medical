@@ -85,7 +85,7 @@
             this.Controls.Add(this.undoButton);
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
-            this.NavigationState = "Occlusion Anterior";
+            this.NavigationState = "Teeth Midline Anterior";
             this.Size = new System.Drawing.Size(318, 286);
             this.ResumeLayout(false);
 
