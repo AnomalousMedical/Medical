@@ -1,4 +1,4 @@
-﻿//#define USE_SLIDER_GUIS
+﻿#define USE_SLIDER_GUIS
 
 using System;
 using System.Collections.Generic;
