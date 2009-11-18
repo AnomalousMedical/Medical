@@ -87,6 +87,16 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// Call this function to force the handle to be created to avoid lag
+        /// the first time the wizard is opened. This should be done after all
+        /// images are loaded into the wizard.
+        /// </summary>
+        public void initializeImageHandle()
+        {
+            IntPtr handle = pickerImageList.Handle;
+        }
+
         public void show()
         {
             uiHost.setDataControl(panelHost);

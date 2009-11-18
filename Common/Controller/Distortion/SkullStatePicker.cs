@@ -91,6 +91,7 @@ namespace Medical
             statePicker.addStatePanel(new TeethAdaptationPanel());
             statePicker.addStatePanel(new NotesPanel("MRI"));
 
+            statePicker.initializeImageHandle();
             statePicker.setToDefault();
         }
 
