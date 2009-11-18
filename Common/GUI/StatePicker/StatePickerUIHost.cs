@@ -14,12 +14,8 @@ namespace Medical.GUI
     /// </summary>
     public interface StatePickerUIHost
     {
-        void setLeftInformation(Control control);
-
-        void setRightInformation(Control control);
+        void setDataControl(Control control);
 
         void setTopInformation(Control control);
-
-        void setBottomInformation(Control control);
     }
 }

@@ -21,7 +21,7 @@ namespace Medical.GUI
             leftInformationPanel = form.leftInformationPanel;
         }
 
-        public void setLeftInformation(Control control)
+        public void setDataControl(Control control)
         {
             leftInformationPanel.Controls.Clear();
             if (control != null)
@@ -35,11 +35,6 @@ namespace Medical.GUI
             {
                 leftInformationPanel.Visible = false;
             }
-        }
-
-        public void setRightInformation(Control control)
-        {
-            
         }
 
         public void setTopInformation(Control control)
@@ -56,11 +51,6 @@ namespace Medical.GUI
             {
                 topInformationPanel.Visible = false;
             }
-        }
-
-        public void setBottomInformation(Control control)
-        {
-            
         }
     }
 }
