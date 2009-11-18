@@ -55,6 +55,10 @@ namespace Medical.GUI
         public void updateImage(StatePickerPanel panel)
         {
             KryptonRibbonGroupButton button = panelButtons[panel];
+            if (button.ImageLarge != null)
+            {
+                button.ImageLarge.Dispose();
+            }
             button.ImageLarge = imageList.Images[panel.NavigationImageKey];
         }
 
