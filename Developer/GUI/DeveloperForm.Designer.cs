@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
             WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
@@ -63,14 +64,15 @@
             this.openSequence = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSequence = new System.Windows.Forms.ToolStripMenuItem();
             this.saveSequenceAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.layoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oneWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.twoWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.threeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fourWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kryptonManager1 = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.toolStripContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -156,6 +158,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.distortionToolStripMenuItem,
@@ -258,30 +261,45 @@
             // newSequence
             // 
             this.newSequence.Name = "newSequence";
-            this.newSequence.Size = new System.Drawing.Size(152, 22);
+            this.newSequence.Size = new System.Drawing.Size(123, 22);
             this.newSequence.Text = "New";
             this.newSequence.Click += new System.EventHandler(this.newSequence_Click);
             // 
             // openSequence
             // 
             this.openSequence.Name = "openSequence";
-            this.openSequence.Size = new System.Drawing.Size(152, 22);
+            this.openSequence.Size = new System.Drawing.Size(123, 22);
             this.openSequence.Text = "Open...";
             this.openSequence.Click += new System.EventHandler(this.openSequence_Click);
             // 
             // saveSequence
             // 
             this.saveSequence.Name = "saveSequence";
-            this.saveSequence.Size = new System.Drawing.Size(152, 22);
+            this.saveSequence.Size = new System.Drawing.Size(123, 22);
             this.saveSequence.Text = "Save";
             this.saveSequence.Click += new System.EventHandler(this.saveSequence_Click);
             // 
             // saveSequenceAs
             // 
             this.saveSequenceAs.Name = "saveSequenceAs";
-            this.saveSequenceAs.Size = new System.Drawing.Size(152, 22);
+            this.saveSequenceAs.Size = new System.Drawing.Size(123, 22);
             this.saveSequenceAs.Text = "Save As...";
             this.saveSequenceAs.Click += new System.EventHandler(this.saveSequenceAs_Click);
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
             // windowToolStripMenuItem
             // 
@@ -330,20 +348,9 @@
             this.fourWindowToolStripMenuItem.Text = "Four Windows";
             this.fourWindowToolStripMenuItem.Click += new System.EventHandler(this.fourWindowToolStripMenuItem_Click);
             // 
-            // toolsToolStripMenuItem
+            // kryptonManager1
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // optionsToolStripMenuItem
-            // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            this.kryptonManager1.GlobalPaletteMode = ComponentFactory.Krypton.Toolkit.PaletteModeManager.ProfessionalSystem;
             // 
             // DeveloperForm
             // 
@@ -356,6 +363,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
+            this.Location = new System.Drawing.Point(0, 0);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DeveloperForm";
             this.Text = "Articulometrics Developer";
@@ -398,6 +406,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager1;
 
     }
 }
