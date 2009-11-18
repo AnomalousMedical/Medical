@@ -251,7 +251,8 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.distortionTab;
+            this.clinicalRibbon.SelectedContext = null;
+            this.clinicalRibbon.SelectedTab = this.simulationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -539,7 +540,7 @@
             // 
             // openingMandibleSlider
             // 
-            this.openingMandibleSlider.BackColor = System.Drawing.Color.Transparent;
+            this.openingMandibleSlider.BackColor = System.Drawing.SystemColors.Control;
             this.openingMandibleSlider.BarMenu = null;
             this.openingMandibleSlider.ChangeTimeOnSelection = false;
             this.openingMandibleSlider.CurrentTime = 3F;
@@ -595,7 +596,7 @@
             // 
             // rightHorizontalMandibleSlider
             // 
-            this.rightHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
+            this.rightHorizontalMandibleSlider.BackColor = System.Drawing.SystemColors.Control;
             this.rightHorizontalMandibleSlider.BarMenu = null;
             this.rightHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.rightHorizontalMandibleSlider.CurrentTime = 0F;
@@ -651,7 +652,7 @@
             // 
             // leftHorizontalMandibleSlider
             // 
-            this.leftHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
+            this.leftHorizontalMandibleSlider.BackColor = System.Drawing.SystemColors.Control;
             this.leftHorizontalMandibleSlider.BarMenu = null;
             this.leftHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.leftHorizontalMandibleSlider.CurrentTime = 0F;
@@ -707,7 +708,7 @@
             // 
             // bothHorizontalMandibleSlider
             // 
-            this.bothHorizontalMandibleSlider.BackColor = System.Drawing.Color.Transparent;
+            this.bothHorizontalMandibleSlider.BackColor = System.Drawing.SystemColors.Control;
             this.bothHorizontalMandibleSlider.BarMenu = null;
             this.bothHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.bothHorizontalMandibleSlider.CurrentTime = 0F;

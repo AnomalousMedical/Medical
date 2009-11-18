@@ -65,7 +65,7 @@ namespace Medical.GUI
         {
             marks.Add(mark);
             calculateThumbPosition();
-            Invalidate();
+            Invalidate(this.ClientRectangle);
         }
 
         public void removeMark(TrackBarMark mark)
@@ -76,7 +76,7 @@ namespace Medical.GUI
             }
             marks.Remove(mark);
             calculateThumbPosition();
-            Invalidate();
+            Invalidate(this.ClientRectangle);
         }
 
         public void clearMarks()
@@ -85,7 +85,7 @@ namespace Medical.GUI
             marks.Clear();
             currentTime = 0;
             calculateThumbPosition();
-            Invalidate();
+            Invalidate(this.ClientRectangle);
         }
 
         // Calculate the sizes of the bar, thumb, and ticks rectangle.
@@ -132,7 +132,7 @@ namespace Medical.GUI
         {
             base.OnResize(e);
             SetupTrackBar();
-            Invalidate();
+            Invalidate(this.ClientRectangle);
         }
 
         // Draw the track bar.
@@ -168,7 +168,7 @@ namespace Medical.GUI
                         thumbClicked = true;
                         thumbState = TrackBarThumbState.Pressed;
                         Cursor.Hide();
-                        this.Invalidate();
+                        this.Invalidate(this.ClientRectangle);
                     }
                 }
                 else
@@ -196,7 +196,7 @@ namespace Medical.GUI
                     }
                     selectedState = marks.IndexOf(selectedMark);
                     marks[selectedState].Status = TrackMarkStatus.Selected;
-                    Invalidate();
+                    Invalidate(this.ClientRectangle);
                     if (selectedMarkMoved)
                     {
                         selectedMarkMoved = false;
@@ -218,7 +218,7 @@ namespace Medical.GUI
                     {
                         thumbClicked = false;
                         thumbState = TrackBarThumbState.Hot;
-                        this.Invalidate();
+                        this.Invalidate(this.ClientRectangle);
                     }
                     Cursor.Show();
                     thumbClicked = false;
@@ -294,7 +294,7 @@ namespace Medical.GUI
                     }
                 }
             }
-            Invalidate();
+            Invalidate(this.ClientRectangle);
         }
 
         private void calculateThumbPosition()
@@ -324,7 +324,7 @@ namespace Medical.GUI
                 {
                     TimeChanged.Invoke(this, currentTime);
                 }
-                Invalidate();
+                Invalidate(this.ClientRectangle);
             }
         }
 
@@ -338,7 +338,7 @@ namespace Medical.GUI
             {
                 maximumTime = value;
                 calculateThumbPosition();
-                this.Invalidate();
+                this.Invalidate(this.ClientRectangle);
             }
         }
 
