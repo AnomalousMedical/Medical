@@ -521,6 +521,7 @@
             this.verticalCloseButton,
             this.kryptonRibbonGroupCustomControl1,
             this.verticalOpenButton});
+            this.kryptonRibbonGroupTriple7.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // verticalCloseButton
             // 
@@ -538,11 +539,11 @@
             this.openingMandibleSlider.BarMenu = null;
             this.openingMandibleSlider.ChangeTimeOnSelection = false;
             this.openingMandibleSlider.CurrentTime = 3F;
-            this.openingMandibleSlider.Location = new System.Drawing.Point(56, 4);
+            this.openingMandibleSlider.Location = new System.Drawing.Point(-184, 4);
             this.openingMandibleSlider.Maximum = 10F;
             this.openingMandibleSlider.MaximumTime = 13F;
             this.openingMandibleSlider.Minimum = -3F;
-            this.openingMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.openingMandibleSlider.MinimumSize = new System.Drawing.Size(75, 0);
             this.openingMandibleSlider.MoveMarks = false;
             this.openingMandibleSlider.MoveThumb = true;
             this.openingMandibleSlider.Name = "openingMandibleSlider";
@@ -575,6 +576,7 @@
             this.rightHorizontalCloseButton,
             this.kryptonRibbonGroupCustomControl2,
             this.rightHorizontalOpenButton});
+            this.kryptonRibbonGroupTriple8.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // rightHorizontalCloseButton
             // 
@@ -592,11 +594,11 @@
             this.rightHorizontalMandibleSlider.BarMenu = null;
             this.rightHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.rightHorizontalMandibleSlider.CurrentTime = 0F;
-            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(268, 4);
+            this.rightHorizontalMandibleSlider.Location = new System.Drawing.Point(28, 4);
             this.rightHorizontalMandibleSlider.Maximum = 1F;
             this.rightHorizontalMandibleSlider.MaximumTime = 1F;
             this.rightHorizontalMandibleSlider.Minimum = 0F;
-            this.rightHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.rightHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 0);
             this.rightHorizontalMandibleSlider.MoveMarks = false;
             this.rightHorizontalMandibleSlider.MoveThumb = true;
             this.rightHorizontalMandibleSlider.Name = "rightHorizontalMandibleSlider";
@@ -629,6 +631,7 @@
             this.leftHorizontalCloseButton,
             this.kryptonRibbonGroupCustomControl3,
             this.leftHorizontalOpenButton});
+            this.kryptonRibbonGroupTriple9.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // leftHorizontalCloseButton
             // 
@@ -646,11 +649,11 @@
             this.leftHorizontalMandibleSlider.BarMenu = null;
             this.leftHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.leftHorizontalMandibleSlider.CurrentTime = 0F;
-            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(405, 4);
+            this.leftHorizontalMandibleSlider.Location = new System.Drawing.Point(240, 4);
             this.leftHorizontalMandibleSlider.Maximum = 1F;
             this.leftHorizontalMandibleSlider.MaximumTime = 1F;
             this.leftHorizontalMandibleSlider.Minimum = 0F;
-            this.leftHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.leftHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 0);
             this.leftHorizontalMandibleSlider.MoveMarks = false;
             this.leftHorizontalMandibleSlider.MoveThumb = true;
             this.leftHorizontalMandibleSlider.Name = "leftHorizontalMandibleSlider";
@@ -683,6 +686,7 @@
             this.bothHorizontalCloseButton,
             this.kryptonRibbonGroupCustomControl4,
             this.bothHorizontalOpenButton});
+            this.kryptonRibbonGroupTriple10.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // bothHorizontalCloseButton
             // 
@@ -700,11 +704,11 @@
             this.bothHorizontalMandibleSlider.BarMenu = null;
             this.bothHorizontalMandibleSlider.ChangeTimeOnSelection = false;
             this.bothHorizontalMandibleSlider.CurrentTime = 0F;
-            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(617, 4);
+            this.bothHorizontalMandibleSlider.Location = new System.Drawing.Point(452, 4);
             this.bothHorizontalMandibleSlider.Maximum = 1F;
             this.bothHorizontalMandibleSlider.MaximumTime = 1F;
             this.bothHorizontalMandibleSlider.Minimum = 0F;
-            this.bothHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 61);
+            this.bothHorizontalMandibleSlider.MinimumSize = new System.Drawing.Size(75, 0);
             this.bothHorizontalMandibleSlider.MoveMarks = false;
             this.bothHorizontalMandibleSlider.MoveThumb = true;
             this.bothHorizontalMandibleSlider.Name = "bothHorizontalMandibleSlider";
@@ -726,6 +730,7 @@
             // 
             // kryptonRibbonGroup3
             // 
+            this.kryptonRibbonGroup3.AllowCollapsed = false;
             this.kryptonRibbonGroup3.DialogBoxLauncher = false;
             this.kryptonRibbonGroup3.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple11});
@@ -735,6 +740,7 @@
             // 
             this.kryptonRibbonGroupTriple11.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.manipulationResetButton});
+            this.kryptonRibbonGroupTriple11.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // manipulationResetButton
             // 
