@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.buttonPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.finishButton = new System.Windows.Forms.Button();
-            this.nextButton = new System.Windows.Forms.Button();
-            this.previousButton = new System.Windows.Forms.Button();
-            this.cancelButton = new System.Windows.Forms.Button();
+            this.finishButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.nextButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.previousButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.panelHost = new System.Windows.Forms.Panel();
             this.buttonPanel.SuspendLayout();
             this.SuspendLayout();
@@ -57,8 +57,7 @@
             this.finishButton.Name = "finishButton";
             this.finishButton.Size = new System.Drawing.Size(75, 23);
             this.finishButton.TabIndex = 2;
-            this.finishButton.Text = "Finish";
-            this.finishButton.UseVisualStyleBackColor = true;
+            this.finishButton.Values.Text = "Finish";
             this.finishButton.Click += new System.EventHandler(this.finishButton_Click);
             // 
             // nextButton
@@ -67,8 +66,7 @@
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(75, 23);
             this.nextButton.TabIndex = 0;
-            this.nextButton.Text = "Next";
-            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Values.Text = "Next";
             this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
             // 
             // previousButton
@@ -77,8 +75,7 @@
             this.previousButton.Name = "previousButton";
             this.previousButton.Size = new System.Drawing.Size(75, 23);
             this.previousButton.TabIndex = 1;
-            this.previousButton.Text = "Previous";
-            this.previousButton.UseVisualStyleBackColor = true;
+            this.previousButton.Values.Text = "Previous";
             this.previousButton.Click += new System.EventHandler(this.previousButton_Click);
             // 
             // cancelButton
@@ -86,9 +83,8 @@
             this.cancelButton.Location = new System.Drawing.Point(4, 3);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.TabIndex = 0;
+            this.cancelButton.Values.Text = "Cancel";
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // panelHost
@@ -117,10 +113,10 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel buttonPanel;
-        private System.Windows.Forms.Button finishButton;
-        private System.Windows.Forms.Button nextButton;
-        private System.Windows.Forms.Button previousButton;
-        private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Panel panelHost;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton cancelButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton finishButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton nextButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton previousButton;
     }
 }
