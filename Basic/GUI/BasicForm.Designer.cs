@@ -157,16 +157,17 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mainStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 542);
+            this.statusStrip.Location = new System.Drawing.Point(0, 669);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(784, 22);
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1045, 25);
             this.statusStrip.TabIndex = 0;
             this.statusStrip.Text = "statusStrip";
             // 
             // mainStatusLabel
             // 
             this.mainStatusLabel.Name = "mainStatusLabel";
-            this.mainStatusLabel.Size = new System.Drawing.Size(39, 17);
+            this.mainStatusLabel.Size = new System.Drawing.Size(50, 20);
             this.mainStatusLabel.Text = "Ready";
             // 
             // dockPanel
@@ -178,9 +179,10 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(427, 235);
+            this.dockPanel.Location = new System.Drawing.Point(503, 279);
+            this.dockPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(357, 307);
+            this.dockPanel.Size = new System.Drawing.Size(542, 390);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
             dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
             autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
@@ -251,8 +253,9 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
-            this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
+            this.clinicalRibbon.Size = new System.Drawing.Size(1045, 130);
             this.clinicalRibbon.TabIndex = 15;
             // 
             // showNavigationQATButton
@@ -1013,11 +1016,12 @@
             this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftNavigator.Location = new System.Drawing.Point(0, 235);
+            this.leftNavigator.Location = new System.Drawing.Point(0, 279);
+            this.leftNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.leftNavigator.MinimumSize = new System.Drawing.Size(200, 0);
             this.leftNavigator.Name = "leftNavigator";
             this.leftNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
-            this.leftNavigator.Size = new System.Drawing.Size(200, 307);
+            this.leftNavigator.Size = new System.Drawing.Size(200, 390);
             this.leftNavigator.TabIndex = 17;
             this.leftNavigator.Text = "primaryNavigator";
             // 
@@ -1031,33 +1035,36 @@
             // topInformationPanel
             // 
             this.topInformationPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topInformationPanel.Location = new System.Drawing.Point(0, 114);
+            this.topInformationPanel.Location = new System.Drawing.Point(0, 130);
+            this.topInformationPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.topInformationPanel.Name = "topInformationPanel";
-            this.topInformationPanel.Size = new System.Drawing.Size(784, 121);
+            this.topInformationPanel.Size = new System.Drawing.Size(1045, 149);
             this.topInformationPanel.TabIndex = 19;
             // 
             // leftInformationPanel
             // 
             this.leftInformationPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftInformationPanel.Location = new System.Drawing.Point(200, 235);
+            this.leftInformationPanel.Location = new System.Drawing.Point(200, 279);
+            this.leftInformationPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.leftInformationPanel.Name = "leftInformationPanel";
-            this.leftInformationPanel.Size = new System.Drawing.Size(227, 307);
+            this.leftInformationPanel.Size = new System.Drawing.Size(303, 390);
             this.leftInformationPanel.TabIndex = 21;
             // 
             // BasicForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 564);
+            this.ClientSize = new System.Drawing.Size(1045, 694);
             this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.leftInformationPanel);
             this.Controls.Add(this.leftNavigator);
             this.Controls.Add(this.topInformationPanel);
-            this.Controls.Add(this.clinicalRibbon);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.clinicalRibbon);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Location = new System.Drawing.Point(0, 0);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "BasicForm";
             this.Text = "Articulometics Clinical";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
