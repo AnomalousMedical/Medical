@@ -115,7 +115,7 @@
             // 
             // leftCondyleDegenerationSlider
             // 
-            this.leftCondyleDegenerationSlider.LabelText = "Condyle Degenertaion";
+            this.leftCondyleDegenerationSlider.LabelText = "Condyle";
             this.leftCondyleDegenerationSlider.Location = new System.Drawing.Point(64, 11);
             this.leftCondyleDegenerationSlider.Name = "leftCondyleDegenerationSlider";
             this.leftCondyleDegenerationSlider.Size = new System.Drawing.Size(197, 44);
@@ -125,7 +125,7 @@
             // 
             // leftLateralPoleSlider
             // 
-            this.leftLateralPoleSlider.LabelText = "Lateral Pole Degeneration";
+            this.leftLateralPoleSlider.LabelText = "Lateral Pole";
             this.leftLateralPoleSlider.Location = new System.Drawing.Point(64, 78);
             this.leftLateralPoleSlider.Name = "leftLateralPoleSlider";
             this.leftLateralPoleSlider.Size = new System.Drawing.Size(197, 44);
@@ -135,7 +135,7 @@
             // 
             // leftMedialPoleScaleSlider
             // 
-            this.leftMedialPoleScaleSlider.LabelText = "Medial Pole Degeneration";
+            this.leftMedialPoleScaleSlider.LabelText = "Medial Pole";
             this.leftMedialPoleScaleSlider.Location = new System.Drawing.Point(64, 142);
             this.leftMedialPoleScaleSlider.Name = "leftMedialPoleScaleSlider";
             this.leftMedialPoleScaleSlider.Size = new System.Drawing.Size(197, 44);
@@ -158,9 +158,9 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel1);
-            this.LayerState = "MandibleSizeLayers";
+            this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "LeftCondylarDegenrationPanel";
-            this.NavigationState = "Left TMJ";
+            this.NavigationState = "DegenerationLeftCameraAngle";
             this.Size = new System.Drawing.Size(325, 229);
             this.ResumeLayout(false);
 

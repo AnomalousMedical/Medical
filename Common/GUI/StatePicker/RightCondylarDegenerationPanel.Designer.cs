@@ -43,7 +43,7 @@
             // 
             // rightCondyleDegenerationSlider
             // 
-            this.rightCondyleDegenerationSlider.LabelText = "Condyle Degenertaion";
+            this.rightCondyleDegenerationSlider.LabelText = "Condyle";
             this.rightCondyleDegenerationSlider.Location = new System.Drawing.Point(64, 11);
             this.rightCondyleDegenerationSlider.Name = "rightCondyleDegenerationSlider";
             this.rightCondyleDegenerationSlider.Size = new System.Drawing.Size(197, 44);
@@ -53,7 +53,7 @@
             // 
             // rightLateralPoleSlider
             // 
-            this.rightLateralPoleSlider.LabelText = "Lateral Pole Degeneration";
+            this.rightLateralPoleSlider.LabelText = "Lateral Pole";
             this.rightLateralPoleSlider.Location = new System.Drawing.Point(64, 78);
             this.rightLateralPoleSlider.Name = "rightLateralPoleSlider";
             this.rightLateralPoleSlider.Size = new System.Drawing.Size(197, 44);
@@ -63,7 +63,7 @@
             // 
             // rightMedialPoleScaleSlider
             // 
-            this.rightMedialPoleScaleSlider.LabelText = "Medial Pole Degeneration";
+            this.rightMedialPoleScaleSlider.LabelText = "Medial Pole";
             this.rightMedialPoleScaleSlider.Location = new System.Drawing.Point(64, 142);
             this.rightMedialPoleScaleSlider.Name = "rightMedialPoleScaleSlider";
             this.rightMedialPoleScaleSlider.Size = new System.Drawing.Size(197, 44);
@@ -158,9 +158,9 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel1);
-            this.LayerState = "MandibleSizeLayers";
+            this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarDegenerationPanel";
-            this.NavigationState = "Right TMJ";
+            this.NavigationState = "DegenerationRightCameraAngle";
             this.Size = new System.Drawing.Size(325, 229);
             this.ResumeLayout(false);
 

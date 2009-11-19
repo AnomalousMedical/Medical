@@ -226,9 +226,9 @@
             this.Controls.Add(this.rightCondyleRotationSlider);
             this.Controls.Add(this.rightMandibularNotchSlider);
             this.Controls.Add(this.rightAntegonialNotchSlider);
-            this.LayerState = "MandibleSizeLayers";
+            this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarGrowthPanel";
-            this.NavigationState = "Right Lateral";
+            this.NavigationState = "GrowthRightCameraAngle";
             this.Size = new System.Drawing.Size(325, 361);
             this.ResumeLayout(false);
 
