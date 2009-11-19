@@ -30,15 +30,15 @@
         {
             this.makeNormalButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.undoButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.leftCondyleDegenerationSlider = new Medical.GUI.BoneManipulatorSlider();
+            this.leftLateralPoleSlider = new Medical.GUI.BoneManipulatorSlider();
+            this.leftMedialPoleScaleSlider = new Medical.GUI.BoneManipulatorSlider();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.leftCondyleDegenerationSlider = new Medical.GUI.BoneManipulatorSlider();
-            this.leftLateralPoleSlider = new Medical.GUI.BoneManipulatorSlider();
-            this.leftMedialPoleScaleSlider = new Medical.GUI.BoneManipulatorSlider();
             this.SuspendLayout();
             // 
             // makeNormalButton
@@ -58,60 +58,6 @@
             this.undoButton.TabIndex = 32;
             this.undoButton.Values.Text = "Undo";
             this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleRotationRotated;
-            this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel5.Location = new System.Drawing.Point(262, 134);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(60, 60);
-            this.panel5.TabIndex = 31;
-            // 
-            // panel6
-            // 
-            this.panel6.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleRotation;
-            this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel6.Location = new System.Drawing.Point(3, 134);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(60, 60);
-            this.panel6.TabIndex = 27;
-            // 
-            // panel3
-            // 
-            this.panel3.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleHeightSmall;
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel3.Location = new System.Drawing.Point(262, 69);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(60, 60);
-            this.panel3.TabIndex = 30;
-            // 
-            // panel2
-            // 
-            this.panel2.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftRamusHeightSmall;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel2.Location = new System.Drawing.Point(262, 4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(60, 60);
-            this.panel2.TabIndex = 23;
-            // 
-            // panel4
-            // 
-            this.panel4.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleHeight;
-            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel4.Location = new System.Drawing.Point(3, 69);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(60, 60);
-            this.panel4.TabIndex = 24;
-            // 
-            // panel1
-            // 
-            this.panel1.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftRamusHeight;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Location = new System.Drawing.Point(3, 4);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(60, 60);
-            this.panel1.TabIndex = 22;
             // 
             // leftCondyleDegenerationSlider
             // 
@@ -142,6 +88,60 @@
             this.leftMedialPoleScaleSlider.TabIndex = 36;
             this.leftMedialPoleScaleSlider.Tag = "leftMedialPoleScaleMandible";
             this.leftMedialPoleScaleSlider.Value = 0F;
+            // 
+            // panel5
+            // 
+            this.panel5.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPoleDistorted;
+            this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel5.Location = new System.Drawing.Point(262, 134);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(60, 60);
+            this.panel5.TabIndex = 31;
+            // 
+            // panel6
+            // 
+            this.panel6.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPole;
+            this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel6.Location = new System.Drawing.Point(3, 134);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(60, 60);
+            this.panel6.TabIndex = 27;
+            // 
+            // panel3
+            // 
+            this.panel3.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleLateralPoleDistorted;
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel3.Location = new System.Drawing.Point(262, 69);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(60, 60);
+            this.panel3.TabIndex = 30;
+            // 
+            // panel2
+            // 
+            this.panel2.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleDistorted;
+            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel2.Location = new System.Drawing.Point(262, 4);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(60, 60);
+            this.panel2.TabIndex = 23;
+            // 
+            // panel4
+            // 
+            this.panel4.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleLateralPole;
+            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel4.Location = new System.Drawing.Point(3, 69);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(60, 60);
+            this.panel4.TabIndex = 24;
+            // 
+            // panel1
+            // 
+            this.panel1.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyle;
+            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel1.Location = new System.Drawing.Point(3, 4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(60, 60);
+            this.panel1.TabIndex = 22;
             // 
             // LeftCondylarDegenrationPanel
             // 

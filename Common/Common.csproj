@@ -927,6 +927,42 @@
   <ItemGroup>
     <None Include="Resources\GrowthRightRamusHeightSmall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyleLateralPole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyleLateralPoleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyleMedialPole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationLeftCondyleMedialPoleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyleLateralPole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyleLateralPoleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyleMedialPole.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegenerationRightCondyleMedialPoleDistorted.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
