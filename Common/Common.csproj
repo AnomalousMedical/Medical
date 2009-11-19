@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7185582B-5482-4148-82B0-263477681B01}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -310,6 +310,12 @@
     </Compile>
     <Compile Include="GUI\StatePicker\FossaStatePanel.Designer.cs">
       <DependentUpon>FossaStatePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\FossaPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\FossaPanel.Designer.cs">
+      <DependentUpon>FossaPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\NotesPanel.cs">
       <SubType>UserControl</SubType>
@@ -689,6 +695,9 @@
       <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\FossaPanel.resx">
+      <DependentUpon>FossaPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\NotesPanel.resx">
       <DependentUpon>NotesPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -962,6 +971,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DegenerationRightCondyleMedialPoleDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftFossaFlat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftFossaNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightFossaFlat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightFossaNormal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

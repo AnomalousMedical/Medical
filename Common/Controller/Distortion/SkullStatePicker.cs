@@ -12,6 +12,7 @@ using Logging;
 using Engine.Saving.XMLSaver;
 using Medical.GUI;
 using Engine.ObjectManagement;
+using Medical.Properties;
 
 namespace Medical
 {
@@ -25,16 +26,18 @@ namespace Medical
         private RightCondylarGrowthPanel rightCondylarGrowthPanel;
         private LeftCondylarDegenrationPanel leftCondylarDegenerationPanel;
         private RightCondylarDegenerationPanel rightCondylarDegenerationPanel;
+        private FossaPanel leftFossaPanel;
+        private FossaPanel rightFossaPanel;
 #else
         private PresetStatePanel leftGrowthPanel;
         private PresetStatePanel rightGrowthPanel;
         private PresetStatePanel leftDegenerationPanel;
         private PresetStatePanel rightDegenerationPanel;
+        private PresetStatePanel leftFossaPanel;
+        private PresetStatePanel rightFossaPanel;
 #endif
         private PresetStatePanel leftDiscPanel;
         private PresetStatePanel rightDiscPanel;
-        private PresetStatePanel leftFossaPanel;
-        private PresetStatePanel rightFossaPanel;
 
         private XmlSaver saver = new XmlSaver();
 
@@ -76,11 +79,21 @@ namespace Medical
             leftDiscPanel.LayerState = "DiscLayers";
             statePicker.addStatePanel(leftDiscPanel);
 
+#if USE_SLIDER_GUIS
+            leftFossaPanel = new FossaPanel("LeftFossa");
+            leftFossaPanel.NormalImage = Resources.LeftFossaNormal;
+            leftFossaPanel.DistortedImage = Resources.LeftFossaFlat;
+            leftFossaPanel.NavigationState = "Left TMJ";
+            leftFossaPanel.LayerState = "FossaLayers";
+            leftFossaPanel.Text = "Left Fossa";
+            statePicker.addStatePanel(leftFossaPanel);
+#else
             leftFossaPanel = new PresetStatePanel();
             leftFossaPanel.Text = "Left Fossa";
             leftFossaPanel.NavigationState = "Left TMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(leftFossaPanel);
+#endif
 
 #if USE_SLIDER_GUIS
             rightCondylarGrowthPanel = new RightCondylarGrowthPanel();
@@ -108,11 +121,21 @@ namespace Medical
             rightDiscPanel.LayerState = "DiscLayers";
             statePicker.addStatePanel(rightDiscPanel);
 
+#if USE_SLIDER_GUIS
+            rightFossaPanel = new FossaPanel("RightFossa");
+            rightFossaPanel.NormalImage = Resources.RightFossaNormal;
+            rightFossaPanel.DistortedImage = Resources.RightFossaFlat;
+            rightFossaPanel.NavigationState = "Right TMJ";
+            rightFossaPanel.LayerState = "FossaLayers";
+            rightFossaPanel.Text = "Right Fossa";
+            statePicker.addStatePanel(rightFossaPanel);
+#else
             rightFossaPanel = new PresetStatePanel();
             rightFossaPanel.Text = "Right Fossa";
             rightFossaPanel.NavigationState = "Right TMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             statePicker.addStatePanel(rightFossaPanel);
+#endif
 
             statePicker.addStatePanel(new TeethAdaptationPanel());
             statePicker.addStatePanel(new NotesPanel("MRI"));
@@ -136,6 +159,8 @@ namespace Medical
             rightCondylarGrowthPanel.sceneLoaded(scene);
             leftCondylarDegenerationPanel.sceneLoaded(scene);
             rightCondylarDegenerationPanel.sceneLoaded(scene);
+            leftFossaPanel.sceneLoaded(scene);
+            rightFossaPanel.sceneLoaded(scene);
 #endif
             if (rootDirectory != lastRootDirectory)
             {
@@ -161,6 +186,16 @@ namespace Medical
                 loadPresetSet(rightDegeneration);
                 rightDegenerationPanel.clear();
                 rightDegenerationPanel.initialize(rightDegeneration);
+
+                PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
+                loadPresetSet(leftFossa);
+                leftFossaPanel.clear();
+                leftFossaPanel.initialize(leftFossa);
+
+                PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
+                loadPresetSet(rightFossa);
+                rightFossaPanel.clear();
+                rightFossaPanel.initialize(rightFossa);
 #endif
 
                 PresetStateSet leftDisc = new PresetStateSet("Left Disc", rootDirectory + "/LeftDisc");
@@ -172,16 +207,6 @@ namespace Medical
                 loadPresetSet(rightDisc);
                 rightDiscPanel.clear();
                 rightDiscPanel.initialize(rightDisc);
-
-                PresetStateSet leftFossa = new PresetStateSet("Left Fossa", rootDirectory + "/LeftFossa");
-                loadPresetSet(leftFossa);
-                leftFossaPanel.clear();
-                leftFossaPanel.initialize(leftFossa);
-
-                PresetStateSet rightFossa = new PresetStateSet("Right Fossa", rootDirectory + "/RightFossa");
-                loadPresetSet(rightFossa);
-                rightFossaPanel.clear();
-                rightFossaPanel.initialize(rightFossa);
             }
         }
 

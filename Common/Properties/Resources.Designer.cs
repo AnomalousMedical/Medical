@@ -347,6 +347,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap LeftFossaFlat {
+            get {
+                object obj = ResourceManager.GetObject("LeftFossaFlat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftFossaNormal {
+            get {
+                object obj = ResourceManager.GetObject("LeftFossaNormal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap leftnormaleminance {
             get {
                 object obj = ResourceManager.GetObject("leftnormaleminance", resourceCulture);
@@ -392,6 +406,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap rightflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightFossaFlat {
+            get {
+                object obj = ResourceManager.GetObject("RightFossaFlat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightFossaNormal {
+            get {
+                object obj = ResourceManager.GetObject("RightFossaNormal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
