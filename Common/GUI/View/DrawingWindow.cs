@@ -221,7 +221,14 @@ namespace Medical
         {
             get
             {
-                return camera.RenderWidth;
+                if (camera != null)
+                {
+                    return camera.RenderWidth;
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
@@ -229,7 +236,14 @@ namespace Medical
         {
             get
             {
-                return camera.RenderHeight;
+                if (camera != null)
+                {
+                    return camera.RenderHeight;
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 
