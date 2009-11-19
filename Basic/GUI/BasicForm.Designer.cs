@@ -146,11 +146,14 @@
             this.buttonSpecExpandCollapse = new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator();
             this.topInformationPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.leftInformationPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.topInformationPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftInformationPanel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottomPanel)).BeginInit();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -178,7 +181,8 @@
             this.dockPanel.DockLeftPortion = 275;
             this.dockPanel.DockRightPortion = 225;
             this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.Location = new System.Drawing.Point(427, 235);
+            this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
+            this.dockPanel.Location = new System.Drawing.Point(427, 121);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.Size = new System.Drawing.Size(357, 307);
             dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
@@ -251,6 +255,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -1013,7 +1018,7 @@
             this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftNavigator.Location = new System.Drawing.Point(0, 235);
+            this.leftNavigator.Location = new System.Drawing.Point(0, 121);
             this.leftNavigator.MinimumSize = new System.Drawing.Size(200, 0);
             this.leftNavigator.Name = "leftNavigator";
             this.leftNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
@@ -1031,7 +1036,7 @@
             // topInformationPanel
             // 
             this.topInformationPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.topInformationPanel.Location = new System.Drawing.Point(0, 114);
+            this.topInformationPanel.Location = new System.Drawing.Point(0, 0);
             this.topInformationPanel.Name = "topInformationPanel";
             this.topInformationPanel.Size = new System.Drawing.Size(784, 121);
             this.topInformationPanel.TabIndex = 19;
@@ -1039,20 +1044,29 @@
             // leftInformationPanel
             // 
             this.leftInformationPanel.Dock = System.Windows.Forms.DockStyle.Left;
-            this.leftInformationPanel.Location = new System.Drawing.Point(200, 235);
+            this.leftInformationPanel.Location = new System.Drawing.Point(200, 121);
             this.leftInformationPanel.Name = "leftInformationPanel";
             this.leftInformationPanel.Size = new System.Drawing.Size(227, 307);
             this.leftInformationPanel.TabIndex = 21;
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.Controls.Add(this.dockPanel);
+            this.bottomPanel.Controls.Add(this.leftInformationPanel);
+            this.bottomPanel.Controls.Add(this.leftNavigator);
+            this.bottomPanel.Controls.Add(this.topInformationPanel);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 114);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(784, 428);
+            this.bottomPanel.TabIndex = 23;
             // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 564);
-            this.Controls.Add(this.dockPanel);
-            this.Controls.Add(this.leftInformationPanel);
-            this.Controls.Add(this.leftNavigator);
-            this.Controls.Add(this.topInformationPanel);
+            this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.clinicalRibbon);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1067,6 +1081,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.topInformationPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftInformationPanel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottomPanel)).EndInit();
+            this.bottomPanel.ResumeLayout(false);
+            this.bottomPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1188,5 +1205,6 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel topInformationPanel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel bottomPanel;
     }
 }
