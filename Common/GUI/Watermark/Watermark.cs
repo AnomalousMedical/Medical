@@ -23,7 +23,7 @@ namespace Medical
 
         public abstract Watermark clone(String newName);
 
-        public void preFindVisibleCallback(bool currentCameraRender)
+        public void preFindVisibleCallback(DrawingWindow window, bool currentCameraRender)
         {
             this.setVisible(currentCameraRender);
         }

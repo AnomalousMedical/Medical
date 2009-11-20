@@ -5,10 +5,11 @@ using System.Text;
 using OgreWrapper;
 using Engine;
 using Logging;
+using OgrePlugin;
 
 namespace Medical
 {
-    class ViewportBackground
+    public class ViewportBackground
     {
         private SceneNode backgroundNode;
         private ManualObject background;
@@ -34,12 +35,12 @@ namespace Medical
             this.uvY = uvY;
         }
 
-        public void createBackground(SceneManager sceneManager)
+        public void createBackground(OgreSceneManager sceneManager)
         {
-            parentNode = sceneManager.getRootSceneNode();
-            this.sceneManager = sceneManager;
+            this.sceneManager = sceneManager.SceneManager;
+            parentNode = this.sceneManager.getRootSceneNode();
 
-            background = sceneManager.createManualObject(name);
+            background = this.sceneManager.createManualObject(name);
             background.begin(materialName, OperationType.OT_TRIANGLE_LIST);
 
             //bottom left
@@ -69,7 +70,7 @@ namespace Medical
 
             background.end();
 
-            backgroundNode = sceneManager.createSceneNode(name + "Node");
+            backgroundNode = this.sceneManager.createSceneNode(name + "Node");
             backgroundNode.attachObject(background);
 
             parentNode.addChild(backgroundNode);
@@ -98,6 +99,20 @@ namespace Medical
         {
             backgroundNode.setPosition(cameraPos + cameraDirection * distance);
             backgroundNode.setOrientation(rotation);
+        }
+
+        public ViewportBackground clone(String newName)
+        {
+            return new ViewportBackground(newName, materialName, distance, halfWidth * 2.0f, halfHeight * 2.0f, uvX, uvY);
+        }
+
+        public void preRenderCallback(DrawingWindow window, bool callingCameraRender)
+        {
+            setVisible(callingCameraRender);
+            if (callingCameraRender)
+            {
+                updatePosition(window.Translation, window.Direction, window.Orientation);
+            }
         }
     }
 }

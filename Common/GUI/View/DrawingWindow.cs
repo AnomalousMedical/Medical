@@ -23,7 +23,7 @@ namespace Medical
     {
         public event DrawingWindowEvent CameraCreated;
         public event DrawingWindowEvent CameraDestroyed;
-        public event OgreCameraCallback PreFindVisibleObjects;
+        public event DrawingWindowRenderEvent PreFindVisibleObjects;
         public event DrawingWindowEvent SubTextChanged;
 
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
@@ -38,8 +38,6 @@ namespace Medical
         private SimScene scene;
         private String subText;
 
-        private ViewportBackground background;
-
         public DrawingWindow()
         {
             InitializeComponent();
@@ -51,9 +49,6 @@ namespace Medical
             this.renderer = renderer;
             this.cameraMover = cameraMover;
             window = renderer.createRendererWindow(this, name);
-
-            //temp
-            background = new ViewportBackground(name + "Background", "PiperClinicBg", 900, 500, 500, 30, 30);
         }
 
         public void recreateWindow()
@@ -88,10 +83,6 @@ namespace Medical
                 camera.showSceneStats(showSceneStats);
                 OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
                 ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
-                if (background != null)
-                {
-                    background.createBackground(defaultScene.getSimElementManager<OgreSceneManager>().SceneManager);
-                }
                 if (CameraCreated != null)
                 {
                     CameraCreated.Invoke(this);
@@ -107,10 +98,6 @@ namespace Medical
         {
             if (camera != null)
             {
-                if (background != null)
-                {
-                    background.destroyBackground();
-                }
                 cameraMover.setCamera(null);
                 Log.Debug("Destroying camera {0}.", name);
                 if (CameraDestroyed != null)
@@ -147,17 +134,9 @@ namespace Medical
 
         void camera_PreFindVisibleObjects(bool callingCameraRender)
         {
-            if (background != null)
-            {
-                background.setVisible(callingCameraRender);
-                if (callingCameraRender)
-                {
-                    background.updatePosition(camera.Translation, camera.Direction, camera.Orientation);
-                }
-            }
             if (PreFindVisibleObjects != null)
             {
-                PreFindVisibleObjects.Invoke(callingCameraRender);
+                PreFindVisibleObjects.Invoke(this, callingCameraRender);
             }
         }
 
@@ -228,6 +207,22 @@ namespace Medical
             get
             {
                 return cameraMover.LookAt;
+            }
+        }
+
+        public Vector3 Direction
+        {
+            get
+            {
+                return camera.Direction;
+            }
+        }
+
+        public Quaternion Orientation
+        {
+            get
+            {
+                return camera.Orientation;
             }
         }
 

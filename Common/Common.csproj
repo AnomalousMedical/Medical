@@ -111,6 +111,7 @@
     <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
@@ -425,7 +426,7 @@
     <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
       <DependentUpon>DrawingWindowHost.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\View\ViewportBackground.cs" />
+    <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="GUI\Watermark\CenteredWatermark.cs" />
     <Compile Include="GUI\Watermark\SideLogoWatermark.cs" />
     <Compile Include="GUI\Watermark\TextWatermark.cs" />

@@ -43,6 +43,8 @@ namespace Medical.Controller
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private MovementSequenceController movementSequenceController;
+        private BackgroundController backgroundController;
+        private ViewportBackground background;
 
         /// <summary>
         /// Constructor.
@@ -121,6 +123,9 @@ namespace Medical.Controller
             //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
             watermark.createOverlays();
             watermarkController = new WatermarkController(watermark, drawingWindowController);
+
+            background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 500, 30, 30);
+            backgroundController = new BackgroundController(background, drawingWindowController);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
@@ -306,17 +311,20 @@ namespace Medical.Controller
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
             drawingWindowController.destroyCameras();
+            backgroundController.SceneManager = null;
             if (medicalController.openScene(file))
             {
-                drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
-                if (SceneLoaded != null)
-                {
-                    SceneLoaded.Invoke(medicalController.CurrentScene);
-                }
-
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
+                    OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
+                    backgroundController.SceneManager = ogreScene;
+
+                    drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
+                    if (SceneLoaded != null)
+                    {
+                        SceneLoaded.Invoke(medicalController.CurrentScene);
+                    }
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     layerController.loadLayerStateSet(layersFile);

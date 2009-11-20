@@ -129,7 +129,7 @@ namespace Medical
             this.window = window;
             window.CameraCreated += new DrawingWindowEvent(window_CameraCreated);
             window.CameraDestroyed += new DrawingWindowEvent(window_CameraDestroyed);
-            window.PreFindVisibleObjects += new OgrePlugin.OgreCameraCallback(window_PreFindVisibleObjects);
+            window.PreFindVisibleObjects += window_PreFindVisibleObjects;
 
             mainOverlay = OverlayManager.getInstance().create(name + "_NavigationOverlay");
         }
@@ -278,7 +278,7 @@ namespace Medical
             navigationController.Timer.removeFixedUpdateListener(this);
         }
 
-        void window_PreFindVisibleObjects(bool callingCameraRender)
+        void window_PreFindVisibleObjects(DrawingWindow window, bool callingCameraRender)
         {
             Vector3 mousePos = eventManager.Mouse.getAbsMouse();
             this.setVisible(callingCameraRender && window.allowMotion((int)mousePos.x, (int)mousePos.y));

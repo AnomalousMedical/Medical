@@ -15,6 +15,7 @@ using Medical.Controller;
 namespace Medical
 {
     public delegate void DrawingWindowEvent(DrawingWindow window);
+    public delegate void DrawingWindowRenderEvent(DrawingWindow window, bool currentCameraRender);
 
     public class DrawingWindowController : IDisposable
     {
