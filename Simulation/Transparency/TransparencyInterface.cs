@@ -75,7 +75,7 @@ namespace Medical
             if (alpha == 1.0f)
             {
                 subEntity.setMaterialName(baseMaterialName);
-                entity.setRenderQueueGroup(50);
+                entity.setRenderQueueGroup(0);
             }
             else
             {
