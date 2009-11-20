@@ -38,6 +38,8 @@ namespace Medical
         private SimScene scene;
         private String subText;
 
+        private ViewportBackground background;
+
         public DrawingWindow()
         {
             InitializeComponent();
@@ -49,6 +51,9 @@ namespace Medical
             this.renderer = renderer;
             this.cameraMover = cameraMover;
             window = renderer.createRendererWindow(this, name);
+
+            //temp
+            background = new ViewportBackground(name + "Background", "PiperClinicBg", 500, 500, 30, 30);
         }
 
         public void recreateWindow()
@@ -81,7 +86,12 @@ namespace Medical
                 cameraMover.setCamera(camera);
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
-                ((OgreCameraControl)camera).PreFindVisibleObjects += camera_PreFindVisibleObjects;
+                OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
+                ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
+                if (background != null)
+                {
+                    background.createBackground(ogreCamera.Camera.getParentSceneNode(), defaultScene.getSimElementManager<OgreSceneManager>().SceneManager, ogreCamera.Camera);
+                }
                 if (CameraCreated != null)
                 {
                     CameraCreated.Invoke(this);
@@ -97,6 +107,10 @@ namespace Medical
         {
             if (camera != null)
             {
+                if (background != null)
+                {
+                    background.destroyBackground();
+                }
                 cameraMover.setCamera(null);
                 Log.Debug("Destroying camera {0}.", name);
                 if (CameraDestroyed != null)
@@ -133,6 +147,10 @@ namespace Medical
 
         void camera_PreFindVisibleObjects(bool callingCameraRender)
         {
+            if (background != null)
+            {
+                background.setVisible(callingCameraRender);
+            }
             if (PreFindVisibleObjects != null)
             {
                 PreFindVisibleObjects.Invoke(callingCameraRender);

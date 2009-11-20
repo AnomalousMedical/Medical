@@ -15,6 +15,7 @@ using Medical.Properties;
 using Logging;
 using Engine.ObjectManagement;
 using System.Drawing;
+using OgrePlugin;
 
 namespace Medical.Controller
 {
@@ -115,8 +116,9 @@ namespace Medical.Controller
 
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            watermark = new SideLogoWatermark("Source" + "Watermark", "PiperClinic", 150, 60);
+            watermark = new SideLogoWatermark("SourceWatermark", "PiperClinic", 150, 60);
             //watermark = new TiledWatermark("SourceWatermark", "PiperClinic", 150, 60);
+            //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
             watermark.createOverlays();
             watermarkController = new WatermarkController(watermark, drawingWindowController);
 
@@ -324,6 +326,11 @@ namespace Medical.Controller
                     windowPresetController.loadPresetSet();
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
                     movementSequenceController.loadSequenceSet(sequenceDirectory);
+
+                    //OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
+                    //ogreScene.SceneManager.setSkyPlane(true, 1000, -Vector3.Up, "HyoidMaterial", 1, 1, true, 0);
+                    //ogreScene.SceneManager.setSkyBox(true, "PiperClinicSkyBox", 300, false);
+                    //ogreScene.SceneManager.setSkyDome(true, "HyoidMaterial");
                 }
                 distortionController.setToDefault();
                 StatusController.TaskCompleted();
