@@ -44,9 +44,9 @@
             this.buttonPanel.Controls.Add(this.nextButton);
             this.buttonPanel.Controls.Add(this.previousButton);
             this.buttonPanel.Controls.Add(this.cancelButton);
-            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.buttonPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 480);
+            this.buttonPanel.Location = new System.Drawing.Point(0, 0);
             this.buttonPanel.Name = "buttonPanel";
             this.buttonPanel.Size = new System.Drawing.Size(325, 29);
             this.buttonPanel.TabIndex = 2;
@@ -91,7 +91,7 @@
             // 
             this.panelHost.AutoScroll = true;
             this.panelHost.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelHost.Location = new System.Drawing.Point(0, 0);
+            this.panelHost.Location = new System.Drawing.Point(0, 29);
             this.panelHost.Name = "panelHost";
             this.panelHost.Size = new System.Drawing.Size(325, 480);
             this.panelHost.TabIndex = 3;

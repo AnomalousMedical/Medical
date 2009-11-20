@@ -119,12 +119,13 @@ namespace Medical.Controller
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             watermark = new SideLogoWatermark("SourceWatermark", "PiperClinic", 150, 60);
-            //watermark = new TiledWatermark("SourceWatermark", "PiperClinic", 150, 60);
+            //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
             //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
             watermark.createOverlays();
             watermarkController = new WatermarkController(watermark, drawingWindowController);
 
-            background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 500, 30, 30);
+            //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
+            background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
             backgroundController = new BackgroundController(background, drawingWindowController);
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
