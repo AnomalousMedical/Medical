@@ -53,7 +53,7 @@ namespace Medical
             window = renderer.createRendererWindow(this, name);
 
             //temp
-            background = new ViewportBackground(name + "Background", "PiperClinicBg", 500, 500, 30, 30);
+            background = new ViewportBackground(name + "Background", "PiperClinicBg", 900, 500, 500, 30, 30);
         }
 
         public void recreateWindow()
@@ -90,7 +90,7 @@ namespace Medical
                 ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
                 if (background != null)
                 {
-                    background.createBackground(ogreCamera.Camera.getParentSceneNode(), defaultScene.getSimElementManager<OgreSceneManager>().SceneManager, ogreCamera.Camera);
+                    background.createBackground(defaultScene.getSimElementManager<OgreSceneManager>().SceneManager);
                 }
                 if (CameraCreated != null)
                 {
@@ -150,6 +150,10 @@ namespace Medical
             if (background != null)
             {
                 background.setVisible(callingCameraRender);
+                if (callingCameraRender)
+                {
+                    background.updatePosition(camera.Translation, camera.Direction, camera.Orientation);
+                }
             }
             if (PreFindVisibleObjects != null)
             {
