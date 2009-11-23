@@ -57,6 +57,10 @@ namespace Medical
             if (events[ToolEvents.Pick].FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 startingRotation.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
+
+                Vector3 stRot = movable.ToolRotation.getEuler();
+                startingRotation.setEuler(stRot.x, stRot.y, stRot.z);
+
                 currentEulerRotation = Vector3.Zero;
             }
             else if (events[ToolEvents.Pick].Down && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))

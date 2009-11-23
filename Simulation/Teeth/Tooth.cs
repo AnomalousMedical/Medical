@@ -307,13 +307,13 @@ namespace Medical
         {
             get
             {
-                return Owner.Rotation;
+                return rotationOffset;
             }
         }
 
         public void rotate(ref Quaternion newRot)
         {
-            Rotation *= newRot;
+            Rotation = newRot;
         }
 
         [DoNotCopy]
