@@ -88,7 +88,7 @@ namespace Medical
             return selected;
         }
 
-        public void drawLine(DebugDrawingSurface drawSurface)
+        public void drawLine(DebugDrawingSurface drawSurface, Vector3 origin)
         {
             if (selected)
             {
@@ -98,20 +98,7 @@ namespace Medical
             {
                 drawSurface.setColor(color);
             }
-            drawSurface.drawLine(Vector3.Zero, direction * length);
-        }
-
-        public void drawLine(ManualObject drawSurface)
-        {
-            if (selected)
-            {
-                drawLine(drawSurface, HIGHLIGHT, Vector3.Zero, direction * length);
-            }
-            else
-            {
-                drawLine(drawSurface, HIGHLIGHT, Vector3.Zero, direction * length);
-            }
-
+            drawSurface.drawLine(origin, origin + direction * length);
         }
 
         public void drawSquare(DebugDrawingSurface drawSurface)
@@ -144,47 +131,6 @@ namespace Medical
                 sourcePoint.z = outPoint.z;
                 drawSurface.drawLine(sourcePoint, outPoint);
             }
-        }
-
-        public void drawSquare(ManualObject drawSurface)
-        {
-            Color drawColor;
-            if (selected)
-            {
-                drawColor = HIGHLIGHT;
-            }
-            else
-            {
-                drawColor = color;
-            }
-            Vector3 outPoint = direction * length;
-            Vector3 sourcePoint;
-            if (outPoint.x != 0)
-            {
-                sourcePoint = Vector3.Zero;
-                sourcePoint.x = outPoint.x;
-                drawLine(drawSurface, drawColor, sourcePoint, outPoint);
-            }
-            if (outPoint.y != 0)
-            {
-                sourcePoint = Vector3.Zero;
-                sourcePoint.y = outPoint.y;
-                drawLine(drawSurface, drawColor, sourcePoint, outPoint);
-            }
-            if (outPoint.z != 0)
-            {
-                sourcePoint = Vector3.Zero;
-                sourcePoint.z = outPoint.z;
-                drawLine(drawSurface, drawColor, sourcePoint, outPoint);
-            }
-        }
-
-        private void drawLine(ManualObject manual, Color drawColor, Vector3 p1, Vector3 p2)
-        {
-            manual.position(ref p1);
-            manual.color(drawColor.r, drawColor.g, drawColor.b, drawColor.a);
-            manual.position(ref p2);
-            manual.color(drawColor.r, drawColor.g, drawColor.b, drawColor.a);
         }
     }
 }

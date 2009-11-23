@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -127,13 +127,15 @@
     <Compile Include="Teeth\TeethController.cs" />
     <Compile Include="Teeth\TeethState.cs" />
     <Compile Include="Teeth\Tooth.cs" />
-    <Compile Include="Teeth\ToothMover.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\TopTooth.cs" />
+    <Compile Include="Tools\MovableObject.cs" />
+    <Compile Include="Tools\MovableObjectTools.cs" />
     <Compile Include="Tools\Movement\Axis.cs" />
-    <Compile Include="Tools\Movement\MovementTool.cs" />
+    <Compile Include="Tools\Movement\MoveTool.cs" />
     <Compile Include="Tools\Rotation\RotateTool.cs" />
     <Compile Include="Tools\Rotation\RotationAxis.cs" />
+    <Compile Include="Tools\SimObjectMover.cs" />
     <Compile Include="Tools\ToolEvents.cs" />
     <Compile Include="Transparency\TransparencyBlock.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />

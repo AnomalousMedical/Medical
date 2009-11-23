@@ -332,6 +332,14 @@ namespace Medical
             }
         }
 
+        public PluginManager PluginManager
+        {
+            get
+            {
+                return pluginManager;
+            }
+        }
+
         #endregion Properties
     }
 }

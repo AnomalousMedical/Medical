@@ -9,6 +9,7 @@ namespace Medical
     public class TeethController
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
+        static SimObjectMover teethMover;
 
         static TeethController()
         {
@@ -18,10 +19,18 @@ namespace Medical
         public static void addTooth(String name, Tooth tooth)
         {
             teeth.Add(name, tooth);
+            if (teethMover != null)
+            {
+                teethMover.addMovableObject(name, tooth);
+            }
         }
 
         public static void removeTooth(String name)
         {
+            if (teethMover != null)
+            {
+                teethMover.removeMovableObject(teeth[name]);
+            }
             teeth.Remove(name);
         }
 
@@ -119,5 +128,17 @@ namespace Medical
         }
 
         public static bool HighlightContacts { get; set; }
+
+        public static SimObjectMover TeethMover
+        {
+            get
+            {
+                return teethMover;
+            }
+            set
+            {
+                teethMover = value;
+            }
+        }
     }
 }

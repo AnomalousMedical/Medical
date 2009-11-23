@@ -18,7 +18,7 @@ namespace Medical
         Bottom,
     }
 
-    public abstract class Tooth : Behavior
+    public abstract class Tooth : Behavior, MovableObject
     {
         [Editable]
         private String sceneNodeName = "Node";
@@ -278,5 +278,42 @@ namespace Medical
                 return false;
             }
         }
+
+        #region MovableObject Members
+
+        [DoNotCopy]
+        public Vector3 ToolTranslation
+        {
+            get
+            {
+                return Owner.Translation;
+            }
+        }
+
+        public void move(Vector3 offset)
+        {
+            Offset += offset;
+        }
+
+        [DoNotCopy]
+        public Quaternion ToolRotation
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        [DoNotCopy]
+        public bool ShowTools
+        {
+            get { return true; }
+        }
+
+        #endregion
     }
 }

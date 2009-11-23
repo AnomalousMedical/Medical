@@ -45,6 +45,7 @@ namespace Medical.Controller
         private MovementSequenceController movementSequenceController;
         private BackgroundController backgroundController;
         private ViewportBackground background;
+        private SimObjectMover teethMover;
 
         /// <summary>
         /// Constructor.
@@ -127,6 +128,12 @@ namespace Medical.Controller
             //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
             background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
             backgroundController = new BackgroundController(background, drawingWindowController);
+
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            this.SceneLoaded += teethMover.sceneLoaded;
+            this.SceneUnloading += teethMover.sceneUnloading;
+            TeethController.TeethMover = teethMover;
+            medicalController.FixedLoopUpdate += teethMover.update;
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
