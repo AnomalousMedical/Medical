@@ -79,11 +79,22 @@ namespace Medical
                         break;
                     }
                 }
-                //if (events[ToolEvents.Pick].FirstFrameDown)
+                //Check collisions and draw shapes
+                //MovableObjectTools closestTools = null;
+                //foreach (MovableObjectTools tools in movableObjects)
                 //{
-                //    foreach (MovableObjectTools currentTools in movableObjects)
+                //    if (tools.checkBoundingBoxCollision(ref spaceRay))
                 //    {
-                        
+                //        closestTools = tools;
+                //    }
+                //    tools.drawTools(drawingSurface);
+                //}
+                //if (closestTools != null)
+                //{
+                //    if (closestTools.processAxes(ref spaceRay))
+                //    {
+                //        closestTools.drawTools(drawingSurface);
+                //        closestTools.processSelection(events, ref cameraPos, ref spaceRay);
                 //    }
                 //}
             }

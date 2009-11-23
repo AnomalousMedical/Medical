@@ -101,7 +101,7 @@ namespace Medical
             drawSurface.drawLine(origin, origin + direction * length);
         }
 
-        public void drawSquare(DebugDrawingSurface drawSurface)
+        public void drawSquare(DebugDrawingSurface drawSurface, Vector3 origin)
         {
             if (selected)
             {
@@ -111,23 +111,23 @@ namespace Medical
             {
                 drawSurface.setColor(color);
             }
-            Vector3 outPoint = direction * length;
-            Vector3 sourcePoint;
-            if (outPoint.x != 0)
+            Vector3 outPoint = origin + direction * length;
+            Vector3 sourcePoint = origin;
+            if (direction.x != 0)
             {
-                sourcePoint = Vector3.Zero;
+                sourcePoint = origin;
                 sourcePoint.x = outPoint.x;
                 drawSurface.drawLine(sourcePoint, outPoint);
             }
-            if (outPoint.y != 0)
+            if (direction.y != 0)
             {
-                sourcePoint = Vector3.Zero;
+                sourcePoint = origin;
                 sourcePoint.y = outPoint.y;
                 drawSurface.drawLine(sourcePoint, outPoint);
             }
-            if (outPoint.z != 0)
+            if (direction.z != 0)
             {
-                sourcePoint = Vector3.Zero;
+                sourcePoint = origin;
                 sourcePoint.z = outPoint.z;
                 drawSurface.drawLine(sourcePoint, outPoint);
             }

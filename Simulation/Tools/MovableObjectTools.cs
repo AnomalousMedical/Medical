@@ -19,6 +19,11 @@ namespace Medical
             moveTool = new MoveTool(name, movable, 1.0f);
         }
 
+        public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
+        {
+            return moveTool.checkBoundingBoxCollision(ref spaceRay);
+        }
+
         public bool processAxes(ref Ray3 spaceRay)
         {
             return moveTool.processAxis(ref spaceRay);

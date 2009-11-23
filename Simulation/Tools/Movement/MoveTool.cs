@@ -26,6 +26,7 @@ namespace Medical
         private String name;
         private bool enabled = true;
         private MovableObject movable;
+        private Box3 boundingBox = new Box3();
 
         #endregion Fields
 
@@ -41,6 +42,8 @@ namespace Medical
             xzAxisBox = new Axis(Vector3.Right + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
             xyAxisBox = new Axis(Vector3.Right + Vector3.Up, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
             yzAxisBox = new Axis(Vector3.Up + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
+            Vector3 boundsExtents = new Vector3(startingLength / 2.0f, startingLength / 2.0f, startingLength / 2.0f);
+            boundingBox.setExtents(boundsExtents);
         }
 
         #endregion Constructors
@@ -61,6 +64,14 @@ namespace Medical
             xyAxisBox.setLength(length / DOUBLE_AXIS_SCALE);
             xzAxisBox.setLength(length / DOUBLE_AXIS_SCALE);
             yzAxisBox.setLength(length / DOUBLE_AXIS_SCALE);
+            Vector3 boundsExtents = new Vector3(length / 2.0f, length / 2.0f, length / 2.0f);
+            boundingBox.setExtents(boundsExtents);
+        }
+
+        public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
+        {
+            boundingBox.setCenter(movable.ToolTranslation);
+            return boundingBox.testIntersection(spaceRay);
         }
 
         public void processSelection(EventManager events, ref Vector3 cameraPos, ref Ray3 spaceRay)
@@ -139,9 +150,9 @@ namespace Medical
                 xAxisBox.drawLine(axisSurface, origin);
                 yAxisBox.drawLine(axisSurface, origin);
                 zAxisBox.drawLine(axisSurface, origin);
-                xyAxisBox.drawSquare(axisSurface);
-                xzAxisBox.drawSquare(axisSurface);
-                yzAxisBox.drawSquare(axisSurface);
+                xyAxisBox.drawSquare(axisSurface, origin);
+                xzAxisBox.drawSquare(axisSurface, origin);
+                yzAxisBox.drawSquare(axisSurface, origin);
             }
             axisSurface.end();
         }
