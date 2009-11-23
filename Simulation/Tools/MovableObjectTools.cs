@@ -34,6 +34,11 @@ namespace Medical
             moveTool.processSelection(events, ref cameraPos, ref spaceRay);
         }
 
+        public void clearSelection()
+        {
+            moveTool.clearSelection();
+        }
+
         public void drawTools(DebugDrawingSurface axisSurface)
         {
             moveTool.drawAxis(axisSurface);

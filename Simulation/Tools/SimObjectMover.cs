@@ -70,33 +70,60 @@ namespace Medical
                 CameraControl camera = validator.getCamera();
                 Ray3 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
                 Vector3 cameraPos = camera.Translation;
-                foreach (MovableObjectTools currentTools in movableObjects)
+                //Old
+                //foreach (MovableObjectTools currentTools in movableObjects)
+                //{
+                //    currentTools.drawTools(drawingSurface);
+                //    if (currentTools.processAxes(ref spaceRay))
+                //    {
+                //        currentTools.processSelection(events, ref cameraPos, ref spaceRay);
+                //        break;
+                //    }
+                //}
+                //Check collisions and draw shapes
+                float closestDistance = float.MaxValue;
+                MovableObjectTools closestTools = null;
+                foreach (MovableObjectTools tools in movableObjects)
                 {
-                    currentTools.drawTools(drawingSurface);
-                    if (currentTools.processAxes(ref spaceRay))
+                    if (tools.checkBoundingBoxCollision(ref spaceRay))
                     {
-                        currentTools.processSelection(events, ref cameraPos, ref spaceRay);
-                        break;
+                        if (tools.processAxes(ref spaceRay))
+                        {
+                            float distance = (tools.Movable.ToolTranslation - cameraPos).length2();
+                            if (distance < closestDistance)
+                            {
+                                //If we had a previous closer tool clear its selection.
+                                if (closestTools != null)
+                                {
+                                    closestTools.clearSelection();
+                                }
+                                closestTools = tools;
+                                closestDistance = distance;
+                            }
+                            //If this tool was not closer clear its selection.
+                            else
+                            {
+                                tools.clearSelection();
+                            }
+                        }
+                        else
+                        {
+                            tools.clearSelection();
+                        }
+                    }
+                    else
+                    {
+                        tools.clearSelection();
                     }
                 }
-                //Check collisions and draw shapes
-                //MovableObjectTools closestTools = null;
-                //foreach (MovableObjectTools tools in movableObjects)
-                //{
-                //    if (tools.checkBoundingBoxCollision(ref spaceRay))
-                //    {
-                //        closestTools = tools;
-                //    }
-                //    tools.drawTools(drawingSurface);
-                //}
-                //if (closestTools != null)
-                //{
-                //    if (closestTools.processAxes(ref spaceRay))
-                //    {
-                //        closestTools.drawTools(drawingSurface);
-                //        closestTools.processSelection(events, ref cameraPos, ref spaceRay);
-                //    }
-                //}
+                foreach (MovableObjectTools tools in movableObjects)
+                {
+                    tools.drawTools(drawingSurface);
+                }
+                if (closestTools != null)
+                {
+                    closestTools.processSelection(events, ref cameraPos, ref spaceRay);
+                }
             }
         }
 

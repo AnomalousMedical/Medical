@@ -42,6 +42,12 @@ namespace Medical
             xzAxisBox = new Axis(Vector3.Right + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
             xyAxisBox = new Axis(Vector3.Right + Vector3.Up, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
             yzAxisBox = new Axis(Vector3.Up + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
+
+            //Bounding box
+            Vector3[] axes = boundingBox.getAxes();
+            axes[0] = Vector3.Right;
+            axes[1] = Vector3.Up;
+            axes[2] = Vector3.Forward;
             Vector3 boundsExtents = new Vector3(startingLength / 2.0f, startingLength / 2.0f, startingLength / 2.0f);
             boundingBox.setExtents(boundsExtents);
         }
@@ -70,7 +76,7 @@ namespace Medical
 
         public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
         {
-            boundingBox.setCenter(movable.ToolTranslation);
+            boundingBox.setCenter(movable.ToolTranslation + boundingBox.getExtents());
             return boundingBox.testIntersection(spaceRay);
         }
 
@@ -93,8 +99,7 @@ namespace Medical
                     + xyAxisBox.translate(spacePoint)
                     + yzAxisBox.translate(spacePoint);
 
-                //newPos += movable.ToolTranslation;
-                movable.move(newPos);// = newPos;
+                movable.move(newPos);
             }
         }
 
@@ -141,6 +146,16 @@ namespace Medical
                 || zAxisBox.isSelected();
         }
 
+        public void clearSelection()
+        {
+            xzAxisBox.clearSelection();
+            xyAxisBox.clearSelection();
+            yzAxisBox.clearSelection();
+            xAxisBox.clearSelection();
+            yAxisBox.clearSelection();
+            zAxisBox.clearSelection();
+        }
+
         public void drawAxis(DebugDrawingSurface axisSurface)
         {
             Vector3 origin = movable.ToolTranslation;
@@ -154,6 +169,11 @@ namespace Medical
                 xzAxisBox.drawSquare(axisSurface, origin);
                 yzAxisBox.drawSquare(axisSurface, origin);
             }
+            //debug bounding box
+            Vector3 bbOrigin = boundingBox.getCenter();
+            axisSurface.setColor(Color.White);
+            axisSurface.drawLine(bbOrigin, bbOrigin + boundingBox.getExtents());
+            axisSurface.drawLine(bbOrigin, bbOrigin - boundingBox.getExtents());
             axisSurface.end();
         }
 
