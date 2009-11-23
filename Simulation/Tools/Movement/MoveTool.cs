@@ -170,10 +170,10 @@ namespace Medical
                 yzAxisBox.drawSquare(axisSurface, origin);
             }
             //debug bounding box
-            Vector3 bbOrigin = boundingBox.getCenter();
-            axisSurface.setColor(Color.White);
-            axisSurface.drawLine(bbOrigin, bbOrigin + boundingBox.getExtents());
-            axisSurface.drawLine(bbOrigin, bbOrigin - boundingBox.getExtents());
+            //Vector3 bbOrigin = boundingBox.getCenter();
+            //axisSurface.setColor(Color.White);
+            //axisSurface.drawLine(bbOrigin, bbOrigin + boundingBox.getExtents());
+            //axisSurface.drawLine(bbOrigin, bbOrigin - boundingBox.getExtents());
             axisSurface.end();
         }
 

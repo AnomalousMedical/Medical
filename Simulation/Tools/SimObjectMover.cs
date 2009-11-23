@@ -81,26 +81,33 @@ namespace Medical
                 //    }
                 //}
                 //Check collisions and draw shapes
-                float closestDistance = float.MaxValue;
-                MovableObjectTools closestTools = null;
-                foreach (MovableObjectTools tools in movableObjects)
+                if (!events[ToolEvents.Pick].Down)
                 {
-                    if (tools.checkBoundingBoxCollision(ref spaceRay))
+                    float closestDistance = float.MaxValue;
+                    MovableObjectTools closestTools = null;
+                    foreach (MovableObjectTools tools in movableObjects)
                     {
-                        if (tools.processAxes(ref spaceRay))
+                        if (tools.checkBoundingBoxCollision(ref spaceRay))
                         {
-                            float distance = (tools.Movable.ToolTranslation - cameraPos).length2();
-                            if (distance < closestDistance)
+                            if (tools.processAxes(ref spaceRay))
                             {
-                                //If we had a previous closer tool clear its selection.
-                                if (closestTools != null)
+                                float distance = (tools.Movable.ToolTranslation - cameraPos).length2();
+                                if (distance < closestDistance)
                                 {
-                                    closestTools.clearSelection();
+                                    //If we had a previous closer tool clear its selection.
+                                    if (closestTools != null)
+                                    {
+                                        closestTools.clearSelection();
+                                    }
+                                    closestTools = tools;
+                                    closestDistance = distance;
                                 }
-                                closestTools = tools;
-                                closestDistance = distance;
+                                //If this tool was not closer clear its selection.
+                                else
+                                {
+                                    tools.clearSelection();
+                                }
                             }
-                            //If this tool was not closer clear its selection.
                             else
                             {
                                 tools.clearSelection();
@@ -111,18 +118,26 @@ namespace Medical
                             tools.clearSelection();
                         }
                     }
-                    else
+                    if (events[ToolEvents.Pick].FirstFrameDown)
                     {
-                        tools.clearSelection();
+                        currentTools = closestTools;
+                        if (closestTools != null)
+                        {
+                            closestTools.processSelection(events, ref cameraPos, ref spaceRay);
+                        }
                     }
                 }
+                else
+                {
+                    if (currentTools != null)
+                    {
+                        currentTools.processSelection(events, ref cameraPos, ref spaceRay);
+                    }
+                }
+
                 foreach (MovableObjectTools tools in movableObjects)
                 {
                     tools.drawTools(drawingSurface);
-                }
-                if (closestTools != null)
-                {
-                    closestTools.processSelection(events, ref cameraPos, ref spaceRay);
                 }
             }
         }
