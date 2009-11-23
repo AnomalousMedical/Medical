@@ -25,6 +25,16 @@ namespace Medical.GUI
             statePickerSet(parentPicker);
         }
 
+        protected void setNavigationState(String name)
+        {
+            parentPicker.setNavigationState(name);
+        }
+
+        protected void setLayerState(String name)
+        {
+            parentPicker.setLayerState(name);
+        }
+
         public virtual void applyToState(MedicalState state)
         { 
         

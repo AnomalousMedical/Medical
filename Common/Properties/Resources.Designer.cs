@@ -67,6 +67,55 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AdaptBottomTeeth {
+            get {
+                object obj = ResourceManager.GetObject("AdaptBottomTeeth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptLeftLateral {
+            get {
+                object obj = ResourceManager.GetObject("AdaptLeftLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptLeftMidAnterior {
+            get {
+                object obj = ResourceManager.GetObject("AdaptLeftMidAnterior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptMidlineAnterior {
+            get {
+                object obj = ResourceManager.GetObject("AdaptMidlineAnterior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptRightLateral {
+            get {
+                object obj = ResourceManager.GetObject("AdaptRightLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptRightMidAnterior {
+            get {
+                object obj = ResourceManager.GetObject("AdaptRightMidAnterior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AdaptTopTeeth {
+            get {
+                object obj = ResourceManager.GetObject("AdaptTopTeeth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap articulometrics {
             get {
                 object obj = ResourceManager.GetObject("articulometrics", resourceCulture);

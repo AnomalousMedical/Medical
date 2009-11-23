@@ -219,15 +219,25 @@ namespace Medical.GUI
                 panelHost.PreviousButtonVisible = !(currentIndex == 0);
                 if (panel.NavigationState != null)
                 {
-                    navigationController.setNavigationState(panel.NavigationState, currentDrawingWindow);
+                    setNavigationState(panel.NavigationState);
                 }
                 if (panel.LayerState != null)
                 {
-                    layerController.applyLayerState(panel.LayerState);
+                    setLayerState(panel.LayerState);
                 }
                 panel.modifyScene();
                 updatePanel = true;
             }
+        }
+
+        internal void setNavigationState(String name)
+        {
+            navigationController.setNavigationState(name, currentDrawingWindow);
+        }
+
+        internal void setLayerState(String name)
+        {
+            layerController.applyLayerState(name);
         }
 
         private void hidePanel()

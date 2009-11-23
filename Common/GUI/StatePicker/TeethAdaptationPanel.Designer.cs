@@ -33,6 +33,13 @@
             this.moveButton = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.undoButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.rotateButton = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.topCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.bottomCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.leftLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.leftMidLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.midlineAnteriorCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.rightMidLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.rightLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.SuspendLayout();
             // 
             // adaptButton
@@ -75,11 +82,88 @@
             this.rotateButton.TabIndex = 9;
             this.rotateButton.Values.Text = "Manual Rotate";
             // 
+            // topCameraButton
+            // 
+            this.topCameraButton.Location = new System.Drawing.Point(3, 63);
+            this.topCameraButton.Name = "topCameraButton";
+            this.topCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.topCameraButton.TabIndex = 12;
+            this.topCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptBottomTeeth;
+            this.topCameraButton.Values.Text = "";
+            this.topCameraButton.Click += new System.EventHandler(this.topCameraButton_Click);
+            // 
+            // bottomCameraButton
+            // 
+            this.bottomCameraButton.Location = new System.Drawing.Point(59, 63);
+            this.bottomCameraButton.Name = "bottomCameraButton";
+            this.bottomCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.bottomCameraButton.TabIndex = 13;
+            this.bottomCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptTopTeeth;
+            this.bottomCameraButton.Values.Text = "";
+            this.bottomCameraButton.Click += new System.EventHandler(this.bottomCameraButton_Click);
+            // 
+            // leftLateralCameraButton
+            // 
+            this.leftLateralCameraButton.Location = new System.Drawing.Point(227, 119);
+            this.leftLateralCameraButton.Name = "leftLateralCameraButton";
+            this.leftLateralCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.leftLateralCameraButton.TabIndex = 14;
+            this.leftLateralCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptLeftLateral;
+            this.leftLateralCameraButton.Values.Text = "";
+            this.leftLateralCameraButton.Click += new System.EventHandler(this.leftLateralCameraButton_Click);
+            // 
+            // leftMidLateralCameraButton
+            // 
+            this.leftMidLateralCameraButton.Location = new System.Drawing.Point(171, 119);
+            this.leftMidLateralCameraButton.Name = "leftMidLateralCameraButton";
+            this.leftMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.leftMidLateralCameraButton.TabIndex = 15;
+            this.leftMidLateralCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptLeftMidAnterior;
+            this.leftMidLateralCameraButton.Values.Text = "";
+            this.leftMidLateralCameraButton.Click += new System.EventHandler(this.leftMidLateralCameraButton_Click);
+            // 
+            // midlineAnteriorCameraButton
+            // 
+            this.midlineAnteriorCameraButton.Location = new System.Drawing.Point(115, 119);
+            this.midlineAnteriorCameraButton.Name = "midlineAnteriorCameraButton";
+            this.midlineAnteriorCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.midlineAnteriorCameraButton.TabIndex = 16;
+            this.midlineAnteriorCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptMidlineAnterior;
+            this.midlineAnteriorCameraButton.Values.Text = "";
+            this.midlineAnteriorCameraButton.Click += new System.EventHandler(this.midlineAnteriorCameraButton_Click);
+            // 
+            // rightMidLateralCameraButton
+            // 
+            this.rightMidLateralCameraButton.Location = new System.Drawing.Point(59, 119);
+            this.rightMidLateralCameraButton.Name = "rightMidLateralCameraButton";
+            this.rightMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.rightMidLateralCameraButton.TabIndex = 17;
+            this.rightMidLateralCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptRightMidAnterior;
+            this.rightMidLateralCameraButton.Values.Text = "";
+            this.rightMidLateralCameraButton.Click += new System.EventHandler(this.rightMidLateralCameraButton_Click);
+            // 
+            // rightLateralCameraButton
+            // 
+            this.rightLateralCameraButton.Location = new System.Drawing.Point(3, 119);
+            this.rightLateralCameraButton.Name = "rightLateralCameraButton";
+            this.rightLateralCameraButton.Size = new System.Drawing.Size(53, 53);
+            this.rightLateralCameraButton.TabIndex = 18;
+            this.rightLateralCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptRightLateral;
+            this.rightLateralCameraButton.Values.Text = "";
+            this.rightLateralCameraButton.Click += new System.EventHandler(this.rightLateralCameraButton_Click);
+            // 
             // TeethAdaptationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.rightLateralCameraButton);
+            this.Controls.Add(this.rightMidLateralCameraButton);
+            this.Controls.Add(this.midlineAnteriorCameraButton);
+            this.Controls.Add(this.leftMidLateralCameraButton);
+            this.Controls.Add(this.leftLateralCameraButton);
+            this.Controls.Add(this.bottomCameraButton);
+            this.Controls.Add(this.topCameraButton);
             this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.moveButton);
@@ -88,7 +172,7 @@
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
             this.NavigationState = "Teeth Midline Anterior";
-            this.Size = new System.Drawing.Size(336, 474);
+            this.Size = new System.Drawing.Size(336, 408);
             this.ResumeLayout(false);
 
         }
@@ -100,6 +184,13 @@
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton moveButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton undoButton;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton rotateButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton topCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton bottomCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton leftLateralCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton leftMidLateralCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton midlineAnteriorCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton rightMidLateralCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton rightLateralCameraButton;
 
     }
 }

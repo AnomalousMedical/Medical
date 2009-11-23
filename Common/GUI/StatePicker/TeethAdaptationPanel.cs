@@ -116,5 +116,55 @@ namespace Medical.GUI
                 adaptButton.Checked = false;
             }
         }
+
+        private void topCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, false);
+            this.setLayerState("TopTeethLayers");
+            this.setNavigationState("Top Teeth");
+        }
+
+        private void bottomCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(false, true);
+            this.setLayerState("BottomTeethLayers");
+            this.setNavigationState("Bottom Teeth");
+            
+        }
+
+        private void leftLateralCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, true);
+            this.setLayerState("TeethLayers");
+            this.setNavigationState("Teeth Left Lateral");
+        }
+
+        private void midlineAnteriorCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, true);
+            this.setLayerState("TeethLayers");
+            this.setNavigationState("Teeth Midline Anterior");
+        }
+
+        private void rightLateralCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, true);
+            this.setLayerState("TeethLayers");
+            this.setNavigationState("Teeth Right Lateral");
+        }
+
+        private void leftMidLateralCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, true);
+            this.setLayerState("TeethLayers");
+            this.setNavigationState("Teeth Left Mid Anterior");
+        }
+
+        private void rightMidLateralCameraButton_Click(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(true, true);
+            this.setLayerState("TeethLayers");
+            this.setNavigationState("Teeth Right Mid Anterior");
+        }
     }
 }
