@@ -63,51 +63,39 @@ namespace Medical
             //Process the mouse
             Mouse mouse = events.Mouse;
             Vector3 mouseLoc = mouse.getAbsMouse();
+            Ray3 spaceRay = new Ray3();
+            Vector3 cameraPos = Vector3.Zero;
             CameraMotionValidator validator = CameraResolver.getValidatorForLocation((int)mouseLoc.x, (int)mouseLoc.y);
             if (validator != null)
             {
                 validator.getLocalCoords(ref mouseLoc.x, ref mouseLoc.y);
                 CameraControl camera = validator.getCamera();
-                Ray3 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
-                Vector3 cameraPos = camera.Translation;
-                //Old
-                //foreach (MovableObjectTools currentTools in movableObjects)
-                //{
-                //    currentTools.drawTools(drawingSurface);
-                //    if (currentTools.processAxes(ref spaceRay))
-                //    {
-                //        currentTools.processSelection(events, ref cameraPos, ref spaceRay);
-                //        break;
-                //    }
-                //}
-                //Check collisions and draw shapes
-                if (!events[ToolEvents.Pick].Down)
+                spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
+                cameraPos = camera.Translation;              
+            }
+            //Check collisions and draw shapes
+            if (!events[ToolEvents.Pick].Down)
+            {
+                float closestDistance = float.MaxValue;
+                MovableObjectTools closestTools = null;
+                foreach (MovableObjectTools tools in movableObjects)
                 {
-                    float closestDistance = float.MaxValue;
-                    MovableObjectTools closestTools = null;
-                    foreach (MovableObjectTools tools in movableObjects)
+                    if (tools.checkBoundingBoxCollision(ref spaceRay))
                     {
-                        if (tools.checkBoundingBoxCollision(ref spaceRay))
+                        if (tools.processAxes(ref spaceRay))
                         {
-                            if (tools.processAxes(ref spaceRay))
+                            float distance = (tools.Movable.ToolTranslation - cameraPos).length2();
+                            if (distance < closestDistance)
                             {
-                                float distance = (tools.Movable.ToolTranslation - cameraPos).length2();
-                                if (distance < closestDistance)
+                                //If we had a previous closer tool clear its selection.
+                                if (closestTools != null)
                                 {
-                                    //If we had a previous closer tool clear its selection.
-                                    if (closestTools != null)
-                                    {
-                                        closestTools.clearSelection();
-                                    }
-                                    closestTools = tools;
-                                    closestDistance = distance;
+                                    closestTools.clearSelection();
                                 }
-                                //If this tool was not closer clear its selection.
-                                else
-                                {
-                                    tools.clearSelection();
-                                }
+                                closestTools = tools;
+                                closestDistance = distance;
                             }
+                            //If this tool was not closer clear its selection.
                             else
                             {
                                 tools.clearSelection();
@@ -118,27 +106,30 @@ namespace Medical
                             tools.clearSelection();
                         }
                     }
-                    if (events[ToolEvents.Pick].FirstFrameDown)
+                    else
                     {
-                        currentTools = closestTools;
-                        if (closestTools != null)
-                        {
-                            closestTools.processSelection(events, ref cameraPos, ref spaceRay);
-                        }
+                        tools.clearSelection();
                     }
                 }
-                else
+                if (events[ToolEvents.Pick].FirstFrameDown)
                 {
-                    if (currentTools != null)
+                    currentTools = closestTools;
+                    if (closestTools != null)
                     {
-                        currentTools.processSelection(events, ref cameraPos, ref spaceRay);
+                        closestTools.processSelection(events, ref cameraPos, ref spaceRay);
                     }
                 }
-
-                foreach (MovableObjectTools tools in movableObjects)
+            }
+            else
+            {
+                if (currentTools != null)
                 {
-                    tools.drawTools(drawingSurface);
+                    currentTools.processSelection(events, ref cameraPos, ref spaceRay);
                 }
+            }  
+            foreach (MovableObjectTools tools in movableObjects)
+            {
+                tools.drawTools(drawingSurface);
             }
         }
 
