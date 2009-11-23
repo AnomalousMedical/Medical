@@ -42,6 +42,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.kryptonLabel4);
             this.panel1.Controls.Add(this.stateNameTextBox);
             this.panel1.Controls.Add(this.kryptonLabel3);
@@ -124,6 +125,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.notes);
             this.Controls.Add(this.panel1);
             this.LayerState = "MandibleSizeLayers";

@@ -127,24 +127,17 @@ namespace Medical
             }
         }
 
-        public static void showTopTeethTools(bool show)
+        public static void showTeethTools(bool topVisible, bool bottomVisible)
         {
             foreach (Tooth tooth in teeth.Values)
             {
                 if (tooth.IsTopTooth)
                 {
-                    tooth.ShowTools = show;
+                    tooth.ShowTools = topVisible;
                 }
-            }
-        }
-
-        public static void showBottomTeethTools(bool show)
-        {
-            foreach (Tooth tooth in teeth.Values)
-            {
-                if (!tooth.IsTopTooth)
+                else
                 {
-                    tooth.ShowTools = show;
+                    tooth.ShowTools = bottomVisible;
                 }
             }
         }

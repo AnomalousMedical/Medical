@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.tooth1Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.tooth2Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.tooth3Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
@@ -45,17 +44,8 @@
             this.tooth14Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.tooth15Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.tooth16Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(112, 98);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 13);
-            this.label1.TabIndex = 146;
-            this.label1.Text = "Top";
             // 
             // tooth1Button
             // 
@@ -473,10 +463,20 @@
             this.tooth16Button.Values.ImageStates.ImageTracking = global::Medical.Properties.Resources.tooth16;
             this.tooth16Button.Values.Text = "";
             // 
+            // kryptonLabel1
+            // 
+            this.kryptonLabel1.Location = new System.Drawing.Point(109, 89);
+            this.kryptonLabel1.Name = "kryptonLabel1";
+            this.kryptonLabel1.Size = new System.Drawing.Size(30, 19);
+            this.kryptonLabel1.TabIndex = 163;
+            this.kryptonLabel1.Values.Text = "Top";
+            // 
             // TopTeethRemovalPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this.kryptonLabel1);
             this.Controls.Add(this.tooth13Button);
             this.Controls.Add(this.tooth15Button);
             this.Controls.Add(this.tooth9Button);
@@ -493,7 +493,6 @@
             this.Controls.Add(this.tooth2Button);
             this.Controls.Add(this.tooth3Button);
             this.Controls.Add(this.tooth1Button);
-            this.Controls.Add(this.label1);
             this.LayerState = "TopTeethLayers";
             this.Name = "TopTeethRemovalPanel";
             this.NavigationState = "Top Teeth";
@@ -505,7 +504,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth1Button;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth2Button;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth3Button;
@@ -522,5 +520,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth14Button;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth15Button;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth16Button;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
     }
 }

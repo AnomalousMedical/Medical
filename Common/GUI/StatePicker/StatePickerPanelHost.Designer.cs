@@ -28,28 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.finishButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.nextButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.previousButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.panelHost = new System.Windows.Forms.Panel();
-            this.buttonPanel.SuspendLayout();
+            this.panelHost = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            ((System.ComponentModel.ISupportInitialize)(this.panelHost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
+            this.kryptonPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // buttonPanel
-            // 
-            this.buttonPanel.AutoSize = true;
-            this.buttonPanel.Controls.Add(this.finishButton);
-            this.buttonPanel.Controls.Add(this.nextButton);
-            this.buttonPanel.Controls.Add(this.previousButton);
-            this.buttonPanel.Controls.Add(this.cancelButton);
-            this.buttonPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.buttonPanel.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.buttonPanel.Location = new System.Drawing.Point(0, 0);
-            this.buttonPanel.Name = "buttonPanel";
-            this.buttonPanel.Size = new System.Drawing.Size(325, 29);
-            this.buttonPanel.TabIndex = 2;
             // 
             // finishButton
             // 
@@ -89,34 +77,46 @@
             // 
             // panelHost
             // 
-            this.panelHost.AutoScroll = true;
             this.panelHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelHost.Location = new System.Drawing.Point(0, 29);
             this.panelHost.Name = "panelHost";
             this.panelHost.Size = new System.Drawing.Size(325, 480);
             this.panelHost.TabIndex = 3;
             // 
+            // kryptonPanel1
+            // 
+            this.kryptonPanel1.Controls.Add(this.finishButton);
+            this.kryptonPanel1.Controls.Add(this.nextButton);
+            this.kryptonPanel1.Controls.Add(this.previousButton);
+            this.kryptonPanel1.Controls.Add(this.cancelButton);
+            this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 0);
+            this.kryptonPanel1.Name = "kryptonPanel1";
+            this.kryptonPanel1.Size = new System.Drawing.Size(325, 29);
+            this.kryptonPanel1.TabIndex = 4;
+            // 
             // StatePickerPanelHost
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelHost);
-            this.Controls.Add(this.buttonPanel);
+            this.Controls.Add(this.kryptonPanel1);
             this.Name = "StatePickerPanelHost";
             this.Size = new System.Drawing.Size(325, 509);
-            this.buttonPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelHost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).EndInit();
+            this.kryptonPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel buttonPanel;
-        private System.Windows.Forms.Panel panelHost;
         private ComponentFactory.Krypton.Toolkit.KryptonButton cancelButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton finishButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton nextButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton previousButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel panelHost;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel1;
     }
 }

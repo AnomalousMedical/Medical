@@ -37,11 +37,15 @@ namespace Medical.GUI
         {
             get
             {
-                return nextButton.Visible;
+                return nextButton.Enabled;
             }
             set
             {
-                nextButton.Visible = value;
+                nextButton.Enabled = value;
+                if (!value)
+                {
+                    previousButton.Focus();
+                }
             }
         }
 
@@ -49,11 +53,15 @@ namespace Medical.GUI
         {
             get
             {
-                return previousButton.Visible;
+                return previousButton.Enabled;
             }
             set
             {
-                previousButton.Visible = value;
+                previousButton.Enabled = value;
+                if (!value)
+                {
+                    nextButton.Focus();
+                }
             }
         }
 

@@ -17,6 +17,9 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Text = "Teeth Adaptation";
+            adaptButton.CheckedChanged += new EventHandler(adaptButton_CheckedChanged);
+            moveButton.CheckedChanged += new EventHandler(moveButton_CheckedChanged);
+            rotateButton.CheckedChanged += new EventHandler(rotateButton_CheckedChanged);
         }
 
         private void undoButton_Click(object sender, EventArgs e)
@@ -67,12 +70,18 @@ namespace Medical.GUI
             }
         }
 
+        protected override void onPanelOpening()
+        {
+            TeethController.showTeethTools(true, true);
+        }
+
         protected override void onPanelClosing()
         {
-            if (AdaptMode)
+            if (adaptButton.Checked)
             {
-                AdaptMode = false;
+                adaptButton.Checked = false;
             }
+            TeethController.showTeethTools(false, false);
         }
 
         protected override void statePickerSet(StatePickerWizard controller)
@@ -80,27 +89,31 @@ namespace Medical.GUI
             parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.AdaptationIcon);
         }
 
-        private void adaptButton_Click(object sender, EventArgs e)
+        void adaptButton_CheckedChanged(object sender, EventArgs e)
         {
-            AdaptMode = true;
-        }
-
-        private void stopButton_Click(object sender, EventArgs e)
-        {
-            AdaptMode = false;
-        }
-
-        private bool AdaptMode
-        {
-            get
+            TeethController.adaptAllTeeth(adaptButton.Checked);
+            if (adaptButton.Checked)
             {
-                return stopButton.Enabled;
+                moveButton.Checked = false;
+                rotateButton.Checked = false;
             }
-            set
+        }
+
+        void rotateButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rotateButton.Checked)
             {
-                TeethController.adaptAllTeeth(value);
-                stopButton.Enabled = value;
-                adaptButton.Enabled = !value;
+                moveButton.Checked = false;
+                adaptButton.Checked = false;
+            }
+        }
+
+        void moveButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (moveButton.Checked)
+            {
+                rotateButton.Checked = false;
+                adaptButton.Checked = false;
             }
         }
     }
