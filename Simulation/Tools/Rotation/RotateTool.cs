@@ -20,7 +20,6 @@ namespace Medical
         private RotationAxis zAxis;
         private Vector3 currentEulerRotation;
         private Quaternion startingRotation = new Quaternion();
-        private CameraMotionValidator activeValidator = null;
         private Quaternion newRot = new Quaternion();
         private String name;
         private MovableObject movable;
@@ -52,19 +51,17 @@ namespace Medical
             boundingBox.setExtents(boundsExtents);
         }
 
-        public void processSelection(EventManager events, CameraMotionValidator validator, Mouse mouse, ref Vector3 mouseLoc)
+        public void processSelection(EventManager events, ref Ray3 spaceRay)
         {
             Vector3 trans = movable.ToolTranslation;
-            CameraControl camera = validator.getCamera();
-            Ray3 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
             if (events[ToolEvents.Pick].FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
                 startingRotation.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 currentEulerRotation = Vector3.Zero;
-                activeValidator = validator;
             }
             else if (events[ToolEvents.Pick].Down && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
+                Mouse mouse = events.Mouse;
                 Vector3 relMouse = mouse.getRelMouse();
                 float amount = relMouse.x + relMouse.y;
                 amount /= 100;
@@ -80,7 +77,6 @@ namespace Medical
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
                 currentEulerRotation = newRot.getEuler();
-                activeValidator = null;
             }
             else
             {

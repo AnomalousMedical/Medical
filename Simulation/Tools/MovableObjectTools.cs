@@ -48,7 +48,7 @@ namespace Medical
             }
             if (RotateToolVisible)
             {
-                
+                rotateTool.processSelection(events, ref spaceRay);
             }
         }
 
