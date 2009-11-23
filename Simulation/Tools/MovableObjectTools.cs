@@ -12,17 +12,19 @@ namespace Medical
     {
         private MovableObject movable;
         private MoveTool moveTool;
+        private RotateTool rotateTool;
 
         public MovableObjectTools(String name, MovableObject movable)
         {
             this.movable = movable;
             moveTool = new MoveTool(name, movable, 1.0f);
             MoveToolVisible = false;
+            rotateTool = new RotateTool(name, movable, 0.3f);
         }
 
         public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
         {
-            return movable.ShowTools && (MoveToolVisible && moveTool.checkBoundingBoxCollision(ref spaceRay));
+            return movable.ShowTools && ((MoveToolVisible && moveTool.checkBoundingBoxCollision(ref spaceRay)) || (RotateToolVisible && rotateTool.checkBoundingBoxCollision(ref spaceRay)));
         }
 
         public bool processAxes(ref Ray3 spaceRay)
@@ -30,6 +32,10 @@ namespace Medical
             if (MoveToolVisible)
             {
                 return moveTool.processAxis(ref spaceRay);
+            }
+            if (RotateToolVisible)
+            {
+                return rotateTool.processAxis(ref spaceRay);
             }
             return false;
         }
@@ -40,16 +46,22 @@ namespace Medical
             {
                 moveTool.processSelection(events, ref cameraPos, ref spaceRay);
             }
+            if (RotateToolVisible)
+            {
+                
+            }
         }
 
         public void clearSelection()
         {
             moveTool.clearSelection();
+            rotateTool.clearSelection();
         }
 
         public void drawTools(DebugDrawingSurface axisSurface)
         {
             moveTool.drawAxis(axisSurface);
+            rotateTool.drawCircles(axisSurface);
         }
 
         public MovableObject Movable
@@ -69,6 +81,18 @@ namespace Medical
             set
             {
                 moveTool.Visible = value;
+            }
+        }
+
+        public bool RotateToolVisible
+        {
+            get
+            {
+                return rotateTool.Visible;
+            }
+            set
+            {
+                rotateTool.Visible = value;
             }
         }
     }

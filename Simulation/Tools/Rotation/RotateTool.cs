@@ -8,14 +8,12 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class RotateTool : Behavior
+    public class RotateTool
     {
         private static Vector3 YAW = new Vector3(1.0f, 0.0f, 0.0f);
         private static Vector3 PITCH = new Vector3(0.0f, 1.0f, 0.0f);
         private static Vector3 ROLL = new Vector3(0.0f, 0.0f, 1.0f);
         private const float RADIUS_DELTA = 1.0f;
-
-        private DebugDrawingSurface circleSurface;
 
         private RotationAxis xAxis;
         private RotationAxis yAxis;
@@ -23,66 +21,40 @@ namespace Medical
         private Vector3 currentEulerRotation;
         private Quaternion startingRotation = new Quaternion();
         private CameraMotionValidator activeValidator = null;
-        private bool allowMotionUpdates = true;
-        private float currentRadius = 5.0f;
         private Quaternion newRot = new Quaternion();
-        private Vector3 translation = Vector3.Zero;
         private String name;
-        private bool enabled = true;
-        private Vector3 savedOrigin = Vector3.Zero; //The origin of the tool when it was destroyed.
+        private MovableObject movable;
+        private Box3 boundingBox = new Box3();
 
-        public RotateTool(String name)
+        public RotateTool(String name, MovableObject movable, float radius)
         {
             this.name = name;
-            xAxis = new RotationAxis(Vector3.Backward, Vector3.Up, ROLL, currentRadius, new Color(1.0f, 0.0f, 0.0f));
-            yAxis = new RotationAxis(Vector3.Backward, Vector3.Right, YAW, currentRadius, new Color(0.0f, 0.0f, 1.0f));
-            zAxis = new RotationAxis(Vector3.Right, Vector3.Up, PITCH, currentRadius, new Color(0.0f, 1.0f, 0.0f));
+            this.movable = movable;
+            xAxis = new RotationAxis(Vector3.Backward, Vector3.Up, ROLL, radius, new Color(1.0f, 0.0f, 0.0f));
+            yAxis = new RotationAxis(Vector3.Backward, Vector3.Right, YAW, radius, new Color(0.0f, 0.0f, 1.0f));
+            zAxis = new RotationAxis(Vector3.Right, Vector3.Up, PITCH, radius, new Color(0.0f, 1.0f, 0.0f));
+            //Bounding box
+            Vector3[] axes = boundingBox.getAxes();
+            axes[0] = Vector3.Right;
+            axes[1] = Vector3.Up;
+            axes[2] = Vector3.Forward;
+            Vector3 boundsExtents = new Vector3(radius, radius, radius);
+            boundingBox.setExtents(boundsExtents);
+            Visible = false;
         }
 
-        public override void update(Clock clock, EventManager events)
+        public void resizeAxes(float radius)
         {
-            //Process the mouse
-            Mouse mouse = events.Mouse;
-            Vector3 mouseLoc = mouse.getAbsMouse();
-            CameraMotionValidator validator = activeValidator;
-            if (validator == null)
-            {
-                validator = CameraResolver.getValidatorForLocation((int)mouseLoc.x, (int)mouseLoc.y);
-            }
-            if (validator != null)
-            {
-                validator.getLocalCoords(ref mouseLoc.x, ref mouseLoc.y);
-                processSelection(events, validator, mouse, ref mouseLoc);
-            }
-
-            //Check for resize
-            if (events[ToolEvents.IncreaseToolSize].FirstFrameUp)
-            {
-                currentRadius += RADIUS_DELTA;
-                resizeAxes();
-            }
-            else if (events[ToolEvents.DecreaseToolSize].FirstFrameUp)
-            {
-                if (currentRadius - RADIUS_DELTA > 0)
-                {
-                    currentRadius -= RADIUS_DELTA;
-                    resizeAxes();
-                }
-            }
+            xAxis.setRadius(radius);
+            yAxis.setRadius(radius);
+            zAxis.setRadius(radius);
+            Vector3 boundsExtents = new Vector3(radius, radius, radius);
+            boundingBox.setExtents(boundsExtents);
         }
 
-        private void resizeAxes()
+        public void processSelection(EventManager events, CameraMotionValidator validator, Mouse mouse, ref Vector3 mouseLoc)
         {
-            xAxis.setRadius(currentRadius);
-            yAxis.setRadius(currentRadius);
-            zAxis.setRadius(currentRadius);
-        }
-
-        public bool AllowPicking { get; set; }
-
-        private void processSelection(EventManager events, CameraMotionValidator validator, Mouse mouse, ref Vector3 mouseLoc)
-        {
-            Vector3 trans = translation;
+            Vector3 trans = movable.ToolTranslation;
             CameraControl camera = validator.getCamera();
             Ray3 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
             if (events[ToolEvents.Pick].FirstFrameDown && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
@@ -101,9 +73,7 @@ namespace Medical
                 zAxis.computeRotation(ref currentEulerRotation, amount);
                 newRot.setEuler(currentEulerRotation.x, currentEulerRotation.y, currentEulerRotation.z);
                 newRot *= startingRotation;
-                allowMotionUpdates = false;
-                this.updateRotation(ref newRot);
-                allowMotionUpdates = true;
+                movable.rotate(ref newRot);
             }
             else if (events[ToolEvents.Pick].FirstFrameUp && (xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected()))
             {
@@ -118,11 +88,12 @@ namespace Medical
             }
         }
 
-        private void processAxis(ref Ray3 spaceRay)
+        public bool processAxis(ref Ray3 spaceRay)
         {
-            xAxis.process(spaceRay, translation);
-            yAxis.process(spaceRay, translation);
-            zAxis.process(spaceRay, translation);
+            Vector3 trans = movable.ToolTranslation;
+            xAxis.process(spaceRay, trans);
+            yAxis.process(spaceRay, trans);
+            zAxis.process(spaceRay, trans);
 
             Vector3 origin = spaceRay.Origin;
 
@@ -168,7 +139,7 @@ namespace Medical
                 twoWayAxisComparison(zAxis, yAxis, ref origin);
             }
 
-            drawCircles();
+            return xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected();
         }
 
         private void twoWayAxisComparison(RotationAxis axis0, RotationAxis axis1, ref Vector3 origin)
@@ -185,63 +156,31 @@ namespace Medical
             }
         }
 
-        private void drawCircles()
+        public void drawCircles(DebugDrawingSurface circleSurface)
         {
-            circleSurface.begin("RotateTool", DrawingType.LineList);
-            xAxis.draw(circleSurface, Vector3.Zero);
-            yAxis.draw(circleSurface, Vector3.Zero);
-            zAxis.draw(circleSurface, Vector3.Zero);
+            circleSurface.begin(name + "RotateTool", DrawingType.LineList);
+            if (Visible && movable.ShowTools)
+            {
+                xAxis.draw(circleSurface, movable.ToolTranslation);
+                yAxis.draw(circleSurface, movable.ToolTranslation);
+                zAxis.draw(circleSurface, movable.ToolTranslation);
+            }
             circleSurface.end();
         }
 
-        void rotateController_OnRotationChanged(Quaternion newRotation, object sender)
+        public bool Visible { get; set; }
+
+        internal void clearSelection()
         {
-            if (allowMotionUpdates)
-            {
-                currentEulerRotation = newRotation.getEuler();
-            }
+            xAxis.clearSelection();
+            yAxis.clearSelection();
+            zAxis.clearSelection();
         }
 
-        #region Tool Members
-
-        public void setToolActive(bool enabled)
+        internal bool checkBoundingBoxCollision(ref Ray3 spaceRay)
         {
-            if (circleSurface != null)
-            {
-                circleSurface.setVisible(enabled);
-            }
-            this.enabled = enabled;
+            boundingBox.setCenter(movable.ToolTranslation);
+            return boundingBox.testIntersection(spaceRay);
         }
-
-        public void createSceneElement(Engine.ObjectManagement.SimSubScene subScene, PluginManager pluginManager)
-        {
-            circleSurface = pluginManager.RendererPlugin.createDebugDrawingSurface(name, subScene);
-            if (circleSurface != null)
-            {
-                circleSurface.setVisible(enabled);
-                circleSurface.moveOrigin(savedOrigin);
-            }
-        }
-
-        public void destroySceneElement(Engine.ObjectManagement.SimSubScene subScene, PluginManager pluginManager)
-        {
-            if (circleSurface != null)
-            {
-                savedOrigin = circleSurface.getOrigin();
-                pluginManager.RendererPlugin.destroyDebugDrawingSurface(circleSurface);
-                circleSurface = null;
-            }
-        }
-
-        public void setTranslation(Vector3 newTranslation)
-        {
-            if (circleSurface != null)
-            {
-                circleSurface.moveOrigin(newTranslation);
-                translation = newTranslation;
-            }
-        }
-
-        #endregion
     }
 }

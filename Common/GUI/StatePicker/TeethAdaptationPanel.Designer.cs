@@ -84,7 +84,7 @@
             // 
             // topCameraButton
             // 
-            this.topCameraButton.Location = new System.Drawing.Point(3, 63);
+            this.topCameraButton.Location = new System.Drawing.Point(3, 66);
             this.topCameraButton.Name = "topCameraButton";
             this.topCameraButton.Size = new System.Drawing.Size(53, 53);
             this.topCameraButton.TabIndex = 12;
@@ -94,7 +94,7 @@
             // 
             // bottomCameraButton
             // 
-            this.bottomCameraButton.Location = new System.Drawing.Point(59, 63);
+            this.bottomCameraButton.Location = new System.Drawing.Point(59, 66);
             this.bottomCameraButton.Name = "bottomCameraButton";
             this.bottomCameraButton.Size = new System.Drawing.Size(53, 53);
             this.bottomCameraButton.TabIndex = 13;
@@ -104,7 +104,7 @@
             // 
             // leftLateralCameraButton
             // 
-            this.leftLateralCameraButton.Location = new System.Drawing.Point(227, 119);
+            this.leftLateralCameraButton.Location = new System.Drawing.Point(227, 122);
             this.leftLateralCameraButton.Name = "leftLateralCameraButton";
             this.leftLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.leftLateralCameraButton.TabIndex = 14;
@@ -114,7 +114,7 @@
             // 
             // leftMidLateralCameraButton
             // 
-            this.leftMidLateralCameraButton.Location = new System.Drawing.Point(171, 119);
+            this.leftMidLateralCameraButton.Location = new System.Drawing.Point(171, 122);
             this.leftMidLateralCameraButton.Name = "leftMidLateralCameraButton";
             this.leftMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.leftMidLateralCameraButton.TabIndex = 15;
@@ -124,7 +124,7 @@
             // 
             // midlineAnteriorCameraButton
             // 
-            this.midlineAnteriorCameraButton.Location = new System.Drawing.Point(115, 119);
+            this.midlineAnteriorCameraButton.Location = new System.Drawing.Point(115, 122);
             this.midlineAnteriorCameraButton.Name = "midlineAnteriorCameraButton";
             this.midlineAnteriorCameraButton.Size = new System.Drawing.Size(53, 53);
             this.midlineAnteriorCameraButton.TabIndex = 16;
@@ -134,7 +134,7 @@
             // 
             // rightMidLateralCameraButton
             // 
-            this.rightMidLateralCameraButton.Location = new System.Drawing.Point(59, 119);
+            this.rightMidLateralCameraButton.Location = new System.Drawing.Point(59, 122);
             this.rightMidLateralCameraButton.Name = "rightMidLateralCameraButton";
             this.rightMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.rightMidLateralCameraButton.TabIndex = 17;
@@ -144,7 +144,7 @@
             // 
             // rightLateralCameraButton
             // 
-            this.rightLateralCameraButton.Location = new System.Drawing.Point(3, 119);
+            this.rightLateralCameraButton.Location = new System.Drawing.Point(3, 122);
             this.rightLateralCameraButton.Name = "rightLateralCameraButton";
             this.rightLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.rightLateralCameraButton.TabIndex = 18;

@@ -307,12 +307,13 @@ namespace Medical
         {
             get
             {
-                throw new NotImplementedException();
+                return Owner.Rotation;
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
+        }
+
+        public void rotate(ref Quaternion newRot)
+        {
+            Rotation *= newRot;
         }
 
         [DoNotCopy]

@@ -10,7 +10,7 @@ namespace Medical
     class RotationAxis
     {
         private static Color HIGHLIGHT = new Color(1.0f, 1.0f, 0.0f);
-        private const float DELTA = 0.3f;
+        private const float DELTA = 0.1f;
 
         Vector3 xAxis;
         Vector3 yAxis;

@@ -18,11 +18,13 @@ namespace Medical
         /// <summary>
         /// Get/Set the rotation of this object.
         /// </summary>
-        Quaternion ToolRotation { get; set; }
+        Quaternion ToolRotation { get; }
 
         /// <summary>
         /// Determine if the tools should be shown. True to show false to hide.
         /// </summary>
         bool ShowTools { get; }
+
+        void rotate(ref Quaternion newRot);
     }
 }
