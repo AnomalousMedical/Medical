@@ -110,6 +110,7 @@ namespace Medical.GUI
 
         void moveButton_CheckedChanged(object sender, EventArgs e)
         {
+            TeethController.TeethMover.ShowMoveTools = moveButton.Checked;
             if (moveButton.Checked)
             {
                 rotateButton.Checked = false;

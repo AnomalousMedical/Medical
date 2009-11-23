@@ -32,6 +32,7 @@ namespace Medical
         private List<MovableObjectTools> movableObjects = new List<MovableObjectTools>();
         private EventManager events;
         private MovableObjectTools currentTools = null;
+        private bool showMoveTools = false;
 
         public SimObjectMover(String name, PluginManager pluginManager, EventManager events)
         {
@@ -153,6 +154,22 @@ namespace Medical
             if (tools != null)
             {
                 movableObjects.Remove(tools);
+            }
+        }
+
+        public bool ShowMoveTools
+        {
+            get
+            {
+                return showMoveTools;
+            }
+            set
+            {
+                showMoveTools = value;
+                foreach (MovableObjectTools tools in movableObjects)
+                {
+                    tools.MoveToolVisible = value;
+                }
             }
         }
     }

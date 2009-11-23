@@ -50,6 +50,7 @@ namespace Medical
             axes[2] = Vector3.Forward;
             Vector3 boundsExtents = new Vector3(startingLength / 2.0f, startingLength / 2.0f, startingLength / 2.0f);
             boundingBox.setExtents(boundsExtents);
+            Visible = false;
         }
 
         #endregion Constructors
@@ -160,7 +161,7 @@ namespace Medical
         {
             Vector3 origin = movable.ToolTranslation;
             axisSurface.begin(name + "MoveTool", DrawingType.LineList);
-            if (movable.ShowTools)
+            if (Visible && movable.ShowTools)
             {
                 xAxisBox.drawLine(axisSurface, origin);
                 yAxisBox.drawLine(axisSurface, origin);
@@ -178,5 +179,7 @@ namespace Medical
         }
 
         #endregion
+
+        public bool Visible { get; set; }
     }
 }

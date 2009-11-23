@@ -88,7 +88,7 @@
             this.topCameraButton.Name = "topCameraButton";
             this.topCameraButton.Size = new System.Drawing.Size(53, 53);
             this.topCameraButton.TabIndex = 12;
-            this.topCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptBottomTeeth;
+            this.topCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptTopTeeth;
             this.topCameraButton.Values.Text = "";
             this.topCameraButton.Click += new System.EventHandler(this.topCameraButton_Click);
             // 
@@ -98,7 +98,7 @@
             this.bottomCameraButton.Name = "bottomCameraButton";
             this.bottomCameraButton.Size = new System.Drawing.Size(53, 53);
             this.bottomCameraButton.TabIndex = 13;
-            this.bottomCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptTopTeeth;
+            this.bottomCameraButton.Values.Image = global::Medical.Properties.Resources.AdaptBottomTeeth;
             this.bottomCameraButton.Values.Text = "";
             this.bottomCameraButton.Click += new System.EventHandler(this.bottomCameraButton_Click);
             // 
