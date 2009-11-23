@@ -55,6 +55,10 @@ namespace Medical
         [DoNotCopy]
         protected List<Tooth> collidingTeeth = new List<Tooth>(5);
 
+        [DoNotCopy]
+        [DoNotSave]
+        private bool showTools = false;
+
         protected override void constructed()
         {
             TeethController.addTooth(Owner.Name, this);
@@ -279,6 +283,9 @@ namespace Medical
             }
         }
 
+        [DoNotCopy]
+        public abstract bool IsTopTooth { get; }
+
         #region MovableObject Members
 
         [DoNotCopy]
@@ -311,7 +318,14 @@ namespace Medical
         [DoNotCopy]
         public bool ShowTools
         {
-            get { return true; }
+            get
+            {
+                return showTools && !extracted;
+            }
+            set
+            {
+                showTools = value;
+            }
         }
 
         #endregion

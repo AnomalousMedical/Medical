@@ -127,6 +127,28 @@ namespace Medical
             }
         }
 
+        public static void showTopTeethTools(bool show)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                if (tooth.IsTopTooth)
+                {
+                    tooth.ShowTools = show;
+                }
+            }
+        }
+
+        public static void showBottomTeethTools(bool show)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                if (!tooth.IsTopTooth)
+                {
+                    tooth.ShowTools = show;
+                }
+            }
+        }
+
         public static bool HighlightContacts { get; set; }
 
         public static SimObjectMover TeethMover

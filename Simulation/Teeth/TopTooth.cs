@@ -7,6 +7,7 @@ using BulletPlugin;
 using Engine;
 using OgreWrapper;
 using Engine.ObjectManagement;
+using Engine.Attributes;
 
 namespace Medical
 {
@@ -80,6 +81,15 @@ namespace Medical
             if (otherTooth != null)
             {
                 collidingTeeth.Remove(otherTooth);
+            }
+        }
+
+        [DoNotCopy]
+        public override bool IsTopTooth
+        {
+            get
+            {
+                return true;
             }
         }
     }

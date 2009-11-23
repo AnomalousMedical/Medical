@@ -21,7 +21,7 @@ namespace Medical
 
         public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
         {
-            return moveTool.checkBoundingBoxCollision(ref spaceRay);
+            return movable.ShowTools && moveTool.checkBoundingBoxCollision(ref spaceRay);
         }
 
         public bool processAxes(ref Ray3 spaceRay)

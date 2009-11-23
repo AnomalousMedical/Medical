@@ -85,6 +85,16 @@ namespace Medical.GUI
 
         }
 
+        internal void callPanelOpening()
+        {
+            onPanelOpening();
+        }
+
+        protected virtual void onPanelOpening()
+        {
+
+        }
+
         internal void callPanelClosing()
         {
             onPanelClosing();

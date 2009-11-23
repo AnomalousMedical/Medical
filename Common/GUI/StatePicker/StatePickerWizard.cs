@@ -212,6 +212,7 @@ namespace Medical.GUI
             {
                 updatePanel = false;
                 StatePickerPanel panel = panels[currentIndex];
+                panel.callPanelOpening();
                 panelHost.showPanel(panel);
                 uiHost.SelectedIndex = currentIndex;
                 panelHost.NextButtonVisible = !(currentIndex == panels.Count - 1);

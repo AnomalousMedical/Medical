@@ -94,6 +94,18 @@ namespace Medical.GUI
             parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.TopTeethRemove);
         }
 
+        protected override void onPanelClosing()
+        {
+            base.onPanelClosing();
+            TeethController.showTopTeethTools(false);
+        }
+
+        protected override void onPanelOpening()
+        {
+            base.onPanelOpening();
+            TeethController.showTopTeethTools(true);
+        }
+
         internal override String NavigationImageKey
         {
             get
