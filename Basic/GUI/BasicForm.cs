@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
 using System.IO;
-using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;

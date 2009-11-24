@@ -89,10 +89,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.22263, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\DockPanel\Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\BasicController.cs" />
@@ -112,12 +108,6 @@
     <Compile Include="GUI\GUIControls\SequencesGUIController.cs" />
     <Compile Include="GUI\GUIControls\StateGUIController.cs" />
     <Compile Include="GUI\GUIControls\WindowGUIController.cs" />
-    <Compile Include="GUI\Muscles\MuscleControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Muscles\MuscleControl.Designer.cs">
-      <DependentUpon>MuscleControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Playback\PlaybackRibbonControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -130,29 +120,13 @@
     <Compile Include="GUI\SimpleLayer\LayerSlider.Designer.cs">
       <DependentUpon>LayerSlider.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SimpleLayer\SimpleLayerControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\SimpleLayer\SimpleLayerControl.Designer.cs">
-      <DependentUpon>SimpleLayerControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\SimpleMandibleControl\MandibleControlSlider.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\SimpleMandibleControl\SimpleMandibleControl.Designer.cs">
-      <DependentUpon>SimpleMandibleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\BasicForm.resx">
       <DependentUpon>BasicForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
-      <DependentUpon>MuscleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Playback\PlaybackRibbonControl.resx">
@@ -163,16 +137,8 @@
       <DependentUpon>LayerSlider.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SimpleLayer\SimpleLayerControl.resx">
-      <DependentUpon>SimpleLayerControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\SimpleMandibleControl\MandibleControlSlider.resx">
       <DependentUpon>MandibleControlSlider.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\SimpleMandibleControl\SimpleMandibleControl.resx">
-      <DependentUpon>SimpleMandibleControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />

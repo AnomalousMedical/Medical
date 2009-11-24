@@ -21,10 +21,16 @@ namespace Medical
         {
             this.dockingManager = dockingManager;
             dockingManager.PageCloseRequest += new EventHandler<CloseRequestEventArgs>(dockingManager_PageCloseRequest);
+            dockingManager.PageFloatingRequest += new EventHandler<CancelUniqueNameEventArgs>(dockingManager_PageFloatingRequest);
 
             this.workspace = workspace;
             workspace.ActivePageChanged += new EventHandler<ComponentFactory.Krypton.Workspace.ActivePageChangedEventArgs>(workspace_ActivePageChanged);
             workspace.PageCloseClicked += new EventHandler<UniqueNameEventArgs>(workspace_PageCloseClicked);
+        }
+
+        void dockingManager_PageFloatingRequest(object sender, CancelUniqueNameEventArgs e)
+        {
+            e.Cancel = true;
         }
 
         public bool restoreFromString(string persistString, out string name, out Engine.Vector3 translation, out Engine.Vector3 lookAt, out int bgColor)
@@ -48,7 +54,7 @@ namespace Medical
         {
             get
             {
-                if (workspace.ActivePage != null)
+                if (workspace.ActivePage != null && workspace.ActivePage.Controls.Count > 0)
                 {
                     return workspace.ActivePage.Controls[0] as DrawingWindowHost;
                 }

@@ -6,7 +6,6 @@ using Medical.Controller;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using System.Drawing;
-using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 
 namespace Medical.GUI
@@ -96,10 +95,10 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(width, height, false, backgroundColorButton.SelectedColor);
                 if (bitmap != null)
                 {
-                    PictureWindow picture = new PictureWindow();
-                    picture.initialize(bitmap);
-                    picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
                     throw new NotImplementedException();
+                    //PictureWindow picture = new PictureWindow();
+                    //picture.initialize(bitmap);
+                    //picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
                     //picture.Show(form.DockPanel, DockState.Float);
                 }
             }
