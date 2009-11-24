@@ -322,14 +322,14 @@ namespace Medical.Controller
             }
             drawingWindowController.destroyCameras();
             background.destroyBackground();
-            backgroundController.SceneManager = null;
+            backgroundController.sceneUnloading();
             if (medicalController.openScene(file))
             {
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
-                    backgroundController.SceneManager = ogreScene;
+                    backgroundController.sceneLoaded(ogreScene);
                     background.createBackground(ogreScene);
 
                     drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);

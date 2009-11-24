@@ -21,16 +21,22 @@ namespace Medical
             drawingWindowController.WindowDestroyed += new DrawingWindowEvent(drawingWindowController_WindowDestroyed);
         }
 
-        public OgreSceneManager SceneManager
+        public void sceneLoaded(OgreSceneManager sceneManager)
         {
-            get
+            currentSceneManager = sceneManager;
+            foreach (ViewportBackground background in backgrounds.Values)
             {
-                return currentSceneManager;
+                background.createBackground(sceneManager);
             }
-            set
+        }
+
+        public void sceneUnloading()
+        {
+            foreach (ViewportBackground background in backgrounds.Values)
             {
-                currentSceneManager = value;
+                background.destroyBackground();
             }
+            currentSceneManager = null;
         }
 
         void drawingWindowController_WindowCreated(DrawingWindow window)
