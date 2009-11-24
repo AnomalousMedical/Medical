@@ -23,6 +23,7 @@ namespace Medical
         private float uvX;
         private float uvY;
         private float distance;
+        private bool visible = false;
 
         public ViewportBackground(String name, String materialName, float distance, float width, float height, float uvX, float uvY)
         {
@@ -74,6 +75,7 @@ namespace Medical
             backgroundNode.attachObject(background);
 
             parentNode.addChild(backgroundNode);
+            backgroundNode.setVisible(visible);
         }
 
         public void destroyBackground()
@@ -92,6 +94,7 @@ namespace Medical
 
         public void setVisible(bool visible)
         {
+            this.visible = visible;
             background.setVisible(visible);
         }
 

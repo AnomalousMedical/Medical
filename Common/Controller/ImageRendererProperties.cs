@@ -15,7 +15,7 @@ namespace Medical
         {
             Width = 100;
             Height = 100;
-            AntiAliasingMode = 0;
+            AntiAliasingMode = 1;
             TransparentBackground = false;
             ShowWatermark = true;
             UseWindowBackgroundColor = true;
@@ -28,6 +28,7 @@ namespace Medical
             NavigationStateName = null;
             OverrideLayers = false;
             LayerState = null;
+            ShowBackground = true;
         }
 
         /// <summary>
@@ -61,6 +62,12 @@ namespace Medical
         /// used.
         /// </summary>
         public bool ShowWatermark { get; set; }
+
+        /// <summary>
+        /// If this is true any background assigned to the ImageRenderer will be
+        /// used.
+        /// </summary>
+        public bool ShowBackground { get; set; }
 
         /// <summary>
         /// If this is true the window color of the active drawing window will

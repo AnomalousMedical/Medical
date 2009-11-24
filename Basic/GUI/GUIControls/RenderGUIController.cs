@@ -92,7 +92,12 @@ namespace Medical.GUI
             {
                 int width = (int)this.width.Value;
                 int height = (int)this.height.Value;
-                Bitmap bitmap = imageRenderer.renderImage(width, height, false, backgroundColorButton.SelectedColor);
+                ImageRendererProperties imageProperties = new ImageRendererProperties();
+                imageProperties.Width = width;
+                imageProperties.Height = height;
+                imageProperties.UseWindowBackgroundColor = false;
+                imageProperties.CustomBackgroundColor = Engine.Color.FromARGB(backgroundColorButton.SelectedColor.ToArgb());
+                Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
                     KryptonPictureWindow picture = new KryptonPictureWindow();

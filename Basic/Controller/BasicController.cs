@@ -138,6 +138,7 @@ namespace Medical.Controller
 
             imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
+            imageRenderer.Background = background;
             stateController = new MedicalStateController(imageRenderer, medicalController);
 
             scenePicker = new ScenePicker();
@@ -320,6 +321,7 @@ namespace Medical.Controller
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
             drawingWindowController.destroyCameras();
+            background.destroyBackground();
             backgroundController.SceneManager = null;
             if (medicalController.openScene(file))
             {
@@ -328,6 +330,7 @@ namespace Medical.Controller
                 {
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
                     backgroundController.SceneManager = ogreScene;
+                    background.createBackground(ogreScene);
 
                     drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                     if (SceneLoaded != null)

@@ -24,8 +24,9 @@ namespace Medical
     public class ImageRenderer
     {
         private MedicalController controller;
-        DrawingWindowController drawingWindowController;
+        private DrawingWindowController drawingWindowController;
         private Watermark watermark;
+        private ViewportBackground background;
         private LayerController layerController;
         private NavigationController navigationController;
 
@@ -199,6 +200,12 @@ namespace Medical
                     watermark.setVisible(true);
                 }
 
+                //Background Activation
+                if (background != null && properties.ShowBackground)
+                {
+                    background.setVisible(true);
+                }
+
                 //Layer override
                 LayerState currentLayers = null;
                 if (properties.OverrideLayers)
@@ -228,6 +235,12 @@ namespace Medical
                 if (properties.OverrideLayers)
                 {
                     layerController.restoreConditions(currentLayers);
+                }
+
+                //Background deactivation
+                if (background != null && properties.ShowBackground)
+                {
+                    background.setVisible(false);
                 }
 
                 //Watermark deactivation
@@ -277,6 +290,12 @@ namespace Medical
                         Viewport viewport = renderTexture.addViewport(camera);
                         viewport.setBackgroundColor(backColor);
 
+                        //Update background position (if applicable)
+                        if (background != null)
+                        {
+                            background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
+                        }
+
                         renderTexture.update();
                         OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
                         System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
@@ -311,6 +330,18 @@ namespace Medical
             set
             {
                 watermark = value;
+            }
+        }
+
+        public ViewportBackground Background
+        {
+            get
+            {
+                return background;
+            }
+            set
+            {
+                this.background = value;
             }
         }
     }
