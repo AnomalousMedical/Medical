@@ -24,6 +24,7 @@ namespace Medical.GUI
             statePickerTab.Text = "State Wizard";
             ribbonGroup = new KryptonRibbonGroup();
             ribbonGroup.TextLine1 = " ";
+            ribbonGroup.DialogBoxLauncher = false;
             statePickerTab.Groups.Add(ribbonGroup);
             ribbonGroup.AllowCollapsed = false;
 
