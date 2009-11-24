@@ -52,6 +52,8 @@ namespace Medical
         private Quaternion rotationOffset = Quaternion.Identity;
         private int adaptTeeth = 0;
 
+        private bool toolHighlight = false;
+
         [DoNotCopy]
         protected List<Tooth> collidingTeeth = new List<Tooth>(5);
 
@@ -134,7 +136,14 @@ namespace Medical
                 adaptTeeth++;
             }
 
-            HighlightColor = highlight ? Color.Blue : Color.White;
+            if (toolHighlight)
+            {
+                HighlightColor = Color.Red;
+            }
+            else
+            {
+                HighlightColor = highlight ? Color.Blue : Color.White;
+            }
         }
 
         protected abstract void looseChanged(bool loose);
@@ -189,7 +198,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        protected Color HighlightColor
+        private Color HighlightColor
         {
             set
             {
@@ -327,6 +336,11 @@ namespace Medical
             {
                 showTools = value;
             }
+        }
+
+        public void alertToolHighlightStatus(bool highlighted)
+        {
+            toolHighlight = highlighted;
         }
 
         #endregion

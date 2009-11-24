@@ -13,6 +13,10 @@ namespace Medical
         /// </summary>
         Vector3 ToolTranslation { get; }
 
+        /// <summary>
+        /// Move the object by offset.
+        /// </summary>
+        /// <param name="offset">The offset to move.</param>
         void move(Vector3 offset);
 
         /// <summary>
@@ -25,6 +29,18 @@ namespace Medical
         /// </summary>
         bool ShowTools { get; }
 
+        /// <summary>
+        /// Rotate the object to newRot.
+        /// </summary>
+        /// <param name="newRot">The new rotation.</param>
         void rotate(ref Quaternion newRot);
+
+        /// <summary>
+        /// This is called when the tool gains and looses its highlight. It can
+        /// be used to make the object appear to change as well when the tool is
+        /// highlighted.
+        /// </summary>
+        /// <param name="highlighted"></param>
+        void alertToolHighlightStatus(bool highlighted);
     }
 }

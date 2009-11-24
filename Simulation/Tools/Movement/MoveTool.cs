@@ -139,12 +139,15 @@ namespace Medical
                 zAxisBox.clearSelection();
             }
 
-            return xzAxisBox.isSelected()
+            bool selected = xzAxisBox.isSelected()
                 || xyAxisBox.isSelected()
                 || yzAxisBox.isSelected()
                 || xAxisBox.isSelected()
                 || yAxisBox.isSelected()
                 || zAxisBox.isSelected();
+            movable.alertToolHighlightStatus(selected);
+
+            return selected;
         }
 
         public void clearSelection()
@@ -155,6 +158,7 @@ namespace Medical
             xAxisBox.clearSelection();
             yAxisBox.clearSelection();
             zAxisBox.clearSelection();
+            movable.alertToolHighlightStatus(false);
         }
 
         public void drawAxis(DebugDrawingSurface axisSurface)

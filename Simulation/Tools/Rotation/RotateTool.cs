@@ -139,7 +139,10 @@ namespace Medical
                 twoWayAxisComparison(zAxis, yAxis, ref origin);
             }
 
-            return xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected();
+            bool selected = xAxis.isSelected() || yAxis.isSelected() || zAxis.isSelected();
+            movable.alertToolHighlightStatus(selected);
+
+            return selected;
         }
 
         private void twoWayAxisComparison(RotationAxis axis0, RotationAxis axis1, ref Vector3 origin)
@@ -175,6 +178,7 @@ namespace Medical
             xAxis.clearSelection();
             yAxis.clearSelection();
             zAxis.clearSelection();
+            movable.alertToolHighlightStatus(false);
         }
 
         internal bool checkBoundingBoxCollision(ref Ray3 spaceRay)
