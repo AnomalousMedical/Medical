@@ -12,8 +12,6 @@ namespace Medical
 
         String Text { get; set; }
 
-        Color BackColor { get; set; }
-
         void ShowWindow();
 
         void ShowWindow(DrawingWindowHost parent, DrawingWindowPosition position);
