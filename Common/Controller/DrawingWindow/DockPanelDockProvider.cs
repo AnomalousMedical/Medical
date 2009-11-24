@@ -9,11 +9,22 @@ namespace Medical
 {
     public class DockPanelDockProvider : DockProvider
     {
+        public event DockProviderEvent ActiveDocumentChanged;
+
         private DockPanel dockPanel;
 
         public DockPanelDockProvider(DockPanel dockPanel)
         {
             this.dockPanel = dockPanel;
+            dockPanel.ActiveDocumentChanged += new EventHandler(dockPanel_ActiveDocumentChanged);
+        }
+
+        void dockPanel_ActiveDocumentChanged(object sender, EventArgs e)
+        {
+            if (ActiveDocumentChanged != null)
+            {
+                ActiveDocumentChanged.Invoke(this);
+            }
         }
 
         public bool restoreFromString(string persistString, out string name, out Engine.Vector3 translation, out Engine.Vector3 lookAt, out int bgColor)
@@ -29,6 +40,14 @@ namespace Medical
         public DrawingWindowHost createCloneWindow(string name, DrawingWindowController controller)
         {
             return new DockPanelDrawingWindowCloneHost(name, controller, dockPanel);
+        }
+
+        public DrawingWindowHost ActiveDocument
+        {
+            get
+            {
+                return dockPanel.ActiveDocument as DrawingWindowHost;
+            }
         }
     }
 }

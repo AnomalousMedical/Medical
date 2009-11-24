@@ -14,6 +14,7 @@ using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using Engine.Platform;
 using ComponentFactory.Krypton.Navigator;
+using ComponentFactory.Krypton.Docking;
 
 namespace Medical.GUI
 {    
@@ -76,6 +77,9 @@ namespace Medical.GUI
             //Hide info panels
             topInformationPanel.Visible = false;
             leftInformationPanel.Visible = false;
+
+            //Docking
+            KryptonDockingWorkspace w = kryptonDockingManager.ManageWorkspace("Workspace", kryptonDockableWorkspace);
 
             //temporary
             tempStateButton.Click += new EventHandler(tempStateButton_Click);
@@ -164,11 +168,19 @@ namespace Medical.GUI
             }
         }
 
-        public DockPanel DockPanel
+        public KryptonDockingManager DockingManager
         {
             get
             {
-                return dockPanel;
+                return kryptonDockingManager;
+            }
+        }
+
+        public KryptonDockableWorkspace DockableWorkspace
+        {
+            get
+            {
+                return kryptonDockableWorkspace;
             }
         }
 

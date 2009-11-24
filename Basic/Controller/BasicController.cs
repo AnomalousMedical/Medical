@@ -108,11 +108,11 @@ namespace Medical.Controller
 
             splashScreen.stepProgress(10);
 
-            dockProvider = new DockPanelDockProvider(basicForm.DockPanel);
+            dockProvider = new KryptonDockProvider(basicForm.DockingManager, basicForm.DockableWorkspace);
             drawingWindowController = new DrawingWindowController(dockProvider);
             drawingWindowController.AllowRotation = false;
             drawingWindowController.AllowZoom = false;
-            drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+            drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
             windowPresetController = new DrawingWindowPresetController(drawingWindowController);
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);

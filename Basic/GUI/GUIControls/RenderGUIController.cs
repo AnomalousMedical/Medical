@@ -99,7 +99,8 @@ namespace Medical.GUI
                     PictureWindow picture = new PictureWindow();
                     picture.initialize(bitmap);
                     picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
-                    picture.Show(form.DockPanel, DockState.Float);
+                    throw new NotImplementedException();
+                    //picture.Show(form.DockPanel, DockState.Float);
                 }
             }
         }

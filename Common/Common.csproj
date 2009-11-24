@@ -120,6 +120,7 @@
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetSet.cs" />
+    <Compile Include="Controller\DrawingWindow\KryptonDockProvider.cs" />
     <Compile Include="Controller\FileTracker.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
@@ -430,6 +431,12 @@
       <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Controller\Background\ViewportBackground.cs" />
+    <Compile Include="GUI\View\KryptonDrawingWindowHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\View\KryptonDrawingWindowHost.Designer.cs">
+      <DependentUpon>KryptonDrawingWindowHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Watermark\CenteredWatermark.cs" />
     <Compile Include="GUI\Watermark\SideLogoWatermark.cs" />
     <Compile Include="GUI\Watermark\TextWatermark.cs" />

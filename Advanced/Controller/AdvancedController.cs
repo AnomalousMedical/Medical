@@ -92,7 +92,7 @@ namespace Medical.Controller
 
                 dockProvider = new DockPanelDockProvider(advancedForm.DockPanel);
                 drawingWindowController = new DrawingWindowController(dockProvider);
-                drawingWindowController.initialize(advancedForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+                drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
                 navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
 

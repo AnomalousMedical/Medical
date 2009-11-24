@@ -30,7 +30,6 @@ namespace Medical
         private SimScene scene;
         private EventManager eventManager;
         private RendererPlugin rendererPlugin;
-        private DockPanel dock;
         private DrawingWindowHost activeDrawingWindow = null;
         private bool allowRotation = true;
         private bool allowZoom = true;
@@ -39,6 +38,7 @@ namespace Medical
         public DrawingWindowController(DockProvider dockProvider)
         {
             this.dockProvider = dockProvider;
+            dockProvider.ActiveDocumentChanged += new DockProviderEvent(dockProvider_ActiveDocumentChanged);
         }
 
         public void Dispose()
@@ -50,10 +50,8 @@ namespace Medical
             }
         }
 
-        public void initialize(DockPanel dock, EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
+        public void initialize(EventManager eventManager, RendererPlugin rendererPlugin, ConfigFile configFile)
         {
-            this.dock = dock;
-            dock.ActiveDocumentChanged += new EventHandler(dock_ActiveDocumentChanged);
             this.eventManager = eventManager;
             this.rendererPlugin = rendererPlugin;
         }
@@ -217,9 +215,9 @@ namespace Medical
             cameras.Remove(host.DrawingWindow.CameraName);
         }
 
-        private void dock_ActiveDocumentChanged(object sender, EventArgs e)
+        void dockProvider_ActiveDocumentChanged(DockProvider source)
         {
-            DrawingWindowHost changed = dock.ActiveDocument as DrawingWindowHost;
+            DrawingWindowHost changed = source.ActiveDocument;
             if (changed != null)
             {
                 activeDrawingWindow = changed;
