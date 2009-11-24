@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Docking;
+using ComponentFactory.Krypton.Workspace;
 
 namespace Medical.GUI
 {
@@ -17,6 +18,8 @@ namespace Medical.GUI
         private DrawingWindow drawingWindow;
         private KryptonPage page;
         private KryptonDockingManager dockingManager;
+        private KryptonWorkspaceSequence horizontalSequence;
+        private KryptonWorkspaceSequence verticalSequence;
 
         public KryptonDrawingWindowHost(String name, DrawingWindowController controller, KryptonDockingManager dockingManager)
         {
@@ -41,16 +44,39 @@ namespace Medical.GUI
             page = new KryptonPage(name, name);
             this.Dock = DockStyle.Fill;
             page.Controls.Add(this);
+            horizontalSequence = new KryptonWorkspaceSequence(Orientation.Horizontal);
+            verticalSequence = new KryptonWorkspaceSequence(Orientation.Vertical);
+            verticalSequence.Children.Add(horizontalSequence);
+            KryptonWorkspaceCell cell = new KryptonWorkspaceCell();
+            cell.Pages.Add(page);
+            horizontalSequence.Children.Add(cell);
         }
 
         public void ShowWindow(DrawingWindowHost parent, DrawingWindowPosition position)
         {
-            dockingManager.AddToWorkspace("Workspace", new KryptonPage[] { page });
+            KryptonDrawingWindowHost parentHost = (KryptonDrawingWindowHost)parent;
+
+            switch (position)
+            {
+                case DrawingWindowPosition.Bottom:
+                    parentHost.verticalSequence.Children.Add(verticalSequence);
+                    break;
+                case DrawingWindowPosition.Top:
+                    parentHost.verticalSequence.Children.Insert(0, verticalSequence);
+                    break;
+                case DrawingWindowPosition.Left:
+                    parentHost.horizontalSequence.Children.Insert(0, verticalSequence);
+                    break;
+                case DrawingWindowPosition.Right:
+                    parentHost.horizontalSequence.Children.Add(verticalSequence);
+                    break;
+            }
         }
 
         public void ShowWindow()
         {
-            dockingManager.AddToWorkspace("Workspace", new KryptonPage[] { page });
+            KryptonDockingWorkspace ws = dockingManager.FindDockingWorkspace("Workspace");
+            ws.DockableWorkspaceControl.Root.Children.Add(verticalSequence);
         }
 
         public void Close()

@@ -106,8 +106,8 @@ namespace Medical.Controller
             fourWindows.addPreset(preset);
 
             preset = new DrawingWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            preset.ParentWindow = "Camera 2";
-            preset.WindowPosition = DrawingWindowPosition.Bottom;
+            preset.ParentWindow = "Camera 3";
+            preset.WindowPosition = DrawingWindowPosition.Right;
             fourWindows.addPreset(preset);
             addPresetSet(fourWindows);
         }
