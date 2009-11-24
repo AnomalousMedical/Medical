@@ -57,7 +57,7 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(width, height, transparentBGCheck.Checked, aa);
                 if (bitmap != null)
                 {
-                    PictureWindow picture = new PictureWindow();
+                    DockPanelPictureWindow picture = new DockPanelPictureWindow();
                     picture.initialize(bitmap);
                     picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
                     picture.Show(DockPanel, DockState.Float);

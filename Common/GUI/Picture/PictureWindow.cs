@@ -15,7 +15,7 @@ using Medical.Properties;
 
 namespace Medical.GUI
 {
-    public partial class PictureWindow : DockContent
+    public partial class PictureWindow : UserControl
     {
         private static SaveFileDialog saveDialog = new SaveFileDialog();
 
@@ -73,7 +73,7 @@ namespace Medical.GUI
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = saveDialog.ShowDialog(DockPanel.TopLevelControl);
+            DialogResult result = saveDialog.ShowDialog(this.TopLevelControl);
             if (result == DialogResult.OK)
             {
                 ImageFormat format = ImageFormat.Jpeg;
@@ -110,17 +110,6 @@ namespace Medical.GUI
                 {
                     Log.Default.sendMessage("Exception occured when opening explorer.exe:\n{0}.", LogLevel.Error, "Medical", ex.Message);
                 }
-            }
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-            //Prevent the main window from going into the background.
-            Form topLevel = DockPanel.TopLevelControl as Form;
-            if (topLevel != null)
-            {
-                topLevel.Activate();
             }
         }
     }
