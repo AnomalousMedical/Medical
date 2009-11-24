@@ -50,9 +50,6 @@ namespace Medical
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            statePicker.addStatePanel(new BottomTeethRemovalPanel());
-            statePicker.addStatePanel(new TopTeethRemovalPanel());
-
 #if USE_SLIDER_GUIS
             leftCondylarGrowthPanel = new LeftCondylarGrowthPanel();
             statePicker.addStatePanel(leftCondylarGrowthPanel);
@@ -145,6 +142,8 @@ namespace Medical
             statePicker.addStatePanel(rightFossaPanel);
 #endif
 
+            statePicker.addStatePanel(new BottomTeethRemovalPanel());
+            statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.addStatePanel(new TeethAdaptationPanel());
             statePicker.addStatePanel(new NotesPanel("MRI"));
 
