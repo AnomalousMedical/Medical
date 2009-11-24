@@ -46,7 +46,7 @@ namespace Medical
             }
         }
 
-        public void apply()
+        internal void apply()
         {
             foreach (LayerEntry entry in entries)
             {

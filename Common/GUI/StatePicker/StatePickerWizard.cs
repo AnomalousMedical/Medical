@@ -106,7 +106,7 @@ namespace Medical.GUI
         {
             hidePanel();
             uiHost.Visible = false;
-            layerStatusBeforeShown.apply();
+            layerController.CurrentLayerState = layerStatusBeforeShown;
             navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
             if (Finished != null)
             {
