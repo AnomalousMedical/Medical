@@ -110,6 +110,8 @@ namespace Medical.GUI
                 this.Text = this.Name;
             }
             page.Text = this.Text;
+            page.TextTitle = this.Text;
+            page.TextDescription = "";
         }
     }
 }
