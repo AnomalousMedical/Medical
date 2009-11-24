@@ -56,7 +56,8 @@
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(90, 25);
             this.resetButton.TabIndex = 11;
-            this.resetButton.Values.Text = "Reset";
+            this.resetButton.Values.Text = "Make Normal";
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // moveButton
             // 
@@ -73,6 +74,7 @@
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 10;
             this.undoButton.Values.Text = "Undo";
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // rotateButton
             // 
