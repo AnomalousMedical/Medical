@@ -102,14 +102,6 @@ namespace Medical.GUI
             }
         }
 
-        internal override String NavigationImageKey
-        {
-            get
-            {
-                return "__BottomToothRemovalKey";
-            }
-        }
-
         private void synchronize(Object source, float value)
         {
             if (source != fossa && fossa != null)

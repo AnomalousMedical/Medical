@@ -128,10 +128,12 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.notes);
             this.Controls.Add(this.panel1);
+            this.LargeIcon = global::Medical.Properties.Resources.NotesIcon;
             this.LayerState = "MandibleSizeLayers";
             this.Name = "NotesPanel";
             this.NavigationState = "Midline Anterior";
             this.Size = new System.Drawing.Size(273, 321);
+            this.TextLine1 = "Notes";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

@@ -99,13 +99,5 @@ namespace Medical.GUI
                 }
             }
         }
-
-        internal override String NavigationImageKey
-        {
-            get
-            {
-                return "__BottomToothRemovalKey";
-            }
-        }
     }
 }

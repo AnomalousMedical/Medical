@@ -171,10 +171,13 @@
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.undoButton);
             this.Controls.Add(this.rotateButton);
+            this.LargeIcon = global::Medical.Properties.Resources.AdaptationIcon;
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
             this.NavigationState = "Teeth Midline Anterior";
-            this.Size = new System.Drawing.Size(336, 408);
+            this.Size = new System.Drawing.Size(291, 181);
+            this.TextLine1 = "Teeth";
+            this.TextLine2 = "Adaptation";
             this.ResumeLayout(false);
 
         }

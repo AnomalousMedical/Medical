@@ -10,7 +10,6 @@ namespace Medical.GUI
     public class StatePickerRibbon : IDisposable
     {
         private StatePickerWizard stateController;
-        private ImageList imageList;
         private KryptonRibbonTab statePickerTab;
         private KryptonRibbonGroup ribbonGroup;
         private KryptonRibbonGroupTriple currentTriple;
@@ -19,7 +18,7 @@ namespace Medical.GUI
         private int selectedIndex = 0;
         private KryptonRibbonGroupButton lastButton;
 
-        public StatePickerRibbon(ImageList imageList, StatePickerWizard stateController)
+        public StatePickerRibbon(StatePickerWizard stateController)
         {
             statePickerTab = new KryptonRibbonTab();
             statePickerTab.Text = "State Wizard";
@@ -28,7 +27,6 @@ namespace Medical.GUI
             statePickerTab.Groups.Add(ribbonGroup);
             ribbonGroup.AllowCollapsed = false;
 
-            this.imageList = imageList;
             this.stateController = stateController;
         }
 
@@ -46,22 +44,14 @@ namespace Medical.GUI
                 currentTriple.MinimumSize = GroupItemSize.Large;
             }
             KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
-            button.TextLine1 = panel.Text;
+            button.TextLine1 = panel.TextLine1;
+            button.TextLine2 = panel.TextLine2;
+            button.ImageLarge = panel.LargeIcon;
             button.Tag = numModes++;
             button.ButtonType = GroupButtonType.Check;
             button.Click += new EventHandler(button_Click);
             panelButtons.Add(panel, button);
             currentTriple.Items.Add(button);
-        }
-
-        public void updateImage(StatePickerPanel panel)
-        {
-            KryptonRibbonGroupButton button = panelButtons[panel];
-            if (button.ImageLarge != null)
-            {
-                button.ImageLarge.Dispose();
-            }
-            button.ImageLarge = imageList.Images[panel.NavigationImageKey];
         }
 
         public int SelectedIndex

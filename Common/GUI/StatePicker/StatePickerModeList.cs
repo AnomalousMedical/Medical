@@ -28,12 +28,6 @@ namespace Medical.GUI
             item.Tag = panel;
         }
 
-        public void updateImage(StatePickerPanel panel)
-        {
-            ListViewItem item = navigatorList.Items[panel.Text];
-            item.ImageKey = panel.NavigationImageKey;
-        }
-
         public int SelectedIndex
         {
             get

@@ -77,6 +77,8 @@ namespace Medical
             leftDiscPanel.Text = "Left Disc";
             leftDiscPanel.NavigationState = "Left TMJ";
             leftDiscPanel.LayerState = "DiscLayers";
+            leftDiscPanel.TextLine1 = "Left TMJ";
+            leftDiscPanel.LargeIcon = Resources.LeftDiscPosition;
             statePicker.addStatePanel(leftDiscPanel);
 
 #if USE_SLIDER_GUIS
@@ -86,6 +88,8 @@ namespace Medical
             leftFossaPanel.NavigationState = "Left TMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             leftFossaPanel.Text = "Left Fossa";
+            leftFossaPanel.TextLine1 = "Left Fossa";
+            leftFossaPanel.LargeIcon = Resources.LeftFossaFlatness;
             statePicker.addStatePanel(leftFossaPanel);
 #else
             leftFossaPanel = new PresetStatePanel();
@@ -119,6 +123,8 @@ namespace Medical
             rightDiscPanel.Text = "Right Disc";
             rightDiscPanel.NavigationState = "Right TMJ";
             rightDiscPanel.LayerState = "DiscLayers";
+            rightDiscPanel.TextLine1 = "Right TMJ";
+            rightDiscPanel.LargeIcon = Resources.RightDiscPosition;
             statePicker.addStatePanel(rightDiscPanel);
 
 #if USE_SLIDER_GUIS
@@ -128,6 +134,8 @@ namespace Medical
             rightFossaPanel.NavigationState = "Right TMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             rightFossaPanel.Text = "Right Fossa";
+            rightFossaPanel.TextLine1 = "Right Fossa";
+            rightFossaPanel.LargeIcon = Resources.RightFossaFlatness;
             statePicker.addStatePanel(rightFossaPanel);
 #else
             rightFossaPanel = new PresetStatePanel();

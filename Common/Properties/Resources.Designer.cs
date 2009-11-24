@@ -389,6 +389,27 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap LeftCondyleDegeneration {
+            get {
+                object obj = ResourceManager.GetObject("LeftCondyleDegeneration", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftCondyleGrowth {
+            get {
+                object obj = ResourceManager.GetObject("LeftCondyleGrowth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftDiscPosition {
+            get {
+                object obj = ResourceManager.GetObject("LeftDiscPosition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap leftflateminance {
             get {
                 object obj = ResourceManager.GetObject("leftflateminance", resourceCulture);
@@ -399,6 +420,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap LeftFossaFlat {
             get {
                 object obj = ResourceManager.GetObject("LeftFossaFlat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftFossaFlatness {
+            get {
+                object obj = ResourceManager.GetObject("LeftFossaFlatness", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -452,6 +480,27 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap RightCondyleDegeneration {
+            get {
+                object obj = ResourceManager.GetObject("RightCondyleDegeneration", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightCondyleGrowth {
+            get {
+                object obj = ResourceManager.GetObject("RightCondyleGrowth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightDiscPosition {
+            get {
+                object obj = ResourceManager.GetObject("RightDiscPosition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap rightflateminance {
             get {
                 object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);
@@ -462,6 +511,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap RightFossaFlat {
             get {
                 object obj = ResourceManager.GetObject("RightFossaFlat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightFossaFlatness {
+            get {
+                object obj = ResourceManager.GetObject("RightFossaFlatness", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -46,7 +46,7 @@ namespace Medical.GUI
             this.navigationController = navigationController;
             this.layerController = layerController;
 
-            uiHost.setStateWizardInfo(this, pickerImageList);
+            uiHost.setStateWizardInfo(this);
         }
 
         public void Dispose()
@@ -73,7 +73,6 @@ namespace Medical.GUI
             foreach (StatePickerPanel panel in panels)
             {
                 panel.recordOpeningState();
-                uiHost.updateImage(panel);
             }
             hidePanel();
             currentIndex = 0;
@@ -145,7 +144,6 @@ namespace Medical.GUI
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
-                uiHost.updateImage(panel);
             }
             if (immediate)
             {

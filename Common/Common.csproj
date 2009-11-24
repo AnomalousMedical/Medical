@@ -1027,6 +1027,30 @@
   <ItemGroup>
     <None Include="Resources\AdaptTopTeeth.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftCondyleDegeneration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftCondyleGrowth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightCondyleDegeneration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightCondyleGrowth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftFossaFlatness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightFossaFlatness.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftDiscPosition.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightDiscPosition.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

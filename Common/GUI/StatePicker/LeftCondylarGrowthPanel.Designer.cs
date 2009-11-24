@@ -227,10 +227,13 @@
             this.Controls.Add(this.leftCondyleRotationSlider);
             this.Controls.Add(this.leftMandibularNotchSlider);
             this.Controls.Add(this.leftAntegonialNotchSlider);
+            this.LargeIcon = global::Medical.Properties.Resources.LeftCondyleGrowth;
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "LeftCondylarGrowthPanel";
             this.NavigationState = "GrowthLeftCameraAngle";
             this.Size = new System.Drawing.Size(325, 361);
+            this.TextLine1 = "Left Condyle";
+            this.TextLine2 = "Growth";
             this.ResumeLayout(false);
 
         }

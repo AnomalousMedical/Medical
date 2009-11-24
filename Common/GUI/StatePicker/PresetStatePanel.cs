@@ -139,22 +139,6 @@ namespace Medical.GUI
             allowUpdates = true;
         }
 
-        internal override String NavigationImageKey
-        {
-            get
-            {
-                if (presetListView.SelectedItems.Count > 0)
-                {
-                    ListViewItem selected = presetListView.SelectedItems[0];
-                    return selected.ImageKey;
-                }
-                else
-                {
-                    return defaultItem.ImageKey;
-                }
-            }
-        }
-
         private void clearImages()
         {
             foreach (Image image in images)

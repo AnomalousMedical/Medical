@@ -88,18 +88,5 @@ namespace Medical.GUI
                 }
             }
         }
-
-        protected override void statePickerSet(StatePickerWizard controller)
-        {
-            parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.BottomTeethRemove);
-        }
-
-        internal override String NavigationImageKey
-        {
-            get
-            {
-                return "__BottomToothRemovalKey";
-            }
-        }
     }
 }

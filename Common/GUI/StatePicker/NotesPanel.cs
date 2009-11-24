@@ -32,18 +32,5 @@ namespace Medical.GUI
             state.Notes.ProcedureDate = datePicker.Value;
             state.Name = stateNameTextBox.Text;
         }
-
-        protected override void statePickerSet(StatePickerWizard controller)
-        {
-            parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.NotesIcon);
-        }
-
-        internal override String NavigationImageKey
-        {
-            get
-            {
-                return "__NotesPanelKey";
-            }
-        }
     }
 }

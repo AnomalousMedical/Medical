@@ -62,14 +62,6 @@ namespace Medical.GUI
             movingMuscleTarget.Offset = Vector3.Zero;
         }
 
-        internal override string NavigationImageKey
-        {
-            get
-            {
-                return "__AdaptationIcon";
-            }
-        }
-
         protected override void onPanelOpening()
         {
             TeethController.showTeethTools(true, true);
@@ -82,11 +74,6 @@ namespace Medical.GUI
                 adaptButton.Checked = false;
             }
             TeethController.showTeethTools(false, false);
-        }
-
-        protected override void statePickerSet(StatePickerWizard controller)
-        {
-            parentPicker.ImageList.Images.Add(NavigationImageKey, Resources.AdaptationIcon);
         }
 
         void adaptButton_CheckedChanged(object sender, EventArgs e)

@@ -493,10 +493,13 @@
             this.Controls.Add(this.tooth2Button);
             this.Controls.Add(this.tooth3Button);
             this.Controls.Add(this.tooth1Button);
+            this.LargeIcon = global::Medical.Properties.Resources.TopTeethRemove;
             this.LayerState = "TopTeethLayers";
             this.Name = "TopTeethRemovalPanel";
             this.NavigationState = "Top Teeth";
             this.Size = new System.Drawing.Size(257, 267);
+            this.TextLine1 = "Remove";
+            this.TextLine2 = "Top Teeth";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -159,10 +159,13 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel1);
+            this.LargeIcon = global::Medical.Properties.Resources.RightCondyleDegeneration;
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarDegenerationPanel";
             this.NavigationState = "DegenerationRightCameraAngle";
             this.Size = new System.Drawing.Size(325, 229);
+            this.TextLine1 = "Right Condyle";
+            this.TextLine2 = "Degeneration";
             this.ResumeLayout(false);
 
         }

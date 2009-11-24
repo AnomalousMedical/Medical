@@ -77,13 +77,11 @@ namespace Medical.GUI
 
         public String LayerState { get; set; }
 
-        internal virtual String NavigationImageKey
-        {
-            get
-            {
-                return "";
-            }
-        }
+        public String TextLine1 { get; set; }
+
+        public String TextLine2 { get; set; }
+
+        public Image LargeIcon { get; set; }
 
         protected void showChanges(bool immediate)
         {
