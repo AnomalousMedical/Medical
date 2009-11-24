@@ -11,7 +11,7 @@ namespace Medical
 {
     public class Axis
     {
-        private static Color HIGHLIGHT = new Color(1.0f, 1.0f, 0.0f);
+        private static Color HIGHLIGHT = new Color(1.0f, 0.5f, 0.0f);
         const float DELTA = 0.3f;
 
         Box3 axisBox;
@@ -90,28 +90,32 @@ namespace Medical
 
         public void drawLine(DebugDrawingSurface drawSurface, Vector3 origin)
         {
+            float drawLength = length;
             if (selected)
             {
                 drawSurface.setColor(HIGHLIGHT);
+                drawLength += length * .25f;
             }
             else
             {
                 drawSurface.setColor(color);
             }
-            drawSurface.drawLine(origin, origin + direction * length);
+            drawSurface.drawLine(origin, origin + direction * drawLength);
         }
 
         public void drawSquare(DebugDrawingSurface drawSurface, Vector3 origin)
         {
+            float drawLength = length;
             if (selected)
             {
                 drawSurface.setColor(HIGHLIGHT);
+                drawLength += length * .25f;
             }
             else
             {
                 drawSurface.setColor(color);
             }
-            Vector3 outPoint = origin + direction * length;
+            Vector3 outPoint = origin + direction * drawLength;
             Vector3 sourcePoint = origin;
             if (direction.x != 0)
             {

@@ -9,7 +9,7 @@ namespace Medical
 {
     class RotationAxis
     {
-        private static Color HIGHLIGHT = new Color(1.0f, 1.0f, 0.0f);
+        private static Color HIGHLIGHT = new Color(1.0f, 0.5f, 0.0f);
         private const float DELTA = 0.1f;
 
         Vector3 xAxis;
@@ -47,15 +47,17 @@ namespace Medical
 
         public void draw(DebugDrawingSurface circleHelper, Vector3 origin)
         {
+            float drawRadius = radius;
             if (selected)
             {
                 circleHelper.setColor(HIGHLIGHT);
+                drawRadius += radius * .25f;
             }
             else
             {
                 circleHelper.setColor(color);
             }
-            circleHelper.drawCircle(origin, xAxis, yAxis, radius);
+            circleHelper.drawCircle(origin, xAxis, yAxis, drawRadius);
         }
 
         public bool isSelected()
