@@ -121,6 +121,8 @@
             this.backgroundColorButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
             this.optionsButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.optionsCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.showStatsButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.showStatisticsCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.layoutGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.kryptonRibbonGroupButton1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -256,7 +258,7 @@
             this.renderingTab,
             this.windowTab});
             this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.windowTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -281,7 +283,8 @@
             this.showTeethCollisionCommand.ImageLarge = global::Medical.Properties.Resources.TeethCollisionIconLarge;
             this.showTeethCollisionCommand.ImageSmall = global::Medical.Properties.Resources.TeethCollisionIconSmall;
             this.showTeethCollisionCommand.Text = "Show Teeth Collision";
-            this.showTeethCollisionCommand.TextLine1 = "Show Teeth Collision";
+            this.showTeethCollisionCommand.TextLine1 = "Show Teeth";
+            this.showTeethCollisionCommand.TextLine2 = "Collision";
             // 
             // renderQATButton
             // 
@@ -798,7 +801,8 @@
             this.renderingBackgroundColor.ImageSmall = global::Medical.Properties.Resources.BackgroundColorIconSmall;
             this.renderingBackgroundColor.RecentColors = new System.Drawing.Color[0];
             this.renderingBackgroundColor.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
-            this.renderingBackgroundColor.TextLine1 = "Background Color";
+            this.renderingBackgroundColor.TextLine1 = "Background";
+            this.renderingBackgroundColor.TextLine2 = "Color";
             // 
             // kryptonRibbonGroupLines1
             // 
@@ -883,7 +887,8 @@
             // 
             this.kryptonRibbonGroupTriple3.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.backgroundColorButton,
-            this.optionsButton});
+            this.optionsButton,
+            this.showStatsButton});
             // 
             // backgroundColorButton
             // 
@@ -891,7 +896,8 @@
             this.backgroundColorButton.ImageSmall = global::Medical.Properties.Resources.BackgroundColorIconSmall;
             this.backgroundColorButton.RecentColors = new System.Drawing.Color[0];
             this.backgroundColorButton.SelectedColor = System.Drawing.Color.Black;
-            this.backgroundColorButton.TextLine1 = "Background Color";
+            this.backgroundColorButton.TextLine1 = "Background";
+            this.backgroundColorButton.TextLine2 = "Color";
             // 
             // optionsButton
             // 
@@ -904,6 +910,23 @@
             this.optionsCommand.ImageSmall = global::Medical.Properties.Resources.OptionsIconSmall;
             this.optionsCommand.Text = "Options";
             this.optionsCommand.TextLine1 = "Options";
+            // 
+            // showStatsButton
+            // 
+            this.showStatsButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
+            this.showStatsButton.ImageLarge = global::Medical.Properties.Resources.StatsIconLarge;
+            this.showStatsButton.ImageSmall = global::Medical.Properties.Resources.StatsIconSmall;
+            this.showStatsButton.KryptonCommand = this.showStatisticsCommand;
+            this.showStatsButton.TextLine1 = "Show";
+            this.showStatsButton.TextLine2 = "Statistics";
+            // 
+            // showStatisticsCommand
+            // 
+            this.showStatisticsCommand.ImageLarge = global::Medical.Properties.Resources.StatsIconLarge;
+            this.showStatisticsCommand.ImageSmall = global::Medical.Properties.Resources.StatsIconSmall;
+            this.showStatisticsCommand.Text = "Show Statistics";
+            this.showStatisticsCommand.TextLine1 = "Show";
+            this.showStatisticsCommand.TextLine2 = "Statistics";
             // 
             // layoutGroup
             // 
@@ -923,7 +946,8 @@
             this.kryptonRibbonGroupButton1.ImageLarge = global::Medical.Properties.Resources.WindowLayoutIconLarge;
             this.kryptonRibbonGroupButton1.ImageSmall = global::Medical.Properties.Resources.WindowLayoutIconSmall;
             this.kryptonRibbonGroupButton1.KryptonContextMenu = this.windowContextMenu;
-            this.kryptonRibbonGroupButton1.TextLine1 = "Window Layout";
+            this.kryptonRibbonGroupButton1.TextLine1 = "Window";
+            this.kryptonRibbonGroupButton1.TextLine2 = "Layout";
             // 
             // windowContextMenu
             // 
@@ -1206,5 +1230,7 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbon clinicalRibbon;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel bottomPanel;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton showStatsButton;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand showStatisticsCommand;
     }
 }

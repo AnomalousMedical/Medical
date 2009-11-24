@@ -5,6 +5,7 @@ using System.Text;
 using ComponentFactory.Krypton.Ribbon;
 using Medical.Controller;
 using System.Windows.Forms;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
@@ -13,6 +14,7 @@ namespace Medical.GUI
         private KryptonRibbonGroupColorButton backgroundColorButton;
         private DrawingWindowController drawingWindowController;
         private BasicController basicController;
+        private KryptonCommand showStatsCommand;
 
         public WindowGUIController(BasicForm form, BasicController basicController, ShortcutController shortcuts)
         {
@@ -29,6 +31,9 @@ namespace Medical.GUI
 
             drawingWindowController = basicController.DrawingWindowController;
             drawingWindowController.ActiveWindowChanged += new DrawingWindowEvent(drawingWindowController_ActiveWindowChanged);
+
+            showStatsCommand = form.showStatisticsCommand;
+            showStatsCommand.Execute += new EventHandler(showStatisticsCommand_Execute);
 
             //Shortcuts
             ShortcutGroup shortcutGroup = shortcuts.createOrRetrieveGroup("MainUI");
@@ -48,6 +53,11 @@ namespace Medical.GUI
             ShortcutEventCommand fourWindowShortcut = new ShortcutEventCommand("fourWindowShortcut", Keys.D4, true);
             fourWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(fourWindowShortcut_Execute);
             shortcutGroup.addShortcut(fourWindowShortcut);
+        }
+
+        void showStatisticsCommand_Execute(object sender, EventArgs e)
+        {
+            drawingWindowController.showStats(showStatsCommand.Checked);
         }
 
         void fourWindowLayoutCommand_Execute(object sender, EventArgs e)
