@@ -15,6 +15,7 @@ namespace Medical
 
         private KryptonDockingManager dockingManager;
         private KryptonDockableWorkspace workspace;
+        private Dictionary<String, KryptonDrawingWindowHost> createdWindows = new Dictionary<string, KryptonDrawingWindowHost>();
 
         public KryptonDockProvider(KryptonDockingManager dockingManager, KryptonDockableWorkspace workspace)
         {
@@ -26,33 +27,6 @@ namespace Medical
             workspace.PageCloseClicked += new EventHandler<UniqueNameEventArgs>(workspace_PageCloseClicked);
         }
 
-        void workspace_PageCloseClicked(object sender, UniqueNameEventArgs e)
-        {
-            //Log.Debug("Page closed clicked.");
-            KryptonPage page = workspace.PageForUniqueName(e.UniqueName);
-            KryptonDrawingWindowHost host = page.Controls[0] as KryptonDrawingWindowHost;
-            if (host != null)
-            {
-                host.alertClosing();
-                page.Dispose();
-            }
-        }
-
-        void dockingManager_PageCloseRequest(object sender, CloseRequestEventArgs e)
-        {
-            //Log.Debug("Page close request.");
-            KryptonPage page = workspace.PageForUniqueName(e.UniqueName);
-            if (page != null)
-            {
-                KryptonDrawingWindowHost host = page.Controls[0] as KryptonDrawingWindowHost;
-                if (host != null)
-                {
-                    host.alertClosing();
-                    page.Dispose();
-                }
-            }
-        }
-
         public bool restoreFromString(string persistString, out string name, out Engine.Vector3 translation, out Engine.Vector3 lookAt, out int bgColor)
         {
             throw new NotImplementedException();
@@ -60,7 +34,9 @@ namespace Medical
 
         public DrawingWindowHost createWindow(string name, DrawingWindowController controller)
         {
-            return new KryptonDrawingWindowHost(name, controller, dockingManager);
+            KryptonDrawingWindowHost newWindow = new KryptonDrawingWindowHost(name, controller, dockingManager);
+            createdWindows.Add(name, newWindow);
+            return newWindow;
         }
 
         public DrawingWindowHost createCloneWindow(string name, DrawingWindowController controller)
@@ -86,6 +62,42 @@ namespace Medical
             {
                 ActiveDocumentChanged.Invoke(this);
             }
+        }
+
+        void workspace_PageCloseClicked(object sender, UniqueNameEventArgs e)
+        {
+            //Log.Debug("Page closed clicked.");
+            //KryptonPage page = workspace.PageForUniqueName(e.UniqueName);
+            //KryptonDrawingWindowHost host = page.Controls[0] as KryptonDrawingWindowHost;
+            //if (host != null)
+            //{
+            //    host.alertClosing();
+            //    page.Dispose();
+            //}
+            destroyWindow(createdWindows[e.UniqueName]);
+        }
+
+        void dockingManager_PageCloseRequest(object sender, CloseRequestEventArgs e)
+        {
+            //Log.Debug("Page close request.");
+            //KryptonPage page = workspace.PageForUniqueName(e.UniqueName);
+            //if (page != null && page.Controls.Count > 0)
+            //{
+            //    KryptonDrawingWindowHost host = page.Controls[0] as KryptonDrawingWindowHost;
+            //    if (host != null)
+            //    {
+            //        host.alertClosing();
+            //        page.Dispose();
+            //    }
+            //}
+            destroyWindow(createdWindows[e.UniqueName]);
+        }
+
+        void destroyWindow(KryptonDrawingWindowHost windowHost)
+        {
+            windowHost.alertClosing();
+            windowHost.Dispose();
+            createdWindows.Remove(windowHost.Name);
         }
     }
 }

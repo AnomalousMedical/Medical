@@ -80,6 +80,7 @@ namespace Medical.GUI
 
             //Docking
             KryptonDockingWorkspace w = kryptonDockingManager.ManageWorkspace("Workspace", kryptonDockableWorkspace);
+            kryptonDockingManager.ManageFloating("Floating", this);
 
             //temporary
             tempStateButton.Click += new EventHandler(tempStateButton_Click);
