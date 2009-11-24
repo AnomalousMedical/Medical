@@ -420,14 +420,14 @@
     <Compile Include="GUI\View\DrawingWindow.designer.cs">
       <DependentUpon>DrawingWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\View\DrawingWindowCloneHost.cs">
+    <Compile Include="GUI\View\DockPanelDrawingWindowCloneHost.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\View\DrawingWindowHost.cs">
+    <Compile Include="GUI\View\DockPanelDrawingWindowHost.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\View\DrawingWindowHost.designer.cs">
-      <DependentUpon>DrawingWindowHost.cs</DependentUpon>
+    <Compile Include="GUI\View\DockPanelDrawingWindowHost.designer.cs">
+      <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="GUI\Watermark\CenteredWatermark.cs" />
@@ -523,8 +523,8 @@
       <DependentUpon>DrawingWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\DrawingWindowHost.resx">
-      <DependentUpon>DrawingWindowHost.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\View\DockPanelDrawingWindowHost.resx">
+      <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -735,8 +735,8 @@
       <DependentUpon>StateList.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\DrawingWindowCloneHost.resx">
-      <DependentUpon>DrawingWindowCloneHost.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\View\DockPanelDrawingWindowCloneHost.resx">
+      <DependentUpon>DockPanelDrawingWindowCloneHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
