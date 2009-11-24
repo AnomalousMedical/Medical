@@ -46,6 +46,7 @@ namespace Medical.Controller
         private BackgroundController backgroundController;
         private ViewportBackground background;
         private SimObjectMover teethMover;
+        private DockProvider dockProvider;
 
         /// <summary>
         /// Constructor.
@@ -107,7 +108,8 @@ namespace Medical.Controller
 
             splashScreen.stepProgress(10);
 
-            drawingWindowController = new DrawingWindowController();
+            dockProvider = new DockPanelDockProvider(basicForm.DockPanel);
+            drawingWindowController = new DrawingWindowController(dockProvider);
             drawingWindowController.AllowRotation = false;
             drawingWindowController.AllowZoom = false;
             drawingWindowController.initialize(basicForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);

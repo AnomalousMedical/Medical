@@ -34,6 +34,7 @@ namespace Medical.Controller
         private ScenePicker scenePicker = new ScenePicker();
         private LayerController layerController;
         private Options options = null;
+        private DockProvider dockProvider;
 
         private NavigationController navigationController;
 
@@ -88,7 +89,8 @@ namespace Medical.Controller
 
             splashScreen.stepProgress(10);
 
-            drawingWindowController = new DrawingWindowController();
+            dockProvider = new DockPanelDockProvider(developerForm.DockPanel);
+            drawingWindowController = new DrawingWindowController(dockProvider);
             drawingWindowController.initialize(developerForm.DockPanel, medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
             navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
@@ -298,7 +300,7 @@ namespace Medical.Controller
             ret = guiElements.restoreWindow(persistString);
             if (ret == null)
             {
-                ret = drawingWindowController.restoreFromString(persistString);
+                ret = drawingWindowController.restoreFromString(persistString) as DockContent;
             }
             return ret;
         }

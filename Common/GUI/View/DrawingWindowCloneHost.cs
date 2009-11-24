@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Medical.GUI
 {
-    class DrawingWindowCloneHost : DrawingWindowHost
+    class DockPanelDrawingWindowCloneHost : DockPanelDrawingWindowHost
     {
-        public DrawingWindowCloneHost(String name, DrawingWindowController controller)
-            :base(name, controller)
+        public DockPanelDrawingWindowCloneHost(String name, DrawingWindowController controller, DockPanel dock)
+            :base(name, controller, dock)
         {
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Float;
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;

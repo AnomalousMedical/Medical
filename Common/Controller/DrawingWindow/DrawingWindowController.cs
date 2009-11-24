@@ -34,10 +34,11 @@ namespace Medical
         private DrawingWindowHost activeDrawingWindow = null;
         private bool allowRotation = true;
         private bool allowZoom = true;
+        private DockProvider dockProvider;
 
-        public DrawingWindowController()
+        public DrawingWindowController(DockProvider dockProvider)
         {
-            
+            this.dockProvider = dockProvider;
         }
 
         public void Dispose()
@@ -62,7 +63,7 @@ namespace Medical
             String name;
             Vector3 translation, lookAt;
             int bgColor;
-            if (DrawingWindowHost.RestoreFromString(persistString, out name, out translation, out lookAt, out bgColor))
+            if (dockProvider.restoreFromString(persistString, out name, out translation, out lookAt, out bgColor))
             {
                 DrawingWindowHost host = this.createDrawingWindowHost(name, translation, lookAt);
                 host.DrawingWindow.BackColor = System.Drawing.Color.FromArgb(bgColor);
@@ -106,25 +107,11 @@ namespace Medical
                 }
                 if (parent == null)
                 {
-                    camera.Show(dock);
+                    camera.ShowWindow();
                 }
                 else
                 {
-                    switch (preset.WindowPosition)
-                    {
-                        case DrawingWindowPosition.Bottom:
-                            camera.Show(parent.Pane, DockAlignment.Bottom, 0.5);
-                            break;
-                        case DrawingWindowPosition.Top:
-                            camera.Show(parent.Pane, DockAlignment.Top, 0.5);
-                            break;
-                        case DrawingWindowPosition.Left:
-                            camera.Show(parent.Pane, DockAlignment.Left, 0.5);
-                            break;
-                        case DrawingWindowPosition.Right:
-                            camera.Show(parent.Pane, DockAlignment.Right, 0.5);
-                            break;
-                    }
+                    camera.ShowWindow(parent, preset.WindowPosition);
                 }
             }
             StatusController.TaskCompleted();
@@ -177,13 +164,13 @@ namespace Medical
             String cloneName = host.Text + " Clone";
             if (cameras.ContainsKey(cloneName))
             {
-                MessageBox.Show(host, String.Format("Cannot create a clone. The window {0} already has a clone.", host.Text), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(host.DrawingWindow, String.Format("Cannot create a clone. The window {0} already has a clone.", host.Text), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
                 DrawingWindowHost cloneHost = addCloneCamera(cloneName, host.DrawingWindow);
                 //cloneHost.Show(host.Pane, DockAlignment.Right, 0.5);
-                cloneHost.Show(dock);
+                cloneHost.ShowWindow();
                 cloneHost.Size = host.Size;
             }
         }
@@ -245,7 +232,7 @@ namespace Medical
 
         private DrawingWindowHost addCamera(String name, Vector3 translation, Vector3 lookAt)
         {
-            DrawingWindowHost cameraHost = new DrawingWindowHost(name, this);
+            DrawingWindowHost cameraHost = dockProvider.createWindow(name, this);
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, cameraHost.DrawingWindow, eventManager);
             orbitCamera.AllowRotation = allowRotation;
             orbitCamera.AllowZoom = allowZoom;
@@ -256,7 +243,7 @@ namespace Medical
 
         private DrawingWindowHost addCloneCamera(String name, DrawingWindow cloneWindow)
         {
-            DrawingWindowHost cameraHost = new DrawingWindowCloneHost(name, this);
+            DrawingWindowHost cameraHost = dockProvider.createCloneWindow(name, this);
             CloneCamera cloneCamera = new CloneCamera(cloneWindow);
             cameraHost.DrawingWindow.initialize(name, cloneCamera, rendererPlugin);
             initializeCamera(cameraHost);

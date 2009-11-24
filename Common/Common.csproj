@@ -113,7 +113,10 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
+    <Compile Include="Controller\DrawingWindow\DockPanelDockProvider.cs" />
+    <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
+    <Compile Include="Controller\DrawingWindow\DrawingWindowHost.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPreset.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetSet.cs" />

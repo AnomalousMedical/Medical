@@ -12,7 +12,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    public partial class DrawingWindowHost : DockContent
+    public partial class DockPanelDrawingWindowHost : DockContent, DrawingWindowHost
     {
         private const String PERSIST_STRING = "{0}: {1}: {2}: {3}: {4}";
         private static readonly char[] SEP = { ':' };
@@ -52,12 +52,14 @@ namespace Medical
         private List<Control> savedControls = new List<Control>();
         private bool notClosing = true;
         private DrawingWindowController controller;
+        private DockPanel dock;
 
-        public DrawingWindowHost(String name, DrawingWindowController controller)
+        public DockPanelDrawingWindowHost(String name, DrawingWindowController controller, DockPanel dock)
         {
             InitializeComponent();
             this.Text = name;
             this.Name = name;
+            this.dock = dock;
             this.controller = controller;
             if (!OgreInterface.FoundOgreCore)
             {
@@ -94,6 +96,31 @@ namespace Medical
             get
             {
                 return drawingWindow;
+            }
+        }
+
+        public void ShowWindow()
+        {
+            this.Show(dock);
+        }
+
+        public void ShowWindow(DrawingWindowHost parent, DrawingWindowPosition position)
+        {
+            DockPanelDrawingWindowHost dockParent = parent as DockPanelDrawingWindowHost;
+            switch (position)
+            {
+                case DrawingWindowPosition.Bottom:
+                    this.Show(dockParent.Pane, DockAlignment.Bottom, 0.5);
+                    break;
+                case DrawingWindowPosition.Top:
+                    this.Show(dockParent.Pane, DockAlignment.Top, 0.5);
+                    break;
+                case DrawingWindowPosition.Left:
+                    this.Show(dockParent.Pane, DockAlignment.Left, 0.5);
+                    break;
+                case DrawingWindowPosition.Right:
+                    this.Show(dockParent.Pane, DockAlignment.Right, 0.5);
+                    break;
             }
         }
 
