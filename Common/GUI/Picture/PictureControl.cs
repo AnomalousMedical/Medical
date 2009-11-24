@@ -51,15 +51,18 @@ namespace Medical.GUI
             DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
             if (drawingWindow != null)
             {
-                int width = (int)resolutionWidth.Value;
-                int height = (int)resolutionHeight.Value;
-                int aa = (int)Math.Pow(2, aaCombo.SelectedIndex);
-                Bitmap bitmap = imageRenderer.renderImage(width, height, transparentBGCheck.Checked, aa);
+                ImageRendererProperties imageProperties = new ImageRendererProperties();
+                imageProperties.Width = (int)resolutionWidth.Value;
+                imageProperties.Height = (int)resolutionHeight.Value;
+                imageProperties.AntiAliasingMode = (int)Math.Pow(2, aaCombo.SelectedIndex);
+                imageProperties.TransparentBackground = false;// transparentBGCheck.Checked;
+
+                Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
                     DockPanelPictureWindow picture = new DockPanelPictureWindow();
                     picture.initialize(bitmap);
-                    picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
+                    picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, imageProperties.Width, imageProperties.Height);
                     picture.Show(DockPanel, DockState.Float);
                 }
             }

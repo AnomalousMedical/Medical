@@ -40,7 +40,10 @@ namespace Medical.GUI
             {
                 currentBitmap.Dispose();
             }
-            currentBitmap = renderer.renderImage(previewPicture.Size.Width, previewPicture.Size.Height);
+            ImageRendererProperties properties = new ImageRendererProperties();
+            properties.Width = previewPicture.Size.Width;
+            properties.Height = previewPicture.Size.Height;
+            currentBitmap = renderer.renderImage(properties);
             previewPicture.Image = currentBitmap;
         }
 

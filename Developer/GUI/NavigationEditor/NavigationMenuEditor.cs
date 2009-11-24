@@ -113,7 +113,15 @@ namespace Medical.GUI
 
         private void renderButton_Click(object sender, EventArgs e)
         {
-            Bitmap bitmap = imageRenderer.renderImage(51, 38, false, Color.Black, 8);
+            ImageRendererProperties properties = new ImageRendererProperties();
+            properties.Width = 51;
+            properties.Height = 38;
+            properties.TransparentBackground = false;
+            properties.UseWindowBackgroundColor = false;
+            properties.CustomBackgroundColor = Engine.Color.Black;
+            properties.AntiAliasingMode = 8;
+
+            Bitmap bitmap = imageRenderer.renderImage(properties);
             ThumbnailImage = bitmap;
         }
 
