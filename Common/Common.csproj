@@ -254,6 +254,7 @@
     <Compile Include="GUI\Picture\DockPanelPictureWindow.Designer.cs">
       <DependentUpon>DockPanelPictureWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Picture\KryptonPictureWindow.cs" />
     <Compile Include="GUI\Picture\PictureWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>

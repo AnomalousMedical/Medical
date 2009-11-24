@@ -95,11 +95,10 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(width, height, false, backgroundColorButton.SelectedColor);
                 if (bitmap != null)
                 {
-                    throw new NotImplementedException();
-                    //PictureWindow picture = new PictureWindow();
-                    //picture.initialize(bitmap);
-                    //picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
-                    //picture.Show(form.DockPanel, DockState.Float);
+                    KryptonPictureWindow picture = new KryptonPictureWindow();
+                    picture.initialize(bitmap);
+                    picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, width, height);
+                    picture.show(form.DockingManager);
                 }
             }
         }

@@ -30,7 +30,11 @@ namespace Medical
 
         void dockingManager_PageFloatingRequest(object sender, CancelUniqueNameEventArgs e)
         {
-            e.Cancel = true;
+            KryptonPage page = dockingManager.PageForUniqueName(e.UniqueName);
+            if (page.Controls.Count > 0)
+            {
+                e.Cancel = page.Controls[0] is KryptonDrawingWindowHost;
+            }
         }
 
         public bool restoreFromString(string persistString, out string name, out Engine.Vector3 translation, out Engine.Vector3 lookAt, out int bgColor)
@@ -80,7 +84,12 @@ namespace Medical
             //    host.alertClosing();
             //    page.Dispose();
             //}
-            destroyWindow(createdWindows[e.UniqueName]);
+            KryptonDrawingWindowHost host;
+            createdWindows.TryGetValue(e.UniqueName, out host);
+            if (host != null)
+            {
+                destroyWindow(host);
+            }
         }
 
         void dockingManager_PageCloseRequest(object sender, CloseRequestEventArgs e)
@@ -96,7 +105,12 @@ namespace Medical
             //        page.Dispose();
             //    }
             //}
-            destroyWindow(createdWindows[e.UniqueName]);
+            KryptonDrawingWindowHost host;
+            createdWindows.TryGetValue(e.UniqueName, out host);
+            if (host != null)
+            {
+                destroyWindow(host);
+            }
         }
 
         void destroyWindow(KryptonDrawingWindowHost windowHost)
