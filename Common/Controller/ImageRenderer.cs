@@ -62,15 +62,18 @@ namespace Medical
                 {
                     if (properties.UseNavigationStatePosition)
                     {
-                        NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
-                        if (state != null)
+                        if (navigationController != null)
                         {
-                            cameraPosition = state.Translation;
-                            cameraLookAt = state.LookAt;
-                        }
-                        else
-                        {
-                            Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
+                            NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
+                            if (state != null)
+                            {
+                                cameraPosition = state.Translation;
+                                cameraLookAt = state.LookAt;
+                            }
+                            else
+                            {
+                                Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
+                            }
                         }
                     }
                     else if (properties.UseCustomPosition)
@@ -95,7 +98,7 @@ namespace Medical
 
                 //Layer override
                 LayerState currentLayers = null;
-                if (properties.OverrideLayers)
+                if (properties.OverrideLayers && layerController != null)
                 {
                     currentLayers = layerController.applyLayerStateTemporaryUndisruptive(properties.LayerState);
                 }
@@ -119,7 +122,7 @@ namespace Medical
                 }
 
                 //Turn off layer override
-                if (properties.OverrideLayers)
+                if (properties.OverrideLayers && layerController != null)
                 {
                     layerController.restoreConditions(currentLayers);
                 }
