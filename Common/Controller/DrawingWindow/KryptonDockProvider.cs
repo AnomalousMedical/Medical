@@ -33,7 +33,11 @@ namespace Medical
             KryptonPage page = dockingManager.PageForUniqueName(e.UniqueName);
             if (page.Controls.Count > 0)
             {
-                e.Cancel = page.Controls[0] is KryptonDrawingWindowHost;
+                KryptonDrawingWindowHost windowHost = page.Controls[0] as KryptonDrawingWindowHost;
+                if(windowHost != null)
+                {
+                    e.Cancel = !windowHost.AllowFloating;
+                }
             }
         }
 
@@ -51,7 +55,10 @@ namespace Medical
 
         public DrawingWindowHost createCloneWindow(string name, DrawingWindowController controller)
         {
-            throw new NotImplementedException();
+            KryptonDrawingWindowHost newWindow = new KryptonDrawingWindowHost(name, controller, dockingManager);
+            createdWindows.Add(name, newWindow);
+            newWindow.AllowFloating = true;
+            return newWindow;
         }
 
         public DrawingWindowHost ActiveDocument

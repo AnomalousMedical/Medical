@@ -50,6 +50,8 @@ namespace Medical.GUI
             KryptonWorkspaceCell cell = new KryptonWorkspaceCell();
             cell.Pages.Add(page);
             horizontalSequence.Children.Add(cell);
+
+            AllowFloating = false;
         }
 
         public void ShowWindow(DrawingWindowHost parent, DrawingWindowPosition position)
@@ -113,5 +115,7 @@ namespace Medical.GUI
             page.TextTitle = this.Text;
             page.TextDescription = "";
         }
+
+        public bool AllowFloating { get; set; }
     }
 }
