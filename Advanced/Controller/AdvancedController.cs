@@ -87,6 +87,7 @@ namespace Medical.Controller
                 advancedForm.initialize(this);
                 medicalController = new MedicalController();
                 medicalController.intialize(advancedForm);
+                medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
 
                 splashScreen.stepProgress(10);
 
@@ -175,6 +176,11 @@ namespace Medical.Controller
             {
                 splashScreen.fadeAway();
             }
+        }
+
+        void medicalController_PumpMessage(ref Message msg)
+        {
+            ManualMessagePump.pumpMessage(ref msg);
         }
 
         /// <summary>

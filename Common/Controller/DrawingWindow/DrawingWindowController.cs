@@ -7,7 +7,6 @@ using Engine.ObjectManagement;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.Renderer;
-using WeifenLuo.WinFormsUI.Docking;
 using Medical.GUI;
 using Logging;
 using Medical.Controller;
@@ -206,7 +205,7 @@ namespace Medical
             }
         }
 
-        internal void _alertCameraDestroyed(DrawingWindowHost host)
+        public void _alertCameraDestroyed(DrawingWindowHost host)
         {
             if (WindowDestroyed != null)
             {

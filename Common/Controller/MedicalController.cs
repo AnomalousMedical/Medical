@@ -10,7 +10,6 @@ using Engine.Platform;
 using Engine.Renderer;
 using System.Threading;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 using System.Xml;
 using Engine.ObjectManagement;
 using Engine.Saving.XMLSaver;
@@ -19,6 +18,7 @@ using Medical.Properties;
 using System.IO;
 using BulletPlugin;
 using System.Drawing;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical
 {
@@ -128,7 +128,6 @@ namespace Medical
         {
             Message msg = Message.Create(message.hwnd, message.message, message.wParam, message.lParam);
             ManualMessagePump.pumpMessage(ref msg);
-            ComponentFactory.Krypton.Toolkit.ManualMessagePump.pumpMessage(ref msg);
             if (PumpMessage != null)
             {
                 PumpMessage.Invoke(ref msg);
