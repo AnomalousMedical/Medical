@@ -112,7 +112,7 @@ namespace Medical.Controller
                 guiElements.addGUIElement(layersControl);
 
                 PictureControl pictureControl = new PictureControl();
-                pictureControl.initialize(imageRenderer, drawingWindowController, null);
+                pictureControl.initialize(imageRenderer, drawingWindowController, developerForm.DrawingWindowDockingManager);
                 guiElements.addGUIElement(pictureControl);
 
                 stateGUI = new MedicalStateGUI();

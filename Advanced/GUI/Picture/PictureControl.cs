@@ -12,6 +12,7 @@ using OgreWrapper;
 using OgrePlugin;
 using System.Drawing.Imaging;
 using Medical.Controller;
+using ComponentFactory.Krypton.Docking;
 
 namespace Medical.GUI
 {
@@ -19,7 +20,7 @@ namespace Medical.GUI
     {
         private ImageRenderer imageRenderer;
         private DrawingWindowController drawingWindowController;
-        private DockPanel dockPanel;
+        private KryptonDockingManager dockPanel;
 
         public PictureControl()
         {
@@ -27,7 +28,7 @@ namespace Medical.GUI
             aaCombo.SelectedIndex = 0;
         }
 
-        public void initialize(ImageRenderer imageRenderer, DrawingWindowController drawingWindowController, DockPanel dockPanel)
+        public void initialize(ImageRenderer imageRenderer, DrawingWindowController drawingWindowController, KryptonDockingManager dockPanel)
         {
             this.imageRenderer = imageRenderer;
             this.drawingWindowController = drawingWindowController;
@@ -57,15 +58,15 @@ namespace Medical.GUI
                 imageProperties.Width = (int)resolutionWidth.Value;
                 imageProperties.Height = (int)resolutionHeight.Value;
                 imageProperties.AntiAliasingMode = (int)Math.Pow(2, aaCombo.SelectedIndex);
-                imageProperties.TransparentBackground = false;// transparentBGCheck.Checked;
+                imageProperties.TransparentBackground = transparentBGCheck.Checked;
 
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
-                    DockPanelPictureWindow picture = new DockPanelPictureWindow();
+                    KryptonPictureWindow picture = new KryptonPictureWindow();
                     picture.initialize(bitmap);
                     picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, imageProperties.Width, imageProperties.Height);
-                    picture.Show(dockPanel, DockState.Float);
+                    picture.show(dockPanel);
                 }
             }
         }

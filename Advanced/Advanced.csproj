@@ -112,13 +112,13 @@
       <DependentUpon>DiscPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Disk\DiskControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Disk\DiskControl.Designer.cs">
       <DependentUpon>DiskControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Fossa\FossaControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Fossa\FossaControl.Designer.cs">
       <DependentUpon>FossaControl.cs</DependentUpon>
@@ -134,7 +134,7 @@
       <DependentUpon>LayerEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Layers\LayersControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Layers\LayersControl.Designer.cs">
       <DependentUpon>LayersControl.cs</DependentUpon>
@@ -146,13 +146,13 @@
       <DependentUpon>LayerSection.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleOffsetControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleOffsetControl.Designer.cs">
       <DependentUpon>MandibleOffsetControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleSizeControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Mandible\MandibleSizeControl.Designer.cs">
       <DependentUpon>MandibleSizeControl.cs</DependentUpon>
@@ -165,7 +165,7 @@
     </Compile>
     <Compile Include="GUI\Mandible\MovementStateTick.cs" />
     <Compile Include="GUI\Measurement\MeasurementGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Measurement\MeasurementGUI.Designer.cs">
       <DependentUpon>MeasurementGUI.cs</DependentUpon>
@@ -189,7 +189,7 @@
       <DependentUpon>MuscleControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Notes\NotesGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Notes\NotesGUI.Designer.cs">
       <DependentUpon>NotesGUI.cs</DependentUpon>
@@ -207,20 +207,20 @@
       <DependentUpon>PictureControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SavedCamera\SavedCameraGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\SavedCamera\SavedCameraGUI.Designer.cs">
       <DependentUpon>SavedCameraGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\States\MedicalStateGUI.Designer.cs">
       <DependentUpon>MedicalStateGUI.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\MedicalStateTrackMark.cs" />
     <Compile Include="GUI\Teeth\TeethControl.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
       <DependentUpon>TeethControl.cs</DependentUpon>

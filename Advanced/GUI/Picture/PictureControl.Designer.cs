@@ -46,10 +46,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.resolutionHeight = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.aaCombo = new System.Windows.Forms.ComboBox();
             this.transparentBGCheck = new System.Windows.Forms.CheckBox();
             this.renderSingleButton = new System.Windows.Forms.Button();
-            this.aaCombo = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -262,6 +262,29 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Other";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(7, 20);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(64, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Anti Aliasing";
+            // 
+            // aaCombo
+            // 
+            this.aaCombo.FormattingEnabled = true;
+            this.aaCombo.Items.AddRange(new object[] {
+            "None",
+            "2",
+            "4",
+            "8",
+            "16"});
+            this.aaCombo.Location = new System.Drawing.Point(6, 36);
+            this.aaCombo.Name = "aaCombo";
+            this.aaCombo.Size = new System.Drawing.Size(121, 21);
+            this.aaCombo.TabIndex = 2;
+            // 
             // transparentBGCheck
             // 
             this.transparentBGCheck.AutoSize = true;
@@ -282,45 +305,19 @@
             this.renderSingleButton.UseVisualStyleBackColor = true;
             this.renderSingleButton.Click += new System.EventHandler(this.renderSingleButton_Click);
             // 
-            // aaCombo
-            // 
-            this.aaCombo.FormattingEnabled = true;
-            this.aaCombo.Items.AddRange(new object[] {
-            "None",
-            "2",
-            "4",
-            "8",
-            "16"});
-            this.aaCombo.Location = new System.Drawing.Point(6, 36);
-            this.aaCombo.Name = "aaCombo";
-            this.aaCombo.Size = new System.Drawing.Size(121, 21);
-            this.aaCombo.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(64, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Anti Aliasing";
-            // 
             // PictureControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Picture";
-            this.ClientSize = new System.Drawing.Size(142, 426);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.DockAreas = ((Medical.GUI.DockLocations)((((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)
-                        )));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PictureControl";
             this.ShortcutKey = System.Windows.Forms.Keys.P;
             this.ShowHint = Medical.GUI.DockLocations.Right;
-            this.Text = "Picture";
+            this.Size = new System.Drawing.Size(1187, 661);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.flowLayoutPanel3.ResumeLayout(false);
