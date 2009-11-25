@@ -96,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Controller\AdvancedController.cs" />
     <Compile Include="Controller\DockPanelDockProvider.cs" />
+    <Compile Include="Controller\MedicalFormController.cs" />
     <Compile Include="Controller\MuscleGroup.cs" />
     <Compile Include="Controller\TeethSelectionGroup.cs" />
     <Compile Include="GUI\AdvancedForm.cs">
@@ -326,6 +327,7 @@
       <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

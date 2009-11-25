@@ -20,7 +20,7 @@ namespace Medical.Controller
     /// <summary>
     /// This is the main controller for the Advanced program.
     /// </summary>
-    public class AdvancedController : IDisposable
+    public class AdvancedController : MedicalFormController, IDisposable
     {
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;

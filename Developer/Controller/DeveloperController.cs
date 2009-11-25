@@ -20,11 +20,11 @@ namespace Medical.Controller
     /// <summary>
     /// This is the main controller for the Advanced program.
     /// </summary>
-    public class DeveloperController : IDisposable
+    public class DeveloperController : MedicalFormController, IDisposable
     {
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
-        private DeveloperForm developerForm;
+        private AdvancedForm developerForm;
         private GUIElementController guiElements;
         private MedicalStateController stateController;
         private MedicalStateGUI stateGUI;
@@ -84,7 +84,9 @@ namespace Medical.Controller
             try
             {
 
-                developerForm = new DeveloperForm();
+                developerForm = new AdvancedForm();
+                developerForm.Text = "Articulometrics Developer";
+                developerForm.Icon = Resources.skull;
                 developerForm.initialize(this);
                 medicalController = new MedicalController();
                 medicalController.intialize(developerForm);
@@ -455,6 +457,11 @@ namespace Medical.Controller
         private MedicalState createStateCallback(int index)
         {
             return stateController.createAndInsertState(index, "Auto");
+        }
+
+        public void cloneActiveWindow()
+        {
+            drawingWindowController.cloneActiveWindow();
         }
     }
 }

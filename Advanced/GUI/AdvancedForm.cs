@@ -14,7 +14,7 @@ namespace Medical.GUI
 {
     public partial class AdvancedForm : MedicalForm
     {
-        private AdvancedController controller;
+        private MedicalFormController controller;
         private FileTracker patientFileTracker = new FileTracker("*.pat|*.pat");
         private FileTracker sequenceFileTracker = new FileTracker("*.seq|*.seq");
 
@@ -46,7 +46,7 @@ namespace Medical.GUI
             cloneWindowCommand.Execute += new EventHandler(cloneWindowCommand_Execute);
         }
 
-        public void initialize(AdvancedController controller)
+        public void initialize(MedicalFormController controller)
         {
             this.controller = controller;
         }
@@ -71,93 +71,6 @@ namespace Medical.GUI
         {
             base.OnClosing(e);
             controller.stop();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void addStateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            controller.newScene();
-            clearWindowTitle();
-            patientFileTracker.clearCurrentFile();
-        }
-
-        private void oneWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void twoWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void threeWindowsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void fourWindowToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void newDistortion_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void openDistortion_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void saveDistortion_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void saveDistortionAs_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void newSequence_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void openSequence_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void saveSequence_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void saveSequenceAs_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void cloneSelectedToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
         }
 
         //File menu
