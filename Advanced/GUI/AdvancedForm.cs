@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
-using WeifenLuo.WinFormsUI.Docking;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Docking;
 

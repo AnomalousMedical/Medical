@@ -88,14 +88,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.22263, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\DockPanel\Src\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AdvancedController.cs" />
-    <Compile Include="Controller\DockPanelDockProvider.cs" />
     <Compile Include="Controller\MedicalFormController.cs" />
     <Compile Include="Controller\MuscleGroup.cs" />
     <Compile Include="Controller\TeethSelectionGroup.cs" />
@@ -194,12 +189,6 @@
     <Compile Include="GUI\Notes\NotesGUI.Designer.cs">
       <DependentUpon>NotesGUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Picture\DockPanelPictureWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\Picture\DockPanelPictureWindow.Designer.cs">
-      <DependentUpon>DockPanelPictureWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Picture\PictureControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -224,15 +213,6 @@
     </Compile>
     <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
       <DependentUpon>TeethControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\View\DockPanelDrawingWindowCloneHost.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\View\DockPanelDrawingWindowHost.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\View\DockPanelDrawingWindowHost.designer.cs">
-      <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -300,9 +280,6 @@
       <DependentUpon>NotesGUI.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\Picture\DockPanelPictureWindow.resx">
-      <DependentUpon>DockPanelPictureWindow.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Picture\PictureControl.resx">
       <DependentUpon>PictureControl.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -317,14 +294,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Teeth\TeethControl.resx">
       <DependentUpon>TeethControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\DockPanelDrawingWindowCloneHost.resx">
-      <DependentUpon>DockPanelDrawingWindowCloneHost.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\View\DockPanelDrawingWindowHost.resx">
-      <DependentUpon>DockPanelDrawingWindowHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />

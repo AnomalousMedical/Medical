@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WeifenLuo.WinFormsUI.Docking;
 using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
@@ -98,7 +97,7 @@ namespace Medical.GUI
         /// <param name="filename"></param>
         /// <param name="callback"></param>
         /// <returns></returns>
-        public bool restoreWindowFile(String filename, DeserializeDockContent callback)
+        public bool restoreWindowFile(String filename)
         {
             return false;
             //bool restore = File.Exists(filename);
@@ -191,18 +190,6 @@ namespace Medical.GUI
         //    }
         //    element._setController(null);
         //}
-
-        public DockContent restoreWindow(String persistString)
-        {
-            //foreach (GUIElement element in guiElements)
-            //{
-            //    if (element.matchesPersistString(persistString))
-            //    {
-            //        return element;
-            //    }
-            //}
-            return null;
-        }
 
         public void showDockContent(GUIElement content)
         {

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 using Engine;
 using System.Threading;
 using System.IO;
@@ -90,7 +89,6 @@ namespace Medical.Controller
                 developerForm.initialize(this);
                 medicalController = new MedicalController();
                 medicalController.intialize(developerForm);
-                medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
 
                 splashScreen.stepProgress(10);
 
@@ -179,7 +177,7 @@ namespace Medical.Controller
 
                 loadDefaultScene();
 
-                if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+                if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile))
                 {
                     setOneWindowLayout();
                 }
@@ -199,11 +197,6 @@ namespace Medical.Controller
             {
                 splashScreen.fadeAway();
             }
-        }
-
-        void medicalController_PumpMessage(ref Message msg)
-        {
-            ManualMessagePump.pumpMessage(ref msg);
         }
 
         /// <summary>
@@ -301,23 +294,6 @@ namespace Medical.Controller
             fourWindows.addPreset(preset);
 
             drawingWindowController.createFromPresets(fourWindows);
-        }
-
-        /// <summary>
-        /// Used when restoring window positions. Return the window matching the
-        /// persistString or null if no match is found.
-        /// </summary>
-        /// <param name="persistString">A string describing the window.</param>
-        /// <returns>The matching DockContent or null if none is found.</returns>
-        public DockContent getDockContent(String persistString)
-        {
-            DockContent ret = null;
-            ret = guiElements.restoreWindow(persistString);
-            if (ret == null)
-            {
-                ret = drawingWindowController.restoreFromString(persistString) as DockContent;
-            }
-            return ret;
         }
 
         public void createNewMedicalStates()

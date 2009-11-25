@@ -6,7 +6,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WeifenLuo.WinFormsUI.Docking;
 using Medical.Properties;
 using Engine.ObjectManagement;
 using Medical.Controller;
