@@ -303,26 +303,8 @@
     <Compile Include="GUI\StatePicker\LeftCondylarGrowthPanel.Designer.cs">
       <DependentUpon>LeftCondylarGrowthPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\DiscPositionPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\StatePicker\DiscPositionPanel.Designer.cs">
-      <DependentUpon>DiscPositionPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
-      <DependentUpon>DiscSpacePanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controller\Distortion\DistortionController.cs" />
     <Compile Include="Controller\Distortion\DistortionWizard.cs" />
-    <Compile Include="GUI\StatePicker\FossaStatePanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\StatePicker\FossaStatePanel.Designer.cs">
-      <DependentUpon>FossaStatePanel.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\StatePicker\FossaPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -373,12 +355,6 @@
     </Compile>
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.Designer.cs">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\StatePicker\TeethStatePanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\StatePicker\TeethStatePanel.Designer.cs">
-      <DependentUpon>TeethStatePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.cs">
       <SubType>UserControl</SubType>
@@ -499,20 +475,8 @@
       <DependentUpon>SavedCameraGUI.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\DiscSpacePanel.resx">
-      <DependentUpon>DiscSpacePanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\FossaStatePanel.resx">
-      <DependentUpon>FossaStatePanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\PresetStatePanel.resx">
       <DependentUpon>PresetStatePanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\TeethStatePanel.resx">
-      <DependentUpon>TeethStatePanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\States\MedicalStateGUI.resx">
@@ -705,10 +669,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\LeftCondylarGrowthPanel.resx">
       <DependentUpon>LeftCondylarGrowthPanel.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\DiscPositionPanel.resx">
-      <DependentUpon>DiscPositionPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\FossaPanel.resx">
