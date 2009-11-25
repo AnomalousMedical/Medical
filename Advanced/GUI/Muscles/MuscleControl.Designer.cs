@@ -85,7 +85,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(259, 421);
+            this.tabControl1.Size = new System.Drawing.Size(1187, 661);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -96,7 +96,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(251, 395);
+            this.tabPage1.Size = new System.Drawing.Size(1179, 635);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Basic";
             // 
@@ -105,7 +105,7 @@
             this.muscleSequenceView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.muscleSequenceView.Location = new System.Drawing.Point(3, 3);
             this.muscleSequenceView.Name = "muscleSequenceView";
-            this.muscleSequenceView.Size = new System.Drawing.Size(245, 389);
+            this.muscleSequenceView.Size = new System.Drawing.Size(1173, 629);
             this.muscleSequenceView.TabIndex = 0;
             // 
             // tabPage2
@@ -541,14 +541,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 4;
             this.ButtonText = "Muscles";
-            this.ClientSize = new System.Drawing.Size(259, 421);
             this.Controls.Add(this.tabControl1);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MuscleControl";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
-            this.Text = "Muscles";
+            this.Size = new System.Drawing.Size(1187, 661);
             this.ToolStripName = "Advanced";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

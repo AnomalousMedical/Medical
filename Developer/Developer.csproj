@@ -101,7 +101,7 @@
       <DependentUpon>FossaPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.Designer.cs">
       <DependentUpon>NavigationEditor.cs</DependentUpon>

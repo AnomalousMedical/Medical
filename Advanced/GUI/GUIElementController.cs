@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using Medical.Controller;
 using ComponentFactory.Krypton.Ribbon;
+using ComponentFactory.Krypton.Docking;
+using ComponentFactory.Krypton.Navigator;
 
 namespace Medical.GUI
 {
@@ -54,13 +56,13 @@ namespace Medical.GUI
 
         private List<GUIElement> guiElements = new List<GUIElement>();
         private List<GUIElement> updatingGUIElements = new List<GUIElement>();
-        private DockPanel dock;
+        private KryptonDockingManager dock;
         private KryptonRibbonTab tab;
         private SortedDictionary<String, RibbonEntry> tabs = new SortedDictionary<string, RibbonEntry>();
         private bool enabled = false;
         private MedicalController medicalController;
 
-        public GUIElementController(DockPanel dock, KryptonRibbonTab tab, MedicalController controller)
+        public GUIElementController(KryptonDockingManager dock, KryptonRibbonTab tab, MedicalController controller)
         {
             this.dock = dock;
             this.tab = tab;
@@ -87,7 +89,7 @@ namespace Medical.GUI
         /// <param name="filename"></param>
         public void saveWindowFile(String filename)
         {
-            dock.SaveAsXml(filename);
+            //dock.SaveAsXml(filename);
         }
 
         /// <summary>
@@ -98,22 +100,23 @@ namespace Medical.GUI
         /// <returns></returns>
         public bool restoreWindowFile(String filename, DeserializeDockContent callback)
         {
-            bool restore = File.Exists(filename);
-            if (restore)
-            {
-                //Close all windows
-                for (int index = dock.Contents.Count - 1; index >= 0; index--)
-                {
-                    IDockContent content = dock.Contents[index] as IDockContent;
-                    if (content != null)
-                    {
-                        content.DockHandler.Close();
-                    }
-                }
-                //Load the file
-                dock.LoadFromXml(filename, callback);
-            }
-            return restore;
+            return false;
+            //bool restore = File.Exists(filename);
+            //if (restore)
+            //{
+            //    //Close all windows
+            //    for (int index = dock.Contents.Count - 1; index >= 0; index--)
+            //    {
+            //        IDockContent content = dock.Contents[index] as IDockContent;
+            //        if (content != null)
+            //        {
+            //            content.DockHandler.Close();
+            //        }
+            //    }
+            //    //Load the file
+            //    dock.LoadFromXml(filename, callback);
+            //}
+            //return restore;
         }
 
         /// <summary>
@@ -137,24 +140,8 @@ namespace Medical.GUI
             {
                 if (element.RestoreFromHidden)
                 {
-                    element.Show(dock);
+                    showDockContent(element);
                 }
-            }
-        }
-
-        public IDockContent ActiveDocument
-        {
-            get
-            {
-                return dock.ActiveDocument;
-            }
-        }
-
-        public DockPanel DockPanel
-        {
-            get
-            {
-                return dock;
             }
         }
 
@@ -185,8 +172,10 @@ namespace Medical.GUI
             }
             KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
             button.TextLine1 = element.ButtonText;
-            button.ImageLarge = element.Icon.ToBitmap();
-            button.ButtonType = GroupButtonType.Check;
+            if (element.Icon != null)
+            {
+                button.ImageLarge = element.Icon.ToBitmap();
+            }
             toolStrip.CurrentTriple.Items.Add(button);
             element._setController(this, button);
         }
@@ -205,24 +194,40 @@ namespace Medical.GUI
 
         public DockContent restoreWindow(String persistString)
         {
-            foreach (GUIElement element in guiElements)
-            {
-                if (element.matchesPersistString(persistString))
-                {
-                    return element;
-                }
-            }
+            //foreach (GUIElement element in guiElements)
+            //{
+            //    if (element.matchesPersistString(persistString))
+            //    {
+            //        return element;
+            //    }
+            //}
             return null;
         }
 
-        public void showDockContent(DockContent content)
+        public void showDockContent(GUIElement content)
         {
-            content.Show(dock);
+            if (content.ShowHint == DockState.DockLeft)
+            {
+                dock.AddToWorkspace("Right", new KryptonPage[] { content.Page });
+            }
+            else if (content.ShowHint == DockState.DockBottom)
+            {
+                dock.AddToWorkspace("Bottom", new KryptonPage[] { content.Page });
+            }
+            else
+            {
+                dock.AddToWorkspace("Left", new KryptonPage[] { content.Page });
+            }
         }
 
-        public void hideDockContent(DockContent content)
+        public void hideDockContent(GUIElement content)
         {
-            content.Hide();
+            dock.RemovePage(content.Page, false);
+        }
+
+        public bool isVisible(GUIElement element)
+        {
+            return dock.ContainsPage(element.Page);
         }
 
         public void alertGUISceneUnloading()

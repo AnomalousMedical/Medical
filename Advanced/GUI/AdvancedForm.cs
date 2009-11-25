@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Medical.Controller;
 using WeifenLuo.WinFormsUI.Docking;
 using ComponentFactory.Krypton.Ribbon;
+using ComponentFactory.Krypton.Docking;
 
 namespace Medical.GUI
 {
@@ -44,6 +45,10 @@ namespace Medical.GUI
             threeWindowLayoutCommand.Execute += new EventHandler(threeWindowLayoutCommand_Execute);
             fourWindowLayoutCommand.Execute += new EventHandler(fourWindowLayoutCommand_Execute);
             cloneWindowCommand.Execute += new EventHandler(cloneWindowCommand_Execute);
+
+            dockingManager.ManageWorkspace("Left", leftWorkspace);
+            dockingManager.ManageWorkspace("Right", rightWorkspace);
+            dockingManager.ManageWorkspace("Bottom", bottomWorkspace);
         }
 
         public void initialize(MedicalFormController controller)
@@ -64,6 +69,14 @@ namespace Medical.GUI
             get
             {
                 return dockPanel;
+            }
+        }
+
+        public KryptonDockingManager DockingManager
+        {
+            get
+            {
+                return dockingManager;
             }
         }
 

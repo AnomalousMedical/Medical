@@ -79,7 +79,7 @@
             this.timeTrackBar.MoveThumb = true;
             this.timeTrackBar.Name = "timeTrackBar";
             this.timeTrackBar.SelectedMark = null;
-            this.timeTrackBar.Size = new System.Drawing.Size(639, 47);
+            this.timeTrackBar.Size = new System.Drawing.Size(1116, 47);
             this.timeTrackBar.TabIndex = 3;
             this.timeTrackBar.TickMenu = null;
             // 
@@ -87,7 +87,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(563, 35);
+            this.label1.Location = new System.Drawing.Point(1040, 35);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 4;
@@ -97,7 +97,7 @@
             // 
             this.timeUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.timeUpDown.DecimalPlaces = 2;
-            this.timeUpDown.Location = new System.Drawing.Point(630, 32);
+            this.timeUpDown.Location = new System.Drawing.Point(1107, 32);
             this.timeUpDown.Maximum = new decimal(new int[] {
             60,
             0,
@@ -153,7 +153,7 @@
             this.lockButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lockButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.lockButton.AutoSize = true;
-            this.lockButton.Location = new System.Drawing.Point(657, 3);
+            this.lockButton.Location = new System.Drawing.Point(1134, 3);
             this.lockButton.Name = "lockButton";
             this.lockButton.Size = new System.Drawing.Size(41, 23);
             this.lockButton.TabIndex = 7;
@@ -167,7 +167,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonImageIndex = 4;
             this.ButtonText = "Movement Sequence";
-            this.ClientSize = new System.Drawing.Size(710, 57);
             this.Controls.Add(this.timeUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.timeTrackBar);
@@ -178,7 +177,8 @@
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MovementStateControl";
-            this.Text = "Movement Sequence";
+            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
+            this.Size = new System.Drawing.Size(1187, 578);
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).EndInit();
             this.tickMenu.ResumeLayout(false);
             this.barMenu.ResumeLayout(false);

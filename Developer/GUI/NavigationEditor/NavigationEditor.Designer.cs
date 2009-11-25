@@ -504,7 +504,6 @@
             this.Controls.Add(this.mainMenu);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
-            this.MainMenuStrip = this.mainMenu;
             this.Name = "NavigationStateSelector";
             this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
             this.Text = "Navigation State Editor";

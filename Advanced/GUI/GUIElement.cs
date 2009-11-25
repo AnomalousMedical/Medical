@@ -8,21 +8,27 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using Medical.Controller;
 using ComponentFactory.Krypton.Ribbon;
+using System.Drawing;
+using ComponentFactory.Krypton.Navigator;
 
 namespace Medical.GUI
 {
-    public class GUIElement : DockContent
+    public class GUIElement : UserControl
     {
         private GUIElementController controller;
         private bool updating = false;
         private Keys shortcutKey = Keys.None;
         private KryptonRibbonGroupButton button;
+        private KryptonPage page;
 
         public GUIElement()
         {
             InitializeComponent();
             ToolStripName = "Default";
-            this.VisibleChanged += new EventHandler(content_VisibleChanged);
+
+            page = new KryptonPage();
+            this.Dock = DockStyle.Fill;
+            page.Controls.Add(this);
         }
 
         public Keys ShortcutKey
@@ -49,16 +55,22 @@ namespace Medical.GUI
             set;
         }
 
+        public new String Text
+        {
+            get
+            {
+                return page.Text;
+            }
+            set
+            {
+                page.Text = value;
+                page.TextDescription = value;
+            }
+        }
+
         public void shortcutKeyPressed(ShortcutEventCommand shortcut)
         {
-            if (this.Visible)
-            {
-                this.Hide();
-            }
-            else
-            {
-                controller.showDockContent(this);
-            }
+            button_Click(null, null);
         }
 
         protected override void Dispose(bool disposing)
@@ -140,14 +152,9 @@ namespace Medical.GUI
             }
         }
 
-        private void content_VisibleChanged(object sender, EventArgs e)
-        {
-            button.Checked = this.Visible;
-        }
-
         private void button_Click(object sender, EventArgs e)
         {
-            if (this.Visible)
+            if (controller.isVisible(this))
             {
                 controller.hideDockContent(this);
             }
@@ -196,6 +203,22 @@ namespace Medical.GUI
             this.HideOnClose = true;
             this.Name = "GUIElement";
             this.ResumeLayout(false);
+        }
+
+        public Icon Icon { get; set; }
+
+        public DockAreas DockAreas { get; set; }
+
+        public DockState ShowHint { get; set; }
+
+        public bool HideOnClose { get; set; }
+
+        public KryptonPage Page
+        {
+            get
+            {
+                return page;
+            }
         }
     }
 }

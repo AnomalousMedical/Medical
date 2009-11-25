@@ -100,7 +100,7 @@ namespace Medical.Controller
                 imageRenderer = new ImageRenderer(medicalController, drawingWindowController, null, null);
                 stateController = new MedicalStateController(imageRenderer, medicalController);
 
-                guiElements = new GUIElementController(advancedForm.DockPanel, advancedForm.HomeTab, medicalController);
+                guiElements = new GUIElementController(advancedForm.DockingManager, advancedForm.HomeTab, medicalController);
                 guiElements.EnableToolbars = true;
 
                 //Add common gui elements
@@ -108,7 +108,7 @@ namespace Medical.Controller
                 guiElements.addGUIElement(layersControl);
 
                 PictureControl pictureControl = new PictureControl();
-                pictureControl.initialize(imageRenderer, drawingWindowController);
+                pictureControl.initialize(imageRenderer, drawingWindowController, advancedForm.DockPanel);
                 guiElements.addGUIElement(pictureControl);
 
                 stateGUI = new MedicalStateGUI();

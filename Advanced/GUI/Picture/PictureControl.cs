@@ -19,6 +19,7 @@ namespace Medical.GUI
     {
         private ImageRenderer imageRenderer;
         private DrawingWindowController drawingWindowController;
+        private DockPanel dockPanel;
 
         public PictureControl()
         {
@@ -26,10 +27,11 @@ namespace Medical.GUI
             aaCombo.SelectedIndex = 0;
         }
 
-        public void initialize(ImageRenderer imageRenderer, DrawingWindowController drawingWindowController)
+        public void initialize(ImageRenderer imageRenderer, DrawingWindowController drawingWindowController, DockPanel dockPanel)
         {
             this.imageRenderer = imageRenderer;
             this.drawingWindowController = drawingWindowController;
+            this.dockPanel = dockPanel;
         }
 
         public void createShortcuts(ShortcutController shortcuts)
@@ -63,7 +65,7 @@ namespace Medical.GUI
                     DockPanelPictureWindow picture = new DockPanelPictureWindow();
                     picture.initialize(bitmap);
                     picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Text, imageProperties.Width, imageProperties.Height);
-                    picture.Show(DockPanel, DockState.Float);
+                    picture.Show(dockPanel, DockState.Float);
                 }
             }
         }
