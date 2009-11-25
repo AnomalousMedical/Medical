@@ -48,9 +48,9 @@ namespace Medical.GUI
             dockingManager.ManageWorkspace("Left", leftWorkspace);
             dockingManager.ManageWorkspace("Right", rightWorkspace);
             dockingManager.ManageWorkspace("Bottom", bottomWorkspace);
+            dockingManager.ManageFloating("Floating", this);
 
             drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace);
-            drawingWindowDockingManager.ManageFloating("Floating", this);
         }
 
         public void initialize(MedicalFormController controller)
