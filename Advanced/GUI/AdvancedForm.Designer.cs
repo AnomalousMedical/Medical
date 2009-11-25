@@ -29,24 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
-            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient1 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient2 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient3 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient4 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient5 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
-            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdvancedForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.ribbon = new ComponentFactory.Krypton.Ribbon.KryptonRibbon();
             this.changeSceneMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
@@ -109,6 +93,8 @@
             this.kryptonSplitContainer1 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
             this.kryptonSplitContainer2 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
             this.kryptonSplitContainer3 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
+            this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
+            this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftWorkspace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightWorkspace)).BeginInit();
@@ -131,6 +117,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3.Panel2)).BeginInit();
             this.kryptonSplitContainer3.Panel2.SuspendLayout();
             this.kryptonSplitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -140,65 +127,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // dockPanel
-            // 
-            this.dockPanel.ActiveAutoHideContent = null;
-            this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockPanel.DockBackColor = System.Drawing.SystemColors.Control;
-            this.dockPanel.DockBottomPortion = 100;
-            this.dockPanel.DockLeftPortion = 275;
-            this.dockPanel.DockRightPortion = 225;
-            this.dockPanel.DockTopPortion = 100;
-            this.dockPanel.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
-            this.dockPanel.Location = new System.Drawing.Point(0, 0);
-            this.dockPanel.Name = "dockPanel";
-            this.dockPanel.Size = new System.Drawing.Size(336, 307);
-            dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
-            autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
-            tabGradient1.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient1.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            autoHideStripSkin1.TabGradient = tabGradient1;
-            dockPanelSkin1.AutoHideStripSkin = autoHideStripSkin1;
-            tabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight;
-            tabGradient2.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient1.ActiveTabGradient = tabGradient2;
-            dockPanelGradient2.EndColor = System.Drawing.SystemColors.Control;
-            dockPanelGradient2.StartColor = System.Drawing.SystemColors.Control;
-            dockPaneStripGradient1.DockStripGradient = dockPanelGradient2;
-            tabGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
-            tabGradient3.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripGradient1.InactiveTabGradient = tabGradient3;
-            dockPaneStripSkin1.DocumentGradient = dockPaneStripGradient1;
-            tabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption;
-            tabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
-            tabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
-            dockPaneStripToolWindowGradient1.ActiveCaptionGradient = tabGradient4;
-            tabGradient5.EndColor = System.Drawing.SystemColors.Control;
-            tabGradient5.StartColor = System.Drawing.SystemColors.Control;
-            tabGradient5.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripToolWindowGradient1.ActiveTabGradient = tabGradient5;
-            dockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
-            dockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
-            dockPaneStripToolWindowGradient1.DockStripGradient = dockPanelGradient3;
-            tabGradient6.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            tabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
-            tabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            tabGradient6.TextColor = System.Drawing.SystemColors.ControlText;
-            dockPaneStripToolWindowGradient1.InactiveCaptionGradient = tabGradient6;
-            tabGradient7.EndColor = System.Drawing.Color.Transparent;
-            tabGradient7.StartColor = System.Drawing.Color.Transparent;
-            tabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark;
-            dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
-            dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
-            dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
-            this.dockPanel.Skin = dockPanelSkin1;
-            this.dockPanel.TabIndex = 10;
             // 
             // kryptonManager
             // 
@@ -216,7 +144,6 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
@@ -596,7 +523,7 @@
             // 
             // kryptonSplitContainer3.Panel1
             // 
-            this.kryptonSplitContainer3.Panel1.Controls.Add(this.dockPanel);
+            this.kryptonSplitContainer3.Panel1.Controls.Add(this.drawingWindowWorkspace);
             // 
             // kryptonSplitContainer3.Panel2
             // 
@@ -604,6 +531,27 @@
             this.kryptonSplitContainer3.Size = new System.Drawing.Size(336, 426);
             this.kryptonSplitContainer3.SplitterDistance = 307;
             this.kryptonSplitContainer3.TabIndex = 0;
+            // 
+            // drawingWindowWorkspace
+            // 
+            this.drawingWindowWorkspace.AutoHiddenHost = false;
+            this.drawingWindowWorkspace.CompactFlags = ((ComponentFactory.Krypton.Workspace.CompactFlags)(((ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptyCells | ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptySequences)
+                        | ComponentFactory.Krypton.Workspace.CompactFlags.PromoteLeafs)));
+            this.drawingWindowWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.drawingWindowWorkspace.Location = new System.Drawing.Point(0, 0);
+            this.drawingWindowWorkspace.Name = "drawingWindowWorkspace";
+            // 
+            // 
+            // 
+            this.drawingWindowWorkspace.Root.UniqueName = "C357DFF886984553EE98BA67648EAF59";
+            this.drawingWindowWorkspace.ShowMaximizeButton = false;
+            this.drawingWindowWorkspace.Size = new System.Drawing.Size(336, 307);
+            this.drawingWindowWorkspace.TabIndex = 0;
+            this.drawingWindowWorkspace.TabStop = true;
+            // 
+            // drawingWindowDockingManager
+            // 
+            this.drawingWindowDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
             // AdvancedForm
             // 
@@ -641,6 +589,7 @@
             this.kryptonSplitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3)).EndInit();
             this.kryptonSplitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -649,7 +598,6 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbon ribbon;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab homeTab;
@@ -712,6 +660,8 @@
         private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer1;
         private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer2;
         private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer3;
+        private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace drawingWindowWorkspace;
+        private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
 
     }
 }

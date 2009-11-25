@@ -91,7 +91,7 @@ namespace Medical.Controller
 
                 splashScreen.stepProgress(10);
 
-                dockProvider = new DockPanelDockProvider(advancedForm.DockPanel);
+                dockProvider = new KryptonDockProvider(advancedForm.DrawingWindowDockingManager, advancedForm.DrawingWindowWorkspace);
                 drawingWindowController = new DrawingWindowController(dockProvider);
                 drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
@@ -108,7 +108,7 @@ namespace Medical.Controller
                 guiElements.addGUIElement(layersControl);
 
                 PictureControl pictureControl = new PictureControl();
-                pictureControl.initialize(imageRenderer, drawingWindowController, advancedForm.DockPanel);
+                pictureControl.initialize(imageRenderer, drawingWindowController, null);
                 guiElements.addGUIElement(pictureControl);
 
                 stateGUI = new MedicalStateGUI();

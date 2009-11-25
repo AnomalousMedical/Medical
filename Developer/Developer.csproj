@@ -50,6 +50,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>E:\Development\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Toolkit\bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="ComponentFactory.Krypton.Workspace, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Workspace\bin\ComponentFactory.Krypton.Workspace.dll</HintPath>
+    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
@@ -86,7 +90,7 @@
   <ItemGroup>
     <Compile Include="Controller\DeveloperController.cs" />
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.Designer.cs">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
@@ -95,7 +99,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.Designer.cs">
       <DependentUpon>FossaPresetEditor.cs</DependentUpon>
@@ -107,7 +111,7 @@
       <DependentUpon>NavigationEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.Designer.cs">
       <DependentUpon>NavigationMenuEditor.cs</DependentUpon>
@@ -119,13 +123,13 @@
       <DependentUpon>PicturePreviewPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.Designer.cs">
       <DependentUpon>PresetLayerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.Designer.cs">
       <DependentUpon>BonePresetSaveWindow.cs</DependentUpon>

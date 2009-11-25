@@ -49,6 +49,8 @@ namespace Medical.GUI
             dockingManager.ManageWorkspace("Left", leftWorkspace);
             dockingManager.ManageWorkspace("Right", rightWorkspace);
             dockingManager.ManageWorkspace("Bottom", bottomWorkspace);
+
+            drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace);
         }
 
         public void initialize(MedicalFormController controller)
@@ -64,11 +66,19 @@ namespace Medical.GUI
             }
         }
 
-        public DockPanel DockPanel
+        public KryptonDockingManager DrawingWindowDockingManager
         {
             get
             {
-                return dockPanel;
+                return drawingWindowDockingManager;
+            }
+        }
+
+        public KryptonDockableWorkspace DrawingWindowWorkspace
+        {
+            get
+            {
+                return drawingWindowWorkspace;
             }
         }
 
