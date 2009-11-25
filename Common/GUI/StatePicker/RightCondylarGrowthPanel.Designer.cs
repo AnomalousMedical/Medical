@@ -209,7 +209,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.makeNormalButton);
             this.Controls.Add(this.undoButton);
             this.Controls.Add(this.panel9);

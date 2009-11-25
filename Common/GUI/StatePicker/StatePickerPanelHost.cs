@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
@@ -21,6 +22,11 @@ namespace Medical.GUI
 
         public void showPanel(StatePickerPanel panel)
         {
+            Color panelColor = KryptonManager.CurrentGlobalPalette.GetBackColor1(panelHost.PanelBackStyle, PaletteState.ContextNormal);
+            if (panel.BackColor != panelColor)
+            {
+                panel.BackColor = panelColor;
+            }
             panelHost.Controls.Add(panel);
             if (panel.AutoSize == true)
             {
