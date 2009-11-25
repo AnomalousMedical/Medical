@@ -191,12 +191,6 @@
     <Compile Include="GUI\MedicalForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\MuscleSequence\MuscleSequenceView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\MuscleSequence\MuscleSequenceView.Designer.cs">
-      <DependentUpon>MuscleSequenceView.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Navigation\NavigationOverlay.cs" />
     <Compile Include="GUI\Navigation\NavigationButton.cs">
       <SubType>Code</SubType>
@@ -361,10 +355,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\MedicalForm.resx">
       <DependentUpon>MedicalForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\MuscleSequence\MuscleSequenceView.resx">
-      <DependentUpon>MuscleSequenceView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Picture\PictureWindow.resx">

@@ -175,6 +175,12 @@
     <Compile Include="GUI\Measurement\MeasurementView.Designer.cs">
       <DependentUpon>MeasurementView.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\MuscleSequence\MuscleSequenceView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\MuscleSequence\MuscleSequenceView.Designer.cs">
+      <DependentUpon>MuscleSequenceView.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Muscles\MuscleControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +285,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Measurement\MeasurementView.resx">
       <DependentUpon>MeasurementView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\MuscleSequence\MuscleSequenceView.resx">
+      <DependentUpon>MuscleSequenceView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Muscles\MuscleControl.resx">
