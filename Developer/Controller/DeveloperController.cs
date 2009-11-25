@@ -81,114 +81,121 @@ namespace Medical.Controller
             ProgressDialog splashScreen = new ProgressDialog(Resources.articulometricsdeveloper);
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
-
-            developerForm = new DeveloperForm();
-            developerForm.initialize(this);
-            medicalController = new MedicalController();
-            medicalController.intialize(developerForm);
-
-            splashScreen.stepProgress(10);
-
-            dockProvider = new DockPanelDockProvider(developerForm.DockPanel);
-            drawingWindowController = new DrawingWindowController(dockProvider);
-            drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
-
-            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
-
-            imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
-            stateController = new MedicalStateController(imageRenderer, medicalController);
-            layerController = new LayerController();
-
-            guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);
-            guiElements.EnableToolbars = true;
-
-            //Add common gui elements
-            LayersControl layersControl = new LayersControl();
-            guiElements.addGUIElement(layersControl);
-
-            PictureControl pictureControl = new PictureControl();
-            pictureControl.initialize(imageRenderer, drawingWindowController);
-            guiElements.addGUIElement(pictureControl);
-
-            stateGUI = new MedicalStateGUI();
-            stateGUI.initialize(stateController);
-            stateGUI.CreateStateCallback = createStateCallback;
-            guiElements.addGUIElement(stateGUI);
-
-            SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
-            savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
-            guiElements.addGUIElement(savedCameraGUI);
-
-            scenePicker.initialize();
-
-            //Add specific gui elements
-            DiskControl discControl = new DiskControl();
-            guiElements.addGUIElement(discControl);
-            
-            MandibleOffsetControl mandibleOffset = new MandibleOffsetControl();
-            guiElements.addGUIElement(mandibleOffset);
-            
-            MandibleSizeControl mandibleSize = new MandibleSizeControl();
-            mandibleSize.initialize(medicalController);
-            guiElements.addGUIElement(mandibleSize);
-
-            MuscleControl muscleControl = new MuscleControl();
-            guiElements.addGUIElement(muscleControl);
-
-            TeethControl teethControl = new TeethControl();
-            teethControl.initialize(medicalController);
-            guiElements.addGUIElement(teethControl);
-
-            FossaControl fossaControl = new FossaControl();
-            guiElements.addGUIElement(fossaControl);
-
-            movementState = new MovementStateControl();
-            guiElements.addGUIElement(movementState);
-
-            //Editor
-            BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
-            bonePresetSaver.initialize(imageRenderer, stateController);
-            guiElements.addGUIElement(bonePresetSaver);
-
-            PresetLayerEditor presetLayers = new PresetLayerEditor();
-            presetLayers.initialize(layerController, imageRenderer);
-            guiElements.addGUIElement(presetLayers);
-
-            DiscPresetEditor discPresetEditor = new DiscPresetEditor();
-            discPresetEditor.initialize(imageRenderer, stateController);
-            guiElements.addGUIElement(discPresetEditor);
-
-            FossaPresetEditor fossaPresetEditor = new FossaPresetEditor();
-            fossaPresetEditor.initialize(imageRenderer, stateController);
-            guiElements.addGUIElement(fossaPresetEditor);
-
-            NavigationEditor navEditor = new NavigationEditor(navigationController, drawingWindowController);
-            guiElements.addGUIElement(navEditor);
-
-            NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor, drawingWindowController);
-            guiElements.addGUIElement(menuEditor);
-
-            options = new Options();
-
-            splashScreen.stepProgress(70);
-
-            loadDefaultScene();
-
-            if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            try
             {
-                setOneWindowLayout();
+
+                developerForm = new DeveloperForm();
+                developerForm.initialize(this);
+                medicalController = new MedicalController();
+                medicalController.intialize(developerForm);
+
+                splashScreen.stepProgress(10);
+
+                dockProvider = new DockPanelDockProvider(developerForm.DockPanel);
+                drawingWindowController = new DrawingWindowController(dockProvider);
+                drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+
+                navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+
+                imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
+                stateController = new MedicalStateController(imageRenderer, medicalController);
+                layerController = new LayerController();
+
+                guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);
+                guiElements.EnableToolbars = true;
+
+                //Add common gui elements
+                LayersControl layersControl = new LayersControl();
+                guiElements.addGUIElement(layersControl);
+
+                PictureControl pictureControl = new PictureControl();
+                pictureControl.initialize(imageRenderer, drawingWindowController);
+                guiElements.addGUIElement(pictureControl);
+
+                stateGUI = new MedicalStateGUI();
+                stateGUI.initialize(stateController);
+                stateGUI.CreateStateCallback = createStateCallback;
+                guiElements.addGUIElement(stateGUI);
+
+                SavedCameraGUI savedCameraGUI = new SavedCameraGUI();
+                savedCameraGUI.initialize(drawingWindowController, MedicalConfig.CamerasFile, navigationController);
+                guiElements.addGUIElement(savedCameraGUI);
+
+                scenePicker.initialize();
+
+                //Add specific gui elements
+                DiskControl discControl = new DiskControl();
+                guiElements.addGUIElement(discControl);
+
+                MandibleOffsetControl mandibleOffset = new MandibleOffsetControl();
+                guiElements.addGUIElement(mandibleOffset);
+
+                MandibleSizeControl mandibleSize = new MandibleSizeControl();
+                mandibleSize.initialize(medicalController);
+                guiElements.addGUIElement(mandibleSize);
+
+                MuscleControl muscleControl = new MuscleControl();
+                guiElements.addGUIElement(muscleControl);
+
+                TeethControl teethControl = new TeethControl();
+                teethControl.initialize(medicalController);
+                guiElements.addGUIElement(teethControl);
+
+                FossaControl fossaControl = new FossaControl();
+                guiElements.addGUIElement(fossaControl);
+
+                movementState = new MovementStateControl();
+                guiElements.addGUIElement(movementState);
+
+                //Editor
+                BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
+                bonePresetSaver.initialize(imageRenderer, stateController);
+                guiElements.addGUIElement(bonePresetSaver);
+
+                PresetLayerEditor presetLayers = new PresetLayerEditor();
+                presetLayers.initialize(layerController, imageRenderer);
+                guiElements.addGUIElement(presetLayers);
+
+                DiscPresetEditor discPresetEditor = new DiscPresetEditor();
+                discPresetEditor.initialize(imageRenderer, stateController);
+                guiElements.addGUIElement(discPresetEditor);
+
+                FossaPresetEditor fossaPresetEditor = new FossaPresetEditor();
+                fossaPresetEditor.initialize(imageRenderer, stateController);
+                guiElements.addGUIElement(fossaPresetEditor);
+
+                NavigationEditor navEditor = new NavigationEditor(navigationController, drawingWindowController);
+                guiElements.addGUIElement(navEditor);
+
+                NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor, drawingWindowController);
+                guiElements.addGUIElement(menuEditor);
+
+                options = new Options();
+
+                splashScreen.stepProgress(70);
+
+                loadDefaultScene();
+
+                if (!guiElements.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+                {
+                    setOneWindowLayout();
+                }
+
+                createNewSequence();
+
+                splashScreen.stepProgress(20);
+
+                developerForm.Show();
+                developerForm.Activate();
+                developerForm.Invalidate(true);
+
+                splashScreen.fadeAway();
+                medicalController.start();
             }
-
-            createNewSequence();
-
-            splashScreen.stepProgress(20);
-
-            developerForm.Show();
-            developerForm.Activate();
-            developerForm.Invalidate(true);
-
-            splashScreen.fadeAway();
-            medicalController.start();
+            finally
+            {
+                splashScreen.fadeAway();
+            }
         }
 
         /// <summary>

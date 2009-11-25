@@ -98,81 +98,88 @@ namespace Medical.Controller
             ProgressDialog splashScreen = new ProgressDialog(Resources.ArticulometricsSplash);
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
-
-            shortcutController = new ShortcutController();
-            basicForm = new BasicForm(shortcutController);
-            medicalController = new MedicalController();
-            medicalController.intialize(basicForm);
-            medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
-
-            splashScreen.stepProgress(10);
-
-            dockProvider = new KryptonDockProvider(basicForm.DockingManager, basicForm.DockableWorkspace);
-            drawingWindowController = new DrawingWindowController(dockProvider);
-            drawingWindowController.AllowRotation = false;
-            drawingWindowController.AllowZoom = false;
-            drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
-            windowPresetController = new DrawingWindowPresetController(drawingWindowController);
-
-            navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
-            layerController = new LayerController();
-            movementSequenceController = new MovementSequenceController(medicalController);
-
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
-            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            watermark = new SideLogoWatermark("SourceWatermark", "PiperClinic", 150, 60);
-            //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
-            //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
-            watermark.createOverlays();
-            watermarkController = new WatermarkController(watermark, drawingWindowController);
-
-            //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
-            background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
-            backgroundController = new BackgroundController(background, drawingWindowController);
-
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
-            this.SceneLoaded += teethMover.sceneLoaded;
-            this.SceneUnloading += teethMover.sceneUnloading;
-            TeethController.TeethMover = teethMover;
-            medicalController.FixedLoopUpdate += teethMover.update;
-
-            imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
-            imageRenderer.Watermark = watermark;
-            imageRenderer.Background = background;
-            stateController = new MedicalStateController(imageRenderer, medicalController);
-
-            scenePicker = new ScenePicker();
-            scenePicker.initialize();
-
-            //Configure distort mode
-            distortionController = new DistortionController();
-            distortionController.Finished += new StatePickerFinished(statePicker_Finished);
-            distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
-            mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController);
-            distortionController.addDistortionWizard(mriWizard);
-            basicForm.createDistortionMenu(distortionController.Wizards);
-
-            basicForm.initialize(this);
-
-            splashScreen.stepProgress(70);
-
-            openDefaultScene();
-
-            //if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+            try
             {
-                windowPresetController.setPresetSet("Primary");
+                shortcutController = new ShortcutController();
+                basicForm = new BasicForm(shortcutController);
+                medicalController = new MedicalController();
+                medicalController.intialize(basicForm);
+                medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
+
+                splashScreen.stepProgress(10);
+
+                dockProvider = new KryptonDockProvider(basicForm.DockingManager, basicForm.DockableWorkspace);
+                drawingWindowController = new DrawingWindowController(dockProvider);
+                drawingWindowController.AllowRotation = false;
+                drawingWindowController.AllowZoom = false;
+                drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
+                windowPresetController = new DrawingWindowPresetController(drawingWindowController);
+
+                navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+                layerController = new LayerController();
+                movementSequenceController = new MovementSequenceController(medicalController);
+
+                OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
+                OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+                watermark = new SideLogoWatermark("SourceWatermark", "PiperClinic", 150, 60);
+                //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
+                //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
+                watermark.createOverlays();
+                watermarkController = new WatermarkController(watermark, drawingWindowController);
+
+                //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
+                background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
+                backgroundController = new BackgroundController(background, drawingWindowController);
+
+                teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+                this.SceneLoaded += teethMover.sceneLoaded;
+                this.SceneUnloading += teethMover.sceneUnloading;
+                TeethController.TeethMover = teethMover;
+                medicalController.FixedLoopUpdate += teethMover.update;
+
+                imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
+                imageRenderer.Watermark = watermark;
+                imageRenderer.Background = background;
+                stateController = new MedicalStateController(imageRenderer, medicalController);
+
+                scenePicker = new ScenePicker();
+                scenePicker.initialize();
+
+                //Configure distort mode
+                distortionController = new DistortionController();
+                distortionController.Finished += new StatePickerFinished(statePicker_Finished);
+                distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
+                mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController);
+                distortionController.addDistortionWizard(mriWizard);
+                basicForm.createDistortionMenu(distortionController.Wizards);
+
+                basicForm.initialize(this);
+
+                splashScreen.stepProgress(70);
+
+                openDefaultScene();
+
+                //if (!viewMode.restoreWindowFile(MedicalConfig.WindowsFile, getDockContent))
+                {
+                    windowPresetController.setPresetSet("Primary");
+                }
+
+                options = new Options();
+
+                splashScreen.stepProgress(20);
+
+                basicForm.Show();
+                basicForm.Activate();
+                basicForm.Invalidate(true);
+
+                splashScreen.fadeAway();
+
+                medicalController.start();
             }
-
-            options = new Options();
-
-            splashScreen.stepProgress(20);
-
-            basicForm.Show();
-            basicForm.Activate();
-            basicForm.Invalidate(true);
-            
-            splashScreen.fadeAway();
-            medicalController.start();
+            finally
+            {
+                splashScreen.fadeAway();
+            }
         }
 
         void medicalController_PumpMessage(ref Message msg)

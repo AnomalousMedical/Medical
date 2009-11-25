@@ -110,10 +110,13 @@ namespace Medical.GUI
             {
                 components.Dispose();
             }
-            layerGUIController.Dispose();
-            openPatient.Dispose();
-            savePatient.Dispose();
-            stateGUIController.Dispose();
+            if (layerGUIController != null)
+            {
+                layerGUIController.Dispose();
+                openPatient.Dispose();
+                savePatient.Dispose();
+                stateGUIController.Dispose();
+            }
             base.Dispose(disposing);
         }
 
