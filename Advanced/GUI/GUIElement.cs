@@ -7,23 +7,22 @@ using System.Windows.Forms;
 using Engine.Platform;
 using Engine.ObjectManagement;
 using Medical.Controller;
+using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {
     public class GUIElement : DockContent
     {
-        private ToolStripButton button = new ToolStripButton();
         private GUIElementController controller;
         private bool updating = false;
         private Keys shortcutKey = Keys.None;
+        private KryptonRibbonGroupButton button;
 
         public GUIElement()
         {
             InitializeComponent();
             ToolStripName = "Default";
             this.VisibleChanged += new EventHandler(content_VisibleChanged);
-            button.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            button.Click += new EventHandler(button_Click);
         }
 
         public Keys ShortcutKey
@@ -40,26 +39,14 @@ namespace Medical.GUI
 
         public String ButtonText
         {
-            get
-            {
-                return button.Text;
-            }
-            set
-            {
-                button.Text = value;
-            }
+            get;
+            set;
         }
 
         public int ButtonImageIndex
         {
-            get
-            {
-                return button.ImageIndex;
-            }
-            set
-            {
-                button.ImageIndex = value;
-            }
+            get;
+            set;
         }
 
         public void shortcutKeyPressed(ShortcutEventCommand shortcut)
@@ -77,11 +64,6 @@ namespace Medical.GUI
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            if (button.Image != null)
-            {
-                button.Image.Dispose();
-            }
-            button.Dispose();
         }
 
         internal void callSceneUnloading()
@@ -119,8 +101,10 @@ namespace Medical.GUI
             return persistString == this.GetType().ToString();
         }
 
-        internal void _setController(GUIElementController controller)
+        internal void _setController(GUIElementController controller, KryptonRibbonGroupButton button)
         {
+            this.button = button;
+            button.Click += button_Click;
             if (updating && controller != null)
             {
                 this.controller.removeUpdatingElement(this);
@@ -185,14 +169,6 @@ namespace Medical.GUI
         //    //}
         //    //button.Image = this.Icon.ToBitmap();
         //}
-
-        internal ToolStripButton Button
-        {
-            get
-            {
-                return button;
-            }
-        }
 
         public MedicalController MedicalController
         {

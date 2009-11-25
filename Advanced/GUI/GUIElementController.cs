@@ -9,9 +9,43 @@ using Engine.ObjectManagement;
 using System.Drawing;
 using System.IO;
 using Medical.Controller;
+using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {
+    class RibbonEntry
+    {
+        private KryptonRibbonGroup group;
+        private KryptonRibbonGroupTriple currentTriple;
+
+        public RibbonEntry(String name)
+        {
+            group = new KryptonRibbonGroup();
+            group.TextLine1 = name;
+        }
+
+        public KryptonRibbonGroup Group
+        {
+            get
+            {
+                return group;
+            }
+        }
+
+        public KryptonRibbonGroupTriple CurrentTriple
+        {
+            get
+            {
+                if (currentTriple == null || currentTriple.Items.Count > 2)
+                {
+                    currentTriple = new KryptonRibbonGroupTriple();
+                    group.Items.Add(currentTriple);
+                }
+                return currentTriple;
+            }
+        }
+    }
+
     public class GUIElementController
     {
         private delegate void CallFixedUpdate(Clock time);
@@ -21,17 +55,16 @@ namespace Medical.GUI
         private List<GUIElement> guiElements = new List<GUIElement>();
         private List<GUIElement> updatingGUIElements = new List<GUIElement>();
         private DockPanel dock;
-        private ToolStripContainer toolStripContainer;
-        private SortedDictionary<String, ToolStrip> toolStrips = new SortedDictionary<string, ToolStrip>();
+        private KryptonRibbonTab tab;
+        private SortedDictionary<String, RibbonEntry> tabs = new SortedDictionary<string, RibbonEntry>();
         private bool enabled = false;
         private MedicalController medicalController;
 
-        public GUIElementController(DockPanel dock, ToolStripContainer toolStrip, MedicalController controller)
+        public GUIElementController(DockPanel dock, KryptonRibbonTab tab, MedicalController controller)
         {
             this.dock = dock;
-            this.toolStripContainer = toolStrip;
+            this.tab = tab;
             controller.FixedLoopUpdate += fixedLoopUpdate;
-            toolStrip.Size = new Size(toolStrip.Size.Width, 40);
             this.medicalController = controller;
         }
 
@@ -125,14 +158,6 @@ namespace Medical.GUI
             }
         }
 
-        public ToolStripContainer ToolStrip
-        {
-            get
-            {
-                return toolStripContainer;
-            }
-        }
-
         public MedicalController MedicalController
         {
             get
@@ -144,37 +169,39 @@ namespace Medical.GUI
         public void addGUIElement(GUIElement element)
         {
             guiElements.Add(element);
-            ToolStrip toolStrip;
-            if (!toolStrips.ContainsKey(element.ToolStripName))
+            RibbonEntry toolStrip;
+            if (!tabs.ContainsKey(element.ToolStripName))
             {
-                toolStrip = new ToolStrip();
-                toolStrip.ImageList = medicalController.ToolStripImages;
-                toolStrip.ImageScalingSize = new Size(32, 32);
-                toolStrips.Add(element.ToolStripName, toolStrip);
+                toolStrip = new RibbonEntry(element.ToolStripName);
+                tabs.Add(element.ToolStripName, toolStrip);
                 if (enabled)
                 {
-                    toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+                    tab.Groups.Add(toolStrip.Group);
                 }
             }
             else
             {
-                toolStrip = toolStrips[element.ToolStripName];
+                toolStrip = tabs[element.ToolStripName];
             }
-            toolStrip.Items.Add(element.Button);
-            element._setController(this);
+            KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
+            button.TextLine1 = element.ButtonText;
+            button.ImageLarge = element.Icon.ToBitmap();
+            button.ButtonType = GroupButtonType.Check;
+            toolStrip.CurrentTriple.Items.Add(button);
+            element._setController(this, button);
         }
 
-        public void removeGUIElement(GUIElement element)
-        {
-            guiElements.Remove(element);
-            ToolStrip toolStrip = toolStrips[element.ToolStripName];
-            toolStrip.Items.Remove(element.Button);
-            if (toolStrip.Items.Count == 0)
-            {
-                toolStripContainer.TopToolStripPanel.Controls.Remove(toolStrip);
-            }
-            element._setController(null);
-        }
+        //public void removeGUIElement(GUIElement element)
+        //{
+        //    guiElements.Remove(element);
+        //    RibbonEntry toolStrip = tabs[element.ToolStripName];
+        //    toolStrip.Items.Remove(element.Button);
+        //    if (toolStrip.Items.Count == 0)
+        //    {
+        //        ribbon.TopToolStripPanel.Controls.Remove(toolStrip);
+        //    }
+        //    element._setController(null);
+        //}
 
         public DockContent restoreWindow(String persistString)
         {
@@ -227,16 +254,16 @@ namespace Medical.GUI
                     enabled = value;
                     if (enabled)
                     {
-                        foreach (ToolStrip toolStrip in toolStrips.Values)
+                        foreach (RibbonEntry toolStrip in tabs.Values)
                         {
-                            toolStripContainer.TopToolStripPanel.Controls.Add(toolStrip);
+                            tab.Groups.Add(toolStrip.Group);
                         }
                     }
                     else
                     {
-                        foreach (ToolStrip toolStrip in toolStrips.Values)
+                        foreach (RibbonEntry toolStrip in tabs.Values)
                         {
-                            toolStripContainer.TopToolStripPanel.Controls.Remove(toolStrip);
+                            tab.Groups.Remove(toolStrip.Group);
                         }
                     }
                 }

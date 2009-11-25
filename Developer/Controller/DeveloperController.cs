@@ -102,7 +102,7 @@ namespace Medical.Controller
                 stateController = new MedicalStateController(imageRenderer, medicalController);
                 layerController = new LayerController();
 
-                guiElements = new GUIElementController(developerForm.DockPanel, developerForm.ToolStrip, medicalController);
+                guiElements = new GUIElementController(developerForm.DockPanel, developerForm.HomeTab, medicalController);
                 guiElements.EnableToolbars = true;
 
                 //Add common gui elements

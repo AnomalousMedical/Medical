@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Medical.Controller;
 using WeifenLuo.WinFormsUI.Docking;
+using ComponentFactory.Krypton.Ribbon;
 
 namespace Medical.GUI
 {
@@ -28,11 +29,11 @@ namespace Medical.GUI
             this.controller = controller;
         }
 
-        public ToolStripContainer ToolStrip
+        public KryptonRibbonTab HomeTab
         {
             get
             {
-                return toolStripContainer;
+                return homeTab;
             }
         }
 
