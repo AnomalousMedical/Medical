@@ -250,6 +250,8 @@
     <None Include="Resources\OpeningGroupIcon.png" />
     <None Include="Resources\StatsIconLarge.png" />
     <None Include="Resources\StatsIconSmall.png" />
+    <None Include="Resources\CloneWindowLarge.png" />
+    <None Include="Resources\CloneWindowSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

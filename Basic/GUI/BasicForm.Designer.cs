@@ -121,6 +121,8 @@
             this.threeWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonContextMenuItem6 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.fourWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.cloneWindowButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.cloneWindowCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.kryptonContextMenuItems1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuRadioButton28 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
@@ -185,6 +187,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -865,7 +868,8 @@
             // kryptonRibbonGroupTriple4
             // 
             this.kryptonRibbonGroupTriple4.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.kryptonRibbonGroupButton1});
+            this.kryptonRibbonGroupButton1,
+            this.cloneWindowButton});
             // 
             // kryptonRibbonGroupButton1
             // 
@@ -938,6 +942,17 @@
             // 
             this.fourWindowLayoutCommand.ImageLarge = global::Medical.Properties.Resources.FourWindowLayout;
             this.fourWindowLayoutCommand.Text = "Four Windows";
+            // 
+            // cloneWindowButton
+            // 
+            this.cloneWindowButton.KryptonCommand = this.cloneWindowCommand;
+            // 
+            // cloneWindowCommand
+            // 
+            this.cloneWindowCommand.ImageLarge = global::Medical.Properties.Resources.CloneWindowLarge;
+            this.cloneWindowCommand.ImageSmall = global::Medical.Properties.Resources.CloneWindowSmall;
+            this.cloneWindowCommand.Text = "Clone Window";
+            this.cloneWindowCommand.TextLine1 = "Clone";
             // 
             // kryptonManager
             // 
@@ -1190,5 +1205,7 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand showStatisticsCommand;
         private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace kryptonDockableWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager kryptonDockingManager;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand cloneWindowCommand;
     }
 }

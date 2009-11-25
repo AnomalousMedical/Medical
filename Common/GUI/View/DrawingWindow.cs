@@ -41,6 +41,7 @@ namespace Medical
         public DrawingWindow()
         {
             InitializeComponent();
+            AllowNavigation = true;
         }
 
         internal void initialize(string name, CameraMover cameraMover, RendererPlugin renderer)
@@ -279,6 +280,8 @@ namespace Medical
                 return camera.ProjectionMatrix;
             }
         }
+
+        public bool AllowNavigation { get; set; }
 
         protected override void OnResize(EventArgs e)
         {

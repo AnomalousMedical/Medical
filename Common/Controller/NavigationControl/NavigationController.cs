@@ -152,21 +152,28 @@ namespace Medical
 
         void windowController_WindowCreated(DrawingWindow window)
         {
-            NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
-            overlay.ShowOverlay = showOverlays;
-            NavigationState closestState = findClosestState(window.Translation);
-            if (closestState != null)
+            if (window.AllowNavigation)
             {
-                overlay.setNavigationState(closestState);
+                NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
+                overlay.ShowOverlay = showOverlays;
+                NavigationState closestState = findClosestState(window.Translation);
+                if (closestState != null)
+                {
+                    overlay.setNavigationState(closestState);
+                }
+                overlays.Add(window, overlay);
             }
-            overlays.Add(window, overlay);
         }
 
         void windowController_WindowDestroyed(DrawingWindow window)
         {
-            NavigationOverlay overlay = overlays[window];
-            overlays.Remove(window);
-            overlay.Dispose();
+            NavigationOverlay overlay;
+            overlays.TryGetValue(window, out overlay);
+            if (overlay != null)
+            {
+                overlays.Remove(window);
+                overlay.Dispose();
+            }
         }
 
         public bool ShowOverlays

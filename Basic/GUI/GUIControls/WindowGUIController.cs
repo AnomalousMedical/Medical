@@ -26,6 +26,7 @@ namespace Medical.GUI
             form.twoWindowLayoutCommand.Execute += new EventHandler(twoWindowLayoutCommand_Execute);
             form.threeWindowLayoutCommand.Execute += new EventHandler(threeWindowLayoutCommand_Execute);
             form.fourWindowLayoutCommand.Execute += new EventHandler(fourWindowLayoutCommand_Execute);
+            form.cloneWindowCommand.Execute += new EventHandler(cloneWindowCommand_Execute);
 
             form.optionsCommand.Execute += new EventHandler(optionsCommand_Execute);
 
@@ -53,6 +54,11 @@ namespace Medical.GUI
             ShortcutEventCommand fourWindowShortcut = new ShortcutEventCommand("fourWindowShortcut", Keys.D4, true);
             fourWindowShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(fourWindowShortcut_Execute);
             shortcutGroup.addShortcut(fourWindowShortcut);
+        }
+
+        void cloneWindowCommand_Execute(object sender, EventArgs e)
+        {
+            drawingWindowController.cloneActiveWindow();
         }
 
         void showStatisticsCommand_Execute(object sender, EventArgs e)

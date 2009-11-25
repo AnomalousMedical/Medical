@@ -58,6 +58,7 @@ namespace Medical
             KryptonDrawingWindowHost newWindow = new KryptonDrawingWindowHost(name, controller, dockingManager);
             createdWindows.Add(name, newWindow);
             newWindow.AllowFloating = true;
+            newWindow.DrawingWindow.AllowNavigation = false;
             return newWindow;
         }
 

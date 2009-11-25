@@ -102,6 +102,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CloneWindowLarge {
+            get {
+                object obj = ResourceManager.GetObject("CloneWindowLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CloneWindowSmall {
+            get {
+                object obj = ResourceManager.GetObject("CloneWindowSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExitIcon {
             get {
                 object obj = ResourceManager.GetObject("ExitIcon", resourceCulture);
