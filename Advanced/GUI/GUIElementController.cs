@@ -206,11 +206,11 @@ namespace Medical.GUI
 
         public void showDockContent(GUIElement content)
         {
-            if (content.ShowHint == DockState.DockLeft)
+            if (content.ShowHint == DockLocations.Right)
             {
                 dock.AddToWorkspace("Right", new KryptonPage[] { content.Page });
             }
-            else if (content.ShowHint == DockState.DockBottom)
+            else if (content.ShowHint == DockLocations.Bottom)
             {
                 dock.AddToWorkspace("Bottom", new KryptonPage[] { content.Page });
             }

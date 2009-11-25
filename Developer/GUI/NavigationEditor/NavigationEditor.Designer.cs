@@ -496,16 +496,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 5;
             this.ButtonText = "Navigation State Editor";
             this.ClientSize = new System.Drawing.Size(274, 711);
             this.Controls.Add(this.navigationStateView);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Name = "NavigationStateSelector";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.GUI.DockLocations.Left;
             this.Text = "Navigation State Editor";
             this.ToolStripName = "Editing";
             this.createStateMenu.ResumeLayout(false);

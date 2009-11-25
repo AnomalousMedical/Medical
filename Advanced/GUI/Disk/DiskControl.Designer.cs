@@ -190,7 +190,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 6;
             this.ButtonText = "Disc";
             this.ClientSize = new System.Drawing.Size(272, 550);
             this.Controls.Add(this.horizontalOffsetUpDown);
@@ -199,11 +198,11 @@
             this.Controls.Add(this.distortionButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DiskControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.GUI.DockLocations.Left;
             this.Tag = "Disc";
             this.Text = "Disc";
             this.ToolStripName = "Advanced";

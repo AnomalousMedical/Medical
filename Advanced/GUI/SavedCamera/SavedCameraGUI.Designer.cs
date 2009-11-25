@@ -110,19 +110,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 3;
             this.ButtonText = "Cameras";
             this.ClientSize = new System.Drawing.Size(311, 112);
             this.Controls.Add(this.cameraNameList);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)
+                        | Medical.GUI.DockLocations.Top)
+                        | Medical.GUI.DockLocations.Bottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SavedCameraGUI";
             this.ShortcutKey = System.Windows.Forms.Keys.C;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            this.ShowHint = Medical.GUI.DockLocations.Right;
             this.Text = "Cameras";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

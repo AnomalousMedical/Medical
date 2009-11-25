@@ -165,7 +165,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ButtonImageIndex = 4;
             this.ButtonText = "Movement Sequence";
             this.Controls.Add(this.timeUpDown);
             this.Controls.Add(this.label1);
@@ -173,11 +172,11 @@
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.lockButton);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Top)
+                        | Medical.GUI.DockLocations.Bottom)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MovementStateControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockBottom;
+            this.ShowHint = Medical.GUI.DockLocations.Bottom;
             this.Size = new System.Drawing.Size(1187, 578);
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).EndInit();
             this.tickMenu.ResumeLayout(false);

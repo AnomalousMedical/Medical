@@ -250,16 +250,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 8;
             this.ButtonText = "Mandible Size";
             this.ClientSize = new System.Drawing.Size(259, 611);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.sliderPanel);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MandibleSizeControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.GUI.DockLocations.Left;
             this.Text = "Mandible Size";
             this.ToolStripName = "Advanced";
             this.sliderPanel.ResumeLayout(false);

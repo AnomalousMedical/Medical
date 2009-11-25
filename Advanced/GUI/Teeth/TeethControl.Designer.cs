@@ -958,7 +958,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 9;
             this.ButtonText = "Teeth";
             this.ClientSize = new System.Drawing.Size(260, 747);
             this.Controls.Add(this.stopOnContactCheck);
@@ -969,11 +968,11 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.teethPanel);
             this.Controls.Add(this.toolStrip1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.GUI.DockLocations.Left;
             this.Text = "Teeth";
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);

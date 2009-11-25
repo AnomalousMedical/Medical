@@ -174,7 +174,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ButtonImageIndex = 0;
             this.ButtonText = "Preset Layer Editor";
             this.ClientSize = new System.Drawing.Size(178, 471);
             this.Controls.Add(this.panel1);
@@ -188,8 +187,8 @@
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.layerList);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Name = "PresetLayerEditor";
             this.Text = "Preset Layer Editor";
             this.ToolStripName = "Editing";

@@ -82,18 +82,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 10;
             this.ButtonText = "Fossa";
             this.ClientSize = new System.Drawing.Size(284, 138);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.rightEminanceSlider);
             this.Controls.Add(this.leftEminanceSlider);
             this.Controls.Add(this.label1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FossaControl";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockLeft;
+            this.ShowHint = Medical.GUI.DockLocations.Left;
             this.Text = "Fossa";
             this.ToolStripName = "Advanced";
             ((System.ComponentModel.ISupportInitialize)(this.rightEminanceSlider)).EndInit();

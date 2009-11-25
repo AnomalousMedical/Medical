@@ -13,6 +13,16 @@ using ComponentFactory.Krypton.Navigator;
 
 namespace Medical.GUI
 {
+    [Flags]
+    public enum DockLocations
+    {
+        Left = 0,
+        Right = 2,
+        Bottom = 4,
+        Top = 8,
+        Float = 16,
+    }
+
     public class GUIElement : UserControl
     {
         private GUIElementController controller;
@@ -29,43 +39,6 @@ namespace Medical.GUI
             page = new KryptonPage();
             this.Dock = DockStyle.Fill;
             page.Controls.Add(this);
-        }
-
-        public Keys ShortcutKey
-        {
-            get
-            {
-                return shortcutKey;
-            }
-            set
-            {
-                shortcutKey = value;
-            }
-        }
-
-        public String ButtonText
-        {
-            get;
-            set;
-        }
-
-        public int ButtonImageIndex
-        {
-            get;
-            set;
-        }
-
-        public new String Text
-        {
-            get
-            {
-                return page.Text;
-            }
-            set
-            {
-                page.Text = value;
-                page.TextDescription = value;
-            }
         }
 
         public void shortcutKeyPressed(ShortcutEventCommand shortcut)
@@ -200,24 +173,48 @@ namespace Medical.GUI
             // 
             this.ClientSize = new System.Drawing.Size(284, 264);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HideOnClose = true;
             this.Name = "GUIElement";
             this.ResumeLayout(false);
         }
 
         public Icon Icon { get; set; }
 
-        public DockAreas DockAreas { get; set; }
+        public DockLocations DockAreas { get; set; }
 
-        public DockState ShowHint { get; set; }
-
-        public bool HideOnClose { get; set; }
+        public DockLocations ShowHint { get; set; }
 
         public KryptonPage Page
         {
             get
             {
                 return page;
+            }
+        }
+
+        public Keys ShortcutKey
+        {
+            get
+            {
+                return shortcutKey;
+            }
+            set
+            {
+                shortcutKey = value;
+            }
+        }
+
+        public String ButtonText { get; set; }
+
+        public new String Text
+        {
+            get
+            {
+                return page.Text;
+            }
+            set
+            {
+                page.Text = value;
+                page.TextDescription = value;
             }
         }
     }

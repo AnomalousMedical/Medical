@@ -195,7 +195,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ButtonImageIndex = 8;
             this.ButtonText = "Bone Preset Editor";
             this.ClientSize = new System.Drawing.Size(264, 480);
             this.Controls.Add(this.picturePreviewPanel);
@@ -211,10 +210,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryText);
             this.Controls.Add(this.nameText);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)));
             this.Name = "BonePresetSaveWindow";
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.Float;
+            this.ShowHint = Medical.GUI.DockLocations.Float;
             this.Text = "Bone Preset Editor";
             this.ToolStripName = "Editing";
             this.groupBox1.ResumeLayout(false);

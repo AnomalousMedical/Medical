@@ -129,19 +129,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ButtonImageIndex = 12;
             this.ButtonText = "Notes";
             this.ClientSize = new System.Drawing.Size(216, 394);
             this.Controls.Add(this.notes);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.Document)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
+                        | Medical.GUI.DockLocations.Right)
+                        )));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NotesGUI";
             this.ShortcutKey = System.Windows.Forms.Keys.N;
-            this.ShowHint = WeifenLuo.WinFormsUI.Docking.DockState.DockRight;
+            this.ShowHint = Medical.GUI.DockLocations.Right;
             this.Text = "Notes";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
