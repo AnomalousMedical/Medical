@@ -27,6 +27,7 @@ namespace Medical.GUI
             kryptonPage = new KryptonPage("States");
             kryptonPage.Controls.Add(stateList);
             kryptonPage.TextTitle = "States";
+            kryptonPage.MinimumSize = stateList.MinimumSize;
 
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);

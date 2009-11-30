@@ -156,9 +156,9 @@ namespace Medical.GUI
         {
             foreach (DistortionWizard wizard in wizards)
             {
-                ToolStripMenuItem item = new ToolStripMenuItem(wizard.Name);
-                item.Click += distortionWizardItem_Click;
-//                distortionToolStripMenuItem.DropDownItems.Add(item);
+                //ToolStripMenuItem item = new ToolStripMenuItem(wizard.Name);
+                //item.Click += distortionWizardItem_Click;
+                //distortionToolStripMenuItem.DropDownItems.Add(item);
             }
         }
 
@@ -314,7 +314,7 @@ namespace Medical.GUI
                 // Switch to mini mode and reverse direction of arrow
                 leftNavigator.NavigatorMode = NavigatorMode.OutlookMini;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowRight;
-                leftNavigator.MinimumSize = new Size(0, 0);
+                leftNavigator.MinimumSize = new Size(1, 1);
             }
             else
             {

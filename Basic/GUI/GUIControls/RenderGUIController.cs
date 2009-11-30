@@ -90,6 +90,7 @@ namespace Medical.GUI
 
         void renderCommand_Execute(object sender, EventArgs e)
         {
+            StatusController.SetStatus("Rendering image...");
             DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
             if (drawingWindow != null)
             {
@@ -110,6 +111,7 @@ namespace Medical.GUI
                     picture.show(form.DockingManager);
                 }
             }
+            StatusController.TaskCompleted();
         }
 
         void render_Execute(ShortcutEventCommand shortcut)

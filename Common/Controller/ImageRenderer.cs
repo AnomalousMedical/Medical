@@ -243,7 +243,7 @@ namespace Medical
             int finalHeight = height / aaMode;
             int imageStepHorizSmall = finalWidth / gridSize;
             int imageStepVertSmall = finalHeight / gridSize;
-            Log.Debug("Step {0}, {1}", imageStepHorizSmall, imageStepVertSmall);
+            //Log.Debug("Step {0}, {1}", imageStepHorizSmall, imageStepVertSmall);
 
             float left, right, top, bottom;
             int totalSS = gridSize * gridSize;
@@ -307,7 +307,7 @@ namespace Medical
                         {
                             g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
                         }
-                        Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
+                        //Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
                     }
                     if (scaledPiecewiseBitmap != null)
                     {

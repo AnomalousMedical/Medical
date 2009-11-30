@@ -97,6 +97,8 @@
             this.renderWidthUpDown = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown();
             this.kryptonRibbonGroupLabel2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
             this.renderHeightUpDown = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupNumericUpDown();
+            this.kryptonRibbonGroupLabel3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
+            this.aaCombo = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox();
             this.kryptonRibbonGroupTriple6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.renderButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.windowTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
@@ -137,8 +139,6 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
-            this.kryptonRibbonGroupLabel3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
-            this.aaCombo = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
@@ -189,7 +189,8 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.renderingTab;
+            this.clinicalRibbon.SelectedContext = null;
+            this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -793,6 +794,22 @@
             0,
             0});
             // 
+            // kryptonRibbonGroupLabel3
+            // 
+            this.kryptonRibbonGroupLabel3.TextLine1 = "Anti Aliasing";
+            // 
+            // aaCombo
+            // 
+            this.aaCombo.DropDownWidth = 121;
+            this.aaCombo.FormattingEnabled = false;
+            this.aaCombo.ItemHeight = 15;
+            this.aaCombo.Items.AddRange(new object[] {
+            "None",
+            "2x",
+            "4x",
+            "8x"});
+            this.aaCombo.Text = "";
+            // 
             // kryptonRibbonGroupTriple6
             // 
             this.kryptonRibbonGroupTriple6.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
@@ -1058,22 +1075,6 @@
             // kryptonDockingManager
             // 
             this.kryptonDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
-            // 
-            // kryptonRibbonGroupLabel3
-            // 
-            this.kryptonRibbonGroupLabel3.TextLine1 = "Anti Aliasing";
-            // 
-            // aaCombo
-            // 
-            this.aaCombo.DropDownWidth = 121;
-            this.aaCombo.FormattingEnabled = false;
-            this.aaCombo.ItemHeight = 15;
-            this.aaCombo.Items.AddRange(new object[] {
-            "None",
-            "2x",
-            "4x",
-            "8x"});
-            this.aaCombo.Text = "";
             // 
             // BasicForm
             // 

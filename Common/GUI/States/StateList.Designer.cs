@@ -45,7 +45,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.stateListBox);
-            this.MinimumSize = new System.Drawing.Size(236, 0);
+            this.MinimumSize = new System.Drawing.Size(236, 466);
             this.Name = "StateList";
             this.Size = new System.Drawing.Size(236, 466);
             this.ResumeLayout(false);
