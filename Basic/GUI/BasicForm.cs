@@ -309,17 +309,17 @@ namespace Medical.GUI
         private void buttonSpecExpandCollapse_Click(object sender, EventArgs e)
         {
             // Are we currently showing fully expanded?
-            if (leftNavigator.NavigatorMode == NavigatorMode.OutlookFull)
+            if (leftNavigator.NavigatorMode == NavigatorMode.HeaderBarCheckButtonGroup)
             {
                 // Switch to mini mode and reverse direction of arrow
-                leftNavigator.NavigatorMode = NavigatorMode.OutlookMini;
+                leftNavigator.NavigatorMode = NavigatorMode.HeaderBarCheckButtonOnly;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowRight;
-                leftNavigator.MinimumSize = new Size(1, 1);
+                leftNavigator.MinimumSize = new Size(0, 0);
             }
             else
             {
                 // Switch to full mode and reverse direction of arrow
-                leftNavigator.NavigatorMode = NavigatorMode.OutlookFull;
+                leftNavigator.NavigatorMode = NavigatorMode.HeaderBarCheckButtonGroup;
                 buttonSpecExpandCollapse.TypeRestricted = PaletteNavButtonSpecStyle.ArrowLeft;
                 leftNavigator.MinimumSize = leftNavigatorSize;
             }

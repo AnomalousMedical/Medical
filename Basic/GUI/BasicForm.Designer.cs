@@ -142,6 +142,7 @@
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
+            this.leftNavigator.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.topInformationPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftInformationPanel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomPanel)).BeginInit();
@@ -189,7 +190,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -998,6 +998,11 @@
             // 
             this.leftNavigator.AutoSize = true;
             this.leftNavigator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.leftNavigator.Bar.BarMapExtraText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
+            this.leftNavigator.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
+            this.leftNavigator.Bar.BarMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
+            this.leftNavigator.Bar.BarOrientation = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
+            this.leftNavigator.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.SameHeight;
             this.leftNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
             this.leftNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
             this.buttonSpecExpandCollapse});
@@ -1012,16 +1017,21 @@
             this.leftNavigator.Button.PreviousButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
             this.leftNavigator.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
+            this.leftNavigator.Header.HeaderPositionBar = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
             this.leftNavigator.Location = new System.Drawing.Point(0, 121);
             this.leftNavigator.MinimumSize = new System.Drawing.Size(200, 0);
             this.leftNavigator.Name = "leftNavigator";
-            this.leftNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.OutlookFull;
+            this.leftNavigator.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.HeaderBarCheckButtonGroup;
+            this.leftNavigator.PopupPages.AllowPopupPages = ComponentFactory.Krypton.Navigator.PopupPageAllow.OnlyCompatibleModes;
+            this.leftNavigator.PopupPages.Element = ComponentFactory.Krypton.Navigator.PopupPageElement.Navigator;
+            this.leftNavigator.PopupPages.Position = ComponentFactory.Krypton.Navigator.PopupPagePosition.FarMatch;
             this.leftNavigator.Size = new System.Drawing.Size(200, 307);
             this.leftNavigator.TabIndex = 17;
             this.leftNavigator.Text = "primaryNavigator";
             // 
             // buttonSpecExpandCollapse
             // 
+            this.buttonSpecExpandCollapse.Edge = ComponentFactory.Krypton.Toolkit.PaletteRelativeEdgeAlign.Near;
             this.buttonSpecExpandCollapse.Type = ComponentFactory.Krypton.Toolkit.PaletteButtonSpecStyle.ArrowLeft;
             this.buttonSpecExpandCollapse.TypeRestricted = ComponentFactory.Krypton.Navigator.PaletteNavButtonSpecStyle.ArrowLeft;
             this.buttonSpecExpandCollapse.UniqueName = "31631F972A0E421F31631F972A0E421F";
@@ -1094,6 +1104,7 @@
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).EndInit();
+            this.leftNavigator.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.topInformationPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftInformationPanel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bottomPanel)).EndInit();
