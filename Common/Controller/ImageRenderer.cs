@@ -104,7 +104,7 @@ namespace Medical
                 }
 
                 //Render
-                bitmap = createRender(width, height, 4, properties.AntiAliasingMode, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
+                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
                 if (properties.OverrideLayers && layerController != null)
@@ -256,7 +256,7 @@ namespace Medical
             Bitmap fullBitmap = new Bitmap(finalWidth, finalHeight, bitmapFormat);
             using (Graphics g = Graphics.FromImage(fullBitmap))
             {
-                g.Clear(System.Drawing.Color.Pink);
+                //g.Clear(System.Drawing.Color.LimeGreen);
                 using (Bitmap pieceBitmap = new Bitmap(imageStepHoriz, imageStepVert, bitmapFormat))
                 {
                     Bitmap scaledPiecewiseBitmap = null;
@@ -265,9 +265,9 @@ namespace Medical
                     {
                         scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
                         scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
-                        scalerGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                        scalerGraphics.CompositingQuality = CompositingQuality.HighQuality;
-                        scalerGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                        //scalerGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                        //scalerGraphics.CompositingQuality = CompositingQuality.HighQuality;
+                        //scalerGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                     }
                     for (int i = 0; i < totalSS; ++i)
                     {
@@ -297,7 +297,8 @@ namespace Medical
                         //destRect, x * imageStepHorizSmall, y * imageStepVertSmall, imageStepHorizSmall, imageStepVertSmall
                         if (scalerGraphics != null)
                         {
-                            scalerGraphics.DrawImage(pieceBitmap, new Rectangle(0, 0, imageStepHorizSmall, imageStepVertSmall));
+                            //scalerGraphics.Clear(System.Drawing.Color.HotPink);
+                            scalerGraphics.DrawImage(pieceBitmap, new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height));
                             g.DrawImage(scaledPiecewiseBitmap, destRect);
                         }
                         else

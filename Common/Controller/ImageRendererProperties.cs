@@ -15,6 +15,8 @@ namespace Medical
         {
             Width = 100;
             Height = 100;
+            MaxGridWidth = 2048;
+            MaxGridHeight = 2048;
             AntiAliasingMode = 1;
             TransparentBackground = false;
             ShowWatermark = true;
@@ -40,6 +42,35 @@ namespace Medical
         /// The height of the final image.
         /// </summary>
         public int Height { get; set; }
+
+        /// <summary>
+        /// The maximum width one element of the grid can be.
+        /// </summary>
+        public int MaxGridWidth { get; set; }
+
+        /// <summary>
+        /// The maximum height one element of the grid can be.
+        /// </summary>
+        public int MaxGridHeight { get; set; }
+
+        /// <summary>
+        /// Compute the number of tiles in the grid.
+        /// </summary>
+        public int NumGridTiles
+        {
+            get
+            {
+                int largeWidth = Width * AntiAliasingMode;
+                int largeHeight = Height * AntiAliasingMode;
+                int widthCompute = largeWidth % MaxGridWidth == 0 ? largeWidth / MaxGridWidth : largeWidth / MaxGridWidth + 1;
+                int heightCompute = largeHeight % MaxGridHeight == 0 ? largeHeight / MaxGridHeight : largeHeight / MaxGridHeight + 1;
+                if (widthCompute > heightCompute)
+                {
+                    return widthCompute;
+                }
+                return heightCompute;
+            }
+        }
 
         /// <summary>
         /// A scalar applied to the width and height to achieve some anti
