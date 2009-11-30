@@ -137,6 +137,8 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
+            this.kryptonRibbonGroupLabel3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
+            this.aaCombo = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
@@ -187,8 +189,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.renderingTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -740,7 +741,9 @@
             this.kryptonRibbonGroupLabel1,
             this.renderWidthUpDown,
             this.kryptonRibbonGroupLabel2,
-            this.renderHeightUpDown});
+            this.renderHeightUpDown,
+            this.kryptonRibbonGroupLabel3,
+            this.aaCombo});
             // 
             // kryptonRibbonGroupLabel1
             // 
@@ -1056,6 +1059,22 @@
             // 
             this.kryptonDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
+            // kryptonRibbonGroupLabel3
+            // 
+            this.kryptonRibbonGroupLabel3.TextLine1 = "Anti Aliasing";
+            // 
+            // aaCombo
+            // 
+            this.aaCombo.DropDownWidth = 121;
+            this.aaCombo.FormattingEnabled = false;
+            this.aaCombo.ItemHeight = 15;
+            this.aaCombo.Items.AddRange(new object[] {
+            "None",
+            "2x",
+            "4x",
+            "8x"});
+            this.aaCombo.Text = "";
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1207,5 +1226,7 @@
         private ComponentFactory.Krypton.Docking.KryptonDockingManager kryptonDockingManager;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand cloneWindowCommand;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel kryptonRibbonGroupLabel3;
+        public ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox aaCombo;
     }
 }

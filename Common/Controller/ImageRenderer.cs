@@ -104,22 +104,7 @@ namespace Medical
                 }
 
                 //Render
-                bitmap = createRender(width, height, 1, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
-
-                //Resize if aa is active
-                if (properties.AntiAliasingMode > 1)
-                {
-                    Bitmap largeImage = bitmap;
-                    bitmap = new Bitmap(properties.Width, properties.Height);
-                    using (Graphics graph = Graphics.FromImage(bitmap))
-                    {
-                        graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                        graph.CompositingQuality = CompositingQuality.HighQuality;
-                        graph.SmoothingMode = SmoothingMode.AntiAlias;
-                        graph.DrawImage(largeImage, new Rectangle(0, 0, properties.Width, properties.Height));
-                    }
-                    largeImage.Dispose();
-                }
+                bitmap = createRender(width, height, 4, properties.AntiAliasingMode, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
                 if (properties.OverrideLayers && layerController != null)
@@ -149,12 +134,12 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap createRender(int width, int height, int gridSize, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
+        private Bitmap createRender(int width, int height, int gridSize, int aaMode, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
             if (sceneManager != null)
             {
-                using (TexturePtr texture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)width, (uint)height, 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0))
+                using (TexturePtr texture = TextureManager.getInstance().createManual("__PictureTexture", "__InternalMedical", TextureType.TEX_TYPE_2D, (uint)(width / gridSize), (uint)(height / gridSize), 1, 1, OgreWrapper.PixelFormat.PF_A8R8G8B8, TextureUsage.TU_RENDERTARGET, false, 0))
                 {
                     using (HardwarePixelBufferSharedPtr pixelBuffer = texture.Value.getBuffer())
                     {
@@ -189,11 +174,11 @@ namespace Medical
                         Bitmap bitmap = null;
                         if (gridSize <= 1)
                         {
-                            bitmap = simpleRender(width, height, renderTexture);
+                            bitmap = simpleRender(width, height, aaMode, renderTexture);
                         }
                         else
                         {
-                            bitmap = gridRender(width, height, gridSize, renderTexture, camera);
+                            bitmap = gridRender(width, height, gridSize, aaMode, renderTexture, camera);
                         }
 
                         renderTexture.destroyViewport(viewport);
@@ -209,7 +194,7 @@ namespace Medical
             return null;
         }
 
-        private Bitmap simpleRender(int width, int height, RenderTexture renderTexture)
+        private Bitmap simpleRender(int width, int height, int aaMode, RenderTexture renderTexture)
         {
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
@@ -222,10 +207,28 @@ namespace Medical
                 renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
             }
             bitmap.UnlockBits(bmpData);
+
+            //Resize if aa is active
+            if (aaMode > 1)
+            {
+                int smallWidth = width / aaMode;
+                int smallHeight = height / aaMode;
+                Bitmap largeImage = bitmap;
+                bitmap = new Bitmap(smallWidth, smallHeight);
+                using (Graphics graph = Graphics.FromImage(bitmap))
+                {
+                    graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                    graph.CompositingQuality = CompositingQuality.HighQuality;
+                    graph.SmoothingMode = SmoothingMode.AntiAlias;
+                    graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
+                }
+                largeImage.Dispose();
+            }
+
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int gridSize, RenderTexture renderTexture, Camera camera)
+        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, RenderTexture renderTexture, Camera camera)
         {
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
@@ -236,17 +239,36 @@ namespace Medical
             int imageStepHoriz = width / gridSize;
             int imageStepVert = height / gridSize;
 
+            int finalWidth = width / aaMode;
+            int finalHeight = height / aaMode;
+            int imageStepHorizSmall = finalWidth / gridSize;
+            int imageStepVertSmall = finalHeight / gridSize;
+            Log.Debug("Step {0}, {1}", imageStepHorizSmall, imageStepVertSmall);
+
             float left, right, top, bottom;
             int totalSS = gridSize * gridSize;
 
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
             System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
 
-            Bitmap fullBitmap = new Bitmap(width, height, bitmapFormat);
+            Rectangle destRect = new Rectangle();
+            Rectangle srcRect = new Rectangle(0, 0, imageStepHoriz, imageStepVert);
+            Bitmap fullBitmap = new Bitmap(finalWidth, finalHeight, bitmapFormat);
             using (Graphics g = Graphics.FromImage(fullBitmap))
             {
-                using (Bitmap pieceBitmap = new Bitmap(width / gridSize, height / gridSize, bitmapFormat))
+                g.Clear(System.Drawing.Color.Pink);
+                using (Bitmap pieceBitmap = new Bitmap(imageStepHoriz, imageStepVert, bitmapFormat))
                 {
+                    Bitmap scaledPiecewiseBitmap = null;
+                    Graphics scalerGraphics = null;
+                    if (aaMode > 1)
+                    {
+                        scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
+                        scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
+                        scalerGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+                        scalerGraphics.CompositingQuality = CompositingQuality.HighQuality;
+                        scalerGraphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    }
                     for (int i = 0; i < totalSS; ++i)
                     {
                         int y = i / gridSize;
@@ -268,8 +290,26 @@ namespace Medical
                             renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
                         }
                         pieceBitmap.UnlockBits(bmpData);
-                        g.DrawImage(pieceBitmap, x * imageStepHoriz, y * imageStepVert);
-                        //Log.Debug("{0}, {1}", x * imageStepHoriz, y * imageStepVert);
+                        destRect.X = x * imageStepHorizSmall;
+                        destRect.Y = y * imageStepVertSmall;
+                        destRect.Width = imageStepHorizSmall;
+                        destRect.Height = imageStepVertSmall;
+                        //destRect, x * imageStepHorizSmall, y * imageStepVertSmall, imageStepHorizSmall, imageStepVertSmall
+                        if (scalerGraphics != null)
+                        {
+                            scalerGraphics.DrawImage(pieceBitmap, new Rectangle(0, 0, imageStepHorizSmall, imageStepVertSmall));
+                            g.DrawImage(scaledPiecewiseBitmap, destRect);
+                        }
+                        else
+                        {
+                            g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
+                        }
+                        Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
+                    }
+                    if (scaledPiecewiseBitmap != null)
+                    {
+                        scalerGraphics.Dispose();
+                        scaledPiecewiseBitmap.Dispose();
                     }
                 }
             }

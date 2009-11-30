@@ -14,6 +14,7 @@ namespace Medical.GUI
     {
         private KryptonRibbonGroupNumericUpDown width;
         private KryptonRibbonGroupNumericUpDown height;
+        private KryptonRibbonGroupComboBox aaCombo;
         private BasicForm form;
         private ImageRenderer imageRenderer;
         private DrawingWindowController drawingWindowController;
@@ -38,6 +39,8 @@ namespace Medical.GUI
 
             width = form.renderWidthUpDown;
             height = form.renderHeightUpDown;
+            aaCombo = form.aaCombo;
+            aaCombo.SelectedIndex = 0;
 
             form.renderCommand.Execute += new EventHandler(renderCommand_Execute);
 
@@ -97,6 +100,7 @@ namespace Medical.GUI
                 imageProperties.Height = height;
                 imageProperties.UseWindowBackgroundColor = false;
                 imageProperties.CustomBackgroundColor = Engine.Color.FromARGB(backgroundColorButton.SelectedColor.ToArgb());
+                imageProperties.AntiAliasingMode = (int)Math.Pow(2, aaCombo.SelectedIndex);
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
