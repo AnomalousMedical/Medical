@@ -83,13 +83,6 @@ namespace Medical
                     }
                 }
 
-                //Watermark activation
-                if (watermark != null && properties.ShowWatermark)
-                {
-                    watermark.sizeChanged(width, height);
-                    watermark.setVisible(true);
-                }
-
                 //Background Activation
                 if (background != null && properties.ShowBackground)
                 {
@@ -104,7 +97,7 @@ namespace Medical
                 }
 
                 //Render
-                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
+                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
                 if (properties.OverrideLayers && layerController != null)
@@ -118,12 +111,6 @@ namespace Medical
                     background.setVisible(false);
                 }
 
-                //Watermark deactivation
-                if (watermark != null && properties.ShowWatermark)
-                {
-                    watermark.setVisible(false);
-                }
-
                 //Transparent background
                 if (properties.TransparentBackground)
                 {
@@ -134,7 +121,7 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap createRender(int width, int height, int gridSize, int aaMode, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
+        private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
             if (sceneManager != null)
@@ -174,7 +161,7 @@ namespace Medical
                         Bitmap bitmap = null;
                         if (gridSize <= 1)
                         {
-                            bitmap = simpleRender(width, height, aaMode, renderTexture);
+                            bitmap = simpleRender(width, height, aaMode, showWatermark, renderTexture);
                         }
                         else
                         {
@@ -194,8 +181,15 @@ namespace Medical
             return null;
         }
 
-        private Bitmap simpleRender(int width, int height, int aaMode, RenderTexture renderTexture)
+        private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, RenderTexture renderTexture)
         {
+            //Watermark activation
+            if (watermark != null && showWatermark)
+            {
+                watermark.sizeChanged(width, height);
+                watermark.setVisible(true);
+            }
+
             renderTexture.update();
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
             System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
@@ -223,6 +217,12 @@ namespace Medical
                     graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
                 }
                 largeImage.Dispose();
+            }
+
+            //Watermark deactivation
+            if (watermark != null && showWatermark)
+            {
+                watermark.setVisible(false);
             }
 
             return bitmap;
@@ -261,9 +261,11 @@ namespace Medical
                 {
                     Bitmap scaledPiecewiseBitmap = null;
                     Graphics scalerGraphics = null;
+                    Rectangle scalarRectangle = new Rectangle();
                     if (aaMode > 1)
                     {
                         scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
+                        scalarRectangle = new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height);
                         scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
                         //scalerGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
                         //scalerGraphics.CompositingQuality = CompositingQuality.HighQuality;
@@ -298,7 +300,7 @@ namespace Medical
                         if (scalerGraphics != null)
                         {
                             //scalerGraphics.Clear(System.Drawing.Color.HotPink);
-                            scalerGraphics.DrawImage(pieceBitmap, new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height));
+                            scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
                             g.DrawImage(scaledPiecewiseBitmap, destRect);
                         }
                         else
