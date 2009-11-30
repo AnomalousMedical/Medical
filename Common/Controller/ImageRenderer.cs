@@ -104,7 +104,7 @@ namespace Medical
                 }
 
                 //Render
-                bitmap = createRender(width, height, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
+                bitmap = createRender(width, height, 1, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Resize if aa is active
                 if (properties.AntiAliasingMode > 1)
@@ -149,7 +149,7 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap createRender(int width, int height, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
+        private Bitmap createRender(int width, int height, int gridSize, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
             if (sceneManager != null)
@@ -186,17 +186,15 @@ namespace Medical
                             background.updatePosition(camera.getRealPosition(), camera.getRealDirection(), camera.getRealOrientation());
                         }
 
-                        renderTexture.update();
-                        OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
-                        System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
-                        Bitmap bitmap = new Bitmap(width, height, bitmapFormat);
-                        BitmapData bmpData = bitmap.LockBits(new Rectangle(new Point(), bitmap.Size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
-                        unsafe
+                        Bitmap bitmap = null;
+                        if (gridSize <= 1)
                         {
-                            PixelBox pixelBox = new PixelBox(0, 0, (uint)bmpData.Width, (uint)bmpData.Height, format, bmpData.Scan0.ToPointer());
-                            renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+                            bitmap = simpleRender(width, height, renderTexture);
                         }
-                        bitmap.UnlockBits(bmpData);
+                        else
+                        {
+                            bitmap = gridRender(width, height, gridSize, renderTexture, camera);
+                        }
 
                         renderTexture.destroyViewport(viewport);
                         sceneManager.SceneManager.getRootSceneNode().removeChild(node);
@@ -209,6 +207,73 @@ namespace Medical
                 }
             }
             return null;
+        }
+
+        private Bitmap simpleRender(int width, int height, RenderTexture renderTexture)
+        {
+            renderTexture.update();
+            OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            Bitmap bitmap = new Bitmap(width, height, bitmapFormat);
+            BitmapData bmpData = bitmap.LockBits(new Rectangle(new Point(), bitmap.Size), ImageLockMode.WriteOnly, bitmap.PixelFormat);
+            unsafe
+            {
+                PixelBox pixelBox = new PixelBox(0, 0, (uint)bmpData.Width, (uint)bmpData.Height, format, bmpData.Scan0.ToPointer());
+                renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+            }
+            bitmap.UnlockBits(bmpData);
+            return bitmap;
+        }
+
+        private Bitmap gridRender(int width, int height, int gridSize, RenderTexture renderTexture, Camera camera)
+        {
+            float originalLeft, originalRight, originalTop, originalBottom;
+            camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
+
+            float gridStepHoriz = (originalRight * 2) / gridSize;
+            float gridStepVert = (originalTop * 2) / gridSize;
+
+            int imageStepHoriz = width / gridSize;
+            int imageStepVert = height / gridSize;
+
+            float left, right, top, bottom;
+            int totalSS = gridSize * gridSize;
+
+            OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
+            System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+
+            Bitmap fullBitmap = new Bitmap(width, height, bitmapFormat);
+            using (Graphics g = Graphics.FromImage(fullBitmap))
+            {
+                using (Bitmap pieceBitmap = new Bitmap(width / gridSize, height / gridSize, bitmapFormat))
+                {
+                    for (int i = 0; i < totalSS; ++i)
+                    {
+                        int y = i / gridSize;
+                        int x = i - y * gridSize;
+
+                        left = originalLeft + gridStepHoriz * x;
+                        right = left + gridStepHoriz;
+                        top = originalTop - gridStepVert * y;
+                        bottom = top - gridStepVert;
+
+                        camera.setFrustumExtents(left, right, top, bottom);
+                        Root.getSingleton().clearEventTimes();
+                        renderTexture.update();
+
+                        BitmapData bmpData = pieceBitmap.LockBits(new Rectangle(new Point(), pieceBitmap.Size), ImageLockMode.WriteOnly, pieceBitmap.PixelFormat);
+                        unsafe
+                        {
+                            PixelBox pixelBox = new PixelBox(0, 0, (uint)bmpData.Width, (uint)bmpData.Height, format, bmpData.Scan0.ToPointer());
+                            renderTexture.copyContentsToMemory(pixelBox, RenderTarget.FrameBuffer.FB_AUTO);
+                        }
+                        pieceBitmap.UnlockBits(bmpData);
+                        g.DrawImage(pieceBitmap, x * imageStepHoriz, y * imageStepVert);
+                        //Log.Debug("{0}, {1}", x * imageStepHoriz, y * imageStepVert);
+                    }
+                }
+            }
+            return fullBitmap;
         }
 
         public Watermark Watermark
