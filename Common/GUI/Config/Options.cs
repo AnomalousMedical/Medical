@@ -8,14 +8,16 @@ using System.Text;
 using System.Windows.Forms;
 using OgreWrapper;
 using OgrePlugin;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
-    public partial class Options : Form
+    public partial class Options : KryptonForm
     {
         public Options()
         {
             InitializeComponent();
+            this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
             tooltip.SetToolTip(antiAliasingCombo, "This option smooths out jagged edges. However, it comes with a performance penalty so it may cause the program to run more slowly.");
             tooltip.SetToolTip(vsyncCheck, "This option will lock the refresh of the 3d scene to the monitor refresh. This will slow down the program causing it to use less resources.");
             Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
