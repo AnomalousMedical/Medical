@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
-    public partial class SavePatientDialog : Form
+    public partial class SavePatientDialog : KryptonForm
     {
         private String filename;
         private bool saveFile;
@@ -18,6 +19,7 @@ namespace Medical.GUI
         public SavePatientDialog()
         {
             InitializeComponent();
+            this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
         }
 
         protected override void OnShown(EventArgs e)

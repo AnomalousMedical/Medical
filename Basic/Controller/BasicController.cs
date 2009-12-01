@@ -258,6 +258,15 @@ namespace Medical.Controller
             {
                 stateController.createNormalStateFromScene();
             }
+            PatientDataFile patientData = new PatientDataFile(filename);
+            patientData.FirstName = "testfirst";
+            patientData.LastName = "testlast";
+            patientData.SavedStates = stateController.getSavedState(medicalController.CurrentSceneFile);
+            patientData.save();
+        }
+
+        private void oldSave(String filename)
+        {
             XmlTextWriter textWriter = null;
             try
             {
@@ -289,6 +298,21 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="filename"></param>
         public void openStates(String filename)
+        {
+            PatientDataFile dataFile = new PatientDataFile(filename);
+            dataFile.loadHeader();
+            Log.Debug("{0} {1}", dataFile.FirstName, dataFile.LastName);
+            dataFile.loadData();
+            SavedMedicalStates states = dataFile.SavedStates;
+            if (states != null)
+            {
+                changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
+                stateController.setStates(states);
+                stateController.blend(0.0f);
+            }
+        }
+
+        private void oldLoad(String filename)
         {
             XmlTextReader textReader = null;
             try

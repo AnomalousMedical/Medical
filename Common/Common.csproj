@@ -130,6 +130,7 @@
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
+    <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
     <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceController.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
