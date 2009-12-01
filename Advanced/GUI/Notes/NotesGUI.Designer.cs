@@ -56,7 +56,7 @@
             this.notes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notes.Location = new System.Drawing.Point(0, 103);
             this.notes.Name = "notes";
-            this.notes.Size = new System.Drawing.Size(216, 255);
+            this.notes.Size = new System.Drawing.Size(1187, 522);
             this.notes.TabIndex = 6;
             this.notes.Text = "";
             // 
@@ -85,7 +85,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(216, 103);
+            this.panel1.Size = new System.Drawing.Size(1187, 103);
             this.panel1.TabIndex = 5;
             // 
             // label1
@@ -110,9 +110,9 @@
             // 
             this.panel2.Controls.Add(this.saveButton);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 358);
+            this.panel2.Location = new System.Drawing.Point(0, 625);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(216, 36);
+            this.panel2.Size = new System.Drawing.Size(1187, 36);
             this.panel2.TabIndex = 7;
             // 
             // saveButton
@@ -130,18 +130,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonText = "Notes";
-            this.ClientSize = new System.Drawing.Size(216, 394);
             this.Controls.Add(this.notes);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.DockAreas = ((Medical.GUI.DockLocations)((((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)
-                        )));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NotesGUI";
             this.ShortcutKey = System.Windows.Forms.Keys.N;
             this.ShowHint = Medical.GUI.DockLocations.Right;
-            this.Text = "Notes";
+            this.Size = new System.Drawing.Size(1187, 661);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

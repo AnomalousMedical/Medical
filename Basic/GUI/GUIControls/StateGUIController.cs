@@ -13,7 +13,9 @@ namespace Medical.GUI
         private BasicForm form;
         private BasicController controller;
         private StateList stateList;
-        private KryptonPage kryptonPage;
+        private KryptonPage stateListPage;
+        private StateNotesPanel notesPanel;
+        private KryptonPage notesPage;
         private bool pageActive = false;
 
         public StateGUIController(BasicForm form, BasicController controller)
@@ -22,12 +24,20 @@ namespace Medical.GUI
             this.controller = controller;
             
             MedicalStateController stateController = controller.MedicalStateController;
+
             stateList = new StateList(stateController);
             stateList.Dock = DockStyle.Fill;
-            kryptonPage = new KryptonPage("States");
-            kryptonPage.Controls.Add(stateList);
-            kryptonPage.TextTitle = "States";
-            kryptonPage.MinimumSize = stateList.MinimumSize;
+            stateListPage = new KryptonPage("States");
+            stateListPage.Controls.Add(stateList);
+            stateListPage.TextTitle = "States";
+            stateListPage.MinimumSize = stateList.MinimumSize;
+
+            notesPanel = new StateNotesPanel(controller.MedicalStateController, controller.ShortcutController);
+            notesPanel.Dock = DockStyle.Fill;
+            notesPage = new KryptonPage("Notes");
+            notesPage.Controls.Add(notesPanel);
+            notesPage.TextTitle = "Notes";
+            notesPage.MinimumSize = stateList.MinimumSize;
 
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
@@ -37,7 +47,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             stateList.Dispose();
-            kryptonPage.Dispose();
+            stateListPage.Dispose();
         }
 
         void stateController_StatesCleared(MedicalStateController controller)
@@ -65,7 +75,8 @@ namespace Medical.GUI
         {
             if (pageActive)
             {
-                form.removePrimaryNavigatorPage(kryptonPage);
+                form.removePrimaryNavigatorPage(stateListPage);
+                form.removePrimaryNavigatorPage(notesPage);
                 pageActive = false;
             }
         }
@@ -74,7 +85,8 @@ namespace Medical.GUI
         {
             if (!pageActive)
             {
-                form.addPrimaryNavigatorPage(kryptonPage);
+                form.addPrimaryNavigatorPage(stateListPage);
+                form.addPrimaryNavigatorPage(notesPage);
                 pageActive = true;
             }
         }

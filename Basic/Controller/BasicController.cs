@@ -464,5 +464,13 @@ namespace Medical.Controller
                 return stateController;
             }
         }
+
+        public ShortcutController ShortcutController
+        {
+            get
+            {
+                return shortcutController;
+            }
+        }
     }
 }
