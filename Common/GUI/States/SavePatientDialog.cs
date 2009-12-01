@@ -13,35 +13,75 @@ namespace Medical.GUI
 {
     public partial class SavePatientDialog : KryptonForm
     {
-        private String filename;
+        private PatientDataFile patientData;
         private bool saveFile;
+        private bool allowFileNameUpdate = true;
+        private bool autoUpdate = false;
 
         public SavePatientDialog()
         {
             InitializeComponent();
             this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
+            lastText.TextChanged += new EventHandler(lastText_TextChanged);
+            firstText.TextChanged += new EventHandler(firstText_TextChanged);
+            fileNameTextBox.TextChanged += new EventHandler(fileNameTextBox_TextChanged);
+        }
+
+        void fileNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!autoUpdate)
+            {
+                allowFileNameUpdate = false;
+            }
+        }
+
+        void firstText_TextChanged(object sender, EventArgs e)
+        {
+            updateFileName();
+        }
+
+        void lastText_TextChanged(object sender, EventArgs e)
+        {
+            updateFileName();
+        }
+
+        void updateFileName()
+        {
+            if (allowFileNameUpdate)
+            {
+                autoUpdate = true;
+                fileNameTextBox.Text = String.Format("{0}, {1}", lastText.Text, firstText.Text);
+                autoUpdate = false;
+            }
         }
 
         protected override void OnShown(EventArgs e)
         {
             lastText.Text = "";
             firstText.Text = "";
+            locationTextBox.Text = MedicalConfig.SaveDirectory;
+            fileNameTextBox.Text = "";
+            allowFileNameUpdate = true;
+            firstText.Focus();
             base.OnShown(e);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            filename = MedicalConfig.SaveDirectory + "/" + String.Format("{0}, {1}", lastText.Text, firstText.Text) + ".pat";
+            String filename = String.Format("{0}/{1}.pdt", locationTextBox.Text, fileNameTextBox.Text);
             saveFile = true;
             if (File.Exists(filename))
             {
-                if (MessageBox.Show(this, String.Format("The patient {0} {1} already exists. Would you like to overwrite it?", firstText.Text, lastText.Text), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show(this, String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Text), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     saveFile = false;
                 }
             }
             if (saveFile)
             {
+                patientData = new PatientDataFile(filename);
+                patientData.FirstName = firstText.Text;
+                patientData.LastName = lastText.Text;
                 this.Close();
             }
         }
@@ -52,11 +92,11 @@ namespace Medical.GUI
             this.Close();
         }
 
-        public String Filename
+        public PatientDataFile PatientData
         {
             get
             {
-                return filename;
+                return patientData;
             }
         }
 
@@ -65,6 +105,14 @@ namespace Medical.GUI
             get
             {
                 return saveFile;
+            }
+        }
+
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                locationTextBox.Text = folderBrowserDialog.SelectedPath;
             }
         }
     }

@@ -252,15 +252,12 @@ namespace Medical.Controller
             }
         }
 
-        public void saveMedicalState(String filename)
+        public void saveMedicalState(PatientDataFile patientData)
         {
             if (stateController.getNumStates() == 0)
             {
                 stateController.createNormalStateFromScene();
             }
-            PatientDataFile patientData = new PatientDataFile(filename);
-            patientData.FirstName = "testfirst";
-            patientData.LastName = "testlast";
             patientData.SavedStates = stateController.getSavedState(medicalController.CurrentSceneFile);
             patientData.save();
         }
@@ -297,11 +294,8 @@ namespace Medical.Controller
         /// Open the specified file and change the scene.
         /// </summary>
         /// <param name="filename"></param>
-        public void openStates(String filename)
+        public void openStates(PatientDataFile dataFile)
         {
-            PatientDataFile dataFile = new PatientDataFile(filename);
-            dataFile.loadHeader();
-            Log.Debug("{0} {1}", dataFile.FirstName, dataFile.LastName);
             dataFile.loadData();
             SavedMedicalStates states = dataFile.SavedStates;
             if (states != null)
@@ -310,6 +304,7 @@ namespace Medical.Controller
                 stateController.setStates(states);
                 stateController.blend(0.0f);
             }
+            dataFile.closeData();
         }
 
         private void oldLoad(String filename)

@@ -111,6 +111,11 @@ namespace Medical
             }
         }
 
+        public void closeData()
+        {
+            savedStates = null;
+        }
+
         public String BackingFile { get; set; }
 
         public String FirstName { get; set; }

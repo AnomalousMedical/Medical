@@ -220,8 +220,8 @@ namespace Medical.GUI
             savePatient.ShowDialog(this);
             if (savePatient.SaveFile)
             {
-                controller.saveMedicalState(savePatient.Filename);
-                StatusController.SetStatus(String.Format("File saved to {0}", savePatient.Filename));
+                controller.saveMedicalState(savePatient.PatientData);
+                StatusController.SetStatus(String.Format("File saved to {0}", savePatient.PatientData));
             }
         }
 

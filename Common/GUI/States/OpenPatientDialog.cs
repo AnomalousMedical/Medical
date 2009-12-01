@@ -14,7 +14,7 @@ namespace Medical.GUI
     {
         private static char[] SEPS = { ',' };
 
-        private String currentFile = null;
+        private PatientDataFile currentFile = null;
 
         public OpenPatientDialog()
         {
@@ -72,8 +72,7 @@ namespace Medical.GUI
 
         void fileList_ItemActivate(object sender, EventArgs e)
         {
-            currentFile = fileList.SelectedItems[0].Tag.ToString();
-            this.Close();
+            openButton_Click(null, null);
         }
 
         public bool FileChosen
@@ -84,7 +83,7 @@ namespace Medical.GUI
             }
         }
 
-        public String CurrentFile
+        public PatientDataFile CurrentFile
         {
             get
             {
@@ -94,7 +93,8 @@ namespace Medical.GUI
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            currentFile = fileList.SelectedItems[0].Tag.ToString();
+            currentFile = new PatientDataFile(fileList.SelectedItems[0].Tag.ToString());
+            currentFile.loadHeader();
             this.Close();
         }
 
