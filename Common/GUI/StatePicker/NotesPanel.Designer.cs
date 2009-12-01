@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.thumbnailPicker = new Medical.GUI.ThumbnailPicker();
+            this.kryptonLabel5 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel4 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.stateNameTextBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
@@ -46,6 +49,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.thumbnailPicker);
+            this.panel1.Controls.Add(this.kryptonLabel5);
             this.panel1.Controls.Add(this.kryptonLabel4);
             this.panel1.Controls.Add(this.stateNameTextBox);
             this.panel1.Controls.Add(this.kryptonLabel3);
@@ -56,8 +61,26 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(273, 158);
+            this.panel1.Size = new System.Drawing.Size(273, 292);
             this.panel1.TabIndex = 3;
+            // 
+            // thumbnailPicker
+            // 
+            this.thumbnailPicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.thumbnailPicker.ImageRenderer = null;
+            this.thumbnailPicker.Location = new System.Drawing.Point(6, 156);
+            this.thumbnailPicker.Name = "thumbnailPicker";
+            this.thumbnailPicker.Size = new System.Drawing.Size(262, 110);
+            this.thumbnailPicker.TabIndex = 15;
+            // 
+            // kryptonLabel5
+            // 
+            this.kryptonLabel5.Location = new System.Drawing.Point(3, 134);
+            this.kryptonLabel5.Name = "kryptonLabel5";
+            this.kryptonLabel5.Size = new System.Drawing.Size(65, 19);
+            this.kryptonLabel5.TabIndex = 14;
+            this.kryptonLabel5.Values.Text = "Thumbnail";
             // 
             // kryptonLabel4
             // 
@@ -113,7 +136,7 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(3, 135);
+            this.kryptonLabel1.Location = new System.Drawing.Point(3, 268);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.Size = new System.Drawing.Size(41, 19);
             this.kryptonLabel1.TabIndex = 7;
@@ -122,19 +145,19 @@
             // notes
             // 
             this.notes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notes.Location = new System.Drawing.Point(5, 158);
+            this.notes.Location = new System.Drawing.Point(5, 292);
             this.notes.Name = "notes";
             this.notes.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.notes.Size = new System.Drawing.Size(263, 161);
+            this.notes.Size = new System.Drawing.Size(263, 306);
             this.notes.TabIndex = 4;
             this.notes.Text = "";
             // 
             // kryptonBorderEdge1
             // 
             this.kryptonBorderEdge1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.kryptonBorderEdge1.Location = new System.Drawing.Point(0, 158);
+            this.kryptonBorderEdge1.Location = new System.Drawing.Point(0, 292);
             this.kryptonBorderEdge1.Name = "kryptonBorderEdge1";
-            this.kryptonBorderEdge1.Size = new System.Drawing.Size(5, 163);
+            this.kryptonBorderEdge1.Size = new System.Drawing.Size(5, 308);
             this.kryptonBorderEdge1.StateCommon.Color1 = System.Drawing.Color.Transparent;
             this.kryptonBorderEdge1.StateCommon.Color2 = System.Drawing.Color.Transparent;
             this.kryptonBorderEdge1.Text = "kryptonBorderEdge1";
@@ -142,9 +165,9 @@
             // kryptonBorderEdge2
             // 
             this.kryptonBorderEdge2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.kryptonBorderEdge2.Location = new System.Drawing.Point(268, 158);
+            this.kryptonBorderEdge2.Location = new System.Drawing.Point(268, 292);
             this.kryptonBorderEdge2.Name = "kryptonBorderEdge2";
-            this.kryptonBorderEdge2.Size = new System.Drawing.Size(5, 163);
+            this.kryptonBorderEdge2.Size = new System.Drawing.Size(5, 308);
             this.kryptonBorderEdge2.StateCommon.Color1 = System.Drawing.Color.Transparent;
             this.kryptonBorderEdge2.StateCommon.Color2 = System.Drawing.Color.Transparent;
             this.kryptonBorderEdge2.Text = "kryptonBorderEdge2";
@@ -152,7 +175,7 @@
             // kryptonBorderEdge3
             // 
             this.kryptonBorderEdge3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.kryptonBorderEdge3.Location = new System.Drawing.Point(5, 319);
+            this.kryptonBorderEdge3.Location = new System.Drawing.Point(5, 598);
             this.kryptonBorderEdge3.Name = "kryptonBorderEdge3";
             this.kryptonBorderEdge3.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.kryptonBorderEdge3.Size = new System.Drawing.Size(263, 2);
@@ -174,7 +197,7 @@
             this.LayerState = "MandibleSizeLayers";
             this.Name = "NotesPanel";
             this.NavigationState = "Midline Anterior";
-            this.Size = new System.Drawing.Size(273, 321);
+            this.Size = new System.Drawing.Size(273, 600);
             this.TextLine1 = "Notes";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -197,5 +220,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonBorderEdge kryptonBorderEdge1;
         private ComponentFactory.Krypton.Toolkit.KryptonBorderEdge kryptonBorderEdge2;
         private ComponentFactory.Krypton.Toolkit.KryptonBorderEdge kryptonBorderEdge3;
+        private ThumbnailPicker thumbnailPicker;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel5;
     }
 }

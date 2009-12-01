@@ -12,11 +12,21 @@ namespace Medical.GUI
 {
     public partial class NotesPanel : StatePickerPanel
     {
-        public NotesPanel(String procedureType)
+        public NotesPanel(String procedureType, ImageRenderer imageRenderer)
         {
             InitializeComponent();
             this.procedureType.Text = procedureType;
             this.Text = "Notes";
+
+            thumbnailPicker.ImageRenderer = imageRenderer;
+            thumbnailPicker.addThumbnail("Midline Anterior", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("Right Lateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("Left Lateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("Right TMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("Left TMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("Teeth Midline Anterior", "TeethLayers");
+            thumbnailPicker.addThumbnail("Teeth Right Lateral", "TeethLayers");
+            thumbnailPicker.addThumbnail("Teeth Left Lateral", "TeethLayers");
         }
 
         public override void setToDefault()
@@ -31,6 +41,12 @@ namespace Medical.GUI
             state.Notes.Notes = notes.Rtf;
             state.Notes.ProcedureDate = datePicker.Value;
             state.Name = stateNameTextBox.Text;
+            state.Thumbnail = thumbnailPicker.SelectedThumbnail;
+        }
+
+        protected override void onPanelOpening()
+        {
+            thumbnailPicker.updateThumbnails();
         }
     }
 }

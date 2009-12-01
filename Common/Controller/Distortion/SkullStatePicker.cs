@@ -42,7 +42,7 @@ namespace Medical
 
         private String lastRootDirectory;
 
-        public SkullStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController)
+        public SkullStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
             statePicker = new StatePickerWizard(uiHost, temporaryStateBlender, navigationController, layerController);
@@ -144,7 +144,7 @@ namespace Medical
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.addStatePanel(new TeethAdaptationPanel());
-            statePicker.addStatePanel(new NotesPanel("MRI"));
+            statePicker.addStatePanel(new NotesPanel("MRI", imageRenderer));
 
             statePicker.initializeImageHandle();
             statePicker.setToDefault();

@@ -318,6 +318,7 @@
     <Compile Include="GUI\States\StateList.Designer.cs">
       <DependentUpon>StateList.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Thumbnail\ThumbnailPicker.cs" />
     <Compile Include="GUI\TimeTrackBar\TimeTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -13,6 +13,8 @@ namespace Medical
 
     public class MedicalStateController
     {
+        private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
+
         public event MedicalStateAdded StateAdded;
         public event MedicalStateRemoved StateRemoved;
         public event MedicalStateEvent StatesCleared;
@@ -38,17 +40,17 @@ namespace Medical
             imageProperties = new ImageRendererProperties();
             imageProperties.Width = 100;
             imageProperties.Height = 100;
-            imageProperties.UseActiveViewportLocation = false;
-            imageProperties.AntiAliasingMode = 2;
             imageProperties.UseWindowBackgroundColor = false;
-            imageProperties.CustomBackgroundColor = Engine.Color.Black;
-            imageProperties.ShowWatermark = false;
-
+            imageProperties.CustomBackgroundColor = BACK_COLOR;
+            imageProperties.AntiAliasingMode = 2;
+            imageProperties.UseActiveViewportLocation = false;
             imageProperties.UseNavigationStatePosition = true;
             imageProperties.NavigationStateName = "Midline Anterior";
-
             imageProperties.OverrideLayers = true;
             imageProperties.LayerState = "MandibleSizeLayers";
+            imageProperties.TransparentBackground = true;
+            imageProperties.ShowBackground = false;
+            imageProperties.ShowWatermark = false;            
 
             this.medicalController = medicalController;
         }

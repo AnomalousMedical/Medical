@@ -97,7 +97,7 @@ namespace Medical
                 }
 
                 //Render
-                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
+                bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, drawingWindow.DrawingWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
                 if (properties.OverrideLayers && layerController != null)
@@ -121,7 +121,7 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
+        private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
         {
             OgreSceneManager sceneManager = controller.CurrentScene.getDefaultSubScene().getSimElementManager<OgreSceneManager>();
             if (sceneManager != null)
@@ -161,7 +161,7 @@ namespace Medical
                         Bitmap bitmap = null;
                         if (gridSize <= 1)
                         {
-                            bitmap = simpleRender(width, height, aaMode, showWatermark, renderTexture);
+                            bitmap = simpleRender(width, height, aaMode, showWatermark, transparentBG, backColor, renderTexture);
                         }
                         else
                         {
@@ -181,7 +181,7 @@ namespace Medical
             return null;
         }
 
-        private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, RenderTexture renderTexture)
+        private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
             //Watermark activation
             if (watermark != null && showWatermark)
@@ -205,6 +205,10 @@ namespace Medical
             //Resize if aa is active
             if (aaMode > 1)
             {
+                if (transparentBG)
+                {
+                    bitmap.MakeTransparent(System.Drawing.Color.FromArgb(bgColor.toARGB()));
+                }
                 int smallWidth = width / aaMode;
                 int smallHeight = height / aaMode;
                 Bitmap largeImage = bitmap;

@@ -149,7 +149,7 @@ namespace Medical.Controller
                 distortionController = new DistortionController();
                 distortionController.Finished += new StatePickerFinished(statePicker_Finished);
                 distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
-                mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController);
+                mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(mriWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
@@ -353,11 +353,6 @@ namespace Medical.Controller
                     windowPresetController.loadPresetSet();
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
                     movementSequenceController.loadSequenceSet(sequenceDirectory);
-
-                    //OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
-                    //ogreScene.SceneManager.setSkyPlane(true, 1000, -Vector3.Up, "HyoidMaterial", 1, 1, true, 0);
-                    //ogreScene.SceneManager.setSkyBox(true, "PiperClinicSkyBox", 300, false);
-                    //ogreScene.SceneManager.setSkyDome(true, "HyoidMaterial");
                 }
                 distortionController.setToDefault();
                 StatusController.TaskCompleted();
