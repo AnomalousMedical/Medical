@@ -254,18 +254,26 @@ namespace Medical.Controller
 
         public void saveMedicalState(String filename)
         {
-            String saveFolder = Path.GetDirectoryName(filename);
-            if (!Directory.Exists(saveFolder))
+            if (stateController.getNumStates() == 0)
             {
-                Directory.CreateDirectory(saveFolder);
+                stateController.createNormalStateFromScene();
             }
             XmlTextWriter textWriter = null;
             try
             {
+                String saveFolder = Path.GetDirectoryName(filename);
+                if (!Directory.Exists(saveFolder))
+                {
+                    Directory.CreateDirectory(saveFolder);
+                }
                 textWriter = new XmlTextWriter(filename, Encoding.Default);
                 textWriter.Formatting = Formatting.Indented;
                 SavedMedicalStates states = stateController.getSavedState(medicalController.CurrentSceneFile);
                 saver.saveObject(states, textWriter);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(basicForm, String.Format("Error saving file {0}.\n{1}", Path.GetFileNameWithoutExtension(filename), e.Message), "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {

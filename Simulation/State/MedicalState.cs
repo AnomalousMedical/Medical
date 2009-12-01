@@ -124,6 +124,7 @@ namespace Medical
         private const string FOSSA_STATE = "FossaState";
         private const string NOTES = "Notes";
         private const string THUMBNAIL = "Thumbnail";
+        private const string NAME = "Name";
 
         protected MedicalState(LoadInfo info)
         {
@@ -151,6 +152,14 @@ namespace Medical
             {
                 thumbnail = null;
             }
+            if (info.hasValue(NAME))
+            {
+                Name = info.GetString(NAME);
+            }
+            else
+            {
+                Name = "Unnamed";
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -160,6 +169,7 @@ namespace Medical
             info.AddValue(TEETH_STATE, teethState);
             info.AddValue(FOSSA_STATE, fossaState);
             info.AddValue(NOTES, notes);
+            info.AddValue(NAME, Name);
             if (thumbnail != null)
             {
                 using (MemoryStream memStream = new MemoryStream())
