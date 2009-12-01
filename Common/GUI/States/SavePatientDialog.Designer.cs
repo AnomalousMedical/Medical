@@ -42,6 +42,7 @@
             this.kryptonLabel4 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.fileNameTextBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.warningLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox1)).BeginInit();
@@ -52,6 +53,7 @@
             // 
             // kryptonPanel1
             // 
+            this.kryptonPanel1.Controls.Add(this.warningLabel);
             this.kryptonPanel1.Controls.Add(this.browseButton);
             this.kryptonPanel1.Controls.Add(this.fileNameTextBox);
             this.kryptonPanel1.Controls.Add(this.kryptonLabel4);
@@ -173,6 +175,15 @@
             this.fileNameTextBox.Size = new System.Drawing.Size(186, 20);
             this.fileNameTextBox.TabIndex = 11;
             // 
+            // warningLabel
+            // 
+            this.warningLabel.Location = new System.Drawing.Point(200, 187);
+            this.warningLabel.Name = "warningLabel";
+            this.warningLabel.Size = new System.Drawing.Size(168, 42);
+            this.warningLabel.TabIndex = 12;
+            this.warningLabel.Values.Image = global::Medical.Properties.Resources.Warning;
+            this.warningLabel.Values.Text = "This file already exists.";
+            // 
             // SavePatientDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -211,5 +222,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel3;
         private ComponentFactory.Krypton.Toolkit.KryptonGroupBox kryptonGroupBox1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel warningLabel;
     }
 }

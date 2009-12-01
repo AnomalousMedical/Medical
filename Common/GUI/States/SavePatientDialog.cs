@@ -25,6 +25,13 @@ namespace Medical.GUI
             lastText.TextChanged += new EventHandler(lastText_TextChanged);
             firstText.TextChanged += new EventHandler(firstText_TextChanged);
             fileNameTextBox.TextChanged += new EventHandler(fileNameTextBox_TextChanged);
+            locationTextBox.TextChanged += new EventHandler(locationTextBox_TextChanged);
+            warningLabel.Visible = false;
+        }
+
+        void locationTextBox_TextChanged(object sender, EventArgs e)
+        {
+            checkForFile();
         }
 
         void fileNameTextBox_TextChanged(object sender, EventArgs e)
@@ -33,6 +40,7 @@ namespace Medical.GUI
             {
                 allowFileNameUpdate = false;
             }
+            checkForFile();
         }
 
         void firstText_TextChanged(object sender, EventArgs e)
@@ -55,6 +63,11 @@ namespace Medical.GUI
             }
         }
 
+        void checkForFile()
+        {
+            warningLabel.Visible = File.Exists(SavePath);
+        }
+
         protected override void OnShown(EventArgs e)
         {
             lastText.Text = "";
@@ -68,11 +81,11 @@ namespace Medical.GUI
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            String filename = String.Format("{0}/{1}.pdt", locationTextBox.Text, fileNameTextBox.Text);
+            String filename = SavePath;
             saveFile = true;
             if (File.Exists(filename))
             {
-                if (MessageBox.Show(this, String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Text), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show(this, String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Text), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 {
                     saveFile = false;
                 }
@@ -105,6 +118,14 @@ namespace Medical.GUI
             get
             {
                 return saveFile;
+            }
+        }
+
+        public String SavePath
+        {
+            get
+            {
+                return String.Format("{0}/{1}.pdt", locationTextBox.Text, fileNameTextBox.Text);
             }
         }
 
