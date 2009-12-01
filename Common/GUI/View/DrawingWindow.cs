@@ -50,6 +50,7 @@ namespace Medical
             this.renderer = renderer;
             this.cameraMover = cameraMover;
             window = renderer.createRendererWindow(this, name);
+            window.setEnabled(Enabled);
         }
 
         public void recreateWindow()
@@ -57,6 +58,7 @@ namespace Medical
             destroyCamera();
             renderer.destroyRendererWindow(window);
             window = renderer.createRendererWindow(this, name);
+            window.setEnabled(Enabled);
             createCamera(mainTimer, scene);
         }
 
@@ -146,11 +148,12 @@ namespace Medical
             cameraMover.setNewPosition(position, lookAt);
         }
 
-        public void setEnabled(bool enabled)
+        protected override void OnEnabledChanged(EventArgs e)
         {
+            base.OnEnabledChanged(e);
             if (window != null)
             {
-                window.setEnabled(enabled);
+                window.setEnabled(Enabled);
             }
         }
 

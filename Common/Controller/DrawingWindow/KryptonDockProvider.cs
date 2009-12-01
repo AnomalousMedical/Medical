@@ -6,6 +6,7 @@ using ComponentFactory.Krypton.Docking;
 using Medical.GUI;
 using Logging;
 using ComponentFactory.Krypton.Navigator;
+using ComponentFactory.Krypton.Workspace;
 
 namespace Medical
 {
@@ -66,9 +67,9 @@ namespace Medical
         {
             get
             {
-                if (workspace.ActivePage != null && workspace.ActivePage.Controls.Count > 0)
+                if (workspace.ActivePage != null)
                 {
-                    return workspace.ActivePage.Controls[0] as DrawingWindowHost;
+                    return getPageWindow(workspace.ActivePage);
                 }
                 return null;
             }
@@ -79,6 +80,19 @@ namespace Medical
             if (ActiveDocumentChanged != null)
             {
                 ActiveDocumentChanged.Invoke(this);
+            }
+            KryptonPage activePage = workspace.ActivePage;
+            KryptonWorkspaceCell cell = workspace.CellForPage(activePage);
+            if (cell != null)
+            {
+                foreach (KryptonPage page in cell.Pages)
+                {
+                    DrawingWindowHost host = getPageWindow(page);
+                    if (host != null)
+                    {
+                        host.DrawingWindow.Enabled = page == activePage;
+                    }
+                }
             }
         }
 
@@ -126,6 +140,15 @@ namespace Medical
             windowHost.alertClosing();
             windowHost.Dispose();
             createdWindows.Remove(windowHost.Name);
+        }
+
+        private DrawingWindowHost getPageWindow(KryptonPage page)
+        {
+            if (page.Controls.Count > 0)
+            {
+                return page.Controls[0] as DrawingWindowHost;
+            }
+            return null;
         }
     }
 }
