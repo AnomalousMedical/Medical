@@ -83,6 +83,13 @@ namespace Medical.GUI
 
             //temporary
             tempStateButton.Click += new EventHandler(tempStateButton_Click);
+
+            aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
+        }
+
+        void aboutCommand_Execute(object sender, EventArgs e)
+        {
+            aboutBox.ShowDialog(this);
         }
 
         void tempStateButton_Click(object sender, EventArgs e)

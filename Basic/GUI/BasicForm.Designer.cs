@@ -125,6 +125,10 @@
             this.fourWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.cloneWindowButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.cloneWindowCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple13 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.kryptonRibbonGroupButton2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.aboutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.kryptonContextMenuItems1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuRadioButton28 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
@@ -190,6 +194,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -823,7 +828,8 @@
             // 
             this.windowTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
             this.windowPropertiesGroup,
-            this.layoutGroup});
+            this.layoutGroup,
+            this.kryptonRibbonGroup4});
             this.windowTab.Text = "Window";
             // 
             // windowPropertiesGroup
@@ -973,6 +979,29 @@
             this.cloneWindowCommand.ImageSmall = global::Medical.Properties.Resources.CloneWindowSmall;
             this.cloneWindowCommand.Text = "Clone Window";
             this.cloneWindowCommand.TextLine1 = "Clone";
+            // 
+            // kryptonRibbonGroup4
+            // 
+            this.kryptonRibbonGroup4.DialogBoxLauncher = false;
+            this.kryptonRibbonGroup4.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple13});
+            this.kryptonRibbonGroup4.TextLine1 = " ";
+            // 
+            // kryptonRibbonGroupTriple13
+            // 
+            this.kryptonRibbonGroupTriple13.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.kryptonRibbonGroupButton2});
+            // 
+            // kryptonRibbonGroupButton2
+            // 
+            this.kryptonRibbonGroupButton2.KryptonCommand = this.aboutCommand;
+            // 
+            // aboutCommand
+            // 
+            this.aboutCommand.ImageLarge = global::Medical.Properties.Resources.AboutLarge;
+            this.aboutCommand.ImageSmall = global::Medical.Properties.Resources.AboutSmall;
+            this.aboutCommand.Text = "About";
+            this.aboutCommand.TextLine1 = "About";
             // 
             // kryptonManager
             // 
@@ -1240,5 +1269,9 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand cloneWindowCommand;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel kryptonRibbonGroupLabel3;
         public ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox aaCombo;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple13;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand aboutCommand;
     }
 }

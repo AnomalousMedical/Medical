@@ -60,6 +60,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AboutLarge {
+            get {
+                object obj = ResourceManager.GetObject("AboutLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AboutSmall {
+            get {
+                object obj = ResourceManager.GetObject("AboutSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap AppButton {
             get {
                 object obj = ResourceManager.GetObject("AppButton", resourceCulture);
