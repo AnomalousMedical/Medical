@@ -102,8 +102,9 @@ namespace Medical.GUI
         }
 
         /// <summary>
-        /// Returns the currently selected thumbnail bitmap. This will create a
-        /// copy of the selected bitmap and return it. So the caller is
+        /// Returns the currently selected thumbnail bitmap. This actually
+        /// renders a new thumbnail when this function is called, so the
+        /// thumbnail will always be up to date. This means that the caller is
         /// responsible for disposing the returned image. This will return null
         /// if no thumbnail is selected.
         /// </summary>
@@ -113,7 +114,7 @@ namespace Medical.GUI
             {
                 if (SelectedIndex > 0 && SelectedIndex < currentImages.Count)
                 {
-                    return new Bitmap(currentImages[SelectedIndex]);
+                    return imageRenderer.renderImage(thumbnailProperties[SelectedIndex]);
                 }
                 return null;
             }
