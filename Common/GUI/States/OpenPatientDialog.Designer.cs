@@ -32,12 +32,17 @@
             this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.openButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.fileDataGrid = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lastNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             this.firstNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             this.dateModifiedColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.browseButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.locationTextBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.warningLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).BeginInit();
@@ -45,17 +50,22 @@
             // 
             // kryptonPanel1
             // 
+            this.kryptonPanel1.Controls.Add(this.warningLabel);
+            this.kryptonPanel1.Controls.Add(this.browseButton);
+            this.kryptonPanel1.Controls.Add(this.locationTextBox);
+            this.kryptonPanel1.Controls.Add(this.kryptonLabel3);
             this.kryptonPanel1.Controls.Add(this.cancelButton);
             this.kryptonPanel1.Controls.Add(this.openButton);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.kryptonPanel1.Location = new System.Drawing.Point(0, 396);
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 349);
             this.kryptonPanel1.Name = "kryptonPanel1";
-            this.kryptonPanel1.Size = new System.Drawing.Size(744, 32);
+            this.kryptonPanel1.Size = new System.Drawing.Size(744, 79);
             this.kryptonPanel1.TabIndex = 2;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(100, 3);
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cancelButton.Location = new System.Drawing.Point(100, 49);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(90, 25);
             this.cancelButton.TabIndex = 1;
@@ -64,7 +74,8 @@
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(3, 3);
+            this.openButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.openButton.Location = new System.Drawing.Point(3, 49);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(90, 25);
             this.openButton.TabIndex = 0;
@@ -86,29 +97,8 @@
             this.fileDataGrid.Name = "fileDataGrid";
             this.fileDataGrid.ReadOnly = true;
             this.fileDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fileDataGrid.Size = new System.Drawing.Size(744, 396);
+            this.fileDataGrid.Size = new System.Drawing.Size(744, 349);
             this.fileDataGrid.TabIndex = 3;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "LastName";
-            this.dataGridViewTextBoxColumn1.HeaderText = "Last Name";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "FirstName";
-            this.dataGridViewTextBoxColumn2.HeaderText = "First Name";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "DateModified";
-            this.dataGridViewTextBoxColumn3.HeaderText = "DateModified";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // lastNameColumn
             // 
@@ -137,6 +127,64 @@
             this.dateModifiedColumn.ReadOnly = true;
             this.dateModifiedColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
+            // browseButton
+            // 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.Location = new System.Drawing.Point(444, 22);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(90, 25);
+            this.browseButton.TabIndex = 12;
+            this.browseButton.Values.Text = "Browse";
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
+            // locationTextBox
+            // 
+            this.locationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.locationTextBox.Location = new System.Drawing.Point(5, 25);
+            this.locationTextBox.Name = "locationTextBox";
+            this.locationTextBox.Size = new System.Drawing.Size(433, 20);
+            this.locationTextBox.TabIndex = 11;
+            // 
+            // kryptonLabel3
+            // 
+            this.kryptonLabel3.Location = new System.Drawing.Point(3, 3);
+            this.kryptonLabel3.Name = "kryptonLabel3";
+            this.kryptonLabel3.Size = new System.Drawing.Size(83, 19);
+            this.kryptonLabel3.TabIndex = 10;
+            this.kryptonLabel3.Values.Text = "Load Location";
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "LastName";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Last Name";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "FirstName";
+            this.dataGridViewTextBoxColumn2.HeaderText = "First Name";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "DateModified";
+            this.dataGridViewTextBoxColumn3.HeaderText = "DateModified";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // warningLabel
+            // 
+            this.warningLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.warningLabel.Location = new System.Drawing.Point(540, 15);
+            this.warningLabel.Name = "warningLabel";
+            this.warningLabel.Size = new System.Drawing.Size(201, 42);
+            this.warningLabel.TabIndex = 13;
+            this.warningLabel.Values.Image = global::Medical.Properties.Resources.Warning;
+            this.warningLabel.Values.Text = "This directory does not exist.";
+            // 
             // OpenPatientDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,6 +198,7 @@
             this.Text = "Open";
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).EndInit();
             this.kryptonPanel1.ResumeLayout(false);
+            this.kryptonPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).EndInit();
             this.ResumeLayout(false);
 
@@ -167,5 +216,10 @@
         private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn lastNameColumn;
         private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn firstNameColumn;
         private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn dateModifiedColumn;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton browseButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonTextBox locationTextBox;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel3;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel warningLabel;
     }
 }

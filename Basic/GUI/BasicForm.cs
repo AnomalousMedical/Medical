@@ -232,7 +232,6 @@ namespace Medical.GUI
             //{
             //    controller.openStates(fileTracker.getCurrentFile());
             //}
-            openPatient.listFiles(MedicalConfig.SaveDirectory);
             openPatient.ShowDialog(this);
             if (openPatient.FileChosen)
             {

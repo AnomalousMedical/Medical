@@ -27,19 +27,31 @@ namespace Medical.GUI
             fileDataGrid.CellClick += new DataGridViewCellEventHandler(fileDataGrid_CellClick);
             fileDataGrid.AutoGenerateColumns = false;
             fileDataGrid.DataSource = patientData;
+            locationTextBox.Text = MedicalConfig.SaveDirectory;
+            locationTextBox.TextChanged += new EventHandler(locationTextBox_TextChanged);
+            warningLabel.Visible = false;
         }
 
-        public void listFiles(String directory)
+        void locationTextBox_TextChanged(object sender, EventArgs e)
+        {
+            warningLabel.Visible = !Directory.Exists(locationTextBox.Text);
+            listFiles();
+        }
+
+        private void listFiles()
         {
             patientData.Clear();
-            foreach (String file in Directory.GetFiles(directory))
+            if (!warningLabel.Visible)
             {
-                if (file.EndsWith(".pdt"))
+                foreach (String file in Directory.GetFiles(locationTextBox.Text))
                 {
-                    PatientDataFile patient = new PatientDataFile(file);
-                    if (patient.loadHeader())
+                    if (file.EndsWith(".pdt"))
                     {
-                        patientData.Add(patient);
+                        PatientDataFile patient = new PatientDataFile(file);
+                        if (patient.loadHeader())
+                        {
+                            patientData.Add(patient);
+                        }
                     }
                 }
             }
@@ -48,6 +60,7 @@ namespace Medical.GUI
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            listFiles();
             currentFile = null;
             openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
         }
@@ -117,6 +130,14 @@ namespace Medical.GUI
         void fileDataGrid_SelectionChanged(object sender, EventArgs e)
         {
             openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
+        }
+
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
+            {
+                locationTextBox.Text = folderBrowserDialog.SelectedPath;
+            }
         }
     }
 }
