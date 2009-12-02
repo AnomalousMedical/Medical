@@ -73,6 +73,12 @@ namespace Medical.GUI
             openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            e.Cancel = fileListWorker.IsBusy;
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -138,6 +144,7 @@ namespace Medical.GUI
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            currentFile = null;
             this.Close();
         }
 
