@@ -28,102 +28,141 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.openButton = new System.Windows.Forms.Button();
-            this.fileList = new System.Windows.Forms.ListView();
-            this.lastName = new System.Windows.Forms.ColumnHeader();
-            this.firstName = new System.Windows.Forms.ColumnHeader();
-            this.dateModified = new System.Windows.Forms.ColumnHeader();
-            this.panel1.SuspendLayout();
+            this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.openButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.fileDataGrid = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
+            this.lastNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.firstNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.dateModifiedColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
+            this.kryptonPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel1
+            // kryptonPanel1
             // 
-            this.panel1.Controls.Add(this.cancelButton);
-            this.panel1.Controls.Add(this.openButton);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 412);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(744, 37);
-            this.panel1.TabIndex = 0;
+            this.kryptonPanel1.Controls.Add(this.cancelButton);
+            this.kryptonPanel1.Controls.Add(this.openButton);
+            this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 396);
+            this.kryptonPanel1.Name = "kryptonPanel1";
+            this.kryptonPanel1.Size = new System.Drawing.Size(744, 32);
+            this.kryptonPanel1.TabIndex = 2;
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(88, 7);
+            this.cancelButton.Location = new System.Drawing.Point(100, 3);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 3;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Size = new System.Drawing.Size(90, 25);
+            this.cancelButton.TabIndex = 1;
+            this.cancelButton.Values.Text = "Cancel";
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(6, 7);
+            this.openButton.Location = new System.Drawing.Point(3, 3);
             this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(75, 23);
+            this.openButton.Size = new System.Drawing.Size(90, 25);
             this.openButton.TabIndex = 0;
-            this.openButton.Text = "Open";
-            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Values.Text = "Open";
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
-            // fileList
+            // fileDataGrid
             // 
-            this.fileList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.lastName,
-            this.firstName,
-            this.dateModified});
-            this.fileList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.fileList.FullRowSelect = true;
-            this.fileList.GridLines = true;
-            this.fileList.Location = new System.Drawing.Point(0, 0);
-            this.fileList.MultiSelect = false;
-            this.fileList.Name = "fileList";
-            this.fileList.Size = new System.Drawing.Size(744, 412);
-            this.fileList.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.fileList.TabIndex = 1;
-            this.fileList.UseCompatibleStateImageBehavior = false;
-            this.fileList.View = System.Windows.Forms.View.Details;
+            this.fileDataGrid.AllowUserToAddRows = false;
+            this.fileDataGrid.AllowUserToDeleteRows = false;
+            this.fileDataGrid.AllowUserToOrderColumns = true;
+            this.fileDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.lastNameColumn,
+            this.firstNameColumn,
+            this.dateModifiedColumn});
+            this.fileDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fileDataGrid.Location = new System.Drawing.Point(0, 0);
+            this.fileDataGrid.MultiSelect = false;
+            this.fileDataGrid.Name = "fileDataGrid";
+            this.fileDataGrid.ReadOnly = true;
+            this.fileDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.fileDataGrid.Size = new System.Drawing.Size(744, 396);
+            this.fileDataGrid.TabIndex = 3;
             // 
-            // lastName
+            // lastNameColumn
             // 
-            this.lastName.Text = "Last";
-            this.lastName.Width = 134;
+            this.lastNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.lastNameColumn.DataPropertyName = "LastName";
+            this.lastNameColumn.HeaderText = "Last Name";
+            this.lastNameColumn.Name = "lastNameColumn";
+            this.lastNameColumn.ReadOnly = true;
             // 
-            // firstName
+            // firstNameColumn
             // 
-            this.firstName.Text = "First";
+            this.firstNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.firstNameColumn.DataPropertyName = "FirstName";
+            this.firstNameColumn.HeaderText = "FirstName";
+            this.firstNameColumn.Name = "firstNameColumn";
+            this.firstNameColumn.ReadOnly = true;
             // 
-            // dateModified
+            // dateModifiedColumn
             // 
-            this.dateModified.Text = "DateModified";
-            this.dateModified.Width = 184;
+            this.dateModifiedColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dateModifiedColumn.DataPropertyName = "DateModified";
+            this.dateModifiedColumn.HeaderText = "Date Modified";
+            this.dateModifiedColumn.Name = "dateModifiedColumn";
+            this.dateModifiedColumn.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "LastName";
+            this.dataGridViewTextBoxColumn1.HeaderText = "Last Name";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "FirstName";
+            this.dataGridViewTextBoxColumn2.HeaderText = "First Name";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "DateModified";
+            this.dataGridViewTextBoxColumn3.HeaderText = "DateModified";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // OpenPatientDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 449);
-            this.Controls.Add(this.fileList);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(744, 428);
+            this.Controls.Add(this.fileDataGrid);
+            this.Controls.Add(this.kryptonPanel1);
             this.Name = "OpenPatientDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Open";
-            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).EndInit();
+            this.kryptonPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button openButton;
-        private System.Windows.Forms.ListView fileList;
-        private System.Windows.Forms.ColumnHeader lastName;
-        private System.Windows.Forms.ColumnHeader dateModified;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.ColumnHeader firstName;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton cancelButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton openButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridView fileDataGrid;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn lastNameColumn;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn firstNameColumn;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn dateModifiedColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }

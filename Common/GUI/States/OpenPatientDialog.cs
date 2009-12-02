@@ -7,59 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
-    public partial class OpenPatientDialog : Form
+    public partial class OpenPatientDialog : KryptonForm
     {
         private static char[] SEPS = { ',' };
+        private BindingSource patientData = new BindingSource();
 
         private PatientDataFile currentFile = null;
 
         public OpenPatientDialog()
         {
             InitializeComponent();
-            fileList.ItemActivate += new EventHandler(fileList_ItemActivate);
-            fileList.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(fileList_ItemSelectionChanged);
+            this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
+            fileDataGrid.SelectionChanged += new EventHandler(fileDataGrid_SelectionChanged);
+            fileDataGrid.AutoGenerateColumns = false;
+            fileDataGrid.DataSource = patientData;
         }
 
         public void listFiles(String directory)
         {
-            try
+            patientData.Clear();
+            foreach (String file in Directory.GetFiles(directory))
             {
-                fileList.BeginUpdate();
-                fileList.Items.Clear();
-                if (!Directory.Exists(directory))
+                if (file.EndsWith(".pdt"))
                 {
-                    Directory.CreateDirectory(directory);
+                    PatientDataFile patient = new PatientDataFile(file);
+                    patient.loadHeader();
+                    patientData.Add(patient);
                 }
-                String[] files = Directory.GetFiles(directory, "*.pat");
-                fileList.Columns[0].Width = (int)(fileList.Width * 0.35f);
-                fileList.Columns[1].Width = (int)(fileList.Width * 0.35f);
-                fileList.Columns[2].Width = (int)(fileList.Width * 0.3f);
-                foreach (String file in files)
-                {
-                    String name = Path.GetFileNameWithoutExtension(file);
-                    DateTime dateModified = File.GetLastWriteTime(file);
-                    String[] split = name.Split(SEPS);
-                    ListViewItem item = new ListViewItem(split[0].Trim());
-                    if (split.Length > 1)
-                    {
-                        item.SubItems.Add(split[1].Trim());
-                    }
-                    else
-                    {
-                        item.SubItems.Add("");
-                    }
-                    item.SubItems.Add(dateModified.ToShortDateString() + " " + dateModified.ToShortTimeString());
-                    item.Tag = file;
-                    fileList.Items.Add(item);
-                }
-                fileList.EndUpdate();
-            }
-            catch
-            {
-
             }
         }
 
@@ -67,7 +45,7 @@ namespace Medical.GUI
         {
             base.OnShown(e);
             currentFile = null;
-            openButton.Enabled = false;
+            openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
         }
 
         void fileList_ItemActivate(object sender, EventArgs e)
@@ -93,9 +71,11 @@ namespace Medical.GUI
 
         private void openButton_Click(object sender, EventArgs e)
         {
-            currentFile = new PatientDataFile(fileList.SelectedItems[0].Tag.ToString());
-            currentFile.loadHeader();
-            this.Close();
+            if (fileDataGrid.SelectedRows.Count > 0)
+            {
+                currentFile = fileDataGrid.SelectedRows[0].DataBoundItem as PatientDataFile;
+                this.Close();
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -103,17 +83,9 @@ namespace Medical.GUI
             this.Close();
         }
 
-        void fileList_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        void fileDataGrid_SelectionChanged(object sender, EventArgs e)
         {
-            openButton.Enabled = fileList.SelectedItems.Count > 0;
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            fileList.Columns[0].Width = -1;
-            fileList.Columns[1].Width = -1;
-            fileList.Columns[2].Width = -1;
-            base.OnResize(e);
+            openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Medical
         public PatientDataFile(String backingFile)
         {
             this.BackingFile = backingFile;
+            DateModified = File.GetLastWriteTime(backingFile);
         }
 
         public void save()
@@ -57,6 +58,7 @@ namespace Medical
                     }
                 }
             }
+            DateModified = File.GetLastWriteTime(BackingFile);
         }
 
         public void loadHeader()
@@ -121,6 +123,8 @@ namespace Medical
         public String FirstName { get; set; }
 
         public String LastName { get; set; }
+
+        public DateTime DateModified { get; set; }
 
         public SavedMedicalStates SavedStates
         {
