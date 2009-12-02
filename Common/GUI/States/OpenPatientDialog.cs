@@ -23,6 +23,7 @@ namespace Medical.GUI
             InitializeComponent();
             this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
             fileDataGrid.SelectionChanged += new EventHandler(fileDataGrid_SelectionChanged);
+            fileDataGrid.CellDoubleClick += new DataGridViewCellEventHandler(fileDataGrid_CellDoubleClick);
             fileDataGrid.AutoGenerateColumns = false;
             fileDataGrid.DataSource = patientData;
         }
@@ -66,6 +67,15 @@ namespace Medical.GUI
             get
             {
                 return currentFile;
+            }
+        }
+
+        void fileDataGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //Make sure this isnt in the header.
+            if (e.RowIndex != -1)
+            {
+                openButton_Click(null, null);
             }
         }
 
