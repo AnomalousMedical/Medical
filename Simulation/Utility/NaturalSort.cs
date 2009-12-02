@@ -5,25 +5,14 @@ using System.Text;
 
 namespace Medical
 {
-    /// <summary>
-    /// This class provides a function that can do natural sorting on a pair of strings.
-    /// </summary>
-    class NaturalSort<T> : Comparer<T>
+    public class NaturalSortAlgorithm
     {
-        /// <summary>
-        /// Compare s1 to s2. Returns output that will work for the Comparer methods on collections.
-        /// </summary>
-        /// <param name="x">The first object.</param>
-        /// <param name="y">The second object.</param>
-        /// <returns>&lt; 0 if s1 &lt; 0, 0 if s1 == s2 and &gt; 0 if s1 &gt; s2.</returns>
-        public override int Compare(T x, T y)
+        public static int CompareFunc(String s1, String s2)
         {
-            String s1 = x.ToString();
             if (s1 == null)
             {
                 return 0;
             }
-            String s2 = y.ToString();
             if (s2 == null)
             {
                 return 0;
@@ -103,6 +92,25 @@ namespace Medical
                 }
             }
             return len1 - len2;
+        }
+    }
+
+    /// <summary>
+    /// This class provides a function that can do natural sorting on a pair of strings.
+    /// </summary>
+    public class NaturalSort<T> : Comparer<T>
+    {
+        
+
+        /// <summary>
+        /// Compare s1 to s2. Returns output that will work for the Comparer methods on collections.
+        /// </summary>
+        /// <param name="x">The first object.</param>
+        /// <param name="y">The second object.</param>
+        /// <returns>&lt; 0 if s1 &lt; 0, 0 if s1 == s2 and &gt; 0 if s1 &gt; s2.</returns>
+        public override int Compare(T x, T y)
+        {
+            return NaturalSortAlgorithm.CompareFunc(x.ToString(), y.ToString());
         }
     }
 }

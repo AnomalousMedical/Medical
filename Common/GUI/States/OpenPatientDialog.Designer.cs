@@ -32,12 +32,12 @@
             this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.openButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.fileDataGrid = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
-            this.lastNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
-            this.firstNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
-            this.dateModifiedColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lastNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.firstNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
+            this.dateModifiedColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).BeginInit();
@@ -89,30 +89,6 @@
             this.fileDataGrid.Size = new System.Drawing.Size(744, 396);
             this.fileDataGrid.TabIndex = 3;
             // 
-            // lastNameColumn
-            // 
-            this.lastNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.lastNameColumn.DataPropertyName = "LastName";
-            this.lastNameColumn.HeaderText = "Last Name";
-            this.lastNameColumn.Name = "lastNameColumn";
-            this.lastNameColumn.ReadOnly = true;
-            // 
-            // firstNameColumn
-            // 
-            this.firstNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.firstNameColumn.DataPropertyName = "FirstName";
-            this.firstNameColumn.HeaderText = "FirstName";
-            this.firstNameColumn.Name = "firstNameColumn";
-            this.firstNameColumn.ReadOnly = true;
-            // 
-            // dateModifiedColumn
-            // 
-            this.dateModifiedColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dateModifiedColumn.DataPropertyName = "DateModified";
-            this.dateModifiedColumn.HeaderText = "Date Modified";
-            this.dateModifiedColumn.Name = "dateModifiedColumn";
-            this.dateModifiedColumn.ReadOnly = true;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.DataPropertyName = "LastName";
@@ -133,6 +109,33 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "DateModified";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // lastNameColumn
+            // 
+            this.lastNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.lastNameColumn.DataPropertyName = "LastName";
+            this.lastNameColumn.HeaderText = "Last Name";
+            this.lastNameColumn.Name = "lastNameColumn";
+            this.lastNameColumn.ReadOnly = true;
+            this.lastNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // firstNameColumn
+            // 
+            this.firstNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.firstNameColumn.DataPropertyName = "FirstName";
+            this.firstNameColumn.HeaderText = "FirstName";
+            this.firstNameColumn.Name = "firstNameColumn";
+            this.firstNameColumn.ReadOnly = true;
+            this.firstNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            // 
+            // dateModifiedColumn
+            // 
+            this.dateModifiedColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dateModifiedColumn.DataPropertyName = "DateModified";
+            this.dateModifiedColumn.HeaderText = "Date Modified";
+            this.dateModifiedColumn.Name = "dateModifiedColumn";
+            this.dateModifiedColumn.ReadOnly = true;
+            this.dateModifiedColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
             // OpenPatientDialog
             // 
@@ -158,11 +161,11 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton cancelButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton openButton;
         private ComponentFactory.Krypton.Toolkit.KryptonDataGridView fileDataGrid;
-        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn lastNameColumn;
-        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn firstNameColumn;
-        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn dateModifiedColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn lastNameColumn;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn firstNameColumn;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn dateModifiedColumn;
     }
 }

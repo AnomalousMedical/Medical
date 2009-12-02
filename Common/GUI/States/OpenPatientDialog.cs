@@ -14,7 +14,7 @@ namespace Medical.GUI
     public partial class OpenPatientDialog : KryptonForm
     {
         private static char[] SEPS = { ',' };
-        private BindingSource patientData = new BindingSource();
+        private PatientBindingSource patientData = new PatientBindingSource();
 
         private PatientDataFile currentFile = null;
 
@@ -24,6 +24,7 @@ namespace Medical.GUI
             this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
             fileDataGrid.SelectionChanged += new EventHandler(fileDataGrid_SelectionChanged);
             fileDataGrid.CellDoubleClick += new DataGridViewCellEventHandler(fileDataGrid_CellDoubleClick);
+            fileDataGrid.CellClick += new DataGridViewCellEventHandler(fileDataGrid_CellClick);
             fileDataGrid.AutoGenerateColumns = false;
             fileDataGrid.DataSource = patientData;
         }
@@ -67,6 +68,24 @@ namespace Medical.GUI
             get
             {
                 return currentFile;
+            }
+        }
+
+        void fileDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == -1)
+            {
+                int columnIndex = e.ColumnIndex;
+                DataGridViewColumn column = fileDataGrid.Columns[columnIndex];
+                SortOrder order = SortOrder.Ascending;
+                ListSortDirection direction = ListSortDirection.Ascending;
+                if (column.HeaderCell.SortGlyphDirection == SortOrder.Ascending)
+                {
+                    order = SortOrder.Descending;
+                    direction = ListSortDirection.Descending;
+                }
+                fileDataGrid.Sort(column, direction);
+                column.HeaderCell.SortGlyphDirection = order;
             }
         }
 

@@ -307,6 +307,8 @@
     <Compile Include="GUI\States\OpenPatientDialog.Designer.cs">
       <DependentUpon>OpenPatientDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\States\PatientBindingSource.cs">
+    </Compile>
     <Compile Include="GUI\States\SavePatientDialog.cs">
       <SubType>Form</SubType>
     </Compile>
