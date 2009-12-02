@@ -34,6 +34,11 @@ namespace Medical
 
         public void save()
         {
+            String saveFolder = Path.GetDirectoryName(BackingFile);
+            if (!Directory.Exists(saveFolder))
+            {
+                Directory.CreateDirectory(saveFolder);
+            }
             using (MemoryStream headerStream = new MemoryStream())
             {
                 using (XmlTextWriter headerWriter = new XmlTextWriter(headerStream, Encoding.Default))
