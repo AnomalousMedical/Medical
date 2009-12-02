@@ -15,16 +15,6 @@ namespace Medical.GUI
 {
     public partial class OpenPatientDialog : KryptonForm
     {
-        /// <summary>
-        /// An enum of actions to take after the background worker is canceled.
-        /// </summary>
-        private enum CancelPostAction
-        {
-            None,
-            ProcessNewDirectory,
-            Close,
-        }
-
         private static char[] SEPS = { ',' };
         private PatientBindingSource patientData = new PatientBindingSource();
 
@@ -35,10 +25,62 @@ namespace Medical.GUI
         private delegate void UpdateCallback(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition);
         private UpdateCallback updateFileListCallback;
 
+        /**
+         * The following variables work on the lifecycle that allows the
+         * background worker to be canceled. This works by doing the sequences
+         * described in the enum. The general sequence works as such.
+         *   Some event happens on the UI thread that requires the background
+         *   thread to shut down before it can continue. The UI thread looks to
+         *   see if the background thread is running. If it is it will set the
+         *   appropriate CancelPostAction and call the CancelAsync method on the
+         *   background worker. The background worker will check each time it is
+         *   scanning a new file to see if it is allowed to continue or is
+         *   canceled. If it is canceled it will set the
+         *   bgThreadKnowsAboutCancel variable to true and will not attempt to
+         *   call anymore ui thread functions or sync its data. It will then
+         *   call the cancelListFilesCallback on the UI thread. This will start
+         *   the action originally requested on the UI thread. It will also
+         *   break its loop and shutdown as fast as possible calling its
+         *   RunCompleted method.
+         */
+        /// <summary>
+        /// An enum of actions to take after the background worker is canceled.
+        /// </summary>
+        private enum CancelPostAction
+        {
+            /// <summary>
+            /// Take no action on close.
+            /// </summary>
+            None,
+            /// <summary>
+            /// The listFiles function will check to see if the background
+            /// thread is already running. If it is it will set the
+            /// CancelPostAction to ProcessNewDirectory and then cancel the
+            /// background worker. When the background worker signals that is
+            /// knows about the cancel the
+            /// startNewDirectoryScanOnBackgroundThreadStop variable will be set
+            /// to true. Now when the RunWorkerCompleted method is called the
+            /// listFiles() function will be called again from that method.
+            /// </summary>
+            ProcessNewDirectory,
+            /// <summary>
+            /// The form's onClosing event is handled. If the background thread
+            /// is busy the close is canceled and the background thread's
+            /// cancelAsync method is called. The CancelPostAction is set to
+            /// Close and the BackgroundWorker cancelAsync method is called. In
+            /// the CancelCallback the form will actually be closed and it will
+            /// not be canceled by the OnClosing event because
+            /// bgThreadKnowsAboutCancel will be true ensuring the background
+            /// thread no longer calls any UI thread functions.
+            /// </summary>
+            Close,
+        }
+
         private delegate void CancelCallback();
         private CancelCallback cancelListFilesCallback;
         private CancelPostAction cancelPostAction;
         private bool bgThreadKnowsAboutCancel = false;
+        private bool startNewDirectoryScanOnBackgroundThreadStop = false;
 
         public OpenPatientDialog()
         {
@@ -185,12 +227,21 @@ namespace Medical.GUI
 
         private void listFiles()
         {
-            patientData.Clear();
-            if (validSearchDirectory)
+            if (fileListWorker.IsBusy)
             {
-                bgThreadKnowsAboutCancel = false;
-                loadingProgress.Visible = true;
-                fileListWorker.RunWorkerAsync();
+                cancelPostAction = CancelPostAction.ProcessNewDirectory;
+                fileListWorker.CancelAsync();
+            }
+            else
+            {
+                patientData.Clear();
+                if (validSearchDirectory)
+                {
+                    startNewDirectoryScanOnBackgroundThreadStop = false;
+                    bgThreadKnowsAboutCancel = false;
+                    loadingProgress.Visible = true;
+                    fileListWorker.RunWorkerAsync();
+                }
             }
         }
 
@@ -252,7 +303,11 @@ namespace Medical.GUI
         void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadingProgress.Visible = false;
-            Log.Debug("Total patients {0}.", patientData.Count);
+            //Log.Debug("Total patients {0}.", patientData.Count);
+            if (startNewDirectoryScanOnBackgroundThreadStop)
+            {
+                listFiles();
+            }
         }
 
         void listFilesCanceled()
@@ -263,8 +318,10 @@ namespace Medical.GUI
                     this.Close();
                     break;
                 case CancelPostAction.ProcessNewDirectory:
+                    startNewDirectoryScanOnBackgroundThreadStop = true;
                     break;
             }
+            cancelPostAction = CancelPostAction.None;
         }
     }
 }
