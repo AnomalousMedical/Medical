@@ -197,6 +197,7 @@
             // fileListWorker
             // 
             this.fileListWorker.WorkerReportsProgress = true;
+            this.fileListWorker.WorkerSupportsCancellation = true;
             // 
             // dataGridViewTextBoxColumn1
             // 

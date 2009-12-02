@@ -15,6 +15,16 @@ namespace Medical.GUI
 {
     public partial class OpenPatientDialog : KryptonForm
     {
+        /// <summary>
+        /// An enum of actions to take after the background worker is canceled.
+        /// </summary>
+        private enum CancelPostAction
+        {
+            None,
+            ProcessNewDirectory,
+            Close,
+        }
+
         private static char[] SEPS = { ',' };
         private PatientBindingSource patientData = new PatientBindingSource();
 
@@ -24,6 +34,10 @@ namespace Medical.GUI
 
         private delegate void UpdateCallback(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition);
         private UpdateCallback updateFileListCallback;
+
+        private delegate void CancelCallback();
+        private CancelCallback cancelListFilesCallback;
+        private CancelPostAction cancelPostAction;
 
         public OpenPatientDialog()
         {
@@ -46,6 +60,7 @@ namespace Medical.GUI
             fileListWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileListWorker_RunWorkerCompleted);
 
             updateFileListCallback = new UpdateCallback(this.updateFileList);
+            cancelListFilesCallback = new CancelCallback(listFilesCanceled);
         }
 
         void searchBox_TextChanged(object sender, EventArgs e)
@@ -71,12 +86,18 @@ namespace Medical.GUI
             listFiles();
             currentFile = null;
             openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
+            cancelPostAction = CancelPostAction.None;
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            e.Cancel = fileListWorker.IsBusy;
+            if (fileListWorker.IsBusy)
+            {
+                e.Cancel = true;
+                cancelPostAction = CancelPostAction.Close;
+                fileListWorker.CancelAsync();
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -186,6 +207,11 @@ namespace Medical.GUI
                 int currentPosition = 0;
                 foreach (String file in files)
                 {
+                    if (fileListWorker.CancellationPending)
+                    {
+                        this.Invoke(cancelListFilesCallback);
+                        break;
+                    }
                     PatientDataFile patient = new PatientDataFile(file);
                     if (patient.loadHeader())
                     {
@@ -221,6 +247,18 @@ namespace Medical.GUI
         {
             loadingProgress.Visible = false;
             Log.Debug("Total patients {0}.", patientData.Count);
+        }
+
+        void listFilesCanceled()
+        {
+            switch (cancelPostAction)
+            {
+                case CancelPostAction.Close:
+                    this.Close();
+                    break;
+                case CancelPostAction.ProcessNewDirectory:
+                    break;
+            }
         }
     }
 }
