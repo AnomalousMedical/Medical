@@ -17,6 +17,7 @@ namespace Medical.GUI
         private PatientBindingSource patientData = new PatientBindingSource();
 
         private PatientDataFile currentFile = null;
+        private PropertyDescriptor lastNameDescriptor;
 
         public OpenPatientDialog()
         {
@@ -30,6 +31,19 @@ namespace Medical.GUI
             locationTextBox.Text = MedicalConfig.SaveDirectory;
             locationTextBox.TextChanged += new EventHandler(locationTextBox_TextChanged);
             warningLabel.Visible = false;
+            searchBox.TextChanged += new EventHandler(searchBox_TextChanged);
+
+            lastNameDescriptor = TypeDescriptor.GetProperties(typeof(PatientBindingSource)).Find("LastName", false);
+        }
+
+        void searchBox_TextChanged(object sender, EventArgs e)
+        {
+            int index = ((IBindingList)patientData).Find(lastNameDescriptor, searchBox.Text);
+            if (index != -1)
+            {
+                fileDataGrid.Rows[index].Selected = true;
+                fileDataGrid.FirstDisplayedScrollingRowIndex = index;
+            }
         }
 
         void locationTextBox_TextChanged(object sender, EventArgs e)

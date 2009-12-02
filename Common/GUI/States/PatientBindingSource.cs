@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Collections;
+using System.Globalization;
 
 namespace Medical.GUI
 {
@@ -56,6 +57,27 @@ namespace Medical.GUI
             {
                 return isSorted;
             }
+        }
+
+        protected override bool SupportsSearchingCore
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        protected override int FindCore(PropertyDescriptor prop, object key)
+        {
+            for (int i = 0; i < Items.Count; ++i)
+            {
+                PatientDataFile data = (PatientDataFile)Items[i];
+                if (data.LastName.StartsWith(key.ToString(), true, CultureInfo.CurrentCulture))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         class LastNameComparer : IComparer<PatientDataFile>
