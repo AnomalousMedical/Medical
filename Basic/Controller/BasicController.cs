@@ -296,15 +296,21 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         public void openStates(PatientDataFile dataFile)
         {
-            dataFile.loadData();
-            SavedMedicalStates states = dataFile.SavedStates;
-            if (states != null)
+            if (dataFile.loadData())
             {
-                changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
-                stateController.setStates(states);
-                stateController.blend(0.0f);
+                SavedMedicalStates states = dataFile.SavedStates;
+                if (states != null)
+                {
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
+                    stateController.setStates(states);
+                    stateController.blend(0.0f);
+                }
+                dataFile.closeData();
             }
-            dataFile.closeData();
+            else
+            {
+                MessageBox.Show(basicForm, String.Format("Error loading file {0}.", dataFile.BackingFile), "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void oldLoad(String filename)

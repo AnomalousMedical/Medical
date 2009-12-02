@@ -66,56 +66,84 @@ namespace Medical
             DateModified = File.GetLastWriteTime(BackingFile);
         }
 
-        public void loadHeader()
+        /// <summary>
+        /// Load the header for the data file. Returns true on success.
+        /// </summary>
+        /// <returns>True if the header was loaded without any problems.</returns>
+        public bool loadHeader()
         {
-            using (Stream fileStream = new BufferedStream(new FileStream(BackingFile, FileMode.Open, FileAccess.Read)))
+            try
             {
-                using (BinaryReader br = new BinaryReader(fileStream))
+                using (Stream fileStream = new BufferedStream(new FileStream(BackingFile, FileMode.Open, FileAccess.Read)))
                 {
-                    headerSize = br.ReadInt64();
-                    using (XmlTextReader xmlReader = new XmlTextReader(fileStream))
+                    using (BinaryReader br = new BinaryReader(fileStream))
                     {
-                        while (!isEndElement(xmlReader, PATIENT_HEADER))
+                        headerSize = br.ReadInt64();
+                        using (XmlTextReader xmlReader = new XmlTextReader(fileStream))
                         {
-                            if (isValidElement(xmlReader))
+                            while (!isEndElement(xmlReader, PATIENT_HEADER))
                             {
-                                if (xmlReader.Name == FIRST_NAME)
+                                if (isValidElement(xmlReader))
                                 {
-                                    FirstName = xmlReader.ReadElementContentAsString();
-                                }
-                                else if (xmlReader.Name == LAST_NAME)
-                                {
-                                    LastName = xmlReader.ReadElementContentAsString();
+                                    if (xmlReader.Name == FIRST_NAME)
+                                    {
+                                        FirstName = xmlReader.ReadElementContentAsString();
+                                    }
+                                    else if (xmlReader.Name == LAST_NAME)
+                                    {
+                                        LastName = xmlReader.ReadElementContentAsString();
+                                    }
+                                    else
+                                    {
+                                        xmlReader.Read();
+                                    }
                                 }
                                 else
                                 {
                                     xmlReader.Read();
                                 }
                             }
-                            else
-                            {
-                                xmlReader.Read();
-                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Load the date for the file. Will return true if sucessful.
+        /// </summary>
+        /// <returns>True if data is loaded correctly.</returns>
+        public bool loadData()
+        {
+            bool loaded = true;
+            try
+            {
+                if (headerSize == -1)
+                {
+                    loaded = loadHeader();
+                }
+                if (loaded)
+                {
+                    using (Stream fs = new BufferedStream(new FileStream(BackingFile, FileMode.Open, FileAccess.Read)))
+                    {
+                        fs.Seek(headerSize, SeekOrigin.Begin);
+                        using (XmlTextReader textReader = new XmlTextReader(fs))
+                        {
+                            savedStates = xmlSaver.restoreObject(textReader) as SavedMedicalStates;
                         }
                     }
                 }
             }
-        }
-
-        public void loadData()
-        {
-            if (headerSize == -1)
+            catch (Exception e)
             {
-                throw new Exception("Must load patient data header before loading data");
+                loaded = false;
             }
-            using (Stream fs = new BufferedStream(new FileStream(BackingFile, FileMode.Open, FileAccess.Read)))
-            {
-                fs.Seek(headerSize, SeekOrigin.Begin);
-                using (XmlTextReader textReader = new XmlTextReader(fs))
-                {
-                    savedStates = xmlSaver.restoreObject(textReader) as SavedMedicalStates;
-                }
-            }
+            return loaded;
         }
 
         public void closeData()

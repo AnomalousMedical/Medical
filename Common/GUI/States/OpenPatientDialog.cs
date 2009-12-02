@@ -37,8 +37,10 @@ namespace Medical.GUI
                 if (file.EndsWith(".pdt"))
                 {
                     PatientDataFile patient = new PatientDataFile(file);
-                    patient.loadHeader();
-                    patientData.Add(patient);
+                    if (patient.loadHeader())
+                    {
+                        patientData.Add(patient);
+                    }
                 }
             }
         }
