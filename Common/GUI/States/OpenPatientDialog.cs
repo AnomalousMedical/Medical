@@ -15,7 +15,6 @@ namespace Medical.GUI
 {
     public partial class OpenPatientDialog : KryptonForm
     {
-        private static char[] SEPS = { ',' };
         private PatientBindingSource patientData = new PatientBindingSource();
 
         private PatientDataFile currentFile = null;
