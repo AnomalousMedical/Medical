@@ -29,22 +29,24 @@
         private void InitializeComponent()
         {
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.loadingProgress = new System.Windows.Forms.ProgressBar();
+            this.searchBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.warningLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.browseButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.locationTextBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.cancelButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.openButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.fileDataGrid = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
             this.lastNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             this.firstNameColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
             this.dateModifiedColumn = new ComponentFactory.Krypton.Toolkit.KryptonDataGridViewTextBoxColumn();
-            this.browseButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.locationTextBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
-            this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.fileListWorker = new System.ComponentModel.BackgroundWorker();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.warningLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.searchBox = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
-            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileDataGrid)).BeginInit();
@@ -52,6 +54,7 @@
             // 
             // kryptonPanel1
             // 
+            this.kryptonPanel1.Controls.Add(this.loadingProgress);
             this.kryptonPanel1.Controls.Add(this.searchBox);
             this.kryptonPanel1.Controls.Add(this.kryptonLabel1);
             this.kryptonPanel1.Controls.Add(this.warningLabel);
@@ -63,8 +66,68 @@
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.kryptonPanel1.Location = new System.Drawing.Point(0, 360);
             this.kryptonPanel1.Name = "kryptonPanel1";
-            this.kryptonPanel1.Size = new System.Drawing.Size(744, 124);
+            this.kryptonPanel1.Size = new System.Drawing.Size(708, 124);
             this.kryptonPanel1.TabIndex = 2;
+            // 
+            // loadingProgress
+            // 
+            this.loadingProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.loadingProgress.Location = new System.Drawing.Point(605, 98);
+            this.loadingProgress.Name = "loadingProgress";
+            this.loadingProgress.Size = new System.Drawing.Size(100, 23);
+            this.loadingProgress.TabIndex = 16;
+            // 
+            // searchBox
+            // 
+            this.searchBox.Location = new System.Drawing.Point(5, 26);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(185, 20);
+            this.searchBox.TabIndex = 15;
+            // 
+            // kryptonLabel1
+            // 
+            this.kryptonLabel1.Location = new System.Drawing.Point(3, 4);
+            this.kryptonLabel1.Name = "kryptonLabel1";
+            this.kryptonLabel1.Size = new System.Drawing.Size(102, 19);
+            this.kryptonLabel1.TabIndex = 14;
+            this.kryptonLabel1.Values.Text = "Search Last Name";
+            // 
+            // warningLabel
+            // 
+            this.warningLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.warningLabel.Location = new System.Drawing.Point(504, 60);
+            this.warningLabel.Name = "warningLabel";
+            this.warningLabel.Size = new System.Drawing.Size(201, 42);
+            this.warningLabel.TabIndex = 13;
+            this.warningLabel.Values.Image = global::Medical.Properties.Resources.Warning;
+            this.warningLabel.Values.Text = "This directory does not exist.";
+            // 
+            // browseButton
+            // 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.Location = new System.Drawing.Point(408, 67);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(90, 25);
+            this.browseButton.TabIndex = 12;
+            this.browseButton.Values.Text = "Browse";
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
+            // locationTextBox
+            // 
+            this.locationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.locationTextBox.Location = new System.Drawing.Point(5, 70);
+            this.locationTextBox.Name = "locationTextBox";
+            this.locationTextBox.Size = new System.Drawing.Size(397, 20);
+            this.locationTextBox.TabIndex = 11;
+            // 
+            // kryptonLabel3
+            // 
+            this.kryptonLabel3.Location = new System.Drawing.Point(3, 48);
+            this.kryptonLabel3.Name = "kryptonLabel3";
+            this.kryptonLabel3.Size = new System.Drawing.Size(83, 19);
+            this.kryptonLabel3.TabIndex = 10;
+            this.kryptonLabel3.Values.Text = "Load Location";
             // 
             // cancelButton
             // 
@@ -101,7 +164,7 @@
             this.fileDataGrid.Name = "fileDataGrid";
             this.fileDataGrid.ReadOnly = true;
             this.fileDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.fileDataGrid.Size = new System.Drawing.Size(744, 360);
+            this.fileDataGrid.Size = new System.Drawing.Size(708, 360);
             this.fileDataGrid.TabIndex = 3;
             // 
             // lastNameColumn
@@ -131,32 +194,9 @@
             this.dateModifiedColumn.ReadOnly = true;
             this.dateModifiedColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             // 
-            // browseButton
+            // fileListWorker
             // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.Location = new System.Drawing.Point(444, 67);
-            this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(90, 25);
-            this.browseButton.TabIndex = 12;
-            this.browseButton.Values.Text = "Browse";
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
-            // 
-            // locationTextBox
-            // 
-            this.locationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.locationTextBox.Location = new System.Drawing.Point(5, 70);
-            this.locationTextBox.Name = "locationTextBox";
-            this.locationTextBox.Size = new System.Drawing.Size(433, 20);
-            this.locationTextBox.TabIndex = 11;
-            // 
-            // kryptonLabel3
-            // 
-            this.kryptonLabel3.Location = new System.Drawing.Point(3, 48);
-            this.kryptonLabel3.Name = "kryptonLabel3";
-            this.kryptonLabel3.Size = new System.Drawing.Size(83, 19);
-            this.kryptonLabel3.TabIndex = 10;
-            this.kryptonLabel3.Values.Text = "Load Location";
+            this.fileListWorker.WorkerReportsProgress = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -179,40 +219,14 @@
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // warningLabel
-            // 
-            this.warningLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.warningLabel.Location = new System.Drawing.Point(540, 60);
-            this.warningLabel.Name = "warningLabel";
-            this.warningLabel.Size = new System.Drawing.Size(201, 42);
-            this.warningLabel.TabIndex = 13;
-            this.warningLabel.Values.Image = global::Medical.Properties.Resources.Warning;
-            this.warningLabel.Values.Text = "This directory does not exist.";
-            // 
-            // searchBox
-            // 
-            this.searchBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchBox.Location = new System.Drawing.Point(5, 26);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(185, 20);
-            this.searchBox.TabIndex = 15;
-            // 
-            // kryptonLabel1
-            // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(3, 4);
-            this.kryptonLabel1.Name = "kryptonLabel1";
-            this.kryptonLabel1.Size = new System.Drawing.Size(102, 19);
-            this.kryptonLabel1.TabIndex = 14;
-            this.kryptonLabel1.Values.Text = "Search Last Name";
-            // 
             // OpenPatientDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 484);
+            this.ClientSize = new System.Drawing.Size(708, 484);
             this.Controls.Add(this.fileDataGrid);
             this.Controls.Add(this.kryptonPanel1);
+            this.MinimumSize = new System.Drawing.Size(416, 200);
             this.Name = "OpenPatientDialog";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -244,5 +258,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel warningLabel;
         private ComponentFactory.Krypton.Toolkit.KryptonTextBox searchBox;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
+        private System.ComponentModel.BackgroundWorker fileListWorker;
+        private System.Windows.Forms.ProgressBar loadingProgress;
     }
 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using ComponentFactory.Krypton.Toolkit;
+using Logging;
+using System.Threading;
 
 namespace Medical.GUI
 {
@@ -18,6 +20,10 @@ namespace Medical.GUI
 
         private PatientDataFile currentFile = null;
         private PropertyDescriptor lastNameDescriptor;
+        private bool validSearchDirectory = true;
+
+        private delegate void UpdateCallback(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition);
+        private UpdateCallback updateFileListCallback;
 
         public OpenPatientDialog()
         {
@@ -31,9 +37,15 @@ namespace Medical.GUI
             locationTextBox.Text = MedicalConfig.SaveDirectory;
             locationTextBox.TextChanged += new EventHandler(locationTextBox_TextChanged);
             warningLabel.Visible = false;
+            loadingProgress.Visible = false;
             searchBox.TextChanged += new EventHandler(searchBox_TextChanged);
 
             lastNameDescriptor = TypeDescriptor.GetProperties(typeof(PatientBindingSource)).Find("LastName", false);
+            fileListWorker.DoWork += new DoWorkEventHandler(fileListWorker_DoWork);
+            fileListWorker.ProgressChanged += new ProgressChangedEventHandler(fileListWorker_ProgressChanged);
+            fileListWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(fileListWorker_RunWorkerCompleted);
+
+            updateFileListCallback = new UpdateCallback(this.updateFileList);
         }
 
         void searchBox_TextChanged(object sender, EventArgs e)
@@ -48,27 +60,9 @@ namespace Medical.GUI
 
         void locationTextBox_TextChanged(object sender, EventArgs e)
         {
-            warningLabel.Visible = !Directory.Exists(locationTextBox.Text);
+            validSearchDirectory = Directory.Exists(locationTextBox.Text);
+            warningLabel.Visible = !validSearchDirectory;
             listFiles();
-        }
-
-        private void listFiles()
-        {
-            patientData.Clear();
-            if (!warningLabel.Visible)
-            {
-                foreach (String file in Directory.GetFiles(locationTextBox.Text))
-                {
-                    if (file.EndsWith(".pdt"))
-                    {
-                        PatientDataFile patient = new PatientDataFile(file);
-                        if (patient.loadHeader())
-                        {
-                            patientData.Add(patient);
-                        }
-                    }
-                }
-            }
         }
 
         protected override void OnShown(EventArgs e)
@@ -77,6 +71,12 @@ namespace Medical.GUI
             listFiles();
             currentFile = null;
             openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            patientData.Clear();
         }
 
         void fileList_ItemActivate(object sender, EventArgs e)
@@ -152,6 +152,68 @@ namespace Medical.GUI
             {
                 locationTextBox.Text = folderBrowserDialog.SelectedPath;
             }
+        }
+
+        private void listFiles()
+        {
+            patientData.Clear();
+            if (validSearchDirectory)
+            {
+                loadingProgress.Visible = true;
+                fileListWorker.RunWorkerAsync();
+            }
+        }
+
+        void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int bufferSize = 15;
+            int bufMax = bufferSize - 1;
+            PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
+            int dataFileBufferPosition = 0;
+            int totalFiles = 0;
+            if (validSearchDirectory)
+            {
+                dataFileBufferPosition = 0;
+                String[] files = Directory.GetFiles(locationTextBox.Text, "*.pdt");
+                totalFiles = files.Length;
+                int currentPosition = 0;
+                foreach (String file in files)
+                {
+                    PatientDataFile patient = new PatientDataFile(file);
+                    if (patient.loadHeader())
+                    {
+                        currentPosition = dataFileBufferPosition++ % bufferSize;
+                        dataFileBuffer[currentPosition] = patient;
+                        if (currentPosition == bufMax)
+                        {
+                            this.Invoke(updateFileListCallback, dataFileBuffer, currentPosition);
+                            fileListWorker.ReportProgress((int)(((float)dataFileBufferPosition / totalFiles) * 100.0f));
+                        }
+                    }
+                }
+                this.Invoke(updateFileListCallback, dataFileBuffer, currentPosition);
+                fileListWorker.ReportProgress(0);
+            }
+        }
+
+        void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
+        {
+            for (int i = 0; i <= dataFileBufferPosition; ++i)
+            {
+                patientData.Add(dataFileBuffer[i]);
+            }
+        }
+
+        void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            loadingProgress.Step = e.ProgressPercentage - loadingProgress.Value;
+            loadingProgress.PerformStep();
+        }
+
+        void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            loadingProgress.Visible = false;
+            Log.Debug("Total patients {0}.", patientData.Count);
         }
     }
 }
