@@ -212,11 +212,6 @@ namespace Medical.GUI
 
         void saveMenuItem_Click(object sender, EventArgs e)
         {
-            //InputResult result = InputBox.GetInput("Save", "Enter a file name", this, validateFileName);
-            //if (result.ok)
-            //{
-            //    controller.saveMedicalState(MedicalConfig.SaveDirectory + "/" + result.text + ".sim.xml");
-            //}
             savePatient.ShowDialog(this);
             if (savePatient.SaveFile)
             {
@@ -227,11 +222,6 @@ namespace Medical.GUI
 
         void openMenuItem_Click(object sender, EventArgs e)
         {
-            //fileTracker.openFile(this);
-            //if (fileTracker.lastDialogAccepted())
-            //{
-            //    controller.openStates(fileTracker.getCurrentFile());
-            //}
             openPatient.ShowDialog(this);
             if (openPatient.FileChosen)
             {

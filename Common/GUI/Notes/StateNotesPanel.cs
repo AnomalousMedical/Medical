@@ -59,6 +59,7 @@ namespace Medical.GUI
             {
                 datePicker.Value = date;
             }
+            stateNameTextBox.Text = state.Name;
         }
 
         private void stateController_StatesCleared(MedicalStateController controller)
@@ -79,6 +80,7 @@ namespace Medical.GUI
                 notes.ProcedureDate = datePicker.Value;
                 notes.DataSource = procedureType.Text;
                 notes.Notes = this.notes.Rtf;
+                currentState.Name = stateNameTextBox.Text;
             }
         }
     }
