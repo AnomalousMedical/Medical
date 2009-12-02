@@ -38,6 +38,7 @@ namespace Medical.GUI
         private delegate void CancelCallback();
         private CancelCallback cancelListFilesCallback;
         private CancelPostAction cancelPostAction;
+        private bool bgThreadKnowsAboutCancel = false;
 
         public OpenPatientDialog()
         {
@@ -92,7 +93,7 @@ namespace Medical.GUI
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            if (fileListWorker.IsBusy)
+            if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)
             {
                 e.Cancel = true;
                 cancelPostAction = CancelPostAction.Close;
@@ -187,6 +188,7 @@ namespace Medical.GUI
             patientData.Clear();
             if (validSearchDirectory)
             {
+                bgThreadKnowsAboutCancel = false;
                 loadingProgress.Visible = true;
                 fileListWorker.RunWorkerAsync();
             }
@@ -209,6 +211,7 @@ namespace Medical.GUI
                 {
                     if (fileListWorker.CancellationPending)
                     {
+                        bgThreadKnowsAboutCancel = true;
                         this.Invoke(cancelListFilesCallback);
                         break;
                     }
@@ -224,8 +227,11 @@ namespace Medical.GUI
                         }
                     }
                 }
-                this.Invoke(updateFileListCallback, dataFileBuffer, currentPosition);
-                fileListWorker.ReportProgress(0);
+                if (!bgThreadKnowsAboutCancel)
+                {
+                    this.Invoke(updateFileListCallback, dataFileBuffer, currentPosition);
+                    fileListWorker.ReportProgress(0);
+                }
             }
         }
 
