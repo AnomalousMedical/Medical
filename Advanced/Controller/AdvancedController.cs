@@ -39,6 +39,9 @@ namespace Medical.Controller
         private Options options = null;
         private DockProvider dockProvider;
 
+        //Ribbon controllers
+        LayerGUIController layerGUIController;
+
         private NavigationController navigationController;
 
         /// <summary>
@@ -158,6 +161,11 @@ namespace Medical.Controller
                 this.SceneUnloading += teethMover.sceneUnloading;
                 TeethController.TeethMover = teethMover;
                 medicalController.FixedLoopUpdate += teethMover.update;
+
+                //Setup the ribbon
+                layerGUIController = new LayerGUIController(advancedForm);
+                this.SceneLoaded += layerGUIController.sceneLoaded;
+                this.SceneUnloading += layerGUIController.sceneUnloading;
 
                 splashScreen.stepProgress(70);
 

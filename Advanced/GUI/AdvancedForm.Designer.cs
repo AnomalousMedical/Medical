@@ -90,6 +90,7 @@
             this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
             this.autoHideDock = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.layersTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoHideDock)).BeginInit();
@@ -119,11 +120,11 @@
             this.ribbon.RibbonShortcuts.ToggleKeyboardAccess2 = System.Windows.Forms.Keys.None;
             this.ribbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.homeTab,
+            this.layersTab,
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
-            this.ribbon.SelectedTab = this.homeTab;
+            this.ribbon.SelectedTab = this.layersTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
             // 
@@ -432,6 +433,10 @@
             this.autoHideDock.Size = new System.Drawing.Size(784, 426);
             this.autoHideDock.TabIndex = 1;
             // 
+            // layersTab
+            // 
+            this.layersTab.Text = "Layers";
+            // 
             // AdvancedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -517,6 +522,7 @@
         private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace drawingWindowWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel autoHideDock;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab layersTab;
 
     }
 }

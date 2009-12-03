@@ -118,6 +118,7 @@
     <Compile Include="GUI\Fossa\FossaControl.Designer.cs">
       <DependentUpon>FossaControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\GUIControllers\LayerGUIController.cs" />
     <Compile Include="GUI\GUIElement.cs">
       <SubType>UserControl</SubType>
     </Compile>
