@@ -761,7 +761,7 @@
             this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.Size = new System.Drawing.Size(260, 747);
+            this.Size = new System.Drawing.Size(260, 631);
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

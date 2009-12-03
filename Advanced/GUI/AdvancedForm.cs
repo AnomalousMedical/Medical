@@ -44,12 +44,10 @@ namespace Medical.GUI
             fourWindowLayoutCommand.Execute += new EventHandler(fourWindowLayoutCommand_Execute);
             cloneWindowCommand.Execute += new EventHandler(cloneWindowCommand_Execute);
 
-            dockingManager.ManageWorkspace("Left", leftWorkspace);
-            dockingManager.ManageWorkspace("Right", rightWorkspace);
-            dockingManager.ManageWorkspace("Bottom", bottomWorkspace);
             dockingManager.ManageFloating("Floating", this);
+            dockingManager.ManageControl(autoHideDock, drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace));
 
-            drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace);
+            
             drawingWindowDockingManager.ManageFloating("Floating2", this);
         }
 

@@ -195,15 +195,15 @@ namespace Medical.GUI
         {
             if (content.ShowHint == DockLocations.Right)
             {
-                dock.AddToWorkspace("Right", new KryptonPage[] { content.Page });
+                dock.AddDockspace("Control", DockingEdge.Right, new KryptonPage[] { content.Page });
             }
             else if (content.ShowHint == DockLocations.Bottom)
             {
-                dock.AddToWorkspace("Bottom", new KryptonPage[] { content.Page });
+                dock.AddDockspace("Control", DockingEdge.Bottom, new KryptonPage[] { content.Page });
             }
             else
             {
-                dock.AddToWorkspace("Left", new KryptonPage[] { content.Page });
+                dock.AddDockspace("Control", DockingEdge.Left, new KryptonPage[] { content.Page });
             }
         }
 

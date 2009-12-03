@@ -86,38 +86,14 @@
             this.fourWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonGroupButton7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.cloneWindowCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
-            this.leftWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
-            this.rightWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
-            this.bottomWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.dockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
-            this.kryptonSplitContainer1 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
-            this.kryptonSplitContainer2 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
-            this.kryptonSplitContainer3 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
             this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
+            this.autoHideDock = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftWorkspace)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightWorkspace)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bottomWorkspace)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel1)).BeginInit();
-            this.kryptonSplitContainer1.Panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel2)).BeginInit();
-            this.kryptonSplitContainer1.Panel2.SuspendLayout();
-            this.kryptonSplitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2.Panel1)).BeginInit();
-            this.kryptonSplitContainer2.Panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2.Panel2)).BeginInit();
-            this.kryptonSplitContainer2.Panel2.SuspendLayout();
-            this.kryptonSplitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3.Panel1)).BeginInit();
-            this.kryptonSplitContainer3.Panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3.Panel2)).BeginInit();
-            this.kryptonSplitContainer3.Panel2.SuspendLayout();
-            this.kryptonSplitContainer3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoHideDock)).BeginInit();
+            this.autoHideDock.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -426,115 +402,6 @@
             this.cloneWindowCommand.TextLine1 = "Clone";
             this.cloneWindowCommand.TextLine2 = "Window";
             // 
-            // leftWorkspace
-            // 
-            this.leftWorkspace.AutoHiddenHost = false;
-            this.leftWorkspace.CompactFlags = ((ComponentFactory.Krypton.Workspace.CompactFlags)(((ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptyCells | ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptySequences)
-                        | ComponentFactory.Krypton.Workspace.CompactFlags.PromoteLeafs)));
-            this.leftWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftWorkspace.Location = new System.Drawing.Point(0, 0);
-            this.leftWorkspace.Name = "leftWorkspace";
-            // 
-            // 
-            // 
-            this.leftWorkspace.Root.UniqueName = "2F9AB1AD686A443E16832719324588F3";
-            this.leftWorkspace.ShowMaximizeButton = false;
-            this.leftWorkspace.Size = new System.Drawing.Size(234, 426);
-            this.leftWorkspace.TabIndex = 17;
-            this.leftWorkspace.TabStop = true;
-            // 
-            // rightWorkspace
-            // 
-            this.rightWorkspace.AutoHiddenHost = false;
-            this.rightWorkspace.CompactFlags = ((ComponentFactory.Krypton.Workspace.CompactFlags)(((ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptyCells | ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptySequences)
-                        | ComponentFactory.Krypton.Workspace.CompactFlags.PromoteLeafs)));
-            this.rightWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rightWorkspace.Location = new System.Drawing.Point(0, 0);
-            this.rightWorkspace.Name = "rightWorkspace";
-            // 
-            // 
-            // 
-            this.rightWorkspace.Root.UniqueName = "2426FFFE18D8492E0FA9E05AE1E1EFC0";
-            this.rightWorkspace.ShowMaximizeButton = false;
-            this.rightWorkspace.Size = new System.Drawing.Size(204, 426);
-            this.rightWorkspace.TabIndex = 18;
-            this.rightWorkspace.TabStop = true;
-            // 
-            // bottomWorkspace
-            // 
-            this.bottomWorkspace.AutoHiddenHost = false;
-            this.bottomWorkspace.CompactFlags = ((ComponentFactory.Krypton.Workspace.CompactFlags)(((ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptyCells | ComponentFactory.Krypton.Workspace.CompactFlags.RemoveEmptySequences)
-                        | ComponentFactory.Krypton.Workspace.CompactFlags.PromoteLeafs)));
-            this.bottomWorkspace.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bottomWorkspace.Location = new System.Drawing.Point(0, 0);
-            this.bottomWorkspace.Name = "bottomWorkspace";
-            // 
-            // 
-            // 
-            this.bottomWorkspace.Root.UniqueName = "A4D0419B53B74D3A24A01E6970C784DE";
-            this.bottomWorkspace.ShowMaximizeButton = false;
-            this.bottomWorkspace.Size = new System.Drawing.Size(336, 114);
-            this.bottomWorkspace.TabIndex = 19;
-            this.bottomWorkspace.TabStop = true;
-            // 
-            // kryptonSplitContainer1
-            // 
-            this.kryptonSplitContainer1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.kryptonSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonSplitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.kryptonSplitContainer1.Location = new System.Drawing.Point(0, 114);
-            this.kryptonSplitContainer1.Name = "kryptonSplitContainer1";
-            // 
-            // kryptonSplitContainer1.Panel1
-            // 
-            this.kryptonSplitContainer1.Panel1.Controls.Add(this.leftWorkspace);
-            // 
-            // kryptonSplitContainer1.Panel2
-            // 
-            this.kryptonSplitContainer1.Panel2.Controls.Add(this.kryptonSplitContainer2);
-            this.kryptonSplitContainer1.Size = new System.Drawing.Size(784, 426);
-            this.kryptonSplitContainer1.SplitterDistance = 234;
-            this.kryptonSplitContainer1.TabIndex = 21;
-            // 
-            // kryptonSplitContainer2
-            // 
-            this.kryptonSplitContainer2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.kryptonSplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonSplitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.kryptonSplitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.kryptonSplitContainer2.Name = "kryptonSplitContainer2";
-            // 
-            // kryptonSplitContainer2.Panel1
-            // 
-            this.kryptonSplitContainer2.Panel1.Controls.Add(this.kryptonSplitContainer3);
-            // 
-            // kryptonSplitContainer2.Panel2
-            // 
-            this.kryptonSplitContainer2.Panel2.Controls.Add(this.rightWorkspace);
-            this.kryptonSplitContainer2.Size = new System.Drawing.Size(545, 426);
-            this.kryptonSplitContainer2.SplitterDistance = 336;
-            this.kryptonSplitContainer2.TabIndex = 0;
-            // 
-            // kryptonSplitContainer3
-            // 
-            this.kryptonSplitContainer3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.kryptonSplitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonSplitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.kryptonSplitContainer3.Location = new System.Drawing.Point(0, 0);
-            this.kryptonSplitContainer3.Name = "kryptonSplitContainer3";
-            this.kryptonSplitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // kryptonSplitContainer3.Panel1
-            // 
-            this.kryptonSplitContainer3.Panel1.Controls.Add(this.drawingWindowWorkspace);
-            // 
-            // kryptonSplitContainer3.Panel2
-            // 
-            this.kryptonSplitContainer3.Panel2.Controls.Add(this.bottomWorkspace);
-            this.kryptonSplitContainer3.Size = new System.Drawing.Size(336, 426);
-            this.kryptonSplitContainer3.SplitterDistance = 307;
-            this.kryptonSplitContainer3.TabIndex = 0;
-            // 
             // drawingWindowWorkspace
             // 
             this.drawingWindowWorkspace.AutoHiddenHost = false;
@@ -548,7 +415,7 @@
             // 
             this.drawingWindowWorkspace.Root.UniqueName = "C357DFF886984553EE98BA67648EAF59";
             this.drawingWindowWorkspace.ShowMaximizeButton = false;
-            this.drawingWindowWorkspace.Size = new System.Drawing.Size(336, 307);
+            this.drawingWindowWorkspace.Size = new System.Drawing.Size(784, 426);
             this.drawingWindowWorkspace.TabIndex = 0;
             this.drawingWindowWorkspace.TabStop = true;
             // 
@@ -556,12 +423,21 @@
             // 
             this.drawingWindowDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
+            // autoHideDock
+            // 
+            this.autoHideDock.Controls.Add(this.drawingWindowWorkspace);
+            this.autoHideDock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.autoHideDock.Location = new System.Drawing.Point(0, 114);
+            this.autoHideDock.Name = "autoHideDock";
+            this.autoHideDock.Size = new System.Drawing.Size(784, 426);
+            this.autoHideDock.TabIndex = 1;
+            // 
             // AdvancedForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);
-            this.Controls.Add(this.kryptonSplitContainer1);
+            this.Controls.Add(this.autoHideDock);
             this.Controls.Add(this.ribbon);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -571,28 +447,9 @@
             this.Text = "Articulometrics Research";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftWorkspace)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rightWorkspace)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bottomWorkspace)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel1)).EndInit();
-            this.kryptonSplitContainer1.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel2)).EndInit();
-            this.kryptonSplitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).EndInit();
-            this.kryptonSplitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2.Panel1)).EndInit();
-            this.kryptonSplitContainer2.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2.Panel2)).EndInit();
-            this.kryptonSplitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer2)).EndInit();
-            this.kryptonSplitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3.Panel1)).EndInit();
-            this.kryptonSplitContainer3.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3.Panel2)).EndInit();
-            this.kryptonSplitContainer3.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer3)).EndInit();
-            this.kryptonSplitContainer3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.autoHideDock)).EndInit();
+            this.autoHideDock.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -656,15 +513,10 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand fourWindowLayoutCommand;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton7;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand cloneWindowCommand;
-        private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace leftWorkspace;
-        private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace rightWorkspace;
-        private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace bottomWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager dockingManager;
-        private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer1;
-        private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer2;
-        private ComponentFactory.Krypton.Toolkit.KryptonSplitContainer kryptonSplitContainer3;
         private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace drawingWindowWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel autoHideDock;
 
     }
 }
