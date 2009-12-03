@@ -427,6 +427,7 @@ namespace Medical.Controller
             basicForm.SuspendLayout();
             basicForm.enableViewMode(true);
             basicForm.ResumeLayout();
+            basicForm.Focus();
         }
 
         public DrawingWindowPresetController PresetWindows
