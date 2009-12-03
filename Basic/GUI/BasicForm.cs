@@ -22,7 +22,7 @@ namespace Medical.GUI
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
         private SavePatientDialog savePatient = new SavePatientDialog();
-        private AboutBox aboutBox = new AboutBox(Resources.articulometricsclinic);
+        private ClinicalAbout aboutBox = new ClinicalAbout();
         private ShortcutController shortcutController;
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;

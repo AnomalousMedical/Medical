@@ -92,6 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\BasicController.cs" />
+    <Compile Include="GUI\About\ClinicalAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\About\ClinicalAbout.Designer.cs">
+      <DependentUpon>ClinicalAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\GUIControls\BasicStateWizardHost.cs" />
     <Compile Include="GUI\GUIControls\LayerGUIController.cs" />
     <Compile Include="GUI\BasicForm.cs">
@@ -125,6 +131,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\About\ClinicalAbout.resx">
+      <DependentUpon>ClinicalAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\BasicForm.resx">
       <DependentUpon>BasicForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -254,6 +263,7 @@
     <None Include="Resources\CloneWindowSmall.png" />
     <None Include="Resources\AboutLarge.png" />
     <None Include="Resources\AboutSmall.png" />
+    <None Include="Resources\AboutImage.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
