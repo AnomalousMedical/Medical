@@ -10,7 +10,7 @@ namespace Medical
 
     public class RecentDocuments : IEnumerable<String>
     {
-        private const int MAX_DOCUMENTS = 10;
+        private const int MAX_DOCUMENTS = 9;
 
         public event RecentDocumentEvent DocumentAdded;
         public event RecentDocumentEvent DocumentRemoved;
@@ -22,6 +22,26 @@ namespace Medical
         public RecentDocuments(ConfigFile configFile)
         {
             section = configFile.createOrRetrieveConfigSection("RecentDocuments");
+            section.SectionLoaded += new ConfigEvent(section_SectionLoaded);
+            section.SectionSaving += new ConfigEvent(section_SectionSaving);
+        }
+
+        void section_SectionSaving(ConfigSection source)
+        {
+            section.clearValues();
+            for(int i = 0; i < recentDocumentList.Count; ++i)
+            {
+                section.setValue("Document" + i, recentDocumentList[i]);
+            }
+        }
+
+        void section_SectionLoaded(ConfigSection source)
+        {
+            recentDocumentList.Clear();
+            for (int i = 0; section.hasValue("Document" + i); ++i)
+            {
+                recentDocumentList.Add(section.getValue("Document" + i, ""));
+            }
         }
 
         public void addDocument(String file)

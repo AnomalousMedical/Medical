@@ -34,11 +34,11 @@ namespace Medical
                 Directory.CreateDirectory(docRoot);
             }
             configFile = new ConfigFile(docRoot + "/config.ini");
+            RecentDocuments = new RecentDocuments(configFile);
             configFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "/Scenes";
-            RecentDocuments = new RecentDocuments(configFile);
 
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 0)

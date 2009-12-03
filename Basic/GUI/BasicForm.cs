@@ -73,6 +73,16 @@ namespace Medical.GUI
             recentDocuments.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
             recentDocuments.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
             recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
+            foreach (String document in recentDocuments)
+            {
+                KryptonRibbonRecentDoc doc = new KryptonRibbonRecentDoc();
+                doc.Text = Path.GetFileNameWithoutExtension(document);
+                doc.ExtraText = Path.GetDirectoryName(document);
+                doc.Click += recentDocument_Click;
+                doc.Tag = document;
+                clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.Add(doc);
+                recentDocsMap.Add(document, doc);
+            }
 
             //Hide navigators
             leftNavigator.Visible = false; 
@@ -325,8 +335,28 @@ namespace Medical.GUI
             KryptonRibbonRecentDoc doc = new KryptonRibbonRecentDoc();
             doc.Text = Path.GetFileNameWithoutExtension(document);
             doc.ExtraText = Path.GetDirectoryName(document);
+            doc.Click += recentDocument_Click;
+            doc.Tag = document;
             clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.Insert(0, doc);
             recentDocsMap.Add(document, doc);
+        }
+
+        void recentDocument_Click(object sender, EventArgs e)
+        {
+            KryptonRibbonRecentDoc doc = sender as KryptonRibbonRecentDoc;
+            if (doc != null)
+            {
+                PatientDataFile patientData = new PatientDataFile(doc.Tag.ToString());
+                if (patientData.loadHeader())
+                {
+                    changeActiveFile(patientData);
+                    controller.openStates(patientData);
+                }
+                else
+                {
+                    MessageBox.Show(this, String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         #endregion App Menu
