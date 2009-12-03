@@ -183,7 +183,6 @@
             this.openMenuItem,
             this.saveMenuItem,
             this.exitMenuItem});
-            this.clinicalRibbon.RibbonAppButton.AppButtonShowRecentDocs = false;
             this.clinicalRibbon.RibbonShortcuts.ToggleKeyboardAccess1 = System.Windows.Forms.Keys.None;
             this.clinicalRibbon.RibbonShortcuts.ToggleKeyboardAccess2 = System.Windows.Forms.Keys.None;
             this.clinicalRibbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
@@ -237,7 +236,7 @@
             // changeSceneMenuItem
             // 
             this.changeSceneMenuItem.Image = global::Medical.Properties.Resources.SceneSelectLarge;
-            this.changeSceneMenuItem.Text = "Change Scene";
+            this.changeSceneMenuItem.Text = "New Scene";
             // 
             // openMenuItem
             // 

@@ -17,17 +17,12 @@ namespace Medical.GUI
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         protected FileTracker fileTracker = new FileTracker("*.sim.xml|*.sim.xml");
-        private String windowDefaultText;
+        private String windowDefaultText = null;
         private const String TITLE_FORMAT = "{0} - {1}";
 
         public MedicalForm()
         {
 
-        }
-
-        protected void initialize(String windowDefaultText)
-        {
-            this.windowDefaultText = windowDefaultText;
         }
 
         #region OSWindow Members
@@ -101,6 +96,10 @@ namespace Medical.GUI
         /// <param name="subName">A name to place as a secondary name in the title.</param>
         protected void updateWindowTitle(String subName)
         {
+            if (windowDefaultText == null)
+            {
+                windowDefaultText = this.Text;
+            }
             Text = String.Format(TITLE_FORMAT, windowDefaultText, subName);
         }
 
@@ -109,7 +108,10 @@ namespace Medical.GUI
         /// </summary>
         protected void clearWindowTitle()
         {
-            Text = windowDefaultText;
+            if (windowDefaultText != null)
+            {
+                Text = windowDefaultText;
+            }
         }
     }
 }

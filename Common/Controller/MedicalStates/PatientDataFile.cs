@@ -153,6 +153,14 @@ namespace Medical
 
         public String BackingFile { get; set; }
 
+        public String BackingFileName
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(BackingFile);
+            }
+        }
+
         public String FirstName { get; set; }
 
         public String LastName { get; set; }

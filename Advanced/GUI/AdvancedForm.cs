@@ -21,7 +21,6 @@ namespace Medical.GUI
         public AdvancedForm()
         {
             InitializeComponent();
-            this.initialize(Text);
 
             //Commands
             changeSceneCommand.Execute += new EventHandler(changeSceneCommand_Execute);

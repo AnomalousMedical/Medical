@@ -34,6 +34,9 @@ namespace Medical.GUI
         private Size leftNavigatorSize;
         private BasicStateWizardHost stateWizardHost;
 
+        private Dictionary<String, KryptonRibbonRecentDoc> recentDocsMap = new Dictionary<string, KryptonRibbonRecentDoc>();
+        private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
+
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
@@ -66,6 +69,10 @@ namespace Medical.GUI
 
             showNavigationQATButton.Click += new EventHandler(showNavigationQATButton_Click);
             showTeethCollisionQATButton.Click += new EventHandler(showTeethCollisionQATButton_Click);
+
+            recentDocuments.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
+            recentDocuments.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
+            recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
 
             //Hide navigators
             leftNavigator.Visible = false; 
@@ -215,8 +222,10 @@ namespace Medical.GUI
             savePatient.ShowDialog(this);
             if (savePatient.SaveFile)
             {
-                controller.saveMedicalState(savePatient.PatientData);
-                StatusController.SetStatus(String.Format("File saved to {0}", savePatient.PatientData));
+                PatientDataFile patientData = savePatient.PatientData;
+                controller.saveMedicalState(patientData);
+                changeActiveFile(patientData);
+                StatusController.SetStatus(String.Format("File saved to {0}", patientData.BackingFile));
             }
         }
 
@@ -225,7 +234,9 @@ namespace Medical.GUI
             openPatient.ShowDialog(this);
             if (openPatient.FileChosen)
             {
-                controller.openStates(openPatient.CurrentFile);
+                PatientDataFile patientData = openPatient.CurrentFile;
+                changeActiveFile(patientData);
+                controller.openStates(patientData);
             }
         }
 
@@ -257,6 +268,7 @@ namespace Medical.GUI
         void changeSceneMenuItem_Click(object sender, EventArgs e)
         {
             controller.newScene();
+            changeActiveFile(null);
         }
 
         void saveShortcut_Execute(ShortcutEventCommand shortcut)
@@ -272,6 +284,49 @@ namespace Medical.GUI
         void newShortcut_Execute(ShortcutEventCommand shortcut)
         {
             changeSceneMenuItem_Click(null, null);
+        }
+
+        void changeActiveFile(PatientDataFile patientData)
+        {
+            if (patientData != null)
+            {
+                updateWindowTitle(String.Format("{0} {1} - {2}", patientData.FirstName, patientData.LastName, patientData.BackingFile));
+                recentDocuments.addDocument(patientData.BackingFile);
+            }
+            else
+            {
+                clearWindowTitle();
+            }
+        }
+
+        void recentDocuments_DocumentRemoved(RecentDocuments source, string document)
+        {
+            KryptonRibbonRecentDoc doc;
+            recentDocsMap.TryGetValue(document, out doc);
+            if (doc != null)
+            {
+                clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.Remove(doc);
+                recentDocsMap.Remove(document);
+            }
+        }
+
+        void recentDocuments_DocumentReaccessed(RecentDocuments source, string document)
+        {
+            KryptonRibbonRecentDoc doc;
+            recentDocsMap.TryGetValue(document, out doc);
+            if (doc != null)
+            {
+                clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.MoveBefore(doc, clinicalRibbon.RibbonAppButton.AppButtonRecentDocs[0]);
+            }
+        }
+
+        void recentDocuments_DocumentAdded(RecentDocuments source, string document)
+        {
+            KryptonRibbonRecentDoc doc = new KryptonRibbonRecentDoc();
+            doc.Text = Path.GetFileNameWithoutExtension(document);
+            doc.ExtraText = Path.GetDirectoryName(document);
+            clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.Insert(0, doc);
+            recentDocsMap.Add(document, doc);
         }
 
         #endregion App Menu

@@ -108,6 +108,7 @@
     <Compile Include="Camera\SavedCameraDefinition.cs" />
     <Compile Include="Config\EngineConfig.cs" />
     <Compile Include="Config\MedicalConfig.cs" />
+    <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />

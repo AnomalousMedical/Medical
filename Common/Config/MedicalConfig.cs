@@ -38,6 +38,7 @@ namespace Medical
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "/Scenes";
+            RecentDocuments = new RecentDocuments(configFile);
 
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 0)
@@ -144,6 +145,8 @@ namespace Medical
         }
 
         public static EngineConfig EngineConfig { get; private set; }
+
+        public static RecentDocuments RecentDocuments { get; private set; }
 
         public static void save()
         {
