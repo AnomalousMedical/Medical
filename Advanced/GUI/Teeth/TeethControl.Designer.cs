@@ -66,38 +66,20 @@
             this.tooth3 = new System.Windows.Forms.CheckBox();
             this.tooth2 = new System.Windows.Forms.CheckBox();
             this.tooth1 = new System.Windows.Forms.CheckBox();
-            this.forwardBackUpDown = new System.Windows.Forms.NumericUpDown();
-            this.leftRightUpDown = new System.Windows.Forms.NumericUpDown();
-            this.upDownUpDown = new System.Windows.Forms.NumericUpDown();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.yawUpDown = new System.Windows.Forms.NumericUpDown();
-            this.rollUpDown = new System.Windows.Forms.NumericUpDown();
-            this.pitchUpDown = new System.Windows.Forms.NumericUpDown();
             this.resetButton = new System.Windows.Forms.Button();
             this.highlightCollisionCheckBox = new System.Windows.Forms.CheckBox();
             this.adaptButton = new System.Windows.Forms.CheckBox();
             this.stopOnContactCheck = new System.Windows.Forms.CheckBox();
+            this.moveButton = new System.Windows.Forms.Button();
+            this.rotateButton = new System.Windows.Forms.Button();
+            this.offButton = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftRightUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownUpDown)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yawUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rollUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pitchUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.removeButton,
             this.restoreButton,
@@ -185,7 +167,7 @@
             this.tooth32.Image = global::Medical.Properties.Resources.tooth32;
             this.tooth32.Location = new System.Drawing.Point(0, 278);
             this.tooth32.Name = "tooth32";
-            this.tooth32.Size = new System.Drawing.Size(39, 38);
+            this.tooth32.Size = new System.Drawing.Size(40, 42);
             this.tooth32.TabIndex = 64;
             this.tooth32.Tag = "Tooth32";
             this.tooth32.UseVisualStyleBackColor = true;
@@ -201,7 +183,7 @@
             this.tooth31.Image = global::Medical.Properties.Resources.tooth31;
             this.tooth31.Location = new System.Drawing.Point(0, 315);
             this.tooth31.Name = "tooth31";
-            this.tooth31.Size = new System.Drawing.Size(42, 42);
+            this.tooth31.Size = new System.Drawing.Size(40, 40);
             this.tooth31.TabIndex = 63;
             this.tooth31.Tag = "Tooth31";
             this.tooth31.UseVisualStyleBackColor = true;
@@ -217,7 +199,7 @@
             this.tooth30.Image = global::Medical.Properties.Resources.tooth30;
             this.tooth30.Location = new System.Drawing.Point(3, 356);
             this.tooth30.Name = "tooth30";
-            this.tooth30.Size = new System.Drawing.Size(44, 44);
+            this.tooth30.Size = new System.Drawing.Size(42, 43);
             this.tooth30.TabIndex = 62;
             this.tooth30.Tag = "Tooth30";
             this.tooth30.UseVisualStyleBackColor = true;
@@ -233,7 +215,7 @@
             this.tooth29.Image = global::Medical.Properties.Resources.tooth29;
             this.tooth29.Location = new System.Drawing.Point(10, 397);
             this.tooth29.Name = "tooth29";
-            this.tooth29.Size = new System.Drawing.Size(34, 33);
+            this.tooth29.Size = new System.Drawing.Size(31, 30);
             this.tooth29.TabIndex = 61;
             this.tooth29.Tag = "Tooth29";
             this.tooth29.UseVisualStyleBackColor = true;
@@ -249,7 +231,7 @@
             this.tooth28.Image = global::Medical.Properties.Resources.tooth28;
             this.tooth28.Location = new System.Drawing.Point(24, 429);
             this.tooth28.Name = "tooth28";
-            this.tooth28.Size = new System.Drawing.Size(30, 32);
+            this.tooth28.Size = new System.Drawing.Size(29, 30);
             this.tooth28.TabIndex = 60;
             this.tooth28.Tag = "Tooth28";
             this.tooth28.UseVisualStyleBackColor = true;
@@ -265,7 +247,7 @@
             this.tooth27.Image = global::Medical.Properties.Resources.tooth27;
             this.tooth27.Location = new System.Drawing.Point(39, 459);
             this.tooth27.Name = "tooth27";
-            this.tooth27.Size = new System.Drawing.Size(30, 29);
+            this.tooth27.Size = new System.Drawing.Size(28, 31);
             this.tooth27.TabIndex = 59;
             this.tooth27.Tag = "Tooth27";
             this.tooth27.UseVisualStyleBackColor = true;
@@ -281,7 +263,7 @@
             this.tooth26.Image = global::Medical.Properties.Resources.tooth26;
             this.tooth26.Location = new System.Drawing.Point(69, 467);
             this.tooth26.Name = "tooth26";
-            this.tooth26.Size = new System.Drawing.Size(28, 30);
+            this.tooth26.Size = new System.Drawing.Size(26, 31);
             this.tooth26.TabIndex = 58;
             this.tooth26.Tag = "Tooth26";
             this.tooth26.UseVisualStyleBackColor = true;
@@ -297,7 +279,7 @@
             this.tooth25.Image = global::Medical.Properties.Resources.tooth25;
             this.tooth25.Location = new System.Drawing.Point(97, 473);
             this.tooth25.Name = "tooth25";
-            this.tooth25.Size = new System.Drawing.Size(26, 27);
+            this.tooth25.Size = new System.Drawing.Size(25, 29);
             this.tooth25.TabIndex = 57;
             this.tooth25.Tag = "Tooth25";
             this.tooth25.UseVisualStyleBackColor = true;
@@ -313,7 +295,7 @@
             this.tooth24.Image = global::Medical.Properties.Resources.tooth24;
             this.tooth24.Location = new System.Drawing.Point(122, 473);
             this.tooth24.Name = "tooth24";
-            this.tooth24.Size = new System.Drawing.Size(24, 28);
+            this.tooth24.Size = new System.Drawing.Size(25, 29);
             this.tooth24.TabIndex = 56;
             this.tooth24.Tag = "Tooth24";
             this.tooth24.UseVisualStyleBackColor = true;
@@ -329,7 +311,7 @@
             this.tooth23.Image = global::Medical.Properties.Resources.tooth23;
             this.tooth23.Location = new System.Drawing.Point(145, 468);
             this.tooth23.Name = "tooth23";
-            this.tooth23.Size = new System.Drawing.Size(28, 29);
+            this.tooth23.Size = new System.Drawing.Size(26, 31);
             this.tooth23.TabIndex = 55;
             this.tooth23.Tag = "Tooth23";
             this.tooth23.UseVisualStyleBackColor = true;
@@ -345,7 +327,7 @@
             this.tooth22.Image = global::Medical.Properties.Resources.tooth22;
             this.tooth22.Location = new System.Drawing.Point(171, 459);
             this.tooth22.Name = "tooth22";
-            this.tooth22.Size = new System.Drawing.Size(32, 29);
+            this.tooth22.Size = new System.Drawing.Size(28, 31);
             this.tooth22.TabIndex = 54;
             this.tooth22.Tag = "Tooth22";
             this.tooth22.UseVisualStyleBackColor = true;
@@ -361,7 +343,7 @@
             this.tooth21.Image = global::Medical.Properties.Resources.tooth21;
             this.tooth21.Location = new System.Drawing.Point(191, 429);
             this.tooth21.Name = "tooth21";
-            this.tooth21.Size = new System.Drawing.Size(30, 31);
+            this.tooth21.Size = new System.Drawing.Size(29, 30);
             this.tooth21.TabIndex = 53;
             this.tooth21.Tag = "Tooth21";
             this.tooth21.UseVisualStyleBackColor = true;
@@ -393,7 +375,7 @@
             this.tooth19.Image = global::Medical.Properties.Resources.tooth19;
             this.tooth19.Location = new System.Drawing.Point(209, 356);
             this.tooth19.Name = "tooth19";
-            this.tooth19.Size = new System.Drawing.Size(45, 45);
+            this.tooth19.Size = new System.Drawing.Size(42, 43);
             this.tooth19.TabIndex = 51;
             this.tooth19.Tag = "Tooth19";
             this.tooth19.UseVisualStyleBackColor = true;
@@ -409,7 +391,7 @@
             this.tooth18.Image = global::Medical.Properties.Resources.tooth18;
             this.tooth18.Location = new System.Drawing.Point(212, 315);
             this.tooth18.Name = "tooth18";
-            this.tooth18.Size = new System.Drawing.Size(42, 41);
+            this.tooth18.Size = new System.Drawing.Size(40, 40);
             this.tooth18.TabIndex = 50;
             this.tooth18.Tag = "Tooth18";
             this.tooth18.UseVisualStyleBackColor = true;
@@ -425,7 +407,7 @@
             this.tooth17.Image = global::Medical.Properties.Resources.tooth17;
             this.tooth17.Location = new System.Drawing.Point(216, 277);
             this.tooth17.Name = "tooth17";
-            this.tooth17.Size = new System.Drawing.Size(40, 39);
+            this.tooth17.Size = new System.Drawing.Size(40, 42);
             this.tooth17.TabIndex = 49;
             this.tooth17.Tag = "Tooth17";
             this.tooth17.UseVisualStyleBackColor = true;
@@ -441,7 +423,7 @@
             this.tooth16.Image = global::Medical.Properties.Resources.tooth16;
             this.tooth16.Location = new System.Drawing.Point(216, 203);
             this.tooth16.Name = "tooth16";
-            this.tooth16.Size = new System.Drawing.Size(38, 37);
+            this.tooth16.Size = new System.Drawing.Size(35, 34);
             this.tooth16.TabIndex = 48;
             this.tooth16.Tag = "Tooth16";
             this.tooth16.UseVisualStyleBackColor = true;
@@ -457,7 +439,7 @@
             this.tooth15.Image = global::Medical.Properties.Resources.tooth15;
             this.tooth15.Location = new System.Drawing.Point(214, 160);
             this.tooth15.Name = "tooth15";
-            this.tooth15.Size = new System.Drawing.Size(42, 42);
+            this.tooth15.Size = new System.Drawing.Size(43, 39);
             this.tooth15.TabIndex = 47;
             this.tooth15.Tag = "Tooth15";
             this.tooth15.UseVisualStyleBackColor = true;
@@ -473,7 +455,7 @@
             this.tooth14.Image = global::Medical.Properties.Resources.tooth14;
             this.tooth14.Location = new System.Drawing.Point(209, 117);
             this.tooth14.Name = "tooth14";
-            this.tooth14.Size = new System.Drawing.Size(45, 45);
+            this.tooth14.Size = new System.Drawing.Size(44, 45);
             this.tooth14.TabIndex = 46;
             this.tooth14.Tag = "Tooth14";
             this.tooth14.UseVisualStyleBackColor = true;
@@ -489,7 +471,7 @@
             this.tooth13.Image = global::Medical.Properties.Resources.tooth13;
             this.tooth13.Location = new System.Drawing.Point(209, 86);
             this.tooth13.Name = "tooth13";
-            this.tooth13.Size = new System.Drawing.Size(34, 33);
+            this.tooth13.Size = new System.Drawing.Size(38, 32);
             this.tooth13.TabIndex = 45;
             this.tooth13.Tag = "Tooth13";
             this.tooth13.UseVisualStyleBackColor = true;
@@ -505,7 +487,7 @@
             this.tooth12.Image = global::Medical.Properties.Resources.tooth12;
             this.tooth12.Location = new System.Drawing.Point(201, 55);
             this.tooth12.Name = "tooth12";
-            this.tooth12.Size = new System.Drawing.Size(37, 33);
+            this.tooth12.Size = new System.Drawing.Size(38, 34);
             this.tooth12.TabIndex = 44;
             this.tooth12.Tag = "Tooth12";
             this.tooth12.UseVisualStyleBackColor = true;
@@ -521,7 +503,7 @@
             this.tooth11.Image = global::Medical.Properties.Resources.tooth11;
             this.tooth11.Location = new System.Drawing.Point(186, 19);
             this.tooth11.Name = "tooth11";
-            this.tooth11.Size = new System.Drawing.Size(33, 37);
+            this.tooth11.Size = new System.Drawing.Size(34, 36);
             this.tooth11.TabIndex = 43;
             this.tooth11.Tag = "Tooth11";
             this.tooth11.UseVisualStyleBackColor = true;
@@ -537,7 +519,7 @@
             this.tooth10.Image = global::Medical.Properties.Resources.tooth10;
             this.tooth10.Location = new System.Drawing.Point(158, 4);
             this.tooth10.Name = "tooth10";
-            this.tooth10.Size = new System.Drawing.Size(29, 32);
+            this.tooth10.Size = new System.Drawing.Size(30, 32);
             this.tooth10.TabIndex = 42;
             this.tooth10.Tag = "Tooth10";
             this.tooth10.UseVisualStyleBackColor = true;
@@ -553,7 +535,7 @@
             this.tooth9.Image = global::Medical.Properties.Resources.tooth9;
             this.tooth9.Location = new System.Drawing.Point(127, -3);
             this.tooth9.Name = "tooth9";
-            this.tooth9.Size = new System.Drawing.Size(33, 36);
+            this.tooth9.Size = new System.Drawing.Size(37, 36);
             this.tooth9.TabIndex = 41;
             this.tooth9.Tag = "Tooth09";
             this.tooth9.UseVisualStyleBackColor = true;
@@ -569,7 +551,7 @@
             this.tooth8.Image = global::Medical.Properties.Resources.tooth8;
             this.tooth8.Location = new System.Drawing.Point(93, -1);
             this.tooth8.Name = "tooth8";
-            this.tooth8.Size = new System.Drawing.Size(35, 34);
+            this.tooth8.Size = new System.Drawing.Size(37, 36);
             this.tooth8.TabIndex = 40;
             this.tooth8.Tag = "Tooth08";
             this.tooth8.UseVisualStyleBackColor = true;
@@ -585,7 +567,7 @@
             this.tooth7.Image = global::Medical.Properties.Resources.tooth7;
             this.tooth7.Location = new System.Drawing.Point(62, 4);
             this.tooth7.Name = "tooth7";
-            this.tooth7.Size = new System.Drawing.Size(33, 32);
+            this.tooth7.Size = new System.Drawing.Size(30, 32);
             this.tooth7.TabIndex = 39;
             this.tooth7.Tag = "Tooth07";
             this.tooth7.UseVisualStyleBackColor = true;
@@ -601,7 +583,7 @@
             this.tooth6.Image = global::Medical.Properties.Resources.tooth6;
             this.tooth6.Location = new System.Drawing.Point(30, 20);
             this.tooth6.Name = "tooth6";
-            this.tooth6.Size = new System.Drawing.Size(33, 36);
+            this.tooth6.Size = new System.Drawing.Size(34, 36);
             this.tooth6.TabIndex = 38;
             this.tooth6.Tag = "Tooth06";
             this.tooth6.UseVisualStyleBackColor = true;
@@ -617,7 +599,7 @@
             this.tooth5.Image = global::Medical.Properties.Resources.tooth5;
             this.tooth5.Location = new System.Drawing.Point(19, 55);
             this.tooth5.Name = "tooth5";
-            this.tooth5.Size = new System.Drawing.Size(35, 34);
+            this.tooth5.Size = new System.Drawing.Size(38, 34);
             this.tooth5.TabIndex = 37;
             this.tooth5.Tag = "Tooth05";
             this.tooth5.UseVisualStyleBackColor = true;
@@ -633,7 +615,7 @@
             this.tooth4.Image = global::Medical.Properties.Resources.tooth4;
             this.tooth4.Location = new System.Drawing.Point(10, 87);
             this.tooth4.Name = "tooth4";
-            this.tooth4.Size = new System.Drawing.Size(37, 31);
+            this.tooth4.Size = new System.Drawing.Size(37, 33);
             this.tooth4.TabIndex = 36;
             this.tooth4.Tag = "Tooth04";
             this.tooth4.UseVisualStyleBackColor = true;
@@ -649,7 +631,7 @@
             this.tooth3.Image = global::Medical.Properties.Resources.tooth3;
             this.tooth3.Location = new System.Drawing.Point(3, 117);
             this.tooth3.Name = "tooth3";
-            this.tooth3.Size = new System.Drawing.Size(44, 44);
+            this.tooth3.Size = new System.Drawing.Size(43, 45);
             this.tooth3.TabIndex = 35;
             this.tooth3.Tag = "Tooth03";
             this.tooth3.UseVisualStyleBackColor = true;
@@ -665,7 +647,7 @@
             this.tooth2.Image = global::Medical.Properties.Resources.tooth2;
             this.tooth2.Location = new System.Drawing.Point(0, 160);
             this.tooth2.Name = "tooth2";
-            this.tooth2.Size = new System.Drawing.Size(44, 42);
+            this.tooth2.Size = new System.Drawing.Size(43, 39);
             this.tooth2.TabIndex = 34;
             this.tooth2.Tag = "Tooth02";
             this.tooth2.UseVisualStyleBackColor = true;
@@ -681,236 +663,14 @@
             this.tooth1.Image = global::Medical.Properties.Resources.tooth1;
             this.tooth1.Location = new System.Drawing.Point(0, 204);
             this.tooth1.Name = "tooth1";
-            this.tooth1.Size = new System.Drawing.Size(41, 36);
+            this.tooth1.Size = new System.Drawing.Size(35, 34);
             this.tooth1.TabIndex = 33;
             this.tooth1.Tag = "Tooth01";
             this.tooth1.UseVisualStyleBackColor = true;
             // 
-            // forwardBackUpDown
-            // 
-            this.forwardBackUpDown.DecimalPlaces = 3;
-            this.forwardBackUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.forwardBackUpDown.Location = new System.Drawing.Point(135, 40);
-            this.forwardBackUpDown.Maximum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            196608});
-            this.forwardBackUpDown.Minimum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            -2147287040});
-            this.forwardBackUpDown.Name = "forwardBackUpDown";
-            this.forwardBackUpDown.Size = new System.Drawing.Size(57, 20);
-            this.forwardBackUpDown.TabIndex = 3;
-            // 
-            // leftRightUpDown
-            // 
-            this.leftRightUpDown.DecimalPlaces = 3;
-            this.leftRightUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.leftRightUpDown.Location = new System.Drawing.Point(72, 40);
-            this.leftRightUpDown.Maximum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            196608});
-            this.leftRightUpDown.Minimum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            -2147287040});
-            this.leftRightUpDown.Name = "leftRightUpDown";
-            this.leftRightUpDown.Size = new System.Drawing.Size(57, 20);
-            this.leftRightUpDown.TabIndex = 2;
-            // 
-            // upDownUpDown
-            // 
-            this.upDownUpDown.DecimalPlaces = 3;
-            this.upDownUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.upDownUpDown.Location = new System.Drawing.Point(9, 40);
-            this.upDownUpDown.Maximum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            196608});
-            this.upDownUpDown.Minimum = new decimal(new int[] {
-            1089,
-            0,
-            0,
-            -2147287040});
-            this.upDownUpDown.Name = "upDownUpDown";
-            this.upDownUpDown.Size = new System.Drawing.Size(57, 20);
-            this.upDownUpDown.TabIndex = 1;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.forwardBackUpDown);
-            this.groupBox1.Controls.Add(this.upDownUpDown);
-            this.groupBox1.Controls.Add(this.leftRightUpDown);
-            this.groupBox1.Location = new System.Drawing.Point(30, 536);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 70);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Move";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(132, 21);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Front/Back";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Right/Left";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Up/Down";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.yawUpDown);
-            this.groupBox2.Controls.Add(this.rollUpDown);
-            this.groupBox2.Controls.Add(this.pitchUpDown);
-            this.groupBox2.Location = new System.Drawing.Point(30, 612);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 70);
-            this.groupBox2.TabIndex = 7;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Rotate";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(132, 21);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Yaw";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(69, 21);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Pitch";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 21);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(25, 13);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Roll";
-            // 
-            // yawUpDown
-            // 
-            this.yawUpDown.DecimalPlaces = 3;
-            this.yawUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.yawUpDown.Location = new System.Drawing.Point(135, 40);
-            this.yawUpDown.Maximum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            196608});
-            this.yawUpDown.Minimum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            -2147287040});
-            this.yawUpDown.Name = "yawUpDown";
-            this.yawUpDown.Size = new System.Drawing.Size(57, 20);
-            this.yawUpDown.TabIndex = 3;
-            // 
-            // rollUpDown
-            // 
-            this.rollUpDown.DecimalPlaces = 3;
-            this.rollUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.rollUpDown.Location = new System.Drawing.Point(9, 40);
-            this.rollUpDown.Maximum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            196608});
-            this.rollUpDown.Minimum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            -2147287040});
-            this.rollUpDown.Name = "rollUpDown";
-            this.rollUpDown.Size = new System.Drawing.Size(57, 20);
-            this.rollUpDown.TabIndex = 1;
-            // 
-            // pitchUpDown
-            // 
-            this.pitchUpDown.DecimalPlaces = 3;
-            this.pitchUpDown.Increment = new decimal(new int[] {
-            33,
-            0,
-            0,
-            196608});
-            this.pitchUpDown.Location = new System.Drawing.Point(72, 40);
-            this.pitchUpDown.Maximum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            196608});
-            this.pitchUpDown.Minimum = new decimal(new int[] {
-            6303,
-            0,
-            0,
-            -2147287040});
-            this.pitchUpDown.Name = "pitchUpDown";
-            this.pitchUpDown.Size = new System.Drawing.Size(57, 20);
-            this.pitchUpDown.TabIndex = 2;
-            // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(148, 688);
+            this.resetButton.Location = new System.Drawing.Point(145, 536);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(75, 23);
             this.resetButton.TabIndex = 8;
@@ -921,7 +681,7 @@
             // highlightCollisionCheckBox
             // 
             this.highlightCollisionCheckBox.AutoSize = true;
-            this.highlightCollisionCheckBox.Location = new System.Drawing.Point(35, 692);
+            this.highlightCollisionCheckBox.Location = new System.Drawing.Point(32, 540);
             this.highlightCollisionCheckBox.Name = "highlightCollisionCheckBox";
             this.highlightCollisionCheckBox.Size = new System.Drawing.Size(108, 17);
             this.highlightCollisionCheckBox.TabIndex = 9;
@@ -933,7 +693,7 @@
             // 
             this.adaptButton.Appearance = System.Windows.Forms.Appearance.Button;
             this.adaptButton.AutoSize = true;
-            this.adaptButton.Location = new System.Drawing.Point(35, 718);
+            this.adaptButton.Location = new System.Drawing.Point(45, 592);
             this.adaptButton.Name = "adaptButton";
             this.adaptButton.Size = new System.Drawing.Size(45, 23);
             this.adaptButton.TabIndex = 10;
@@ -946,12 +706,42 @@
             this.stopOnContactCheck.AutoSize = true;
             this.stopOnContactCheck.Checked = true;
             this.stopOnContactCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.stopOnContactCheck.Location = new System.Drawing.Point(86, 722);
+            this.stopOnContactCheck.Location = new System.Drawing.Point(96, 596);
             this.stopOnContactCheck.Name = "stopOnContactCheck";
             this.stopOnContactCheck.Size = new System.Drawing.Size(118, 17);
             this.stopOnContactCheck.TabIndex = 11;
             this.stopOnContactCheck.Text = "Stop on full contact";
             this.stopOnContactCheck.UseVisualStyleBackColor = true;
+            // 
+            // moveButton
+            // 
+            this.moveButton.Location = new System.Drawing.Point(93, 563);
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(75, 23);
+            this.moveButton.TabIndex = 12;
+            this.moveButton.Text = "Move";
+            this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
+            // 
+            // rotateButton
+            // 
+            this.rotateButton.Location = new System.Drawing.Point(176, 563);
+            this.rotateButton.Name = "rotateButton";
+            this.rotateButton.Size = new System.Drawing.Size(75, 23);
+            this.rotateButton.TabIndex = 13;
+            this.rotateButton.Text = "Rotate";
+            this.rotateButton.UseVisualStyleBackColor = true;
+            this.rotateButton.Click += new System.EventHandler(this.rotateButton_Click);
+            // 
+            // offButton
+            // 
+            this.offButton.Location = new System.Drawing.Point(12, 563);
+            this.offButton.Name = "offButton";
+            this.offButton.Size = new System.Drawing.Size(75, 23);
+            this.offButton.TabIndex = 14;
+            this.offButton.Text = "Off";
+            this.offButton.UseVisualStyleBackColor = true;
+            this.offButton.Click += new System.EventHandler(this.offButton_Click);
             // 
             // TeethControl
             // 
@@ -959,36 +749,24 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Teeth";
-            this.ClientSize = new System.Drawing.Size(260, 747);
+            this.Controls.Add(this.offButton);
+            this.Controls.Add(this.rotateButton);
+            this.Controls.Add(this.moveButton);
             this.Controls.Add(this.stopOnContactCheck);
             this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.highlightCollisionCheckBox);
             this.Controls.Add(this.resetButton);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.teethPanel);
             this.Controls.Add(this.toolStrip1);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.ShowHint = Medical.GUI.DockLocations.Left;
-            this.Text = "Teeth";
+            this.Size = new System.Drawing.Size(260, 747);
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.teethPanel.ResumeLayout(false);
             this.teethPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.forwardBackUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.leftRightUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownUpDown)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yawUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rollUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pitchUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1032,25 +810,14 @@
         private System.Windows.Forms.CheckBox tooth22;
         private System.Windows.Forms.ToolStripButton removeButton;
         private System.Windows.Forms.ToolStripButton restoreButton;
-        private System.Windows.Forms.NumericUpDown forwardBackUpDown;
-        private System.Windows.Forms.NumericUpDown leftRightUpDown;
-        private System.Windows.Forms.NumericUpDown upDownUpDown;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown yawUpDown;
-        private System.Windows.Forms.NumericUpDown rollUpDown;
-        private System.Windows.Forms.NumericUpDown pitchUpDown;
         private System.Windows.Forms.Button resetButton;
         private System.Windows.Forms.ToolStripComboBox selectionSetCombo;
         private System.Windows.Forms.CheckBox highlightCollisionCheckBox;
         private System.Windows.Forms.CheckBox adaptButton;
         private System.Windows.Forms.CheckBox stopOnContactCheck;
+        private System.Windows.Forms.Button moveButton;
+        private System.Windows.Forms.Button rotateButton;
+        private System.Windows.Forms.Button offButton;
 
     }
 }

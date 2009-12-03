@@ -139,11 +139,14 @@
             this.changeSceneMenuItem,
             this.exitMenuItem});
             this.ribbon.RibbonAppButton.AppButtonShowRecentDocs = false;
+            this.ribbon.RibbonShortcuts.ToggleKeyboardAccess1 = System.Windows.Forms.Keys.None;
+            this.ribbon.RibbonShortcuts.ToggleKeyboardAccess2 = System.Windows.Forms.Keys.None;
             this.ribbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.homeTab,
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
+            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;

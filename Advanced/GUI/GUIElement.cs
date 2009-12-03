@@ -36,7 +36,6 @@ namespace Medical.GUI
             ToolStripName = "Default";
 
             page = new KryptonPage();
-            this.Dock = DockStyle.Fill;
             page.Controls.Add(this);
         }
 
@@ -87,6 +86,7 @@ namespace Medical.GUI
 
         internal void _setController(GUIElementController controller, KryptonRibbonGroupButton button)
         {
+            this.Dock = DockStyle.Fill;
             this.button = button;
             button.Click += button_Click;
             if (updating && controller != null)

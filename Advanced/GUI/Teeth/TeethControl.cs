@@ -20,13 +20,6 @@ namespace Medical.GUI
         public TeethControl()
         {
             InitializeComponent();
-            upDownUpDown.ValueChanged += offsetValueChanged;
-            leftRightUpDown.ValueChanged += offsetValueChanged;
-            forwardBackUpDown.ValueChanged += offsetValueChanged;
-
-            yawUpDown.ValueChanged += rotateValueChanged;
-            rollUpDown.ValueChanged += rotateValueChanged;
-            pitchUpDown.ValueChanged += rotateValueChanged;
 
             setupTeethGroups();
 
@@ -77,50 +70,10 @@ namespace Medical.GUI
             }
         }
 
-        void offsetValueChanged(object sender, EventArgs e)
-        {
-            if (allowUpdates)
-            {
-                Vector3 offset = new Vector3((float)leftRightUpDown.Value, (float)upDownUpDown.Value, (float)forwardBackUpDown.Value);
-                foreach (CheckBox control in teethPanel.Controls)
-                {
-                    if (control.Checked)
-                    {
-                        Tooth tooth = TeethController.getTooth(control.Tag.ToString());
-                        tooth.Offset = offset;
-                    }
-                }
-            }
-        }
-
-        void rotateValueChanged(object sender, EventArgs e)
-        {
-            if (allowUpdates)
-            {
-                Quaternion rot = new Quaternion((float)yawUpDown.Value, (float)rollUpDown.Value, (float)pitchUpDown.Value);
-                foreach (CheckBox control in teethPanel.Controls)
-                {
-                    if (control.Checked)
-                    {
-                        Tooth tooth = TeethController.getTooth(control.Tag.ToString());
-                        tooth.Rotation = rot;
-                    }
-                }
-            }
-        }
-
         private void resetButton_Click(object sender, EventArgs e)
         {
-            allowUpdates = false;
-            leftRightUpDown.Value = 0.0m;
-            upDownUpDown.Value = 0.0m;
-            yawUpDown.Value = 0.0m;
-            rollUpDown.Value = 0.0m;
-            pitchUpDown.Value = 0.0m;
-            forwardBackUpDown.Value = 0.0m;
-            allowUpdates = true;
-            offsetValueChanged(null, null);
-            rotateValueChanged(null, null);
+            TeethController.setAllOffsets(Vector3.Zero);
+            TeethController.setAllRotations(Quaternion.Identity);
         }
 
         void selectionSetCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -202,6 +155,27 @@ namespace Medical.GUI
                     TeethController.adaptSingleTooth(control.Tag.ToString(), false);
                 }
             }
+        }
+
+        private void moveButton_Click(object sender, EventArgs e)
+        {
+            TeethController.TeethMover.ShowMoveTools = true;
+            TeethController.TeethMover.ShowRotateTools = false;
+            TeethController.showTeethTools(true, true);
+        }
+
+        private void rotateButton_Click(object sender, EventArgs e)
+        {
+            TeethController.TeethMover.ShowMoveTools = false;
+            TeethController.TeethMover.ShowRotateTools = true;
+            TeethController.showTeethTools(true, true);
+        }
+
+        private void offButton_Click(object sender, EventArgs e)
+        {
+            TeethController.TeethMover.ShowMoveTools = false;
+            TeethController.TeethMover.ShowRotateTools = false;
+            TeethController.showTeethTools(false, false);
         }
     }
 }

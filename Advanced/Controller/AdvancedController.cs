@@ -16,11 +16,16 @@ using Engine.ObjectManagement;
 
 namespace Medical.Controller
 {
+    public delegate void SceneEvent(SimScene scene);
+
     /// <summary>
     /// This is the main controller for the Advanced program.
     /// </summary>
     public class AdvancedController : MedicalFormController, IDisposable
     {
+        public event SceneEvent SceneLoaded;
+        public event SceneEvent SceneUnloading;
+
         private MedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private AdvancedForm advancedForm;
@@ -147,6 +152,12 @@ namespace Medical.Controller
 
                 movementState = new MovementStateControl();
                 guiElements.addGUIElement(movementState);
+
+                SimObjectMover teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+                this.SceneLoaded += teethMover.sceneLoaded;
+                this.SceneUnloading += teethMover.sceneUnloading;
+                TeethController.TeethMover = teethMover;
+                medicalController.FixedLoopUpdate += teethMover.update;
 
                 splashScreen.stepProgress(70);
 
@@ -382,11 +393,19 @@ namespace Medical.Controller
         private bool changeScene(String file)
         {
             guiElements.alertGUISceneUnloading();
+            if (SceneUnloading != null)
+            {
+                SceneUnloading.Invoke(medicalController.CurrentScene);
+            }
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                 guiElements.alertGUISceneLoaded(medicalController.CurrentScene);
+                if (SceneLoaded != null)
+                {
+                    SceneLoaded.Invoke(medicalController.CurrentScene);
+                }
 
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
