@@ -214,6 +214,7 @@ namespace Medical.GUI
             {
                 page.Text = value;
                 page.TextDescription = value;
+                page.TextTitle = value;
             }
         }
     }

@@ -33,6 +33,8 @@
             this.emptySpaceMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addParentMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.layerStateText = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.textText = new System.Windows.Forms.TextBox();
             this.thumbnailPanel = new System.Windows.Forms.Panel();
             this.updateButton = new System.Windows.Forms.Button();
@@ -45,8 +47,6 @@
             this.addStatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addSubEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.layerStateText = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.emptySpaceMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.nodeMenu.SuspendLayout();
@@ -93,6 +93,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(284, 265);
             this.panel1.TabIndex = 1;
+            // 
+            // layerStateText
+            // 
+            this.layerStateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.layerStateText.Location = new System.Drawing.Point(5, 89);
+            this.layerStateText.Name = "layerStateText";
+            this.layerStateText.Size = new System.Drawing.Size(275, 20);
+            this.layerStateText.TabIndex = 20;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 73);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(61, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Layer State";
             // 
             // textText
             // 
@@ -196,37 +214,17 @@
             this.deleteToolStripMenuItem.Text = "Delete";
             this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
-            // layerStateText
-            // 
-            this.layerStateText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.layerStateText.Location = new System.Drawing.Point(5, 89);
-            this.layerStateText.Name = "layerStateText";
-            this.layerStateText.Size = new System.Drawing.Size(275, 20);
-            this.layerStateText.TabIndex = 20;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 73);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 13);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Layer State";
-            // 
             // NavigationMenuEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonText = "Navigation Menu Editor";
-            this.ClientSize = new System.Drawing.Size(284, 527);
             this.Controls.Add(this.menuTree);
             this.Controls.Add(this.panel1);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Name = "NavigationMenuEditor";
-            this.ShowHint = Medical.GUI.DockLocations.Left;
-            this.Text = "NavigationMenuEditor";
+            this.ShowHint = Medical.GUI.DockLocations.Right;
+            this.Size = new System.Drawing.Size(284, 527);
             this.ToolStripName = "Editing";
             this.emptySpaceMenu.ResumeLayout(false);
             this.panel1.ResumeLayout(false);

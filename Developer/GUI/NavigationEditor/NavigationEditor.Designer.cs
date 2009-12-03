@@ -330,6 +330,7 @@
             // 
             // mainMenu
             // 
+            this.mainMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.showToolStripMenuItem});
@@ -491,21 +492,19 @@
             this.State.Text = "State";
             this.State.Width = 0;
             // 
-            // NavigationStateSelector
+            // NavigationEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Navigation State Editor";
-            this.ClientSize = new System.Drawing.Size(274, 711);
             this.Controls.Add(this.navigationStateView);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenu);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
-            this.Name = "NavigationStateSelector";
-            this.ShowHint = Medical.GUI.DockLocations.Left;
-            this.Text = "Navigation State Editor";
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
+            this.Name = "NavigationEditor";
+            this.ShowHint = Medical.GUI.DockLocations.Right;
+            this.Size = new System.Drawing.Size(274, 711);
             this.ToolStripName = "Editing";
             this.createStateMenu.ResumeLayout(false);
             this.linkMenu.ResumeLayout(false);

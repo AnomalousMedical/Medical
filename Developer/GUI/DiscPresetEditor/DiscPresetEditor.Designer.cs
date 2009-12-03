@@ -174,7 +174,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Disc Preset Editor";
-            this.ClientSize = new System.Drawing.Size(259, 460);
             this.Controls.Add(this.picturePreviewPanel);
             this.Controls.Add(this.copySideButton);
             this.Controls.Add(this.outDirBrowseButton);
@@ -186,11 +185,10 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.categoryText);
             this.Controls.Add(this.nameText);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Name = "DiscPresetEditor";
-            this.ShowHint = Medical.GUI.DockLocations.Left;
-            this.Text = "Disc Preset Editor";
+            this.ShowHint = Medical.GUI.DockLocations.Right;
+            this.Size = new System.Drawing.Size(259, 460);
             this.ToolStripName = "Editing";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

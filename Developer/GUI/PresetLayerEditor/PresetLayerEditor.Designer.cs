@@ -175,7 +175,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonText = "Preset Layer Editor";
-            this.ClientSize = new System.Drawing.Size(178, 471);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mergeButton);
             this.Controls.Add(this.renderThumbnailButton);
@@ -187,10 +186,10 @@
             this.Controls.Add(this.removeButton);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.layerList);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Name = "PresetLayerEditor";
-            this.Text = "Preset Layer Editor";
+            this.ShowHint = Medical.GUI.DockLocations.Right;
+            this.Size = new System.Drawing.Size(178, 471);
             this.ToolStripName = "Editing";
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
