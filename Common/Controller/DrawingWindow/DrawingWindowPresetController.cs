@@ -82,11 +82,11 @@ namespace Medical.Controller
 
             preset = new DrawingWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
             preset.ParentWindow = "Camera 1";
-            preset.WindowPosition = DrawingWindowPosition.Bottom;
+            preset.WindowPosition = DrawingWindowPosition.Left;
             threeWindows.addPreset(preset);
 
             preset = new DrawingWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            preset.ParentWindow = "Camera 2";
+            preset.ParentWindow = "Camera 1";
             preset.WindowPosition = DrawingWindowPosition.Right;
             threeWindows.addPreset(preset);
             addPresetSet(threeWindows);
