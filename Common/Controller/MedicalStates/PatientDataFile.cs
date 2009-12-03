@@ -161,6 +161,14 @@ namespace Medical
             }
         }
 
+        public String BackingFileDirectory
+        {
+            get
+            {
+                return Path.GetDirectoryName(Path.GetFullPath(BackingFile));
+            }
+        }
+
         public String FirstName { get; set; }
 
         public String LastName { get; set; }

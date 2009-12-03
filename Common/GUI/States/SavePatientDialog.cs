@@ -29,6 +29,25 @@ namespace Medical.GUI
             warningLabel.Visible = false;
         }
 
+        public bool save(Control parent)
+        {
+            if (patientData == null)
+            {
+                this.ShowDialog(parent);
+                return saveFile;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool saveAs(Control parent)
+        {
+            this.ShowDialog(parent);
+            return saveFile;
+        }
+
         void locationTextBox_TextChanged(object sender, EventArgs e)
         {
             checkForFile();
@@ -70,10 +89,20 @@ namespace Medical.GUI
 
         protected override void OnShown(EventArgs e)
         {
-            lastText.Text = "";
-            firstText.Text = "";
-            locationTextBox.Text = MedicalConfig.SaveDirectory;
-            fileNameTextBox.Text = "";
+            if (patientData == null)
+            {
+                lastText.Text = "";
+                firstText.Text = "";
+                fileNameTextBox.Text = "";
+                locationTextBox.Text = MedicalConfig.SaveDirectory;
+            }
+            else
+            {
+                lastText.Text = patientData.LastName;
+                firstText.Text = patientData.FirstName;
+                fileNameTextBox.Text = patientData.BackingFileName;
+                locationTextBox.Text = patientData.BackingFileDirectory;
+            }
             allowFileNameUpdate = true;
             firstText.Focus();
             base.OnShown(e);
@@ -111,13 +140,9 @@ namespace Medical.GUI
             {
                 return patientData;
             }
-        }
-
-        public bool SaveFile
-        {
-            get
+            set
             {
-                return saveFile;
+                patientData = value;
             }
         }
 

@@ -143,6 +143,7 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
+            this.saveAsMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
@@ -182,6 +183,7 @@
             this.changeSceneMenuItem,
             this.openMenuItem,
             this.saveMenuItem,
+            this.saveAsMenuItem,
             this.exitMenuItem});
             this.clinicalRibbon.RibbonShortcuts.ToggleKeyboardAccess1 = System.Windows.Forms.Keys.None;
             this.clinicalRibbon.RibbonShortcuts.ToggleKeyboardAccess2 = System.Windows.Forms.Keys.None;
@@ -193,7 +195,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -1102,6 +1103,11 @@
             // 
             this.kryptonDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
+            // saveAsMenuItem
+            // 
+            this.saveAsMenuItem.Image = global::Medical.Properties.Resources.SaveLarge;
+            this.saveAsMenuItem.Text = "Save As...";
+            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1260,5 +1266,6 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple13;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand aboutCommand;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveAsMenuItem;
     }
 }

@@ -65,6 +65,7 @@ namespace Medical.GUI
             changeSceneMenuItem.Click += new EventHandler(changeSceneMenuItem_Click);
             openMenuItem.Click += new EventHandler(openMenuItem_Click);
             saveMenuItem.Click += new EventHandler(saveMenuItem_Click);
+            saveAsMenuItem.Click += new EventHandler(saveAsMenuItem_Click);
             exitMenuItem.Click += new EventHandler(exitMenuItem_Click);
 
             showNavigationQATButton.Click += new EventHandler(showNavigationQATButton_Click);
@@ -229,8 +230,18 @@ namespace Medical.GUI
 
         void saveMenuItem_Click(object sender, EventArgs e)
         {
-            savePatient.ShowDialog(this);
-            if (savePatient.SaveFile)
+            if (savePatient.save(this))
+            {
+                PatientDataFile patientData = savePatient.PatientData;
+                controller.saveMedicalState(patientData);
+                changeActiveFile(patientData);
+                StatusController.SetStatus(String.Format("File saved to {0}", patientData.BackingFile));
+            }
+        }
+
+        void saveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            if (savePatient.saveAs(this))
             {
                 PatientDataFile patientData = savePatient.PatientData;
                 controller.saveMedicalState(patientData);
@@ -307,6 +318,7 @@ namespace Medical.GUI
             {
                 clearWindowTitle();
             }
+            savePatient.PatientData = patientData;
         }
 
         void recentDocuments_DocumentRemoved(RecentDocuments source, string document)
@@ -326,7 +338,11 @@ namespace Medical.GUI
             recentDocsMap.TryGetValue(document, out doc);
             if (doc != null)
             {
-                clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.MoveBefore(doc, clinicalRibbon.RibbonAppButton.AppButtonRecentDocs[0]);
+                KryptonRibbonRecentDoc firstDoc = clinicalRibbon.RibbonAppButton.AppButtonRecentDocs[0];
+                if (doc != firstDoc)
+                {
+                    clinicalRibbon.RibbonAppButton.AppButtonRecentDocs.MoveBefore(doc, firstDoc);
+                }
             }
         }
 
