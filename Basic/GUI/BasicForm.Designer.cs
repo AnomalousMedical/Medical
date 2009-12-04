@@ -29,6 +29,7 @@
             this.changeSceneMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.openMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.saveMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.saveAsMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.exitMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.navigationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.navigationOnScreenGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
@@ -143,7 +144,7 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
-            this.saveAsMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.teethWizardButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
@@ -195,7 +196,8 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedContext = null;
+            this.clinicalRibbon.SelectedTab = this.distortionTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -248,6 +250,11 @@
             // 
             this.saveMenuItem.Image = global::Medical.Properties.Resources.SaveLarge;
             this.saveMenuItem.Text = "Save";
+            // 
+            // saveAsMenuItem
+            // 
+            this.saveAsMenuItem.Image = global::Medical.Properties.Resources.SaveLarge;
+            this.saveAsMenuItem.Text = "Save As...";
             // 
             // exitMenuItem
             // 
@@ -438,7 +445,8 @@
             // kryptonRibbonGroupTriple12
             // 
             this.kryptonRibbonGroupTriple12.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.tempStateButton});
+            this.tempStateButton,
+            this.teethWizardButton});
             // 
             // tempStateButton
             // 
@@ -1103,10 +1111,9 @@
             // 
             this.kryptonDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
-            // saveAsMenuItem
+            // teethWizardButton
             // 
-            this.saveAsMenuItem.Image = global::Medical.Properties.Resources.SaveLarge;
-            this.saveAsMenuItem.Text = "Save As...";
+            this.teethWizardButton.TextLine1 = "Teeth Wizard";
             // 
             // BasicForm
             // 
@@ -1267,5 +1274,6 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand aboutCommand;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveAsMenuItem;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton teethWizardButton;
     }
 }

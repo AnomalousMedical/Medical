@@ -101,6 +101,7 @@ namespace Medical.GUI
 
             //temporary
             tempStateButton.Click += new EventHandler(tempStateButton_Click);
+            teethWizardButton.Click += new EventHandler(teethWizardButton_Click);
 
             aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
         }
@@ -113,6 +114,11 @@ namespace Medical.GUI
         void tempStateButton_Click(object sender, EventArgs e)
         {
             controller.showStatePicker(tempStateButton.TextLine1);
+        }
+
+        void teethWizardButton_Click(object sender, EventArgs e)
+        {
+            controller.showStatePicker(teethWizardButton.TextLine1);
         }
 
         void showTeethCollisionQATButton_Click(object sender, EventArgs e)

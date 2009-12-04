@@ -50,6 +50,8 @@ namespace Medical.GUI
             KryptonWorkspaceCell cell = new KryptonWorkspaceCell();
             cell.Pages.Add(page);
             horizontalSequence.Children.Add(cell);
+            page.TextTitle = this.Text;
+            page.TextDescription = this.Text;
 
             AllowFloating = false;
         }
@@ -113,7 +115,7 @@ namespace Medical.GUI
             }
             page.Text = this.Text;
             page.TextTitle = this.Text;
-            page.TextDescription = "";
+            page.TextDescription = this.Text;
         }
 
         public bool AllowFloating { get; set; }

@@ -111,6 +111,7 @@
     <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
+    <Compile Include="Controller\Distortion\TeethStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowHost.cs" />
@@ -230,6 +231,12 @@
     </Compile>
     <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.Designer.cs">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\FileBrowserPickerPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\FileBrowserPickerPanel.Designer.cs">
+      <DependentUpon>FileBrowserPickerPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\LeftCondylarDegenrationPanel.cs">
       <SubType>UserControl</SubType>
@@ -541,6 +548,9 @@
     <EmbeddedResource Include="GUI\StatePicker\BottomTeethRemovalPanel.resx">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\FileBrowserPickerPanel.resx">
+      <DependentUpon>FileBrowserPickerPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\LeftCondylarDegenrationPanel.resx">
       <DependentUpon>LeftCondylarDegenrationPanel.cs</DependentUpon>

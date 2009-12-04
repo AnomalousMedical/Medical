@@ -38,6 +38,7 @@
             this.exitMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.exitCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.homeTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.layersTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.kryptonRibbonGroup2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -90,7 +91,6 @@
             this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
             this.autoHideDock = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
-            this.layersTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoHideDock)).BeginInit();
@@ -124,7 +124,8 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedTab = this.layersTab;
+            this.ribbon.SelectedContext = null;
+            this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
             // 
@@ -149,6 +150,10 @@
             // homeTab
             // 
             this.homeTab.Text = "Home";
+            // 
+            // layersTab
+            // 
+            this.layersTab.Text = "Layers";
             // 
             // distortionTab
             // 
@@ -432,10 +437,6 @@
             this.autoHideDock.Name = "autoHideDock";
             this.autoHideDock.Size = new System.Drawing.Size(784, 426);
             this.autoHideDock.TabIndex = 1;
-            // 
-            // layersTab
-            // 
-            this.layersTab.Text = "Layers";
             // 
             // AdvancedForm
             // 

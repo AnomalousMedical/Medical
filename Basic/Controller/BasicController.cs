@@ -38,6 +38,7 @@ namespace Medical.Controller
         private LayerController layerController;
         private DistortionController distortionController;
         private SkullStatePicker mriWizard;
+        private TeethStatePicker teethWizard;
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
@@ -151,6 +152,8 @@ namespace Medical.Controller
                 distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
                 mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(mriWizard);
+                teethWizard = new TeethStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                distortionController.addDistortionWizard(teethWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
                 basicForm.initialize(this);
