@@ -15,14 +15,24 @@ namespace Medical.GUI
         private BasicForm form;
         private KryptonPanel topInformationPanel;
         private KryptonPanel leftInformationPanel;
-        private StatePickerWizard wizard;
         private StatePickerRibbon stateRibbon;
+        private StatePickerWizard currentWizard;
 
         public BasicStateWizardHost(BasicForm form)
         {
             this.form = form;
             topInformationPanel = form.topInformationPanel;
             leftInformationPanel = form.leftInformationPanel;
+
+            stateRibbon = new StatePickerRibbon();
+            form.clinicalRibbon.RibbonTabs.Add(stateRibbon.RibbonTab);
+            stateRibbon.RibbonTab.Visible = false;
+            stateRibbon.SelectedIndexChanged += new EventHandler(stateRibbon_SelectedIndexChanged);
+        }
+
+        void stateRibbon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentWizard.modeChanged(stateRibbon.SelectedIndex);
         }
 
         public void Dispose()
@@ -30,18 +40,11 @@ namespace Medical.GUI
             stateRibbon.Dispose();
         }
 
-        public void setStateWizardInfo(StatePickerWizard wizard)
+        public void setCurrentWizard(StatePickerWizard wizard)
         {
-            this.wizard = wizard;
-
-            stateRibbon = new StatePickerRibbon(wizard);
-            form.clinicalRibbon.RibbonTabs.Add(stateRibbon.RibbonTab);
-            stateRibbon.RibbonTab.Visible = false;
-        }
-
-        public void setDataControl(Control control)
-        {
+            currentWizard = wizard;
             leftInformationPanel.Controls.Clear();
+            Control control = wizard.WizardControl;
             if (control != null)
             {
                 leftInformationPanel.Controls.Add(control);
@@ -53,6 +56,11 @@ namespace Medical.GUI
         public void addMode(StatePickerPanel mode)
         {
             stateRibbon.addMode(mode);
+        }
+
+        public void clearModes()
+        {
+            stateRibbon.clearModes();
         }
 
         public int SelectedIndex

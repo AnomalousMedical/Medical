@@ -9,7 +9,8 @@ namespace Medical.GUI
 {
     public class StatePickerRibbon : IDisposable
     {
-        private StatePickerWizard stateController;
+        public event EventHandler SelectedIndexChanged;
+
         private KryptonRibbonTab statePickerTab;
         private KryptonRibbonGroup ribbonGroup;
         private KryptonRibbonGroupTriple currentTriple;
@@ -18,7 +19,7 @@ namespace Medical.GUI
         private int selectedIndex = 0;
         private KryptonRibbonGroupButton lastButton;
 
-        public StatePickerRibbon(StatePickerWizard stateController)
+        public StatePickerRibbon()
         {
             statePickerTab = new KryptonRibbonTab();
             statePickerTab.Text = "State Wizard";
@@ -27,8 +28,6 @@ namespace Medical.GUI
             ribbonGroup.DialogBoxLauncher = false;
             statePickerTab.Groups.Add(ribbonGroup);
             ribbonGroup.AllowCollapsed = false;
-
-            this.stateController = stateController;
         }
 
         public void Dispose()
@@ -53,6 +52,14 @@ namespace Medical.GUI
             button.Click += new EventHandler(button_Click);
             panelButtons.Add(panel, button);
             currentTriple.Items.Add(button);
+        }
+
+        public void clearModes()
+        {
+            currentTriple = null;
+            ribbonGroup.Items.Clear();
+            panelButtons.Clear();
+            numModes = 0;
         }
 
         public int SelectedIndex
@@ -89,7 +96,10 @@ namespace Medical.GUI
             KryptonRibbonGroupButton button = sender as KryptonRibbonGroupButton;
             synchronizeButtons(button);
             selectedIndex = (int)button.Tag;
-            stateController.modeChanged((int)button.Tag);
+            if (SelectedIndexChanged != null)
+            {
+                SelectedIndexChanged.Invoke(this, EventArgs.Empty);
+            }
         }
 
         void synchronizeButtons(KryptonRibbonGroupButton newButton)

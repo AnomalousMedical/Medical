@@ -153,10 +153,10 @@ namespace Medical.Controller
                 distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
                 mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(mriWizard);
-                //teethWizard = new TeethStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                //distortionController.addDistortionWizard(teethWizard);
-                //profileWizard = new ProfileStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                //distortionController.addDistortionWizard(profileWizard);
+                teethWizard = new TeethStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                distortionController.addDistortionWizard(teethWizard);
+                profileWizard = new ProfileStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                distortionController.addDistortionWizard(profileWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
                 basicForm.initialize(this);

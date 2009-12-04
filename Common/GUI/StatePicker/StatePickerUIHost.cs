@@ -14,11 +14,11 @@ namespace Medical.GUI
     /// </summary>
     public interface StatePickerUIHost : IDisposable
     {
-        void setStateWizardInfo(StatePickerWizard wizard);
-
-        void setDataControl(Control control);
+        void setCurrentWizard(StatePickerWizard wizard);
 
         void addMode(StatePickerPanel mode);
+
+        void clearModes();
 
         int SelectedIndex { get; set; }
 

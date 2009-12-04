@@ -39,13 +39,10 @@ namespace Medical.GUI
             pickerImageList.ImageSize = new Size(100, 100);
 
             this.panelHost = new StatePickerPanelHost(this);
-            uiHost.setDataControl(panelHost);
 
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
             this.layerController = layerController;
-
-            uiHost.setStateWizardInfo(this);
         }
 
         public void Dispose()
@@ -59,7 +56,6 @@ namespace Medical.GUI
         {
             panel.setStatePicker(this);
             panels.Add(panel);
-            uiHost.addMode(panel);
         }
 
         public void startWizard(DrawingWindow controllingWindow)
@@ -71,11 +67,13 @@ namespace Medical.GUI
             stateBlender.recordUndoState();
             foreach (StatePickerPanel panel in panels)
             {
+                uiHost.addMode(panel);
                 panel.recordOpeningState();
             }
             hidePanel();
             currentIndex = 0;
             showPanel();
+            uiHost.setCurrentWizard(this);
         }
 
         public void setToDefault()
@@ -103,6 +101,7 @@ namespace Medical.GUI
 
         public void close()
         {
+            uiHost.clearModes();
             hidePanel();
             uiHost.Visible = false;
             layerController.CurrentLayerState = layerStatusBeforeShown;
@@ -118,6 +117,14 @@ namespace Medical.GUI
             get
             {
                 return uiHost.Visible;
+            }
+        }
+
+        public Control WizardControl
+        {
+            get
+            {
+                return panelHost;
             }
         }
 
@@ -193,7 +200,7 @@ namespace Medical.GUI
             this.close();
         }
 
-        internal void modeChanged(int modeIndex)
+        public void modeChanged(int modeIndex)
         {
             if (updatePanel)
             {
