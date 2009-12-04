@@ -16,14 +16,17 @@ namespace Medical.GUI
     {
         private String rootDirectory;
         private String currentDirectory;
+        private String fileFilter;
 
-        private List<Bitmap> currentDirectoryFiles = new List<Bitmap>();
+        private List<Bitmap> currentDirectoryBitmaps = new List<Bitmap>();
         private Dictionary<String, KryptonBreadCrumbItem> breadCrumbItems = new Dictionary<string,KryptonBreadCrumbItem>();
+        private List<String> files = new List<string>();
 
-        public FileBrowserPickerPanel()
+        public FileBrowserPickerPanel(String fileFilter)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+            this.fileFilter = fileFilter;
             fileListBox.ListBox.MouseDoubleClick += new MouseEventHandler(fileListBox_MouseDoubleClick);
             breadCrumbs.SelectedItemChanged += new EventHandler(breadCrumbs_SelectedItemChanged);
         }
@@ -45,17 +48,23 @@ namespace Medical.GUI
             }
         }
 
+        protected virtual void onFileChosen(String filename)
+        {
+
+        }
+
         private void showDirectory(String targetDirectory)
         {
             bool buildBreadCrumbs = false;
             KryptonBreadCrumbItem directoryCrumbs = breadCrumbItems[targetDirectory.Replace('\\', '/')];
             buildBreadCrumbs = directoryCrumbs.Items.Count == 0;
-            foreach (Bitmap bitmap in currentDirectoryFiles)
+            foreach (Bitmap bitmap in currentDirectoryBitmaps)
             {
                 bitmap.Dispose();
             }
-            currentDirectoryFiles.Clear();
+            currentDirectoryBitmaps.Clear();
             fileListBox.Items.Clear();
+            files.Clear();
             using (Archive archive = FileSystem.OpenArchive(targetDirectory))
             {
                 if (archive.isDirectory(targetDirectory))
@@ -64,13 +73,14 @@ namespace Medical.GUI
                     {
                         ArchiveFileInfo fileInfo = archive.getFileInfo(directory);
                         KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
+                        dirItem.Tag = directory;
                         String folderThumbnailFile = directory + "/folder.png";
                         if (archive.exists(folderThumbnailFile))
                         {
                             using (Stream imageStream = archive.openStream(folderThumbnailFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                             {
                                 Bitmap bmp = new Bitmap(imageStream);
-                                currentDirectoryFiles.Add(bmp);
+                                currentDirectoryBitmaps.Add(bmp);
                                 dirItem.Image = bmp;
                             }
                         }
@@ -83,6 +93,26 @@ namespace Medical.GUI
                             breadCrumbItems.Add(directory.Replace('\\', '/'), crumb);
                         }
                     }
+                    foreach (String file in archive.listFiles(targetDirectory, fileFilter, false))
+                    {
+                        String fixedFile = file.Replace('\\', '/');
+                        ArchiveFileInfo fileInfo = archive.getFileInfo(fixedFile);
+                        String fileNameOnly = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
+                        KryptonListItem fileItem = new KryptonListItem(fileNameOnly);
+                        fileItem.Tag = fixedFile;
+                        String fileThumbnail = String.Format("{0}/{1}.png", fileInfo.DirectoryName, fileNameOnly);
+                        if (archive.exists(fileThumbnail))
+                        {
+                            using (Stream imageStream = archive.openStream(fileThumbnail, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                            {
+                                Bitmap bmp = new Bitmap(imageStream);
+                                currentDirectoryBitmaps.Add(bmp);
+                                fileItem.Image = bmp;
+                            }
+                        }
+                        files.Add(fixedFile);
+                        fileListBox.Items.Add(fileItem);
+                    }
                 }
             }
             currentDirectory = targetDirectory;
@@ -92,8 +122,15 @@ namespace Medical.GUI
         {
             if (fileListBox.SelectedItem != null)
             {
-                String newPath = String.Format("{0}/{1}", currentDirectory, ((KryptonListItem)fileListBox.SelectedItem).ShortText).Replace('\\', '/');
-                breadCrumbs.SelectedItem = breadCrumbItems[newPath];
+                String newPath = ((KryptonListItem)fileListBox.SelectedItem).Tag.ToString().Replace('\\', '/');
+                if (files.Contains(newPath))
+                {
+                    onFileChosen(newPath);
+                }
+                else
+                {
+                    breadCrumbs.SelectedItem = breadCrumbItems[newPath];
+                }
             }
         }
 

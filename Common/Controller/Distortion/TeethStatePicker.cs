@@ -14,7 +14,7 @@ namespace Medical
         private StatePickerWizard statePicker;
         private String lastPresetDirectory;
 
-        private FileBrowserPickerPanel fileBrowserPanel;
+        private TeethDistortionPicker teethDistortionPicker;
         private NotesPanel notesPanel;
 
         public TeethStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
@@ -24,13 +24,8 @@ namespace Medical
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            fileBrowserPanel = new FileBrowserPickerPanel();
-            fileBrowserPanel.Text = "Teeth";
-            fileBrowserPanel.NavigationState = "Teeth Midline Anterior";
-            fileBrowserPanel.LayerState = "TeethLayers";
-            fileBrowserPanel.TextLine1 = "Teeth";
-            fileBrowserPanel.LargeIcon = Resources.AdaptationIcon;
-            statePicker.addStatePanel(fileBrowserPanel);
+            teethDistortionPicker = new TeethDistortionPicker();
+            statePicker.addStatePanel(teethDistortionPicker);
 
             notesPanel = new NotesPanel(this.Name, imageRenderer);
             statePicker.addStatePanel(notesPanel);
@@ -54,7 +49,7 @@ namespace Medical
             if (presetDirectory != lastPresetDirectory)
             {
                 lastPresetDirectory = presetDirectory;
-                fileBrowserPanel.initialize(presetDirectory + "/TeethPresets");
+                teethDistortionPicker.initialize(presetDirectory + "/TeethPresets");
             }
         }
 

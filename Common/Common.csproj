@@ -303,6 +303,9 @@
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.Designer.cs">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\TeethDistortionPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
