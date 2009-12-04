@@ -145,7 +145,10 @@ namespace Medical.GUI
 
         void breadCrumbs_SelectedItemChanged(object sender, EventArgs e)
         {
-            showDirectory(breadCrumbs.SelectedItem.Tag.ToString());
+            if (breadCrumbs.SelectedItem != null)
+            {
+                showDirectory(breadCrumbs.SelectedItem.Tag.ToString());
+            }
         }
     }
 }
