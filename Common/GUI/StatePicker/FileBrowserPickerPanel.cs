@@ -18,17 +18,23 @@ namespace Medical.GUI
         private String currentDirectory;
 
         private List<Bitmap> currentDirectoryFiles = new List<Bitmap>();
+        private Dictionary<String, KryptonBreadCrumbItem> breadCrumbItems = new Dictionary<string,KryptonBreadCrumbItem>();
 
         public FileBrowserPickerPanel()
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
             fileListBox.ListBox.MouseDoubleClick += new MouseEventHandler(fileListBox_MouseDoubleClick);
+            breadCrumbs.SelectedItemChanged += new EventHandler(breadCrumbs_SelectedItemChanged);
         }
 
         public void initialize(String rootDirectory)
         {
             this.rootDirectory = rootDirectory;
+            breadCrumbItems.Clear();
+            breadCrumbs.RootItem.Items.Clear();
+            breadCrumbs.RootItem.Tag = rootDirectory;
+            breadCrumbItems.Add(rootDirectory.Replace('\\', '/'), breadCrumbs.RootItem);
         }
 
         public override void setToDefault()
@@ -41,6 +47,9 @@ namespace Medical.GUI
 
         private void showDirectory(String targetDirectory)
         {
+            bool buildBreadCrumbs = false;
+            KryptonBreadCrumbItem directoryCrumbs = breadCrumbItems[targetDirectory.Replace('\\', '/')];
+            buildBreadCrumbs = directoryCrumbs.Items.Count == 0;
             foreach (Bitmap bitmap in currentDirectoryFiles)
             {
                 bitmap.Dispose();
@@ -65,6 +74,13 @@ namespace Medical.GUI
                             }
                         }
                         fileListBox.Items.Add(dirItem);
+                        if (buildBreadCrumbs)
+                        {
+                            KryptonBreadCrumbItem crumb = new KryptonBreadCrumbItem(dirItem.ShortText);
+                            directoryCrumbs.Items.Add(crumb);
+                            crumb.Tag = directory;
+                            breadCrumbItems.Add(directory.Replace('\\', '/'), crumb);
+                        }
                     }
                 }
             }
@@ -75,8 +91,14 @@ namespace Medical.GUI
         {
             if (fileListBox.SelectedItem != null)
             {
-                showDirectory(String.Format("{0}/{1}", currentDirectory, ((KryptonListItem)fileListBox.SelectedItem).ShortText));
+                String newDirectory = String.Format("{0}/{1}", currentDirectory, ((KryptonListItem)fileListBox.SelectedItem).ShortText).Replace('\\', '/');
+                breadCrumbs.SelectedItem = breadCrumbItems[newDirectory];
             }
+        }
+
+        void breadCrumbs_SelectedItemChanged(object sender, EventArgs e)
+        {
+            showDirectory(breadCrumbs.SelectedItem.Tag.ToString());
         }
     }
 }
