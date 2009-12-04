@@ -36,7 +36,8 @@
             // 
             // refreshImageButton
             // 
-            this.refreshImageButton.Location = new System.Drawing.Point(2, 274);
+            this.refreshImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.refreshImageButton.Location = new System.Drawing.Point(2, 272);
             this.refreshImageButton.Name = "refreshImageButton";
             this.refreshImageButton.Size = new System.Drawing.Size(89, 23);
             this.refreshImageButton.TabIndex = 28;
@@ -55,9 +56,12 @@
             // 
             // previewPicture
             // 
+            this.previewPicture.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.previewPicture.Location = new System.Drawing.Point(2, 18);
             this.previewPicture.Name = "previewPicture";
-            this.previewPicture.Size = new System.Drawing.Size(250, 250);
+            this.previewPicture.Size = new System.Drawing.Size(250, 252);
             this.previewPicture.TabIndex = 26;
             this.previewPicture.TabStop = false;
             // 
@@ -69,7 +73,7 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.previewPicture);
             this.Name = "PicturePreviewPanel";
-            this.Size = new System.Drawing.Size(254, 298);
+            this.Size = new System.Drawing.Size(254, 300);
             ((System.ComponentModel.ISupportInitialize)(this.previewPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

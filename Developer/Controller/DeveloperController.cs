@@ -176,6 +176,9 @@ namespace Medical.Controller
                 NavigationMenuEditor menuEditor = new NavigationMenuEditor(navigationController, imageRenderer, navEditor, drawingWindowController);
                 guiElements.addGUIElement(menuEditor);
 
+                StateDistortionEditor stateEditor = new StateDistortionEditor(stateController, imageRenderer);
+                guiElements.addGUIElement(stateEditor);
+
                 options = new Options();
 
                 SimObjectMover teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);

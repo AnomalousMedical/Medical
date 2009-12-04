@@ -16,12 +16,15 @@ namespace Medical.GUI
 
         public PicturePreviewPanel()
         {
+            ImageProperties = new ImageRendererProperties();
             InitializeComponent();
         }
 
-        public void initialize(ImageRenderer imageRenderer)
+        public void initialize(ImageRenderer imageRenderer, int width, int height)
         {
             this.renderer = imageRenderer;
+            ImageProperties.Width = width;
+            ImageProperties.Height = height;
         }
 
         public void saveBitmap(String filename)
@@ -40,12 +43,11 @@ namespace Medical.GUI
             {
                 currentBitmap.Dispose();
             }
-            ImageRendererProperties properties = new ImageRendererProperties();
-            properties.Width = previewPicture.Size.Width;
-            properties.Height = previewPicture.Size.Height;
-            currentBitmap = renderer.renderImage(properties);
+            currentBitmap = renderer.renderImage(ImageProperties);
             previewPicture.Image = currentBitmap;
         }
+
+        public ImageRendererProperties ImageProperties { get; set; }
 
         private void refreshImageButton_Click(object sender, EventArgs e)
         {

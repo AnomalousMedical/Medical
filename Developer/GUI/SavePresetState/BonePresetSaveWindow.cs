@@ -29,7 +29,7 @@ namespace Medical.GUI
 
         public void initialize(ImageRenderer renderer, MedicalStateController stateController)
         {
-            picturePreviewPanel.initialize(renderer);
+            picturePreviewPanel.initialize(renderer, 250, 250);
             this.stateController = stateController;
         }
 

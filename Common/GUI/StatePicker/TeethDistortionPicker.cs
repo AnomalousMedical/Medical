@@ -17,5 +17,15 @@ namespace Medical.GUI
             this.TextLine1 = "Teeth";
             this.LargeIcon = Resources.AdaptationIcon;
         }
+
+        public override void applyToState(MedicalState state)
+        {
+            
+        }
+
+        protected override void onFileChosen(string filename)
+        {
+            
+        }
     }
 }
