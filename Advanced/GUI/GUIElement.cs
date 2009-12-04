@@ -44,6 +44,14 @@ namespace Medical.GUI
             button_Click(null, null);
         }
 
+        public void close()
+        {
+            if (controller.isVisible(this))
+            {
+                controller.hideDockContent(this);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

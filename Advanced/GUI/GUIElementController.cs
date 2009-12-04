@@ -67,6 +67,7 @@ namespace Medical.GUI
             this.tab = tab;
             controller.FixedLoopUpdate += fixedLoopUpdate;
             this.medicalController = controller;
+            dock.PageCloseRequest += new EventHandler<CloseRequestEventArgs>(dock_PageCloseRequest);
         }
 
         public void setupShortcuts(ShortcutGroup shortcuts)
@@ -210,6 +211,15 @@ namespace Medical.GUI
         public void hideDockContent(GUIElement content)
         {
             dock.RemovePage(content.Page, false);
+        }
+
+        void dock_PageCloseRequest(object sender, CloseRequestEventArgs e)
+        {
+            GUIElement guiElement = dock.PageForUniqueName(e.UniqueName).Controls[0] as GUIElement;
+            if (guiElement != null)
+            {
+                guiElement.close();
+            }
         }
 
         public bool isVisible(GUIElement element)

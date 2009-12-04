@@ -124,7 +124,6 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
@@ -407,6 +406,10 @@
             this.cloneWindowCommand.Text = "Clone Window";
             this.cloneWindowCommand.TextLine1 = "Clone";
             this.cloneWindowCommand.TextLine2 = "Window";
+            // 
+            // dockingManager
+            // 
+            this.dockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.None;
             // 
             // drawingWindowWorkspace
             // 

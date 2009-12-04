@@ -45,9 +45,8 @@ namespace Medical.GUI
             cloneWindowCommand.Execute += new EventHandler(cloneWindowCommand_Execute);
 
             dockingManager.ManageFloating("Floating", this);
-            dockingManager.ManageControl(autoHideDock, drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace));
-
-            
+            dockingManager.ManageControl(autoHideDock);
+            drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace);
             drawingWindowDockingManager.ManageFloating("Floating2", this);
         }
 
