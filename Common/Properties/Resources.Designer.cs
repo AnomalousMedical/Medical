@@ -473,6 +473,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ProfileIcon {
+            get {
+                object obj = ResourceManager.GetObject("ProfileIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ResizeDownSmall {
             get {
                 object obj = ResourceManager.GetObject("ResizeDownSmall", resourceCulture);
@@ -560,6 +567,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap StateButtons {
             get {
                 object obj = ResourceManager.GetObject("StateButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TeethWizardIcon {
+            get {
+                object obj = ResourceManager.GetObject("TeethWizardIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

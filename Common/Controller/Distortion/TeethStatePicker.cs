@@ -103,7 +103,7 @@ namespace Medical
         {
             get
             {
-                return null;
+                return Resources.TeethWizardIcon;
             }
         }
     }

@@ -103,7 +103,7 @@ namespace Medical.Controller
         {
             get
             {
-                return null;
+                return Resources.ProfileIcon;
             }
         }
     }
