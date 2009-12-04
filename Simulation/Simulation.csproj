@@ -119,12 +119,14 @@
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="State\CompoundPresetState.cs" />
     <Compile Include="State\MedicalState.cs" />
     <Compile Include="State\MedicalStateNotes.cs" />
     <Compile Include="State\PresetState.cs" />
     <Compile Include="State\PresetStateSet.cs" />
     <Compile Include="Teeth\BottomTooth.cs" />
     <Compile Include="Teeth\TeethController.cs" />
+    <Compile Include="Teeth\TeethPresetState.cs" />
     <Compile Include="Teeth\TeethState.cs" />
     <Compile Include="Teeth\Tooth.cs" />
     <Compile Include="Teeth\ToothState.cs" />

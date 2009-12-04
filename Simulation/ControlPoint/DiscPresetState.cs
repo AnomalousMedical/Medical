@@ -22,6 +22,15 @@ namespace Medical
             this.discName = discName;
         }
 
+        public void captureFromState(DiscStateProperties state)
+        {
+            this.DiscOffset = state.DiscOffset;
+            this.HorizontalOffset = state.HorizontalOffset;
+            this.Locked = state.Locked;
+            this.PopLocation = state.PopLocation;
+            this.RdaOffset = state.RDAOffset;
+        }
+
         public override void applyToState(MedicalState state)
         {
             DiscStateProperties disc = new DiscStateProperties(discName);

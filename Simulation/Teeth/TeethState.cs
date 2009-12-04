@@ -17,6 +17,10 @@ namespace Medical
 
         public void addPosition(ToothState state)
         {
+            if (teeth.ContainsKey(state.Name))
+            {
+                teeth.Remove(state.Name);
+            }
             teeth.Add(state.Name, state);
         }
 

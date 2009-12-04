@@ -25,6 +25,14 @@ namespace Medical
             this.rotation = rotation;
         }
 
+        internal ToothState(ToothState source)
+        {
+            this.name = source.name;
+            this.extracted = source.extracted;
+            this.offset = source.offset;
+            this.rotation = source.rotation;
+        }
+
         public void blend(ToothState end, float percent)
         {
             Tooth tooth = TeethController.getTooth(name);

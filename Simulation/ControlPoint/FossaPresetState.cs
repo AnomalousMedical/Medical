@@ -17,6 +17,12 @@ namespace Medical
 
         }
 
+        public void captureFromState(String fossaName, FossaState state)
+        {
+            this.fossaName = fossaName;
+            position = state.getPosition(fossaName);
+        }
+
         public override void applyToState(MedicalState state)
         {
             state.Fossa.addPosition(fossaName, position);

@@ -21,6 +21,11 @@ namespace Medical
             positions.Add(entry);
         }
 
+        public void captureFromState(BoneManipulatorStateEntry state)
+        {
+            addPosition(state.clone());
+        }
+
         public override void applyToState(MedicalState state)
         {
             foreach (BoneManipulatorStateEntry position in positions)
