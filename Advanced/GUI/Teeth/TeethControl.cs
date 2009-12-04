@@ -161,21 +161,41 @@ namespace Medical.GUI
         {
             TeethController.TeethMover.ShowMoveTools = true;
             TeethController.TeethMover.ShowRotateTools = false;
-            TeethController.showTeethTools(true, true);
+            TeethController.showTeethTools(!hideTop.Checked, !hideBottom.Checked);
         }
 
         private void rotateButton_Click(object sender, EventArgs e)
         {
             TeethController.TeethMover.ShowMoveTools = false;
             TeethController.TeethMover.ShowRotateTools = true;
-            TeethController.showTeethTools(true, true);
+            TeethController.showTeethTools(!hideTop.Checked, !hideBottom.Checked);
         }
 
         private void offButton_Click(object sender, EventArgs e)
         {
             TeethController.TeethMover.ShowMoveTools = false;
             TeethController.TeethMover.ShowRotateTools = false;
-            TeethController.showTeethTools(false, false);
+            TeethController.showTeethTools(!hideTop.Checked, !hideBottom.Checked);
+        }
+
+        private void hideTop_CheckedChanged(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(!hideTop.Checked, !hideBottom.Checked);
+            TransparencyGroup teeth = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+            for (int i = 1; i < 17; ++i)
+            {
+                teeth.getTransparencyObject("Tooth " + i).setAlpha(hideTop.Checked ? 0.0f : 1.0f);
+            }
+        }
+
+        private void hideBottom_CheckedChanged(object sender, EventArgs e)
+        {
+            TeethController.showTeethTools(!hideTop.Checked, !hideBottom.Checked);
+            TransparencyGroup teeth = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+            for (int i = 17; i < 33; ++i)
+            {
+                teeth.getTransparencyObject("Tooth " + i).setAlpha(hideBottom.Checked ? 0.0f : 1.0f);
+            }
         }
     }
 }

@@ -73,6 +73,8 @@
             this.moveButton = new System.Windows.Forms.Button();
             this.rotateButton = new System.Windows.Forms.Button();
             this.offButton = new System.Windows.Forms.Button();
+            this.hideTop = new System.Windows.Forms.CheckBox();
+            this.hideBottom = new System.Windows.Forms.CheckBox();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
@@ -743,12 +745,38 @@
             this.offButton.UseVisualStyleBackColor = true;
             this.offButton.Click += new System.EventHandler(this.offButton_Click);
             // 
+            // hideTop
+            // 
+            this.hideTop.Appearance = System.Windows.Forms.Appearance.Button;
+            this.hideTop.AutoSize = true;
+            this.hideTop.Location = new System.Drawing.Point(27, 631);
+            this.hideTop.Name = "hideTop";
+            this.hideTop.Size = new System.Drawing.Size(92, 23);
+            this.hideTop.TabIndex = 15;
+            this.hideTop.Text = "Hide Top Teeth";
+            this.hideTop.UseVisualStyleBackColor = true;
+            this.hideTop.CheckedChanged += new System.EventHandler(this.hideTop_CheckedChanged);
+            // 
+            // hideBottom
+            // 
+            this.hideBottom.Appearance = System.Windows.Forms.Appearance.Button;
+            this.hideBottom.AutoSize = true;
+            this.hideBottom.Location = new System.Drawing.Point(125, 631);
+            this.hideBottom.Name = "hideBottom";
+            this.hideBottom.Size = new System.Drawing.Size(106, 23);
+            this.hideBottom.TabIndex = 16;
+            this.hideBottom.Text = "Hide Bottom Teeth";
+            this.hideBottom.UseVisualStyleBackColor = true;
+            this.hideBottom.CheckedChanged += new System.EventHandler(this.hideBottom_CheckedChanged);
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Teeth";
+            this.Controls.Add(this.hideBottom);
+            this.Controls.Add(this.hideTop);
             this.Controls.Add(this.offButton);
             this.Controls.Add(this.rotateButton);
             this.Controls.Add(this.moveButton);
@@ -761,7 +789,7 @@
             this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.Size = new System.Drawing.Size(260, 631);
+            this.Size = new System.Drawing.Size(260, 673);
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -818,6 +846,8 @@
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button rotateButton;
         private System.Windows.Forms.Button offButton;
+        private System.Windows.Forms.CheckBox hideTop;
+        private System.Windows.Forms.CheckBox hideBottom;
 
     }
 }
