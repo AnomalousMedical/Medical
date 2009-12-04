@@ -110,6 +110,7 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
+    <Compile Include="Controller\Distortion\ProfileStatePicker.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\Distortion\TeethStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
@@ -303,7 +304,7 @@
     <Compile Include="GUI\StatePicker\TeethAdaptationPanel.Designer.cs">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\TeethDistortionPicker.cs">
+    <Compile Include="GUI\StatePicker\FullDistortionPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.cs">
@@ -891,6 +892,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MRIWizardLarge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

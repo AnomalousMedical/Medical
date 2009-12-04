@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Medical.GUI;
-using Engine.ObjectManagement;
 using Medical.Properties;
+using Engine.ObjectManagement;
 using System.Drawing;
 
-namespace Medical
+namespace Medical.Controller
 {
-    public class TeethStatePicker : DistortionWizard
+    public class ProfileStatePicker : DistortionWizard
     {
         private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
         private String lastPresetDirectory;
 
-        private FullDistortionPicker teethDistortionPicker;
+        private FullDistortionPicker profileDistortionPicker;
         private NotesPanel notesPanel;
 
-        public TeethStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
+        public ProfileStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
             statePicker = new StatePickerWizard(uiHost, temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            teethDistortionPicker = new FullDistortionPicker();
-            teethDistortionPicker.Text = "Teeth";
-            teethDistortionPicker.NavigationState = "Teeth Midline Anterior";
-            teethDistortionPicker.LayerState = "TeethLayers";
-            teethDistortionPicker.TextLine1 = "Teeth";
-            teethDistortionPicker.LargeIcon = Resources.AdaptationIcon;
-            statePicker.addStatePanel(teethDistortionPicker);
+            profileDistortionPicker = new FullDistortionPicker();
+            profileDistortionPicker.Text = "Profile";
+            profileDistortionPicker.NavigationState = "Right Lateral";
+            profileDistortionPicker.LayerState = "ProfileLayers";
+            profileDistortionPicker.TextLine1 = "Profile";
+            profileDistortionPicker.LargeIcon = Resources.AdaptationIcon;
+            statePicker.addStatePanel(profileDistortionPicker);
 
             notesPanel = new NotesPanel(this.Name, imageRenderer);
             statePicker.addStatePanel(notesPanel);
@@ -55,7 +55,7 @@ namespace Medical
             if (presetDirectory != lastPresetDirectory)
             {
                 lastPresetDirectory = presetDirectory;
-                teethDistortionPicker.initialize(presetDirectory + "/TeethPresets");
+                profileDistortionPicker.initialize(presetDirectory + "/ProfilePresets");
             }
         }
 
@@ -69,7 +69,7 @@ namespace Medical
         {
             get
             {
-                return "Teeth Wizard";
+                return "Profile Wizard";
             }
         }
 
@@ -87,7 +87,7 @@ namespace Medical
         {
             get
             {
-                return "Teeth Wizard";
+                return "Profile Wizard";
             }
         }
 

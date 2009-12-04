@@ -8,19 +8,15 @@ using System.Xml;
 
 namespace Medical.GUI
 {
-    class TeethDistortionPicker : FileBrowserPickerPanel
+    class FullDistortionPicker : FileBrowserPickerPanel
     {
         private PresetState presetState;
         private XmlSaver xmlSaver = new XmlSaver();
 
-        public TeethDistortionPicker()
+        public FullDistortionPicker()
             :base("*.dst")
         {
-            this.Text = "Teeth";
-            this.NavigationState = "Teeth Midline Anterior";
-            this.LayerState = "TeethLayers";
-            this.TextLine1 = "Teeth";
-            this.LargeIcon = Resources.AdaptationIcon;
+            
         }
 
         public override void applyToState(MedicalState state)

@@ -28,6 +28,7 @@ namespace Medical.GUI
             this.Dock = DockStyle.Fill;
             this.fileFilter = fileFilter;
             fileListBox.ListBox.MouseDoubleClick += new MouseEventHandler(fileListBox_MouseDoubleClick);
+            fileListBox.ListBox.MouseClick += new MouseEventHandler(ListBox_MouseClick);
             breadCrumbs.SelectedItemChanged += new EventHandler(breadCrumbs_SelectedItemChanged);
         }
 
@@ -130,6 +131,18 @@ namespace Medical.GUI
                 else
                 {
                     breadCrumbs.SelectedItem = breadCrumbItems[newPath];
+                }
+            }
+        }
+
+        void ListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (fileListBox.SelectedItem != null)
+            {
+                String newPath = ((KryptonListItem)fileListBox.SelectedItem).Tag.ToString().Replace('\\', '/');
+                if (files.Contains(newPath))
+                {
+                    onFileChosen(newPath);
                 }
             }
         }

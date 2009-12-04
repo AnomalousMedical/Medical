@@ -57,8 +57,6 @@
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.wizardRibbonGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
-            this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
-            this.tempStateButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.simulationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.openingGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -144,7 +142,6 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
-            this.teethWizardButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
@@ -196,7 +193,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.distortionTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -438,21 +434,7 @@
             // wizardRibbonGroup
             // 
             this.wizardRibbonGroup.DialogBoxLauncher = false;
-            this.wizardRibbonGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
-            this.kryptonRibbonGroupTriple12});
             this.wizardRibbonGroup.TextLine1 = "Wizards";
-            // 
-            // kryptonRibbonGroupTriple12
-            // 
-            this.kryptonRibbonGroupTriple12.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.tempStateButton,
-            this.teethWizardButton});
-            // 
-            // tempStateButton
-            // 
-            this.tempStateButton.ImageLarge = global::Medical.Properties.Resources.MRIWizardLarge;
-            this.tempStateButton.ImageSmall = global::Medical.Properties.Resources.MRIWizardSmall;
-            this.tempStateButton.TextLine1 = "MRI Wizard";
             // 
             // simulationTab
             // 
@@ -1111,10 +1093,6 @@
             // 
             this.kryptonDockingManager.DefaultCloseRequest = ComponentFactory.Krypton.Docking.DockingCloseRequest.RemovePageAndDispose;
             // 
-            // teethWizardButton
-            // 
-            this.teethWizardButton.TextLine1 = "Teeth Wizard";
-            // 
             // BasicForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1254,8 +1232,6 @@
         private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab distortionTab;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup wizardRibbonGroup;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple12;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton tempStateButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel leftInformationPanel;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel topInformationPanel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
@@ -1274,6 +1250,5 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand aboutCommand;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveAsMenuItem;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton teethWizardButton;
     }
 }

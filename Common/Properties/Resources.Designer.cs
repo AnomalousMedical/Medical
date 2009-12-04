@@ -459,6 +459,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap MRIWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("MRIWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap NotesIcon {
             get {
                 object obj = ResourceManager.GetObject("NotesIcon", resourceCulture);

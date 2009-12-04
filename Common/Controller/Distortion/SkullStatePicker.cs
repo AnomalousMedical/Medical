@@ -12,6 +12,7 @@ using Engine.Saving.XMLSaver;
 using Medical.GUI;
 using Engine.ObjectManagement;
 using Medical.Properties;
+using System.Drawing;
 
 namespace Medical
 {
@@ -278,6 +279,30 @@ namespace Medical
         void statePicker_Finished()
         {
             alertWizardFinished();
+        }
+
+        public override String TextLine1
+        {
+            get
+            {
+                return "MRI Wizard";
+            }
+        }
+
+        public override String TextLine2
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public override Image ImageLarge
+        {
+            get
+            {
+                return Resources.MRIWizardLarge;
+            }
         }
     }
 }

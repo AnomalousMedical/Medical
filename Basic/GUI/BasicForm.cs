@@ -99,26 +99,12 @@ namespace Medical.GUI
             KryptonDockingWorkspace w = kryptonDockingManager.ManageWorkspace("Workspace", kryptonDockableWorkspace);
             kryptonDockingManager.ManageFloating("Floating", this);
 
-            //temporary
-            tempStateButton.Click += new EventHandler(tempStateButton_Click);
-            teethWizardButton.Click += new EventHandler(teethWizardButton_Click);
-
             aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
         }
 
         void aboutCommand_Execute(object sender, EventArgs e)
         {
             aboutBox.ShowDialog(this);
-        }
-
-        void tempStateButton_Click(object sender, EventArgs e)
-        {
-            controller.showStatePicker(tempStateButton.TextLine1);
-        }
-
-        void teethWizardButton_Click(object sender, EventArgs e)
-        {
-            controller.showStatePicker(teethWizardButton.TextLine1);
         }
 
         void showTeethCollisionQATButton_Click(object sender, EventArgs e)
@@ -185,12 +171,28 @@ namespace Medical.GUI
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
         {
+            KryptonRibbonGroupTriple currentTriple = null;
             foreach (DistortionWizard wizard in wizards)
             {
-                //ToolStripMenuItem item = new ToolStripMenuItem(wizard.Name);
-                //item.Click += distortionWizardItem_Click;
-                //distortionToolStripMenuItem.DropDownItems.Add(item);
+                if (currentTriple == null || currentTriple.Items.Count > 2)
+                {
+                    currentTriple = new KryptonRibbonGroupTriple();
+                    wizardRibbonGroup.Items.Add(currentTriple);
+                    currentTriple.MinimumSize = GroupItemSize.Large;
+                }
+                KryptonRibbonGroupButton wizardButton = new KryptonRibbonGroupButton();
+                wizardButton.Click += new EventHandler(wizardButton_Click);
+                wizardButton.TextLine1 = wizard.TextLine1;
+                wizardButton.TextLine2 = wizard.TextLine2;
+                wizardButton.ImageLarge = wizard.ImageLarge;
+                wizardButton.Tag = wizard.Name;
+                currentTriple.Items.Add(wizardButton);
             }
+        }
+
+        void wizardButton_Click(object sender, EventArgs e)
+        {
+            controller.showStatePicker(((KryptonRibbonGroupButton)sender).Tag.ToString());
         }
 
         void distortionWizardItem_Click(object sender, EventArgs e)
