@@ -72,10 +72,11 @@ namespace Medical.GUI
                 {
                     foreach (String directory in archive.listDirectories(targetDirectory, false))
                     {
-                        ArchiveFileInfo fileInfo = archive.getFileInfo(directory);
+                        String fullPath = archive.getFullPath(directory).Replace('\\', '/');
+                        ArchiveFileInfo fileInfo = archive.getFileInfo(fullPath);
                         KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
-                        dirItem.Tag = directory;
-                        String folderThumbnailFile = directory + "/folder.png";
+                        dirItem.Tag = fullPath;
+                        String folderThumbnailFile = fullPath + "/folder.png";
                         if (archive.exists(folderThumbnailFile))
                         {
                             using (Stream imageStream = archive.openStream(folderThumbnailFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
@@ -90,13 +91,14 @@ namespace Medical.GUI
                         {
                             KryptonBreadCrumbItem crumb = new KryptonBreadCrumbItem(dirItem.ShortText);
                             directoryCrumbs.Items.Add(crumb);
-                            crumb.Tag = directory;
-                            breadCrumbItems.Add(directory.Replace('\\', '/'), crumb);
+                            crumb.Tag = fullPath;
+                            System.Console.WriteLine(fullPath);
+                            breadCrumbItems.Add(fullPath, crumb);
                         }
                     }
                     foreach (String file in archive.listFiles(targetDirectory, fileFilter, false))
                     {
-                        String fixedFile = file.Replace('\\', '/');
+                        String fixedFile = archive.getFullPath(file).Replace('\\', '/');
                         ArchiveFileInfo fileInfo = archive.getFileInfo(fixedFile);
                         String fileNameOnly = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
                         KryptonListItem fileItem = new KryptonListItem(fileNameOnly);

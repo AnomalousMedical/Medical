@@ -5,6 +5,8 @@ using System.Text;
 using Medical.Properties;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using Engine.Resources;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -29,9 +31,15 @@ namespace Medical.GUI
 
         protected override void onFileChosen(string filename)
         {
-            using (XmlTextReader textReader = new XmlTextReader(filename))
+            using (Archive archive = FileSystem.OpenArchive(filename))
             {
-                presetState = xmlSaver.restoreObject(textReader) as PresetState;
+                using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                {
+                    using (XmlTextReader textReader = new XmlTextReader(stream))
+                    {
+                        presetState = xmlSaver.restoreObject(textReader) as PresetState;
+                    }
+                }
             }
             showChanges(false);
         }
