@@ -18,6 +18,7 @@ namespace Medical.GUI
         {
             pictureWindow.Dock = DockStyle.Fill;
             page.Controls.Add(pictureWindow);
+            pictureWindow.TitleTextChanged += new EventHandler(pictureWindow_TitleTextChanged);
         }
 
         public void initialize(Bitmap bitmap)
@@ -42,6 +43,12 @@ namespace Medical.GUI
                 page.Text = value;
                 page.TextTitle = value;
             }
+        }
+
+        void pictureWindow_TitleTextChanged(object sender, EventArgs e)
+        {
+            page.Text = pictureWindow.Text;
+            page.TextTitle = pictureWindow.Text;
         }
     }
 }

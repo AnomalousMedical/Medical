@@ -16,6 +16,8 @@ namespace Medical.GUI
 {
     public partial class PictureWindow : UserControl
     {
+        public event EventHandler TitleTextChanged;
+
         private static SaveFileDialog saveDialog = new SaveFileDialog();
 
         static PictureWindow()
@@ -93,6 +95,10 @@ namespace Medical.GUI
                 }
                 pictureBox.Image.Save(saveDialog.FileName, format);
                 this.Text = saveDialog.FileName;
+                if (TitleTextChanged != null)
+                {
+                    TitleTextChanged.Invoke(this, EventArgs.Empty);
+                }
                 exploreButton.Enabled = true;
             }
         }
