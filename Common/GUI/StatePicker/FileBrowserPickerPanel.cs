@@ -124,11 +124,7 @@ namespace Medical.GUI
             if (fileListBox.SelectedItem != null)
             {
                 String newPath = ((KryptonListItem)fileListBox.SelectedItem).Tag.ToString().Replace('\\', '/');
-                if (files.Contains(newPath))
-                {
-                    onFileChosen(newPath);
-                }
-                else
+                if (!files.Contains(newPath))
                 {
                     breadCrumbs.SelectedItem = breadCrumbItems[newPath];
                 }
