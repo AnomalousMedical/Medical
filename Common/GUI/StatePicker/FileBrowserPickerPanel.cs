@@ -62,7 +62,8 @@ namespace Medical.GUI
                 {
                     foreach (String directory in archive.listDirectories(targetDirectory, false))
                     {
-                        KryptonListItem dirItem = new KryptonListItem(Path.GetFileNameWithoutExtension(directory));
+                        ArchiveFileInfo fileInfo = archive.getFileInfo(directory);
+                        KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
                         String folderThumbnailFile = directory + "/folder.png";
                         if (archive.exists(folderThumbnailFile))
                         {
@@ -91,8 +92,8 @@ namespace Medical.GUI
         {
             if (fileListBox.SelectedItem != null)
             {
-                String newDirectory = String.Format("{0}/{1}", currentDirectory, ((KryptonListItem)fileListBox.SelectedItem).ShortText).Replace('\\', '/');
-                breadCrumbs.SelectedItem = breadCrumbItems[newDirectory];
+                String newPath = String.Format("{0}/{1}", currentDirectory, ((KryptonListItem)fileListBox.SelectedItem).ShortText).Replace('\\', '/');
+                breadCrumbs.SelectedItem = breadCrumbItems[newPath];
             }
         }
 
