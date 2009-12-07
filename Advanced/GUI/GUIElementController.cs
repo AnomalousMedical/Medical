@@ -215,10 +215,20 @@ namespace Medical.GUI
 
         void dock_PageCloseRequest(object sender, CloseRequestEventArgs e)
         {
-            GUIElement guiElement = dock.PageForUniqueName(e.UniqueName).Controls[0] as GUIElement;
+            KryptonPage page = dock.PageForUniqueName(e.UniqueName);
+            Control ctrl = page.Controls[0];
+            GUIElement guiElement = ctrl as GUIElement;
             if (guiElement != null)
             {
                 guiElement.close();
+            }
+            else
+            {
+                PictureWindow picWindow = ctrl as PictureWindow;
+                if (picWindow != null)
+                {
+                    dock.RemovePage(page, true);
+                }
             }
         }
 
