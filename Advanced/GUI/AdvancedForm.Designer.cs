@@ -99,8 +99,10 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.statusStrip1.Location = new System.Drawing.Point(0, 540);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
             this.statusStrip1.Size = new System.Drawing.Size(784, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
@@ -123,7 +125,6 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
