@@ -40,7 +40,7 @@ namespace Medical.Controller
         private DockProvider dockProvider;
 
         //Ribbon controllers
-        LayerGUIController layerGUIController;
+        //LayerGUIController layerGUIController;
 
         private NavigationController navigationController;
 
@@ -163,9 +163,9 @@ namespace Medical.Controller
                 medicalController.FixedLoopUpdate += teethMover.update;
 
                 //Setup the ribbon
-                layerGUIController = new LayerGUIController(advancedForm);
-                this.SceneLoaded += layerGUIController.sceneLoaded;
-                this.SceneUnloading += layerGUIController.sceneUnloading;
+                //layerGUIController = new LayerGUIController(advancedForm);
+                //this.SceneLoaded += layerGUIController.sceneLoaded;
+                //this.SceneUnloading += layerGUIController.sceneUnloading;
 
                 splashScreen.stepProgress(70);
 

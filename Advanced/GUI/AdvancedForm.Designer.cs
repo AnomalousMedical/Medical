@@ -38,7 +38,6 @@
             this.exitMenuItem = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             this.exitCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.homeTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
-            this.layersTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.kryptonRibbonGroup2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -121,10 +120,10 @@
             this.ribbon.RibbonShortcuts.ToggleKeyboardAccess2 = System.Windows.Forms.Keys.None;
             this.ribbon.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.homeTab,
-            this.layersTab,
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
+            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
@@ -150,10 +149,6 @@
             // homeTab
             // 
             this.homeTab.Text = "Home";
-            // 
-            // layersTab
-            // 
-            this.layersTab.Text = "Layers";
             // 
             // distortionTab
             // 
@@ -559,7 +554,6 @@
         private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace drawingWindowWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel autoHideDock;
-        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab layersTab;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorPicker;
 
     }

@@ -14,10 +14,10 @@ namespace Medical.GUI
 
         public LayerGUIController(AdvancedForm advancedForm)
         {
-            layerTab = advancedForm.layersTab;
+            //layerTab = advancedForm.layersTab;
             layerGroup = new KryptonRibbonGroup();
             layerGroup.TextLine1 = "Layers";
-            layerTab.Groups.Add(layerGroup);
+            //layerTab.Groups.Add(layerGroup);
         }
 
         public void sceneLoaded(SimScene scene)
