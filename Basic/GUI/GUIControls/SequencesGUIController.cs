@@ -28,6 +28,7 @@ namespace Medical.GUI
 
         void sequenceController_CurrentSequenceSetChanged(MovementSequenceController controller)
         {
+            sequenceTab.Groups.Clear();
             MovementSequenceSet currentSet = controller.SequenceSet;
             foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
