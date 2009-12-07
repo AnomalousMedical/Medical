@@ -153,6 +153,9 @@ namespace Medical.Controller
                 movementState = new MovementStateControl();
                 guiElements.addGUIElement(movementState);
 
+                MeasurementGUI measurement = new MeasurementGUI();
+                guiElements.addGUIElement(measurement);
+
                 //Editor
                 BonePresetSaveWindow bonePresetSaver = new BonePresetSaveWindow();
                 bonePresetSaver.initialize(imageRenderer, stateController);
