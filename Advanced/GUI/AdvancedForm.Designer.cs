@@ -72,6 +72,7 @@
             this.kryptonRibbonGroupTriple6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.kryptonRibbonGroupButton5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.optionsCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.backgroundColorPicker = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton();
             this.kryptonRibbonGroup5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.kryptonRibbonGroupButton6 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -182,6 +183,8 @@
             // 
             // newDistortionCommand
             // 
+            this.newDistortionCommand.ImageLarge = global::Medical.Properties.Resources.NewStatesLarge;
+            this.newDistortionCommand.ImageSmall = global::Medical.Properties.Resources.NewStatesSmall;
             this.newDistortionCommand.Text = "New";
             this.newDistortionCommand.TextLine1 = "New";
             // 
@@ -191,6 +194,8 @@
             // 
             // openDistortionCommand
             // 
+            this.openDistortionCommand.ImageLarge = global::Medical.Properties.Resources.OpenStatesLarge;
+            this.openDistortionCommand.ImageSmall = global::Medical.Properties.Resources.OpenStatesSmall;
             this.openDistortionCommand.Text = "Open";
             this.openDistortionCommand.TextLine1 = "Open";
             // 
@@ -200,6 +205,8 @@
             // 
             // saveDistortionCommand
             // 
+            this.saveDistortionCommand.ImageLarge = global::Medical.Properties.Resources.SaveStatesLarge;
+            this.saveDistortionCommand.ImageSmall = global::Medical.Properties.Resources.SaveStatesSmall;
             this.saveDistortionCommand.Text = "Save";
             this.saveDistortionCommand.TextLine1 = "Save";
             // 
@@ -214,6 +221,8 @@
             // 
             // saveDistortionAsCommand
             // 
+            this.saveDistortionAsCommand.ImageLarge = global::Medical.Properties.Resources.SaveStatesLarge;
+            this.saveDistortionAsCommand.ImageSmall = global::Medical.Properties.Resources.SaveStatesSmall;
             this.saveDistortionAsCommand.Text = "Save As...";
             this.saveDistortionAsCommand.TextLine1 = "Save As...";
             // 
@@ -235,6 +244,8 @@
             // 
             // addCurrentStateCommand
             // 
+            this.addCurrentStateCommand.ImageLarge = global::Medical.Properties.Resources.AddStateLarge;
+            this.addCurrentStateCommand.ImageSmall = global::Medical.Properties.Resources.AddStateSmall;
             this.addCurrentStateCommand.Text = "Add Current State";
             this.addCurrentStateCommand.TextLine1 = "Add Current";
             this.addCurrentStateCommand.TextLine2 = "State";
@@ -266,6 +277,8 @@
             // 
             // newSequenceCommand
             // 
+            this.newSequenceCommand.ImageLarge = global::Medical.Properties.Resources.NewSequenceLarge;
+            this.newSequenceCommand.ImageSmall = global::Medical.Properties.Resources.NewSequenceSmall;
             this.newSequenceCommand.Text = "New";
             this.newSequenceCommand.TextLine1 = "New";
             // 
@@ -275,6 +288,8 @@
             // 
             // openSequenceCommand
             // 
+            this.openSequenceCommand.ImageLarge = global::Medical.Properties.Resources.OpenSequenceLarge;
+            this.openSequenceCommand.ImageSmall = global::Medical.Properties.Resources.OpenSequenceSmall;
             this.openSequenceCommand.Text = "Open";
             this.openSequenceCommand.TextLine1 = "Open";
             // 
@@ -284,6 +299,8 @@
             // 
             // saveSequenceCommand
             // 
+            this.saveSequenceCommand.ImageLarge = global::Medical.Properties.Resources.SaveSequenceLarge;
+            this.saveSequenceCommand.ImageSmall = global::Medical.Properties.Resources.SaveSequenceSmall;
             this.saveSequenceCommand.Text = "Save";
             this.saveSequenceCommand.TextLine1 = "Save";
             // 
@@ -298,6 +315,8 @@
             // 
             // saveSequenceAsCommand
             // 
+            this.saveSequenceAsCommand.ImageLarge = global::Medical.Properties.Resources.SaveSequenceLarge;
+            this.saveSequenceAsCommand.ImageSmall = global::Medical.Properties.Resources.SaveSequenceSmall;
             this.saveSequenceAsCommand.Text = "Save As...";
             this.saveSequenceAsCommand.TextLine1 = "Save As...";
             // 
@@ -318,7 +337,8 @@
             // kryptonRibbonGroupTriple6
             // 
             this.kryptonRibbonGroupTriple6.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.kryptonRibbonGroupButton5});
+            this.kryptonRibbonGroupButton5,
+            this.backgroundColorPicker});
             // 
             // kryptonRibbonGroupButton5
             // 
@@ -326,8 +346,17 @@
             // 
             // optionsCommand
             // 
+            this.optionsCommand.ImageLarge = global::Medical.Properties.Resources.OptionsIconLarge;
+            this.optionsCommand.ImageSmall = global::Medical.Properties.Resources.OptionsIconSmall;
             this.optionsCommand.Text = "Options";
             this.optionsCommand.TextLine1 = "Options";
+            // 
+            // backgroundColorPicker
+            // 
+            this.backgroundColorPicker.ImageLarge = global::Medical.Properties.Resources.BackgroundColorIconLarge;
+            this.backgroundColorPicker.ImageSmall = global::Medical.Properties.Resources.BackgroundColorIconSmall;
+            this.backgroundColorPicker.RecentColors = new System.Drawing.Color[0];
+            this.backgroundColorPicker.SelectedColorChanged += new System.EventHandler<ComponentFactory.Krypton.Toolkit.ColorEventArgs>(this.backgroundColorPicker_SelectedColorChanged);
             // 
             // kryptonRibbonGroup5
             // 
@@ -345,6 +374,8 @@
             // kryptonRibbonGroupButton6
             // 
             this.kryptonRibbonGroupButton6.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.DropDown;
+            this.kryptonRibbonGroupButton6.ImageLarge = global::Medical.Properties.Resources.WindowLayoutIconLarge;
+            this.kryptonRibbonGroupButton6.ImageSmall = global::Medical.Properties.Resources.WindowLayoutIconSmall;
             this.kryptonRibbonGroupButton6.KryptonContextMenu = this.windowLayoutMenu;
             this.kryptonRibbonGroupButton6.TextLine1 = "Layout";
             // 
@@ -403,6 +434,8 @@
             // 
             // cloneWindowCommand
             // 
+            this.cloneWindowCommand.ImageLarge = global::Medical.Properties.Resources.CloneWindowLarge;
+            this.cloneWindowCommand.ImageSmall = global::Medical.Properties.Resources.CloneWindowSmall;
             this.cloneWindowCommand.Text = "Clone Window";
             this.cloneWindowCommand.TextLine1 = "Clone";
             this.cloneWindowCommand.TextLine2 = "Window";
@@ -527,6 +560,7 @@
         private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel autoHideDock;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonTab layersTab;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorPicker;
 
     }
 }

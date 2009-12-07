@@ -60,6 +60,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap AddStateLarge {
+            get {
+                object obj = ResourceManager.GetObject("AddStateLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap AddStateSmall {
+            get {
+                object obj = ResourceManager.GetObject("AddStateSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap articulometricsresearch {
             get {
                 object obj = ResourceManager.GetObject("articulometricsresearch", resourceCulture);
@@ -67,9 +81,37 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BackgroundColorIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundColorIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap BackgroundColorIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundColorIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap clenchedmuscle {
             get {
                 object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CloneWindowLarge {
+            get {
+                object obj = ResourceManager.GetObject("CloneWindowLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CloneWindowSmall {
+            get {
+                object obj = ResourceManager.GetObject("CloneWindowSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -130,6 +172,34 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap NewSequenceLarge {
+            get {
+                object obj = ResourceManager.GetObject("NewSequenceLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NewSequenceSmall {
+            get {
+                object obj = ResourceManager.GetObject("NewSequenceSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NewStatesLarge {
+            get {
+                object obj = ResourceManager.GetObject("NewStatesLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap NewStatesSmall {
+            get {
+                object obj = ResourceManager.GetObject("NewStatesSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap normalLeftSide {
             get {
                 object obj = ResourceManager.GetObject("normalLeftSide", resourceCulture);
@@ -151,9 +221,79 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap OpenSequenceLarge {
+            get {
+                object obj = ResourceManager.GetObject("OpenSequenceLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OpenSequenceSmall {
+            get {
+                object obj = ResourceManager.GetObject("OpenSequenceSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OpenStatesLarge {
+            get {
+                object obj = ResourceManager.GetObject("OpenStatesLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OpenStatesSmall {
+            get {
+                object obj = ResourceManager.GetObject("OpenStatesSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OptionsIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("OptionsIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap OptionsIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("OptionsIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap rightcondyleresize {
             get {
                 object obj = ResourceManager.GetObject("rightcondyleresize", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveSequenceLarge {
+            get {
+                object obj = ResourceManager.GetObject("SaveSequenceLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveSequenceSmall {
+            get {
+                object obj = ResourceManager.GetObject("SaveSequenceSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveStatesLarge {
+            get {
+                object obj = ResourceManager.GetObject("SaveStatesLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap SaveStatesSmall {
+            get {
+                object obj = ResourceManager.GetObject("SaveStatesSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -385,6 +525,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap tooth9 {
             get {
                 object obj = ResourceManager.GetObject("tooth9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap WindowLayoutIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("WindowLayoutIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap WindowLayoutIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("WindowLayoutIconSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

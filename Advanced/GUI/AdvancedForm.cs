@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Medical.Controller;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Docking;
+using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
@@ -48,6 +49,8 @@ namespace Medical.GUI
             dockingManager.ManageControl(autoHideDock);
             drawingWindowDockingManager.ManageWorkspace("Workspace", drawingWindowWorkspace);
             drawingWindowDockingManager.ManageFloating("Floating2", this);
+
+            backgroundColorPicker.SelectedColorChanged += new EventHandler<ComponentFactory.Krypton.Toolkit.ColorEventArgs>(backgroundColorPicker_SelectedColorChanged);
         }
 
         public void initialize(MedicalFormController controller)
@@ -216,6 +219,15 @@ namespace Medical.GUI
         void optionsCommand_Execute(object sender, EventArgs e)
         {
             controller.showOptions();
+        }
+
+        private void backgroundColorPicker_SelectedColorChanged(object sender, ColorEventArgs e)
+        {
+            //DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            //if (window != null)
+            //{
+            //    window.DrawingWindow.BackColor = backgroundColorButton.SelectedColor;
+            //}
         }
     }
 }
