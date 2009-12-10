@@ -116,44 +116,9 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap articulometrics {
-            get {
-                object obj = ResourceManager.GetObject("articulometrics", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap BottomTeethRemove {
             get {
                 object obj = ResourceManager.GetObject("BottomTeethRemove", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Button_First {
-            get {
-                object obj = ResourceManager.GetObject("Button_First", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Button_Last {
-            get {
-                object obj = ResourceManager.GetObject("Button_Last", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Button_Pause {
-            get {
-                object obj = ResourceManager.GetObject("Button_Pause", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Button_Play {
-            get {
-                object obj = ResourceManager.GetObject("Button_Play", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -410,13 +375,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap leftflateminance {
-            get {
-                object obj = ResourceManager.GetObject("leftflateminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap LeftFossaFlat {
             get {
                 object obj = ResourceManager.GetObject("LeftFossaFlat", resourceCulture);
@@ -434,27 +392,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap LeftFossaNormal {
             get {
                 object obj = ResourceManager.GetObject("LeftFossaNormal", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap leftnormaleminance {
-            get {
-                object obj = ResourceManager.GetObject("leftnormaleminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap leftsemiflateminance {
-            get {
-                object obj = ResourceManager.GetObject("leftsemiflateminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap mandiblediscspace {
-            get {
-                object obj = ResourceManager.GetObject("mandiblediscspace", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -515,13 +452,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap rightflateminance {
-            get {
-                object obj = ResourceManager.GetObject("rightflateminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap RightFossaFlat {
             get {
                 object obj = ResourceManager.GetObject("RightFossaFlat", resourceCulture);
@@ -543,20 +473,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap rightnormaleminance {
-            get {
-                object obj = ResourceManager.GetObject("rightnormaleminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap rightsemiflateminance {
-            get {
-                object obj = ResourceManager.GetObject("rightsemiflateminance", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap SaveSmall {
             get {
                 object obj = ResourceManager.GetObject("SaveSmall", resourceCulture);
@@ -564,23 +480,9 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap StateButtons {
-            get {
-                object obj = ResourceManager.GetObject("StateButtons", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap TeethWizardIcon {
             get {
                 object obj = ResourceManager.GetObject("TeethWizardIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap toolstrip {
-            get {
-                object obj = ResourceManager.GetObject("toolstrip", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

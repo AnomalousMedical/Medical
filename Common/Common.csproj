@@ -414,9 +414,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\articulometrics.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\tooth1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -513,27 +510,6 @@
     <None Include="Resources\tooth32.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\leftflateminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\leftnormaleminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\leftsemiflateminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rightflateminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rightnormaleminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\rightsemiflateminance.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\mandiblediscspace.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="GUI\About\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -597,18 +573,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Button-First.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Button-Last.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Button-Pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Button-Play.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\BottomTeethRemove.png" />
   </ItemGroup>
   <ItemGroup>
@@ -616,12 +580,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AdaptationIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\toolstrip.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\StateButtons.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\NotesIcon.png" />
