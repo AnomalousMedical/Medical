@@ -158,6 +158,11 @@ namespace Medical
             }
         }
 
+        public void setDrawingSurfaceVisible(bool visible)
+        {
+            drawingSurface.setVisible(visible);
+        }
+
         public bool ShowMoveTools
         {
             get

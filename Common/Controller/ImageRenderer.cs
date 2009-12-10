@@ -23,6 +23,18 @@ namespace Medical
 
     public class ImageRenderer
     {
+        /// <summary>
+        /// Called before the image is rendered or any modifications for
+        /// rendering of the scene have been made.
+        /// </summary>
+        public event EventHandler ImageRenderStarted;
+
+        /// <summary>
+        /// Called after the image has completed rendering and the scene has
+        /// been put back to how it was before the render started.
+        /// </summary>
+        public event EventHandler ImageRenderCompleted;
+
         private MedicalController controller;
         private DrawingWindowController drawingWindowController;
         private Watermark watermark;
@@ -44,6 +56,11 @@ namespace Medical
             DrawingWindowHost drawingWindow = drawingWindowController.getActiveWindow();
             if (drawingWindow != null)
             {
+                if (ImageRenderStarted != null)
+                {
+                    ImageRenderStarted.Invoke(this, EventArgs.Empty);
+                }
+
                 //Background color
                 Engine.Color backgroundColor = properties.CustomBackgroundColor;
                 if (properties.UseWindowBackgroundColor)
@@ -115,6 +132,11 @@ namespace Medical
                 if (properties.TransparentBackground)
                 {
                     bitmap.MakeTransparent(System.Drawing.Color.FromArgb(backgroundColor.toARGB()));
+                }
+
+                if (ImageRenderCompleted != null)
+                {
+                    ImageRenderCompleted.Invoke(this, EventArgs.Empty);
                 }
             }
 

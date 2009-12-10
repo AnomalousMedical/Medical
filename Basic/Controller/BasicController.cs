@@ -142,6 +142,9 @@ namespace Medical.Controller
                 imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
                 imageRenderer.Watermark = watermark;
                 imageRenderer.Background = background;
+                imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
+                imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
+
                 stateController = new MedicalStateController(imageRenderer, medicalController);
 
                 scenePicker = new ScenePicker();

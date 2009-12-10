@@ -142,6 +142,32 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Call this function before a screenshot is rendered to hide the
+        /// movement tools if you wish them hidden in the screenshot. This
+        /// function is setup to consume as an EventHandler, but it does not
+        /// actually use the arguments.
+        /// </summary>
+        /// <param name="sender">Ignored.</param>
+        /// <param name="e">Ignored.</param>
+        public static void ScreenshotRenderStarted(Object sender, EventArgs e)
+        {
+            teethMover.setDrawingSurfaceVisible(false);
+        }
+
+        /// <summary>
+        /// Call this function after a screenshot is rendered to show the
+        /// movement tools if you hid them with ScreenshotRenderStarted. This
+        /// function is setup to consume as an EventHandler, but it does not
+        /// actually use the arguments.
+        /// </summary>
+        /// <param name="sender">Ignored.</param>
+        /// <param name="e">Ignored.</param>
+        public static void ScreenshotRenderCompleted(Object sender, EventArgs e)
+        {
+            teethMover.setDrawingSurfaceVisible(true);
+        }
+
         public static bool HighlightContacts { get; set; }
 
         public static SimObjectMover TeethMover
