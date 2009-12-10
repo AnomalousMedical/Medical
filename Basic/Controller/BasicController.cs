@@ -364,6 +364,10 @@ namespace Medical.Controller
         private bool changeScene(String file)
         {
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
+            if (movementSequenceController.Playing)
+            {
+                movementSequenceController.stopPlayback();
+            }
             distortionController.setToDefault();
             if (SceneUnloading != null)
             {
