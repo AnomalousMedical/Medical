@@ -163,17 +163,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\clenchedmuscle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\neutralmuscle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\openmuscle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\articulometricsclinic.jpg" />
-    <None Include="Resources\PlaybackButtons.png" />
     <None Include="Resources\ArticulometricsSplash.png" />
     <None Include="Resources\AppButton.png" />
     <None Include="Resources\LayersBottomTeethLarge.png" />

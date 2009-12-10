@@ -88,13 +88,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap articulometricsclinic {
-            get {
-                object obj = ResourceManager.GetObject("articulometricsclinic", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap ArticulometricsSplash {
             get {
                 object obj = ResourceManager.GetObject("ArticulometricsSplash", resourceCulture);
@@ -112,13 +105,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap BackgroundColorIconSmall {
             get {
                 object obj = ResourceManager.GetObject("BackgroundColorIconSmall", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap clenchedmuscle {
-            get {
-                object obj = ResourceManager.GetObject("clenchedmuscle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -417,13 +403,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap neutralmuscle {
-            get {
-                object obj = ResourceManager.GetObject("neutralmuscle", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap OneWindowLayout {
             get {
                 object obj = ResourceManager.GetObject("OneWindowLayout", resourceCulture);
@@ -452,13 +431,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap openmuscle {
-            get {
-                object obj = ResourceManager.GetObject("openmuscle", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap OptionsIconLarge {
             get {
                 object obj = ResourceManager.GetObject("OptionsIconLarge", resourceCulture);
@@ -469,13 +441,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap OptionsIconSmall {
             get {
                 object obj = ResourceManager.GetObject("OptionsIconSmall", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap PlaybackButtons {
-            get {
-                object obj = ResourceManager.GetObject("PlaybackButtons", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

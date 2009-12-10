@@ -235,9 +235,6 @@
   <data name="NavIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NavIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="neutralmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\neutralmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ArticulometricsSplash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ArticulometricsSplash.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -252,9 +249,6 @@
   </data>
   <data name="ExitIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExitIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="clenchedmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clenchedmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SaveSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -295,14 +289,8 @@
   <data name="OptionsIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OptionsIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="articulometricsclinic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\articulometricsclinic.jpg;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SequenceIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SequenceIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="openmuscle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openmuscle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="OptionsIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OptionsIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -312,9 +300,6 @@
   </data>
   <data name="ManipLeftHorizontalForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ManipLeftHorizontalForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PlaybackButtons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PlaybackButtons.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LayersTMJLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LayersTMJLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
