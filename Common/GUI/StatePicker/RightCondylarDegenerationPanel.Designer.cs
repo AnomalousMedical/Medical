@@ -39,6 +39,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.wearSlider = new Medical.GUI.BoneManipulatorSlider();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // rightCondyleDegenerationSlider
@@ -73,7 +76,7 @@
             // 
             // makeNormalButton
             // 
-            this.makeNormalButton.Location = new System.Drawing.Point(100, 200);
+            this.makeNormalButton.Location = new System.Drawing.Point(100, 266);
             this.makeNormalButton.Name = "makeNormalButton";
             this.makeNormalButton.Size = new System.Drawing.Size(90, 25);
             this.makeNormalButton.TabIndex = 44;
@@ -82,7 +85,7 @@
             // 
             // undoButton
             // 
-            this.undoButton.Location = new System.Drawing.Point(3, 200);
+            this.undoButton.Location = new System.Drawing.Point(3, 266);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 43;
@@ -143,10 +146,41 @@
             this.panel1.Size = new System.Drawing.Size(60, 60);
             this.panel1.TabIndex = 37;
             // 
+            // wearSlider
+            // 
+            this.wearSlider.LabelText = "Wear";
+            this.wearSlider.Location = new System.Drawing.Point(64, 208);
+            this.wearSlider.Name = "wearSlider";
+            this.wearSlider.Size = new System.Drawing.Size(197, 44);
+            this.wearSlider.TabIndex = 50;
+            this.wearSlider.Tag = "rightCondyleRoughnessMandible";
+            this.wearSlider.Value = 0F;
+            // 
+            // panel7
+            // 
+            this.panel7.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPoleDistorted;
+            this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel7.Location = new System.Drawing.Point(262, 200);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(60, 60);
+            this.panel7.TabIndex = 49;
+            // 
+            // panel8
+            // 
+            this.panel8.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPole;
+            this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel8.Location = new System.Drawing.Point(3, 200);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(60, 60);
+            this.panel8.TabIndex = 48;
+            // 
             // RightCondylarDegenerationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.wearSlider);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.panel8);
             this.Controls.Add(this.rightCondyleDegenerationSlider);
             this.Controls.Add(this.rightLateralPoleSlider);
             this.Controls.Add(this.rightMedialPoleScaleSlider);
@@ -162,7 +196,7 @@
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarDegenerationPanel";
             this.NavigationState = "DegenerationRightCameraAngle";
-            this.Size = new System.Drawing.Size(325, 229);
+            this.Size = new System.Drawing.Size(325, 296);
             this.TextLine1 = "Right Condyle";
             this.TextLine2 = "Degeneration";
             this.ResumeLayout(false);
@@ -182,5 +216,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel1;
+        private BoneManipulatorSlider wearSlider;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel8;
     }
 }

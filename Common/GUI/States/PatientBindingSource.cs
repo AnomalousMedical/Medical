@@ -72,7 +72,7 @@ namespace Medical.GUI
             for (int i = 0; i < Items.Count; ++i)
             {
                 PatientDataFile data = (PatientDataFile)Items[i];
-                if (data.LastName.StartsWith(key.ToString(), true, CultureInfo.CurrentCulture))
+                if (data != null && data.LastName.StartsWith(key.ToString(), true, CultureInfo.CurrentCulture))
                 {
                     return i;
                 }
