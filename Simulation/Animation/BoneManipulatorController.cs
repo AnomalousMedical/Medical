@@ -8,9 +8,9 @@ namespace Medical
 {
     public class BoneManipulatorController
     {
-        private static Dictionary<String, BoneManipulator> boneManipulators = new Dictionary<String, BoneManipulator>();
+        private static Dictionary<String, AnimationManipulator> boneManipulators = new Dictionary<String, AnimationManipulator>();
 
-        public static void addBoneManipulator(BoneManipulator boneManipulator)
+        public static void addBoneManipulator(AnimationManipulator boneManipulator)
         {
             String name = boneManipulator.UIName;
             if (name != null && !boneManipulators.ContainsKey(name))
@@ -23,7 +23,7 @@ namespace Medical
             }
         }
 
-        public static void removeBoneManipulator(BoneManipulator boneManipulator)
+        public static void removeBoneManipulator(AnimationManipulator boneManipulator)
         {
             String name = boneManipulator.UIName;
             if (name != null && boneManipulators.ContainsKey(name))
@@ -43,9 +43,9 @@ namespace Medical
             }
         }
 
-        public static BoneManipulator getManipulator(String name)
+        public static AnimationManipulator getManipulator(String name)
         {
-            BoneManipulator ret;
+            AnimationManipulator ret;
             boneManipulators.TryGetValue(name, out ret);
             return ret;
         }

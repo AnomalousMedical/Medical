@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\BoneFollower.cs" />
     <Compile Include="Animation\BoneManipulator.cs" />
     <Compile Include="Animation\BoneManipulatorController.cs" />

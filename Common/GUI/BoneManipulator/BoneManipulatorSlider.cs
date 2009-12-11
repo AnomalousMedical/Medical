@@ -11,7 +11,7 @@ namespace Medical.GUI
 {
     public partial class BoneManipulatorSlider : UserControl
     {
-        private BoneManipulator manipulator;
+        private AnimationManipulator manipulator;
         private bool allowSynchronization = true;
 
         public BoneManipulatorSlider()
@@ -20,7 +20,7 @@ namespace Medical.GUI
             valueTrackBar.ValueChanged += new EventHandler(valueTrackBar_ValueChanged);
         }
 
-        public void initialize(BoneManipulator manipulator)
+        public void initialize(AnimationManipulator manipulator)
         {
             this.manipulator = manipulator;
             synchronizeValue(manipulator, manipulator.Position);
