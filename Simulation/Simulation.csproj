@@ -75,12 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimationManipulator.cs" />
+    <Compile Include="Animation\AnimationManipulatorState.cs" />
+    <Compile Include="Animation\AnimationManipulatorStateEntry.cs" />
     <Compile Include="Animation\BoneFollower.cs" />
     <Compile Include="Animation\BoneManipulator.cs" />
-    <Compile Include="Animation\BoneManipulatorController.cs" />
-    <Compile Include="Animation\BoneManipulatorPresetState.cs" />
-    <Compile Include="Animation\BoneManipulatorState.cs" />
-    <Compile Include="Animation\BoneManipulatorStateEntry.cs" />
+    <Compile Include="Animation\AnimationManipulatorController.cs" />
+    <Compile Include="Animation\AnimationManipulatorPresetState.cs" />
     <Compile Include="Animation\BoneRotator.cs" />
     <Compile Include="Animation\BoneRotatorStateEntry.cs" />
     <Compile Include="Animation\BoneScalar.cs" />
@@ -89,6 +89,7 @@
     <Compile Include="Animation\FixedJointBoneFollower.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />
     <Compile Include="Animation\PoseManipulator.cs" />
+    <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
     <Compile Include="Animation\Tracer.cs" />
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />
     <Compile Include="ControlPoint\ControlPointController.cs" />

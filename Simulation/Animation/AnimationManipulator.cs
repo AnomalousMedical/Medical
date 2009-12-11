@@ -4,7 +4,7 @@ namespace Medical
 {
     public interface AnimationManipulator
     {
-        BoneManipulatorStateEntry createStateEntry();
+        AnimationManipulatorStateEntry createStateEntry();
         
         float DefaultPosition { get; }
         

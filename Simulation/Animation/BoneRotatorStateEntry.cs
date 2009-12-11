@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class BoneRotatorStateEntry : BoneManipulatorStateEntry, Saveable
+    public class BoneRotatorStateEntry : AnimationManipulatorStateEntry, Saveable
     {
         private String name;
         private Quaternion rotation;
@@ -18,13 +18,13 @@ namespace Medical
             this.rotation = rotation;
         }
 
-        public void blend(BoneManipulatorStateEntry target, float percent)
+        public void blend(AnimationManipulatorStateEntry target, float percent)
         {
             BoneRotatorStateEntry rotateTarget = target as BoneRotatorStateEntry;
-            ((BoneRotator)BoneManipulatorController.getManipulator(name)).Rotation = rotation.slerp(ref rotateTarget.rotation, percent);
+            ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = rotation.slerp(ref rotateTarget.rotation, percent);
         }
 
-        public BoneManipulatorStateEntry clone()
+        public AnimationManipulatorStateEntry clone()
         {
             return new BoneRotatorStateEntry(name, rotation);
         }

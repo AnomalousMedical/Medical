@@ -11,7 +11,7 @@ namespace Medical
 {
     public class MedicalState : Saveable, IDisposable
     {
-        private BoneManipulatorState boneState;
+        private AnimationManipulatorState boneState;
         private DiscState discState;
         private TeethState teethState;
         private FossaState fossaState;
@@ -21,7 +21,7 @@ namespace Medical
         public MedicalState(String name)
         {
             Name = name;
-            boneState = new BoneManipulatorState();
+            boneState = new AnimationManipulatorState();
             discState = new DiscState();
             teethState = new TeethState();
             fossaState = new FossaState();
@@ -46,7 +46,7 @@ namespace Medical
 
         public void update()
         {
-            boneState = BoneManipulatorController.createBoneManipulatorState();
+            boneState = AnimationManipulatorController.createAnimationManipulatorState();
             discState = DiscController.createDiscState();
             teethState = TeethController.createTeethState();
             fossaState = FossaController.createState();
@@ -54,7 +54,7 @@ namespace Medical
 
         public String Name { get; set; }
 
-        public BoneManipulatorState BoneManipulator
+        public AnimationManipulatorState BoneManipulator
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Medical
 
         protected MedicalState(LoadInfo info)
         {
-            boneState = info.GetValue<BoneManipulatorState>(BONE_MANIPULATOR_STATE);
+            boneState = info.GetValue<AnimationManipulatorState>(BONE_MANIPULATOR_STATE);
             discState = info.GetValue<DiscState>(DISC_STATE);
             teethState = info.GetValue<TeethState>(TEETH_STATE);
             fossaState = info.GetValue<FossaState>(FOSSA_STATE);

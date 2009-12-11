@@ -65,9 +65,9 @@ namespace Medical.GUI
             }
         }
 
-        private BoneManipulatorPresetState getGrowth(String baseName, MedicalState sourceState)
+        private AnimationManipulatorPresetState getGrowth(String baseName, MedicalState sourceState)
         {
-            BoneManipulatorPresetState presetBones = new BoneManipulatorPresetState(baseName + "Growth", "", "");
+            AnimationManipulatorPresetState presetBones = new AnimationManipulatorPresetState(baseName + "Growth", "", "");
             String ramusHeight = baseName + "RamusHeightMandible";
             String condyleHeight = baseName + "CondyleHeightMandible";
             String condyleRotation = baseName + "CondyleRotationMandible";
@@ -83,9 +83,9 @@ namespace Medical.GUI
             return presetBones;
         }
 
-        private BoneManipulatorPresetState getDegeneration(String baseName, MedicalState sourceState)
+        private AnimationManipulatorPresetState getDegeneration(String baseName, MedicalState sourceState)
         {
-            BoneManipulatorPresetState presetBones = new BoneManipulatorPresetState(baseName + "Degeneration", "", "");
+            AnimationManipulatorPresetState presetBones = new AnimationManipulatorPresetState(baseName + "Degeneration", "", "");
             String condyleDegenerationMandible = baseName + "CondyleDegenerationMandible";
             String lateralPoleMandible = baseName + "LateralPoleMandible";
             String medialPoleScale = baseName + "MedialPoleScaleMandible";

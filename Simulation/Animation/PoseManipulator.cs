@@ -105,7 +105,7 @@ namespace Medical
             manualAnimationState.setLength(0.0f);
             manualAnimationState.setTimePosition(0.0f);
             manualAnimationState.setEnabled(true);
-            BoneManipulatorController.addBoneManipulator(this);
+            AnimationManipulatorController.addAnimationManipulator(this);
         }
 
         protected override void destroy()
@@ -114,12 +114,12 @@ namespace Medical
             {
                 mesh.Dispose();
             }
-            BoneManipulatorController.removeBoneManipulator(this);
+            AnimationManipulatorController.removeAnimationManipulator(this);
         }
 
-        public BoneManipulatorStateEntry createStateEntry()
+        public AnimationManipulatorStateEntry createStateEntry()
         {
-            return null;
+            return new PoseManipulatorStateEntry(uiName, position);
         }
 
         [DoNotCopy]

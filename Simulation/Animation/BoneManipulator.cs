@@ -54,7 +54,7 @@ namespace Medical
                             {
                                 bone = skeleton.getBone(targetBone);
                                 bone.setManuallyControlled(true);
-                                BoneManipulatorController.addBoneManipulator(this);
+                                AnimationManipulatorController.addAnimationManipulator(this);
                             }
                             else
                             {
@@ -86,13 +86,13 @@ namespace Medical
         {
             if (bone != null)
             {
-                BoneManipulatorController.removeBoneManipulator(this);
+                AnimationManipulatorController.removeAnimationManipulator(this);
             }
         }
 
         protected abstract void positionUpdated(float position);
 
-        public abstract BoneManipulatorStateEntry createStateEntry();
+        public abstract AnimationManipulatorStateEntry createStateEntry();
 
         public float Position
         {

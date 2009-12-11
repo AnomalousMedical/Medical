@@ -36,7 +36,7 @@ namespace Medical.GUI
             {
                 if (slider.Tag != null)
                 {
-                    AnimationManipulator manipulator = BoneManipulatorController.getManipulator(slider.Tag.ToString());
+                    AnimationManipulator manipulator = AnimationManipulatorController.getManipulator(slider.Tag.ToString());
                     if (manipulator != null)
                     {
                         slider.initialize(manipulator);

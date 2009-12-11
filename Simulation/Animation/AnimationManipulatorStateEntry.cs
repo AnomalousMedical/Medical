@@ -6,11 +6,11 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public interface BoneManipulatorStateEntry : Saveable
+    public interface AnimationManipulatorStateEntry : Saveable
     {
-        void blend(BoneManipulatorStateEntry target, float percent);
+        void blend(AnimationManipulatorStateEntry target, float percent);
 
-        BoneManipulatorStateEntry clone();
+        AnimationManipulatorStateEntry clone();
 
         String Name { get; }
 

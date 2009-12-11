@@ -6,16 +6,16 @@ using Logging;
 
 namespace Medical
 {
-    public class BoneManipulatorController
+    public class AnimationManipulatorController
     {
-        private static Dictionary<String, AnimationManipulator> boneManipulators = new Dictionary<String, AnimationManipulator>();
+        private static Dictionary<String, AnimationManipulator> manipulators = new Dictionary<String, AnimationManipulator>();
 
-        public static void addBoneManipulator(AnimationManipulator boneManipulator)
+        public static void addAnimationManipulator(AnimationManipulator boneManipulator)
         {
             String name = boneManipulator.UIName;
-            if (name != null && !boneManipulators.ContainsKey(name))
+            if (name != null && !manipulators.ContainsKey(name))
             {
-                boneManipulators.Add(name, boneManipulator);
+                manipulators.Add(name, boneManipulator);
             }
             else
             {
@@ -23,14 +23,14 @@ namespace Medical
             }
         }
 
-        public static void removeBoneManipulator(AnimationManipulator boneManipulator)
+        public static void removeAnimationManipulator(AnimationManipulator boneManipulator)
         {
             String name = boneManipulator.UIName;
-            if (name != null && boneManipulators.ContainsKey(name))
+            if (name != null && manipulators.ContainsKey(name))
             {
-                if (boneManipulators[name] == boneManipulator)
+                if (manipulators[name] == boneManipulator)
                 {
-                    boneManipulators.Remove(name);
+                    manipulators.Remove(name);
                 }
                 else
                 {
@@ -46,14 +46,14 @@ namespace Medical
         public static AnimationManipulator getManipulator(String name)
         {
             AnimationManipulator ret;
-            boneManipulators.TryGetValue(name, out ret);
+            manipulators.TryGetValue(name, out ret);
             return ret;
         }
 
-        public static BoneManipulatorState createBoneManipulatorState()
+        public static AnimationManipulatorState createAnimationManipulatorState()
         {
-            BoneManipulatorState state = new BoneManipulatorState();
-            foreach (BoneManipulator manipulator in boneManipulators.Values)
+            AnimationManipulatorState state = new AnimationManipulatorState();
+            foreach (AnimationManipulator manipulator in manipulators.Values)
             {
                 state.addPosition(manipulator.createStateEntry());
             }

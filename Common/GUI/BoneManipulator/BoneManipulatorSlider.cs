@@ -26,7 +26,7 @@ namespace Medical.GUI
             synchronizeValue(manipulator, manipulator.Position);
         }
 
-        public BoneManipulatorStateEntry createStateEntry()
+        public AnimationManipulatorStateEntry createStateEntry()
         {
             return manipulator.createStateEntry();
         }

@@ -32,7 +32,7 @@ namespace Medical
             }
         }
 
-        public override BoneManipulatorStateEntry createStateEntry()
+        public override AnimationManipulatorStateEntry createStateEntry()
         {
             return new BoneScalarStateEntry(UIName, Scale);
         }

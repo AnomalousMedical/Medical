@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class BoneScalarStateEntry : BoneManipulatorStateEntry, Saveable
+    public class BoneScalarStateEntry : AnimationManipulatorStateEntry, Saveable
     {
         private String name;
         private Vector3 scale;
@@ -18,13 +18,13 @@ namespace Medical
             this.scale = scale;
         }
 
-        public void blend(BoneManipulatorStateEntry target, float percent)
+        public void blend(AnimationManipulatorStateEntry target, float percent)
         {
             BoneScalarStateEntry rotateTarget = target as BoneScalarStateEntry;
-            ((BoneScalar)BoneManipulatorController.getManipulator(name)).Scale = scale.lerp(ref rotateTarget.scale, ref percent);
+            ((BoneScalar)AnimationManipulatorController.getManipulator(name)).Scale = scale.lerp(ref rotateTarget.scale, ref percent);
         }
 
-        public BoneManipulatorStateEntry clone()
+        public AnimationManipulatorStateEntry clone()
         {
             return new BoneScalarStateEntry(name, scale);
         }

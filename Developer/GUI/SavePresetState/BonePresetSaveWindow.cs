@@ -76,7 +76,7 @@ namespace Medical.GUI
             if (allowSave)
             {
                 MedicalState sourceState = stateController.createState(nameText.Text);
-                BoneManipulatorPresetState presetBones = new BoneManipulatorPresetState(nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
+                AnimationManipulatorPresetState presetBones = new AnimationManipulatorPresetState(nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
                 String baseName = "left";
                 if (rightSideSource.Checked)
                 {
@@ -134,7 +134,7 @@ namespace Medical.GUI
             if (allowSave)
             {
                 MedicalState sourceState = stateController.createState(nameText.Text);
-                BoneManipulatorPresetState presetBones = new BoneManipulatorPresetState(nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
+                AnimationManipulatorPresetState presetBones = new AnimationManipulatorPresetState(nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
                 String baseName = "left";
                 if (rightSideSource.Checked)
                 {
@@ -205,7 +205,7 @@ namespace Medical.GUI
             {
                 using (XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
                 {
-                    BoneManipulatorPresetState preset = saver.restoreObject(reader) as BoneManipulatorPresetState;
+                    AnimationManipulatorPresetState preset = saver.restoreObject(reader) as AnimationManipulatorPresetState;
                     if (preset != null)
                     {
                         preset.changeSide(oldName, newName);
