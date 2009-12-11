@@ -36,6 +36,7 @@
             this.leftCondyleDegenerationSlider = new Medical.GUI.BoneManipulatorSlider();
             this.leftLateralPoleSlider = new Medical.GUI.BoneManipulatorSlider();
             this.leftMedialPoleScaleSlider = new Medical.GUI.BoneManipulatorSlider();
+            this.leftCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.leftMandibularNotchSlider = new Medical.GUI.BoneManipulatorSlider();
             this.leftAntegonialNotchSlider = new Medical.GUI.BoneManipulatorSlider();
             this.rightRamusHeightSlider = new Medical.GUI.BoneManipulatorSlider();
@@ -44,11 +45,10 @@
             this.rightCondyleDegenerationSlider = new Medical.GUI.BoneManipulatorSlider();
             this.rightLateralPoleDegeneration = new Medical.GUI.BoneManipulatorSlider();
             this.rightMedialPoleScaleDegeneration = new Medical.GUI.BoneManipulatorSlider();
+            this.rightCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.rightMandibularNotchSlider = new Medical.GUI.BoneManipulatorSlider();
             this.rightAntegonialNotchSlider = new Medical.GUI.BoneManipulatorSlider();
-            this.rightCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.resetButton = new System.Windows.Forms.Button();
-            this.leftCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.sliderPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +76,7 @@
             this.sliderPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.sliderPanel.Location = new System.Drawing.Point(2, 32);
             this.sliderPanel.Name = "sliderPanel";
-            this.sliderPanel.Size = new System.Drawing.Size(211, 900);
+            this.sliderPanel.Size = new System.Drawing.Size(203, 900);
             this.sliderPanel.TabIndex = 1;
             // 
             // leftRamusHeightSlider
@@ -138,6 +138,16 @@
             this.leftMedialPoleScaleSlider.TabIndex = 13;
             this.leftMedialPoleScaleSlider.Tag = "leftMedialPoleScaleMandible";
             this.leftMedialPoleScaleSlider.Value = 0F;
+            // 
+            // leftCondyleRoughnessSlider
+            // 
+            this.leftCondyleRoughnessSlider.LabelText = "Left Condyle Roughness";
+            this.leftCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 303);
+            this.leftCondyleRoughnessSlider.Name = "leftCondyleRoughnessSlider";
+            this.leftCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
+            this.leftCondyleRoughnessSlider.TabIndex = 17;
+            this.leftCondyleRoughnessSlider.Tag = "leftCondyleRoughnessMandible";
+            this.leftCondyleRoughnessSlider.Value = 0F;
             // 
             // leftMandibularNotchSlider
             // 
@@ -219,6 +229,16 @@
             this.rightMedialPoleScaleDegeneration.Tag = "rightMedialPoleScaleMandible";
             this.rightMedialPoleScaleDegeneration.Value = 0F;
             // 
+            // rightCondyleRoughnessSlider
+            // 
+            this.rightCondyleRoughnessSlider.LabelText = "Right Condyle Roughness";
+            this.rightCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 753);
+            this.rightCondyleRoughnessSlider.Name = "rightCondyleRoughnessSlider";
+            this.rightCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
+            this.rightCondyleRoughnessSlider.TabIndex = 16;
+            this.rightCondyleRoughnessSlider.Tag = "rightCondyleRoughnessMandible";
+            this.rightCondyleRoughnessSlider.Value = 0F;
+            // 
             // rightMandibularNotchSlider
             // 
             this.rightMandibularNotchSlider.LabelText = "Right Mandibular Notch";
@@ -239,16 +259,6 @@
             this.rightAntegonialNotchSlider.Tag = "rightAntegonialNotchMandible";
             this.rightAntegonialNotchSlider.Value = 0F;
             // 
-            // rightCondyleRoughnessSlider
-            // 
-            this.rightCondyleRoughnessSlider.LabelText = "Right Condyle Roughness";
-            this.rightCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 753);
-            this.rightCondyleRoughnessSlider.Name = "rightCondyleRoughnessSlider";
-            this.rightCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
-            this.rightCondyleRoughnessSlider.TabIndex = 16;
-            this.rightCondyleRoughnessSlider.Tag = "rightCondyleRoughnessMandible";
-            this.rightCondyleRoughnessSlider.Value = 0F;
-            // 
             // resetButton
             // 
             this.resetButton.Location = new System.Drawing.Point(5, 3);
@@ -258,16 +268,6 @@
             this.resetButton.Text = "Reset";
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
-            // 
-            // leftCondyleRoughnessSlider
-            // 
-            this.leftCondyleRoughnessSlider.LabelText = "Left Condyle Roughness";
-            this.leftCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 303);
-            this.leftCondyleRoughnessSlider.Name = "leftCondyleRoughnessSlider";
-            this.leftCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
-            this.leftCondyleRoughnessSlider.TabIndex = 17;
-            this.leftCondyleRoughnessSlider.Tag = "leftCondyleRoughnessMandible";
-            this.leftCondyleRoughnessSlider.Value = 0F;
             // 
             // MandibleSizeControl
             // 

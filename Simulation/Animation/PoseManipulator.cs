@@ -23,7 +23,7 @@ namespace Medical
         String targetEntity;
 
         [Editable]
-        String manualAnimationName = "ManualPoseAnim";
+        String manualAnimationName = "ManualPoseAnimation";
 
         [Editable]
         private float defaultPosition = 0;
@@ -73,17 +73,15 @@ namespace Medical
             mesh = entity.getMesh();
             OgreWrapper.Animation anim;
             VertexAnimationTrack track;
-            if (!mesh.Value.hasAnimation(manualAnimationName))
-            {
-                anim = mesh.Value.createAnimation(manualAnimationName, 0.0f);
-                track = anim.createVertexTrack(0, VertexAnimationType.VAT_POSE);
-                manualKeyFrame = track.createVertexPoseKeyFrame(0);
-            }
-            else
+            if (mesh.Value.hasAnimation(manualAnimationName))
             {
                 anim = mesh.Value.getAnimation(manualAnimationName);
                 track = anim.getVertexTrack(1);
                 manualKeyFrame = track.getKeyFrame(0) as VertexPoseKeyFrame;
+            }
+            else
+            {
+                blacklist("Could not find animation {0}.", manualAnimationName);
             }
             //Must look this up this way to get the correct pose index.
             uint poseCount = mesh.Value.getPoseCount();
