@@ -88,6 +88,7 @@
     <Compile Include="Animation\InteractiveCurve.cs" />
     <Compile Include="Animation\FixedJointBoneFollower.cs" />
     <Compile Include="Animation\PhysicalAnimator.cs" />
+    <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\Tracer.cs" />
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />
     <Compile Include="ControlPoint\ControlPointController.cs" />

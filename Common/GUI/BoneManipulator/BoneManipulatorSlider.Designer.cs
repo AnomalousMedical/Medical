@@ -49,9 +49,12 @@
             // 
             // sliderNameLabel
             // 
+            this.sliderNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.sliderNameLabel.AutoSize = false;
             this.sliderNameLabel.Location = new System.Drawing.Point(4, -1);
             this.sliderNameLabel.Name = "sliderNameLabel";
-            this.sliderNameLabel.Size = new System.Drawing.Size(70, 19);
+            this.sliderNameLabel.Size = new System.Drawing.Size(190, 19);
             this.sliderNameLabel.TabIndex = 1;
             this.sliderNameLabel.Values.Text = "SliderName";
             // 

@@ -46,7 +46,9 @@
             this.rightMedialPoleScaleDegeneration = new Medical.GUI.BoneManipulatorSlider();
             this.rightMandibularNotchSlider = new Medical.GUI.BoneManipulatorSlider();
             this.rightAntegonialNotchSlider = new Medical.GUI.BoneManipulatorSlider();
+            this.rightCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.resetButton = new System.Windows.Forms.Button();
+            this.leftCondyleRoughnessSlider = new Medical.GUI.BoneManipulatorSlider();
             this.sliderPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +61,7 @@
             this.sliderPanel.Controls.Add(this.leftCondyleDegenerationSlider);
             this.sliderPanel.Controls.Add(this.leftLateralPoleSlider);
             this.sliderPanel.Controls.Add(this.leftMedialPoleScaleSlider);
+            this.sliderPanel.Controls.Add(this.leftCondyleRoughnessSlider);
             this.sliderPanel.Controls.Add(this.leftMandibularNotchSlider);
             this.sliderPanel.Controls.Add(this.leftAntegonialNotchSlider);
             this.sliderPanel.Controls.Add(this.rightRamusHeightSlider);
@@ -67,12 +70,13 @@
             this.sliderPanel.Controls.Add(this.rightCondyleDegenerationSlider);
             this.sliderPanel.Controls.Add(this.rightLateralPoleDegeneration);
             this.sliderPanel.Controls.Add(this.rightMedialPoleScaleDegeneration);
+            this.sliderPanel.Controls.Add(this.rightCondyleRoughnessSlider);
             this.sliderPanel.Controls.Add(this.rightMandibularNotchSlider);
             this.sliderPanel.Controls.Add(this.rightAntegonialNotchSlider);
             this.sliderPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.sliderPanel.Location = new System.Drawing.Point(2, 32);
             this.sliderPanel.Name = "sliderPanel";
-            this.sliderPanel.Size = new System.Drawing.Size(211, 800);
+            this.sliderPanel.Size = new System.Drawing.Size(211, 900);
             this.sliderPanel.TabIndex = 1;
             // 
             // leftRamusHeightSlider
@@ -138,7 +142,7 @@
             // leftMandibularNotchSlider
             // 
             this.leftMandibularNotchSlider.LabelText = "Left Mandibular Notch";
-            this.leftMandibularNotchSlider.Location = new System.Drawing.Point(3, 303);
+            this.leftMandibularNotchSlider.Location = new System.Drawing.Point(3, 353);
             this.leftMandibularNotchSlider.Name = "leftMandibularNotchSlider";
             this.leftMandibularNotchSlider.Size = new System.Drawing.Size(197, 44);
             this.leftMandibularNotchSlider.TabIndex = 4;
@@ -148,7 +152,7 @@
             // leftAntegonialNotchSlider
             // 
             this.leftAntegonialNotchSlider.LabelText = "Left Antegonial Notch";
-            this.leftAntegonialNotchSlider.Location = new System.Drawing.Point(3, 353);
+            this.leftAntegonialNotchSlider.Location = new System.Drawing.Point(3, 403);
             this.leftAntegonialNotchSlider.Name = "leftAntegonialNotchSlider";
             this.leftAntegonialNotchSlider.Size = new System.Drawing.Size(197, 44);
             this.leftAntegonialNotchSlider.TabIndex = 0;
@@ -158,7 +162,7 @@
             // rightRamusHeightSlider
             // 
             this.rightRamusHeightSlider.LabelText = "Right Ramus Height";
-            this.rightRamusHeightSlider.Location = new System.Drawing.Point(3, 403);
+            this.rightRamusHeightSlider.Location = new System.Drawing.Point(3, 453);
             this.rightRamusHeightSlider.Name = "rightRamusHeightSlider";
             this.rightRamusHeightSlider.Size = new System.Drawing.Size(197, 44);
             this.rightRamusHeightSlider.TabIndex = 11;
@@ -168,7 +172,7 @@
             // rightCondyleHeightSlider
             // 
             this.rightCondyleHeightSlider.LabelText = "Right Condyle Height";
-            this.rightCondyleHeightSlider.Location = new System.Drawing.Point(3, 453);
+            this.rightCondyleHeightSlider.Location = new System.Drawing.Point(3, 503);
             this.rightCondyleHeightSlider.Name = "rightCondyleHeightSlider";
             this.rightCondyleHeightSlider.Size = new System.Drawing.Size(197, 44);
             this.rightCondyleHeightSlider.TabIndex = 8;
@@ -178,7 +182,7 @@
             // rightCondyleRotationSlider
             // 
             this.rightCondyleRotationSlider.LabelText = "Right Condyle Rotation";
-            this.rightCondyleRotationSlider.Location = new System.Drawing.Point(3, 503);
+            this.rightCondyleRotationSlider.Location = new System.Drawing.Point(3, 553);
             this.rightCondyleRotationSlider.Name = "rightCondyleRotationSlider";
             this.rightCondyleRotationSlider.Size = new System.Drawing.Size(197, 44);
             this.rightCondyleRotationSlider.TabIndex = 9;
@@ -188,7 +192,7 @@
             // rightCondyleDegenerationSlider
             // 
             this.rightCondyleDegenerationSlider.LabelText = "Right Condyle Degenertaion";
-            this.rightCondyleDegenerationSlider.Location = new System.Drawing.Point(3, 553);
+            this.rightCondyleDegenerationSlider.Location = new System.Drawing.Point(3, 603);
             this.rightCondyleDegenerationSlider.Name = "rightCondyleDegenerationSlider";
             this.rightCondyleDegenerationSlider.Size = new System.Drawing.Size(197, 44);
             this.rightCondyleDegenerationSlider.TabIndex = 7;
@@ -198,7 +202,7 @@
             // rightLateralPoleDegeneration
             // 
             this.rightLateralPoleDegeneration.LabelText = "Right Lateral Pole Degeneration";
-            this.rightLateralPoleDegeneration.Location = new System.Drawing.Point(3, 603);
+            this.rightLateralPoleDegeneration.Location = new System.Drawing.Point(3, 653);
             this.rightLateralPoleDegeneration.Name = "rightLateralPoleDegeneration";
             this.rightLateralPoleDegeneration.Size = new System.Drawing.Size(197, 44);
             this.rightLateralPoleDegeneration.TabIndex = 14;
@@ -208,7 +212,7 @@
             // rightMedialPoleScaleDegeneration
             // 
             this.rightMedialPoleScaleDegeneration.LabelText = "Right Medial Pole Degeneration";
-            this.rightMedialPoleScaleDegeneration.Location = new System.Drawing.Point(3, 653);
+            this.rightMedialPoleScaleDegeneration.Location = new System.Drawing.Point(3, 703);
             this.rightMedialPoleScaleDegeneration.Name = "rightMedialPoleScaleDegeneration";
             this.rightMedialPoleScaleDegeneration.Size = new System.Drawing.Size(197, 44);
             this.rightMedialPoleScaleDegeneration.TabIndex = 15;
@@ -218,7 +222,7 @@
             // rightMandibularNotchSlider
             // 
             this.rightMandibularNotchSlider.LabelText = "Right Mandibular Notch";
-            this.rightMandibularNotchSlider.Location = new System.Drawing.Point(3, 703);
+            this.rightMandibularNotchSlider.Location = new System.Drawing.Point(3, 803);
             this.rightMandibularNotchSlider.Name = "rightMandibularNotchSlider";
             this.rightMandibularNotchSlider.Size = new System.Drawing.Size(197, 44);
             this.rightMandibularNotchSlider.TabIndex = 10;
@@ -228,12 +232,22 @@
             // rightAntegonialNotchSlider
             // 
             this.rightAntegonialNotchSlider.LabelText = "Right Antegonial Notch";
-            this.rightAntegonialNotchSlider.Location = new System.Drawing.Point(3, 753);
+            this.rightAntegonialNotchSlider.Location = new System.Drawing.Point(3, 853);
             this.rightAntegonialNotchSlider.Name = "rightAntegonialNotchSlider";
             this.rightAntegonialNotchSlider.Size = new System.Drawing.Size(197, 44);
             this.rightAntegonialNotchSlider.TabIndex = 6;
             this.rightAntegonialNotchSlider.Tag = "rightAntegonialNotchMandible";
             this.rightAntegonialNotchSlider.Value = 0F;
+            // 
+            // rightCondyleRoughnessSlider
+            // 
+            this.rightCondyleRoughnessSlider.LabelText = "Right Condyle Roughness";
+            this.rightCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 753);
+            this.rightCondyleRoughnessSlider.Name = "rightCondyleRoughnessSlider";
+            this.rightCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
+            this.rightCondyleRoughnessSlider.TabIndex = 16;
+            this.rightCondyleRoughnessSlider.Tag = "rightCondyleRoughnessMandible";
+            this.rightCondyleRoughnessSlider.Value = 0F;
             // 
             // resetButton
             // 
@@ -245,21 +259,28 @@
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
+            // leftCondyleRoughnessSlider
+            // 
+            this.leftCondyleRoughnessSlider.LabelText = "Left Condyle Roughness";
+            this.leftCondyleRoughnessSlider.Location = new System.Drawing.Point(3, 303);
+            this.leftCondyleRoughnessSlider.Name = "leftCondyleRoughnessSlider";
+            this.leftCondyleRoughnessSlider.Size = new System.Drawing.Size(197, 44);
+            this.leftCondyleRoughnessSlider.TabIndex = 17;
+            this.leftCondyleRoughnessSlider.Tag = "leftCondyleRoughnessMandible";
+            this.leftCondyleRoughnessSlider.Value = 0F;
+            // 
             // MandibleSizeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Mandible Size";
-            this.ClientSize = new System.Drawing.Size(259, 611);
             this.Controls.Add(this.resetButton);
             this.Controls.Add(this.sliderPanel);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Left)
-                        | Medical.GUI.DockLocations.Right)));
+            this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MandibleSizeControl";
-            this.ShowHint = Medical.GUI.DockLocations.Left;
-            this.Text = "Mandible Size";
+            this.Size = new System.Drawing.Size(214, 607);
             this.ToolStripName = "Advanced";
             this.sliderPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -287,6 +308,8 @@
         private BoneManipulatorSlider rightLateralPoleDegeneration;
         private BoneManipulatorSlider rightMedialPoleScaleDegeneration;
         private System.Windows.Forms.Button resetButton;
+        private BoneManipulatorSlider rightCondyleRoughnessSlider;
+        private BoneManipulatorSlider leftCondyleRoughnessSlider;
 
 
     }

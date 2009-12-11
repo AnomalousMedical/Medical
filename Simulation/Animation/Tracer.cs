@@ -8,7 +8,7 @@ using OgreWrapper;
 using Engine.Editing;
 using OgrePlugin;
 
-namespace Medical.Animation
+namespace Medical
 {
     class Tracer : Behavior
     {
