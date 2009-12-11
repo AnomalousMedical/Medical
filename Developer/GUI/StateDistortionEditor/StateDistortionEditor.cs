@@ -89,10 +89,12 @@ namespace Medical.GUI
             String condyleDegenerationMandible = baseName + "CondyleDegenerationMandible";
             String lateralPoleMandible = baseName + "LateralPoleMandible";
             String medialPoleScale = baseName + "MedialPoleScaleMandible";
+            String roughnessPose = baseName + "CondyleRoughnessMandible";
 
             presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleDegenerationMandible));
             presetBones.captureFromState(sourceState.BoneManipulator.getEntry(lateralPoleMandible));
             presetBones.captureFromState(sourceState.BoneManipulator.getEntry(medialPoleScale));
+            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(roughnessPose));
 
             return presetBones;
         }
