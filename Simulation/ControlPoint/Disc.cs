@@ -10,6 +10,7 @@ using Engine.ObjectManagement;
 using OgrePlugin;
 using Engine.Attributes;
 using Logging;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -70,6 +71,9 @@ namespace Medical
         private float discBackOffset = 0.14f;
 
         [Editable]
+        private float lateralPoleRotation = 0.0f;
+
+        [Editable]
         private float popAdditionalOffsetPercent = 0.5f;
 
         [Editable]
@@ -122,6 +126,10 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         private ControlPointBehavior controlPoint;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private PoseManipulator discRotation;
 
         protected override void constructed()
         {
@@ -188,6 +196,12 @@ namespace Medical
             medialPole.initialize(controlPoint, Owner);
             lateralPole.initialize(controlPoint, Owner);
             ventralPole.initialize(controlPoint, Owner);
+
+            discRotation = Owner.getElement("DiscRotator") as PoseManipulator;
+            if (discRotation != null)
+            {
+                discRotation.Position = lateralPoleRotation;
+            }
         }
 
         protected override void destroy()
@@ -376,6 +390,24 @@ namespace Medical
             get
             {
                 return discBackOffset;
+            }
+        }
+
+        [DoNotCopy]
+        public float LateralPoleRotation
+        {
+            get
+            {
+                return lateralPoleRotation;
+            }
+            set
+            {
+                Debug.Assert(lateralPoleRotation >= 0.0f && lateralPoleRotation <= 1.0f, "Lateral pole rotation must be between 0 and 1.");
+                lateralPoleRotation = value;
+                if (discRotation != null)
+                {
+                    discRotation.Position = lateralPoleRotation;
+                }
             }
         }
 

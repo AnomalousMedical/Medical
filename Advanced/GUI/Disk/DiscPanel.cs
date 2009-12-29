@@ -25,6 +25,8 @@ namespace Medical.GUI
             discOffsetSlider.ValueChanged += new EventHandler(discOffsetSlider_ValueChanged);
             discOffsetUpDown.ValueChanged += new EventHandler(discOffsetUpDown_ValueChanged);
             discLockedCheck.CheckedChanged += new EventHandler(discLockedCheck_CheckedChanged);
+            lateralPoleRotSlider.ValueChanged += new EventHandler(lateralPoleRotSlider_ValueChanged);
+            lateralPoleRotUpDown.ValueChanged += new EventHandler(lateralPoleRotUpDown_ValueChanged);
         }
 
         public void sceneLoaded()
@@ -183,6 +185,38 @@ namespace Medical.GUI
         void discLockedCheck_CheckedChanged(object sender, EventArgs e)
         {
             synchronizeLocked(discLockedCheck, discLockedCheck.Checked);
+        }
+
+        //Synchronize Lateral Pole Rotation
+        void synchronizeLateralPoleRotation(object sender, float position)
+        {
+            if (allowSynchronization)
+            {
+                allowSynchronization = false;
+                if (sender != disc)
+                {
+                    disc.LateralPoleRotation = position;
+                }
+                if (sender != lateralPoleRotSlider)
+                {
+                    lateralPoleRotSlider.Value = (int)(position * lateralPoleRotSlider.Maximum);
+                }
+                if (sender != lateralPoleRotUpDown)
+                {
+                    lateralPoleRotUpDown.Value = (decimal)position;
+                }
+                allowSynchronization = true;
+            }
+        }
+
+        void lateralPoleRotUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeLateralPoleRotation(lateralPoleRotUpDown, (float)lateralPoleRotUpDown.Value);
+        }
+
+        void lateralPoleRotSlider_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeLateralPoleRotation(lateralPoleRotSlider, lateralPoleRotSlider.Value / (float)lateralPoleRotSlider.Maximum);
         }
     }
 }

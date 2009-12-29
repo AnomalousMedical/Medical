@@ -40,6 +40,9 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.rdaOffsetSlider = new System.Windows.Forms.TrackBar();
             this.discPopSlider = new System.Windows.Forms.TrackBar();
+            this.lateralPoleRotUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lateralPoleRotSlider = new System.Windows.Forms.TrackBar();
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopUpDown)).BeginInit();
@@ -48,6 +51,8 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // discOffsetUpDown
@@ -217,10 +222,56 @@
             this.discPopSlider.TickFrequency = 10000;
             this.discPopSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
+            // lateralPoleRotUpDown
+            // 
+            this.lateralPoleRotUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lateralPoleRotUpDown.DecimalPlaces = 4;
+            this.lateralPoleRotUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.lateralPoleRotUpDown.Location = new System.Drawing.Point(192, 111);
+            this.lateralPoleRotUpDown.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.lateralPoleRotUpDown.Name = "lateralPoleRotUpDown";
+            this.lateralPoleRotUpDown.Size = new System.Drawing.Size(54, 20);
+            this.lateralPoleRotUpDown.TabIndex = 44;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(3, 118);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 13);
+            this.label1.TabIndex = 42;
+            this.label1.Text = "Lateral Pole Rot";
+            // 
+            // lateralPoleRotSlider
+            // 
+            this.lateralPoleRotSlider.LargeChange = 100;
+            this.lateralPoleRotSlider.Location = new System.Drawing.Point(83, 110);
+            this.lateralPoleRotSlider.Maximum = 10000;
+            this.lateralPoleRotSlider.Name = "lateralPoleRotSlider";
+            this.lateralPoleRotSlider.Size = new System.Drawing.Size(103, 45);
+            this.lateralPoleRotSlider.SmallChange = 1000;
+            this.lateralPoleRotSlider.TabIndex = 43;
+            this.lateralPoleRotSlider.TickFrequency = 10000;
+            this.lateralPoleRotSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
             // DiscPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lateralPoleRotUpDown);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lateralPoleRotSlider);
             this.Controls.Add(this.discOffsetUpDown);
             this.Controls.Add(this.rdaOffsetUpDown);
             this.Controls.Add(this.discPopUpDown);
@@ -232,7 +283,7 @@
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.discPopSlider);
             this.Name = "DiscPanel";
-            this.Size = new System.Drawing.Size(248, 116);
+            this.Size = new System.Drawing.Size(248, 163);
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopUpDown)).EndInit();
@@ -243,6 +294,8 @@
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,5 +315,8 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TrackBar rdaOffsetSlider;
         private System.Windows.Forms.TrackBar discPopSlider;
+        private System.Windows.Forms.NumericUpDown lateralPoleRotUpDown;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar lateralPoleRotSlider;
     }
 }
