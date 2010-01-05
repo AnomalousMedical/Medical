@@ -45,6 +45,7 @@
             this.makeNormalButton.Size = new System.Drawing.Size(90, 25);
             this.makeNormalButton.TabIndex = 46;
             this.makeNormalButton.Values.Text = "Make Normal";
+            this.makeNormalButton.Click += new System.EventHandler(this.makeNormalButton_Click);
             // 
             // undoButton
             // 
@@ -54,6 +55,7 @@
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 45;
             this.undoButton.Values.Text = "Undo";
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // kryptonLabel1
             // 

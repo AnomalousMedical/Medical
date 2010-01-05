@@ -15,6 +15,7 @@ namespace Medical.GUI
     {
         private String discName;
         private Disc disc;
+        private Vector3 openingStateOffset = Vector3.Zero;
 
         public DiscSpacePanel(String discName)
         {
@@ -48,6 +49,16 @@ namespace Medical.GUI
             discOffsetSlider.Value = (int)(disc.DiscOffset.y * -discOffsetSlider.Maximum);
         }
 
+        public override void recordOpeningState()
+        {
+            openingStateOffset = disc.DiscOffset;
+        }
+
+        public override void resetToOpeningState()
+        {
+            disc.DiscOffset = openingStateOffset;
+        }
+
         public Image BoneOnBoneImage
         {
             get
@@ -70,6 +81,18 @@ namespace Medical.GUI
             {
                 distortedPanel.BackgroundImage = value;
             }
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            resetToOpeningState();
+            onPanelOpening();
+        }
+
+        private void makeNormalButton_Click(object sender, EventArgs e)
+        {
+            disc.DiscOffset = disc.NormalDiscOffset;
+            onPanelOpening();
         }
     }
 }
