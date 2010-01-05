@@ -47,5 +47,29 @@ namespace Medical.GUI
         {
             discOffsetSlider.Value = (int)(disc.DiscOffset.y * -discOffsetSlider.Maximum);
         }
+
+        public Image BoneOnBoneImage
+        {
+            get
+            {
+                return normalPanel.BackgroundImage;
+            }
+            set
+            {
+                normalPanel.BackgroundImage = value;
+            }
+        }
+
+        public Image OpenImage
+        {
+            get
+            {
+                return distortedPanel.BackgroundImage;
+            }
+            set
+            {
+                distortedPanel.BackgroundImage = value;
+            }
+        }
     }
 }

@@ -123,6 +123,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CTWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("CTWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap DegenerationLeftCondyle {
             get {
                 object obj = ResourceManager.GetObject("DegenerationLeftCondyle", resourceCulture);
@@ -368,9 +375,30 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap LeftDiscBoneOnBone {
+            get {
+                object obj = ResourceManager.GetObject("LeftDiscBoneOnBone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftDiscOpen {
+            get {
+                object obj = ResourceManager.GetObject("LeftDiscOpen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap LeftDiscPosition {
             get {
                 object obj = ResourceManager.GetObject("LeftDiscPosition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftDiscSpace {
+            get {
+                object obj = ResourceManager.GetObject("LeftDiscSpace", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -445,9 +473,30 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap RightDiscBoneOnBone {
+            get {
+                object obj = ResourceManager.GetObject("RightDiscBoneOnBone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightDiscOpen {
+            get {
+                object obj = ResourceManager.GetObject("RightDiscOpen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap RightDiscPosition {
             get {
                 object obj = ResourceManager.GetObject("RightDiscPosition", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap RightDiscSpace {
+            get {
+                object obj = ResourceManager.GetObject("RightDiscSpace", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

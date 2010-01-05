@@ -870,6 +870,27 @@
   <ItemGroup>
     <None Include="Resources\TeethWizardIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CTWizardLarge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftDiscSpace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightDiscSpace.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftDiscBoneOnBone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftDiscOpen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightDiscBoneOnBone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightDiscOpen.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

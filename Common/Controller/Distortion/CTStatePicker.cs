@@ -52,14 +52,14 @@ namespace Medical
             statePicker.addStatePanel(leftFossaPanel);
 
             leftDiscPanel = new DiscSpacePanel("LeftTMJDisc");
-            //leftDiscPanel.NormalImage = Resources.LeftFossaNormal;
-            //leftDiscPanel.DistortedImage = Resources.LeftFossaFlat;
+            leftDiscPanel.BoneOnBoneImage = Resources.LeftDiscBoneOnBone;
+            leftDiscPanel.OpenImage = Resources.LeftDiscOpen;
             leftDiscPanel.NavigationState = "Left TMJ";
             leftDiscPanel.LayerState = "FossaLayers";
             leftDiscPanel.Text = "Left Disc Space";
             leftDiscPanel.TextLine1 = "Left Disc";
             leftDiscPanel.TextLine2 = "Space";
-            leftDiscPanel.LargeIcon = Resources.LeftFossaFlatness;
+            leftDiscPanel.LargeIcon = Resources.LeftDiscSpace;
             statePicker.addStatePanel(leftDiscPanel);
 
             rightCondylarGrowthPanel = new RightCondylarGrowthPanel();
@@ -79,14 +79,14 @@ namespace Medical
             statePicker.addStatePanel(rightFossaPanel);
 
             rightDiscPanel = new DiscSpacePanel("RightTMJDisc");
-            //rightDiscPanel.NormalImage = Resources.RightFossaNormal;
-            //rightDiscPanel.DistortedImage = Resources.RightFossaFlat;
+            rightDiscPanel.BoneOnBoneImage = Resources.RightDiscBoneOnBone;
+            rightDiscPanel.OpenImage = Resources.RightDiscOpen;
             rightDiscPanel.NavigationState = "Right TMJ";
             rightDiscPanel.LayerState = "FossaLayers";
             rightDiscPanel.Text = "Right Disc Space";
             rightDiscPanel.TextLine1 = "Right Disc";
             rightDiscPanel.TextLine2 = "Space";
-            rightDiscPanel.LargeIcon = Resources.RightFossaFlatness;
+            rightDiscPanel.LargeIcon = Resources.RightDiscSpace;
             statePicker.addStatePanel(rightDiscPanel);
 
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
@@ -162,7 +162,7 @@ namespace Medical
         {
             get
             {
-                return Resources.MRIWizardLarge;
+                return Resources.CTWizardLarge;
             }
         }
 
