@@ -32,5 +32,17 @@ namespace Medical
             }
             return state;
         }
+
+        /// <summary>
+        /// Get the AnimationManipultor attached to this Mandible with the given
+        /// name. Will return null if the manipulator does not exist.
+        /// </summary>
+        /// <param name="name">The name of the manipultor.</param>
+        /// <returns>The attached AnimationManipulator or null if it does not exist.</returns>
+        public AnimationManipulator getAnimationManipulator(String name)
+        {
+            return AnimationManipulatorController.getManipulator(name);
+            //return Owner.getElement(name) as AnimationManipulator;
+        }
     }
 }

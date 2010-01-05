@@ -10,6 +10,18 @@ namespace Medical
     {
         static Mandible mandible = null;
 
+        /// <summary>
+        /// Block constructor.
+        /// </summary>
+        private MandibleController()
+        {
+
+        }
+
+        /// <summary>
+        /// Set the mandible. Only one can be created per scene. If more than one exists an exception will be thrown.
+        /// </summary>
+        /// <param name="mandibleInstance">The mandible instance to use.</param>
         internal static void setMandible(Mandible mandibleInstance)
         {
             if (mandible == null)
@@ -22,6 +34,10 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Clear the mandible.
+        /// </summary>
+        /// <param name="mandibleInstance">The mandible instance calling the clear function.</param>
         internal static void clearMandible(Mandible mandibleInstance)
         {
             if (mandible == mandibleInstance)
@@ -30,6 +46,10 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Create a state for the mandible.
+        /// </summary>
+        /// <returns>A new state for the mandible.</returns>
         public static AnimationManipulatorState createMandibleState()
         {
             if (mandible != null)
@@ -42,6 +62,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Get the current mandible for the scene.
+        /// </summary>
         public static Mandible Mandible
         {
             get
