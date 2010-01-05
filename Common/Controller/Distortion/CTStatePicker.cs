@@ -21,6 +21,8 @@ namespace Medical
         private RightCondylarDegenerationPanel rightCondylarDegenerationPanel;
         private FossaPanel leftFossaPanel;
         private FossaPanel rightFossaPanel;
+        private DiscSpacePanel leftDiscPanel;
+        private DiscSpacePanel rightDiscPanel;
 
         private XmlSaver saver = new XmlSaver();
 
@@ -49,6 +51,17 @@ namespace Medical
             leftFossaPanel.LargeIcon = Resources.LeftFossaFlatness;
             statePicker.addStatePanel(leftFossaPanel);
 
+            leftDiscPanel = new DiscSpacePanel("LeftTMJDisc");
+            //leftDiscPanel.NormalImage = Resources.LeftFossaNormal;
+            //leftDiscPanel.DistortedImage = Resources.LeftFossaFlat;
+            leftDiscPanel.NavigationState = "Left TMJ";
+            leftDiscPanel.LayerState = "FossaLayers";
+            leftDiscPanel.Text = "Left Disc Space";
+            leftDiscPanel.TextLine1 = "Left Disc";
+            leftDiscPanel.TextLine2 = "Space";
+            leftDiscPanel.LargeIcon = Resources.LeftFossaFlatness;
+            statePicker.addStatePanel(leftDiscPanel);
+
             rightCondylarGrowthPanel = new RightCondylarGrowthPanel();
             statePicker.addStatePanel(rightCondylarGrowthPanel);
 
@@ -64,6 +77,17 @@ namespace Medical
             rightFossaPanel.TextLine1 = "Right Fossa";
             rightFossaPanel.LargeIcon = Resources.RightFossaFlatness;
             statePicker.addStatePanel(rightFossaPanel);
+
+            rightDiscPanel = new DiscSpacePanel("RightTMJDisc");
+            //rightDiscPanel.NormalImage = Resources.RightFossaNormal;
+            //rightDiscPanel.DistortedImage = Resources.RightFossaFlat;
+            rightDiscPanel.NavigationState = "Right TMJ";
+            rightDiscPanel.LayerState = "FossaLayers";
+            rightDiscPanel.Text = "Right Disc Space";
+            rightDiscPanel.TextLine1 = "Right Disc";
+            rightDiscPanel.TextLine2 = "Space";
+            rightDiscPanel.LargeIcon = Resources.RightFossaFlatness;
+            statePicker.addStatePanel(rightDiscPanel);
 
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
@@ -90,6 +114,8 @@ namespace Medical
             rightCondylarDegenerationPanel.sceneLoaded(scene);
             leftFossaPanel.sceneLoaded(scene);
             rightFossaPanel.sceneLoaded(scene);
+            leftDiscPanel.sceneLoaded(scene);
+            rightDiscPanel.sceneLoaded(scene);
 
             if (rootDirectory != lastRootDirectory)
             {

@@ -234,6 +234,12 @@
     <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.Designer.cs">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
+      <DependentUpon>DiscSpacePanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\StatePicker\FileBrowserPickerPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -529,6 +535,9 @@
     <EmbeddedResource Include="GUI\StatePicker\BottomTeethRemovalPanel.resx">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\DiscSpacePanel.resx">
+      <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\FileBrowserPickerPanel.resx">
       <DependentUpon>FileBrowserPickerPanel.cs</DependentUpon>
