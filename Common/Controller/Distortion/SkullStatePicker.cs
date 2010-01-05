@@ -228,19 +228,6 @@ namespace Medical
             statePicker.show();
         }
 
-        public void close()
-        {
-            statePicker.close();
-        }
-
-        public bool Visible
-        {
-            get
-            {
-                return statePicker.Visible;
-            }
-        }
-
         public override String Name
         {
             get

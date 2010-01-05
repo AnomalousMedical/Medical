@@ -50,14 +50,14 @@ namespace Medical
             return ret;
         }
 
-        public static AnimationManipulatorState createAnimationManipulatorState()
-        {
-            AnimationManipulatorState state = new AnimationManipulatorState();
-            foreach (AnimationManipulator manipulator in manipulators.Values)
-            {
-                state.addPosition(manipulator.createStateEntry());
-            }
-            return state;
-        }
+        //public static AnimationManipulatorState createAnimationManipulatorState()
+        //{
+        //    AnimationManipulatorState state = new AnimationManipulatorState();
+        //    foreach (AnimationManipulator manipulator in manipulators.Values)
+        //    {
+        //        state.addPosition(manipulator.createStateEntry());
+        //    }
+        //    return state;
+        //}
     }
 }
