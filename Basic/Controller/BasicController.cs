@@ -41,6 +41,7 @@ namespace Medical.Controller
         private TeethStatePicker teethWizard;
         private ProfileStatePicker profileWizard;
         private CTStatePicker ctWizard;
+        private DopplerStatePicker dopplerWizard;
         private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
@@ -90,6 +91,10 @@ namespace Medical.Controller
             if (teethWizard != null)
             {
                 teethWizard.Dispose();
+            }
+            if (dopplerWizard != null)
+            {
+                dopplerWizard.Dispose();
             }
             if (ctWizard != null)
             {
@@ -175,6 +180,8 @@ namespace Medical.Controller
                 distortionController.addDistortionWizard(profileWizard);
                 ctWizard = new CTStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(ctWizard);
+                dopplerWizard = new DopplerStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                distortionController.addDistortionWizard(dopplerWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
                 basicForm.initialize(this);

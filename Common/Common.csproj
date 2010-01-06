@@ -111,6 +111,7 @@
     <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Distortion\CTStatePicker.cs" />
+    <Compile Include="Controller\Distortion\DopplerStatePicker.cs" />
     <Compile Include="Controller\Distortion\ProfileStatePicker.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\Distortion\TeethStatePicker.cs" />
@@ -239,6 +240,18 @@
     </Compile>
     <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Doppler\DopplerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Doppler\DopplerControl.Designer.cs">
+      <DependentUpon>DopplerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Doppler\DopplerPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Doppler\DopplerPanel.Designer.cs">
+      <DependentUpon>DopplerPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\FileBrowserPickerPanel.cs">
       <SubType>UserControl</SubType>
@@ -538,6 +551,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscSpacePanel.resx">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\Doppler\DopplerControl.resx">
+      <DependentUpon>DopplerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\Doppler\DopplerPanel.resx">
+      <DependentUpon>DopplerPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\FileBrowserPickerPanel.resx">
       <DependentUpon>FileBrowserPickerPanel.cs</DependentUpon>
