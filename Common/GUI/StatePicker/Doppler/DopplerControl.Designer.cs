@@ -64,12 +64,13 @@
             "Mild",
             "Moderate",
             "Coarse Rough",
-            "Coarse Eburnated"});
+            "Coarse Eburnated",
+            "Unknown"});
             this.rotatoryCombo.Location = new System.Drawing.Point(4, 23);
             this.rotatoryCombo.Name = "rotatoryCombo";
             this.rotatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.rotatoryCombo.TabIndex = 1;
-            this.rotatoryCombo.Text = "kryptonComboBox1";
+            this.rotatoryCombo.Text = "Unknown";
             // 
             // translatoryCombo
             // 
@@ -79,12 +80,13 @@
             "Mild",
             "Moderate",
             "Coarse Rough",
-            "Coarse Eburnated"});
+            "Coarse Eburnated",
+            "Unknown"});
             this.translatoryCombo.Location = new System.Drawing.Point(4, 69);
             this.translatoryCombo.Name = "translatoryCombo";
             this.translatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.translatoryCombo.TabIndex = 3;
-            this.translatoryCombo.Text = "kryptonComboBox2";
+            this.translatoryCombo.Text = "Unknown";
             // 
             // kryptonLabel2
             // 
@@ -100,12 +102,13 @@
             this.clickCombo.Items.AddRange(new object[] {
             "None",
             "Reciprocal",
-            "Surface"});
+            "Surface",
+            "Unknown"});
             this.clickCombo.Location = new System.Drawing.Point(4, 115);
             this.clickCombo.Name = "clickCombo";
             this.clickCombo.Size = new System.Drawing.Size(179, 21);
             this.clickCombo.TabIndex = 5;
-            this.clickCombo.Text = "kryptonComboBox3";
+            this.clickCombo.Text = "Unknown";
             // 
             // kryptonLabel3
             // 
@@ -125,6 +128,7 @@
             // 
             // stageIButton
             // 
+            this.stageIButton.Checked = true;
             this.stageIButton.Location = new System.Drawing.Point(4, 169);
             this.stageIButton.Name = "stageIButton";
             this.stageIButton.Size = new System.Drawing.Size(25, 19);

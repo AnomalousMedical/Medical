@@ -49,7 +49,7 @@ namespace Medical
 
         public override void setToDefault()
         {
-            
+            statePicker.setToDefault();
         }
 
         public override void sceneChanged(Engine.ObjectManagement.SimScene scene, string presetDirectory)
@@ -59,6 +59,7 @@ namespace Medical
 
         public override void startWizard(DrawingWindow displayWindow)
         {
+            statePicker.setToDefault();
             statePicker.startWizard(displayWindow);
             statePicker.show();
         }

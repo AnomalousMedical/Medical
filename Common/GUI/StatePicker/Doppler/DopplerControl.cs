@@ -32,6 +32,8 @@ namespace Medical.GUI
     /// </summary>
     public partial class DopplerControl : UserControl
     {
+        public event EventHandler CurrentStageChanged;
+
         DopplerStage currentStage = DopplerStage.Unknown;
         Dictionary<DopplerStage, int> stageMap = new Dictionary<DopplerStage, int>();
 
@@ -50,6 +52,23 @@ namespace Medical.GUI
             rotatoryCombo.SelectedIndexChanged += new EventHandler(rotatoryCombo_SelectedIndexChanged);
             translatoryCombo.SelectedIndexChanged += new EventHandler(translatoryCombo_SelectedIndexChanged);
             clickCombo.SelectedIndexChanged += new EventHandler(clickCombo_SelectedIndexChanged);
+
+            stageIButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageIIButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageIIIaButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageIIIbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageIVaButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageIVbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageVaButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+            stageVbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+        }
+
+        public void setToDefault()
+        {
+            rotatoryCombo.SelectedItem = "Unknown";
+            translatoryCombo.SelectedItem = "Unknown";
+            clickCombo.SelectedItem = "Unknown";
+            stageIButton.Checked = true;
         }
 
         /// <summary>
@@ -197,6 +216,54 @@ namespace Medical.GUI
             {
                 button.Checked = true;
                 activatedLowest = true;
+            }
+        }
+
+        void stageButton_CheckedChanged(object sender, EventArgs e)
+        {
+            DopplerStage oldStage = currentStage;
+            if (stageIButton.Checked)
+            {
+                currentStage = DopplerStage.I;
+            }
+            else if (stageIIButton.Checked)
+            {
+                currentStage = DopplerStage.II;
+            }
+            else if (stageIIIaButton.Checked)
+            {
+                currentStage = DopplerStage.IIIa;
+            }
+            else if (stageIIIbButton.Checked)
+            {
+                currentStage = DopplerStage.IIIb;
+            }
+            else if (stageIVaButton.Checked)
+            {
+                currentStage = DopplerStage.IVa;
+            }
+            else if (stageIVbButton.Checked)
+            {
+                currentStage = DopplerStage.IVb;
+            }
+            else if (stageVaButton.Checked)
+            {
+                currentStage = DopplerStage.Va;
+            }
+            else if (stageVbButton.Checked)
+            {
+                currentStage = DopplerStage.Vb;
+            }
+            else
+            {
+                currentStage = DopplerStage.Unknown;
+            }
+            if (currentStage != oldStage)
+            {
+                if (CurrentStageChanged != null)
+                {
+                    CurrentStageChanged.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 

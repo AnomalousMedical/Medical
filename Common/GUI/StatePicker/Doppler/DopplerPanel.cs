@@ -17,6 +17,17 @@ namespace Medical.GUI
         public DopplerPanel()
         {
             InitializeComponent();
+            dopplerControl1.CurrentStageChanged += new EventHandler(dopplerControl1_CurrentStageChanged);
+        }
+
+        void dopplerControl1_CurrentStageChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        public override void setToDefault()
+        {
+            dopplerControl1.setToDefault();
         }
     }
 }
