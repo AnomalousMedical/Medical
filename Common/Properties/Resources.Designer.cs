@@ -214,6 +214,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DopplerWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("DopplerWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExploreIconSmall {
             get {
                 object obj = ResourceManager.GetObject("ExploreIconSmall", resourceCulture);

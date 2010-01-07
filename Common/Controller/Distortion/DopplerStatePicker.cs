@@ -96,7 +96,7 @@ namespace Medical
         {
             get
             {
-                return Resources.MRIWizardLarge;
+                return Resources.DopplerWizardLarge;
             }
         }
 
