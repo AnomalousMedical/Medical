@@ -45,11 +45,13 @@
             this.tooth31Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.tooth32Button = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.SuspendLayout();
             // 
             // tooth17Button
             // 
-            this.tooth17Button.Location = new System.Drawing.Point(182, 3);
+            this.tooth17Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth17Button.Location = new System.Drawing.Point(182, 36);
             this.tooth17Button.Name = "tooth17Button";
             this.tooth17Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth17Button.Size = new System.Drawing.Size(42, 44);
@@ -75,7 +77,8 @@
             // 
             // tooth18Button
             // 
-            this.tooth18Button.Location = new System.Drawing.Point(180, 44);
+            this.tooth18Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth18Button.Location = new System.Drawing.Point(180, 77);
             this.tooth18Button.Name = "tooth18Button";
             this.tooth18Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth18Button.Size = new System.Drawing.Size(42, 42);
@@ -101,7 +104,8 @@
             // 
             // tooth19Button
             // 
-            this.tooth19Button.Location = new System.Drawing.Point(176, 83);
+            this.tooth19Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth19Button.Location = new System.Drawing.Point(176, 116);
             this.tooth19Button.Name = "tooth19Button";
             this.tooth19Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth19Button.Size = new System.Drawing.Size(44, 45);
@@ -127,7 +131,8 @@
             // 
             // tooth20Button
             // 
-            this.tooth20Button.Location = new System.Drawing.Point(176, 126);
+            this.tooth20Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth20Button.Location = new System.Drawing.Point(176, 159);
             this.tooth20Button.Name = "tooth20Button";
             this.tooth20Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth20Button.Size = new System.Drawing.Size(34, 32);
@@ -153,7 +158,8 @@
             // 
             // tooth21Button
             // 
-            this.tooth21Button.Location = new System.Drawing.Point(169, 154);
+            this.tooth21Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth21Button.Location = new System.Drawing.Point(169, 187);
             this.tooth21Button.Name = "tooth21Button";
             this.tooth21Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth21Button.Size = new System.Drawing.Size(34, 32);
@@ -179,7 +185,8 @@
             // 
             // tooth22Button
             // 
-            this.tooth22Button.Location = new System.Drawing.Point(157, 181);
+            this.tooth22Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth22Button.Location = new System.Drawing.Point(157, 214);
             this.tooth22Button.Name = "tooth22Button";
             this.tooth22Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth22Button.Size = new System.Drawing.Size(30, 33);
@@ -205,7 +212,8 @@
             // 
             // tooth23Button
             // 
-            this.tooth23Button.Location = new System.Drawing.Point(133, 196);
+            this.tooth23Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth23Button.Location = new System.Drawing.Point(133, 229);
             this.tooth23Button.Name = "tooth23Button";
             this.tooth23Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth23Button.Size = new System.Drawing.Size(28, 33);
@@ -231,7 +239,8 @@
             // 
             // tooth24Button
             // 
-            this.tooth24Button.Location = new System.Drawing.Point(110, 203);
+            this.tooth24Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth24Button.Location = new System.Drawing.Point(110, 236);
             this.tooth24Button.Name = "tooth24Button";
             this.tooth24Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth24Button.Size = new System.Drawing.Size(27, 31);
@@ -257,7 +266,8 @@
             // 
             // tooth25Button
             // 
-            this.tooth25Button.Location = new System.Drawing.Point(88, 203);
+            this.tooth25Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth25Button.Location = new System.Drawing.Point(88, 236);
             this.tooth25Button.Name = "tooth25Button";
             this.tooth25Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth25Button.Size = new System.Drawing.Size(27, 31);
@@ -283,7 +293,8 @@
             // 
             // tooth26Button
             // 
-            this.tooth26Button.Location = new System.Drawing.Point(65, 197);
+            this.tooth26Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth26Button.Location = new System.Drawing.Point(65, 230);
             this.tooth26Button.Name = "tooth26Button";
             this.tooth26Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth26Button.Size = new System.Drawing.Size(28, 33);
@@ -309,7 +320,8 @@
             // 
             // tooth27Button
             // 
-            this.tooth27Button.Location = new System.Drawing.Point(42, 181);
+            this.tooth27Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth27Button.Location = new System.Drawing.Point(42, 214);
             this.tooth27Button.Name = "tooth27Button";
             this.tooth27Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth27Button.Size = new System.Drawing.Size(30, 33);
@@ -335,7 +347,8 @@
             // 
             // tooth28Button
             // 
-            this.tooth28Button.Location = new System.Drawing.Point(25, 155);
+            this.tooth28Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth28Button.Location = new System.Drawing.Point(25, 188);
             this.tooth28Button.Name = "tooth28Button";
             this.tooth28Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth28Button.Size = new System.Drawing.Size(32, 32);
@@ -361,7 +374,8 @@
             // 
             // tooth29Button
             // 
-            this.tooth29Button.Location = new System.Drawing.Point(17, 126);
+            this.tooth29Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth29Button.Location = new System.Drawing.Point(17, 159);
             this.tooth29Button.Name = "tooth29Button";
             this.tooth29Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth29Button.Size = new System.Drawing.Size(33, 32);
@@ -387,7 +401,8 @@
             // 
             // tooth30Button
             // 
-            this.tooth30Button.Location = new System.Drawing.Point(6, 83);
+            this.tooth30Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth30Button.Location = new System.Drawing.Point(6, 116);
             this.tooth30Button.Name = "tooth30Button";
             this.tooth30Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth30Button.Size = new System.Drawing.Size(44, 45);
@@ -413,7 +428,8 @@
             // 
             // tooth31Button
             // 
-            this.tooth31Button.Location = new System.Drawing.Point(5, 44);
+            this.tooth31Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth31Button.Location = new System.Drawing.Point(5, 77);
             this.tooth31Button.Name = "tooth31Button";
             this.tooth31Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth31Button.Size = new System.Drawing.Size(42, 42);
@@ -439,7 +455,8 @@
             // 
             // tooth32Button
             // 
-            this.tooth32Button.Location = new System.Drawing.Point(3, 1);
+            this.tooth32Button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.tooth32Button.Location = new System.Drawing.Point(3, 34);
             this.tooth32Button.Name = "tooth32Button";
             this.tooth32Button.OverrideFocus.Content.DrawFocus = ComponentFactory.Krypton.Toolkit.InheritBool.False;
             this.tooth32Button.Size = new System.Drawing.Size(42, 44);
@@ -465,16 +482,29 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(88, 109);
+            this.kryptonLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.kryptonLabel1.Location = new System.Drawing.Point(88, 142);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.Size = new System.Drawing.Size(49, 19);
             this.kryptonLabel1.TabIndex = 179;
             this.kryptonLabel1.Values.Text = "Bottom";
             // 
+            // kryptonWrapLabel1
+            // 
+            this.kryptonWrapLabel1.AutoSize = false;
+            this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
+            this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(227, 31);
+            this.kryptonWrapLabel1.Text = "Click the teeth to remove them from the model.";
+            // 
             // BottomTeethRemovalPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.kryptonLabel1);
             this.Controls.Add(this.tooth32Button);
             this.Controls.Add(this.tooth31Button);
@@ -496,7 +526,7 @@
             this.LayerState = "BottomTeethLayers";
             this.Name = "BottomTeethRemovalPanel";
             this.NavigationState = "Bottom Teeth";
-            this.Size = new System.Drawing.Size(227, 237);
+            this.Size = new System.Drawing.Size(227, 274);
             this.TextLine1 = "Remove";
             this.TextLine2 = "Bottom Teeth";
             this.ResumeLayout(false);
@@ -523,5 +553,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth31Button;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton tooth32Button;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
     }
 }

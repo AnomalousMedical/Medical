@@ -29,5 +29,10 @@ namespace Medical.GUI
         {
             dopplerControl1.setToDefault();
         }
+
+        public override void recordOpeningState()
+        {
+            dopplerControl1.setToDefault();
+        }
     }
 }

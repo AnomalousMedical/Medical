@@ -14,6 +14,7 @@ namespace Medical
         private StatePickerWizard statePicker;
         private DopplerPanel leftDopplerPanel;
         private DopplerPanel rightDopplerPanel;
+        private NotesPanel notesPanel;
 
         public DopplerStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
         {
@@ -39,12 +40,16 @@ namespace Medical
             rightDopplerPanel.TextLine2 = "Doppler";
             rightDopplerPanel.LargeIcon = Resources.RightDiscSpace;
             statePicker.addStatePanel(rightDopplerPanel);
+
+            notesPanel = new NotesPanel("Doppler", imageRenderer);
+            statePicker.addStatePanel(notesPanel);
          }
 
         public override void Dispose()
         {
             leftDopplerPanel.Dispose();
             rightDopplerPanel.Dispose();
+            notesPanel.Dispose();
         }
 
         public override void setToDefault()
@@ -59,7 +64,6 @@ namespace Medical
 
         public override void startWizard(DrawingWindow displayWindow)
         {
-            statePicker.setToDefault();
             statePicker.startWizard(displayWindow);
             statePicker.show();
         }

@@ -45,12 +45,13 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.undoButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.makeNormalButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.SuspendLayout();
             // 
             // leftRamusHeightSlider
             // 
             this.leftRamusHeightSlider.LabelText = "Ramus Height";
-            this.leftRamusHeightSlider.Location = new System.Drawing.Point(69, 11);
+            this.leftRamusHeightSlider.Location = new System.Drawing.Point(69, 48);
             this.leftRamusHeightSlider.Name = "leftRamusHeightSlider";
             this.leftRamusHeightSlider.Size = new System.Drawing.Size(187, 44);
             this.leftRamusHeightSlider.TabIndex = 10;
@@ -60,7 +61,7 @@
             // leftCondyleHeightSlider
             // 
             this.leftCondyleHeightSlider.LabelText = "Condyle Height";
-            this.leftCondyleHeightSlider.Location = new System.Drawing.Point(69, 76);
+            this.leftCondyleHeightSlider.Location = new System.Drawing.Point(69, 113);
             this.leftCondyleHeightSlider.Name = "leftCondyleHeightSlider";
             this.leftCondyleHeightSlider.Size = new System.Drawing.Size(187, 44);
             this.leftCondyleHeightSlider.TabIndex = 7;
@@ -70,7 +71,7 @@
             // leftCondyleRotationSlider
             // 
             this.leftCondyleRotationSlider.LabelText = "Condyle Rotation";
-            this.leftCondyleRotationSlider.Location = new System.Drawing.Point(69, 141);
+            this.leftCondyleRotationSlider.Location = new System.Drawing.Point(69, 178);
             this.leftCondyleRotationSlider.Name = "leftCondyleRotationSlider";
             this.leftCondyleRotationSlider.Size = new System.Drawing.Size(187, 44);
             this.leftCondyleRotationSlider.TabIndex = 8;
@@ -80,7 +81,7 @@
             // leftMandibularNotchSlider
             // 
             this.leftMandibularNotchSlider.LabelText = "Mandibular Notch";
-            this.leftMandibularNotchSlider.Location = new System.Drawing.Point(69, 206);
+            this.leftMandibularNotchSlider.Location = new System.Drawing.Point(69, 243);
             this.leftMandibularNotchSlider.Name = "leftMandibularNotchSlider";
             this.leftMandibularNotchSlider.Size = new System.Drawing.Size(187, 44);
             this.leftMandibularNotchSlider.TabIndex = 9;
@@ -90,7 +91,7 @@
             // leftAntegonialNotchSlider
             // 
             this.leftAntegonialNotchSlider.LabelText = "Antegonial Notch";
-            this.leftAntegonialNotchSlider.Location = new System.Drawing.Point(69, 271);
+            this.leftAntegonialNotchSlider.Location = new System.Drawing.Point(69, 308);
             this.leftAntegonialNotchSlider.Name = "leftAntegonialNotchSlider";
             this.leftAntegonialNotchSlider.Size = new System.Drawing.Size(187, 44);
             this.leftAntegonialNotchSlider.TabIndex = 6;
@@ -101,7 +102,7 @@
             // 
             this.panel2.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftRamusHeightSmall;
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel2.Location = new System.Drawing.Point(262, 3);
+            this.panel2.Location = new System.Drawing.Point(262, 40);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(60, 60);
             this.panel2.TabIndex = 12;
@@ -110,7 +111,7 @@
             // 
             this.panel3.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleHeightSmall;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel3.Location = new System.Drawing.Point(262, 68);
+            this.panel3.Location = new System.Drawing.Point(262, 105);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(60, 60);
             this.panel3.TabIndex = 14;
@@ -119,7 +120,7 @@
             // 
             this.panel4.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleHeight;
             this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel4.Location = new System.Drawing.Point(3, 68);
+            this.panel4.Location = new System.Drawing.Point(3, 105);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(60, 60);
             this.panel4.TabIndex = 13;
@@ -128,7 +129,7 @@
             // 
             this.panel5.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleRotationRotated;
             this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel5.Location = new System.Drawing.Point(262, 133);
+            this.panel5.Location = new System.Drawing.Point(262, 170);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(60, 60);
             this.panel5.TabIndex = 14;
@@ -137,7 +138,7 @@
             // 
             this.panel6.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftCondyleRotation;
             this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel6.Location = new System.Drawing.Point(3, 133);
+            this.panel6.Location = new System.Drawing.Point(3, 170);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(60, 60);
             this.panel6.TabIndex = 13;
@@ -146,7 +147,7 @@
             // 
             this.panel7.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftMandibularNotchDistorted;
             this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel7.Location = new System.Drawing.Point(262, 198);
+            this.panel7.Location = new System.Drawing.Point(262, 235);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(60, 60);
             this.panel7.TabIndex = 14;
@@ -155,7 +156,7 @@
             // 
             this.panel8.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftMandibularNotch;
             this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel8.Location = new System.Drawing.Point(3, 198);
+            this.panel8.Location = new System.Drawing.Point(3, 235);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(60, 60);
             this.panel8.TabIndex = 13;
@@ -164,7 +165,7 @@
             // 
             this.panel9.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftAntegonialNotchDistorted;
             this.panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel9.Location = new System.Drawing.Point(262, 263);
+            this.panel9.Location = new System.Drawing.Point(262, 300);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(60, 60);
             this.panel9.TabIndex = 14;
@@ -173,7 +174,7 @@
             // 
             this.panel10.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftAntegonialNotch;
             this.panel10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel10.Location = new System.Drawing.Point(3, 263);
+            this.panel10.Location = new System.Drawing.Point(3, 300);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(60, 60);
             this.panel10.TabIndex = 13;
@@ -182,14 +183,14 @@
             // 
             this.panel1.BackgroundImage = global::Medical.Properties.Resources.GrowthLeftRamusHeight;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Location = new System.Drawing.Point(3, 40);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(60, 60);
             this.panel1.TabIndex = 11;
             // 
             // undoButton
             // 
-            this.undoButton.Location = new System.Drawing.Point(4, 330);
+            this.undoButton.Location = new System.Drawing.Point(4, 367);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 15;
@@ -198,17 +199,29 @@
             // 
             // makeNormalButton
             // 
-            this.makeNormalButton.Location = new System.Drawing.Point(101, 330);
+            this.makeNormalButton.Location = new System.Drawing.Point(101, 367);
             this.makeNormalButton.Name = "makeNormalButton";
             this.makeNormalButton.Size = new System.Drawing.Size(90, 25);
             this.makeNormalButton.TabIndex = 16;
             this.makeNormalButton.Values.Text = "Make Normal";
             this.makeNormalButton.Click += new System.EventHandler(this.makeNormalButton_Click);
             // 
+            // kryptonWrapLabel1
+            // 
+            this.kryptonWrapLabel1.AutoSize = false;
+            this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
+            this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(325, 31);
+            this.kryptonWrapLabel1.Text = "Adjust the sliders to match the left side of the patient\'s mandible.";
+            // 
             // LeftCondylarGrowthPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.makeNormalButton);
             this.Controls.Add(this.undoButton);
             this.Controls.Add(this.panel9);
@@ -230,7 +243,7 @@
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "LeftCondylarGrowthPanel";
             this.NavigationState = "GrowthLeftCameraAngle";
-            this.Size = new System.Drawing.Size(325, 361);
+            this.Size = new System.Drawing.Size(325, 401);
             this.TextLine1 = "Left Condyle";
             this.TextLine2 = "Growth";
             this.ResumeLayout(false);
@@ -256,6 +269,7 @@
         private System.Windows.Forms.Panel panel10;
         private ComponentFactory.Krypton.Toolkit.KryptonButton undoButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton makeNormalButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
 
     }
 }

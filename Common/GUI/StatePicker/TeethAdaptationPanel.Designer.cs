@@ -40,11 +40,14 @@
             this.midlineAnteriorCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.rightMidLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.rightLateralCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.kryptonWrapLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.kryptonWrapLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.SuspendLayout();
             // 
             // adaptButton
             // 
-            this.adaptButton.Location = new System.Drawing.Point(3, 3);
+            this.adaptButton.Location = new System.Drawing.Point(4, 194);
             this.adaptButton.Name = "adaptButton";
             this.adaptButton.Size = new System.Drawing.Size(90, 25);
             this.adaptButton.TabIndex = 7;
@@ -52,7 +55,8 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(100, 35);
+            this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.resetButton.Location = new System.Drawing.Point(100, 333);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(90, 25);
             this.resetButton.TabIndex = 11;
@@ -61,7 +65,7 @@
             // 
             // moveButton
             // 
-            this.moveButton.Location = new System.Drawing.Point(100, 3);
+            this.moveButton.Location = new System.Drawing.Point(3, 279);
             this.moveButton.Name = "moveButton";
             this.moveButton.Size = new System.Drawing.Size(90, 25);
             this.moveButton.TabIndex = 8;
@@ -69,7 +73,8 @@
             // 
             // undoButton
             // 
-            this.undoButton.Location = new System.Drawing.Point(4, 35);
+            this.undoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.undoButton.Location = new System.Drawing.Point(4, 333);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 10;
@@ -78,7 +83,7 @@
             // 
             // rotateButton
             // 
-            this.rotateButton.Location = new System.Drawing.Point(197, 4);
+            this.rotateButton.Location = new System.Drawing.Point(100, 280);
             this.rotateButton.Name = "rotateButton";
             this.rotateButton.Size = new System.Drawing.Size(90, 25);
             this.rotateButton.TabIndex = 9;
@@ -86,7 +91,7 @@
             // 
             // topCameraButton
             // 
-            this.topCameraButton.Location = new System.Drawing.Point(3, 66);
+            this.topCameraButton.Location = new System.Drawing.Point(6, 21);
             this.topCameraButton.Name = "topCameraButton";
             this.topCameraButton.Size = new System.Drawing.Size(53, 53);
             this.topCameraButton.TabIndex = 12;
@@ -96,7 +101,7 @@
             // 
             // bottomCameraButton
             // 
-            this.bottomCameraButton.Location = new System.Drawing.Point(59, 66);
+            this.bottomCameraButton.Location = new System.Drawing.Point(62, 21);
             this.bottomCameraButton.Name = "bottomCameraButton";
             this.bottomCameraButton.Size = new System.Drawing.Size(53, 53);
             this.bottomCameraButton.TabIndex = 13;
@@ -106,7 +111,7 @@
             // 
             // leftLateralCameraButton
             // 
-            this.leftLateralCameraButton.Location = new System.Drawing.Point(227, 122);
+            this.leftLateralCameraButton.Location = new System.Drawing.Point(230, 77);
             this.leftLateralCameraButton.Name = "leftLateralCameraButton";
             this.leftLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.leftLateralCameraButton.TabIndex = 14;
@@ -116,7 +121,7 @@
             // 
             // leftMidLateralCameraButton
             // 
-            this.leftMidLateralCameraButton.Location = new System.Drawing.Point(171, 122);
+            this.leftMidLateralCameraButton.Location = new System.Drawing.Point(174, 77);
             this.leftMidLateralCameraButton.Name = "leftMidLateralCameraButton";
             this.leftMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.leftMidLateralCameraButton.TabIndex = 15;
@@ -126,7 +131,7 @@
             // 
             // midlineAnteriorCameraButton
             // 
-            this.midlineAnteriorCameraButton.Location = new System.Drawing.Point(115, 122);
+            this.midlineAnteriorCameraButton.Location = new System.Drawing.Point(118, 77);
             this.midlineAnteriorCameraButton.Name = "midlineAnteriorCameraButton";
             this.midlineAnteriorCameraButton.Size = new System.Drawing.Size(53, 53);
             this.midlineAnteriorCameraButton.TabIndex = 16;
@@ -136,7 +141,7 @@
             // 
             // rightMidLateralCameraButton
             // 
-            this.rightMidLateralCameraButton.Location = new System.Drawing.Point(59, 122);
+            this.rightMidLateralCameraButton.Location = new System.Drawing.Point(62, 77);
             this.rightMidLateralCameraButton.Name = "rightMidLateralCameraButton";
             this.rightMidLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.rightMidLateralCameraButton.TabIndex = 17;
@@ -146,7 +151,7 @@
             // 
             // rightLateralCameraButton
             // 
-            this.rightLateralCameraButton.Location = new System.Drawing.Point(3, 122);
+            this.rightLateralCameraButton.Location = new System.Drawing.Point(6, 77);
             this.rightLateralCameraButton.Name = "rightLateralCameraButton";
             this.rightLateralCameraButton.Size = new System.Drawing.Size(53, 53);
             this.rightLateralCameraButton.TabIndex = 18;
@@ -154,10 +159,45 @@
             this.rightLateralCameraButton.Values.Text = "";
             this.rightLateralCameraButton.Click += new System.EventHandler(this.rightLateralCameraButton_Click);
             // 
+            // kryptonWrapLabel1
+            // 
+            this.kryptonWrapLabel1.AutoSize = false;
+            this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.Location = new System.Drawing.Point(3, 0);
+            this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(135, 17);
+            this.kryptonWrapLabel1.Text = "Choose a camera angle.";
+            // 
+            // kryptonWrapLabel2
+            // 
+            this.kryptonWrapLabel2.AutoSize = false;
+            this.kryptonWrapLabel2.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel2.Location = new System.Drawing.Point(4, 144);
+            this.kryptonWrapLabel2.Name = "kryptonWrapLabel2";
+            this.kryptonWrapLabel2.Size = new System.Drawing.Size(279, 48);
+            this.kryptonWrapLabel2.Text = "Click the button to automatically adapt the teeth to fit the mandible you have cr" +
+                "eated. Click it again to stop the adaptation if it is suitable.";
+            // 
+            // kryptonWrapLabel3
+            // 
+            this.kryptonWrapLabel3.AutoSize = false;
+            this.kryptonWrapLabel3.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel3.Location = new System.Drawing.Point(4, 229);
+            this.kryptonWrapLabel3.Name = "kryptonWrapLabel3";
+            this.kryptonWrapLabel3.Size = new System.Drawing.Size(279, 48);
+            this.kryptonWrapLabel3.Text = "Manually move the teeth to fine tune their positions. Or manually move and rotate" +
+                " the teeth to match your patient exactly.";
+            // 
             // TeethAdaptationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.kryptonWrapLabel3);
+            this.Controls.Add(this.kryptonWrapLabel2);
+            this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.rightLateralCameraButton);
             this.Controls.Add(this.rightMidLateralCameraButton);
             this.Controls.Add(this.midlineAnteriorCameraButton);
@@ -174,7 +214,7 @@
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
             this.NavigationState = "Teeth Midline Anterior";
-            this.Size = new System.Drawing.Size(291, 181);
+            this.Size = new System.Drawing.Size(291, 361);
             this.TextLine1 = "Teeth";
             this.TextLine2 = "Adaptation";
             this.ResumeLayout(false);
@@ -195,6 +235,9 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton midlineAnteriorCameraButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton rightMidLateralCameraButton;
         private ComponentFactory.Krypton.Toolkit.KryptonButton rightLateralCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel3;
 
     }
 }
