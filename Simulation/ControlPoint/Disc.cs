@@ -74,7 +74,7 @@ namespace Medical
         private float lateralPoleRotation = 0.0f;
 
         [Editable]
-        private bool popLateralPole = true;
+        private bool displaceLateralPole = false;
 
         [Editable]
         private float maxLateralPoleRotation = 1.0f;
@@ -227,7 +227,7 @@ namespace Medical
 
             float location = controlPoint.CurrentLocation;
             //Calculate the lateral pole displacement.
-            if (popLateralPole)
+            if (displaceLateralPole)
             {
                 if (location < discPopLocation)
                 {
@@ -276,7 +276,7 @@ namespace Medical
             {
                 return rdaOffset + horizontalOffset;
             }
-            else if(popLateralPole)
+            else if(displaceLateralPole)
             {
                 float rotAmount = lateralPoleRotation / maxLateralPoleRotation;
                 //Method 1
@@ -437,6 +437,22 @@ namespace Medical
             }
         }
 
+        public bool DisplaceLateralPole
+        {
+            get
+            {
+                return displaceLateralPole;
+            }
+            set
+            {
+                displaceLateralPole = value;
+                if (!value)
+                {
+                    LateralPoleRotation = 0.0f;
+                }
+            }
+        }
+
         internal float DiscBackOffset
         {
             get
@@ -446,7 +462,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        public float LateralPoleRotation
+        private float LateralPoleRotation
         {
             get
             {

@@ -40,9 +40,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.rdaOffsetSlider = new System.Windows.Forms.TrackBar();
             this.discPopSlider = new System.Windows.Forms.TrackBar();
-            this.lateralPoleRotUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lateralPoleRotSlider = new System.Windows.Forms.TrackBar();
+            this.lateralPoleDisplacementCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopUpDown)).BeginInit();
@@ -51,8 +49,6 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // discOffsetUpDown
@@ -65,7 +61,7 @@
             0,
             0,
             65536});
-            this.discOffsetUpDown.Location = new System.Drawing.Point(191, 71);
+            this.discOffsetUpDown.Location = new System.Drawing.Point(191, 91);
             this.discOffsetUpDown.Maximum = new decimal(new int[] {
             0,
             0,
@@ -90,7 +86,7 @@
             0,
             0,
             65536});
-            this.rdaOffsetUpDown.Location = new System.Drawing.Point(191, 37);
+            this.rdaOffsetUpDown.Location = new System.Drawing.Point(191, 57);
             this.rdaOffsetUpDown.Maximum = new decimal(new int[] {
             0,
             0,
@@ -115,7 +111,7 @@
             0,
             0,
             65536});
-            this.discPopUpDown.Location = new System.Drawing.Point(191, 4);
+            this.discPopUpDown.Location = new System.Drawing.Point(191, 5);
             this.discPopUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -128,7 +124,7 @@
             // discLockedCheck
             // 
             this.discLockedCheck.AutoSize = true;
-            this.discLockedCheck.Location = new System.Drawing.Point(5, 98);
+            this.discLockedCheck.Location = new System.Drawing.Point(5, 118);
             this.discLockedCheck.Name = "discLockedCheck";
             this.discLockedCheck.Size = new System.Drawing.Size(62, 17);
             this.discLockedCheck.TabIndex = 38;
@@ -140,7 +136,7 @@
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(2, 11);
+            this.label9.Location = new System.Drawing.Point(2, 12);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(44, 13);
             this.label9.TabIndex = 36;
@@ -151,7 +147,7 @@
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label4.Location = new System.Drawing.Point(2, 35);
+            this.label4.Location = new System.Drawing.Point(2, 55);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 35;
@@ -162,7 +158,7 @@
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(2, 69);
+            this.label5.Location = new System.Drawing.Point(2, 89);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 34;
@@ -172,7 +168,7 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.Yellow;
             this.panel3.Controls.Add(this.discOffsetSlider);
-            this.panel3.Location = new System.Drawing.Point(80, 69);
+            this.panel3.Location = new System.Drawing.Point(80, 89);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(108, 28);
             this.panel3.TabIndex = 32;
@@ -193,7 +189,7 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.Red;
             this.panel5.Controls.Add(this.rdaOffsetSlider);
-            this.panel5.Location = new System.Drawing.Point(80, 35);
+            this.panel5.Location = new System.Drawing.Point(80, 55);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(108, 28);
             this.panel5.TabIndex = 33;
@@ -213,7 +209,7 @@
             // discPopSlider
             // 
             this.discPopSlider.LargeChange = 100;
-            this.discPopSlider.Location = new System.Drawing.Point(82, 3);
+            this.discPopSlider.Location = new System.Drawing.Point(82, 4);
             this.discPopSlider.Maximum = 10000;
             this.discPopSlider.Name = "discPopSlider";
             this.discPopSlider.Size = new System.Drawing.Size(103, 45);
@@ -222,56 +218,22 @@
             this.discPopSlider.TickFrequency = 10000;
             this.discPopSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
-            // lateralPoleRotUpDown
+            // lateralPoleDisplacementCheck
             // 
-            this.lateralPoleRotUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lateralPoleRotUpDown.DecimalPlaces = 4;
-            this.lateralPoleRotUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.lateralPoleRotUpDown.Location = new System.Drawing.Point(192, 111);
-            this.lateralPoleRotUpDown.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.lateralPoleRotUpDown.Name = "lateralPoleRotUpDown";
-            this.lateralPoleRotUpDown.Size = new System.Drawing.Size(54, 20);
-            this.lateralPoleRotUpDown.TabIndex = 44;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label1.Location = new System.Drawing.Point(3, 118);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(83, 13);
-            this.label1.TabIndex = 42;
-            this.label1.Text = "Lateral Pole Rot";
-            // 
-            // lateralPoleRotSlider
-            // 
-            this.lateralPoleRotSlider.LargeChange = 100;
-            this.lateralPoleRotSlider.Location = new System.Drawing.Point(83, 110);
-            this.lateralPoleRotSlider.Maximum = 10000;
-            this.lateralPoleRotSlider.Name = "lateralPoleRotSlider";
-            this.lateralPoleRotSlider.Size = new System.Drawing.Size(103, 45);
-            this.lateralPoleRotSlider.SmallChange = 1000;
-            this.lateralPoleRotSlider.TabIndex = 43;
-            this.lateralPoleRotSlider.TickFrequency = 10000;
-            this.lateralPoleRotSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.lateralPoleDisplacementCheck.AutoSize = true;
+            this.lateralPoleDisplacementCheck.Location = new System.Drawing.Point(3, 32);
+            this.lateralPoleDisplacementCheck.Name = "lateralPoleDisplacementCheck";
+            this.lateralPoleDisplacementCheck.Size = new System.Drawing.Size(149, 17);
+            this.lateralPoleDisplacementCheck.TabIndex = 42;
+            this.lateralPoleDisplacementCheck.Text = "Lateral Pole Displacement";
+            this.lateralPoleDisplacementCheck.UseVisualStyleBackColor = true;
+            this.lateralPoleDisplacementCheck.CheckedChanged += new System.EventHandler(this.lateralPoleDisplacementCheck_CheckedChanged);
             // 
             // DiscPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lateralPoleRotUpDown);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lateralPoleRotSlider);
+            this.Controls.Add(this.lateralPoleDisplacementCheck);
             this.Controls.Add(this.discOffsetUpDown);
             this.Controls.Add(this.rdaOffsetUpDown);
             this.Controls.Add(this.discPopUpDown);
@@ -294,8 +256,6 @@
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lateralPoleRotSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,8 +275,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TrackBar rdaOffsetSlider;
         private System.Windows.Forms.TrackBar discPopSlider;
-        private System.Windows.Forms.NumericUpDown lateralPoleRotUpDown;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TrackBar lateralPoleRotSlider;
+        private System.Windows.Forms.CheckBox lateralPoleDisplacementCheck;
     }
 }

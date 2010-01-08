@@ -25,8 +25,8 @@ namespace Medical.GUI
             discOffsetSlider.ValueChanged += new EventHandler(discOffsetSlider_ValueChanged);
             discOffsetUpDown.ValueChanged += new EventHandler(discOffsetUpDown_ValueChanged);
             discLockedCheck.CheckedChanged += new EventHandler(discLockedCheck_CheckedChanged);
-            lateralPoleRotSlider.ValueChanged += new EventHandler(lateralPoleRotSlider_ValueChanged);
-            lateralPoleRotUpDown.ValueChanged += new EventHandler(lateralPoleRotUpDown_ValueChanged);
+            //lateralPoleRotSlider.ValueChanged += new EventHandler(lateralPoleRotSlider_ValueChanged);
+            //lateralPoleRotUpDown.ValueChanged += new EventHandler(lateralPoleRotUpDown_ValueChanged);
         }
 
         public void sceneLoaded()
@@ -42,6 +42,7 @@ namespace Medical.GUI
                 synchronizeDiscOffset(disc, disc.DiscOffset.y);
                 synchronizeRDAOffset(disc, disc.RDAOffset.y);
                 synchronizeLocked(disc, disc.Locked);
+                synchronizeLateralPoleDisplacement(disc, disc.DisplaceLateralPole);
             }
         }
 
@@ -56,6 +57,7 @@ namespace Medical.GUI
             synchronizeDiscOffset(null, disc.NormalDiscOffset.y);
             synchronizeRDAOffset(null, disc.NormalRDAOffset.y);
             synchronizeLocked(null, false);
+            synchronizeLateralPoleDisplacement(null, false);
         }
 
         public String DiscName { get; set; }
@@ -187,36 +189,59 @@ namespace Medical.GUI
             synchronizeLocked(discLockedCheck, discLockedCheck.Checked);
         }
 
-        //Synchronize Lateral Pole Rotation
-        void synchronizeLateralPoleRotation(object sender, float position)
+        //Synchronize lateral pole displacement
+        void synchronizeLateralPoleDisplacement(object sender, bool displace)
         {
             if (allowSynchronization)
             {
                 allowSynchronization = false;
                 if (sender != disc)
                 {
-                    disc.LateralPoleRotation = position;
+                    disc.DisplaceLateralPole = displace;
                 }
-                if (sender != lateralPoleRotSlider)
+                if (sender != lateralPoleDisplacementCheck)
                 {
-                    lateralPoleRotSlider.Value = (int)(position * lateralPoleRotSlider.Maximum);
-                }
-                if (sender != lateralPoleRotUpDown)
-                {
-                    lateralPoleRotUpDown.Value = (decimal)position;
+                    lateralPoleDisplacementCheck.Checked = displace;
                 }
                 allowSynchronization = true;
             }
         }
 
-        void lateralPoleRotUpDown_ValueChanged(object sender, EventArgs e)
+        private void lateralPoleDisplacementCheck_CheckedChanged(object sender, EventArgs e)
         {
-            synchronizeLateralPoleRotation(lateralPoleRotUpDown, (float)lateralPoleRotUpDown.Value);
+            synchronizeLateralPoleDisplacement(lateralPoleDisplacementCheck, lateralPoleDisplacementCheck.Checked);
         }
 
-        void lateralPoleRotSlider_ValueChanged(object sender, EventArgs e)
-        {
-            synchronizeLateralPoleRotation(lateralPoleRotSlider, lateralPoleRotSlider.Value / (float)lateralPoleRotSlider.Maximum);
-        }
+        //Synchronize Lateral Pole Rotation
+        //void synchronizeLateralPoleRotation(object sender, float position)
+        //{
+        //    if (allowSynchronization)
+        //    {
+        //        allowSynchronization = false;
+        //        if (sender != disc)
+        //        {
+        //            disc.LateralPoleRotation = position;
+        //        }
+        //        if (sender != lateralPoleRotSlider)
+        //        {
+        //            lateralPoleRotSlider.Value = (int)(position * lateralPoleRotSlider.Maximum);
+        //        }
+        //        if (sender != lateralPoleRotUpDown)
+        //        {
+        //            lateralPoleRotUpDown.Value = (decimal)position;
+        //        }
+        //        allowSynchronization = true;
+        //    }
+        //}
+
+        //void lateralPoleRotUpDown_ValueChanged(object sender, EventArgs e)
+        //{
+        //    synchronizeLateralPoleRotation(lateralPoleRotUpDown, (float)lateralPoleRotUpDown.Value);
+        //}
+
+        //void lateralPoleRotSlider_ValueChanged(object sender, EventArgs e)
+        //{
+        //    synchronizeLateralPoleRotation(lateralPoleRotSlider, lateralPoleRotSlider.Value / (float)lateralPoleRotSlider.Maximum);
+        //}
     }
 }
