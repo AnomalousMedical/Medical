@@ -74,7 +74,7 @@ namespace Medical
         private float lateralPoleRotation = 0.0f;
 
         [Editable]
-        private bool popLateralPole = false;
+        private bool popLateralPole = true;
 
         [Editable]
         private float maxLateralPoleRotation = 1.0f;
@@ -275,6 +275,33 @@ namespace Medical
             if (locked)
             {
                 return rdaOffset + horizontalOffset;
+            }
+            else if(popLateralPole)
+            {
+                float rotAmount = lateralPoleRotation / maxLateralPoleRotation;
+                //Method 1
+                if (rotAmount < 0.1f)
+                {
+                    return discOffset + horizontalOffset;
+                }
+                else if (rotAmount < 0.2f)
+                {
+                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
+                }
+                else
+                {
+                    return rdaOffset + horizontalOffset;
+                }
+
+                //Method 2
+                //if (rotAmount < 0.2f)
+                //{
+                //    return discOffset + horizontalOffset;
+                //}
+                //else
+                //{
+                //    return rdaOffset + horizontalOffset;
+                //}
             }
             else
             {
