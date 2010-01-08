@@ -16,6 +16,7 @@ namespace Medical
         private String discName;
         private bool locked;
         private bool displaceLateralPole;
+        private Vector3 clockFaceOffset;
 
         public DiscPresetState(String discName, String name, String category, String imageName)
             :base(name, category, imageName)
@@ -31,6 +32,7 @@ namespace Medical
             this.PopLocation = state.PopLocation;
             this.RdaOffset = state.RDAOffset;
             this.DisplaceLateralPole = state.DisplaceLateralPole;
+            this.ClockFaceOffset = state.ClockFaceOffset;
         }
 
         public override void applyToState(MedicalState state)
@@ -42,6 +44,7 @@ namespace Medical
             disc.PopLocation = popLocation;
             disc.RDAOffset = rdaOffset;
             disc.DisplaceLateralPole = displaceLateralPole;
+            disc.ClockFaceOffset = clockFaceOffset;
             state.Disc.addPosition(disc);
         }
 
@@ -134,6 +137,18 @@ namespace Medical
             }
         }
 
+        public Vector3 ClockFaceOffset
+        {
+            get
+            {
+                return clockFaceOffset;
+            }
+            private set
+            {
+                clockFaceOffset = value;
+            }
+        }
+
         #region Saveable Members
 
         private const String DISC_OFFSET = "discOffset";
@@ -143,6 +158,7 @@ namespace Medical
         private const String DISC_NAME = "discName";
         private const String LOCKED = "locked";
         private const string DISPLACE_LATERAL_POLE = "displaceLateralPole";
+        private const string CLOCK_FACE_OFFSET = "clockFaceOffset";
 
         protected DiscPresetState(LoadInfo info)
             :base(info)
@@ -158,6 +174,10 @@ namespace Medical
             {
                 displaceLateralPole = info.GetBoolean(DISPLACE_LATERAL_POLE);
             }
+            if (info.hasValue(CLOCK_FACE_OFFSET))
+            {
+                clockFaceOffset = info.GetVector3(CLOCK_FACE_OFFSET);
+            }
         }
 
         public override void getInfo(SaveInfo info)
@@ -170,6 +190,7 @@ namespace Medical
             info.AddValue(DISC_NAME, discName);
             info.AddValue(LOCKED, locked);
             info.AddValue(DISPLACE_LATERAL_POLE, displaceLateralPole);
+            info.AddValue(CLOCK_FACE_OFFSET, clockFaceOffset);
         }
 
         #endregion Saveable Members

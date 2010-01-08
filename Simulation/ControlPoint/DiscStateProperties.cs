@@ -16,6 +16,7 @@ namespace Medical
         private String discName;
         private bool locked;
         private bool displaceLateralPole;
+        private Vector3 clockFaceOffset;
 
         public DiscStateProperties(Disc disc)
         {
@@ -26,6 +27,7 @@ namespace Medical
             horizontalOffset = disc.HorizontalOffset;
             locked = disc.Locked;
             displaceLateralPole = disc.DisplaceLateralPole;
+            clockFaceOffset = disc.ClockFaceOffset;
         }
 
         public DiscStateProperties(String discName)
@@ -39,6 +41,7 @@ namespace Medical
             disc.DiscOffset = this.discOffset.lerp(ref target.discOffset, ref percent);
             disc.RDAOffset = this.rdaOffset.lerp(ref target.rdaOffset, ref percent);
             disc.HorizontalOffset = this.horizontalOffset.lerp(ref target.horizontalOffset, ref percent);
+            disc.ClockFaceOffset = this.clockFaceOffset.lerp(ref target.clockFaceOffset, ref percent);
             float delta = target.popLocation - this.popLocation;
             disc.PopLocation = this.popLocation + delta * percent;
             if (percent < 0.05f)
@@ -143,6 +146,18 @@ namespace Medical
             }
         }
 
+        public Vector3 ClockFaceOffset
+        {
+            get
+            {
+                return clockFaceOffset;
+            }
+            set
+            {
+                clockFaceOffset = value;
+            }
+        }
+
         #region Saveable Members
 
         private const string DISC_OFFSET = "DiscOffset";
@@ -152,6 +167,7 @@ namespace Medical
         private const string HORIZONTAL_OFFSET = "HorizontalOffset";
         private const string LOCKED = "Locked";
         private const string DISPLACE_LATERAL_POLE = "DisplaceLateralPole";
+        private const string CLOCK_FACE_OFFSET = "ClockFaceOffset";
 
         protected DiscStateProperties(LoadInfo info)
         {
@@ -170,6 +186,10 @@ namespace Medical
             {
                 displaceLateralPole = info.GetBoolean(DISPLACE_LATERAL_POLE);
             }
+            if (info.hasValue(CLOCK_FACE_OFFSET))
+            {
+                clockFaceOffset = info.GetVector3(CLOCK_FACE_OFFSET);
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -181,6 +201,7 @@ namespace Medical
             info.AddValue(HORIZONTAL_OFFSET, horizontalOffset);
             info.AddValue(LOCKED, locked);
             info.AddValue(DISPLACE_LATERAL_POLE, displaceLateralPole);
+            info.AddValue(CLOCK_FACE_OFFSET, clockFaceOffset);
         }
 
         #endregion
