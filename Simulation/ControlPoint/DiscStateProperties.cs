@@ -15,6 +15,7 @@ namespace Medical
         private Vector3 horizontalOffset;
         private String discName;
         private bool locked;
+        private bool displaceLateralPole;
 
         public DiscStateProperties(Disc disc)
         {
@@ -24,6 +25,7 @@ namespace Medical
             discName = disc.Owner.Name;
             horizontalOffset = disc.HorizontalOffset;
             locked = disc.Locked;
+            displaceLateralPole = disc.DisplaceLateralPole;
         }
 
         public DiscStateProperties(String discName)
@@ -39,6 +41,14 @@ namespace Medical
             disc.HorizontalOffset = this.horizontalOffset.lerp(ref target.horizontalOffset, ref percent);
             float delta = target.popLocation - this.popLocation;
             disc.PopLocation = this.popLocation + delta * percent;
+            if (percent < 0.05f)
+            {
+                disc.DisplaceLateralPole = displaceLateralPole;
+            }
+            else
+            {
+                disc.DisplaceLateralPole = target.displaceLateralPole;
+            }
             if (percent < 1.0f)
             {
                 disc.Locked = locked;
@@ -121,6 +131,18 @@ namespace Medical
             }
         }
 
+        public bool DisplaceLateralPole
+        {
+            get
+            {
+                return displaceLateralPole;
+            }
+            set
+            {
+                displaceLateralPole = value;
+            }
+        }
+
         #region Saveable Members
 
         private const string DISC_OFFSET = "DiscOffset";
@@ -129,6 +151,7 @@ namespace Medical
         private const string DISC_NAME = "DiscName";
         private const string HORIZONTAL_OFFSET = "HorizontalOffset";
         private const string LOCKED = "Locked";
+        private const string DISPLACE_LATERAL_POLE = "DisplaceLateralPole";
 
         protected DiscStateProperties(LoadInfo info)
         {
@@ -142,6 +165,11 @@ namespace Medical
             {
                 locked = info.GetBoolean(LOCKED);
             }
+            //Check for version with displace lateral pole
+            if(info.hasValue(DISPLACE_LATERAL_POLE))
+            {
+                displaceLateralPole = info.GetBoolean(DISPLACE_LATERAL_POLE);
+            }
         }
 
         public void getInfo(SaveInfo info)
@@ -152,6 +180,7 @@ namespace Medical
             info.AddValue(DISC_NAME, discName);
             info.AddValue(HORIZONTAL_OFFSET, horizontalOffset);
             info.AddValue(LOCKED, locked);
+            info.AddValue(DISPLACE_LATERAL_POLE, displaceLateralPole);
         }
 
         #endregion

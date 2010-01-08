@@ -68,11 +68,7 @@ namespace Medical.GUI
                 DiscStateProperties discSource = sourceState.Disc.getPosition(discName);
                                 
                 DiscPresetState discPreset = new DiscPresetState(discName, nameText.Text, categoryText.Text, nameText.Text.Replace(" ", "") + ".png");
-                discPreset.DiscOffset = discSource.DiscOffset;
-                discPreset.HorizontalOffset = discSource.HorizontalOffset;
-                discPreset.Locked = discSource.Locked;
-                discPreset.PopLocation = discSource.PopLocation;
-                discPreset.RdaOffset = discSource.RDAOffset;
+                discPreset.captureFromState(discSource);
 
                 try
                 {

@@ -15,6 +15,7 @@ namespace Medical
         private Vector3 horizontalOffset;
         private String discName;
         private bool locked;
+        private bool displaceLateralPole;
 
         public DiscPresetState(String discName, String name, String category, String imageName)
             :base(name, category, imageName)
@@ -29,6 +30,7 @@ namespace Medical
             this.Locked = state.Locked;
             this.PopLocation = state.PopLocation;
             this.RdaOffset = state.RDAOffset;
+            this.DisplaceLateralPole = state.DisplaceLateralPole;
         }
 
         public override void applyToState(MedicalState state)
@@ -39,6 +41,7 @@ namespace Medical
             disc.Locked = locked;
             disc.PopLocation = popLocation;
             disc.RDAOffset = rdaOffset;
+            disc.DisplaceLateralPole = displaceLateralPole;
             state.Disc.addPosition(disc);
         }
 
@@ -53,7 +56,7 @@ namespace Medical
             {
                 return discOffset;
             }
-            set
+            private set
             {
                 discOffset = value;
             }
@@ -65,7 +68,7 @@ namespace Medical
             {
                 return rdaOffset;
             }
-            set
+            private set
             {
                 rdaOffset = value;
             }
@@ -77,7 +80,7 @@ namespace Medical
             {
                 return popLocation;
             }
-            set
+            private set
             {
                 popLocation = value;
             }
@@ -89,7 +92,7 @@ namespace Medical
             {
                 return horizontalOffset;
             }
-            set
+            private set
             {
                 horizontalOffset = value;
             }
@@ -101,7 +104,7 @@ namespace Medical
             {
                 return discName;
             }
-            set
+            private set
             {
                 discName = value;
             }
@@ -113,9 +116,21 @@ namespace Medical
             {
                 return locked;
             }
-            set
+            private set
             {
                 locked = value;
+            }
+        }
+
+        public bool DisplaceLateralPole
+        {
+            get
+            {
+                return displaceLateralPole;
+            }
+            private set
+            {
+                displaceLateralPole = value;
             }
         }
 
@@ -127,6 +142,7 @@ namespace Medical
         private const String HORIZONTAL_OFFSET = "horizontalOffset";
         private const String DISC_NAME = "discName";
         private const String LOCKED = "locked";
+        private const string DISPLACE_LATERAL_POLE = "displaceLateralPole";
 
         protected DiscPresetState(LoadInfo info)
             :base(info)
@@ -137,6 +153,11 @@ namespace Medical
             horizontalOffset = info.GetVector3(HORIZONTAL_OFFSET);
             discName = info.GetString(DISC_NAME);
             locked = info.GetBoolean(LOCKED);
+            //Check for version with displace lateral pole
+            if (info.hasValue(DISPLACE_LATERAL_POLE))
+            {
+                displaceLateralPole = info.GetBoolean(DISPLACE_LATERAL_POLE);
+            }
         }
 
         public override void getInfo(SaveInfo info)
@@ -148,6 +169,7 @@ namespace Medical
             info.AddValue(HORIZONTAL_OFFSET, horizontalOffset);
             info.AddValue(DISC_NAME, discName);
             info.AddValue(LOCKED, locked);
+            info.AddValue(DISPLACE_LATERAL_POLE, displaceLateralPole);
         }
 
         #endregion Saveable Members
