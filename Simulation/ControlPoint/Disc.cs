@@ -86,12 +86,6 @@ namespace Medical
         private float lateralPolePopDistance = 0.2f;
 
         [Editable]
-        private float popAdditionalOffsetPercent = 0.5f;
-
-        [Editable]
-        Vector3 elevenOClockAdditionalOffset = Vector3.UnitZ * -0.2f;
-
-        [Editable]
         private bool locked = false;
 
         [Editable]
