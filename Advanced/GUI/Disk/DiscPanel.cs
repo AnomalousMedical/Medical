@@ -27,6 +27,10 @@ namespace Medical.GUI
             discLockedCheck.CheckedChanged += new EventHandler(discLockedCheck_CheckedChanged);
             //lateralPoleRotSlider.ValueChanged += new EventHandler(lateralPoleRotSlider_ValueChanged);
             //lateralPoleRotUpDown.ValueChanged += new EventHandler(lateralPoleRotUpDown_ValueChanged);
+            horizontalClockFaceSlider.ValueChanged += new EventHandler(clockFaceSlider_ValueChanged);
+            horizontalClockFaceUpDown.ValueChanged += new EventHandler(clockFaceUpDown_ValueChanged);
+            verticalClockFaceSlider.ValueChanged += new EventHandler(clockFaceSlider_ValueChanged);
+            verticalClockFaceUpDown.ValueChanged += new EventHandler(clockFaceUpDown_ValueChanged);
         }
 
         public void sceneLoaded()
@@ -58,6 +62,7 @@ namespace Medical.GUI
             synchronizeRDAOffset(null, disc.NormalRDAOffset.y);
             synchronizeLocked(null, false);
             synchronizeLateralPoleDisplacement(null, false);
+            synchronizeClockFaceOffset(null, disc.NormalClockFaceOffset);
         }
 
         public String DiscName { get; set; }
@@ -210,6 +215,44 @@ namespace Medical.GUI
         private void lateralPoleDisplacementCheck_CheckedChanged(object sender, EventArgs e)
         {
             synchronizeLateralPoleDisplacement(lateralPoleDisplacementCheck, lateralPoleDisplacementCheck.Checked);
+        }
+
+        //Synchronize clock face position
+        void synchronizeClockFaceOffset(object sender, Vector3 offset)
+        {
+            if (allowSynchronization)
+            {
+                allowSynchronization = false;
+                if (sender != disc)
+                {
+                    disc.ClockFaceOffset = offset;
+                }
+                if (sender != horizontalClockFaceSlider && sender != verticalClockFaceSlider)
+                {
+                    horizontalClockFaceSlider.Value = (int)(offset.z * horizontalClockFaceSlider.Maximum);
+                    verticalClockFaceSlider.Value = (int)(offset.y * -verticalClockFaceSlider.Maximum);
+                }
+                if (sender != horizontalClockFaceUpDown && sender != verticalClockFaceUpDown)
+                {
+                    horizontalClockFaceUpDown.Value = (decimal)offset.z;
+                    verticalClockFaceUpDown.Value = (decimal)offset.y;
+                }
+                allowSynchronization = true;
+            }
+        }
+
+        void clockFaceUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            Vector3 offset = new Vector3(0.0f, (float)verticalClockFaceUpDown.Value, (float)horizontalClockFaceUpDown.Value);
+            synchronizeClockFaceOffset(sender, offset);
+        }
+
+        void clockFaceSlider_ValueChanged(object sender, EventArgs e)
+        {
+            Vector3 offset = new Vector3(0.0f, 
+                (float)verticalClockFaceSlider.Value / -(float)verticalClockFaceSlider.Maximum, 
+                (float)horizontalClockFaceSlider.Value / (float)horizontalClockFaceSlider.Maximum);
+            synchronizeClockFaceOffset(sender, offset);
         }
 
         //Synchronize Lateral Pole Rotation

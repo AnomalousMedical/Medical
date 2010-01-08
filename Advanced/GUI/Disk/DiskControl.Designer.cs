@@ -51,7 +51,7 @@
             // 
             // distortionButton
             // 
-            this.distortionButton.Location = new System.Drawing.Point(99, 554);
+            this.distortionButton.Location = new System.Drawing.Point(99, 732);
             this.distortionButton.Name = "distortionButton";
             this.distortionButton.Size = new System.Drawing.Size(76, 23);
             this.distortionButton.TabIndex = 12;
@@ -63,7 +63,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(111)))), ((int)(((byte)(243)))));
             this.panel2.Controls.Add(this.horizontalOffsetTrackBar);
-            this.panel2.Location = new System.Drawing.Point(53, 523);
+            this.panel2.Location = new System.Drawing.Point(53, 701);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(125, 25);
             this.panel2.TabIndex = 13;
@@ -86,7 +86,7 @@
             this.groupBox1.Controls.Add(this.rightDiscPanel);
             this.groupBox1.Location = new System.Drawing.Point(8, 198);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(261, 151);
+            this.groupBox1.Size = new System.Drawing.Size(261, 242);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Right Disc";
@@ -96,15 +96,15 @@
             this.rightDiscPanel.DiscName = "RightTMJDisc";
             this.rightDiscPanel.Location = new System.Drawing.Point(4, 12);
             this.rightDiscPanel.Name = "rightDiscPanel";
-            this.rightDiscPanel.Size = new System.Drawing.Size(255, 152);
+            this.rightDiscPanel.Size = new System.Drawing.Size(255, 222);
             this.rightDiscPanel.TabIndex = 0;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.leftDiscPanel);
-            this.groupBox2.Location = new System.Drawing.Point(8, 355);
+            this.groupBox2.Location = new System.Drawing.Point(6, 445);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(261, 150);
+            this.groupBox2.Size = new System.Drawing.Size(261, 237);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Left Disc";
@@ -114,7 +114,7 @@
             this.leftDiscPanel.DiscName = "LeftTMJDisc";
             this.leftDiscPanel.Location = new System.Drawing.Point(3, 11);
             this.leftDiscPanel.Name = "leftDiscPanel";
-            this.leftDiscPanel.Size = new System.Drawing.Size(255, 144);
+            this.leftDiscPanel.Size = new System.Drawing.Size(255, 239);
             this.leftDiscPanel.TabIndex = 0;
             // 
             // horizontalOffsetUpDown
@@ -125,7 +125,7 @@
             0,
             0,
             65536});
-            this.horizontalOffsetUpDown.Location = new System.Drawing.Point(181, 525);
+            this.horizontalOffsetUpDown.Location = new System.Drawing.Point(181, 703);
             this.horizontalOffsetUpDown.Maximum = new decimal(new int[] {
             1,
             0,
@@ -200,7 +200,7 @@
             this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DiskControl";
-            this.Size = new System.Drawing.Size(272, 587);
+            this.Size = new System.Drawing.Size(272, 770);
             this.Tag = "Disc";
             this.ToolStripName = "Advanced";
             this.panel2.ResumeLayout(false);

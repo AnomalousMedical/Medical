@@ -41,6 +41,13 @@
             this.rdaOffsetSlider = new System.Windows.Forms.TrackBar();
             this.discPopSlider = new System.Windows.Forms.TrackBar();
             this.lateralPoleDisplacementCheck = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.horizontalClockFaceUpDown = new System.Windows.Forms.NumericUpDown();
+            this.horizontalClockFaceSlider = new System.Windows.Forms.TrackBar();
+            this.verticalClockFaceUpDown = new System.Windows.Forms.NumericUpDown();
+            this.verticalClockFaceSlider = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopUpDown)).BeginInit();
@@ -49,6 +56,10 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizontalClockFaceUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizontalClockFaceSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalClockFaceUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalClockFaceSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // discOffsetUpDown
@@ -229,10 +240,125 @@
             this.lateralPoleDisplacementCheck.UseVisualStyleBackColor = true;
             this.lateralPoleDisplacementCheck.CheckedChanged += new System.EventHandler(this.lateralPoleDisplacementCheck_CheckedChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(3, 138);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 13);
+            this.label1.TabIndex = 43;
+            this.label1.Text = "Clock Face Offset";
+            // 
+            // horizontalClockFaceUpDown
+            // 
+            this.horizontalClockFaceUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.horizontalClockFaceUpDown.DecimalPlaces = 4;
+            this.horizontalClockFaceUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.horizontalClockFaceUpDown.Location = new System.Drawing.Point(189, 164);
+            this.horizontalClockFaceUpDown.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.horizontalClockFaceUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.horizontalClockFaceUpDown.Name = "horizontalClockFaceUpDown";
+            this.horizontalClockFaceUpDown.Size = new System.Drawing.Size(54, 20);
+            this.horizontalClockFaceUpDown.TabIndex = 45;
+            // 
+            // horizontalClockFaceSlider
+            // 
+            this.horizontalClockFaceSlider.LargeChange = 100;
+            this.horizontalClockFaceSlider.Location = new System.Drawing.Point(80, 163);
+            this.horizontalClockFaceSlider.Maximum = 10000;
+            this.horizontalClockFaceSlider.Minimum = -10000;
+            this.horizontalClockFaceSlider.Name = "horizontalClockFaceSlider";
+            this.horizontalClockFaceSlider.Size = new System.Drawing.Size(103, 45);
+            this.horizontalClockFaceSlider.SmallChange = 1000;
+            this.horizontalClockFaceSlider.TabIndex = 44;
+            this.horizontalClockFaceSlider.TickFrequency = 10000;
+            this.horizontalClockFaceSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // verticalClockFaceUpDown
+            // 
+            this.verticalClockFaceUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.verticalClockFaceUpDown.DecimalPlaces = 4;
+            this.verticalClockFaceUpDown.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.verticalClockFaceUpDown.Location = new System.Drawing.Point(189, 201);
+            this.verticalClockFaceUpDown.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.verticalClockFaceUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.verticalClockFaceUpDown.Name = "verticalClockFaceUpDown";
+            this.verticalClockFaceUpDown.Size = new System.Drawing.Size(54, 20);
+            this.verticalClockFaceUpDown.TabIndex = 47;
+            // 
+            // verticalClockFaceSlider
+            // 
+            this.verticalClockFaceSlider.LargeChange = 100;
+            this.verticalClockFaceSlider.Location = new System.Drawing.Point(80, 200);
+            this.verticalClockFaceSlider.Maximum = 10000;
+            this.verticalClockFaceSlider.Name = "verticalClockFaceSlider";
+            this.verticalClockFaceSlider.Size = new System.Drawing.Size(103, 45);
+            this.verticalClockFaceSlider.SmallChange = 1000;
+            this.verticalClockFaceSlider.TabIndex = 46;
+            this.verticalClockFaceSlider.TickFrequency = 10000;
+            this.verticalClockFaceSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(2, 166);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 48;
+            this.label2.Text = "Horizontal";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label3.Location = new System.Drawing.Point(3, 203);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.TabIndex = 49;
+            this.label3.Text = "Vertical";
+            // 
             // DiscPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.verticalClockFaceUpDown);
+            this.Controls.Add(this.verticalClockFaceSlider);
+            this.Controls.Add(this.horizontalClockFaceUpDown);
+            this.Controls.Add(this.horizontalClockFaceSlider);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lateralPoleDisplacementCheck);
             this.Controls.Add(this.discOffsetUpDown);
             this.Controls.Add(this.rdaOffsetUpDown);
@@ -245,7 +371,7 @@
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.discPopSlider);
             this.Name = "DiscPanel";
-            this.Size = new System.Drawing.Size(248, 163);
+            this.Size = new System.Drawing.Size(248, 234);
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopUpDown)).EndInit();
@@ -256,6 +382,10 @@
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rdaOffsetSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.discPopSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizontalClockFaceUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizontalClockFaceSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalClockFaceUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.verticalClockFaceSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,5 +406,12 @@
         private System.Windows.Forms.TrackBar rdaOffsetSlider;
         private System.Windows.Forms.TrackBar discPopSlider;
         private System.Windows.Forms.CheckBox lateralPoleDisplacementCheck;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown horizontalClockFaceUpDown;
+        private System.Windows.Forms.TrackBar horizontalClockFaceSlider;
+        private System.Windows.Forms.NumericUpDown verticalClockFaceUpDown;
+        private System.Windows.Forms.TrackBar verticalClockFaceSlider;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

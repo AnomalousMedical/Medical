@@ -57,10 +57,13 @@ namespace Medical
         private Vector3 rdaOffset = Vector3.UnitY * -0.151f;
 
         [Editable]
-        private Vector3 horizontalTickSpacing = Vector3.UnitX * 0.1f;
+        private Vector3 horizontalOffset = Vector3.Zero;
 
         [Editable]
-        private Vector3 horizontalOffset = Vector3.Zero;
+        private Vector3 clockFaceOffset = Vector3.Zero;
+
+        [Editable]
+        private Vector3 normalClockFaceOffset = Vector3.Zero;
 
         //The location that the disc starts to move with the condyle.
         [Editable]
@@ -279,43 +282,27 @@ namespace Medical
             else if(displaceLateralPole)
             {
                 float rotAmount = lateralPoleRotation / maxLateralPoleRotation;
-                //Method 1
-                if (rotAmount < 0.1f)
+
+                //Rotation is still within the disc.
+                if (rotAmount < 0.15f)
                 {
                     return discOffset + horizontalOffset;
                 }
-                else if (rotAmount < 0.2f)
-                {
-                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
-                }
+                //Disc is slipped.
                 else
                 {
                     return rdaOffset + horizontalOffset;
                 }
-
-                //Method 2
-                //if (rotAmount < 0.2f)
-                //{
-                //    return discOffset + horizontalOffset;
-                //}
-                //else
-                //{
-                //    return rdaOffset + horizontalOffset;
-                //}
             }
             else
             {
                 if (location < discPopLocation - discBackOffset)
                 {
-                    return rdaOffset + horizontalOffset;
-                }
-                else if (location < discPopLocation - discBackOffset / 1.5f)
-                {
-                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset + elevenOClockAdditionalOffset;
+                    return rdaOffset + clockFaceOffset + horizontalOffset;
                 }
                 else if (location < discPopLocation)
                 {
-                    return discOffset + discOffset * popAdditionalOffsetPercent + horizontalOffset;
+                    return discOffset + clockFaceOffset + horizontalOffset;
                 }
                 else
                 {
@@ -327,14 +314,6 @@ namespace Medical
         public Vector3 getPosition(float location)
         {
             return fossa.getPosition(location) + getOffset(location);
-        }
-
-        public Vector3 HorizontalTickSpacing
-        {
-            get
-            {
-                return horizontalTickSpacing;
-            }
         }
 
         public Vector3 DiscOffset
@@ -424,6 +403,32 @@ namespace Medical
                 }
             }
         }
+
+        public Vector3 ClockFaceOffset
+        {
+            get
+            {
+                return clockFaceOffset;
+            }
+            set
+            {
+                clockFaceOffset = value;
+                if (controlPoint != null)
+                {
+                    controlPoint.positionModified();
+                }
+            }
+        }
+
+        public Vector3 NormalClockFaceOffset
+        {
+            get
+            {
+                return normalClockFaceOffset;
+            }
+        }
+
+
 
         public bool Locked
         {
