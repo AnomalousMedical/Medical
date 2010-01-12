@@ -83,6 +83,9 @@ namespace Medical
         private float lateralPolePopDistance = 0.2f;
 
         [Editable]
+        private float lateralPoleDiscBack = 0.03f;
+
+        [Editable]
         private bool locked = false;
 
         [Editable]
@@ -224,29 +227,25 @@ namespace Medical
             //Calculate the lateral pole displacement.
             if (displaceLateralPole)
             {
+                float popOffset = 0.0f;
                 if (locked)
                 {
-                    float popOffset = discPopLocation - NormalPopLocation;
-                    float rotatePercentage = popOffset / lateralPolePopDistance;
-                    if (rotatePercentage > 1.0f)
-                    {
-                        rotatePercentage = 1.0f;
-                    }
-                    LateralPoleRotation = rotatePercentage;
+                    popOffset = discPopLocation - NormalPopLocation;
                 }
-                else
+                else if (location < discPopLocation)
                 {
-                    if (location < discPopLocation)
-                    {
-                        float popOffset = discPopLocation - location;
-                        float rotatePercentage = popOffset / lateralPolePopDistance;
-                        if (rotatePercentage > 1.0f)
-                        {
-                            rotatePercentage = 1.0f;
-                        }
-                        LateralPoleRotation = rotatePercentage;
-                    }
+                    popOffset = discPopLocation - location;
                 }
+                if (popOffset < 0.0f)
+                {
+                    popOffset = 0.0f;
+                }
+                float rotatePercentage = popOffset / lateralPolePopDistance;
+                if (rotatePercentage > 1.0f)
+                {
+                    rotatePercentage = 1.0f;
+                }
+                LateralPoleRotation = rotatePercentage;
             }
             //Move the disc with the mandible as it is under the pop location.
             if (controlPoint.CurrentLocation >= discPopLocation && !locked)
@@ -300,15 +299,13 @@ namespace Medical
             }
             else if(displaceLateralPole)
             {
-                //Rotation is still within the disc.
-                if (lateralPoleRotation < 0.15f)
-                {
-                    return discOffset + horizontalOffset;
-                }
-                //Disc is slipped.
-                else
+                if (location < discPopLocation - lateralPoleDiscBack)
                 {
                     return rdaOffset + horizontalOffset;
+                }
+                else
+                {
+                    return discOffset + horizontalOffset; 
                 }
             }
             else

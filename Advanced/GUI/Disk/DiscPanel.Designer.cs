@@ -121,7 +121,7 @@
             1,
             0,
             0,
-            65536});
+            131072});
             this.discPopUpDown.Location = new System.Drawing.Point(191, 5);
             this.discPopUpDown.Maximum = new decimal(new int[] {
             1,
