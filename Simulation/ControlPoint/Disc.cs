@@ -80,9 +80,6 @@ namespace Medical
         private bool displaceLateralPole = false;
 
         [Editable]
-        private float maxLateralPoleRotation = 1.0f;
-
-        [Editable]
         private float lateralPolePopDistance = 0.2f;
 
         [Editable]
@@ -223,18 +220,32 @@ namespace Medical
             ventralPole.update();
 
             float location = controlPoint.CurrentLocation;
+
             //Calculate the lateral pole displacement.
             if (displaceLateralPole)
             {
-                if (location < discPopLocation)
+                if (locked)
                 {
-                    float popOffset = discPopLocation - location;
+                    float popOffset = discPopLocation - NormalPopLocation;
                     float rotatePercentage = popOffset / lateralPolePopDistance;
-                    if(rotatePercentage > 1.0f)
+                    if (rotatePercentage > 1.0f)
                     {
                         rotatePercentage = 1.0f;
                     }
-                    LateralPoleRotation = rotatePercentage * maxLateralPoleRotation;
+                    LateralPoleRotation = rotatePercentage;
+                }
+                else
+                {
+                    if (location < discPopLocation)
+                    {
+                        float popOffset = discPopLocation - location;
+                        float rotatePercentage = popOffset / lateralPolePopDistance;
+                        if (rotatePercentage > 1.0f)
+                        {
+                            rotatePercentage = 1.0f;
+                        }
+                        LateralPoleRotation = rotatePercentage;
+                    }
                 }
             }
             //Move the disc with the mandible as it is under the pop location.
@@ -246,13 +257,27 @@ namespace Medical
             //The disc is displaced from the top of the mandible.
             else
             {
-                if (controlPoint.CurrentLocation >= discPopLocation - discBackOffset && locked)
+                if (displaceLateralPole)
                 {
-                    location = controlPoint.CurrentLocation + discBackOffset;
+                    if (controlPoint.CurrentLocation >= discPopLocation && locked)
+                    {
+                        location = controlPoint.CurrentLocation;
+                    }
+                    else
+                    {
+                        location = discPopLocation;
+                    }
                 }
                 else
                 {
-                    location = discPopLocation;
+                    if (controlPoint.CurrentLocation >= discPopLocation - discBackOffset && locked)
+                    {
+                        location = controlPoint.CurrentLocation + discBackOffset;
+                    }
+                    else
+                    {
+                        location = discPopLocation;
+                    }
                 }
                 Vector3 translation = Quaternion.quatRotate(controlPoint.MandibleRotation, controlPoint.MandibleBonePosition + endpointOffset) + controlPoint.MandibleTranslation;
                 updateTranslation(ref translation);
@@ -275,10 +300,8 @@ namespace Medical
             }
             else if(displaceLateralPole)
             {
-                float rotAmount = lateralPoleRotation / maxLateralPoleRotation;
-
                 //Rotation is still within the disc.
-                if (rotAmount < 0.15f)
+                if (lateralPoleRotation < 0.15f)
                 {
                     return discOffset + horizontalOffset;
                 }
