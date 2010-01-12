@@ -144,9 +144,17 @@ namespace Medical.GUI
             }
         }
 
-        internal void showChanges(bool immediate)
+        internal void showChanges(bool immediate, bool captureCurrentState)
         {
-            MedicalState createdState = new MedicalState("");
+            MedicalState createdState;
+            if (captureCurrentState)
+            {
+                createdState = stateBlender.createBaselineState();
+            }
+            else
+            {
+                createdState = new MedicalState("");
+            }
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);

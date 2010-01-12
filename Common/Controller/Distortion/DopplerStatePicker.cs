@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using Medical.Properties;
 using Medical.GUI;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -23,7 +24,7 @@ namespace Medical
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            leftDopplerPanel = new DopplerPanel();
+            leftDopplerPanel = new DopplerPanel("LeftDoppler");
             leftDopplerPanel.NavigationState = "Left TMJ";
             leftDopplerPanel.LayerState = "DiscLayers";
             leftDopplerPanel.Text = "Left Fossa";
@@ -32,7 +33,7 @@ namespace Medical
             leftDopplerPanel.LargeIcon = Resources.LeftDiscSpace;
             statePicker.addStatePanel(leftDopplerPanel);
 
-            rightDopplerPanel = new DopplerPanel();
+            rightDopplerPanel = new DopplerPanel("RightDoppler");
             rightDopplerPanel.NavigationState = "Right TMJ";
             rightDopplerPanel.LayerState = "DiscLayers";
             rightDopplerPanel.Text = "Right Fossa";
@@ -57,9 +58,10 @@ namespace Medical
             statePicker.setToDefault();
         }
 
-        public override void sceneChanged(Engine.ObjectManagement.SimScene scene, string presetDirectory)
+        public override void sceneChanged(SimScene scene, string presetDirectory)
         {
-            
+            rightDopplerPanel.CurrentPresetDirectory = presetDirectory;
+            leftDopplerPanel.CurrentPresetDirectory = presetDirectory;
         }
 
         public override void startWizard(DrawingWindow displayWindow)

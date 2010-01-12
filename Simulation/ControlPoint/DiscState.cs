@@ -18,12 +18,26 @@ namespace Medical
 
         public void addPosition(Disc disc)
         {
-            discs.Add(disc.Owner.Name, new DiscStateProperties(disc));
+            if (discs.ContainsKey(disc.Owner.Name))
+            {
+                discs[disc.Owner.Name] = new DiscStateProperties(disc);
+            }
+            else
+            {
+                discs.Add(disc.Owner.Name, new DiscStateProperties(disc));
+            }
         }
 
         public void addPosition(DiscStateProperties prop)
         {
-            discs.Add(prop.DiscName, prop);
+            if (discs.ContainsKey(prop.DiscName))
+            {
+                discs[prop.DiscName] = prop;
+            }
+            else
+            {
+                discs.Add(prop.DiscName, prop);
+            }
         }
 
         public void blend(DiscState target, float percent)

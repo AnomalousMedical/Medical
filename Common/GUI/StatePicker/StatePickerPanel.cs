@@ -85,7 +85,12 @@ namespace Medical.GUI
 
         protected void showChanges(bool immediate)
         {
-            parentPicker.showChanges(immediate);
+            parentPicker.showChanges(immediate, false);
+        }
+
+        protected void showChanges(bool immediate, bool captureCurrentState)
+        {
+            parentPicker.showChanges(immediate, captureCurrentState);
         }
 
         protected virtual void statePickerSet(StatePickerWizard controller)

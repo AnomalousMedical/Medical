@@ -17,7 +17,14 @@ namespace Medical
 
         public void addPosition(AnimationManipulatorStateEntry entry)
         {
-            positions.Add(entry.Name, entry);
+            if (positions.ContainsKey(entry.Name))
+            {
+                positions[entry.Name] = entry;
+            }
+            else
+            {
+                positions.Add(entry.Name, entry);
+            }
         }
 
         public void blend(AnimationManipulatorState target, float percent)

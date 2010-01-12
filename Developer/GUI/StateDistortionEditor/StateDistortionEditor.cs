@@ -35,33 +35,53 @@ namespace Medical.GUI
                 String fileName = Path.GetFileNameWithoutExtension(distortionFile);
 
                 CompoundPresetState compoundState = new CompoundPresetState(fileName, "", fileName + ".png");
-                compoundState.addSubState(getGrowth("left", state));
-                compoundState.addSubState(getGrowth("right", state));
-                compoundState.addSubState(getDegeneration("left", state));
-                compoundState.addSubState(getDegeneration("right", state));
-                DiscPresetState leftDisc = new DiscPresetState("LeftTMJDisc", "LeftTMJDisc", "", "");
-                leftDisc.captureFromState(state.Disc.getPosition("LeftTMJDisc"));
-                compoundState.addSubState(leftDisc);
-                DiscPresetState rightDisc = new DiscPresetState("RightTMJDisc", "RightTMJDisc", "", "");
-                rightDisc.captureFromState(state.Disc.getPosition("RightTMJDisc"));
-                compoundState.addSubState(rightDisc);
-                FossaPresetState leftFossaState = new FossaPresetState("LeftFossa", "", "");
-                leftFossaState.captureFromState("LeftFossa", state.Fossa);
-                compoundState.addSubState(leftFossaState);
-                FossaPresetState rightFossaState = new FossaPresetState("RightFossa", "", "");
-                rightFossaState.captureFromState("RightFossa", state.Fossa);
-                compoundState.addSubState(rightFossaState);
-                TeethPresetState teethPreset = new TeethPresetState("Teeth", "", "");
-                teethPreset.captureFromState(state.Teeth);
-                compoundState.addSubState(teethPreset);
+
+                if (exportLeftCheck.Checked)
+                {
+                    compoundState.addSubState(getGrowth("left", state));
+                    compoundState.addSubState(getDegeneration("left", state));
+
+                    DiscPresetState leftDisc = new DiscPresetState("LeftTMJDisc", "LeftTMJDisc", "", "");
+                    leftDisc.captureFromState(state.Disc.getPosition("LeftTMJDisc"));
+                    compoundState.addSubState(leftDisc);
+
+                    FossaPresetState leftFossaState = new FossaPresetState("LeftFossa", "", "");
+                    leftFossaState.captureFromState("LeftFossa", state.Fossa);
+                    compoundState.addSubState(leftFossaState);
+                }
+
+                if (exportRightCheck.Checked)
+                {
+                    compoundState.addSubState(getGrowth("right", state));
+                    compoundState.addSubState(getDegeneration("right", state));
+
+                    DiscPresetState rightDisc = new DiscPresetState("RightTMJDisc", "RightTMJDisc", "", "");
+                    rightDisc.captureFromState(state.Disc.getPosition("RightTMJDisc"));
+                    compoundState.addSubState(rightDisc);
+
+                    FossaPresetState rightFossaState = new FossaPresetState("RightFossa", "", "");
+                    rightFossaState.captureFromState("RightFossa", state.Fossa);
+                    compoundState.addSubState(rightFossaState);
+                }
+
+                if (exportTeethCheck.Checked)
+                {
+                    TeethPresetState teethPreset = new TeethPresetState("Teeth", "", "");
+                    teethPreset.captureFromState(state.Teeth);
+                    compoundState.addSubState(teethPreset);
+                }
 
                 using (XmlTextWriter textWriter = new XmlTextWriter(distortionFile, Encoding.Default))
                 {
                     textWriter.Formatting = Formatting.Indented;
                     xmlSaver.saveObject(compoundState, textWriter);
                 }
-                String imageFile = distortionFile.Replace(".dst", ".png");
-                picturePreviewPanel.saveBitmap(imageFile);
+
+                if (saveThumbnailCheck.Checked)
+                {
+                    String imageFile = distortionFile.Replace(".dst", ".png");
+                    picturePreviewPanel.saveBitmap(imageFile);
+                }
             }
         }
 

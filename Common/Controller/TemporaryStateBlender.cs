@@ -46,6 +46,11 @@ namespace Medical
             startTemporaryBlend(undoState);
         }
 
+        public MedicalState createBaselineState()
+        {
+            return stateController.createState("Baseline");
+        }
+
         public MedicalState UndoState
         {
             get
