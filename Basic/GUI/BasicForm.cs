@@ -165,6 +165,7 @@ namespace Medical.GUI
             renderingTab.Visible = enabled;
             windowTab.Visible = enabled;
             leftNavigator.Visible = enabled && leftNavigator.Pages.Count > 0;
+            this.Focus();
         }
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
