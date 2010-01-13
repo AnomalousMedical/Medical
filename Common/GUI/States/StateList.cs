@@ -38,7 +38,8 @@ namespace Medical.GUI
         {
             if (stateListBox.SelectedIndices.Count > 0)
             {
-                stateController.blendTo(stateListBox.SelectedIndices[0], 1.0f);
+                //stateController.blendTo(stateListBox.SelectedIndices[0], 1.0f);
+                stateController.directBlend(stateListBox.SelectedIndices[0], 1.0f);
             }
         }
 

@@ -33,6 +33,10 @@ namespace Medical
         private float blendTarget = 0.0f;
         private bool playing = false;
 
+        private bool directBlending = false;
+        private int directStartState;
+        private int directEndState;
+
         public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
         {
             this.imageRenderer = imageRenderer;
@@ -158,26 +162,42 @@ namespace Medical
         /// <param name="percent">The index and percentage to blend.</param>
         public void blend(float percent)
         {
-            int startState = (int)percent;
-            int endState = startState + 1;
-            if (endState < states.Count)
+            if (directBlending)
             {
-                states[startState].blend(percent - startState, states[endState]);
-            }
-            //Be sure to blend if on the exact frame of the last state.
-            else if (startState == states.Count - 1 && startState >= 0)
-            {
-                states[startState].blend(1.0f, states[startState]);
-            }
-            if (startState != currentState)
-            {
-                currentState = startState;
-                if (StateChanged != null)
+                states[directStartState].blend(percent, states[directEndState]);
+                if (percent == 1.0f)
                 {
-                    StateChanged.Invoke(states[startState]);
+                    blendLocation = directEndState;
+                    directBlending = false;
+                }
+                else
+                {
+                    blendLocation = percent;
                 }
             }
-            blendLocation = percent;
+            else
+            {
+                int startState = (int)percent;
+                int endState = startState + 1;
+                if (endState < states.Count)
+                {
+                    states[startState].blend(percent - startState, states[endState]);
+                }
+                //Be sure to blend if on the exact frame of the last state.
+                else if (startState == states.Count - 1 && startState >= 0)
+                {
+                    states[startState].blend(1.0f, states[startState]);
+                }
+                if (startState != currentState)
+                {
+                    currentState = startState;
+                    if (StateChanged != null)
+                    {
+                        StateChanged.Invoke(states[startState]);
+                    }
+                }
+                blendLocation = percent;
+            }
         }
 
         public SavedMedicalStates getSavedState(String currentSceneName)
@@ -196,6 +216,7 @@ namespace Medical
 
         public void blendTo(int index, float speed)
         {
+            directBlending = false;
             if (index > blendTarget)
             {
                 blendSpeed = speed;
@@ -205,15 +226,22 @@ namespace Medical
                 blendSpeed = -speed;
             }
             blendTarget = index;
-            if (!playing)
-            {
-                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
-                playing = true;
-                if (BlendingStarted != null)
-                {
-                    BlendingStarted.Invoke(this);
-                }
-            }
+            startPlayback();
+        }
+
+        public void directBlend(int startIndex, int endIndex, float speed)
+        {
+            directBlending = true;
+            this.directStartState = startIndex;
+            this.directEndState = endIndex;
+            blendLocation = 0.0f;
+            blendTarget = 1.0f;
+            startPlayback();
+        }
+
+        public void directBlend(int endIndex, float speed)
+        {
+            directBlend((int)blendLocation, endIndex, speed);
         }
 
         public void stopBlending()
@@ -261,6 +289,19 @@ namespace Medical
                 }
             }
             blend((float)nextTime);
+        }
+
+        private void startPlayback()
+        {
+            if (!playing)
+            {
+                medicalController.FixedLoopUpdate += medicalController_FixedLoopUpdate;
+                playing = true;
+                if (BlendingStarted != null)
+                {
+                    BlendingStarted.Invoke(this);
+                }
+            }
         }
     }
 }
