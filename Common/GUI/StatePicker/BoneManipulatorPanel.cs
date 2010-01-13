@@ -33,21 +33,24 @@ namespace Medical.GUI
             foreach (Control control in Controls)
             {
                 BoneManipulatorSlider slider = control as BoneManipulatorSlider;
-                if (slider != null && slider.Tag != null)
+                if (slider != null)
                 {
-                    AnimationManipulator manipulator = MandibleController.Mandible.getAnimationManipulator(slider.Tag.ToString());
-                    if (manipulator != null)
+                    if (slider.Tag != null)
                     {
-                        slider.initialize(manipulator);
+                        AnimationManipulator manipulator = MandibleController.Mandible.getAnimationManipulator(slider.Tag.ToString());
+                        if (manipulator != null)
+                        {
+                            slider.initialize(manipulator);
+                        }
+                        else
+                        {
+                            Log.Default.sendMessage("Could not find manipulator named {0}.", LogLevel.Warning, "Head", slider.Tag.ToString());
+                        }
                     }
                     else
                     {
-                        Log.Default.sendMessage("Could not find manipulator named {0}.", LogLevel.Warning, "Head", slider.Tag.ToString());
+                        Log.Default.sendMessage("No tag set on slider. Cannot search for manipulator.", LogLevel.Warning, "Head");
                     }
-                }
-                else
-                {
-                    Log.Default.sendMessage("No tag set on slider. Cannot search for manipulator.", LogLevel.Warning, "Head");
                 }
             }
         }
