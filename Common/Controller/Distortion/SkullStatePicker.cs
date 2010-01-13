@@ -161,6 +161,11 @@ namespace Medical
 
         public override void sceneChanged(SimScene scene, String rootDirectory)
         {
+            if (statePicker.Visible)
+            {
+                statePicker.closeForSceneChange();
+            }
+
 #if USE_SLIDER_GUIS
             leftCondylarGrowthPanel.sceneLoaded(scene);
             rightCondylarGrowthPanel.sceneLoaded(scene);

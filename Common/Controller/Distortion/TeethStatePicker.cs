@@ -52,6 +52,11 @@ namespace Medical
 
         public override void sceneChanged(SimScene scene, string presetDirectory)
         {
+            if (statePicker.Visible)
+            {
+                statePicker.closeForSceneChange();
+            }
+
             if (presetDirectory != lastPresetDirectory)
             {
                 lastPresetDirectory = presetDirectory;

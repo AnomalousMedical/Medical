@@ -113,6 +113,17 @@ namespace Medical.GUI
             }
         }
 
+        public void closeForSceneChange()
+        {
+            uiHost.clearModes();
+            hidePanel();
+            uiHost.Visible = false;
+            if (Finished != null)
+            {
+                Finished.Invoke();
+            }
+        }
+
         public bool Visible
         {
             get

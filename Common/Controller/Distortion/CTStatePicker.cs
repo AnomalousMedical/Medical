@@ -108,6 +108,11 @@ namespace Medical
 
         public override void sceneChanged(SimScene scene, String rootDirectory)
         {
+            if (statePicker.Visible)
+            {
+                statePicker.closeForSceneChange();
+            }
+
             leftCondylarGrowthPanel.sceneLoaded(scene);
             rightCondylarGrowthPanel.sceneLoaded(scene);
             leftCondylarDegenerationPanel.sceneLoaded(scene);
