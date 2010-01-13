@@ -34,7 +34,7 @@ namespace Medical
         private bool playing = false;
 
         private bool directBlending = false;
-        private int directStartState;
+        private MedicalState directStartState;
         private int directEndState;
 
         public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
@@ -164,7 +164,7 @@ namespace Medical
         {
             if (directBlending)
             {
-                states[directStartState].blend(percent, states[directEndState]);
+                directStartState.blend(percent, states[directEndState]);
                 if (percent == 1.0f)
                 {
                     blendLocation = directEndState;
@@ -229,19 +229,14 @@ namespace Medical
             startPlayback();
         }
 
-        public void directBlend(int startIndex, int endIndex, float speed)
+        public void directBlend(int endIndex, float speed)
         {
             directBlending = true;
-            this.directStartState = startIndex;
+            this.directStartState = createState("DirectStart");
             this.directEndState = endIndex;
             blendLocation = 0.0f;
             blendTarget = 1.0f;
             startPlayback();
-        }
-
-        public void directBlend(int endIndex, float speed)
-        {
-            directBlend((int)blendLocation, endIndex, speed);
         }
 
         public void stopBlending()
