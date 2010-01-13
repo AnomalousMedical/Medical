@@ -38,6 +38,9 @@ namespace Medical
         private SimScene scene;
         private String subText;
 
+        private Vector3 startingTranslation;
+        private Vector3 startingLookAt;
+
         public DrawingWindow()
         {
             InitializeComponent();
@@ -46,6 +49,9 @@ namespace Medical
 
         internal void initialize(string name, CameraMover cameraMover, RendererPlugin renderer)
         {
+            startingTranslation = cameraMover.Translation;
+            startingLookAt = cameraMover.LookAt;
+
             this.name = name;
             this.renderer = renderer;
             this.cameraMover = cameraMover;
@@ -188,6 +194,11 @@ namespace Medical
             screenPos.x = (screenPos.x / 2.0f + 0.5f) * camera.RenderWidth;
             screenPos.y = (1 - (screenPos.y / 2.0f + 0.5f)) * camera.RenderHeight;
             return screenPos;
+        }
+
+        public void restoreStartingPosition()
+        {
+            cameraMover.immediatlySetPosition(startingTranslation, startingLookAt);
         }
 
         public String CameraName

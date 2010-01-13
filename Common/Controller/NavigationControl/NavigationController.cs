@@ -103,6 +103,17 @@ namespace Medical
             return null;
         }
 
+        /// <summary>
+        /// Figure out what the closest state to all cameras is.
+        /// </summary>
+        public void recalculateClosestStates()
+        {
+            foreach (DrawingWindow window in overlays.Keys)
+            {
+                overlays[window].setNavigationState(findClosestState(window.Translation));
+            }
+        }
+
         public EventManager EventManager
         {
             get

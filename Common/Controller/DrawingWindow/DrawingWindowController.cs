@@ -181,6 +181,14 @@ namespace Medical
             }
         }
 
+        public void resetAllCameraPositions()
+        {
+            foreach (DrawingWindowHost host in cameras.Values)
+            {
+                host.DrawingWindow.restoreStartingPosition();
+            }
+        }
+
         public bool AllowRotation
         {
             get

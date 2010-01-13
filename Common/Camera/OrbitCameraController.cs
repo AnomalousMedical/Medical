@@ -279,7 +279,7 @@ namespace Medical
                 {
                     computeStartingValues(translation - this.lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
                 }
-                
+
                 //Starting position
                 startLookAt = this.lookAt;
                 startOrbitDistance = orbitDistance;
@@ -317,6 +317,13 @@ namespace Medical
                 automaticMovement = true;
                 totalTime = 0.0f;
             }
+        }
+
+        public override void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
+        {
+            this.translation = translation;
+            this.lookAt = lookAt;
+            computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
         /// <summary>

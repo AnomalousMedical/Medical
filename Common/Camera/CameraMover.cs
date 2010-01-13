@@ -22,6 +22,13 @@ namespace Medical
         /// <param name="lookAt">The look at point of the camera.</param>
         public abstract void setNewPosition(Vector3 position, Vector3 lookAt);
 
+        /// <summary>
+        /// Set the position of the camera immediatly.
+        /// </summary>
+        /// <param name="translation"></param>
+        /// <param name="lookAt"></param>
+        public abstract void immediatlySetPosition(Vector3 translation, Vector3 lookAt);
+
         #region UpdateListener Members
 
         public virtual void exceededMaxDelta()

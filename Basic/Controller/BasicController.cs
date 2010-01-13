@@ -385,6 +385,8 @@ namespace Medical.Controller
         /// <param name="filename"></param>
         private bool changeScene(String file)
         {
+            drawingWindowController.resetAllCameraPositions();
+            navigationController.recalculateClosestStates();
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
             {

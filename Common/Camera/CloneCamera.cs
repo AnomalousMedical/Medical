@@ -27,6 +27,11 @@ namespace Medical
             
         }
 
+        public override void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
+        {
+
+        }
+
         public override void sendUpdate(Clock clock)
         {
             if (camera != null)
