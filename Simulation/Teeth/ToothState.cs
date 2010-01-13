@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -22,7 +23,15 @@ namespace Medical
             this.name = name;
             this.extracted = extracted;
             this.offset = offset;
+            if (!offset.isNumber())
+            {
+                Log.Debug("Got a non numerical offset for tooth {0}", Name);
+            }
             this.rotation = rotation;
+            if (!rotation.isNumber())
+            {
+                Log.Debug("Got a non numerical rotation for tooth {0}", Name);
+            }
         }
 
         internal ToothState(ToothState source)
@@ -37,8 +46,26 @@ namespace Medical
         {
             Tooth tooth = TeethController.getTooth(name);
             tooth.Extracted = this.Extracted;
-            tooth.Offset = this.offset.lerp(ref end.offset, ref percent);
-            tooth.Rotation = this.rotation.slerp(ref end.rotation, percent);
+            Vector3 offset = this.offset.lerp(ref end.offset, ref percent);
+            if (offset.isNumber())
+            {
+                tooth.Offset = offset;
+            }
+            else
+            {
+                //Log.Debug("Got a non numerical offset for tooth {0} time {1}", Name, percent);
+                tooth.Offset = end.offset;
+            }
+            Quaternion rotation = this.rotation.slerp(ref end.rotation, percent);
+            if(rotation.isNumber())
+            {
+                tooth.Rotation = rotation;
+            }
+            else
+            {
+                //Log.Debug("Got a non numerical rotation for tooth {0} time {1}", Name, percent);
+                tooth.Rotation = end.rotation;
+            }
         }
 
         public bool Extracted
