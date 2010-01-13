@@ -30,8 +30,9 @@ namespace Medical.GUI
 
         private StatePickerUIHost uiHost;
 
-        public StatePickerWizard(StatePickerUIHost uiHost, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
+        public StatePickerWizard(String name, StatePickerUIHost uiHost, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
         {
+            this.Name = name;
             this.uiHost = uiHost;
 
             pickerImageList = new ImageList();
@@ -143,6 +144,8 @@ namespace Medical.GUI
                 return stateBlender;
             }
         }
+
+        public String Name { get; private set; }
 
         internal void showChanges(bool immediate, bool captureCurrentState)
         {

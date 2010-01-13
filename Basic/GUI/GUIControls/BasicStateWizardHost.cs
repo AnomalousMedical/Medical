@@ -51,6 +51,7 @@ namespace Medical.GUI
                 leftInformationPanel.Size = control.Size;
                 control.Dock = DockStyle.Fill;
             }
+            stateRibbon.RibbonTab.Text = currentWizard.Name;
         }
 
         public void addMode(StatePickerPanel mode)

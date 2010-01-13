@@ -162,8 +162,6 @@ namespace Medical.GUI
         public void enableViewMode(bool enabled)
         {
             distortionTab.Visible = enabled;
-            simulationTab.Visible = enabled;
-            sequencesTab.Visible = enabled;
             renderingTab.Visible = enabled;
             windowTab.Visible = enabled;
             leftNavigator.Visible = enabled && leftNavigator.Pages.Count > 0;
