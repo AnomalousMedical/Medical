@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.stateListBox = new ComponentFactory.Krypton.Toolkit.KryptonListBox();
+            this.contextMenu = new ComponentFactory.Krypton.Toolkit.KryptonContextMenu();
+            this.kryptonContextMenuItems1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
+            this.kryptonContextMenuItem1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.deleteCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.SuspendLayout();
             // 
             // stateListBox
@@ -38,6 +42,26 @@
             this.stateListBox.Name = "stateListBox";
             this.stateListBox.Size = new System.Drawing.Size(200, 466);
             this.stateListBox.TabIndex = 0;
+            // 
+            // contextMenu
+            // 
+            this.contextMenu.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuItems1});
+            // 
+            // kryptonContextMenuItems1
+            // 
+            this.kryptonContextMenuItems1.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuItem1});
+            // 
+            // kryptonContextMenuItem1
+            // 
+            this.kryptonContextMenuItem1.KryptonCommand = this.deleteCommand;
+            this.kryptonContextMenuItem1.Text = "Delete";
+            // 
+            // deleteCommand
+            // 
+            this.deleteCommand.Text = "Delete";
+            this.deleteCommand.TextLine1 = "Delete";
             // 
             // StateList
             // 
@@ -55,6 +79,10 @@
         #endregion
 
         private ComponentFactory.Krypton.Toolkit.KryptonListBox stateListBox;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenu contextMenu;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems kryptonContextMenuItems1;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem1;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand deleteCommand;
 
     }
 }

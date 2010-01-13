@@ -122,6 +122,11 @@ namespace Medical
             state.Dispose();
         }
 
+        public void destroyState(int index)
+        {
+            destroyState(states[index]);
+        }
+
         public void clearStates()
         {
             currentState = -1;

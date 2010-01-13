@@ -31,15 +31,53 @@ namespace Medical.GUI
             stateController.BlendingStarted += new MedicalStateEvent(stateController_BlendingStarted);
             stateController.BlendingStopped += new MedicalStateEvent(stateController_BlendingStopped);
 
-            stateListBox.SelectedIndexChanged += new EventHandler(stateListBox_SelectedIndexChanged);
+            stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
+            stateListBox.ListBox.MouseUp += new MouseEventHandler(ListBox_MouseUp);
+            stateListBox.ListBox.KeyUp += new KeyEventHandler(ListBox_KeyUp);
+
+            deleteCommand.Execute += new EventHandler(deleteCommand_Execute);
         }
 
-        void stateListBox_SelectedIndexChanged(object sender, EventArgs e)
+        void ListBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                stateListBox.SelectedIndex = stateListBox.ListBox.IndexFromPoint(e.Location);
+                contextMenu.Show(stateListBox.PointToScreen(e.Location));
+            }
+        }
+
+        void stateListBox_SelectedValueChanged(object sender, EventArgs e)
         {
             if (stateListBox.SelectedIndices.Count > 0)
             {
                 //stateController.blendTo(stateListBox.SelectedIndices[0], 1.0f);
                 stateController.directBlend(stateListBox.SelectedIndices[0], 1.0f);
+            }
+        }
+
+        void ListBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteCommand_Execute(this, EventArgs.Empty);
+            }
+        }
+
+        void deleteCommand_Execute(object sender, EventArgs e)
+        {
+            int selectedIndex = stateListBox.SelectedIndex;
+            stateController.destroyState(selectedIndex);
+            if (selectedIndex < stateListBox.Items.Count)
+            {
+                stateListBox.SelectedIndex = selectedIndex;
+            }
+            else if(stateListBox.Items.Count > 0)
+            {
+                if (selectedIndex > 0)
+                {
+                    stateListBox.SelectedIndex = selectedIndex - 1;
+                }
             }
         }
 
