@@ -199,7 +199,7 @@ namespace Medical.GUI
 
         internal void finish()
         {
-            MedicalState createdState = new MedicalState("Test");
+            MedicalState createdState = stateBlender.createBaselineState();
             foreach (StatePickerPanel panel in panels)
             {
                 panel.applyToState(createdState);
