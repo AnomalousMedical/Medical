@@ -125,6 +125,7 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
+            this.ribbon.SelectedContext = null;
             this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
@@ -472,6 +473,7 @@
             // 
             // AdvancedForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);

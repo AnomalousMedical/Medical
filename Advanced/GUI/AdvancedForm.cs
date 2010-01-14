@@ -223,11 +223,43 @@ namespace Medical.GUI
 
         private void backgroundColorPicker_SelectedColorChanged(object sender, ColorEventArgs e)
         {
-            //DrawingWindowHost window = drawingWindowController.getActiveWindow();
-            //if (window != null)
-            //{
-            //    window.DrawingWindow.BackColor = backgroundColorButton.SelectedColor;
-            //}
+            DrawingWindowHost window = controller.DrawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                window.DrawingWindow.BackColor = backgroundColorPicker.SelectedColor;
+            }
+        }
+
+        protected override void OnDragEnter(DragEventArgs drgevent)
+        {
+            base.OnDragEnter(drgevent);
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                String[] files = drgevent.Data.GetData(DataFormats.FileDrop) as String[];
+                if (files.Length > 0)
+                {
+                    if (files[0].EndsWith(".dst"))
+                    {
+                        drgevent.Effect = DragDropEffects.Copy;
+                    }
+                }
+            }
+        }
+
+        protected override void OnDragDrop(DragEventArgs drgevent)
+        {
+            base.OnDragDrop(drgevent);
+            if (drgevent.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                String[] files = drgevent.Data.GetData(DataFormats.FileDrop) as String[];
+                if (files.Length > 0)
+                {
+                    if (files[0].EndsWith(".dst"))
+                    {
+                        controller.applyDistortion(files[0]);
+                    }
+                }
+            }
         }
     }
 }

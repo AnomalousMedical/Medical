@@ -38,30 +38,54 @@ namespace Medical.GUI
 
                 if (exportLeftCheck.Checked)
                 {
-                    compoundState.addSubState(getGrowth("left", state));
-                    compoundState.addSubState(getDegeneration("left", state));
+                    if (exportGrowthDefect.Checked)
+                    {
+                        compoundState.addSubState(getGrowth("left", state));
+                    }
+                    if (exportMandibularDegenration.Checked)
+                    {
+                        compoundState.addSubState(getDegeneration("left", state));
+                    }
 
-                    DiscPresetState leftDisc = new DiscPresetState("LeftTMJDisc", "LeftTMJDisc", "", "");
-                    leftDisc.captureFromState(state.Disc.getPosition("LeftTMJDisc"));
-                    compoundState.addSubState(leftDisc);
+                    if (exportDisc.Checked)
+                    {
+                        DiscPresetState leftDisc = new DiscPresetState("LeftTMJDisc", "LeftTMJDisc", "", "");
+                        leftDisc.captureFromState(state.Disc.getPosition("LeftTMJDisc"));
+                        compoundState.addSubState(leftDisc);
+                    }
 
-                    FossaPresetState leftFossaState = new FossaPresetState("LeftFossa", "", "");
-                    leftFossaState.captureFromState("LeftFossa", state.Fossa);
-                    compoundState.addSubState(leftFossaState);
+                    if (exportFossa.Checked)
+                    {
+                        FossaPresetState leftFossaState = new FossaPresetState("LeftFossa", "", "");
+                        leftFossaState.captureFromState("LeftFossa", state.Fossa);
+                        compoundState.addSubState(leftFossaState);
+                    }
                 }
 
                 if (exportRightCheck.Checked)
                 {
-                    compoundState.addSubState(getGrowth("right", state));
-                    compoundState.addSubState(getDegeneration("right", state));
+                    if (exportGrowthDefect.Checked)
+                    {
+                        compoundState.addSubState(getGrowth("right", state));
+                    }
+                    if (exportMandibularDegenration.Checked)
+                    {
+                        compoundState.addSubState(getDegeneration("right", state));
+                    }
 
-                    DiscPresetState rightDisc = new DiscPresetState("RightTMJDisc", "RightTMJDisc", "", "");
-                    rightDisc.captureFromState(state.Disc.getPosition("RightTMJDisc"));
-                    compoundState.addSubState(rightDisc);
+                    if (exportDisc.Checked)
+                    {
+                        DiscPresetState rightDisc = new DiscPresetState("RightTMJDisc", "RightTMJDisc", "", "");
+                        rightDisc.captureFromState(state.Disc.getPosition("RightTMJDisc"));
+                        compoundState.addSubState(rightDisc);
+                    }
 
-                    FossaPresetState rightFossaState = new FossaPresetState("RightFossa", "", "");
-                    rightFossaState.captureFromState("RightFossa", state.Fossa);
-                    compoundState.addSubState(rightFossaState);
+                    if (exportFossa.Checked)
+                    {
+                        FossaPresetState rightFossaState = new FossaPresetState("RightFossa", "", "");
+                        rightFossaState.captureFromState("RightFossa", state.Fossa);
+                        compoundState.addSubState(rightFossaState);
+                    }
                 }
 
                 if (exportTeethCheck.Checked)
@@ -94,11 +118,26 @@ namespace Medical.GUI
             String mandibluarNotch = baseName + "MandibularNotchMandible";
             String antegonialNotch = baseName + "AntegonialNotchMandible";
 
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(ramusHeight));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleHeight));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleRotation));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(mandibluarNotch));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(antegonialNotch));
+            if (exportRamusHeight.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(ramusHeight));
+            }
+            if (exportCondyleHeight.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleHeight));
+            }
+            if (exportCondyleRotation.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleRotation));
+            }
+            if (exportMandibularNotch.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(mandibluarNotch));
+            }
+            if (exportAntegonialNotch.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(antegonialNotch));
+            }
 
             return presetBones;
         }
@@ -111,10 +150,22 @@ namespace Medical.GUI
             String medialPoleScale = baseName + "MedialPoleScaleMandible";
             String roughnessPose = baseName + "CondyleRoughnessMandible";
 
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleDegenerationMandible));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(lateralPoleMandible));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(medialPoleScale));
-            presetBones.captureFromState(sourceState.BoneManipulator.getEntry(roughnessPose));
+            if (exportCondyleDegeneration.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(condyleDegenerationMandible));
+            }
+            if (exportLateralPoleDegeneration.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(lateralPoleMandible));
+            }
+            if (exportMedialPoleDegeneration.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(medialPoleScale));
+            }
+            if (exportCondyleRoughness.Checked)
+            {
+                presetBones.captureFromState(sourceState.BoneManipulator.getEntry(roughnessPose));
+            }
 
             return presetBones;
         }

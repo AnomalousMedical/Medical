@@ -36,5 +36,12 @@ namespace Medical.Controller
         void setOneWindowLayout();
 
         void showOptions();
+
+        void applyDistortion(String filename);
+
+        DrawingWindowController DrawingWindowController
+        {
+            get;
+        }
     }
 }

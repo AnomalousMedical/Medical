@@ -13,6 +13,7 @@ using Engine.Saving.XMLSaver;
 using Medical.Muscles;
 using Medical.Properties;
 using Engine.ObjectManagement;
+using Logging;
 
 namespace Medical.Controller
 {
@@ -39,6 +40,7 @@ namespace Medical.Controller
         private LayerController layerController;
         private Options options = null;
         private DockProvider dockProvider;
+        private TemporaryStateBlender tempBlender;
 
         private NavigationController navigationController;
 
@@ -189,6 +191,8 @@ namespace Medical.Controller
                 this.SceneUnloading += teethMover.sceneUnloading;
                 TeethController.TeethMover = teethMover;
                 medicalController.FixedLoopUpdate += teethMover.update;
+
+                tempBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
                 splashScreen.stepProgress(70);
 
@@ -463,6 +467,32 @@ namespace Medical.Controller
         public void cloneActiveWindow()
         {
             drawingWindowController.cloneActiveWindow();
+        }
+
+        public void applyDistortion(String filename)
+        {
+            using (XmlTextReader reader = new XmlTextReader(filename))
+            {
+                PresetState state = saver.restoreObject(reader) as PresetState;
+                if (state != null)
+                {
+                    MedicalState targetState = stateController.createState("FileOpenTemp");
+                    state.applyToState(targetState);
+                    tempBlender.startTemporaryBlend(targetState);
+                }
+                else
+                {
+                    Log.Error("Could not load a preset state out of {0}.", filename);
+                }
+            }
+        }
+
+        public DrawingWindowController DrawingWindowController
+        {
+            get
+            {
+                return drawingWindowController;
+            }
         }
     }
 }
