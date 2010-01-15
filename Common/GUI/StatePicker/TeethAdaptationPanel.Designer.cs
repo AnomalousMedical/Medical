@@ -55,7 +55,6 @@
             // 
             // resetButton
             // 
-            this.resetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.resetButton.Location = new System.Drawing.Point(100, 333);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(90, 25);
@@ -73,7 +72,6 @@
             // 
             // undoButton
             // 
-            this.undoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.undoButton.Location = new System.Drawing.Point(4, 333);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);

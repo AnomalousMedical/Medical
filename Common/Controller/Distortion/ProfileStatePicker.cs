@@ -15,7 +15,7 @@ namespace Medical.Controller
         private StatePickerWizard statePicker;
         private String lastPresetDirectory;
 
-        private FullDistortionPicker profileDistortionPicker;
+        private ProfileDistortionPanel profileDistortionPicker;
         private NotesPanel notesPanel;
 
         public ProfileStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
@@ -25,7 +25,7 @@ namespace Medical.Controller
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            profileDistortionPicker = new FullDistortionPicker();
+            profileDistortionPicker = new ProfileDistortionPanel();
             profileDistortionPicker.Text = "Profile";
             profileDistortionPicker.NavigationState = "Right Lateral";
             profileDistortionPicker.LayerState = "ProfileLayers";
@@ -56,12 +56,13 @@ namespace Medical.Controller
             {
                 statePicker.closeForSceneChange();
             }
+            profileDistortionPicker.sceneChanged();
 
-            if (presetDirectory != lastPresetDirectory)
-            {
-                lastPresetDirectory = presetDirectory;
-                profileDistortionPicker.initialize(presetDirectory + "/ProfilePresets");
-            }
+            //if (presetDirectory != lastPresetDirectory)
+            //{
+            //    lastPresetDirectory = presetDirectory;
+            //    profileDistortionPicker.initialize(presetDirectory + "/ProfilePresets");
+            //}
         }
 
         public override void startWizard(DrawingWindow displayWindow)

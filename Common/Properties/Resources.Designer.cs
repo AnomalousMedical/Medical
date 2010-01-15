@@ -452,6 +452,41 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ProfileLeftLateral {
+            get {
+                object obj = ResourceManager.GetObject("ProfileLeftLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ProfileLeftMidLateral {
+            get {
+                object obj = ResourceManager.GetObject("ProfileLeftMidLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ProfileMidline {
+            get {
+                object obj = ResourceManager.GetObject("ProfileMidline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ProfileRightLateral {
+            get {
+                object obj = ResourceManager.GetObject("ProfileRightLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ProfileRightMidLateral {
+            get {
+                object obj = ResourceManager.GetObject("ProfileRightMidLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ResizeDownSmall {
             get {
                 object obj = ResourceManager.GetObject("ResizeDownSmall", resourceCulture);
