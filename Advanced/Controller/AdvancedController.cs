@@ -14,6 +14,7 @@ using Medical.Muscles;
 using Medical.Properties;
 using Engine.ObjectManagement;
 using Logging;
+using OgrePlugin;
 
 namespace Medical.Controller
 {
@@ -41,6 +42,11 @@ namespace Medical.Controller
         private DockProvider dockProvider;
         private TemporaryStateBlender tempBlender;
 
+        private WatermarkController watermarkController;
+        private Watermark watermark;
+        private BackgroundController backgroundController;
+        private ViewportBackground background;
+
         //Ribbon controllers
         //LayerGUIController layerGUIController;
 
@@ -59,6 +65,10 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            if (watermark != null)
+            {
+                watermark.Dispose();
+            }
             if (drawingWindowController != null)
             {
                 drawingWindowController.Dispose();
@@ -157,6 +167,18 @@ namespace Medical.Controller
 
                 movementState = new MovementStateControl();
                 guiElements.addGUIElement(movementState);
+
+                OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
+                OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+                watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
+                //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
+                //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
+                watermark.createOverlays();
+                watermarkController = new WatermarkController(watermark, drawingWindowController);
+
+                //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
+                background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
+                backgroundController = new BackgroundController(background, drawingWindowController);
 
                 SimObjectMover teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
                 this.SceneLoaded += teethMover.sceneLoaded;
@@ -436,6 +458,8 @@ namespace Medical.Controller
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
             drawingWindowController.destroyCameras();
+            background.destroyBackground();
+            backgroundController.sceneUnloading();
             if (medicalController.openScene(file))
             {
                 drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
@@ -448,6 +472,10 @@ namespace Medical.Controller
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
+                    OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
+                    backgroundController.sceneLoaded(ogreScene);
+                    background.createBackground(ogreScene);
+
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     //String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     //layerController.loadLayerStateSet(layersFile);

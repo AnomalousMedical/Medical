@@ -33,7 +33,6 @@ namespace Medical.Controller
         private Options options = null;
         private ImageRenderer imageRenderer;
         private NavigationController navigationController;
-        private WatermarkController watermarkController;
         private ScenePicker scenePicker;
         private LayerController layerController;
         private DistortionController distortionController;
@@ -42,12 +41,15 @@ namespace Medical.Controller
         private ProfileStatePicker profileWizard;
         private CTStatePicker ctWizard;
         private DopplerStatePicker dopplerWizard;
-        private Watermark watermark;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private MovementSequenceController movementSequenceController;
+
+        private WatermarkController watermarkController;
+        private Watermark watermark;
         private BackgroundController backgroundController;
         private ViewportBackground background;
+
         private SimObjectMover teethMover;
         private DockProvider dockProvider;
 
@@ -141,7 +143,7 @@ namespace Medical.Controller
 
                 OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-                watermark = new SideLogoWatermark("SourceWatermark", "PiperClinic", 150, 60);
+                watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
                 //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
                 //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
                 watermark.createOverlays();

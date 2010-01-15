@@ -14,13 +14,17 @@ namespace Medical
         float markWidth = 100;
         float markHeight = 100;
         String materialName;
+        float leftOffset;
+        float bottomOffset;
 
-        public SideLogoWatermark(String name, String materialName, float width, float height)
+        public SideLogoWatermark(String name, String materialName, float width, float height, float leftOffset, float bottomOffset)
         {
             this.name = name;
             this.markWidth = width;
             this.markHeight = height;
             this.materialName = materialName;
+            this.leftOffset = leftOffset;
+            this.bottomOffset = bottomOffset;
         }
 
         public override void createOverlays()
@@ -33,7 +37,7 @@ namespace Medical
             panel.setMaterialName(materialName);
             overlay.add2d(panel);
             panel.setDimensions(markWidth, markHeight);
-            panel.setPosition(0, -markHeight);
+            panel.setPosition(leftOffset, -markHeight - bottomOffset);
         }
 
         public override void sizeChanged(float width, float height)
@@ -71,7 +75,7 @@ namespace Medical
 
         public override Watermark clone(String newName)
         {
-            return new SideLogoWatermark(newName, materialName, markWidth, markHeight);
+            return new SideLogoWatermark(newName, materialName, markWidth, markHeight, leftOffset, bottomOffset);
         }
     }
 }
