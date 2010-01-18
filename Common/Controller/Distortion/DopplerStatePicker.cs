@@ -6,6 +6,7 @@ using System.Drawing;
 using Medical.Properties;
 using Medical.GUI;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -17,14 +18,14 @@ namespace Medical
         private DopplerPanel rightDopplerPanel;
         private NotesPanel notesPanel;
 
-        public DopplerStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
+        public DopplerStatePicker(MovementSequenceController movementController, StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
         {
             temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
             statePicker = new StatePickerWizard(Name, uiHost, temporaryStateBlender, navigationController, layerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            leftDopplerPanel = new DopplerPanel("LeftDoppler");
+            leftDopplerPanel = new DopplerPanel("LeftDoppler", "Left TMJ", movementController);
             leftDopplerPanel.NavigationState = "Left TMJ";
             leftDopplerPanel.LayerState = "DiscLayers";
             leftDopplerPanel.Text = "Left Fossa";
@@ -33,7 +34,7 @@ namespace Medical
             leftDopplerPanel.LargeIcon = Resources.LeftDiscSpace;
             statePicker.addStatePanel(leftDopplerPanel);
 
-            rightDopplerPanel = new DopplerPanel("RightDoppler");
+            rightDopplerPanel = new DopplerPanel("RightDoppler", "Right TMJ", movementController);
             rightDopplerPanel.NavigationState = "Right TMJ";
             rightDopplerPanel.LayerState = "DiscLayers";
             rightDopplerPanel.Text = "Right Fossa";
@@ -65,8 +66,8 @@ namespace Medical
                 statePicker.closeForSceneChange();
             }
 
-            rightDopplerPanel.CurrentPresetDirectory = presetDirectory;
-            leftDopplerPanel.CurrentPresetDirectory = presetDirectory;
+            rightDopplerPanel.sceneChanged(presetDirectory);
+            leftDopplerPanel.sceneChanged(presetDirectory);
         }
 
         public override void startWizard(DrawingWindow displayWindow)

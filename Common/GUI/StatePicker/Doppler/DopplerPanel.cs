@@ -11,6 +11,8 @@ using System.IO;
 using System.Xml;
 using Engine.Saving.XMLSaver;
 using Logging;
+using Medical.Controller;
+using Medical.Muscles;
 
 namespace Medical.GUI
 {
@@ -23,23 +25,30 @@ namespace Medical.GUI
         private String presetSubDirectory;
         private static XmlSaver xmlSaver = new XmlSaver();
         private PresetState presetState;
+        private MovementSequenceController movementSequenceController;
+        private String currentSequenceDirectory;
+        private MovementSequence movementSequence;
+        private String jointCameraName;
 
-        public DopplerPanel(String presetSubDirectory)
+        public DopplerPanel(String presetSubDirectory, String jointCameraName, MovementSequenceController movementSequenceController)
         {
             InitializeComponent();
+            this.jointCameraName = jointCameraName;
             dopplerControl1.CurrentStageChanged += new EventHandler(dopplerControl1_CurrentStageChanged);
             this.presetSubDirectory = presetSubDirectory;
+            this.movementSequenceController = movementSequenceController;
         }
 
-        public String CurrentPresetDirectory
+        public void sceneChanged(String presetDirectory)
         {
-            get
+            if (currentSequenceDirectory != movementSequenceController.SequenceDirectory)
             {
-                return currentPresetDirectory;
+                currentSequenceDirectory = movementSequenceController.SequenceDirectory;
+                movementSequence = movementSequenceController.loadSequence(currentSequenceDirectory + "/Doppler.seq");
             }
-            set
+            if (currentPresetDirectory != presetDirectory)
             {
-                currentPresetDirectory = value;
+                currentPresetDirectory = presetDirectory;
                 dopplerControl1.setToDefault();
                 String filename = String.Format("{0}/{1}/{2}", currentPresetDirectory, presetSubDirectory, "I.dst");
                 using (Archive archive = FileSystem.OpenArchive(filename))
@@ -132,6 +141,29 @@ namespace Medical.GUI
             {
                 presetState.applyToState(state);
             }
+        }
+
+        public override void modifyScene()
+        {
+            movementSequenceController.CurrentSequence = movementSequence;
+            movementSequenceController.playCurrentSequence();
+        }
+
+        protected override void onPanelClosing()
+        {
+            movementSequenceController.stopPlayback();
+        }
+
+        private void jointCameraButton_Click(object sender, EventArgs e)
+        {
+            this.setNavigationState(jointCameraName);
+            this.setLayerState(LayerState);
+        }
+
+        private void midlineCameraButton_Click(object sender, EventArgs e)
+        {
+            this.setNavigationState("Skull Midline Anterosuperior");
+            this.setLayerState("JointMenuLayers");
         }
     }
 }

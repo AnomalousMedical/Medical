@@ -43,6 +43,8 @@
             this.stageIVbButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.stageVaButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.stageVbButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
+            this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.kryptonWrapLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).BeginInit();
@@ -50,7 +52,7 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(4, 4);
+            this.kryptonLabel1.Location = new System.Drawing.Point(4, 35);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.Size = new System.Drawing.Size(100, 19);
             this.kryptonLabel1.TabIndex = 0;
@@ -66,7 +68,7 @@
             "Coarse Rough",
             "Coarse Eburnated",
             "Unknown"});
-            this.rotatoryCombo.Location = new System.Drawing.Point(4, 23);
+            this.rotatoryCombo.Location = new System.Drawing.Point(4, 54);
             this.rotatoryCombo.Name = "rotatoryCombo";
             this.rotatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.rotatoryCombo.TabIndex = 1;
@@ -82,7 +84,7 @@
             "Coarse Rough",
             "Coarse Eburnated",
             "Unknown"});
-            this.translatoryCombo.Location = new System.Drawing.Point(4, 69);
+            this.translatoryCombo.Location = new System.Drawing.Point(4, 100);
             this.translatoryCombo.Name = "translatoryCombo";
             this.translatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.translatoryCombo.TabIndex = 3;
@@ -90,7 +92,7 @@
             // 
             // kryptonLabel2
             // 
-            this.kryptonLabel2.Location = new System.Drawing.Point(4, 50);
+            this.kryptonLabel2.Location = new System.Drawing.Point(4, 81);
             this.kryptonLabel2.Name = "kryptonLabel2";
             this.kryptonLabel2.Size = new System.Drawing.Size(113, 19);
             this.kryptonLabel2.TabIndex = 2;
@@ -104,7 +106,7 @@
             "Reciprocal",
             "Surface",
             "Unknown"});
-            this.clickCombo.Location = new System.Drawing.Point(4, 115);
+            this.clickCombo.Location = new System.Drawing.Point(4, 146);
             this.clickCombo.Name = "clickCombo";
             this.clickCombo.Size = new System.Drawing.Size(179, 21);
             this.clickCombo.TabIndex = 5;
@@ -112,7 +114,7 @@
             // 
             // kryptonLabel3
             // 
-            this.kryptonLabel3.Location = new System.Drawing.Point(4, 96);
+            this.kryptonLabel3.Location = new System.Drawing.Point(4, 127);
             this.kryptonLabel3.Name = "kryptonLabel3";
             this.kryptonLabel3.Size = new System.Drawing.Size(34, 19);
             this.kryptonLabel3.TabIndex = 4;
@@ -120,7 +122,7 @@
             // 
             // kryptonLabel4
             // 
-            this.kryptonLabel4.Location = new System.Drawing.Point(4, 143);
+            this.kryptonLabel4.Location = new System.Drawing.Point(0, 189);
             this.kryptonLabel4.Name = "kryptonLabel4";
             this.kryptonLabel4.Size = new System.Drawing.Size(39, 19);
             this.kryptonLabel4.TabIndex = 6;
@@ -129,7 +131,7 @@
             // stageIButton
             // 
             this.stageIButton.Checked = true;
-            this.stageIButton.Location = new System.Drawing.Point(4, 169);
+            this.stageIButton.Location = new System.Drawing.Point(4, 208);
             this.stageIButton.Name = "stageIButton";
             this.stageIButton.Size = new System.Drawing.Size(25, 19);
             this.stageIButton.TabIndex = 7;
@@ -137,7 +139,7 @@
             // 
             // stageIIButton
             // 
-            this.stageIIButton.Location = new System.Drawing.Point(4, 194);
+            this.stageIIButton.Location = new System.Drawing.Point(4, 233);
             this.stageIIButton.Name = "stageIIButton";
             this.stageIIButton.Size = new System.Drawing.Size(28, 19);
             this.stageIIButton.TabIndex = 8;
@@ -145,7 +147,7 @@
             // 
             // stageIIIaButton
             // 
-            this.stageIIIaButton.Location = new System.Drawing.Point(4, 219);
+            this.stageIIIaButton.Location = new System.Drawing.Point(4, 258);
             this.stageIIIaButton.Name = "stageIIIaButton";
             this.stageIIIaButton.Size = new System.Drawing.Size(38, 19);
             this.stageIIIaButton.TabIndex = 9;
@@ -153,7 +155,7 @@
             // 
             // stageIIIbButton
             // 
-            this.stageIIIbButton.Location = new System.Drawing.Point(4, 244);
+            this.stageIIIbButton.Location = new System.Drawing.Point(4, 283);
             this.stageIIIbButton.Name = "stageIIIbButton";
             this.stageIIIbButton.Size = new System.Drawing.Size(38, 19);
             this.stageIIIbButton.TabIndex = 10;
@@ -161,7 +163,7 @@
             // 
             // stageIVaButton
             // 
-            this.stageIVaButton.Location = new System.Drawing.Point(4, 269);
+            this.stageIVaButton.Location = new System.Drawing.Point(4, 308);
             this.stageIVaButton.Name = "stageIVaButton";
             this.stageIVaButton.Size = new System.Drawing.Size(39, 19);
             this.stageIVaButton.TabIndex = 11;
@@ -169,7 +171,7 @@
             // 
             // stageIVbButton
             // 
-            this.stageIVbButton.Location = new System.Drawing.Point(4, 294);
+            this.stageIVbButton.Location = new System.Drawing.Point(4, 333);
             this.stageIVbButton.Name = "stageIVbButton";
             this.stageIVbButton.Size = new System.Drawing.Size(39, 19);
             this.stageIVbButton.TabIndex = 12;
@@ -177,7 +179,7 @@
             // 
             // stageVaButton
             // 
-            this.stageVaButton.Location = new System.Drawing.Point(4, 319);
+            this.stageVaButton.Location = new System.Drawing.Point(4, 358);
             this.stageVaButton.Name = "stageVaButton";
             this.stageVaButton.Size = new System.Drawing.Size(35, 19);
             this.stageVaButton.TabIndex = 13;
@@ -185,16 +187,38 @@
             // 
             // stageVbButton
             // 
-            this.stageVbButton.Location = new System.Drawing.Point(4, 344);
+            this.stageVbButton.Location = new System.Drawing.Point(4, 383);
             this.stageVbButton.Name = "stageVbButton";
             this.stageVbButton.Size = new System.Drawing.Size(36, 19);
             this.stageVbButton.TabIndex = 14;
             this.stageVbButton.Values.Text = "Vb";
             // 
+            // kryptonWrapLabel1
+            // 
+            this.kryptonWrapLabel1.AutoSize = false;
+            this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
+            this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(189, 40);
+            this.kryptonWrapLabel1.Text = "Input the crepitus and click information.";
+            // 
+            // kryptonWrapLabel2
+            // 
+            this.kryptonWrapLabel2.AutoSize = false;
+            this.kryptonWrapLabel2.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel2.Location = new System.Drawing.Point(0, 172);
+            this.kryptonWrapLabel2.Name = "kryptonWrapLabel2";
+            this.kryptonWrapLabel2.Size = new System.Drawing.Size(189, 18);
+            this.kryptonWrapLabel2.Text = "Choose the output stage.";
+            // 
             // DopplerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.kryptonWrapLabel2);
             this.Controls.Add(this.stageVbButton);
             this.Controls.Add(this.stageVaButton);
             this.Controls.Add(this.stageIVbButton);
@@ -210,8 +234,9 @@
             this.Controls.Add(this.kryptonLabel2);
             this.Controls.Add(this.rotatoryCombo);
             this.Controls.Add(this.kryptonLabel1);
+            this.Controls.Add(this.kryptonWrapLabel1);
             this.Name = "DopplerControl";
-            this.Size = new System.Drawing.Size(189, 368);
+            this.Size = new System.Drawing.Size(189, 415);
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).EndInit();
@@ -237,5 +262,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageIVbButton;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageVaButton;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageVbButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
+        private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel2;
     }
 }

@@ -190,6 +190,14 @@ namespace Medical.Controller
             }
         }
 
+        public String SequenceDirectory
+        {
+            get
+            {
+                return currentDirectory;
+            }
+        }
+
         /// <summary>
         /// Update function during playback.
         /// </summary>

@@ -182,7 +182,7 @@ namespace Medical.Controller
                 distortionController.addDistortionWizard(profileWizard);
                 ctWizard = new CTStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(ctWizard);
-                dopplerWizard = new DopplerStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                dopplerWizard = new DopplerStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(dopplerWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
@@ -412,19 +412,19 @@ namespace Medical.Controller
                     background.createBackground(ogreScene);
 
                     drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
-                    if (SceneLoaded != null)
-                    {
-                        SceneLoaded.Invoke(medicalController.CurrentScene);
-                    }
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     layerController.loadLayerStateSet(layersFile);
+                    String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
+                    movementSequenceController.loadSequenceSet(sequenceDirectory);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
                     distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     windowPresetController.loadPresetSet();
-                    String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-                    movementSequenceController.loadSequenceSet(sequenceDirectory);
+                    if (SceneLoaded != null)
+                    {
+                        SceneLoaded.Invoke(medicalController.CurrentScene);
+                    }
                 }
                 distortionController.setToDefault();
                 StatusController.TaskCompleted();
