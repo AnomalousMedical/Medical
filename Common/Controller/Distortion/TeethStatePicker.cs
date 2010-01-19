@@ -26,13 +26,8 @@ namespace Medical
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            //teethDistortionPicker = new FullDistortionPicker();
-            //teethDistortionPicker.Text = "Teeth";
-            //teethDistortionPicker.NavigationState = "Teeth Midline Anterior";
-            //teethDistortionPicker.LayerState = "TeethLayers";
-            //teethDistortionPicker.TextLine1 = "Teeth";
-            //teethDistortionPicker.LargeIcon = Resources.AdaptationIcon;
-            //statePicker.addStatePanel(teethDistortionPicker);
+            statePicker.addStatePanel(new BottomTeethRemovalPanel());
+            statePicker.addStatePanel(new TopTeethRemovalPanel());
 
             teethHeightAdaptation = new TeethHeightAdaptationPanel();
             teethHeightAdaptation.Text = "Teeth";

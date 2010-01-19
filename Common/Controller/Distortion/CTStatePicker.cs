@@ -92,7 +92,7 @@ namespace Medical
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.addStatePanel(new TeethAdaptationPanel());
-            statePicker.addStatePanel(new NotesPanel("MRI", imageRenderer));
+            statePicker.addStatePanel(new NotesPanel("CT", imageRenderer));
 
             statePicker.initializeImageHandle();
             statePicker.setToDefault();
