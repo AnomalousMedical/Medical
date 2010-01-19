@@ -159,7 +159,7 @@
             // 
             // panel7
             // 
-            this.panel7.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPoleDistorted;
+            this.panel7.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleRoughnessDistorted;
             this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel7.Location = new System.Drawing.Point(262, 214);
             this.panel7.Name = "panel7";
@@ -168,7 +168,7 @@
             // 
             // panel8
             // 
-            this.panel8.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleMedialPole;
+            this.panel8.BackgroundImage = global::Medical.Properties.Resources.DegenerationLeftCondyleRoughness;
             this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel8.Location = new System.Drawing.Point(3, 214);
             this.panel8.Name = "panel8";

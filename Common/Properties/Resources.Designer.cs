@@ -172,6 +172,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DegenerationLeftCondyleRoughness {
+            get {
+                object obj = ResourceManager.GetObject("DegenerationLeftCondyleRoughness", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DegenerationLeftCondyleRoughnessDistorted {
+            get {
+                object obj = ResourceManager.GetObject("DegenerationLeftCondyleRoughnessDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap DegenerationRightCondyle {
             get {
                 object obj = ResourceManager.GetObject("DegenerationRightCondyle", resourceCulture);
@@ -210,6 +224,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap DegenerationRightCondyleMedialPoleDistorted {
             get {
                 object obj = ResourceManager.GetObject("DegenerationRightCondyleMedialPoleDistorted", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DegenerationRightCondyleRoughness {
+            get {
+                object obj = ResourceManager.GetObject("DegenerationRightCondyleRoughness", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DegenerationRightCondyleRoughnessDistorted {
+            get {
+                object obj = ResourceManager.GetObject("DegenerationRightCondyleRoughnessDistorted", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

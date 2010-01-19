@@ -11,6 +11,8 @@ namespace Medical.GUI
 {
     public partial class BoneManipulatorSlider : UserControl
     {
+        public event EventHandler ValueChanged;
+
         private AnimationManipulator manipulator;
         private bool allowSynchronization = true;
 
@@ -88,6 +90,10 @@ namespace Medical.GUI
                 if (sender != valueTrackBar)
                 {
                     valueTrackBar.Value = (int)(value * valueTrackBar.Maximum);
+                }
+                if (ValueChanged != null)
+                {
+                    ValueChanged.Invoke(this, EventArgs.Empty);
                 }
                 allowSynchronization = true;
             }
