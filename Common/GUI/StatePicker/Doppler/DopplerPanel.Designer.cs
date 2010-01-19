@@ -38,7 +38,7 @@
             // 
             this.dopplerControl1.Location = new System.Drawing.Point(0, 101);
             this.dopplerControl1.Name = "dopplerControl1";
-            this.dopplerControl1.Size = new System.Drawing.Size(197, 403);
+            this.dopplerControl1.Size = new System.Drawing.Size(197, 422);
             this.dopplerControl1.TabIndex = 0;
             // 
             // kryptonWrapLabel1

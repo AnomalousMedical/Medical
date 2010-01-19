@@ -34,7 +34,6 @@
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.clickCombo = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.kryptonLabel4 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.stageIButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.stageIIButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.stageIIIaButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
@@ -45,9 +44,22 @@
             this.stageVbButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.kryptonWrapLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.kryptonGroupBox1 = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
+            this.rdaReductionGroupBox = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
+            this.severeRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
+            this.moderateRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
+            this.mildRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox1.Panel)).BeginInit();
+            this.kryptonGroupBox1.Panel.SuspendLayout();
+            this.kryptonGroupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rdaReductionGroupBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rdaReductionGroupBox.Panel)).BeginInit();
+            this.rdaReductionGroupBox.Panel.SuspendLayout();
+            this.rdaReductionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // kryptonLabel1
@@ -120,18 +132,10 @@
             this.kryptonLabel3.TabIndex = 4;
             this.kryptonLabel3.Values.Text = "Click";
             // 
-            // kryptonLabel4
-            // 
-            this.kryptonLabel4.Location = new System.Drawing.Point(0, 189);
-            this.kryptonLabel4.Name = "kryptonLabel4";
-            this.kryptonLabel4.Size = new System.Drawing.Size(39, 19);
-            this.kryptonLabel4.TabIndex = 6;
-            this.kryptonLabel4.Values.Text = "Stage";
-            // 
             // stageIButton
             // 
             this.stageIButton.Checked = true;
-            this.stageIButton.Location = new System.Drawing.Point(4, 208);
+            this.stageIButton.Location = new System.Drawing.Point(6, 3);
             this.stageIButton.Name = "stageIButton";
             this.stageIButton.Size = new System.Drawing.Size(25, 19);
             this.stageIButton.TabIndex = 7;
@@ -139,7 +143,7 @@
             // 
             // stageIIButton
             // 
-            this.stageIIButton.Location = new System.Drawing.Point(4, 233);
+            this.stageIIButton.Location = new System.Drawing.Point(6, 28);
             this.stageIIButton.Name = "stageIIButton";
             this.stageIIButton.Size = new System.Drawing.Size(28, 19);
             this.stageIIButton.TabIndex = 8;
@@ -147,7 +151,7 @@
             // 
             // stageIIIaButton
             // 
-            this.stageIIIaButton.Location = new System.Drawing.Point(4, 258);
+            this.stageIIIaButton.Location = new System.Drawing.Point(6, 53);
             this.stageIIIaButton.Name = "stageIIIaButton";
             this.stageIIIaButton.Size = new System.Drawing.Size(38, 19);
             this.stageIIIaButton.TabIndex = 9;
@@ -155,7 +159,7 @@
             // 
             // stageIIIbButton
             // 
-            this.stageIIIbButton.Location = new System.Drawing.Point(4, 283);
+            this.stageIIIbButton.Location = new System.Drawing.Point(6, 78);
             this.stageIIIbButton.Name = "stageIIIbButton";
             this.stageIIIbButton.Size = new System.Drawing.Size(38, 19);
             this.stageIIIbButton.TabIndex = 10;
@@ -163,7 +167,7 @@
             // 
             // stageIVaButton
             // 
-            this.stageIVaButton.Location = new System.Drawing.Point(4, 308);
+            this.stageIVaButton.Location = new System.Drawing.Point(6, 103);
             this.stageIVaButton.Name = "stageIVaButton";
             this.stageIVaButton.Size = new System.Drawing.Size(39, 19);
             this.stageIVaButton.TabIndex = 11;
@@ -171,7 +175,7 @@
             // 
             // stageIVbButton
             // 
-            this.stageIVbButton.Location = new System.Drawing.Point(4, 333);
+            this.stageIVbButton.Location = new System.Drawing.Point(6, 128);
             this.stageIVbButton.Name = "stageIVbButton";
             this.stageIVbButton.Size = new System.Drawing.Size(39, 19);
             this.stageIVbButton.TabIndex = 12;
@@ -179,7 +183,7 @@
             // 
             // stageVaButton
             // 
-            this.stageVaButton.Location = new System.Drawing.Point(4, 358);
+            this.stageVaButton.Location = new System.Drawing.Point(6, 153);
             this.stageVaButton.Name = "stageVaButton";
             this.stageVaButton.Size = new System.Drawing.Size(35, 19);
             this.stageVaButton.TabIndex = 13;
@@ -187,7 +191,7 @@
             // 
             // stageVbButton
             // 
-            this.stageVbButton.Location = new System.Drawing.Point(4, 383);
+            this.stageVbButton.Location = new System.Drawing.Point(6, 178);
             this.stageVbButton.Name = "stageVbButton";
             this.stageVbButton.Size = new System.Drawing.Size(36, 19);
             this.stageVbButton.TabIndex = 14;
@@ -214,20 +218,70 @@
             this.kryptonWrapLabel2.Size = new System.Drawing.Size(189, 18);
             this.kryptonWrapLabel2.Text = "Choose the output stage.";
             // 
+            // kryptonGroupBox1
+            // 
+            this.kryptonGroupBox1.Location = new System.Drawing.Point(4, 189);
+            this.kryptonGroupBox1.Name = "kryptonGroupBox1";
+            // 
+            // kryptonGroupBox1.Panel
+            // 
+            this.kryptonGroupBox1.Panel.Controls.Add(this.rdaReductionGroupBox);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIIButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageVbButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIIIaButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageVaButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIIIbButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIVbButton);
+            this.kryptonGroupBox1.Panel.Controls.Add(this.stageIVaButton);
+            this.kryptonGroupBox1.Size = new System.Drawing.Size(179, 223);
+            this.kryptonGroupBox1.TabIndex = 16;
+            this.kryptonGroupBox1.Values.Heading = "Stage";
+            // 
+            // rdaReductionGroupBox
+            // 
+            this.rdaReductionGroupBox.Location = new System.Drawing.Point(68, 78);
+            this.rdaReductionGroupBox.Name = "rdaReductionGroupBox";
+            // 
+            // rdaReductionGroupBox.Panel
+            // 
+            this.rdaReductionGroupBox.Panel.Controls.Add(this.severeRDAReductionButton);
+            this.rdaReductionGroupBox.Panel.Controls.Add(this.mildRDAReductionButton);
+            this.rdaReductionGroupBox.Panel.Controls.Add(this.moderateRDAReductionButton);
+            this.rdaReductionGroupBox.Size = new System.Drawing.Size(104, 94);
+            this.rdaReductionGroupBox.TabIndex = 15;
+            this.rdaReductionGroupBox.Values.Heading = "RDA Reduction";
+            // 
+            // severeRDAReductionButton
+            // 
+            this.severeRDAReductionButton.Location = new System.Drawing.Point(3, 53);
+            this.severeRDAReductionButton.Name = "severeRDAReductionButton";
+            this.severeRDAReductionButton.Size = new System.Drawing.Size(56, 19);
+            this.severeRDAReductionButton.TabIndex = 18;
+            this.severeRDAReductionButton.Values.Text = "Severe";
+            // 
+            // moderateRDAReductionButton
+            // 
+            this.moderateRDAReductionButton.Location = new System.Drawing.Point(3, 28);
+            this.moderateRDAReductionButton.Name = "moderateRDAReductionButton";
+            this.moderateRDAReductionButton.Size = new System.Drawing.Size(73, 19);
+            this.moderateRDAReductionButton.TabIndex = 17;
+            this.moderateRDAReductionButton.Values.Text = "Moderate";
+            // 
+            // mildRDAReductionButton
+            // 
+            this.mildRDAReductionButton.Location = new System.Drawing.Point(3, 3);
+            this.mildRDAReductionButton.Name = "mildRDAReductionButton";
+            this.mildRDAReductionButton.Size = new System.Drawing.Size(45, 19);
+            this.mildRDAReductionButton.TabIndex = 16;
+            this.mildRDAReductionButton.Values.Text = "Mild";
+            // 
             // DopplerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.kryptonGroupBox1);
             this.Controls.Add(this.kryptonWrapLabel2);
-            this.Controls.Add(this.stageVbButton);
-            this.Controls.Add(this.stageVaButton);
-            this.Controls.Add(this.stageIVbButton);
-            this.Controls.Add(this.stageIVaButton);
-            this.Controls.Add(this.stageIIIbButton);
-            this.Controls.Add(this.stageIIIaButton);
-            this.Controls.Add(this.stageIIButton);
-            this.Controls.Add(this.stageIButton);
-            this.Controls.Add(this.kryptonLabel4);
             this.Controls.Add(this.clickCombo);
             this.Controls.Add(this.kryptonLabel3);
             this.Controls.Add(this.translatoryCombo);
@@ -240,6 +294,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox1.Panel)).EndInit();
+            this.kryptonGroupBox1.Panel.ResumeLayout(false);
+            this.kryptonGroupBox1.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox1)).EndInit();
+            this.kryptonGroupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.rdaReductionGroupBox.Panel)).EndInit();
+            this.rdaReductionGroupBox.Panel.ResumeLayout(false);
+            this.rdaReductionGroupBox.Panel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rdaReductionGroupBox)).EndInit();
+            this.rdaReductionGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,7 +317,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox clickCombo;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel3;
-        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel4;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageIButton;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageIIButton;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageIIIaButton;
@@ -264,5 +327,10 @@
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton stageVbButton;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonGroupBox kryptonGroupBox1;
+        private ComponentFactory.Krypton.Toolkit.KryptonRadioButton severeRDAReductionButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonRadioButton mildRDAReductionButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonRadioButton moderateRDAReductionButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonGroupBox rdaReductionGroupBox;
     }
 }

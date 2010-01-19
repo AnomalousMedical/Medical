@@ -90,10 +90,32 @@ namespace Medical.GUI
                     filename = "IIIb.dst";
                     break;
                 case DopplerStage.IVa:
-                    filename = "IVa.dst";
+                    switch(dopplerControl1.CurrentReduction)
+                    {
+                        case RdaReduction.Mild:
+                            filename = "IVaMildRDAReduction.dst";
+                            break;
+                        case RdaReduction.Moderate:
+                            filename = "IVaModerateRDAReduction.dst";
+                            break;
+                        case RdaReduction.Severe:
+                            filename = "IVaSevereRDAReduction.dst";
+                            break;
+                    }
                     break;
                 case DopplerStage.IVb:
-                    filename = "IVb.dst";
+                    switch (dopplerControl1.CurrentReduction)
+                    {
+                        case RdaReduction.Mild:
+                            filename = "IVbMildRDAReduction.dst";
+                            break;
+                        case RdaReduction.Moderate:
+                            filename = "IVbModerateRDAReduction.dst";
+                            break;
+                        case RdaReduction.Severe:
+                            filename = "IVbSevereRDAReduction.dst";
+                            break;
+                    }
                     break;
                 case DopplerStage.Va:
                     filename = "Va.dst";

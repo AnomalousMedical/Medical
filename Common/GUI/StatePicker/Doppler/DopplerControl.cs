@@ -27,6 +27,14 @@ namespace Medical.GUI
         Vb = 128,
     }
 
+    public enum RdaReduction
+    {
+        Mild,
+        Moderate,
+        Severe,
+        Unknown
+    }
+
     /// <summary>
     /// A reuseable control that can compute doppler stages.
     /// </summary>
@@ -36,6 +44,8 @@ namespace Medical.GUI
 
         DopplerStage currentStage = DopplerStage.Unknown;
         Dictionary<DopplerStage, int> stageMap = new Dictionary<DopplerStage, int>();
+        private bool allowRdaReductionEventFire = true;
+        RdaReduction currentReduction = RdaReduction.Unknown;
 
         public DopplerControl()
         {
@@ -61,6 +71,12 @@ namespace Medical.GUI
             stageIVbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
             stageVaButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
             stageVbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
+
+            mildRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
+            moderateRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
+            severeRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
+
+            rdaReductionGroupBox.Enabled = false;
         }
 
         public void setToDefault()
@@ -79,6 +95,14 @@ namespace Medical.GUI
             get
             {
                 return currentStage;
+            }
+        }
+
+        public RdaReduction CurrentReduction
+        {
+            get
+            {
+                return currentReduction;
             }
         }
 
@@ -209,6 +233,30 @@ namespace Medical.GUI
             return stages;
         }
 
+        void RDAReductionButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RdaReduction oldReduction = currentReduction;
+            if (mildRDAReductionButton.Checked)
+            {
+                currentReduction = RdaReduction.Mild;
+            }
+            else if (moderateRDAReductionButton.Checked)
+            {
+                currentReduction = RdaReduction.Moderate;
+            }
+            else if (severeRDAReductionButton.Checked)
+            {
+                currentReduction = RdaReduction.Severe;
+            }
+            if (allowRdaReductionEventFire && oldReduction != currentReduction)
+            {
+                if (CurrentStageChanged != null)
+                {
+                    CurrentStageChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
         void processButton(KryptonRadioButton button, DopplerStage checkStage, DopplerStage stages, ref bool activatedLowest)
         {
             button.Enabled = (stages & checkStage) == checkStage;
@@ -225,34 +273,48 @@ namespace Medical.GUI
             if (stageIButton.Checked)
             {
                 currentStage = DopplerStage.I;
+                rdaReductionGroupBox.Enabled = false;
             }
             else if (stageIIButton.Checked)
             {
                 currentStage = DopplerStage.II;
+                rdaReductionGroupBox.Enabled = false;
             }
             else if (stageIIIaButton.Checked)
             {
                 currentStage = DopplerStage.IIIa;
+                rdaReductionGroupBox.Enabled = false;
             }
             else if (stageIIIbButton.Checked)
             {
                 currentStage = DopplerStage.IIIb;
+                rdaReductionGroupBox.Enabled = false;
             }
             else if (stageIVaButton.Checked)
             {
+                allowRdaReductionEventFire = false;
                 currentStage = DopplerStage.IVa;
+                rdaReductionGroupBox.Enabled = true;
+                mildRDAReductionButton.Checked = true;
+                allowRdaReductionEventFire = true;
             }
             else if (stageIVbButton.Checked)
             {
+                allowRdaReductionEventFire = false;
                 currentStage = DopplerStage.IVb;
+                rdaReductionGroupBox.Enabled = true;
+                mildRDAReductionButton.Checked = true;
+                allowRdaReductionEventFire = true;
             }
             else if (stageVaButton.Checked)
             {
                 currentStage = DopplerStage.Va;
+                rdaReductionGroupBox.Enabled = false;
             }
             else if (stageVbButton.Checked)
             {
                 currentStage = DopplerStage.Vb;
+                rdaReductionGroupBox.Enabled = false;
             }
             else
             {
