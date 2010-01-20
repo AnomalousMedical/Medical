@@ -66,6 +66,7 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            OgreWrapper.OgreResourceGroupManager.getInstance().destroyResourceGroup("__InternalMedical");
             if (watermark != null)
             {
                 watermark.Dispose();
@@ -142,6 +143,7 @@ namespace Medical.Controller
                 movementSequenceController = new MovementSequenceController(medicalController);
 
                 OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
+                OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
                 //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
@@ -394,7 +396,7 @@ namespace Medical.Controller
             {
                 movementSequenceController.stopPlayback();
             }
-            distortionController.setToDefault();
+            //distortionController.setToDefault();
             if (SceneUnloading != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
