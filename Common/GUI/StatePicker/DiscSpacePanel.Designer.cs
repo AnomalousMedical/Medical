@@ -35,13 +35,15 @@
             this.distortedPanel = new System.Windows.Forms.Panel();
             this.normalPanel = new System.Windows.Forms.Panel();
             this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.dopplerControl1 = new Medical.GUI.DopplerControl();
+            this.dopplerDataCheck = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // makeNormalButton
             // 
             this.makeNormalButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.makeNormalButton.Location = new System.Drawing.Point(100, 88);
+            this.makeNormalButton.Location = new System.Drawing.Point(100, 534);
             this.makeNormalButton.Name = "makeNormalButton";
             this.makeNormalButton.Size = new System.Drawing.Size(90, 25);
             this.makeNormalButton.TabIndex = 46;
@@ -51,7 +53,7 @@
             // undoButton
             // 
             this.undoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.undoButton.Location = new System.Drawing.Point(3, 88);
+            this.undoButton.Location = new System.Drawing.Point(3, 534);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 45;
@@ -107,10 +109,27 @@
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(325, 17);
             this.kryptonWrapLabel1.Text = "Adjust the slider to change the disc space.";
             // 
+            // dopplerControl1
+            // 
+            this.dopplerControl1.Location = new System.Drawing.Point(3, 117);
+            this.dopplerControl1.Name = "dopplerControl1";
+            this.dopplerControl1.Size = new System.Drawing.Size(189, 415);
+            this.dopplerControl1.TabIndex = 52;
+            // 
+            // dopplerDataCheck
+            // 
+            this.dopplerDataCheck.Location = new System.Drawing.Point(4, 90);
+            this.dopplerDataCheck.Name = "dopplerDataCheck";
+            this.dopplerDataCheck.Size = new System.Drawing.Size(126, 19);
+            this.dopplerDataCheck.TabIndex = 53;
+            this.dopplerDataCheck.Values.Text = "I have doppler data.";
+            // 
             // DiscSpacePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dopplerDataCheck);
+            this.Controls.Add(this.dopplerControl1);
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.discOffsetSlider);
             this.Controls.Add(this.kryptonLabel1);
@@ -119,7 +138,7 @@
             this.Controls.Add(this.makeNormalButton);
             this.Controls.Add(this.undoButton);
             this.Name = "DiscSpacePanel";
-            this.Size = new System.Drawing.Size(325, 116);
+            this.Size = new System.Drawing.Size(325, 562);
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -135,5 +154,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
         private System.Windows.Forms.TrackBar discOffsetSlider;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
+        private DopplerControl dopplerControl1;
+        private ComponentFactory.Krypton.Toolkit.KryptonCheckBox dopplerDataCheck;
     }
 }

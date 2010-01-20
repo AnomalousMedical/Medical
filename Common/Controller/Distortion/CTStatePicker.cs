@@ -51,7 +51,7 @@ namespace Medical
             leftFossaPanel.LargeIcon = Resources.LeftFossaFlatness;
             statePicker.addStatePanel(leftFossaPanel);
 
-            leftDiscPanel = new DiscSpacePanel("LeftTMJDisc");
+            leftDiscPanel = new DiscSpacePanel("LeftTMJDisc", "FossaLayers");
             leftDiscPanel.BoneOnBoneImage = Resources.LeftDiscBoneOnBone;
             leftDiscPanel.OpenImage = Resources.LeftDiscOpen;
             leftDiscPanel.NavigationState = "Left TMJ";
@@ -78,7 +78,7 @@ namespace Medical
             rightFossaPanel.LargeIcon = Resources.RightFossaFlatness;
             statePicker.addStatePanel(rightFossaPanel);
 
-            rightDiscPanel = new DiscSpacePanel("RightTMJDisc");
+            rightDiscPanel = new DiscSpacePanel("RightTMJDisc", "FossaLayers");
             rightDiscPanel.BoneOnBoneImage = Resources.RightDiscBoneOnBone;
             rightDiscPanel.OpenImage = Resources.RightDiscOpen;
             rightDiscPanel.NavigationState = "Right TMJ";
@@ -119,8 +119,8 @@ namespace Medical
             rightCondylarDegenerationPanel.sceneLoaded(scene);
             leftFossaPanel.sceneLoaded(scene);
             rightFossaPanel.sceneLoaded(scene);
-            leftDiscPanel.sceneLoaded(scene);
-            rightDiscPanel.sceneLoaded(scene);
+            leftDiscPanel.sceneLoaded(scene, rootDirectory + "/LeftDoppler");
+            rightDiscPanel.sceneLoaded(scene, rootDirectory + "/RightDoppler");
 
             if (rootDirectory != lastRootDirectory)
             {
