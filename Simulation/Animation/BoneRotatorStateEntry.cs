@@ -21,7 +21,15 @@ namespace Medical
         public void blend(AnimationManipulatorStateEntry target, float percent)
         {
             BoneRotatorStateEntry rotateTarget = target as BoneRotatorStateEntry;
-            ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = rotation.slerp(ref rotateTarget.rotation, percent);
+            Quaternion blendRot = rotation.slerp(ref rotateTarget.rotation, percent);
+            if (blendRot.isNumber())
+            {
+                ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = blendRot;
+            }
+            else
+            {
+                ((BoneRotator)AnimationManipulatorController.getManipulator(name)).Rotation = rotateTarget.rotation;
+            }
         }
 
         public AnimationManipulatorStateEntry clone()
