@@ -57,6 +57,7 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            OgreWrapper.OgreResourceGroupManager.getInstance().destroyResourceGroup("__InternalMedical");
             if (drawingWindowController != null)
             {
                 drawingWindowController.Dispose();
@@ -104,6 +105,8 @@ namespace Medical.Controller
                 drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
 
                 navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
+
+                OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
 
                 imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
                 stateController = new MedicalStateController(imageRenderer, medicalController);

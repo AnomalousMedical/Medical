@@ -65,6 +65,7 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
+            OgreWrapper.OgreResourceGroupManager.getInstance().destroyResourceGroup("__InternalMedical");
             if (watermark != null)
             {
                 watermark.Dispose();
@@ -170,6 +171,7 @@ namespace Medical.Controller
 
                 OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+                OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
                 //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
                 //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
