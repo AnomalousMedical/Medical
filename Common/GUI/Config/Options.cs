@@ -25,7 +25,7 @@ namespace Medical.GUI
             {
                 foreach (String value in configOptions["FSAA"].PossibleValues)
                 {
-                    antiAliasingCombo.Items.Add(value.Replace("Level ", ""));
+                    antiAliasingCombo.Items.Add(value);
                 }
                 antiAliasingCombo.SelectedItem = OgreConfig.FSAA;
             }
@@ -45,9 +45,7 @@ namespace Medical.GUI
         private void applyButton_Click(object sender, EventArgs e)
         {
             OgreConfig.VSync = vsyncCheck.Checked;
-            int value = 0;
-            int.TryParse(antiAliasingCombo.SelectedItem.ToString(), out value);
-            OgreConfig.FSAA = value;
+            OgreConfig.FSAA = antiAliasingCombo.SelectedItem.ToString();
             this.DialogResult = DialogResult.OK;
         }
 
