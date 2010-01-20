@@ -30,7 +30,7 @@ namespace Medical.Controller
             profileDistortionPicker.NavigationState = "Right Lateral";
             profileDistortionPicker.LayerState = "ProfileLayers";
             profileDistortionPicker.TextLine1 = "Profile";
-            profileDistortionPicker.LargeIcon = Resources.AdaptationIcon;
+            profileDistortionPicker.LargeIcon = Resources.ProfileIcon;
             statePicker.addStatePanel(profileDistortionPicker);
 
             notesPanel = new NotesPanel(this.Name, imageRenderer);
@@ -39,6 +39,14 @@ namespace Medical.Controller
 
         public override void Dispose()
         {
+            if (profileDistortionPicker != null)
+            {
+                profileDistortionPicker.Dispose();
+            }
+            if (notesPanel != null)
+            {
+                notesPanel.Dispose();
+            }
             if (statePicker != null)
             {
                 statePicker.Dispose();

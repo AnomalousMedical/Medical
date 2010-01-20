@@ -41,6 +41,7 @@ namespace Medical.Controller
         private ProfileStatePicker profileWizard;
         private CTStatePicker ctWizard;
         private DopplerStatePicker dopplerWizard;
+        private ClinicStatePicker clinicalWizard;
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private MovementSequenceController movementSequenceController;
@@ -186,6 +187,8 @@ namespace Medical.Controller
                 distortionController.addDistortionWizard(ctWizard);
                 dopplerWizard = new DopplerStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
                 distortionController.addDistortionWizard(dopplerWizard);
+                clinicalWizard = new ClinicStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+                distortionController.addDistortionWizard(clinicalWizard);
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
                 basicForm.initialize(this);

@@ -47,6 +47,7 @@ namespace Medical
             {
                 statePicker.Dispose();
             }
+            teethHeightAdaptation.Dispose();
         }
 
         public override void setToDefault()

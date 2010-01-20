@@ -110,6 +110,7 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
+    <Compile Include="Controller\Distortion\ClinicStatePicker.cs" />
     <Compile Include="Controller\Distortion\CTStatePicker.cs" />
     <Compile Include="Controller\Distortion\DopplerStatePicker.cs" />
     <Compile Include="Controller\Distortion\ProfileStatePicker.cs" />
@@ -966,6 +967,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DegenerationRightCondyleRoughnessDistorted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ClinicalIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
