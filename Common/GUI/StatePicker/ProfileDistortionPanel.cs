@@ -28,6 +28,13 @@ namespace Medical.GUI
             rightHeightSlider.initialize(condyle, ramus);
         }
 
+        protected override void onPanelOpening()
+        {
+            base.onPanelOpening();
+            leftHeightSlider.getPositionFromScene();
+            rightHeightSlider.getPositionFromScene();
+        }
+
         private void rightSideCamera_Click(object sender, EventArgs e)
         {
             this.setNavigationState("Right Lateral");

@@ -43,6 +43,26 @@ namespace Medical.GUI
             }
         }
 
+        public void getPositionFromScene()
+        {
+            int value = (int)((ramus.Position - ramus.DefaultPosition) * valueTrackBar.Maximum);
+            if (value > valueTrackBar.Minimum)
+            {
+                if (value < valueTrackBar.Maximum)
+                {
+                    valueTrackBar.Value = value;
+                }
+                else
+                {
+                    valueTrackBar.Value = valueTrackBar.Maximum;
+                }
+            }
+            else
+            {
+                valueTrackBar.Value = valueTrackBar.Minimum;
+            }
+        }
+
         public String LabelText
         {
             get

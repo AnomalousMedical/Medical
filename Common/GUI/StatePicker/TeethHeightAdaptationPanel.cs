@@ -26,5 +26,12 @@ namespace Medical.GUI
             condyle = MandibleController.Mandible.getAnimationManipulator("rightCondyleHeightMandible");
             rightHeightSlider.initialize(condyle, ramus);
         }
+
+        protected override void onPanelOpening()
+        {
+            base.onPanelOpening();
+            leftHeightSlider.getPositionFromScene();
+            rightHeightSlider.getPositionFromScene();
+        }
     }
 }
