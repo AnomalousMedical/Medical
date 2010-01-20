@@ -21,15 +21,11 @@ namespace Medical.GUI
             tooltip.SetToolTip(antiAliasingCombo, "This option smooths out jagged edges. However, it comes with a performance penalty so it may cause the program to run more slowly.");
             tooltip.SetToolTip(vsyncCheck, "This option will lock the refresh of the 3d scene to the monitor refresh. This will slow down the program causing it to use less resources.");
             Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
-            if (configOptions.ContainsKey("Anti aliasing"))
+            if (configOptions.ContainsKey("FSAA"))
             {
-                antiAliasingCombo.Items.Add("0");
-                foreach (String value in configOptions["Anti aliasing"].PossibleValues)
+                foreach (String value in configOptions["FSAA"].PossibleValues)
                 {
-                    if (value.StartsWith("Level "))
-                    {
-                        antiAliasingCombo.Items.Add(value.Replace("Level ", ""));
-                    }
+                    antiAliasingCombo.Items.Add(value.Replace("Level ", ""));
                 }
                 antiAliasingCombo.SelectedItem = OgreConfig.FSAA;
             }
