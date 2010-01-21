@@ -70,6 +70,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.keyCombo = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.startOffsetZ = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.startOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.startOffsetX = new System.Windows.Forms.NumericUpDown();
             this.createButton = new System.Windows.Forms.Button();
             this.navigationStateView = new DragNDrop.DragAndDropListView();
             this.State = new System.Windows.Forms.ColumnHeader();
@@ -80,6 +86,9 @@
             this.singleStateMenu.SuspendLayout();
             this.mainMenu.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetX)).BeginInit();
             this.SuspendLayout();
             // 
             // createStateMenu
@@ -265,7 +274,7 @@
             // 
             // linkUpdate
             // 
-            this.linkUpdate.Location = new System.Drawing.Point(7, 360);
+            this.linkUpdate.Location = new System.Drawing.Point(7, 391);
             this.linkUpdate.Name = "linkUpdate";
             this.linkUpdate.Size = new System.Drawing.Size(75, 23);
             this.linkUpdate.TabIndex = 26;
@@ -434,6 +443,12 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label9);
+            this.panel1.Controls.Add(this.startOffsetZ);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.startOffsetY);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.startOffsetX);
             this.panel1.Controls.Add(this.createButton);
             this.panel1.Controls.Add(this.stateUpdate);
             this.panel1.Controls.Add(this.label1);
@@ -456,10 +471,76 @@
             this.panel1.Controls.Add(this.radiusUpDown);
             this.panel1.Controls.Add(this.buttonCombo);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 324);
+            this.panel1.Location = new System.Drawing.Point(0, 278);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(274, 387);
+            this.panel1.Size = new System.Drawing.Size(274, 433);
             this.panel1.TabIndex = 33;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(197, 359);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(14, 13);
+            this.label9.TabIndex = 38;
+            this.label9.Text = "Z";
+            // 
+            // startOffsetZ
+            // 
+            this.startOffsetZ.DecimalPlaces = 2;
+            this.startOffsetZ.Location = new System.Drawing.Point(214, 356);
+            this.startOffsetZ.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.startOffsetZ.Name = "startOffsetZ";
+            this.startOffsetZ.Size = new System.Drawing.Size(48, 20);
+            this.startOffsetZ.TabIndex = 39;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(129, 359);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(14, 13);
+            this.label8.TabIndex = 36;
+            this.label8.Text = "Y";
+            // 
+            // startOffsetY
+            // 
+            this.startOffsetY.DecimalPlaces = 2;
+            this.startOffsetY.Location = new System.Drawing.Point(146, 356);
+            this.startOffsetY.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.startOffsetY.Name = "startOffsetY";
+            this.startOffsetY.Size = new System.Drawing.Size(48, 20);
+            this.startOffsetY.TabIndex = 37;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(5, 359);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 13);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "Start Offset X";
+            // 
+            // startOffsetX
+            // 
+            this.startOffsetX.DecimalPlaces = 2;
+            this.startOffsetX.Location = new System.Drawing.Point(78, 356);
+            this.startOffsetX.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.startOffsetX.Name = "startOffsetX";
+            this.startOffsetX.Size = new System.Drawing.Size(48, 20);
+            this.startOffsetX.TabIndex = 35;
             // 
             // createButton
             // 
@@ -482,7 +563,7 @@
             this.navigationStateView.LineColor = System.Drawing.Color.Red;
             this.navigationStateView.Location = new System.Drawing.Point(0, 24);
             this.navigationStateView.Name = "navigationStateView";
-            this.navigationStateView.Size = new System.Drawing.Size(274, 300);
+            this.navigationStateView.Size = new System.Drawing.Size(274, 254);
             this.navigationStateView.TabIndex = 34;
             this.navigationStateView.UseCompatibleStateImageBehavior = false;
             this.navigationStateView.View = System.Windows.Forms.View.Details;
@@ -515,6 +596,9 @@
             this.mainMenu.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.startOffsetX)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -566,6 +650,12 @@
         private DragNDrop.DragAndDropListView navigationStateView;
         private System.Windows.Forms.ColumnHeader State;
         private System.Windows.Forms.Button createButton;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown startOffsetZ;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.NumericUpDown startOffsetY;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown startOffsetX;
 
 
     }

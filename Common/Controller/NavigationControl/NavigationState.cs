@@ -39,7 +39,7 @@ namespace Medical
             this.shortcutKey = shortcutKey;
         }
 
-        public void addAdjacentState(NavigationState adjacent, NavigationButtons button, float radius)
+        public void addAdjacentState(NavigationState adjacent, NavigationButtons button, float radius, Vector3 radiusStartOffset)
         {
             if (adjacent != null)
             {
@@ -54,17 +54,17 @@ namespace Medical
                 }
                 if (allowAdd)
                 {
-                    adjacentStates.Add(new NavigationLink(adjacent, button, radius));
+                    adjacentStates.Add(new NavigationLink(adjacent, button, radius, radiusStartOffset));
                 }
             }
         }
 
-        public void addTwoWayAdjacentState(NavigationState adjacent, NavigationButtons button, float radius)
+        public void addTwoWayAdjacentState(NavigationState adjacent, NavigationButtons button, float radius, Vector3 radiusStartOffset)
         {
             if (adjacent != null)
             {
-                addAdjacentState(adjacent, button, radius);
-                adjacent.addAdjacentState(this, NavigationLink.GetOppositeButton(button), radius);
+                addAdjacentState(adjacent, button, radius, radiusStartOffset);
+                adjacent.addAdjacentState(this, NavigationLink.GetOppositeButton(button), radius, Vector3.Zero);
             }
         }
 

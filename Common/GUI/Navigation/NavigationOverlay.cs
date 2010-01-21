@@ -225,7 +225,7 @@ namespace Medical
             {
                 foreach (NavigationButton button in buttons)
                 {
-                    Vector3 screenPos = window.getScreenPosition(button.Link.Destination.LookAt + (button.Link.Destination.Translation - button.Link.Destination.LookAt).normalized() * button.Link.VisualRadius);
+                    Vector3 screenPos = window.getScreenPosition(button.Link.RadiusStartOffset + button.Link.Destination.LookAt + (button.Link.Destination.Translation - button.Link.Destination.LookAt).normalized() * button.Link.VisualRadius);
                     screenPos.x -= BUTTON_HALF_WIDTH;
                     screenPos.y -= BUTTON_HALF_HEIGHT;
                     if (screenPos.x < 0)

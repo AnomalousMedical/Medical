@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -40,6 +41,7 @@ namespace Medical
         private NavigationState destination;
         private NavigationButtons button;
         private float visualRadius = 10.0f;
+        private Vector3 radiusStartOffset = Vector3.Zero;
 
         public NavigationLink(NavigationState destination, NavigationButtons button)
         {
@@ -47,11 +49,12 @@ namespace Medical
             this.button = button;
         }
 
-        public NavigationLink(NavigationState destination, NavigationButtons button, float visualRadius)
+        public NavigationLink(NavigationState destination, NavigationButtons button, float visualRadius, Vector3 radiusStartOffset)
         {
             this.destination = destination;
             this.button = button;
             this.visualRadius = visualRadius;
+            this.radiusStartOffset = radiusStartOffset;
         }
 
         public NavigationButtons Button
@@ -83,6 +86,18 @@ namespace Medical
             set
             {
                 visualRadius = value;
+            }
+        }
+
+        public Vector3 RadiusStartOffset
+        {
+            get
+            {
+                return radiusStartOffset;
+            }
+            set
+            {
+                radiusStartOffset = value;
             }
         }
     }

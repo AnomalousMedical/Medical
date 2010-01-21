@@ -273,7 +273,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value);
+                    currentState.addAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value, new Vector3((float)startOffsetX.Value, (float)startOffsetY.Value, (float)startOffsetZ.Value));
                 }
             }
         }
@@ -285,7 +285,7 @@ namespace Medical.GUI
                 NavigationState state = item.Tag as NavigationState;
                 if (state != currentState)
                 {
-                    currentState.addTwoWayAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value);
+                    currentState.addTwoWayAdjacentState(state, (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString()), (float)radiusUpDown.Value, new Vector3((float)startOffsetX.Value, (float)startOffsetY.Value, (float)startOffsetZ.Value));
                 }
             }
         }
@@ -339,6 +339,9 @@ namespace Medical.GUI
                 currentLink = currentLinkItem.Tag as NavigationLink;
                 buttonCombo.SelectedItem = currentLink.Button.ToString();
                 radiusUpDown.Value = (decimal)currentLink.VisualRadius;
+                startOffsetX.Value = (decimal)currentLink.RadiusStartOffset.x;
+                startOffsetY.Value = (decimal)currentLink.RadiusStartOffset.y;
+                startOffsetZ.Value = (decimal)currentLink.RadiusStartOffset.z;
             }
             else
             {
@@ -353,6 +356,7 @@ namespace Medical.GUI
             {
                 currentLink.Button = (NavigationButtons)Enum.Parse(typeof(NavigationButtons), buttonCombo.SelectedItem.ToString());
                 currentLink.VisualRadius = (float)radiusUpDown.Value;
+                currentLink.RadiusStartOffset = new Vector3((float)startOffsetX.Value, (float)startOffsetY.Value, (float)startOffsetZ.Value);
             }
         }
 

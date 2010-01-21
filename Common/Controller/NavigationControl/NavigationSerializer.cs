@@ -23,6 +23,7 @@ namespace Medical
         private const String DESTINATION = "Destination";
         private const String SOURCE = "Source";
         private const String VISUAL_RADIUS = "VisualRadius";
+        private const String RADIUS_START_OFFSET = "RadiusStartOffset";
         private const String HIDDEN = "IsHidden";
         private const String SHORTCUT_KEY = "ShortcutKey";
         private const String THUMBNAIL = "Thumbnail";
@@ -60,6 +61,7 @@ namespace Medical
                     xmlWriter.WriteElementString(DESTINATION, link.Destination.Name);
                     xmlWriter.WriteElementString(BUTTON, link.Button.ToString());
                     xmlWriter.WriteElementString(VISUAL_RADIUS, link.VisualRadius.ToString());
+                    xmlWriter.WriteElementString(RADIUS_START_OFFSET, link.RadiusStartOffset.ToString());
                     xmlWriter.WriteEndElement();
                 }
             }
@@ -188,6 +190,7 @@ namespace Medical
             String destination = "";
             NavigationButtons button = NavigationButtons.Up;
             float radius = 10.0f;
+            Vector3 radiusStartOffset = Vector3.Zero;
             while (!isEndElement(xmlReader, LINK) && xmlReader.Read())
             {
                 if (isValidElement(xmlReader))
@@ -208,13 +211,17 @@ namespace Medical
                     {
                         radius = xmlReader.ReadElementContentAsFloat();
                     }
+                    else if (xmlReader.Name == RADIUS_START_OFFSET)
+                    {
+                        radiusStartOffset = new Vector3(xmlReader.ReadElementContentAsString());
+                    }
                 }
             }
             NavigationState sourceState = set.getState(source);
             NavigationState destState = set.getState(destination);
             if (sourceState != null && destState != null)
             {
-                sourceState.addAdjacentState(destState, button, radius);
+                sourceState.addAdjacentState(destState, button, radius, radiusStartOffset);
             }
         }
 
