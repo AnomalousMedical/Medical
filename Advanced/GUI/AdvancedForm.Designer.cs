@@ -127,7 +127,8 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedTab = this.windowTab;
+            this.ribbon.SelectedContext = null;
+            this.ribbon.SelectedTab = this.homeTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
             // 
