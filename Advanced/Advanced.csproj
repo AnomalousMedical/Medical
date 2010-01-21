@@ -486,6 +486,8 @@
     <None Include="Resources\SaveStatesSmall.png" />
     <None Include="Resources\AddStateLarge.png" />
     <None Include="Resources\AddStateSmall.png" />
+    <None Include="Resources\SequenceIconSmall.png" />
+    <None Include="Resources\StatsIconLarge.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

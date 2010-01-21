@@ -136,16 +136,16 @@
     <value>17, 56</value>
   </metadata>
   <metadata name="saveDistortionCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>554, 56</value>
+    <value>568, 56</value>
   </metadata>
   <metadata name="saveDistortionAsCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>740, 56</value>
+    <value>754, 56</value>
   </metadata>
   <metadata name="addCurrentStateCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>698, 17</value>
   </metadata>
   <metadata name="newSequenceCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>939, 56</value>
+    <value>953, 56</value>
   </metadata>
   <metadata name="openSequenceCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>200, 95</value>
@@ -154,7 +154,7 @@
     <value>389, 95</value>
   </metadata>
   <metadata name="saveSequenceAsCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>356, 56</value>
+    <value>370, 56</value>
   </metadata>
   <metadata name="optionsCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>574, 95</value>
@@ -176,6 +176,9 @@
   </metadata>
   <metadata name="cloneWindowCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 95</value>
+  </metadata>
+  <metadata name="showStatsCommand.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>207, 56</value>
   </metadata>
   <metadata name="dockingManager.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>599, 134</value>

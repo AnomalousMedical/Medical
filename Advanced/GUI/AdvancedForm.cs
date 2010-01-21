@@ -51,6 +51,8 @@ namespace Medical.GUI
             drawingWindowDockingManager.ManageFloating("Floating2", this);
 
             backgroundColorPicker.SelectedColorChanged += new EventHandler<ComponentFactory.Krypton.Toolkit.ColorEventArgs>(backgroundColorPicker_SelectedColorChanged);
+
+            showStatsCommand.Execute += new EventHandler(showStatsCommand_Execute);
         }
 
         public void initialize(MedicalFormController controller)
@@ -214,6 +216,11 @@ namespace Medical.GUI
         void oneWindowLayoutCommand_Execute(object sender, EventArgs e)
         {
             controller.setOneWindowLayout();
+        }
+
+        void showStatsCommand_Execute(object sender, EventArgs e)
+        {
+            controller.DrawingWindowController.showStats(showStatsCommand.Checked);
         }
 
         void optionsCommand_Execute(object sender, EventArgs e)

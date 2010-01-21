@@ -298,9 +298,23 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap SequenceIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("SequenceIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap StateButtons {
             get {
                 object obj = ResourceManager.GetObject("StateButtons", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap StatsIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("StatsIconLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

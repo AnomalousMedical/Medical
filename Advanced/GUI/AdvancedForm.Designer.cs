@@ -87,6 +87,8 @@
             this.fourWindowLayoutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonGroupButton7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.cloneWindowCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.statsButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.showStatsCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.dockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
             this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
@@ -125,8 +127,7 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
-            this.ribbon.SelectedTab = this.homeTab;
+            this.ribbon.SelectedTab = this.windowTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
             // 
@@ -336,6 +337,7 @@
             this.kryptonRibbonGroupTriple6.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.kryptonRibbonGroupButton5,
             this.backgroundColorPicker});
+            this.kryptonRibbonGroupTriple6.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // kryptonRibbonGroupButton5
             // 
@@ -366,7 +368,9 @@
             // 
             this.kryptonRibbonGroupTriple7.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.kryptonRibbonGroupButton6,
-            this.kryptonRibbonGroupButton7});
+            this.kryptonRibbonGroupButton7,
+            this.statsButton});
+            this.kryptonRibbonGroupTriple7.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // kryptonRibbonGroupButton6
             // 
@@ -436,6 +440,18 @@
             this.cloneWindowCommand.Text = "Clone Window";
             this.cloneWindowCommand.TextLine1 = "Clone";
             this.cloneWindowCommand.TextLine2 = "Window";
+            // 
+            // statsButton
+            // 
+            this.statsButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Check;
+            this.statsButton.KryptonCommand = this.showStatsCommand;
+            // 
+            // showStatsCommand
+            // 
+            this.showStatsCommand.ImageLarge = global::Medical.Properties.Resources.StatsIconLarge;
+            this.showStatsCommand.Text = "Show Statistics";
+            this.showStatsCommand.TextLine1 = "Show";
+            this.showStatsCommand.TextLine2 = "Statistics";
             // 
             // dockingManager
             // 
@@ -558,6 +574,8 @@
         private ComponentFactory.Krypton.Docking.KryptonDockingManager drawingWindowDockingManager;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel autoHideDock;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorPicker;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton statsButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand showStatsCommand;
 
     }
 }
