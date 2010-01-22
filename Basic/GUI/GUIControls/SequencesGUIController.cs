@@ -14,9 +14,7 @@ namespace Medical.GUI
 {
     class SequencesGUIController
     {
-        private KryptonRibbonTab sequenceTab;
         private MovementSequenceController sequenceController;
-        private KryptonRibbonGroupButton previousClickedButton;
         private KryptonContextMenu sequenceMenu;
         private KryptonContextMenuItems sequenceMenuItems;
         private KryptonCommand playCommand;
@@ -25,7 +23,6 @@ namespace Medical.GUI
 
         public SequencesGUIController(BasicForm form, BasicController basicController)
         {
-            this.sequenceTab = form.sequencesTab;
             this.sequenceController = basicController.MovementSequenceController;
             this.sequenceMenu = form.sequenceMenu;
             this.playCommand = form.playCommand;
@@ -35,45 +32,23 @@ namespace Medical.GUI
             sequenceMenu.Items.Add(sequenceMenuItems);
 
             sequenceController.CurrentSequenceSetChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceSetChanged);
+            sequenceController.PlaybackStarted += new MovementSequenceEvent(sequenceController_PlaybackStarted);
+            sequenceController.PlaybackStopped += new MovementSequenceEvent(sequenceController_PlaybackStopped);
+            sequenceController.CurrentSequenceChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceChanged);
             playCommand.Execute += new EventHandler(playCommand_Execute);
             stopCommand.Execute += new EventHandler(stopCommand_Execute);
         }
 
         void sequenceController_CurrentSequenceSetChanged(MovementSequenceController controller)
         {
-            //sequenceTab.Groups.Clear();
             MovementSequenceSet currentSet = controller.SequenceSet;
+            sequenceMenuItems.Items.Clear();
             foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
-                KryptonRibbonGroup group = new KryptonRibbonGroup();
-                group.TextLine1 = sequenceGroup.Name;
-                sequenceTab.Groups.Add(group);
-                KryptonRibbonGroupTriple triple = null;
+                KryptonContextMenuHeading heading = new KryptonContextMenuHeading(sequenceGroup.Name);
+                sequenceMenuItems.Items.Add(heading);
                 foreach (MovementSequenceInfo sequenceInfo in sequenceGroup.Sequences)
                 {
-                    if (triple == null || triple.Items.Count > 2)
-                    {
-                        triple = new KryptonRibbonGroupTriple();
-                        group.Items.Add(triple);
-                    }
-                    KryptonRibbonGroupButton button = new KryptonRibbonGroupButton();
-                    button.TextLine1 = sequenceInfo.Name;
-                    button.Tag = sequenceInfo.FileName;
-                    if (sequenceInfo.Thumbnail == null)
-                    {
-                        button.ImageLarge = Resources.SequenceIconLarge;
-                        button.ImageSmall = Resources.SequenceIconSmall;
-                    }
-                    else
-                    {
-                        button.ImageLarge = sequenceInfo.Thumbnail;
-                        button.ImageSmall = sequenceInfo.Thumbnail;
-                    }
-                    button.ButtonType = GroupButtonType.Check;
-                    button.Click += new EventHandler(button_Click);
-                    triple.Items.Add(button);
-
-                    //Menu
                     KryptonContextMenuItem sequenceItem = new KryptonContextMenuItem(sequenceInfo.Name);
                     sequenceItem.Click += sequenceItem_Click;
                     sequenceItem.Tag = sequenceInfo.FileName;
@@ -98,55 +73,45 @@ namespace Medical.GUI
                 MovementSequence sequence = sequenceController.loadSequence(item.Tag.ToString());
                 sequenceController.stopPlayback();
                 sequenceController.CurrentSequence = sequence;
-                playCommand.Enabled = true;
-                stopCommand.Enabled = false;
-                nowPlayingLabel.TextLine2 = item.Text;
-                nowPlayingLabel.ImageLarge = item.Image;
+                //nowPlayingLabel.TextLine2 = item.Text;
+                //nowPlayingLabel.ImageLarge = item.Image;
             }
         }
 
         void stopCommand_Execute(object sender, EventArgs e)
         {
             sequenceController.stopPlayback();
-            playCommand.Enabled = true;
-            stopCommand.Enabled = false;
         }
 
         void playCommand_Execute(object sender, EventArgs e)
         {
             sequenceController.playCurrentSequence();
+        }
+
+        void sequenceController_PlaybackStopped(MovementSequenceController controller)
+        {
+            playCommand.Enabled = true;
+            stopCommand.Enabled = false;
+        }
+
+        void sequenceController_PlaybackStarted(MovementSequenceController controller)
+        {
             playCommand.Enabled = false;
             stopCommand.Enabled = true;
         }
 
-        void button_Click(object sender, EventArgs e)
+        void sequenceController_CurrentSequenceChanged(MovementSequenceController controller)
         {
-            KryptonRibbonGroupButton currentButton = sender as KryptonRibbonGroupButton;
-            if (currentButton != null)
+            if (controller.CurrentSequence == null)
             {
-                if (currentButton != previousClickedButton)
-                {
-                    if (previousClickedButton != null)
-                    {
-                        previousClickedButton.Checked = false;
-                    }
-                    MovementSequence sequence = sequenceController.loadSequence(currentButton.Tag.ToString());
-                    sequenceController.CurrentSequence = sequence;
-                    sequenceController.playCurrentSequence();
-                    previousClickedButton = currentButton;
-                }
-                else
-                {
-                    if (!previousClickedButton.Checked)
-                    {
-                        sequenceController.stopPlayback();
-                    }
-                    else
-                    {
-                        sequenceController.playCurrentSequence();
-                    }
-                }
+                nowPlayingLabel.TextLine2 = "None";
             }
+            else
+            {
+                nowPlayingLabel.TextLine2 = controller.CurrentSequence.Name;
+            }
+            playCommand.Enabled = true;
+            stopCommand.Enabled = false;
         }
     }
 }

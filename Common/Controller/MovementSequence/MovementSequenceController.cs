@@ -63,6 +63,8 @@ namespace Medical.Controller
                     using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                     {
                         loadingSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                        ArchiveFileInfo fileInfo = archive.getFileInfo(filename);
+                        loadingSequence.Name = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4);
                     }
                 }
             }
@@ -82,6 +84,7 @@ namespace Medical.Controller
         {
             if (sequenceDir != currentDirectory)
             {
+                CurrentSequence = null;
                 if (currentSequenceSet != null)
                 {
                     currentSequenceSet.Dispose();
