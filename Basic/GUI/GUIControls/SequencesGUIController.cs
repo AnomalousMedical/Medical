@@ -105,13 +105,15 @@ namespace Medical.GUI
             if (controller.CurrentSequence == null)
             {
                 nowPlayingLabel.TextLine2 = "None";
+                playCommand.Enabled = false;
+                stopCommand.Enabled = false;
             }
             else
             {
                 nowPlayingLabel.TextLine2 = controller.CurrentSequence.Name;
+                playCommand.Enabled = true;
+                stopCommand.Enabled = false;
             }
-            playCommand.Enabled = true;
-            stopCommand.Enabled = false;
         }
     }
 }

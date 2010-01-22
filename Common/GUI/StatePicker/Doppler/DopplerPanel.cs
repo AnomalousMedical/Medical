@@ -28,6 +28,7 @@ namespace Medical.GUI
         private MovementSequenceController movementSequenceController;
         private String currentSequenceDirectory;
         private MovementSequence movementSequence;
+        private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
         private String jointCameraName;
 
         public DopplerPanel(String presetSubDirectory, String jointCameraName, MovementSequenceController movementSequenceController)
@@ -167,6 +168,7 @@ namespace Medical.GUI
 
         public override void modifyScene()
         {
+            previousSequence = movementSequenceController.CurrentSequence;
             movementSequenceController.CurrentSequence = movementSequence;
             movementSequenceController.playCurrentSequence();
         }
@@ -174,6 +176,8 @@ namespace Medical.GUI
         protected override void onPanelClosing()
         {
             movementSequenceController.stopPlayback();
+            movementSequenceController.CurrentSequence = previousSequence;
+            previousSequence = null;
         }
 
         private void jointCameraButton_Click(object sender, EventArgs e)
