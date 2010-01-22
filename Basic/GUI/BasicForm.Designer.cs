@@ -86,6 +86,16 @@
             this.kryptonRibbonGroupTriple11 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.manipulationResetButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.sequencesTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
+            this.kryptonRibbonGroup5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.kryptonRibbonGroupButton3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.sequenceMenu = new ComponentFactory.Krypton.Toolkit.KryptonContextMenu();
+            this.nowPlayingLabel = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
+            this.playButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.playCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.kryptonRibbonGroupTriple14 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.stopButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.stopCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.renderingTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.pictureGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -195,7 +205,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedTab = this.navigationTab;
+            this.clinicalRibbon.SelectedTab = this.sequencesTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
             // 
@@ -694,7 +704,65 @@
             // 
             // sequencesTab
             // 
+            this.sequencesTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
+            this.kryptonRibbonGroup5});
             this.sequencesTab.Text = "Sequences";
+            // 
+            // kryptonRibbonGroup5
+            // 
+            this.kryptonRibbonGroup5.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.kryptonRibbonGroupTriple12,
+            this.kryptonRibbonGroupTriple14});
+            this.kryptonRibbonGroup5.TextLine1 = "Playback";
+            // 
+            // kryptonRibbonGroupTriple12
+            // 
+            this.kryptonRibbonGroupTriple12.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.kryptonRibbonGroupButton3,
+            this.nowPlayingLabel,
+            this.playButton});
+            // 
+            // kryptonRibbonGroupButton3
+            // 
+            this.kryptonRibbonGroupButton3.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.DropDown;
+            this.kryptonRibbonGroupButton3.ImageLarge = global::Medical.Properties.Resources.SequenceIconLarge;
+            this.kryptonRibbonGroupButton3.ImageSmall = global::Medical.Properties.Resources.SequenceIconSmall;
+            this.kryptonRibbonGroupButton3.KryptonContextMenu = this.sequenceMenu;
+            this.kryptonRibbonGroupButton3.TextLine1 = "Sequence";
+            // 
+            // nowPlayingLabel
+            // 
+            this.nowPlayingLabel.TextLine1 = "Now Playing";
+            this.nowPlayingLabel.TextLine2 = "None";
+            // 
+            // playButton
+            // 
+            this.playButton.KryptonCommand = this.playCommand;
+            // 
+            // playCommand
+            // 
+            this.playCommand.Enabled = false;
+            this.playCommand.ImageLarge = global::Medical.Properties.Resources.PlayIconLarge;
+            this.playCommand.ImageSmall = global::Medical.Properties.Resources.PlayIconSmall;
+            this.playCommand.Text = "Play";
+            this.playCommand.TextLine1 = "Play";
+            // 
+            // kryptonRibbonGroupTriple14
+            // 
+            this.kryptonRibbonGroupTriple14.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.stopButton});
+            // 
+            // stopButton
+            // 
+            this.stopButton.KryptonCommand = this.stopCommand;
+            // 
+            // stopCommand
+            // 
+            this.stopCommand.Enabled = false;
+            this.stopCommand.ImageLarge = global::Medical.Properties.Resources.StopButtonLarge;
+            this.stopCommand.ImageSmall = global::Medical.Properties.Resources.StopButtonSmall;
+            this.stopCommand.Text = "Stop";
+            this.stopCommand.TextLine1 = "Stop";
             // 
             // renderingTab
             // 
@@ -1019,24 +1087,12 @@
             // 
             this.leftNavigator.AutoSize = true;
             this.leftNavigator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.leftNavigator.Bar.BarMapExtraText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
-            this.leftNavigator.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
-            this.leftNavigator.Bar.BarMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
             this.leftNavigator.Bar.BarOrientation = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
-            this.leftNavigator.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.SameHeight;
             this.leftNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
             this.leftNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
             this.buttonSpecExpandCollapse});
             this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
-            this.leftNavigator.Button.ContextButtonAction = ComponentFactory.Krypton.Navigator.ContextButtonAction.SelectPage;
-            this.leftNavigator.Button.ContextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
-            this.leftNavigator.Button.ContextMenuMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
-            this.leftNavigator.Button.ContextMenuMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
-            this.leftNavigator.Button.NextButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
-            this.leftNavigator.Button.NextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
-            this.leftNavigator.Button.PreviousButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
-            this.leftNavigator.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftNavigator.Header.HeaderPositionBar = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
             this.leftNavigator.Location = new System.Drawing.Point(0, 121);
@@ -1264,5 +1320,15 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton2;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand aboutCommand;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveAsMenuItem;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup5;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple12;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton3;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton playButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple14;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton stopButton;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand playCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand stopCommand;
+        internal ComponentFactory.Krypton.Toolkit.KryptonContextMenu sequenceMenu;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel nowPlayingLabel;
     }
 }

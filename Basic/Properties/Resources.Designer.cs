@@ -445,6 +445,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap PlayIconLarge {
+            get {
+                object obj = ResourceManager.GetObject("PlayIconLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap PlayIconSmall {
+            get {
+                object obj = ResourceManager.GetObject("PlayIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap RenderIconLarge {
             get {
                 object obj = ResourceManager.GetObject("RenderIconLarge", resourceCulture);
@@ -504,6 +518,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap StatsIconSmall {
             get {
                 object obj = ResourceManager.GetObject("StatsIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap StopButtonLarge {
+            get {
+                object obj = ResourceManager.GetObject("StopButtonLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap StopButtonSmall {
+            get {
+                object obj = ResourceManager.GetObject("StopButtonSmall", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

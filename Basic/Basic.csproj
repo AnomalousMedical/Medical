@@ -233,6 +233,10 @@
     <None Include="Resources\AboutLarge.png" />
     <None Include="Resources\AboutSmall.png" />
     <None Include="Resources\AboutImage.png" />
+    <None Include="Resources\PlayIconLarge.png" />
+    <None Include="Resources\PlayIconSmall.png" />
+    <None Include="Resources\StopButtonLarge.png" />
+    <None Include="Resources\StopButtonSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
