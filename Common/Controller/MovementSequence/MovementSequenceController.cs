@@ -97,10 +97,13 @@ namespace Medical.Controller
                         foreach (String file in archive.listFiles(directory, false))
                         {
                             String fileName = archive.getFileInfo(file).Name;
-                            MovementSequenceInfo info = new MovementSequenceInfo();
-                            info.Name = fileName.Substring(0, fileName.Length - 4);
-                            info.FileName = archive.getFullPath(file);
-                            group.addSequence(info);
+                            if (fileName.EndsWith(".seq"))
+                            {
+                                MovementSequenceInfo info = new MovementSequenceInfo();
+                                info.Name = fileName.Substring(0, fileName.Length - 4);
+                                info.FileName = archive.getFullPath(file);
+                                group.addSequence(info);
+                            }
                         }
                     }
                 }
