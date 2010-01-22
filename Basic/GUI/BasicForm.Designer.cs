@@ -711,6 +711,8 @@
             // 
             // kryptonRibbonGroup5
             // 
+            this.kryptonRibbonGroup5.AllowCollapsed = false;
+            this.kryptonRibbonGroup5.DialogBoxLauncher = false;
             this.kryptonRibbonGroup5.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.kryptonRibbonGroupTriple12,
             this.kryptonRibbonGroupLines2});
