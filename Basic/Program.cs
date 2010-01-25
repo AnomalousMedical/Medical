@@ -18,17 +18,31 @@ namespace Medical
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            using (BasicController controller = new BasicController())
+            bool connectionLoop = true;
+            using (UserPermissions permissions = new UserPermissions())
             {
-                try
+                while (connectionLoop)
                 {
-                    controller.go();
-                }
-                catch (Exception e)
-                {
-                    Log.Default.printException(e);
-                    MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (UserPermissions.Instance.checkConnection())
+                    {
+                        connectionLoop = false;
+                        using (BasicController controller = new BasicController())
+                        {
+                            try
+                            {
+                                controller.go();
+                            }
+                            catch (Exception e)
+                            {
+                                Log.Default.printException(e);
+                                MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        connectionLoop = MessageBox.Show("Please connect your dongle.", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry;
+                    }
                 }
             }
         }

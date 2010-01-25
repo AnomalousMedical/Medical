@@ -15,6 +15,7 @@ using Logging;
 using Engine.ObjectManagement;
 using System.Drawing;
 using OgrePlugin;
+using Engine.Platform;
 
 namespace Medical.Controller
 {
@@ -53,6 +54,11 @@ namespace Medical.Controller
 
         private SimObjectMover teethMover;
         private DockProvider dockProvider;
+
+        private const double checkInterval = 5;
+        private double checkTime = 0.0;
+
+        private bool closeOnWindowUpdate = false;
 
         /// <summary>
         /// Constructor.
@@ -129,6 +135,7 @@ namespace Medical.Controller
                 medicalController = new MedicalController();
                 medicalController.intialize(basicForm);
                 medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
+                medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
 
                 splashScreen.stepProgress(10);
 
@@ -220,11 +227,41 @@ namespace Medical.Controller
             }
         }
 
+        void medicalController_FixedLoopUpdate(Clock time)
+        {
+            checkTime += time.Seconds;
+            if (checkTime > checkInterval)
+            {
+                checkTime = 0;
+                bool loop = true;
+                while (loop)
+                {
+                    if (!UserPermissions.Instance.checkConnection())
+                    {
+                        DialogResult result = MessageBox.Show(basicForm, "Please reconnect your dongle.\nWarning, clicking cancel will close the program and all work will be lost.", "Dongle connection failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        if (result == DialogResult.Cancel)
+                        {
+                            loop = false;
+                            closeOnWindowUpdate = true;
+                        }
+                    }
+                    else
+                    {
+                        loop = false;
+                    }
+                }
+            }
+        }
+
         void medicalController_PumpMessage(ref Message msg)
         {
             if (!distortionController.Visible)
             {
                 shortcutController.processShortcuts(ref msg);
+            }
+            if (closeOnWindowUpdate)
+            {
+                basicForm.Close();
             }
         }
 
