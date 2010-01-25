@@ -39,6 +39,7 @@ UserPermissions::~UserPermissions()
 
 bool UserPermissions::allowFeature(int featureId)
 {
+#ifdef ENABLE_HASP_PROTECTION
 	const hasp_feature_t feature = featureId;
 
 	hasp_handle_t handle = HASP_INVALID_HANDLE_VALUE;
@@ -56,10 +57,14 @@ bool UserPermissions::allowFeature(int featureId)
 	{
 		return false;
 	}
+#else
+	return true;
+#endif
 }
 
 bool UserPermissions::checkConnection()
 {
+#ifdef ENABLE_HASP_PROTECTION
 	hasp_status_t status = HASP_STATUS_OK;
 	if(handle == HASP_INVALID_HANDLE_VALUE)
 	{
@@ -81,12 +86,17 @@ bool UserPermissions::checkConnection()
 		}
 	}
 	return false;
+#else
+	return true;
+#endif
 }
 
 void UserPermissions::logout()
 {
+#ifdef ENABLE_HASP_PROTECTION
 	hasp_logout(handle);
 	handle = HASP_INVALID_HANDLE_VALUE;
+#endif
 }
 
 }
