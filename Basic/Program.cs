@@ -41,7 +41,7 @@ namespace Medical
                     }
                     else
                     {
-                        connectionLoop = MessageBox.Show("Please connect your dongle.", "Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry;
+                        connectionLoop = MessageBox.Show("Please connect your dongle.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
                     }
                 }
             }

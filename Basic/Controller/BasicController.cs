@@ -238,7 +238,7 @@ namespace Medical.Controller
                 {
                     if (!UserPermissions.Instance.checkConnection())
                     {
-                        DialogResult result = MessageBox.Show(basicForm, "Please reconnect your dongle.\nWarning, clicking cancel will close the program and all work will be lost.", "Dongle connection failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+                        DialogResult result = MessageBox.Show(basicForm, "Please reconnect your dongle.\nWarning, clicking cancel will close the program and all work will be lost.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                         if (result == DialogResult.Cancel)
                         {
                             loop = false;
