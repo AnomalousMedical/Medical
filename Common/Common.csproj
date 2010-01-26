@@ -57,17 +57,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dependencies\KryptonSuite\Krypton Components\ComponentFactory.Krypton.Workspace\bin\ComponentFactory.Krypton.Workspace.dll</HintPath>
     </Reference>
+    <Reference Include="Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Engine\Release\Core.dll</HintPath>
+    </Reference>
     <Reference Include="Engine, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Engine.dll</HintPath>
-    </Reference>
-    <Reference Include="Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\Log.dll</HintPath>
-    </Reference>
-    <Reference Include="Math, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\Math.dll</HintPath>
     </Reference>
     <Reference Include="OgrePlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
