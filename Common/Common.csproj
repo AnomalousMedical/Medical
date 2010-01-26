@@ -976,7 +976,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ENGINE_HOME)\Release\cg.dll" "$(TargetDir)cg.dll"
-copy "$(ENGINE_HOME)\Release\zzip.dll" "$(TargetDir)zzip.dll"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ENGINE_HOME)\Release\cg.dll" "$(TargetDir)cg.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
