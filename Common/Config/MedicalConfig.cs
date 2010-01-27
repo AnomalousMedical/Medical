@@ -62,12 +62,14 @@ namespace Medical
                 autoResourceRoot = ".";
             }
 
+#if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))
             {
                 internalSettings = new ConfigFile(programDirectory + "/override.ini");
                 internalSettings.loadConfigFile();
                 resources = internalSettings.createOrRetrieveConfigSection("Resources");
             }
+#endif
         }
 
         public static String DocRoot
@@ -118,6 +120,7 @@ namespace Medical
         {
             get
             {
+#if ALLOW_OVERRIDE
                 if (internalSettings != null)
                 {
                     return resources.getValue("ResourceRoot", autoResourceRoot);
@@ -126,6 +129,9 @@ namespace Medical
                 {
                     return autoResourceRoot;
                 }
+#else
+                return autoResourceRoot;
+#endif
             }
         }
 
@@ -133,6 +139,7 @@ namespace Medical
         {
             get
             {
+#if ALLOW_OVERRIDE
                 if (internalSettings != null)
                 {
                     return resources.getValue("DefaultScene", SceneDirectory + "/Male.sim.xml");
@@ -141,6 +148,9 @@ namespace Medical
                 {
                     return SceneDirectory + "/Male.sim.xml";
                 }
+#else
+                return SceneDirectory + "/Male.sim.xml";
+#endif
             }
         }
 

@@ -27,10 +27,19 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ALLOW_OVERRIDE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
+    <OutputPath>..\PublicRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BulletPlugin, Version=1.0.3505.16367, Culture=neutral, processorArchitecture=x86">
@@ -90,10 +99,6 @@
     <Reference Include="Win32Platform, Version=1.0.3418.16948, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\Win32Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="WrapperUtilities, Version=1.0.3418.16945, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\WrapperUtilities.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -976,6 +981,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ENGINE_HOME)\Release\cg.dll" "$(TargetDir)cg.dll"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
