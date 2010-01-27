@@ -26,6 +26,10 @@ UserPermissions::UserPermissions()
 		throw gcnew System::Exception("Only one UserPermissions instance can be created at a time.");
 	}
 	instance = this;
+#ifndef ENABLE_HASP_PROTECTION
+	//Stuff can be added to the blockedFeatures list to test disabling of features without a hasp key in Release mode.
+	//blockedFeatures.AddLast(Features::FULL_RESOLUTION_RENDERING);
+#endif
 }
 
 UserPermissions::~UserPermissions()
@@ -37,10 +41,10 @@ UserPermissions::~UserPermissions()
 	instance = nullptr;
 }
 
-bool UserPermissions::allowFeature(int featureId)
+bool UserPermissions::allowFeature(Features featureId)
 {
 #ifdef ENABLE_HASP_PROTECTION
-	const hasp_feature_t feature = featureId;
+	const hasp_feature_t feature = static_cast<hasp_feature_t>(featureId);
 
 	hasp_handle_t handle = HASP_INVALID_HANDLE_VALUE;
 	hasp_status_t status;
@@ -58,7 +62,7 @@ bool UserPermissions::allowFeature(int featureId)
 		return false;
 	}
 #else
-	return true;
+	return !blockedFeatures.Contains(featureId);
 #endif
 }
 

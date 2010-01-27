@@ -254,6 +254,10 @@
 			Name="Permissions"
 			>
 			<File
+				RelativePath=".\include\Features.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\UserPermissions.cpp"
 				>
 			</File>

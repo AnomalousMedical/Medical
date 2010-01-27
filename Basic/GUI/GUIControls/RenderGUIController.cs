@@ -86,6 +86,16 @@ namespace Medical.GUI
             resolutionMenu.Items.Add(custom);
 
             form.renderImageSizeButton.KryptonContextMenu = resolutionMenu;
+
+            if (!UserPermissions.Instance.allowFeature(Features.FULL_RESOLUTION_RENDERING))
+            {
+                form.renderImageSizeButton.Enabled = false;
+                width.Enabled = false;
+                height.Enabled = false;
+                width.Value = 320;
+                height.Value = 240;
+                aaCombo.Enabled = false;
+            }
         }
 
         void renderCommand_Execute(object sender, EventArgs e)
