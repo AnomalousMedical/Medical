@@ -30,6 +30,14 @@ namespace Medical.Muscles
             currentIndex = 0;
         }
 
+        public void reverseSides()
+        {
+            foreach (MovementSequenceState state in states)
+            {
+                state.reverseSides();
+            }
+        }
+
         public void sortStates()
         {
             states.Sort(this);

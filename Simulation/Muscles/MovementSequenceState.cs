@@ -31,6 +31,13 @@ namespace Medical.Muscles
             rightCPPosition = rightCP.CurrentLocation;
         }
 
+        public void reverseSides()
+        {
+            float temp = leftCPPosition;
+            leftCPPosition = rightCPPosition;
+            rightCPPosition = temp;
+        }
+
         internal void blend(MovementSequenceState targetState, float currentTime, float duration)
         {
             float endTime;

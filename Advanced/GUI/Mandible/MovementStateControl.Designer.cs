@@ -41,6 +41,7 @@
             this.barMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addKeyStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lockButton = new System.Windows.Forms.CheckBox();
+            this.reverseSidesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.timeUpDown)).BeginInit();
             this.tickMenu.SuspendLayout();
             this.barMenu.SuspendLayout();
@@ -161,19 +162,30 @@
             this.lockButton.UseVisualStyleBackColor = true;
             this.lockButton.CheckedChanged += new System.EventHandler(this.lockButtonCheckChanged);
             // 
+            // reverseSidesButton
+            // 
+            this.reverseSidesButton.Location = new System.Drawing.Point(174, 32);
+            this.reverseSidesButton.Name = "reverseSidesButton";
+            this.reverseSidesButton.Size = new System.Drawing.Size(89, 23);
+            this.reverseSidesButton.TabIndex = 8;
+            this.reverseSidesButton.Text = "Reverse Sides";
+            this.reverseSidesButton.UseVisualStyleBackColor = true;
+            this.reverseSidesButton.Click += new System.EventHandler(this.reverseSidesButton_Click);
+            // 
             // MovementStateControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonText = "Movement Sequence";
+            this.Controls.Add(this.reverseSidesButton);
             this.Controls.Add(this.timeUpDown);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.timeTrackBar);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.lockButton);
-            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Float | Medical.GUI.DockLocations.Top)
-                        | Medical.GUI.DockLocations.Bottom)));
+            this.DockAreas = ((Medical.GUI.DockLocations)(((Medical.GUI.DockLocations.Bottom | Medical.GUI.DockLocations.Top)
+                        | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MovementStateControl";
             this.ShowHint = Medical.GUI.DockLocations.Bottom;
@@ -199,5 +211,6 @@
         private System.Windows.Forms.ToolStripMenuItem addKeyStateToolStripMenuItem;
         private System.Windows.Forms.CheckBox lockButton;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.Button reverseSidesButton;
     }
 }

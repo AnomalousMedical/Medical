@@ -45,6 +45,21 @@ namespace Medical.GUI
             }
         }
 
+        public String Filename
+        {
+            set
+            {
+                if (value == null)
+                {
+                    this.Text = "Movement Sequence";
+                }
+                else
+                {
+                    this.Text = "Movement Sequence - " + value;
+                }
+            }
+        }
+
         void timeTrackBar_TimeChanged(TimeTrackBar trackBar, double currentTime)
         {
             movementSequence.setPosition((float)currentTime);
@@ -110,6 +125,11 @@ namespace Medical.GUI
         private void lockButtonCheckChanged(object sender, EventArgs e)
         {
             timeTrackBar.MoveMarks = !lockButton.Checked;
+        }
+
+        private void reverseSidesButton_Click(object sender, EventArgs e)
+        {
+            movementSequence.reverseSides();
         }
     }
 }

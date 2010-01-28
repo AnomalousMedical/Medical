@@ -382,6 +382,7 @@ namespace Medical.Controller
             MovementSequence sequence = new MovementSequence();
             sequence.Duration = 5.0f;
             movementState.Sequence = sequence;
+            movementState.Filename = null;
         }
 
         public void loadSequence(String filename)
@@ -394,6 +395,7 @@ namespace Medical.Controller
                     if (sequence != null)
                     {
                         movementState.Sequence = sequence;
+                        movementState.Filename = filename;
                     }
                 }
             }
@@ -405,6 +407,7 @@ namespace Medical.Controller
             {
                 writer.Formatting = Formatting.Indented;
                 saver.saveObject(movementState.Sequence, writer);
+                movementState.Filename = filename;
             }
         }
 
