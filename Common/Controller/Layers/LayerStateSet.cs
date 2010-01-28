@@ -8,7 +8,8 @@ namespace Medical
 {
     public class LayerStateSet : Saveable, IDisposable
     {
-        private Dictionary<String, LayerState> states = new Dictionary<string, LayerState>();
+        private List<LayerState> stateOrder = new List<LayerState>(); //A list to maintain state order
+        private Dictionary<String, LayerState> stateLookup = new Dictionary<string, LayerState>(); //A dictionary for fast lookup.
 
         public LayerStateSet()
         {
@@ -17,52 +18,61 @@ namespace Medical
 
         public void Dispose()
         {
-            foreach (LayerState state in states.Values)
+            foreach (LayerState state in stateOrder)
             {
                 state.Dispose();
             }
+            stateOrder.Clear();
+            stateLookup.Clear();
         }
 
         public void addState(LayerState state)
         {
-            states.Add(state.Name, state);
+            stateOrder.Add(state);
+            stateLookup.Add(state.Name, state);
         }
 
         public void removeState(LayerState state)
         {
-            states.Remove(state.Name);
+            stateOrder.Remove(state);
+            stateLookup.Remove(state.Name);
         }
 
         public void removeState(String name)
         {
-            states.Remove(name);
+            removeState(getState(name));
+        }
+
+        public void moveState(LayerState state, int index)
+        {
+            if (hasState(state.Name))
+            {
+                stateOrder.Remove(state);
+                stateOrder.Insert(index, state);
+            }
+            else
+            {
+                throw new Exception("Attempted to move a state that is not part of this LayerStateSet.");
+            }
         }
 
         public bool hasState(String name)
         {
-            return states.ContainsKey(name);
+            return stateLookup.ContainsKey(name);
         }
 
         public LayerState getState(String name)
         {
             LayerState ret;
-            states.TryGetValue(name, out ret);
+            stateLookup.TryGetValue(name, out ret);
             return ret;
-        }
-
-        public IEnumerable<String> LayerStateNames
-        {
-            get
-            {
-                return states.Keys;
-            }
         }
 
         public IEnumerable<LayerState> LayerStates
         {
             get
             {
-                return states.Values;
+                return stateOrder;
             }
         }
 
@@ -72,12 +82,16 @@ namespace Medical
 
         protected LayerStateSet(LoadInfo info)
         {
-            info.RebuildDictionary<String, LayerState>(STATES, states);
+            info.RebuildList<LayerState>(STATES, stateOrder);
+            foreach (LayerState state in stateOrder)
+            {
+                stateLookup.Add(state.Name, state);
+            }
         }
 
         public void getInfo(SaveInfo info)
         {
-            info.ExtractDictionary<String, LayerState>(STATES, states);
+            info.ExtractList<LayerState>(STATES, stateOrder);
         }
 
         #endregion

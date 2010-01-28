@@ -108,11 +108,11 @@ namespace Medical
                             {
                                 throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
                             }
-                            foreach (String name in states.LayerStateNames)
+                            foreach (LayerState state in states.LayerStates)
                             {
-                                if (!currentLayers.hasState(name))
+                                if (!currentLayers.hasState(state.Name))
                                 {
-                                    currentLayers.addState(states.getState(name));
+                                    currentLayers.addState(state);
                                 }
                             }
                         }

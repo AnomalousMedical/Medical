@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using DragNDrop;
 
 namespace Medical.GUI
 {
@@ -22,7 +23,14 @@ namespace Medical.GUI
         public PresetLayerEditor()
         {
             InitializeComponent();
-            layerList.SelectedValueChanged += new EventHandler(layerList_SelectedValueChanged);
+            layerList.SelectedIndexChanged += new EventHandler(layerList_SelectedValueChanged);
+            this.SizeChanged += new EventHandler(PresetLayerEditor_SizeChanged);
+            layerList.DragDrop += new DragEventHandler(layerList_DragDrop);
+        }
+
+        void PresetLayerEditor_SizeChanged(object sender, EventArgs e)
+        {
+            layerList.Columns[0].Width = -2;
         }
 
         public void initialize(LayerController layerController, ImageRenderer imageRenderer)
@@ -39,18 +47,20 @@ namespace Medical.GUI
             this.Enabled = stateSet != null;
             if (Enabled)
             {
-                foreach (String name in stateSet.LayerStateNames)
+                foreach (LayerState state in stateSet.LayerStates)
                 {
-                    layerList.Items.Add(name);
+                    ListViewItem lvItem = new ListViewItem(state.Name);
+                    lvItem.Tag = state;
+                    layerList.Items.Add(lvItem);
                 }
             }
         }
 
         void layerList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (layerList.SelectedItem != null)
+            if (layerList.SelectedItems.Count > 0 && layerList.SelectedItems[0] != null)
             {
-                String name = layerList.SelectedItem.ToString();
+                String name = layerList.SelectedItems[0].Text;
                 LayerState state = layerController.CurrentLayers.getState(name);
                 hiddenCheckBox.Checked = state.Hidden;
                 if (state.Thumbnail != null)
@@ -76,7 +86,9 @@ namespace Medical.GUI
                 state.captureState();
                 state.Hidden = hiddenCheckBox.Checked;
                 layerController.CurrentLayers.addState(state);
-                layerList.Items.Add(result.text);
+                ListViewItem lvItem = new ListViewItem(state.Name);
+                lvItem.Tag = state;
+                layerList.Items.Add(lvItem);
             }
         }
 
@@ -93,19 +105,19 @@ namespace Medical.GUI
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            if (layerList.SelectedItem != null)
+            if (layerList.SelectedItems.Count > 0 && layerList.SelectedItems[0] != null)
             {
-                String name = layerList.SelectedItem.ToString();
+                String name = layerList.SelectedItems[0].Text;
                 layerController.CurrentLayers.removeState(name);
-                layerList.Items.Remove(name);
+                layerList.Items.Remove(layerList.SelectedItems[0]);
             }
         }
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            if (layerList.SelectedItem != null)
+            if (layerList.SelectedItems.Count > 0 && layerList.SelectedItems[0] != null)
             {
-                String name = layerList.SelectedItem.ToString();
+                String name = layerList.SelectedItems[0].Text;
                 LayerState state = layerController.CurrentLayers.getState(name);
                 state.Hidden = hiddenCheckBox.Checked;
                 state.captureState();
@@ -117,6 +129,15 @@ namespace Medical.GUI
                 {
                     ThumbnailImage = null;
                 }
+            }
+        }
+
+        void layerList_DragDrop(object sender, DragEventArgs e)
+        {
+            DragItemData data = (DragItemData)e.Data.GetData(typeof(DragItemData).ToString());
+            foreach (ListViewItem item in data.DragItems)
+            {
+                layerController.CurrentLayers.moveState(item.Tag as LayerState, item.Index);
             }
         }
 
