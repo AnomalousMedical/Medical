@@ -31,9 +31,13 @@ namespace Medical
             blending = true;
         }
 
-        public void stopBlend()
+        public void forceFinishBlend()
         {
-            blending = false;
+            if (blending)
+            {
+                targetState.blend(0.0f, targetState);
+                blending = false;
+            }
         }
 
         public void recordUndoState()

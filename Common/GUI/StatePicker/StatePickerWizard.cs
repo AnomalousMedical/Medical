@@ -199,12 +199,8 @@ namespace Medical.GUI
 
         internal void finish()
         {
+            stateBlender.forceFinishBlend();
             MedicalState createdState = stateBlender.createBaselineState();
-            foreach (StatePickerPanel panel in panels)
-            {
-                panel.applyToState(createdState);
-            }
-            stateBlender.stopBlend();
             if (StateCreated != null)
             {
                 StateCreated.Invoke(createdState);
