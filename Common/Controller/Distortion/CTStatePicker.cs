@@ -15,10 +15,6 @@ namespace Medical
         private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
 
-        private LeftCondylarGrowthPanel leftCondylarGrowthPanel;
-        private RightCondylarGrowthPanel rightCondylarGrowthPanel;
-        private LeftCondylarDegenrationPanel leftCondylarDegenerationPanel;
-        private RightCondylarDegenerationPanel rightCondylarDegenerationPanel;
         private FossaPanel leftFossaPanel;
         private FossaPanel rightFossaPanel;
         private DiscSpacePanel leftDiscPanel;
@@ -28,18 +24,15 @@ namespace Medical
 
         private String lastRootDirectory;
 
-        public CTStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
+        public CTStatePicker(StatePickerPanelController panelController)
         {
-            temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-            statePicker = new StatePickerWizard(Name, uiHost, temporaryStateBlender, navigationController, layerController);
+            temporaryStateBlender = new TemporaryStateBlender(panelController.MedicalController.MainTimer, panelController.StateController);
+            statePicker = new StatePickerWizard(Name, panelController.UiHost, temporaryStateBlender, panelController.NavigationController, panelController.LayerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            leftCondylarGrowthPanel = new LeftCondylarGrowthPanel();
-            statePicker.addStatePanel(leftCondylarGrowthPanel);
-
-            leftCondylarDegenerationPanel = new LeftCondylarDegenrationPanel();
-            statePicker.addStatePanel(leftCondylarDegenerationPanel);
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.LeftCondylarGrowth));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.LeftCondylarDegeneration));
 
             leftFossaPanel = new FossaPanel("LeftFossa");
             leftFossaPanel.NormalImage = Resources.LeftFossaNormal;
@@ -62,11 +55,8 @@ namespace Medical
             leftDiscPanel.LargeIcon = Resources.LeftDiscSpace;
             statePicker.addStatePanel(leftDiscPanel);
 
-            rightCondylarGrowthPanel = new RightCondylarGrowthPanel();
-            statePicker.addStatePanel(rightCondylarGrowthPanel);
-
-            rightCondylarDegenerationPanel = new RightCondylarDegenerationPanel();
-            statePicker.addStatePanel(rightCondylarDegenerationPanel);
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.RightCondylarGrowth));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.RightCondylarDegeneration));
 
             rightFossaPanel = new FossaPanel("RightFossa");
             rightFossaPanel.NormalImage = Resources.RightFossaNormal;
@@ -92,7 +82,7 @@ namespace Medical
             statePicker.addStatePanel(new BottomTeethRemovalPanel());
             statePicker.addStatePanel(new TopTeethRemovalPanel());
             statePicker.addStatePanel(new TeethAdaptationPanel());
-            statePicker.addStatePanel(new NotesPanel("CT", imageRenderer));
+            statePicker.addStatePanel(new NotesPanel("CT", panelController.ImageRenderer));
 
             statePicker.initializeImageHandle();
             statePicker.setToDefault();
@@ -113,10 +103,6 @@ namespace Medical
                 statePicker.closeForSceneChange();
             }
 
-            leftCondylarGrowthPanel.sceneLoaded(scene);
-            rightCondylarGrowthPanel.sceneLoaded(scene);
-            leftCondylarDegenerationPanel.sceneLoaded(scene);
-            rightCondylarDegenerationPanel.sceneLoaded(scene);
             leftFossaPanel.sceneLoaded(scene);
             rightFossaPanel.sceneLoaded(scene);
             leftDiscPanel.sceneLoaded(scene, rootDirectory + "/LeftDoppler");

@@ -73,6 +73,11 @@ namespace Medical.GUI
             movingMuscleTarget.Offset = Vector3.Zero;
         }
 
+        public virtual void sceneChanged(MedicalController medicalController, SimulationScene simScene)
+        {
+            
+        }
+
         public String NavigationState { get; set; }
 
         public String LayerState { get; set; }

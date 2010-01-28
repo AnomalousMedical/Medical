@@ -47,6 +47,9 @@ namespace Medical.Controller
         private ShortcutController shortcutController;
         private MovementSequenceController movementSequenceController;
 
+        //Wizards
+        private StatePickerPanelController statePickerPanelController;
+
         private WatermarkController watermarkController;
         private Watermark watermark;
         private BackgroundController backgroundController;
@@ -184,18 +187,7 @@ namespace Medical.Controller
                 distortionController = new DistortionController();
                 distortionController.Finished += new StatePickerFinished(statePicker_Finished);
                 distortionController.StateCreated += new MedicalStateCreated(statePicker_StateCreated);
-                mriWizard = new SkullStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(mriWizard);
-                teethWizard = new TeethStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(teethWizard);
-                profileWizard = new ProfileStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(profileWizard);
-                ctWizard = new CTStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(ctWizard);
-                dopplerWizard = new DopplerStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(dopplerWizard);
-                clinicalWizard = new ClinicStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
-                distortionController.addDistortionWizard(clinicalWizard);
+                createWizardPanels();
                 basicForm.createDistortionMenu(distortionController.Wizards);
 
                 basicForm.initialize(this);
@@ -225,6 +217,30 @@ namespace Medical.Controller
             {
                 splashScreen.fadeAway();
             }
+        }
+
+        private void createWizardPanels()
+        {
+            //Create panels
+            statePickerPanelController = new StatePickerPanelController(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+            statePickerPanelController.addPanel(WizardPanels.LeftCondylarGrowth, new LeftCondylarGrowthPanel());
+            statePickerPanelController.addPanel(WizardPanels.LeftCondylarDegeneration, new LeftCondylarDegenrationPanel());
+            statePickerPanelController.addPanel(WizardPanels.RightCondylarGrowth, new RightCondylarGrowthPanel());
+            statePickerPanelController.addPanel(WizardPanels.RightCondylarDegeneration, new RightCondylarDegenerationPanel());
+
+            //Create wizards
+            mriWizard = new SkullStatePicker(statePickerPanelController);
+            distortionController.addDistortionWizard(mriWizard);
+            teethWizard = new TeethStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+            distortionController.addDistortionWizard(teethWizard);
+            profileWizard = new ProfileStatePicker(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+            distortionController.addDistortionWizard(profileWizard);
+            ctWizard = new CTStatePicker(statePickerPanelController);
+            distortionController.addDistortionWizard(ctWizard);
+            dopplerWizard = new DopplerStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+            distortionController.addDistortionWizard(dopplerWizard);
+            clinicalWizard = new ClinicStatePicker(movementSequenceController, basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer);
+            distortionController.addDistortionWizard(clinicalWizard);
         }
 
         void medicalController_FixedLoopUpdate(Clock time)
@@ -462,6 +478,7 @@ namespace Medical.Controller
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
                     distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
+                    statePickerPanelController.sceneChanged(medicalController, medicalScene);
                     windowPresetController.loadPresetSet();
                     if (SceneLoaded != null)
                     {

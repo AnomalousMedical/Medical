@@ -28,6 +28,11 @@ namespace Medical.GUI
             }
         }
 
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
+        {
+            sceneLoaded(medicalController.CurrentScene);
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             foreach (Control control in Controls)

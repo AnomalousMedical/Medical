@@ -115,6 +115,7 @@
     <Compile Include="Controller\Distortion\CTStatePicker.cs" />
     <Compile Include="Controller\Distortion\DopplerStatePicker.cs" />
     <Compile Include="Controller\Distortion\ProfileStatePicker.cs" />
+    <Compile Include="Controller\Distortion\StatePickerPanelController.cs" />
     <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
     <Compile Include="Controller\Distortion\TeethStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
