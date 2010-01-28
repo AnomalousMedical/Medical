@@ -146,10 +146,10 @@ namespace Medical
                 }
                 else
                 {
-                    return SceneDirectory + "/Male.sim.xml";
+                    return SceneDirectory + "/Female.sim.xml";
                 }
 #else
-                return SceneDirectory + "/Male.sim.xml";
+                return SceneDirectory + "/Female.sim.xml";
 #endif
             }
         }

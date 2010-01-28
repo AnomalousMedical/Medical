@@ -40,7 +40,7 @@ namespace Medical.GUI
             width = form.renderWidthUpDown;
             height = form.renderHeightUpDown;
             aaCombo = form.aaCombo;
-            aaCombo.SelectedIndex = 0;
+            aaCombo.SelectedIndex = aaCombo.Items.Count - 1;
 
             form.renderCommand.Execute += new EventHandler(renderCommand_Execute);
 
@@ -89,12 +89,15 @@ namespace Medical.GUI
 
             if (!UserPermissions.Instance.allowFeature(Features.FULL_RESOLUTION_RENDERING))
             {
-                form.renderImageSizeButton.Enabled = false;
-                width.Enabled = false;
-                height.Enabled = false;
+                form.renderImageSizeButton.Visible = false;
+                width.Visible = false;
+                height.Visible = false;
                 width.Value = 320;
                 height.Value = 240;
-                aaCombo.Enabled = false;
+                aaCombo.Visible = false;
+                form.antiAliasingLabel.Visible = false;
+                form.widthLabel.Visible = false;
+                form.heightLabel.Visible = false;
             }
         }
 
