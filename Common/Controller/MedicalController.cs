@@ -82,6 +82,9 @@ namespace Medical
             logListener = new LogFileListener();
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
+#if ONLY_LOG_ERRORS
+            Log.Default.setActiveMessageTypes(LogLevel.Error);
+#endif
 
             Resource.ResourceRoot = MedicalConfig.ResourceRoot;
             Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
