@@ -17,7 +17,8 @@ namespace Medical.GUI
         private String fossaName;
         private float openingState = 0.0f;
 
-        public FossaPanel(String fossaName)
+        public FossaPanel(String fossaName, StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             eminanceSlider.ValueChanged += new EventHandler(leftEminanceSlider_ValueChanged);

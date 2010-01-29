@@ -14,7 +14,8 @@ namespace Medical.GUI
         private bool open = false;
         private bool showingWear = false;
 
-        public LeftCondylarDegenrationPanel()
+        public LeftCondylarDegenrationPanel(StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             this.Text = "Left Condyle Degeneration";

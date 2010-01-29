@@ -11,34 +11,18 @@ namespace Medical
 {
     public class TeethStatePicker : DistortionWizard
     {
-        private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
-        private String lastPresetDirectory;
 
-        //private FullDistortionPicker teethDistortionPicker;
-        private TeethHeightAdaptationPanel teethHeightAdaptation;
-        private NotesPanel notesPanel;
-
-        public TeethStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
+        public TeethStatePicker(StatePickerPanelController panelController)
         {
-            temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-            statePicker = new StatePickerWizard(Name, uiHost, temporaryStateBlender, navigationController, layerController);
+            statePicker = new StatePickerWizard(Name, panelController.UiHost, panelController.StateBlender, panelController.NavigationController, panelController.LayerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            statePicker.addStatePanel(new BottomTeethRemovalPanel());
-            statePicker.addStatePanel(new TopTeethRemovalPanel());
-
-            teethHeightAdaptation = new TeethHeightAdaptationPanel();
-            teethHeightAdaptation.Text = "Teeth";
-            teethHeightAdaptation.NavigationState = "Teeth Midline Anterior";
-            teethHeightAdaptation.LayerState = "TeethLayers";
-            teethHeightAdaptation.TextLine1 = "Teeth";
-            teethHeightAdaptation.LargeIcon = Resources.AdaptationIcon;
-            statePicker.addStatePanel(teethHeightAdaptation);
-
-            notesPanel = new NotesPanel(this.Name, imageRenderer);
-            statePicker.addStatePanel(notesPanel);
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.TeethHeightAdaptationPanel));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.NotesPanel));
         }
 
         public override void Dispose()
@@ -47,7 +31,6 @@ namespace Medical
             {
                 statePicker.Dispose();
             }
-            teethHeightAdaptation.Dispose();
         }
 
         public override void setToDefault()
@@ -61,14 +44,6 @@ namespace Medical
             {
                 statePicker.closeForSceneChange();
             }
-
-            teethHeightAdaptation.sceneChanged();
-
-            //if (presetDirectory != lastPresetDirectory)
-            //{
-            //    lastPresetDirectory = presetDirectory;
-            //    teethDistortionPicker.initialize(presetDirectory + "/TeethPresets");
-            //}
         }
 
         public override void startWizard(DrawingWindow displayWindow)

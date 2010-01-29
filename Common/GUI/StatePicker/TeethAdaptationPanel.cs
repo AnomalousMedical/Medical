@@ -13,7 +13,8 @@ namespace Medical.GUI
 {
     public partial class TeethAdaptationPanel : StatePickerPanel
     {
-        public TeethAdaptationPanel()
+        public TeethAdaptationPanel(StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             this.Text = "Teeth Adaptation";
@@ -24,7 +25,7 @@ namespace Medical.GUI
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            TeethState undo = parentPicker.StateBlender.UndoState.Teeth;
+            TeethState undo = panelController.StateBlender.UndoState.Teeth;
             foreach (ToothState toothState in undo.StateEnum)
             {
                 Tooth tooth = TeethController.getTooth(toothState.Name);

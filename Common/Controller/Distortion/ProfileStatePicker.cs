@@ -11,42 +11,20 @@ namespace Medical.Controller
 {
     public class ProfileStatePicker : DistortionWizard
     {
-        private TemporaryStateBlender temporaryStateBlender;
         private StatePickerWizard statePicker;
-        private String lastPresetDirectory;
 
-        private ProfileDistortionPanel profileDistortionPicker;
-        private NotesPanel notesPanel;
-
-        public ProfileStatePicker(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer)
+        public ProfileStatePicker(StatePickerPanelController panelController)
         {
-            temporaryStateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
-            statePicker = new StatePickerWizard(Name, uiHost, temporaryStateBlender, navigationController, layerController);
+            statePicker = new StatePickerWizard(Name, panelController.UiHost, panelController.StateBlender, panelController.NavigationController, panelController.LayerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
 
-            profileDistortionPicker = new ProfileDistortionPanel();
-            profileDistortionPicker.Text = "Profile";
-            profileDistortionPicker.NavigationState = "Right Lateral";
-            profileDistortionPicker.LayerState = "ProfileLayers";
-            profileDistortionPicker.TextLine1 = "Profile";
-            profileDistortionPicker.LargeIcon = Resources.ProfileIcon;
-            statePicker.addStatePanel(profileDistortionPicker);
-
-            notesPanel = new NotesPanel(this.Name, imageRenderer);
-            statePicker.addStatePanel(notesPanel);
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.ProfileDistortionPanel));
+            statePicker.addStatePanel(panelController.getPanel(WizardPanels.NotesPanel));
         }
 
         public override void Dispose()
         {
-            if (profileDistortionPicker != null)
-            {
-                profileDistortionPicker.Dispose();
-            }
-            if (notesPanel != null)
-            {
-                notesPanel.Dispose();
-            }
             if (statePicker != null)
             {
                 statePicker.Dispose();
@@ -64,13 +42,6 @@ namespace Medical.Controller
             {
                 statePicker.closeForSceneChange();
             }
-            profileDistortionPicker.sceneChanged();
-
-            //if (presetDirectory != lastPresetDirectory)
-            //{
-            //    lastPresetDirectory = presetDirectory;
-            //    profileDistortionPicker.initialize(presetDirectory + "/ProfilePresets");
-            //}
         }
 
         public override void startWizard(DrawingWindow displayWindow)

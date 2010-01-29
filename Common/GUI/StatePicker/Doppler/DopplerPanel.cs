@@ -31,7 +31,8 @@ namespace Medical.GUI
         private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
         private String jointCameraName;
 
-        public DopplerPanel(String presetSubDirectory, String jointCameraName, MovementSequenceController movementSequenceController)
+        public DopplerPanel(String presetSubDirectory, String jointCameraName, MovementSequenceController movementSequenceController, StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             this.jointCameraName = jointCameraName;
@@ -40,13 +41,14 @@ namespace Medical.GUI
             this.movementSequenceController = movementSequenceController;
         }
 
-        public void sceneChanged(String presetDirectory)
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
             if (currentSequenceDirectory != movementSequenceController.SequenceDirectory)
             {
                 currentSequenceDirectory = movementSequenceController.SequenceDirectory;
                 movementSequence = movementSequenceController.loadSequence(currentSequenceDirectory + "/Doppler.seq");
             }
+            String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
             if (currentPresetDirectory != presetDirectory)
             {
                 currentPresetDirectory = presetDirectory;
@@ -135,7 +137,7 @@ namespace Medical.GUI
                         using (XmlTextReader textReader = new XmlTextReader(stream))
                         {
                             presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                            showChanges(false, true);
+                            showChanges(false);
                         }
                     }
                 }

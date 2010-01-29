@@ -15,8 +15,8 @@ namespace Medical.GUI
         private PresetState presetState;
         private XmlSaver xmlSaver = new XmlSaver();
 
-        public FullDistortionPicker()
-            :base("*.dst")
+        public FullDistortionPicker(StatePickerPanelController panelController)
+            :base("*.dst", panelController)
         {
             
         }

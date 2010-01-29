@@ -11,7 +11,8 @@ namespace Medical.GUI
 {
     public partial class RightCondylarGrowthPanel : BoneManipulatorPanel
     {
-        public RightCondylarGrowthPanel()
+        public RightCondylarGrowthPanel(StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             this.Text = "Right Condyle Growth";

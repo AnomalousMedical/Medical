@@ -17,7 +17,8 @@ namespace Medical.GUI
         private Dictionary<KryptonCheckButton, bool> openCheckStatus = new Dictionary<KryptonCheckButton, bool>();
         private bool allowUpdates = true;
 
-        public BottomTeethRemovalPanel()
+        public BottomTeethRemovalPanel(StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             foreach (Control control in this.Controls)

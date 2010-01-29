@@ -15,7 +15,8 @@ namespace Medical.GUI
     {
         private Dictionary<BoneManipulatorSlider, float> openingValues = new Dictionary<BoneManipulatorSlider, float>();
 
-        public BoneManipulatorPanel()
+        public BoneManipulatorPanel(StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             foreach (Control control in Controls)

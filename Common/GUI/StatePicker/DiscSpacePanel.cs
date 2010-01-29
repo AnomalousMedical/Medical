@@ -26,12 +26,15 @@ namespace Medical.GUI
         private static XmlSaver xmlSaver = new XmlSaver();
         private PresetState presetState;
         private String defaultLayerState;
+        private String subDirectory;
 
-        public DiscSpacePanel(String discName, String defaultLayerState)
+        public DiscSpacePanel(String discName, String defaultLayerState, String subDirectory, StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             this.discName = discName;
             this.defaultLayerState = defaultLayerState;
+            this.subDirectory = subDirectory;
             discOffsetSlider.ValueChanged += new EventHandler(discOffsetSlider_ValueChanged);
             dopplerControl1.Enabled = false;
             dopplerDataCheck.CheckedChanged += new EventHandler(dopplerDataCheck_CheckedChanged);
@@ -114,10 +117,10 @@ namespace Medical.GUI
             discState.RDAOffset = newOffset;
         }
 
-        internal void sceneLoaded(SimScene scene, String presetDirectory)
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
             disc = DiscController.getDisc(discName);
-
+            String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory + '/' + subDirectory;
             if (currentPresetDirectory != presetDirectory)
             {
                 currentPresetDirectory = presetDirectory;
@@ -223,7 +226,7 @@ namespace Medical.GUI
                         using (XmlTextReader textReader = new XmlTextReader(stream))
                         {
                             presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                            showChanges(false, true);
+                            showChanges(false);
                         }
                     }
                 }

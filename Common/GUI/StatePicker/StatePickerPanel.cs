@@ -12,27 +12,22 @@ namespace Medical.GUI
 {
     public partial class StatePickerPanel : UserControl
     {
-        protected StatePickerWizard parentPicker;
+        protected StatePickerPanelController panelController;
 
-        public StatePickerPanel()
+        public StatePickerPanel(StatePickerPanelController panelController)
         {
             InitializeComponent();
-        }
-
-        public void setStatePicker(StatePickerWizard parentPicker)
-        {
-            this.parentPicker = parentPicker;
-            statePickerSet(parentPicker);
+            this.panelController = panelController;
         }
 
         protected void setNavigationState(String name)
         {
-            parentPicker.setNavigationState(name);
+            panelController.setNavigationState(name);
         }
 
         protected void setLayerState(String name)
         {
-            parentPicker.setLayerState(name);
+            panelController.setLayerState(name);
         }
 
         public virtual void applyToState(MedicalState state)
@@ -90,17 +85,7 @@ namespace Medical.GUI
 
         protected void showChanges(bool immediate)
         {
-            parentPicker.showChanges(immediate, false);
-        }
-
-        protected void showChanges(bool immediate, bool captureCurrentState)
-        {
-            parentPicker.showChanges(immediate, captureCurrentState);
-        }
-
-        protected virtual void statePickerSet(StatePickerWizard controller)
-        {
-
+            panelController.showChanges(this, immediate);
         }
 
         internal void callPanelOpening()

@@ -22,7 +22,8 @@ namespace Medical.GUI
         private Dictionary<String, KryptonBreadCrumbItem> breadCrumbItems = new Dictionary<string,KryptonBreadCrumbItem>();
         private List<String> files = new List<string>();
 
-        public FileBrowserPickerPanel(String fileFilter)
+        public FileBrowserPickerPanel(String fileFilter, StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;

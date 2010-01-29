@@ -12,7 +12,8 @@ namespace Medical.GUI
 {
     public partial class NotesPanel : StatePickerPanel
     {
-        public NotesPanel(String procedureType, ImageRenderer imageRenderer)
+        public NotesPanel(String procedureType, ImageRenderer imageRenderer, StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             this.procedureType.Text = procedureType;

@@ -10,6 +10,7 @@ using System.Resources;
 using Engine.Resources;
 using System.IO;
 using Logging;
+using System.Xml;
 
 namespace Medical.GUI
 {
@@ -20,11 +21,15 @@ namespace Medical.GUI
         private ListViewItem openingItem = null; //the item that was selected when this ui was opened.
         private bool allowUpdates = true;
         private LinkedList<Image> images = new LinkedList<Image>();
+        private String lastRootDirectory;
+        private String subDirectory;
 
-        public PresetStatePanel()
+        public PresetStatePanel(String subDirectory, StatePickerPanelController panelController)
+            : base(panelController)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+            this.subDirectory = subDirectory;
             presetListView.SelectedIndexChanged += new EventHandler(presetListView_SelectedIndexChanged);
         }
 
@@ -36,11 +41,25 @@ namespace Medical.GUI
             }
         }
 
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
+        {
+            String rootDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
+            if (rootDirectory != lastRootDirectory)
+            {
+                lastRootDirectory = rootDirectory;
+
+                PresetStateSet presets = new PresetStateSet(this.Text, rootDirectory + '/' + subDirectory);
+                loadPresetSet(presets);
+                this.clear();
+                this.initialize(presets);
+            }
+        }
+
         public void initialize(PresetStateSet presetStateSet)
         {
             if (presetListView.LargeImageList == null)
             {
-                presetListView.LargeImageList = parentPicker.ImageList;
+                presetListView.LargeImageList = panelController.ImageList;
             }
             using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
             {
@@ -143,10 +162,32 @@ namespace Medical.GUI
         {
             foreach (Image image in images)
             {
-                parentPicker.ImageList.Images.RemoveByKey(image.Tag.ToString());
+                panelController.ImageList.Images.RemoveByKey(image.Tag.ToString());
                 image.Dispose();
             }
             images.Clear();
+        }
+
+        private void loadPresetSet(PresetStateSet presetStateSet)
+        {
+            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
+            {
+                String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
+                foreach (String file in files)
+                {
+                    XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
+                    PresetState preset = panelController.XmlSaver.restoreObject(reader) as PresetState;
+                    if (preset != null)
+                    {
+                        presetStateSet.addPresetState(preset);
+                    }
+                    else
+                    {
+                        Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                    }
+                    reader.Close();
+                }
+            }
         }
     }
 }

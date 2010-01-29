@@ -18,7 +18,6 @@ namespace Medical.GUI
         private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
         int currentIndex = 0;
         private bool updatePanel = true;
-        TemporaryStateBlender stateBlender;
         NavigationController navigationController;
         private DrawingWindow currentDrawingWindow;
         private LayerController layerController;
@@ -26,36 +25,29 @@ namespace Medical.GUI
         private String navigationStateBeforeShown;
         private StatePickerPanelHost panelHost;
 
-        private ImageList pickerImageList;
-
         private StatePickerUIHost uiHost;
+        private TemporaryStateBlender stateBlender;
 
         public StatePickerWizard(String name, StatePickerUIHost uiHost, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController)
         {
             this.Name = name;
             this.uiHost = uiHost;
 
-            pickerImageList = new ImageList();
-            pickerImageList.ColorDepth = ColorDepth.Depth32Bit;
-            pickerImageList.ImageSize = new Size(100, 100);
-
             this.panelHost = new StatePickerPanelHost(this);
-
             this.stateBlender = stateBlender;
+
             this.navigationController = navigationController;
             this.layerController = layerController;
         }
 
         public void Dispose()
         {
-            pickerImageList.Dispose();
             uiHost.Dispose();
             panelHost.Dispose();
         }
 
         public void addStatePanel(StatePickerPanel panel)
         {
-            panel.setStatePicker(this);
             panels.Add(panel);
         }
 
@@ -83,16 +75,6 @@ namespace Medical.GUI
             {
                 panel.setToDefault();
             }
-        }
-
-        /// <summary>
-        /// Call this function to force the handle to be created to avoid lag
-        /// the first time the wizard is opened. This should be done after all
-        /// images are loaded into the wizard.
-        /// </summary>
-        public void initializeImageHandle()
-        {
-            IntPtr handle = pickerImageList.Handle;
         }
 
         public void show()
@@ -140,48 +122,32 @@ namespace Medical.GUI
             }
         }
 
-        internal ImageList ImageList
-        {
-            get
-            {
-                return pickerImageList;
-            }
-        }
-
-        public TemporaryStateBlender StateBlender
-        {
-            get
-            {
-                return stateBlender;
-            }
-        }
-
         public String Name { get; private set; }
 
-        internal void showChanges(bool immediate, bool captureCurrentState)
-        {
-            MedicalState createdState;
-            if (captureCurrentState)
-            {
-                createdState = stateBlender.createBaselineState();
-            }
-            else
-            {
-                createdState = new MedicalState("");
-            }
-            foreach (StatePickerPanel panel in panels)
-            {
-                panel.applyToState(createdState);
-            }
-            if (immediate)
-            {
-                createdState.blend(1.0f, createdState);
-            }
-            else
-            {
-                stateBlender.startTemporaryBlend(createdState);
-            }
-        }
+        //internal void showChanges(bool immediate, bool captureCurrentState)
+        //{
+        //    MedicalState createdState;
+        //    if (captureCurrentState)
+        //    {
+        //        createdState = stateBlender.createBaselineState();
+        //    }
+        //    else
+        //    {
+        //        createdState = new MedicalState("");
+        //    }
+        //    foreach (StatePickerPanel panel in panels)
+        //    {
+        //        panel.applyToState(createdState);
+        //    }
+        //    if (immediate)
+        //    {
+        //        createdState.blend(1.0f, createdState);
+        //    }
+        //    else
+        //    {
+        //        stateBlender.startTemporaryBlend(createdState);
+        //    }
+        //}
 
         internal void next()
         {

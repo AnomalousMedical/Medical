@@ -11,13 +11,14 @@ namespace Medical.GUI
 {
     public partial class ProfileDistortionPanel : StatePickerPanel
     {
-        public ProfileDistortionPanel()
+        public ProfileDistortionPanel(StatePickerPanelController panelController)
+            :base(panelController)
         {
             InitializeComponent();
             adaptButton.CheckedChanged += new EventHandler(adaptButton_CheckedChanged);
         }
 
-        public void sceneChanged()
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
             AnimationManipulator ramus = MandibleController.Mandible.getAnimationManipulator("leftRamusHeightMandible");
             AnimationManipulator condyle = MandibleController.Mandible.getAnimationManipulator("leftCondyleHeightMandible");
