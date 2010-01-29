@@ -14,6 +14,17 @@ namespace Medical.GUI
     {
         protected StatePickerPanelController panelController;
 
+        /// <summary>
+        /// Do not call this constructor, it exists to make the designer work
+        /// </summary>
+        protected StatePickerPanel()
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public StatePickerPanel(StatePickerPanelController panelController)
         {
             InitializeComponent();

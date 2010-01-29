@@ -13,6 +13,17 @@ namespace Medical.GUI
 {
     public partial class TeethAdaptationPanel : StatePickerPanel
     {
+        /// <summary>
+        /// Do not call this constructor, it exists to make the designer work
+        /// </summary>
+        protected TeethAdaptationPanel()
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public TeethAdaptationPanel(StatePickerPanelController panelController)
             : base(panelController)
         {

@@ -15,6 +15,17 @@ namespace Medical.GUI
     {
         private Dictionary<BoneManipulatorSlider, float> openingValues = new Dictionary<BoneManipulatorSlider, float>();
 
+        /// <summary>
+        /// Do not call this constructor, it exists to make the designer work
+        /// </summary>
+        protected BoneManipulatorPanel()
+        {
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public BoneManipulatorPanel(StatePickerPanelController panelController)
             : base(panelController)
         {
