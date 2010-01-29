@@ -17,11 +17,12 @@ namespace Medical
         private string textLine1;
         private string textLine2;
         private Image imageLarge;
+        private StatePickerPanelController panelController;
 
         public DistortionWizard(String name, StatePickerPanelController panelController)
         {
             this.name = name;
-
+            this.panelController = panelController;
             statePicker = new StatePickerWizard(name, panelController.UiHost, panelController.StateBlender, panelController.NavigationController, panelController.LayerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
@@ -105,6 +106,8 @@ namespace Medical
 
         void statePicker_StateCreated(MedicalState state)
         {
+            //This is a bit of a hack, but apply the notes to the state here.
+            panelController.applyNotes(state);
             alertStateCreated(state);
         }
 

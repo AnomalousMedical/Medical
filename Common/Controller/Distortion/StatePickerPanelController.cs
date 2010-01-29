@@ -50,6 +50,7 @@ namespace Medical
         private TemporaryStateBlender stateBlender;
         private XmlSaver saver = new XmlSaver();
         private DrawingWindowController drawingWindowController;
+        private NotesPanel notesPanel;
 
         public StatePickerPanelController(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer, MovementSequenceController movementSequenceController, DrawingWindowController drawingWindowController)
         {
@@ -68,6 +69,9 @@ namespace Medical
 
             this.stateBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
+            notesPanel = new NotesPanel("", imageRenderer, this);
+            panelDictionary.Add(WizardPanels.NotesPanel, notesPanel);
+
             panelCreationFunctions.Add(WizardPanels.LeftCondylarGrowth, createLeftCondylarGrowth);
             panelCreationFunctions.Add(WizardPanels.LeftCondylarDegeneration, createLeftCondylarDegeneration);
             panelCreationFunctions.Add(WizardPanels.RightCondylarGrowth, createRightCondylarGrowth);
@@ -80,7 +84,6 @@ namespace Medical
             panelCreationFunctions.Add(WizardPanels.BottomTeethRemovalPanel, createBottomTeethRemovalPanel);
             panelCreationFunctions.Add(WizardPanels.TopTeethRemovalPanel, createTopTeethRemovalPanel);
             panelCreationFunctions.Add(WizardPanels.TeethHeightAdaptationPanel, createTeethHeightAdaptationPanel);
-            panelCreationFunctions.Add(WizardPanels.NotesPanel, createNotesPanel);
             panelCreationFunctions.Add(WizardPanels.LeftDiscSpacePanel, createLeftDiscSpacePanel);
             panelCreationFunctions.Add(WizardPanels.RightDiscSpacePanel, createRightDiscSpacePanel);
             panelCreationFunctions.Add(WizardPanels.LeftDiscClockFacePanel, createLeftDiscClockFacePanel);
@@ -96,14 +99,9 @@ namespace Medical
             }
         }
 
-        private void addPanel(WizardPanels key, StatePickerPanel panel)
+        public void applyNotes(MedicalState state)
         {
-            panelDictionary.Add(key, panel);
-        }
-
-        private void removePanel(WizardPanels key)
-        {
-            panelDictionary.Remove(key);
+            notesPanel.applyToState(state);
         }
 
         public StatePickerPanel getPanel(WizardPanels key)
@@ -308,12 +306,6 @@ namespace Medical
             teethHeightAdaptation.TextLine1 = "Teeth";
             teethHeightAdaptation.LargeIcon = Resources.AdaptationIcon;
             return teethHeightAdaptation;
-        }
-
-        private StatePickerPanel createNotesPanel()
-        {
-            NotesPanel notesPanel = new NotesPanel("Clinical Exam", imageRenderer, this);
-            return notesPanel;
         }
 
         private StatePickerPanel createLeftDiscSpacePanel()
