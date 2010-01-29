@@ -111,13 +111,7 @@
     <Compile Include="Config\MedicalConfig.cs" />
     <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
-    <Compile Include="Controller\Distortion\ClinicStatePicker.cs" />
-    <Compile Include="Controller\Distortion\CTStatePicker.cs" />
-    <Compile Include="Controller\Distortion\DopplerStatePicker.cs" />
-    <Compile Include="Controller\Distortion\ProfileStatePicker.cs" />
     <Compile Include="Controller\Distortion\StatePickerPanelController.cs" />
-    <Compile Include="Controller\Distortion\SkullStatePicker.cs" />
-    <Compile Include="Controller\Distortion\TeethStatePicker.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowHost.cs" />

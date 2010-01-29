@@ -8,7 +8,7 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public class DistortionController
+    public class DistortionController : IDisposable
     {
         private Dictionary<String, DistortionWizard> wizards = new Dictionary<string, DistortionWizard>();
         public event MedicalStateCreated StateCreated;
@@ -17,6 +17,14 @@ namespace Medical
         public DistortionController()
         {
             Visible = false;
+        }
+
+        public void Dispose()
+        {
+            foreach (DistortionWizard wizard in wizards.Values)
+            {
+                wizard.Dispose();
+            }
         }
 
         public void addDistortionWizard(DistortionWizard wizard)

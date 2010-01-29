@@ -228,7 +228,6 @@
     <None Include="Resources\SaveLarge.png" />
     <None Include="Resources\ExitIcon.png" />
     <None Include="Resources\SceneSelectLarge.png" />
-    <None Include="Resources\MRIWizardLarge.png" />
     <None Include="Resources\MRIWizardSmall.png" />
     <None Include="Resources\HorizontalBothGroupIcon.png" />
     <None Include="Resources\HorizontalLeftGroupIcon.png" />
@@ -245,6 +244,12 @@
     <None Include="Resources\PlayIconSmall.png" />
     <None Include="Resources\StopButtonLarge.png" />
     <None Include="Resources\StopButtonSmall.png" />
+    <None Include="Resources\ClinicalIcon.png" />
+    <None Include="Resources\CTWizardLarge.png" />
+    <None Include="Resources\DopplerWizardLarge.png" />
+    <None Include="Resources\MRIWizardLarge.png" />
+    <None Include="Resources\ProfileIcon.png" />
+    <None Include="Resources\TeethWizardIcon.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

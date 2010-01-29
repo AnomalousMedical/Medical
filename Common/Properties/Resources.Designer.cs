@@ -123,20 +123,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap ClinicalIcon {
-            get {
-                object obj = ResourceManager.GetObject("ClinicalIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap CTWizardLarge {
-            get {
-                object obj = ResourceManager.GetObject("CTWizardLarge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap DegenerationLeftCondyle {
             get {
                 object obj = ResourceManager.GetObject("DegenerationLeftCondyle", resourceCulture);
@@ -245,13 +231,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap DegenerationRightCondyleRoughnessDistorted {
             get {
                 object obj = ResourceManager.GetObject("DegenerationRightCondyleRoughnessDistorted", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap DopplerWizardLarge {
-            get {
-                object obj = ResourceManager.GetObject("DopplerWizardLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -466,13 +445,6 @@ namespace Medical.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap MRIWizardLarge {
-            get {
-                object obj = ResourceManager.GetObject("MRIWizardLarge", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap NotesIcon {
             get {
                 object obj = ResourceManager.GetObject("NotesIcon", resourceCulture);
@@ -602,13 +574,6 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap SaveSmall {
             get {
                 object obj = ResourceManager.GetObject("SaveSmall", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap TeethWizardIcon {
-            get {
-                object obj = ResourceManager.GetObject("TeethWizardIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

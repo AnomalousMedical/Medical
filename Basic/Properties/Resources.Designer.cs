@@ -109,6 +109,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ClinicalIcon {
+            get {
+                object obj = ResourceManager.GetObject("ClinicalIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap CloneWindowLarge {
             get {
                 object obj = ResourceManager.GetObject("CloneWindowLarge", resourceCulture);
@@ -119,6 +126,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap CloneWindowSmall {
             get {
                 object obj = ResourceManager.GetObject("CloneWindowSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap CTWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("CTWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DopplerWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("DopplerWizardLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -459,6 +480,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ProfileIcon {
+            get {
+                object obj = ResourceManager.GetObject("ProfileIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap RenderIconLarge {
             get {
                 object obj = ResourceManager.GetObject("RenderIconLarge", resourceCulture);
@@ -546,6 +574,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap TeethCollisionIconSmall {
             get {
                 object obj = ResourceManager.GetObject("TeethCollisionIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap TeethWizardIcon {
+            get {
+                object obj = ResourceManager.GetObject("TeethWizardIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

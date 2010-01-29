@@ -205,9 +205,6 @@
   <data name="ResizeDownSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ResizeDownSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DopplerWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DopplerWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="GrowthLeftCondyleRotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleRotation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -225,9 +222,6 @@
   </data>
   <data name="DegenerationRightCondyleMedialPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationRightCondyleMedialPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProfileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ProfileIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth1removed1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth1removed1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -328,9 +322,6 @@
   <data name="GrowthRightCondyleRotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightCondyleRotation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CTWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CTWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tooth3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -424,9 +415,6 @@
   <data name="GrowthLeftCondyleRotationRotated" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleRotationRotated.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MRIWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\MRIWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="tooth27removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth27removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -480,9 +468,6 @@
   </data>
   <data name="LeftCondyleGrowth" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftCondyleGrowth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TeethWizardIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TeethWizardIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthLeftCondyleHeightSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleHeightSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -553,7 +538,7 @@
   <data name="DegenerationRightCondyleRoughnessDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationRightCondyleRoughnessDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ClinicalIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ClinicalIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ProfileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ProfileIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

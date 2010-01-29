@@ -340,4 +340,19 @@
   <data name="StopButtonSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StopButtonSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ClinicalIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ClinicalIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CTWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CTWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DopplerWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DopplerWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProfileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ProfileIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TeethWizardIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TeethWizardIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
