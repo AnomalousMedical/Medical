@@ -90,6 +90,14 @@ namespace Medical.GUI
 
         internal void callPanelOpening()
         {
+            if (NavigationState != null)
+            {
+                setNavigationState(NavigationState);
+            }
+            if (LayerState != null)
+            {
+                setLayerState(LayerState);
+            }
             onPanelOpening();
         }
 

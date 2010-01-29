@@ -15,7 +15,7 @@ namespace Medical.GUI
         public event MedicalStateCreated StateCreated;
         public event StatePickerFinished Finished;
 
-        private List<StatePickerPanel> panels = new List<StatePickerPanel>(3);
+        private List<StatePickerPanel> panels = new List<StatePickerPanel>();
         int currentIndex = 0;
         private bool updatePanel = true;
         NavigationController navigationController;
@@ -32,10 +32,8 @@ namespace Medical.GUI
         {
             this.Name = name;
             this.uiHost = uiHost;
-
             this.panelHost = new StatePickerPanelHost(this);
             this.stateBlender = stateBlender;
-
             this.navigationController = navigationController;
             this.layerController = layerController;
         }
@@ -124,31 +122,6 @@ namespace Medical.GUI
 
         public String Name { get; private set; }
 
-        //internal void showChanges(bool immediate, bool captureCurrentState)
-        //{
-        //    MedicalState createdState;
-        //    if (captureCurrentState)
-        //    {
-        //        createdState = stateBlender.createBaselineState();
-        //    }
-        //    else
-        //    {
-        //        createdState = new MedicalState("");
-        //    }
-        //    foreach (StatePickerPanel panel in panels)
-        //    {
-        //        panel.applyToState(createdState);
-        //    }
-        //    if (immediate)
-        //    {
-        //        createdState.blend(1.0f, createdState);
-        //    }
-        //    else
-        //    {
-        //        stateBlender.startTemporaryBlend(createdState);
-        //    }
-        //}
-
         internal void next()
         {
             hidePanel();
@@ -205,27 +178,9 @@ namespace Medical.GUI
                 uiHost.SelectedIndex = currentIndex;
                 panelHost.NextButtonVisible = !(currentIndex == panels.Count - 1);
                 panelHost.PreviousButtonVisible = !(currentIndex == 0);
-                if (panel.NavigationState != null)
-                {
-                    setNavigationState(panel.NavigationState);
-                }
-                if (panel.LayerState != null)
-                {
-                    setLayerState(panel.LayerState);
-                }
                 panel.modifyScene();
                 updatePanel = true;
             }
-        }
-
-        internal void setNavigationState(String name)
-        {
-            navigationController.setNavigationState(name, currentDrawingWindow);
-        }
-
-        internal void setLayerState(String name)
-        {
-            layerController.applyLayerState(name);
         }
 
         private void hidePanel()
