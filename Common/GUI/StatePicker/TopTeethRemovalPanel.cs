@@ -66,6 +66,20 @@ namespace Medical.GUI
             }
         }
 
+        protected override void onPanelOpening()
+        {
+            allowUpdates = false;
+            foreach (Control control in this.Controls)
+            {
+                KryptonCheckButton checkBox = control as KryptonCheckButton;
+                if (checkBox != null)
+                {
+                    checkBox.Checked = TeethController.getTooth(checkBox.Tag.ToString()).Extracted;
+                }
+            }
+            allowUpdates = true;
+        }
+
         public override void recordOpeningState()
         {
             foreach (Control control in this.Controls)
@@ -73,7 +87,7 @@ namespace Medical.GUI
                 KryptonCheckButton checkBox = control as KryptonCheckButton;
                 if (checkBox != null)
                 {
-                    openCheckStatus[checkBox] = checkBox.Checked;
+                    openCheckStatus[checkBox] = TeethController.getTooth(checkBox.Tag.ToString()).Extracted;
                 }
             }
         }

@@ -169,14 +169,15 @@ namespace Medical
         {
             if (directBlending)
             {
-                directStartState.blend(percent, states[directEndState]);
-                if (percent == 1.0f)
+                if (percent >= 1.0f)
                 {
+                    states[directEndState].blend(0, states[directEndState]);
                     blendLocation = directEndState;
                     directBlending = false;
                 }
                 else
                 {
+                    directStartState.blend(percent, states[directEndState]);
                     blendLocation = percent;
                 }
             }
