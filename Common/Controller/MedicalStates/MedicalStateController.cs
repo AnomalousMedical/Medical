@@ -155,7 +155,7 @@ namespace Medical
             normalState.Notes.Notes = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
 \viewkind4\uc1\pard\f0\fs17 Normal\par
 }";
-            normalState.Notes.DataSource = "Articulometrics";
+            normalState.Notes.DataSource = "";
         }
 
         /// <summary>
@@ -174,6 +174,14 @@ namespace Medical
                     states[directEndState].blend(0, states[directEndState]);
                     blendLocation = directEndState;
                     directBlending = false;
+                    if (currentState != directEndState)
+                    {
+                        currentState = directEndState;
+                        if (StateChanged != null)
+                        {
+                            StateChanged.Invoke(states[directEndState]);
+                        }
+                    }
                 }
                 else
                 {
