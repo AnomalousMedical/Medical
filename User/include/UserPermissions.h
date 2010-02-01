@@ -10,7 +10,7 @@ private:
 	hasp_handle_t handle;
 	static UserPermissions^ instance;
 #ifndef ENABLE_HASP_PROTECTION
-	System::Collections::Generic::LinkedList<Features> blockedFeatures;
+	System::Collections::Generic::LinkedList<Features> allowedFeatures;
 #endif
 
 	void logout();

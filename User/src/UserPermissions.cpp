@@ -1,6 +1,16 @@
 #include "stdafx.h"
 #include "UserPermissions.h"
 
+//#define SIM_LITE
+//#define SIM_STANDARD
+#define SIM_GRAPHICS
+
+//#define SIM_DOPPLER
+//#define SIM_DENTITION_AND_PROFILE
+//#define SIM_CLINICAL
+//#define SIM_RADIOGRAPHY
+#define SIM_MRI
+
 namespace Medical
 {
 
@@ -27,8 +37,63 @@ UserPermissions::UserPermissions()
 	}
 	instance = this;
 #ifndef ENABLE_HASP_PROTECTION
-	//Stuff can be added to the blockedFeatures list to test disabling of features without a hasp key in Release mode.
-	//blockedFeatures.AddLast(Features::FULL_RESOLUTION_RENDERING);
+	#ifdef SIM_LITE
+	//Simulated lite version
+	allowedFeatures.AddLast(Features::PIPER_JBO_LITE);
+	#endif
+
+	#ifdef SIM_STANDARD
+	//Simulated standard version
+	allowedFeatures.AddLast(Features::PIPER_JBO_STANDARD);
+	#endif
+	
+	#ifdef SIM_GRAPHICS
+	//Simulated graphics version
+	allowedFeatures.AddLast(Features::PIPER_JBO_GRAPHICS);
+	#endif
+
+	#ifdef SIM_DOPPLER
+	//Simulated doppler version
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
+	#endif
+
+	#ifdef SIM_DENTITION_AND_PROFILE
+	//Simulated Dentition and Profile version
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
+	#endif
+
+	#ifdef SIM_CLINICAL
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
+	#endif
+
+	#ifdef SIM_RADIOGRAPHY
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_BONE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CT);
+	#endif
+
+	#ifdef SIM_MRI
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_BONE);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CT);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DISC);
+	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_MRI);
+	#endif
+
 #endif
 }
 
@@ -62,7 +127,7 @@ bool UserPermissions::allowFeature(Features featureId)
 		return false;
 	}
 #else
-	return !blockedFeatures.Contains(featureId);
+	return allowedFeatures.Contains(featureId);
 #endif
 }
 
