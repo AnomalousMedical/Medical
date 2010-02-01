@@ -33,6 +33,19 @@ namespace Medical.GUI
         {
             ShortcutGroup group = shortcuts.createOrRetrieveGroup("LayerShortcuts");
 
+            showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
+            showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
+
+            //Predefined layers
+            layerController = basicController.LayerController;
+            layerController.LayerStateSetChanged += new LayerControllerEvent(LayerController_LayerStateSetChanged);
+            predefinedImageList = new ImageList();
+            predefinedImageList.ColorDepth = ColorDepth.Depth32Bit;
+            predefinedImageList.ImageSize = new Size(48, 48);
+            predefinedLayerGallery = basicForm.predefinedLayerGallery;
+            predefinedLayerGallery.ImageList = predefinedImageList;
+            predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
+
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
             {
                 layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
@@ -78,19 +91,6 @@ namespace Medical.GUI
             {
                 basicForm.customLayersGroup.Visible = false;
             }
-
-            showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
-            showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
-
-            //Predefined layers
-            layerController = basicController.LayerController;
-            layerController.LayerStateSetChanged += new LayerControllerEvent(LayerController_LayerStateSetChanged);
-            predefinedImageList = new ImageList();
-            predefinedImageList.ColorDepth = ColorDepth.Depth32Bit;
-            predefinedImageList.ImageSize = new Size(48, 48);
-            predefinedLayerGallery = basicForm.predefinedLayerGallery;
-            predefinedLayerGallery.ImageList = predefinedImageList;
-            predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
         }
 
         void synchronizeLayerMenus(LayerController controller)
