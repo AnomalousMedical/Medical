@@ -194,7 +194,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -1226,7 +1225,6 @@
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand showStatisticsCommand;
         private ComponentFactory.Krypton.Docking.KryptonDockableWorkspace kryptonDockableWorkspace;
         private ComponentFactory.Krypton.Docking.KryptonDockingManager kryptonDockingManager;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand cloneWindowCommand;
         public ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupComboBox aaCombo;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup4;
@@ -1249,5 +1247,6 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel heightLabel;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel antiAliasingLabel;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton windowLayoutButton;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
     }
 }

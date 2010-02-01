@@ -47,6 +47,11 @@ namespace Medical.GUI
                 }
             }
             form.windowLayoutButton.KryptonContextMenu = windowLayoutMenu;
+
+            if (!UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            {
+                form.cloneWindowButton.Visible = false;
+            }
         }
 
         public void Dispose()
