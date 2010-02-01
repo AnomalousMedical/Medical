@@ -133,6 +133,7 @@ namespace Medical.GUI
                 openPatient.Dispose();
                 savePatient.Dispose();
                 stateGUIController.Dispose();
+                windowGUIController.Dispose();
             }
             base.Dispose(disposing);
         }

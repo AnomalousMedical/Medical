@@ -130,6 +130,7 @@ namespace Medical.Controller
                 drawingWindowController.AllowZoom = false;
                 drawingWindowController.initialize(medicalController.EventManager, PluginManager.Instance.RendererPlugin, MedicalConfig.ConfigFile);
                 windowPresetController = new DrawingWindowPresetController(drawingWindowController);
+                createWindowPresets();
 
                 navigationController = new NavigationController(drawingWindowController, medicalController.EventManager, medicalController.MainTimer);
                 layerController = new LayerController();
@@ -343,6 +344,67 @@ namespace Medical.Controller
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethAdaptationPanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
                 distortionController.addDistortionWizard(mriWizard);
+            }
+        }
+
+        private void createWindowPresets()
+        {
+            windowPresetController.clearPresetSets();
+            DrawingWindowPresetSet primary = new DrawingWindowPresetSet("Primary");
+            DrawingWindowPreset preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            primary.addPreset(preset);
+            primary.Hidden = true;
+            windowPresetController.addPresetSet(primary);
+
+            DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet("One Window");
+            preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            oneWindow.addPreset(preset);
+            windowPresetController.addPresetSet(oneWindow);
+
+            if(UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            {
+                DrawingWindowPresetSet twoWindows = new DrawingWindowPresetSet("Two Windows");
+                preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                twoWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = DrawingWindowPosition.Right;
+                twoWindows.addPreset(preset);
+                windowPresetController.addPresetSet(twoWindows);
+            }
+
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            {
+                DrawingWindowPresetSet threeWindows = new DrawingWindowPresetSet("Three Windows");
+                preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                threeWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = DrawingWindowPosition.Left;
+                threeWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = DrawingWindowPosition.Right;
+                threeWindows.addPreset(preset);
+                windowPresetController.addPresetSet(threeWindows);
+
+                DrawingWindowPresetSet fourWindows = new DrawingWindowPresetSet("Four Windows");
+                preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                fourWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = DrawingWindowPosition.Right;
+                fourWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = DrawingWindowPosition.Bottom;
+                fourWindows.addPreset(preset);
+                preset = new DrawingWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 3";
+                preset.WindowPosition = DrawingWindowPosition.Right;
+                fourWindows.addPreset(preset);
+                windowPresetController.addPresetSet(fourWindows);
             }
         }
 
@@ -582,7 +644,6 @@ namespace Medical.Controller
                     navigationController.loadNavigationSet(cameraFile);
                     distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     statePickerPanelController.sceneChanged(medicalController, medicalScene);
-                    windowPresetController.loadPresetSet();
                     if (SceneLoaded != null)
                     {
                         SceneLoaded.Invoke(medicalController.CurrentScene);
