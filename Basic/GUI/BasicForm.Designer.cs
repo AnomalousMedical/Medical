@@ -39,7 +39,7 @@
             this.displayTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.predefinedLayerGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.predefinedLayerGallery = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupGallery();
-            this.kryptonRibbonGroup2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
+            this.customLayersGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.customLayersButtons1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.layersSkinButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.layersMusclesButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
@@ -194,7 +194,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -297,7 +296,7 @@
             // 
             this.displayTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
             this.predefinedLayerGroup,
-            this.kryptonRibbonGroup2,
+            this.customLayersGroup,
             this.teethGroup});
             this.displayTab.Text = "Display";
             // 
@@ -313,14 +312,14 @@
             this.predefinedLayerGallery.ImageList = null;
             this.predefinedLayerGallery.TextLine1 = "Predefined Layers";
             // 
-            // kryptonRibbonGroup2
+            // customLayersGroup
             // 
-            this.kryptonRibbonGroup2.DialogBoxLauncher = false;
-            this.kryptonRibbonGroup2.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
+            this.customLayersGroup.DialogBoxLauncher = false;
+            this.customLayersGroup.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupContainer[] {
             this.customLayersButtons1,
             this.customLayersButtons2,
             this.customLayersButtons3});
-            this.kryptonRibbonGroup2.TextLine1 = "Custom";
+            this.customLayersGroup.TextLine1 = "Custom";
             // 
             // customLayersButtons1
             // 
@@ -1136,7 +1135,6 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton showNavigationButton;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem openMenuItem;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem saveMenuItem;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup2;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple customLayersButtons1;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple customLayersButtons2;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple customLayersButtons3;
@@ -1249,5 +1247,6 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel antiAliasingLabel;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton windowLayoutButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup customLayersGroup;
     }
 }

@@ -33,42 +33,49 @@ namespace Medical.GUI
         {
             ShortcutGroup group = shortcuts.createOrRetrieveGroup("LayerShortcuts");
 
-            skinMenu = new LayerGUIMenu(basicForm.layersSkinButton);
-            skinMenu.createShortcuts("SkinToggle", group, Keys.F1);
-            skinMenu.TransparencyChanged += changeSkinTransparency;
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            {
+                skinMenu = new LayerGUIMenu(basicForm.layersSkinButton);
+                skinMenu.createShortcuts("SkinToggle", group, Keys.F1);
+                skinMenu.TransparencyChanged += changeSkinTransparency;
 
-            musclesMenu = new LayerGUIMenu(basicForm.layersMusclesButton);
-            musclesMenu.createShortcuts("MusclesToggle", group, Keys.F2);
-            musclesMenu.TransparencyChanged += changeMuscleTransparency;
+                musclesMenu = new LayerGUIMenu(basicForm.layersMusclesButton);
+                musclesMenu.createShortcuts("MusclesToggle", group, Keys.F2);
+                musclesMenu.TransparencyChanged += changeMuscleTransparency;
 
-            skullMenu = new LayerGUISkullMenu(basicForm.layersSkullButton);
-            skullMenu.createShortcuts("SkullToggle", group, Keys.F3);
-            skullMenu.createEminanceShortcut("EminanceToggle", group, Keys.F4);
-            skullMenu.TransparencyChanged += changeSkullTransparency;
+                skullMenu = new LayerGUISkullMenu(basicForm.layersSkullButton);
+                skullMenu.createShortcuts("SkullToggle", group, Keys.F3);
+                skullMenu.createEminanceShortcut("EminanceToggle", group, Keys.F4);
+                skullMenu.TransparencyChanged += changeSkullTransparency;
 
-            mandibleMenu = new LayerGUIMenu(basicForm.layersMandibleButton);
-            mandibleMenu.createShortcuts("MandibleToggle", group, Keys.F5);
-            mandibleMenu.TransparencyChanged += changeMandibleTransparency;
+                mandibleMenu = new LayerGUIMenu(basicForm.layersMandibleButton);
+                mandibleMenu.createShortcuts("MandibleToggle", group, Keys.F5);
+                mandibleMenu.TransparencyChanged += changeMandibleTransparency;
 
-            discsMenu = new LayerGUIMenu(basicForm.layersDiscsButton);
-            discsMenu.createShortcuts("DiscsToggle", group, Keys.F6);
-            discsMenu.TransparencyChanged += changeDiscTransparency;
+                discsMenu = new LayerGUIMenu(basicForm.layersDiscsButton);
+                discsMenu.createShortcuts("DiscsToggle", group, Keys.F6);
+                discsMenu.TransparencyChanged += changeDiscTransparency;
 
-            spineMenu = new LayerGUIMenu(basicForm.layersSpineButton);
-            spineMenu.createShortcuts("SpineToggle", group, Keys.F7);
-            spineMenu.TransparencyChanged += changeSpineTransparency;
+                spineMenu = new LayerGUIMenu(basicForm.layersSpineButton);
+                spineMenu.createShortcuts("SpineToggle", group, Keys.F7);
+                spineMenu.TransparencyChanged += changeSpineTransparency;
 
-            hyoidMenu = new LayerGUIMenu(basicForm.layersHyoidButton);
-            hyoidMenu.createShortcuts("HyoidToggle", group, Keys.F8);
-            hyoidMenu.TransparencyChanged += changeHyoidTransparency;
+                hyoidMenu = new LayerGUIMenu(basicForm.layersHyoidButton);
+                hyoidMenu.createShortcuts("HyoidToggle", group, Keys.F8);
+                hyoidMenu.TransparencyChanged += changeHyoidTransparency;
 
-            topTeethMenu = new LayerGUIMenu(basicForm.layersTopTeethButton);
-            //topTeethMenu.createShortcuts("TopTeethToggle", group, Keys.F9);
-            topTeethMenu.TransparencyChanged += changeTopToothTransparency;
+                topTeethMenu = new LayerGUIMenu(basicForm.layersTopTeethButton);
+                //topTeethMenu.createShortcuts("TopTeethToggle", group, Keys.F9);
+                topTeethMenu.TransparencyChanged += changeTopToothTransparency;
 
-            bottomTeethMenu = new LayerGUIMenu(basicForm.layersBottomTeethButton);
-            //bottomTeethMenu.createShortcuts("BottomTeethToggle", group, Keys.F10);
-            bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
+                bottomTeethMenu = new LayerGUIMenu(basicForm.layersBottomTeethButton);
+                //bottomTeethMenu.createShortcuts("BottomTeethToggle", group, Keys.F10);
+                bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
+            }
+            else
+            {
+                basicForm.customLayersGroup.Visible = false;
+            }
 
             showTeethCollisionCommand = basicForm.showTeethCollisionCommand;
             showTeethCollisionCommand.Execute += new EventHandler(showTeethCollisionCommand_Execute);
@@ -142,7 +149,6 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            skinMenu.Dispose();
             predefinedImageList.Dispose();
         }
 
