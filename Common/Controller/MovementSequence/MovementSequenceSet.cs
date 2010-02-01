@@ -32,6 +32,18 @@ namespace Medical.Controller
             groups.Remove(group);
         }
 
+        public MovementSequenceGroup getGroup(String name)
+        {
+            foreach (MovementSequenceGroup group in groups)
+            {
+                if (group.Name == name)
+                {
+                    return group;
+                }
+            }
+            return null;
+        }
+
         public IEnumerable<MovementSequenceGroup> Groups
         {
             get

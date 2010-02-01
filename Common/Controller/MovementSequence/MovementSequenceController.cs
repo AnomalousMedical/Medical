@@ -29,7 +29,6 @@ namespace Medical.Controller
 
         private XmlSaver xmlSaver = new XmlSaver();
         private MovementSequence currentSequence;
-        private String currentDirectory;
         private MedicalController medicalController;
         private float currentTime = 0.0f;
         private bool playing = false;
@@ -79,24 +78,27 @@ namespace Medical.Controller
         /// Load the sequences in the specified directory. Will not make any
         /// changes if the directory is the currently loaded directory.
         /// </summary>
-        /// <param name="sequenceDir">The directory to load.</param>
-        public void loadSequenceSet(String sequenceDir)
+        public void loadSequenceDirectories(params String[] sequenceDirs)
         {
-            if (sequenceDir != currentDirectory)
+            CurrentSequence = null;
+            if (currentSequenceSet != null)
             {
-                CurrentSequence = null;
-                if (currentSequenceSet != null)
-                {
-                    currentSequenceSet.Dispose();
-                }
-                currentSequenceSet = new MovementSequenceSet();
-                currentDirectory = sequenceDir;
+                currentSequenceSet.Dispose();
+            }
+            currentSequenceSet = new MovementSequenceSet();
+            foreach(String sequenceDir in sequenceDirs)
+            {
                 using (Archive archive = FileSystem.OpenArchive(sequenceDir))
                 {
                     foreach (String directory in archive.listDirectories(sequenceDir, false, false))
                     {
-                        MovementSequenceGroup group = new MovementSequenceGroup(archive.getFileInfo(directory).Name);
-                        currentSequenceSet.addGroup(group);
+                        String groupName = archive.getFileInfo(directory).Name;
+                        MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
+                        if (group == null)
+                        {
+                            group = new MovementSequenceGroup(groupName);
+                            currentSequenceSet.addGroup(group);
+                        }
                         foreach (String file in archive.listFiles(directory, false))
                         {
                             String fileName = archive.getFileInfo(file).Name;
@@ -110,10 +112,10 @@ namespace Medical.Controller
                         }
                     }
                 }
-                if (CurrentSequenceSetChanged != null)
-                {
-                    CurrentSequenceSetChanged.Invoke(this);
-                }
+            }
+            if (CurrentSequenceSetChanged != null)
+            {
+                CurrentSequenceSetChanged.Invoke(this);
             }
         }
 
@@ -193,14 +195,6 @@ namespace Medical.Controller
             get
             {
                 return playing;
-            }
-        }
-
-        public String SequenceDirectory
-        {
-            get
-            {
-                return currentDirectory;
             }
         }
 

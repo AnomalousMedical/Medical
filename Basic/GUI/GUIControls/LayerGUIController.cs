@@ -35,6 +35,8 @@ namespace Medical.GUI
 
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
             {
+                layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
+
                 skinMenu = new LayerGUIMenu(basicForm.layersSkinButton);
                 skinMenu.createShortcuts("SkinToggle", group, Keys.F1);
                 skinMenu.TransparencyChanged += changeSkinTransparency;
@@ -83,7 +85,6 @@ namespace Medical.GUI
             //Predefined layers
             layerController = basicController.LayerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(LayerController_LayerStateSetChanged);
-            layerController.CurrentLayerStateChanged += new LayerControllerEvent(layerController_CurrentLayerStateChanged);
             predefinedImageList = new ImageList();
             predefinedImageList.ColorDepth = ColorDepth.Depth32Bit;
             predefinedImageList.ImageSize = new Size(48, 48);
@@ -92,7 +93,7 @@ namespace Medical.GUI
             predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
         }
 
-        void layerController_CurrentLayerStateChanged(LayerController controller)
+        void synchronizeLayerMenus(LayerController controller)
         {
             foreach (LayerEntry layerEntry in controller.CurrentLayerState.Entries)
             {

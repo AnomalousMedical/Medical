@@ -639,7 +639,18 @@ namespace Medical.Controller
                     String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     layerController.loadLayerStateSet(layersFile);
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-                    movementSequenceController.loadSequenceSet(sequenceDirectory);
+                    if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+                    {
+                        movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard", sequenceDirectory + "/Graphics");
+                    }
+                    else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD))
+                    {
+                        movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard");
+                    }
+                    else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_LITE))
+                    {
+                        movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite");
+                    }
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFile;
                     navigationController.loadNavigationSet(cameraFile);
                     distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);

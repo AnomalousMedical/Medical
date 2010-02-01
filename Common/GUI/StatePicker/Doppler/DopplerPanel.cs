@@ -43,9 +43,10 @@ namespace Medical.GUI
 
         public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
-            if (currentSequenceDirectory != movementSequenceController.SequenceDirectory)
+            String newSequenceDir = medicalController.CurrentSceneDirectory + '/' + simScene.SequenceDirectory;
+            if (currentSequenceDirectory != newSequenceDir)
             {
-                currentSequenceDirectory = movementSequenceController.SequenceDirectory;
+                currentSequenceDirectory = newSequenceDir;
                 movementSequence = movementSequenceController.loadSequence(currentSequenceDirectory + "/Doppler.seq");
             }
             String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
