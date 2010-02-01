@@ -109,6 +109,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BoneWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("BoneWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ClinicalIcon {
             get {
                 object obj = ResourceManager.GetObject("ClinicalIcon", resourceCulture);
@@ -133,6 +140,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap CTWizardLarge {
             get {
                 object obj = ResourceManager.GetObject("CTWizardLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap DiscWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("DiscWizardLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -476,6 +490,13 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap PlayIconSmall {
             get {
                 object obj = ResourceManager.GetObject("PlayIconSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap ProfileAndTeethWizardLarge {
+            get {
+                object obj = ResourceManager.GetObject("ProfileAndTeethWizardLarge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

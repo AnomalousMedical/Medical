@@ -355,4 +355,13 @@
   <data name="TeethWizardIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TeethWizardIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BoneWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BoneWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DiscWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DiscWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ProfileAndTeethWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ProfileAndTeethWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

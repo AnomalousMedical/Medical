@@ -250,6 +250,9 @@
     <None Include="Resources\MRIWizardLarge.png" />
     <None Include="Resources\ProfileIcon.png" />
     <None Include="Resources\TeethWizardIcon.png" />
+    <None Include="Resources\BoneWizardLarge.png" />
+    <None Include="Resources\DiscWizardLarge.png" />
+    <None Include="Resources\ProfileAndTeethWizardLarge.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
