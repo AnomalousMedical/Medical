@@ -37,6 +37,8 @@ namespace Medical.GUI
         private Dictionary<String, KryptonRibbonRecentDoc> recentDocsMap = new Dictionary<string, KryptonRibbonRecentDoc>();
         private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
 
+        private bool allowSimulationTab = true;
+
         public BasicForm(ShortcutController shortcuts)
         {
             InitializeComponent();
@@ -100,6 +102,18 @@ namespace Medical.GUI
             kryptonDockingManager.ManageFloating("Floating", this);
 
             aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
+
+            //Determine if simulation tab is enabled
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD)
+                || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            {
+                allowSimulationTab = true;
+            }
+            else
+            {
+                allowSimulationTab = false;
+                simulationTab.Visible = false;
+            }
         }
 
         void aboutCommand_Execute(object sender, EventArgs e)
@@ -162,10 +176,18 @@ namespace Medical.GUI
 
         public void enableViewMode(bool enabled)
         {
+            navigationTab.Visible = enabled;
+            displayTab.Visible = enabled;
             distortionTab.Visible = enabled;
+            simulationTab.Visible = enabled && allowSimulationTab;
+            sequencesTab.Visible = enabled;
             renderingTab.Visible = enabled;
             windowTab.Visible = enabled;
             leftNavigator.Visible = enabled && leftNavigator.Pages.Count > 0;
+            if (enabled)
+            {
+                clinicalRibbon.SelectedTab = distortionTab;
+            }
             this.Focus();
         }
 
