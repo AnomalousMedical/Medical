@@ -269,14 +269,15 @@ namespace Medical
                     }
                     else if (xmlReader.Name == NAVIGATION_STATE)
                     {
-                        NavigationState state = navStateSet.getState(xmlReader.ReadElementContentAsString());
+                        String stateName = xmlReader.ReadElementContentAsString();
+                        NavigationState state = navStateSet.getState(stateName);
                         if (state != null)
                         {
                             menuEntry.addNavigationState(state);
                         }
                         else
                         {
-                            Log.Error("Cannot load state {0} into menu {1} because the state was not found.", xmlReader.ReadElementContentAsString(), menuEntry.Text);
+                            Log.Error("Cannot load state {0} into menu {1} because the state was not found.", stateName, menuEntry.Text);
                         }
                     }
                 }
