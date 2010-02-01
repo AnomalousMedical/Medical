@@ -1,15 +1,6 @@
 #include "stdafx.h"
 #include "UserPermissions.h"
-
-//#define SIM_LITE
-//#define SIM_STANDARD
-#define SIM_GRAPHICS
-
-//#define SIM_DOPPLER
-//#define SIM_DENTITION_AND_PROFILE
-//#define SIM_CLINICAL
-//#define SIM_RADIOGRAPHY
-#define SIM_MRI
+#include "Settings.h"
 
 namespace Medical
 {

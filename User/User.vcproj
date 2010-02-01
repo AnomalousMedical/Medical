@@ -258,6 +258,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\Settings.h"
+				>
+			</File>
+			<File
 				RelativePath=".\src\UserPermissions.cpp"
 				>
 			</File>
