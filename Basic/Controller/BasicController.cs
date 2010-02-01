@@ -207,23 +207,16 @@ namespace Medical.Controller
             statePickerPanelController = new StatePickerPanelController(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer, movementSequenceController, drawingWindowController);
 
             //Create wizards
-            DistortionWizard mriWizard = new DistortionWizard("MRI Wizard", statePickerPanelController);
-            mriWizard.TextLine1 = "MRI Wizard";
-            mriWizard.ImageLarge = Resources.MRIWizardLarge;
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftFossa));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarGrowth));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightFossa));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethAdaptationPanel));
-            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
-            distortionController.addDistortionWizard(mriWizard);
+            //Doppler
+            DistortionWizard dopplerWizard = new DistortionWizard("Doppler Wizard", statePickerPanelController);
+            dopplerWizard.TextLine1 = "Doppler Wizard";
+            dopplerWizard.ImageLarge = Resources.DopplerWizardLarge;
+            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDopplerPanel));
+            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDopplerPanel));
+            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(dopplerWizard);
 
+            //Teeth
             DistortionWizard teethWizard = new DistortionWizard("Teeth Wizard", statePickerPanelController);
             teethWizard.TextLine1 = "Teeth Wizard";
             teethWizard.ImageLarge = Resources.TeethWizardIcon;
@@ -233,6 +226,7 @@ namespace Medical.Controller
             teethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
             distortionController.addDistortionWizard(teethWizard);
 
+            //Profile
             DistortionWizard profileWizard = new DistortionWizard("Profile Wizard", statePickerPanelController);
             profileWizard.TextLine1 = "Profile Wizard";
             profileWizard.ImageLarge = Resources.ProfileIcon;
@@ -240,6 +234,53 @@ namespace Medical.Controller
             profileWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
             distortionController.addDistortionWizard(profileWizard);
 
+            //Bone
+            DistortionWizard boneWizard = new DistortionWizard("Bone Wizard", statePickerPanelController);
+            boneWizard.TextLine1 = "Bone Wizard";
+            boneWizard.ImageLarge = Resources.CTWizardLarge;
+            boneWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
+            boneWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
+            boneWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarGrowth));
+            boneWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
+            boneWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(boneWizard);
+
+            //Disc
+            DistortionWizard discWizard = new DistortionWizard("Disc Wizard", statePickerPanelController);
+            discWizard.TextLine1 = "Disc Wizard";
+            discWizard.ImageLarge = Resources.MRIWizardLarge;
+            discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
+            discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
+            discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(discWizard);
+
+            //Profile + Teeth
+            DistortionWizard profileTeethWizard = new DistortionWizard("Profile and Teeth Wizard", statePickerPanelController);
+            profileTeethWizard.TextLine1 = "Profile and Teeth";
+            profileTeethWizard.TextLine2 = "Wizard";
+            profileTeethWizard.ImageLarge = Resources.ClinicalIcon;
+            profileTeethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.ProfileDistortionPanel));
+            profileTeethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            profileTeethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            profileTeethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethHeightAdaptationPanel));
+            profileTeethWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(profileTeethWizard);
+
+            //Clinical
+            DistortionWizard clinicalWizard = new DistortionWizard("Clinical Exam Wizard", statePickerPanelController);
+            clinicalWizard.TextLine1 = "Clinical Exam";
+            clinicalWizard.TextLine2 = "Wizard";
+            clinicalWizard.ImageLarge = Resources.ClinicalIcon;
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDopplerPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDopplerPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.ProfileDistortionPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethHeightAdaptationPanel));
+            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(clinicalWizard);
+
+            //CT/Radiography Wizard
             DistortionWizard ctWizard = new DistortionWizard("CT Wizard", statePickerPanelController);
             ctWizard.TextLine1 = "CT Wizard";
             ctWizard.ImageLarge = Resources.CTWizardLarge;
@@ -257,26 +298,23 @@ namespace Medical.Controller
             ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
             distortionController.addDistortionWizard(ctWizard);
 
-            DistortionWizard dopplerWizard = new DistortionWizard("Doppler Wizard", statePickerPanelController);
-            dopplerWizard.TextLine1 = "Doppler Wizard";
-            dopplerWizard.ImageLarge = Resources.DopplerWizardLarge;
-            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDopplerPanel));
-            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDopplerPanel));
-            dopplerWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
-            distortionController.addDistortionWizard(dopplerWizard);
-
-            DistortionWizard clinicalWizard = new DistortionWizard("Clinical Exam Wizard", statePickerPanelController);
-            clinicalWizard.TextLine1 = "Clinical Exam";
-            clinicalWizard.TextLine2 = "Wizard";
-            clinicalWizard.ImageLarge = Resources.ClinicalIcon;
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDopplerPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDopplerPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.ProfileDistortionPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethHeightAdaptationPanel));
-            clinicalWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
-            distortionController.addDistortionWizard(clinicalWizard);
+            //MRI Wizard
+            DistortionWizard mriWizard = new DistortionWizard("MRI Wizard", statePickerPanelController);
+            mriWizard.TextLine1 = "MRI Wizard";
+            mriWizard.ImageLarge = Resources.MRIWizardLarge;
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftFossa));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarGrowth));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightFossa));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethAdaptationPanel));
+            mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+            distortionController.addDistortionWizard(mriWizard);
         }
 
         void medicalController_FixedLoopUpdate(Clock time)
