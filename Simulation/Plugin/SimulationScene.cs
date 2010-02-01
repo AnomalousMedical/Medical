@@ -11,9 +11,17 @@ namespace Medical
     {
         private String name;
         private SimulationSceneFactory factory = new SimulationSceneFactory();
-        private String cameraFile = "";
+
+        private String graphicsCameraFile = "";
+        private String standardCameraFile;
+        private String liteCameraFile;
+
         private String presetDirectory;
-        private String layersFile;
+
+        private String graphicsLayersFile;
+        private String standardLayersFile;
+        private String liteLayersFile;
+
         private String sequenceDirectory;
 
         public SimulationScene(String name)
@@ -26,9 +34,13 @@ namespace Medical
         public SimElementManagerDefinition createDefinition()
         {
             SimulationSceneDefinition definition = new SimulationSceneDefinition(name);
-            definition.CameraFile = cameraFile;
+            definition.GraphicsCameraFile = graphicsCameraFile;
+            definition.StandardCameraFile = standardCameraFile;
+            definition.LiteCameraFile = liteCameraFile;
             definition.PresetDirectory = presetDirectory;
-            definition.LayersFile = layersFile;
+            definition.GraphicsLayersFile = graphicsLayersFile;
+            definition.StandardLayersFile = standardLayersFile;
+            definition.LiteLayersFile = liteLayersFile;
             definition.SequenceDirectory = sequenceDirectory;
             return definition;
         }
@@ -57,15 +69,39 @@ namespace Medical
 
         #region Properties
 
-        public String CameraFile
+        public String GraphicsCameraFile
         {
             get
             {
-                return cameraFile;
+                return graphicsCameraFile;
             }
             set
             {
-                cameraFile = value;
+                graphicsCameraFile = value;
+            }
+        }
+
+        public String StandardCameraFile
+        {
+            get
+            {
+                return standardCameraFile;
+            }
+            set
+            {
+                standardCameraFile = value;
+            }
+        }
+
+        public String LiteCameraFile
+        {
+            get
+            {
+                return liteCameraFile;
+            }
+            set
+            {
+                liteCameraFile = value;
             }
         }
 
@@ -81,15 +117,39 @@ namespace Medical
             }
         }
 
-        public String LayersFile
+        public String GraphicsLayersFile
         {
             get
             {
-                return layersFile;
+                return graphicsLayersFile;
             }
             set
             {
-                layersFile = value;
+                graphicsLayersFile = value;
+            }
+        }
+
+        public String StandardLayersFile
+        {
+            get
+            {
+                return standardLayersFile;
+            }
+            set
+            {
+                standardLayersFile = value;
+            }
+        }
+
+        public String LiteLayersFile
+        {
+            get
+            {
+                return liteLayersFile;
+            }
+            set
+            {
+                liteLayersFile = value;
             }
         }
 
