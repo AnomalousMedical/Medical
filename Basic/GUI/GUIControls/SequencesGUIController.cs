@@ -73,6 +73,7 @@ namespace Medical.GUI
                 MovementSequence sequence = sequenceController.loadSequence(item.Tag.ToString());
                 sequenceController.stopPlayback();
                 sequenceController.CurrentSequence = sequence;
+                sequenceController.playCurrentSequence();
                 //nowPlayingLabel.TextLine2 = item.Text;
                 //nowPlayingLabel.ImageLarge = item.Image;
             }
