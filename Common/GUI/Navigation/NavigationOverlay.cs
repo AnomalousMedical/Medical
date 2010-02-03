@@ -281,7 +281,7 @@ namespace Medical
         void window_PreFindVisibleObjects(DrawingWindow window, bool callingCameraRender)
         {
             Vector3 mousePos = eventManager.Mouse.getAbsMouse();
-            this.setVisible(callingCameraRender && window.allowMotion((int)mousePos.x, (int)mousePos.y));
+            this.setVisible(callingCameraRender && window.Focused);
         }
 
         #region UpdateListener Members
@@ -307,7 +307,7 @@ namespace Medical
                 }
                 bool mouseClicked = eventManager[NavigationEvents.ClickButton].Down || firstFrame || eventManager[NavigationEvents.ClickButton].FirstFrameUp;
                 Vector3 mouseCoords = eventManager.Mouse.getAbsMouse();
-                if (window.allowMotion((int)mouseCoords.x, (int)mouseCoords.y))
+                if (window.Focused)
                 {
                     window.getLocalCoords(ref mouseCoords.x, ref mouseCoords.y);
                     foreach (NavigationButton button in buttons)
@@ -326,7 +326,7 @@ namespace Medical
                             }
                             break;
                         }
-                        else if (window.Focused && button.ShortcutEvent != NavigationEvents.None && (currentButton == null || button == currentButton))
+                        else if (button.ShortcutEvent != NavigationEvents.None && (currentButton == null || button == currentButton))
                         {
                             if (currentButton == null && eventManager[button.ShortcutEvent].Down)
                             {
