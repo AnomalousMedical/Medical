@@ -57,12 +57,12 @@
             // 
             // kryptonPanel1
             // 
-            this.kryptonPanel1.Controls.Add(this.openSourcePanel);
-            this.kryptonPanel1.Controls.Add(this.namesPanel);
             this.kryptonPanel1.Controls.Add(this.copyright);
             this.kryptonPanel1.Controls.Add(this.closeButton);
             this.kryptonPanel1.Controls.Add(this.anomalousSoftwareLabel);
             this.kryptonPanel1.Controls.Add(this.versionLabel);
+            this.kryptonPanel1.Controls.Add(this.openSourcePanel);
+            this.kryptonPanel1.Controls.Add(this.namesPanel);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonPanel1.Name = "kryptonPanel1";
@@ -199,9 +199,9 @@
             // 
             this.copyright.Location = new System.Drawing.Point(54, 140);
             this.copyright.Name = "copyright";
-            this.copyright.Size = new System.Drawing.Size(240, 19);
+            this.copyright.Size = new System.Drawing.Size(235, 19);
             this.copyright.TabIndex = 4;
-            this.copyright.Values.Text = "Copyright ©2009-2010 Anomalous Software";
+            this.copyright.Values.Text = "Copyright ©2009-2010 Anomalous Medical";
             // 
             // closeButton
             // 
