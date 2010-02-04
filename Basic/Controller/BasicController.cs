@@ -62,7 +62,7 @@ namespace Medical.Controller
         /// </summary>
         public BasicController()
         {
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Articulometrics/Clinical");
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Piper");
         }
 
         /// <summary>

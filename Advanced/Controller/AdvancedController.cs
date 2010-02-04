@@ -57,7 +57,7 @@ namespace Medical.Controller
         /// </summary>
         public AdvancedController()
         {
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Software/Articulometrics/Research");
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Articulometrics/Research");
         }
 
         /// <summary>
