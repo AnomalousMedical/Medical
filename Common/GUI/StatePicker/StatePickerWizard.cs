@@ -61,7 +61,7 @@ namespace Medical.GUI
                 uiHost.addMode(panel);
                 panel.recordOpeningState();
             }
-            hidePanel();
+            //hidePanel();
             currentIndex = 0;
             showPanel();
             uiHost.setCurrentWizard(this);
