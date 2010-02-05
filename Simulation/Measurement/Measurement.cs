@@ -29,7 +29,7 @@ namespace Medical
         }
 #endif
 
-        private const float unitsToMM = 8.467f;
+        public const float unitsToMM = 8.467f;
 
         [Editable]
         String deltaSimObjectName;

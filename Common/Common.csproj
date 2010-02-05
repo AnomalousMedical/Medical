@@ -129,6 +129,7 @@
     <Compile Include="Controller\Layers\LayerEntry.cs" />
     <Compile Include="Controller\Layers\LayerState.cs" />
     <Compile Include="Controller\Layers\LayerStateSet.cs" />
+    <Compile Include="Controller\MeasurementGrid.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="Controller\StatusController.cs" />
     <Compile Include="Controller\WindowsInfo.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />
-    <Compile Include="Controller\ViewportToothMover.cs" />
     <Compile Include="Controller\WatermarkController.cs" />
     <Compile Include="GUI\About\AboutBox.cs">
       <SubType>Form</SubType>

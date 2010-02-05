@@ -40,6 +40,7 @@ namespace Medical.Controller
         private DrawingWindowPresetController windowPresetController;
         private ShortcutController shortcutController;
         private MovementSequenceController movementSequenceController;
+        private MeasurementGrid measurementGrid;
 
         //Wizards
         private StatePickerPanelController statePickerPanelController;
@@ -162,6 +163,10 @@ namespace Medical.Controller
                 this.SceneUnloading += teethMover.sceneUnloading;
                 TeethController.TeethMover = teethMover;
                 medicalController.FixedLoopUpdate += teethMover.update;
+
+                measurementGrid = new MeasurementGrid("Measurement", medicalController, drawingWindowController);
+                this.SceneLoaded += measurementGrid.sceneLoaded;
+                this.SceneUnloading += measurementGrid.sceneUnloading;
 
                 imageRenderer = new ImageRenderer(medicalController, drawingWindowController, layerController, navigationController);
                 imageRenderer.Watermark = watermark;
