@@ -25,7 +25,7 @@ namespace Medical.GUI
             this.fossaName = fossaName;
         }
 
-        public void sceneLoaded(SimScene scene)
+        public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
             fossa = FossaController.get(fossaName);
             if (fossa != null)
