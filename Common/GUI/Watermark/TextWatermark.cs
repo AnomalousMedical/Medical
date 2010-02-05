@@ -20,6 +20,23 @@ namespace Medical
             this.name = name;
             this.markHeight = height;
             this.text = text;
+            VerticalAlignment = GuiVerticalAlignment.GVA_BOTTOM;
+        }
+
+        public String Text
+        {
+            get
+            {
+                return text;
+            }
+            set
+            {
+                text = value;
+                if (fpsTextArea != null)
+                {
+                    fpsTextArea.setCaption(value);
+                }
+            }
         }
 
         public override void createOverlays()
@@ -32,8 +49,14 @@ namespace Medical
             fpsTextArea.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
             fpsTextArea.setCharHeight(markHeight);
             fpsTextArea.setCaption(text);
-            fpsTextArea.setVerticalAlignment(GuiVerticalAlignment.GVA_BOTTOM);
-            fpsTextArea.setPosition(5.0f, -markHeight);
+            fpsTextArea.setVerticalAlignment(VerticalAlignment);
+            float xPos = 5.0f;
+            float yPos = 5.0f;
+            if(VerticalAlignment == GuiVerticalAlignment.GVA_BOTTOM)
+            {
+                yPos = -markHeight;
+            }
+            fpsTextArea.setPosition(xPos, yPos);
 
             overlay.add2d(statsPanel);
         }
@@ -75,7 +98,11 @@ namespace Medical
 
         public override Watermark clone(String newName)
         {
-            return new TextWatermark(newName, text, markHeight);
+            TextWatermark wm = new TextWatermark(newName, text, markHeight);
+            wm.VerticalAlignment = VerticalAlignment;
+            return wm;
         }
+
+        public GuiVerticalAlignment VerticalAlignment { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace Medical
         private EventManager events;
         private DrawingWindowController drawingWindowController;
         private bool visible = true;
+        private TextWatermark textWatermark;
 
         public MeasurementGrid(String name, MedicalController medicalController, DrawingWindowController drawingWindowController)
         {
@@ -28,19 +29,9 @@ namespace Medical
             this.events = medicalController.EventManager;
             this.drawingWindowController = drawingWindowController;
             drawingWindowController.WindowCreated += new DrawingWindowEvent(drawingWindowController_WindowCreated);
-        }
-
-        void drawingWindowController_WindowCreated(DrawingWindow window)
-        {
-            window.PreFindVisibleObjects += new DrawingWindowRenderEvent(window_PreFindVisibleObjects);
-        }
-
-        void window_PreFindVisibleObjects(DrawingWindow window, bool currentCameraRender)
-        {
-            if (currentCameraRender)
-            {
-                sceneNode.setOrientation(window.Orientation);
-            }
+            drawingWindowController.WindowDestroyed += new DrawingWindowEvent(drawingWindowController_WindowDestroyed);
+            textWatermark = new TextWatermark("MeasurementAmount", "Grid Spacing: 0 mm", 20.0f);
+            textWatermark.VerticalAlignment = GuiVerticalAlignment.GVA_TOP;
         }
 
         public void sceneLoaded(SimScene scene)
@@ -55,6 +46,8 @@ namespace Medical
                 sceneNode.setVisible(visible);
                 sceneManager.SceneManager.getRootSceneNode().addChild(sceneNode);
                 drawGrid(5.0f, 25.0f);
+                textWatermark.createOverlays();
+                textWatermark.setVisible(visible);
             }
         }
 
@@ -70,6 +63,7 @@ namespace Medical
                 sceneManager.SceneManager.destroySceneNode(sceneNode);
                 manualObject = null;
                 sceneNode = null;
+                textWatermark.destroyOverlays();
             }
         }
 
@@ -82,12 +76,17 @@ namespace Medical
             set
             {
                 visible = value;
-                sceneNode.setVisible(value);
+                if (sceneNode != null)
+                {
+                    sceneNode.setVisible(value);
+                    textWatermark.setVisible(value);
+                }
             }
         }
 
         private void drawGrid(float gridSpacingMM, float gridMax)
         {
+            textWatermark.Text = String.Format("Grid Spacing: {0} mm", gridSpacingMM);
             float gridSpacing = gridSpacingMM * (1.0f / Measurement.unitsToMM);
             Vector3 startPoint = new Vector3(0.0f, -gridMax, 0.0f);
             Vector3 endPoint = new Vector3(0.0f, gridMax, 0.0f);
@@ -133,6 +132,24 @@ namespace Medical
                 manualObject.color(color.r, color.g, color.b, color.a);
             }
             manualObject.end();
+        }
+
+        void drawingWindowController_WindowDestroyed(DrawingWindow window)
+        {
+            window.PreFindVisibleObjects -= window_PreFindVisibleObjects;
+        }
+
+        void drawingWindowController_WindowCreated(DrawingWindow window)
+        {
+            window.PreFindVisibleObjects += window_PreFindVisibleObjects;
+        }
+
+        void window_PreFindVisibleObjects(DrawingWindow window, bool currentCameraRender)
+        {
+            if (currentCameraRender)
+            {
+                sceneNode.setOrientation(window.Orientation);
+            }
         }
     }
 }
