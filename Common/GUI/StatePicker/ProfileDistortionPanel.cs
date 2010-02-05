@@ -16,6 +16,7 @@ namespace Medical.GUI
         {
             InitializeComponent();
             adaptButton.CheckedChanged += new EventHandler(adaptButton_CheckedChanged);
+            gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
         }
 
         public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
@@ -34,7 +35,7 @@ namespace Medical.GUI
             base.onPanelOpening();
             leftHeightSlider.getPositionFromScene();
             rightHeightSlider.getPositionFromScene();
-            panelController.MeasurementGrid.Visible = true;
+            gridPropertiesControl1.updateGrid();
         }
 
         protected override void onPanelClosing()

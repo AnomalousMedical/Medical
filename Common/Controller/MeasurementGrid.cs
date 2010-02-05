@@ -21,6 +21,7 @@ namespace Medical
         private DrawingWindowController drawingWindowController;
         private bool visible = false;
         private TextWatermark textWatermark;
+        private Color color = Color.FromARGB(System.Drawing.Color.Green.ToArgb());
 
         public MeasurementGrid(String name, MedicalController medicalController, DrawingWindowController drawingWindowController)
         {
@@ -100,7 +101,6 @@ namespace Medical
             Vector3 endPoint = new Vector3(0.0f, gridMax, 0.0f);
             manualObject.clear();
             manualObject.begin("Grid", OperationType.OT_LINE_LIST);
-            Color color = Color.FromARGB(System.Drawing.Color.Green.ToArgb());
             for (float x = 0; x < gridMax; x += gridSpacing)
             {
                 startPoint.x = x;
@@ -140,6 +140,18 @@ namespace Medical
                 manualObject.color(color.r, color.g, color.b, color.a);
             }
             manualObject.end();
+        }
+
+        public Color Color
+        {
+            get
+            {
+                return color;
+            }
+            set
+            {
+                color = value;
+            }
         }
 
         void drawingWindowController_WindowDestroyed(DrawingWindow window)

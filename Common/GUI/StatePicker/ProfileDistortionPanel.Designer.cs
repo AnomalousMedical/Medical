@@ -39,6 +39,7 @@
             this.leftSideCamera = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonWrapLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.adaptButton = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
+            this.gridPropertiesControl1 = new Medical.GUI.Grid.GridPropertiesControl();
             this.SuspendLayout();
             // 
             // kryptonWrapLabel1
@@ -148,10 +149,18 @@
             this.adaptButton.TabIndex = 31;
             this.adaptButton.Values.Text = "Adapt Teeth";
             // 
+            // gridPropertiesControl1
+            // 
+            this.gridPropertiesControl1.Location = new System.Drawing.Point(6, 274);
+            this.gridPropertiesControl1.Name = "gridPropertiesControl1";
+            this.gridPropertiesControl1.Size = new System.Drawing.Size(253, 98);
+            this.gridPropertiesControl1.TabIndex = 34;
+            // 
             // ProfileDistortionPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridPropertiesControl1);
             this.Controls.Add(this.kryptonWrapLabel3);
             this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.leftSideCamera);
@@ -164,7 +173,7 @@
             this.Controls.Add(this.rightMidCamera);
             this.Controls.Add(this.midlineCamera);
             this.Name = "ProfileDistortionPanel";
-            this.Size = new System.Drawing.Size(293, 300);
+            this.Size = new System.Drawing.Size(293, 332);
             this.ResumeLayout(false);
 
         }
@@ -182,5 +191,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton leftSideCamera;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel3;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton adaptButton;
+        private Medical.GUI.Grid.GridPropertiesControl gridPropertiesControl1;
     }
 }

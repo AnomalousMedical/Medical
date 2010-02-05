@@ -35,7 +35,7 @@
             // rightHeightSlider
             // 
             this.rightHeightSlider.LabelText = "Right Side";
-            this.rightHeightSlider.Location = new System.Drawing.Point(4, 414);
+            this.rightHeightSlider.Location = new System.Drawing.Point(4, 477);
             this.rightHeightSlider.Name = "rightHeightSlider";
             this.rightHeightSlider.Size = new System.Drawing.Size(197, 44);
             this.rightHeightSlider.TabIndex = 26;
@@ -44,7 +44,7 @@
             // leftHeightSlider
             // 
             this.leftHeightSlider.LabelText = "Left Side";
-            this.leftHeightSlider.Location = new System.Drawing.Point(4, 364);
+            this.leftHeightSlider.Location = new System.Drawing.Point(4, 427);
             this.leftHeightSlider.Name = "leftHeightSlider";
             this.leftHeightSlider.Size = new System.Drawing.Size(197, 44);
             this.leftHeightSlider.TabIndex = 25;
@@ -57,9 +57,7 @@
             this.Controls.Add(this.rightHeightSlider);
             this.Controls.Add(this.leftHeightSlider);
             this.Name = "TeethHeightAdaptationPanel";
-            this.Size = new System.Drawing.Size(291, 515);
-            this.Controls.SetChildIndex(this.leftHeightSlider, 0);
-            this.Controls.SetChildIndex(this.rightHeightSlider, 0);
+            this.Size = new System.Drawing.Size(291, 572);
             this.ResumeLayout(false);
 
         }

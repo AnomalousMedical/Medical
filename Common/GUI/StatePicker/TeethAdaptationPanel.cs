@@ -32,6 +32,7 @@ namespace Medical.GUI
             adaptButton.CheckedChanged += new EventHandler(adaptButton_CheckedChanged);
             moveButton.CheckedChanged += new EventHandler(moveButton_CheckedChanged);
             rotateButton.CheckedChanged += new EventHandler(rotateButton_CheckedChanged);
+            gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
         }
 
         private void undoButton_Click(object sender, EventArgs e)
@@ -77,7 +78,7 @@ namespace Medical.GUI
         protected override void onPanelOpening()
         {
             TeethController.showTeethTools(true, true);
-            panelController.MeasurementGrid.Visible = true;
+            gridPropertiesControl1.updateGrid();
         }
 
         protected override void onPanelClosing()

@@ -43,6 +43,7 @@
             this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.kryptonWrapLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.kryptonWrapLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.gridPropertiesControl1 = new Medical.GUI.Grid.GridPropertiesControl();
             this.SuspendLayout();
             // 
             // adaptButton
@@ -55,7 +56,7 @@
             // 
             // resetButton
             // 
-            this.resetButton.Location = new System.Drawing.Point(100, 333);
+            this.resetButton.Location = new System.Drawing.Point(100, 360);
             this.resetButton.Name = "resetButton";
             this.resetButton.Size = new System.Drawing.Size(90, 25);
             this.resetButton.TabIndex = 11;
@@ -72,7 +73,7 @@
             // 
             // undoButton
             // 
-            this.undoButton.Location = new System.Drawing.Point(4, 333);
+            this.undoButton.Location = new System.Drawing.Point(4, 360);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 10;
@@ -189,10 +190,20 @@
             this.kryptonWrapLabel3.Text = "Manually move the teeth to fine tune their positions. Or manually move and rotate" +
                 " the teeth to match your patient exactly.";
             // 
+            // gridPropertiesControl1
+            // 
+            this.gridPropertiesControl1.GridSpacing = 2F;
+            this.gridPropertiesControl1.GridVisible = true;
+            this.gridPropertiesControl1.Location = new System.Drawing.Point(4, 311);
+            this.gridPropertiesControl1.Name = "gridPropertiesControl1";
+            this.gridPropertiesControl1.Size = new System.Drawing.Size(253, 44);
+            this.gridPropertiesControl1.TabIndex = 19;
+            // 
             // TeethAdaptationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridPropertiesControl1);
             this.Controls.Add(this.kryptonWrapLabel3);
             this.Controls.Add(this.kryptonWrapLabel2);
             this.Controls.Add(this.kryptonWrapLabel1);
@@ -212,7 +223,7 @@
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
             this.NavigationState = "Teeth Midline Anterior";
-            this.Size = new System.Drawing.Size(291, 361);
+            this.Size = new System.Drawing.Size(291, 390);
             this.TextLine1 = "Teeth";
             this.TextLine2 = "Adaptation";
             this.ResumeLayout(false);
@@ -236,6 +247,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel3;
+        private Medical.GUI.Grid.GridPropertiesControl gridPropertiesControl1;
 
     }
 }

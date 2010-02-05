@@ -34,6 +34,7 @@ namespace Medical.GUI
         {
             base.OnShown(e);
             openSourcePanel.Visible = false;
+            namesPanel.Visible = true;
         }
 
         void anomalousSoftwareLabel_LinkClicked(object sender, EventArgs e)
