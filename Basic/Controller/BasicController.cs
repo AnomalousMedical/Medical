@@ -45,7 +45,6 @@ namespace Medical.Controller
         //Wizards
         private StatePickerPanelController statePickerPanelController;
 
-        private WatermarkController watermarkController;
         private Watermark watermark;
         private BackgroundController backgroundController;
         private ViewportBackground background;
@@ -75,6 +74,10 @@ namespace Medical.Controller
             if (watermark != null)
             {
                 watermark.Dispose();
+            }
+            if (measurementGrid != null)
+            {
+                measurementGrid.Dispose();
             }
             if (drawingWindowController != null)
             {
@@ -140,9 +143,7 @@ namespace Medical.Controller
                 OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
                 OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-                watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
-                watermark.createOverlays();
-                watermarkController = new WatermarkController(watermark, drawingWindowController);
+                watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
                 if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
                 {

@@ -205,11 +205,12 @@ namespace Medical
 
         private Bitmap simpleRender(int width, int height, int aaMode, bool showWatermark, bool transparentBG, Engine.Color bgColor, RenderTexture renderTexture)
         {
-            //Watermark activation
-            if (watermark != null && showWatermark)
+            //Toggle watermark if required.
+            bool watermarkStatusChanged = false;
+            if (watermark != null && (showWatermark != watermark.Visible))
             {
-                watermark.sizeChanged(width, height);
-                watermark.setVisible(true);
+                watermarkStatusChanged = true;
+                watermark.Visible = !watermark.Visible;
             }
 
             renderTexture.update();
@@ -245,10 +246,10 @@ namespace Medical
                 largeImage.Dispose();
             }
 
-            //Watermark deactivation
-            if (watermark != null && showWatermark)
+            //Toggle watermark back
+            if (watermarkStatusChanged)
             {
-                watermark.setVisible(false);
+                watermark.Visible = !watermark.Visible;
             }
 
             return bitmap;
@@ -256,6 +257,13 @@ namespace Medical
 
         private Bitmap gridRender(int width, int height, int gridSize, int aaMode, RenderTexture renderTexture, Camera camera)
         {
+            bool turnedOffWatermark = false;
+            if (watermark != null && watermark.Visible)
+            {
+                turnedOffWatermark = true;
+                watermark.Visible = false;
+            }
+
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
 
@@ -342,6 +350,12 @@ namespace Medical
                     }
                 }
             }
+
+            if (turnedOffWatermark)
+            {
+                watermark.Visible = true;
+            }
+
             return fullBitmap;
         }
 

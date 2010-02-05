@@ -11,7 +11,7 @@ using OgrePlugin;
 
 namespace Medical
 {
-    public class MeasurementGrid
+    public class MeasurementGrid : IDisposable
     {
         private PluginManager pluginManager;
         private String name;
@@ -19,7 +19,7 @@ namespace Medical
         private SceneNode sceneNode;
         private EventManager events;
         private DrawingWindowController drawingWindowController;
-        private bool visible = true;
+        private bool visible = false;
         private TextWatermark textWatermark;
 
         public MeasurementGrid(String name, MedicalController medicalController, DrawingWindowController drawingWindowController)
@@ -30,8 +30,12 @@ namespace Medical
             this.drawingWindowController = drawingWindowController;
             drawingWindowController.WindowCreated += new DrawingWindowEvent(drawingWindowController_WindowCreated);
             drawingWindowController.WindowDestroyed += new DrawingWindowEvent(drawingWindowController_WindowDestroyed);
-            textWatermark = new TextWatermark("MeasurementAmount", "Grid Spacing: 0 mm", 20.0f);
-            textWatermark.VerticalAlignment = GuiVerticalAlignment.GVA_TOP;
+            textWatermark = new TextWatermark("MeasurementAmount", "Grid Spacing: 0 mm", 15.0f, GuiVerticalAlignment.GVA_TOP);
+        }
+
+        public void Dispose()
+        {
+            textWatermark.Dispose();
         }
 
         public void sceneLoaded(SimScene scene)
@@ -46,8 +50,7 @@ namespace Medical
                 sceneNode.setVisible(visible);
                 sceneManager.SceneManager.getRootSceneNode().addChild(sceneNode);
                 drawGrid(5.0f, 25.0f);
-                textWatermark.createOverlays();
-                textWatermark.setVisible(visible);
+                textWatermark.Visible = visible;
             }
         }
 
@@ -63,7 +66,6 @@ namespace Medical
                 sceneManager.SceneManager.destroySceneNode(sceneNode);
                 manualObject = null;
                 sceneNode = null;
-                textWatermark.destroyOverlays();
             }
         }
 
@@ -79,7 +81,7 @@ namespace Medical
                 if (sceneNode != null)
                 {
                     sceneNode.setVisible(value);
-                    textWatermark.setVisible(value);
+                    textWatermark.Visible = value;
                 }
             }
         }

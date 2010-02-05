@@ -42,7 +42,6 @@ namespace Medical.Controller
         private DockProvider dockProvider;
         private TemporaryStateBlender tempBlender;
 
-        private WatermarkController watermarkController;
         private Watermark watermark;
         private BackgroundController backgroundController;
         private ViewportBackground background;
@@ -173,8 +172,6 @@ namespace Medical.Controller
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
-                watermark.createOverlays();
-                watermarkController = new WatermarkController(watermark, drawingWindowController);
 
                 background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
                 backgroundController = new BackgroundController(background, drawingWindowController);

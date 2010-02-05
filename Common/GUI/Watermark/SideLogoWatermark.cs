@@ -25,10 +25,8 @@ namespace Medical
             this.materialName = materialName;
             this.leftOffset = leftOffset;
             this.bottomOffset = bottomOffset;
-        }
-
-        public override void createOverlays()
-        {
+            
+            //Create overlays
             overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
             panel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
             panel.setUV(0, 0, 1, 1);
@@ -38,30 +36,10 @@ namespace Medical
             overlay.add2d(panel);
             panel.setDimensions(markWidth, markHeight);
             panel.setPosition(leftOffset, -markHeight - bottomOffset);
+            Visible = true;
         }
 
-        public override void sizeChanged(float width, float height)
-        {
-            
-        }
-
-        public override void setVisible(bool visible)
-        {
-            if (overlay != null)
-            {
-                if (visible && !overlay.isVisible())
-                {
-                    overlay.show();
-
-                }
-                else if (!visible && overlay.isVisible())
-                {
-                    overlay.hide();
-                }
-            }
-        }
-
-        public override void destroyOverlays()
+        public void Dispose()
         {
             if (panel != null)
             {
@@ -73,9 +51,27 @@ namespace Medical
             }
         }
 
-        public override Watermark clone(String newName)
+        public bool Visible
         {
-            return new SideLogoWatermark(newName, materialName, markWidth, markHeight, leftOffset, bottomOffset);
+            get
+            {
+                return overlay.isVisible();
+            }
+            set
+            {
+                if (overlay != null)
+                {
+                    if (value && !overlay.isVisible())
+                    {
+                        overlay.show();
+
+                    }
+                    else if (!value && overlay.isVisible())
+                    {
+                        overlay.hide();
+                    }
+                }
+            }
         }
     }
 }

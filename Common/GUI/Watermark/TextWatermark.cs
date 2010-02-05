@@ -15,12 +15,45 @@ namespace Medical
         float markHeight = 100;
         String text;
 
-        public TextWatermark(String name, String text, float height)
+        public TextWatermark(String name, String text, float height, GuiVerticalAlignment verticalAlignment)
         {
             this.name = name;
             this.markHeight = height;
             this.text = text;
-            VerticalAlignment = GuiVerticalAlignment.GVA_BOTTOM;
+            
+            //Create overlays
+            overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
+            statsPanel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
+            fpsTextArea = OverlayManager.getInstance().createOverlayElement(TextAreaOverlayElement.TypeName, name + "_WatermarkText") as TextAreaOverlayElement;
+            statsPanel.addChild(fpsTextArea);
+            fpsTextArea.setFontName("Watermark");
+            fpsTextArea.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
+            fpsTextArea.setCharHeight(markHeight);
+            fpsTextArea.setCaption(text);
+            fpsTextArea.setVerticalAlignment(verticalAlignment);
+            float xPos = 5.0f;
+            float yPos = 5.0f;
+            if (verticalAlignment == GuiVerticalAlignment.GVA_BOTTOM)
+            {
+                yPos = -markHeight;
+            }
+            fpsTextArea.setPosition(xPos, yPos);
+            overlay.add2d(statsPanel);
+            Visible = true;
+        }
+
+        public void Dispose()
+        {
+            if (statsPanel != null)
+            {
+                overlay.remove2d(statsPanel);
+                OverlayManager.getInstance().destroyOverlayElement(statsPanel);
+                OverlayManager.getInstance().destroyOverlayElement(fpsTextArea);
+                OverlayManager.getInstance().destroy(overlay);
+                statsPanel = null;
+                fpsTextArea = null;
+                overlay = null;
+            }
         }
 
         public String Text
@@ -39,70 +72,27 @@ namespace Medical
             }
         }
 
-        public override void createOverlays()
+        public bool Visible
         {
-            overlay = OverlayManager.getInstance().create(name + "_WatermarkOverlay");
-            statsPanel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkPanel") as PanelOverlayElement;
-            fpsTextArea = OverlayManager.getInstance().createOverlayElement(TextAreaOverlayElement.TypeName, name + "_WatermarkText") as TextAreaOverlayElement;
-            statsPanel.addChild(fpsTextArea);
-            fpsTextArea.setFontName("Watermark");
-            fpsTextArea.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
-            fpsTextArea.setCharHeight(markHeight);
-            fpsTextArea.setCaption(text);
-            fpsTextArea.setVerticalAlignment(VerticalAlignment);
-            float xPos = 5.0f;
-            float yPos = 5.0f;
-            if(VerticalAlignment == GuiVerticalAlignment.GVA_BOTTOM)
+            get
             {
-                yPos = -markHeight;
+                return overlay.isVisible();
             }
-            fpsTextArea.setPosition(xPos, yPos);
-
-            overlay.add2d(statsPanel);
-        }
-
-        public override void sizeChanged(float width, float height)
-        {
-            
-        }
-
-        public override void setVisible(bool visible)
-        {
-            if (overlay != null)
+            set
             {
-                if (visible && !overlay.isVisible())
+                if (overlay != null)
                 {
-                    overlay.show();
+                    if (value && !overlay.isVisible())
+                    {
+                        overlay.show();
 
-                }
-                else if (!visible && overlay.isVisible())
-                {
-                    overlay.hide();
+                    }
+                    else if (!value && overlay.isVisible())
+                    {
+                        overlay.hide();
+                    }
                 }
             }
         }
-
-        public override void destroyOverlays()
-        {
-            if (statsPanel != null)
-            {
-                overlay.remove2d(statsPanel);
-                OverlayManager.getInstance().destroyOverlayElement(statsPanel);
-                OverlayManager.getInstance().destroyOverlayElement(fpsTextArea);
-                OverlayManager.getInstance().destroy(overlay);
-                statsPanel = null;
-                fpsTextArea = null;
-                overlay = null;
-            }
-        }
-
-        public override Watermark clone(String newName)
-        {
-            TextWatermark wm = new TextWatermark(newName, text, markHeight);
-            wm.VerticalAlignment = VerticalAlignment;
-            return wm;
-        }
-
-        public GuiVerticalAlignment VerticalAlignment { get; set; }
     }
 }
