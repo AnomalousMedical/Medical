@@ -173,13 +173,10 @@ namespace Medical.Controller
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 watermark = new SideLogoWatermark("SourceWatermark", "AnomalousMedical", 150, 44, 4, 4);
-                //watermark = new TiledWatermark("SourceWatermark", "PiperClinicBg", 150, 60);
-                //watermark = new TextWatermark("SourceWatermark", "Copyright 2009 Piper Clinic", 50);
                 watermark.createOverlays();
                 watermarkController = new WatermarkController(watermark, drawingWindowController);
 
-                //background = new ViewportBackground("SourceBackground", "PiperClinicBg", 900, 500, 250, 30, 30);
-                background = new ViewportBackground("SourceBackground", "PiperClinicBg2", 900, 500, 500, 5, 5);
+                background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
                 backgroundController = new BackgroundController(background, drawingWindowController);
 
                 SimObjectMover teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);

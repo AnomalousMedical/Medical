@@ -26,17 +26,27 @@ namespace Medical
                     if (UserPermissions.Instance.checkConnection())
                     {
                         connectionLoop = false;
-                        using (BasicController controller = new BasicController())
+                        bool canUseProgram = UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS)
+                            || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD)
+                            || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_LITE);
+                        if (canUseProgram)
                         {
-                            try
+                            using (BasicController controller = new BasicController())
                             {
-                                controller.go();
+                                try
+                                {
+                                    controller.go();
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.Default.printException(e);
+                                    MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
                             }
-                            catch (Exception e)
-                            {
-                                Log.Default.printException(e);
-                                MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
