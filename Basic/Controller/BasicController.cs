@@ -631,7 +631,7 @@ namespace Medical.Controller
                 movementSequenceController.stopPlayback();
             }
             //distortionController.setToDefault();
-            if (SceneUnloading != null)
+            if (SceneUnloading != null && medicalController.CurrentScene != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
