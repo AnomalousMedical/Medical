@@ -34,6 +34,12 @@ namespace Medical.GUI
             base.onPanelOpening();
             leftHeightSlider.getPositionFromScene();
             rightHeightSlider.getPositionFromScene();
+            panelController.MeasurementGrid.Visible = true;
+        }
+
+        protected override void onPanelClosing()
+        {
+            panelController.MeasurementGrid.Visible = false;
         }
 
         private void rightSideCamera_Click(object sender, EventArgs e)

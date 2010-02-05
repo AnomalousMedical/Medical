@@ -45,6 +45,7 @@ namespace Medical
             {
                 OgreSceneManager sceneManager = subScene.getSimElementManager<OgreSceneManager>();
                 manualObject = sceneManager.SceneManager.createManualObject(name + "__MeasurementManualObject");
+                manualObject.setRenderQueueGroup(95);
                 sceneNode = sceneManager.SceneManager.createSceneNode(name + "__MeasurementManualObjectSceneNode");
                 sceneNode.attachObject(manualObject);
                 sceneNode.setVisible(visible);
@@ -86,7 +87,12 @@ namespace Medical
             }
         }
 
-        private void drawGrid(float gridSpacingMM, float gridMax)
+        /// <summary>
+        /// Draw a grid with the given spacing in milimeters taking up the space specified by gridmax.
+        /// </summary>
+        /// <param name="gridSpacingMM">The number of milimeters to space the grid lines.</param>
+        /// <param name="gridMax">The area of the grid in 3d units.</param>
+        public void drawGrid(float gridSpacingMM, float gridMax)
         {
             textWatermark.Text = String.Format("Grid Spacing: {0} mm", gridSpacingMM);
             float gridSpacing = gridSpacingMM * (1.0f / Measurement.unitsToMM);

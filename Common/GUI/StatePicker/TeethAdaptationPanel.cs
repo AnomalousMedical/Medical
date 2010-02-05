@@ -77,6 +77,7 @@ namespace Medical.GUI
         protected override void onPanelOpening()
         {
             TeethController.showTeethTools(true, true);
+            panelController.MeasurementGrid.Visible = true;
         }
 
         protected override void onPanelClosing()
@@ -86,6 +87,7 @@ namespace Medical.GUI
                 adaptButton.Checked = false;
             }
             TeethController.showTeethTools(false, false);
+            panelController.MeasurementGrid.Visible = false;
         }
 
         void adaptButton_CheckedChanged(object sender, EventArgs e)

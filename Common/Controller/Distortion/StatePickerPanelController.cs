@@ -51,8 +51,9 @@ namespace Medical
         private XmlSaver saver = new XmlSaver();
         private DrawingWindowController drawingWindowController;
         private NotesPanel notesPanel;
+        private MeasurementGrid measurementGrid;
 
-        public StatePickerPanelController(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer, MovementSequenceController movementSequenceController, DrawingWindowController drawingWindowController)
+        public StatePickerPanelController(StatePickerUIHost uiHost, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, ImageRenderer imageRenderer, MovementSequenceController movementSequenceController, DrawingWindowController drawingWindowController, MeasurementGrid measurementGrid)
         {
             this.uiHost = uiHost;
             this.medicalController = medicalController;
@@ -62,6 +63,7 @@ namespace Medical
             this.imageRenderer = imageRenderer;
             this.movementSequenceController = movementSequenceController;
             this.drawingWindowController = drawingWindowController;
+            this.measurementGrid = measurementGrid;
 
             imageList = new ImageList();
             imageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -203,6 +205,14 @@ namespace Medical
             get
             {
                 return saver;
+            }
+        }
+
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return measurementGrid;
             }
         }
 

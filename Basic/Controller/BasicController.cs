@@ -219,7 +219,7 @@ namespace Medical.Controller
         private void createWizardPanels()
         {
             //Create panels
-            statePickerPanelController = new StatePickerPanelController(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer, movementSequenceController, drawingWindowController);
+            statePickerPanelController = new StatePickerPanelController(basicForm.StateWizardHost, medicalController, stateController, navigationController, layerController, imageRenderer, movementSequenceController, drawingWindowController, measurementGrid);
 
             //Create wizards
 
