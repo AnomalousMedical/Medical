@@ -651,26 +651,26 @@ namespace Medical.Controller
                     drawingWindowController.createCameras(medicalController.MainTimer, medicalController.CurrentScene, medicalController.CurrentSceneDirectory);
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
 
-                    String layersFile = medicalController.CurrentSceneDirectory + "/";
-                    String cameraFile = medicalController.CurrentSceneDirectory + "/";
+                    String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFileDirectory;
+                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory;
                     String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard", sequenceDirectory + "/Graphics");
-                        layersFile += medicalScene.GraphicsLayersFile;
-                        cameraFile += medicalScene.GraphicsCameraFile;
+                        cameraFile += "/GraphicsCameras.cam";
+                        layersFile += "/GraphicsLayers.lay";
                     }
                     else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard");
-                        layersFile += medicalScene.StandardLayersFile;
-                        cameraFile += medicalScene.StandardCameraFile;
+                        cameraFile += "/StandardCameras.cam";
+                        layersFile += "/StandardLayers.lay";
                     }
                     else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_LITE))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite");
-                        layersFile += medicalScene.LiteLayersFile;
-                        cameraFile += medicalScene.LiteCameraFile;
+                        cameraFile += "/LiteCameras.cam";
+                        layersFile += "/LiteLayers.lay";
                     }
                     layerController.loadLayerStateSet(layersFile);
                     navigationController.loadNavigationSet(cameraFile);

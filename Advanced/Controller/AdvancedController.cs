@@ -478,7 +478,7 @@ namespace Medical.Controller
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
                     //String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     //layerController.loadLayerStateSet(layersFile);
-                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.GraphicsCameraFile;
+                    String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/GraphicsCameras.cam";
                     navigationController.loadNavigationSet(cameraFile);
                 }
 

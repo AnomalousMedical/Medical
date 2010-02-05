@@ -22,13 +22,9 @@ namespace Medical
         }
 
         private String name;
-        private String graphicsCameraFile;
-        private String standardCameraFile;
-        private String liteCameraFile;
+        private String cameraFileDirectory;
         private String presetDirectory;
-        private String graphicsLayersFile;
-        private String standardLayersFile;
-        private String liteLayersFile;
+        private String layersFileDirectory;
         private String sequenceDirectory;
 
         public SimulationSceneDefinition(String name)
@@ -49,13 +45,9 @@ namespace Medical
         public SimElementManager createSimElementManager()
         {
             SimulationScene scene = new SimulationScene(name);
-            scene.GraphicsCameraFile = graphicsCameraFile;
-            scene.StandardCameraFile = standardCameraFile;
-            scene.LiteCameraFile = liteCameraFile;
+            scene.CameraFileDirectory = cameraFileDirectory;
             scene.PresetDirectory = presetDirectory;
-            scene.GraphicsLayersFile = graphicsLayersFile;
-            scene.StandardLayersFile = standardLayersFile;
-            scene.LiteLayersFile = liteLayersFile;
+            scene.LayersFileDirectory = layersFileDirectory;
             scene.SequenceDirectory = sequenceDirectory;
             return scene;
         }
@@ -75,44 +67,17 @@ namespace Medical
         #region Properties
 
         [Editable]
-        public String GraphicsCameraFile
+        public String CameraFileDirectory
         {
             get
             {
-                return graphicsCameraFile;
+                return cameraFileDirectory;
             }
             set
             {
-                graphicsCameraFile = value;
+                cameraFileDirectory = value;
             }
         }
-
-        [Editable]
-        public String StandardCameraFile
-        {
-            get
-            {
-                return standardCameraFile;
-            }
-            set
-            {
-                standardCameraFile = value;
-            }
-        }
-
-        [Editable]
-        public String LiteCameraFile
-        {
-            get
-            {
-                return liteCameraFile;
-            }
-            set
-            {
-                liteCameraFile = value;
-            }
-        }
-
 
         [Editable]
         public String PresetDirectory
@@ -128,41 +93,15 @@ namespace Medical
         }
 
         [Editable]
-        public String GraphicsLayersFile
+        public String LayersFileDirectory
         {
             get
             {
-                return graphicsLayersFile;
+                return layersFileDirectory;
             }
             set
             {
-                graphicsLayersFile = value;
-            }
-        }
-
-        [Editable]
-        public String StandardLayersFile
-        {
-            get
-            {
-                return standardLayersFile;
-            }
-            set
-            {
-                standardLayersFile = value;
-            }
-        }
-
-        [Editable]
-        public String LiteLayersFile
-        {
-            get
-            {
-                return liteLayersFile;
-            }
-            set
-            {
-                liteLayersFile = value;
+                layersFileDirectory = value;
             }
         }
 
@@ -199,38 +138,26 @@ namespace Medical
         #region Saveable Members
 
         private const String NAME = "Name";
-        private const String GRAPHICS_CAMERA_FILE = "GraphicsCameraFile";
-        private const String STANDARD_CAMERA_FILE = "StandardCameraFile";
-        private const String LITE_CAMERA_FILE = "LiteCameraFile";
+        private const String CAMERA_FILE_DIRECTORY = "CameraFileDirectory";
         private const String PRESET_DIRECTORY = "PresetDirectory";
-        private const String GRAPHICS_LAYERS_FILE = "GraphicsLayersFile";
-        private const String STANDARD_LAYERS_FILE = "StandardLayersFile";
-        private const String LITE_LAYERS_FILE = "LiteLayersFile";
+        private const String LAYERS_FILE_DIRECTORY = "LayersFileDirectory";
         private const String SEQUENCE_DIRECTORY = "SequenceDirectory";
 
         protected SimulationSceneDefinition(LoadInfo info)
         {
             name = info.GetString(NAME);
-            graphicsCameraFile = info.GetString(GRAPHICS_CAMERA_FILE);
-            standardCameraFile = info.GetString(STANDARD_CAMERA_FILE);
-            liteCameraFile = info.GetString(LITE_CAMERA_FILE);
+            cameraFileDirectory = info.GetString(CAMERA_FILE_DIRECTORY);
             presetDirectory = info.GetString(PRESET_DIRECTORY);
-            graphicsLayersFile = info.GetString(GRAPHICS_LAYERS_FILE);
-            standardLayersFile = info.GetString(STANDARD_LAYERS_FILE);
-            liteLayersFile = info.GetString(LITE_LAYERS_FILE);
+            layersFileDirectory = info.GetString(LAYERS_FILE_DIRECTORY);
             sequenceDirectory = info.GetString(SEQUENCE_DIRECTORY);
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue(NAME, name);
-            info.AddValue(GRAPHICS_CAMERA_FILE, graphicsCameraFile);
-            info.AddValue(STANDARD_CAMERA_FILE, standardCameraFile);
-            info.AddValue(LITE_CAMERA_FILE, liteCameraFile);
+            info.AddValue(CAMERA_FILE_DIRECTORY, cameraFileDirectory);
             info.AddValue(PRESET_DIRECTORY, presetDirectory);
-            info.AddValue(GRAPHICS_LAYERS_FILE, graphicsLayersFile);
-            info.AddValue(STANDARD_LAYERS_FILE, standardLayersFile);
-            info.AddValue(LITE_LAYERS_FILE, liteLayersFile);
+            info.AddValue(LAYERS_FILE_DIRECTORY, layersFileDirectory);
             info.AddValue(SEQUENCE_DIRECTORY, sequenceDirectory);
         }
 
