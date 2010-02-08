@@ -47,8 +47,9 @@
             this.kryptonGroupBox1 = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
             this.rdaReductionGroupBox = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
             this.severeRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
-            this.moderateRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
             this.mildRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
+            this.moderateRDAReductionButton = new ComponentFactory.Krypton.Toolkit.KryptonRadioButton();
+            this.resetButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).BeginInit();
@@ -64,7 +65,7 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(4, 35);
+            this.kryptonLabel1.Location = new System.Drawing.Point(4, 18);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.Size = new System.Drawing.Size(100, 19);
             this.kryptonLabel1.TabIndex = 0;
@@ -72,6 +73,8 @@
             // 
             // rotatoryCombo
             // 
+            this.rotatoryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.rotatoryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.rotatoryCombo.DropDownWidth = 179;
             this.rotatoryCombo.Items.AddRange(new object[] {
             "None",
@@ -80,7 +83,7 @@
             "Coarse Rough",
             "Coarse Eburnated",
             "Unknown"});
-            this.rotatoryCombo.Location = new System.Drawing.Point(4, 54);
+            this.rotatoryCombo.Location = new System.Drawing.Point(4, 37);
             this.rotatoryCombo.Name = "rotatoryCombo";
             this.rotatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.rotatoryCombo.TabIndex = 1;
@@ -88,6 +91,8 @@
             // 
             // translatoryCombo
             // 
+            this.translatoryCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.translatoryCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.translatoryCombo.DropDownWidth = 179;
             this.translatoryCombo.Items.AddRange(new object[] {
             "None",
@@ -96,7 +101,7 @@
             "Coarse Rough",
             "Coarse Eburnated",
             "Unknown"});
-            this.translatoryCombo.Location = new System.Drawing.Point(4, 100);
+            this.translatoryCombo.Location = new System.Drawing.Point(4, 83);
             this.translatoryCombo.Name = "translatoryCombo";
             this.translatoryCombo.Size = new System.Drawing.Size(179, 21);
             this.translatoryCombo.TabIndex = 3;
@@ -104,7 +109,7 @@
             // 
             // kryptonLabel2
             // 
-            this.kryptonLabel2.Location = new System.Drawing.Point(4, 81);
+            this.kryptonLabel2.Location = new System.Drawing.Point(4, 64);
             this.kryptonLabel2.Name = "kryptonLabel2";
             this.kryptonLabel2.Size = new System.Drawing.Size(113, 19);
             this.kryptonLabel2.TabIndex = 2;
@@ -112,13 +117,15 @@
             // 
             // clickCombo
             // 
+            this.clickCombo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
+            this.clickCombo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.clickCombo.DropDownWidth = 179;
             this.clickCombo.Items.AddRange(new object[] {
             "None",
             "Reciprocal",
             "Surface",
             "Unknown"});
-            this.clickCombo.Location = new System.Drawing.Point(4, 146);
+            this.clickCombo.Location = new System.Drawing.Point(4, 129);
             this.clickCombo.Name = "clickCombo";
             this.clickCombo.Size = new System.Drawing.Size(179, 21);
             this.clickCombo.TabIndex = 5;
@@ -126,7 +133,7 @@
             // 
             // kryptonLabel3
             // 
-            this.kryptonLabel3.Location = new System.Drawing.Point(4, 127);
+            this.kryptonLabel3.Location = new System.Drawing.Point(4, 110);
             this.kryptonLabel3.Name = "kryptonLabel3";
             this.kryptonLabel3.Size = new System.Drawing.Size(34, 19);
             this.kryptonLabel3.TabIndex = 4;
@@ -202,25 +209,25 @@
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
-            this.kryptonWrapLabel1.Size = new System.Drawing.Size(189, 40);
-            this.kryptonWrapLabel1.Text = "Input the crepitus and click information.";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(189, 19);
+            this.kryptonWrapLabel1.Text = "Input Joint Sounds";
             // 
             // kryptonWrapLabel2
             // 
             this.kryptonWrapLabel2.AutoSize = false;
             this.kryptonWrapLabel2.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            this.kryptonWrapLabel2.Location = new System.Drawing.Point(0, 172);
+            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.kryptonWrapLabel2.Location = new System.Drawing.Point(0, 156);
             this.kryptonWrapLabel2.Name = "kryptonWrapLabel2";
             this.kryptonWrapLabel2.Size = new System.Drawing.Size(189, 18);
-            this.kryptonWrapLabel2.Text = "Choose the output stage.";
+            this.kryptonWrapLabel2.Text = "Piper Classification Stage";
             // 
             // kryptonGroupBox1
             // 
-            this.kryptonGroupBox1.Location = new System.Drawing.Point(4, 189);
+            this.kryptonGroupBox1.Location = new System.Drawing.Point(4, 173);
             this.kryptonGroupBox1.Name = "kryptonGroupBox1";
             // 
             // kryptonGroupBox1.Panel
@@ -260,14 +267,6 @@
             this.severeRDAReductionButton.TabIndex = 18;
             this.severeRDAReductionButton.Values.Text = "Severe";
             // 
-            // moderateRDAReductionButton
-            // 
-            this.moderateRDAReductionButton.Location = new System.Drawing.Point(3, 28);
-            this.moderateRDAReductionButton.Name = "moderateRDAReductionButton";
-            this.moderateRDAReductionButton.Size = new System.Drawing.Size(73, 19);
-            this.moderateRDAReductionButton.TabIndex = 17;
-            this.moderateRDAReductionButton.Values.Text = "Moderate";
-            // 
             // mildRDAReductionButton
             // 
             this.mildRDAReductionButton.Location = new System.Drawing.Point(3, 3);
@@ -276,10 +275,28 @@
             this.mildRDAReductionButton.TabIndex = 16;
             this.mildRDAReductionButton.Values.Text = "Mild";
             // 
+            // moderateRDAReductionButton
+            // 
+            this.moderateRDAReductionButton.Location = new System.Drawing.Point(3, 28);
+            this.moderateRDAReductionButton.Name = "moderateRDAReductionButton";
+            this.moderateRDAReductionButton.Size = new System.Drawing.Size(73, 19);
+            this.moderateRDAReductionButton.TabIndex = 17;
+            this.moderateRDAReductionButton.Values.Text = "Moderate";
+            // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(4, 402);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(90, 25);
+            this.resetButton.TabIndex = 19;
+            this.resetButton.Values.Text = "Reset";
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
             // DopplerControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.resetButton);
             this.Controls.Add(this.kryptonGroupBox1);
             this.Controls.Add(this.kryptonWrapLabel2);
             this.Controls.Add(this.clickCombo);
@@ -290,7 +307,7 @@
             this.Controls.Add(this.kryptonLabel1);
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Name = "DopplerControl";
-            this.Size = new System.Drawing.Size(189, 415);
+            this.Size = new System.Drawing.Size(189, 432);
             ((System.ComponentModel.ISupportInitialize)(this.rotatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.translatoryCombo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clickCombo)).EndInit();
@@ -332,5 +349,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton mildRDAReductionButton;
         private ComponentFactory.Krypton.Toolkit.KryptonRadioButton moderateRDAReductionButton;
         private ComponentFactory.Krypton.Toolkit.KryptonGroupBox rdaReductionGroupBox;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton resetButton;
     }
 }

@@ -38,7 +38,7 @@
             // 
             this.dopplerControl1.Location = new System.Drawing.Point(0, 101);
             this.dopplerControl1.Name = "dopplerControl1";
-            this.dopplerControl1.Size = new System.Drawing.Size(197, 422);
+            this.dopplerControl1.Size = new System.Drawing.Size(197, 450);
             this.dopplerControl1.TabIndex = 0;
             // 
             // kryptonWrapLabel1
@@ -46,7 +46,7 @@
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(197, 18);
@@ -79,7 +79,7 @@
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.dopplerControl1);
             this.Name = "DopplerPanel";
-            this.Size = new System.Drawing.Size(197, 526);
+            this.Size = new System.Drawing.Size(197, 556);
             this.ResumeLayout(false);
 
         }

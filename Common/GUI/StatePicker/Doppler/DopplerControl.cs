@@ -45,6 +45,7 @@ namespace Medical.GUI
         DopplerStage currentStage = DopplerStage.Unknown;
         Dictionary<DopplerStage, int> stageMap = new Dictionary<DopplerStage, int>();
         private bool allowRdaReductionEventFire = true;
+        private bool allowStageChangeEventFire = true;
         RdaReduction currentReduction = RdaReduction.Unknown;
 
         public DopplerControl()
@@ -217,7 +218,8 @@ namespace Medical.GUI
                 }
             }
 
-            //Log.Debug("Stage {0}", stages);
+            allowStageChangeEventFire = false;
+            allowRdaReductionEventFire = false;
 
             //Update UI
             bool activatedLowest = false;
@@ -229,6 +231,31 @@ namespace Medical.GUI
             processButton(stageIVbButton, DopplerStage.IVb, stages, ref activatedLowest);
             processButton(stageVaButton, DopplerStage.Va, stages, ref activatedLowest);
             processButton(stageVbButton, DopplerStage.Vb, stages, ref activatedLowest);
+
+            //Override the settings with any custom overrides
+            //If rotatory crepitus is Moderate
+            if (rotatoryCombo.SelectedIndex == 2)
+            {
+                //Force stage IVa if reciprocal click
+                if (clickCombo.SelectedIndex == 1)
+                {
+                    stageIVaButton.Checked = true;
+                }
+                //Force stage IVb for others ignoring value under translatory
+                else
+                {
+                    stageIVbButton.Checked = true;
+                    stageIVbButton.Enabled = true;
+                }
+            }
+
+            allowStageChangeEventFire = true;
+            allowRdaReductionEventFire = true;
+
+            if (CurrentStageChanged != null)
+            {
+                CurrentStageChanged.Invoke(this, EventArgs.Empty);
+            }
 
             return stages;
         }
@@ -320,7 +347,7 @@ namespace Medical.GUI
             {
                 currentStage = DopplerStage.Unknown;
             }
-            if (currentStage != oldStage)
+            if (currentStage != oldStage && allowStageChangeEventFire)
             {
                 if (CurrentStageChanged != null)
                 {
@@ -342,6 +369,11 @@ namespace Medical.GUI
         void translatoryCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
             computeDopplerStage();
+        }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            setToDefault();
         }
     }
 }

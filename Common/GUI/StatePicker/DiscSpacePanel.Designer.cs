@@ -43,7 +43,7 @@
             // makeNormalButton
             // 
             this.makeNormalButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.makeNormalButton.Location = new System.Drawing.Point(100, 534);
+            this.makeNormalButton.Location = new System.Drawing.Point(100, 588);
             this.makeNormalButton.Name = "makeNormalButton";
             this.makeNormalButton.Size = new System.Drawing.Size(90, 25);
             this.makeNormalButton.TabIndex = 46;
@@ -53,7 +53,7 @@
             // undoButton
             // 
             this.undoButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.undoButton.Location = new System.Drawing.Point(3, 534);
+            this.undoButton.Location = new System.Drawing.Point(3, 588);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(90, 25);
             this.undoButton.TabIndex = 45;
@@ -103,7 +103,7 @@
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(325, 17);
@@ -111,14 +111,14 @@
             // 
             // dopplerControl1
             // 
-            this.dopplerControl1.Location = new System.Drawing.Point(3, 117);
+            this.dopplerControl1.Location = new System.Drawing.Point(5, 117);
             this.dopplerControl1.Name = "dopplerControl1";
-            this.dopplerControl1.Size = new System.Drawing.Size(189, 415);
+            this.dopplerControl1.Size = new System.Drawing.Size(189, 449);
             this.dopplerControl1.TabIndex = 52;
             // 
             // dopplerDataCheck
             // 
-            this.dopplerDataCheck.Location = new System.Drawing.Point(4, 90);
+            this.dopplerDataCheck.Location = new System.Drawing.Point(6, 90);
             this.dopplerDataCheck.Name = "dopplerDataCheck";
             this.dopplerDataCheck.Size = new System.Drawing.Size(126, 19);
             this.dopplerDataCheck.TabIndex = 53;
@@ -138,7 +138,7 @@
             this.Controls.Add(this.makeNormalButton);
             this.Controls.Add(this.undoButton);
             this.Name = "DiscSpacePanel";
-            this.Size = new System.Drawing.Size(325, 562);
+            this.Size = new System.Drawing.Size(325, 616);
             ((System.ComponentModel.ISupportInitialize)(this.discOffsetSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
