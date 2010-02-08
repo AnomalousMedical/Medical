@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.copyright = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.closeButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.anomalousSoftwareLabel = new ComponentFactory.Krypton.Toolkit.KryptonLinkLabel();
+            this.versionLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.openSourcePanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.freeimageLinkLabel = new ComponentFactory.Krypton.Toolkit.KryptonLinkLabel();
@@ -43,10 +47,6 @@
             this.namesLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.namesToOpenSourceButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.copyright = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.closeButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.anomalousSoftwareLabel = new ComponentFactory.Krypton.Toolkit.KryptonLinkLabel();
-            this.versionLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openSourcePanel)).BeginInit();
@@ -70,6 +70,43 @@
             this.kryptonPanel1.StateCommon.Image = global::Medical.Properties.Resources.AboutImage;
             this.kryptonPanel1.StateCommon.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.TopLeft;
             this.kryptonPanel1.TabIndex = 0;
+            // 
+            // copyright
+            // 
+            this.copyright.Location = new System.Drawing.Point(54, 140);
+            this.copyright.Name = "copyright";
+            this.copyright.Size = new System.Drawing.Size(235, 19);
+            this.copyright.TabIndex = 4;
+            this.copyright.Values.Text = "Copyright ©2009-2010 Anomalous Medical";
+            // 
+            // closeButton
+            // 
+            this.closeButton.Location = new System.Drawing.Point(4, 389);
+            this.closeButton.Name = "closeButton";
+            this.closeButton.Size = new System.Drawing.Size(90, 25);
+            this.closeButton.TabIndex = 2;
+            this.closeButton.Values.Text = "Close";
+            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            // 
+            // anomalousSoftwareLabel
+            // 
+            this.anomalousSoftwareLabel.Location = new System.Drawing.Point(229, 395);
+            this.anomalousSoftwareLabel.Name = "anomalousSoftwareLabel";
+            this.anomalousSoftwareLabel.Size = new System.Drawing.Size(117, 19);
+            this.anomalousSoftwareLabel.TabIndex = 1;
+            this.anomalousSoftwareLabel.Values.Text = "Anomalous Software";
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.Location = new System.Drawing.Point(136, 73);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(49, 19);
+            this.versionLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
+            this.versionLabel.TabIndex = 0;
+            this.versionLabel.Values.Text = "Version ";
             // 
             // openSourcePanel
             // 
@@ -195,43 +232,6 @@
             this.namesToOpenSourceButton.Values.Text = "More";
             this.namesToOpenSourceButton.Click += new System.EventHandler(this.namesToOpenSourceButton_Click);
             // 
-            // copyright
-            // 
-            this.copyright.Location = new System.Drawing.Point(54, 140);
-            this.copyright.Name = "copyright";
-            this.copyright.Size = new System.Drawing.Size(235, 19);
-            this.copyright.TabIndex = 4;
-            this.copyright.Values.Text = "Copyright ©2009-2010 Anomalous Medical";
-            // 
-            // closeButton
-            // 
-            this.closeButton.Location = new System.Drawing.Point(4, 389);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(90, 25);
-            this.closeButton.TabIndex = 2;
-            this.closeButton.Values.Text = "Close";
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // anomalousSoftwareLabel
-            // 
-            this.anomalousSoftwareLabel.Location = new System.Drawing.Point(229, 395);
-            this.anomalousSoftwareLabel.Name = "anomalousSoftwareLabel";
-            this.anomalousSoftwareLabel.Size = new System.Drawing.Size(117, 19);
-            this.anomalousSoftwareLabel.TabIndex = 1;
-            this.anomalousSoftwareLabel.Values.Text = "Anomalous Software";
-            // 
-            // versionLabel
-            // 
-            this.versionLabel.Location = new System.Drawing.Point(136, 73);
-            this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(49, 19);
-            this.versionLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
-            this.versionLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
-            this.versionLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
-            this.versionLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
-            this.versionLabel.TabIndex = 0;
-            this.versionLabel.Values.Text = "Version ";
-            // 
             // ClinicalAbout
             // 
             this.AcceptButton = this.closeButton;
@@ -240,11 +240,13 @@
             this.ClientSize = new System.Drawing.Size(349, 417);
             this.Controls.Add(this.kryptonPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "ClinicalAbout";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "About Articulometrics";
+            this.Text = "About";
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).EndInit();
             this.kryptonPanel1.ResumeLayout(false);
             this.kryptonPanel1.PerformLayout();
