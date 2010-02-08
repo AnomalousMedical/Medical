@@ -39,7 +39,7 @@
             // 
             this.kryptonWrapLabel4.AutoSize = false;
             this.kryptonWrapLabel4.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel4.Location = new System.Drawing.Point(3, 0);
             this.kryptonWrapLabel4.Name = "kryptonWrapLabel4";
             this.kryptonWrapLabel4.Size = new System.Drawing.Size(279, 17);
@@ -47,8 +47,6 @@
             // 
             // showGridCheckBox
             // 
-            this.showGridCheckBox.Checked = true;
-            this.showGridCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showGridCheckBox.Location = new System.Drawing.Point(4, 20);
             this.showGridCheckBox.Name = "showGridCheckBox";
             this.showGridCheckBox.Size = new System.Drawing.Size(76, 19);

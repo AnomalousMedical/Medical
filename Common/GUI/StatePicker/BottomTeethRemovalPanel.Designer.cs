@@ -483,18 +483,18 @@
             // kryptonLabel1
             // 
             this.kryptonLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.kryptonLabel1.Location = new System.Drawing.Point(88, 142);
+            this.kryptonLabel1.Location = new System.Drawing.Point(65, 142);
             this.kryptonLabel1.Name = "kryptonLabel1";
-            this.kryptonLabel1.Size = new System.Drawing.Size(49, 19);
+            this.kryptonLabel1.Size = new System.Drawing.Size(96, 19);
             this.kryptonLabel1.TabIndex = 179;
-            this.kryptonLabel1.Values.Text = "Bottom";
+            this.kryptonLabel1.Values.Text = "Mandibular Arch";
             // 
             // kryptonWrapLabel1
             // 
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(227, 31);
@@ -528,7 +528,7 @@
             this.NavigationState = "Bottom Teeth";
             this.Size = new System.Drawing.Size(227, 274);
             this.TextLine1 = "Remove";
-            this.TextLine2 = "Bottom Teeth";
+            this.TextLine2 = "Mandibular Teeth";
             this.ResumeLayout(false);
             this.PerformLayout();
 
