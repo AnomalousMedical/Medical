@@ -27,5 +27,10 @@ namespace Medical.GUI
             base.onPanelOpening();
             heightControl1.getPositionFromScene();
         }
+
+        public override void modifyScene()
+        {
+            base.modifyScene();
+        }
     }
 }

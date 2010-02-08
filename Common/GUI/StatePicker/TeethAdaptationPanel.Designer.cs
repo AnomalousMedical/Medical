@@ -67,9 +67,9 @@
             // 
             this.moveButton.Location = new System.Drawing.Point(3, 279);
             this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(90, 25);
+            this.moveButton.Size = new System.Drawing.Size(112, 25);
             this.moveButton.TabIndex = 8;
-            this.moveButton.Values.Text = "Manual Move";
+            this.moveButton.Values.Text = "Linear Movements";
             // 
             // undoButton
             // 
@@ -82,11 +82,11 @@
             // 
             // rotateButton
             // 
-            this.rotateButton.Location = new System.Drawing.Point(100, 280);
+            this.rotateButton.Location = new System.Drawing.Point(124, 279);
             this.rotateButton.Name = "rotateButton";
-            this.rotateButton.Size = new System.Drawing.Size(90, 25);
+            this.rotateButton.Size = new System.Drawing.Size(127, 25);
             this.rotateButton.TabIndex = 9;
-            this.rotateButton.Values.Text = "Manual Rotate";
+            this.rotateButton.Values.Text = "Rotational Movements";
             // 
             // topCameraButton
             // 
@@ -162,29 +162,29 @@
             // 
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(3, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
-            this.kryptonWrapLabel1.Size = new System.Drawing.Size(135, 17);
-            this.kryptonWrapLabel1.Text = "Choose a camera angle.";
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(288, 17);
+            this.kryptonWrapLabel1.Text = "Choose a camera angle.  Change when required.";
             // 
             // kryptonWrapLabel2
             // 
             this.kryptonWrapLabel2.AutoSize = false;
             this.kryptonWrapLabel2.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            this.kryptonWrapLabel2.Location = new System.Drawing.Point(4, 144);
+            this.kryptonWrapLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.kryptonWrapLabel2.Location = new System.Drawing.Point(4, 139);
             this.kryptonWrapLabel2.Name = "kryptonWrapLabel2";
             this.kryptonWrapLabel2.Size = new System.Drawing.Size(279, 48);
-            this.kryptonWrapLabel2.Text = "Click the button to automatically adapt the teeth to fit the mandible you have cr" +
-                "eated. Click it again to stop the adaptation if it is suitable.";
+            this.kryptonWrapLabel2.Text = "Click the Automatic button to automatically adapt the teeth to fit the mandible y" +
+                "ou have created. Click it again to stop the adaptation if it is suitable.";
             // 
             // kryptonWrapLabel3
             // 
             this.kryptonWrapLabel3.AutoSize = false;
             this.kryptonWrapLabel3.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            this.kryptonWrapLabel3.Location = new System.Drawing.Point(4, 229);
+            this.kryptonWrapLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.kryptonWrapLabel3.Location = new System.Drawing.Point(4, 227);
             this.kryptonWrapLabel3.Name = "kryptonWrapLabel3";
             this.kryptonWrapLabel3.Size = new System.Drawing.Size(279, 48);
             this.kryptonWrapLabel3.Text = "Manually move the teeth to fine tune their positions. Or manually move and rotate" +
