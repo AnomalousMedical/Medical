@@ -21,20 +21,13 @@ namespace Medical.GUI
 
         public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
-            AnimationManipulator ramus = MandibleController.Mandible.getAnimationManipulator("leftRamusHeightMandible");
-            AnimationManipulator condyle = MandibleController.Mandible.getAnimationManipulator("leftCondyleHeightMandible");
-            leftHeightSlider.initialize(condyle, ramus);
-
-            ramus = MandibleController.Mandible.getAnimationManipulator("rightRamusHeightMandible");
-            condyle = MandibleController.Mandible.getAnimationManipulator("rightCondyleHeightMandible");
-            rightHeightSlider.initialize(condyle, ramus);
+            heightControl1.sceneChanged();
         }
 
         protected override void onPanelOpening()
         {
             base.onPanelOpening();
-            leftHeightSlider.getPositionFromScene();
-            rightHeightSlider.getPositionFromScene();
+            heightControl1.getPositionFromScene();
             gridPropertiesControl1.updateGrid();
         }
 

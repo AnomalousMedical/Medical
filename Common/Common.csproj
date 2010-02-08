@@ -171,6 +171,12 @@
     <Compile Include="GUI\BoneManipulator\HeightComboSlider.Designer.cs">
       <DependentUpon>HeightComboSlider.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\BoneManipulator\HeightControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\BoneManipulator\HeightControl.Designer.cs">
+      <DependentUpon>HeightControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Common\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="GUI\Common\DataGridViewNumericUpDownEditingControl.cs">
@@ -554,6 +560,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\BoneManipulator\HeightComboSlider.resx">
       <DependentUpon>HeightComboSlider.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\BoneManipulator\HeightControl.resx">
+      <DependentUpon>HeightControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Config\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>

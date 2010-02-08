@@ -28,43 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.rightHeightSlider = new Medical.GUI.HeightComboSlider();
-            this.leftHeightSlider = new Medical.GUI.HeightComboSlider();
+            this.heightControl1 = new Medical.GUI.BoneManipulator.HeightControl();
             this.SuspendLayout();
             // 
-            // rightHeightSlider
+            // heightControl1
             // 
-            this.rightHeightSlider.LabelText = "Right Side";
-            this.rightHeightSlider.Location = new System.Drawing.Point(4, 477);
-            this.rightHeightSlider.Name = "rightHeightSlider";
-            this.rightHeightSlider.Size = new System.Drawing.Size(197, 44);
-            this.rightHeightSlider.TabIndex = 26;
-            this.rightHeightSlider.Value = 0F;
-            // 
-            // leftHeightSlider
-            // 
-            this.leftHeightSlider.LabelText = "Left Side";
-            this.leftHeightSlider.Location = new System.Drawing.Point(4, 427);
-            this.leftHeightSlider.Name = "leftHeightSlider";
-            this.leftHeightSlider.Size = new System.Drawing.Size(197, 44);
-            this.leftHeightSlider.TabIndex = 25;
-            this.leftHeightSlider.Value = 0F;
+            this.heightControl1.Location = new System.Drawing.Point(6, 404);
+            this.heightControl1.Name = "heightControl1";
+            this.heightControl1.Size = new System.Drawing.Size(205, 165);
+            this.heightControl1.TabIndex = 23;
             // 
             // TeethHeightAdaptationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.rightHeightSlider);
-            this.Controls.Add(this.leftHeightSlider);
+            this.Controls.Add(this.heightControl1);
             this.Name = "TeethHeightAdaptationPanel";
             this.Size = new System.Drawing.Size(291, 572);
+            this.Controls.SetChildIndex(this.heightControl1, 0);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Medical.GUI.HeightComboSlider rightHeightSlider;
-        private Medical.GUI.HeightComboSlider leftHeightSlider;
+        private Medical.GUI.BoneManipulator.HeightControl heightControl1;
+
     }
 }

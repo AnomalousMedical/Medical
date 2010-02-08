@@ -33,13 +33,12 @@
             this.rightMidCamera = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.midlineCamera = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonWrapLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
-            this.rightHeightSlider = new Medical.GUI.HeightComboSlider();
-            this.leftHeightSlider = new Medical.GUI.HeightComboSlider();
             this.leftMidCamera = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.leftSideCamera = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonWrapLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
             this.adaptButton = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.gridPropertiesControl1 = new Medical.GUI.Grid.GridPropertiesControl();
+            this.heightControl1 = new Medical.GUI.BoneManipulator.HeightControl();
             this.SuspendLayout();
             // 
             // kryptonWrapLabel1
@@ -92,24 +91,6 @@
             this.kryptonWrapLabel2.Size = new System.Drawing.Size(280, 17);
             this.kryptonWrapLabel2.Text = "Subtract height from the profile moving the chin backward";
             // 
-            // rightHeightSlider
-            // 
-            this.rightHeightSlider.LabelText = "Right Side";
-            this.rightHeightSlider.Location = new System.Drawing.Point(6, 146);
-            this.rightHeightSlider.Name = "rightHeightSlider";
-            this.rightHeightSlider.Size = new System.Drawing.Size(197, 44);
-            this.rightHeightSlider.TabIndex = 24;
-            this.rightHeightSlider.Value = 0F;
-            // 
-            // leftHeightSlider
-            // 
-            this.leftHeightSlider.LabelText = "Left Side";
-            this.leftHeightSlider.Location = new System.Drawing.Point(6, 96);
-            this.leftHeightSlider.Name = "leftHeightSlider";
-            this.leftHeightSlider.Size = new System.Drawing.Size(197, 44);
-            this.leftHeightSlider.TabIndex = 23;
-            this.leftHeightSlider.Value = 0F;
-            // 
             // leftMidCamera
             // 
             this.leftMidCamera.Location = new System.Drawing.Point(174, 20);
@@ -135,7 +116,7 @@
             this.kryptonWrapLabel3.AutoSize = false;
             this.kryptonWrapLabel3.Font = new System.Drawing.Font("Segoe UI", 8.5F);
             this.kryptonWrapLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            this.kryptonWrapLabel3.Location = new System.Drawing.Point(6, 193);
+            this.kryptonWrapLabel3.Location = new System.Drawing.Point(6, 255);
             this.kryptonWrapLabel3.Name = "kryptonWrapLabel3";
             this.kryptonWrapLabel3.Size = new System.Drawing.Size(279, 48);
             this.kryptonWrapLabel3.Text = "Click the button to automatically adapt the teeth to fit the profile you have cre" +
@@ -143,7 +124,7 @@
             // 
             // adaptButton
             // 
-            this.adaptButton.Location = new System.Drawing.Point(6, 243);
+            this.adaptButton.Location = new System.Drawing.Point(6, 305);
             this.adaptButton.Name = "adaptButton";
             this.adaptButton.Size = new System.Drawing.Size(90, 25);
             this.adaptButton.TabIndex = 31;
@@ -151,29 +132,37 @@
             // 
             // gridPropertiesControl1
             // 
-            this.gridPropertiesControl1.Location = new System.Drawing.Point(6, 274);
+            this.gridPropertiesControl1.GridSpacing = 5F;
+            this.gridPropertiesControl1.GridVisible = true;
+            this.gridPropertiesControl1.Location = new System.Drawing.Point(6, 336);
             this.gridPropertiesControl1.Name = "gridPropertiesControl1";
-            this.gridPropertiesControl1.Size = new System.Drawing.Size(253, 98);
+            this.gridPropertiesControl1.Size = new System.Drawing.Size(253, 48);
             this.gridPropertiesControl1.TabIndex = 34;
+            // 
+            // heightControl1
+            // 
+            this.heightControl1.Location = new System.Drawing.Point(6, 97);
+            this.heightControl1.Name = "heightControl1";
+            this.heightControl1.Size = new System.Drawing.Size(279, 155);
+            this.heightControl1.TabIndex = 38;
             // 
             // ProfileDistortionPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.heightControl1);
             this.Controls.Add(this.gridPropertiesControl1);
             this.Controls.Add(this.kryptonWrapLabel3);
             this.Controls.Add(this.adaptButton);
             this.Controls.Add(this.leftSideCamera);
             this.Controls.Add(this.leftMidCamera);
             this.Controls.Add(this.kryptonWrapLabel2);
-            this.Controls.Add(this.rightHeightSlider);
-            this.Controls.Add(this.leftHeightSlider);
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.rightSideCamera);
             this.Controls.Add(this.rightMidCamera);
             this.Controls.Add(this.midlineCamera);
             this.Name = "ProfileDistortionPanel";
-            this.Size = new System.Drawing.Size(293, 332);
+            this.Size = new System.Drawing.Size(293, 398);
             this.ResumeLayout(false);
 
         }
@@ -184,13 +173,12 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton rightSideCamera;
         private ComponentFactory.Krypton.Toolkit.KryptonButton rightMidCamera;
         private ComponentFactory.Krypton.Toolkit.KryptonButton midlineCamera;
-        private Medical.GUI.HeightComboSlider leftHeightSlider;
-        private Medical.GUI.HeightComboSlider rightHeightSlider;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonButton leftMidCamera;
         private ComponentFactory.Krypton.Toolkit.KryptonButton leftSideCamera;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel3;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton adaptButton;
         private Medical.GUI.Grid.GridPropertiesControl gridPropertiesControl1;
+        private Medical.GUI.BoneManipulator.HeightControl heightControl1;
     }
 }

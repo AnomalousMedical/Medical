@@ -22,6 +22,7 @@ namespace Medical.GUI
             {
                 throw new NotImplementedException();
             }
+            InitializeComponent();
         }
 
         public TeethAdaptationPanel(StatePickerPanelController panelController)
