@@ -119,5 +119,18 @@ namespace Medical.GUI
                 }
             }
         }
+
+        protected override void onPanelOpening()
+        {
+            base.onPanelOpening();
+            foreach (Control control in Controls)
+            {
+                BoneManipulatorSlider slider = control as BoneManipulatorSlider;
+                if (slider != null && slider.Tag != null)
+                {
+                    slider.updateFromScene();
+                }
+            }
+        }
     }
 }

@@ -28,6 +28,11 @@ namespace Medical.GUI
             synchronizeValue(manipulator, manipulator.Position);
         }
 
+        public void updateFromScene()
+        {
+            synchronizeValue(manipulator, manipulator.Position);
+        }
+
         public AnimationManipulatorStateEntry createStateEntry()
         {
             return manipulator.createStateEntry();
