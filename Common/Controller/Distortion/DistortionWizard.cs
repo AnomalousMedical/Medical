@@ -57,6 +57,7 @@ namespace Medical
 
         public void startWizard(DrawingWindow window)
         {
+            panelController.setCurrentWizard(this);
             statePicker.startWizard(window);
             statePicker.show();
         }

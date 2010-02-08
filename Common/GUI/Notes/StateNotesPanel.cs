@@ -53,7 +53,7 @@ namespace Medical.GUI
                 Log.Warning("Error setting notes text.\n{0}", e.Message);
                 notes.Text = state.Notes.Notes;
             }
-            procedureType.Text = state.Notes.DataSource;
+            wizardType.Text = state.Notes.DataSource;
             DateTime date = state.Notes.ProcedureDate;
             if (date > datePicker.MinDate && date < datePicker.MaxDate)
             {
@@ -66,7 +66,7 @@ namespace Medical.GUI
         {
             notes.Rtf = "";
             datePicker.Value = DateTime.Today;
-            procedureType.Text = "";
+            wizardType.Text = "";
             notes.Enabled = false;
             datePicker.Enabled = false;
         }
@@ -78,9 +78,10 @@ namespace Medical.GUI
             {
                 MedicalStateNotes notes = currentState.Notes;
                 notes.ProcedureDate = datePicker.Value;
-                notes.DataSource = procedureType.Text;
+                notes.DataSource = wizardType.Text;
                 notes.Notes = this.notes.Rtf;
                 currentState.Name = stateNameTextBox.Text;
+                stateController.alertStateUpdated(currentState);
             }
         }
     }

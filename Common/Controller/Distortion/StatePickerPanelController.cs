@@ -108,6 +108,11 @@ namespace Medical
             notesPanel.applyToState(state);
         }
 
+        public void setCurrentWizard(DistortionWizard wizard)
+        {
+            notesPanel.DistortionWizardText = wizard.Name;
+        }
+
         public StatePickerPanel getPanel(WizardPanels key)
         {
             StatePickerPanel panel;

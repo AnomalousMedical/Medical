@@ -27,9 +27,9 @@ namespace Medical.GUI
 
             stateList = new StateList(stateController);
             stateList.Dock = DockStyle.Fill;
-            stateListPage = new KryptonPage("States");
+            stateListPage = new KryptonPage("Distortions");
             stateListPage.Controls.Add(stateList);
-            stateListPage.TextTitle = "States";
+            stateListPage.TextTitle = "Distortions";
             stateListPage.MinimumSize = stateList.MinimumSize;
 
             notesPanel = new StateNotesPanel(controller.MedicalStateController, controller.ShortcutController);

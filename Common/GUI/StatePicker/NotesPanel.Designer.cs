@@ -37,7 +37,7 @@
             this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.datePicker = new ComponentFactory.Krypton.Toolkit.KryptonDateTimePicker();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.procedureType = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.distortionWizard = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.notes = new ComponentFactory.Krypton.Toolkit.KryptonRichTextBox();
             this.kryptonBorderEdge1 = new ComponentFactory.Krypton.Toolkit.KryptonBorderEdge();
@@ -56,7 +56,7 @@
             this.panel1.Controls.Add(this.kryptonLabel3);
             this.panel1.Controls.Add(this.datePicker);
             this.panel1.Controls.Add(this.kryptonLabel2);
-            this.panel1.Controls.Add(this.procedureType);
+            this.panel1.Controls.Add(this.distortionWizard);
             this.panel1.Controls.Add(this.kryptonLabel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -78,17 +78,17 @@
             // 
             this.kryptonLabel5.Location = new System.Drawing.Point(3, 134);
             this.kryptonLabel5.Name = "kryptonLabel5";
-            this.kryptonLabel5.Size = new System.Drawing.Size(65, 19);
+            this.kryptonLabel5.Size = new System.Drawing.Size(99, 19);
             this.kryptonLabel5.TabIndex = 14;
-            this.kryptonLabel5.Values.Text = "Thumbnail";
+            this.kryptonLabel5.Values.Text = "Select Thumbnail";
             // 
             // kryptonLabel4
             // 
             this.kryptonLabel4.Location = new System.Drawing.Point(3, 0);
             this.kryptonLabel4.Name = "kryptonLabel4";
-            this.kryptonLabel4.Size = new System.Drawing.Size(70, 19);
+            this.kryptonLabel4.Size = new System.Drawing.Size(95, 19);
             this.kryptonLabel4.TabIndex = 13;
-            this.kryptonLabel4.Values.Text = "State Name";
+            this.kryptonLabel4.Values.Text = "Distortion Name";
             // 
             // stateNameTextBox
             // 
@@ -98,15 +98,15 @@
             this.stateNameTextBox.Name = "stateNameTextBox";
             this.stateNameTextBox.Size = new System.Drawing.Size(262, 20);
             this.stateNameTextBox.TabIndex = 12;
-            this.stateNameTextBox.Text = "Custom State";
+            this.stateNameTextBox.Text = "Custom Distortion";
             // 
             // kryptonLabel3
             // 
             this.kryptonLabel3.Location = new System.Drawing.Point(3, 45);
             this.kryptonLabel3.Name = "kryptonLabel3";
-            this.kryptonLabel3.Size = new System.Drawing.Size(90, 19);
+            this.kryptonLabel3.Size = new System.Drawing.Size(78, 19);
             this.kryptonLabel3.TabIndex = 11;
-            this.kryptonLabel3.Values.Text = "Procedure Date";
+            this.kryptonLabel3.Values.Text = "Date Created";
             // 
             // datePicker
             // 
@@ -121,18 +121,19 @@
             // 
             this.kryptonLabel2.Location = new System.Drawing.Point(3, 91);
             this.kryptonLabel2.Name = "kryptonLabel2";
-            this.kryptonLabel2.Size = new System.Drawing.Size(91, 19);
+            this.kryptonLabel2.Size = new System.Drawing.Size(100, 19);
             this.kryptonLabel2.TabIndex = 9;
-            this.kryptonLabel2.Values.Text = "Procedure Type";
+            this.kryptonLabel2.Values.Text = "Distortion Wizard";
             // 
-            // procedureType
+            // distortionWizard
             // 
-            this.procedureType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.distortionWizard.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.procedureType.Location = new System.Drawing.Point(6, 112);
-            this.procedureType.Name = "procedureType";
-            this.procedureType.Size = new System.Drawing.Size(262, 20);
-            this.procedureType.TabIndex = 8;
+            this.distortionWizard.Location = new System.Drawing.Point(6, 112);
+            this.distortionWizard.Name = "distortionWizard";
+            this.distortionWizard.ReadOnly = true;
+            this.distortionWizard.Size = new System.Drawing.Size(262, 20);
+            this.distortionWizard.TabIndex = 8;
             // 
             // kryptonLabel1
             // 
@@ -212,7 +213,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonRichTextBox notes;
         private ComponentFactory.Krypton.Toolkit.KryptonDateTimePicker datePicker;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
-        private ComponentFactory.Krypton.Toolkit.KryptonTextBox procedureType;
+        private ComponentFactory.Krypton.Toolkit.KryptonTextBox distortionWizard;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
         private ComponentFactory.Krypton.Toolkit.KryptonTextBox stateNameTextBox;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel3;

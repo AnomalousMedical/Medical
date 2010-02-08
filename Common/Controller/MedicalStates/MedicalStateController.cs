@@ -9,7 +9,7 @@ namespace Medical
     public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
     public delegate void MedicalStateEvent(MedicalStateController controller);
-    public delegate void MedicalStateChanged(MedicalState state);
+    public delegate void MedicalStateStatusUpdate(MedicalState state);
 
     public class MedicalStateController
     {
@@ -18,9 +18,10 @@ namespace Medical
         public event MedicalStateAdded StateAdded;
         public event MedicalStateRemoved StateRemoved;
         public event MedicalStateEvent StatesCleared;
-        public event MedicalStateChanged StateChanged;
+        public event MedicalStateStatusUpdate StateChanged;
         public event MedicalStateEvent BlendingStarted;
         public event MedicalStateEvent BlendingStopped;
+        public event MedicalStateStatusUpdate StateUpdated;
 
         private List<MedicalState> states = new List<MedicalState>();
         private int currentState = -1;
@@ -138,6 +139,14 @@ namespace Medical
             if (StatesCleared != null)
             {
                 StatesCleared.Invoke(this);
+            }
+        }
+
+        public void alertStateUpdated(MedicalState state)
+        {
+            if (StateUpdated != null && states.Contains(state))
+            {
+                StateUpdated.Invoke(state);
             }
         }
 

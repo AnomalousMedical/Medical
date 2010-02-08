@@ -27,9 +27,10 @@ namespace Medical.GUI
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
             stateController.StateRemoved += new MedicalStateRemoved(stateController_StateRemoved);
             stateController.StatesCleared += new MedicalStateEvent(stateController_StatesCleared);
-            stateController.StateChanged += new MedicalStateChanged(stateController_StateChanged);
+            stateController.StateChanged += new MedicalStateStatusUpdate(stateController_StateChanged);
             stateController.BlendingStarted += new MedicalStateEvent(stateController_BlendingStarted);
             stateController.BlendingStopped += new MedicalStateEvent(stateController_BlendingStopped);
+            stateController.StateUpdated += new MedicalStateStatusUpdate(stateController_StateUpdated);
 
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
             stateListBox.ListBox.MouseUp += new MouseEventHandler(ListBox_MouseUp);
@@ -96,6 +97,13 @@ namespace Medical.GUI
             stateListBox.Items.Remove(entry);
             entry.Dispose();
             entries.Remove(state);
+        }
+
+        void stateController_StateUpdated(MedicalState state)
+        {
+            KryptonListItem entry = entries[state];
+            entry.ShortText = state.Name;
+            entry.Image = state.Thumbnail;
         }
 
         void stateController_StatesCleared(MedicalStateController controller)

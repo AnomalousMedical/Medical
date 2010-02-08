@@ -16,7 +16,7 @@ namespace Medical.GUI
             :base(panelController)
         {
             InitializeComponent();
-            this.procedureType.Text = procedureType;
+            this.distortionWizard.Text = procedureType;
             this.Text = "Notes";
 
             thumbnailPicker.ImageRenderer = imageRenderer;
@@ -38,11 +38,23 @@ namespace Medical.GUI
 
         public override void applyToState(MedicalState state)
         {
-            state.Notes.DataSource = procedureType.Text;
+            state.Notes.DataSource = distortionWizard.Text;
             state.Notes.Notes = notes.Rtf;
             state.Notes.ProcedureDate = datePicker.Value;
             state.Name = stateNameTextBox.Text;
             state.Thumbnail = thumbnailPicker.SelectedThumbnail;
+        }
+
+        public String DistortionWizardText
+        {
+            get
+            {
+                return distortionWizard.Text;
+            }
+            set
+            {
+                distortionWizard.Text = value;
+            }
         }
 
         protected override void onPanelOpening()
