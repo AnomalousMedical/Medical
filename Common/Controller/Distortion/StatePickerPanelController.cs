@@ -31,6 +31,7 @@ namespace Medical
         LeftDiscClockFacePanel,
         RightDiscClockFacePanel,
         TeethAdaptationPanel,
+        DisclaimerPanel,
     }
 
     public class StatePickerPanelController : IDisposable
@@ -91,6 +92,7 @@ namespace Medical
             panelCreationFunctions.Add(WizardPanels.LeftDiscClockFacePanel, createLeftDiscClockFacePanel);
             panelCreationFunctions.Add(WizardPanels.RightDiscClockFacePanel, createRightDiscClockFacePanel);
             panelCreationFunctions.Add(WizardPanels.TeethAdaptationPanel, createTeethAdaptationPanel);
+            panelCreationFunctions.Add(WizardPanels.DisclaimerPanel, createDisclaimerPanel);
         }
 
         public void Dispose()
@@ -366,6 +368,12 @@ namespace Medical
             rightDiscPanel.TextLine1 = "Right TMJ";
             rightDiscPanel.LargeIcon = Resources.RightDiscPosition;
             return rightDiscPanel;
+        }
+
+        private StatePickerPanel createDisclaimerPanel()
+        {
+            DisclaimerPanel disclaimerPanel = new DisclaimerPanel(this);
+            return disclaimerPanel;
         }
 
         private StatePickerPanel createTeethAdaptationPanel()

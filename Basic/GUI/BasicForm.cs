@@ -37,6 +37,8 @@ namespace Medical.GUI
         private Dictionary<String, KryptonRibbonRecentDoc> recentDocsMap = new Dictionary<string, KryptonRibbonRecentDoc>();
         private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
 
+        private Dictionary<String, KryptonRibbonGroup> wizardGroups = new Dictionary<string, KryptonRibbonGroup>();
+
         private bool allowSimulationTab = true;
 
         public BasicForm(ShortcutController shortcuts)
@@ -193,9 +195,26 @@ namespace Medical.GUI
 
         public void createDistortionMenu(IEnumerable<DistortionWizard> wizards)
         {
+            KryptonRibbonGroup wizardRibbonGroup;
             KryptonRibbonGroupTriple currentTriple = null;
             foreach (DistortionWizard wizard in wizards)
             {
+                wizardGroups.TryGetValue(wizard.Group, out wizardRibbonGroup);
+                //If the group does not exist create it.
+                if (wizardRibbonGroup == null)
+                {
+                    wizardRibbonGroup = new KryptonRibbonGroup();
+                    wizardRibbonGroup.TextLine1 = wizard.Group;
+                    wizardGroups.Add(wizard.Group, wizardRibbonGroup);
+                    currentTriple = null;
+                    distortionTab.Groups.Add(wizardRibbonGroup);
+                }
+                //Get the current triple out of the group if it already exists.
+                else
+                {
+                    currentTriple = wizardRibbonGroup.Items[wizardRibbonGroup.Items.Count - 1] as KryptonRibbonGroupTriple;
+                }
+                //Add the item to the triple.
                 if (currentTriple == null || currentTriple.Items.Count > 2)
                 {
                     currentTriple = new KryptonRibbonGroupTriple();

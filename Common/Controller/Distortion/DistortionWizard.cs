@@ -19,10 +19,11 @@ namespace Medical
         private Image imageLarge;
         private StatePickerPanelController panelController;
 
-        public DistortionWizard(String name, StatePickerPanelController panelController)
+        public DistortionWizard(String name, String group, StatePickerPanelController panelController)
         {
             this.name = name;
             this.panelController = panelController;
+            this.Group = group;
             statePicker = new StatePickerWizard(name, panelController.UiHost, panelController.StateBlender, panelController.NavigationController, panelController.LayerController);
             statePicker.StateCreated += statePicker_StateCreated;
             statePicker.Finished += statePicker_Finished;
@@ -103,6 +104,8 @@ namespace Medical
                 imageLarge = value;
             }
         }
+
+        public String Group { get; set; }
 
         void statePicker_StateCreated(MedicalState state)
         {

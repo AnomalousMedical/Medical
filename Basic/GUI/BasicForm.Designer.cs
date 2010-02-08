@@ -56,7 +56,6 @@
             this.kryptonRibbonGroupTriple2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.showTeethCollisionButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.distortionTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
-            this.wizardRibbonGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.simulationTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.openingGroup = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -194,6 +193,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -430,14 +430,7 @@
             // 
             // distortionTab
             // 
-            this.distortionTab.Groups.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup[] {
-            this.wizardRibbonGroup});
-            this.distortionTab.Text = "Distortion";
-            // 
-            // wizardRibbonGroup
-            // 
-            this.wizardRibbonGroup.DialogBoxLauncher = false;
-            this.wizardRibbonGroup.TextLine1 = "Wizards";
+            this.distortionTab.Text = "Distortions";
             // 
             // simulationTab
             // 
@@ -1214,7 +1207,6 @@
         private ComponentFactory.Krypton.Navigator.KryptonNavigator leftNavigator;
         private ComponentFactory.Krypton.Navigator.ButtonSpecNavigator buttonSpecExpandCollapse;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab distortionTab;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup wizardRibbonGroup;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel leftInformationPanel;
         internal ComponentFactory.Krypton.Toolkit.KryptonPanel topInformationPanel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab navigationTab;
