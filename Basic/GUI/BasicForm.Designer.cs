@@ -193,7 +193,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -1097,7 +1096,7 @@
             this.IsMdiContainer = true;
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BasicForm";
-            this.Text = "Articulometics Clinical";
+            this.Text = "Piper\'s Joint Based Occlusion";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();

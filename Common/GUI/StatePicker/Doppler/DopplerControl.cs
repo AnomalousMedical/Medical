@@ -141,10 +141,10 @@ namespace Medical.GUI
                     stageMap[DopplerStage.Vb] += 1;
                     break;
                 case 3: //Coarse Rough
-                    stageMap[DopplerStage.Va] += 2;
+                    stageMap[DopplerStage.Va] += 10;
                     break;
                 case 4: //Coarse Eburnated
-                    stageMap[DopplerStage.Vb] += 2;
+                    stageMap[DopplerStage.Vb] += 10;
                     break;
             }
 
@@ -169,10 +169,10 @@ namespace Medical.GUI
                     stageMap[DopplerStage.IVb] += 2;
                     break;
                 case 3: //Coarse Rough
-                    stageMap[DopplerStage.Va] += 2;
+                    stageMap[DopplerStage.Va] += 10;
                     break;
                 case 4: //Coarse Eburnated
-                    stageMap[DopplerStage.Vb] += 2;
+                    stageMap[DopplerStage.Vb] += 10;
                     break;
             }
 
