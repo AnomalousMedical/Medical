@@ -131,7 +131,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhasp_windows.lib $(NOINHERIT)"
+				AdditionalDependencies="libhasp_windows_92548.lib $(NOINHERIT)"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(HASP_HOME)"
 				GenerateDebugInformation="true"
