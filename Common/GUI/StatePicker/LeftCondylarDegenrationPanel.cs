@@ -19,6 +19,7 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Text = "Left Condyle Degeneration";
+            gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
 
             wearSlider.ValueChanged += new EventHandler(wearSlider_ValueChanged);
             leftCondyleDegenerationSlider.ValueChanged += new EventHandler(otherSliders_ValueChanged);
@@ -58,12 +59,14 @@ namespace Medical.GUI
         {
             base.onPanelOpening();
             open = true;
+            gridPropertiesControl1.updateGrid();
         }
 
         protected override void onPanelClosing()
         {
             base.onPanelClosing();
             open = false;
+            panelController.MeasurementGrid.Visible = false;
         }
     }
 }

@@ -43,6 +43,7 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
+            this.gridPropertiesControl1 = new Medical.GUI.Grid.GridPropertiesControl();
             this.SuspendLayout();
             // 
             // rightCondyleDegenerationSlider
@@ -180,16 +181,26 @@
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(325, 17);
             this.kryptonWrapLabel1.Text = "Adjust the sliders to match the patient\'s right condyle.";
             // 
+            // gridPropertiesControl1
+            // 
+            this.gridPropertiesControl1.GridSpacing = 5F;
+            this.gridPropertiesControl1.GridVisible = true;
+            this.gridPropertiesControl1.Location = new System.Drawing.Point(3, 312);
+            this.gridPropertiesControl1.Name = "gridPropertiesControl1";
+            this.gridPropertiesControl1.Size = new System.Drawing.Size(253, 44);
+            this.gridPropertiesControl1.TabIndex = 51;
+            // 
             // RightCondylarDegenerationPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gridPropertiesControl1);
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.wearSlider);
             this.Controls.Add(this.panel7);
@@ -209,7 +220,7 @@
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarDegenerationPanel";
             this.NavigationState = "DegenerationRightCameraAngle";
-            this.Size = new System.Drawing.Size(325, 310);
+            this.Size = new System.Drawing.Size(325, 361);
             this.TextLine1 = "Right Condyle";
             this.TextLine2 = "Degeneration";
             this.ResumeLayout(false);
@@ -233,5 +244,6 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel8;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
+        private Medical.GUI.Grid.GridPropertiesControl gridPropertiesControl1;
     }
 }

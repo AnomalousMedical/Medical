@@ -18,6 +18,7 @@ namespace Medical.GUI
         {
             InitializeComponent();
             this.Text = "Left Condyle Growth";
+            gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
         }
 
         private void makeNormalButton_Click(object sender, EventArgs e)
@@ -28,6 +29,18 @@ namespace Medical.GUI
         private void undoButton_Click(object sender, EventArgs e)
         {
             resetToOpeningState();
+        }
+
+        protected override void onPanelOpening()
+        {
+            base.onPanelOpening();
+            gridPropertiesControl1.updateGrid();
+        }
+
+        protected override void onPanelClosing()
+        {
+            base.onPanelClosing();
+            panelController.MeasurementGrid.Visible = false;
         }
     }
 }
