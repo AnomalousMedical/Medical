@@ -11,6 +11,8 @@ namespace Medical.GUI.BoneManipulator
 {
     public partial class HeightControl : UserControl
     {
+        private bool allowUpdates = true;
+
         public HeightControl()
         {
             InitializeComponent();
@@ -33,12 +35,18 @@ namespace Medical.GUI.BoneManipulator
         {
             leftHeightSlider.getPositionFromScene();
             rightHeightSlider.getPositionFromScene();
+            allowUpdates = false;
+            bothSidesSlider.Value = (int)((leftHeightSlider.Value + rightHeightSlider.Value) / 2.0 * bothSidesSlider.Maximum);
+            allowUpdates = true;
         }
 
         void bothSidesSlider_ValueChanged(object sender, EventArgs e)
         {
-            leftHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
-            rightHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
+            if (allowUpdates)
+            {
+                leftHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
+                rightHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
+            }
         }
     }
 }

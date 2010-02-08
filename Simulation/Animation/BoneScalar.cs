@@ -23,6 +23,32 @@ namespace Medical
         [Editable]
         float defaultPosition = 0.0f;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private Vector3 lengthRange;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private int nonZeroAxis = 0;
+
+        protected override void constructed()
+        {
+            base.constructed();
+            lengthRange = endScale - startScale;
+            if (lengthRange.x != 0.0f)
+            {
+                nonZeroAxis = 0;
+            }
+            else if (lengthRange.y != 0.0f)
+            {
+                nonZeroAxis = 1;
+            }
+            else if (lengthRange.z != 0.0f)
+            {
+                nonZeroAxis = 2;
+            }
+        }
+
         protected override void positionUpdated(float position)
         {
             if (bone != null)
@@ -72,6 +98,18 @@ namespace Medical
             {
                 bone.setScale(value);
                 bone.needUpdate(true);
+                switch(nonZeroAxis)
+                {
+                    case 0:
+                        currentPosition = (value.x - startScale.x) / (lengthRange.x);
+                        break;
+                    case 1:
+                        currentPosition = (value.y - startScale.y) / (lengthRange.y);
+                        break;
+                    case 2:
+                        currentPosition = (value.z - startScale.z) / (lengthRange.z);
+                        break;
+                }
             }
         }
     }

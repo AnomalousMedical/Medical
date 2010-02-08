@@ -27,7 +27,7 @@ namespace Medical
         String targetBone;
 
         [Editable]
-        float currentPosition = 0.0f;
+        protected float currentPosition = 0.0f;
 
         //The tag on the UI control for this manipulator. Must be unique.
         [Editable]
