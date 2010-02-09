@@ -29,13 +29,15 @@ namespace Medical.GUI
         private String currentSequenceDirectory;
         private MovementSequence movementSequence;
         private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
-        private String jointCameraName;
+        private String lateralJointCameraName;
+        private String superiorJointCameraName;
 
-        public DopplerPanel(String presetSubDirectory, String jointCameraName, MovementSequenceController movementSequenceController, StatePickerPanelController panelController)
+        public DopplerPanel(String presetSubDirectory, String jointCameraName, String superiorJointCameraName, MovementSequenceController movementSequenceController, StatePickerPanelController panelController)
             :base(panelController)
         {
             InitializeComponent();
-            this.jointCameraName = jointCameraName;
+            this.lateralJointCameraName = jointCameraName;
+            this.superiorJointCameraName = superiorJointCameraName;
             dopplerControl1.CurrentStageChanged += new EventHandler(dopplerControl1_CurrentStageChanged);
             this.presetSubDirectory = presetSubDirectory;
             this.movementSequenceController = movementSequenceController;
@@ -183,15 +185,21 @@ namespace Medical.GUI
             previousSequence = null;
         }
 
-        private void jointCameraButton_Click(object sender, EventArgs e)
+        private void lateralJointCamerButton_Click(object sender, EventArgs e)
         {
-            this.setNavigationState(jointCameraName);
+            this.setNavigationState(lateralJointCameraName);
             this.setLayerState(LayerState);
         }
 
-        private void midlineCameraButton_Click(object sender, EventArgs e)
+        private void superiorJointCameraButton_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Skull Midline Anterosuperior");
+            this.setNavigationState(superiorJointCameraName);
+            this.setLayerState("JointMenuLayers");
+        }
+
+        private void bothJointsCameraButton_Click(object sender, EventArgs e)
+        {
+            this.setNavigationState("WizardBothTMJSuperior");
             this.setLayerState("JointMenuLayers");
         }
     }

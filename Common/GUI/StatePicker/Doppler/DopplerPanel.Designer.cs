@@ -30,8 +30,9 @@
         {
             this.dopplerControl1 = new Medical.GUI.DopplerControl();
             this.kryptonWrapLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
-            this.jointCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.midlineCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.lateralJointCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.superiorJointCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.bothJointsCameraButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.SuspendLayout();
             // 
             // dopplerControl1
@@ -52,30 +53,40 @@
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(197, 18);
             this.kryptonWrapLabel1.Text = "Choose a camera angle.";
             // 
-            // jointCameraButton
+            // lateralJointCameraButton
             // 
-            this.jointCameraButton.Location = new System.Drawing.Point(4, 22);
-            this.jointCameraButton.Name = "jointCameraButton";
-            this.jointCameraButton.Size = new System.Drawing.Size(90, 25);
-            this.jointCameraButton.TabIndex = 3;
-            this.jointCameraButton.Values.Text = "Joint";
-            this.jointCameraButton.Click += new System.EventHandler(this.jointCameraButton_Click);
+            this.lateralJointCameraButton.Location = new System.Drawing.Point(4, 22);
+            this.lateralJointCameraButton.Name = "lateralJointCameraButton";
+            this.lateralJointCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.lateralJointCameraButton.TabIndex = 3;
+            this.lateralJointCameraButton.Values.Text = "Lateral Joint";
+            this.lateralJointCameraButton.Click += new System.EventHandler(this.lateralJointCamerButton_Click);
             // 
-            // midlineCameraButton
+            // superiorJointCameraButton
             // 
-            this.midlineCameraButton.Location = new System.Drawing.Point(4, 54);
-            this.midlineCameraButton.Name = "midlineCameraButton";
-            this.midlineCameraButton.Size = new System.Drawing.Size(90, 25);
-            this.midlineCameraButton.TabIndex = 4;
-            this.midlineCameraButton.Values.Text = "Midline";
-            this.midlineCameraButton.Click += new System.EventHandler(this.midlineCameraButton_Click);
+            this.superiorJointCameraButton.Location = new System.Drawing.Point(4, 54);
+            this.superiorJointCameraButton.Name = "superiorJointCameraButton";
+            this.superiorJointCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.superiorJointCameraButton.TabIndex = 4;
+            this.superiorJointCameraButton.Values.Text = "Superior Joint";
+            this.superiorJointCameraButton.Click += new System.EventHandler(this.superiorJointCameraButton_Click);
+            // 
+            // bothJointsCameraButton
+            // 
+            this.bothJointsCameraButton.Location = new System.Drawing.Point(100, 54);
+            this.bothJointsCameraButton.Name = "bothJointsCameraButton";
+            this.bothJointsCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.bothJointsCameraButton.TabIndex = 6;
+            this.bothJointsCameraButton.Values.Text = "Both Joints";
+            this.bothJointsCameraButton.Click += new System.EventHandler(this.bothJointsCameraButton_Click);
             // 
             // DopplerPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.midlineCameraButton);
-            this.Controls.Add(this.jointCameraButton);
+            this.Controls.Add(this.bothJointsCameraButton);
+            this.Controls.Add(this.superiorJointCameraButton);
+            this.Controls.Add(this.lateralJointCameraButton);
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.dopplerControl1);
             this.Name = "DopplerPanel";
@@ -88,7 +99,8 @@
 
         private DopplerControl dopplerControl1;
         private ComponentFactory.Krypton.Toolkit.KryptonWrapLabel kryptonWrapLabel1;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton jointCameraButton;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton midlineCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton lateralJointCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton superiorJointCameraButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton bothJointsCameraButton;
     }
 }

@@ -271,7 +271,7 @@ namespace Medical
 
         private StatePickerPanel createLeftDopplerPanel()
         {
-            DopplerPanel leftDopplerPanel = new DopplerPanel("LeftDoppler", "Left TMJ", movementSequenceController, this);
+            DopplerPanel leftDopplerPanel = new DopplerPanel("LeftDoppler", "WizardLeftTMJ", "WizardLeftTMJSuperior", movementSequenceController, this);
             leftDopplerPanel.NavigationState = "WizardLeftTMJ";
             leftDopplerPanel.LayerState = "DiscLayers";
             leftDopplerPanel.Text = "Left Fossa";
@@ -283,7 +283,7 @@ namespace Medical
 
         private StatePickerPanel createRightDopplerPanel()
         {
-            DopplerPanel rightDopplerPanel = new DopplerPanel("RightDoppler", "Right TMJ", movementSequenceController, this);
+            DopplerPanel rightDopplerPanel = new DopplerPanel("RightDoppler", "WizardRightTMJ", "WizardRightTMJSuperior", movementSequenceController, this);
             rightDopplerPanel.NavigationState = "WizardRightTMJ";
             rightDopplerPanel.LayerState = "DiscLayers";
             rightDopplerPanel.Text = "Right Fossa";
