@@ -185,7 +185,14 @@ namespace Medical
             }
             //Force the buttons to update
             lastCameraPos = Vector3.Zero;
-            window.SubText = state.Name;
+            if (state.Hidden)
+            {
+                window.SubText = null;
+            }
+            else
+            {
+                window.SubText = state.Name;
+            }
             //Log.Debug("Current state is {0}.", state.Name);
         }
 

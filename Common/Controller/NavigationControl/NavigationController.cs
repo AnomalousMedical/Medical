@@ -94,11 +94,11 @@ namespace Medical
             return overlays[window].getNavigationState();
         }
 
-        public NavigationState findClosestState(Vector3 position)
+        public NavigationState findClosestNonHiddenState(Vector3 position)
         {
             if (navigationSet != null)
             {
-                return navigationSet.findClosestState(position);
+                return navigationSet.findClosestNonHiddenState(position);
             }
             return null;
         }
@@ -106,11 +106,11 @@ namespace Medical
         /// <summary>
         /// Figure out what the closest state to all cameras is.
         /// </summary>
-        public void recalculateClosestStates()
+        public void recalculateClosestNonHiddenStates()
         {
             foreach (DrawingWindow window in overlays.Keys)
             {
-                overlays[window].setNavigationState(findClosestState(window.Translation));
+                overlays[window].setNavigationState(findClosestNonHiddenState(window.Translation));
             }
         }
 
@@ -167,7 +167,7 @@ namespace Medical
             {
                 NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
                 overlay.ShowOverlay = showOverlays;
-                NavigationState closestState = findClosestState(window.Translation);
+                NavigationState closestState = findClosestNonHiddenState(window.Translation);
                 if (closestState != null)
                 {
                     overlay.setNavigationState(closestState);

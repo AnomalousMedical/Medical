@@ -54,7 +54,15 @@ namespace Medical.GUI
             layerStatusBeforeShown = new LayerState("Temp");
             layerStatusBeforeShown.captureState();
             currentDrawingWindow = controllingWindow;
-            navigationStateBeforeShown = navigationController.getNavigationState(currentDrawingWindow).Name;
+            NavigationState currentState = navigationController.getNavigationState(currentDrawingWindow);
+            if (currentState != null)
+            {
+                navigationStateBeforeShown = currentState.Name;
+            }
+            else
+            {
+                navigationStateBeforeShown = null;
+            }
             stateBlender.recordUndoState();
             foreach (StatePickerPanel panel in panels)
             {
@@ -86,7 +94,10 @@ namespace Medical.GUI
             hidePanel();
             uiHost.Visible = false;
             layerController.CurrentLayerState = layerStatusBeforeShown;
-            navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
+            if (navigationStateBeforeShown != null)
+            {
+                navigationController.setNavigationState(navigationStateBeforeShown, currentDrawingWindow);
+            }
             if (Finished != null)
             {
                 Finished.Invoke();

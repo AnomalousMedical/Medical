@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Medical
 {
-    public class NavigationState : IDisposable
+    public class NavigationState
     {
         private String name;
         private List<NavigationLink> adjacentStates = new List<NavigationLink>();
@@ -22,11 +22,6 @@ namespace Medical
             this.translation = translation;
             this.lookAt = lookAt;
             this.hidden = hidden;
-        }
-
-        public void Dispose()
-        {
-
         }
 
         public NavigationState(String name, Vector3 lookAt, Vector3 translation, bool hidden, KeyCodes shortcutKey)

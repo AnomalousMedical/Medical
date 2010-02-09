@@ -15,10 +15,6 @@ namespace Medical
         public void Dispose()
         {
             menus.Dispose();
-            foreach (NavigationState state in navigationStates.Values)
-            {
-                state.Dispose();
-            }
         }
 
         public void addState(NavigationState state)
@@ -71,17 +67,20 @@ namespace Medical
             return state;
         }
 
-        public NavigationState findClosestState(Vector3 position)
+        public NavigationState findClosestNonHiddenState(Vector3 position)
         {
             NavigationState closest = null;
             float closestDistanceSq = float.MaxValue;
             foreach (NavigationState state in navigationStates.Values)
             {
-                float distanceSq = (position - state.Translation).length2();
-                if (distanceSq < closestDistanceSq)
+                if (!state.Hidden)
                 {
-                    closestDistanceSq = distanceSq;
-                    closest = state;
+                    float distanceSq = (position - state.Translation).length2();
+                    if (distanceSq < closestDistanceSq)
+                    {
+                        closestDistanceSq = distanceSq;
+                        closest = state;
+                    }
                 }
             }
             return closest;

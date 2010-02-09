@@ -633,7 +633,7 @@ namespace Medical.Controller
         private bool changeScene(String file)
         {
             drawingWindowController.resetAllCameraPositions();
-            navigationController.recalculateClosestStates();
+            navigationController.recalculateClosestNonHiddenStates();
             StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
             {
@@ -665,7 +665,8 @@ namespace Medical.Controller
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard", sequenceDirectory + "/Graphics");
-                        cameraFile += "/GraphicsCameras.cam";//"/BaselineCameras.cam";
+                        //cameraFile += "/BaselineCameras.cam";
+                        cameraFile += "/GraphicsCameras.cam";
                         layersFile += "/GraphicsLayers.lay";
                     }
                     else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD))
