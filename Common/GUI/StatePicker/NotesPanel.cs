@@ -20,14 +20,14 @@ namespace Medical.GUI
             this.Text = "Notes";
 
             thumbnailPicker.ImageRenderer = imageRenderer;
-            thumbnailPicker.addThumbnail("Midline Anterior", "MandibleSizeLayers");
-            thumbnailPicker.addThumbnail("Right Lateral", "MandibleSizeLayers");
-            thumbnailPicker.addThumbnail("Left Lateral", "MandibleSizeLayers");
-            thumbnailPicker.addThumbnail("Right TMJ Thumbnail", "DiscLayers");
-            thumbnailPicker.addThumbnail("Left TMJ Thumbnail", "DiscLayers");
-            thumbnailPicker.addThumbnail("Teeth Midline Anterior", "TeethLayers");
-            thumbnailPicker.addThumbnail("Teeth Right Lateral", "TeethLayers");
-            thumbnailPicker.addThumbnail("Teeth Left Lateral", "TeethLayers");
+            thumbnailPicker.addThumbnail("ThumbnailMidlineAnterior", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightLateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightTMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftTMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethMidlineAnterior", "TeethLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethRightLateral", "TeethLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethLeftLateral", "TeethLayers");
         }
 
         public override void setToDefault()
