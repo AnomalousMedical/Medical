@@ -35,8 +35,6 @@ namespace Medical
         private const String LAYER_STATE = "LayerState";
         private const String MENU_ENTRY_NAVIGATION_STATE = "MenuEntryNavigationState";
 
-        private static Dictionary<String, Bitmap> TEMP_ThumbnailStorage = new Dictionary<string, Bitmap>();
-
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
             xmlWriter.WriteStartElement(NAVIGATION_STATE_SET);
@@ -112,7 +110,6 @@ namespace Medical
 
         public static NavigationStateSet readNavigationStateSet(XmlReader xmlReader)
         {
-            TEMP_ThumbnailStorage.Clear();
             NavigationStateSet set = new NavigationStateSet();
             while (!isEndElement(xmlReader, NAVIGATION_STATE_SET) && xmlReader.Read())
             {
@@ -165,11 +162,6 @@ namespace Medical
                     else if (xmlReader.Name == SHORTCUT_KEY)
                     {
                         shortcutKey = (KeyCodes)Enum.Parse(typeof(KeyCodes), xmlReader.ReadElementContentAsString());
-                    }
-                    else if (xmlReader.Name == THUMBNAIL)
-                    {
-                        Bitmap thumb = readThumbnail(xmlReader);
-                        TEMP_ThumbnailStorage.Add(name, thumb);
                     }
                 }
             }
@@ -266,20 +258,6 @@ namespace Medical
                     else if (xmlReader.Name == MENU_ENTRY_NAVIGATION_STATE)
                     {
                         menuEntry.NavigationState = xmlReader.ReadElementContentAsString();
-                    }
-                    else if (xmlReader.Name == NAVIGATION_STATE)
-                    {
-                        String stateName = xmlReader.ReadElementContentAsString();
-                        NavigationState state = navStateSet.getState(stateName);
-                        if (state != null)
-                        {
-                            NavigationMenuEntry stateEntry = menuEntry.addNavigationState(state);
-                            stateEntry.Thumbnail = TEMP_ThumbnailStorage[stateEntry.NavigationState];
-                        }
-                        else
-                        {
-                            Log.Error("Cannot load state {0} into menu {1} because the state was not found.", stateName, menuEntry.Text);
-                        }
                     }
                 }
             }

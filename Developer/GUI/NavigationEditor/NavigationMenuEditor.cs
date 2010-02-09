@@ -39,7 +39,7 @@ namespace Medical.GUI
             if (node != null)
             {
                 NavigationMenuEntry entry = node.Tag as NavigationMenuEntry;
-                if (entry != null)
+                if (entry != null && entry.NavigationState != null)
                 {
                     navController.setNavigationState(entry.NavigationState, drawingWindowController.getActiveWindow().DrawingWindow);
                 }
