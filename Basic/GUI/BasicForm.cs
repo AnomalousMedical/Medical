@@ -190,6 +190,11 @@ namespace Medical.GUI
             {
                 clinicalRibbon.SelectedTab = distortionTab;
             }
+            saveAsMenuItem.Enabled = enabled;
+            saveMenuItem.Enabled = enabled;
+            openMenuItem.Enabled = enabled;
+            changeSceneMenuItem.Enabled = enabled;
+            clinicalRibbon.RibbonAppButton.AppButtonShowRecentDocs = enabled;
             this.Focus();
         }
 
