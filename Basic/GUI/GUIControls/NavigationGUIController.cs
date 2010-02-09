@@ -110,7 +110,7 @@ namespace Medical.GUI
 
         void addEntriesAsImages(NavigationMenuEntry currentEntry, KryptonContextMenu menu)
         {
-            if (currentEntry.States != null)
+            if (currentEntry.SubEntries != null)
             {
                 KryptonContextMenuHeading heading = new KryptonContextMenuHeading(currentEntry.Text);
                 menu.Items.Add(heading);
@@ -120,10 +120,16 @@ namespace Medical.GUI
                 imageSelect.ImageIndexStart = menuImageList.Images.Count;
                 imageSelect.SelectedIndexChanged += imageSelect_SelectedIndexChanged;
                 menu.Items.Add(imageSelect);
-                foreach (NavigationState state in currentEntry.States)
+                foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
                 {
-                    menuImageList.Images.Add(state.Thumbnail);
-                    menuImageListIndex.Add(new MenuImageIndex(state.Name, currentEntry.LayerState));
+                    menuImageList.Images.Add(entry.Thumbnail);
+                    //Set the parent's layer state if the entry's layer state is null
+                    String layerState = entry.LayerState;
+                    if (layerState == null)
+                    {
+                        layerState = currentEntry.LayerState;
+                    }
+                    menuImageListIndex.Add(new MenuImageIndex(entry.NavigationState, layerState));
                 }
                 imageSelect.ImageIndexEnd = menuImageList.Images.Count - 1;
             }

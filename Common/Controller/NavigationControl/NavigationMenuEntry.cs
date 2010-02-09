@@ -8,7 +8,7 @@ namespace Medical
 {
     public class NavigationMenuEntry : IDisposable
     {
-        private LinkedList<NavigationState> states;
+        private String state;
         private LinkedList<NavigationMenuEntry> subEntries;
         private Bitmap thumbnail;
 
@@ -32,20 +32,28 @@ namespace Medical
             }
         }
 
-        internal void addNavigationState(NavigationState state)
+        internal NavigationMenuEntry addNavigationState(NavigationState state)
         {
-            if (states == null)
-            {
-                states = new LinkedList<NavigationState>();
-            }
-            states.AddLast(state);
+            NavigationMenuEntry stateEntry = new NavigationMenuEntry(state.Name);
+            stateEntry.NavigationState = state.Name;
+            addSubEntry(stateEntry);
+            return stateEntry;
         }
 
         internal void removeNavigationState(NavigationState state)
         {
-            if (states != null)
+            NavigationMenuEntry remove = null;
+            foreach (NavigationMenuEntry entry in subEntries)
             {
-                states.Remove(state);
+                if (entry.NavigationState == state.Name)
+                {
+                    remove = entry;
+                    break;
+                }
+            }
+            if (remove != null)
+            {
+                removeSubEntry(remove);
             }
         }
 
@@ -99,11 +107,15 @@ namespace Medical
             }
         }
 
-        public IEnumerable<NavigationState> States
+        public String NavigationState
         {
             get
             {
-                return states;
+                return state;
+            }
+            set
+            {
+                state = value;
             }
         }
     }

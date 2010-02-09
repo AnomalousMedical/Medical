@@ -33,6 +33,9 @@ namespace Medical
         private const String TEXT = "Text";
         private const String BITMAP_SIZE = "Size";
         private const String LAYER_STATE = "LayerState";
+        private const String MENU_ENTRY_NAVIGATION_STATE = "MenuEntryNavigationState";
+
+        private static Dictionary<String, Bitmap> TEMP_ThumbnailStorage = new Dictionary<string, Bitmap>();
 
         public static void writeNavigationStateSet(NavigationStateSet set, XmlWriter xmlWriter)
         {
@@ -45,10 +48,6 @@ namespace Medical
                 xmlWriter.WriteElementString(LOOK_AT, state.LookAt.ToString());
                 xmlWriter.WriteElementString(HIDDEN, state.Hidden.ToString());
                 xmlWriter.WriteElementString(SHORTCUT_KEY, state.ShortcutKey.ToString());
-                if (state.Thumbnail != null)
-                {
-                    writeThumbnail(xmlWriter, state.Thumbnail);
-                }
                 xmlWriter.WriteEndElement();
             }
 
@@ -80,6 +79,10 @@ namespace Medical
             xmlWriter.WriteStartElement(NAVIGATION_MENU_ENTRY);
             xmlWriter.WriteElementString(TEXT, entry.Text);
             xmlWriter.WriteElementString(LAYER_STATE, entry.LayerState);
+            if (entry.NavigationState != null)
+            {
+                xmlWriter.WriteElementString(MENU_ENTRY_NAVIGATION_STATE, entry.NavigationState);
+            }
             if (entry.Thumbnail != null)
             {
                 writeThumbnail(xmlWriter, entry.Thumbnail);
@@ -89,13 +92,6 @@ namespace Medical
                 foreach (NavigationMenuEntry subEntry in entry.SubEntries)
                 {
                     WriteNavMenuEntry(xmlWriter, subEntry);
-                }
-            }
-            if (entry.States != null)
-            {
-                foreach (NavigationState state in entry.States)
-                {
-                    xmlWriter.WriteElementString(NAVIGATION_STATE, state.Name);
                 }
             }
             xmlWriter.WriteEndElement();
@@ -116,6 +112,7 @@ namespace Medical
 
         public static NavigationStateSet readNavigationStateSet(XmlReader xmlReader)
         {
+            TEMP_ThumbnailStorage.Clear();
             NavigationStateSet set = new NavigationStateSet();
             while (!isEndElement(xmlReader, NAVIGATION_STATE_SET) && xmlReader.Read())
             {
@@ -145,7 +142,6 @@ namespace Medical
             Vector3 lookAt = Vector3.Zero;
             bool hidden = false;
             KeyCodes shortcutKey = KeyCodes.None;
-            Bitmap thumbnail = null;
             while (!isEndElement(xmlReader, NAVIGATION_STATE) && xmlReader.Read())
             {
                 if (isValidElement(xmlReader))
@@ -172,14 +168,14 @@ namespace Medical
                     }
                     else if (xmlReader.Name == THUMBNAIL)
                     {
-                        thumbnail = readThumbnail(xmlReader);
+                        Bitmap thumb = readThumbnail(xmlReader);
+                        TEMP_ThumbnailStorage.Add(name, thumb);
                     }
                 }
             }
             if (name != null)
             {
                 NavigationState navState = new NavigationState(name, lookAt, position, hidden, shortcutKey);
-                navState.Thumbnail = thumbnail;
                 set.addState(navState);
             }
         }
@@ -267,13 +263,18 @@ namespace Medical
                     {
                         menuEntry.addSubEntry(readNavMenuEntryData(navStateSet, xmlReader));
                     }
+                    else if (xmlReader.Name == MENU_ENTRY_NAVIGATION_STATE)
+                    {
+                        menuEntry.NavigationState = xmlReader.ReadElementContentAsString();
+                    }
                     else if (xmlReader.Name == NAVIGATION_STATE)
                     {
                         String stateName = xmlReader.ReadElementContentAsString();
                         NavigationState state = navStateSet.getState(stateName);
                         if (state != null)
                         {
-                            menuEntry.addNavigationState(state);
+                            NavigationMenuEntry stateEntry = menuEntry.addNavigationState(state);
+                            stateEntry.Thumbnail = TEMP_ThumbnailStorage[stateEntry.NavigationState];
                         }
                         else
                         {

@@ -38,10 +38,10 @@ namespace Medical.GUI
             TreeNode node = menuTree.GetNodeAt(e.Location);
             if (node != null)
             {
-                NavigationState state = node.Tag as NavigationState;
-                if (state != null)
+                NavigationMenuEntry entry = node.Tag as NavigationMenuEntry;
+                if (entry != null)
                 {
-                    navController.setNavigationState(state.Name, drawingWindowController.getActiveWindow().DrawingWindow);
+                    navController.setNavigationState(entry.NavigationState, drawingWindowController.getActiveWindow().DrawingWindow);
                 }
             }
         }
@@ -76,15 +76,6 @@ namespace Medical.GUI
                         addRecursiveMenu(node, subEntry);
                     }
                 }
-                if (entry.States != null)
-                {
-                    foreach (NavigationState state in entry.States)
-                    {
-                        TreeNode stateNode = new TreeNode(state.Name);
-                        stateNode.Tag = state;
-                        node.Nodes.Add(stateNode);
-                    }
-                }
             }
         }
 
@@ -98,15 +89,6 @@ namespace Medical.GUI
                 foreach (NavigationMenuEntry subEntry in entry.SubEntries)
                 {
                     addRecursiveMenu(node, subEntry);
-                }
-            }
-            if (entry.States != null)
-            {
-                foreach (NavigationState state in entry.States)
-                {
-                    TreeNode stateNode = new TreeNode(state.Name);
-                    stateNode.Tag = state;
-                    node.Nodes.Add(stateNode);
                 }
             }
         }
@@ -143,6 +125,7 @@ namespace Medical.GUI
                 {
                     entry.Text = textText.Text;
                     entry.LayerState = layerStateText.Text;
+                    entry.NavigationState = navigationStateTextBox.Text;
                     if (thumbnailPanel.BackgroundImage != null)
                     {
                         entry.Thumbnail = new Bitmap(thumbnailPanel.BackgroundImage);
@@ -152,21 +135,6 @@ namespace Medical.GUI
                         entry.Thumbnail = null;
                     }
                     selected.Text = entry.Text;
-                }
-                else
-                {
-                    NavigationState state = selected.Tag as NavigationState;
-                    if (state != null)
-                    {
-                        if (thumbnailPanel.BackgroundImage != null)
-                        {
-                            state.Thumbnail = new Bitmap(thumbnailPanel.BackgroundImage);
-                        }
-                        else
-                        {
-                            state.Thumbnail = null;
-                        }
-                    }
                 }
             }
         }
@@ -181,6 +149,7 @@ namespace Medical.GUI
                 {
                     textText.Text = entry.Text;
                     layerStateText.Text = entry.LayerState;
+                    navigationStateTextBox.Text = entry.NavigationState;
                     if (entry.Thumbnail != null)
                     {
                         ThumbnailImage = new Bitmap(entry.Thumbnail);
@@ -188,21 +157,6 @@ namespace Medical.GUI
                     else
                     {
                         ThumbnailImage = null;
-                    }
-                }
-                else
-                {
-                    NavigationState state = selected.Tag as NavigationState;
-                    if (state != null)
-                    {
-                        if (state.Thumbnail != null)
-                        {
-                            ThumbnailImage = new Bitmap(state.Thumbnail);
-                        }
-                        else
-                        {
-                            ThumbnailImage = null;
-                        }
                     }
                 }
             }
@@ -241,9 +195,9 @@ namespace Medical.GUI
             {
                 foreach (NavigationState state in navigationEditor.SelectedStates)
                 {
-                    menus.addState(entry, state);
-                    TreeNode node = new TreeNode(state.Name);
-                    node.Tag = state;
+                    NavigationMenuEntry stateEntry = menus.addState(entry, state);
+                    TreeNode node = new TreeNode(stateEntry.Text);
+                    node.Tag = stateEntry;
                     parentNode.Nodes.Add(node);
                 }
             }
@@ -281,14 +235,6 @@ namespace Medical.GUI
                     parentNode.Nodes.Remove(node);
                     menus.removeSubEntry(parentEntry, entry);
                 }
-            }
-            else
-            {
-                NavigationState state = node.Tag as NavigationState;
-                TreeNode parentNode = menuTree.SelectedNode.Parent;
-                NavigationMenuEntry parentEntry = parentNode.Tag as NavigationMenuEntry;
-                parentNode.Nodes.Remove(node);
-                menus.removeState(parentEntry, state);
             }
         }
     }

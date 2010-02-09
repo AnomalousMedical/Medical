@@ -46,9 +46,9 @@ namespace Medical
             parent.removeSubEntry(child);
         }
 
-        public void addState(NavigationMenuEntry target, NavigationState state)
+        public NavigationMenuEntry addState(NavigationMenuEntry target, NavigationState state)
         {
-            target.addNavigationState(state);
+            return target.addNavigationState(state);
         }
 
         public void removeState(NavigationMenuEntry target, NavigationState state)

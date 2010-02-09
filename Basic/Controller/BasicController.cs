@@ -665,7 +665,7 @@ namespace Medical.Controller
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard", sequenceDirectory + "/Graphics");
-                        cameraFile += "/GraphicsCameras.cam";
+                        cameraFile += "/GraphicsCameras.cam";//"/BaselineCameras.cam";
                         layersFile += "/GraphicsLayers.lay";
                     }
                     else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD))
