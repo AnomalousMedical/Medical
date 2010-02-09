@@ -929,16 +929,7 @@
     <None Include="Resources\Warning.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\MRIWizardLarge.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\ProfileIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TeethWizardIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CTWizardLarge.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\LeftDiscSpace.png" />
@@ -957,9 +948,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RightDiscOpen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DopplerWizardLarge.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ProfileLeftLateral.png" />
@@ -989,7 +977,13 @@
     <None Include="Resources\DegenerationRightCondyleRoughnessDistorted.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ClinicalIcon.png" />
+    <None Include="Resources\BothJointSuperior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftJointLateral.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftJointSuperior.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

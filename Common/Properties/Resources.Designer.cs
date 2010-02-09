@@ -116,6 +116,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap BothJointSuperior {
+            get {
+                object obj = ResourceManager.GetObject("BothJointSuperior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap BottomTeethRemove {
             get {
                 object obj = ResourceManager.GetObject("BottomTeethRemove", resourceCulture);
@@ -441,6 +448,20 @@ namespace Medical.Properties {
         internal static System.Drawing.Bitmap LeftFossaNormal {
             get {
                 object obj = ResourceManager.GetObject("LeftFossaNormal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftJointLateral {
+            get {
+                object obj = ResourceManager.GetObject("LeftJointLateral", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap LeftJointSuperior {
+            get {
+                object obj = ResourceManager.GetObject("LeftJointSuperior", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

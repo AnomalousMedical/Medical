@@ -55,29 +55,32 @@
             // 
             // lateralJointCameraButton
             // 
-            this.lateralJointCameraButton.Location = new System.Drawing.Point(4, 22);
+            this.lateralJointCameraButton.Location = new System.Drawing.Point(7, 22);
             this.lateralJointCameraButton.Name = "lateralJointCameraButton";
-            this.lateralJointCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.lateralJointCameraButton.Size = new System.Drawing.Size(53, 53);
             this.lateralJointCameraButton.TabIndex = 3;
-            this.lateralJointCameraButton.Values.Text = "Lateral Joint";
+            this.lateralJointCameraButton.Values.Image = global::Medical.Properties.Resources.LeftJointLateral;
+            this.lateralJointCameraButton.Values.Text = "";
             this.lateralJointCameraButton.Click += new System.EventHandler(this.lateralJointCamerButton_Click);
             // 
             // superiorJointCameraButton
             // 
-            this.superiorJointCameraButton.Location = new System.Drawing.Point(4, 54);
+            this.superiorJointCameraButton.Location = new System.Drawing.Point(68, 22);
             this.superiorJointCameraButton.Name = "superiorJointCameraButton";
-            this.superiorJointCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.superiorJointCameraButton.Size = new System.Drawing.Size(53, 53);
             this.superiorJointCameraButton.TabIndex = 4;
-            this.superiorJointCameraButton.Values.Text = "Superior Joint";
+            this.superiorJointCameraButton.Values.Image = global::Medical.Properties.Resources.LeftJointSuperior;
+            this.superiorJointCameraButton.Values.Text = "";
             this.superiorJointCameraButton.Click += new System.EventHandler(this.superiorJointCameraButton_Click);
             // 
             // bothJointsCameraButton
             // 
-            this.bothJointsCameraButton.Location = new System.Drawing.Point(100, 54);
+            this.bothJointsCameraButton.Location = new System.Drawing.Point(127, 22);
             this.bothJointsCameraButton.Name = "bothJointsCameraButton";
-            this.bothJointsCameraButton.Size = new System.Drawing.Size(90, 25);
+            this.bothJointsCameraButton.Size = new System.Drawing.Size(53, 53);
             this.bothJointsCameraButton.TabIndex = 6;
-            this.bothJointsCameraButton.Values.Text = "Both Joints";
+            this.bothJointsCameraButton.Values.Image = global::Medical.Properties.Resources.BothJointSuperior;
+            this.bothJointsCameraButton.Values.Text = "";
             this.bothJointsCameraButton.Click += new System.EventHandler(this.bothJointsCameraButton_Click);
             // 
             // DopplerPanel
