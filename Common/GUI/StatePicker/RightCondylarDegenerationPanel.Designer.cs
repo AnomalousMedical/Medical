@@ -219,7 +219,7 @@
             this.LargeIcon = global::Medical.Properties.Resources.RightCondyleDegeneration;
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "RightCondylarDegenerationPanel";
-            this.NavigationState = "DegenerationRightCameraAngle";
+            this.NavigationState = "WizardDegenerationRightCameraAngle";
             this.Size = new System.Drawing.Size(325, 361);
             this.TextLine1 = "Right Condyle";
             this.TextLine2 = "Degeneration";

@@ -222,7 +222,7 @@
             this.LargeIcon = global::Medical.Properties.Resources.AdaptationIcon;
             this.LayerState = "TeethLayers";
             this.Name = "TeethAdaptationPanel";
-            this.NavigationState = "Teeth Midline Anterior";
+            this.NavigationState = "WizardTeethMidlineAnterior";
             this.Size = new System.Drawing.Size(291, 390);
             this.TextLine1 = "Teeth";
             this.TextLine2 = "Adaptation";

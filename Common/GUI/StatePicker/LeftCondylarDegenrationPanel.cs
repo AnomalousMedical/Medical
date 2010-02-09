@@ -31,7 +31,7 @@ namespace Medical.GUI
         {
             if (open && !showingWear)
             {
-                this.setNavigationState("Left TMJ");
+                this.setNavigationState("WizardLeftTMJ");
                 showingWear = true;
             }
         }

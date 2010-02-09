@@ -253,7 +253,7 @@
             this.LargeIcon = global::Medical.Properties.Resources.LeftCondyleGrowth;
             this.LayerState = "MandibleSliderSizeLayers";
             this.Name = "LeftCondylarGrowthPanel";
-            this.NavigationState = "GrowthLeftCameraAngle";
+            this.NavigationState = "WizardGrowthLeftCameraAngle";
             this.Size = new System.Drawing.Size(325, 452);
             this.TextLine1 = "Left Condyle";
             this.TextLine2 = "Growth";

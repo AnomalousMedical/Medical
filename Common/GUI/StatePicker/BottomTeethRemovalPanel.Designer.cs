@@ -525,7 +525,7 @@
             this.LargeIcon = global::Medical.Properties.Resources.BottomTeethRemove;
             this.LayerState = "BottomTeethLayers";
             this.Name = "BottomTeethRemovalPanel";
-            this.NavigationState = "Bottom Teeth";
+            this.NavigationState = "WizardBottomTeeth";
             this.Size = new System.Drawing.Size(227, 274);
             this.TextLine1 = "Remove";
             this.TextLine2 = "Mandibular Teeth";

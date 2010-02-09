@@ -248,7 +248,7 @@ namespace Medical
             FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", this);
             leftFossaPanel.NormalImage = Resources.LeftFossaNormal;
             leftFossaPanel.DistortedImage = Resources.LeftFossaFlat;
-            leftFossaPanel.NavigationState = "Left TMJ";
+            leftFossaPanel.NavigationState = "WizardLeftTMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             leftFossaPanel.Text = "Left Fossa";
             leftFossaPanel.TextLine1 = "Left Fossa";
@@ -261,7 +261,7 @@ namespace Medical
             FossaPanel rightFossaPanel = new FossaPanel("RightFossa", this);
             rightFossaPanel.NormalImage = Resources.RightFossaNormal;
             rightFossaPanel.DistortedImage = Resources.RightFossaFlat;
-            rightFossaPanel.NavigationState = "Right TMJ";
+            rightFossaPanel.NavigationState = "WizardRightTMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             rightFossaPanel.Text = "Right Fossa";
             rightFossaPanel.TextLine1 = "Right Fossa";
@@ -272,7 +272,7 @@ namespace Medical
         private StatePickerPanel createLeftDopplerPanel()
         {
             DopplerPanel leftDopplerPanel = new DopplerPanel("LeftDoppler", "Left TMJ", movementSequenceController, this);
-            leftDopplerPanel.NavigationState = "Left TMJ";
+            leftDopplerPanel.NavigationState = "WizardLeftTMJ";
             leftDopplerPanel.LayerState = "DiscLayers";
             leftDopplerPanel.Text = "Left Fossa";
             leftDopplerPanel.TextLine1 = "Left TMJ";
@@ -284,7 +284,7 @@ namespace Medical
         private StatePickerPanel createRightDopplerPanel()
         {
             DopplerPanel rightDopplerPanel = new DopplerPanel("RightDoppler", "Right TMJ", movementSequenceController, this);
-            rightDopplerPanel.NavigationState = "Right TMJ";
+            rightDopplerPanel.NavigationState = "WizardRightTMJ";
             rightDopplerPanel.LayerState = "DiscLayers";
             rightDopplerPanel.Text = "Right Fossa";
             rightDopplerPanel.TextLine1 = "Right TMJ";
@@ -297,7 +297,7 @@ namespace Medical
         {
             ProfileDistortionPanel profileDistortionPicker = new ProfileDistortionPanel(this);
             profileDistortionPicker.Text = "Profile";
-            profileDistortionPicker.NavigationState = "Right Lateral";
+            profileDistortionPicker.NavigationState = "WizardRightLateral";
             profileDistortionPicker.LayerState = "ProfileLayers";
             profileDistortionPicker.TextLine1 = "Profile";
             profileDistortionPicker.LargeIcon = Resources.ProfileIcon;
@@ -318,7 +318,7 @@ namespace Medical
         {
             TeethHeightAdaptationPanel teethHeightAdaptation = new TeethHeightAdaptationPanel(this);
             teethHeightAdaptation.Text = "Teeth";
-            teethHeightAdaptation.NavigationState = "Teeth Midline Anterior";
+            teethHeightAdaptation.NavigationState = "WizardTeethMidlineAnterior";
             teethHeightAdaptation.LayerState = "TeethLayers";
             teethHeightAdaptation.TextLine1 = "Teeth";
             teethHeightAdaptation.LargeIcon = Resources.AdaptationIcon;
@@ -330,7 +330,7 @@ namespace Medical
             DiscSpacePanel leftDiscPanel = new DiscSpacePanel("LeftTMJDisc", "FossaLayers", "LeftDoppler", this);
             leftDiscPanel.BoneOnBoneImage = Resources.LeftDiscBoneOnBone;
             leftDiscPanel.OpenImage = Resources.LeftDiscOpen;
-            leftDiscPanel.NavigationState = "Left TMJ";
+            leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "FossaLayers";
             leftDiscPanel.Text = "Left Disc Space";
             leftDiscPanel.TextLine1 = "Left Disc";
@@ -344,7 +344,7 @@ namespace Medical
             DiscSpacePanel rightDiscPanel = new DiscSpacePanel("RightTMJDisc", "FossaLayers", "RightDoppler", this);
             rightDiscPanel.BoneOnBoneImage = Resources.RightDiscBoneOnBone;
             rightDiscPanel.OpenImage = Resources.RightDiscOpen;
-            rightDiscPanel.NavigationState = "Right TMJ";
+            rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "FossaLayers";
             rightDiscPanel.Text = "Right Disc Space";
             rightDiscPanel.TextLine1 = "Right Disc";
@@ -357,7 +357,7 @@ namespace Medical
         {
             PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", this);
             leftDiscPanel.Text = "Left Disc";
-            leftDiscPanel.NavigationState = "Left TMJ";
+            leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "DiscLayers";
             leftDiscPanel.TextLine1 = "Left TMJ";
             leftDiscPanel.LargeIcon = Resources.LeftDiscPosition;
@@ -368,7 +368,7 @@ namespace Medical
         {
             PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", this);
             rightDiscPanel.Text = "Right Disc";
-            rightDiscPanel.NavigationState = "Right TMJ";
+            rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "DiscLayers";
             rightDiscPanel.TextLine1 = "Right TMJ";
             rightDiscPanel.LargeIcon = Resources.RightDiscPosition;

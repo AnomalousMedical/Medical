@@ -197,7 +197,7 @@
             this.LargeIcon = global::Medical.Properties.Resources.NotesIcon;
             this.LayerState = "MandibleSizeLayers";
             this.Name = "NotesPanel";
-            this.NavigationState = "Midline Anterior";
+            this.NavigationState = "WizardMidlineAnterior";
             this.Size = new System.Drawing.Size(273, 600);
             this.TextLine1 = "Notes";
             this.panel1.ResumeLayout(false);

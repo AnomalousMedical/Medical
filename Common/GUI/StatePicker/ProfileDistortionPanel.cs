@@ -38,27 +38,27 @@ namespace Medical.GUI
 
         private void rightSideCamera_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Right Lateral");
+            this.setNavigationState("WizardRightLateral");
         }
 
         private void rightMidCamera_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Right Mid Anterior");
+            this.setNavigationState("WizardRightMidAnterior");
         }
 
         private void midlineCamera_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Midline Anterior");
+            this.setNavigationState("WizardMidlineAnterior");
         }
 
         private void leftMidCamera_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Left Mid Anterior");
+            this.setNavigationState("WizardLeftMidAnterior");
         }
 
         private void leftSideCamera_Click(object sender, EventArgs e)
         {
-            this.setNavigationState("Left Lateral");
+            this.setNavigationState("WizardLeftLateral");
         }
 
         void adaptButton_CheckedChanged(object sender, EventArgs e)

@@ -126,14 +126,14 @@ namespace Medical.GUI
         {
             TeethController.showTeethTools(true, false);
             this.setLayerState("TopTeethLayers");
-            this.setNavigationState("Top Teeth");
+            this.setNavigationState("WizardTopTeeth");
         }
 
         private void bottomCameraButton_Click(object sender, EventArgs e)
         {
             TeethController.showTeethTools(false, true);
             this.setLayerState("BottomTeethLayers");
-            this.setNavigationState("Bottom Teeth");
+            this.setNavigationState("WizardBottomTeeth");
             
         }
 
@@ -141,35 +141,35 @@ namespace Medical.GUI
         {
             TeethController.showTeethTools(true, true);
             this.setLayerState("TeethLayers");
-            this.setNavigationState("Teeth Left Lateral");
+            this.setNavigationState("WizardTeethLeftLateral");
         }
 
         private void midlineAnteriorCameraButton_Click(object sender, EventArgs e)
         {
             TeethController.showTeethTools(true, true);
             this.setLayerState("TeethLayers");
-            this.setNavigationState("Teeth Midline Anterior");
+            this.setNavigationState("WizardTeethMidlineAnterior");
         }
 
         private void rightLateralCameraButton_Click(object sender, EventArgs e)
         {
             TeethController.showTeethTools(true, true);
             this.setLayerState("TeethLayers");
-            this.setNavigationState("Teeth Right Lateral");
+            this.setNavigationState("WizardTeethRightLateral");
         }
 
         private void leftMidLateralCameraButton_Click(object sender, EventArgs e)
         {
             TeethController.showTeethTools(true, true);
             this.setLayerState("TeethLayers");
-            this.setNavigationState("Teeth Left Mid Anterior");
+            this.setNavigationState("WizardTeethLeftMidAnterior");
         }
 
         private void rightMidLateralCameraButton_Click(object sender, EventArgs e)
         {
             TeethController.showTeethTools(true, true);
             this.setLayerState("TeethLayers");
-            this.setNavigationState("Teeth Right Mid Anterior");
+            this.setNavigationState("WizardTeethRightMidAnterior");
         }
     }
 }
