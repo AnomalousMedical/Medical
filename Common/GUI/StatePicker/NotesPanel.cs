@@ -25,6 +25,8 @@ namespace Medical.GUI
             thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
             thumbnailPicker.addThumbnail("ThumbnailRightTMJ", "DiscLayers");
             thumbnailPicker.addThumbnail("ThumbnailLeftTMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftTMJSuperior", "ThumbnailTMJSuperiorLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightTMJSuperior", "ThumbnailTMJSuperiorLayers");
             thumbnailPicker.addThumbnail("ThumbnailTeethMidlineAnterior", "TeethLayers");
             thumbnailPicker.addThumbnail("ThumbnailTeethRightLateral", "TeethLayers");
             thumbnailPicker.addThumbnail("ThumbnailTeethLeftLateral", "TeethLayers");
