@@ -35,30 +35,61 @@ namespace Medical
             windowController.WindowDestroyed += windowController_WindowDestroyed;
         }
 
-        public void loadNavigationSet(String cameraFile)
+        public bool loadNavigationSetIfDifferent(String cameraFile)
         {
             if (cameraFile != currentCameraFile)
             {
-                currentCameraFile = cameraFile;
-                using (Archive archive = FileSystem.OpenArchive(cameraFile))
+                loadNavigationSet(cameraFile);
+                return true;
+            }
+            return false;
+        }
+
+        public void loadNavigationSet(String cameraFile)
+        {
+            currentCameraFile = cameraFile;
+            NavigationSet = loadNavSet(cameraFile);
+        }
+
+        public void mergeNavigationSet(String cameraFile)
+        {
+            using (NavigationStateSet navSet = loadNavSet(cameraFile))
+            {
+                if (navSet != null)
                 {
-                    if (archive.exists(cameraFile))
+                    if (NavigationSet == null)
                     {
-                        try
-                        {
-                            using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
-                            {
-                                NavigationStateSet navigation = NavigationSerializer.readNavigationStateSet(textReader);
-                                this.NavigationSet = navigation;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Debug("Error loading navigation file.\n{0}", ex.Message);
-                        }
+                        currentCameraFile = cameraFile;
+                        NavigationSet = navSet;
+                    }
+                    else
+                    {
+                        NavigationSet.mergeStates(navSet);
                     }
                 }
             }
+        }
+
+        private NavigationStateSet loadNavSet(String cameraFile)
+        {
+            using (Archive archive = FileSystem.OpenArchive(cameraFile))
+            {
+                if (archive.exists(cameraFile))
+                {
+                    try
+                    {
+                        using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                        {
+                            return NavigationSerializer.readNavigationStateSet(textReader);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                    }
+                }
+            }
+            return null;
         }
 
         public void saveNavigationSet(String cameraFile)

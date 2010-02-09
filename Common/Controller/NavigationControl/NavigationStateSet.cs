@@ -51,6 +51,24 @@ namespace Medical
             
         }
 
+        public void mergeStates(NavigationStateSet toMerge)
+        {
+            //Copy all states
+            foreach (NavigationState sourceState in toMerge.States)
+            {
+                addState(new NavigationState(sourceState.Name, sourceState.LookAt, sourceState.Translation, sourceState.Hidden));
+            }
+            //Copy all links
+            foreach (NavigationState sourceState in toMerge.States)
+            {
+                NavigationState copiedState = getState(sourceState.Name);
+                foreach (NavigationLink link in copiedState.AdjacentStates)
+                {
+                    copiedState.addAdjacentState(getState(link.Destination.Name), link.Button, link.VisualRadius, link.RadiusStartOffset);
+                }
+            }
+        }
+
         public void clearStates()
         {
             navigationStates.Clear();

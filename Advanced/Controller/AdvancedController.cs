@@ -479,7 +479,7 @@ namespace Medical.Controller
                     //String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFile;
                     //layerController.loadLayerStateSet(layersFile);
                     String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/GraphicsCameras.cam";
-                    navigationController.loadNavigationSet(cameraFile);
+                    navigationController.loadNavigationSetIfDifferent(cameraFile);
                 }
 
                 return true;

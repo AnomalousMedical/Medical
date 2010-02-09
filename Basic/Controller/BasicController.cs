@@ -665,7 +665,6 @@ namespace Medical.Controller
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
                     {
                         movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Lite", sequenceDirectory + "/Standard", sequenceDirectory + "/Graphics");
-                        //cameraFile += "/BaselineCameras.cam";
                         cameraFile += "/GraphicsCameras.cam";
                         layersFile += "/GraphicsLayers.lay";
                     }
@@ -682,7 +681,11 @@ namespace Medical.Controller
                         layersFile += "/LiteLayers.lay";
                     }
                     layerController.loadLayerStateSet(layersFile);
-                    navigationController.loadNavigationSet(cameraFile);
+                    //Load camera file, merge baseline cameras if the cameras changed
+                    if (navigationController.loadNavigationSetIfDifferent(cameraFile))
+                    {
+                        navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
+                    }
                     distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
                     statePickerPanelController.sceneChanged(medicalController, medicalScene);
                     if (SceneLoaded != null)
