@@ -60,6 +60,7 @@ namespace Medical.GUI
             base.onPanelOpening();
             open = true;
             gridPropertiesControl1.updateGrid();
+            showingWear = false;
         }
 
         protected override void onPanelClosing()
