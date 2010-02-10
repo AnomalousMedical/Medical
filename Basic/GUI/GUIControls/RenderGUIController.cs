@@ -87,7 +87,7 @@ namespace Medical.GUI
 
             form.renderImageSizeButton.KryptonContextMenu = resolutionMenu;
 
-            if (!UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            if (!UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_FULL_RENDERING))
             {
                 form.renderImageSizeButton.Visible = false;
                 width.Visible = false;

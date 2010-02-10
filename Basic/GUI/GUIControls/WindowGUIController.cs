@@ -48,7 +48,7 @@ namespace Medical.GUI
             }
             form.windowLayoutButton.KryptonContextMenu = windowLayoutMenu;
 
-            if (!UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            if (!UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 form.cloneWindowButton.Visible = false;
             }

@@ -16,61 +16,74 @@ UserPermissions::UserPermissions()
 	}
 	instance = this;
 #ifndef ENABLE_HASP_PROTECTION
-	#ifdef SIM_LITE
-	//Simulated lite version
-	allowedFeatures.AddLast(Features::PIPER_JBO_LITE);
-	#endif
-
-	#ifdef SIM_STANDARD
-	//Simulated standard version
-	allowedFeatures.AddLast(Features::PIPER_JBO_STANDARD);
-	#endif
-	
-	#ifdef SIM_GRAPHICS
-	//Simulated graphics version
-	allowedFeatures.AddLast(Features::PIPER_JBO_GRAPHICS);
-	#endif
-
 	#ifdef SIM_DOPPLER
 	//Simulated doppler version
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DOPPLER);
 	#endif
 
 	#ifdef SIM_DENTITION_AND_PROFILE
 	//Simulated Dentition and Profile version
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_DENTITION_PROFILE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
 	#endif
 
 	#ifdef SIM_CLINICAL
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_CLINICAL);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
 	#endif
 
 	#ifdef SIM_RADIOGRAPHY
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_BONE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CT);
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_RADIOGRAPHY_CT);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MANDIBLE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
 	#endif
 
 	#ifdef SIM_MRI
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DOPPLER);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_PROFILE_TEETH);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CLINICAL);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_BONE);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_CT);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_DISC);
-	allowedFeatures.AddLast(Features::WIZARD_PIPER_JBO_MRI);
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_MRI);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MANDIBLE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DISC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MRI);
+	#endif
+
+	#ifdef SIM_GRAPHICS
+	allowedFeatures.AddLast(Features::PIPER_JBO_MODULE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_VERSION_GRAPHICS);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MANDIBLE);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DISC);
+	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MRI);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_FULL_RENDERING);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CLONE_WINDOW);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_SIMULATION);
 	#endif
 
 #endif

@@ -106,8 +106,7 @@ namespace Medical.GUI
             aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
 
             //Determine if simulation tab is enabled
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD)
-                || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_SIMULATION))
             {
                 allowSimulationTab = true;
             }

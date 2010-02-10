@@ -26,10 +26,7 @@ namespace Medical
                     if (UserPermissions.Instance.checkConnection())
                     {
                         connectionLoop = false;
-                        bool canUseProgram = UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS)
-                            || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_STANDARD)
-                            || UserPermissions.Instance.allowFeature(Features.PIPER_JBO_LITE);
-                        if (canUseProgram)
+                        if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                         {
                             using (BasicController controller = new BasicController())
                             {

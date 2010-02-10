@@ -46,7 +46,7 @@ namespace Medical.GUI
             predefinedLayerGallery.ImageList = predefinedImageList;
             predefinedLayerGallery.SelectedIndexChanged += new EventHandler(predefinedLayerGallery_SelectedIndexChanged);
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_GRAPHICS))
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CUSTOM_LAYERS))
             {
                 layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
 

@@ -47,6 +47,7 @@
             this.namesLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.namesToOpenSourceButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.featureLevelLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openSourcePanel)).BeginInit();
@@ -57,6 +58,7 @@
             // 
             // kryptonPanel1
             // 
+            this.kryptonPanel1.Controls.Add(this.featureLevelLabel);
             this.kryptonPanel1.Controls.Add(this.copyright);
             this.kryptonPanel1.Controls.Add(this.closeButton);
             this.kryptonPanel1.Controls.Add(this.anomalousSoftwareLabel);
@@ -98,7 +100,7 @@
             // 
             // versionLabel
             // 
-            this.versionLabel.Location = new System.Drawing.Point(136, 73);
+            this.versionLabel.Location = new System.Drawing.Point(136, 94);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(49, 19);
             this.versionLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
@@ -232,6 +234,18 @@
             this.namesToOpenSourceButton.Values.Text = "More";
             this.namesToOpenSourceButton.Click += new System.EventHandler(this.namesToOpenSourceButton_Click);
             // 
+            // featureLevelLabel
+            // 
+            this.featureLevelLabel.Location = new System.Drawing.Point(136, 76);
+            this.featureLevelLabel.Name = "featureLevelLabel";
+            this.featureLevelLabel.Size = new System.Drawing.Size(75, 19);
+            this.featureLevelLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
+            this.featureLevelLabel.TabIndex = 6;
+            this.featureLevelLabel.Values.Text = "FeatureLevel";
+            // 
             // ClinicalAbout
             // 
             this.AcceptButton = this.closeButton;
@@ -281,5 +295,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel namesLabel;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel featureLevelLabel;
     }
 }
