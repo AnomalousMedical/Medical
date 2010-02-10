@@ -39,7 +39,7 @@ namespace Medical.GUI
             this.basicController = basicController;
 
             menuImageList.ColorDepth = ColorDepth.Depth32Bit;
-            menuImageList.ImageSize = new Size(51, 38);
+            menuImageList.ImageSize = new Size(69, 51);
 
             showNavigationCommand = basicForm.showNavigationCommand;
             showNavigationCommand.Execute += new EventHandler(showNavigationCommand_Execute);

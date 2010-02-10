@@ -96,8 +96,8 @@ namespace Medical.GUI
         private void renderButton_Click(object sender, EventArgs e)
         {
             ImageRendererProperties properties = new ImageRendererProperties();
-            properties.Width = 51;
-            properties.Height = 38;
+            properties.Width = 69;
+            properties.Height = 51;
             properties.TransparentBackground = false;
             properties.UseWindowBackgroundColor = false;
             properties.CustomBackgroundColor = Engine.Color.Black;
