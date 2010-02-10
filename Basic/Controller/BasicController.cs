@@ -323,7 +323,7 @@ namespace Medical.Controller
                 distortionController.addDistortionWizard(clinicalWizard);
             }
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_RADIOGRAPHY))
             {
                 //CT/Radiography Wizard
                 DistortionWizard ctWizard = new DistortionWizard("Radiography", "Combination Distortion", statePickerPanelController);

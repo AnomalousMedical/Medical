@@ -40,6 +40,8 @@ UserPermissions::UserPermissions()
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_SIMULATION);
 	#endif
 
 	#ifdef SIM_RADIOGRAPHY
@@ -52,6 +54,8 @@ UserPermissions::UserPermissions()
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_CLINICAL_DOPPLER);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MANDIBLE);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_SIMULATION);
 	#endif
 
 	#ifdef SIM_MRI
@@ -66,6 +70,8 @@ UserPermissions::UserPermissions()
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DISC);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MRI);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_SIMULATION);
 	#endif
 
 	#ifdef SIM_GRAPHICS
@@ -80,9 +86,9 @@ UserPermissions::UserPermissions()
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_RADIOGRAPHY);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_DISC);
 	allowedFeatures.AddLast(Features::PIPER_JBO_WIZARD_MRI);
-	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
 	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_FULL_RENDERING);
 	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CLONE_WINDOW);
+	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_CUSTOM_LAYERS);
 	allowedFeatures.AddLast(Features::PIPER_JBO_FEATURE_SIMULATION);
 	#endif
 
