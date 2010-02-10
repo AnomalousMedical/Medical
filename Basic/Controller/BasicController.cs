@@ -780,7 +780,17 @@ namespace Medical.Controller
             basicForm.SuspendLayout();
             basicForm.enableViewMode(true);
             basicForm.ResumeLayout();
-            basicForm.Focus();
+            //Force focus back to either the active window or the form to make navigation easier to understand and
+            //to prevent user inputs to closed wizards in normal mode.
+            DrawingWindowHost activeWindow = drawingWindowController.getActiveWindow();
+            if (activeWindow != null)
+            {
+                activeWindow.DrawingWindow.Focus();
+            }
+            else
+            {
+                basicForm.Focus();
+            }
         }
 
         public DrawingWindowPresetController PresetWindows
