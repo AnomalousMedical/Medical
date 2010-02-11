@@ -242,6 +242,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DisclaimerIcon {
+            get {
+                object obj = ResourceManager.GetObject("DisclaimerIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ExploreIconSmall {
             get {
                 object obj = ResourceManager.GetObject("ExploreIconSmall", resourceCulture);

@@ -121,9 +121,6 @@
   <data name="RightFossaNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RightFossaNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth29" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth29.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="GrowthLeftAntegonialNotch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftAntegonialNotch.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -133,14 +130,23 @@
   <data name="GrowthRightAntegonialNotchDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightAntegonialNotchDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LeftJointLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftJointLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tooth18" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth18.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationLeftCondyleDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationLeftCondyleDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth8removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth8removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DegenerationRightCondyleMedialPoleDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DegenerationRightCondyleMedialPoleDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DegenerationLeftCondyleRoughnessDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DegenerationLeftCondyleRoughnessDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth16removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth16removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth7.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,8 +157,8 @@
   <data name="GrowthRightRamusHeightSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightRamusHeightSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth22removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth22removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth14removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth14removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationRightCondyleRoughnessDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationRightCondyleRoughnessDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -160,11 +166,11 @@
   <data name="DegenerationLeftCondyleLateralPoleDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationLeftCondyleLateralPoleDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DegenerationRightCondyleLateralPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DegenerationRightCondyleLateralPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DegenerationRightCondyleRoughness" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DegenerationRightCondyleRoughness.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RightDiscBoneOnBone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightDiscBoneOnBone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LeftDiscBoneOnBone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftDiscBoneOnBone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth30removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth30removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,26 +202,17 @@
   <data name="tooth13removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth13removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth16removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth16removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth31removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth31removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RightCondyleGrowth" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightCondyleGrowth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AdaptRightMidAnterior" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AdaptRightMidAnterior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth29removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth29removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ResizeDownSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ResizeDownSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftDiscBoneOnBone" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftDiscBoneOnBone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProfileLeftLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ProfileLeftLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthLeftCondyleRotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleRotation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,8 +232,8 @@
   <data name="DegenerationRightCondyleMedialPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationRightCondyleMedialPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ProfileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ProfileIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth1removed1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth1removed1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,8 +250,8 @@
   <data name="AdaptRightLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AdaptRightLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth19" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth19.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="RightDiscBoneOnBone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightDiscBoneOnBone.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AdaptTopTeeth" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AdaptTopTeeth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -286,6 +283,9 @@
   <data name="tooth11removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth11removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tooth28" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth28.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tooth26" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth26.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -301,11 +301,14 @@
   <data name="tooth16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth16.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LeftFossaFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftFossaFlat.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth10.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth6.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GrowthRightAntegonialNotch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GrowthRightAntegonialNotch.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthRightCondyleHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightCondyleHeight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -322,11 +325,8 @@
   <data name="tooth24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth24.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RightFossaFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightFossaFlat.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DegenerationRightCondyleRoughness" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DegenerationRightCondyleRoughness.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth8removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth8removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthRightRamusHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightRamusHeight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -337,11 +337,8 @@
   <data name="GrowthRightCondyleRotation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthRightCondyleRotation.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth26removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth26removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GrowthLeftRamusHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GrowthLeftRamusHeight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth3.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth19removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth19removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -366,9 +363,6 @@
   </data>
   <data name="tooth2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth2.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftCondyleGrowth" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftCondyleGrowth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationLeftCondyleMedialPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationLeftCondyleMedialPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -397,20 +391,20 @@
   <data name="LeftFossaNormal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftFossaNormal.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GrowthRightCondyleHeightSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GrowthRightCondyleHeightSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="RightFossaFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightFossaFlat.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth10.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GrowthLeftAntegonialNotchDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GrowthLeftAntegonialNotchDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth11.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationLeftCondyleLateralPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationLeftCondyleLateralPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth12" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth12.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth13.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationRightCondyleDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationRightCondyleDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -424,8 +418,11 @@
   <data name="tooth25" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth25.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="AdaptRightMidAnterior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\AdaptRightMidAnterior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth1removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth1removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GrowthLeftRamusHeight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GrowthLeftRamusHeight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth7removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth7removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -433,53 +430,62 @@
   <data name="GrowthLeftCondyleRotationRotated" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleRotationRotated.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BothJointSuperior" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BothJointSuperior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tooth27removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth27removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="BottomTeethRemove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BottomTeethRemove.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ProfileRightMidLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ProfileRightMidLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth28" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth28.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GrowthLeftAntegonialNotchDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GrowthLeftAntegonialNotchDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightDiscSpace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightDiscSpace.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="AdaptMidlineAnterior" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AdaptMidlineAnterior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DegenerationLeftCondyleRoughnessDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DegenerationLeftCondyleRoughnessDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ProfileIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ProfileIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth19" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth19.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth32.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth13" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth13.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth1.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth8.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth11.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="RightCondyleGrowth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightCondyleGrowth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RightDiscPosition" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightDiscPosition.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftJointSuperior" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftJointSuperior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RightCondyleDegeneration" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RightCondyleDegeneration.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth30" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth30.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ProfileLeftMidLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ProfileLeftMidLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth27removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth27removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GrowthRightCondyleHeightSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GrowthRightCondyleHeightSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthLeftMandibularNotch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftMandibularNotch.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth14removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth14removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LeftCondyleGrowth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftCondyleGrowth.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GrowthLeftCondyleHeightSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrowthLeftCondyleHeightSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -487,14 +493,14 @@
   <data name="tooth12removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth12removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RightDiscPosition" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightDiscPosition.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth30.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth4removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth4removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth1removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth1removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LeftFossaFlat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftFossaFlat.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LeftDiscPosition" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftDiscPosition.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -508,32 +514,35 @@
   <data name="tooth21removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth21removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tooth31removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tooth31removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth22removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth22removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth5.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DegenerationRightCondyleMedialPoleDistorted" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DegenerationRightCondyleMedialPoleDistorted.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth26removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth26removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DegenerationLeftCondyle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DegenerationLeftCondyle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="DegenerationLeftCondyleRoughness" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DegenerationLeftCondyleRoughness.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="GrowthRightAntegonialNotch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GrowthRightAntegonialNotch.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="tooth29" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tooth29.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth15removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth15removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RightDiscSpace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightDiscSpace.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DegenerationRightCondyleLateralPole" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DegenerationRightCondyleLateralPole.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LeftFossaFlatness" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LeftFossaFlatness.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="DegenerationLeftCondyle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DegenerationLeftCondyle.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ProfileLeftLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ProfileLeftLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="tooth23removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth23removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -541,13 +550,7 @@
   <data name="tooth25removed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tooth25removed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BothJointSuperior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BothJointSuperior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftJointLateral" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftJointLateral.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LeftJointSuperior" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftJointSuperior.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DisclaimerIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DisclaimerIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

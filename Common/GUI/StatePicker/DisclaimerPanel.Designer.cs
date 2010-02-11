@@ -83,7 +83,7 @@
             this.kryptonWrapLabel1.AutoSize = false;
             this.kryptonWrapLabel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonWrapLabel1.Font = new System.Drawing.Font("Segoe UI", 8.5F);
-            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(59)))), ((int)(((byte)(59)))));
+            this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(5, 0);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
             this.kryptonWrapLabel1.Size = new System.Drawing.Size(263, 52);
@@ -100,6 +100,7 @@
             this.Controls.Add(this.kryptonWrapLabel1);
             this.Controls.Add(this.kryptonBorderEdge2);
             this.Controls.Add(this.kryptonBorderEdge1);
+            this.LargeIcon = global::Medical.Properties.Resources.DisclaimerIcon;
             this.Name = "DisclaimerPanel";
             this.Size = new System.Drawing.Size(273, 600);
             this.TextLine1 = "Disclaimer";
