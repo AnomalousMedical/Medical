@@ -67,6 +67,11 @@ namespace Medical.GUI
             synchronize(this, openingState);
         }
 
+        protected override void onPanelOpening()
+        {
+            synchronize(fossa, fossa.getEminanceDistortion());
+        }
+
         public String FossaName
         {
             get
