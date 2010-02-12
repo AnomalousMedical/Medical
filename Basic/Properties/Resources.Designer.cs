@@ -389,6 +389,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ManipRestoreLarge {
+            get {
+                object obj = ResourceManager.GetObject("ManipRestoreLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap ManipRightHorizontalBack {
             get {
                 object obj = ResourceManager.GetObject("ManipRightHorizontalBack", resourceCulture);

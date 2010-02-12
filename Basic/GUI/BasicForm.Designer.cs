@@ -84,6 +84,7 @@
             this.kryptonRibbonGroup3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple11 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.manipulationResetButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.manipulationRestoreButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.sequencesTab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab();
             this.kryptonRibbonGroup5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple12 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
@@ -193,6 +194,7 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
+            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -676,7 +678,8 @@
             // kryptonRibbonGroupTriple11
             // 
             this.kryptonRibbonGroupTriple11.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.manipulationResetButton});
+            this.manipulationResetButton,
+            this.manipulationRestoreButton});
             this.kryptonRibbonGroupTriple11.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // manipulationResetButton
@@ -684,6 +687,11 @@
             this.manipulationResetButton.ImageLarge = global::Medical.Properties.Resources.ManipResetLarge;
             this.manipulationResetButton.ImageSmall = global::Medical.Properties.Resources.ManipResetSmall;
             this.manipulationResetButton.TextLine1 = "Reset";
+            // 
+            // manipulationRestoreButton
+            // 
+            this.manipulationRestoreButton.ImageLarge = global::Medical.Properties.Resources.ManipRestoreLarge;
+            this.manipulationRestoreButton.TextLine1 = "Restore";
             // 
             // sequencesTab
             // 
@@ -1008,12 +1016,24 @@
             // 
             this.leftNavigator.AutoSize = true;
             this.leftNavigator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.leftNavigator.Bar.BarMapExtraText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
+            this.leftNavigator.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
+            this.leftNavigator.Bar.BarMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
             this.leftNavigator.Bar.BarOrientation = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
+            this.leftNavigator.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.SameHeight;
             this.leftNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
             this.leftNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
             this.buttonSpecExpandCollapse});
             this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
+            this.leftNavigator.Button.ContextButtonAction = ComponentFactory.Krypton.Navigator.ContextButtonAction.SelectPage;
+            this.leftNavigator.Button.ContextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
+            this.leftNavigator.Button.ContextMenuMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
+            this.leftNavigator.Button.ContextMenuMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
+            this.leftNavigator.Button.NextButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
+            this.leftNavigator.Button.NextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
+            this.leftNavigator.Button.PreviousButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
+            this.leftNavigator.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftNavigator.Header.HeaderPositionBar = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
             this.leftNavigator.Location = new System.Drawing.Point(0, 121);
@@ -1239,5 +1259,6 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton windowLayoutButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup customLayersGroup;
+        internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton manipulationRestoreButton;
     }
 }

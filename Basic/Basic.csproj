@@ -254,6 +254,7 @@
     <None Include="Resources\DiscWizardLarge.png" />
     <None Include="Resources\ProfileAndTeethWizardLarge.png" />
     <None Include="Resources\DiscSpaceWizardIcon.png" />
+    <None Include="Resources\ManipRestoreLarge.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -25,7 +25,12 @@ namespace Medical.GUI
         private MandibleControlSlider rightForwardBack;
         private MandibleControlSlider leftForwardBack;
         private MandibleControlSlider bothForwardBack;
-        private KryptonRibbonGroupButton distortionButton;
+        private KryptonRibbonGroupButton resetButton;
+        private KryptonRibbonGroupButton restoreButton;
+
+        private Vector3 movingMusclePosition;
+        private float leftCPPosition;
+        private float rightCPPosition;
 
         public MandibleGUIController(BasicForm basicForm, BasicController basicController)
         {
@@ -37,13 +42,16 @@ namespace Medical.GUI
             rightForwardBack = basicForm.rightHorizontalMandibleSlider;
             leftForwardBack = basicForm.leftHorizontalMandibleSlider;
             bothForwardBack = basicForm.bothHorizontalMandibleSlider;
-            distortionButton = basicForm.manipulationResetButton;
+            resetButton = basicForm.manipulationResetButton;
+            restoreButton = basicForm.manipulationRestoreButton;
+            restoreButton.Enabled = false;
 
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
             rightForwardBack.ValueChanged += rightSliderValueChanged;
             leftForwardBack.ValueChanged += leftSliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
-            distortionButton.Click += distortionButton_Click;
+            resetButton.Click += resetButton_Click;
+            restoreButton.Click += new EventHandler(restoreButton_Click);
         }
 
         public bool AllowSceneManipulation
@@ -78,7 +86,7 @@ namespace Medical.GUI
                 rightForwardBack.Enabled = value;
                 leftForwardBack.Enabled = value;
                 bothForwardBack.Enabled = value;
-                distortionButton.Enabled = value;
+                resetButton.Enabled = value;
             }
         }
 
@@ -105,6 +113,7 @@ namespace Medical.GUI
 
         void basicController_SceneLoaded(SimScene scene)
         {
+            restoreButton.Enabled = false;
             leftCP = ControlPointController.getControlPoint("LeftCP");
             rightCP = ControlPointController.getControlPoint("RightCP");
             movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
@@ -168,12 +177,25 @@ namespace Medical.GUI
             synchronizeRightCP(bothForwardBack, value);
         }
 
-        private void distortionButton_Click(object sender, EventArgs e)
+        private void resetButton_Click(object sender, EventArgs e)
         {
-            synchronizeLeftCP(distortionButton, leftCP.getNeutralLocation());
-            synchronizeRightCP(distortionButton, rightCP.getNeutralLocation());
+            leftCPPosition = leftCP.CurrentLocation;
+            rightCPPosition = rightCP.CurrentLocation;
+            movingMusclePosition = movingMuscleTarget.Offset;
+
+            synchronizeLeftCP(resetButton, leftCP.getNeutralLocation());
+            synchronizeRightCP(resetButton, rightCP.getNeutralLocation());
             bothForwardBack.Value = rightForwardBack.Value;
-            synchronizeMovingMuscleOffset(distortionButton, Vector3.Zero);
+            synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
+            restoreButton.Enabled = true;
+        }
+
+        void restoreButton_Click(object sender, EventArgs e)
+        {
+            synchronizeLeftCP(resetButton, leftCPPosition);
+            synchronizeRightCP(resetButton, rightCPPosition);
+            synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
+            restoreButton.Enabled = false;
         }
 
         private void subscribeToUpdates()
