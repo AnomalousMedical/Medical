@@ -25,6 +25,7 @@ namespace Medical.GUI
         private PresetState presetState;
         private String defaultLayerState;
         private String subDirectory;
+        private bool showing = false;
 
         public DiscSpacePanel(String defaultLayerState, String subDirectory, StatePickerPanelController panelController)
             :base(panelController)
@@ -153,12 +154,33 @@ namespace Medical.GUI
 
         protected override void onPanelOpening()
         {
-            discSpaceControl1.setToDefault();
+            showDiscCheckBox.Checked = false;
+            showing = true;
+        }
+
+        protected override void onPanelClosing()
+        {
+            showing = false;
         }
 
         public override void setToDefault()
         {
             discSpaceControl1.setToDefault();
+        }
+
+        private void showDiscCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (showing)
+            {
+                if (showDiscCheckBox.Checked)
+                {
+                    panelController.LayerController.applyLayerState("DiscLayers");
+                }
+                else
+                {
+                    panelController.LayerController.applyLayerState(LayerState);
+                }
+            }
         }
     }
 }

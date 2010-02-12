@@ -326,18 +326,19 @@ namespace Medical.Controller
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_RADIOGRAPHY))
             {
                 //CT/Radiography Wizard
-                DistortionWizard ctWizard = new DistortionWizard("Radiography", "Combination Distortion", statePickerPanelController);
-                ctWizard.TextLine1 = "Radiography";
+                DistortionWizard ctWizard = new DistortionWizard("Clinical and Radiography", "Combination Distortion", statePickerPanelController);
+                ctWizard.TextLine1 = "Clinical and";
+                ctWizard.TextLine2 = "Radiography";
                 ctWizard.ImageLarge = Resources.CTWizardLarge;
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftFossa));
-                ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
+                ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarGrowth));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightFossa));
-                ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
                 ctWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TeethAdaptationPanel));
@@ -361,17 +362,18 @@ namespace Medical.Controller
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MRI))
             {
                 //MRI Wizard
-                DistortionWizard mriWizard = new DistortionWizard("MRI", "Combination Distortion", statePickerPanelController);
-                mriWizard.TextLine1 = "MRI";
+                DistortionWizard mriWizard = new DistortionWizard("Clinical and MRI", "Combination Distortion", statePickerPanelController);
+                mriWizard.TextLine1 = "Clinical";
+                mriWizard.TextLine2 = "and MRI";
                 mriWizard.ImageLarge = Resources.MRIWizardLarge;
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
-                mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftFossa));
+                mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarGrowth));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
-                mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightFossa));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
                 mriWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
