@@ -142,6 +142,18 @@ namespace Medical
             }
         }
 
+        public static void showTeethTools(String[] toothNames)
+        {
+            foreach (Tooth tooth in teeth.Values)
+            {
+                tooth.ShowTools = false;
+            }
+            foreach (String toothName in toothNames)
+            {
+                teeth[toothName].ShowTools = true;
+            }
+        }
+
         /// <summary>
         /// Call this function before a screenshot is rendered to hide the
         /// movement tools if you wish them hidden in the screenshot. This
