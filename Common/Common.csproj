@@ -255,10 +255,16 @@
     <Compile Include="GUI\StatePicker\DisclaimerPanel.Designer.cs">
       <DependentUpon>DisclaimerPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\DiscSpacePanel.cs">
+    <Compile Include="GUI\StatePicker\DiscSpace\DiscSpaceControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\DiscSpacePanel.Designer.cs">
+    <Compile Include="GUI\StatePicker\DiscSpace\DiscSpaceControl.Designer.cs">
+      <DependentUpon>DiscSpaceControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\DiscSpace\DiscSpacePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\DiscSpace\DiscSpacePanel.Designer.cs">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\Doppler\DopplerControl.cs">
@@ -591,7 +597,10 @@
     <EmbeddedResource Include="GUI\StatePicker\DisclaimerPanel.resx">
       <DependentUpon>DisclaimerPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\DiscSpacePanel.resx">
+    <EmbeddedResource Include="GUI\StatePicker\DiscSpace\DiscSpaceControl.resx">
+      <DependentUpon>DiscSpaceControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\DiscSpace\DiscSpacePanel.resx">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Doppler\DopplerControl.resx">

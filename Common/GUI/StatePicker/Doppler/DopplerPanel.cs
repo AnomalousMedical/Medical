@@ -83,19 +83,19 @@ namespace Medical.GUI
             String filename = "I.dst";
             switch (dopplerControl1.CurrentStage)
             {
-                case DopplerStage.I:
+                case PiperStage.I:
                     filename = "I.dst";
                     break;
-                case DopplerStage.II:
+                case PiperStage.II:
                     filename = "II.dst";
                     break;
-                case DopplerStage.IIIa:
+                case PiperStage.IIIa:
                     filename = "IIIa.dst";
                     break;
-                case DopplerStage.IIIb:
+                case PiperStage.IIIb:
                     filename = "IIIb.dst";
                     break;
-                case DopplerStage.IVa:
+                case PiperStage.IVa:
                     switch(dopplerControl1.CurrentReduction)
                     {
                         case RdaReduction.Mild:
@@ -109,7 +109,7 @@ namespace Medical.GUI
                             break;
                     }
                     break;
-                case DopplerStage.IVb:
+                case PiperStage.IVb:
                     switch (dopplerControl1.CurrentReduction)
                     {
                         case RdaReduction.Mild:
@@ -123,10 +123,10 @@ namespace Medical.GUI
                             break;
                     }
                     break;
-                case DopplerStage.Va:
+                case PiperStage.Va:
                     filename = "Va.dst";
                     break;
-                case DopplerStage.Vb:
+                case PiperStage.Vb:
                     filename = "Vb.dst";
                     break;
             }

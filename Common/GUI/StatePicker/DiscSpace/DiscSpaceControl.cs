@@ -6,51 +6,35 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Logging;
 using ComponentFactory.Krypton.Toolkit;
 
 namespace Medical.GUI
 {
-    /// <summary>
-    /// An enum of piper stages.
-    /// </summary>
-    public enum PiperStage
+    public enum ClockFace
     {
         Unknown = 0,
-        I = 1,
-        II = 2,
-        IIIa = 4,
-        IIIb = 8,
-        IVa = 16,
-        IVb = 32,
-        Va = 64,
-        Vb = 128,
+        Clock12 = 1,
+        Clock11 = 2,
+        Clock10 = 4
     }
 
-    public enum RdaReduction
-    {
-        Mild,
-        Moderate,
-        Severe,
-        Unknown
-    }
-
-    /// <summary>
-    /// A reuseable control that can compute doppler stages.
-    /// </summary>
-    public partial class DopplerControl : UserControl
+    public partial class DiscSpaceControl : UserControl
     {
         public event EventHandler CurrentStageChanged;
 
         PiperStage currentStage = PiperStage.Unknown;
         Dictionary<PiperStage, int> stageMap = new Dictionary<PiperStage, int>();
+        Dictionary<ClockFace, int> clockFaceMap = new Dictionary<ClockFace, int>();
         private bool allowRdaReductionEventFire = true;
         private bool allowStageChangeEventFire = true;
+        private bool allowClockChangeEventFire = true;
         RdaReduction currentReduction = RdaReduction.Unknown;
+        ClockFace currentClockFace = ClockFace.Unknown;
 
-        public DopplerControl()
+        public DiscSpaceControl()
         {
             InitializeComponent();
+            
             stageMap.Add(PiperStage.I, 0);
             stageMap.Add(PiperStage.II, 0);
             stageMap.Add(PiperStage.IIIa, 0);
@@ -60,9 +44,13 @@ namespace Medical.GUI
             stageMap.Add(PiperStage.Va, 0);
             stageMap.Add(PiperStage.Vb, 0);
 
-            rotatoryCombo.SelectedIndexChanged += new EventHandler(rotatoryCombo_SelectedIndexChanged);
-            translatoryCombo.SelectedIndexChanged += new EventHandler(translatoryCombo_SelectedIndexChanged);
-            clickCombo.SelectedIndexChanged += new EventHandler(clickCombo_SelectedIndexChanged);
+            clockFaceMap.Add(ClockFace.Clock10, 0);
+            clockFaceMap.Add(ClockFace.Clock11, 0);
+            clockFaceMap.Add(ClockFace.Clock12, 0);
+
+            verticalSpaceCombo.SelectedIndexChanged += new EventHandler(comboSelectionChanged);
+            horizontalSpaceCombo.SelectedIndexChanged += new EventHandler(comboSelectionChanged);
+            condyleShapeCombo.SelectedIndexChanged += new EventHandler(comboSelectionChanged);
 
             stageIButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
             stageIIButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
@@ -73,18 +61,25 @@ namespace Medical.GUI
             stageVaButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
             stageVbButton.CheckedChanged += new EventHandler(stageButton_CheckedChanged);
 
+            clock10Radio.CheckedChanged += new EventHandler(clockRadio_CheckedChanged);
+            clock11Radio.CheckedChanged += new EventHandler(clockRadio_CheckedChanged);
+            clock12Radio.CheckedChanged += new EventHandler(clockRadio_CheckedChanged);
+
             mildRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
             moderateRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
             severeRDAReductionButton.CheckedChanged += new EventHandler(RDAReductionButton_CheckedChanged);
 
             rdaReductionGroupBox.Enabled = false;
+            clockFaceGroupBox.Enabled = false;
+
+            computeDiscSpaceStage();
         }
 
         public void setToDefault()
         {
-            rotatoryCombo.SelectedItem = "Unknown";
-            translatoryCombo.SelectedItem = "Unknown";
-            clickCombo.SelectedItem = "Unknown";
+            verticalSpaceCombo.SelectedItem = "Normal";
+            horizontalSpaceCombo.SelectedItem = "Normal";
+            condyleShapeCombo.SelectedItem = "Normal";
             stageIButton.Checked = true;
         }
 
@@ -107,7 +102,7 @@ namespace Medical.GUI
             }
         }
 
-        private PiperStage computeDopplerStage()
+        private void computeDiscSpaceStage()
         {
             stageMap[PiperStage.I] = 0;
             stageMap[PiperStage.II] = 0;
@@ -118,86 +113,72 @@ namespace Medical.GUI
             stageMap[PiperStage.Va] = 0;
             stageMap[PiperStage.Vb] = 0;
 
-            switch (rotatoryCombo.SelectedIndex)
+            clockFaceMap[ClockFace.Clock10] = 0;
+            clockFaceMap[ClockFace.Clock11] = 0;
+            clockFaceMap[ClockFace.Clock12] = 0;
+
+            switch (verticalSpaceCombo.SelectedIndex)
             {
-                case 0: //None
-                    stageMap[PiperStage.I] += 2;
-                    stageMap[PiperStage.II] += 2;
-                    stageMap[PiperStage.IIIa] += 2;
-                    stageMap[PiperStage.IIIb] += 2;
+                case 0: //Normal
+                    stageMap[PiperStage.I] += 1;
+                    stageMap[PiperStage.II] += 1;
+                    stageMap[PiperStage.IIIa] += 1;
+                    stageMap[PiperStage.IIIb] += 1;
+                    //stageMap[PiperStage.IVa] += 1;
+                    clockFaceMap[ClockFace.Clock11] += 1;
                     break;
-                case 1: //Mild
+                case 1: //Increased
+                    stageMap[PiperStage.IVa] += 1;
+                    clockFaceMap[ClockFace.Clock11] += 1;
+                    clockFaceMap[ClockFace.Clock12] += 2;
+                    break;
+                case 2: //Decreased
+                    stageMap[PiperStage.IVa] += 1;
+                    stageMap[PiperStage.IVb] += 1;
+                    clockFaceMap[ClockFace.Clock11] += 1;
+                    clockFaceMap[ClockFace.Clock10] += 2;
+                    break;
+                case 3: //Bone on Bone
+                    stageMap[PiperStage.Va] += 10;
+                    stageMap[PiperStage.Vb] += 10;
+                    break;
+            }
+
+            switch (horizontalSpaceCombo.SelectedIndex)
+            {
+                case 0: //Normal
                     stageMap[PiperStage.I] += 1;
                     stageMap[PiperStage.II] += 1;
                     stageMap[PiperStage.IIIa] += 1;
                     stageMap[PiperStage.IIIb] += 1;
                     stageMap[PiperStage.IVa] += 1;
                     stageMap[PiperStage.IVb] += 1;
-                    break;
-                case 2: //Moderate
-                    stageMap[PiperStage.IVa] += 2;
-                    stageMap[PiperStage.IVb] += 2;
                     stageMap[PiperStage.Va] += 1;
                     stageMap[PiperStage.Vb] += 1;
                     break;
-                case 3: //Coarse Rough
-                    stageMap[PiperStage.Va] += 10;
-                    break;
-                case 4: //Coarse Eburnated
-                    stageMap[PiperStage.Vb] += 10;
+                case 1: //Posterior Shift
+                    stageMap[PiperStage.IVa] += 2;
+                    clockFaceMap[ClockFace.Clock11] += 2;
                     break;
             }
 
-            switch (translatoryCombo.SelectedIndex)
+            switch (condyleShapeCombo.SelectedIndex)
             {
-                case 0: //None
-                    stageMap[PiperStage.I] += 2;
-                    stageMap[PiperStage.II] += 1;
-                    break;
-                case 1: //Mild
+                case 0: //Normal
                     stageMap[PiperStage.I] += 1;
-                    stageMap[PiperStage.II] += 2;
+                    stageMap[PiperStage.II] += 1;
                     stageMap[PiperStage.IIIa] += 1;
                     stageMap[PiperStage.IIIb] += 1;
                     stageMap[PiperStage.IVa] += 1;
                     stageMap[PiperStage.IVb] += 1;
+                    stageMap[PiperStage.Va] += 1;
                     break;
-                case 2: //Moderate
-                    stageMap[PiperStage.IIIa] += 2;
-                    stageMap[PiperStage.IIIb] += 2;
-                    stageMap[PiperStage.IVa] += 2;
-                    stageMap[PiperStage.IVb] += 2;
-                    break;
-                case 3: //Coarse Rough
-                    stageMap[PiperStage.Va] += 10;
-                    break;
-                case 4: //Coarse Eburnated
+                case 1: //Osteophyte
                     stageMap[PiperStage.Vb] += 10;
                     break;
             }
 
-            switch (clickCombo.SelectedIndex)
-            {
-                case 0: //None
-                    stageMap[PiperStage.I] += 2;
-                    stageMap[PiperStage.II] += 1;
-                    stageMap[PiperStage.IIIb] += 2;
-                    stageMap[PiperStage.IVb] += 2;
-                    stageMap[PiperStage.Va] += 2;
-                    stageMap[PiperStage.Vb] += 2;
-                    break;
-                case 1: //Reciprocal
-                    stageMap[PiperStage.II] += 2;
-                    stageMap[PiperStage.IIIa] += 2;
-                    stageMap[PiperStage.IVa] += 2;
-                    break;
-                case 2: //Surface
-                    stageMap[PiperStage.Va] += 1;
-                    stageMap[PiperStage.Vb] += 1;
-                    break;
-            }
-
-            //Find the largest number
+            //Find the largest piper stage number
             int largest = 0;
             foreach (int value in stageMap.Values)
             {
@@ -218,46 +199,64 @@ namespace Medical.GUI
                 }
             }
 
-            allowStageChangeEventFire = false;
-            allowRdaReductionEventFire = false;
-
-            //Update UI
-            bool activatedLowest = false;
-            processButton(stageIButton, PiperStage.I, stages, ref activatedLowest);
-            processButton(stageIIButton, PiperStage.II, stages, ref activatedLowest);
-            processButton(stageIIIaButton, PiperStage.IIIa, stages, ref activatedLowest);
-            processButton(stageIIIbButton, PiperStage.IIIb, stages, ref activatedLowest);
-            processButton(stageIVaButton, PiperStage.IVa, stages, ref activatedLowest);
-            processButton(stageIVbButton, PiperStage.IVb, stages, ref activatedLowest);
-            processButton(stageVaButton, PiperStage.Va, stages, ref activatedLowest);
-            processButton(stageVbButton, PiperStage.Vb, stages, ref activatedLowest);
-
-            //Override the settings with any custom overrides
-            //If rotatory crepitus is Moderate
-            if (rotatoryCombo.SelectedIndex == 2)
+            //Find the largest clock face number
+            largest = 0;
+            foreach (int value in clockFaceMap.Values)
             {
-                //Force stage IVa if reciprocal click
-                if (clickCombo.SelectedIndex == 1)
+                if (value > largest)
                 {
-                    stageIVaButton.Checked = true;
-                }
-                //Force stage IVb for others ignoring value under translatory
-                else
-                {
-                    stageIVbButton.Checked = true;
-                    stageIVbButton.Enabled = true;
+                    largest = value;
                 }
             }
 
+            ClockFace clockFaces = ClockFace.Unknown;
+
+            foreach (ClockFace clockFace in clockFaceMap.Keys)
+            {
+                if (clockFaceMap[clockFace] == largest)
+                {
+                    clockFaces |= clockFace;
+                }
+            }
+
+            allowStageChangeEventFire = false;
+            allowRdaReductionEventFire = false;
+            allowClockChangeEventFire = false;
+
+            //Update UI
+            bool activatedLowest = false;
+            processButton(stageIButton, (int)PiperStage.I, (int)stages, ref activatedLowest);
+            processButton(stageIIButton, (int)PiperStage.II, (int)stages, ref activatedLowest);
+            processButton(stageIIIaButton, (int)PiperStage.IIIa, (int)stages, ref activatedLowest);
+            processButton(stageIIIbButton, (int)PiperStage.IIIb, (int)stages, ref activatedLowest);
+            processButton(stageIVaButton, (int)PiperStage.IVa, (int)stages, ref activatedLowest);
+            processButton(stageIVbButton, (int)PiperStage.IVb, (int)stages, ref activatedLowest);
+            processButton(stageVaButton, (int)PiperStage.Va, (int)stages, ref activatedLowest);
+            processButton(stageVbButton, (int)PiperStage.Vb, (int)stages, ref activatedLowest);
+
+            activatedLowest = false;
+            processButton(clock12Radio, (int)ClockFace.Clock12, (int)clockFaces, ref activatedLowest);
+            processButton(clock11Radio, (int)ClockFace.Clock11, (int)clockFaces, ref activatedLowest);
+            processButton(clock10Radio, (int)ClockFace.Clock10, (int)clockFaces, ref activatedLowest);
+
             allowStageChangeEventFire = true;
             allowRdaReductionEventFire = true;
+            allowClockChangeEventFire = true;
 
             if (CurrentStageChanged != null)
             {
                 CurrentStageChanged.Invoke(this, EventArgs.Empty);
             }
+        }
 
-            return stages;
+        void processButton(KryptonRadioButton button, int checkStage, int stages, ref bool activatedLowest)
+        {
+            button.Enabled = (stages & checkStage) == checkStage;
+            if (!activatedLowest && button.Enabled)
+            {
+                button.Checked = true;
+                activatedLowest = true;
+            }
         }
 
         void RDAReductionButton_CheckedChanged(object sender, EventArgs e)
@@ -284,13 +283,31 @@ namespace Medical.GUI
             }
         }
 
-        void processButton(KryptonRadioButton button, PiperStage checkStage, PiperStage stages, ref bool activatedLowest)
+        void clockRadio_CheckedChanged(object sender, EventArgs e)
         {
-            button.Enabled = (stages & checkStage) == checkStage;
-            if (!activatedLowest && button.Enabled)
+            ClockFace oldClockFace = currentClockFace;
+            if (clock10Radio.Checked)
             {
-                button.Checked = true;
-                activatedLowest = true;
+                currentClockFace = ClockFace.Clock10;
+                rdaReductionGroupBox.Enabled = true;
+                mildRDAReductionButton.Checked = true;
+            }
+            else if (clock11Radio.Checked)
+            {
+                currentClockFace = ClockFace.Clock11;
+                rdaReductionGroupBox.Enabled = false;
+            }
+            else if (clock12Radio.Checked)
+            {
+                currentClockFace = ClockFace.Clock12;
+                rdaReductionGroupBox.Enabled = false;
+            }
+            if (allowClockChangeEventFire && oldClockFace != currentClockFace)
+            {
+                if (CurrentStageChanged != null)
+                {
+                    CurrentStageChanged.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -301,47 +318,54 @@ namespace Medical.GUI
             {
                 currentStage = PiperStage.I;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else if (stageIIButton.Checked)
             {
                 currentStage = PiperStage.II;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else if (stageIIIaButton.Checked)
             {
                 currentStage = PiperStage.IIIa;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else if (stageIIIbButton.Checked)
             {
                 currentStage = PiperStage.IIIb;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else if (stageIVaButton.Checked)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVa;
-                rdaReductionGroupBox.Enabled = true;
+                rdaReductionGroupBox.Enabled = clock10Radio.Checked;
                 mildRDAReductionButton.Checked = true;
+                clockFaceGroupBox.Enabled = true;
                 allowRdaReductionEventFire = true;
             }
             else if (stageIVbButton.Checked)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVb;
-                rdaReductionGroupBox.Enabled = true;
-                mildRDAReductionButton.Checked = true;
+                rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
                 allowRdaReductionEventFire = true;
             }
             else if (stageVaButton.Checked)
             {
                 currentStage = PiperStage.Va;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else if (stageVbButton.Checked)
             {
                 currentStage = PiperStage.Vb;
                 rdaReductionGroupBox.Enabled = false;
+                clockFaceGroupBox.Enabled = false;
             }
             else
             {
@@ -356,24 +380,14 @@ namespace Medical.GUI
             }
         }
 
-        void rotatoryCombo_SelectedIndexChanged(object sender, EventArgs e)
+        void comboSelectionChanged(object sender, EventArgs e)
         {
-            computeDopplerStage();
-        }
-
-        void clickCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            computeDopplerStage();
-        }
-
-        void translatoryCombo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            computeDopplerStage();
+            computeDiscSpaceStage();
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            setToDefault();
+            this.setToDefault();
         }
     }
 }
