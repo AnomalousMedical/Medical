@@ -20,6 +20,7 @@ namespace Medical
         Color color;
         bool selected;
         Vector3 centerOffset;
+        bool enabled = true;
 
         public Axis(Vector3 direction, float length, Color color)
         {
@@ -62,8 +63,11 @@ namespace Medical
 
         public void process(Ray3 worldRay, Vector3 boxLocation)
         {
-            axisBox.setCenter(boxLocation + centerOffset);
-            selected = axisBox.testIntersection(ref worldRay);
+            if (enabled)
+            {
+                axisBox.setCenter(boxLocation + centerOffset);
+                selected = axisBox.testIntersection(ref worldRay);
+            }
         }
 
         public void clearSelection()
@@ -73,7 +77,7 @@ namespace Medical
 
         public Vector3 translate(Vector3 worldTargetPoint)
         {
-            if (selected)
+            if (isSelected())
             {
                 return worldTargetPoint * direction;
             }
@@ -85,55 +89,77 @@ namespace Medical
 
         public bool isSelected()
         {
-            return selected;
+            return enabled && selected;
         }
 
         public void drawLine(DebugDrawingSurface drawSurface, Vector3 origin)
         {
-            float drawLength = length;
-            if (selected)
+            if (enabled)
             {
-                drawSurface.setColor(HIGHLIGHT);
-                drawLength += length * .25f;
+                float drawLength = length;
+                if (selected)
+                {
+                    drawSurface.setColor(HIGHLIGHT);
+                    drawLength += length * .25f;
+                }
+                else
+                {
+                    drawSurface.setColor(color);
+                }
+                drawSurface.drawLine(origin, origin + direction * drawLength);
             }
-            else
-            {
-                drawSurface.setColor(color);
-            }
-            drawSurface.drawLine(origin, origin + direction * drawLength);
         }
 
         public void drawSquare(DebugDrawingSurface drawSurface, Vector3 origin)
         {
-            float drawLength = length;
-            if (selected)
+            if (enabled)
             {
-                drawSurface.setColor(HIGHLIGHT);
-                drawLength += length * .25f;
+                float drawLength = length;
+                if (selected)
+                {
+                    drawSurface.setColor(HIGHLIGHT);
+                    drawLength += length * .25f;
+                }
+                else
+                {
+                    drawSurface.setColor(color);
+                }
+                Vector3 outPoint = origin + direction * drawLength;
+                Vector3 sourcePoint = origin;
+                if (direction.x != 0)
+                {
+                    sourcePoint = origin;
+                    sourcePoint.x = outPoint.x;
+                    drawSurface.drawLine(sourcePoint, outPoint);
+                }
+                if (direction.y != 0)
+                {
+                    sourcePoint = origin;
+                    sourcePoint.y = outPoint.y;
+                    drawSurface.drawLine(sourcePoint, outPoint);
+                }
+                if (direction.z != 0)
+                {
+                    sourcePoint = origin;
+                    sourcePoint.z = outPoint.z;
+                    drawSurface.drawLine(sourcePoint, outPoint);
+                }
             }
-            else
+        }
+
+        public bool Enabled
+        {
+            get
             {
-                drawSurface.setColor(color);
+                return enabled;
             }
-            Vector3 outPoint = origin + direction * drawLength;
-            Vector3 sourcePoint = origin;
-            if (direction.x != 0)
+            set
             {
-                sourcePoint = origin;
-                sourcePoint.x = outPoint.x;
-                drawSurface.drawLine(sourcePoint, outPoint);
-            }
-            if (direction.y != 0)
-            {
-                sourcePoint = origin;
-                sourcePoint.y = outPoint.y;
-                drawSurface.drawLine(sourcePoint, outPoint);
-            }
-            if (direction.z != 0)
-            {
-                sourcePoint = origin;
-                sourcePoint.z = outPoint.z;
-                drawSurface.drawLine(sourcePoint, outPoint);
+                enabled = value;
+                if (!enabled)
+                {
+                    selected = false;
+                }
             }
         }
     }

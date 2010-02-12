@@ -40,8 +40,11 @@ namespace Medical
             yAxisBox = new Axis(Vector3.Up, startingLength, new Color(0.0f, 0.0f, 1.0f));
             zAxisBox = new Axis(Vector3.Backward, startingLength, new Color(0.0f, 1.0f, 0.0f));
             xzAxisBox = new Axis(Vector3.Right + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
+            //xzAxisBox.Enabled = false;
             xyAxisBox = new Axis(Vector3.Right + Vector3.Up, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
+            //xyAxisBox.Enabled = false;
             yzAxisBox = new Axis(Vector3.Up + Vector3.Backward, startingLength / DOUBLE_AXIS_SCALE, new Color(1.0f, 0.0f, 1.0f));
+            //yzAxisBox.Enabled = false;
 
             //Bounding box
             Vector3[] axes = boundingBox.getAxes();
@@ -180,6 +183,22 @@ namespace Medical
             //axisSurface.drawLine(bbOrigin, bbOrigin + boundingBox.getExtents());
             //axisSurface.drawLine(bbOrigin, bbOrigin - boundingBox.getExtents());
             axisSurface.end();
+        }
+
+        public void setActivePlanes(MovementPlane activePlanes)
+        {
+            clearSelection();
+            xyAxisBox.Enabled = (activePlanes & MovementPlane.XY) == MovementPlane.XY;
+            xzAxisBox.Enabled = (activePlanes & MovementPlane.XZ) == MovementPlane.XZ;
+            yzAxisBox.Enabled = (activePlanes & MovementPlane.YZ) == MovementPlane.YZ;
+        }
+
+        public void setActiveAxes(MovementAxis activeAxes)
+        {
+            clearSelection();
+            xAxisBox.Enabled = (activeAxes & MovementAxis.X) == MovementAxis.X;
+            yAxisBox.Enabled = (activeAxes & MovementAxis.Y) == MovementAxis.Y;
+            zAxisBox.Enabled = (activeAxes & MovementAxis.Z) == MovementAxis.Z;
         }
 
         #endregion

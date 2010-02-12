@@ -99,6 +99,7 @@ namespace Medical.GUI
         protected override void onPanelOpening()
         {
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
+            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
             gridPropertiesControl1.updateGrid();
         }
 
@@ -147,6 +148,7 @@ namespace Medical.GUI
             TeethController.showTeethTools(true, false);
             this.setLayerState("TopTeethLayers");
             this.setNavigationState("WizardTopTeeth");
+            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
         }
 
         private void bottomCameraButton_Click(object sender, EventArgs e)
@@ -154,7 +156,7 @@ namespace Medical.GUI
             TeethController.showTeethTools(false, true);
             this.setLayerState("BottomTeethLayers");
             this.setNavigationState("WizardBottomTeeth");
-            
+            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Z, MovementPlane.XZ);
         }
 
         private void leftLateralCameraButton_Click(object sender, EventArgs e)
@@ -162,6 +164,7 @@ namespace Medical.GUI
             TeethController.showTeethTools(LEFT_LATERAL_TEETH);
             this.setLayerState("TeethLayers");
             this.setNavigationState("WizardTeethLeftLateral");
+            TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ);
         }
 
         private void midlineAnteriorCameraButton_Click(object sender, EventArgs e)
@@ -169,6 +172,7 @@ namespace Medical.GUI
             TeethController.showTeethTools(MIDLINE_ANTERIOR_TEETH);
             this.setLayerState("TeethLayers");
             this.setNavigationState("WizardTeethMidlineAnterior");
+            TeethController.TeethMover.setActivePlanes(MovementAxis.X | MovementAxis.Y, MovementPlane.XY);
         }
 
         private void rightLateralCameraButton_Click(object sender, EventArgs e)
@@ -176,6 +180,7 @@ namespace Medical.GUI
             TeethController.showTeethTools(RIGHT_LATERAL_TEETH);
             this.setLayerState("TeethLayers");
             this.setNavigationState("WizardTeethRightLateral");
+            TeethController.TeethMover.setActivePlanes(MovementAxis.Y | MovementAxis.Z, MovementPlane.YZ);
         }
     }
 }

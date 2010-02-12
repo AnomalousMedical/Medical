@@ -8,6 +8,22 @@ using Engine.Renderer;
 
 namespace Medical
 {
+    public enum MovementPlane
+    {
+        XY = 1,
+        XZ = 2,
+        YZ = 4,
+        All = XY | XZ | YZ,
+    }
+
+    public enum MovementAxis
+    {
+        X = 1,
+        Y = 2,
+        Z = 4,
+        All = X | Y | Z,
+    }
+
     class MovableObjectTools
     {
         private MovableObject movable;
@@ -56,6 +72,16 @@ namespace Medical
         {
             moveTool.clearSelection();
             rotateTool.clearSelection();
+        }
+
+        public void setActivePlanes(MovementPlane activePlanes)
+        {
+            moveTool.setActivePlanes(activePlanes);
+        }
+
+        public void setActiveAxes(MovementAxis activeAxes)
+        {
+            moveTool.setActiveAxes(activeAxes);
         }
 
         public void drawTools(DebugDrawingSurface axisSurface)

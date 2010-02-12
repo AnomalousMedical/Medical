@@ -163,6 +163,15 @@ namespace Medical
             drawingSurface.setVisible(visible);
         }
 
+        public void setActivePlanes(MovementAxis axes, MovementPlane planes)
+        {
+            foreach (MovableObjectTools currentTools in movableObjects)
+            {
+                currentTools.setActiveAxes(axes);
+                currentTools.setActivePlanes(planes);
+            }
+        }
+
         public bool ShowMoveTools
         {
             get
