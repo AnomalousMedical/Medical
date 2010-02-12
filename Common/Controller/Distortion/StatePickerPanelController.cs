@@ -327,7 +327,7 @@ namespace Medical
 
         private StatePickerPanel createLeftDiscSpacePanel()
         {
-            DiscSpacePanel leftDiscPanel = new DiscSpacePanel("LeftTMJDisc", "FossaLayers", "LeftDiscSpace", this);
+            DiscSpacePanel leftDiscPanel = new DiscSpacePanel("FossaLayers", "LeftDiscSpace", this);
             leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "FossaLayers";
             leftDiscPanel.Text = "Left Disc Space";
@@ -339,7 +339,7 @@ namespace Medical
 
         private StatePickerPanel createRightDiscSpacePanel()
         {
-            DiscSpacePanel rightDiscPanel = new DiscSpacePanel("RightTMJDisc", "FossaLayers", "RightDiscSpace", this);
+            DiscSpacePanel rightDiscPanel = new DiscSpacePanel("FossaLayers", "RightDiscSpace", this);
             rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "FossaLayers";
             rightDiscPanel.Text = "Right Disc Space";

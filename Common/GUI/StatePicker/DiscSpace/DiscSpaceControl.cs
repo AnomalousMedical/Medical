@@ -102,6 +102,14 @@ namespace Medical.GUI
             }
         }
 
+        public ClockFace CurrentClockFace
+        {
+            get
+            {
+                return currentClockFace;
+            }
+        }
+
         private void computeDiscSpaceStage()
         {
             stageMap[PiperStage.I] = 0;
