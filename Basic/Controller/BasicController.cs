@@ -346,17 +346,31 @@ namespace Medical.Controller
                 distortionController.addDistortionWizard(ctWizard);
             }
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC))
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_SPACE))
             {
                 //Disc
-                DistortionWizard discWizard = new DistortionWizard("Disc", "Single Distortion", statePickerPanelController);
-                discWizard.TextLine1 = "Disc";
-                discWizard.ImageLarge = Resources.DiscWizardLarge;
+                DistortionWizard discWizard = new DistortionWizard("Disc Space", "Single Distortion", statePickerPanelController);
+                discWizard.TextLine1 = "Disc Space";
+                discWizard.ImageLarge = Resources.DiscSpaceWizardIcon;
                 discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.DisclaimerPanel));
-                discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
-                discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
+                discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
+                discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
                 discWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
                 distortionController.addDistortionWizard(discWizard);
+            }
+
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_CLOCK))
+            {
+                //Disc
+                DistortionWizard discClockWizard = new DistortionWizard("Disc Clock Face", "Single Distortion", statePickerPanelController);
+                discClockWizard.TextLine1 = "Disc";
+                discClockWizard.TextLine2 = "Clock Face";
+                discClockWizard.ImageLarge = Resources.DiscWizardLarge;
+                discClockWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                discClockWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
+                discClockWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
+                discClockWizard.addStatePanel(statePickerPanelController.getPanel(WizardPanels.NotesPanel));
+                distortionController.addDistortionWizard(discClockWizard);
             }
 
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MRI))

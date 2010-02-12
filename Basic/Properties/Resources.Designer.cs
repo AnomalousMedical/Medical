@@ -144,6 +144,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DiscSpaceWizardIcon {
+            get {
+                object obj = ResourceManager.GetObject("DiscSpaceWizardIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap DiscWizardLarge {
             get {
                 object obj = ResourceManager.GetObject("DiscWizardLarge", resourceCulture);
