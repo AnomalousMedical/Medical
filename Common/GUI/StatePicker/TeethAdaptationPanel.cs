@@ -111,6 +111,8 @@ namespace Medical.GUI
             }
             TeethController.showTeethTools(false, false);
             panelController.MeasurementGrid.Visible = false;
+            moveButton.Checked = false;
+            rotateButton.Checked = false;
         }
 
         void adaptButton_CheckedChanged(object sender, EventArgs e)
