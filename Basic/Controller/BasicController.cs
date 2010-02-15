@@ -64,7 +64,7 @@ namespace Medical.Controller
         /// </summary>
         public BasicController()
         {
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Piper");
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/PiperJBO");
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 featureLevelString = "Graphics Edition";
