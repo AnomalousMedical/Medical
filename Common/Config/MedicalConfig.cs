@@ -49,26 +49,27 @@ namespace Medical
             {
                 programDirectory = ".";
             }
-            if (File.Exists(programDirectory + "/Articulometrics.dat"))
+#if ALLOW_OVERRIDE
+            if (File.Exists(programDirectory + "/PiperJBO.dat"))
             {
-                autoResourceRoot = programDirectory + "/Articulometrics.dat";
+                autoResourceRoot = programDirectory + "/PiperJBO.dat";
             }
-            else if (File.Exists(programDirectory + "/Articulometrics.zip"))
+            else if (File.Exists(programDirectory + "/PiperJBO.zip"))
             {
-                autoResourceRoot = programDirectory + "/Articulometrics.zip";
+                autoResourceRoot = programDirectory + "/PiperJBO.zip";
             }
             else
             {
                 autoResourceRoot = ".";
             }
-
-#if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))
             {
                 internalSettings = new ConfigFile(programDirectory + "/override.ini");
                 internalSettings.loadConfigFile();
                 resources = internalSettings.createOrRetrieveConfigSection("Resources");
             }
+#else
+            autoResourceRoot = programDirectory + "/PiperJBO.dat";
 #endif
         }
 
