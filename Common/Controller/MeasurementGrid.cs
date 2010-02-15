@@ -22,6 +22,7 @@ namespace Medical
         private bool visible = false;
         private TextWatermark textWatermark;
         private Color color = Color.FromARGB(System.Drawing.Color.Green.ToArgb());
+        private Vector3 origin = Vector3.Zero;
 
         public MeasurementGrid(String name, MedicalController medicalController, DrawingWindowController drawingWindowController)
         {
@@ -50,6 +51,7 @@ namespace Medical
                 sceneNode = sceneManager.SceneManager.createSceneNode(name + "__MeasurementManualObjectSceneNode");
                 sceneNode.attachObject(manualObject);
                 sceneNode.setVisible(visible);
+                sceneNode.setPosition(origin);
                 sceneManager.SceneManager.getRootSceneNode().addChild(sceneNode);
                 drawGrid(5.0f, 25.0f);
                 textWatermark.Visible = visible;
@@ -151,6 +153,22 @@ namespace Medical
             set
             {
                 color = value;
+            }
+        }
+
+        public Vector3 Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
+                if (sceneNode != null)
+                {
+                    sceneNode.setPosition(origin);
+                }
             }
         }
 

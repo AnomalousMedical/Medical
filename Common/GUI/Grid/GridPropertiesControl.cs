@@ -6,12 +6,14 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Engine;
 
 namespace Medical.GUI.Grid
 {
     public partial class GridPropertiesControl : UserControl
     {
         private MeasurementGrid grid;
+        private Vector3 origin = Vector3.Zero;
 
         public GridPropertiesControl()
         {
@@ -29,6 +31,7 @@ namespace Medical.GUI.Grid
         {
             grid.drawGrid((float)gridSpaceControl.Value, 100);
             grid.Visible = showGridCheckBox.Checked;
+            grid.Origin = origin;
         }
 
         public bool GridVisible
@@ -52,6 +55,18 @@ namespace Medical.GUI.Grid
             set
             {
                 gridSpaceControl.Value = (decimal)value;
+            }
+        }
+
+        public Vector3 Origin
+        {
+            get
+            {
+                return origin;
+            }
+            set
+            {
+                origin = value;
             }
         }
 

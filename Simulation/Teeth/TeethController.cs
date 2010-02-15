@@ -154,6 +154,17 @@ namespace Medical
             }
         }
 
+        public static Vector3 getToothCenter()
+        {
+            Vector3 center = Vector3.Zero;
+            foreach (Tooth tooth in teeth.Values)
+            {
+                center += tooth.Owner.Translation;
+            }
+            center /= teeth.Count;
+            return center;
+        }
+
         /// <summary>
         /// Call this function before a screenshot is rendered to hide the
         /// movement tools if you wish them hidden in the screenshot. This

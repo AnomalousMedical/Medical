@@ -47,6 +47,7 @@ namespace Medical.GUI
 
         protected override void onPanelOpening()
         {
+            gridPropertiesControl1.Origin = TeethController.getToothCenter();
             gridPropertiesControl1.updateGrid();
             teethMovementPanel1.setDefaultTools();
         }
