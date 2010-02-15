@@ -22,7 +22,7 @@ namespace Medical.GUI
         private BasicController controller;
         private OpenPatientDialog openPatient = new OpenPatientDialog();
         private SavePatientDialog savePatient = new SavePatientDialog();
-        private ClinicalAbout aboutBox = new ClinicalAbout();
+        private ClinicalAbout aboutBox;
         private ShortcutController shortcutController;
         private LayerGUIController layerGUIController;
         private WindowGUIController windowGUIController;
@@ -41,9 +41,10 @@ namespace Medical.GUI
 
         private bool allowSimulationTab = true;
 
-        public BasicForm(ShortcutController shortcuts)
+        public BasicForm(ShortcutController shortcuts, String featureLevelString)
         {
             InitializeComponent();
+            aboutBox = new ClinicalAbout(featureLevelString);
             stateWizardHost = new BasicStateWizardHost(this);
             this.shortcutController = shortcuts;
 

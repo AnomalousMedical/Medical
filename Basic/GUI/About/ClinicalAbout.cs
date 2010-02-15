@@ -13,7 +13,7 @@ namespace Medical.GUI
 {
     public partial class ClinicalAbout : KryptonForm
     {
-        public ClinicalAbout()
+        public ClinicalAbout(String featureLevelString)
         {
             InitializeComponent();
             this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
@@ -28,32 +28,7 @@ namespace Medical.GUI
             zliblinklabel.LinkClicked += new EventHandler(zliblinklabel_LinkClicked);
             freeimageLinkLabel.LinkClicked += new EventHandler(freeimageLinkLabel_LinkClicked);
             freetypeLinkLabel.LinkClicked += new EventHandler(freetypeLinkLabel_LinkClicked);
-
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
-            {
-                featureLevelLabel.Text = "Graphical";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
-            {
-                featureLevelLabel.Text = "Magnetic Resonance";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                featureLevelLabel.Text = "Radiography and CT";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
-            {
-                featureLevelLabel.Text = "Clinical";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                featureLevelLabel.Text = "Dentition and Profile";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                featureLevelLabel.Text = "Doppler";
-            }
-             
+            featureLevelLabel.Text = featureLevelString;
         }
 
         protected override void OnShown(EventArgs e)

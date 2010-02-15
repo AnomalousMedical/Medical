@@ -23,6 +23,8 @@ namespace Medical.Controller
 
     public class BasicController : IDisposable
     {
+        public String featureLevelString;
+
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;
 
@@ -63,6 +65,30 @@ namespace Medical.Controller
         public BasicController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Piper");
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            {
+                featureLevelString = "Graphics Edition";
+            }
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
+            {
+                featureLevelString = "Magnetic Resonance Edition";
+            }
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            {
+                featureLevelString = "Radiography and CT Edition";
+            }
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
+            {
+                featureLevelString = "Clinical Edition";
+            }
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
+            {
+                featureLevelString = "Dentition and Profile Edition";
+            }
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            {
+                featureLevelString = "Doppler Edition";
+            }
         }
 
         /// <summary>
@@ -115,12 +141,13 @@ namespace Medical.Controller
         public void go()
         {
             ProgressDialog splashScreen = new ProgressDialog(Resources.ArticulometricsSplash);
+            splashScreen.VersionString = featureLevelString;
             splashScreen.fadeIn();
             splashScreen.ProgressMaximum = 100;
             try
             {
                 shortcutController = new ShortcutController();
-                basicForm = new BasicForm(shortcutController);
+                basicForm = new BasicForm(shortcutController, featureLevelString);
                 medicalController = new MedicalController();
                 medicalController.intialize(basicForm);
                 medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);

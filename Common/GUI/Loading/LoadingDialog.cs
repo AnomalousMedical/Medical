@@ -109,5 +109,17 @@ namespace Medical.GUI
                 progressBar.Step = value;
             }
         }
+
+        public String VersionString
+        {
+            get
+            {
+                return versionLabel.Text;
+            }
+            set
+            {
+                versionLabel.Text = value;
+            }
+        }
     }
 }

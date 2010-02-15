@@ -29,6 +29,7 @@ namespace Medical.GUI
                 currentDialog.ProgressMaximum = ProgressMaximum;
                 currentDialog.ProgressMinimum = ProgressMinimum;
                 currentDialog.TopMost = TopMost;
+                currentDialog.VersionString = VersionString;
                 Thread loadThread = new Thread(doFadeIn);
                 loadThread.Name = "Load Dialog Thread";
                 loadThread.Start();
@@ -60,5 +61,7 @@ namespace Medical.GUI
         public bool TopMost { get; set; }
 
         public bool Visible { get; private set; }
+
+        public String VersionString { get; set; }
     }
 }

@@ -32,6 +32,8 @@
             this.opacityTimer = new System.Windows.Forms.Timer(this.components);
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.picturePanel = new System.Windows.Forms.Panel();
+            this.versionLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.picturePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // progressBar
@@ -44,11 +46,25 @@
             // 
             // picturePanel
             // 
+            this.picturePanel.Controls.Add(this.versionLabel);
             this.picturePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picturePanel.Location = new System.Drawing.Point(0, 0);
             this.picturePanel.Name = "picturePanel";
             this.picturePanel.Size = new System.Drawing.Size(514, 170);
             this.picturePanel.TabIndex = 1;
+            // 
+            // versionLabel
+            // 
+            this.versionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.versionLabel.Location = new System.Drawing.Point(501, 150);
+            this.versionLabel.Name = "versionLabel";
+            this.versionLabel.Size = new System.Drawing.Size(10, 19);
+            this.versionLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
+            this.versionLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
+            this.versionLabel.TabIndex = 0;
+            this.versionLabel.Values.Text = "   ";
             // 
             // LoadingDialog
             // 
@@ -63,6 +79,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LoadingDialog";
+            this.picturePanel.ResumeLayout(false);
+            this.picturePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -72,5 +90,6 @@
         private System.Windows.Forms.Timer opacityTimer;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Panel picturePanel;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel versionLabel;
     }
 }
