@@ -39,6 +39,8 @@
             this.adaptButton = new ComponentFactory.Krypton.Toolkit.KryptonCheckButton();
             this.gridPropertiesControl1 = new Medical.GUI.Grid.GridPropertiesControl();
             this.heightControl1 = new Medical.GUI.BoneManipulator.HeightControl();
+            this.resetButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.undoButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.SuspendLayout();
             // 
             // kryptonWrapLabel1
@@ -146,10 +148,30 @@
             this.heightControl1.Size = new System.Drawing.Size(279, 155);
             this.heightControl1.TabIndex = 38;
             // 
+            // resetButton
+            // 
+            this.resetButton.Location = new System.Drawing.Point(102, 390);
+            this.resetButton.Name = "resetButton";
+            this.resetButton.Size = new System.Drawing.Size(90, 25);
+            this.resetButton.TabIndex = 43;
+            this.resetButton.Values.Text = "Make Normal";
+            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(6, 390);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(90, 25);
+            this.undoButton.TabIndex = 42;
+            this.undoButton.Values.Text = "Undo";
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
             // ProfileDistortionPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.resetButton);
+            this.Controls.Add(this.undoButton);
             this.Controls.Add(this.heightControl1);
             this.Controls.Add(this.gridPropertiesControl1);
             this.Controls.Add(this.kryptonWrapLabel3);
@@ -162,7 +184,7 @@
             this.Controls.Add(this.rightMidCamera);
             this.Controls.Add(this.midlineCamera);
             this.Name = "ProfileDistortionPanel";
-            this.Size = new System.Drawing.Size(293, 398);
+            this.Size = new System.Drawing.Size(293, 428);
             this.ResumeLayout(false);
 
         }
@@ -180,5 +202,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonCheckButton adaptButton;
         private Medical.GUI.Grid.GridPropertiesControl gridPropertiesControl1;
         private Medical.GUI.BoneManipulator.HeightControl heightControl1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton resetButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton undoButton;
     }
 }
