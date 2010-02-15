@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Engine;
 
 namespace Medical.GUI.StatePicker.Teeth
 {
@@ -104,6 +105,16 @@ namespace Medical.GUI.StatePicker.Teeth
             TeethController.adaptAllTeeth(adaptButton.Checked);
             if (adaptButton.Checked)
             {
+                ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
+                ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
+                MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
+                MovingMuscleTarget movingMuscleTarget = MuscleController.MovingTarget;
+
+                leftCP.setLocation(leftCP.getNeutralLocation());
+                rightCP.setLocation(rightCP.getNeutralLocation());
+                movingMuscle.changeForce(1.0f);
+                movingMuscleTarget.Offset = Vector3.Zero;
+
                 moveButton.Checked = false;
                 rotateButton.Checked = false;
             }
