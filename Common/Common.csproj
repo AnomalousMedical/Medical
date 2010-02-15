@@ -243,10 +243,10 @@
     <Compile Include="GUI\StatePicker\BoneManipulatorPanel.Designer.cs">
       <DependentUpon>BoneManipulatorPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.cs">
+    <Compile Include="GUI\StatePicker\Teeth\BottomTeethRemovalPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\BottomTeethRemovalPanel.Designer.cs">
+    <Compile Include="GUI\StatePicker\Teeth\BottomTeethRemovalPanel.Designer.cs">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\DisclaimerPanel.cs">
@@ -350,25 +350,31 @@
     <Compile Include="GUI\StatePicker\StatePickerRibbon.cs" />
     <Compile Include="GUI\StatePicker\StatePickerUIHost.cs" />
     <Compile Include="GUI\StatePicker\StatePickerWizard.cs" />
-    <Compile Include="GUI\StatePicker\TeethAdaptationPanel.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethAdaptationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\TeethAdaptationPanel.Designer.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethAdaptationPanel.Designer.cs">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StatePicker\FullDistortionPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\TeethHeightAdaptationPanel.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethHeightAdaptationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\TeethHeightAdaptationPanel.Designer.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethHeightAdaptationPanel.Designer.cs">
       <DependentUpon>TeethHeightAdaptationPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethMovementPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\StatePicker\TopTeethRemovalPanel.Designer.cs">
+    <Compile Include="GUI\StatePicker\Teeth\TeethMovementPanel.Designer.cs">
+      <DependentUpon>TeethMovementPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Teeth\TopTeethRemovalPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\StatePicker\Teeth\TopTeethRemovalPanel.Designer.cs">
       <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\OpenPatientDialog.cs">
@@ -590,7 +596,7 @@
       <DependentUpon>ScenePicker.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\BottomTeethRemovalPanel.resx">
+    <EmbeddedResource Include="GUI\StatePicker\Teeth\BottomTeethRemovalPanel.resx">
       <DependentUpon>BottomTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -642,14 +648,17 @@
       <DependentUpon>StatePickerPanelHost.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\TeethAdaptationPanel.resx">
+    <EmbeddedResource Include="GUI\StatePicker\Teeth\TeethAdaptationPanel.resx">
       <DependentUpon>TeethAdaptationPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\TeethHeightAdaptationPanel.resx">
+    <EmbeddedResource Include="GUI\StatePicker\Teeth\TeethHeightAdaptationPanel.resx">
       <DependentUpon>TeethHeightAdaptationPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\StatePicker\TopTeethRemovalPanel.resx">
+    <EmbeddedResource Include="GUI\StatePicker\Teeth\TeethMovementPanel.resx">
+      <DependentUpon>TeethMovementPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\StatePicker\Teeth\TopTeethRemovalPanel.resx">
       <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>

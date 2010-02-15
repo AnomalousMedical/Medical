@@ -40,6 +40,15 @@ namespace Medical.GUI.BoneManipulator
             allowUpdates = true;
         }
 
+        public void setToDefault()
+        {
+            leftHeightSlider.setToDefault();
+            rightHeightSlider.setToDefault();
+            allowUpdates = false;
+            bothSidesSlider.Value = (int)((leftHeightSlider.Value + rightHeightSlider.Value) / 2.0 * bothSidesSlider.Maximum);
+            allowUpdates = true;
+        }
+
         void bothSidesSlider_ValueChanged(object sender, EventArgs e)
         {
             if (allowUpdates)

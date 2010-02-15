@@ -195,6 +195,7 @@ namespace Medical.GUI
             openMenuItem.Enabled = enabled;
             changeSceneMenuItem.Enabled = enabled;
             clinicalRibbon.RibbonAppButton.AppButtonShowRecentDocs = enabled;
+            //mandibleGUIController.AllowSceneManipulation = enabled;
             this.Focus();
         }
 
