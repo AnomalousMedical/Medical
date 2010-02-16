@@ -45,8 +45,11 @@ namespace Medical.GUI
             sequenceMenuItems.Items.Clear();
             foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
-                KryptonContextMenuHeading heading = new KryptonContextMenuHeading(sequenceGroup.Name);
-                sequenceMenuItems.Items.Add(heading);
+                KryptonContextMenuItem groupItem = new KryptonContextMenuItem(sequenceGroup.Name);
+                groupItem.Image = Resources.SequenceIconLarge;
+                sequenceMenuItems.Items.Add(groupItem);
+                KryptonContextMenuItems groupMenuItems = new KryptonContextMenuItems();
+                groupItem.Items.Add(groupMenuItems);
                 foreach (MovementSequenceInfo sequenceInfo in sequenceGroup.Sequences)
                 {
                     KryptonContextMenuItem sequenceItem = new KryptonContextMenuItem(sequenceInfo.Name);
@@ -60,7 +63,7 @@ namespace Medical.GUI
                     {
                         sequenceItem.Image = sequenceInfo.Thumbnail;
                     }
-                    sequenceMenuItems.Items.Add(sequenceItem);
+                    groupMenuItems.Items.Add(sequenceItem);
                 }
             }
         }
