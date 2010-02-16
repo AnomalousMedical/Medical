@@ -42,6 +42,7 @@ namespace Medical
         private int lastWindowWidth = 0;
         private int lastWindowHeight = 0;
         private NavigationState currentState;
+        private bool formMouseClick = false;
 
         static NavigationOverlay()
         {
@@ -130,6 +131,8 @@ namespace Medical
             window.CameraCreated += new DrawingWindowEvent(window_CameraCreated);
             window.CameraDestroyed += new DrawingWindowEvent(window_CameraDestroyed);
             window.PreFindVisibleObjects += window_PreFindVisibleObjects;
+
+            window.MouseClick += new System.Windows.Forms.MouseEventHandler(window_MouseClick);
 
             mainOverlay = OverlayManager.getInstance().create(name + "_NavigationOverlay");
         }
@@ -300,19 +303,36 @@ namespace Medical
 
         public void loopStarting()
         {
-            
+
+        }
+
+        void window_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (showOverlay)
+            {
+                formMouseClick = true;
+            }
         }
 
         public void sendUpdate(Clock clock)
         {
             if (showOverlay)
             {
-                bool firstFrame = eventManager[NavigationEvents.ClickButton].FirstFrameDown;
-                if (firstFrame)
+                bool mouseClicked = false;
+                if (formMouseClick)
                 {
                     currentButton = null;
+                    mouseClicked = true;
                 }
-                bool mouseClicked = eventManager[NavigationEvents.ClickButton].Down || firstFrame || eventManager[NavigationEvents.ClickButton].FirstFrameUp;
+                else
+                {
+                    bool firstFrame = eventManager[NavigationEvents.ClickButton].FirstFrameDown;
+                    if (firstFrame)
+                    {
+                        currentButton = null;
+                    }
+                    mouseClicked = eventManager[NavigationEvents.ClickButton].Down || firstFrame || eventManager[NavigationEvents.ClickButton].FirstFrameUp;
+                }
                 Vector3 mouseCoords = eventManager.Mouse.getAbsMouse();
                 if (window.Focused)
                 {
@@ -326,7 +346,12 @@ namespace Medical
                                 currentButton = button;
                                 //Log.Debug("Clicking {0}.", button.Link.Destination.Name);
                             }
-                            else if (eventManager[NavigationEvents.ClickButton].FirstFrameUp && currentButton == button)
+                            //else if (eventManager[NavigationEvents.ClickButton].FirstFrameUp && currentButton == button)
+                            //{
+                            //    button.fireClickEvent();
+                            //    currentButton = null;
+                            //}
+                            else if (formMouseClick)
                             {
                                 button.fireClickEvent();
                                 currentButton = null;
@@ -363,6 +388,7 @@ namespace Medical
                         }
                     }
                 }
+                formMouseClick = false;
             }
         }
 
