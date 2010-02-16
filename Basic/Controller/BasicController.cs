@@ -71,7 +71,7 @@ namespace Medical.Controller
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
             {
-                featureLevelString = "Magnetic Resonance Edition";
+                featureLevelString = "MRI Edition";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
