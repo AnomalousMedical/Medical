@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.featureLevelLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.copyright = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.closeButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.anomalousSoftwareLabel = new ComponentFactory.Krypton.Toolkit.KryptonLinkLabel();
@@ -47,7 +48,6 @@
             this.namesLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.namesToOpenSourceButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.featureLevelLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openSourcePanel)).BeginInit();
@@ -72,6 +72,18 @@
             this.kryptonPanel1.StateCommon.Image = global::Medical.Properties.Resources.AboutImage;
             this.kryptonPanel1.StateCommon.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.TopLeft;
             this.kryptonPanel1.TabIndex = 0;
+            // 
+            // featureLevelLabel
+            // 
+            this.featureLevelLabel.Location = new System.Drawing.Point(136, 76);
+            this.featureLevelLabel.Name = "featureLevelLabel";
+            this.featureLevelLabel.Size = new System.Drawing.Size(75, 19);
+            this.featureLevelLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
+            this.featureLevelLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
+            this.featureLevelLabel.TabIndex = 6;
+            this.featureLevelLabel.Values.Text = "FeatureLevel";
             // 
             // copyright
             // 
@@ -234,23 +246,10 @@
             this.namesToOpenSourceButton.Values.Text = "More";
             this.namesToOpenSourceButton.Click += new System.EventHandler(this.namesToOpenSourceButton_Click);
             // 
-            // featureLevelLabel
-            // 
-            this.featureLevelLabel.Location = new System.Drawing.Point(136, 76);
-            this.featureLevelLabel.Name = "featureLevelLabel";
-            this.featureLevelLabel.Size = new System.Drawing.Size(75, 19);
-            this.featureLevelLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
-            this.featureLevelLabel.StateCommon.LongText.Color2 = System.Drawing.Color.White;
-            this.featureLevelLabel.StateCommon.ShortText.Color1 = System.Drawing.Color.White;
-            this.featureLevelLabel.StateCommon.ShortText.Color2 = System.Drawing.Color.White;
-            this.featureLevelLabel.TabIndex = 6;
-            this.featureLevelLabel.Values.Text = "FeatureLevel";
-            // 
             // ClinicalAbout
             // 
             this.AcceptButton = this.closeButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(349, 417);
             this.Controls.Add(this.kryptonPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
