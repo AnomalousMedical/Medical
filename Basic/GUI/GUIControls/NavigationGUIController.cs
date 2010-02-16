@@ -115,7 +115,6 @@ namespace Medical.GUI
                 KryptonContextMenuHeading heading = new KryptonContextMenuHeading(currentEntry.Text);
                 menu.Items.Add(heading);
                 KryptonContextMenuImageSelect imageSelect = new KryptonContextMenuImageSelect();
-                imageSelect.LineItems = 6;
                 imageSelect.ImageList = menuImageList;
                 imageSelect.ImageIndexStart = menuImageList.Images.Count;
                 imageSelect.SelectedIndexChanged += imageSelect_SelectedIndexChanged;
@@ -132,6 +131,15 @@ namespace Medical.GUI
                     menuImageListIndex.Add(new MenuImageIndex(entry.NavigationState, layerState));
                 }
                 imageSelect.ImageIndexEnd = menuImageList.Images.Count - 1;
+                int lineSize = imageSelect.ImageIndexEnd - imageSelect.ImageIndexStart + 1;
+                if (lineSize < 6)
+                {
+                    imageSelect.LineItems = lineSize;
+                }
+                else
+                {
+                    imageSelect.LineItems = 6;
+                }
             }
             if (currentEntry.SubEntries != null)
             {
