@@ -61,19 +61,25 @@ namespace Medical.GUI
 
         private void undoButton_Click(object sender, EventArgs e)
         {
-            TeethState undo = panelController.StateBlender.UndoState.Teeth;
-            foreach (ToothState toothState in undo.StateEnum)
+            if (MessageBox.Show(this, "Are you sure you want to undo the teeth to how they were before the wizard was opened?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
             {
-                Tooth tooth = TeethController.getTooth(toothState.Name);
-                tooth.Offset = toothState.Offset;
-                tooth.Rotation = toothState.Rotation;
+                TeethState undo = panelController.StateBlender.UndoState.Teeth;
+                foreach (ToothState toothState in undo.StateEnum)
+                {
+                    Tooth tooth = TeethController.getTooth(toothState.Name);
+                    tooth.Offset = toothState.Offset;
+                    tooth.Rotation = toothState.Rotation;
+                }
             }
         }
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            TeethController.setAllOffsets(Vector3.Zero);
-            TeethController.setAllRotations(Quaternion.Identity);
+            if (MessageBox.Show(this, "Are you sure you want to reset the teeth to normal?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                TeethController.setAllOffsets(Vector3.Zero);
+                TeethController.setAllRotations(Quaternion.Identity);
+            }
         }
     }
 }

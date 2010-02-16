@@ -395,7 +395,10 @@ namespace Medical.GUI
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            this.setToDefault();
+            if (MessageBox.Show(this, "Are you sure you want to reset the disc space settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                this.setToDefault();
+            }
         }
     }
 }

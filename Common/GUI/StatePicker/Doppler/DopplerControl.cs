@@ -373,7 +373,10 @@ namespace Medical.GUI
 
         private void resetButton_Click(object sender, EventArgs e)
         {
-            setToDefault();
+            if (MessageBox.Show(this, "Are you sure you want to reset the doppler settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            {
+                setToDefault();
+            }
         }
     }
 }
