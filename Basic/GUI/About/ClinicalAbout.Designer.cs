@@ -48,34 +48,33 @@
             this.namesLabel = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.namesToOpenSourceButton = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonPanel2 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
             this.kryptonPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.openSourcePanel)).BeginInit();
             this.openSourcePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.namesPanel)).BeginInit();
             this.namesPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).BeginInit();
+            this.kryptonPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // kryptonPanel1
             // 
-            this.kryptonPanel1.Controls.Add(this.featureLevelLabel);
-            this.kryptonPanel1.Controls.Add(this.copyright);
             this.kryptonPanel1.Controls.Add(this.closeButton);
             this.kryptonPanel1.Controls.Add(this.anomalousSoftwareLabel);
-            this.kryptonPanel1.Controls.Add(this.versionLabel);
             this.kryptonPanel1.Controls.Add(this.openSourcePanel);
             this.kryptonPanel1.Controls.Add(this.namesPanel);
+            this.kryptonPanel1.Controls.Add(this.kryptonPanel2);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel1.Location = new System.Drawing.Point(0, 0);
             this.kryptonPanel1.Name = "kryptonPanel1";
             this.kryptonPanel1.Size = new System.Drawing.Size(349, 417);
-            this.kryptonPanel1.StateCommon.Image = global::Medical.Properties.Resources.AboutImage;
-            this.kryptonPanel1.StateCommon.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.TopLeft;
             this.kryptonPanel1.TabIndex = 0;
             // 
             // featureLevelLabel
             // 
-            this.featureLevelLabel.Location = new System.Drawing.Point(136, 76);
+            this.featureLevelLabel.Location = new System.Drawing.Point(129, 81);
             this.featureLevelLabel.Name = "featureLevelLabel";
             this.featureLevelLabel.Size = new System.Drawing.Size(75, 19);
             this.featureLevelLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
@@ -87,7 +86,7 @@
             // 
             // copyright
             // 
-            this.copyright.Location = new System.Drawing.Point(54, 140);
+            this.copyright.Location = new System.Drawing.Point(65, 140);
             this.copyright.Name = "copyright";
             this.copyright.Size = new System.Drawing.Size(235, 19);
             this.copyright.TabIndex = 4;
@@ -112,7 +111,7 @@
             // 
             // versionLabel
             // 
-            this.versionLabel.Location = new System.Drawing.Point(136, 94);
+            this.versionLabel.Location = new System.Drawing.Point(129, 99);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(49, 19);
             this.versionLabel.StateCommon.LongText.Color1 = System.Drawing.Color.White;
@@ -246,10 +245,24 @@
             this.namesToOpenSourceButton.Values.Text = "More";
             this.namesToOpenSourceButton.Click += new System.EventHandler(this.namesToOpenSourceButton_Click);
             // 
+            // kryptonPanel2
+            // 
+            this.kryptonPanel2.Controls.Add(this.copyright);
+            this.kryptonPanel2.Controls.Add(this.featureLevelLabel);
+            this.kryptonPanel2.Controls.Add(this.versionLabel);
+            this.kryptonPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonPanel2.Location = new System.Drawing.Point(0, 0);
+            this.kryptonPanel2.Name = "kryptonPanel2";
+            this.kryptonPanel2.Size = new System.Drawing.Size(349, 164);
+            this.kryptonPanel2.StateCommon.Image = global::Medical.Properties.Resources.AboutImage;
+            this.kryptonPanel2.StateCommon.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.Stretch;
+            this.kryptonPanel2.TabIndex = 7;
+            // 
             // ClinicalAbout
             // 
             this.AcceptButton = this.closeButton;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(349, 417);
             this.Controls.Add(this.kryptonPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -269,6 +282,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.namesPanel)).EndInit();
             this.namesPanel.ResumeLayout(false);
             this.namesPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).EndInit();
+            this.kryptonPanel2.ResumeLayout(false);
+            this.kryptonPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -295,5 +311,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel namesLabel;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel featureLevelLabel;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel2;
     }
 }
