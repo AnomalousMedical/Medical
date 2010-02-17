@@ -24,6 +24,8 @@ public:
 
 	bool checkConnection();
 
+	System::String^ getId();
+
 	static property UserPermissions^ Instance
 	{
 		UserPermissions^ get()

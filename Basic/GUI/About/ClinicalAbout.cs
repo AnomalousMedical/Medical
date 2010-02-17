@@ -29,6 +29,7 @@ namespace Medical.GUI
             freeimageLinkLabel.LinkClicked += new EventHandler(freeimageLinkLabel_LinkClicked);
             freetypeLinkLabel.LinkClicked += new EventHandler(freetypeLinkLabel_LinkClicked);
             featureLevelLabel.Text = featureLevelString;
+            serialLabel.Text += UserPermissions.Instance.getId();
         }
 
         protected override void OnShown(EventArgs e)
@@ -40,7 +41,7 @@ namespace Medical.GUI
 
         void anomalousSoftwareLabel_LinkClicked(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.anomaloussoftware.com");
+            System.Diagnostics.Process.Start("http://www.anomalousmedical.com");
         }
 
         private void closeButton_Click(object sender, EventArgs e)

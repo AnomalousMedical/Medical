@@ -161,6 +161,41 @@ bool UserPermissions::checkConnection()
 #endif
 }
 
+System::String^ UserPermissions::getId()
+{
+#ifdef ENABLE_HASP_PROTECTION
+	System::String^ returnVal = "Error";
+	if(checkConnection())
+	{
+		char *info = 0;
+
+		const char* format = 
+		"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+		"<haspformat root=\"haspscope\">"
+		"    <hasp>"
+		"        <attribute name=\"id\" />"
+		"    </hasp>"
+		"</haspformat>";
+
+		hasp_status_t status = hasp_get_sessioninfo(handle, format, &info);
+
+		/* check if operation was successful */
+		if (status == HASP_STATUS_OK)
+		{
+			System::String^ managedInfo = gcnew System::String(info);
+			int idIndex = managedInfo->IndexOf("id=\"") + 4;
+			int endQuoteIndex = managedInfo->IndexOf("\"", idIndex);
+			returnVal = managedInfo->Substring(idIndex, endQuoteIndex - idIndex);
+		}
+
+		hasp_free(info);
+	}
+	return returnVal;
+#else
+	return "0000000000000";
+#endif
+}
+
 void UserPermissions::logout()
 {
 #ifdef ENABLE_HASP_PROTECTION
