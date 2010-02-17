@@ -186,6 +186,20 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap HelpLarge {
+            get {
+                object obj = ResourceManager.GetObject("HelpLarge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap HelpSmall {
+            get {
+                object obj = ResourceManager.GetObject("HelpSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap HorizontalBothGroupIcon {
             get {
                 object obj = ResourceManager.GetObject("HorizontalBothGroupIcon", resourceCulture);

@@ -172,6 +172,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Doc\PiperJBOHelpFile.chm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\ArticulometricsSplash.png" />
     <None Include="Resources\AppButton.png" />
     <None Include="Resources\LayersBottomTeethLarge.png" />
@@ -256,6 +259,8 @@
     <None Include="Resources\ProfileAndTeethWizardLarge.png" />
     <None Include="Resources\DiscSpaceWizardIcon.png" />
     <None Include="Resources\ManipRestoreLarge.png" />
+    <None Include="Resources\HelpLarge.png" />
+    <None Include="Resources\HelpSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

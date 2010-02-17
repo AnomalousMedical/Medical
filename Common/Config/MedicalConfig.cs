@@ -172,5 +172,13 @@ namespace Medical
             }
         }
 
+        public static String ProgramDirectory
+        {
+            get
+            {
+                return programDirectory;
+            }
+        }
+
     }
 }

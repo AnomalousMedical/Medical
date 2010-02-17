@@ -105,6 +105,7 @@ namespace Medical.GUI
             kryptonDockingManager.ManageFloating("Floating", this);
 
             aboutCommand.Execute += new EventHandler(aboutCommand_Execute);
+            helpCommand.Execute += new EventHandler(helpCommand_Execute);
 
             //Determine if simulation tab is enabled
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_SIMULATION))
@@ -116,6 +117,11 @@ namespace Medical.GUI
                 allowSimulationTab = false;
                 simulationTab.Visible = false;
             }
+        }
+
+        void helpCommand_Execute(object sender, EventArgs e)
+        {
+            Help.ShowHelp(this, MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.chm");
         }
 
         void aboutCommand_Execute(object sender, EventArgs e)

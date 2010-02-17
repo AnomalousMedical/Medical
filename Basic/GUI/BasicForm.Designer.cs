@@ -125,6 +125,8 @@
             this.cloneWindowCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupTriple13 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
+            this.helpButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.helpCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonGroupButton2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.aboutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
@@ -141,7 +143,6 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
-            this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
             this.leftNavigator.SuspendLayout();
@@ -155,8 +156,6 @@
             // statusStrip
             // 
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mainStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 542);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
@@ -979,7 +978,19 @@
             // kryptonRibbonGroupTriple13
             // 
             this.kryptonRibbonGroupTriple13.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
+            this.helpButton,
             this.kryptonRibbonGroupButton2});
+            // 
+            // helpButton
+            // 
+            this.helpButton.KryptonCommand = this.helpCommand;
+            // 
+            // helpCommand
+            // 
+            this.helpCommand.ImageLarge = global::Medical.Properties.Resources.HelpLarge;
+            this.helpCommand.ImageSmall = global::Medical.Properties.Resources.HelpSmall;
+            this.helpCommand.Text = "Help";
+            this.helpCommand.TextLine1 = "Help";
             // 
             // kryptonRibbonGroupButton2
             // 
@@ -1016,24 +1027,12 @@
             // 
             this.leftNavigator.AutoSize = true;
             this.leftNavigator.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.leftNavigator.Bar.BarMapExtraText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
-            this.leftNavigator.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
-            this.leftNavigator.Bar.BarMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
             this.leftNavigator.Bar.BarOrientation = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
-            this.leftNavigator.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.SameHeight;
             this.leftNavigator.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
             this.leftNavigator.Button.ButtonSpecs.AddRange(new ComponentFactory.Krypton.Navigator.ButtonSpecNavigator[] {
             this.buttonSpecExpandCollapse});
             this.leftNavigator.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.HidePage;
             this.leftNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
-            this.leftNavigator.Button.ContextButtonAction = ComponentFactory.Krypton.Navigator.ContextButtonAction.SelectPage;
-            this.leftNavigator.Button.ContextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
-            this.leftNavigator.Button.ContextMenuMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Small;
-            this.leftNavigator.Button.ContextMenuMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.TextTitle;
-            this.leftNavigator.Button.NextButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
-            this.leftNavigator.Button.NextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
-            this.leftNavigator.Button.PreviousButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
-            this.leftNavigator.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.leftNavigator.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftNavigator.Header.HeaderPositionBar = ComponentFactory.Krypton.Toolkit.VisualOrientation.Left;
             this.leftNavigator.Location = new System.Drawing.Point(0, 121);
@@ -1118,8 +1117,6 @@
             this.Name = "BasicForm";
             this.Text = "Piper\'s Joint Based Occlusion";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).EndInit();
             this.leftNavigator.ResumeLayout(false);
@@ -1260,5 +1257,7 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton cloneWindowButton;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup customLayersGroup;
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton manipulationRestoreButton;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton helpButton;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand helpCommand;
     }
 }

@@ -154,6 +154,9 @@
   <data name="ManipLeftHorizontalForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ManipLeftHorizontalForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="HorizontalRightGroupIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HorizontalRightGroupIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ManipVerticalClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ManipVerticalClosed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -229,14 +232,8 @@
   <data name="OpeningGroupIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpeningGroupIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LayersBottomTeethSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LayersBottomTeethSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="StopButtonLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StopButtonLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CTWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CTWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WindowLayoutIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WindowLayoutIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -337,6 +334,12 @@
   <data name="StatsIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatsIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ManipRestoreLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ManipRestoreLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LayersBottomTeethSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LayersBottomTeethSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="OpenIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OpenIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -355,8 +358,8 @@
   <data name="LayersSkinLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LayersSkinLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="HorizontalRightGroupIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\HorizontalRightGroupIcon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="CTWizardLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CTWizardLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ExitIconSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ExitIconSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -367,7 +370,10 @@
   <data name="StatsIconLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\StatsIconLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ManipRestoreLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ManipRestoreLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="HelpLarge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HelpLarge.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HelpSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HelpSmall.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
