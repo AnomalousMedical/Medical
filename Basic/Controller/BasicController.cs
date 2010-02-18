@@ -434,6 +434,7 @@ namespace Medical.Controller
             windowPresetController.addPresetSet(primary);
 
             DrawingWindowPresetSet oneWindow = new DrawingWindowPresetSet("One Window");
+            oneWindow.Image = Resources.OneWindowLayout;
             preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
             oneWindow.addPreset(preset);
             windowPresetController.addPresetSet(oneWindow);
@@ -444,6 +445,7 @@ namespace Medical.Controller
                 UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 DrawingWindowPresetSet twoWindows = new DrawingWindowPresetSet("Two Windows");
+                twoWindows.Image = Resources.TwoWindowLayout;
                 preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 twoWindows.addPreset(preset);
                 preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
@@ -456,6 +458,7 @@ namespace Medical.Controller
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 DrawingWindowPresetSet threeWindows = new DrawingWindowPresetSet("Three Windows");
+                threeWindows.Image = Resources.ThreeWindowLayout;
                 preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 threeWindows.addPreset(preset);
                 preset = new DrawingWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
@@ -469,6 +472,7 @@ namespace Medical.Controller
                 windowPresetController.addPresetSet(threeWindows);
 
                 DrawingWindowPresetSet fourWindows = new DrawingWindowPresetSet("Four Windows");
+                fourWindows.Image = Resources.FourWindowLayout;
                 preset = new DrawingWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 fourWindows.addPreset(preset);
                 preset = new DrawingWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));

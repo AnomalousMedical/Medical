@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Medical
 {
@@ -59,5 +60,7 @@ namespace Medical
                 hidden = value;
             }
         }
+
+        public Bitmap Image { get; set; }
     }
 }

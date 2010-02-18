@@ -41,6 +41,7 @@ namespace Medical.GUI
                 if (!preset.Hidden)
                 {
                     KryptonContextMenuItem item = new KryptonContextMenuItem(preset.Name);
+                    item.Image = preset.Image;
                     item.Click += windowLayout_Click;
                     item.Tag = preset.Name;
                     windowItems.Items.Add(item);
