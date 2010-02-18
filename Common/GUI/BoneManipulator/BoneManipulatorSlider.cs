@@ -94,7 +94,19 @@ namespace Medical.GUI
                 }
                 if (sender != valueTrackBar)
                 {
-                    valueTrackBar.Value = (int)(value * valueTrackBar.Maximum);
+                    int newVal = (int)(value * valueTrackBar.Maximum);
+                    if (newVal > valueTrackBar.Maximum)
+                    {
+                        valueTrackBar.Value = valueTrackBar.Maximum;
+                    }
+                    else if (newVal < valueTrackBar.Minimum)
+                    {
+                        valueTrackBar.Value = valueTrackBar.Minimum;
+                    }
+                    else
+                    {
+                        valueTrackBar.Value = newVal;
+                    }
                 }
                 if (ValueChanged != null)
                 {
