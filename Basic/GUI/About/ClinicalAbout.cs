@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 using System.Reflection;
+using System.Xml;
 
 namespace Medical.GUI
 {
@@ -94,6 +95,73 @@ namespace Medical.GUI
         void ogreLinkLabel_LinkClicked(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.ogre3d.org/");
+        }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            checkForUpdates();
+        }
+
+        private void checkForUpdates()
+        {
+            Version newVersion = null;
+            string downloadURL = "";
+            XmlTextReader reader = null;
+            try
+            {
+                string xmlURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+                reader = new XmlTextReader(xmlURL);
+                reader.MoveToContent();
+                string elementName = "";
+                if ((reader.NodeType == XmlNodeType.Element) && (reader.Name == "update"))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.NodeType == XmlNodeType.Element)
+                        {
+                            elementName = reader.Name;
+                        }
+                        else
+                        { 
+                            if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
+                            {
+                                switch (elementName)
+                                {
+                                    case "version":
+                                        newVersion = new Version(reader.Value);
+                                        break;
+                                    case "url":
+                                        downloadURL = reader.Value;
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (Assembly.GetAssembly(typeof(ClinicalAbout)).GetName().Version < newVersion)
+                {
+                    if(MessageBox.Show(this, String.Format("A new version {0} is avaliable for download. Would you like to download it now?", newVersion.ToString()), 
+                        "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(downloadURL);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(this, "Your current version is up to date.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(this, "Could not find update information, please try again later.", "Cannot find update", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1);
+            }
+            finally
+            {
+                if (reader != null)
+                {
+                    reader.Close();
+                }
+            }
         }
     }
 }
