@@ -116,7 +116,19 @@ namespace Medical.GUI
             }
             if (source != eminanceSlider)
             {
-                eminanceSlider.Value = (int)(value * eminanceSlider.Maximum);
+                int newVal = (int)(value * eminanceSlider.Maximum);
+                if (newVal > eminanceSlider.Maximum)
+                {
+                    eminanceSlider.Value = eminanceSlider.Maximum;
+                }
+                else if (newVal < eminanceSlider.Minimum)
+                {
+                    eminanceSlider.Value = eminanceSlider.Minimum;
+                }
+                else
+                {
+                    eminanceSlider.Value = newVal;
+                }
             }
         }
 

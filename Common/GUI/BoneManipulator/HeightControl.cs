@@ -35,18 +35,14 @@ namespace Medical.GUI.BoneManipulator
         {
             leftHeightSlider.getPositionFromScene();
             rightHeightSlider.getPositionFromScene();
-            allowUpdates = false;
-            bothSidesSlider.Value = (int)((leftHeightSlider.Value + rightHeightSlider.Value) / 2.0 * bothSidesSlider.Maximum);
-            allowUpdates = true;
+            syncBothSidesSlider();
         }
 
         public void setToDefault()
         {
             leftHeightSlider.setToDefault();
             rightHeightSlider.setToDefault();
-            allowUpdates = false;
-            bothSidesSlider.Value = (int)((leftHeightSlider.Value + rightHeightSlider.Value) / 2.0 * bothSidesSlider.Maximum);
-            allowUpdates = true;
+            syncBothSidesSlider();
         }
 
         void bothSidesSlider_ValueChanged(object sender, EventArgs e)
@@ -56,6 +52,25 @@ namespace Medical.GUI.BoneManipulator
                 leftHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
                 rightHeightSlider.Value = (float)bothSidesSlider.Value / bothSidesSlider.Maximum;
             }
+        }
+
+        private void syncBothSidesSlider()
+        {
+            allowUpdates = false;
+            int newVal = (int)((leftHeightSlider.Value + rightHeightSlider.Value) / 2.0 * bothSidesSlider.Maximum);
+            if (newVal > bothSidesSlider.Maximum)
+            {
+                bothSidesSlider.Value = bothSidesSlider.Maximum;
+            }
+            else if (newVal < bothSidesSlider.Minimum)
+            {
+                bothSidesSlider.Value = bothSidesSlider.Minimum;
+            }
+            else
+            {
+                bothSidesSlider.Value = newVal;
+            }
+            allowUpdates = true;
         }
     }
 }
