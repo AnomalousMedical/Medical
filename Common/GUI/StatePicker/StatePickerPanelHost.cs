@@ -36,6 +36,7 @@ namespace Medical.GUI
 
         public void hidePanel(StatePickerPanel panel)
         {
+            panelHost.AutoScrollPosition = Point.Empty;
             panelHost.Controls.Remove(panel);
         }
 
