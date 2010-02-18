@@ -143,6 +143,7 @@
             this.bottomPanel = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.kryptonDockableWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.kryptonDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
+            this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).BeginInit();
             this.leftNavigator.SuspendLayout();
@@ -156,6 +157,8 @@
             // statusStrip
             // 
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mainStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 542);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
@@ -1117,6 +1120,8 @@
             this.Name = "BasicForm";
             this.Text = "Piper\'s Joint Based Occlusion";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clinicalRibbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.leftNavigator)).EndInit();
             this.leftNavigator.ResumeLayout(false);
@@ -1134,7 +1139,6 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
         private ComponentFactory.Krypton.Toolkit.KryptonManager kryptonManager;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonTab displayTab;
         private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem changeSceneMenuItem;
@@ -1259,5 +1263,6 @@
         internal ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton manipulationRestoreButton;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton helpButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand helpCommand;
+        private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
     }
 }
