@@ -58,7 +58,7 @@
             this.kryptonWrapLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             this.kryptonWrapLabel1.Location = new System.Drawing.Point(4, 4);
             this.kryptonWrapLabel1.Name = "kryptonWrapLabel1";
-            this.kryptonWrapLabel1.Size = new System.Drawing.Size(318, 23);
+            this.kryptonWrapLabel1.Size = new System.Drawing.Size(207, 23);
             this.kryptonWrapLabel1.Text = "Check this box to show the disc.";
             // 
             // DiscSpacePanel
@@ -69,7 +69,7 @@
             this.Controls.Add(this.showDiscCheckBox);
             this.Controls.Add(this.discSpaceControl1);
             this.Name = "DiscSpacePanel";
-            this.Size = new System.Drawing.Size(325, 616);
+            this.Size = new System.Drawing.Size(214, 518);
             this.ResumeLayout(false);
             this.PerformLayout();
 
