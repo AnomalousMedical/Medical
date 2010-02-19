@@ -188,7 +188,7 @@ namespace Medical.GUI
         private void lateralJointCamerButton_Click(object sender, EventArgs e)
         {
             this.setNavigationState(lateralJointCameraName);
-            this.setLayerState(LayerState);
+            this.setLayerState("DiscLayers");
         }
 
         private void superiorJointCameraButton_Click(object sender, EventArgs e)
