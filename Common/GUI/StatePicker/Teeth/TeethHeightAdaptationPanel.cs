@@ -40,7 +40,7 @@ namespace Medical.GUI
 
             leftCP.setLocation(leftCP.getNeutralLocation());
             rightCP.setLocation(rightCP.getNeutralLocation());
-            movingMuscle.changeForce(1.0f);
+            movingMuscle.changeForce(TeethController.AdaptForce);
             movingMuscleTarget.Offset = Vector3.Zero;
         }
 

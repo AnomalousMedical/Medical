@@ -204,5 +204,13 @@ namespace Medical
                 teethMover = value;
             }
         }
+
+        public static float AdaptForce
+        {
+            get
+            {
+                return 3.0f;
+            }
+        }
     }
 }
