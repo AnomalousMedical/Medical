@@ -233,8 +233,8 @@ namespace Medical.GUI
             processButton(stageVbButton, PiperStage.Vb, stages, ref activatedLowest);
 
             //Override the settings with any custom overrides
-            //If rotatory crepitus is Moderate
-            if (rotatoryCombo.SelectedIndex == 2)
+            //If rotatory crepitus is Moderate and we do not have coarse rough or coarse ebrunated
+            if (rotatoryCombo.SelectedIndex == 2 && translatoryCombo.SelectedIndex != 3 && translatoryCombo.SelectedIndex != 4)
             {
                 //Force stage IVa if reciprocal click
                 if (clickCombo.SelectedIndex == 1)
