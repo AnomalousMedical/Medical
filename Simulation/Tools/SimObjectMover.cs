@@ -160,7 +160,10 @@ namespace Medical
 
         public void setDrawingSurfaceVisible(bool visible)
         {
-            drawingSurface.setVisible(visible);
+            if (drawingSurface != null)
+            {
+                drawingSurface.setVisible(visible);
+            }
         }
 
         public void setActivePlanes(MovementAxis axes, MovementPlane planes)

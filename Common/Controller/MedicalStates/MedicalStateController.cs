@@ -78,7 +78,6 @@ namespace Medical
         {
             MedicalState state = new MedicalState(name);
             state.update();
-            state.Thumbnail = imageRenderer.renderImage(imageProperties);
             return state;
         }
 

@@ -213,6 +213,8 @@ namespace Medical.Controller
                 imageRenderer.Background = background;
                 imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
                 imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
+                imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
+                imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
 
                 stateController = new MedicalStateController(imageRenderer, medicalController);
 

@@ -189,5 +189,45 @@ namespace Medical
                 sceneNode.setOrientation(window.Orientation);
             }
         }
+
+        /// <summary>
+        /// Call this function before a screenshot is rendered to hide the
+        /// grid lines if you wish them hidden in the screenshot. This
+        /// function is setup to consume as an EventHandler, but it does not
+        /// actually use the arguments.
+        /// </summary>
+        /// <param name="sender">Ignored.</param>
+        /// <param name="e">Ignored.</param>
+        public void ScreenshotRenderStarted(Object sender, EventArgs e)
+        {
+            if (visible)
+            {
+                if (sceneNode != null)
+                {
+                    sceneNode.setVisible(false);
+                    textWatermark.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Call this function after a screenshot is rendered to show the
+        /// grid lines if you hid them with ScreenshotRenderStarted. This
+        /// function is setup to consume as an EventHandler, but it does not
+        /// actually use the arguments.
+        /// </summary>
+        /// <param name="sender">Ignored.</param>
+        /// <param name="e">Ignored.</param>
+        public void ScreenshotRenderCompleted(Object sender, EventArgs e)
+        {
+            if (visible)
+            {
+                if (sceneNode != null)
+                {
+                    sceneNode.setVisible(true);
+                    textWatermark.Visible = true;
+                }
+            }
+        }
     }
 }

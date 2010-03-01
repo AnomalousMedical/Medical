@@ -175,7 +175,10 @@ namespace Medical
         /// <param name="e">Ignored.</param>
         public static void ScreenshotRenderStarted(Object sender, EventArgs e)
         {
-            teethMover.setDrawingSurfaceVisible(false);
+            if (teethMover != null)
+            {
+                teethMover.setDrawingSurfaceVisible(false);
+            }
         }
 
         /// <summary>
@@ -188,7 +191,10 @@ namespace Medical
         /// <param name="e">Ignored.</param>
         public static void ScreenshotRenderCompleted(Object sender, EventArgs e)
         {
-            teethMover.setDrawingSurfaceVisible(true);
+            if (teethMover != null)
+            {
+                teethMover.setDrawingSurfaceVisible(true);
+            }
         }
 
         public static bool HighlightContacts { get; set; }
