@@ -31,6 +31,7 @@ namespace Medical.GUI
         private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
         private String lateralJointCameraName;
         private String superiorJointCameraName;
+        private bool panelOpen = false;
 
         public DopplerPanel(String presetSubDirectory, String jointCameraName, String superiorJointCameraName, MovementSequenceController movementSequenceController, StatePickerPanelController panelController)
             :base(panelController)
@@ -80,77 +81,79 @@ namespace Medical.GUI
 
         void dopplerControl1_CurrentStageChanged(object sender, EventArgs e)
         {
-            String filename = "I.dst";
-            switch (dopplerControl1.CurrentStage)
+            if (panelOpen)
             {
-                case PiperStage.I:
-                    filename = "I.dst";
-                    break;
-                case PiperStage.II:
-                    filename = "II.dst";
-                    break;
-                case PiperStage.IIIa:
-                    filename = "IIIa.dst";
-                    break;
-                case PiperStage.IIIb:
-                    filename = "IIIb.dst";
-                    break;
-                case PiperStage.IVa:
-                    switch(dopplerControl1.CurrentReduction)
-                    {
-                        case RdaReduction.Mild:
-                            filename = "IVaMildRDAReduction.dst";
-                            break;
-                        case RdaReduction.Moderate:
-                            filename = "IVaModerateRDAReduction.dst";
-                            break;
-                        case RdaReduction.Severe:
-                            filename = "IVaSevereRDAReduction.dst";
-                            break;
-                    }
-                    break;
-                case PiperStage.IVb:
-                    switch (dopplerControl1.CurrentReduction)
-                    {
-                        case RdaReduction.Mild:
-                            filename = "IVbMildRDAReduction.dst";
-                            break;
-                        case RdaReduction.Moderate:
-                            filename = "IVbModerateRDAReduction.dst";
-                            break;
-                        case RdaReduction.Severe:
-                            filename = "IVbSevereRDAReduction.dst";
-                            break;
-                    }
-                    break;
-                case PiperStage.Va:
-                    filename = "Va.dst";
-                    break;
-                case PiperStage.Vb:
-                    filename = "Vb.dst";
-                    break;
-            }
-            filename = String.Format("{0}/{1}/{2}", currentPresetDirectory, presetSubDirectory, filename);
-            using (Archive archive = FileSystem.OpenArchive(filename))
-            {
-                if (archive.exists(filename))
+                String filename = "I.dst";
+                switch (dopplerControl1.CurrentStage)
                 {
-                    using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                    {
-                        using (XmlTextReader textReader = new XmlTextReader(stream))
+                    case PiperStage.I:
+                        filename = "I.dst";
+                        break;
+                    case PiperStage.II:
+                        filename = "II.dst";
+                        break;
+                    case PiperStage.IIIa:
+                        filename = "IIIa.dst";
+                        break;
+                    case PiperStage.IIIb:
+                        filename = "IIIb.dst";
+                        break;
+                    case PiperStage.IVa:
+                        switch (dopplerControl1.CurrentReduction)
                         {
-                            presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                            showChanges(false);
+                            case RdaReduction.Mild:
+                                filename = "IVaMildRDAReduction.dst";
+                                break;
+                            case RdaReduction.Moderate:
+                                filename = "IVaModerateRDAReduction.dst";
+                                break;
+                            case RdaReduction.Severe:
+                                filename = "IVaSevereRDAReduction.dst";
+                                break;
+                        }
+                        break;
+                    case PiperStage.IVb:
+                        switch (dopplerControl1.CurrentReduction)
+                        {
+                            case RdaReduction.Mild:
+                                filename = "IVbMildRDAReduction.dst";
+                                break;
+                            case RdaReduction.Moderate:
+                                filename = "IVbModerateRDAReduction.dst";
+                                break;
+                            case RdaReduction.Severe:
+                                filename = "IVbSevereRDAReduction.dst";
+                                break;
+                        }
+                        break;
+                    case PiperStage.Va:
+                        filename = "Va.dst";
+                        break;
+                    case PiperStage.Vb:
+                        filename = "Vb.dst";
+                        break;
+                }
+                filename = String.Format("{0}/{1}/{2}", currentPresetDirectory, presetSubDirectory, filename);
+                using (Archive archive = FileSystem.OpenArchive(filename))
+                {
+                    if (archive.exists(filename))
+                    {
+                        using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            using (XmlTextReader textReader = new XmlTextReader(stream))
+                            {
+                                presetState = xmlSaver.restoreObject(textReader) as PresetState;
+                                showChanges(false);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    presetState = null;
-                    Log.Error("Cannot load doppler distortion file {0}.", filename);
+                    else
+                    {
+                        presetState = null;
+                        Log.Error("Cannot load doppler distortion file {0}.", filename);
+                    }
                 }
             }
-            
         }
 
         public override void setToDefault()
@@ -178,8 +181,14 @@ namespace Medical.GUI
             movementSequenceController.playCurrentSequence();
         }
 
+        protected override void onPanelOpening()
+        {
+            panelOpen = true;
+        }
+
         protected override void onPanelClosing()
         {
+            panelOpen = false;
             movementSequenceController.stopPlayback();
             movementSequenceController.CurrentSequence = previousSequence;
             previousSequence = null;
