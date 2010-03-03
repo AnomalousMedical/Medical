@@ -164,6 +164,16 @@ namespace Medical
             logListener.closeLogFile();
         }
 
+        public void saveCrashLog()
+        {
+            if (logListener != null)
+            {
+                DateTime now = DateTime.Now;
+                String crashFile = String.Format("{0}/CrashLogs/log {1}-{2}-{3} {4}.{5}.{6}.log", MedicalConfig.DocRoot, now.Month, now.Day, now.Year, now.Hour, now.Minute, now.Second);
+                logListener.saveCrashLog(crashFile);
+            }
+        }
+
         /// <summary>
         /// Show the form to the user and start the loop.
         /// </summary>

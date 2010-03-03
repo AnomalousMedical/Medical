@@ -37,6 +37,7 @@ namespace Medical
                                 catch (Exception e)
                                 {
                                     Log.Default.printException(e);
+                                    controller.saveCrashLog();
                                     MessageBox.Show(e.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }

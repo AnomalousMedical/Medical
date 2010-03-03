@@ -257,6 +257,14 @@ namespace Medical.Controller
             }
         }
 
+        public void saveCrashLog()
+        {
+            if (medicalController != null)
+            {
+                medicalController.saveCrashLog();
+            }
+        }
+
         private void createWizardPanels()
         {
             //Create panels
