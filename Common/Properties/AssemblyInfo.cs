@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Anomalous Medical")]
 [assembly: AssemblyProduct("Common")]
 [assembly: AssemblyCopyright("Copyright © Anomalous Medical 2010")]
 [assembly: AssemblyTrademark("")]
