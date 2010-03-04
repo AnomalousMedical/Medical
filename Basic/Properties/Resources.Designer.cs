@@ -648,6 +648,13 @@ namespace Medical.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap UpdateIcon {
+            get {
+                object obj = ResourceManager.GetObject("UpdateIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap WindowLayoutIconLarge {
             get {
                 object obj = ResourceManager.GetObject("WindowLayoutIconLarge", resourceCulture);

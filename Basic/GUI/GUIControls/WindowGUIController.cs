@@ -6,6 +6,7 @@ using ComponentFactory.Krypton.Ribbon;
 using Medical.Controller;
 using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -16,9 +17,11 @@ namespace Medical.GUI
         private BasicController basicController;
         private KryptonCommand showStatsCommand;
         private KryptonContextMenu windowLayoutMenu;
+        private KryptonForm form;
 
         public WindowGUIController(BasicForm form, BasicController basicController, ShortcutController shortcuts)
         {
+            this.form = form;
             this.basicController = basicController;
             backgroundColorButton = form.backgroundColorButton;
             backgroundColorButton.SelectedColorChanged += new EventHandler<ComponentFactory.Krypton.Toolkit.ColorEventArgs>(backgroundColorButton_SelectedColorChanged);
@@ -53,6 +56,13 @@ namespace Medical.GUI
             {
                 form.cloneWindowButton.Visible = false;
             }
+
+            form.checkForUpdatesCommand.Execute += new EventHandler(checkForUpdatesCommand_Execute);
+        }
+
+        void checkForUpdatesCommand_Execute(object sender, EventArgs e)
+        {
+            UpdateManager.checkForUpdates(form, Assembly.GetAssembly(this.GetType()).GetName().Version);
         }
 
         public void Dispose()

@@ -129,6 +129,8 @@
             this.helpCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonRibbonGroupButton2 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.aboutCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.checkUpdatesButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.checkForUpdatesCommand = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
             this.kryptonManager = new ComponentFactory.Krypton.Toolkit.KryptonManager(this.components);
             this.kryptonContextMenuItems1 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
             this.kryptonContextMenuRadioButton28 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuRadioButton();
@@ -196,7 +198,6 @@
             this.sequencesTab,
             this.renderingTab,
             this.windowTab});
-            this.clinicalRibbon.SelectedContext = null;
             this.clinicalRibbon.SelectedTab = this.navigationTab;
             this.clinicalRibbon.Size = new System.Drawing.Size(784, 114);
             this.clinicalRibbon.TabIndex = 15;
@@ -982,7 +983,8 @@
             // 
             this.kryptonRibbonGroupTriple13.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.helpButton,
-            this.kryptonRibbonGroupButton2});
+            this.kryptonRibbonGroupButton2,
+            this.checkUpdatesButton});
             // 
             // helpButton
             // 
@@ -1005,6 +1007,19 @@
             this.aboutCommand.ImageSmall = global::Medical.Properties.Resources.AboutSmall;
             this.aboutCommand.Text = "About";
             this.aboutCommand.TextLine1 = "About";
+            // 
+            // checkUpdatesButton
+            // 
+            this.checkUpdatesButton.KryptonCommand = this.checkForUpdatesCommand;
+            this.checkUpdatesButton.TextLine1 = "Check for";
+            this.checkUpdatesButton.TextLine2 = "Updates";
+            // 
+            // checkForUpdatesCommand
+            // 
+            this.checkForUpdatesCommand.ImageLarge = global::Medical.Properties.Resources.UpdateIcon;
+            this.checkForUpdatesCommand.Text = "Check for Updates";
+            this.checkForUpdatesCommand.TextLine1 = "Check for";
+            this.checkForUpdatesCommand.TextLine2 = "Updates";
             // 
             // kryptonManager
             // 
@@ -1264,5 +1279,7 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton helpButton;
         internal ComponentFactory.Krypton.Toolkit.KryptonCommand helpCommand;
         private System.Windows.Forms.ToolStripStatusLabel mainStatusLabel;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton checkUpdatesButton;
+        internal ComponentFactory.Krypton.Toolkit.KryptonCommand checkForUpdatesCommand;
     }
 }

@@ -262,6 +262,7 @@
     <None Include="Resources\ManipRestoreLarge.png" />
     <None Include="Resources\HelpLarge.png" />
     <None Include="Resources\HelpSmall.png" />
+    <None Include="Resources\UpdateIcon.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
