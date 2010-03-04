@@ -50,7 +50,7 @@ namespace Medical
                     }
                     else if (result == ConnectionResult.TooManyUsers)
                     {
-                        connectionLoop = MessageBox.Show("Too many users currently connected. Please shutdown the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                        connectionLoop = MessageBox.Show("Too many users currently connected. Please shut down the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
                     }
                     else if (result == ConnectionResult.NoDongle)
                     {
