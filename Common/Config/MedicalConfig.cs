@@ -148,7 +148,7 @@ namespace Medical
 #if ALLOW_OVERRIDE
                 if (internalSettings != null)
                 {
-                    return resources.getValue("DefaultScene", SceneDirectory + "/Male.sim.xml");
+                    return resources.getValue("DefaultScene", SceneDirectory + "/Female.sim.xml");
                 }
                 else
                 {
