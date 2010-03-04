@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Version.h"
 
 using namespace System;
 using namespace System::Reflection;
@@ -11,14 +12,14 @@ using namespace System::Security::Permissions;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly:AssemblyTitleAttribute("User")];
-[assembly:AssemblyDescriptionAttribute("")];
-[assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Microsoft")];
-[assembly:AssemblyProductAttribute("User")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2010")];
-[assembly:AssemblyTrademarkAttribute("")];
-[assembly:AssemblyCultureAttribute("")];
+[assembly:AssemblyTitleAttribute(ASSEMBLY_TITLE)];
+[assembly:AssemblyDescriptionAttribute(ASSEMBLY_DESCRIPTION)];
+[assembly:AssemblyConfigurationAttribute(ASSEMBLY_CONFIGURATION)];
+[assembly:AssemblyCompanyAttribute(ASSEMBLY_COMPANY)];
+[assembly:AssemblyProductAttribute(ASSEMBLY_PRODUCT)];
+[assembly:AssemblyCopyrightAttribute(ASSEMBLY_COPYRIGHT)];
+[assembly:AssemblyTrademarkAttribute(ASSEMBLY_TRADEMARK)];
+[assembly:AssemblyCultureAttribute(ASSEMBLY_CULTURE)];
 
 //
 // Version information for an assembly consists of the following four values:
@@ -31,7 +32,7 @@ using namespace System::Security::Permissions;
 // You can specify all the value or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly:AssemblyVersionAttribute("1.0.*")];
+[assembly:AssemblyVersionAttribute(ASSEMBLY_VERSION)];
 
 [assembly:ComVisible(false)];
 
