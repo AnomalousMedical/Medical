@@ -4,6 +4,13 @@
 namespace Medical
 {
 
+public enum class ConnectionResult
+{
+	Ok = 1,
+	NoDongle = 2,
+	TooManyUsers = 3,
+};
+
 public ref class UserPermissions
 {
 private:
@@ -22,7 +29,7 @@ public:
 
 	bool allowFeature(Features featureId);
 
-	bool checkConnection();
+	ConnectionResult checkConnection();
 
 	System::String^ getId();
 

@@ -23,7 +23,8 @@ namespace Medical
             {
                 while (connectionLoop)
                 {
-                    if (UserPermissions.Instance.checkConnection())
+                    ConnectionResult result = UserPermissions.Instance.checkConnection();
+                    if (result == ConnectionResult.Ok)
                     {
                         connectionLoop = false;
                         if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
@@ -47,7 +48,11 @@ namespace Medical
                             MessageBox.Show("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    else
+                    else if (result == ConnectionResult.TooManyUsers)
+                    {
+                        connectionLoop = MessageBox.Show("Too many users currently connected. Please shutdown the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                    }
+                    else if (result == ConnectionResult.NoDongle)
                     {
                         connectionLoop = MessageBox.Show("Please connect your dongle.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
                     }

@@ -510,7 +510,7 @@ namespace Medical.Controller
                 bool loop = true;
                 while (loop)
                 {
-                    if (!UserPermissions.Instance.checkConnection())
+                    if (UserPermissions.Instance.checkConnection() != ConnectionResult.Ok)
                     {
                         DialogResult result = MessageBox.Show(basicForm, "Please reconnect your dongle.\nWarning, clicking cancel will close the program and all work will be lost.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                         if (result == DialogResult.Cancel)

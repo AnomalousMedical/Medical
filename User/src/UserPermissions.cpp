@@ -132,14 +132,14 @@ bool UserPermissions::allowFeature(Features featureId)
 #endif
 }
 
-bool UserPermissions::checkConnection()
+ConnectionResult UserPermissions::checkConnection()
 {
 #ifdef ENABLE_HASP_PROTECTION
 	hasp_status_t status = HASP_STATUS_OK;
 	if(handle == HASP_INVALID_HANDLE_VALUE)
 	{
 		hasp_handle_t localHandle;
-		status = hasp_login(0, vendor_code, &localHandle);
+		status = hasp_login(static_cast<hasp_feature_t>(Features::PIPER_JBO_MODULE), vendor_code, &localHandle);
 		handle = localHandle;
 	}
 	if(status == HASP_STATUS_OK)
@@ -148,14 +148,18 @@ bool UserPermissions::checkConnection()
 		status = hasp_read(handle, HASP_FILEID_RO, 0, 1, data);
 		if(status == HASP_STATUS_OK)
 		{
-			return true;
+			return ConnectionResult::Ok;
 		}
 		else
 		{
 			logout();
 		}
 	}
-	return false;
+	else if(status == HASP_TOO_MANY_USERS)
+	{
+		return ConnectionResult::TooManyUsers;
+	}
+	return ConnectionResult::NoDongle;
 #else
 	return true;
 #endif
@@ -165,7 +169,7 @@ System::String^ UserPermissions::getId()
 {
 #ifdef ENABLE_HASP_PROTECTION
 	System::String^ returnVal = "Error";
-	if(checkConnection())
+	if(checkConnection() == ConnectionResult::Ok)
 	{
 		char *info = 0;
 
