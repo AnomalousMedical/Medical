@@ -24,6 +24,8 @@ namespace Medical
 
         private static String sceneDirectory;
 
+        private static String updateURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+
         public MedicalConfig(String docRoot)
         {
             MedicalConfig.docRoot = docRoot;
@@ -67,6 +69,9 @@ namespace Medical
                 internalSettings = new ConfigFile(programDirectory + "/override.ini");
                 internalSettings.loadConfigFile();
                 resources = internalSettings.createOrRetrieveConfigSection("Resources");
+
+                ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
+                updateURL = updates.getValue("UpdateURL", updateURL);
             }
 #else
             autoResourceRoot = programDirectory + "/PiperJBO.dat";
@@ -180,5 +185,12 @@ namespace Medical
             }
         }
 
+        public static String UpdateURL
+        {
+            get
+            {
+                return updateURL;
+            }
+        }
     }
 }

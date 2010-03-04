@@ -109,7 +109,7 @@ namespace Medical.GUI
             XmlTextReader reader = null;
             try
             {
-                string xmlURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+                string xmlURL = MedicalConfig.UpdateURL;
                 reader = new XmlTextReader(xmlURL);
                 reader.MoveToContent();
                 string elementName = "";
