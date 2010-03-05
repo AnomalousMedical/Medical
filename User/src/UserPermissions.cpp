@@ -161,7 +161,7 @@ ConnectionResult UserPermissions::checkConnection()
 	}
 	return ConnectionResult::NoDongle;
 #else
-	return true;
+	return ConnectionResult::Ok;
 #endif
 }
 
