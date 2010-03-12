@@ -12,6 +12,11 @@ namespace Medical
     {
         /// <summary>
         /// The main entry point for the application.
+        /// 
+        /// The edition of the program to run can be specified on the command
+        /// line by typing -e followed by one of the following: Doppler,
+        /// DentitionAndProfile, Clinical, Radiography, MRI or Graphics. That will
+        /// cause the given edition to open instead of the Graphics edition.
         /// </summary>
         [STAThread]
         static void Main()
@@ -19,7 +24,11 @@ namespace Medical
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             bool connectionLoop = true;
+#if ENABLE_HASP_PROTECTION
             using (UserPermissions permissions = new UserPermissions())
+#else
+            using (UserPermissions permissions = new UserPermissions(getSimulatedVersion()))
+#endif
             {
                 while (connectionLoop)
                 {
@@ -59,5 +68,29 @@ namespace Medical
                 }
             }
         }
+
+#if !ENABLE_HASP_PROTECTION
+        private static SimulatedVersion getSimulatedVersion()
+        {
+            String[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 2 && args[1] == "-e")
+            {
+                try
+                {
+                    SimulatedVersion version = (SimulatedVersion)Enum.Parse(typeof(SimulatedVersion), args[2]);
+                    return version;
+                }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine(String.Format("The edition specified \'{0}\' is not valid.", args[2]));
+                    return SimulatedVersion.Graphics;
+                }
+            }
+            else
+            {
+                return SimulatedVersion.Graphics;
+            }
+        }
+#endif
     }
 }

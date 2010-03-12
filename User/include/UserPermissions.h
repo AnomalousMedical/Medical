@@ -11,6 +11,18 @@ public enum class ConnectionResult
 	TooManyUsers = 3,
 };
 
+#ifndef ENABLE_HASP_PROTECTION
+public enum class SimulatedVersion
+{
+	Doppler,
+	DentitionAndProfile,
+	Clinical,
+	Radiography,
+	MRI,
+	Graphics
+};
+#endif
+
 public ref class UserPermissions
 {
 private:
@@ -23,7 +35,11 @@ private:
 	void logout();
 
 public:
+#ifndef ENABLE_HASP_PROTECTION
+	UserPermissions(SimulatedVersion simVersion);
+#else 
 	UserPermissions();
+#endif
 
 	~UserPermissions();
 
