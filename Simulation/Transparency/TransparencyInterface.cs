@@ -22,7 +22,8 @@ namespace Medical
         Skin,
         Spine,
         Nasal,
-        TMJ
+        TMJ,
+        MouthInterior
     }
 
     public class TransparencyInterface : Behavior
@@ -33,6 +34,7 @@ namespace Medical
         [Editable] private String alphaMaterialName = null;
         [Editable] private float currentAlpha = 1.0f;
         [Editable] private String nodeName;
+        [Editable] private String childNodeName;
         [Editable] private String entityName;
         [Editable] private bool disableOnHidden = true;
         [Editable] private float targetOpacity = 1.0f;
@@ -145,6 +147,14 @@ namespace Medical
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode != null)
             {
+                if (childNodeName != null && childNodeName != String.Empty)
+                {
+                    sceneNode = sceneNode.findChildNode(childNodeName);
+                    if (sceneNode == null)
+                    {
+                        blacklist("Could not find child node {0}.", childNodeName);
+                    }
+                }
                 entity = sceneNode.getNodeObject(entityName) as Entity;
             }
 
