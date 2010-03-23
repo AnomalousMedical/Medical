@@ -112,6 +112,8 @@
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
+    <Compile Include="MouthInterior\Tongue.cs" />
+    <Compile Include="MouthInterior\TongueCollisionSection.cs" />
     <Compile Include="Muscles\MovementSequence.cs" />
     <Compile Include="Muscles\MovementSequenceState.cs" />
     <Compile Include="Muscles\MovingMuscleTarget.cs" />
