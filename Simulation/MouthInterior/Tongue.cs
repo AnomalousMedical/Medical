@@ -59,13 +59,13 @@ namespace Medical
             {
                 blacklist("Tongue Entity {0} does not have an animation for protrusion named {1}.", tongueEntityName, protrudeAnimationName);
             }
-            anim.setLoop(true);
-            anim.setEnabled(true);
+            //anim.setLoop(true);
+            //anim.setEnabled(true);
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            anim.addTime((float)clock.Seconds / 3.0f);
+            //anim.addTime((float)clock.Seconds / 3.0f);
         }
     }
 }
