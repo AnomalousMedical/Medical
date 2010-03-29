@@ -32,7 +32,7 @@ namespace Medical.GUI
             String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
             foreach (String file in files)
             {
-                String fileName = FileSystem.GetFileName(file);
+                String fileName = VirtualFileSystem.GetFileName(file);
                 String baseName = fileName.Substring(0, fileName.IndexOf('.'));
                 ListViewItem listViewItem = new ListViewItem(baseName);
                 String pictureFileName = sceneDirectory + "/" + baseName + ".png";

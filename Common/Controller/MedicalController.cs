@@ -204,8 +204,8 @@ namespace Medical
             VirtualFileSystem sceneArchive = VirtualFileSystem.Instance;
             if (sceneArchive.exists(filename))
             {
-                currentSceneFile = FileSystem.GetFileName(filename);
-                currentSceneDirectory = FileSystem.GetDirectoryName(filename);
+                currentSceneFile = VirtualFileSystem.GetFileName(filename);
+                currentSceneDirectory = VirtualFileSystem.GetDirectoryName(filename);
                 using (Stream file = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                 {
                     XmlTextReader textReader = null;

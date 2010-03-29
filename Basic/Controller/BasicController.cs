@@ -705,7 +705,7 @@ namespace Medical.Controller
         {
             drawingWindowController.resetAllCameraPositions();
             navigationController.recalculateClosestNonHiddenStates();
-            StatusController.SetStatus(String.Format("Opening scene {0}...", FileSystem.GetFileName(file)));
+            StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
             {
                 movementSequenceController.stopPlayback();
