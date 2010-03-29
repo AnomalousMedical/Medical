@@ -86,8 +86,6 @@ namespace Medical
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
 
-            Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(MedicalConfig.ResourceRoot));
-
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
             pluginManager.OnConfigureDefaultWindow = createWindow;
@@ -98,7 +96,22 @@ namespace Medical
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
 
             VirtualFileSystem archive = VirtualFileSystem.Instance;
-            archive.addArchive(MedicalConfig.ResourceRoot);
+            //Add primary archive
+            archive.addArchive(MedicalConfig.PrimaryArchive);
+            
+            //Add any patch archives
+            int i = 0;
+            String patchArchive = MedicalConfig.getPatchArchiveName(i);
+            for (; File.Exists(patchArchive); ++i)
+            {
+                archive.addArchive(patchArchive);
+                patchArchive = MedicalConfig.getPatchArchiveName(i);
+            }
+
+            //Add working archive
+#if ALLOW_OVERRIDE
+            archive.addArchive(MedicalConfig.WorkingResourceDirectory);
+#endif
 
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;

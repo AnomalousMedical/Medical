@@ -20,9 +20,9 @@ namespace Medical
         private static ConfigSection resources = null;
 
         private static String programDirectory;
-        private static String autoResourceRoot;
 
         private static String sceneDirectory;
+        private static String archiveNameFormat = "PiperJBO{0}.dat";
 
         private static String updateURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
 
@@ -52,18 +52,6 @@ namespace Medical
                 programDirectory = ".";
             }
 #if ALLOW_OVERRIDE
-            if (File.Exists(programDirectory + "/PiperJBO.dat"))
-            {
-                autoResourceRoot = programDirectory + "/PiperJBO.dat";
-            }
-            else if (File.Exists(programDirectory + "/PiperJBO.zip"))
-            {
-                autoResourceRoot = programDirectory + "/PiperJBO.zip";
-            }
-            else
-            {
-                autoResourceRoot = ".";
-            }
             if (File.Exists(programDirectory + "/override.ini"))
             {
                 internalSettings = new ConfigFile(programDirectory + "/override.ini");
@@ -73,8 +61,6 @@ namespace Medical
                 ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
             }
-#else
-            autoResourceRoot = programDirectory + "/PiperJBO.dat";
 #endif
         }
 
@@ -122,23 +108,31 @@ namespace Medical
             }
         }
 
-        public static String ResourceRoot
+#if ALLOW_OVERRIDE
+        public static String WorkingResourceDirectory
         {
             get
             {
-#if ALLOW_OVERRIDE
                 if (internalSettings != null)
                 {
-                    return resources.getValue("ResourceRoot", autoResourceRoot);
+                    return resources.getValue("WorkingResourceDirectory", "");
                 }
-                else
-                {
-                    return autoResourceRoot;
-                }
-#else
-                return autoResourceRoot;
-#endif
+                return "";
             }
+        }
+#endif
+
+        public static String PrimaryArchive
+        {
+            get
+            {
+                return String.Format(archiveNameFormat, "");
+            }
+        }
+
+        public static String getPatchArchiveName(int index)
+        {
+            return String.Format(archiveNameFormat, index);
         }
 
         public static String DefaultScene
