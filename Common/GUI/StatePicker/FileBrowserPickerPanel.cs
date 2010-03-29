@@ -73,7 +73,7 @@ namespace Medical.GUI
             {
                 foreach (String directory in archive.listDirectories(targetDirectory, false))
                 {
-                    String fullPath = archive.getFullPath(directory).Replace('\\', '/');
+                    String fullPath = directory.Replace('\\', '/');
                     VirtualFileInfo fileInfo = archive.getFileInfo(fullPath);
                     KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
                     dirItem.Tag = fullPath;
@@ -99,7 +99,7 @@ namespace Medical.GUI
                 }
                 foreach (String file in archive.listFiles(targetDirectory, fileFilter, false))
                 {
-                    String fixedFile = archive.getFullPath(file).Replace('\\', '/');
+                    String fixedFile = file.Replace('\\', '/');
                     VirtualFileInfo fileInfo = archive.getFileInfo(fixedFile);
                     String fileNameOnly = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
                     KryptonListItem fileItem = new KryptonListItem(fileNameOnly);

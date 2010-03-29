@@ -42,9 +42,10 @@ namespace Medical.GUI
                 muscleStateList.Groups.Add(group);
                 foreach (String file in archive.listFiles(directory, false))
                 {
-                    String fileName = archive.getFileInfo(file).Name;
+                    VirtualFileInfo fileInfo = archive.getFileInfo(file);
+                    String fileName = fileInfo.Name;
                     ListViewItem listViewItem = new ListViewItem(fileName.Substring(0, fileName.Length - 4), group);
-                    listViewItem.Tag = archive.getFullPath(file);
+                    listViewItem.Tag = fileInfo.FullName;
                     muscleStateList.Items.Add(listViewItem);
                 }
             }

@@ -85,27 +85,31 @@ namespace Medical.Controller
                 currentSequenceSet.Dispose();
             }
             currentSequenceSet = new MovementSequenceSet();
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
             foreach(String sequenceDir in sequenceDirs)
             {
-                VirtualFileSystem archive = VirtualFileSystem.Instance;
-                foreach (String directory in archive.listDirectories(sequenceDir, false, false))
+                if(archive.exists(sequenceDir))
                 {
-                    String groupName = archive.getFileInfo(directory).Name;
-                    MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
-                    if (group == null)
+                    foreach (String directory in archive.listDirectories(sequenceDir, false, false))
                     {
-                        group = new MovementSequenceGroup(groupName);
-                        currentSequenceSet.addGroup(group);
-                    }
-                    foreach (String file in archive.listFiles(directory, false))
-                    {
-                        String fileName = archive.getFileInfo(file).Name;
-                        if (fileName.EndsWith(".seq"))
+                        String groupName = archive.getFileInfo(directory).Name;
+                        MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
+                        if (group == null)
                         {
-                            MovementSequenceInfo info = new MovementSequenceInfo();
-                            info.Name = fileName.Substring(0, fileName.Length - 4);
-                            info.FileName = archive.getFullPath(file);
-                            group.addSequence(info);
+                            group = new MovementSequenceGroup(groupName);
+                            currentSequenceSet.addGroup(group);
+                        }
+                        foreach (String file in archive.listFiles(directory, false))
+                        {
+                            VirtualFileInfo fileInfo = archive.getFileInfo(file);
+                            String fileName = fileInfo.Name;
+                            if (fileName.EndsWith(".seq"))
+                            {
+                                MovementSequenceInfo info = new MovementSequenceInfo();
+                                info.Name = fileName.Substring(0, fileName.Length - 4);
+                                info.FileName = fileInfo.FullName;
+                                group.addSequence(info);
+                            }
                         }
                     }
                 }
