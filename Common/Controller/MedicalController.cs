@@ -102,9 +102,10 @@ namespace Medical
             //Add any patch archives
             int i = 0;
             String patchArchive = MedicalConfig.getPatchArchiveName(i);
-            for (; File.Exists(patchArchive); ++i)
+            while (File.Exists(patchArchive))
             {
                 archive.addArchive(patchArchive);
+                ++i;
                 patchArchive = MedicalConfig.getPatchArchiveName(i);
             }
 
