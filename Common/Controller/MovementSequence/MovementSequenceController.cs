@@ -8,6 +8,7 @@ using System.Xml;
 using Logging;
 using Engine.Saving.XMLSaver;
 using Engine.Platform;
+using Engine;
 
 namespace Medical.Controller
 {
@@ -57,14 +58,12 @@ namespace Medical.Controller
             MovementSequence loadingSequence = null;
             try
             {
-                using (Archive archive = FileSystem.OpenArchive(filename))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                 {
-                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
-                    {
-                        loadingSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
-                        ArchiveFileInfo fileInfo = archive.getFileInfo(filename);
-                        loadingSequence.Name = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4);
-                    }
+                    loadingSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                    VirtualFileInfo fileInfo = archive.getFileInfo(filename);
+                    loadingSequence.Name = fileInfo.Name.Substring(0, fileInfo.Name.Length - 4);
                 }
             }
             catch (Exception e)
@@ -88,27 +87,25 @@ namespace Medical.Controller
             currentSequenceSet = new MovementSequenceSet();
             foreach(String sequenceDir in sequenceDirs)
             {
-                using (Archive archive = FileSystem.OpenArchive(sequenceDir))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                foreach (String directory in archive.listDirectories(sequenceDir, false, false))
                 {
-                    foreach (String directory in archive.listDirectories(sequenceDir, false, false))
+                    String groupName = archive.getFileInfo(directory).Name;
+                    MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
+                    if (group == null)
                     {
-                        String groupName = archive.getFileInfo(directory).Name;
-                        MovementSequenceGroup group = currentSequenceSet.getGroup(groupName);
-                        if (group == null)
+                        group = new MovementSequenceGroup(groupName);
+                        currentSequenceSet.addGroup(group);
+                    }
+                    foreach (String file in archive.listFiles(directory, false))
+                    {
+                        String fileName = archive.getFileInfo(file).Name;
+                        if (fileName.EndsWith(".seq"))
                         {
-                            group = new MovementSequenceGroup(groupName);
-                            currentSequenceSet.addGroup(group);
-                        }
-                        foreach (String file in archive.listFiles(directory, false))
-                        {
-                            String fileName = archive.getFileInfo(file).Name;
-                            if (fileName.EndsWith(".seq"))
-                            {
-                                MovementSequenceInfo info = new MovementSequenceInfo();
-                                info.Name = fileName.Substring(0, fileName.Length - 4);
-                                info.FileName = archive.getFullPath(file);
-                                group.addSequence(info);
-                            }
+                            MovementSequenceInfo info = new MovementSequenceInfo();
+                            info.Name = fileName.Substring(0, fileName.Length - 4);
+                            info.FileName = archive.getFullPath(file);
+                            group.addSequence(info);
                         }
                     }
                 }

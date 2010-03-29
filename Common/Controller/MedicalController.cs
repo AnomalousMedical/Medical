@@ -86,8 +86,7 @@ namespace Medical
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
 
-            Resource.ResourceRoot = MedicalConfig.ResourceRoot;
-            Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(Resource.ResourceRoot));
+            Log.Default.sendMessage("Resource root is {0}.", LogLevel.ImportantInfo, "Medical", Path.GetFullPath(MedicalConfig.ResourceRoot));
 
             hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
@@ -97,6 +96,9 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(Win32PlatformPlugin).Assembly);
             pluginManager.initializePlugins();
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
+
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            archive.addArchive(MedicalConfig.ResourceRoot);
 
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
@@ -199,40 +201,38 @@ namespace Medical
         public bool openScene(String filename)
         {
             medicalScene.destroyScene();
-            using (Archive sceneArchive = FileSystem.OpenArchive(filename))
+            VirtualFileSystem sceneArchive = VirtualFileSystem.Instance;
+            if (sceneArchive.exists(filename))
             {
-                if (sceneArchive.exists(filename))
+                currentSceneFile = FileSystem.GetFileName(filename);
+                currentSceneDirectory = FileSystem.GetDirectoryName(filename);
+                using (Stream file = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                 {
-                    currentSceneFile = FileSystem.GetFileName(filename);
-                    currentSceneDirectory = FileSystem.GetDirectoryName(filename);
-                    using (Stream file = sceneArchive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    XmlTextReader textReader = null;
+                    ScenePackage scenePackage = null;
+                    try
                     {
-                        XmlTextReader textReader = null;
-                        ScenePackage scenePackage = null;
-                        try
-                        {
-                            textReader = new XmlTextReader(file);
-                            scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
-                        }
-                        finally
-                        {
-                            if (textReader != null)
-                            {
-                                textReader.Close();
-                            }
-                        }
-                        if (scenePackage != null)
-                        {
-                            medicalScene.loadScene(scenePackage);
-                            return true;
-                        }
-                        return false;
+                        textReader = new XmlTextReader(file);
+                        scenePackage = xmlSaver.restoreObject(textReader) as ScenePackage;
                     }
-                }
-                else
-                {
+                    finally
+                    {
+                        if (textReader != null)
+                        {
+                            textReader.Close();
+                        }
+                    }
+                    if (scenePackage != null)
+                    {
+                        medicalScene.loadScene(scenePackage);
+                        return true;
+                    }
                     return false;
                 }
+            }
+            else
+            {
+                return false;
             }
         }
 

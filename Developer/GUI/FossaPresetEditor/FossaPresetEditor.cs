@@ -11,6 +11,7 @@ using Engine.Resources;
 using System.IO;
 using System.Xml;
 using Logging;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -94,15 +95,13 @@ namespace Medical.GUI
             String prompt = String.Format("This will copy the contents of the {0} side to the {1} side. Are you sure you want to do this", oldName, newName);
             if (MessageBox.Show(this, prompt, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
-                {
-                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Fossa", outputDirectoryText.Text + "/" + destDirectory + "Fossa", oldName, newName, archive);
-                }
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Fossa", outputDirectoryText.Text + "/" + destDirectory + "Fossa", oldName, newName, archive);
                 MessageBox.Show(this, "Finished copying sides.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void doCopy(String sourceDirectory, String destDirectory, String oldName, String newName, Archive archive)
+        private void doCopy(String sourceDirectory, String destDirectory, String oldName, String newName, VirtualFileSystem archive)
         {
             if (!Directory.Exists(sourceDirectory))
             {

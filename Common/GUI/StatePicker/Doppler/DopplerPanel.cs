@@ -13,6 +13,7 @@ using Engine.Saving.XMLSaver;
 using Logging;
 using Medical.Controller;
 using Medical.Muscles;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -58,23 +59,21 @@ namespace Medical.GUI
                 currentPresetDirectory = presetDirectory;
                 dopplerControl1.setToDefault();
                 String filename = String.Format("{0}/{1}/{2}", currentPresetDirectory, presetSubDirectory, "I.dst");
-                using (Archive archive = FileSystem.OpenArchive(filename))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                if (archive.exists(filename))
                 {
-                    if (archive.exists(filename))
+                    using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        using (XmlTextReader textReader = new XmlTextReader(stream))
                         {
-                            using (XmlTextReader textReader = new XmlTextReader(stream))
-                            {
-                                presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                            }
+                            presetState = xmlSaver.restoreObject(textReader) as PresetState;
                         }
                     }
-                    else
-                    {
-                        presetState = null;
-                        Log.Error("Cannot load doppler distortion file {0}.", filename);
-                    }
+                }
+                else
+                {
+                    presetState = null;
+                    Log.Error("Cannot load doppler distortion file {0}.", filename);
                 }
             }
         }
@@ -134,24 +133,22 @@ namespace Medical.GUI
                         break;
                 }
                 filename = String.Format("{0}/{1}/{2}", currentPresetDirectory, presetSubDirectory, filename);
-                using (Archive archive = FileSystem.OpenArchive(filename))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                if (archive.exists(filename))
                 {
-                    if (archive.exists(filename))
+                    using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        using (XmlTextReader textReader = new XmlTextReader(stream))
                         {
-                            using (XmlTextReader textReader = new XmlTextReader(stream))
-                            {
-                                presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                                showChanges(false);
-                            }
+                            presetState = xmlSaver.restoreObject(textReader) as PresetState;
+                            showChanges(false);
                         }
                     }
-                    else
-                    {
-                        presetState = null;
-                        Log.Error("Cannot load doppler distortion file {0}.", filename);
-                    }
+                }
+                else
+                {
+                    presetState = null;
+                    Log.Error("Cannot load doppler distortion file {0}.", filename);
                 }
             }
         }

@@ -173,7 +173,7 @@ namespace Medical
         {
             get
             {
-                return Resource.ResourceRoot + sceneDirectory;
+                return sceneDirectory;
             }
         }
 

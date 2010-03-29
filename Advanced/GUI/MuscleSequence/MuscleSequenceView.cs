@@ -10,6 +10,7 @@ using Medical.Properties;
 using Engine.Resources;
 using Engine.Saving.XMLSaver;
 using Medical.Muscles;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -34,19 +35,17 @@ namespace Medical.GUI
             groups.Clear();
             muscleStateList.Groups.Clear();
             String sequenceDir = sceneDirectory + "/" + simScene.SequenceDirectory;
-            using (Archive archive = FileSystem.OpenArchive(sequenceDir))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            foreach (String directory in archive.listDirectories(sequenceDir, false))
             {
-                foreach (String directory in archive.listDirectories(sequenceDir, false))
+                ListViewGroup group = new ListViewGroup(archive.getFileInfo(directory).Name);
+                muscleStateList.Groups.Add(group);
+                foreach (String file in archive.listFiles(directory, false))
                 {
-                    ListViewGroup group = new ListViewGroup(archive.getFileInfo(directory).Name);
-                    muscleStateList.Groups.Add(group);
-                    foreach (String file in archive.listFiles(directory, false))
-                    {
-                        String fileName = archive.getFileInfo(file).Name;
-                        ListViewItem listViewItem = new ListViewItem(fileName.Substring(0, fileName.Length - 4), group);
-                        listViewItem.Tag = archive.getFullPath(file);
-                        muscleStateList.Items.Add(listViewItem);
-                    }
+                    String fileName = archive.getFileInfo(file).Name;
+                    ListViewItem listViewItem = new ListViewItem(fileName.Substring(0, fileName.Length - 4), group);
+                    listViewItem.Tag = archive.getFullPath(file);
+                    muscleStateList.Items.Add(listViewItem);
                 }
             }
         }

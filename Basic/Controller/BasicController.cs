@@ -167,7 +167,7 @@ namespace Medical.Controller
                 layerController = new LayerController();
                 movementSequenceController = new MovementSequenceController(medicalController);
 
-                OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/Watermark", "EngineArchive", "Watermark", false);
+                OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
                 OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);

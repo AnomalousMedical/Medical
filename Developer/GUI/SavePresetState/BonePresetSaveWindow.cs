@@ -11,6 +11,7 @@ using System.IO;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using Logging;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -183,16 +184,14 @@ namespace Medical.GUI
             String prompt = String.Format("This will copy the contents of the {0} side to the {1} side. Are you sure you want to do this", oldName, newName);
             if (MessageBox.Show(this, prompt, "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                using (Archive archive = FileSystem.OpenArchive(sourceDirectory))
-                {
-                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Growth", outputDirectoryText.Text + "/" + destDirectory + "Growth", oldName, newName, archive);
-                    doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Degeneration", outputDirectoryText.Text + "/" + destDirectory + "Degeneration", oldName, newName, archive);
-                }
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Growth", outputDirectoryText.Text + "/" + destDirectory + "Growth", oldName, newName, archive);
+                doCopy(outputDirectoryText.Text + "/" + sourceDirectory + "Degeneration", outputDirectoryText.Text + "/" + destDirectory + "Degeneration", oldName, newName, archive);
                 MessageBox.Show(this, "Finished copying sides.", "Finished", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
-        private void doCopy(String sourceDirectory, String destDirectory, String oldName, String newName, Archive archive)
+        private void doCopy(String sourceDirectory, String destDirectory, String oldName, String newName, VirtualFileSystem archive)
         {
             if (!Directory.Exists(sourceDirectory))
             {

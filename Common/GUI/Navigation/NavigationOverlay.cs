@@ -85,7 +85,7 @@ namespace Medical
         {
             if (!resourcesLoaded)
             {
-                OgreResourceGroupManager.getInstance().addResourceLocation(Engine.Resources.Resource.ResourceRoot + "/GUI", "EngineArchive", "Embedded", false);
+                OgreResourceGroupManager.getInstance().addResourceLocation("/GUI", "EngineArchive", "Embedded", false);
                 OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 resourcesLoaded = true;
             }

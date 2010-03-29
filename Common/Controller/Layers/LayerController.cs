@@ -6,6 +6,7 @@ using Engine.Saving;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using Engine.Resources;
+using Engine;
 
 namespace Medical
 {
@@ -77,17 +78,15 @@ namespace Medical
             {
                 lastLayersFile = filename;
 
-                using (Archive archive = FileSystem.OpenArchive(filename))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                 {
-                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
+                    LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet;
+                    if (states == null)
                     {
-                        LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet;
-                        if (states == null)
-                        {
-                            throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
-                        }
-                        CurrentLayers = states;
+                        throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
                     }
+                    CurrentLayers = states;
                 }
             }
         }
@@ -98,28 +97,26 @@ namespace Medical
             {
                 lastLayersFile = filename;
 
-                using (Archive archive = FileSystem.OpenArchive(filename))
+                VirtualFileSystem archive = VirtualFileSystem.Instance;
+                using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                 {
-                    using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
+                    using (LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet)
                     {
-                        using (LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet)
+                        if (states == null)
                         {
-                            if (states == null)
+                            throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
+                        }
+                        foreach (LayerState state in states.LayerStates)
+                        {
+                            if (!currentLayers.hasState(state.Name))
                             {
-                                throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
-                            }
-                            foreach (LayerState state in states.LayerStates)
-                            {
-                                if (!currentLayers.hasState(state.Name))
-                                {
-                                    currentLayers.addState(state);
-                                }
+                                currentLayers.addState(state);
                             }
                         }
-                        if (LayerStateSetChanged != null)
-                        {
-                            LayerStateSetChanged.Invoke(this);
-                        }
+                    }
+                    if (LayerStateSetChanged != null)
+                    {
+                        LayerStateSetChanged.Invoke(this);
                     }
                 }
             }

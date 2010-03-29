@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Engine.Resources;
 using ComponentFactory.Krypton.Toolkit;
 using System.IO;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -67,56 +68,54 @@ namespace Medical.GUI
             currentDirectoryBitmaps.Clear();
             fileListBox.Items.Clear();
             files.Clear();
-            using (Archive archive = FileSystem.OpenArchive(targetDirectory))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            if (archive.isDirectory(targetDirectory))
             {
-                if (archive.isDirectory(targetDirectory))
+                foreach (String directory in archive.listDirectories(targetDirectory, false))
                 {
-                    foreach (String directory in archive.listDirectories(targetDirectory, false))
+                    String fullPath = archive.getFullPath(directory).Replace('\\', '/');
+                    VirtualFileInfo fileInfo = archive.getFileInfo(fullPath);
+                    KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
+                    dirItem.Tag = fullPath;
+                    String folderThumbnailFile = fullPath + "/folder.png";
+                    if (archive.exists(folderThumbnailFile))
                     {
-                        String fullPath = archive.getFullPath(directory).Replace('\\', '/');
-                        ArchiveFileInfo fileInfo = archive.getFileInfo(fullPath);
-                        KryptonListItem dirItem = new KryptonListItem(fileInfo.Name);
-                        dirItem.Tag = fullPath;
-                        String folderThumbnailFile = fullPath + "/folder.png";
-                        if (archive.exists(folderThumbnailFile))
+                        using (Stream imageStream = archive.openStream(folderThumbnailFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                         {
-                            using (Stream imageStream = archive.openStream(folderThumbnailFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                            {
-                                Bitmap bmp = new Bitmap(imageStream);
-                                currentDirectoryBitmaps.Add(bmp);
-                                dirItem.Image = bmp;
-                            }
-                        }
-                        fileListBox.Items.Add(dirItem);
-                        if (buildBreadCrumbs)
-                        {
-                            KryptonBreadCrumbItem crumb = new KryptonBreadCrumbItem(dirItem.ShortText);
-                            directoryCrumbs.Items.Add(crumb);
-                            crumb.Tag = fullPath;
-                            System.Console.WriteLine(fullPath);
-                            breadCrumbItems.Add(fullPath, crumb);
+                            Bitmap bmp = new Bitmap(imageStream);
+                            currentDirectoryBitmaps.Add(bmp);
+                            dirItem.Image = bmp;
                         }
                     }
-                    foreach (String file in archive.listFiles(targetDirectory, fileFilter, false))
+                    fileListBox.Items.Add(dirItem);
+                    if (buildBreadCrumbs)
                     {
-                        String fixedFile = archive.getFullPath(file).Replace('\\', '/');
-                        ArchiveFileInfo fileInfo = archive.getFileInfo(fixedFile);
-                        String fileNameOnly = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
-                        KryptonListItem fileItem = new KryptonListItem(fileNameOnly);
-                        fileItem.Tag = fixedFile;
-                        String fileThumbnail = String.Format("{0}/{1}.png", fileInfo.DirectoryName, fileNameOnly);
-                        if (archive.exists(fileThumbnail))
-                        {
-                            using (Stream imageStream = archive.openStream(fileThumbnail, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                            {
-                                Bitmap bmp = new Bitmap(imageStream);
-                                currentDirectoryBitmaps.Add(bmp);
-                                fileItem.Image = bmp;
-                            }
-                        }
-                        files.Add(fixedFile);
-                        fileListBox.Items.Add(fileItem);
+                        KryptonBreadCrumbItem crumb = new KryptonBreadCrumbItem(dirItem.ShortText);
+                        directoryCrumbs.Items.Add(crumb);
+                        crumb.Tag = fullPath;
+                        System.Console.WriteLine(fullPath);
+                        breadCrumbItems.Add(fullPath, crumb);
                     }
+                }
+                foreach (String file in archive.listFiles(targetDirectory, fileFilter, false))
+                {
+                    String fixedFile = archive.getFullPath(file).Replace('\\', '/');
+                    VirtualFileInfo fileInfo = archive.getFileInfo(fixedFile);
+                    String fileNameOnly = fileInfo.Name.Substring(0, fileInfo.Name.LastIndexOf('.'));
+                    KryptonListItem fileItem = new KryptonListItem(fileNameOnly);
+                    fileItem.Tag = fixedFile;
+                    String fileThumbnail = String.Format("{0}/{1}.png", fileInfo.DirectoryName, fileNameOnly);
+                    if (archive.exists(fileThumbnail))
+                    {
+                        using (Stream imageStream = archive.openStream(fileThumbnail, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            Bitmap bmp = new Bitmap(imageStream);
+                            currentDirectoryBitmaps.Add(bmp);
+                            fileItem.Image = bmp;
+                        }
+                    }
+                    files.Add(fixedFile);
+                    fileListBox.Items.Add(fileItem);
                 }
             }
             currentDirectory = targetDirectory;

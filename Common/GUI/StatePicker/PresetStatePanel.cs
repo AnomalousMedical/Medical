@@ -11,6 +11,7 @@ using Engine.Resources;
 using System.IO;
 using Logging;
 using System.Xml;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -61,48 +62,46 @@ namespace Medical.GUI
             {
                 presetListView.LargeImageList = panelController.ImageList;
             }
-            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            foreach (PresetState state in presetStateSet.Presets)
             {
-                foreach (PresetState state in presetStateSet.Presets)
+                ListViewGroup group;
+                groups.TryGetValue(state.Category, out group);
+                if (group == null)
                 {
-                    ListViewGroup group;
-                    groups.TryGetValue(state.Category, out group);
-                    if (group == null)
+                    group = new ListViewGroup(state.Category);
+                    groups.Add(state.Category, group);
+                    presetListView.Groups.Add(group);
+                }
+                String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
+                if (!presetListView.LargeImageList.Images.ContainsKey(fullImageName))
+                {
+                    try
                     {
-                        group = new ListViewGroup(state.Category);
-                        groups.Add(state.Category, group);
-                        presetListView.Groups.Add(group);
-                    }
-                    String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
-                    if (!presetListView.LargeImageList.Images.ContainsKey(fullImageName))
-                    {
-                        try
+                        using (Stream imageStream = archive.openStream(fullImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                         {
-                            using (Stream imageStream = archive.openStream(fullImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                            Image image = Image.FromStream(imageStream);
+                            if (image != null)
                             {
-                                Image image = Image.FromStream(imageStream);
-                                if (image != null)
-                                {
-                                    presetListView.LargeImageList.Images.Add(fullImageName, image);
-                                    images.AddLast(image);
-                                    image.Tag = fullImageName;
-                                }
+                                presetListView.LargeImageList.Images.Add(fullImageName, image);
+                                images.AddLast(image);
+                                image.Tag = fullImageName;
                             }
                         }
-                        catch (Exception e)
-                        {
-                            Log.Error("Could not open image preview file {0}.", fullImageName);
-                        }
                     }
-                    ListViewItem item = new ListViewItem(state.Name, fullImageName);
-                    item.Tag = state;
-                    item.Group = group;
-                    presetListView.Items.Add(item);
+                    catch (Exception e)
+                    {
+                        Log.Error("Could not open image preview file {0}.", fullImageName);
+                    }
                 }
-                if (presetListView.Items.Count > 0)
-                {
-                    defaultItem = presetListView.Items[0];
-                }
+                ListViewItem item = new ListViewItem(state.Name, fullImageName);
+                item.Tag = state;
+                item.Group = group;
+                presetListView.Items.Add(item);
+            }
+            if (presetListView.Items.Count > 0)
+            {
+                defaultItem = presetListView.Items[0];
             }
         }
 
@@ -170,23 +169,21 @@ namespace Medical.GUI
 
         private void loadPresetSet(PresetStateSet presetStateSet)
         {
-            using (Archive archive = FileSystem.OpenArchive(presetStateSet.SourceDirectory))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
+            foreach (String file in files)
             {
-                String[] files = archive.listFiles(presetStateSet.SourceDirectory, "*.pre", false);
-                foreach (String file in files)
+                XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
+                PresetState preset = panelController.XmlSaver.restoreObject(reader) as PresetState;
+                if (preset != null)
                 {
-                    XmlTextReader reader = new XmlTextReader(archive.openStream(file, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read));
-                    PresetState preset = panelController.XmlSaver.restoreObject(reader) as PresetState;
-                    if (preset != null)
-                    {
-                        presetStateSet.addPresetState(preset);
-                    }
-                    else
-                    {
-                        Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
-                    }
-                    reader.Close();
+                    presetStateSet.addPresetState(preset);
                 }
+                else
+                {
+                    Log.Error("Could not load preset from file {0}. Object was not a BoneManipulatorPresetState.", file);
+                }
+                reader.Close();
             }
         }
     }

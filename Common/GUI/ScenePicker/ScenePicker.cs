@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Engine.Resources;
 using System.IO;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -26,32 +27,30 @@ namespace Medical.GUI
 
         public void initialize()
         {
-            using (Archive archive = FileSystem.OpenArchive(MedicalConfig.SceneDirectory))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            String sceneDirectory = MedicalConfig.SceneDirectory;
+            String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+            foreach (String file in files)
             {
-                String sceneDirectory = MedicalConfig.SceneDirectory;
-                String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
-                foreach (String file in files)
+                String fileName = FileSystem.GetFileName(file);
+                String baseName = fileName.Substring(0, fileName.IndexOf('.'));
+                ListViewItem listViewItem = new ListViewItem(baseName);
+                String pictureFileName = sceneDirectory + "/" + baseName + ".png";
+                if (archive.exists(pictureFileName))
                 {
-                    String fileName = FileSystem.GetFileName(file);
-                    String baseName = fileName.Substring(0, fileName.IndexOf('.'));
-                    ListViewItem listViewItem = new ListViewItem(baseName);
-                    String pictureFileName = sceneDirectory + "/" + baseName + ".png";
-                    if (archive.exists(pictureFileName))
+                    using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
                     {
-                        using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        Image image = Image.FromStream(imageStream);
+                        if (image != null)
                         {
-                            Image image = Image.FromStream(imageStream);
-                            if (image != null)
-                            {
-                                sceneSelectionView.LargeImageList.Images.Add(pictureFileName, image);
-                                listViewItem.ImageKey = pictureFileName;
-                                images.AddLast(image);
-                            }
+                            sceneSelectionView.LargeImageList.Images.Add(pictureFileName, image);
+                            listViewItem.ImageKey = pictureFileName;
+                            images.AddLast(image);
                         }
                     }
-                    listViewItem.Tag = fileName;
-                    sceneSelectionView.Items.Add(listViewItem);
                 }
+                listViewItem.Tag = fileName;
+                sceneSelectionView.Items.Add(listViewItem);
             }
         }
 

@@ -72,21 +72,19 @@ namespace Medical
 
         private NavigationStateSet loadNavSet(String cameraFile)
         {
-            using (Archive archive = FileSystem.OpenArchive(cameraFile))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            if (archive.exists(cameraFile))
             {
-                if (archive.exists(cameraFile))
+                try
                 {
-                    try
+                    using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
                     {
-                        using (XmlTextReader textReader = new XmlTextReader(archive.openStream(cameraFile, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
-                        {
-                            return NavigationSerializer.readNavigationStateSet(textReader);
-                        }
+                        return NavigationSerializer.readNavigationStateSet(textReader);
                     }
-                    catch (Exception ex)
-                    {
-                        Log.Debug("Error loading navigation file.\n{0}", ex.Message);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Debug("Error loading navigation file.\n{0}", ex.Message);
                 }
             }
             return null;

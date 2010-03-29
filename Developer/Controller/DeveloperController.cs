@@ -387,16 +387,14 @@ namespace Medical.Controller
 
         public void loadSequence(String filename)
         {
-            using (Archive archive = FileSystem.OpenArchive(filename))
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
             {
-                using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                MovementSequence sequence = saver.restoreObject(new XmlTextReader(stream)) as MovementSequence;
+                if (sequence != null)
                 {
-                    MovementSequence sequence = saver.restoreObject(new XmlTextReader(stream)) as MovementSequence;
-                    if (sequence != null)
-                    {
-                        movementState.Sequence = sequence;
-                        movementState.Filename = filename;
-                    }
+                    movementState.Sequence = sequence;
+                    movementState.Filename = filename;
                 }
             }
         }
