@@ -48,7 +48,7 @@ namespace Medical
                     headerWriter.WriteElementString(LAST_NAME, LastName);
                     headerWriter.WriteEndElement();
                     headerWriter.Flush();
-                    using (Stream fileStream = new BufferedStream(new FileStream(BackingFile, FileMode.OpenOrCreate, FileAccess.Write)))
+                    using (Stream fileStream = new BufferedStream(new FileStream(BackingFile, FileMode.Create, FileAccess.Write)))
                     {
                         using (BinaryWriter bw = new BinaryWriter(fileStream))
                         {
