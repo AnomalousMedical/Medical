@@ -30,8 +30,12 @@ namespace Medical
         [Editable]
         private String jointName = "Joint";
 
+        [Editable]
+        private String rigidBodyName = "RigidBody";
+
         private Bone bone;
-        protected Generic6DofConstraintElement joint;
+        private Generic6DofConstraintElement joint;
+        private RigidBody rigidBody;
         SimObject tongueObject;
 
         [DoNotSave]
@@ -83,6 +87,22 @@ namespace Medical
             {
                 blacklist("Could not find Joint {0}.", jointName);
             }
+
+            rigidBody = Owner.getElement(rigidBodyName) as RigidBody;
+            if (rigidBody == null)
+            {
+                blacklist("Could not find RigidBody {0}", rigidBodyName);
+            }
+        }
+
+        protected override void link()
+        {
+            TongueController.addCollisionSection(this);
+        }
+
+        protected override void destroy()
+        {
+            TongueController.removeTongueCollisionSection(this);
         }
 
         public override void update(Clock clock, EventManager eventManager)
@@ -93,6 +113,26 @@ namespace Medical
                 Vector3 jointPos = tongueObject.Translation + bonePos + offset * Owner.Scale - joint.RigidBodyA.Owner.Translation;
                 joint.setFrameOffsetA(jointPos);
                 lastPosition = bonePos;
+            }
+        }
+
+        [DoNotCopy]
+        public bool CollisionEnabled
+        {
+            get
+            {
+                return (rigidBody.getCollisionFlags() & CollisionFlags.NoContactResponse) == 0;
+            }
+            set
+            {
+                if (value)
+                {
+                    rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() & ~CollisionFlags.NoContactResponse);
+                }
+                else
+                {
+                    rigidBody.setCollisionFlags(rigidBody.getCollisionFlags() | CollisionFlags.NoContactResponse);
+                }
             }
         }
     }

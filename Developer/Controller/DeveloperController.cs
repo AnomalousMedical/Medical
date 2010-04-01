@@ -14,6 +14,8 @@ using Medical.Muscles;
 using Medical.Properties;
 using Engine.ObjectManagement;
 using Logging;
+using Engine.Renderer;
+using Engine.Platform;
 
 namespace Medical.Controller
 {
@@ -41,6 +43,7 @@ namespace Medical.Controller
         private Options options = null;
         private DockProvider dockProvider;
         private TemporaryStateBlender tempBlender;
+        private DebugDrawingSurface debugSurface = null;
 
         private NavigationController navigationController;
 
@@ -158,6 +161,9 @@ namespace Medical.Controller
                 movementState = new MovementStateControl();
                 guiElements.addGUIElement(movementState);
 
+                MouthInteriorControl tongueControl = new MouthInteriorControl();
+                guiElements.addGUIElement(tongueControl);
+
                 MeasurementGUI measurement = new MeasurementGUI();
                 guiElements.addGUIElement(measurement);
 
@@ -188,6 +194,15 @@ namespace Medical.Controller
                 guiElements.addGUIElement(stateEditor);
 
                 options = new Options();
+
+                //Initialize debug visualizers
+                foreach (DebugInterface debugInterface in medicalController.PluginManager.getDebugInterfaces())
+                {
+                    DebugVisualizer visualizer = new DebugVisualizer();
+                    visualizer.initialize(debugInterface);
+                    guiElements.addGUIElement(visualizer);
+                }
+                medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
                 SimObjectMover teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
                 this.SceneLoaded += teethMover.sceneLoaded;
@@ -428,6 +443,11 @@ namespace Medical.Controller
             if (SceneUnloading != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
+                if (debugSurface != null)
+                {
+                    medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(debugSurface);
+                    debugSurface = null;
+                }
             }
             drawingWindowController.destroyCameras();
             if (medicalController.openScene(file))
@@ -437,6 +457,7 @@ namespace Medical.Controller
                 if (SceneLoaded != null)
                 {
                     SceneLoaded.Invoke(medicalController.CurrentScene);
+                    debugSurface = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("SceneDebugDrawer", medicalController.CurrentScene.getDefaultSubScene());
                 }
 
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -496,6 +517,19 @@ namespace Medical.Controller
             get
             {
                 return drawingWindowController;
+            }
+        }
+
+        void medicalController_FullSpeedLoopUpdate(Clock time)
+        {
+            // Draw the debug information for the current scene.
+            SimScene currentScene = medicalController.CurrentScene;
+            if (currentScene != null && currentScene.getDefaultSubScene() != null)
+            {
+                foreach (DebugInterface debugInterface in medicalController.PluginManager.getDebugInterfaces())
+                {
+                    debugInterface.renderDebug(debugSurface, currentScene.getDefaultSubScene());
+                }
             }
         }
     }

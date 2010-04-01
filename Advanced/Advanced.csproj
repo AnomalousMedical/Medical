@@ -219,6 +219,12 @@
     <Compile Include="GUI\Teeth\TeethControl.Designer.cs">
       <DependentUpon>TeethControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\MouthInterior\MouthInteriorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\MouthInterior\MouthInteriorControl.Designer.cs">
+      <DependentUpon>MouthInteriorControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AdvancedForm.resx">
@@ -300,6 +306,9 @@
     <EmbeddedResource Include="GUI\Teeth\TeethControl.resx">
       <DependentUpon>TeethControl.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\MouthInterior\MouthInteriorControl.resx">
+      <DependentUpon>MouthInteriorControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

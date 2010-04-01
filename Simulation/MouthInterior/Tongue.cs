@@ -13,6 +13,13 @@ using Logging;
 
 namespace Medical
 {
+    public enum TongueMode
+    {
+        Protrude,
+        Back,
+        Rest,
+    }
+
     public class Tongue : Behavior
     {
         [Editable]
@@ -27,7 +34,22 @@ namespace Medical
         [Editable]
         private String protrudeAnimationName = "Protrude";
 
-        AnimationState anim;
+        [Editable]
+        private String backAnimationName = "Back";
+
+        [Editable]
+        private String restAnimationName = "Rest";
+
+        [Editable]
+        private TongueMode tongueMode = TongueMode.Back;
+
+        [Editable]
+        private float currentTonguePosition = 0.0f;
+
+        AnimationState protrude;
+        AnimationState back;
+        AnimationState rest;
+        AnimationState current;
 
         protected override void constructed()
         {
@@ -49,23 +71,93 @@ namespace Medical
                 blacklist("Could not find tongue Entity {0}.", tongueNodeName);
             }
 
-            if (!entity.hasSkeleton())
-            {
-                blacklist("Tongue Entity {0} does not have a skeleton.", tongueEntityName);
-            }
-
-            anim = entity.getAnimationState(protrudeAnimationName);
-            if (anim == null)
+            protrude = entity.getAnimationState(protrudeAnimationName);
+            if (protrude == null)
             {
                 blacklist("Tongue Entity {0} does not have an animation for protrusion named {1}.", tongueEntityName, protrudeAnimationName);
             }
-            //anim.setLoop(true);
-            //anim.setEnabled(true);
+
+            back = entity.getAnimationState(backAnimationName);
+            if (back == null)
+            {
+                blacklist("Tongue Entity {0} does not have an animation for back named {1}.", tongueEntityName, backAnimationName);
+            }
+
+            rest = entity.getAnimationState(restAnimationName);
+            if (rest == null)
+            {
+                blacklist("Tongue Entity {0} does not have an animation for rest named {1}.", tongueEntityName, restAnimationName);
+            }
+
+            protrude.setLoop(false);
+            back.setLoop(false);
+            rest.setLoop(false);
+
+            TongueMode = tongueMode;
+        }
+
+        protected override void link()
+        {
+            TongueController.setTongue(this);
+        }
+
+        protected override void destroy()
+        {
+            TongueController.setTongue(null);
         }
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            //anim.addTime((float)clock.Seconds / 3.0f);
+            
+        }
+
+        [DoNotCopy]
+        public TongueMode TongueMode
+        {
+            get
+            {
+                return tongueMode;
+            }
+            set
+            {
+                this.tongueMode = value;
+                switch (tongueMode)
+                {
+                    case TongueMode.Protrude:
+                        current = protrude;
+                        protrude.setEnabled(true);
+                        back.setEnabled(false);
+                        rest.setEnabled(false);
+                        break;
+                    case TongueMode.Back:
+                        current = back;
+                        protrude.setEnabled(false);
+                        back.setEnabled(true);
+                        rest.setEnabled(false);
+                        break;
+                    case TongueMode.Rest:
+                        current = rest;
+                        protrude.setEnabled(false);
+                        back.setEnabled(false);
+                        rest.setEnabled(true);
+                        break;
+                }
+                current.setTimePosition(currentTonguePosition);
+            }
+        }
+
+        [DoNotCopy]
+        public float CurrentTonguePosition
+        {
+            get
+            {
+                return currentTonguePosition;
+            }
+            set
+            {
+                currentTonguePosition = value;
+                current.setTimePosition(currentTonguePosition);
+            }
         }
     }
 }

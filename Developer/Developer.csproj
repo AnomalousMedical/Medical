@@ -94,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\DeveloperController.cs" />
+    <Compile Include="GUI\DebugVisualizer\DebugVisualizer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\DebugVisualizer\DebugVisualizer.designer.cs">
+      <DependentUpon>DebugVisualizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GUI\DebugVisualizer\DebugVisualizer.resx">
+      <DependentUpon>DebugVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\DiscPresetEditor\DiscPresetEditor.resx">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
       <SubType>Designer</SubType>

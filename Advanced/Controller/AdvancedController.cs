@@ -168,6 +168,9 @@ namespace Medical.Controller
                 movementState = new MovementStateControl();
                 guiElements.addGUIElement(movementState);
 
+                MouthInteriorControl tongueControl = new MouthInteriorControl();
+                guiElements.addGUIElement(tongueControl);
+
                 OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
                 OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
                 OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
