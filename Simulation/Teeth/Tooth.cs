@@ -55,6 +55,7 @@ namespace Medical
         private bool toolHighlight = false;
 
         [DoNotCopy]
+        [DoNotSave]
         protected List<Tooth> collidingTeeth = new List<Tooth>(5);
 
         [DoNotCopy]

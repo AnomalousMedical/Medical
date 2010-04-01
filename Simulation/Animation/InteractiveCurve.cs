@@ -32,6 +32,8 @@ namespace Medical
 
         ManualObject manualObject;
         SimObject targetObject;
+
+        [DoNotSave]
         NaturalSplineSet curve = new NaturalSplineSet();
 
         public void addControlPoint(Vector3 controlPoint)
