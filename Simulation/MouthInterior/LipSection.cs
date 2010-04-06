@@ -10,10 +10,11 @@ using Engine.ObjectManagement;
 using OgrePlugin;
 using OgreWrapper;
 using Engine.Attributes;
+using Logging;
 
 namespace Medical
 {
-    public class LipSection : Behavior
+    public abstract class LipSection : Behavior
     {
         [Editable]
         private String jointName = "Joint";
@@ -47,6 +48,14 @@ namespace Medical
         [DoNotSave]
         private Vector3 lastPosition;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private Vector3 originalPosition;
+
+        [DoNotCopy]
+        [DoNotSave]
+        protected List<Tooth> collidingTeeth = new List<Tooth>(5);
+
         protected override void constructed()
         {
             joint = Owner.getElement(jointName) as Generic6DofConstraintElement;
@@ -55,11 +64,15 @@ namespace Medical
                 blacklist("Could not find Joint {0}.", jointName);
             }
 
+            originalPosition = joint.getFrameOffsetOriginA();
+
             rigidBody = Owner.getElement(rigidBodyName) as RigidBody;
             if (rigidBody == null)
             {
                 blacklist("Could not find RigidBody {0}", rigidBodyName);
             }
+            rigidBody.ContactStarted += new CollisionCallback(rigidBody_ContactStarted);
+            rigidBody.ContactEnded += new CollisionCallback(rigidBody_ContactEnded);
 
             skinObject = Owner.getOtherSimObject(skinSimObjectName);
             if (skinObject == null)
@@ -96,16 +109,6 @@ namespace Medical
             {
                 blacklist("Cannot find bone {0} in Skin Entity {1} in SimObject {2}", lipBoneName, skinEntityName, skinSimObjectName);
             }
-        }
-
-        protected override void link()
-        {
-            LipController.addCollisionSection(this);
-        }
-
-        protected override void destroy()
-        {
-            LipController.removeTongueCollisionSection(this);
         }
 
         public override void update(Clock clock, EventManager eventManager)
@@ -148,14 +151,11 @@ namespace Medical
             set
             {
                 lipsRigid = value;
-                if (lipsRigid)
+                if (value)
                 {
                     SimObject other = joint.RigidBodyA.Owner;
                     Vector3 offset = Quaternion.quatRotate(other.Rotation.inverse(), Owner.Translation - other.Translation);
                     joint.setFrameOffsetA(offset);
-
-                    Quaternion rotation = other.Rotation.inverse() * Owner.Rotation;
-                    joint.setFrameOffsetA(rotation);
 
                     joint.setLinearLowerLimit(Vector3.Zero);
                     joint.setLinearUpperLimit(Vector3.Zero);
@@ -166,8 +166,54 @@ namespace Medical
                 {
                     joint.setLinearLowerLimit(new Vector3(-1.0f, -1.0f, -1.0f));
                     joint.setLinearUpperLimit(new Vector3(1.0f, 1.0f, 1.0f));
-                    joint.setAngularLowerLimit(new Vector3(-3.14f, -3.14f, -3.14f));
-                    joint.setAngularUpperLimit(new Vector3(3.14f, 3.14f, 3.14f));
+                    //joint.setAngularLowerLimit(new Vector3(-3.14f, -3.14f, -3.14f));
+                    //joint.setAngularUpperLimit(new Vector3(3.14f, 3.14f, 3.14f));
+                }
+            }
+        }
+
+        [DoNotCopy]
+        public float Damping
+        {
+            get
+            {
+                return rigidBody.getLinearDamping();
+            }
+            set
+            {
+                rigidBody.setDamping(value, rigidBody.getAngularDamping());
+            }
+        }
+
+        public void setOriginalPosition()
+        {
+            joint.setFrameOffsetA(originalPosition);
+        }
+
+        void rigidBody_ContactStarted(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
+        {
+            Tooth otherTooth = otherBody.Owner.getElement("Behavior") as Tooth;
+            if (otherTooth != null)
+            {
+                if (collidingTeeth.Count == 0)
+                {
+                    rigidBody.setDamping(0.0f, 0.0f);
+                    //Log.Debug("Lip section {0} damping set to 0.", Owner.Name);
+                }
+                collidingTeeth.Add(otherTooth);
+            }
+        }
+
+        void rigidBody_ContactEnded(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
+        {
+            Tooth otherTooth = otherBody.Owner.getElement("Behavior") as Tooth;
+            if (otherTooth != null)
+            {
+                collidingTeeth.Remove(otherTooth);
+                if (collidingTeeth.Count == 0)
+                {
+                    rigidBody.setDamping(1.0f, 1.0f);
+                    //Log.Debug("Lip section {0} damping set to 1.", Owner.Name);
                 }
             }
         }

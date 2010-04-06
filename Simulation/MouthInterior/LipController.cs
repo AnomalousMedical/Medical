@@ -8,23 +8,53 @@ namespace Medical
     public class LipController
     {
         static bool collisionEnabled = true;
-        static bool lipsRigid = true;
 
-        static List<LipSection> lipCollisionSections = new List<LipSection>();
+        static bool topLipsRigid = true;
+        static List<LipSection> topLipCollisionSections = new List<LipSection>();
 
-        internal static void addCollisionSection(LipSection section)
+        static bool bottomLipsRigid = true;
+        static List<LipSection> bottomLipCollisionSections = new List<LipSection>();
+
+        internal static void addTopCollisionSection(LipSection section)
         {
-            if (lipCollisionSections.Count == 0)
+            if (topLipCollisionSections.Count == 0)
             {
                 collisionEnabled = section.CollisionEnabled;
-                lipsRigid = section.LipsRigid;
+                topLipsRigid = section.LipsRigid;
             }
-            lipCollisionSections.Add(section);
+            topLipCollisionSections.Add(section);
         }
 
-        internal static void removeTongueCollisionSection(LipSection section)
+        internal static void removeTopCollisionSection(LipSection section)
         {
-            lipCollisionSections.Remove(section);
+            topLipCollisionSections.Remove(section);
+        }
+
+        internal static void addBottomCollisionSection(LipSection section)
+        {
+            if (bottomLipCollisionSections.Count == 0)
+            {
+                collisionEnabled = section.CollisionEnabled;
+                bottomLipsRigid = section.LipsRigid;
+            }
+            bottomLipCollisionSections.Add(section);
+        }
+
+        internal static void removeBottomCollisionSection(LipSection section)
+        {
+            bottomLipCollisionSections.Remove(section);
+        }
+
+        public static void setOriginalPosition()
+        {
+            foreach (LipSection section in topLipCollisionSections)
+            {
+                section.setOriginalPosition();
+            }
+            foreach (LipSection section in bottomLipCollisionSections)
+            {
+                section.setOriginalPosition();
+            }
         }
 
         public static bool LipCollisionEnabled
@@ -36,25 +66,45 @@ namespace Medical
             set
             {
                 collisionEnabled = value;
-                foreach (LipSection section in lipCollisionSections)
+                foreach (LipSection section in topLipCollisionSections)
+                {
+                    section.CollisionEnabled = collisionEnabled;
+                }
+                foreach (LipSection section in bottomLipCollisionSections)
                 {
                     section.CollisionEnabled = collisionEnabled;
                 }
             }
         }
 
-        public static bool LipsRigid
+        public static bool TopLipsRigid
         {
             get
             {
-                return lipsRigid;
+                return topLipsRigid;
             }
             set
             {
-                lipsRigid = value;
-                foreach (LipSection section in lipCollisionSections)
+                topLipsRigid = value;
+                foreach (LipSection section in topLipCollisionSections)
                 {
-                    section.LipsRigid = lipsRigid;
+                    section.LipsRigid = topLipsRigid;
+                }
+            }
+        }
+
+        public static bool BottomLipsRigid
+        {
+            get
+            {
+                return bottomLipsRigid;
+            }
+            set
+            {
+                bottomLipsRigid = value;
+                foreach (LipSection section in bottomLipCollisionSections)
+                {
+                    section.LipsRigid = bottomLipsRigid;
                 }
             }
         }

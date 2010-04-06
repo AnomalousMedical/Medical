@@ -34,7 +34,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tonguePosition = new System.Windows.Forms.NumericUpDown();
             this.lipCollisionCheck = new System.Windows.Forms.CheckBox();
-            this.lipsRigidCheckBox = new System.Windows.Forms.CheckBox();
+            this.topLipsRigidCheckBox = new System.Windows.Forms.CheckBox();
+            this.resetLipsButton = new System.Windows.Forms.Button();
+            this.bottomLipsRigidCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tonguePosition)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,29 +97,51 @@
             // lipCollisionCheck
             // 
             this.lipCollisionCheck.AutoSize = true;
-            this.lipCollisionCheck.Location = new System.Drawing.Point(3, 152);
+            this.lipCollisionCheck.Location = new System.Drawing.Point(3, 210);
             this.lipCollisionCheck.Name = "lipCollisionCheck";
             this.lipCollisionCheck.Size = new System.Drawing.Size(117, 17);
             this.lipCollisionCheck.TabIndex = 5;
             this.lipCollisionCheck.Text = "Enable Lip Collision";
             this.lipCollisionCheck.UseVisualStyleBackColor = true;
             // 
-            // lipsRigidCheckBox
+            // topLipsRigidCheckBox
             // 
-            this.lipsRigidCheckBox.AutoSize = true;
-            this.lipsRigidCheckBox.Location = new System.Drawing.Point(3, 129);
-            this.lipsRigidCheckBox.Name = "lipsRigidCheckBox";
-            this.lipsRigidCheckBox.Size = new System.Drawing.Size(72, 17);
-            this.lipsRigidCheckBox.TabIndex = 6;
-            this.lipsRigidCheckBox.Text = "Lips Rigid";
-            this.lipsRigidCheckBox.UseVisualStyleBackColor = true;
+            this.topLipsRigidCheckBox.AutoSize = true;
+            this.topLipsRigidCheckBox.Location = new System.Drawing.Point(3, 166);
+            this.topLipsRigidCheckBox.Name = "topLipsRigidCheckBox";
+            this.topLipsRigidCheckBox.Size = new System.Drawing.Size(94, 17);
+            this.topLipsRigidCheckBox.TabIndex = 6;
+            this.topLipsRigidCheckBox.Text = "Top Lips Rigid";
+            this.topLipsRigidCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // resetLipsButton
+            // 
+            this.resetLipsButton.Location = new System.Drawing.Point(4, 234);
+            this.resetLipsButton.Name = "resetLipsButton";
+            this.resetLipsButton.Size = new System.Drawing.Size(75, 23);
+            this.resetLipsButton.TabIndex = 7;
+            this.resetLipsButton.Text = "Reset Lips";
+            this.resetLipsButton.UseVisualStyleBackColor = true;
+            this.resetLipsButton.Click += new System.EventHandler(this.resetLipsButton_Click);
+            // 
+            // bottomLipsRigidCheck
+            // 
+            this.bottomLipsRigidCheck.AutoSize = true;
+            this.bottomLipsRigidCheck.Location = new System.Drawing.Point(3, 187);
+            this.bottomLipsRigidCheck.Name = "bottomLipsRigidCheck";
+            this.bottomLipsRigidCheck.Size = new System.Drawing.Size(108, 17);
+            this.bottomLipsRigidCheck.TabIndex = 10;
+            this.bottomLipsRigidCheck.Text = "Bottom Lips Rigid";
+            this.bottomLipsRigidCheck.UseVisualStyleBackColor = true;
             // 
             // MouthInteriorControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ButtonText = "Mouth Interior";
-            this.Controls.Add(this.lipsRigidCheckBox);
+            this.Controls.Add(this.bottomLipsRigidCheck);
+            this.Controls.Add(this.resetLipsButton);
+            this.Controls.Add(this.topLipsRigidCheckBox);
             this.Controls.Add(this.lipCollisionCheck);
             this.Controls.Add(this.tonguePosition);
             this.Controls.Add(this.label2);
@@ -125,7 +149,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tongueCollisionCheckBox);
             this.Name = "MouthInteriorControl";
-            this.Size = new System.Drawing.Size(176, 185);
+            this.Size = new System.Drawing.Size(176, 304);
             this.ToolStripName = "Advanced";
             ((System.ComponentModel.ISupportInitialize)(this.tonguePosition)).EndInit();
             this.ResumeLayout(false);
@@ -141,6 +165,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown tonguePosition;
         private System.Windows.Forms.CheckBox lipCollisionCheck;
-        private System.Windows.Forms.CheckBox lipsRigidCheckBox;
+        private System.Windows.Forms.CheckBox topLipsRigidCheckBox;
+        private System.Windows.Forms.Button resetLipsButton;
+        private System.Windows.Forms.CheckBox bottomLipsRigidCheck;
     }
 }

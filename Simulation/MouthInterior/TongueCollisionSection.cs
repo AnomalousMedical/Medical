@@ -110,9 +110,11 @@ namespace Medical
             Vector3 bonePos = bone.getDerivedPosition();
             if (bonePos != lastPosition)
             {
-                Vector3 jointPos = tongueObject.Translation + bonePos + offset * Owner.Scale - joint.RigidBodyA.Owner.Translation;
+                Vector3 jointPos = tongueObject.Translation + bonePos + offset * bone.getDerivedScale() - joint.RigidBodyA.Owner.Translation;
                 joint.setFrameOffsetA(jointPos);
                 lastPosition = bonePos;
+
+                rigidBody.setLocalScaling(bone.getDerivedScale());
             }
         }
 

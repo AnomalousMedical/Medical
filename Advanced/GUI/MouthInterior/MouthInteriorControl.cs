@@ -28,7 +28,8 @@ namespace Medical.GUI
             tonguePosition.ValueChanged += new EventHandler(tonguePosition_ValueChanged);
             tongueCollisionCheckBox.CheckedChanged += new EventHandler(tongueCollisionCheckBox_CheckedChanged);
             lipCollisionCheck.CheckedChanged += new EventHandler(lipCollisionCheck_CheckedChanged);
-            lipsRigidCheckBox.CheckedChanged += new EventHandler(lipsRigidCheckBox_CheckedChanged);
+            topLipsRigidCheckBox.CheckedChanged += new EventHandler(topLipsRigidCheckBox_CheckedChanged);
+            bottomLipsRigidCheck.CheckedChanged += new EventHandler(bottomLipsRigidCheck_CheckedChanged);
         }
 
         protected override void sceneLoaded(Engine.ObjectManagement.SimScene scene)
@@ -43,7 +44,8 @@ namespace Medical.GUI
                 tongueCollisionCheckBox.Checked = TongueController.TongueCollisionEnabled;
 
                 lipCollisionCheck.Checked = LipController.LipCollisionEnabled;
-                lipsRigidCheckBox.Checked = LipController.LipsRigid;
+                topLipsRigidCheckBox.Checked = LipController.TopLipsRigid;
+                bottomLipsRigidCheck.Checked = LipController.BottomLipsRigid;
                 allowUpdates = true;
             }
         }
@@ -80,12 +82,25 @@ namespace Medical.GUI
             }
         }
 
-        void lipsRigidCheckBox_CheckedChanged(object sender, EventArgs e)
+        void topLipsRigidCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (allowUpdates)
             {
-                LipController.LipsRigid = lipsRigidCheckBox.Checked;
+                LipController.TopLipsRigid = topLipsRigidCheckBox.Checked;
             }
+        }
+
+        void bottomLipsRigidCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            if (allowUpdates)
+            {
+                LipController.BottomLipsRigid = bottomLipsRigidCheck.Checked;
+            }
+        }
+
+        private void resetLipsButton_Click(object sender, EventArgs e)
+        {
+            LipController.setOriginalPosition();
         }
     }
 }
