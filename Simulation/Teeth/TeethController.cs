@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Engine.ObjectManagement;
+using BulletPlugin;
 
 namespace Medical
 {
@@ -151,6 +153,23 @@ namespace Medical
             foreach (String toothName in toothNames)
             {
                 teeth[toothName].ShowTools = true;
+            }
+        }
+
+        public static void bindTeeth(List<String> toothNames)
+        {
+            for (int i = 0; i < toothNames.Count - 1; ++i)
+            {
+                SimObject obj = teeth[toothNames[i]].Owner;
+                GenericSimObjectDefinition jointObjectDef = new GenericSimObjectDefinition(String.Format("{0}{1}Joint", toothNames[i], toothNames[i + 1]));
+                jointObjectDef.Translation = obj.Translation;
+                Generic6DofConstraintDefinition joint = new Generic6DofConstraintDefinition("Joint");
+                joint.RigidBodyASimObject = toothNames[i];
+                joint.RigidBodyAElement = "Actor";
+                joint.RigidBodyBSimObject = toothNames[i + 1];
+                joint.RigidBodyBElement = "Actor";
+                jointObjectDef.addElement(joint);
+                obj.createOtherSimObject(jointObjectDef);
             }
         }
 

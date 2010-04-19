@@ -75,6 +75,7 @@
             this.offButton = new System.Windows.Forms.Button();
             this.hideTop = new System.Windows.Forms.CheckBox();
             this.hideBottom = new System.Windows.Forms.CheckBox();
+            this.linkTeeth = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
@@ -749,7 +750,7 @@
             // 
             this.hideTop.Appearance = System.Windows.Forms.Appearance.Button;
             this.hideTop.AutoSize = true;
-            this.hideTop.Location = new System.Drawing.Point(27, 631);
+            this.hideTop.Location = new System.Drawing.Point(27, 661);
             this.hideTop.Name = "hideTop";
             this.hideTop.Size = new System.Drawing.Size(92, 23);
             this.hideTop.TabIndex = 15;
@@ -761,7 +762,7 @@
             // 
             this.hideBottom.Appearance = System.Windows.Forms.Appearance.Button;
             this.hideBottom.AutoSize = true;
-            this.hideBottom.Location = new System.Drawing.Point(125, 631);
+            this.hideBottom.Location = new System.Drawing.Point(125, 661);
             this.hideBottom.Name = "hideBottom";
             this.hideBottom.Size = new System.Drawing.Size(106, 23);
             this.hideBottom.TabIndex = 16;
@@ -769,12 +770,23 @@
             this.hideBottom.UseVisualStyleBackColor = true;
             this.hideBottom.CheckedChanged += new System.EventHandler(this.hideBottom_CheckedChanged);
             // 
+            // linkTeeth
+            // 
+            this.linkTeeth.Location = new System.Drawing.Point(60, 626);
+            this.linkTeeth.Name = "linkTeeth";
+            this.linkTeeth.Size = new System.Drawing.Size(128, 23);
+            this.linkTeeth.TabIndex = 17;
+            this.linkTeeth.Text = "Link Selected Teeth";
+            this.linkTeeth.UseVisualStyleBackColor = true;
+            this.linkTeeth.Click += new System.EventHandler(this.linkTeeth_Click);
+            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Teeth";
+            this.Controls.Add(this.linkTeeth);
             this.Controls.Add(this.hideBottom);
             this.Controls.Add(this.hideTop);
             this.Controls.Add(this.offButton);
@@ -789,7 +801,7 @@
             this.DockAreas = ((Medical.GUI.DockLocations)((Medical.GUI.DockLocations.Right | Medical.GUI.DockLocations.Float)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TeethControl";
-            this.Size = new System.Drawing.Size(260, 673);
+            this.Size = new System.Drawing.Size(260, 700);
             this.ToolStripName = "Advanced";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -848,6 +860,7 @@
         private System.Windows.Forms.Button offButton;
         private System.Windows.Forms.CheckBox hideTop;
         private System.Windows.Forms.CheckBox hideBottom;
+        private System.Windows.Forms.Button linkTeeth;
 
     }
 }

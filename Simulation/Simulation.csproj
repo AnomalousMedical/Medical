@@ -29,6 +29,7 @@
     <DefineConstants>TRACE;DEBUG;DEBUG_KEYS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PublicRelease|AnyCPU' ">
     <OutputPath>..\PublicRelease\</OutputPath>
@@ -138,10 +139,13 @@
     <Compile Include="State\PresetState.cs" />
     <Compile Include="State\PresetStateSet.cs" />
     <Compile Include="Teeth\BottomTooth.cs" />
+    <Compile Include="Teeth\ReshapeableBottomTooth.cs" />
+    <Compile Include="Teeth\ReshapeableTopTooth.cs" />
     <Compile Include="Teeth\TeethController.cs" />
     <Compile Include="Teeth\TeethPresetState.cs" />
     <Compile Include="Teeth\TeethState.cs" />
     <Compile Include="Teeth\Tooth.cs" />
+    <Compile Include="Teeth\ToothSection.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\TopTooth.cs" />
     <Compile Include="Tools\MovableObject.cs" />
