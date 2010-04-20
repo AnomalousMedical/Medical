@@ -7,30 +7,44 @@ using OgreWrapper;
 using Engine;
 using Engine.Editing;
 using Engine.Attributes;
+using Engine.Saving;
+using Engine.Renderer;
 
 namespace Medical
 {
     class ToothEditRenderer : EditInterfaceRenderer
     {
-        public void frameUpdate(Engine.Renderer.DebugDrawingSurface drawingSurface)
+        private List<EditInterfaceRenderer> subRenderers = new List<EditInterfaceRenderer>();
+
+        public void addSubRenderer(EditInterfaceRenderer renderer)
+        {
+            subRenderers.Add(renderer);
+        }
+
+        public void removeSubRenderer(EditInterfaceRenderer renderer)
+        {
+            subRenderers.Remove(renderer);
+        }
+
+        public void frameUpdate(DebugDrawingSurface drawingSurface)
         {
             
         }
 
-        public void interfaceDeselected(Engine.Renderer.DebugDrawingSurface drawingSurface)
+        public void interfaceDeselected(DebugDrawingSurface drawingSurface)
         {
 
         }
 
-        public void interfaceSelected(Engine.Renderer.DebugDrawingSurface drawingSurface)
+        public void interfaceSelected(DebugDrawingSurface drawingSurface)
         {
-            drawingSurface.begin("ToothEditor", Engine.Renderer.DrawingType.LineList);
-            drawingSurface.setColor(Color.Red);
-            drawingSurface.drawLine(Vector3.Zero, Vector3.UnitX);
-            drawingSurface.end();
+            foreach (EditInterfaceRenderer renderer in subRenderers)
+            {
+                renderer.interfaceSelected(drawingSurface);
+            }
         }
 
-        public void propertiesChanged(Engine.Renderer.DebugDrawingSurface drawingSurface)
+        public void propertiesChanged(DebugDrawingSurface drawingSurface)
         {
             
         }
@@ -113,7 +127,16 @@ namespace Medical
 
                             ReshapeableRigidBody body = (ReshapeableRigidBody)actorElement;
                             mainToothSection.checkTriangles(verticesArray, indicesArray);
+                            foreach (ToothSection section in toothSections)
+                            {
+                                section.checkTriangles(verticesArray, indicesArray);
+                            }
+
                             mainToothSection.createSection(verticesArray, body);
+                            foreach (ToothSection section in toothSections)
+                            {
+                                section.createSection(verticesArray, body);
+                            }
                             body.recomputeMassProps();                            
                         }
                     }
@@ -121,9 +144,88 @@ namespace Medical
             }
         }
 
+        protected override void customLoad(LoadInfo info)
+        {
+            info.RebuildList<ToothSection>("ToothSections", toothSections);
+        }
+
+        protected override void customSave(SaveInfo info)
+        {
+            info.ExtractList<ToothSection>("ToothSections", toothSections);
+        }
+
+        #region EditInterface
+
+        private EditInterfaceManager<ToothSection> sectionManager;
+        private EditInterface editInterface;
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
-            editInterface.Renderer = new ToothEditRenderer();
+            this.editInterface = editInterface;
+            sectionManager = new EditInterfaceManager<ToothSection>(editInterface);
+            sectionManager.addCommand(new EditInterfaceCommand("Remove", removeSectionCallback));
+            ToothEditRenderer toothEditRenderer = new ToothEditRenderer();
+            editInterface.Renderer = toothEditRenderer;
+            toothEditRenderer.addSubRenderer(mainToothSection.getEditInterface(null, null).Renderer);//dont need args as this will already be created
+            editInterface.addCommand(new EditInterfaceCommand("Add Tooth Section", addSectionCallback));
+            foreach (ToothSection section in toothSections)
+            {
+                onToothSectionAdded(section);
+            }
         }
+
+        private void addSectionCallback(EditUICallback callback, EditInterfaceCommand command)
+        {
+            String name;
+            bool accept = callback.getInputString("Enter a name for the section.", out name, validateSectionCreate);
+            if (accept)
+            {
+                ToothSection section = new ToothSection(name);
+                toothSections.Add(section);
+                onToothSectionAdded(section);
+            }
+        }
+
+        private bool validateSectionCreate(String input, out String errorPrompt)
+        {
+            if (input == null || input == "")
+            {
+                errorPrompt = "Please enter a non empty name.";
+                return false;
+            }
+            foreach (ToothSection section in toothSections)
+            {
+                if (section.Name == input)
+                {
+                    errorPrompt = "That name is already in use. Please provide another.";
+                    return false;
+                }
+            }
+            errorPrompt = "";
+            return true;
+        }
+
+        private void removeSectionCallback(EditUICallback callback, EditInterfaceCommand command)
+        {
+            EditInterface edit = callback.getSelectedEditInterface();
+            ToothSection section = sectionManager.resolveSourceObject(edit);
+            toothSections.Remove(section);
+            onToothSectionRemoved(section, edit);
+        }
+
+        private void onToothSectionAdded(ToothSection section)
+        {
+            EditInterface edit = section.getEditInterface(section.Name, BehaviorEditMemberScanner.Scanner);
+            ((ToothEditRenderer)editInterface.Renderer).addSubRenderer(edit.Renderer);
+            sectionManager.addSubInterface(section, edit);
+        }
+
+        private void onToothSectionRemoved(ToothSection section, EditInterface edit)
+        {
+            ((ToothEditRenderer)editInterface.Renderer).removeSubRenderer(edit.Renderer);
+            sectionManager.removeSubInterface(section);
+        }
+
+        #endregion
     }
 }

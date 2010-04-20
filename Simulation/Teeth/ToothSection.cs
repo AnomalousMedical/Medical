@@ -90,7 +90,7 @@ namespace Medical
         private uint[] indexBuffer; //The buffer of indices to include in this section
 
         [Editable]
-        int decompDepth = 2;
+        uint decompDepth = 2;
 
         [Editable]
         int concavityThreshold = 5;
@@ -99,10 +99,22 @@ namespace Medical
         int volumeConservationThreshold = 15;
 
         [Editable]
-        int maxVertices = 16;
+        uint maxVertices = 16;
 
         [Editable]
         float skinWidth = 0.0f;
+
+        /// <summary>
+        /// Constructor for copying, do not call this directly.
+        /// </summary>
+        public ToothSection()
+        {
+            boundingBox = new Box3();
+            Vector3[] axes = boundingBox.getAxes();
+            axes[0] = Vector3.Right;
+            axes[1] = Vector3.Up;
+            axes[2] = Vector3.Forward;
+        }
 
         public ToothSection(String name)
         {
@@ -144,14 +156,12 @@ namespace Medical
                     decompDesc.mVertices = verts;
                     decompDesc.mTcount = (uint)indexBuffer.Length / 3;
                     decompDesc.mIndices = idxs;
-                    decompDesc.mDepth = 2;
-                    decompDesc.mCpercent = 5;
-                    decompDesc.mPpercent = 15;
-                    decompDesc.mMaxVertices = 16;
-                    decompDesc.mSkinWidth = 0.0f;
-
+                    decompDesc.mDepth = decompDepth;
+                    decompDesc.mCpercent = concavityThreshold;
+                    decompDesc.mPpercent = volumeConservationThreshold;
+                    decompDesc.mMaxVertices = maxVertices;
+                    decompDesc.mSkinWidth = skinWidth;
                     body.createHullRegion(name, decompDesc);
-                    //body.recomputeMassProps(); dont do this here, do it after everything is made.
                 }
             }
         }
