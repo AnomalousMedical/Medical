@@ -45,10 +45,12 @@ namespace Medical
             drawingSurface.begin(String.Format("ToothSection{0}", section.Name), Engine.Renderer.DrawingType.LineList);
 
             //Origin
+            drawingSurface.setColor(Color.Red);
+            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Left * 0.1f);
             drawingSurface.setColor(Color.Blue);
             drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Up * 0.1f);
-            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Left * 0.1f);
-            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Backward * 0.1f);
+            drawingSurface.setColor(Color.Green);
+            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Forward * 0.1f);
 
             drawingSurface.setColor(Color.Red);
 

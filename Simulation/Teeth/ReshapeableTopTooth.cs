@@ -156,7 +156,12 @@ namespace Medical
 
         #region EditInterface
 
+        [DoNotCopy]
+        [DoNotSave]
         private EditInterfaceManager<ToothSection> sectionManager;
+
+        [DoNotCopy]
+        [DoNotSave]
         private EditInterface editInterface;
 
         protected override void customizeEditInterface(EditInterface editInterface)
