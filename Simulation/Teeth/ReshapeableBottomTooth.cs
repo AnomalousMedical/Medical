@@ -5,20 +5,44 @@ using System.Text;
 using OgreWrapper;
 using BulletPlugin;
 using Engine;
+using Engine.Attributes;
+using Engine.Editing;
+using Engine.Saving;
+using OgrePlugin;
+using Engine.Renderer;
+using Logging;
 
 namespace Medical
 {
     class ReshapeableBottomTooth : BottomTooth
     {
+        [DoNotSave]
+        private List<ToothSection> toothSections = new List<ToothSection>();
+
+        [Editable]
+        private ToothSection mainToothSection = new ToothSection("MainTooth");
+
         protected override void constructed()
         {
-            try
+            //temporary get entity
+            SceneNodeElement sceneNodeElement = Owner.getElement(sceneNodeName) as SceneNodeElement;
+            Entity entity = null;
+            if (sceneNodeElement == null)
             {
-                base.constructed();
+                blacklist("Could not find SceneNodeElement {0}.", sceneNodeName);
             }
-            catch (Exception)
+            else
             {
-
+                entity = sceneNodeElement.getNodeObject(entityName) as Entity;
+                if (entity == null)
+                {
+                    blacklist("Could not find Entity {0}.", entityName);
+                }
+            }
+            RigidBody actorElement = Owner.getElement(actorName) as RigidBody;
+            if (actorElement == null)
+            {
+                blacklist("Could not find Actor {0}.", actorName);
             }
 
             using (MeshPtr meshPtr = entity.getMesh())
@@ -85,30 +109,164 @@ namespace Medical
                                 indexBuffer.Value.unlock();
                             }
 
-                            fixed (float* verts = &verticesArray[0].x)
+                            ReshapeableRigidBody body = (ReshapeableRigidBody)actorElement;
+                            mainToothSection.checkTriangles(verticesArray, indicesArray);
+                            foreach (ToothSection section in toothSections)
                             {
-                                fixed (uint* idxs = &indicesArray[0])
-                                {
-                                    ConvexDecompositionDesc decompDesc = new ConvexDecompositionDesc();
-                                    decompDesc.mVcount = vertexBuffer.Value.getNumVertices();
-                                    decompDesc.mVertices = verts;
-                                    decompDesc.mTcount = indexBuffer.Value.getNumIndexes() / 3;
-                                    decompDesc.mIndices = idxs;
-                                    decompDesc.mDepth = 2;
-                                    decompDesc.mCpercent = 5;
-                                    decompDesc.mPpercent = 15;
-                                    decompDesc.mMaxVertices = 16;
-                                    decompDesc.mSkinWidth = 0.0f;
-
-                                    ReshapeableRigidBody reshape = (ReshapeableRigidBody)actorElement;
-                                    reshape.createHullRegion("Tooth", decompDesc);
-                                    reshape.recomputeMassProps();
-                                }
+                                section.checkTriangles(verticesArray, indicesArray);
                             }
+
+                            mainToothSection.createSection(verticesArray, body);
+                            foreach (ToothSection section in toothSections)
+                            {
+                                section.createSection(verticesArray, body);
+                            }
+                            body.recomputeMassProps();                            
                         }
                     }
                 }
             }
+
+            base.constructed();
         }
+
+        public override bool rayIntersects(Ray3 worldRay, out float distance)
+        {
+            //this algo seems to work, but the tooth that is actually the closest one is not being computed correctly.(which is not in this function)
+            //the ray seems to be rotating correctly, however
+
+            Ray3 localRay = worldRay;
+            Quaternion rotationDir = Owner.Rotation.inverse();
+            localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
+            localRay.Origin = localRay.Origin - Owner.Translation;
+            localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
+
+            //debugRay = localRay;
+            //debugRay.Origin = debugRay.Origin + Owner.Translation;
+
+            if (mainToothSection.intersects(localRay))
+            {
+                return base.rayIntersects(worldRay, out distance);
+            }
+            foreach (ToothSection section in toothSections)
+            {
+                if (section.intersects(localRay))
+                {
+                    return base.rayIntersects(worldRay, out distance);
+                }
+            }
+            distance = float.MaxValue;
+            return false;
+        }
+
+        //[DoNotSave]
+        //Ray3 debugRay;
+
+        public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
+        {
+            debugDrawing.begin("ToothRay" + Owner.Name, DrawingType.LineList);
+            //debugDrawing.setColor(Color.White);
+            //debugDrawing.drawPoint(debugRay.Origin);
+            //debugDrawing.setColor(Color.Blue);
+            //debugDrawing.drawPoint(debugRay.Origin + debugRay.Direction * 1000.0f);
+
+            mainToothSection.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+
+            foreach (ToothSection section in toothSections)
+            {
+                section.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+            }
+
+            debugDrawing.end();
+        }
+
+        protected override void customLoad(LoadInfo info)
+        {
+            info.RebuildList<ToothSection>("ToothSections", toothSections);
+        }
+
+        protected override void customSave(SaveInfo info)
+        {
+            info.ExtractList<ToothSection>("ToothSections", toothSections);
+        }
+
+        #region EditInterface
+
+        [DoNotCopy]
+        [DoNotSave]
+        private EditInterfaceManager<ToothSection> sectionManager;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private EditInterface editInterface;
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            this.editInterface = editInterface;
+            sectionManager = new EditInterfaceManager<ToothSection>(editInterface);
+            sectionManager.addCommand(new EditInterfaceCommand("Remove", removeSectionCallback));
+            ToothEditRenderer toothEditRenderer = new ToothEditRenderer();
+            editInterface.Renderer = toothEditRenderer;
+            toothEditRenderer.addSubRenderer(mainToothSection.getEditInterface(null, null).Renderer);//dont need args as this will already be created
+            editInterface.addCommand(new EditInterfaceCommand("Add Tooth Section", addSectionCallback));
+            foreach (ToothSection section in toothSections)
+            {
+                onToothSectionAdded(section);
+            }
+        }
+
+        private void addSectionCallback(EditUICallback callback, EditInterfaceCommand command)
+        {
+            String name;
+            bool accept = callback.getInputString("Enter a name for the section.", out name, validateSectionCreate);
+            if (accept)
+            {
+                ToothSection section = new ToothSection(name);
+                toothSections.Add(section);
+                onToothSectionAdded(section);
+            }
+        }
+
+        private bool validateSectionCreate(String input, out String errorPrompt)
+        {
+            if (input == null || input == "")
+            {
+                errorPrompt = "Please enter a non empty name.";
+                return false;
+            }
+            foreach (ToothSection section in toothSections)
+            {
+                if (section.Name == input)
+                {
+                    errorPrompt = "That name is already in use. Please provide another.";
+                    return false;
+                }
+            }
+            errorPrompt = "";
+            return true;
+        }
+
+        private void removeSectionCallback(EditUICallback callback, EditInterfaceCommand command)
+        {
+            EditInterface edit = callback.getSelectedEditInterface();
+            ToothSection section = sectionManager.resolveSourceObject(edit);
+            toothSections.Remove(section);
+            onToothSectionRemoved(section, edit);
+        }
+
+        private void onToothSectionAdded(ToothSection section)
+        {
+            EditInterface edit = section.getEditInterface(section.Name, BehaviorEditMemberScanner.Scanner);
+            ((ToothEditRenderer)editInterface.Renderer).addSubRenderer(edit.Renderer);
+            sectionManager.addSubInterface(section, edit);
+        }
+
+        private void onToothSectionRemoved(ToothSection section, EditInterface edit)
+        {
+            ((ToothEditRenderer)editInterface.Renderer).removeSubRenderer(edit.Renderer);
+            sectionManager.removeSubInterface(section);
+        }
+
+        #endregion
     }
 }

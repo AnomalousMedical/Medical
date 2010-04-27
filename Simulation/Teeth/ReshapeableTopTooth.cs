@@ -12,44 +12,6 @@ using Engine.Renderer;
 
 namespace Medical
 {
-    class ToothEditRenderer : EditInterfaceRenderer
-    {
-        private List<EditInterfaceRenderer> subRenderers = new List<EditInterfaceRenderer>();
-
-        public void addSubRenderer(EditInterfaceRenderer renderer)
-        {
-            subRenderers.Add(renderer);
-        }
-
-        public void removeSubRenderer(EditInterfaceRenderer renderer)
-        {
-            subRenderers.Remove(renderer);
-        }
-
-        public void frameUpdate(DebugDrawingSurface drawingSurface)
-        {
-            
-        }
-
-        public void interfaceDeselected(DebugDrawingSurface drawingSurface)
-        {
-
-        }
-
-        public void interfaceSelected(DebugDrawingSurface drawingSurface)
-        {
-            foreach (EditInterfaceRenderer renderer in subRenderers)
-            {
-                renderer.interfaceSelected(drawingSurface);
-            }
-        }
-
-        public void propertiesChanged(DebugDrawingSurface drawingSurface)
-        {
-            
-        }
-    }
-
     class ReshapeableTopTooth : TopTooth
     {
         [DoNotSave]
@@ -142,6 +104,32 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        public override bool rayIntersects(Ray3 worldRay, out float distance)
+        {
+            Ray3 localRay = worldRay;
+            Quaternion rotationDir = Owner.Rotation.inverse();
+            localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
+            localRay.Origin = localRay.Origin - Owner.Translation;
+            localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
+
+            //debugRay = localRay;
+            //debugRay.Origin = debugRay.Origin + Owner.Translation;
+
+            if (mainToothSection.intersects(localRay))
+            {
+                return base.rayIntersects(worldRay, out distance);
+            }
+            foreach (ToothSection section in toothSections)
+            {
+                if (section.intersects(localRay))
+                {
+                    return base.rayIntersects(worldRay, out distance);
+                }
+            }
+            distance = float.MaxValue;
+            return false;
         }
 
         protected override void customLoad(LoadInfo info)

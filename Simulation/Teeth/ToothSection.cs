@@ -46,11 +46,11 @@ namespace Medical
 
             //Origin
             drawingSurface.setColor(Color.Red);
-            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Left * 0.1f);
+            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Right * 0.1f);
             drawingSurface.setColor(Color.Blue);
             drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Up * 0.1f);
             drawingSurface.setColor(Color.Green);
-            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Forward * 0.1f);
+            drawingSurface.drawLine(section.BoundsOrigin, section.BoundsOrigin + Vector3.Backward * 0.1f);
 
             drawingSurface.setColor(Color.Red);
 
@@ -115,7 +115,7 @@ namespace Medical
             Vector3[] axes = boundingBox.getAxes();
             axes[0] = Vector3.Right;
             axes[1] = Vector3.Up;
-            axes[2] = Vector3.Forward;
+            axes[2] = Vector3.Backward;
         }
 
         public ToothSection(String name)
@@ -125,7 +125,7 @@ namespace Medical
             Vector3[] axes = boundingBox.getAxes();
             axes[0] = Vector3.Right;
             axes[1] = Vector3.Up;
-            axes[2] = Vector3.Forward;
+            axes[2] = Vector3.Backward;
             boundingBox.setExtents(new Vector3(2, 2, 2));
         }
 
@@ -135,7 +135,7 @@ namespace Medical
             uint[] tempTriangleBuffer = new uint[indices.Length];
             for (int i = 0; i < indices.Length; i += 3)
             {
-                if (boundingBox.isInside(vertices[indices[i]]) || boundingBox.isInside(vertices[indices[i + 1]]) || boundingBox.isInside(vertices[indices[i + 2]]))
+                if (boundingBox.isInside(vertices[indices[i]]) && boundingBox.isInside(vertices[indices[i + 1]]) && boundingBox.isInside(vertices[indices[i + 2]]))
                 {
                     tempTriangleBuffer[numIndices++] = indices[i];
                     tempTriangleBuffer[numIndices++] = indices[i + 1];
@@ -163,6 +163,14 @@ namespace Medical
                     decompDesc.mPpercent = volumeConservationThreshold;
                     decompDesc.mMaxVertices = maxVertices;
                     decompDesc.mSkinWidth = skinWidth;
+
+                    //temp
+                    if (decompDesc.mDepth == 6 && decompDesc.mCpercent == 0)
+                    {
+                        decompDesc.mDepth = 3;
+                    }
+                    //endtemp
+
                     body.createHullRegion(name, decompDesc);
                 }
             }
@@ -180,6 +188,51 @@ namespace Medical
         internal void _getBoundsVertices(Vector3[] verts)
         {
             boundingBox.computeVertices(verts);
+        }
+
+        public void drawBoundsWorld(DebugDrawingSurface drawingSurface, Vector3 worldTrans, Quaternion worldRot)
+        {
+            Box3 worldBox = new Box3();
+            worldBox.setCenter(Quaternion.quatRotate(worldRot, boundingBox.getCenter()) + worldTrans);
+            worldBox.setExtents(boundingBox.getExtents());
+            Vector3[] worldAxis = worldBox.getAxes();
+            Vector3[] boundAxis = boundingBox.getAxes();
+            worldAxis[0] = Quaternion.quatRotate(worldRot, boundAxis[0]);
+            worldAxis[1] = Quaternion.quatRotate(worldRot, boundAxis[1]);
+            worldAxis[2] = Quaternion.quatRotate(worldRot, boundAxis[2]);
+
+            Vector3 origin = worldBox.getCenter();
+
+            //Origin
+            drawingSurface.setColor(Color.Red);
+            drawingSurface.drawLine(origin, origin + Vector3.Right * 0.1f);
+            drawingSurface.setColor(Color.Blue);
+            drawingSurface.drawLine(origin, origin + Vector3.Up * 0.1f);
+            drawingSurface.setColor(Color.Green);
+            drawingSurface.drawLine(origin, origin + Vector3.Backward * 0.1f);
+
+            drawingSurface.setColor(Color.Red);
+
+            Vector3[] vertices = new Vector3[8];
+            worldBox.computeVertices(vertices);
+
+            //-Z ccw
+            drawingSurface.drawLine(vertices[0], vertices[1]);
+            drawingSurface.drawLine(vertices[1], vertices[2]);
+            drawingSurface.drawLine(vertices[2], vertices[3]);
+            drawingSurface.drawLine(vertices[3], vertices[0]);
+
+            //+z ccw
+            drawingSurface.drawLine(vertices[4], vertices[5]);
+            drawingSurface.drawLine(vertices[5], vertices[6]);
+            drawingSurface.drawLine(vertices[6], vertices[7]);
+            drawingSurface.drawLine(vertices[7], vertices[4]);
+
+            //Sides
+            drawingSurface.drawLine(vertices[0], vertices[4]);
+            drawingSurface.drawLine(vertices[1], vertices[5]);
+            drawingSurface.drawLine(vertices[2], vertices[6]);
+            drawingSurface.drawLine(vertices[3], vertices[7]);
         }
 
         [Editable]
@@ -238,5 +291,10 @@ namespace Medical
         }
 
         #endregion
+
+        internal bool intersects(Ray3 localRay)
+        {
+            return boundingBox.testIntersection(ref localRay);
+        }
     }
 }

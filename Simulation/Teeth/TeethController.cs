@@ -5,6 +5,8 @@ using System.Text;
 using Engine;
 using Engine.ObjectManagement;
 using BulletPlugin;
+using Engine.Platform;
+using Logging;
 
 namespace Medical
 {
@@ -12,10 +14,19 @@ namespace Medical
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
         static SimObjectMover teethMover;
+        static UpdateTimer timer;
+        static TeethTimerUpdate teethUpdate;
 
         static TeethController()
         {
             HighlightContacts = false;
+        }
+
+        public static void setPlatformInfo(UpdateTimer timer, EventManager eventManager)
+        {
+            TeethController.timer = timer;
+            teethUpdate = new TeethTimerUpdate(eventManager);
+            timer.addFixedUpdateListener(teethUpdate);
         }
 
         public static void addTooth(String name, Tooth tooth)
@@ -54,6 +65,26 @@ namespace Medical
             {
                 tooth.Adapt = adapt;
             }
+        }
+
+        public static Tooth pickTooth(Ray3 worldRay, Vector3 origin)
+        {
+            float closestDistance = float.MaxValue;
+            Tooth closestTooth = null;
+            float distance = 0.0f;
+            foreach (Tooth tooth in teeth.Values)
+            {
+                if (!tooth.Extracted && tooth.rayIntersects(worldRay, out distance))
+                {
+                    Log.Debug("Hit tooth {0}.", tooth.Owner.Name);
+                    if (distance < closestDistance)
+                    {
+                        closestTooth = tooth;
+                        closestDistance = distance;
+                    }
+                }
+            }
+            return closestTooth;
         }
 
         public static void adaptSingleTooth(String name, bool adapt)

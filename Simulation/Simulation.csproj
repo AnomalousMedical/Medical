@@ -144,7 +144,9 @@
     <Compile Include="Teeth\TeethController.cs" />
     <Compile Include="Teeth\TeethPresetState.cs" />
     <Compile Include="Teeth\TeethState.cs" />
+    <Compile Include="Teeth\TeethTimerUpdate.cs" />
     <Compile Include="Teeth\Tooth.cs" />
+    <Compile Include="Teeth\ToothEditRenderer.cs" />
     <Compile Include="Teeth\ToothSection.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\TopTooth.cs" />
