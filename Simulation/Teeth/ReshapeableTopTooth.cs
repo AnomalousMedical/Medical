@@ -106,7 +106,7 @@ namespace Medical
             }
         }
 
-        public override bool rayIntersects(Ray3 worldRay, out float distance)
+        public override bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
         {
             Ray3 localRay = worldRay;
             Quaternion rotationDir = Owner.Rotation.inverse();
@@ -117,18 +117,23 @@ namespace Medical
             //debugRay = localRay;
             //debugRay.Origin = debugRay.Origin + Owner.Translation;
 
-            if (mainToothSection.intersects(localRay))
+            Vector3 hitLocation;
+            float closestSectionDistance;
+            ToothSection closestSection;
+
+            if (mainToothSection.intersects(localRay, out hitLocation))
             {
-                return base.rayIntersects(worldRay, out distance);
+                return base.rayIntersects(worldRay, out distance, out vertexNumber);
             }
             foreach (ToothSection section in toothSections)
             {
-                if (section.intersects(localRay))
+                if (section.intersects(localRay, out hitLocation))
                 {
-                    return base.rayIntersects(worldRay, out distance);
+                    return base.rayIntersects(worldRay, out distance, out vertexNumber);
                 }
             }
             distance = float.MaxValue;
+            vertexNumber = 0;
             return false;
         }
 

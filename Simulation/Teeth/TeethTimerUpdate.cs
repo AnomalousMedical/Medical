@@ -58,7 +58,7 @@ namespace Medical
                     Tooth tooth = TeethController.pickTooth(spaceRay, cameraPos);
                     if (tooth != null)
                     {
-                        Log.Debug(tooth.Owner.Name);
+                        Log.Debug("{0}", tooth.Owner.Name);
                     }
                 }
             }

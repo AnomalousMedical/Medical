@@ -8,6 +8,7 @@ using Engine.Saving;
 using Engine.Renderer;
 using Engine.Attributes;
 using BulletPlugin;
+using OgreWrapper;
 
 namespace Medical
 {
@@ -176,6 +177,68 @@ namespace Medical
             }
         }
 
+        //Helper function, finds the distance along the given ray that intersects the given triangle.
+        //This function assumes that the two intersect.
+        float computeRayIntersectTriDistance(Ray3 ray, Vector3 vert0, Vector3 vert1, Vector3 vert2)
+        {
+            Vector3 edge1 = vert1 - vert0;
+            Vector3 edge2 = vert2 - vert0;
+
+            Vector3 pvec = ray.Direction.cross(ref edge2);
+            float inv_det = 1.0f / edge1.dot(ref pvec);
+            Vector3 tvec = ray.Origin - vert0;
+            Vector3 qvec = tvec.cross(ref edge1);
+
+            return edge2.dot(ref qvec) * inv_det;
+        }
+
+        public bool checkTriangleCollision(Vector3[] vertices, Ray3 localRay, out float distance, out uint vertexNumber)
+        {
+            bool hit = false;
+            int hitVertex = 0;
+            float closestDistance = float.MaxValue;
+            for (int i = 0; i < indexBuffer.Length; i += 3)
+            {
+                Pair<bool, float> triHit = WrapperMath.intersects(localRay, vertices[indexBuffer[i]], vertices[indexBuffer[i+1]], vertices[indexBuffer[i+2]], true, false);
+                if (triHit.First)
+                {
+                    if (triHit.Second < closestDistance)
+                    {
+                        closestDistance = triHit.Second;
+                        hit = true;
+                        hitVertex = i;
+                    }
+                }
+            }
+
+            distance = computeRayIntersectTriDistance(localRay, vertices[indexBuffer[hitVertex]], vertices[indexBuffer[hitVertex + 1]], vertices[indexBuffer[hitVertex + 2]]);
+
+            //find closest vertex to the ray
+            vertexNumber = indexBuffer[hitVertex];
+            Vector3 rayIntersectionPoint = localRay.Origin + localRay.Direction * distance;
+            closestDistance = float.MaxValue;
+            for (int i = 0; i < 3; ++i)
+            {
+                float vertexDistance = (rayIntersectionPoint - vertices[indexBuffer[hitVertex + i]]).length2();
+                if (vertexDistance < closestDistance)
+                {
+                    closestDistance = vertexDistance;
+                    vertexNumber = indexBuffer[hitVertex];
+                }
+            }
+            
+            return hit;
+        }
+
+        internal bool intersects(Ray3 localRay, out Vector3 intersectionPoint)
+        {
+            int quantity;
+            Vector3 useless;
+            bool hit = boundingBox.findIntersection(localRay, out quantity, out intersectionPoint, out useless);
+            return hit;
+//            return boundingBox.testIntersection(ref localRay);
+        }
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             editInterface.Renderer = new ToothSectionEditRenderer(this);
@@ -291,10 +354,5 @@ namespace Medical
         }
 
         #endregion
-
-        internal bool intersects(Ray3 localRay)
-        {
-            return boundingBox.testIntersection(ref localRay);
-        }
     }
 }

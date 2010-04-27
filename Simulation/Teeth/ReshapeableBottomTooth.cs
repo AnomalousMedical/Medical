@@ -22,6 +22,10 @@ namespace Medical
         [Editable]
         private ToothSection mainToothSection = new ToothSection("MainTooth");
 
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3[] verticesArray;
+
         protected override void constructed()
         {
             //temporary get entity
@@ -73,7 +77,7 @@ namespace Medical
                         uint numTriangles = numIndices / 3;
                         unsafe
                         {
-                            Vector3[] verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
+                            verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
                             uint[] indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
 
                             // Get vertex data
@@ -130,45 +134,87 @@ namespace Medical
             base.constructed();
         }
 
-        public override bool rayIntersects(Ray3 worldRay, out float distance)
+        public override bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
         {
-            //this algo seems to work, but the tooth that is actually the closest one is not being computed correctly.(which is not in this function)
-            //the ray seems to be rotating correctly, however
-
             Ray3 localRay = worldRay;
             Quaternion rotationDir = Owner.Rotation.inverse();
             localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
             localRay.Origin = localRay.Origin - Owner.Translation;
             localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
 
-            //debugRay = localRay;
-            //debugRay.Origin = debugRay.Origin + Owner.Translation;
+            //Find the closest section that actually hits the tooth.
+            Vector3 hitLocation;
+            float closestSectionDistance = float.MaxValue;
+            ToothSection closestSection = null;
 
-            if (mainToothSection.intersects(localRay))
+            if (mainToothSection.intersects(localRay, out hitLocation))
             {
-                return base.rayIntersects(worldRay, out distance);
+                closestSectionDistance = (hitLocation - localRay.Origin).length2();
+                closestSection = mainToothSection;
             }
             foreach (ToothSection section in toothSections)
             {
-                if (section.intersects(localRay))
+                if (section.intersects(localRay, out hitLocation))
                 {
-                    return base.rayIntersects(worldRay, out distance);
+                    float distance2 = (hitLocation - localRay.Origin).length2();
+                    if (distance2 < closestSectionDistance)
+                    {
+                        closestSectionDistance = distance2;
+                        closestSection = section;
+                    }
                 }
             }
-            distance = float.MaxValue;
-            return false;
+
+            //Check the triangles in the closest section
+            if (closestSection != null)
+            {
+                return closestSection.checkTriangleCollision(verticesArray, localRay, out distance, out vertexNumber);
+            }
+            else
+            {
+                vertexNumber = 0;
+                distance = float.MaxValue;
+                return false;
+            }
         }
 
-        //[DoNotSave]
-        //Ray3 debugRay;
+        public override unsafe void moveVertex(uint vertex)
+        {
+            using (MeshPtr meshPtr = entity.getMesh())
+            {
+                SubMesh subMesh = meshPtr.Value.getSubMesh(0);
+
+                VertexData vertexData = subMesh.vertexData;
+                IndexData indexData = subMesh.indexData;
+                if (subMesh.UseSharedVertices)
+                {
+                    vertexData = meshPtr.Value.SharedVertexData;
+                }
+
+                VertexDeclaration vertexDeclaration = vertexData.vertexDeclaration;
+                VertexElement positionElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_POSITION);
+
+                VertexBufferBinding vertexBinding = vertexData.vertexBufferBinding;
+                using (HardwareVertexBufferSharedPtr vertexBuffer = vertexBinding.getBuffer(positionElement.getSource()))
+                {
+                    uint vertexSize = vertexBuffer.Value.getVertexSize();
+
+                    // Modify vertex data
+                    byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_NORMAL);
+                    vertexBufferData += vertex * vertexSize;
+                    float* elemStart;
+                    positionElement.baseVertexPointerToElement(vertexBufferData, &elemStart);
+                    elemStart[0] = 0;
+                    elemStart[1] = 0;
+                    elemStart[2] = 0;
+                    vertexBuffer.Value.unlock();
+                }
+            }
+        }
 
         public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
         {
             debugDrawing.begin("ToothRay" + Owner.Name, DrawingType.LineList);
-            //debugDrawing.setColor(Color.White);
-            //debugDrawing.drawPoint(debugRay.Origin);
-            //debugDrawing.setColor(Color.Blue);
-            //debugDrawing.drawPoint(debugRay.Origin + debugRay.Direction * 1000.0f);
 
             mainToothSection.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
 

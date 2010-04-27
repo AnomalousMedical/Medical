@@ -71,19 +71,28 @@ namespace Medical
         {
             float closestDistance = float.MaxValue;
             Tooth closestTooth = null;
+            uint closestVertexNumber = 0;
             float distance = 0.0f;
+            uint vertexNumber;
             foreach (Tooth tooth in teeth.Values)
             {
-                if (!tooth.Extracted && tooth.rayIntersects(worldRay, out distance))
+                if (!tooth.Extracted && tooth.rayIntersects(worldRay, out distance, out vertexNumber))
                 {
                     Log.Debug("Hit tooth {0}.", tooth.Owner.Name);
                     if (distance < closestDistance)
                     {
                         closestTooth = tooth;
                         closestDistance = distance;
+                        closestVertexNumber = vertexNumber;
                     }
                 }
             }
+            if (closestTooth != null)
+            {
+                Log.Debug("Closest tooth vertex {0}", closestVertexNumber);
+                closestTooth.moveVertex(closestVertexNumber);
+            }
+
             return closestTooth;
         }
 

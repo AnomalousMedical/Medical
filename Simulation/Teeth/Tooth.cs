@@ -147,10 +147,16 @@ namespace Medical
             }
         }
 
-        public virtual bool rayIntersects(Ray3 worldRay, out float distance)
+        public virtual bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
         {
             distance = float.MaxValue;
+            vertexNumber = 0;
             return entity.raycastPolygonLevel(worldRay, ref distance);
+        }
+
+        public virtual void moveVertex(uint vertex)
+        {
+
         }
 
         protected abstract void looseChanged(bool loose);
