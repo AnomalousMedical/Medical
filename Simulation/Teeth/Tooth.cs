@@ -154,7 +154,7 @@ namespace Medical
             return entity.raycastPolygonLevel(worldRay, ref distance);
         }
 
-        public virtual void moveVertex(uint vertex)
+        public virtual void moveVertex(uint vertex, Ray3 worldRay)
         {
 
         }

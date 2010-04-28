@@ -90,7 +90,7 @@ namespace Medical
             if (closestTooth != null)
             {
                 Log.Debug("Closest tooth vertex {0}", closestVertexNumber);
-                closestTooth.moveVertex(closestVertexNumber);
+                closestTooth.moveVertex(closestVertexNumber, worldRay);
             }
 
             return closestTooth;

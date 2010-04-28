@@ -136,11 +136,7 @@ namespace Medical
 
         public override bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
         {
-            Ray3 localRay = worldRay;
-            Quaternion rotationDir = Owner.Rotation.inverse();
-            localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
-            localRay.Origin = localRay.Origin - Owner.Translation;
-            localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
+            Ray3 localRay = getLocalRay(ref worldRay);
 
             //Find the closest section that actually hits the tooth.
             Vector3 hitLocation;
@@ -178,8 +174,20 @@ namespace Medical
             }
         }
 
-        public override unsafe void moveVertex(uint vertex)
+        private Ray3 getLocalRay(ref Ray3 worldRay)
         {
+            Ray3 localRay = worldRay;
+            Quaternion rotationDir = Owner.Rotation.inverse();
+            localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
+            localRay.Origin = localRay.Origin - Owner.Translation;
+            localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
+            return localRay;
+        }
+
+        public override unsafe void moveVertex(uint vertex, Ray3 worldRay)
+        {
+            Ray3 localRay = getLocalRay(ref worldRay);
+
             using (MeshPtr meshPtr = entity.getMesh())
             {
                 SubMesh subMesh = meshPtr.Value.getSubMesh(0);
@@ -194,6 +202,8 @@ namespace Medical
                 VertexDeclaration vertexDeclaration = vertexData.vertexDeclaration;
                 VertexElement positionElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_POSITION);
 
+                VertexElement normalElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_NORMAL);
+
                 VertexBufferBinding vertexBinding = vertexData.vertexBufferBinding;
                 using (HardwareVertexBufferSharedPtr vertexBuffer = vertexBinding.getBuffer(positionElement.getSource()))
                 {
@@ -202,12 +212,18 @@ namespace Medical
                     // Modify vertex data
                     byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_NORMAL);
                     vertexBufferData += vertex * vertexSize;
-                    float* elemStart;
-                    positionElement.baseVertexPointerToElement(vertexBufferData, &elemStart);
-                    elemStart[0] = 0;
-                    elemStart[1] = 0;
-                    elemStart[2] = 0;
+                    float* position;
+                    float* normal;
+                    normalElement.baseVertexPointerToElement(vertexBufferData, &normal);
+                    positionElement.baseVertexPointerToElement(vertexBufferData, &position);
+                    Vector3 posVec = new Vector3(position[0], position[1], position[2]);
+                    Vector3 normalVec = new Vector3(normal[0], normal[1], normal[2]);
+                    posVec += localRay.Direction * 0.1f;
+                    position[0] = posVec.x;
+                    position[1] = posVec.y;
+                    position[2] = posVec.z;
                     vertexBuffer.Value.unlock();
+                    verticesArray[vertex] = posVec;
                 }
             }
         }

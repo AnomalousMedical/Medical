@@ -10,6 +10,7 @@ using Medical.Controller;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Docking;
 using ComponentFactory.Krypton.Toolkit;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -53,6 +54,10 @@ namespace Medical.GUI
             backgroundColorPicker.SelectedColorChanged += new EventHandler<ComponentFactory.Krypton.Toolkit.ColorEventArgs>(backgroundColorPicker_SelectedColorChanged);
 
             showStatsCommand.Execute += new EventHandler(showStatsCommand_Execute);
+
+            normalRenderingMode.Execute += new EventHandler(normalRenderingMode_Execute);
+            wireframeRenderingMode.Execute += new EventHandler(wireframeRenderingMode_Execute);
+            pointRenderingMode.Execute += new EventHandler(pointRenderingMode_Execute);
         }
 
         public void initialize(MedicalFormController controller)
@@ -267,6 +272,21 @@ namespace Medical.GUI
                     }
                 }
             }
+        }
+
+        void pointRenderingMode_Execute(object sender, EventArgs e)
+        {
+            controller.changeRenderingMode(RenderingMode.Points);
+        }
+
+        void wireframeRenderingMode_Execute(object sender, EventArgs e)
+        {
+            controller.changeRenderingMode(RenderingMode.Wireframe);
+        }
+
+        void normalRenderingMode_Execute(object sender, EventArgs e)
+        {
+            controller.changeRenderingMode(RenderingMode.Solid);
         }
     }
 }

@@ -337,6 +337,15 @@ namespace Medical.Controller
             drawingWindowController.createFromPresets(fourWindows);
         }
 
+        public void changeRenderingMode(RenderingMode renderingMode)
+        {
+            DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                window.DrawingWindow.setRenderingMode(renderingMode);
+            }
+        }
+
         public void createNewMedicalStates()
         {
             stateController.clearStates();

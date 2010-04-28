@@ -216,14 +216,15 @@ namespace Medical
             //find closest vertex to the ray
             vertexNumber = indexBuffer[hitVertex];
             Vector3 rayIntersectionPoint = localRay.Origin + localRay.Direction * distance;
+            debugIntersectionPoint = rayIntersectionPoint;
             closestDistance = float.MaxValue;
             for (int i = 0; i < 3; ++i)
             {
-                float vertexDistance = (rayIntersectionPoint - vertices[indexBuffer[hitVertex + i]]).length2();
+                float vertexDistance = (vertices[indexBuffer[hitVertex + i]] - rayIntersectionPoint).length2();
                 if (vertexDistance < closestDistance)
                 {
                     closestDistance = vertexDistance;
-                    vertexNumber = indexBuffer[hitVertex];
+                    vertexNumber = indexBuffer[hitVertex + i];
                 }
             }
             
@@ -253,6 +254,10 @@ namespace Medical
             boundingBox.computeVertices(verts);
         }
 
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3 debugIntersectionPoint;
+
         public void drawBoundsWorld(DebugDrawingSurface drawingSurface, Vector3 worldTrans, Quaternion worldRot)
         {
             Box3 worldBox = new Box3();
@@ -273,6 +278,15 @@ namespace Medical
             drawingSurface.drawLine(origin, origin + Vector3.Up * 0.1f);
             drawingSurface.setColor(Color.Green);
             drawingSurface.drawLine(origin, origin + Vector3.Backward * 0.1f);
+
+            //Intersection Point
+            Vector3 worldIntersection = Quaternion.quatRotate(worldRot, debugIntersectionPoint) + worldTrans;
+            drawingSurface.setColor(new Color(1, 0, 1));
+            drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Right * 0.1f);
+            drawingSurface.setColor(new Color(1, 1, 0));
+            drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Up * 0.1f);
+            drawingSurface.setColor(new Color(0, 1, 1));
+            drawingSurface.drawLine(worldIntersection, worldIntersection + Vector3.Backward * 0.1f);
 
             drawingSurface.setColor(Color.Red);
 

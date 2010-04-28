@@ -438,6 +438,15 @@ namespace Medical.Controller
             }
         }
 
+        public void changeRenderingMode(RenderingMode renderingMode)
+        {
+            DrawingWindowHost window = drawingWindowController.getActiveWindow();
+            if (window != null)
+            {
+                window.DrawingWindow.setRenderingMode(renderingMode);
+            }
+        }
+
         public DrawingWindowController DrawingWindowController
         {
             get

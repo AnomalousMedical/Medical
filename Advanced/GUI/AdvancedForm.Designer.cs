@@ -93,6 +93,15 @@
             this.drawingWindowWorkspace = new ComponentFactory.Krypton.Docking.KryptonDockableWorkspace();
             this.drawingWindowDockingManager = new ComponentFactory.Krypton.Docking.KryptonDockingManager();
             this.autoHideDock = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.renderingModeButton = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.renderingModeMenu = new ComponentFactory.Krypton.Toolkit.KryptonContextMenu();
+            this.kryptonContextMenuItems2 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems();
+            this.kryptonContextMenuItem5 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.normalRenderingMode = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.wireframeRenderingMode = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.pointRenderingMode = new ComponentFactory.Krypton.Toolkit.KryptonCommand();
+            this.kryptonContextMenuItem6 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
+            this.kryptonContextMenuItem7 = new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.drawingWindowWorkspace)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.autoHideDock)).BeginInit();
@@ -127,8 +136,7 @@
             this.distortionTab,
             this.sequenceTab,
             this.windowTab});
-            this.ribbon.SelectedContext = null;
-            this.ribbon.SelectedTab = this.homeTab;
+            this.ribbon.SelectedTab = this.windowTab;
             this.ribbon.Size = new System.Drawing.Size(784, 114);
             this.ribbon.TabIndex = 15;
             // 
@@ -337,7 +345,8 @@
             // 
             this.kryptonRibbonGroupTriple6.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
             this.kryptonRibbonGroupButton5,
-            this.backgroundColorPicker});
+            this.backgroundColorPicker,
+            this.renderingModeButton});
             this.kryptonRibbonGroupTriple6.MinimumSize = ComponentFactory.Krypton.Ribbon.GroupItemSize.Large;
             // 
             // kryptonRibbonGroupButton5
@@ -488,6 +497,55 @@
             this.autoHideDock.Size = new System.Drawing.Size(784, 426);
             this.autoHideDock.TabIndex = 1;
             // 
+            // renderingModeButton
+            // 
+            this.renderingModeButton.ButtonType = ComponentFactory.Krypton.Ribbon.GroupButtonType.Split;
+            this.renderingModeButton.KryptonContextMenu = this.renderingModeMenu;
+            this.renderingModeButton.TextLine1 = "Rendering";
+            this.renderingModeButton.TextLine2 = "Mode";
+            // 
+            // renderingModeMenu
+            // 
+            this.renderingModeMenu.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuItems2});
+            // 
+            // kryptonContextMenuItems2
+            // 
+            this.kryptonContextMenuItems2.Items.AddRange(new ComponentFactory.Krypton.Toolkit.KryptonContextMenuItemBase[] {
+            this.kryptonContextMenuItem5,
+            this.kryptonContextMenuItem6,
+            this.kryptonContextMenuItem7});
+            // 
+            // kryptonContextMenuItem5
+            // 
+            this.kryptonContextMenuItem5.KryptonCommand = this.normalRenderingMode;
+            this.kryptonContextMenuItem5.Text = "Normal";
+            // 
+            // normalRenderingMode
+            // 
+            this.normalRenderingMode.Text = "Normal";
+            this.normalRenderingMode.TextLine1 = "Normal";
+            // 
+            // wireframeRenderingMode
+            // 
+            this.wireframeRenderingMode.Text = "Wireframe";
+            this.wireframeRenderingMode.TextLine1 = "Wireframe";
+            // 
+            // pointRenderingMode
+            // 
+            this.pointRenderingMode.Text = "Point";
+            this.pointRenderingMode.TextLine1 = "Point";
+            // 
+            // kryptonContextMenuItem6
+            // 
+            this.kryptonContextMenuItem6.KryptonCommand = this.wireframeRenderingMode;
+            this.kryptonContextMenuItem6.Text = "Wireframe";
+            // 
+            // kryptonContextMenuItem7
+            // 
+            this.kryptonContextMenuItem7.KryptonCommand = this.pointRenderingMode;
+            this.kryptonContextMenuItem7.Text = "Point";
+            // 
             // AdvancedForm
             // 
             this.AllowDrop = true;
@@ -577,6 +635,15 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupColorButton backgroundColorPicker;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton statsButton;
         private ComponentFactory.Krypton.Toolkit.KryptonCommand showStatsCommand;
+        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton renderingModeButton;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenu renderingModeMenu;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItems kryptonContextMenuItems2;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem5;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand normalRenderingMode;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand wireframeRenderingMode;
+        private ComponentFactory.Krypton.Toolkit.KryptonCommand pointRenderingMode;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem6;
+        private ComponentFactory.Krypton.Toolkit.KryptonContextMenuItem kryptonContextMenuItem7;
 
     }
 }
