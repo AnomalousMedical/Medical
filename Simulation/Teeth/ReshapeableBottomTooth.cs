@@ -26,6 +26,10 @@ namespace Medical
         [DoNotSave]
         Vector3[] verticesArray;
 
+        [DoNotCopy]
+        [DoNotSave]
+        uint[] indicesArray;
+
         protected override void constructed()
         {
             //temporary get entity
@@ -78,7 +82,7 @@ namespace Medical
                         unsafe
                         {
                             verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
-                            uint[] indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
+                            indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
 
                             // Get vertex data
                             byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_DISCARD);
@@ -184,6 +188,30 @@ namespace Medical
             return localRay;
         }
 
+        private Vector3 slowNormalRecompute(uint vertexNumber)
+        {
+            //search the whole index array for all triangles that hold this vertex
+            List<uint> triangleBases = new List<uint>();
+            for (uint i = 0; i < indicesArray.Length; i += 3)
+            {
+                if (indicesArray[i] == vertexNumber || indicesArray[i + 1] == vertexNumber || indicesArray[i + 2] == vertexNumber)
+                {
+                    triangleBases.Add(i);
+                }
+            }
+            Vector3 normalTotal = Vector3.Zero;
+            foreach (uint baseIndex in triangleBases)
+            {
+                Vector3 v0 = verticesArray[indicesArray[baseIndex]];
+                Vector3 v1 = verticesArray[indicesArray[baseIndex + 1]];
+                Vector3 v2 = verticesArray[indicesArray[baseIndex + 2]];
+                Vector3 edge1 = v1 - v0;
+                Vector3 edge2 = v2 - v0;
+                normalTotal += edge1.cross(ref edge2).normalize();
+            }
+            return (normalTotal /= triangleBases.Count).normalize();
+        }
+
         public override unsafe void moveVertex(uint vertex, Ray3 worldRay)
         {
             Ray3 localRay = getLocalRay(ref worldRay);
@@ -203,6 +231,8 @@ namespace Medical
                 VertexElement positionElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_POSITION);
 
                 VertexElement normalElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_NORMAL);
+                VertexElement binormalElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_BINORMAL);
+                VertexElement tangentElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_TANGENT);
 
                 VertexBufferBinding vertexBinding = vertexData.vertexBufferBinding;
                 using (HardwareVertexBufferSharedPtr vertexBuffer = vertexBinding.getBuffer(positionElement.getSource()))
@@ -214,14 +244,36 @@ namespace Medical
                     vertexBufferData += vertex * vertexSize;
                     float* position;
                     float* normal;
+                    float* tangent;
+                    float* binormal;
                     normalElement.baseVertexPointerToElement(vertexBufferData, &normal);
                     positionElement.baseVertexPointerToElement(vertexBufferData, &position);
                     Vector3 posVec = new Vector3(position[0], position[1], position[2]);
                     Vector3 normalVec = new Vector3(normal[0], normal[1], normal[2]);
-                    posVec += localRay.Direction * 0.1f;
+                    posVec += localRay.Direction * 0.005f;
+
                     position[0] = posVec.x;
                     position[1] = posVec.y;
                     position[2] = posVec.z;
+
+                    tangentElement.baseVertexPointerToElement(vertexBufferData, &tangent);
+                    binormalElement.baseVertexPointerToElement(vertexBufferData, &binormal);
+
+                    //This WILL NOT WORK for parity models
+                    meshPtr.Value.buildTangentVectors(VertexElementSemantic.VES_TANGENT, 0, 0, false, false, false);
+
+                    Vector3 normalNewVal = slowNormalRecompute(vertex);
+                    normal[0] = normalNewVal.x;
+                    normal[1] = normalNewVal.y;
+                    normal[2] = normalNewVal.z;
+
+                    Vector3 tangentVec = new Vector3(tangent[0], tangent[1], tangent[2]);
+                    Vector3 newBinormal = tangentVec.cross(ref normalNewVal);
+
+                    binormal[0] = newBinormal.x;
+                    binormal[1] = newBinormal.y;
+                    binormal[2] = newBinormal.z;
+
                     vertexBuffer.Value.unlock();
                     verticesArray[vertex] = posVec;
                 }
