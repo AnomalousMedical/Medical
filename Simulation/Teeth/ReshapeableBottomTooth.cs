@@ -52,6 +52,8 @@ namespace Medical
             {
                 blacklist("Could not find Actor {0}.", actorName);
             }
+            actorElement.ContactContinues += new CollisionCallback(actorElement_ContactContinues);
+            actorElement.ContactEnded += new CollisionCallback(actorElement_ContactEnded);
 
             using (MeshPtr meshPtr = entity.getMesh())
             {
@@ -250,7 +252,8 @@ namespace Medical
                     positionElement.baseVertexPointerToElement(vertexBufferData, &position);
                     Vector3 posVec = new Vector3(position[0], position[1], position[2]);
                     Vector3 normalVec = new Vector3(normal[0], normal[1], normal[2]);
-                    posVec += localRay.Direction * 0.005f;
+//                    posVec += localRay.Direction * 0.005f;
+                    posVec += -normalVec * 0.001f;
 
                     position[0] = posVec.x;
                     position[1] = posVec.y;
@@ -260,7 +263,7 @@ namespace Medical
                     binormalElement.baseVertexPointerToElement(vertexBufferData, &binormal);
 
                     //This WILL NOT WORK for parity models
-                    meshPtr.Value.buildTangentVectors(VertexElementSemantic.VES_TANGENT, 0, 0, false, false, false);
+                    meshPtr.Value.buildTangentVectors(VertexElementSemantic.VES_TANGENT, 0, 0, false, false, true);
 
                     Vector3 normalNewVal = slowNormalRecompute(vertex);
                     normal[0] = normalNewVal.x;
@@ -282,16 +285,62 @@ namespace Medical
 
         public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
         {
-            debugDrawing.begin("ToothRay" + Owner.Name, DrawingType.LineList);
+            //debugDrawing.begin("ToothRay" + Owner.Name, DrawingType.LineList);
 
-            mainToothSection.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+            //mainToothSection.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
 
-            foreach (ToothSection section in toothSections)
+            //foreach (ToothSection section in toothSections)
+            //{
+            //    section.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+            //}
+
+            //debugDrawing.end();
+
+            debugDrawing.begin("ToothContacts" + Owner.Name, DrawingType.LineList);
+
+            debugDrawing.setColor(new Color(1.0f, 0.0f, 1.0f));
+
+            Vector3 delta = Vector3.ScaleIdentity * 0.01f;
+            foreach (Vector3 pos in debugContactPoints)
             {
-                section.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+                debugDrawing.drawLine(pos, pos + delta);
             }
 
             debugDrawing.end();
+        }
+
+        List<Vector3> debugContactPoints = new List<Vector3>();
+
+        void actorElement_ContactContinues(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
+        {
+            if (debugContactPoints.Count > 1000)
+            {
+
+                debugContactPoints.Clear();
+            }
+            ManifoldPoint manifoldPt = new ManifoldPoint();
+            TopTooth otherTooth = otherBody.Owner.getElement("Behavior") as TopTooth;
+            if (otherTooth != null)
+            {
+                int numContacts = contact.getNumContacts();
+                for (int i = 0; i < numContacts; ++i)
+                {
+                    contact.getContactPoint(i, manifoldPt);
+                    if (isBodyA)
+                    {
+                        debugContactPoints.Add(manifoldPt.getPositionWorldOnA());
+                    }
+                    else
+                    {
+                        debugContactPoints.Add(manifoldPt.getPositionWorldOnB());
+                    }
+                }
+            }
+        }
+
+        void actorElement_ContactEnded(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
+        {
+            //debugContactPoints.Clear();
         }
 
         protected override void customLoad(LoadInfo info)
@@ -303,6 +352,8 @@ namespace Medical
         {
             info.ExtractList<ToothSection>("ToothSections", toothSections);
         }
+
+        
 
         #region EditInterface
 

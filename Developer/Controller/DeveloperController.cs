@@ -43,7 +43,6 @@ namespace Medical.Controller
         private Options options = null;
         private DockProvider dockProvider;
         private TemporaryStateBlender tempBlender;
-        private DebugDrawingSurface debugSurface = null;
 
         private NavigationController navigationController;
 
@@ -454,10 +453,12 @@ namespace Medical.Controller
             if (SceneUnloading != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
-                if (debugSurface != null)
+                if (medicalController.CurrentScene != null)
                 {
-                    medicalController.PluginManager.RendererPlugin.destroyDebugDrawingSurface(debugSurface);
-                    debugSurface = null;
+                    foreach (DebugInterface debugInterface in medicalController.PluginManager.getDebugInterfaces())
+                    {
+                        debugInterface.destroyDebugInterface(medicalController.PluginManager.RendererPlugin, medicalController.CurrentScene.getDefaultSubScene());
+                    }
                 }
             }
             drawingWindowController.destroyCameras();
@@ -468,7 +469,10 @@ namespace Medical.Controller
                 if (SceneLoaded != null)
                 {
                     SceneLoaded.Invoke(medicalController.CurrentScene);
-                    debugSurface = medicalController.PluginManager.RendererPlugin.createDebugDrawingSurface("SceneDebugDrawer", medicalController.CurrentScene.getDefaultSubScene());
+                    foreach (DebugInterface debugInterface in medicalController.PluginManager.getDebugInterfaces())
+                    {
+                        debugInterface.createDebugInterface(medicalController.PluginManager.RendererPlugin, medicalController.CurrentScene.getDefaultSubScene());
+                    }
                 }
 
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
@@ -539,7 +543,7 @@ namespace Medical.Controller
             {
                 foreach (DebugInterface debugInterface in medicalController.PluginManager.getDebugInterfaces())
                 {
-                    debugInterface.renderDebug(debugSurface, currentScene.getDefaultSubScene());
+                    debugInterface.renderDebug(currentScene.getDefaultSubScene());
                 }
             }
         }

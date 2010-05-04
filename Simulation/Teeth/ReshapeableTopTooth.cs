@@ -9,6 +9,7 @@ using Engine.Editing;
 using Engine.Attributes;
 using Engine.Saving;
 using Engine.Renderer;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -20,9 +21,37 @@ namespace Medical
         [Editable]
         private ToothSection mainToothSection = new ToothSection("MainTooth");
 
+        [DoNotCopy]
+        [DoNotSave]
+        Vector3[] verticesArray;
+
+        [DoNotCopy]
+        [DoNotSave]
+        uint[] indicesArray;
+
         protected override void constructed()
         {
-            base.constructed();
+            //temporary get entity
+            SceneNodeElement sceneNodeElement = Owner.getElement(sceneNodeName) as SceneNodeElement;
+            Entity entity = null;
+            if (sceneNodeElement == null)
+            {
+                blacklist("Could not find SceneNodeElement {0}.", sceneNodeName);
+            }
+            else
+            {
+                entity = sceneNodeElement.getNodeObject(entityName) as Entity;
+                if (entity == null)
+                {
+                    blacklist("Could not find Entity {0}.", entityName);
+                }
+            }
+            RigidBody actorElement = Owner.getElement(actorName) as RigidBody;
+            if (actorElement == null)
+            {
+                blacklist("Could not find Actor {0}.", actorName);
+            }
+
             using (MeshPtr meshPtr = entity.getMesh())
             {
                 SubMesh subMesh = meshPtr.Value.getSubMesh(0);
@@ -51,8 +80,8 @@ namespace Medical
                         uint numTriangles = numIndices / 3;
                         unsafe
                         {
-                            Vector3[] verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
-                            uint[] indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
+                            verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
+                            indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
 
                             // Get vertex data
                             byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_DISCARD);
@@ -99,42 +128,169 @@ namespace Medical
                             {
                                 section.createSection(verticesArray, body);
                             }
-                            body.recomputeMassProps();                            
+                            body.recomputeMassProps();
                         }
                     }
                 }
             }
+
+            base.constructed();
         }
 
         public override bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
+        {
+            Ray3 localRay = getLocalRay(ref worldRay);
+
+            //Find the closest section that actually hits the tooth.
+            Vector3 hitLocation;
+            float closestSectionDistance = float.MaxValue;
+            ToothSection closestSection = null;
+
+            if (mainToothSection.intersects(localRay, out hitLocation))
+            {
+                closestSectionDistance = (hitLocation - localRay.Origin).length2();
+                closestSection = mainToothSection;
+            }
+            foreach (ToothSection section in toothSections)
+            {
+                if (section.intersects(localRay, out hitLocation))
+                {
+                    float distance2 = (hitLocation - localRay.Origin).length2();
+                    if (distance2 < closestSectionDistance)
+                    {
+                        closestSectionDistance = distance2;
+                        closestSection = section;
+                    }
+                }
+            }
+
+            //Check the triangles in the closest section
+            if (closestSection != null)
+            {
+                return closestSection.checkTriangleCollision(verticesArray, localRay, out distance, out vertexNumber);
+            }
+            else
+            {
+                vertexNumber = 0;
+                distance = float.MaxValue;
+                return false;
+            }
+        }
+
+        private Ray3 getLocalRay(ref Ray3 worldRay)
         {
             Ray3 localRay = worldRay;
             Quaternion rotationDir = Owner.Rotation.inverse();
             localRay.Direction = Quaternion.quatRotate(rotationDir, worldRay.Direction);
             localRay.Origin = localRay.Origin - Owner.Translation;
             localRay.Origin = Quaternion.quatRotate(rotationDir, localRay.Origin);
+            return localRay;
+        }
 
-            //debugRay = localRay;
-            //debugRay.Origin = debugRay.Origin + Owner.Translation;
-
-            Vector3 hitLocation;
-            float closestSectionDistance;
-            ToothSection closestSection;
-
-            if (mainToothSection.intersects(localRay, out hitLocation))
+        private Vector3 slowNormalRecompute(uint vertexNumber)
+        {
+            //search the whole index array for all triangles that hold this vertex
+            List<uint> triangleBases = new List<uint>();
+            for (uint i = 0; i < indicesArray.Length; i += 3)
             {
-                return base.rayIntersects(worldRay, out distance, out vertexNumber);
-            }
-            foreach (ToothSection section in toothSections)
-            {
-                if (section.intersects(localRay, out hitLocation))
+                if (indicesArray[i] == vertexNumber || indicesArray[i + 1] == vertexNumber || indicesArray[i + 2] == vertexNumber)
                 {
-                    return base.rayIntersects(worldRay, out distance, out vertexNumber);
+                    triangleBases.Add(i);
                 }
             }
-            distance = float.MaxValue;
-            vertexNumber = 0;
-            return false;
+            Vector3 normalTotal = Vector3.Zero;
+            foreach (uint baseIndex in triangleBases)
+            {
+                Vector3 v0 = verticesArray[indicesArray[baseIndex]];
+                Vector3 v1 = verticesArray[indicesArray[baseIndex + 1]];
+                Vector3 v2 = verticesArray[indicesArray[baseIndex + 2]];
+                Vector3 edge1 = v1 - v0;
+                Vector3 edge2 = v2 - v0;
+                normalTotal += edge1.cross(ref edge2).normalize();
+            }
+            return (normalTotal /= triangleBases.Count).normalize();
+        }
+
+        public override unsafe void moveVertex(uint vertex, Ray3 worldRay)
+        {
+            Ray3 localRay = getLocalRay(ref worldRay);
+
+            using (MeshPtr meshPtr = entity.getMesh())
+            {
+                SubMesh subMesh = meshPtr.Value.getSubMesh(0);
+
+                VertexData vertexData = subMesh.vertexData;
+                IndexData indexData = subMesh.indexData;
+                if (subMesh.UseSharedVertices)
+                {
+                    vertexData = meshPtr.Value.SharedVertexData;
+                }
+
+                VertexDeclaration vertexDeclaration = vertexData.vertexDeclaration;
+                VertexElement positionElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_POSITION);
+
+                VertexElement normalElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_NORMAL);
+                VertexElement binormalElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_BINORMAL);
+                VertexElement tangentElement = vertexDeclaration.findElementBySemantic(VertexElementSemantic.VES_TANGENT);
+
+                VertexBufferBinding vertexBinding = vertexData.vertexBufferBinding;
+                using (HardwareVertexBufferSharedPtr vertexBuffer = vertexBinding.getBuffer(positionElement.getSource()))
+                {
+                    uint vertexSize = vertexBuffer.Value.getVertexSize();
+
+                    // Modify vertex data
+                    byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_NORMAL);
+                    vertexBufferData += vertex * vertexSize;
+                    float* position;
+                    float* normal;
+                    float* tangent;
+                    float* binormal;
+                    normalElement.baseVertexPointerToElement(vertexBufferData, &normal);
+                    positionElement.baseVertexPointerToElement(vertexBufferData, &position);
+                    Vector3 posVec = new Vector3(position[0], position[1], position[2]);
+                    Vector3 normalVec = new Vector3(normal[0], normal[1], normal[2]);
+                    posVec += localRay.Direction * 0.005f;
+
+                    position[0] = posVec.x;
+                    position[1] = posVec.y;
+                    position[2] = posVec.z;
+
+                    tangentElement.baseVertexPointerToElement(vertexBufferData, &tangent);
+                    binormalElement.baseVertexPointerToElement(vertexBufferData, &binormal);
+
+                    //This WILL NOT WORK for parity models
+                    meshPtr.Value.buildTangentVectors(VertexElementSemantic.VES_TANGENT, 0, 0, false, false, true);
+
+                    Vector3 normalNewVal = slowNormalRecompute(vertex);
+                    normal[0] = normalNewVal.x;
+                    normal[1] = normalNewVal.y;
+                    normal[2] = normalNewVal.z;
+
+                    Vector3 tangentVec = new Vector3(tangent[0], tangent[1], tangent[2]);
+                    Vector3 newBinormal = tangentVec.cross(ref normalNewVal);
+
+                    binormal[0] = newBinormal.x;
+                    binormal[1] = newBinormal.y;
+                    binormal[2] = newBinormal.z;
+
+                    vertexBuffer.Value.unlock();
+                    verticesArray[vertex] = posVec;
+                }
+            }
+        }
+
+        public override void drawDebugInfo(DebugDrawingSurface debugDrawing)
+        {
+            //debugDrawing.begin("ToothRay" + Owner.Name, DrawingType.LineList);
+
+            //mainToothSection.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+
+            //foreach (ToothSection section in toothSections)
+            //{
+            //    section.drawBoundsWorld(debugDrawing, Owner.Translation, Owner.Rotation);
+            //}
+
+            //debugDrawing.end();
         }
 
         protected override void customLoad(LoadInfo info)
