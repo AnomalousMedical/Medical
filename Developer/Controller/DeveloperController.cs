@@ -412,8 +412,7 @@ namespace Medical.Controller
 
         public void loadSequence(String filename)
         {
-            VirtualFileSystem archive = VirtualFileSystem.Instance;
-            using (Stream stream = archive.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+            using (Stream stream = new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
                 MovementSequence sequence = saver.restoreObject(new XmlTextReader(stream)) as MovementSequence;
                 if (sequence != null)
