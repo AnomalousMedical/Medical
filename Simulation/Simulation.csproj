@@ -152,6 +152,9 @@
     <Compile Include="Teeth\Dynamic\ToothSection.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\Static\TopTooth.cs" />
+    <Compile Include="Teeth\Unified\UnifiedTooth.cs" />
+    <Compile Include="Teeth\Unified\UnifiedToothSection.cs" />
+    <Compile Include="Teeth\Unified\UnifiedTopTooth.cs" />
     <Compile Include="Tools\MovableObject.cs" />
     <Compile Include="Tools\MovableObjectTools.cs" />
     <Compile Include="Tools\Movement\Axis.cs" />
