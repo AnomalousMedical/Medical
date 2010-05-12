@@ -116,6 +116,11 @@ namespace Medical
                                 indexBuffer.Value.unlock();
                             }
 
+                            bool inWorld = actorElement.isInWorld();
+                            if (inWorld)
+                            {
+                                actorElement.removeFromWorld();
+                            }
                             ReshapeableRigidBody body = (ReshapeableRigidBody)actorElement;
                             mainToothSection.checkTriangles(verticesArray, indicesArray);
                             foreach (ToothSection section in toothSections)
@@ -129,6 +134,10 @@ namespace Medical
                                 section.createSection(verticesArray, body);
                             }
                             body.recomputeMassProps();
+                            if (inWorld)
+                            {
+                                actorElement.addToWorld();
+                            }
                         }
                     }
                 }
