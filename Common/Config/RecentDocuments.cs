@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using System.IO;
 
 namespace Medical
 {
@@ -40,7 +41,11 @@ namespace Medical
             recentDocumentList.Clear();
             for (int i = 0; section.hasValue("Document" + i); ++i)
             {
-                recentDocumentList.Add(section.getValue("Document" + i, ""));
+                String doc = section.getValue("Document" + i, "");
+                if (File.Exists(doc))
+                {
+                    recentDocumentList.Add(doc);
+                }
             }
         }
 
