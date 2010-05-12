@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
-using Engine.ObjectManagement;
-using BulletPlugin;
-using Engine.Platform;
-using Logging;
 
 namespace Medical
 {
@@ -14,19 +10,10 @@ namespace Medical
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
         static SimObjectMover teethMover;
-        static UpdateTimer timer;
-        static TeethTimerUpdate teethUpdate;
 
         static TeethController()
         {
             HighlightContacts = false;
-        }
-
-        public static void setPlatformInfo(UpdateTimer timer, EventManager eventManager)
-        {
-            TeethController.timer = timer;
-            teethUpdate = new TeethTimerUpdate(eventManager);
-            timer.addFixedUpdateListener(teethUpdate);
         }
 
         public static void addTooth(String name, Tooth tooth)
@@ -65,35 +52,6 @@ namespace Medical
             {
                 tooth.Adapt = adapt;
             }
-        }
-
-        public static Tooth pickTooth(Ray3 worldRay, Vector3 origin)
-        {
-            float closestDistance = float.MaxValue;
-            Tooth closestTooth = null;
-            uint closestVertexNumber = 0;
-            float distance = 0.0f;
-            uint vertexNumber;
-            foreach (Tooth tooth in teeth.Values)
-            {
-                if (!tooth.Extracted && tooth.rayIntersects(worldRay, out distance, out vertexNumber))
-                {
-                    Log.Debug("Hit tooth {0}.", tooth.Owner.Name);
-                    if (distance < closestDistance)
-                    {
-                        closestTooth = tooth;
-                        closestDistance = distance;
-                        closestVertexNumber = vertexNumber;
-                    }
-                }
-            }
-            if (closestTooth != null)
-            {
-                Log.Debug("Closest tooth vertex {0}", closestVertexNumber);
-                closestTooth.moveVertex(closestVertexNumber, worldRay);
-            }
-
-            return closestTooth;
         }
 
         public static void adaptSingleTooth(String name, bool adapt)
@@ -193,23 +151,6 @@ namespace Medical
             foreach (String toothName in toothNames)
             {
                 teeth[toothName].ShowTools = true;
-            }
-        }
-
-        public static void bindTeeth(List<String> toothNames)
-        {
-            for (int i = 0; i < toothNames.Count - 1; ++i)
-            {
-                SimObject obj = teeth[toothNames[i]].Owner;
-                GenericSimObjectDefinition jointObjectDef = new GenericSimObjectDefinition(String.Format("{0}{1}Joint", toothNames[i], toothNames[i + 1]));
-                jointObjectDef.Translation = obj.Translation;
-                Generic6DofConstraintDefinition joint = new Generic6DofConstraintDefinition("Joint");
-                joint.RigidBodyASimObject = toothNames[i];
-                joint.RigidBodyAElement = "Actor";
-                joint.RigidBodyBSimObject = toothNames[i + 1];
-                joint.RigidBodyBElement = "Actor";
-                jointObjectDef.addElement(joint);
-                obj.createOtherSimObject(jointObjectDef);
             }
         }
 

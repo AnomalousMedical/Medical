@@ -21,13 +21,13 @@ namespace Medical
     public abstract class Tooth : Behavior, MovableObject
     {
         [Editable]
-        protected String sceneNodeName = "Node";
+        private String sceneNodeName = "Node";
 
         [Editable]
-        protected String entityName = "Entity";
+        private String entityName = "Entity";
 
         [Editable]
-        protected String actorName = "Actor";
+        private String actorName = "Actor";
 
         [Editable]
         private String jointName = "Joint";
@@ -145,18 +145,6 @@ namespace Medical
             {
                 HighlightColor = highlight ? Color.Blue : Color.White;
             }
-        }
-
-        public virtual bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
-        {
-            distance = float.MaxValue;
-            vertexNumber = 0;
-            return entity.raycastPolygonLevel(worldRay, ref distance);
-        }
-
-        public virtual void moveVertex(uint vertex, Ray3 worldRay)
-        {
-
         }
 
         protected abstract void looseChanged(bool loose);

@@ -197,18 +197,5 @@ namespace Medical.GUI
                 teeth.getTransparencyObject("Tooth " + i).setAlpha(hideBottom.Checked ? 0.0f : 1.0f);
             }
         }
-
-        private void linkTeeth_Click(object sender, EventArgs e)
-        {
-            List<String> selectedTeeth = new List<string>();
-            foreach (CheckBox control in teethPanel.Controls)
-            {
-                if (control.Checked)
-                {
-                    selectedTeeth.Add(control.Tag.ToString());
-                }
-            }
-            TeethController.bindTeeth(selectedTeeth);
-        }
     }
 }

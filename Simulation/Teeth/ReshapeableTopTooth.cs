@@ -15,6 +15,18 @@ namespace Medical
 {
     class ReshapeableTopTooth : TopTooth
     {
+        [Editable]
+        private String sceneNodeName = "Node";
+
+        [Editable]
+        private String entityName = "Entity";
+
+        [Editable]
+        private String actorName = "Actor";
+
+        [Editable]
+        private String jointName = "Joint";
+
         [DoNotSave]
         private List<ToothSection> toothSections = new List<ToothSection>();
 
@@ -146,7 +158,7 @@ namespace Medical
             base.constructed();
         }
 
-        public override bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
+        public bool rayIntersects(Ray3 worldRay, out float distance, out uint vertexNumber)
         {
             Ray3 localRay = getLocalRay(ref worldRay);
 
@@ -220,7 +232,7 @@ namespace Medical
             return (normalTotal /= triangleBases.Count).normalize();
         }
 
-        public override unsafe void moveVertex(uint vertex, Ray3 worldRay)
+        public unsafe void moveVertex(uint vertex, Ray3 worldRay)
         {
             Ray3 localRay = getLocalRay(ref worldRay);
 

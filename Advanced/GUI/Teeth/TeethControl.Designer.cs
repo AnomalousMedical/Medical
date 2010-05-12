@@ -75,7 +75,6 @@
             this.offButton = new System.Windows.Forms.Button();
             this.hideTop = new System.Windows.Forms.CheckBox();
             this.hideBottom = new System.Windows.Forms.CheckBox();
-            this.linkTeeth = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             this.teethPanel.SuspendLayout();
             this.SuspendLayout();
@@ -770,23 +769,12 @@
             this.hideBottom.UseVisualStyleBackColor = true;
             this.hideBottom.CheckedChanged += new System.EventHandler(this.hideBottom_CheckedChanged);
             // 
-            // linkTeeth
-            // 
-            this.linkTeeth.Location = new System.Drawing.Point(60, 626);
-            this.linkTeeth.Name = "linkTeeth";
-            this.linkTeeth.Size = new System.Drawing.Size(128, 23);
-            this.linkTeeth.TabIndex = 17;
-            this.linkTeeth.Text = "Link Selected Teeth";
-            this.linkTeeth.UseVisualStyleBackColor = true;
-            this.linkTeeth.Click += new System.EventHandler(this.linkTeeth_Click);
-            // 
             // TeethControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ButtonText = "Teeth";
-            this.Controls.Add(this.linkTeeth);
             this.Controls.Add(this.hideBottom);
             this.Controls.Add(this.hideTop);
             this.Controls.Add(this.offButton);
@@ -860,7 +848,6 @@
         private System.Windows.Forms.Button offButton;
         private System.Windows.Forms.CheckBox hideTop;
         private System.Windows.Forms.CheckBox hideBottom;
-        private System.Windows.Forms.Button linkTeeth;
 
     }
 }

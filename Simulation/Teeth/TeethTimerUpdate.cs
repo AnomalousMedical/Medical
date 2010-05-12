@@ -55,11 +55,12 @@ namespace Medical
                     CameraControl camera = validator.getCamera();
                     spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
                     cameraPos = camera.Translation;
-                    Tooth tooth = TeethController.pickTooth(spaceRay, cameraPos);
-                    if (tooth != null)
-                    {
-                        Log.Debug("{0}", tooth.Owner.Name);
-                    }
+                    throw new NotImplementedException();
+                    //Tooth tooth = TeethController.pickTooth(spaceRay, cameraPos);
+                    //if (tooth != null)
+                    //{
+                    //    Log.Debug("{0}", tooth.Owner.Name);
+                    //}
                 }
             }
         }

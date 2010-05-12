@@ -209,8 +209,6 @@ namespace Medical.Controller
                 TeethController.TeethMover = teethMover;
                 medicalController.FixedLoopUpdate += teethMover.update;
 
-                TeethController.setPlatformInfo(medicalController.MainTimer, medicalController.EventManager);
-
                 tempBlender = new TemporaryStateBlender(medicalController.MainTimer, stateController);
 
                 splashScreen.stepProgress(70);
