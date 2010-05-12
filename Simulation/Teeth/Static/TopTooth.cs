@@ -11,18 +11,11 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    class TopTooth : Tooth
+    class TopTooth : StaticTooth
     {
         protected override void looseChanged(bool loose)
         {
-            //if (loose)
-            //{
-            //    actorElement.clearCollisionFlag(CollisionFlags.KinematicObject);
-            //}
-            //else
-            //{
-            //    actorElement.raiseCollisionFlag(CollisionFlags.KinematicObject);
-            //}
+            
         }
 
         protected override void constructed()

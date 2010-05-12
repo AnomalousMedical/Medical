@@ -11,7 +11,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    class BottomTooth : Tooth
+    class BottomTooth : StaticTooth
     {
         protected override void looseChanged(bool loose)
         {
