@@ -84,7 +84,7 @@ namespace Medical
                 blacklist("Could not find animation {0}.", manualAnimationName);
             }
             //Must look this up this way to get the correct pose index.
-            uint poseCount = mesh.Value.getPoseCount();
+            int poseCount = mesh.Value.getPoseCount();
             Pose pose = null;
             for(ushort i = 0; i < poseCount; ++i)
             {

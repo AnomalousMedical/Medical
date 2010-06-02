@@ -58,7 +58,6 @@ namespace Medical
 
         protected override void constructed()
         {
-            TeethController.addTooth(Owner.Name, this);
             sceneNodeElement = Owner.getElement(sceneNodeName) as SceneNodeElement;
             if (sceneNodeElement == null)
             {
@@ -94,6 +93,7 @@ namespace Medical
             {
                 blacklist("Could not find TransparencyInterface {0}", transparencyInterface);
             }
+            TeethController.addTooth(Owner.Name, this);
         }
 
         protected override void destroy()

@@ -122,20 +122,20 @@ namespace Medical
                 {
                     using (HardwareIndexBufferSharedPtr indexBuffer = indexData.IndexBuffer)
                     {
-                        uint vertexSize = vertexBuffer.Value.getVertexSize();
+                        int vertexSize = vertexBuffer.Value.getVertexSize().ToInt32();
 
-                        uint numVertices = vertexBuffer.Value.getNumVertices();
-                        uint positionOffset = positionElement.getOffset();
+                        int numVertices = vertexBuffer.Value.getNumVertices().ToInt32();
+                        int positionOffset = positionElement.getOffset().ToInt32();
 
-                        uint numIndices = indexBuffer.Value.getNumIndexes();
-                        uint numTriangles = numIndices / 3;
+                        int numIndices = indexBuffer.Value.getNumIndexes().ToInt32();
+                        int numTriangles = numIndices / 3;
                         unsafe
                         {
-                            verticesArray = new Vector3[vertexBuffer.Value.getNumVertices()];
-                            indicesArray = new uint[indexBuffer.Value.getNumIndexes()];
+                            verticesArray = new Vector3[vertexBuffer.Value.getNumVertices().ToInt32()];
+                            indicesArray = new uint[indexBuffer.Value.getNumIndexes().ToInt32()];
 
                             // Get vertex data
-                            byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_DISCARD);
+                            byte* vertexBufferData = (byte*)vertexBuffer.Value.lockBuf(HardwareBuffer.LockOptions.HBL_DISCARD);
                             float* elemStart;
                             for (int i = 0; i < numVertices; ++i)
                             {
@@ -150,7 +150,7 @@ namespace Medical
                             // Get index data
                             if (indexBuffer.Value.getType() == HardwareIndexBuffer.IndexType.IT_16BIT)
                             {
-                                ushort* indexBufferData = (ushort*)indexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_DISCARD);
+                                ushort* indexBufferData = (ushort*)indexBuffer.Value.lockBuf(HardwareBuffer.LockOptions.HBL_DISCARD);
                                 for (int i = 0; i < numIndices; ++i)
                                 {
                                     indicesArray[i] = indexBufferData[i];
@@ -159,7 +159,7 @@ namespace Medical
                             }
                             else if (indexBuffer.Value.getType() == HardwareIndexBuffer.IndexType.IT_32BIT)
                             {
-                                uint* indexBufferData = (uint*)indexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_DISCARD);
+                                uint* indexBufferData = (uint*)indexBuffer.Value.lockBuf(HardwareBuffer.LockOptions.HBL_DISCARD);
                                 for (int i = 0; i < numIndices; ++i)
                                 {
                                     indicesArray[i] = indexBufferData[i];
@@ -468,10 +468,10 @@ namespace Medical
                 VertexBufferBinding vertexBinding = vertexData.vertexBufferBinding;
                 using (HardwareVertexBufferSharedPtr vertexBuffer = vertexBinding.getBuffer(positionElement.getSource()))
                 {
-                    uint vertexSize = vertexBuffer.Value.getVertexSize();
+                    int vertexSize = vertexBuffer.Value.getVertexSize().ToInt32();
 
                     // Modify vertex data
-                    byte* vertexBufferData = (byte*)vertexBuffer.Value.@lock(HardwareBuffer.LockOptions.HBL_NORMAL);
+                    byte* vertexBufferData = (byte*)vertexBuffer.Value.lockBuf(HardwareBuffer.LockOptions.HBL_NORMAL);
                     vertexBufferData += vertex * vertexSize;
                     float* position;
                     float* normal;
@@ -547,14 +547,14 @@ namespace Medical
 
                 debugContactPoints.Clear();
             }
-            ManifoldPoint manifoldPt = new ManifoldPoint();
+            ManifoldPoint manifoldPt;
             TopTooth otherTooth = otherBody.Owner.getElement("Behavior") as TopTooth;
             if (otherTooth != null)
             {
-                int numContacts = contact.getNumContacts();
-                for (int i = 0; i < numContacts; ++i)
+                contact.startPointIterator();
+                while(contact.hasNextPoint())
                 {
-                    contact.getContactPoint(i, manifoldPt);
+                    manifoldPt = contact.nextPoint();
                     if (isBodyA)
                     {
                         debugContactPoints.Add(manifoldPt.getPositionWorldOnA());

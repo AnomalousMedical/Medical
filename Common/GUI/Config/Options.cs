@@ -20,19 +20,19 @@ namespace Medical.GUI
             this.AllowFormChrome = !WindowsInfo.CompositionEnabled;
             tooltip.SetToolTip(antiAliasingCombo, "This option smooths out jagged edges. However, it comes with a performance penalty so it may cause the program to run more slowly.");
             tooltip.SetToolTip(vsyncCheck, "This option will lock the refresh of the 3d scene to the monitor refresh. This will slow down the program causing it to use less resources.");
-            Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
-            if (configOptions.ContainsKey("FSAA"))
-            {
-                foreach (String value in configOptions["FSAA"].PossibleValues)
-                {
-                    antiAliasingCombo.Items.Add(value);
-                }
-                antiAliasingCombo.SelectedItem = OgreConfig.FSAA;
-            }
-            else
-            {
-                antiAliasingCombo.Enabled = false;
-            }
+            //Dictionary<String, ConfigOption> configOptions = Root.getSingleton().getRenderSystem().getConfigOptions();
+            //if (configOptions.ContainsKey("FSAA"))
+            //{
+            //    foreach (String value in configOptions["FSAA"].PossibleValues)
+            //    {
+            //        antiAliasingCombo.Items.Add(value);
+            //    }
+            //    antiAliasingCombo.SelectedItem = OgreConfig.FSAA;
+            //}
+            //else
+            //{
+            //    antiAliasingCombo.Enabled = false;
+            //}
         }
 
         protected override void OnShown(EventArgs e)

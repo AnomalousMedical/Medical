@@ -74,10 +74,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
-    <Reference Include="OgreWrapper, Version=1.0.3491.17320, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OgreWrapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>

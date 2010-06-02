@@ -97,7 +97,7 @@ namespace Medical
         {
             currentAlpha = alpha;
             diffuse.a = alpha;
-            alphaMaterial.Value.setDiffuse(ref diffuse);
+            alphaMaterial.Value.setDiffuse(diffuse);
             if (disableOnHidden)
             {
                 subEntity.setVisible(alpha != 0.0f);

@@ -19,6 +19,7 @@ using System.IO;
 using BulletPlugin;
 using System.Drawing;
 using ComponentFactory.Krypton.Toolkit;
+using PCPlatform;
 
 namespace Medical
 {
@@ -91,7 +92,7 @@ namespace Medical
             pluginManager.OnConfigureDefaultWindow = createWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(Win32PlatformPlugin).Assembly);
+            pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
             pluginManager.initializePlugins();
             pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
 
@@ -117,8 +118,11 @@ namespace Medical
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
             systemTimer = pluginManager.PlatformPlugin.createTimer();
-            Win32UpdateTimer win32Timer = new Win32UpdateTimer(systemTimer);
-            win32Timer.MessageReceived += new PumpMessageEvent(win32Timer_MessageReceived);
+
+            PCUpdateTimer win32Timer = new PCUpdateTimer(systemTimer);
+            WindowsMessagePump windowsPump = new WindowsMessagePump();
+            windowsPump.MessageReceived += new PumpMessageEvent(win32Timer_MessageReceived);
+            win32Timer.MessagePump = windowsPump;
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;

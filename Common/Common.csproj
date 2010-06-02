@@ -78,9 +78,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
-    <Reference Include="OgreWrapper, Version=1.0.3418.16973, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="PCPlatformPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\OgreWrapper.dll</HintPath>
+      <HintPath>..\..\Engine\Release\PCPlatformPlugin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -96,10 +96,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Win32Platform, Version=1.0.3418.16948, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\Win32Platform.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\CameraMover.cs" />
