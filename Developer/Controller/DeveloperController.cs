@@ -29,7 +29,7 @@ namespace Medical.Controller
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;
 
-        private MedicalController medicalController;
+        private WindowsFormsMedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private AdvancedForm developerForm;
         private GUIElementController guiElements;
@@ -97,8 +97,8 @@ namespace Medical.Controller
                 developerForm.Text = "Articulometrics Developer";
                 developerForm.Icon = Resources.skull;
                 developerForm.initialize(this);
-                medicalController = new MedicalController();
-                medicalController.intialize(developerForm);
+                medicalController = new WindowsFormsMedicalController();
+                medicalController.initialize(developerForm);
 
                 splashScreen.stepProgress(10);
 

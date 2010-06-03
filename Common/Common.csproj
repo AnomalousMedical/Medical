@@ -98,15 +98,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera\CameraMover.cs" />
-    <Compile Include="Camera\CloneCamera.cs" />
-    <Compile Include="Camera\OrbitCameraController.cs" />
-    <Compile Include="Camera\SavedCameraController.cs" />
-    <Compile Include="Camera\SavedCameraDefinition.cs" />
-    <Compile Include="Config\EngineConfig.cs" />
-    <Compile Include="Config\MedicalConfig.cs" />
-    <Compile Include="Config\RecentDocuments.cs" />
     <Compile Include="Controller\Background\BackgroundController.cs" />
+    <Compile Include="Controller\Camera\CloneCamera.cs" />
     <Compile Include="Controller\Distortion\StatePickerPanelController.cs" />
     <Compile Include="Controller\DrawingWindow\DockProvider.cs" />
     <Compile Include="Controller\DrawingWindow\DrawingWindowController.cs" />
@@ -116,8 +109,6 @@
     <Compile Include="Controller\DrawingWindow\DrawingWindowPresetSet.cs" />
     <Compile Include="Controller\DrawingWindow\KryptonDockProvider.cs" />
     <Compile Include="Controller\FileTracker.cs" />
-    <Compile Include="Controller\FixedMedicalUpdate.cs" />
-    <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRendererProperties.cs" />
     <Compile Include="Controller\KeyCodes.cs" />
@@ -126,8 +117,6 @@
     <Compile Include="Controller\Layers\LayerState.cs" />
     <Compile Include="Controller\Layers\LayerStateSet.cs" />
     <Compile Include="Controller\MeasurementGrid.cs" />
-    <Compile Include="Controller\MedicalController.cs" />
-    <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
     <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
     <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
@@ -148,6 +137,7 @@
     <Compile Include="Controller\Shortcuts\ShortcutGroup.cs" />
     <Compile Include="Controller\StatusController.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
+    <Compile Include="Controller\WindowsFormsMedicalController.cs" />
     <Compile Include="Controller\WindowsInfo.cs" />
     <Compile Include="Controller\TemporaryStateBlender.cs" />
     <Compile Include="GUI\About\AboutBox.cs">

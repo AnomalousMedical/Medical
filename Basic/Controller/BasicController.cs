@@ -28,7 +28,7 @@ namespace Medical.Controller
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;
 
-        private MedicalController medicalController;
+        private WindowsFormsMedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private BasicForm basicForm;
         private MedicalStateController stateController;
@@ -148,8 +148,8 @@ namespace Medical.Controller
             {
                 shortcutController = new ShortcutController();
                 basicForm = new BasicForm(shortcutController, featureLevelString);
-                medicalController = new MedicalController();
-                medicalController.intialize(basicForm);
+                medicalController = new WindowsFormsMedicalController();
+                medicalController.initialize(basicForm);
                 medicalController.PumpMessage += new PumpMessage(medicalController_PumpMessage);
                 medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
 

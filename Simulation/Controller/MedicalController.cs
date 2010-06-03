@@ -4,27 +4,22 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Logging;
-using Medical.GUI;
 using OgrePlugin;
 using Engine.Platform;
 using Engine.Renderer;
 using System.Threading;
-using System.Windows.Forms;
 using System.Xml;
 using Engine.ObjectManagement;
 using Engine.Saving.XMLSaver;
 using Engine.Resources;
-using Medical.Properties;
 using System.IO;
 using BulletPlugin;
 using System.Drawing;
-using ComponentFactory.Krypton.Toolkit;
 using PCPlatform;
 
 namespace Medical
 {
     public delegate void LoopUpdate(Clock time);
-    public delegate void PumpMessage(ref Message msg);
 
     public class MedicalController : IDisposable
     {
@@ -43,9 +38,6 @@ namespace Medical
         private FixedMedicalUpdate fixedUpdate;
         private FullSpeedMedicalUpdate fullSpeedUpdate;
 
-        //GUI
-        private DrawingWindow hiddenEmbedWindow;
-
         //Controller
         private MedicalSceneController medicalScene;
 
@@ -62,7 +54,6 @@ namespace Medical
 
         public event LoopUpdate FullSpeedLoopUpdate;
         public event LoopUpdate FixedLoopUpdate;
-        public event PumpMessage PumpMessage;
 
         #endregion Events
 
@@ -77,7 +68,13 @@ namespace Medical
 
         #region Functions
 
-        public void intialize(OSWindow mainForm)
+        /// <summary>
+        /// Initialize the controller.
+        /// </summary>
+        /// <param name="mainForm">The form to use for input, or null to use the primary render window.</param>
+        /// <param name="messagePump"></param>
+        /// <param name="configureWindow"></param>
+        public void initialize(OSWindow mainForm, OSMessagePump messagePump, ConfigureDefaultWindow configureWindow)
         {
             //Create the log.
             logListener = new LogFileListener();
@@ -87,14 +84,16 @@ namespace Medical
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
 
-            hiddenEmbedWindow = new DrawingWindow();
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
-            pluginManager.OnConfigureDefaultWindow = createWindow;
+            pluginManager.OnConfigureDefaultWindow = configureWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
             pluginManager.initializePlugins();
-            pluginManager.RendererPlugin.PrimaryWindow.setEnabled(false);
+            if(mainForm == null)
+            {
+                mainForm = pluginManager.RendererPlugin.PrimaryWindow.Handle;
+            }
 
             VirtualFileSystem archive = VirtualFileSystem.Instance;
             //Add primary archive
@@ -120,9 +119,7 @@ namespace Medical
             systemTimer = pluginManager.PlatformPlugin.createTimer();
 
             PCUpdateTimer win32Timer = new PCUpdateTimer(systemTimer);
-            WindowsMessagePump windowsPump = new WindowsMessagePump();
-            windowsPump.MessageReceived += new PumpMessageEvent(win32Timer_MessageReceived);
-            win32Timer.MessagePump = windowsPump;
+            win32Timer.MessagePump = messagePump;
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
@@ -140,20 +137,10 @@ namespace Medical
             medicalScene = new MedicalSceneController(pluginManager);
         }
 
-        void win32Timer_MessageReceived(ref WinMsg message)
-        {
-            Message msg = Message.Create(message.hwnd, message.message, message.wParam, message.lParam);
-            ManualMessagePump.pumpMessage(ref msg);
-            if (PumpMessage != null)
-            {
-                PumpMessage.Invoke(ref msg);
-            }
-        }
-
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             if (medicalScene != null)
             {
@@ -174,10 +161,6 @@ namespace Medical
             if (pluginManager != null)
             {
                 pluginManager.Dispose();
-            }
-            if (hiddenEmbedWindow != null)
-            {
-                hiddenEmbedWindow.Dispose();
             }
 
             MedicalConfig.save();
@@ -287,16 +270,6 @@ namespace Medical
             {
                 FixedLoopUpdate.Invoke(clock);
             }
-        }
-
-        /// <summary>
-        /// Helper function to create the default window. This is the callback
-        /// to the PluginManager.
-        /// </summary>
-        /// <param name="defaultWindow"></param>
-        private void createWindow(out DefaultWindowInfo defaultWindow)
-        {
-            defaultWindow = new DefaultWindowInfo(hiddenEmbedWindow);
         }
 
         #endregion Functions

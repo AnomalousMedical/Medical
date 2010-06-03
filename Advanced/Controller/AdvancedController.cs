@@ -28,7 +28,7 @@ namespace Medical.Controller
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;
 
-        private MedicalController medicalController;
+        private WindowsFormsMedicalController medicalController;
         private DrawingWindowController drawingWindowController;
         private AdvancedForm advancedForm;
         private GUIElementController guiElements;
@@ -104,8 +104,8 @@ namespace Medical.Controller
 
                 advancedForm = new AdvancedForm();
                 advancedForm.initialize(this);
-                medicalController = new MedicalController();
-                medicalController.intialize(advancedForm);
+                medicalController = new WindowsFormsMedicalController();
+                medicalController.initialize(advancedForm);
 
                 splashScreen.stepProgress(10);
 
