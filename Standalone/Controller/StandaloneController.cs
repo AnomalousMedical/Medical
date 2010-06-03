@@ -50,8 +50,8 @@ namespace Standalone
         /// <param name="defaultWindow"></param>
         private void createWindow(out DefaultWindowInfo defaultWindow)
         {
-            defaultWindow = new DefaultWindowInfo("Articulometrics", 800, 600);
-            defaultWindow.Fullscreen = false;
+            defaultWindow = new DefaultWindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+            defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
             defaultWindow.MonitorIndex = 0;
         }
 
