@@ -30,14 +30,12 @@ namespace Standalone
         public void go()
         {
             medicalController = new MedicalController();
-            medicalController.initialize(null, new WindowsMessagePump(), createWindow);
+            medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
             windowListener = new WindowListener(medicalController);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
-            //temp
             medicalController.openScene(MedicalConfig.DefaultScene);
-            //endtemp
-
+            
             createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
 
             medicalController.start();
