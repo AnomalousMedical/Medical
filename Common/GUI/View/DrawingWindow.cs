@@ -352,11 +352,11 @@ namespace Medical
             listeners.Remove(listener);
         }
 
-        public IntPtr WindowHandle
+        public String WindowHandle
         {
             get
             {
-                return this.Handle;
+                return this.Handle.ToString();
             }
         }
 

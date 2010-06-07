@@ -34,11 +34,13 @@ namespace Standalone
             windowListener = new WindowListener(medicalController);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
-            medicalController.openScene(MedicalConfig.DefaultScene);
-            
-            createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
+            if (medicalController.openScene(MedicalConfig.DefaultScene))
+            {
 
-            medicalController.start();
+                createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
+
+                medicalController.start();
+            }
         }
 
         /// <summary>

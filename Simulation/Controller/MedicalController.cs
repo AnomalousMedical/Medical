@@ -233,6 +233,7 @@ namespace Medical
             }
             else
             {
+                Log.Error("Could not load scene {0}.", filename);
                 return false;
             }
         }
