@@ -21,7 +21,7 @@ namespace Medical.GUI
             InitializeComponent();
             sceneSelectionView.LargeImageList = new ImageList();
             sceneSelectionView.LargeImageList.ColorDepth = ColorDepth.Depth32Bit;
-            sceneSelectionView.LargeImageList.ImageSize = new Size(214, 256);
+            sceneSelectionView.LargeImageList.ImageSize = new System.Drawing.Size(214, 256);
             sceneSelectionView.ItemActivate += new EventHandler(sceneSelectionView_ItemActivate);
         }
 

@@ -10,14 +10,14 @@ namespace Medical
     public class CloneCamera : CameraMover
     {
         private DrawingWindow followWindow;
-        private CameraControl camera;
+        private SceneView camera;
 
         public CloneCamera(DrawingWindow followWindow)
         {
             this.followWindow = followWindow;
         }
 
-        public override void setCamera(CameraControl camera)
+        public override void setCamera(SceneView camera)
         {
             this.camera = camera;
         }

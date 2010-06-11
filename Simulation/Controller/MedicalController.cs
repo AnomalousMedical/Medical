@@ -16,6 +16,7 @@ using System.IO;
 using BulletPlugin;
 using System.Drawing;
 using PCPlatform;
+using CEGUIPlugin;
 
 namespace Medical
 {
@@ -89,6 +90,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
+            pluginManager.addPluginAssembly(typeof(CEGUIInterface).Assembly);
             pluginManager.initializePlugins();
             if(mainForm == null)
             {

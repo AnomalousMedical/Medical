@@ -13,7 +13,7 @@ namespace Medical
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
         /// <param name="camera">The camera to use.</param>
-        public abstract void setCamera(CameraControl camera);
+        public abstract void setCamera(SceneView camera);
 
         /// <summary>
         /// Set the camera to the given position looking at the given point.

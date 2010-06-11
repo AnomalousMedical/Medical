@@ -9,6 +9,9 @@ using Engine.Platform;
 using Logging;
 using Medical;
 using PCPlatform;
+using CEGUIPlugin;
+using OgrePlugin;
+using OgreWrapper;
 
 namespace Standalone
 {
@@ -34,13 +37,48 @@ namespace Standalone
             windowListener = new WindowListener(medicalController);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
+            
+            String resourcePath = "TEMPCEGUI/";
+
+            //temp initialize ogre resources for cegui
+            OgreResourceGroupManager rgm = OgreResourceGroupManager.getInstance();
+            rgm.createResourceGroup("imagesets");
+            rgm.createResourceGroup("fonts");
+            rgm.createResourceGroup("layouts");
+            rgm.createResourceGroup("schemes");
+            rgm.createResourceGroup("looknfeels");
+            rgm.createResourceGroup("lua_scripts");
+            rgm.createResourceGroup("schemas");
+            rgm.addResourceLocation(resourcePath + "schemes", "EngineArchive", "schemes", true);
+            rgm.addResourceLocation(resourcePath + "imagesets", "EngineArchive", "imagesets", true);
+            rgm.addResourceLocation(resourcePath + "fonts", "EngineArchive", "fonts", true);
+            rgm.addResourceLocation(resourcePath + "layouts", "EngineArchive", "layouts", true);
+            rgm.addResourceLocation(resourcePath + "looknfeel", "EngineArchive", "looknfeels", true);
+            //rgm.addResourceLocation(resourcePath + "lua_scripts", "EngineArchive", "lua_scripts", true);
+            //rgm.addResourceLocation(resourcePath + "xml_schemas", "EngineArchive", "schemas", true);
+
+            rgm.initializeAllResourceGroups();
+
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {
-
+                SchemeManager.Singleton.create("AnomalousLook.scheme");
+                Window mainLayout = WindowManager.Singleton.loadWindowLayout("TestSmallerWindow.layout");
+                CEGUISystem.Instance.setGUISheet(mainLayout);
+                PushButton button = mainLayout.getChildRecursive("Root/Window/Button") as PushButton;
+                CEGUIEvent evt = new CEGUIEvent(button_TestEvent);
+                button.Clicked += evt;
+                
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
 
                 medicalController.start();
             }
+            
+        }
+
+        void button_TestEvent(CEGUIPlugin.EventArgs e)
+        {
+            Log.Debug("Event recieved standalone.");
+            medicalController.MainTimer.stopLoop();
         }
 
         /// <summary>
@@ -61,22 +99,42 @@ namespace Standalone
             SimSubScene defaultScene = scene.getDefaultSubScene();
             if (defaultScene != null)
             {
-                CameraControl camera = window.createCamera(defaultScene, "Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
+                mainTimer.addFixedUpdateListener(cameraController);
+
+                SceneView camera = window.createSceneView(defaultScene, "Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
                 camera.BackgroundColor = Engine.Color.Black;
                 camera.addLight();
                 camera.setNearClipDistance(1.0f);
                 camera.setFarClipDistance(1000.0f);
                 //camera.setRenderingMode(renderingMode);
-                mainTimer.addFixedUpdateListener(cameraController);
                 cameraController.setCamera(camera);
                 //CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(true);
+                camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
                 //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
                 //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
                 //if (CameraCreated != null)
                 //{
                 //    CameraCreated.Invoke(this);
                 //}
+
+                //create a secondary camera
+                //SceneView camera2 = window.createSceneView(defaultScene, "Default2", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
+                //camera2.BackgroundColor = Engine.Color.Black;
+                //camera2.addLight();
+                //camera2.setNearClipDistance(1.0f);
+                //camera2.setFarClipDistance(1000.0f);
+                ////camera.setRenderingMode(renderingMode);
+                ////cameraController.setCamera(camera2);
+                ////CameraResolver.addMotionValidator(this);
+                //camera2.showSceneStats(true);
+                //camera2.setDimensions(0.3f, 0.3f, 0.5f, 0.5f);
+                ////OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
+                ////ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
+                ////if (CameraCreated != null)
+                ////{
+                ////    CameraCreated.Invoke(this);
+                ////}
             }
             else
             {

@@ -71,7 +71,7 @@ namespace Medical
             if (validator != null)
             {
                 validator.getLocalCoords(ref mouseLoc.x, ref mouseLoc.y);
-                CameraControl camera = validator.getCamera();
+                SceneView camera = validator.getCamera();
                 spaceRay = camera.getCameraToViewportRay(mouseLoc.x / validator.getMouseAreaWidth(), mouseLoc.y / validator.getMouseAreaHeight());
                 cameraPos = camera.Translation;              
             }

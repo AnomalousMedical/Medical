@@ -54,7 +54,7 @@ namespace Medical
 
         #endregion Static
 
-        private CameraControl camera;
+        private SceneView camera;
         private EventManager events;
 
         //These three vectors form the axis relative to the current rotation.
@@ -260,7 +260,7 @@ namespace Medical
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
         /// <param name="camera">The camera to use.</param>
-        public override void setCamera(CameraControl camera)
+        public override void setCamera(SceneView camera)
         {
             this.camera = camera;
         }

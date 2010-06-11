@@ -29,7 +29,7 @@ namespace Medical
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         private RendererWindow window;
         private String name;
-        private CameraControl camera;
+        private SceneView camera;
         private CameraMover cameraMover;
         private RendererPlugin renderer;
         private bool showSceneStats = false;
@@ -80,7 +80,7 @@ namespace Medical
             if (defaultScene != null)
             {
                 this.mainTimer = mainTimer;
-                camera = window.createCamera(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
+                camera = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
                 camera.BackgroundColor = Engine.Color.FromARGB(BackColor.ToArgb());
                 camera.addLight();
                 camera.setNearClipDistance(1.0f);
@@ -90,7 +90,7 @@ namespace Medical
                 cameraMover.setCamera(camera);
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
-                OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
+                OgreSceneView ogreCamera = ((OgreSceneView)camera);
                 ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
                 if (CameraCreated != null)
                 {
@@ -113,9 +113,9 @@ namespace Medical
                 {
                     CameraDestroyed.Invoke(this);
                 }
-                ((OgreCameraControl)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
+                ((OgreSceneView)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
                 cameraMover.setCamera(null);
-                window.destroyCamera(camera);
+                window.destroySceneView(camera);
                 mainTimer.removeFixedUpdateListener(cameraMover);
                 camera = null;
                 CameraResolver.removeMotionValidator(this);
@@ -245,7 +245,7 @@ namespace Medical
         {
             get
             {
-                return ((OgreCameraControl)camera).Camera;
+                return ((OgreSceneView)camera).Camera;
             }
         }
 
@@ -457,7 +457,7 @@ namespace Medical
         /// Get the camera for this motion validator.
         /// </summary>
         /// <returns>The camera for this validator.</returns>
-        public CameraControl getCamera()
+        public SceneView getCamera()
         {
             return camera;
         }
