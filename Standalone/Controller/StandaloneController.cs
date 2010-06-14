@@ -12,6 +12,8 @@ using PCPlatform;
 using CEGUIPlugin;
 using OgrePlugin;
 using OgreWrapper;
+using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace Standalone
 {
@@ -19,6 +21,7 @@ namespace Standalone
     {
         private MedicalController medicalController;
         private WindowListener windowListener;
+        private ScreenLayoutManager screenLayoutManager;
 
         public StandaloneController()
         {
@@ -36,6 +39,7 @@ namespace Standalone
             medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
             windowListener = new WindowListener(medicalController);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
+            screenLayoutManager = new ScreenLayoutManager(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
 
             
             String resourcePath = "TEMPCEGUI/";
@@ -62,13 +66,20 @@ namespace Standalone
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {
                 SchemeManager.Singleton.create("AnomalousLook.scheme");
-                Window mainLayout = WindowManager.Singleton.loadWindowLayout("TestSmallerWindow.layout");
-                CEGUISystem.Instance.setGUISheet(mainLayout);
-                PushButton button = mainLayout.getChildRecursive("Root/Window/Button") as PushButton;
+
+                Window root = WindowManager.Singleton.createWindow("DefaultWindow", "Root");
+                CEGUISystem.Instance.setGUISheet(root);
+
+                Window leftLayout = WindowManager.Singleton.loadWindowLayout("left.layout");
+                root.addChildWindow(leftLayout);
+                PushButton button = leftLayout.getChildRecursive("Root/Window/Button") as PushButton;
                 CEGUIEvent evt = new CEGUIEvent(button_TestEvent);
                 button.Clicked += evt;
+                screenLayoutManager.Root.Left = new CEGUILayoutItem(leftLayout);
                 
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
+
+                screenLayoutManager.layout();
 
                 medicalController.start();
             }
@@ -110,7 +121,8 @@ namespace Standalone
                 cameraController.setCamera(camera);
                 //CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(true);
-                camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
+                //camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
+                screenLayoutManager.Root.Center = new SceneViewLayoutItem(camera);
                 //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
                 //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
                 //if (CameraCreated != null)
@@ -139,6 +151,25 @@ namespace Standalone
             else
             {
                 Log.Default.sendMessage("Cannot find default subscene for the scene. Not creating camera.", LogLevel.Error, "Anomaly");
+            }
+        }
+
+        static void DebugStructureAlignment(object structure) {
+            var t = structure.GetType();
+            if (t.IsValueType) {
+                Console.WriteLine("Offset  Length  Field");
+                int realTotal = 0;
+                foreach (var iField in t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
+                    Console.Write(Marshal.OffsetOf(t, iField.Name).ToString().PadLeft(6));
+                    Console.Write("  ");
+                    int size = Marshal.SizeOf(iField.GetValue(structure));
+                    realTotal += size;
+                    Console.Write(size.ToString().PadLeft(6));
+                    Console.Write("  ");
+                    Console.WriteLine(iField.Name);
+                }
+                Console.WriteLine("        " + Marshal.SizeOf(structure).ToString().PadLeft(6) + " bytes total");
+                Console.WriteLine("        " + realTotal.ToString().PadLeft(6) + " bytes total (data without padding)");
             }
         }
     }
