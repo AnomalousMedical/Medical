@@ -14,6 +14,7 @@ using OgrePlugin;
 using OgreWrapper;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using Medical.GUI;
 
 namespace Standalone
 {
@@ -22,6 +23,7 @@ namespace Standalone
         private MedicalController medicalController;
         private WindowListener windowListener;
         private ScreenLayoutManager screenLayoutManager;
+        private LayerGUIController layerGUIController;
 
         public StandaloneController()
         {
@@ -30,6 +32,10 @@ namespace Standalone
 
         public void Dispose()
         {
+            if (layerGUIController != null)
+            {
+                layerGUIController.Dispose();
+            }
             medicalController.Dispose();
         }
 
@@ -42,7 +48,7 @@ namespace Standalone
             screenLayoutManager = new ScreenLayoutManager(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
 
             
-            String resourcePath = "TEMPCEGUI/";
+            String resourcePath = "GUI/AnomalousLook/";
 
             //temp initialize ogre resources for cegui
             OgreResourceGroupManager rgm = OgreResourceGroupManager.getInstance();
@@ -51,32 +57,44 @@ namespace Standalone
             rgm.createResourceGroup("layouts");
             rgm.createResourceGroup("schemes");
             rgm.createResourceGroup("looknfeels");
-            rgm.createResourceGroup("lua_scripts");
-            rgm.createResourceGroup("schemas");
+            //rgm.createResourceGroup("lua_scripts");
+            //rgm.createResourceGroup("schemas");
             rgm.addResourceLocation(resourcePath + "schemes", "EngineArchive", "schemes", true);
             rgm.addResourceLocation(resourcePath + "imagesets", "EngineArchive", "imagesets", true);
             rgm.addResourceLocation(resourcePath + "fonts", "EngineArchive", "fonts", true);
-            rgm.addResourceLocation(resourcePath + "layouts", "EngineArchive", "layouts", true);
             rgm.addResourceLocation(resourcePath + "looknfeel", "EngineArchive", "looknfeels", true);
+            rgm.addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "layouts", true);
+            rgm.addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "imagesets", true);
             //rgm.addResourceLocation(resourcePath + "lua_scripts", "EngineArchive", "lua_scripts", true);
             //rgm.addResourceLocation(resourcePath + "xml_schemas", "EngineArchive", "schemas", true);
 
             rgm.initializeAllResourceGroups();
 
+            //Initialze UI
+            SchemeManager.Singleton.create("AnomalousLook.scheme");
+
+            ImagesetManager.Instance.create("LayersToolstrip.imageset");
+
+            Window root = WindowManager.Instance.createWindow("DefaultWindow", "Root");
+            CEGUISystem.Instance.setGUISheet(root);
+
+            Window leftLayout = WindowManager.Instance.loadWindowLayout("left.layout");
+            root.addChildWindow(leftLayout);
+            PushButton button = leftLayout.getChildRecursive("Root/Window/Button") as PushButton;
+            CEGUIEvent evt = new CEGUIEvent(button_TestEvent);
+            button.Clicked += evt;
+            screenLayoutManager.Root.Left = new CEGUILayoutItem(leftLayout);
+
+            Window ribbonLayout = WindowManager.Instance.loadWindowLayout("Ribbon.layout");
+            root.addChildWindow(ribbonLayout);
+            screenLayoutManager.Root.Top = new CEGUILayoutItem(ribbonLayout);
+            layerGUIController = new LayerGUIController(ribbonLayout);
+
+            PushButton systemButton = ribbonLayout.getChildRecursive("Ribbon/Tabs__auto_TabPane__SystemButton") as PushButton;
+            systemButton.Clicked += new CEGUIEvent(systemButton_Clicked);
+
             if (medicalController.openScene(MedicalConfig.DefaultScene))
-            {
-                SchemeManager.Singleton.create("AnomalousLook.scheme");
-
-                Window root = WindowManager.Singleton.createWindow("DefaultWindow", "Root");
-                CEGUISystem.Instance.setGUISheet(root);
-
-                Window leftLayout = WindowManager.Singleton.loadWindowLayout("left.layout");
-                root.addChildWindow(leftLayout);
-                PushButton button = leftLayout.getChildRecursive("Root/Window/Button") as PushButton;
-                CEGUIEvent evt = new CEGUIEvent(button_TestEvent);
-                button.Clicked += evt;
-                screenLayoutManager.Root.Left = new CEGUILayoutItem(leftLayout);
-                
+            {                
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
 
                 screenLayoutManager.layout();
@@ -86,7 +104,26 @@ namespace Standalone
             
         }
 
-        void button_TestEvent(CEGUIPlugin.EventArgs e)
+        void systemButton_Clicked(EventArgs e)
+        {
+            Log.Debug("SystemButton Clicked");
+        }
+
+        void skinToggle_Clicked(EventArgs e)
+        {
+            float alpha = 0.0f;
+            TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
+            TransparencyInterface skin = group.getTransparencyObject("Skin");
+            skin.smoothBlend(alpha);
+            TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
+            leftEye.smoothBlend(alpha);
+            TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
+            rightEye.smoothBlend(alpha);
+            TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
+            eyebrowsAndEyelashes.smoothBlend(alpha);
+        }
+
+        void button_TestEvent(EventArgs e)
         {
             Log.Debug("Event recieved standalone.");
             medicalController.MainTimer.stopLoop();
