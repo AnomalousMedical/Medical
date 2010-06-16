@@ -16,7 +16,7 @@ using System.IO;
 using BulletPlugin;
 using System.Drawing;
 using PCPlatform;
-using CEGUIPlugin;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -85,22 +85,14 @@ namespace Medical
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
 
+            //Create pluginmanager
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
-            pluginManager.OnConfigureDefaultWindow = configureWindow;
-            pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
-            pluginManager.addPluginAssembly(typeof(CEGUIInterface).Assembly);
-            pluginManager.initializePlugins();
-            if(mainForm == null)
-            {
-                mainForm = pluginManager.RendererPlugin.PrimaryWindow.Handle;
-            }
 
+            //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
             //Add primary archive
             archive.addArchive(MedicalConfig.PrimaryArchive);
-            
+
             //Add any patch archives
             int i = 0;
             String patchArchive = MedicalConfig.getPatchArchiveName(i);
@@ -115,6 +107,18 @@ namespace Medical
 #if ALLOW_OVERRIDE
             archive.addArchive(MedicalConfig.WorkingResourceDirectory);
 #endif
+
+            //Configure plugins
+            pluginManager.OnConfigureDefaultWindow = configureWindow;
+            pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
+            pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
+            pluginManager.initializePlugins();
+            if(mainForm == null)
+            {
+                mainForm = pluginManager.RendererPlugin.PrimaryWindow.Handle;
+            }
 
             //Intialize the platform
             BulletInterface.Instance.ShapeMargin = 0.005f;
