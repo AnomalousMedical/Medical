@@ -13,6 +13,7 @@ using OgrePlugin;
 using OgreWrapper;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using MyGUIPlugin;
 
 namespace Standalone
 {
@@ -21,6 +22,7 @@ namespace Standalone
         private MedicalController medicalController;
         private WindowListener windowListener;
         private ScreenLayoutManager screenLayoutManager;
+        SceneView camera;
 
         public StandaloneController()
         {
@@ -40,11 +42,21 @@ namespace Standalone
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
             screenLayoutManager = new ScreenLayoutManager(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
 
+            MyGUIInterface myGui = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
+
+            Gui gui = Gui.Instance;
+            Widget button = gui.createWidgetT("Button", "Button", 10, 10, 300, 26, Align.Default, "Main", "Test");
+            
+            Console.WriteLine(button.ToString());
+
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
 
                 screenLayoutManager.layout();
+
+                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
+                rm.setActiveViewport(1);
 
                 medicalController.start();
             }
@@ -96,7 +108,7 @@ namespace Standalone
             {
                 mainTimer.addFixedUpdateListener(cameraController);
 
-                SceneView camera = window.createSceneView(defaultScene, "Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
+                camera = window.createSceneView(defaultScene, "Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
                 camera.BackgroundColor = Engine.Color.Black;
                 camera.addLight();
                 camera.setNearClipDistance(1.0f);
