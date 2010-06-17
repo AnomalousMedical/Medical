@@ -14,6 +14,7 @@ using OgreWrapper;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using MyGUIPlugin;
+using Medical.GUI;
 
 namespace Standalone
 {
@@ -22,7 +23,8 @@ namespace Standalone
         private MedicalController medicalController;
         private WindowListener windowListener;
         private ScreenLayoutManager screenLayoutManager;
-        SceneView camera;
+        private SceneView camera;
+        private LayerGUIController layerGUIController;
 
         public StandaloneController()
         {
@@ -31,6 +33,7 @@ namespace Standalone
 
         public void Dispose()
         {
+            layerGUIController.Dispose();
             medicalController.Dispose();
         }
 
@@ -56,6 +59,7 @@ namespace Standalone
 
             Layout ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
             screenLayoutManager.Root.Top = new MyGUILayoutContainer(ribbon.getWidget(0));
+            layerGUIController = new LayerGUIController(gui);
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
