@@ -46,19 +46,16 @@ namespace Standalone
 
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
-            Widget button = gui.createWidgetT("Button", "Button", 10, 100, 300, 100, Align.Default, "Main", "Test");
-            button.MouseButtonClick += button_MouseButtonClick;
-
-            Widget button2 = gui.createWidgetT("Button", "Button", 10, 500, 300, 100, Align.Default, "Main", "Test2");
-            button2.MouseButtonClick += button2_MouseButtonClick;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
 
-            Layout layout = LayoutManager.Instance.loadLayout("test.xml");
+            Layout layout = LayoutManager.Instance.loadLayout("Left.layout");
             screenLayoutManager.Root.Left = new MyGUILayoutContainer(layout.getWidget(0));
-            //LayoutManager.Instance.unloadLayout(layout);
-            
-            Console.WriteLine(button.ToString());
+            Button button = gui.findWidgetT("QuitButton") as Button;
+            button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
+
+            Layout ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
+            screenLayoutManager.Root.Top = new MyGUILayoutContainer(ribbon.getWidget(0));
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
@@ -120,7 +117,7 @@ namespace Standalone
                 //camera.setRenderingMode(renderingMode);
                 cameraController.setCamera(camera);
                 //CameraResolver.addMotionValidator(this);
-                camera.showSceneStats(true);
+                //camera.showSceneStats(true);
                 //camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
                 screenLayoutManager.Root.Center = new SceneViewLayoutItem(camera);
                 //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
