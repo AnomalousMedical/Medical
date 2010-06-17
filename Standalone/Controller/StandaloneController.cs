@@ -45,7 +45,18 @@ namespace Standalone
             MyGUIInterface myGui = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
 
             Gui gui = Gui.Instance;
-            Widget button = gui.createWidgetT("Button", "Button", 10, 10, 300, 26, Align.Default, "Main", "Test");
+            gui.setVisiblePointer(false);
+            Widget button = gui.createWidgetT("Button", "Button", 10, 100, 300, 100, Align.Default, "Main", "Test");
+            button.MouseButtonClick += button_MouseButtonClick;
+
+            Widget button2 = gui.createWidgetT("Button", "Button", 10, 500, 300, 100, Align.Default, "Main", "Test2");
+            button2.MouseButtonClick += button2_MouseButtonClick;
+
+            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
+
+            Layout layout = LayoutManager.Instance.loadLayout("test.xml");
+            screenLayoutManager.Root.Left = new MyGUILayoutContainer(layout.getWidget(0));
+            //LayoutManager.Instance.unloadLayout(layout);
             
             Console.WriteLine(button.ToString());
 
@@ -60,15 +71,14 @@ namespace Standalone
 
                 medicalController.start();
             }
-            
         }
 
-        void systemButton_Clicked(EventArgs e)
+        void button_MouseButtonClick(Widget source, EventArgs e)
         {
-            Log.Debug("SystemButton Clicked");
+            medicalController.MainTimer.stopLoop();
         }
 
-        void skinToggle_Clicked(EventArgs e)
+        void button2_MouseButtonClick(Widget source, EventArgs e)
         {
             float alpha = 0.0f;
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
@@ -80,12 +90,6 @@ namespace Standalone
             rightEye.smoothBlend(alpha);
             TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
             eyebrowsAndEyelashes.smoothBlend(alpha);
-        }
-
-        void button_TestEvent(EventArgs e)
-        {
-            Log.Debug("Event recieved standalone.");
-            medicalController.MainTimer.stopLoop();
         }
 
         /// <summary>
