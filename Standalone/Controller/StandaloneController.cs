@@ -52,6 +52,9 @@ namespace Standalone
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
 
+            LanguageManager.Instance.loadUserTags("core_theme_black_blue_tag.xml");
+            gui.load("core_skin.xml");
+
             Layout layout = LayoutManager.Instance.loadLayout("Left.layout");
             screenLayoutManager.Root.Left = new MyGUILayoutContainer(layout.getWidget(0));
             Button button = gui.findWidgetT("QuitButton") as Button;
