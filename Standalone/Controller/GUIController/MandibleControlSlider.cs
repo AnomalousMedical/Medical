@@ -77,6 +77,18 @@ namespace Medical.GUI
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return scrollBar.Enabled;
+            }
+            set
+            {
+                scrollBar.Enabled = value;
+            }
+        }
+
         //public KryptonRibbonGroupButton PreviousButton
         //{
         //    get

@@ -26,8 +26,8 @@ namespace Medical.GUI
         private MandibleControlSlider rightForwardBack;
         private MandibleControlSlider leftForwardBack;
         private MandibleControlSlider bothForwardBack;
-        //private Button resetButton;
-        //private Button restoreButton;
+        private Button resetButton;
+        private Button restoreButton;
 
         private Vector3 movingMusclePosition;
         private float leftCPPosition;
@@ -51,16 +51,16 @@ namespace Medical.GUI
             bothForwardBack = new MandibleControlSlider(gui.findWidgetT("Movement/ProtrusionSlider") as HScroll);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
-            //resetButton = basicForm.manipulationResetButton;
-            //restoreButton = basicForm.manipulationRestoreButton;
-            //restoreButton.Enabled = false;
+            resetButton = gui.findWidgetT("Movement/Reset") as Button;
+            restoreButton = gui.findWidgetT("Movement/Restore") as Button;
+            restoreButton.Enabled = false;
 
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;
             rightForwardBack.ValueChanged += rightSliderValueChanged;
             leftForwardBack.ValueChanged += leftSliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
-            //resetButton.Click += resetButton_Click;
-            //restoreButton.Click += new EventHandler(restoreButton_Click);
+            resetButton.MouseButtonClick += resetButton_Click;
+            restoreButton.MouseButtonClick += restoreButton_Click;
         }
 
         public bool AllowSceneManipulation
@@ -87,16 +87,15 @@ namespace Medical.GUI
         {
             get
             {
-                return true;
-                //return openTrackBar.Enabled;
+                return openTrackBar.Enabled;
             }
             set
             {
-                //openTrackBar.Enabled = value;
-                //rightForwardBack.Enabled = value;
-                //leftForwardBack.Enabled = value;
-                //bothForwardBack.Enabled = value;
-                //resetButton.Enabled = value;
+                openTrackBar.Enabled = value;
+                rightForwardBack.Enabled = value;
+                leftForwardBack.Enabled = value;
+                bothForwardBack.Enabled = value;
+                resetButton.Enabled = value;
             }
         }
 
@@ -187,26 +186,26 @@ namespace Medical.GUI
             synchronizeRightCP(bothForwardBack, value);
         }
 
-        //private void resetButton_Click(object sender, EventArgs e)
-        //{
-        //    leftCPPosition = leftCP.CurrentLocation;
-        //    rightCPPosition = rightCP.CurrentLocation;
-        //    movingMusclePosition = movingMuscleTarget.Offset;
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            leftCPPosition = leftCP.CurrentLocation;
+            rightCPPosition = rightCP.CurrentLocation;
+            movingMusclePosition = movingMuscleTarget.Offset;
 
-        //    synchronizeLeftCP(resetButton, leftCP.getNeutralLocation());
-        //    synchronizeRightCP(resetButton, rightCP.getNeutralLocation());
-        //    bothForwardBack.Value = rightForwardBack.Value;
-        //    synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
-        //    restoreButton.Enabled = true;
-        //}
+            synchronizeLeftCP(resetButton, leftCP.getNeutralLocation());
+            synchronizeRightCP(resetButton, rightCP.getNeutralLocation());
+            bothForwardBack.Value = rightForwardBack.Value;
+            synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
+            restoreButton.Enabled = true;
+        }
 
-        //void restoreButton_Click(object sender, EventArgs e)
-        //{
-        //    synchronizeLeftCP(resetButton, leftCPPosition);
-        //    synchronizeRightCP(resetButton, rightCPPosition);
-        //    synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
-        //    restoreButton.Enabled = false;
-        //}
+        void restoreButton_Click(object sender, EventArgs e)
+        {
+            synchronizeLeftCP(resetButton, leftCPPosition);
+            synchronizeRightCP(resetButton, rightCPPosition);
+            synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
+            restoreButton.Enabled = false;
+        }
 
         private void subscribeToUpdates()
         {
