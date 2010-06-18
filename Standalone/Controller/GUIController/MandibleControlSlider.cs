@@ -149,11 +149,11 @@ namespace Medical.GUI
         {
             get
             {
-                return scrollBar.getScrollPosition() / 1000.0f;
+                return scrollBar.ScrollPosition / 1000.0f;
             }
             set
             {
-                scrollBar.setScrollPosition((uint)(value * 1000.0f));
+                scrollBar.ScrollPosition = (uint)(value * 1000.0f);
             }
         }
 
@@ -161,11 +161,11 @@ namespace Medical.GUI
         {
             get
             {
-                return scrollBar.getScrollRange() / 1000.0f;
+                return scrollBar.ScrollRange / 1000.0f;
             }
             set
             {
-                scrollBar.setScrollRange((uint)(value * 1000.0f));
+                scrollBar.ScrollRange = (uint)(value * 1000.0f);
             }
         }
     }
