@@ -18,13 +18,21 @@ using Medical.GUI;
 
 namespace Standalone
 {
+    public delegate void SceneEvent(SimScene scene);
+
     class StandaloneController : IDisposable
     {
+        //Events
+        public event SceneEvent SceneLoaded;
+        public event SceneEvent SceneUnloading;
+
+        //Members
         private MedicalController medicalController;
         private WindowListener windowListener;
         private ScreenLayoutManager screenLayoutManager;
         private SceneView camera;
         private LayerGUIController layerGUIController;
+        private MandibleGUIController mandibleGUIController;
 
         public StandaloneController()
         {
@@ -51,18 +59,19 @@ namespace Standalone
             gui.setVisiblePointer(false);
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
 
             LanguageManager.Instance.loadUserTags("core_theme_black_blue_tag.xml");
             gui.load("core_skin.xml");
-
-            Layout layout = LayoutManager.Instance.loadLayout("Left.layout");
-            screenLayoutManager.Root.Left = new MyGUILayoutContainer(layout.getWidget(0));
-            Button button = gui.findWidgetT("QuitButton") as Button;
-            button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
+            gui.load("LayersToolstrip.xml");
 
             Layout ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
             screenLayoutManager.Root.Top = new MyGUILayoutContainer(ribbon.getWidget(0));
             layerGUIController = new LayerGUIController(gui);
+            mandibleGUIController = new MandibleGUIController(gui, this);
+
+            Button quitButton = gui.findWidgetT("File/Quit") as Button;
+            quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
@@ -73,27 +82,18 @@ namespace Standalone
                 OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
                 rm.setActiveViewport(1);
 
+                if (SceneLoaded != null)
+                {
+                    SceneLoaded.Invoke(medicalController.CurrentScene);
+                }
+
                 medicalController.start();
             }
         }
 
-        void button_MouseButtonClick(Widget source, EventArgs e)
+        void quitButton_MouseButtonClick(Widget source, EventArgs e)
         {
             medicalController.MainTimer.stopLoop();
-        }
-
-        void button2_MouseButtonClick(Widget source, EventArgs e)
-        {
-            float alpha = 0.0f;
-            TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
-            TransparencyInterface skin = group.getTransparencyObject("Skin");
-            skin.smoothBlend(alpha);
-            TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
-            leftEye.smoothBlend(alpha);
-            TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
-            rightEye.smoothBlend(alpha);
-            TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
-            eyebrowsAndEyelashes.smoothBlend(alpha);
         }
 
         /// <summary>
@@ -158,7 +158,18 @@ namespace Standalone
             }
         }
 
-        static void DebugStructureAlignment(object structure) {
+        public MedicalController MedicalController
+        {
+            get
+            {
+                return medicalController;
+            }
+        }
+    }
+}
+
+/*
+static void DebugStructureAlignment(object structure) {
             var t = structure.GetType();
             if (t.IsValueType) {
                 Console.WriteLine("Offset  Length  Field");
@@ -176,5 +187,4 @@ namespace Standalone
                 Console.WriteLine("        " + realTotal.ToString().PadLeft(6) + " bytes total (data without padding)");
             }
         }
-    }
-}
+*/

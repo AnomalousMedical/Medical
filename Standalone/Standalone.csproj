@@ -73,6 +73,8 @@
     <Compile Include="Controller\GUIController\LayerGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIMenu.cs" />
     <Compile Include="Controller\GUIController\LayerGUISkullMenu.cs" />
+    <Compile Include="Controller\GUIController\MandibleControlSlider.cs" />
+    <Compile Include="Controller\GUIController\MandibleGUIController.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Layout\SceneViewLayoutItem.cs" />

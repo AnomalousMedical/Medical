@@ -85,6 +85,9 @@ namespace Medical
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
 
+            //Config plugins
+            MyGUIInterface.LogFile = MedicalConfig.DocRoot + "/MyGUI.log";
+
             //Create pluginmanager
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);
 
