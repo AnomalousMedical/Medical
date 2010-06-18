@@ -73,6 +73,13 @@ namespace Standalone
             Button quitButton = gui.findWidgetT("File/Quit") as Button;
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
 
+            Button layerButton = gui.findWidgetT("Layers/Skin") as Button;
+            StaticImage image = layerButton.StaticImage;
+            image.setItemResource("LayersToolstripIcons");
+            image.setItemGroup("Icons");
+            image.setItemName("Skin");
+            Console.WriteLine(image);
+
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
