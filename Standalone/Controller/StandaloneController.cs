@@ -59,7 +59,6 @@ namespace Standalone
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
-                //createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
                 sceneViewController.createCameras(medicalController.CurrentScene);
 
                 if (SceneLoaded != null)

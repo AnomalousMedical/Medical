@@ -14,6 +14,7 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private BasicRibbon basicRibbon;
         private StandaloneController standaloneController;
+        AnimatedLayoutContainer animatedContainer;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -38,6 +39,28 @@ namespace Medical.GUI
             basicRibbon = new BasicRibbon(gui, standaloneController);
             screenLayoutManager.Root.Top = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             screenLayoutManager.Root.SuppressLayout = false;
+
+            animatedContainer = new AnimatedLayoutContainer(standaloneController.MedicalController.MainTimer);
+            ScreenLayout.Root.Left = animatedContainer;
+
+            //temp
+            Button panelPopTest = gui.findWidgetT("PanelPopTest") as Button;
+            panelPopTest.MouseButtonClick += new MyGUIEvent(panelPopTest_MouseButtonClick);
+        }
+
+        Layout leftLayout;
+
+        void panelPopTest_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (leftLayout == null)
+            {
+                leftLayout = LayoutManager.Instance.loadLayout("left.layout");
+                animatedContainer.slideOutContainerLeft(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f);
+            }
+            else
+            {
+
+            }
         }
 
         void standaloneController_SceneUnloading(SimScene scene)

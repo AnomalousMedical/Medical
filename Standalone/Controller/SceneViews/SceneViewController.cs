@@ -28,7 +28,7 @@ namespace Medical.Controller
 
         public void Dispose()
         {
-            window.destroySceneView();
+            destroyCameras();
         }
 
         public void createCameras(SimScene scene)
@@ -39,6 +39,11 @@ namespace Medical.Controller
             MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
             OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
             rm.setActiveViewport(1);
+        }
+
+        public void destroyCameras()
+        {
+            window.destroySceneView();
         }
 
         public ScreenLayoutContainer LayoutContainer
