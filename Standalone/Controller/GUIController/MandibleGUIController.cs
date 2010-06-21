@@ -33,11 +33,9 @@ namespace Medical.GUI
         private float leftCPPosition;
         private float rightCPPosition;
 
-        public MandibleGUIController(Gui gui, StandaloneController standaloneController)
+        public MandibleGUIController(Gui gui, MedicalController medicalController)
         {
-            this.medicalController = standaloneController.MedicalController;
-            standaloneController.SceneLoaded += new SceneEvent(basicController_SceneLoaded);
-            standaloneController.SceneUnloading += new SceneEvent(basicController_SceneUnloading);
+            this.medicalController = medicalController;
 
             openTrackBar = new MandibleControlSlider(gui.findWidgetT("Movement/HingeSlider") as HScroll);
             openTrackBar.Minimum = -3;
@@ -120,7 +118,7 @@ namespace Medical.GUI
             }
         }
 
-        void basicController_SceneLoaded(SimScene scene)
+        public void sceneLoaded(SimScene scene)
         {
             //restoreButton.Enabled = false;
             leftCP = ControlPointController.getControlPoint("LeftCP");
@@ -156,7 +154,7 @@ namespace Medical.GUI
             }
         }
 
-        void basicController_SceneUnloading(SimScene scene)
+        public void sceneUnloading(SimScene scene)
         {
             if (movingMuscle != null)
             {

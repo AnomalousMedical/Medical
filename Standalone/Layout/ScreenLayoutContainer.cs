@@ -23,6 +23,21 @@ namespace Medical
             }
         }
 
+        public void invalidate()
+        {
+            if (parent != null)
+            {
+                parent.invalidate();
+            }
+            else
+            {
+                if (!SuppressLayout)
+                {
+                    layout();
+                }
+            }
+        }
+
         public abstract void layout();
 
         public Size WorkingSize { get; set; }
@@ -45,6 +60,8 @@ namespace Medical
                 }
             }
         }
+
+        public bool SuppressLayout { get; set; }
 
         /// <summary>
         /// Internal function to set the parent, should only be called by other ScreenLayoutContainers.

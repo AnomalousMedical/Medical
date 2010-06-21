@@ -29,10 +29,9 @@ namespace Standalone
         //Members
         private MedicalController medicalController;
         private WindowListener windowListener;
-        private ScreenLayoutManager screenLayoutManager;
         private SceneView camera;
-        private LayerGUIController layerGUIController;
-        private MandibleGUIController mandibleGUIController;
+
+        private BasicGUI basicGUI;
 
         public StandaloneController()
         {
@@ -41,7 +40,6 @@ namespace Standalone
 
         public void Dispose()
         {
-            layerGUIController.Dispose();
             medicalController.Dispose();
         }
 
@@ -51,36 +49,12 @@ namespace Standalone
             medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
             windowListener = new WindowListener(medicalController);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
-            screenLayoutManager = new ScreenLayoutManager(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
 
-            MyGUIInterface myGui = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
-
-            Gui gui = Gui.Instance;
-            gui.setVisiblePointer(false);
-
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
-
-            LanguageManager.Instance.loadUserTags("core_theme_black_blue_tag.xml");
-            gui.load("core_skin.xml");
-            gui.load("LayersToolstrip.xml");
-
-            Layout ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
-            screenLayoutManager.Root.Top = new MyGUILayoutContainer(ribbon.getWidget(0));
-            layerGUIController = new LayerGUIController(gui);
-            mandibleGUIController = new MandibleGUIController(gui, this);
-
-            Button quitButton = gui.findWidgetT("File/Quit") as Button;
-            quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
+            basicGUI = new BasicGUI(this);
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
                 createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
-
-                screenLayoutManager.layout();
-
-                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
-                rm.setActiveViewport(1);
 
                 if (SceneLoaded != null)
                 {
@@ -91,7 +65,7 @@ namespace Standalone
             }
         }
 
-        void quitButton_MouseButtonClick(Widget source, EventArgs e)
+        public void shutdown()
         {
             medicalController.MainTimer.stopLoop();
         }
@@ -126,7 +100,7 @@ namespace Standalone
                 //CameraResolver.addMotionValidator(this);
                 //camera.showSceneStats(true);
                 //camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
-                screenLayoutManager.Root.Center = new SceneViewLayoutItem(camera);
+                basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(camera);
                 //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
                 //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
                 //if (CameraCreated != null)
@@ -134,23 +108,9 @@ namespace Standalone
                 //    CameraCreated.Invoke(this);
                 //}
 
-                //create a secondary camera
-                //SceneView camera2 = window.createSceneView(defaultScene, "Default2", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
-                //camera2.BackgroundColor = Engine.Color.Black;
-                //camera2.addLight();
-                //camera2.setNearClipDistance(1.0f);
-                //camera2.setFarClipDistance(1000.0f);
-                ////camera.setRenderingMode(renderingMode);
-                ////cameraController.setCamera(camera2);
-                ////CameraResolver.addMotionValidator(this);
-                //camera2.showSceneStats(true);
-                //camera2.setDimensions(0.3f, 0.3f, 0.5f, 0.5f);
-                ////OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
-                ////ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
-                ////if (CameraCreated != null)
-                ////{
-                ////    CameraCreated.Invoke(this);
-                ////}
+                MyGUIInterface myGui = this.MedicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
+                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
+                rm.setActiveViewport(1);
             }
             else
             {

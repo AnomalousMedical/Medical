@@ -114,6 +114,7 @@ namespace Medical
                 }
                 left = value;
                 left._setParent(this);
+                invalidate();
             }
         }
 
@@ -131,6 +132,7 @@ namespace Medical
                 }
                 right = value;
                 right._setParent(this);
+                invalidate();
             }
         }
 
@@ -148,6 +150,7 @@ namespace Medical
                 }
                 top = value;
                 top._setParent(this);
+                invalidate();
             }
         }
 
@@ -165,6 +168,7 @@ namespace Medical
                 }
                 bottom = value;
                 bottom._setParent(this);
+                invalidate();
             }
         }
 
@@ -182,6 +186,7 @@ namespace Medical
                 }
                 center = value;
                 center._setParent(this);
+                invalidate();
             }
         }
     }
