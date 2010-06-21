@@ -15,6 +15,7 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using MyGUIPlugin;
 using Medical.GUI;
+using Medical.Controller;
 
 namespace Standalone
 {
@@ -29,9 +30,9 @@ namespace Standalone
         //Members
         private MedicalController medicalController;
         private WindowListener windowListener;
-        private SceneView camera;
 
         private BasicGUI basicGUI;
+        private SceneViewController sceneViewController;
 
         public StandaloneController()
         {
@@ -40,6 +41,8 @@ namespace Standalone
 
         public void Dispose()
         {
+            sceneViewController.Dispose();
+            basicGUI.Dispose();
             medicalController.Dispose();
         }
 
@@ -51,10 +54,13 @@ namespace Standalone
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
             basicGUI = new BasicGUI(this);
+            sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
+            basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
 
             if (medicalController.openScene(MedicalConfig.DefaultScene))
             {                
-                createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
+                //createCamera(medicalController.PluginManager.RendererPlugin.PrimaryWindow, medicalController.MainTimer, medicalController.CurrentScene);
+                sceneViewController.createCameras(medicalController.CurrentScene);
 
                 if (SceneLoaded != null)
                 {
@@ -82,42 +88,6 @@ namespace Standalone
             defaultWindow.MonitorIndex = 0;
         }
 
-        public void createCamera(RendererWindow window, UpdateTimer mainTimer, SimScene scene)
-        {
-            OrbitCameraController cameraController = new OrbitCameraController(new Vector3(0, -5, 150), new Vector3(0, -5, 0), null, medicalController.EventManager);
-            SimSubScene defaultScene = scene.getDefaultSubScene();
-            if (defaultScene != null)
-            {
-                mainTimer.addFixedUpdateListener(cameraController);
-
-                camera = window.createSceneView(defaultScene, "Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
-                camera.BackgroundColor = Engine.Color.Black;
-                camera.addLight();
-                camera.setNearClipDistance(1.0f);
-                camera.setFarClipDistance(1000.0f);
-                //camera.setRenderingMode(renderingMode);
-                cameraController.setCamera(camera);
-                //CameraResolver.addMotionValidator(this);
-                //camera.showSceneStats(true);
-                //camera.setDimensions(0.3f, 0.0f, 0.7f, 1.0f);
-                basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(camera);
-                //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
-                //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
-                //if (CameraCreated != null)
-                //{
-                //    CameraCreated.Invoke(this);
-                //}
-
-                MyGUIInterface myGui = this.MedicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
-                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
-                rm.setActiveViewport(1);
-            }
-            else
-            {
-                Log.Default.sendMessage("Cannot find default subscene for the scene. Not creating camera.", LogLevel.Error, "Anomaly");
-            }
-        }
-
         public MedicalController MedicalController
         {
             get
@@ -127,24 +97,3 @@ namespace Standalone
         }
     }
 }
-
-/*
-static void DebugStructureAlignment(object structure) {
-            var t = structure.GetType();
-            if (t.IsValueType) {
-                Console.WriteLine("Offset  Length  Field");
-                int realTotal = 0;
-                foreach (var iField in t.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)) {
-                    Console.Write(Marshal.OffsetOf(t, iField.Name).ToString().PadLeft(6));
-                    Console.Write("  ");
-                    int size = Marshal.SizeOf(iField.GetValue(structure));
-                    realTotal += size;
-                    Console.Write(size.ToString().PadLeft(6));
-                    Console.Write("  ");
-                    Console.WriteLine(iField.Name);
-                }
-                Console.WriteLine("        " + Marshal.SizeOf(structure).ToString().PadLeft(6) + " bytes total");
-                Console.WriteLine("        " + realTotal.ToString().PadLeft(6) + " bytes total (data without padding)");
-            }
-        }
-*/
