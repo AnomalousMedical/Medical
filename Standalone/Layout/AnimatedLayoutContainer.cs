@@ -127,6 +127,10 @@ namespace Medical
                     oldChildContainer = null;
                 }
                 alpha = currentTime / animationLength;
+                if (childContainer != null && oldChildContainer != null)
+                {
+                    childContainer.setAlpha(alpha);
+                }
                 currentSize = new Size(oldSize.Width + sizeDelta.Width * alpha, WorkingSize.Height);
                 invalidate();
             }
