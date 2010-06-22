@@ -60,12 +60,11 @@ namespace Medical.GUI
             if (leftLayout2 == null)
             {
                 leftLayout2 = LayoutManager.Instance.loadLayout("left2.layout");
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, null);
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, animationCompleted);
             }
             else
             {
-                animatedContainer.changePanel(null, 0.25f, null);
-                leftLayout2 = null;
+                animatedContainer.changePanel(null, 0.25f, animationCompleted);
             }
         }
 
@@ -74,12 +73,30 @@ namespace Medical.GUI
             if (leftLayout == null)
             {
                 leftLayout = LayoutManager.Instance.loadLayout("left.layout");
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, null);
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, animationCompleted);
             }
             else
             {
-                animatedContainer.changePanel(null, 0.25f, null);
-                leftLayout = null;
+                animatedContainer.changePanel(null, 0.25f, animationCompleted);
+            }
+        }
+
+        public void animationCompleted(ScreenLayoutContainer oldChild)
+        {
+            MyGUILayoutContainer myGUIContainer = oldChild as MyGUILayoutContainer;
+            if (myGUIContainer != null)
+            {
+                if (leftLayout != null && myGUIContainer.Widget == leftLayout.getWidget(0))
+                {
+                    LayoutManager.Instance.unloadLayout(leftLayout);
+                    leftLayout = null;
+                }
+                else if (leftLayout2 != null && myGUIContainer.Widget == leftLayout2.getWidget(0))
+                {
+                    LayoutManager.Instance.unloadLayout(leftLayout2);
+                    leftLayout2 = null;
+                }
+
             }
         }
 

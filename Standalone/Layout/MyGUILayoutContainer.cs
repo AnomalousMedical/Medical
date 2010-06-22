@@ -33,5 +33,18 @@ namespace Medical
                 return new Size(widget.getWidth(), widget.getHeight());
             }
         }
+
+        public Widget Widget
+        {
+            get
+            {
+                return widget;
+            }
+            set
+            {
+                widget = value;
+                invalidate();
+            }
+        }
     }
 }
