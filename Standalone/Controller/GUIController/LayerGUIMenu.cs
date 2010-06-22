@@ -13,70 +13,62 @@ namespace Medical.GUI
         public event ChangeTransparency TransparencyChanged;
 
         protected Button mainButton;
-        //protected KryptonContextMenu contextMenu;
-        //protected KryptonContextMenuRadioButton opaqueButton;
-        //protected KryptonContextMenuRadioButton transparentButton;
-        //protected KryptonContextMenuRadioButton hiddenButton;
+        protected Button menuButton;
+        protected PopupMenu contextMenu;
+        protected MenuItem opaqueButton;
+        protected MenuItem transparentButton;
+        protected MenuItem hiddenButton;
 
         private bool allowUpdates = true;
-        private float currentTransparency = 1.0f;
 
-        public LayerGUIMenu(Button mainButton)
+        public LayerGUIMenu(Button mainButton, Button menuButton)
         {
-            //contextMenu = new KryptonContextMenu();
-            
-            //KryptonContextMenuHeading visibilityHeading = new KryptonContextMenuHeading("Visibility");
-            //contextMenu.Items.Add(visibilityHeading);
-            
-            //opaqueButton = new KryptonContextMenuRadioButton("Opaque");
-            //opaqueButton.Checked = true;
-            //opaqueButton.AutoClose = true;
-            //opaqueButton.CheckedChanged += new EventHandler(opaqueButton_CheckedChanged);
-            //contextMenu.Items.Add(opaqueButton);
+            Gui gui = Gui.Instance;
 
-            //transparentButton = new KryptonContextMenuRadioButton("Transparent");
-            //transparentButton.AutoClose = true;
-            //transparentButton.CheckedChanged += new EventHandler(transparentButton_CheckedChanged);
-            //contextMenu.Items.Add(transparentButton);
+            contextMenu = gui.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
+            contextMenu.Visible = false;
 
-            //hiddenButton = new KryptonContextMenuRadioButton("Hidden");
-            //hiddenButton.AutoClose = true;
-            //hiddenButton.CheckedChanged += new EventHandler(hiddenButton_CheckedChanged);
-            //contextMenu.Items.Add(hiddenButton);
+            opaqueButton = contextMenu.addItem("Opaque", MenuItemType.Normal) as MenuItem;
+            opaqueButton.StateCheck = true;
+            opaqueButton.MouseButtonClick += new MyGUIEvent(opaqueButton_MouseButtonClick);
+
+            transparentButton = contextMenu.addItem("Transparent", MenuItemType.Normal) as MenuItem;
+            transparentButton.MouseButtonClick += new MyGUIEvent(transparentButton_MouseButtonClick);
+
+            hiddenButton = contextMenu.addItem("Hidden", MenuItemType.Normal) as MenuItem;
+            hiddenButton.MouseButtonClick += new MyGUIEvent(hiddenButton_MouseButtonClick);
 
             this.mainButton = mainButton;
             mainButton.MouseButtonClick += new MyGUIEvent(mainButton_MouseButtonClick);
-            //mainButton.KryptonContextMenu = contextMenu;
+
+            this.menuButton = menuButton;
+            if (menuButton != null)
+            {
+                menuButton.MouseButtonClick += new MyGUIEvent(menuButton_MouseButtonClick);
+            }
+        }
+
+        void menuButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            contextMenu.setVisibleSmooth(true);
+            contextMenu.setPosition(mainButton.getAbsoluteLeft(), mainButton.getAbsoluteTop() + mainButton.getHeight());
         }
 
         void mainButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //temp transparency change algo
-            if (currentTransparency == 1.0f)
+            if (opaqueButton.StateCheck)
             {
-                currentTransparency = 0.7f;
+                setAlpha(0.7f);
             }
-            else if (currentTransparency == 0.7f)
+            else if (transparentButton.StateCheck)
             {
-                currentTransparency = 0.0f;
+                setAlpha(0.0f);
             }
-            else if (currentTransparency == 0.0f)
+            else if (hiddenButton.StateCheck)
             {
-                currentTransparency = 1.0f;
-            }
-
-            if (TransparencyChanged != null)
-            {
-                TransparencyChanged(currentTransparency);
+                setAlpha(1.0f);
             }
         }
-
-        //public virtual void createShortcuts(String name, ShortcutGroup shortcutGroup, Keys key)
-        //{
-        //    ShortcutEventCommand shortcut = new ShortcutEventCommand(name, key, false);
-        //    shortcut.Execute += new ShortcutEventCommand.ExecuteEvent(shortcut_Execute);
-        //    shortcutGroup.addShortcut(shortcut);
-        //}
 
         public void Dispose()
         {
@@ -88,46 +80,46 @@ namespace Medical.GUI
             allowUpdates = false;
             if (alpha >= 1.0f)
             {
-                //opaqueButton.Checked = true;
+                opaqueButton.StateCheck = true;
+                hiddenButton.StateCheck = false;
+                transparentButton.StateCheck = false;
             }
             else if (alpha <= 0.0f)
             {
-                //hiddenButton.Checked = true;
+                opaqueButton.StateCheck = false;
+                hiddenButton.StateCheck = true;
+                transparentButton.StateCheck = false;
             }
             else
             {
-                //transparentButton.Checked = true;
+                opaqueButton.StateCheck = false;
+                hiddenButton.StateCheck = false;
+                transparentButton.StateCheck = true;
             }
             allowUpdates = true;
+
+            if (TransparencyChanged != null)
+            {
+                TransparencyChanged(alpha);
+            }
         }
 
-        //void shortcut_Execute(ShortcutEventCommand shortcut)
-        //{
-        //    mainButton_Click(null, null);
-        //}
+        void hiddenButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            setAlpha(0.0f);
+            contextMenu.setVisibleSmooth(false);
+        }
 
-        //void opaqueButton_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (allowUpdates && opaqueButton.Checked && TransparencyChanged != null)
-        //    {
-        //        TransparencyChanged(1.0f);
-        //    }
-        //}
+        void transparentButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            setAlpha(0.7f);
+            contextMenu.setVisibleSmooth(false);
+        }
 
-        //void transparentButton_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (allowUpdates && transparentButton.Checked && TransparencyChanged != null)
-        //    {
-        //        TransparencyChanged(0.7f);
-        //    }
-        //}
-
-        //void hiddenButton_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (allowUpdates && hiddenButton.Checked && TransparencyChanged != null)
-        //    {
-        //        TransparencyChanged(0.0f);
-        //    }
-        //}
+        void opaqueButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            setAlpha(1.0f);
+            contextMenu.setVisibleSmooth(false);
+        }
     }
 }

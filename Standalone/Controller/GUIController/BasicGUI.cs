@@ -46,6 +46,7 @@ namespace Medical.GUI
             //temp
             Button panelPopTest = gui.findWidgetT("PanelPopTest") as Button;
             panelPopTest.MouseButtonClick += new MyGUIEvent(panelPopTest_MouseButtonClick);
+            panelPopTest.Caption = "аттачим";
             Button panelPopTest2 = gui.findWidgetT("PopPanel2") as Button;
             panelPopTest2.MouseButtonClick += new MyGUIEvent(panelPopTest2_MouseButtonClick);
 

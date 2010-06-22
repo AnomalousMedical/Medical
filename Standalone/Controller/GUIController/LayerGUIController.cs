@@ -24,40 +24,40 @@ namespace Medical.GUI
             {
                 //layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
 
-                skinMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Skin") as Button);
+                skinMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Skin") as Button, ribbonLayout.findWidgetT("Layers/SkinMenu") as Button);
                 //skinMenu.createShortcuts("SkinToggle", group, Keys.F1);
                 skinMenu.TransparencyChanged += changeSkinTransparency;
 
-                musclesMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Muscles") as Button);
+                musclesMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Muscles") as Button, ribbonLayout.findWidgetT("Layers/MusclesMenu") as Button);
                 //musclesMenu.createShortcuts("MusclesToggle", group, Keys.F2);
                 musclesMenu.TransparencyChanged += changeMuscleTransparency;
 
-                skullMenu = new LayerGUISkullMenu(ribbonLayout.findWidgetT("Layers/Skull") as Button);
+                skullMenu = new LayerGUISkullMenu(ribbonLayout.findWidgetT("Layers/Skull") as Button, ribbonLayout.findWidgetT("Layers/SkullMenu") as Button);
                 //skullMenu.createShortcuts("SkullToggle", group, Keys.F3);
                 //skullMenu.createEminanceShortcut("EminanceToggle", group, Keys.F4);
                 skullMenu.TransparencyChanged += changeSkullTransparency;
 
-                mandibleMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Mandible") as Button);
+                mandibleMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Mandible") as Button, ribbonLayout.findWidgetT("Layers/MandibleMenu") as Button);
                 //mandibleMenu.createShortcuts("MandibleToggle", group, Keys.F5);
                 mandibleMenu.TransparencyChanged += changeMandibleTransparency;
 
-                discsMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Discs") as Button);
+                discsMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Discs") as Button, ribbonLayout.findWidgetT("Layers/DiscsMenu") as Button);
                 //discsMenu.createShortcuts("DiscsToggle", group, Keys.F6);
                 discsMenu.TransparencyChanged += changeDiscTransparency;
 
-                spineMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Spine") as Button);
+                spineMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Spine") as Button, ribbonLayout.findWidgetT("Layers/SpineMenu") as Button);
                 //spineMenu.createShortcuts("SpineToggle", group, Keys.F7);
                 spineMenu.TransparencyChanged += changeSpineTransparency;
 
-                hyoidMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Hyoid") as Button);
+                hyoidMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Hyoid") as Button, ribbonLayout.findWidgetT("Layers/HyoidMenu") as Button);
                 //hyoidMenu.createShortcuts("HyoidToggle", group, Keys.F8);
                 hyoidMenu.TransparencyChanged += changeHyoidTransparency;
 
-                topTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MaxillaryTeeth") as Button);
+                topTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MaxillaryTeeth") as Button, ribbonLayout.findWidgetT("Layers/MaxillaryTeethMenu") as Button);
                 //topTeethMenu.createShortcuts("TopTeethToggle", group, Keys.F9);
                 topTeethMenu.TransparencyChanged += changeTopToothTransparency;
 
-                bottomTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MandibularTeeth") as Button);
+                bottomTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MandibularTeeth") as Button, ribbonLayout.findWidgetT("Layers/MandibularTeethMenu") as Button);
                 //bottomTeethMenu.createShortcuts("BottomTeethToggle", group, Keys.F10);
                 bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
             }

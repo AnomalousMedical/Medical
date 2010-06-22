@@ -8,22 +8,23 @@ namespace Medical.GUI
 {
     class LayerGUISkullMenu : LayerGUIMenu
     {
-        //KryptonContextMenuCheckBox showEminence;
+        MenuItem separator;
+        MenuItem showEminence;
 
-        public LayerGUISkullMenu(Button mainButton)
-            :base(mainButton)
+        public LayerGUISkullMenu(Button mainButton, Button menuButton)
+            :base(mainButton, menuButton)
         {
-            //KryptonContextMenuSeparator separator = new KryptonContextMenuSeparator();
-            //separator.Horizontal = false;
-            //contextMenu.Items.Add(separator);
+            separator = contextMenu.addItem("", MenuItemType.Separator) as MenuItem;
 
-            //KryptonContextMenuHeading header = new KryptonContextMenuHeading("Cutouts");
-            //contextMenu.Items.Add(header);
+            showEminence = contextMenu.addItem("Show Eminence", MenuItemType.Normal) as MenuItem;
+            showEminence.StateCheck = true;
+            showEminence.MouseButtonClick += new MyGUIEvent(showEminence_MouseButtonClick);
+        }
 
-            //showEminence = new KryptonContextMenuCheckBox("Show Eminence");
-            //showEminence.Checked = true;
-            //showEminence.CheckedChanged += new EventHandler(showEminence_CheckedChanged);
-            //contextMenu.Items.Add(showEminence);
+        void showEminence_MouseButtonClick(Widget source, EventArgs e)
+        {
+            ShowEminance = !ShowEminance;
+            contextMenu.setVisibleSmooth(false);
         }
 
         //public void createEminanceShortcut(String name, ShortcutGroup shortcutGroup, Keys key)
@@ -42,33 +43,37 @@ namespace Medical.GUI
         {
             get
             {
-                return true;//showEminence.Checked;
+                return showEminence.StateCheck;
             }
             set
             {
-                //showEminence.Checked = value;
+                if (showEminence.StateCheck != value)
+                {
+                    showEminence.StateCheck = value;
+                    toggleShowEminance();
+                }
             }
         }
 
-        //private void showEminence_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (showEminence.Checked)
-        //    {
-        //        TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-        //        TransparencyInterface skull = group.getTransparencyObject("Skull");
-        //        TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
-        //        TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-        //        leftEminence.smoothBlend(skull.CurrentAlpha);
-        //        rightEminence.smoothBlend(skull.CurrentAlpha);
-        //    }
-        //    else
-        //    {
-        //        TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-        //        TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
-        //        TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-        //        leftEminence.smoothBlend(0.0f);
-        //        rightEminence.smoothBlend(0.0f);
-        //    }
-        //}
+        private void toggleShowEminance()
+        {
+            if (showEminence.StateCheck)
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull");
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                leftEminence.smoothBlend(skull.CurrentAlpha);
+                rightEminence.smoothBlend(skull.CurrentAlpha);
+            }
+            else
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                leftEminence.smoothBlend(0.0f);
+                rightEminence.smoothBlend(0.0f);
+            }
+        }
     }
 }
