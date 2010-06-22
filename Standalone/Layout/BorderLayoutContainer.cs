@@ -20,6 +20,39 @@ namespace Medical
         private ScreenLayoutContainer bottom;
         private ScreenLayoutContainer center;
 
+        public override void setAlpha(float alpha)
+        {
+            //Top
+            if (top != null)
+            {
+                top.setAlpha(alpha);
+            }
+
+            //Bottom
+            if (bottom != null)
+            {
+                bottom.setAlpha(alpha);
+            }
+
+            //Left
+            if (left != null)
+            {
+                left.setAlpha(alpha);
+            }
+
+            //Center
+            if (center != null)
+            {
+                center.setAlpha(alpha);
+            }
+
+            //Right
+            if (right != null)
+            {
+                right.setAlpha(alpha);
+            }
+        }
+
         public override void layout()
         {
             Size leftDesired = left != null ? left.DesiredSize : new Size();

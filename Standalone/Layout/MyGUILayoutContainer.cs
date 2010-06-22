@@ -16,6 +16,11 @@ namespace Medical
             this.widget = widget;
         }
 
+        public override void setAlpha(float alpha)
+        {
+            widget.Alpha = alpha;
+        }
+
         public override void layout()
         {
             widget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);

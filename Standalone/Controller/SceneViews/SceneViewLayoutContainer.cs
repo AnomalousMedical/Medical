@@ -22,6 +22,11 @@ namespace Medical.Controller
             invalidate();
         }
 
+        public override void setAlpha(float alpha)
+        {
+
+        }
+
         public override void layout()
         {
             if (sceneViewWindow != null)

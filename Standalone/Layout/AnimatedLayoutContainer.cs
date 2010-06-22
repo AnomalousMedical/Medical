@@ -7,22 +7,31 @@ using Engine.Platform;
 
 namespace Medical
 {
+    public delegate void AnimationCompletedDelegate(ScreenLayoutContainer oldChild);
+
     public class AnimatedLayoutContainer : ScreenLayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private ScreenLayoutContainer childContainer;
+        private ScreenLayoutContainer oldChildContainer;
 
         private Vector2 animatedLocation;
-        //private Size animatedSize = new Size();
+        private AnimationCompletedDelegate animationComplete;
         private float animationLength;
         private float currentTime;
         private Size fullSize;
         private bool animating = false;
+        private float alpha = 1.0f;
 
         public AnimatedLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
             mainTimer.addFixedUpdateListener(this);
+        }
+
+        public override void setAlpha(float alpha)
+        {
+
         }
 
         public override void layout()
@@ -33,16 +42,28 @@ namespace Medical
                 childContainer.WorkingSize = new Size(fullSize.Width, WorkingSize.Height);
                 childContainer.layout();
             }
+            if (oldChildContainer != null)
+            {
+                oldChildContainer.Location = animatedLocation;
+                oldChildContainer.WorkingSize = new Size(fullSize.Width, WorkingSize.Height);
+                oldChildContainer.layout();
+            }
         }
 
-        public void slideOutContainerLeft(ScreenLayoutContainer childContainer, float slideDuration)
+        public void changePanel(ScreenLayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
         {
-            this.childContainer = childContainer;
-            childContainer._setParent(this);
             currentTime = 0.0f;
-            animationLength = slideDuration;
-            fullSize = childContainer.DesiredSize;
-            animatedLocation = new Vector2(Location.x - fullSize.Width, Location.y);
+            animationLength = animDuration;
+            this.animationComplete = animationComplete;
+
+            oldChildContainer = this.childContainer;
+            this.childContainer = childContainer;
+            if (childContainer != null)
+            {
+                childContainer._setParent(this);
+                fullSize = childContainer.DesiredSize;
+                animatedLocation = new Vector2(Location.x - fullSize.Width, Location.y);
+            }
             animating = true;
         }
 
@@ -73,8 +94,29 @@ namespace Medical
                 {
                     currentTime = animationLength;
                     animating = false;
+                    if (animationComplete != null)
+                    {
+                        animationComplete(oldChildContainer);
+                    }
+                    oldChildContainer = null;
                 }
-                animatedLocation = new Vector2(Location.x - fullSize.Width * ((animationLength - currentTime) / animationLength), Location.y);
+                alpha = ((animationLength - currentTime) / animationLength);
+                if (oldChildContainer != null && childContainer != null)
+                {
+                    oldChildContainer.setAlpha(1.0f - alpha);
+                    childContainer.setAlpha(alpha);
+                }
+                else
+                {
+                    if (childContainer != null)
+                    {
+                        animatedLocation = new Vector2(Location.x - fullSize.Width * alpha, Location.y);
+                    }
+                    else
+                    {
+                        animatedLocation = new Vector2(Location.x - fullSize.Width * (1.0f - alpha), Location.y);
+                    }
+                }
                 invalidate();
             }
         }

@@ -38,6 +38,8 @@ namespace Medical
             }
         }
 
+        public abstract void setAlpha(float alpha);
+
         public abstract void layout();
 
         public Size WorkingSize { get; set; }

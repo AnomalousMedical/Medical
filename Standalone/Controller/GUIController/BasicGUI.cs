@@ -46,20 +46,40 @@ namespace Medical.GUI
             //temp
             Button panelPopTest = gui.findWidgetT("PanelPopTest") as Button;
             panelPopTest.MouseButtonClick += new MyGUIEvent(panelPopTest_MouseButtonClick);
+
+            //temp
+            Button panelPopTest2 = gui.findWidgetT("PopPanel2") as Button;
+            panelPopTest2.MouseButtonClick += new MyGUIEvent(panelPopTest2_MouseButtonClick);
         }
 
         Layout leftLayout;
+        Layout leftLayout2;
+
+        void panelPopTest2_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (leftLayout2 == null)
+            {
+                leftLayout2 = LayoutManager.Instance.loadLayout("left2.layout");
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, null);
+            }
+            else
+            {
+                animatedContainer.changePanel(null, 0.25f, null);
+                leftLayout2 = null;
+            }
+        }
 
         void panelPopTest_MouseButtonClick(Widget source, EventArgs e)
         {
             if (leftLayout == null)
             {
                 leftLayout = LayoutManager.Instance.loadLayout("left.layout");
-                animatedContainer.slideOutContainerLeft(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f);
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, null);
             }
             else
             {
-
+                animatedContainer.changePanel(null, 0.25f, null);
+                leftLayout = null;
             }
         }
 

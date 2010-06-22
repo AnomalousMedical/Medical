@@ -15,6 +15,11 @@ namespace Medical
             this.sceneView = sceneView;
         }
 
+        public override void setAlpha(float alpha)
+        {
+
+        }
+
         public override void layout()
         {
             Size totalSize = TopmostWorkingSize;

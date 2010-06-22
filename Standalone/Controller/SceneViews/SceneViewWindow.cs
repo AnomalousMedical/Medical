@@ -58,6 +58,11 @@ namespace Medical.Controller
             window.destroySceneView(sceneView);
         }
 
+        public override void setAlpha(float alpha)
+        {
+
+        }
+
         public override void layout()
         {
             Size totalSize = TopmostWorkingSize;
