@@ -46,10 +46,13 @@ namespace Medical.GUI
             //temp
             Button panelPopTest = gui.findWidgetT("PanelPopTest") as Button;
             panelPopTest.MouseButtonClick += new MyGUIEvent(panelPopTest_MouseButtonClick);
-
-            //temp
             Button panelPopTest2 = gui.findWidgetT("PopPanel2") as Button;
             panelPopTest2.MouseButtonClick += new MyGUIEvent(panelPopTest2_MouseButtonClick);
+
+            leftLayout = LayoutManager.Instance.loadLayout("left.layout");
+            leftLayout.getWidget(0).Visible = false;
+            leftLayout2 = LayoutManager.Instance.loadLayout("left2.layout");
+            leftLayout2.getWidget(0).Visible = false;
         }
 
         Layout leftLayout;
@@ -57,27 +60,29 @@ namespace Medical.GUI
 
         void panelPopTest2_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (leftLayout2 == null)
+            if (leftLayout2.getWidget(0).Visible)
             {
-                leftLayout2 = LayoutManager.Instance.loadLayout("left2.layout");
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, animationCompleted);
+                animatedContainer.changePanel(null, 0.25f, animationCompleted);
             }
             else
             {
-                animatedContainer.changePanel(null, 0.25f, animationCompleted);
+                leftLayout2.getWidget(0).Visible = true;
+                LayerManager.Instance.upLayerItem(leftLayout2.getWidget(0));
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, animationCompleted);
             }
         }
 
         void panelPopTest_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (leftLayout == null)
+            if (leftLayout.getWidget(0).Visible)
             {
-                leftLayout = LayoutManager.Instance.loadLayout("left.layout");
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, animationCompleted);
+                animatedContainer.changePanel(null, 0.25f, animationCompleted);
             }
             else
             {
-                animatedContainer.changePanel(null, 0.25f, animationCompleted);
+                leftLayout.getWidget(0).Visible = true;
+                LayerManager.Instance.upLayerItem(leftLayout.getWidget(0));
+                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, animationCompleted);
             }
         }
 
@@ -86,17 +91,7 @@ namespace Medical.GUI
             MyGUILayoutContainer myGUIContainer = oldChild as MyGUILayoutContainer;
             if (myGUIContainer != null)
             {
-                if (leftLayout != null && myGUIContainer.Widget == leftLayout.getWidget(0))
-                {
-                    LayoutManager.Instance.unloadLayout(leftLayout);
-                    leftLayout = null;
-                }
-                else if (leftLayout2 != null && myGUIContainer.Widget == leftLayout2.getWidget(0))
-                {
-                    LayoutManager.Instance.unloadLayout(leftLayout2);
-                    leftLayout2 = null;
-                }
-
+                myGUIContainer.Widget.Visible = false;
             }
         }
 
