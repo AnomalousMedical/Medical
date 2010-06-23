@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
+    <Compile Include="Controller\GUIController\DistortionsGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIMenu.cs" />
     <Compile Include="Controller\GUIController\LayerGUISkullMenu.cs" />

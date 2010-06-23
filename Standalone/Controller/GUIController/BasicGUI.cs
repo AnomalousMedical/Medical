@@ -14,7 +14,8 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private BasicRibbon basicRibbon;
         private StandaloneController standaloneController;
-        AnimatedLayoutContainer animatedContainer;
+        private AnimatedLayoutContainer animatedContainer;
+        private DistortionsGUIController distortionsController;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -43,51 +44,29 @@ namespace Medical.GUI
             animatedContainer = new AnimatedLayoutContainer(standaloneController.MedicalController.MainTimer);
             ScreenLayout.Root.Left = animatedContainer;
 
-            //temp
-            Button panelPopTest = gui.findWidgetT("PanelPopTest") as Button;
-            panelPopTest.MouseButtonClick += new MyGUIEvent(panelPopTest_MouseButtonClick);
-            panelPopTest.Caption = "аттачим";
-            Button panelPopTest2 = gui.findWidgetT("PopPanel2") as Button;
-            panelPopTest2.MouseButtonClick += new MyGUIEvent(panelPopTest2_MouseButtonClick);
-
-            leftLayout = LayoutManager.Instance.loadLayout("left.layout");
-            leftLayout.getWidget(0).Visible = false;
-            leftLayout2 = LayoutManager.Instance.loadLayout("left2.layout");
-            leftLayout2.getWidget(0).Visible = false;
+            distortionsController = new DistortionsGUIController(gui, this);
         }
 
-        Layout leftLayout;
-        Layout leftLayout2;
-
-        void panelPopTest2_MouseButtonClick(Widget source, EventArgs e)
+        public void Dispose()
         {
-            if (leftLayout2.getWidget(0).Visible)
-            {
-                animatedContainer.changePanel(null, 0.25f, animationCompleted);
-            }
-            else
-            {
-                leftLayout2.getWidget(0).Visible = true;
-                LayerManager.Instance.upLayerItem(leftLayout2.getWidget(0));
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout2.getWidget(0)), 0.25f, animationCompleted);
-            }
+            distortionsController.Dispose();
+            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
+            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+            basicRibbon.Dispose();
         }
 
-        void panelPopTest_MouseButtonClick(Widget source, EventArgs e)
+        public void changeLeftPanel(MyGUILayoutContainer leftContainer)
         {
-            if (leftLayout.getWidget(0).Visible)
+            if (leftContainer != null)
             {
-                animatedContainer.changePanel(null, 0.25f, animationCompleted);
+                Widget widget = leftContainer.Widget;
+                widget.Visible = true;
+                LayerManager.Instance.upLayerItem(widget);
             }
-            else
-            {
-                leftLayout.getWidget(0).Visible = true;
-                LayerManager.Instance.upLayerItem(leftLayout.getWidget(0));
-                animatedContainer.changePanel(new MyGUILayoutContainer(leftLayout.getWidget(0)), 0.25f, animationCompleted);
-            }
+            animatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
         }
 
-        public void animationCompleted(ScreenLayoutContainer oldChild)
+        private void animationCompleted(ScreenLayoutContainer oldChild)
         {
             MyGUILayoutContainer myGUIContainer = oldChild as MyGUILayoutContainer;
             if (myGUIContainer != null)
@@ -104,13 +83,6 @@ namespace Medical.GUI
         void standaloneController_SceneLoaded(SimScene scene)
         {
             basicRibbon.sceneLoaded(scene);
-        }
-
-        public void Dispose()
-        {
-            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
-            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
-            basicRibbon.Dispose();
         }
 
         public ScreenLayoutManager ScreenLayout
