@@ -61,6 +61,8 @@ namespace Medical.GUI
             panels.Add(new WizardTestPanel("DistortionPanels/LeftFossaPanel.layout", gui.findWidgetT("TestLeftFossa") as Button, basicGUI));
             panels.Add(new WizardTestPanel("DistortionPanels/RightFossaPanel.layout", gui.findWidgetT("TestRightFossa") as Button, basicGUI));
             panels.Add(new WizardTestPanel("DistortionPanels/DiscSpacePanel.layout", gui.findWidgetT("TestDiscSpace") as Button, basicGUI));
+            panels.Add(new WizardTestPanel("DistortionPanels/DisclaimerPanel.layout", gui.findWidgetT("TestDisclaimer") as Button, basicGUI));
+            panels.Add(new WizardTestPanel("DistortionPanels/NotesPanel.layout", gui.findWidgetT("TestNotes") as Button, basicGUI));
         }
 
         public void Dispose()

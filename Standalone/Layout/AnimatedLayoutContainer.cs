@@ -55,6 +55,18 @@ namespace Medical
 
         public void changePanel(ScreenLayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
         {
+            //If we were animating when a new request comes in clear the old animation first.
+            if (animating)
+            {
+                if (this.childContainer != null)
+                {
+                    this.childContainer.setAlpha(1.0f);
+                    this.childContainer.WorkingSize = newSize;
+                    this.childContainer.layout();
+                }
+                finishAnimation();
+            }
+
             currentTime = 0.0f;
             animationLength = animDuration;
             this.animationComplete = animationComplete;
@@ -112,18 +124,7 @@ namespace Medical
                     currentTime = animationLength;
                     animating = false;
 
-                    //reset the old child
-                    if (oldChildContainer != null)
-                    {
-                        oldChildContainer._setParent(null);
-                        oldChildContainer.setAlpha(1.0f);
-                        oldChildContainer.WorkingSize = oldSize;
-                        oldChildContainer.layout();
-                    }
-                    if (animationComplete != null)
-                    {
-                        animationComplete(oldChildContainer);
-                    }
+                    finishAnimation();
                     oldChildContainer = null;
                 }
                 alpha = currentTime / animationLength;
@@ -133,6 +134,22 @@ namespace Medical
                 }
                 currentSize = new Size(oldSize.Width + sizeDelta.Width * alpha, WorkingSize.Height);
                 invalidate();
+            }
+        }
+
+        private void finishAnimation()
+        {
+            //reset the old child
+            if (oldChildContainer != null)
+            {
+                oldChildContainer._setParent(null);
+                oldChildContainer.setAlpha(1.0f);
+                oldChildContainer.WorkingSize = oldSize;
+                oldChildContainer.layout();
+            }
+            if (animationComplete != null)
+            {
+                animationComplete(oldChildContainer);
             }
         }
     }
