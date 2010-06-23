@@ -10,7 +10,7 @@ namespace Medical.GUI
     {
         private Layout layout;
         private MyGUILayoutContainer layoutContainer;
-        private Widget mainWidget;
+        protected Widget mainWidget;
         private BasicGUI basicGUI;
         private Button button;
 
@@ -52,8 +52,8 @@ namespace Medical.GUI
         public DistortionsGUIController(Gui gui, BasicGUI basicGUI)
         {
             panels.Add(new WizardTestPanel("DistortionPanels/DopplerPanel.layout", gui.findWidgetT("TestDoppler") as Button, basicGUI));
-            panels.Add(new WizardTestPanel("DistortionPanels/BottomTeethRemovalPanel.layout", gui.findWidgetT("TestBottomTeeth") as Button, basicGUI));
-            panels.Add(new WizardTestPanel("DistortionPanels/TopTeethRemovalPanel.layout", gui.findWidgetT("TestTopTeeth") as Button, basicGUI));
+            panels.Add(new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", gui.findWidgetT("TestBottomTeeth") as Button, basicGUI));
+            panels.Add(new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", gui.findWidgetT("TestTopTeeth") as Button, basicGUI));
             panels.Add(new WizardTestPanel("DistortionPanels/LeftCondylarGrowthPanel.layout", gui.findWidgetT("TestLeftCondylarGrowth") as Button, basicGUI));
             panels.Add(new WizardTestPanel("DistortionPanels/LeftCondyleDegenerationPanel.layout", gui.findWidgetT("TestLeftCondylarDegeneration") as Button, basicGUI));
             panels.Add(new WizardTestPanel("DistortionPanels/RightCondylarGrowthPanel.layout", gui.findWidgetT("TestRightCondylarGrowth") as Button, basicGUI));

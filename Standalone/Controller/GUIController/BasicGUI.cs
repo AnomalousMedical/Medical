@@ -31,9 +31,10 @@ namespace Medical.GUI
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
 
-            LanguageManager.Instance.loadUserTags("core_theme_black_blue_tag.xml");
+            LanguageManager.Instance.loadUserTags("core_theme_black_orange_tag.xml");
             gui.load("core_skin.xml");
             gui.load("LayersToolstrip.xml");
+            gui.load("TeethButtons.xml");
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;

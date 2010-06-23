@@ -72,7 +72,7 @@
   <ItemGroup>
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
-    <Compile Include="Controller\GUIController\DistortionsGUIController.cs" />
+    <Compile Include="Controller\StatePicker\DistortionsGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIMenu.cs" />
     <Compile Include="Controller\GUIController\LayerGUISkullMenu.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Controller\SceneViews\SceneViewLayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
+    <Compile Include="Controller\StatePicker\TeethPanels\ToothButton.cs" />
+    <Compile Include="Controller\StatePicker\TeethPanels\ToothPanel.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
