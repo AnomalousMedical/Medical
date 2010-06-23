@@ -23,17 +23,18 @@ namespace Medical.Controller
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
-            window = new SceneViewWindow(new OrbitCameraController(new Vector3(0, -5, 150), new Vector3(0, -5, 0), null, eventManager), "Default");
+            window = new SceneViewWindow(mainTimer, new OrbitCameraController(new Vector3(0, -5, 150), new Vector3(0, -5, 0), null, eventManager), "Default");
         }
 
         public void Dispose()
         {
             destroyCameras();
+            window.Dispose();
         }
 
         public void createCameras(SimScene scene)
         {
-            window.createSceneView(rendererWindow, mainTimer, scene);
+            window.createSceneView(rendererWindow, scene);
             layoutContainer.setWindow(window);
 
             MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;

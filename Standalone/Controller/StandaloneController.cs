@@ -50,7 +50,7 @@ namespace Standalone
         {
             medicalController = new MedicalController();
             medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
-            windowListener = new WindowListener(medicalController);
+            windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
             basicGUI = new BasicGUI(this);
@@ -72,7 +72,8 @@ namespace Standalone
 
         public void shutdown()
         {
-            medicalController.MainTimer.stopLoop();
+            sceneViewController.destroyCameras();
+            medicalController.shutdown();
         }
 
         /// <summary>

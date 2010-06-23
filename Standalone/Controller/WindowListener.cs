@@ -10,16 +10,16 @@ namespace Standalone
 {
     class WindowListener : OSWindowListener
     {
-        private MedicalController medicalController;
+        private StandaloneController controller;
 
-        public WindowListener(MedicalController medicalController)
+        public WindowListener(StandaloneController controller)
         {
-            this.medicalController = medicalController;
+            this.controller = controller;
         }
 
         public void closing(OSWindow window)
         {
-            medicalController.shutdown();
+            controller.shutdown();
         }
 
         public void moved(OSWindow window)

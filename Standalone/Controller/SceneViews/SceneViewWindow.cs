@@ -10,7 +10,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    class SceneViewWindow : ScreenLayoutContainer
+    class SceneViewWindow : ScreenLayoutContainer, IDisposable
     {
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -18,18 +18,23 @@ namespace Medical.Controller
         private RendererWindow window;
         private String name;
 
-        public SceneViewWindow(CameraMover cameraMover, String name)
+        public SceneViewWindow(UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.cameraMover = cameraMover;
             this.name = name;
+            this.mainTimer = mainTimer;
+            mainTimer.addFixedUpdateListener(cameraMover);
         }
 
-        public void createSceneView(RendererWindow window, UpdateTimer mainTimer, SimScene scene)
+        public void Dispose()
+        {
+            mainTimer.removeFixedUpdateListener(cameraMover);
+        }
+
+        public void createSceneView(RendererWindow window, SimScene scene)
         {
             Log.Info("Creating SceneView for {0}.", name);
             this.window = window;
-            this.mainTimer = mainTimer;
-            mainTimer.addFixedUpdateListener(cameraMover);
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
@@ -52,10 +57,13 @@ namespace Medical.Controller
 
         public void destroySceneView()
         {
-            Log.Info("Destroying SceneView for {0}.", name);
-            mainTimer.removeFixedUpdateListener(cameraMover);
-            cameraMover.setCamera(null);
-            window.destroySceneView(sceneView);
+            if (sceneView != null)
+            {
+                Log.Info("Destroying SceneView for {0}.", name);
+                cameraMover.setCamera(null);
+                window.destroySceneView(sceneView);
+                sceneView = null;
+            }
         }
 
         public override void setAlpha(float alpha)
