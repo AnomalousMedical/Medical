@@ -28,6 +28,7 @@ namespace Medical.GUI
         private LayerState layerStatusBeforeShown;
         private String navigationStateBeforeShown;
         private int currentIndex;
+        private int maxIndex = 0;
         private StateWizard currentWizard;
 
         //UI
@@ -75,6 +76,7 @@ namespace Medical.GUI
                     navigationStateBeforeShown = null;
                 }
                 stateBlender.recordUndoState();
+                maxIndex = 0;
                 currentWizard.startWizard();
                 currentWizard.showPanel(0);
                 basicGUI.changeLeftPanel(screenLayout);
@@ -82,6 +84,15 @@ namespace Medical.GUI
             else
             {
                 Log.Error("Could not open wizard {0}. It does not exist.", name);
+            }
+        }
+
+        public void closeWizard()
+        {
+            if (currentWizard != null)
+            {
+                basicGUI.changeLeftPanel(null);
+                currentWizard = null;
             }
         }
 
@@ -112,7 +123,45 @@ namespace Medical.GUI
         /// <param name="panel"></param>
         internal void addMode(StateWizardPanel panel)
         {
-            
+            maxIndex++;
+        }
+
+        /// <summary>
+        /// Next button clicked. Called by the StateWizardPanel.
+        /// </summary>
+        internal void next()
+        {
+            currentWizard.hidePanel(currentIndex);
+            currentIndex++;
+            if (currentIndex >= maxIndex)
+            {
+                currentIndex = maxIndex - 1;
+            }
+            currentWizard.showPanel(currentIndex);
+        }
+
+        /// <summary>
+        /// Previous button clicked. Called by the StateWizardPanel.
+        /// </summary>
+        internal void previous()
+        {
+            currentWizard.hidePanel(currentIndex);
+            currentIndex--;
+            if (currentIndex < 0)
+            {
+                currentIndex = 0;
+            }
+            currentWizard.showPanel(currentIndex);
+        }
+
+        /// <summary>
+        /// Cancel button clicked. Called by the StateWizardPanel.
+        /// </summary>
+        internal void cancel()
+        {
+            stateBlender.blendToUndo();
+            currentWizard.resetPanels();
+            closeWizard();
         }
 
         /// <summary>
@@ -126,35 +175,7 @@ namespace Medical.GUI
             {
                 StateCreated.Invoke(createdState);
             }
-        }
-
-        /// <summary>
-        /// Next button clicked. Called by the StateWizardPanel.
-        /// </summary>
-        internal void next()
-        {
-            currentWizard.hidePanel(currentIndex);
-            currentIndex++;
-            currentWizard.showPanel(currentIndex);
-        }
-
-        /// <summary>
-        /// Previous button clicked. Called by the StateWizardPanel.
-        /// </summary>
-        internal void previous()
-        {
-            currentWizard.hidePanel(currentIndex);
-            currentIndex--;
-            currentWizard.showPanel(currentIndex);
-        }
-
-        /// <summary>
-        /// Cancel button clicked. Called by the StateWizardPanel.
-        /// </summary>
-        internal void cancel()
-        {
-            stateBlender.blendToUndo();
-            currentWizard.resetPanels();
+            closeWizard();
         }
 
         //public void modeChanged(int modeIndex)
