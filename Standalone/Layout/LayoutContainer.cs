@@ -6,16 +6,16 @@ using Engine;
 
 namespace Medical
 {
-    public abstract class ScreenLayoutContainer
+    public abstract class LayoutContainer
     {
-        private ScreenLayoutContainer parent = null;
+        private LayoutContainer parent = null;
 
-        public ScreenLayoutContainer()
+        public LayoutContainer()
         {
             
         }
 
-        public ScreenLayoutContainer ParentContainer
+        public LayoutContainer ParentContainer
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Medical
         /// Internal function to set the parent, should only be called by other ScreenLayoutContainers.
         /// </summary>
         /// <param name="parent"></param>
-        internal void _setParent(ScreenLayoutContainer parent)
+        internal void _setParent(LayoutContainer parent)
         {
             this.parent = parent;
         }

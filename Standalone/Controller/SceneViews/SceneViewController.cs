@@ -52,7 +52,7 @@ namespace Medical.Controller
             window.resetToStartPosition();
         }
 
-        public ScreenLayoutContainer LayoutContainer
+        public LayoutContainer LayoutContainer
         {
             get
             {

@@ -15,7 +15,7 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private BasicRibbon basicRibbon;
         private StandaloneController standaloneController;
-        private AnimatedLayoutContainer animatedContainer;
+        private LeftPopoutLayoutContainer animatedContainer;
         private StateWizardPanelController distortionsController;
         private StateWizardController stateWizardController;
 
@@ -44,7 +44,7 @@ namespace Medical.GUI
             screenLayoutManager.Root.Top = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             screenLayoutManager.Root.SuppressLayout = false;
 
-            animatedContainer = new AnimatedLayoutContainer(standaloneController.MedicalController.MainTimer);
+            animatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             ScreenLayout.Root.Left = animatedContainer;
 
             distortionsController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController);
@@ -52,8 +52,10 @@ namespace Medical.GUI
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
+            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.DisclaimerPanel));
             wizard.addStatePanel(distortionsController.getPanel(WizardPanels.TopTeethRemovalPanel));
             wizard.addStatePanel(distortionsController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.NotesPanel));
             stateWizardController.addWizard(wizard);
 
             Button testWizard = gui.findWidgetT("TestWizard") as Button;
@@ -74,7 +76,7 @@ namespace Medical.GUI
             basicRibbon.Dispose();
         }
 
-        public void changeLeftPanel(ScreenLayoutContainer leftContainer)
+        public void changeLeftPanel(LayoutContainer leftContainer)
         {
             if (leftContainer != null)
             {
@@ -84,7 +86,7 @@ namespace Medical.GUI
             animatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
         }
 
-        private void animationCompleted(ScreenLayoutContainer oldChild)
+        private void animationCompleted(LayoutContainer oldChild)
         {
             if (oldChild != null)
             {

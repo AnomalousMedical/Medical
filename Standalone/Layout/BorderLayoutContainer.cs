@@ -12,13 +12,13 @@ namespace Medical
     /// height of the screen and left, right and center will be sandwiched in
     /// between.
     /// </summary>
-    public class BorderLayoutContainer : ScreenLayoutContainer
+    public class BorderLayoutContainer : LayoutContainer
     {
-        private ScreenLayoutContainer left;
-        private ScreenLayoutContainer right;
-        private ScreenLayoutContainer top;
-        private ScreenLayoutContainer bottom;
-        private ScreenLayoutContainer center;
+        private LayoutContainer left;
+        private LayoutContainer right;
+        private LayoutContainer top;
+        private LayoutContainer bottom;
+        private LayoutContainer center;
 
         private bool visible = true;
 
@@ -135,7 +135,7 @@ namespace Medical
             }
         }
 
-        public ScreenLayoutContainer Left
+        public LayoutContainer Left
         {
             get
             {
@@ -156,7 +156,7 @@ namespace Medical
             }
         }
 
-        public ScreenLayoutContainer Right
+        public LayoutContainer Right
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Medical
             }
         }
 
-        public ScreenLayoutContainer Top
+        public LayoutContainer Top
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Medical
             }
         }
 
-        public ScreenLayoutContainer Bottom
+        public LayoutContainer Bottom
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Medical
             }
         }
 
-        public ScreenLayoutContainer Center
+        public LayoutContainer Center
         {
             get
             {

@@ -8,13 +8,13 @@ using Logging;
 
 namespace Medical
 {
-    public delegate void AnimationCompletedDelegate(ScreenLayoutContainer oldChild);
+    public delegate void AnimationCompletedDelegate(LayoutContainer oldChild);
 
-    public class AnimatedLayoutContainer : ScreenLayoutContainer, UpdateListener
+    public class LeftPopoutLayoutContainer : LayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
-        private ScreenLayoutContainer childContainer;
-        private ScreenLayoutContainer oldChildContainer;
+        private LayoutContainer childContainer;
+        private LayoutContainer oldChildContainer;
 
         private AnimationCompletedDelegate animationComplete;
         private float animationLength;
@@ -26,7 +26,7 @@ namespace Medical
         private Size sizeDelta;
         private Size currentSize;
 
-        public AnimatedLayoutContainer(UpdateTimer mainTimer)
+        public LeftPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
             mainTimer.addFixedUpdateListener(this);
@@ -65,7 +65,7 @@ namespace Medical
             }
         }
 
-        public void changePanel(ScreenLayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
+        public void changePanel(LayoutContainer childContainer, float animDuration, AnimationCompletedDelegate animationComplete)
         {
             //If we were animating when a new request comes in clear the old animation first.
             if (animating)

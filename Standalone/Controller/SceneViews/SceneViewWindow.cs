@@ -10,7 +10,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    public class SceneViewWindow : ScreenLayoutContainer, IDisposable
+    public class SceneViewWindow : LayoutContainer, IDisposable
     {
         private SceneView sceneView;
         private CameraMover cameraMover;

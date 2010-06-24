@@ -103,10 +103,10 @@
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
-    <Compile Include="Layout\AnimatedLayoutContainer.cs" />
+    <Compile Include="Layout\LeftPopoutLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
-    <Compile Include="Layout\ScreenLayoutContainer.cs" />
+    <Compile Include="Layout\LayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

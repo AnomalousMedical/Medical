@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical.Controller
 {
-    class SceneViewLayoutContainer : ScreenLayoutContainer
+    class SceneViewLayoutContainer : LayoutContainer
     {
         private SceneViewWindow sceneViewWindow;
 

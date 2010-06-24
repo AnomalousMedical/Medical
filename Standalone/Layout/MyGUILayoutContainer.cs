@@ -7,7 +7,7 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    public class MyGUILayoutContainer : ScreenLayoutContainer
+    public class MyGUILayoutContainer : LayoutContainer
     {
         private Widget widget;
         private Size desiredSize;
