@@ -26,7 +26,7 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
 
         //Wizard state
-        private LayerState layerStatusBeforeShown;
+        private LayerState layerStatusBeforeShown = new LayerState("WizardStartLayerStatus");
         private String navigationStateBeforeShown;
         private int currentIndex;
         private int maxIndex = 0;
@@ -66,7 +66,6 @@ namespace Medical.GUI
             wizards.TryGetValue(name, out currentWizard);
             if (currentWizard != null)
             {
-                layerStatusBeforeShown = new LayerState("Temp");
                 layerStatusBeforeShown.captureState();
                 currentSceneView = sceneViewController.ActiveWindow;
                 NavigationState currentState = navigationController.getNavigationState(currentSceneView);
@@ -100,6 +99,7 @@ namespace Medical.GUI
                 {
                     navigationController.setNavigationState(navigationStateBeforeShown, currentSceneView);
                 }
+                layerStatusBeforeShown.apply();
             }
         }
 
