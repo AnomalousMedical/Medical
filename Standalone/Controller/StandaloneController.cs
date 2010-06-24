@@ -33,6 +33,7 @@ namespace Standalone
         private NavigationController navigationController;
         private LayerController layerController;
         private MedicalStateController medicalStateController;
+        private TemporaryStateBlender tempStateBlender;
 
         //GUI
         private BasicGUI basicGUI;
@@ -63,6 +64,7 @@ namespace Standalone
             navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
             medicalStateController = new MedicalStateController(medicalController);
+            tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
 
             basicGUI = new BasicGUI(this);
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
@@ -97,6 +99,30 @@ namespace Standalone
             get
             {
                 return medicalController;
+            }
+        }
+
+        public TemporaryStateBlender TemporaryStateBlender
+        {
+            get
+            {
+                return tempStateBlender;
+            }
+        }
+
+        public LayerController LayerController
+        {
+            get
+            {
+                return layerController;
+            }
+        }
+
+        public NavigationController NavigationController
+        {
+            get
+            {
+                return navigationController;
             }
         }
 

@@ -15,7 +15,8 @@ namespace Medical.GUI
         private BasicRibbon basicRibbon;
         private StandaloneController standaloneController;
         private AnimatedLayoutContainer animatedContainer;
-        private DistortionsGUIController distortionsController;
+        private StateWizardPanelController distortionsController;
+        private StateWizardController stateWizardController;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -45,34 +46,48 @@ namespace Medical.GUI
             animatedContainer = new AnimatedLayoutContainer(standaloneController.MedicalController.MainTimer);
             ScreenLayout.Root.Left = animatedContainer;
 
-            distortionsController = new DistortionsGUIController(gui, this);
+            distortionsController = new StateWizardPanelController(gui, this);
+            stateWizardController = new StateWizardController(standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
+
+            //create a temporary wizard
+            StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
+            wizard.addStatePanel(new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", gui.findWidgetT("TestBottomTeeth") as Button, this));
+            wizard.addStatePanel(new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", gui.findWidgetT("TestTopTeeth") as Button, this));
+            stateWizardController.addWizard(wizard);
+
+            Button testWizard = gui.findWidgetT("TestWizard") as Button;
+            testWizard.MouseButtonClick += new MyGUIEvent(testWizard_MouseButtonClick);
+        }
+
+        void testWizard_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stateWizardController.startWizard("TestWizard");
         }
 
         public void Dispose()
         {
+            stateWizardController.Dispose();
             distortionsController.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             basicRibbon.Dispose();
         }
 
-        public void changeLeftPanel(MyGUILayoutContainer leftContainer)
+        public void changeLeftPanel(ScreenLayoutContainer leftContainer)
         {
             if (leftContainer != null)
             {
-                Widget widget = leftContainer.Widget;
-                widget.Visible = true;
-                LayerManager.Instance.upLayerItem(widget);
+                leftContainer.Visible = true;
+                leftContainer.bringToFront();
             }
             animatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
         }
 
         private void animationCompleted(ScreenLayoutContainer oldChild)
         {
-            MyGUILayoutContainer myGUIContainer = oldChild as MyGUILayoutContainer;
-            if (myGUIContainer != null)
+            if (oldChild != null)
             {
-                myGUIContainer.Widget.Visible = false;
+                oldChild.Visible = false;
             }
         }
 

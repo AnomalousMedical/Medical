@@ -46,5 +46,22 @@ namespace Medical
                 invalidate();
             }
         }
+
+        public override void bringToFront()
+        {
+            LayerManager.Instance.upLayerItem(widget);
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return widget.Visible;
+            }
+            set
+            {
+                widget.Visible = value;
+            }
+        }
     }
 }

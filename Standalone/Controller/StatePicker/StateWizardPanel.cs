@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class WizardPanel : IDisposable
+    class StateWizardPanel : IDisposable
     {
         private Layout layout;
         private MyGUILayoutContainer layoutContainer;
@@ -14,7 +14,7 @@ namespace Medical.GUI
         private BasicGUI basicGUI;
         private Button button;
 
-        public WizardPanel(String file, Button button, BasicGUI basicGUI)
+        public StateWizardPanel(String file, Button button, BasicGUI basicGUI)
         {
             this.button = button;
             this.basicGUI = basicGUI;
@@ -44,44 +44,52 @@ namespace Medical.GUI
             }
         }
 
+        public MyGUILayoutContainer LayoutContainer
+        {
+            get
+            {
+                return layoutContainer;
+            }
+        }
+
         internal void applyToState(MedicalState createdState)
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void sceneChanged(MedicalController medicalController, SimulationScene simScene)
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void setToDefault()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void recordOpeningState()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void resetToOpeningState()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void callPanelOpening()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void modifyScene()
         {
-            throw new NotImplementedException();
+            
         }
 
         internal void callPanelClosing()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

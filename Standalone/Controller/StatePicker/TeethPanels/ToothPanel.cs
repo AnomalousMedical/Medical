@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class ToothPanel : WizardPanel
+    class ToothPanel : StateWizardPanel
     {
         private List<ToothButton> toothButtons = new List<ToothButton>();
 

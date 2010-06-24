@@ -20,6 +20,8 @@ namespace Medical
         private ScreenLayoutContainer bottom;
         private ScreenLayoutContainer center;
 
+        private bool visible = true;
+
         public override void setAlpha(float alpha)
         {
             //Top
@@ -220,6 +222,62 @@ namespace Medical
                 center = value;
                 center._setParent(this);
                 invalidate();
+            }
+        }
+
+        public override void bringToFront()
+        {
+            if (center != null)
+            {
+                center.bringToFront();
+            }
+            if (left != null)
+            {
+                left.bringToFront();
+            }
+            if (right != null)
+            {
+                right.bringToFront();
+            }
+            if (top != null)
+            {
+                top.bringToFront();
+            }
+            if (bottom != null)
+            {
+                bottom.bringToFront();
+            }
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+            set
+            {
+                visible = value;
+                if (center != null)
+                {
+                    center.Visible = value;
+                }
+                if (left != null)
+                {
+                    left.Visible = value;
+                }
+                if (right != null)
+                {
+                    right.Visible = value;
+                }
+                if (top != null)
+                {
+                    top.Visible = value;
+                }
+                if (bottom != null)
+                {
+                    bottom.Visible = value;
+                }
             }
         }
     }

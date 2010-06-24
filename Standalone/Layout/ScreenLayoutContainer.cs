@@ -38,6 +38,8 @@ namespace Medical
             }
         }
 
+        public abstract void bringToFront();
+
         public abstract void setAlpha(float alpha);
 
         public abstract void layout();
@@ -47,6 +49,8 @@ namespace Medical
         public Vector2 Location { get; set; }
 
         public abstract Size DesiredSize { get; }
+
+        public abstract bool Visible { get; set; }
 
         public Size TopmostWorkingSize
         {

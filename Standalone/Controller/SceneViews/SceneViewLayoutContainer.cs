@@ -48,5 +48,22 @@ namespace Medical.Controller
                 return new Size();
             }
         }
+
+        public override void bringToFront()
+        {
+            
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return true;
+            }
+            set
+            {
+                
+            }
+        }
     }
 }
