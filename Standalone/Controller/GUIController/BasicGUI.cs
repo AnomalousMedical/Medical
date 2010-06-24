@@ -47,13 +47,13 @@ namespace Medical.GUI
             animatedContainer = new AnimatedLayoutContainer(standaloneController.MedicalController.MainTimer);
             ScreenLayout.Root.Left = animatedContainer;
 
-            distortionsController = new StateWizardPanelController(gui, this);
+            distortionsController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController);
             stateWizardController = new StateWizardController(standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
-            wizard.addStatePanel(new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", gui.findWidgetT("TestBottomTeeth") as Button, this));
-            wizard.addStatePanel(new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", gui.findWidgetT("TestTopTeeth") as Button, this));
+            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.BottomTeethRemovalPanel));
             stateWizardController.addWizard(wizard);
 
             Button testWizard = gui.findWidgetT("TestWizard") as Button;

@@ -11,14 +11,11 @@ namespace Medical.GUI
         private Layout layout;
         private MyGUILayoutContainer layoutContainer;
         protected Widget mainWidget;
-        private BasicGUI basicGUI;
-        private Button button;
+        protected StateWizardPanelController controller;
 
-        public StateWizardPanel(String file, Button button, BasicGUI basicGUI)
+        public StateWizardPanel(String file, StateWizardPanelController controller)
         {
-            this.button = button;
-            this.basicGUI = basicGUI;
-            button.MouseButtonClick += button_MouseButtonClick;
+            this.controller = controller;
             layout = LayoutManager.Instance.loadLayout(file);
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
@@ -27,21 +24,8 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            button.MouseButtonClick -= button_MouseButtonClick;
             LayoutManager.Instance.unloadLayout(layout);
             layout = null;
-        }
-
-        void button_MouseButtonClick(Widget source, EventArgs e)
-        {
-            if (mainWidget.Visible)
-            {
-                basicGUI.changeLeftPanel(null);
-            }
-            else
-            {
-                basicGUI.changeLeftPanel(layoutContainer);
-            }
         }
 
         public MyGUILayoutContainer LayoutContainer

@@ -135,6 +135,14 @@ namespace Standalone
             }
         }
 
+        public MedicalStateController MedicalStateController
+        {
+            get
+            {
+                return medicalStateController;
+            }
+        }
+
         /// <summary>
         /// Change the scene to the specified filename.
         /// </summary>

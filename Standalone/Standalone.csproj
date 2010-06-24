@@ -87,6 +87,7 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
+    <Compile Include="Controller\StatePicker\Panels\NotesPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardButtons.cs" />
     <Compile Include="Controller\StatePicker\StateWizardController.cs" />
     <Compile Include="Controller\StatePicker\StateWizard.cs" />
@@ -99,8 +100,8 @@
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Controller\SceneViews\SceneViewLayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
-    <Compile Include="Controller\StatePicker\TeethPanels\ToothButton.cs" />
-    <Compile Include="Controller\StatePicker\TeethPanels\ToothPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
+    <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />

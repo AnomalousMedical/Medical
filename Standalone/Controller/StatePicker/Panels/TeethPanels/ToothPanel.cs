@@ -10,8 +10,8 @@ namespace Medical.GUI
     {
         private List<ToothButton> toothButtons = new List<ToothButton>();
 
-        public ToothPanel(String toothPanelFile, Button button, BasicGUI basicGUI)
-            :base(toothPanelFile, button, basicGUI)
+        public ToothPanel(String toothPanelFile, StateWizardPanelController controller)
+            : base(toothPanelFile, controller)
         {
             uint numChildren = mainWidget.getChildCount();
             for (uint i = 0; i < numChildren; ++i)
