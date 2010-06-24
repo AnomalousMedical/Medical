@@ -39,17 +39,29 @@ namespace Medical
 
         public override void layout()
         {
-            if (childContainer != null)
+            if (animating)
             {
-                childContainer.Location = Location;
-                childContainer.WorkingSize = currentSize;
-                childContainer.layout();
+                if (childContainer != null)
+                {
+                    childContainer.Location = Location;
+                    childContainer.WorkingSize = currentSize;
+                    childContainer.layout();
+                }
+                if (oldChildContainer != null)
+                {
+                    oldChildContainer.Location = Location;
+                    oldChildContainer.WorkingSize = currentSize;
+                    oldChildContainer.layout();
+                }
             }
-            if (oldChildContainer != null)
+            else
             {
-                oldChildContainer.Location = Location;
-                oldChildContainer.WorkingSize = currentSize;
-                oldChildContainer.layout();
+                if (childContainer != null)
+                {
+                    childContainer.Location = Location;
+                    childContainer.WorkingSize = WorkingSize;
+                    childContainer.layout();
+                }
             }
         }
 
@@ -118,11 +130,12 @@ namespace Medical
         {
             if (animating)
             {
+                bool finishAnimatingThisFrame = false;
                 currentTime += clock.fSeconds;
                 if (currentTime > animationLength)
                 {
                     currentTime = animationLength;
-                    animating = false;
+                    finishAnimatingThisFrame = true;
 
                     finishAnimation();
                     oldChildContainer = null;
@@ -134,6 +147,10 @@ namespace Medical
                 }
                 currentSize = new Size(oldSize.Width + sizeDelta.Width * alpha, WorkingSize.Height);
                 invalidate();
+                if (finishAnimatingThisFrame)
+                {
+                    animating = false;
+                }
             }
         }
 
