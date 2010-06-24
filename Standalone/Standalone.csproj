@@ -72,6 +72,17 @@
   <ItemGroup>
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
+    <Compile Include="Controller\Layers\LayerController.cs" />
+    <Compile Include="Controller\Layers\LayerEntry.cs" />
+    <Compile Include="Controller\Layers\LayerState.cs" />
+    <Compile Include="Controller\Layers\LayerStateSet.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationController.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationMenus.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationState.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\StatePicker\DistortionsGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIMenu.cs" />

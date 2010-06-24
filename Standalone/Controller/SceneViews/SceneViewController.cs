@@ -47,6 +47,11 @@ namespace Medical.Controller
             window.destroySceneView();
         }
 
+        public void resetAllCameraPositions()
+        {
+            window.resetToStartPosition();
+        }
+
         public ScreenLayoutContainer LayoutContainer
         {
             get

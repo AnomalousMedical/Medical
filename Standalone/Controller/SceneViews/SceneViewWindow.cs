@@ -10,7 +10,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    class SceneViewWindow : ScreenLayoutContainer, IDisposable
+    public class SceneViewWindow : ScreenLayoutContainer, IDisposable
     {
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -18,11 +18,16 @@ namespace Medical.Controller
         private RendererWindow window;
         private String name;
 
+        private Vector3 startPosition;
+        private Vector3 startLookAt;
+
         public SceneViewWindow(UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.cameraMover = cameraMover;
             this.name = name;
             this.mainTimer = mainTimer;
+            this.startPosition = cameraMover.Translation;
+            this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
         }
 
@@ -66,6 +71,11 @@ namespace Medical.Controller
             }
         }
 
+        public void setCamera(Vector3 position, Vector3 lookAt)
+        {
+            cameraMover.setNewPosition(position, lookAt);
+        }
+
         public override void setAlpha(float alpha)
         {
 
@@ -100,6 +110,9 @@ namespace Medical.Controller
             }
         }
 
-        
+        public void resetToStartPosition()
+        {
+            cameraMover.immediatlySetPosition(startPosition, startLookAt);
+        }
     }
 }
