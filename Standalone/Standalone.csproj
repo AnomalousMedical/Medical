@@ -76,6 +76,10 @@
     <Compile Include="Controller\Layers\LayerEntry.cs" />
     <Compile Include="Controller\Layers\LayerState.cs" />
     <Compile Include="Controller\Layers\LayerStateSet.cs" />
+    <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
+    <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
+    <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
+    <Compile Include="Controller\MedicalStates\TemporaryStateBlender.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Controller\StatePicker\TeethPanels\ToothButton.cs" />
     <Compile Include="Controller\StatePicker\TeethPanels\ToothPanel.cs" />
+    <Compile Include="Controller\StatePicker\WizardPanel.cs" />
     <Compile Include="Layout\AnimatedLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />

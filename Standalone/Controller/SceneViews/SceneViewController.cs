@@ -59,5 +59,13 @@ namespace Medical.Controller
                 return layoutContainer;
             }
         }
+
+        public SceneViewWindow ActiveWindow
+        {
+            get
+            {
+                return window;
+            }
+        }
     }
 }

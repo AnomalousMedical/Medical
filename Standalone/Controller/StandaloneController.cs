@@ -32,6 +32,7 @@ namespace Standalone
         private WindowListener windowListener;
         private NavigationController navigationController;
         private LayerController layerController;
+        private MedicalStateController medicalStateController;
 
         //GUI
         private BasicGUI basicGUI;
@@ -44,6 +45,7 @@ namespace Standalone
 
         public void Dispose()
         {
+            medicalStateController.Dispose();
             sceneViewController.Dispose();
             basicGUI.Dispose();
             layerController.Dispose();
@@ -60,6 +62,7 @@ namespace Standalone
 
             navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
+            medicalStateController = new MedicalStateController(medicalController);
 
             basicGUI = new BasicGUI(this);
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);

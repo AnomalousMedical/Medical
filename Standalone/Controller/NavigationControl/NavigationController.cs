@@ -125,10 +125,12 @@ namespace Medical.Controller
             }
         }
 
-        //public NavigationState getNavigationState(DrawingWindow window)
-        //{
-        //    return overlays[window].getNavigationState();
-        //}
+        public NavigationState getNavigationState(SceneViewWindow window)
+        {
+            //this is temporary
+            return navigationSet.findClosestNonHiddenState(Vector3.Zero);
+            //return overlays[window].getNavigationState();
+        }
 
         public NavigationState findClosestNonHiddenState(Vector3 position)
         {
