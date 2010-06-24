@@ -109,6 +109,8 @@ namespace Medical.GUI
         /// <param name="panel"></param>
         internal void showPanel(StateWizardPanel panel)
         {
+            stateWizardButtons.setPreviousButtonActive(currentIndex != 0);
+            stateWizardButtons.setNextButtonActive(currentIndex != maxIndex - 1);
             panel.LayoutContainer.Visible = true;
             panel.LayoutContainer.bringToFront();
             screenLayout.Center = panel.LayoutContainer;

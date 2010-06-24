@@ -53,6 +53,16 @@ namespace Medical.GUI
             }
         }
 
+        public void setPreviousButtonActive(bool active)
+        {
+            previousButton.Enabled = active;
+        }
+
+        public void setNextButtonActive(bool active)
+        {
+            nextButton.Enabled = active;
+        }
+
         void finishButton_MouseButtonClick(Widget source, EventArgs e)
         {
             stateWizardController.finish();
