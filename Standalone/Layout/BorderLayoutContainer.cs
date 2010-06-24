@@ -148,7 +148,10 @@ namespace Medical
                     left._setParent(null);
                 }
                 left = value;
-                left._setParent(this);
+                if (left != null)
+                {
+                    left._setParent(this);
+                }
                 invalidate();
             }
         }
@@ -166,7 +169,10 @@ namespace Medical
                     right._setParent(null);
                 }
                 right = value;
-                right._setParent(this);
+                if (right != null)
+                {
+                    right._setParent(this);
+                }
                 invalidate();
             }
         }
@@ -184,7 +190,10 @@ namespace Medical
                     top._setParent(null);
                 }
                 top = value;
-                top._setParent(this);
+                if (top != null)
+                {
+                    top._setParent(this);
+                }
                 invalidate();
             }
         }
@@ -202,7 +211,10 @@ namespace Medical
                     bottom._setParent(null);
                 }
                 bottom = value;
-                bottom._setParent(this);
+                if (bottom != null)
+                {
+                    bottom._setParent(this);
+                }
                 invalidate();
             }
         }
@@ -220,7 +232,10 @@ namespace Medical
                     center._setParent(null);
                 }
                 center = value;
-                center._setParent(this);
+                if (center != null)
+                {
+                    center._setParent(this);
+                }
                 invalidate();
             }
         }

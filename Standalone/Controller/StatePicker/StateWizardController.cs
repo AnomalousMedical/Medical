@@ -76,6 +76,7 @@ namespace Medical.GUI
                 }
                 stateBlender.recordUndoState();
                 currentWizard.startWizard();
+                currentWizard.showPanel(0);
                 basicGUI.changeLeftPanel(screenLayout);
             }
             else
@@ -90,6 +91,8 @@ namespace Medical.GUI
         /// <param name="panel"></param>
         internal void showPanel(StateWizardPanel panel)
         {
+            panel.LayoutContainer.Visible = true;
+            panel.LayoutContainer.bringToFront();
             screenLayout.Center = panel.LayoutContainer;
         }
 
@@ -99,6 +102,7 @@ namespace Medical.GUI
         /// <param name="stateWizardPanel"></param>
         internal void hidePanel(StateWizardPanel stateWizardPanel)
         {
+            stateWizardPanel.LayoutContainer.Visible = false;
             screenLayout.Center = null;
         }
 

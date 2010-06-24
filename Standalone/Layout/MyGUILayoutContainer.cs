@@ -10,10 +10,12 @@ namespace Medical
     public class MyGUILayoutContainer : ScreenLayoutContainer
     {
         private Widget widget;
+        private Size desiredSize;
 
         public MyGUILayoutContainer(Widget widget)
         {
             this.widget = widget;
+            this.desiredSize = new Size(widget.getWidth(), widget.getHeight());
         }
 
         public override void setAlpha(float alpha)
@@ -30,7 +32,7 @@ namespace Medical
         {
             get
             {
-                return new Size(widget.getWidth(), widget.getHeight());
+                return desiredSize;
             }
         }
 
