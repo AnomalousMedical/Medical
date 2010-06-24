@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.Controller;
 using Logging;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -36,9 +37,10 @@ namespace Medical.GUI
         //UI
         private BasicGUI basicGUI;
         private BorderLayoutContainer screenLayout;
+        private CrossFadeLayoutContainer crossFadeContainer;
         private StateWizardButtons stateWizardButtons;
 
-        public StateWizardController(SceneViewController sceneViewController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
+        public StateWizardController(UpdateTimer mainTimer, SceneViewController sceneViewController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
         {
             this.sceneViewController = sceneViewController;
             this.basicGUI = basicGUI;
@@ -49,6 +51,8 @@ namespace Medical.GUI
             screenLayout = new BorderLayoutContainer();
             stateWizardButtons = new StateWizardButtons(this);
             screenLayout.Top = stateWizardButtons.LayoutContainer;
+            crossFadeContainer = new CrossFadeLayoutContainer(mainTimer);
+            screenLayout.Center = crossFadeContainer;
         }
 
         public void Dispose()
@@ -113,7 +117,8 @@ namespace Medical.GUI
             stateWizardButtons.setNextButtonActive(currentIndex != maxIndex - 1);
             panel.LayoutContainer.Visible = true;
             panel.LayoutContainer.bringToFront();
-            screenLayout.Center = panel.LayoutContainer;
+            //screenLayout.Center = panel.LayoutContainer;
+            crossFadeContainer.changePanel(panel.LayoutContainer, 0.25f, animationCompleted);
         }
 
         /// <summary>
@@ -123,7 +128,7 @@ namespace Medical.GUI
         internal void hidePanel(StateWizardPanel stateWizardPanel)
         {
             stateWizardPanel.LayoutContainer.Visible = false;
-            screenLayout.Center = null;
+            //screenLayout.Center = null;
         }
 
         /// <summary>
@@ -196,5 +201,13 @@ namespace Medical.GUI
         //        showPanel();
         //    }
         //}
+
+        private void animationCompleted(LayoutContainer oldChild)
+        {
+            if (oldChild != null)
+            {
+                oldChild.Visible = false;
+            }
+        }
     }
 }

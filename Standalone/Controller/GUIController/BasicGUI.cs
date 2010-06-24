@@ -48,7 +48,7 @@ namespace Medical.GUI
             ScreenLayout.Root.Left = animatedContainer;
 
             distortionsController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController);
-            stateWizardController = new StateWizardController(standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
+            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
