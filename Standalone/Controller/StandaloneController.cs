@@ -66,8 +66,9 @@ namespace Standalone
             medicalStateController = new MedicalStateController(medicalController);
             tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
 
-            basicGUI = new BasicGUI(this);
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
+
+            basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
 
             if (changeScene(MedicalConfig.DefaultScene))
@@ -123,6 +124,14 @@ namespace Standalone
             get
             {
                 return navigationController;
+            }
+        }
+
+        public SceneViewController SceneViewController
+        {
+            get
+            {
+                return sceneViewController;
             }
         }
 

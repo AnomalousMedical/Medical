@@ -128,7 +128,7 @@ namespace Medical.Controller
         public NavigationState getNavigationState(SceneViewWindow window)
         {
             //this is temporary
-            return navigationSet.findClosestNonHiddenState(Vector3.Zero);
+            return navigationSet.findClosestNonHiddenState(window.Translation);
             //return overlays[window].getNavigationState();
         }
 

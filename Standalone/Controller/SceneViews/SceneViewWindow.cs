@@ -131,5 +131,21 @@ namespace Medical.Controller
                 
             }
         }
+
+        public Vector3 Translation
+        {
+            get
+            {
+                return cameraMover.Translation;
+            }
+        }
+
+        public Vector3 LookAt
+        {
+            get
+            {
+                return cameraMover.LookAt;
+            }
+        }
     }
 }

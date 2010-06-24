@@ -23,6 +23,7 @@ namespace Medical.GUI
         private TemporaryStateBlender stateBlender;
         private NavigationController navigationController;
         private LayerController layerController;
+        private SceneViewController sceneViewController;
 
         //Wizard state
         private LayerState layerStatusBeforeShown;
@@ -30,14 +31,16 @@ namespace Medical.GUI
         private int currentIndex;
         private int maxIndex = 0;
         private StateWizard currentWizard;
+        SceneViewWindow currentSceneView;
 
         //UI
         private BasicGUI basicGUI;
         private BorderLayoutContainer screenLayout;
         private StateWizardButtons stateWizardButtons;
 
-        public StateWizardController(TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
+        public StateWizardController(SceneViewController sceneViewController, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
         {
+            this.sceneViewController = sceneViewController;
             this.basicGUI = basicGUI;
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
@@ -65,13 +68,13 @@ namespace Medical.GUI
             {
                 layerStatusBeforeShown = new LayerState("Temp");
                 layerStatusBeforeShown.captureState();
-                //currentDrawingWindow = controllingWindow;
-                //NavigationState currentState = navigationController.getNavigationState(currentDrawingWindow);
-                //if (currentState != null)
-                //{
-                //    navigationStateBeforeShown = currentState.Name;
-                //}
-                //else
+                currentSceneView = sceneViewController.ActiveWindow;
+                NavigationState currentState = navigationController.getNavigationState(currentSceneView);
+                if (currentState != null)
+                {
+                    navigationStateBeforeShown = currentState.Name;
+                }
+                else
                 {
                     navigationStateBeforeShown = null;
                 }
@@ -93,6 +96,10 @@ namespace Medical.GUI
             {
                 basicGUI.changeLeftPanel(null);
                 currentWizard = null;
+                if (navigationStateBeforeShown != null)
+                {
+                    navigationController.setNavigationState(navigationStateBeforeShown, currentSceneView);
+                }
             }
         }
 

@@ -6,6 +6,7 @@ using Standalone;
 using MyGUIPlugin;
 using OgreWrapper;
 using Engine.ObjectManagement;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -47,7 +48,7 @@ namespace Medical.GUI
             ScreenLayout.Root.Left = animatedContainer;
 
             distortionsController = new StateWizardPanelController(gui, this);
-            stateWizardController = new StateWizardController(standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
+            stateWizardController = new StateWizardController(standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
