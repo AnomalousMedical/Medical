@@ -87,6 +87,8 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Doppler\DopplerControl.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Doppler\DopplerPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\NotesPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardButtons.cs" />
     <Compile Include="Controller\StatePicker\StateWizardController.cs" />

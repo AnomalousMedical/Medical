@@ -108,6 +108,14 @@ namespace Medical.GUI
             return panel;
         }
 
+        public void sceneChanged(MedicalController medicalController, SimulationScene simScene)
+        {
+            foreach (StateWizardPanel panel in panelDictionary.Values)
+            {
+                panel.sceneChanged(medicalController, simScene);
+            }
+        }
+
         public SceneViewWindow CurrentSceneView { get; set; }
 
         internal void setNavigationState(string name)
@@ -187,28 +195,22 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDopplerPanel()
         {
-            //DopplerPanel leftDopplerPanel = new DopplerPanel("LeftDoppler", "WizardLeftTMJ", "WizardLeftTMJSuperior", movementSequenceController, this);
-            //leftDopplerPanel.NavigationState = "WizardBothTMJSuperior";
-            //leftDopplerPanel.LayerState = "JointMenuLayers";
-            //leftDopplerPanel.Text = "Left Fossa";
-            //leftDopplerPanel.TextLine1 = "Left TMJ";
-            //leftDopplerPanel.TextLine2 = "Doppler";
-            //leftDopplerPanel.LargeIcon = Resources.LeftDiscSpace;
-            //return leftDopplerPanel;
-            return new StateWizardPanel("DistortionPanels/DopplerPanel.layout", this);
+            DopplerPanel leftDopplerPanel = new DopplerPanel("DistortionPanels/DopplerPanel.layout", this, "LeftDoppler", "WizardLeftTMJ", "WizardLeftTMJSuperior");
+            leftDopplerPanel.NavigationState = "WizardBothTMJSuperior";
+            leftDopplerPanel.LayerState = "JointMenuLayers";
+            leftDopplerPanel.TextLine1 = "Left TMJ";
+            leftDopplerPanel.TextLine2 = "Doppler";
+            return leftDopplerPanel;
         }
 
         private StateWizardPanel createRightDopplerPanel()
         {
-            //DopplerPanel rightDopplerPanel = new DopplerPanel("RightDoppler", "WizardRightTMJ", "WizardRightTMJSuperior", movementSequenceController, this);
-            //rightDopplerPanel.NavigationState = "WizardBothTMJSuperior";
-            //rightDopplerPanel.LayerState = "JointMenuLayers";
-            //rightDopplerPanel.Text = "Right Fossa";
-            //rightDopplerPanel.TextLine1 = "Right TMJ";
-            //rightDopplerPanel.TextLine2 = "Doppler";
-            //rightDopplerPanel.LargeIcon = Resources.RightDiscSpace;
-            //return rightDopplerPanel;
-            return new StateWizardPanel("DistortionPanels/DopplerPanel.layout", this);
+            DopplerPanel rightDopplerPanel = new DopplerPanel("DistortionPanels/DopplerPanel.layout", this, "RightDoppler", "WizardRightTMJ", "WizardRightTMJSuperior");
+            rightDopplerPanel.NavigationState = "WizardBothTMJSuperior";
+            rightDopplerPanel.LayerState = "JointMenuLayers";
+            rightDopplerPanel.TextLine1 = "Right TMJ";
+            rightDopplerPanel.TextLine2 = "Doppler";
+            return rightDopplerPanel;
         }
 
         private StateWizardPanel createProfileDistortionPanel()

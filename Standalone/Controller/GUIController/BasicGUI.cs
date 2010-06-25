@@ -53,6 +53,8 @@ namespace Medical.GUI
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDopplerPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDopplerPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
@@ -104,6 +106,7 @@ namespace Medical.GUI
         void standaloneController_SceneLoaded(SimScene scene)
         {
             basicRibbon.sceneLoaded(scene);
+            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
         }
 
         public ScreenLayoutManager ScreenLayout
