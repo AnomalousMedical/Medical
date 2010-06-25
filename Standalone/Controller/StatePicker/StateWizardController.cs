@@ -83,8 +83,9 @@ namespace Medical.GUI
                 }
                 stateBlender.recordUndoState();
                 maxIndex = 0;
+                currentIndex = 0;
                 currentWizard.startWizard();
-                currentWizard.showPanel(0);
+                currentWizard.showPanel(currentIndex);
                 basicGUI.changeLeftPanel(screenLayout);
             }
             else
