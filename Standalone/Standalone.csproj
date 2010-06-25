@@ -80,6 +80,10 @@
     <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
     <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
     <Compile Include="Controller\MedicalStates\TemporaryStateBlender.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceController.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceGroup.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
+    <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />

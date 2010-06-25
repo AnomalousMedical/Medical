@@ -12,7 +12,7 @@ namespace Medical.GUI
         private Layout layout;
         private MyGUILayoutContainer layoutContainer;
         protected Widget mainWidget;
-        private StateWizardPanelController controller;
+        protected StateWizardPanelController controller;
 
         public StateWizardPanel(String file, StateWizardPanelController controller)
         {

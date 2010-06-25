@@ -34,6 +34,7 @@ namespace Standalone
         private LayerController layerController;
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
+        private MovementSequenceController movementSequenceController;
 
         //GUI
         private BasicGUI basicGUI;
@@ -46,6 +47,7 @@ namespace Standalone
 
         public void Dispose()
         {
+            movementSequenceController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
             basicGUI.Dispose();
@@ -67,6 +69,8 @@ namespace Standalone
             tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
 
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
+
+            movementSequenceController = new MovementSequenceController(medicalController);
 
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
@@ -143,6 +147,14 @@ namespace Standalone
             }
         }
 
+        public MovementSequenceController MovementSequenceController
+        {
+            get
+            {
+                return movementSequenceController;
+            }
+        }
+
         /// <summary>
         /// Change the scene to the specified filename.
         /// </summary>
@@ -152,10 +164,10 @@ namespace Standalone
             sceneViewController.resetAllCameraPositions();
             navigationController.recalculateClosestNonHiddenStates();
             //StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
-            //if (movementSequenceController.Playing)
-            //{
-            //    movementSequenceController.stopPlayback();
-            //}
+            if (movementSequenceController.Playing)
+            {
+                movementSequenceController.stopPlayback();
+            }
             //distortionController.setToDefault();
             if (SceneUnloading != null && medicalController.CurrentScene != null)
             {
@@ -203,6 +215,12 @@ namespace Standalone
 
             cameraFile += "/GraphicsCameras.cam";
             layersFile += "/GraphicsLayersStandaloneTemp.lay";
+            movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Graphics",
+                    sequenceDirectory + "/MRI",
+                    sequenceDirectory + "/RadiographyCT",
+                    sequenceDirectory + "/Clinical",
+                    sequenceDirectory + "/DentitionProfile",
+                    sequenceDirectory + "/Doppler");
 
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             //{

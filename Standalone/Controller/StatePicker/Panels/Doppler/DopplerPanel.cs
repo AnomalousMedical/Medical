@@ -8,6 +8,7 @@ using System.IO;
 using System.Xml;
 using Logging;
 using MyGUIPlugin;
+using Medical.Muscles;
 
 namespace Medical.GUI
 {
@@ -19,10 +20,9 @@ namespace Medical.GUI
         private String presetSubDirectory;
         private static XmlSaver xmlSaver = new XmlSaver();
         private PresetState presetState;
-        //private MovementSequenceController movementSequenceController;
         private String currentSequenceDirectory;
-        //private MovementSequence movementSequence;
-        //private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
+        private MovementSequence movementSequence;
+        private MovementSequence previousSequence; //The sequence loaded when the panel was opened.
         private String lateralJointCameraName;
         private String superiorJointCameraName;
         private bool panelOpen = false;
@@ -32,7 +32,7 @@ namespace Medical.GUI
         private Button superiorJointCameraButton;
         private Button bothJointsCameraButton;
 
-        public DopplerPanel(String panelFile, StateWizardPanelController controller, String presetSubDirectory, String jointCameraName, String superiorJointCameraName/*, MovementSequenceController movementSequenceController*/)
+        public DopplerPanel(String panelFile, StateWizardPanelController controller, String presetSubDirectory, String jointCameraName, String superiorJointCameraName)
             : base(panelFile, controller)
         {
             dopplerControl = new DopplerControl(mainWidget);
@@ -41,7 +41,6 @@ namespace Medical.GUI
             this.superiorJointCameraName = superiorJointCameraName;
             dopplerControl.CurrentStageChanged += new EventHandler(dopplerControl1_CurrentStageChanged);
             this.presetSubDirectory = presetSubDirectory;
-            //this.movementSequenceController = movementSequenceController;
 
             lateralJointCameraButton = mainWidget.findWidget("DopplerPanel/LateralJointCamera") as Button;
             superiorJointCameraButton = mainWidget.findWidget("DopplerPanel/SuperiorJointCamera") as Button;
@@ -58,7 +57,7 @@ namespace Medical.GUI
             if (currentSequenceDirectory != newSequenceDir)
             {
                 currentSequenceDirectory = newSequenceDir;
-                //movementSequence = movementSequenceController.loadSequence(currentSequenceDirectory + "/Doppler.seq");
+                movementSequence = controller.loadSequence(currentSequenceDirectory + "/Doppler.seq");
             }
             String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
             if (currentPresetDirectory != presetDirectory)
@@ -178,12 +177,10 @@ namespace Medical.GUI
             }
         }
 
-        //public override void modifyScene()
-        //{
-        //    previousSequence = movementSequenceController.CurrentSequence;
-        //    movementSequenceController.CurrentSequence = movementSequence;
-        //    movementSequenceController.playCurrentSequence();
-        //}
+        public override void modifyScene()
+        {
+            previousSequence = controller.changeAndPlaySequence(movementSequence);
+        }
 
         protected override void onPanelOpening()
         {
@@ -193,9 +190,8 @@ namespace Medical.GUI
         protected override void onPanelClosing()
         {
             panelOpen = false;
-            //movementSequenceController.stopPlayback();
-            //movementSequenceController.CurrentSequence = previousSequence;
-            //previousSequence = null;
+            controller.resetAndStopMovementSequence(previousSequence);
+            previousSequence = null;
         }
 
         void bothJointsCameraButton_MouseButtonClick(Widget source, EventArgs e)
