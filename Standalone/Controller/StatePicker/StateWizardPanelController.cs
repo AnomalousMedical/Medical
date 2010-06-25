@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
 using Engine.Saving.XMLSaver;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -47,10 +48,12 @@ namespace Medical.GUI
         private XmlSaver saver = new XmlSaver();
         private SceneViewController sceneViewController;
         private NotesPanel notesPanel;
+        private TemporaryStateBlender stateBlender;
         //private MeasurementGrid measurementGrid;
 
-        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController/*, ImageRenderer imageRenderer, MovementSequenceController movementSequenceController, MeasurementGrid measurementGrid*/)
+        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController, TemporaryStateBlender stateBlender/*, ImageRenderer imageRenderer, MovementSequenceController movementSequenceController, MeasurementGrid measurementGrid*/)
         {
+            this.stateBlender = stateBlender;
             this.medicalController = medicalController;
             this.stateController = stateController;
             this.navigationController = navigationController;
@@ -103,6 +106,33 @@ namespace Medical.GUI
                 panelDictionary.Add(key, panel);
             }
             return panel;
+        }
+
+        public SceneViewWindow CurrentSceneView { get; set; }
+
+        internal void setNavigationState(string name)
+        {
+            navigationController.setNavigationState(name, CurrentSceneView);
+        }
+
+        internal void setLayerState(string name)
+        {
+            layerController.applyLayerState(name);
+        }
+
+        internal void showChanges(StateWizardPanel panel, bool immediate)
+        {
+            MedicalState createdState;
+            createdState = stateBlender.createBaselineState();
+            panel.applyToState(createdState);
+            if (immediate)
+            {
+                createdState.blend(1.0f, createdState);
+            }
+            else
+            {
+                stateBlender.startTemporaryBlend(createdState);
+            }
         }
 
         #region Creation Functions
@@ -195,14 +225,22 @@ namespace Medical.GUI
 
         private StateWizardPanel createBottomTeethRemovalPanel()
         {
-            //return new BottomTeethRemovalPanel(this);
-            return new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", this);
+            ToothPanel panel = new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", this);
+            panel.LayerState = "BottomTeethLayers";
+            panel.NavigationState = "WizardBottomTeeth";
+            panel.TextLine1 = "Remove";
+            panel.TextLine2 = "Mandibular Teeth";
+            return panel;
         }
 
         private StateWizardPanel createTopTeethRemovalPanel()
         {
-            //return new TopTeethRemovalPanel(this);
-            return new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", this);
+            ToothPanel panel = new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", this);
+            panel.LayerState = "TopTeethLayers";
+            panel.NavigationState = "WizardTopTeeth";
+            panel.TextLine1 = "Remove";
+            panel.TextLine2 = "Maxillary Teeth";
+            return panel;
         }
 
         private StateWizardPanel createTeethHeightAdaptationPanel()
@@ -269,9 +307,9 @@ namespace Medical.GUI
 
         private StateWizardPanel createDisclaimerPanel()
         {
-            //DisclaimerPanel disclaimerPanel = new DisclaimerPanel(this);
-            //return disclaimerPanel;
-            return new StateWizardPanel("DistortionPanels/DisclaimerPanel.layout", this);
+            StateWizardPanel panel = new StateWizardPanel("DistortionPanels/DisclaimerPanel.layout", this);
+            panel.TextLine1 = "Disclaimer";
+            return panel;
         }
 
         private StateWizardPanel createTeethAdaptationPanel()

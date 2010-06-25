@@ -11,7 +11,9 @@ namespace Medical.GUI
         public NotesPanel(String notesPanelFile, StateWizardPanelController controller)
             :base(notesPanelFile, controller)
         {
-            
+            this.LayerState = "MandibleSizeLayers";
+            this.NavigationState = "WizardMidlineAnterior";
+            this.TextLine1 = "Notes";
         }
     }
 }

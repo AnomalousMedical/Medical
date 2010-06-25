@@ -11,6 +11,8 @@ namespace Medical.GUI
         private Button button;
         private String toothName;
 
+        public event EventHandler ExtractedStatusChanged;
+
         public ToothButton(Button button)
         {
             this.button = button;
@@ -22,7 +24,30 @@ namespace Medical.GUI
         {
             bool extracted = !button.StateCheck;
             button.StateCheck = extracted;
-            TeethController.getTooth(toothName).Extracted = extracted;
+            if (ExtractedStatusChanged != null)
+            {
+                ExtractedStatusChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public bool Extracted
+        {
+            get
+            {
+                return button.StateCheck;
+            }
+            set
+            {
+                button.StateCheck = value;
+            }
+        }
+
+        public String ToothName
+        {
+            get
+            {
+                return toothName;
+            }
         }
     }
 }

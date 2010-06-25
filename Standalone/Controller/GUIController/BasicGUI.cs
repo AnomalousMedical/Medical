@@ -16,7 +16,7 @@ namespace Medical.GUI
         private BasicRibbon basicRibbon;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer animatedContainer;
-        private StateWizardPanelController distortionsController;
+        private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
 
         public BasicGUI(StandaloneController standaloneController)
@@ -47,15 +47,15 @@ namespace Medical.GUI
             animatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             ScreenLayout.Root.Left = animatedContainer;
 
-            distortionsController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController);
-            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
+            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender);
+            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, this);
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
-            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.DisclaimerPanel));
-            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.TopTeethRemovalPanel));
-            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.BottomTeethRemovalPanel));
-            wizard.addStatePanel(distortionsController.getPanel(WizardPanels.NotesPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
             stateWizardController.addWizard(wizard);
 
             Button testWizard = gui.findWidgetT("TestWizard") as Button;
@@ -64,13 +64,15 @@ namespace Medical.GUI
 
         void testWizard_MouseButtonClick(Widget source, EventArgs e)
         {
+            stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
+            stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard("TestWizard");
         }
 
         public void Dispose()
         {
             stateWizardController.Dispose();
-            distortionsController.Dispose();
+            stateWizardPanelController.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             basicRibbon.Dispose();
