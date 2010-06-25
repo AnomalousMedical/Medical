@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using OgreWrapper;
 using Engine.ObjectManagement;
 using Medical.Controller;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -60,7 +61,9 @@ namespace Medical.GUI
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
             stateWizardController.addWizard(wizard);
 
-            Button testWizard = gui.findWidgetT("TestWizard") as Button;
+            Widget distortionTab = gui.findWidgetT("DistortionsTab");
+            Button testWizard = distortionTab.createWidgetT("Button", "RibbonButton", 3, 6, 78, 64, Align.Default, "TestButton") as Button;
+            testWizard.Caption = "Test Wizard";
             testWizard.MouseButtonClick += new MyGUIEvent(testWizard_MouseButtonClick);
         }
 
