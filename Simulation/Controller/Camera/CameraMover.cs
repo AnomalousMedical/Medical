@@ -54,5 +54,11 @@ namespace Medical
         {
             get;
         }
+
+        public abstract CameraMotionValidator MotionValidator
+        {
+            get;
+            set;
+        }
     }
 }

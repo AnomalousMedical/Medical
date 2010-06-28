@@ -386,7 +386,7 @@ namespace Medical
             }
         }
 
-        public CameraMotionValidator MotionValidator
+        public override CameraMotionValidator MotionValidator
         {
             get
             {
