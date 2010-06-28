@@ -215,9 +215,12 @@ namespace Medical.GUI
         /// <param name="modeIndex"></param>
         private void wizardIconPanel_ModeChanged(int modeIndex)
         {
-            currentWizard.hidePanel(currentIndex);
-            currentIndex = modeIndex;
-            currentWizard.showPanel(currentIndex);
+            if (currentIndex != modeIndex)
+            {
+                currentWizard.hidePanel(currentIndex);
+                currentIndex = modeIndex;
+                currentWizard.showPanel(currentIndex);
+            }
         }
     }
 }
