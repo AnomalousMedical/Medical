@@ -99,6 +99,7 @@ namespace Medical.GUI
         {
             if (currentWizard != null)
             {
+                currentWizard.hidePanel(currentIndex);
                 wizardIconPanel.clearPanels();
                 crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
                 basicGUI.changeLeftPanel(null);
