@@ -41,6 +41,18 @@ namespace Medical.GUI
                     button.Visible = value;
                 }
             }
+
+            public bool StateCheck
+            {
+                get
+                {
+                    return button.StateCheck;
+                }
+                set
+                {
+                    button.StateCheck = value;
+                }
+            }
         }
 
         private Layout layout;
@@ -48,6 +60,8 @@ namespace Medical.GUI
         private MyGUILayoutContainer layoutContainer;
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(0.0f, 10.0f));
         private Dictionary<StateWizardPanel, WizardButtonContainer> panels = new Dictionary<StateWizardPanel, WizardButtonContainer>();
+        private WizardButtonContainer selectedButton;
+        private List<WizardButtonContainer> currentButtons = new List<WizardButtonContainer>();
 
         public WizardIconPanel()
         {
@@ -90,15 +104,19 @@ namespace Medical.GUI
             container.ModeIndex = modeIndex;
             container.Visible = true;
             flowLayout.addChild(container.Layout);
+            currentButtons.Add(container);
         }
 
         public void clearPanels()
         {
-            flowLayout.SuppressLayout = true;
-            flowLayout.Visible = false;
             flowLayout.clearChildren();
-            flowLayout.Visible = true;
-            flowLayout.SuppressLayout = false;
+            foreach (WizardButtonContainer wizardButton in currentButtons)
+            {
+                wizardButton.Visible = false;
+                wizardButton.StateCheck = false;
+            }
+            currentButtons.Clear();
+            selectedButton = null;
         }
 
         public bool SuppressLayout
@@ -116,6 +134,16 @@ namespace Medical.GUI
         public void invalidate()
         {
             flowLayout.invalidate();
+        }
+
+        public void indexChanged(int index)
+        {
+            if (selectedButton != null)
+            {
+                selectedButton.StateCheck = false;
+            }
+            selectedButton = currentButtons[index];
+            selectedButton.StateCheck = true;
         }
 
         void iconClicked(Widget source, EventArgs e)

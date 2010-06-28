@@ -127,6 +127,7 @@ namespace Medical.GUI
             panel.LayoutContainer.bringToFront();
             //screenLayout.Center = panel.LayoutContainer;
             crossFadeContainer.changePanel(panel.LayoutContainer, 0.25f, animationCompleted);
+            wizardIconPanel.indexChanged(currentIndex);
         }
 
         /// <summary>
