@@ -15,8 +15,10 @@ namespace Medical.GUI
     {
         private ScreenLayoutManager screenLayoutManager;
         private BasicRibbon basicRibbon;
+        private MyGUILayoutContainer basicRibbonContainer;
         private StandaloneController standaloneController;
-        private LeftPopoutLayoutContainer animatedContainer;
+        private LeftPopoutLayoutContainer leftAnimatedContainer;
+        private TopPopoutLayoutContainer topAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
 
@@ -42,11 +44,14 @@ namespace Medical.GUI
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
             basicRibbon = new BasicRibbon(gui, standaloneController);
-            screenLayoutManager.Root.Top = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
-            screenLayoutManager.Root.SuppressLayout = false;
+            basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
+            topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            screenLayoutManager.Root.Top = topAnimatedContainer;
+            topAnimatedContainer.setInitialPanel(basicRibbonContainer);
 
-            animatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            ScreenLayout.Root.Left = animatedContainer;
+            leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            ScreenLayout.Root.Left = leftAnimatedContainer;
+            screenLayoutManager.Root.SuppressLayout = false;
 
             stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController);
             stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, this);
@@ -83,6 +88,21 @@ namespace Medical.GUI
             basicRibbon.Dispose();
         }
 
+        public void changeTopPanel(LayoutContainer topContainer)
+        {
+            if (topContainer != null)
+            {
+                topContainer.Visible = true;
+                topContainer.bringToFront();
+            }
+            topAnimatedContainer.changePanel(topContainer, 0.25f, animationCompleted);
+        }
+
+        public void resetTopPanel()
+        {
+            changeTopPanel(basicRibbonContainer);
+        }
+
         public void changeLeftPanel(LayoutContainer leftContainer)
         {
             if (leftContainer != null)
@@ -90,7 +110,7 @@ namespace Medical.GUI
                 leftContainer.Visible = true;
                 leftContainer.bringToFront();
             }
-            animatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
+            leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
         }
 
         private void animationCompleted(LayoutContainer oldChild)

@@ -36,6 +36,7 @@ namespace Medical.GUI
         private BorderLayoutContainer screenLayout;
         private CrossFadeLayoutContainer crossFadeContainer;
         private StateWizardButtons stateWizardButtons;
+        private WizardIconPanel wizardIconPanel;
 
         public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, BasicGUI basicGUI)
         {
@@ -48,6 +49,8 @@ namespace Medical.GUI
             screenLayout.Top = stateWizardButtons.LayoutContainer;
             crossFadeContainer = new CrossFadeLayoutContainer(mainTimer);
             screenLayout.Center = crossFadeContainer;
+            wizardIconPanel = new WizardIconPanel();
+            wizardIconPanel.ModeChanged += new WizardIconPanel.ModeChangedDelegate(wizardIconPanel_ModeChanged);
         }
 
         public void Dispose()
@@ -78,9 +81,13 @@ namespace Medical.GUI
                 stateBlender.recordUndoState();
                 maxIndex = 0;
                 currentIndex = 0;
+                wizardIconPanel.SuppressLayout = true;
                 currentWizard.startWizard();
+                wizardIconPanel.SuppressLayout = false;
+                wizardIconPanel.invalidate();
                 currentWizard.showPanel(currentIndex);
                 basicGUI.changeLeftPanel(screenLayout);
+                basicGUI.changeTopPanel(wizardIconPanel.LayoutContainer);
             }
             else
             {
@@ -92,8 +99,10 @@ namespace Medical.GUI
         {
             if (currentWizard != null)
             {
+                wizardIconPanel.clearPanels();
                 crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
                 basicGUI.changeLeftPanel(null);
+                basicGUI.resetTopPanel();
                 currentWizard = null;
                 if (navigationStateBeforeShown != null)
                 {
@@ -135,6 +144,7 @@ namespace Medical.GUI
         /// <param name="panel"></param>
         internal void addMode(StateWizardPanel panel)
         {
+            wizardIconPanel.addPanel(panel, maxIndex);
             maxIndex++;
         }
 
@@ -190,22 +200,23 @@ namespace Medical.GUI
             closeWizard();
         }
 
-        //public void modeChanged(int modeIndex)
-        //{
-        //    if (updatePanel)
-        //    {
-        //        hidePanel();
-        //        //currentIndex = uiHost.SelectedIndex;
-        //        showPanel();
-        //    }
-        //}
-
         private void animationCompleted(LayoutContainer oldChild)
         {
             if (oldChild != null)
             {
                 oldChild.Visible = false;
             }
+        }
+
+        /// <summary>
+        /// Callback from the WizardIconPanel for direct index changes.
+        /// </summary>
+        /// <param name="modeIndex"></param>
+        private void wizardIconPanel_ModeChanged(int modeIndex)
+        {
+            currentWizard.hidePanel(currentIndex);
+            currentIndex = modeIndex;
+            currentWizard.showPanel(currentIndex);
         }
     }
 }

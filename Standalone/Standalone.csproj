@@ -109,12 +109,15 @@
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
+    <Compile Include="Controller\StatePicker\WizardIconPanel.cs" />
     <Compile Include="Layout\CrossFadeLayoutContainer.cs" />
+    <Compile Include="Layout\FlowLayoutContainer.cs" />
     <Compile Include="Layout\LeftPopoutLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Layout\LayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
+    <Compile Include="Layout\TopPopoutLayoutContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
