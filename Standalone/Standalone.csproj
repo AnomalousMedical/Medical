@@ -93,6 +93,7 @@
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\StatePicker\Panels\Doppler\DopplerControl.cs" />
     <Compile Include="Controller\StatePicker\Panels\Doppler\DopplerPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Fossa\FossaPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Mandible\BoneManipulatorPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Mandible\BoneManipulatorSlider.cs" />
     <Compile Include="Controller\StatePicker\Panels\Mandible\LeftCondylarDegenerationPanel.cs" />

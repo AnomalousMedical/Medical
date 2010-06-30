@@ -216,30 +216,26 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftFossaPanel()
         {
-            //FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", this);
+            FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "DistortionPanels/LeftFossaPanel.layout", this);
             //leftFossaPanel.NormalImage = Resources.LeftFossaNormal;
             //leftFossaPanel.DistortedImage = Resources.LeftFossaFlat;
-            //leftFossaPanel.NavigationState = "WizardLeftTMJ";
-            //leftFossaPanel.LayerState = "FossaLayers";
-            //leftFossaPanel.Text = "Left Fossa";
-            //leftFossaPanel.TextLine1 = "Left Fossa";
+            leftFossaPanel.NavigationState = "WizardLeftTMJ";
+            leftFossaPanel.LayerState = "FossaLayers";
+            leftFossaPanel.TextLine1 = "Left Fossa";
             //leftFossaPanel.LargeIcon = Resources.LeftFossaFlatness;
-            //return leftFossaPanel;
-            return new StateWizardPanel("DistortionPanels/LeftFossaPanel.layout", this);
+            return leftFossaPanel;
         }
 
         private StateWizardPanel createRightFossaPanel()
         {
-            //FossaPanel rightFossaPanel = new FossaPanel("RightFossa", this);
+            FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "DistortionPanels/RightFossaPanel.layout", this);
             //rightFossaPanel.NormalImage = Resources.RightFossaNormal;
             //rightFossaPanel.DistortedImage = Resources.RightFossaFlat;
-            //rightFossaPanel.NavigationState = "WizardRightTMJ";
-            //rightFossaPanel.LayerState = "FossaLayers";
-            //rightFossaPanel.Text = "Right Fossa";
-            //rightFossaPanel.TextLine1 = "Right Fossa";
+            rightFossaPanel.NavigationState = "WizardRightTMJ";
+            rightFossaPanel.LayerState = "FossaLayers";
+            rightFossaPanel.TextLine1 = "Right Fossa";
             //rightFossaPanel.LargeIcon = Resources.RightFossaFlatness;
-            //return rightFossaPanel;
-            return new StateWizardPanel("DistortionPanels/RightFossaPanel.layout", this);
+            return rightFossaPanel;
         }
 
         private StateWizardPanel createLeftDopplerPanel()
