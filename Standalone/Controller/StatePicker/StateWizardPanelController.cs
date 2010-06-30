@@ -181,7 +181,12 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftCondylarDegeneration()
         {
-            return new StateWizardPanel("DistortionPanels/LeftCondyleDegenerationPanel.layout", this);
+            LeftCondylarDegenerationPanel leftCondyle = new LeftCondylarDegenerationPanel("DistortionPanels/LeftCondyleDegenerationPanel.layout", this);
+            leftCondyle.LayerState = "MandibleSliderSizeLayers";
+            leftCondyle.NavigationState = "WizardDegenerationLeftCameraAngle";
+            leftCondyle.TextLine1 = "Left Condyle";
+            leftCondyle.TextLine2 = "Degeneration";
+            return leftCondyle;
         }
 
         private StateWizardPanel createRightCondylarGrowth()
