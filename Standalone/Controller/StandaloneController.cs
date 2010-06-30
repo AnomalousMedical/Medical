@@ -35,6 +35,7 @@ namespace Standalone
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
+        private SimObjectMover teethMover;
 
         //GUI
         private BasicGUI basicGUI;
@@ -71,6 +72,13 @@ namespace Standalone
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
 
             movementSequenceController = new MovementSequenceController(medicalController);
+
+            //Teeth mover
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            this.SceneLoaded += teethMover.sceneLoaded;
+            this.SceneUnloading += teethMover.sceneUnloading;
+            TeethController.TeethMover = teethMover;
+            medicalController.FixedLoopUpdate += teethMover.update;
 
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;

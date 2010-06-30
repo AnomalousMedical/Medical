@@ -119,6 +119,14 @@ namespace Medical.GUI
 
         public SceneViewWindow CurrentSceneView { get; set; }
 
+        public TemporaryStateBlender StateBlender
+        {
+            get
+            {
+                return stateBlender;
+            }
+        }
+
         internal void setNavigationState(string name)
         {
             navigationController.setNavigationState(name, CurrentSceneView);
@@ -361,8 +369,12 @@ namespace Medical.GUI
 
         private StateWizardPanel createTeethAdaptationPanel()
         {
-            //return new TeethAdaptationPanel(this);
-            throw new NotImplementedException();
+            TeethAdaptationPanel teethPanel = new TeethAdaptationPanel("DistortionPanels/TeethAdaptationPanel.layout", this);
+            teethPanel.LayerState = "TeethLayers";
+            teethPanel.NavigationState = "WizardTeethMidlineAnterior";
+            teethPanel.TextLine1 = "Teeth";
+            teethPanel.TextLine2 = "Adaptation";
+            return teethPanel;
         }
 
         #endregion

@@ -48,6 +48,7 @@ namespace Medical
             if (subScene != null)
             {
                 drawingSurface = pluginManager.RendererPlugin.createDebugDrawingSurface(name + "DebugSurface", subScene);
+                drawingSurface.setDepthTesting(false);
             }
         }
 
