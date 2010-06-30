@@ -90,6 +90,11 @@ namespace Medical.GUI
 
         void testWizard_MouseButtonClick(Widget source, EventArgs e)
         {
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                standaloneController.MedicalStateController.createNormalStateFromScene();
+            }
+
             stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard("TestWizard");
