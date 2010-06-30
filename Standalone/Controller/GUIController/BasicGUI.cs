@@ -21,6 +21,7 @@ namespace Medical.GUI
         private TopPopoutLayoutContainer topAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
+        private StateList stateList;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -55,6 +56,9 @@ namespace Medical.GUI
 
             stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController);
             stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, this);
+            stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
+
+            stateList = new StateList("StateList.layout", standaloneController.MedicalStateController);
 
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
@@ -77,6 +81,11 @@ namespace Medical.GUI
             Button testWizard = distortionTab.createWidgetT("Button", "RibbonButton", 3, 6, 78, 64, Align.Default, "TestButton") as Button;
             testWizard.Caption = "Test Wizard";
             testWizard.MouseButtonClick += new MyGUIEvent(testWizard_MouseButtonClick);
+        }
+
+        void stateWizardController_StateCreated(MedicalState state)
+        {
+            standaloneController.MedicalStateController.addState(state);
         }
 
         void testWizard_MouseButtonClick(Widget source, EventArgs e)
@@ -114,6 +123,12 @@ namespace Medical.GUI
         {
             if (leftContainer != null)
             {
+                leftContainer.Visible = true;
+                leftContainer.bringToFront();
+            }
+            else if(standaloneController.MedicalStateController.getNumStates() > 0)
+            {
+                leftContainer = stateList.LayoutContainer;
                 leftContainer.Visible = true;
                 leftContainer.bringToFront();
             }
