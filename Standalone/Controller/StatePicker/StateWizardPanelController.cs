@@ -176,7 +176,12 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftCondylarGrowth()
         {
-            return new StateWizardPanel("DistortionPanels/LeftCondylarGrowthPanel.layout",this);
+            LeftCondylarGrowthPanel leftCondyle = new LeftCondylarGrowthPanel("DistortionPanels/LeftCondylarGrowthPanel.layout", this);
+            leftCondyle.LayerState = "MandibleSliderSizeLayers";
+            leftCondyle.NavigationState = "WizardGrowthLeftCameraAngle";
+            leftCondyle.TextLine1 = "Left Condyle";
+            leftCondyle.TextLine2 = "Growth";
+            return leftCondyle;
         }
 
         private StateWizardPanel createLeftCondylarDegeneration()
@@ -191,12 +196,22 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightCondylarGrowth()
         {
-            return new StateWizardPanel("DistortionPanels/RightCondylarGrowthPanel.layout", this);
+            RightCondylarGrowthPanel rightCondyle = new RightCondylarGrowthPanel("DistortionPanels/RightCondylarGrowthPanel.layout", this);
+            rightCondyle.LayerState = "MandibleSliderSizeLayers";
+            rightCondyle.NavigationState = "WizardGrowthRightCameraAngle";
+            rightCondyle.TextLine1 = "Right Condyle";
+            rightCondyle.TextLine2 = "Growth";
+            return rightCondyle;
         }
 
         private StateWizardPanel createRightCondylarDegeneration()
         {
-            return new StateWizardPanel("DistortionPanels/RightCondyleDegenerationPanel.layout", this);
+            RightCondylarDegenerationPanel rightCondyle = new RightCondylarDegenerationPanel("DistortionPanels/RightCondyleDegenerationPanel.layout", this);
+            rightCondyle.LayerState = "MandibleSliderSizeLayers";
+            rightCondyle.NavigationState = "WizardDegenerationRightCameraAngle";
+            rightCondyle.TextLine1 = "Right Condyle";
+            rightCondyle.TextLine2 = "Degeneration";
+            return rightCondyle;
         }
 
         private StateWizardPanel createLeftFossaPanel()

@@ -60,6 +60,9 @@ namespace Medical.GUI
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarGrowth));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDopplerPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDopplerPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));

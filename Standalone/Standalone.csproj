@@ -96,6 +96,9 @@
     <Compile Include="Controller\StatePicker\Panels\Mandible\BoneManipulatorPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Mandible\BoneManipulatorSlider.cs" />
     <Compile Include="Controller\StatePicker\Panels\Mandible\LeftCondylarDegenerationPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Mandible\LeftCondylarGrowthPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Mandible\RightCondylarDegenerationPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Mandible\RightCondylarGrowthPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\NotesPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardButtons.cs" />
     <Compile Include="Controller\StatePicker\StateWizardController.cs" />
