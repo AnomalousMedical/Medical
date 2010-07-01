@@ -118,6 +118,11 @@ namespace Medical
                     }
                     this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
                     Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
+                    //If the rotation is not a valid number just use the target rotation
+                    if (!rotation.isNumber())
+                    {
+                        rotation = targetRotation;
+                    }
                     Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
                     float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
