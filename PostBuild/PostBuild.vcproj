@@ -132,6 +132,29 @@
 				CommandLine="copy &quot;$(ENGINE_HOME)\Release\cg.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\cg.dll&quot;"
 			/>
 		</Configuration>
+		<Configuration
+			Name="MacRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="10"
+			CharacterSet="1"
+			ManagedExtensions="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\*.dll&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\Standalone.exe&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
