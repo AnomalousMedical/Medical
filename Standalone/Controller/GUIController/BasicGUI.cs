@@ -63,6 +63,8 @@ namespace Medical.GUI
             //create a temporary wizard
             StateWizard wizard = new StateWizard("TestWizard", stateWizardController);
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
+            wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TeethAdaptationPanel));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftFossa));
             wizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightFossa));

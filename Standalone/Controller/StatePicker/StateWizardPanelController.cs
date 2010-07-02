@@ -312,28 +312,24 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDiscSpacePanel()
         {
-            //DiscSpacePanel leftDiscPanel = new DiscSpacePanel("FossaLayers", "LeftDiscSpace", this);
-            //leftDiscPanel.NavigationState = "WizardLeftTMJ";
-            //leftDiscPanel.LayerState = "FossaLayers";
-            //leftDiscPanel.Text = "Left Disc Space";
-            //leftDiscPanel.TextLine1 = "Left Disc";
-            //leftDiscPanel.TextLine2 = "Space";
+            DiscSpacePanel leftDiscPanel = new DiscSpacePanel("FossaLayers", "LeftDiscSpace", "DistortionPanels/DiscSpacePanel.layout", this);
+            leftDiscPanel.NavigationState = "WizardLeftTMJ";
+            leftDiscPanel.LayerState = "FossaLayers";
+            leftDiscPanel.TextLine1 = "Left Disc";
+            leftDiscPanel.TextLine2 = "Space";
             //leftDiscPanel.LargeIcon = Resources.LeftDiscSpace;
-            //return leftDiscPanel;
-            return new StateWizardPanel("DistortionPanels/DiscSpacePanel.layout", this);
+            return leftDiscPanel;
         }
 
         private StateWizardPanel createRightDiscSpacePanel()
         {
-            //DiscSpacePanel rightDiscPanel = new DiscSpacePanel("FossaLayers", "RightDiscSpace", this);
-            //rightDiscPanel.NavigationState = "WizardRightTMJ";
-            //rightDiscPanel.LayerState = "FossaLayers";
-            //rightDiscPanel.Text = "Right Disc Space";
-            //rightDiscPanel.TextLine1 = "Right Disc";
-            //rightDiscPanel.TextLine2 = "Space";
+            DiscSpacePanel rightDiscPanel = new DiscSpacePanel("FossaLayers", "RightDiscSpace", "DistortionPanels/DiscSpacePanel.layout", this);
+            rightDiscPanel.NavigationState = "WizardRightTMJ";
+            rightDiscPanel.LayerState = "FossaLayers";
+            rightDiscPanel.TextLine1 = "Right Disc";
+            rightDiscPanel.TextLine2 = "Space";
             //rightDiscPanel.LargeIcon = Resources.RightDiscSpace;
-            //return rightDiscPanel;
-            return new StateWizardPanel("DistortionPanels/DiscSpacePanel.layout", this);
+            return rightDiscPanel;
         }
 
         private StateWizardPanel createLeftDiscClockFacePanel()
