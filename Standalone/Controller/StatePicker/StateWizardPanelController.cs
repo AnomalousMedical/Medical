@@ -113,6 +113,7 @@ namespace Medical.GUI
         {
             foreach (StateWizardPanel panel in panelDictionary.Values)
             {
+                panel.setToDefault();
                 panel.sceneChanged(medicalController, simScene);
             }
         }

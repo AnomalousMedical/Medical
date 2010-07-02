@@ -53,6 +53,14 @@ namespace Medical.GUI
             }
         }
 
+        public void applyToState(MedicalState state)
+        {
+            foreach (StateWizardPanel panel in panels)
+            {
+                panel.applyToState(state);
+            }
+        }
+
         public void showPanel(int index)
         {
             if (updatePanel)

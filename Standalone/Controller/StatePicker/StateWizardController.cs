@@ -195,6 +195,7 @@ namespace Medical.GUI
         {
             stateBlender.forceFinishBlend();
             MedicalState createdState = stateBlender.createBaselineState();
+            currentWizard.applyToState(createdState);
             if (StateCreated != null)
             {
                 StateCreated.Invoke(createdState);
