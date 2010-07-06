@@ -11,7 +11,6 @@ namespace Medical.GUI
 {
     class PresetStatePanel : StateWizardPanel
     {
-        //private Dictionary<String, ListViewGroup> groups = new Dictionary<string, ListViewGroup>();
         private ButtonGridItem defaultItem = null;
         private ButtonGridItem openingItem = null; //the item that was selected when this ui was opened.
         private bool allowUpdates = true;
@@ -88,10 +87,10 @@ namespace Medical.GUI
             }
             presetListView.SuppressLayout = false;
             presetListView.layout();
-            //if (presetListView.Count > 0)
-            //{
-            //    defaultItem = presetListView.Items[0];
-            //}
+            if (presetListView.Count > 0)
+            {
+                defaultItem = presetListView.getItem(0);
+            }
         }
 
         public void clear()
@@ -109,38 +108,27 @@ namespace Medical.GUI
             }
             else
             {
-                //PresetState preset = defaultItem.Tag as PresetState;
-                //preset.applyToState(state);
+                PresetState preset = defaultItem.UserObject as PresetState;
+                preset.applyToState(state);
             }
         }
 
         public override void setToDefault()
         {
             allowUpdates = false;
-            //presetListView.SelectedItems.Clear();
-            //if (defaultItem != null)
-            //{
-            //    defaultItem.Selected = true;
-            //}
+            presetListView.SelectedItem = defaultItem;
             allowUpdates = true;
         }
 
         public override void recordOpeningState()
         {
-            //if (presetListView.SelectedItems.Count > 0)
-            //{
-            //    openingItem = presetListView.SelectedItems[0];
-            //}
+            openingItem = presetListView.SelectedItem;
         }
 
         public override void resetToOpeningState()
         {
             allowUpdates = false;
-            //presetListView.SelectedItems.Clear();
-            //if (openingItem != null)
-            //{
-            //    openingItem.Selected = true;
-            //}
+            presetListView.SelectedItem = openingItem;
             allowUpdates = true;
         }
 
