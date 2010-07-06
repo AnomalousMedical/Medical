@@ -100,6 +100,8 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Profile\HeightComboSlider.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Profile\HeightControl.cs" />
     <Compile Include="Controller\StatePicker\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="Controller\StatePicker\Panels\DiscSpace\DiscSpacePanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Doppler\DopplerControl.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Controller\StatePicker\Panels\Mandible\RightCondylarGrowthPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\NotesPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Preset\PresetStatePanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\Profile\ProfileDistortionPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\TeethAdaptationPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\TeethMovementPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardButtons.cs" />

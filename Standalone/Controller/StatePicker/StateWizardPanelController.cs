@@ -277,14 +277,12 @@ namespace Medical.GUI
 
         private StateWizardPanel createProfileDistortionPanel()
         {
-            //ProfileDistortionPanel profileDistortionPicker = new ProfileDistortionPanel(this);
-            //profileDistortionPicker.Text = "Profile";
-            //profileDistortionPicker.NavigationState = "WizardRightLateral";
-            //profileDistortionPicker.LayerState = "ProfileLayers";
-            //profileDistortionPicker.TextLine1 = "Profile";
+            ProfileDistortionPanel profileDistortionPicker = new ProfileDistortionPanel("DistortionPanels/ProfileDistortionPanel.layout", this);
+            profileDistortionPicker.NavigationState = "WizardRightLateral";
+            profileDistortionPicker.LayerState = "ProfileLayers";
+            profileDistortionPicker.TextLine1 = "Profile";
             //profileDistortionPicker.LargeIcon = Resources.ProfileIcon;
-            //return profileDistortionPicker;
-            throw new NotImplementedException();
+            return profileDistortionPicker;
         }
 
         private StateWizardPanel createBottomTeethRemovalPanel()

@@ -56,5 +56,17 @@ namespace Medical
                 return followWindow.LookAt;
             }
         }
+
+        public override CameraMotionValidator MotionValidator
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
