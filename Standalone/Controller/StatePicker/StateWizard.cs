@@ -12,7 +12,7 @@ namespace Medical.GUI
         private bool updatePanel = true;
         private StateWizardController wizardController;
 
-        public StateWizard(String name, StateWizardController wizardController)
+        public StateWizard(String name, String group, StateWizardController wizardController)
         {
             this.Name = name;
             this.wizardController = wizardController;
@@ -81,5 +81,11 @@ namespace Medical.GUI
         }
 
         public String Name { get; private set; }
+
+        public String Group { get; private set; }
+
+        public String TextLine1 { get; set; }
+
+        public String TextLine2 { get; set; }
     }
 }

@@ -134,6 +134,7 @@
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
+    <Compile Include="Controller\StatePicker\StateWizardRibbonTab.cs" />
     <Compile Include="Controller\StatePicker\WizardIconPanel.cs" />
     <Compile Include="Controller\States\StateList.cs" />
     <Compile Include="Layout\CrossFadeLayoutContainer.cs" />

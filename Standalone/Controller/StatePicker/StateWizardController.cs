@@ -115,6 +115,14 @@ namespace Medical.GUI
 
         public SceneViewWindow CurrentSceneView { get; set; }
 
+        public IEnumerable<StateWizard> WizardEnum
+        {
+            get
+            {
+                return wizards.Values;
+            }
+        }
+
         /// <summary>
         /// Show a wizard panel, called by the wizards
         /// </summary>
