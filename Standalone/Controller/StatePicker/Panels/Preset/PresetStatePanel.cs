@@ -59,6 +59,7 @@ namespace Medical.GUI
             //    presetListView.LargeImageList = panelController.ImageList;
             //}
             VirtualFileSystem archive = VirtualFileSystem.Instance;
+            presetListView.SuppressLayout = true;
             foreach (PresetState state in presetStateSet.Presets)
             {
                 //String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
@@ -85,6 +86,8 @@ namespace Medical.GUI
                 ButtonGridItem item = presetListView.addItem(state.Category, state.Name);// new ListViewItem(state.Name, fullImageName);
                 item.UserObject = state;
             }
+            presetListView.SuppressLayout = false;
+            presetListView.layout();
             //if (presetListView.Count > 0)
             //{
             //    defaultItem = presetListView.Items[0];
