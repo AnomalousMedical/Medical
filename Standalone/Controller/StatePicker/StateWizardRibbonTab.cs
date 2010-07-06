@@ -31,7 +31,7 @@ namespace Medical.GUI
                 int buttonWidth = (int)FontManager.Instance.measureStringWidth(wizardButton.Font, caption) + 45;
                 wizardButton.setSize(buttonWidth, 64);
                 wizardButton.Caption = caption;
-                wizardButton.UserObject = wizard.Name;
+                wizardButton.UserObject = wizard;
                 wizardButton.MouseButtonClick += new MyGUIEvent(wizardButton_MouseButtonClick);
                 currentPosition += buttonWidth + 3;
             }
@@ -48,7 +48,7 @@ namespace Medical.GUI
 
         void wizardButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            basicGUI.startWizard(source.UserObject.ToString());
+            basicGUI.startWizard(source.UserObject as StateWizard);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Medical.GUI
         public event StatePickerFinished Finished;
 
         //Wizard collection
-        private Dictionary<String, StateWizard> wizards = new Dictionary<String, StateWizard>();
+        private List<StateWizard> wizards = new List<StateWizard>();
 
         //Controllers
         private TemporaryStateBlender stateBlender;
@@ -60,12 +60,12 @@ namespace Medical.GUI
 
         public void addWizard(StateWizard wizard)
         {
-            wizards.Add(wizard.Name, wizard);
+            wizards.Add(wizard);
         }
 
-        public void startWizard(String name)
+        public void startWizard(StateWizard wizard)
         {
-            wizards.TryGetValue(name, out currentWizard);
+            currentWizard = wizard;
             if (currentWizard != null)
             {
                 layerStatusBeforeShown.captureState();
@@ -88,10 +88,6 @@ namespace Medical.GUI
                 currentWizard.showPanel(currentIndex);
                 basicGUI.changeLeftPanel(screenLayout);
                 basicGUI.changeTopPanel(wizardIconPanel.LayoutContainer);
-            }
-            else
-            {
-                Log.Error("Could not open wizard {0}. It does not exist.", name);
             }
         }
 
@@ -119,7 +115,7 @@ namespace Medical.GUI
         {
             get
             {
-                return wizards.Values;
+                return wizards;
             }
         }
 

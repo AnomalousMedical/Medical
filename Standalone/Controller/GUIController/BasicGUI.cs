@@ -139,7 +139,7 @@ namespace Medical.GUI
             }
         }
 
-        public void startWizard(String name)
+        public void startWizard(StateWizard wizard)
         {
             if (standaloneController.MedicalStateController.getNumStates() == 0)
             {
@@ -148,16 +148,16 @@ namespace Medical.GUI
 
             stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
-            stateWizardController.startWizard(name);
+            stateWizardController.startWizard(wizard);
         }
 
         private void createWizardPanels()
         {
-            //Create wizards
+            //Create single distortion wizards
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DOPPLER))
             {
                 //Doppler
-                StateWizard dopplerWizard = new StateWizard("Doppler", "Single Distortion", stateWizardController);
+                StateWizard dopplerWizard = new StateWizard("Doppler", stateWizardController);
                 dopplerWizard.TextLine1 = "Doppler";
                 //dopplerWizard.ImageLarge = Resources.DopplerWizardLarge;
                 dopplerWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -170,7 +170,7 @@ namespace Medical.GUI
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DENTITION))
             {
                 //Teeth
-                StateWizard teethWizard = new StateWizard("Dentition", "Single Distortion", stateWizardController);
+                StateWizard teethWizard = new StateWizard("Dentition", stateWizardController);
                 teethWizard.TextLine1 = "Dentition";
                 //teethWizard.ImageLarge = Resources.TeethWizardIcon;
                 teethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -184,7 +184,7 @@ namespace Medical.GUI
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CEPHALOMETRIC))
             {
                 //Profile
-                StateWizard profileWizard = new StateWizard("Cephalometric", "Single Distortion", stateWizardController);
+                StateWizard profileWizard = new StateWizard("Cephalometric", stateWizardController);
                 profileWizard.TextLine1 = "Cephalometric";
                 //profileWizard.ImageLarge = Resources.ProfileIcon;
                 profileWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -193,10 +193,56 @@ namespace Medical.GUI
                 stateWizardController.addWizard(profileWizard);
             }
 
+            
+
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MANDIBLE))
+            {
+                //Bone
+                StateWizard boneWizard = new StateWizard("Mandible", stateWizardController);
+                boneWizard.TextLine1 = "Mandible";
+                //boneWizard.ImageLarge = Resources.BoneWizardLarge;
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarGrowth));
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
+                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
+                stateWizardController.addWizard(boneWizard);
+            }
+
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_SPACE))
+            {
+                //Disc
+                StateWizard discWizard = new StateWizard("Disc Space", stateWizardController);
+                discWizard.TextLine1 = "Disc Space";
+                //discWizard.ImageLarge = Resources.DiscSpaceWizardIcon;
+                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
+                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
+                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
+                stateWizardController.addWizard(discWizard);
+            }
+
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_CLOCK))
+            {
+                //Disc
+                StateWizard discClockWizard = new StateWizard("Disc Clock Face", stateWizardController);
+                discClockWizard.TextLine1 = "Disc";
+                discClockWizard.TextLine2 = "Clock Face";
+                //discClockWizard.ImageLarge = Resources.DiscWizardLarge;
+                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
+                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
+                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
+                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
+                stateWizardController.addWizard(discClockWizard);
+            }
+
+            //Create combination distortion wizards
+
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION))
             {
                 //Profile + Teeth
-                StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", "Combination Distortion", stateWizardController);
+                StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", stateWizardController);
                 profileTeethWizard.TextLine1 = "Cephalometric";
                 profileTeethWizard.TextLine2 = "and Dentition";
                 //profileTeethWizard.ImageLarge = Resources.ProfileAndTeethWizardLarge;
@@ -209,25 +255,10 @@ namespace Medical.GUI
                 stateWizardController.addWizard(profileTeethWizard);
             }
 
-            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MANDIBLE))
-            {
-                //Bone
-                StateWizard boneWizard = new StateWizard("Mandible", "Single Distortion", stateWizardController);
-                boneWizard.TextLine1 = "Mandible";
-                //boneWizard.ImageLarge = Resources.BoneWizardLarge;
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarGrowth));
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightCondylarDegeneration));
-                boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
-                stateWizardController.addWizard(boneWizard);
-            }
-
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CLINICAL_DOPPLER))
             {
                 //Clinical
-                StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", "Combination Distortion", stateWizardController);
+                StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", stateWizardController);
                 clinicalWizard.TextLine1 = "Clinical";
                 clinicalWizard.TextLine2 = "and Doppler";
                 //clinicalWizard.ImageLarge = Resources.ClinicalIcon;
@@ -245,7 +276,7 @@ namespace Medical.GUI
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_RADIOGRAPHY))
             {
                 //CT/Radiography Wizard
-                StateWizard ctWizard = new StateWizard("Clinical and Radiography", "Combination Distortion", stateWizardController);
+                StateWizard ctWizard = new StateWizard("Clinical and Radiography", stateWizardController);
                 ctWizard.TextLine1 = "Clinical and";
                 ctWizard.TextLine2 = "Radiography";
                 //ctWizard.ImageLarge = Resources.CTWizardLarge;
@@ -265,37 +296,10 @@ namespace Medical.GUI
                 stateWizardController.addWizard(ctWizard);
             }
 
-            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_SPACE))
-            {
-                //Disc
-                StateWizard discWizard = new StateWizard("Disc Space", "Single Distortion", stateWizardController);
-                discWizard.TextLine1 = "Disc Space";
-                //discWizard.ImageLarge = Resources.DiscSpaceWizardIcon;
-                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
-                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
-                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
-                discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
-                stateWizardController.addWizard(discWizard);
-            }
-
-            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_CLOCK))
-            {
-                //Disc
-                StateWizard discClockWizard = new StateWizard("Disc Clock Face", "Single Distortion", stateWizardController);
-                discClockWizard.TextLine1 = "Disc";
-                discClockWizard.TextLine2 = "Clock Face";
-                //discClockWizard.ImageLarge = Resources.DiscWizardLarge;
-                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
-                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
-                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
-                discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
-                stateWizardController.addWizard(discClockWizard);
-            }
-
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MRI))
             {
                 //MRI Wizard
-                StateWizard mriWizard = new StateWizard("Clinical and MRI", "Combination Distortion", stateWizardController);
+                StateWizard mriWizard = new StateWizard("Clinical and MRI", stateWizardController);
                 mriWizard.TextLine1 = "Clinical";
                 mriWizard.TextLine2 = "and MRI";
                 //mriWizard.ImageLarge = Resources.MRIWizardLarge;
