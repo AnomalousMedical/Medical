@@ -120,6 +120,14 @@ namespace Medical.GUI
 
         public SceneViewWindow CurrentSceneView { get; set; }
 
+        public XmlSaver XmlSaver
+        {
+            get
+            {
+                return saver;
+            }
+        }
+
         public TemporaryStateBlender StateBlender
         {
             get
@@ -335,26 +343,24 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDiscClockFacePanel()
         {
-            //PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", this);
+            PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", "DistortionPanels/PresetStatePanel.layout", this);
             //leftDiscPanel.Text = "Left Disc";
-            //leftDiscPanel.NavigationState = "WizardLeftTMJ";
-            //leftDiscPanel.LayerState = "DiscLayers";
-            //leftDiscPanel.TextLine1 = "Left TMJ";
+            leftDiscPanel.NavigationState = "WizardLeftTMJ";
+            leftDiscPanel.LayerState = "DiscLayers";
+            leftDiscPanel.TextLine1 = "Left TMJ";
             //leftDiscPanel.LargeIcon = Resources.LeftDiscPosition;
-            //return leftDiscPanel;
-            throw new NotImplementedException();
+            return leftDiscPanel;
         }
 
         private StateWizardPanel createRightDiscClockFacePanel()
         {
-            //PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", this);
+            PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", "DistortionPanels/PresetStatePanel.layout", this);
             //rightDiscPanel.Text = "Right Disc";
-            //rightDiscPanel.NavigationState = "WizardRightTMJ";
-            //rightDiscPanel.LayerState = "DiscLayers";
-            //rightDiscPanel.TextLine1 = "Right TMJ";
+            rightDiscPanel.NavigationState = "WizardRightTMJ";
+            rightDiscPanel.LayerState = "DiscLayers";
+            rightDiscPanel.TextLine1 = "Right TMJ";
             //rightDiscPanel.LargeIcon = Resources.RightDiscPosition;
-            //return rightDiscPanel;
-            throw new NotImplementedException();
+            return rightDiscPanel;
         }
 
         private StateWizardPanel createDisclaimerPanel()
