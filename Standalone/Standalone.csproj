@@ -117,6 +117,7 @@
     <Compile Include="Controller\StatePicker\Panels\Preset\PresetStatePanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\Profile\ProfileDistortionPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\TeethAdaptationPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\TeethPanels\TeethHeightAdaptationPanel.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\TeethMovementPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardButtons.cs" />
     <Compile Include="Controller\StatePicker\StateWizardController.cs" />

@@ -307,14 +307,12 @@ namespace Medical.GUI
 
         private StateWizardPanel createTeethHeightAdaptationPanel()
         {
-            //TeethHeightAdaptationPanel teethHeightAdaptation = new TeethHeightAdaptationPanel(this);
-            //teethHeightAdaptation.Text = "Teeth";
-            //teethHeightAdaptation.NavigationState = "WizardTeethMidlineAnterior";
-            //teethHeightAdaptation.LayerState = "TeethLayers";
-            //teethHeightAdaptation.TextLine1 = "Teeth";
+            TeethHeightAdaptationPanel teethHeightAdaptation = new TeethHeightAdaptationPanel("DistortionPanels/TeethHeightAdaptationPanel.layout", this);
+            teethHeightAdaptation.NavigationState = "WizardTeethMidlineAnterior";
+            teethHeightAdaptation.LayerState = "TeethLayers";
+            teethHeightAdaptation.TextLine1 = "Teeth";
             //teethHeightAdaptation.LargeIcon = Resources.AdaptationIcon;
-            //return teethHeightAdaptation;
-            throw new NotImplementedException();
+            return teethHeightAdaptation;
         }
 
         private StateWizardPanel createLeftDiscSpacePanel()
