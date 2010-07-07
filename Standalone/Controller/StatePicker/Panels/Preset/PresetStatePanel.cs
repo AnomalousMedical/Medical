@@ -6,6 +6,8 @@ using MyGUIPlugin;
 using Engine;
 using System.Xml;
 using Logging;
+using System.IO;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -14,9 +16,9 @@ namespace Medical.GUI
         private ButtonGridItem defaultItem = null;
         private ButtonGridItem openingItem = null; //the item that was selected when this ui was opened.
         private bool allowUpdates = true;
-        //private LinkedList<Image> images = new LinkedList<Image>();
         private String lastRootDirectory;
         private String subDirectory;
+        private ImageAtlas imageAtlas;
 
         private ButtonGrid presetListView;
 
@@ -27,6 +29,14 @@ namespace Medical.GUI
 
             presetListView = new ButtonGrid(mainWidget.findWidget("PresetPanel/ScrollView") as ScrollView);
             presetListView.SelectedValueChanged += new EventHandler(presetListView_SelectedValueChanged);
+
+            imageAtlas = new ImageAtlas("Preset_" + subDirectory, new Size2(100, 100), new Size2(512, 512));
+        }
+
+        public override void Dispose()
+        {
+            imageAtlas.Dispose();
+            base.Dispose();
         }
 
         void presetListView_SelectedValueChanged(object sender, EventArgs e)
@@ -61,28 +71,29 @@ namespace Medical.GUI
             presetListView.SuppressLayout = true;
             foreach (PresetState state in presetStateSet.Presets)
             {
-                //String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
+                String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
+                String imageKey = null;
                 //if (!presetListView.LargeImageList.Images.ContainsKey(fullImageName))
-                //{
-                //    try
-                //    {
-                //        using (Stream imageStream = archive.openStream(fullImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
-                //        {
-                //            Image image = Image.FromStream(imageStream);
-                //            if (image != null)
-                //            {
-                //                presetListView.LargeImageList.Images.Add(fullImageName, image);
-                //                images.AddLast(image);
-                //                image.Tag = fullImageName;
-                //            }
-                //        }
-                //    }
-                //    catch (Exception e)
-                //    {
-                //        Log.Error("Could not open image preview file {0}.", fullImageName);
-                //    }
-                //}
-                ButtonGridItem item = presetListView.addItem(state.Category, state.Name);// new ListViewItem(state.Name, fullImageName);
+                {
+                    try
+                    {
+                        using (Stream imageStream = archive.openStream(fullImageName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                        {
+                            Image image = Image.FromStream(imageStream);
+                            if (image != null)
+                            {
+                                imageKey = imageAtlas.addImage(fullImageName, image);
+                                image.Tag = fullImageName;
+                                image.Dispose();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error("Could not open image preview file {0}.", fullImageName);
+                    }
+                }
+                ButtonGridItem item = presetListView.addItem(state.Category, state.Name, imageKey);// new ListViewItem(state.Name, fullImageName);
                 item.UserObject = state;
             }
             presetListView.SuppressLayout = false;
@@ -134,6 +145,7 @@ namespace Medical.GUI
 
         private void clearImages()
         {
+            imageAtlas.clear();
             //foreach (Image image in images)
             //{
             //    panelController.ImageList.Images.RemoveByKey(image.Tag.ToString());

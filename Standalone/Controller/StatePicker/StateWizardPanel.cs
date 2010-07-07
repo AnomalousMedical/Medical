@@ -23,7 +23,7 @@ namespace Medical.GUI
             layoutContainer = new MyGUILayoutContainer(mainWidget);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             LayoutManager.Instance.unloadLayout(layout);
             layout = null;
