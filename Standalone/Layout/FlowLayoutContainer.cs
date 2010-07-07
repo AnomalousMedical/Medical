@@ -74,7 +74,7 @@ namespace Medical
             {
                 foreach (LayoutContainer child in children)
                 {
-                    Size childSize = child.DesiredSize;
+                    Size2 childSize = child.DesiredSize;
                     child.WorkingSize = childSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -85,7 +85,7 @@ namespace Medical
             {
                 foreach (LayoutContainer child in children)
                 {
-                    Size childSize = child.DesiredSize;
+                    Size2 childSize = child.DesiredSize;
                     child.WorkingSize = childSize;
                     child.Location = currentLocation;
                     currentLocation.y += childSize.Height + padding;
@@ -93,16 +93,16 @@ namespace Medical
             }
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get 
             {
-                Size desiredSize = new Size(startLocation.x, startLocation.y);
+                Size2 desiredSize = new Size2(startLocation.x, startLocation.y);
                 if (layoutType == LayoutType.Horizontal)
                 {
                     foreach (LayoutContainer child in children)
                     {
-                        Size childSize = child.DesiredSize;
+                        Size2 childSize = child.DesiredSize;
                         if (childSize.Height > desiredSize.Height)
                         {
                             desiredSize.Height = childSize.Height;
@@ -114,7 +114,7 @@ namespace Medical
                 {
                     foreach (LayoutContainer child in children)
                     {
-                        Size childSize = child.DesiredSize;
+                        Size2 childSize = child.DesiredSize;
                         if (childSize.Width > desiredSize.Width)
                         {
                             desiredSize.Width = childSize.Width;

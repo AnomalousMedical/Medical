@@ -18,10 +18,10 @@ namespace Medical
         private float currentTime;
         private bool animating = false;
         private float alpha = 1.0f;
-        private Size oldSize;
-        private Size newSize;
-        private Size sizeDelta;
-        private Size currentSize;
+        private Size2 oldSize;
+        private Size2 newSize;
+        private Size2 sizeDelta;
+        private Size2 currentSize;
 
         public TopPopoutLayoutContainer(UpdateTimer mainTimer)
         {
@@ -98,7 +98,7 @@ namespace Medical
             }
             else
             {
-                oldSize = new Size(0.0f, 0.0f);
+                oldSize = new Size2(0.0f, 0.0f);
             }
 
             this.childContainer = childContainer;
@@ -109,14 +109,14 @@ namespace Medical
             }
             else
             {
-                newSize = new Size(0.0f, 0.0f);
+                newSize = new Size2(0.0f, 0.0f);
             }
 
             sizeDelta = newSize - oldSize;
             animating = true;
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get 
             {
@@ -153,7 +153,7 @@ namespace Medical
                 {
                     childContainer.setAlpha(alpha);
                 }
-                currentSize = new Size(WorkingSize.Width, oldSize.Height + sizeDelta.Height * alpha);
+                currentSize = new Size2(WorkingSize.Width, oldSize.Height + sizeDelta.Height * alpha);
                 invalidate();
                 if (finishAnimatingThisFrame)
                 {

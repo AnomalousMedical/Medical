@@ -30,7 +30,7 @@ namespace Medical
         private const String NAVIGATION_MENU = "NavigationMenu";
         private const String NAVIGATION_MENU_ENTRY = "NavigationMenuEntry";
         private const String TEXT = "Text";
-        private const String BITMAP_SIZE = "Size";
+        private const String BITMAP_SIZE = "Size2";
         private const String LAYER_STATE = "LayerState";
         private const String MENU_ENTRY_NAVIGATION_STATE = "MenuEntryNavigationState";
 

@@ -37,7 +37,7 @@ namespace Medical.Controller
             }
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get 
             {
@@ -45,7 +45,7 @@ namespace Medical.Controller
                 {
                     return sceneViewWindow.DesiredSize;
                 }
-                return new Size();
+                return new Size2();
             }
         }
 

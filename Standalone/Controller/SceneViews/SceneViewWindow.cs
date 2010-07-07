@@ -51,7 +51,7 @@ namespace Medical.Controller
             //camera.setRenderingMode(renderingMode);
             cameraMover.setCamera(sceneView);
             CameraResolver.addMotionValidator(this);
-            //camera.showSceneStats(true);
+            sceneView.showSceneStats(true);
             //basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(sceneView);
             //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
             //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
@@ -85,7 +85,7 @@ namespace Medical.Controller
 
         public override void layout()
         {
-            Size totalSize = TopmostWorkingSize;
+            Size2 totalSize = TopmostWorkingSize;
             if (totalSize.Width == 0.0f)
             {
                 totalSize.Width = 1.0f;
@@ -100,15 +100,15 @@ namespace Medical.Controller
             }
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get
             {
                 if (sceneView != null)
                 {
-                    return new Size(sceneView.RenderWidth, sceneView.RenderHeight);
+                    return new Size2(sceneView.RenderWidth, sceneView.RenderHeight);
                 }
-                return new Size();
+                return new Size2();
             }
         }
 

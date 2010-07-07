@@ -73,7 +73,7 @@ namespace Medical
             animating = true;
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get 
             {
@@ -81,7 +81,7 @@ namespace Medical
                 {
                     return childContainer.DesiredSize;
                 }
-                return new Size(0.0f, 0.0f);
+                return new Size2(0.0f, 0.0f);
             }
         }
 

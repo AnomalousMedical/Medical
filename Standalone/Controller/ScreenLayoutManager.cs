@@ -17,7 +17,7 @@ namespace Medical
         public ScreenLayoutManager(OSWindow window)
         {
             this.window = window;
-            rootContainer.WorkingSize = new Size(window.WindowWidth, window.WindowHeight);
+            rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             window.addListener(this);
         }
 
@@ -46,7 +46,7 @@ namespace Medical
 
         public void resized(OSWindow window)
         {
-            rootContainer.WorkingSize = new Size(window.WindowWidth, window.WindowHeight);
+            rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             layout();
         }
     }

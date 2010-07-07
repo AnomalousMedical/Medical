@@ -44,15 +44,15 @@ namespace Medical
 
         public abstract void layout();
 
-        public Size WorkingSize { get; set; }
+        public Size2 WorkingSize { get; set; }
 
         public Vector2 Location { get; set; }
 
-        public abstract Size DesiredSize { get; }
+        public abstract Size2 DesiredSize { get; }
 
         public abstract bool Visible { get; set; }
 
-        public Size TopmostWorkingSize
+        public Size2 TopmostWorkingSize
         {
             get
             {

@@ -57,19 +57,19 @@ namespace Medical
 
         public override void layout()
         {
-            Size leftDesired = left != null ? left.DesiredSize : new Size();
-            Size rightDesired = right != null ? right.DesiredSize : new Size();
-            Size topDesired = top != null ? top.DesiredSize : new Size();
-            Size bottomDesired = bottom != null ? bottom.DesiredSize : new Size();
+            Size2 leftDesired = left != null ? left.DesiredSize : new Size2();
+            Size2 rightDesired = right != null ? right.DesiredSize : new Size2();
+            Size2 topDesired = top != null ? top.DesiredSize : new Size2();
+            Size2 bottomDesired = bottom != null ? bottom.DesiredSize : new Size2();
 
             //Determine center region size.
-            Size centerSize = new Size(WorkingSize.Width - leftDesired.Width - rightDesired.Width, WorkingSize.Height - topDesired.Height - bottomDesired.Height);
+            Size2 centerSize = new Size2(WorkingSize.Width - leftDesired.Width - rightDesired.Width, WorkingSize.Height - topDesired.Height - bottomDesired.Height);
             
             //Top
             if (top != null)
             {
                 top.Location = this.Location;
-                top.WorkingSize = new Size(WorkingSize.Width, topDesired.Height);
+                top.WorkingSize = new Size2(WorkingSize.Width, topDesired.Height);
                 top.layout();
             }
 
@@ -77,7 +77,7 @@ namespace Medical
             if(bottom != null)
             {
                 bottom.Location = new Vector2(this.Location.x, this.Location.y + topDesired.Height + centerSize.Height);
-                bottom.WorkingSize = new Size(WorkingSize.Width, bottomDesired.Height);
+                bottom.WorkingSize = new Size2(WorkingSize.Width, bottomDesired.Height);
                 bottom.layout();
             }
 
@@ -85,7 +85,7 @@ namespace Medical
             if(left != null)
             {
                 left.Location = new Vector2(this.Location.x, this.Location.y + topDesired.Height);
-                left.WorkingSize = new Size(leftDesired.Width, centerSize.Height);
+                left.WorkingSize = new Size2(leftDesired.Width, centerSize.Height);
                 left.layout();
             }
 
@@ -101,20 +101,20 @@ namespace Medical
             if(right != null)
             {
                 right.Location = new Vector2(this.Location.x + leftDesired.Width + centerSize.Width, this.Location.y + topDesired.Height);
-                right.WorkingSize = new Size(rightDesired.Width, centerSize.Height);
+                right.WorkingSize = new Size2(rightDesired.Width, centerSize.Height);
                 right.layout();
             }
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get
             {
-                Size desiredSize = new Size();
-                Size leftDesired = left != null ? left.DesiredSize : new Size();
-                Size rightDesired = right != null ? right.DesiredSize : new Size();
-                Size topDesired = top != null ? top.DesiredSize : new Size();
-                Size bottomDesired = bottom != null ? bottom.DesiredSize : new Size();
+                Size2 desiredSize = new Size2();
+                Size2 leftDesired = left != null ? left.DesiredSize : new Size2();
+                Size2 rightDesired = right != null ? right.DesiredSize : new Size2();
+                Size2 topDesired = top != null ? top.DesiredSize : new Size2();
+                Size2 bottomDesired = bottom != null ? bottom.DesiredSize : new Size2();
                 if(leftDesired.Height > rightDesired.Height)
                 {
                     desiredSize.Height = leftDesired.Height + topDesired.Height + bottomDesired.Height;

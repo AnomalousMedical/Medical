@@ -10,12 +10,12 @@ namespace Medical
     public class MyGUILayoutContainer : LayoutContainer
     {
         private Widget widget;
-        private Size desiredSize;
+        private Size2 desiredSize;
 
         public MyGUILayoutContainer(Widget widget)
         {
             this.widget = widget;
-            this.desiredSize = new Size(widget.getWidth(), widget.getHeight());
+            this.desiredSize = new Size2(widget.getWidth(), widget.getHeight());
         }
 
         public override void setAlpha(float alpha)
@@ -28,7 +28,7 @@ namespace Medical
             widget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
         }
 
-        public override Size DesiredSize
+        public override Size2 DesiredSize
         {
             get
             {
