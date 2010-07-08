@@ -13,6 +13,8 @@ namespace Medical.GUI
         Edit distortionWizard;
         Edit notes;
 
+        private ThumbnailPicker thumbnailPicker;
+
         public NotesPanel(String notesPanelFile, StateWizardPanelController controller)
             : base(notesPanelFile, controller)
         {
@@ -25,17 +27,22 @@ namespace Medical.GUI
             distortionWizard = mainWidget.findWidget("Notes/DistortionWizard") as Edit;
             notes = mainWidget.findWidget("Notes/NotesText") as Edit;
 
-            //thumbnailPicker.ImageRenderer = imageRenderer;
-            //thumbnailPicker.addThumbnail("ThumbnailMidlineAnterior", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightLateral", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightTMJ", "DiscLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftTMJ", "DiscLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailLeftTMJSuperior", "ThumbnailTMJSuperiorLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailRightTMJSuperior", "ThumbnailTMJSuperiorLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethMidlineAnterior", "TeethLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethRightLateral", "TeethLayers");
-            //thumbnailPicker.addThumbnail("ThumbnailTeethLeftLateral", "TeethLayers");
+            thumbnailPicker = new ThumbnailPicker(controller.ImageRenderer, mainWidget.findWidget("Notes/Thumbnails") as ScrollView);
+            thumbnailPicker.addThumbnail("ThumbnailMidlineAnterior", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightLateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftLateral", "MandibleSizeLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightTMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftTMJ", "DiscLayers");
+            thumbnailPicker.addThumbnail("ThumbnailLeftTMJSuperior", "ThumbnailTMJSuperiorLayers");
+            thumbnailPicker.addThumbnail("ThumbnailRightTMJSuperior", "ThumbnailTMJSuperiorLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethMidlineAnterior", "TeethLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethRightLateral", "TeethLayers");
+            thumbnailPicker.addThumbnail("ThumbnailTeethLeftLateral", "TeethLayers");
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
 
         public override void setToDefault()
@@ -56,7 +63,7 @@ namespace Medical.GUI
             state.Notes.Notes = notes.Caption;
             state.Notes.ProcedureDate = DateTime.Now;// datePicker.Value;
             state.Name = stateNameTextBox.Caption;
-            //state.Thumbnail = thumbnailPicker.SelectedThumbnail;
+            state.Thumbnail = thumbnailPicker.SelectedThumbnail;
         }
 
         public String DistortionWizardText
@@ -73,7 +80,7 @@ namespace Medical.GUI
 
         protected override void onPanelOpening()
         {
-            //thumbnailPicker.updateThumbnails();
+            thumbnailPicker.updateThumbnails();
         }
     }
 }

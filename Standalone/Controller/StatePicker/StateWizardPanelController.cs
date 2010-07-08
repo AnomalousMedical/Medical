@@ -43,7 +43,7 @@ namespace Medical.GUI
         private MedicalStateController stateController;
         private NavigationController navigationController;
         private LayerController layerController;
-        //private ImageRenderer imageRenderer;
+        private ImageRenderer imageRenderer;
         //private ImageList imageList;
         private MovementSequenceController movementSequenceController;
         private XmlSaver saver = new XmlSaver();
@@ -52,7 +52,7 @@ namespace Medical.GUI
         private TemporaryStateBlender stateBlender;
         //private MeasurementGrid measurementGrid;
 
-        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController, TemporaryStateBlender stateBlender, MovementSequenceController movementSequenceController/*, ImageRenderer imageRenderer, MeasurementGrid measurementGrid*/)
+        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController, TemporaryStateBlender stateBlender, MovementSequenceController movementSequenceController, ImageRenderer imageRenderer/*, MeasurementGrid measurementGrid*/)
         {
             this.stateBlender = stateBlender;
             this.medicalController = medicalController;
@@ -60,7 +60,7 @@ namespace Medical.GUI
             this.navigationController = navigationController;
             this.layerController = layerController;
             this.sceneViewController = sceneViewController;
-            //this.imageRenderer = imageRenderer;
+            this.imageRenderer = imageRenderer;
             this.movementSequenceController = movementSequenceController;
             //this.measurementGrid = measurementGrid;
 
@@ -133,6 +133,14 @@ namespace Medical.GUI
             get
             {
                 return stateBlender;
+            }
+        }
+
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return imageRenderer;
             }
         }
 
