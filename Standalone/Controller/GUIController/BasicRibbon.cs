@@ -22,7 +22,7 @@ namespace Medical.GUI
             this.standaloneController = standaloneController;
 
             ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
-            layerGUIController = new LayerGUIController(gui);
+            layerGUIController = new LayerGUIController(gui, standaloneController.LayerController);
             mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
 
             Button quitButton = gui.findWidgetT("File/Quit") as Button;

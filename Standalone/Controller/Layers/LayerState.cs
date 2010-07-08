@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Medical
 {
@@ -12,7 +14,7 @@ namespace Medical
         private String name;
         private LinkedList<LayerEntry> entries = new LinkedList<LayerEntry>();
         private bool hidden = false;
-        //private Bitmap thumbnail = null;
+        private Bitmap thumbnail = null;
 
         public LayerState(String name)
         {
@@ -21,11 +23,11 @@ namespace Medical
 
         public void Dispose()
         {
-            //if (thumbnail != null)
-            //{
-            //    thumbnail.Dispose();
-            //    thumbnail = null;
-            //}
+            if (thumbnail != null)
+            {
+                thumbnail.Dispose();
+                thumbnail = null;
+            }
         }
 
         /// <summary>
@@ -89,21 +91,21 @@ namespace Medical
         /// it will be disposed when it is no longer needed. If you need to make
         /// a copy make one manually.
         /// </summary>
-        //public Bitmap Thumbnail
-        //{
-        //    get
-        //    {
-        //        return thumbnail;
-        //    }
-        //    set
-        //    {
-        //        if (thumbnail != null)
-        //        {
-        //            thumbnail.Dispose();
-        //        }
-        //        thumbnail = value;
-        //    }
-        //}
+        public Bitmap Thumbnail
+        {
+            get
+            {
+                return thumbnail;
+            }
+            set
+            {
+                if (thumbnail != null)
+                {
+                    thumbnail.Dispose();
+                }
+                thumbnail = value;
+            }
+        }
 
         public IEnumerable<LayerEntry> Entries
         {
@@ -129,13 +131,13 @@ namespace Medical
             {
                 using (MemoryStream memStream = new MemoryStream(info.GetBlob(THUMBNAIL)))
                 {
-                    //thumbnail = new Bitmap(memStream);
+                    thumbnail = new Bitmap(memStream);
                     memStream.Close();
                 }
             }
             else
             {
-                //thumbnail = null;
+                thumbnail = null;
             }
         }
 
@@ -144,15 +146,15 @@ namespace Medical
             info.AddValue(NAME, name);
             info.AddValue(HIDDEN, hidden);
             info.ExtractLinkedList<LayerEntry>(ENTRIES, entries);
-            //if (thumbnail != null)
-            //{
-            //    using (MemoryStream memStream = new MemoryStream())
-            //    {
-            //        thumbnail.Save(memStream, ImageFormat.Png);
-            //        info.AddValue(THUMBNAIL, memStream.GetBuffer());
-            //        memStream.Close();
-            //    }
-            //}
+            if (thumbnail != null)
+            {
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    thumbnail.Save(memStream, ImageFormat.Png);
+                    info.AddValue(THUMBNAIL, memStream.GetBuffer());
+                    memStream.Close();
+                }
+            }
         }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -18,8 +19,19 @@ namespace Medical.GUI
         private LayerGUIMenu topTeethMenu;
         private LayerGUIMenu bottomTeethMenu;
 
-        public LayerGUIController(Gui ribbonLayout)
+        private LayerController layerController;
+        private ImageAtlas predefinedImageAtlas;
+        private ButtonGrid predefinedLayerGallery;
+
+        public LayerGUIController(Gui ribbonLayout, LayerController layerController)
         {
+            //Predefined layers
+            this.layerController = layerController;
+            layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
+            predefinedLayerGallery = new ButtonGrid(ribbonLayout.findWidgetT("Layers/Predefined") as ScrollView);
+            predefinedLayerGallery.SelectedValueChanged += new EventHandler(predefinedLayerGallery_SelectedValueChanged);
+            predefinedImageAtlas = new ImageAtlas("PredefinedLayers", new Size2(100, 100), new Size2(512, 512));
+
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CUSTOM_LAYERS))
             {
                 //layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
@@ -65,6 +77,30 @@ namespace Medical.GUI
             //{
             //    basicForm.customLayersGroup.Visible = false;
             //}
+        }
+
+        void predefinedLayerGallery_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ButtonGridItem selectedItem = predefinedLayerGallery.SelectedItem;
+            if (selectedItem != null)
+            {
+                layerController.applyLayerState(selectedItem.UserObject.ToString());
+            }
+        }
+
+        void layerController_LayerStateSetChanged(LayerController controller)
+        {
+            predefinedImageAtlas.clear();
+            predefinedLayerGallery.clear();
+            foreach (LayerState state in controller.CurrentLayers.LayerStates)
+            {
+                if (!state.Hidden && state.Thumbnail != null)
+                {
+                    String imageKey = predefinedImageAtlas.addImage(state, state.Thumbnail);
+                    ButtonGridItem item = predefinedLayerGallery.addItem("Main", state.Name, imageKey);
+                    item.UserObject = state.Name;
+                }
+            }
         }
 
         public void Dispose()
