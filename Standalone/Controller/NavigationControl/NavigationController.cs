@@ -120,7 +120,7 @@ namespace Medical.Controller
             NavigationState state = getState(name);
             if (state != null)
             {
-                window.setCamera(state.Translation, state.LookAt);
+                window.setPosition(state.Translation, state.LookAt);
                 //overlays[window].setNavigationState(state);
             }
         }

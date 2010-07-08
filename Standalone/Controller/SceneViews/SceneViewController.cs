@@ -10,8 +10,15 @@ using MyGUIPlugin;
 
 namespace Medical.Controller
 {
+    public delegate void SceneViewWindowEvent(SceneViewWindow window);
+    public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
+
     class SceneViewController : IDisposable
     {
+        public event SceneViewWindowEvent WindowCreated;
+        public event SceneViewWindowEvent WindowDestroyed;
+        public event SceneViewWindowEvent ActiveWindowChanged;
+
         private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer();
         private SceneViewWindow window;
         private EventManager eventManager;
@@ -23,13 +30,23 @@ namespace Medical.Controller
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
-            window = new SceneViewWindow(mainTimer, new OrbitCameraController(new Vector3(0, -5, 150), new Vector3(0, -5, 0), null, eventManager), "Default");
         }
 
         public void Dispose()
         {
             destroyCameras();
             window.Dispose();
+        }
+
+        public void createWindow(String name, Vector3 translation, Vector3 lookAt)
+        {
+            //temp, will soon have more than one window variable
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
+            window = new SceneViewWindow(mainTimer, orbitCamera, name);
+            if (WindowCreated != null)
+            {
+                WindowCreated.Invoke(window);
+            }
         }
 
         public void createCameras(SimScene scene)

@@ -40,6 +40,7 @@ namespace Standalone
         //GUI
         private BasicGUI basicGUI;
         private SceneViewController sceneViewController;
+        private Watermark watermark;
 
         public StandaloneController()
         {
@@ -48,10 +49,11 @@ namespace Standalone
 
         public void Dispose()
         {
+            basicGUI.Dispose();
+            watermark.Dispose();
             movementSequenceController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
-            basicGUI.Dispose();
             layerController.Dispose();
             navigationController.Dispose();
             medicalController.Dispose();
@@ -80,8 +82,22 @@ namespace Standalone
             TeethController.TeethMover = teethMover;
             medicalController.FixedLoopUpdate += teethMover.update;
 
+            //GUI
+            MyGUIInterface myGUI = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
+            myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
+            myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
+
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
+
+            //Watermark
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
+
+            //Create scene view windows
+            sceneViewController.createWindow("Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
@@ -287,6 +303,22 @@ namespace Standalone
             {
                 navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
             }
+        }
+
+        /// <summary>
+        /// Called before MyGUI renders.
+        /// </summary>
+        void myGUI_RenderStarted(object sender, EventArgs e)
+        {
+            watermark.Visible = false;
+        }
+
+        /// <summary>
+        /// Called after MyGUI renders.
+        /// </summary>
+        void myGUI_RenderEnded(object sender, EventArgs e)
+        {
+            watermark.Visible = true;
         }
     }
 }

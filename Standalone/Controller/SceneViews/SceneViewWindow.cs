@@ -12,6 +12,9 @@ namespace Medical.Controller
 {
     public class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
     {
+        public event SceneViewWindowEvent CameraCreated;
+        public event SceneViewWindowEvent CameraDestroyed;
+
         private SceneView sceneView;
         private CameraMover cameraMover;
         private UpdateTimer mainTimer;
@@ -55,10 +58,10 @@ namespace Medical.Controller
             //basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(sceneView);
             //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
             //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
-            //if (CameraCreated != null)
-            //{
-            //    CameraCreated.Invoke(this);
-            //}
+            if (CameraCreated != null)
+            {
+                CameraCreated.Invoke(this);
+            }
         }
 
         public void destroySceneView()
@@ -70,12 +73,16 @@ namespace Medical.Controller
                 cameraMover.setCamera(null);
                 window.destroySceneView(sceneView);
                 sceneView = null;
+                if (CameraDestroyed != null)
+                {
+                    CameraDestroyed.Invoke(this);
+                }
             }
         }
 
-        public void setCamera(Vector3 position, Vector3 lookAt)
+        public void setPosition(Vector3 translation, Vector3 lookAt)
         {
-            cameraMover.setNewPosition(position, lookAt);
+            cameraMover.setNewPosition(translation, lookAt);
         }
 
         public override void setAlpha(float alpha)
