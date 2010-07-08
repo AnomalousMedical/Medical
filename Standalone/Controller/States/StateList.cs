@@ -117,7 +117,7 @@ namespace Medical.GUI
         {
             ButtonListItem entry = entries[state];
             entry.Caption = state.Name;
-            //entry.Image = state.Thumbnail;
+            imageAtlas.replaceImage(state, state.Thumbnail);
         }
 
         void stateController_StatesCleared(MedicalStateController controller)
