@@ -77,6 +77,12 @@ namespace Standalone
             navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
 
+            //Watermark
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
+
             //Image Renderer
             imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
@@ -106,12 +112,6 @@ namespace Standalone
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
-
-            //Watermark
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
-            OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
-            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
             createBackground();
 

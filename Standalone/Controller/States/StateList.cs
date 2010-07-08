@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -15,6 +16,7 @@ namespace Medical.GUI
         private Layout layout;
         private Widget mainWidget;
         private MyGUILayoutContainer layoutContainer;
+        private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
 
         public StateList(String stateListFile, MedicalStateController stateController)
         {
@@ -67,7 +69,6 @@ namespace Medical.GUI
         {
             if (stateListBox.SelectedIndex != -1)
             {
-                //stateController.blendTo(stateListBox.SelectedIndices[0], 1.0f);
                 stateController.directBlend(stateListBox.SelectedIndex, 1.0f);
             }
         }
@@ -99,8 +100,8 @@ namespace Medical.GUI
 
         void stateController_StateAdded(MedicalStateController controller, MedicalState state, int index)
         {
-            ButtonListItem entry = stateListBox.addItem(state.Name);
-            //entry.Image = state.Thumbnail;
+            String imageId = imageAtlas.addImage(state, state.Thumbnail);
+            ButtonListItem entry = stateListBox.addItem(state.Name, imageId);
             entries.Add(state, entry);
         }
 
@@ -109,6 +110,7 @@ namespace Medical.GUI
             ButtonListItem entry = entries[state];
             stateListBox.removeItem(entry);
             entries.Remove(state);
+            imageAtlas.removeImage(state);
         }
 
         void stateController_StateUpdated(MedicalState state)
