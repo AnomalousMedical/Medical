@@ -7,6 +7,8 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using Engine.Renderer;
 using Logging;
+using OgreWrapper;
+using OgrePlugin;
 
 namespace Medical.Controller
 {
@@ -182,6 +184,27 @@ namespace Medical.Controller
             get
             {
                 return name;
+            }
+        }
+
+        public Camera Camera
+        {
+            get
+            {
+                //Have to typecast the scene view for this.
+                return ((OgreSceneView)sceneView).Camera;
+            }
+        }
+
+        public Color BackColor
+        {
+            get
+            {
+                return sceneView.BackgroundColor;
+            }
+            set
+            {
+                sceneView.BackgroundColor = value;
             }
         }
 

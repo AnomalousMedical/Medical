@@ -6,7 +6,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public class TemporaryStateBlender : UpdateListener
+    class TemporaryStateBlender : UpdateListener
     {
         private UpdateTimer mainTimer;
         MedicalState currentState;

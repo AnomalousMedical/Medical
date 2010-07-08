@@ -36,6 +36,7 @@ namespace Standalone
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
+        private ImageRenderer imageRenderer;
 
         //GUI
         private BasicGUI basicGUI;
@@ -63,18 +64,31 @@ namespace Standalone
 
         public void go()
         {
+            //Engine core
             medicalController = new MedicalController();
             medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
-            navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
-            layerController = new LayerController();
-            medicalStateController = new MedicalStateController(medicalController);
-            tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
-
+            //SceneView
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
 
+            //Navigation and layers
+            navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
+            layerController = new LayerController();
+
+            //Image Renderer
+            imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
+            imageRenderer.Watermark = watermark;
+            imageRenderer.Background = background;
+            //imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
+            //imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
+            
+            //Medical states
+            medicalStateController = new MedicalStateController(imageRenderer, medicalController);
+            tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
+
+            //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
 
             //Teeth mover
@@ -83,12 +97,13 @@ namespace Standalone
             this.SceneUnloading += teethMover.sceneUnloading;
             TeethController.TeethMover = teethMover;
             medicalController.FixedLoopUpdate += teethMover.update;
+            imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
+            imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
             //GUI
             MyGUIInterface myGUI = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
             myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
-
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
 
@@ -180,6 +195,14 @@ namespace Standalone
             get
             {
                 return movementSequenceController;
+            }
+        }
+
+        public ImageRenderer ImageRenderer
+        {
+            get
+            {
+                return imageRenderer;
             }
         }
 

@@ -84,6 +84,8 @@
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
+    <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
     <Compile Include="Controller\Layers\LayerState.cs" />

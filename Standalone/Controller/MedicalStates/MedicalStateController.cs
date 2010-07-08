@@ -6,12 +6,12 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
-    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
-    public delegate void MedicalStateEvent(MedicalStateController controller);
-    public delegate void MedicalStateStatusUpdate(MedicalState state);
+    delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
+    delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
+    delegate void MedicalStateEvent(MedicalStateController controller);
+    delegate void MedicalStateStatusUpdate(MedicalState state);
 
-    public class MedicalStateController : IDisposable
+    class MedicalStateController : IDisposable
     {
         private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
 
@@ -25,8 +25,8 @@ namespace Medical
 
         private List<MedicalState> states = new List<MedicalState>();
         private int currentState = -1;
-        //private ImageRenderer imageRenderer;
-        //private ImageRendererProperties imageProperties;
+        private ImageRenderer imageRenderer;
+        private ImageRendererProperties imageProperties;
         private MedicalController medicalController;
 
         private float blendLocation = 0.0f;
@@ -38,24 +38,24 @@ namespace Medical
         private MedicalState directStartState;
         private int directEndState;
 
-        public MedicalStateController(/*ImageRenderer imageRenderer,*/ MedicalController medicalController)
+        public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
         {
-            //this.imageRenderer = imageRenderer;
+            this.imageRenderer = imageRenderer;
 
-            //imageProperties = new ImageRendererProperties();
-            //imageProperties.Width = 100;
-            //imageProperties.Height = 100;
-            //imageProperties.UseWindowBackgroundColor = false;
-            //imageProperties.CustomBackgroundColor = BACK_COLOR;
-            //imageProperties.AntiAliasingMode = 2;
-            //imageProperties.UseActiveViewportLocation = false;
-            //imageProperties.UseNavigationStatePosition = true;
-            //imageProperties.NavigationStateName = "Midline Anterior";
-            //imageProperties.OverrideLayers = true;
-            //imageProperties.LayerState = "MandibleSizeLayers";
-            //imageProperties.TransparentBackground = true;
-            //imageProperties.ShowBackground = false;
-            //imageProperties.ShowWatermark = false;            
+            imageProperties = new ImageRendererProperties();
+            imageProperties.Width = 100;
+            imageProperties.Height = 100;
+            imageProperties.UseWindowBackgroundColor = false;
+            imageProperties.CustomBackgroundColor = BACK_COLOR;
+            imageProperties.AntiAliasingMode = 2;
+            imageProperties.UseActiveViewportLocation = false;
+            imageProperties.UseNavigationStatePosition = true;
+            imageProperties.NavigationStateName = "Midline Anterior";
+            imageProperties.OverrideLayers = true;
+            imageProperties.LayerState = "MandibleSizeLayers";
+            imageProperties.TransparentBackground = true;
+            imageProperties.ShowBackground = false;
+            imageProperties.ShowWatermark = false;            
 
             this.medicalController = medicalController;
         }
@@ -89,10 +89,10 @@ namespace Medical
         public void addState(MedicalState state)
         {
             states.Add(state);
-            //if (state.Thumbnail == null)
-            //{
-            //    state.Thumbnail = imageRenderer.renderImage(imageProperties);
-            //}
+            if (state.Thumbnail == null)
+            {
+                state.Thumbnail = imageRenderer.renderImage(imageProperties);
+            }
             if (StateAdded != null)
             {
                 StateAdded.Invoke(this, state, states.Count - 1);
