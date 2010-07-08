@@ -73,7 +73,7 @@ namespace Medical.GUI
             {
                 String fullImageName = presetStateSet.SourceDirectory + "/" + state.ImageName;
                 String imageKey = null;
-                //if (!presetListView.LargeImageList.Images.ContainsKey(fullImageName))
+                if (!imageAtlas.containsImage(fullImageName))
                 {
                     try
                     {
