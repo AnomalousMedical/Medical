@@ -41,6 +41,8 @@ namespace Standalone
         private BasicGUI basicGUI;
         private SceneViewController sceneViewController;
         private Watermark watermark;
+        private BackgroundController backgroundController;
+        private ViewportBackground background;
 
         public StandaloneController()
         {
@@ -96,8 +98,10 @@ namespace Standalone
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
+            createBackground();
+
             //Create scene view windows
-            sceneViewController.createWindow("Default", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("DefaultWindow", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
@@ -192,35 +196,31 @@ namespace Standalone
             {
                 movementSequenceController.stopPlayback();
             }
-            //distortionController.setToDefault();
             if (SceneUnloading != null && medicalController.CurrentScene != null)
             {
                 SceneUnloading.Invoke(medicalController.CurrentScene);
             }
             sceneViewController.destroyCameras();
-            //background.destroyBackground();
-            //backgroundController.sceneUnloading();
+            background.destroyBackground();
+            backgroundController.sceneUnloading();
             if (medicalController.openScene(file))
             {
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
-                    //backgroundController.sceneLoaded(ogreScene);
-                    //background.createBackground(ogreScene);
+                    backgroundController.sceneLoaded(ogreScene);
+                    background.createBackground(ogreScene);
 
                     sceneViewController.createCameras(medicalController.CurrentScene);
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
 
                     loadExternalFiles(medicalScene);
-                    //distortionController.sceneChanged(medicalController.CurrentScene, medicalController.CurrentSceneDirectory + "/" + medicalScene.PresetDirectory);
-                    //statePickerPanelController.sceneChanged(medicalController, medicalScene);
                     if (SceneLoaded != null)
                     {
                         SceneLoaded.Invoke(medicalController.CurrentScene);
                     }
                 }
-                //distortionController.setToDefault();
                 //StatusController.TaskCompleted();
                 return true;
             }
@@ -229,6 +229,39 @@ namespace Standalone
                 //StatusController.TaskCompleted();
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Create the background for the version that has been loaded.
+        /// </summary>
+        private void createBackground()
+        {
+            background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
+            //}
+            //else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBOMRIBackground", 900, 500, 500, 5, 5);
+            //}
+            //else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBORadiographyBackground", 900, 500, 500, 5, 5);
+            //}
+            //else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
+            //}
+            //else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBODentitionProfileBackground", 900, 500, 500, 5, 5);
+            //}
+            //else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            //{
+            //    background = new ViewportBackground("SourceBackground", "PiperJBODopplerBackground", 900, 500, 500, 5, 5);
+            //}
+            backgroundController = new BackgroundController(background, sceneViewController);
         }
 
         private void loadExternalFiles(SimulationScene medicalScene)

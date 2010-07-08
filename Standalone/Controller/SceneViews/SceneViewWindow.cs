@@ -10,10 +10,13 @@ using Logging;
 
 namespace Medical.Controller
 {
+    public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
+
     public class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
     {
         public event SceneViewWindowEvent CameraCreated;
         public event SceneViewWindowEvent CameraDestroyed;
+        public event SceneViewWindowRenderEvent FindVisibleObjects;
 
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -57,7 +60,7 @@ namespace Medical.Controller
             sceneView.showSceneStats(true);
             //basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(sceneView);
             //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
-            //ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
+            sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             if (CameraCreated != null)
             {
                 CameraCreated.Invoke(this);
@@ -70,6 +73,7 @@ namespace Medical.Controller
             {
                 Log.Info("Destroying SceneView for {0}.", name);
                 CameraResolver.removeMotionValidator(this);
+                sceneView.FindVisibleObjects -= sceneView_FindVisibleObjects;
                 cameraMover.setCamera(null);
                 window.destroySceneView(sceneView);
                 sceneView = null;
@@ -154,6 +158,38 @@ namespace Medical.Controller
             get
             {
                 return cameraMover.LookAt;
+            }
+        }
+
+        public Vector3 Direction
+        {
+            get
+            {
+                return sceneView.Direction;
+            }
+        }
+
+        public Quaternion Orientation
+        {
+            get
+            {
+                return sceneView.Orientation;
+            }
+        }
+
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+        }
+
+        void sceneView_FindVisibleObjects(SceneView sceneView)
+        {
+            if (FindVisibleObjects != null)
+            {
+                FindVisibleObjects.Invoke(this, sceneView.CurrentlyRendering);
             }
         }
 

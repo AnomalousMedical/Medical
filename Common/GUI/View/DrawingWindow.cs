@@ -91,7 +91,7 @@ namespace Medical
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
                 OgreSceneView ogreCamera = ((OgreSceneView)camera);
-                ogreCamera.PreFindVisibleObjects += camera_PreFindVisibleObjects;
+                ogreCamera.FindVisibleObjects += camera_PreFindVisibleObjects;
                 if (CameraCreated != null)
                 {
                     CameraCreated.Invoke(this);

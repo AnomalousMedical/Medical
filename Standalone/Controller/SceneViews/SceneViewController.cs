@@ -11,7 +11,6 @@ using MyGUIPlugin;
 namespace Medical.Controller
 {
     public delegate void SceneViewWindowEvent(SceneViewWindow window);
-    public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
 
     class SceneViewController : IDisposable
     {
