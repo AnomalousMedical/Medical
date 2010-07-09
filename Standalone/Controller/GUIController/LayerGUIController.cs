@@ -23,6 +23,8 @@ namespace Medical.GUI
         private ImageAtlas predefinedImageAtlas;
         private ButtonGrid predefinedLayerGallery;
 
+        private Button showContacts;
+
         public LayerGUIController(Gui ribbonLayout, LayerController layerController)
         {
             //Predefined layers
@@ -31,6 +33,9 @@ namespace Medical.GUI
             predefinedLayerGallery = new ButtonGrid(ribbonLayout.findWidgetT("Layers/Predefined") as ScrollView);
             predefinedLayerGallery.SelectedValueChanged += new EventHandler(predefinedLayerGallery_SelectedValueChanged);
             predefinedImageAtlas = new ImageAtlas("PredefinedLayers", new Size2(100, 100), new Size2(512, 512));
+
+            showContacts = ribbonLayout.findWidgetT("Layers/ShowContacts") as Button;
+            showContacts.MouseButtonClick += new MyGUIEvent(showContacts_MouseButtonClick);
 
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CUSTOM_LAYERS))
             {
@@ -77,6 +82,12 @@ namespace Medical.GUI
             //{
             //    basicForm.customLayersGroup.Visible = false;
             //}
+        }
+
+        void showContacts_MouseButtonClick(Widget source, EventArgs e)
+        {
+            TeethController.HighlightContacts = !TeethController.HighlightContacts;
+            showContacts.StateCheck = TeethController.HighlightContacts;
         }
 
         void predefinedLayerGallery_SelectedValueChanged(object sender, EventArgs e)

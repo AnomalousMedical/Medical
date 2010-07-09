@@ -40,9 +40,7 @@ namespace Medical.GUI
 
             LanguageManager.Instance.loadUserTags("core_theme_black_orange_tag.xml");
             gui.load("core_skin.xml");
-            gui.load("LayersToolstrip.xml");
-            gui.load("SequenceToolstrip.xml");
-            gui.load("TeethButtons.xml");
+            gui.load("Imagesets.xml");
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
