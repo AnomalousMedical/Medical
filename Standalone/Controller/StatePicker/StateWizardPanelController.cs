@@ -65,6 +65,7 @@ namespace Medical.GUI
             //this.measurementGrid = measurementGrid;
 
             notesPanel = new NotesPanel("DistortionPanels/NotesPanel.layout", this);
+            notesPanel.ImageKey = "DistortionPanelIcons/Notes";
             panelDictionary.Add(WizardPanels.NotesPanel, notesPanel);
 
             panelCreationFunctions.Add(WizardPanels.LeftCondylarGrowth, createLeftCondylarGrowth);
@@ -206,6 +207,7 @@ namespace Medical.GUI
             leftCondyle.NavigationState = "WizardGrowthLeftCameraAngle";
             leftCondyle.TextLine1 = "Left Condyle";
             leftCondyle.TextLine2 = "Growth";
+            leftCondyle.ImageKey = "DistortionPanelIcons/LeftCondyleGrowth";
             return leftCondyle;
         }
 
@@ -216,6 +218,7 @@ namespace Medical.GUI
             leftCondyle.NavigationState = "WizardDegenerationLeftCameraAngle";
             leftCondyle.TextLine1 = "Left Condyle";
             leftCondyle.TextLine2 = "Degeneration";
+            leftCondyle.ImageKey = "DistortionPanelIcons/LeftCondyleDegeneration";
             return leftCondyle;
         }
 
@@ -226,6 +229,7 @@ namespace Medical.GUI
             rightCondyle.NavigationState = "WizardGrowthRightCameraAngle";
             rightCondyle.TextLine1 = "Right Condyle";
             rightCondyle.TextLine2 = "Growth";
+            rightCondyle.ImageKey = "DistortionPanelIcons/RightCondyleGrowth";
             return rightCondyle;
         }
 
@@ -236,6 +240,7 @@ namespace Medical.GUI
             rightCondyle.NavigationState = "WizardDegenerationRightCameraAngle";
             rightCondyle.TextLine1 = "Right Condyle";
             rightCondyle.TextLine2 = "Degeneration";
+            rightCondyle.ImageKey = "DistortionPanelIcons/RightCondyleDegeneration";
             return rightCondyle;
         }
 
@@ -247,7 +252,7 @@ namespace Medical.GUI
             leftFossaPanel.NavigationState = "WizardLeftTMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             leftFossaPanel.TextLine1 = "Left Fossa";
-            //leftFossaPanel.LargeIcon = Resources.LeftFossaFlatness;
+            leftFossaPanel.ImageKey = "DistortionPanelIcons/LeftFossa";
             return leftFossaPanel;
         }
 
@@ -259,7 +264,7 @@ namespace Medical.GUI
             rightFossaPanel.NavigationState = "WizardRightTMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             rightFossaPanel.TextLine1 = "Right Fossa";
-            //rightFossaPanel.LargeIcon = Resources.RightFossaFlatness;
+            rightFossaPanel.ImageKey = "DistortionPanelIcons/RightFossa";
             return rightFossaPanel;
         }
 
@@ -270,6 +275,7 @@ namespace Medical.GUI
             leftDopplerPanel.LayerState = "JointMenuLayers";
             leftDopplerPanel.TextLine1 = "Left TMJ";
             leftDopplerPanel.TextLine2 = "Doppler";
+            leftDopplerPanel.ImageKey = "DistortionPanelIcons/LeftDiscSpace";
             return leftDopplerPanel;
         }
 
@@ -280,6 +286,7 @@ namespace Medical.GUI
             rightDopplerPanel.LayerState = "JointMenuLayers";
             rightDopplerPanel.TextLine1 = "Right TMJ";
             rightDopplerPanel.TextLine2 = "Doppler";
+            rightDopplerPanel.ImageKey = "DistortionPanelIcons/RightDiscSpace";
             return rightDopplerPanel;
         }
 
@@ -289,7 +296,7 @@ namespace Medical.GUI
             profileDistortionPicker.NavigationState = "WizardRightLateral";
             profileDistortionPicker.LayerState = "ProfileLayers";
             profileDistortionPicker.TextLine1 = "Profile";
-            //profileDistortionPicker.LargeIcon = Resources.ProfileIcon;
+            profileDistortionPicker.ImageKey = "DistortionPanelIcons/Profile";
             return profileDistortionPicker;
         }
 
@@ -300,6 +307,7 @@ namespace Medical.GUI
             panel.NavigationState = "WizardBottomTeeth";
             panel.TextLine1 = "Remove";
             panel.TextLine2 = "Mandibular Teeth";
+            panel.ImageKey = "DistortionPanelIcons/BottomTeeth";
             return panel;
         }
 
@@ -310,6 +318,7 @@ namespace Medical.GUI
             panel.NavigationState = "WizardTopTeeth";
             panel.TextLine1 = "Remove";
             panel.TextLine2 = "Maxillary Teeth";
+            panel.ImageKey = "DistortionPanelIcons/TopTeeth";
             return panel;
         }
 
@@ -319,7 +328,7 @@ namespace Medical.GUI
             teethHeightAdaptation.NavigationState = "WizardTeethMidlineAnterior";
             teethHeightAdaptation.LayerState = "TeethLayers";
             teethHeightAdaptation.TextLine1 = "Teeth";
-            //teethHeightAdaptation.LargeIcon = Resources.AdaptationIcon;
+            teethHeightAdaptation.ImageKey = "DistortionPanelIcons/TeethAdaptation";
             return teethHeightAdaptation;
         }
 
@@ -330,7 +339,7 @@ namespace Medical.GUI
             leftDiscPanel.LayerState = "FossaLayers";
             leftDiscPanel.TextLine1 = "Left Disc";
             leftDiscPanel.TextLine2 = "Space";
-            //leftDiscPanel.LargeIcon = Resources.LeftDiscSpace;
+            leftDiscPanel.ImageKey = "DistortionPanelIcons/LeftDiscSpace";
             return leftDiscPanel;
         }
 
@@ -341,29 +350,27 @@ namespace Medical.GUI
             rightDiscPanel.LayerState = "FossaLayers";
             rightDiscPanel.TextLine1 = "Right Disc";
             rightDiscPanel.TextLine2 = "Space";
-            //rightDiscPanel.LargeIcon = Resources.RightDiscSpace;
+            rightDiscPanel.ImageKey = "DistortionPanelIcons/RightDiscSpace";
             return rightDiscPanel;
         }
 
         private StateWizardPanel createLeftDiscClockFacePanel()
         {
             PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", "DistortionPanels/PresetStatePanel.layout", this);
-            //leftDiscPanel.Text = "Left Disc";
             leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "DiscLayers";
             leftDiscPanel.TextLine1 = "Left TMJ";
-            //leftDiscPanel.LargeIcon = Resources.LeftDiscPosition;
+            leftDiscPanel.ImageKey = "DistortionPanelIcons/LeftDiscPosition";
             return leftDiscPanel;
         }
 
         private StateWizardPanel createRightDiscClockFacePanel()
         {
             PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", "DistortionPanels/PresetStatePanel.layout", this);
-            //rightDiscPanel.Text = "Right Disc";
             rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "DiscLayers";
             rightDiscPanel.TextLine1 = "Right TMJ";
-            //rightDiscPanel.LargeIcon = Resources.RightDiscPosition;
+            rightDiscPanel.ImageKey = "DistortionPanelIcons/RightDiscPosition";
             return rightDiscPanel;
         }
 
@@ -371,6 +378,7 @@ namespace Medical.GUI
         {
             StateWizardPanel panel = new StateWizardPanel("DistortionPanels/DisclaimerPanel.layout", this);
             panel.TextLine1 = "Disclaimer";
+            panel.ImageKey = "DistortionPanelIcons/Disclaimer";
             return panel;
         }
 
@@ -381,6 +389,7 @@ namespace Medical.GUI
             teethPanel.NavigationState = "WizardTeethMidlineAnterior";
             teethPanel.TextLine1 = "Teeth";
             teethPanel.TextLine2 = "Adaptation";
+            teethPanel.ImageKey = "DistortionPanelIcons/TeethAdaptation";
             return teethPanel;
         }
 

@@ -98,6 +98,8 @@ namespace Medical.GUI
 
         public String TextLine2 { get; set; }
 
+        public String ImageKey { get; set; }
+
         protected void showChanges(bool immediate)
         {
             controller.showChanges(this, immediate);
