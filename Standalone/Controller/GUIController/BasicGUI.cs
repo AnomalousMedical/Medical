@@ -158,7 +158,7 @@ namespace Medical.GUI
                 //Doppler
                 StateWizard dopplerWizard = new StateWizard("Doppler", stateWizardController);
                 dopplerWizard.TextLine1 = "Doppler";
-                //dopplerWizard.ImageLarge = Resources.DopplerWizardLarge;
+                dopplerWizard.ImageKey = "DistortionsToolstrip/Doppler";
                 dopplerWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 dopplerWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDopplerPanel));
                 dopplerWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDopplerPanel));
@@ -171,7 +171,7 @@ namespace Medical.GUI
                 //Teeth
                 StateWizard teethWizard = new StateWizard("Dentition", stateWizardController);
                 teethWizard.TextLine1 = "Dentition";
-                //teethWizard.ImageLarge = Resources.TeethWizardIcon;
+                teethWizard.ImageKey = "DistortionsToolstrip/Dentition";
                 teethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 teethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
                 teethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.BottomTeethRemovalPanel));
@@ -185,7 +185,7 @@ namespace Medical.GUI
                 //Profile
                 StateWizard profileWizard = new StateWizard("Cephalometric", stateWizardController);
                 profileWizard.TextLine1 = "Cephalometric";
-                //profileWizard.ImageLarge = Resources.ProfileIcon;
+                profileWizard.ImageKey = "DistortionsToolstrip/Cephalometric";
                 profileWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 profileWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.ProfileDistortionPanel));
                 profileWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
@@ -199,7 +199,7 @@ namespace Medical.GUI
                 //Bone
                 StateWizard boneWizard = new StateWizard("Mandible", stateWizardController);
                 boneWizard.TextLine1 = "Mandible";
-                //boneWizard.ImageLarge = Resources.BoneWizardLarge;
+                boneWizard.ImageKey = "DistortionsToolstrip/Mandible";
                 boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
                 boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarDegeneration));
@@ -214,7 +214,7 @@ namespace Medical.GUI
                 //Disc
                 StateWizard discWizard = new StateWizard("Disc Space", stateWizardController);
                 discWizard.TextLine1 = "Disc Space";
-                //discWizard.ImageLarge = Resources.DiscSpaceWizardIcon;
+                discWizard.ImageKey = "DistortionsToolstrip/DiscSpace";
                 discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
                 discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscSpacePanel));
@@ -228,7 +228,7 @@ namespace Medical.GUI
                 StateWizard discClockWizard = new StateWizard("Disc Clock Face", stateWizardController);
                 discClockWizard.TextLine1 = "Disc";
                 discClockWizard.TextLine2 = "Clock Face";
-                //discClockWizard.ImageLarge = Resources.DiscWizardLarge;
+                discClockWizard.ImageKey = "DistortionsToolstrip/DiscClockFace";
                 discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
                 discClockWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDiscClockFacePanel));
@@ -244,7 +244,7 @@ namespace Medical.GUI
                 StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", stateWizardController);
                 profileTeethWizard.TextLine1 = "Cephalometric";
                 profileTeethWizard.TextLine2 = "and Dentition";
-                //profileTeethWizard.ImageLarge = Resources.ProfileAndTeethWizardLarge;
+                profileTeethWizard.ImageKey = "DistortionsToolstrip/CephalometricAndDentition";
                 profileTeethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 profileTeethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.ProfileDistortionPanel));
                 profileTeethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.TopTeethRemovalPanel));
@@ -260,7 +260,7 @@ namespace Medical.GUI
                 StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", stateWizardController);
                 clinicalWizard.TextLine1 = "Clinical";
                 clinicalWizard.TextLine2 = "and Doppler";
-                //clinicalWizard.ImageLarge = Resources.ClinicalIcon;
+                clinicalWizard.ImageKey = "DistortionsToolstrip/ClinicalAndDoppler";
                 clinicalWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 clinicalWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDopplerPanel));
                 clinicalWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightDopplerPanel));
@@ -278,7 +278,7 @@ namespace Medical.GUI
                 StateWizard ctWizard = new StateWizard("Clinical and Radiography", stateWizardController);
                 ctWizard.TextLine1 = "Clinical and";
                 ctWizard.TextLine2 = "Radiography";
-                //ctWizard.ImageLarge = Resources.CTWizardLarge;
+                ctWizard.ImageKey = "DistortionsToolstrip/ClinicalAndRadiography";
                 ctWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 ctWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
                 ctWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));
@@ -301,7 +301,7 @@ namespace Medical.GUI
                 StateWizard mriWizard = new StateWizard("Clinical and MRI", stateWizardController);
                 mriWizard.TextLine1 = "Clinical";
                 mriWizard.TextLine2 = "and MRI";
-                //mriWizard.ImageLarge = Resources.MRIWizardLarge;
+                mriWizard.ImageKey = "DistortionsToolstrip/ClinicalAndMRI";
                 mriWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 mriWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));
                 mriWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftCondylarGrowth));

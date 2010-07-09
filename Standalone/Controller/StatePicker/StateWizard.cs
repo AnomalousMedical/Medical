@@ -85,5 +85,7 @@ namespace Medical.GUI
         public String TextLine1 { get; set; }
 
         public String TextLine2 { get; set; }
+
+        public String ImageKey { get; set; }
     }
 }

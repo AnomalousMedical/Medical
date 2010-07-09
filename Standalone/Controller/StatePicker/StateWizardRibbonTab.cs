@@ -32,6 +32,7 @@ namespace Medical.GUI
                 wizardButton.setSize(buttonWidth, 64);
                 wizardButton.Caption = caption;
                 wizardButton.UserObject = wizard;
+                wizardButton.StaticImage.setItemResource(wizard.ImageKey);
                 wizardButton.MouseButtonClick += new MyGUIEvent(wizardButton_MouseButtonClick);
                 currentPosition += buttonWidth + 3;
             }
