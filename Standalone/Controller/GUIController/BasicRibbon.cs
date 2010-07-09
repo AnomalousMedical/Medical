@@ -13,8 +13,8 @@ namespace Medical.GUI
     {
         private LayerGUIController layerGUIController;
         private MandibleGUIController mandibleGUIController;
+        private SequencesGUIController sequencesGUIController;
         private Layout ribbon;
-        private Gui gui;
         private StandaloneController standaloneController;
 
         public BasicRibbon(Gui gui, StandaloneController standaloneController)
@@ -24,6 +24,7 @@ namespace Medical.GUI
             ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
             layerGUIController = new LayerGUIController(gui, standaloneController.LayerController);
             mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
+            sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
 
             Button quitButton = gui.findWidgetT("File/Quit") as Button;
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
