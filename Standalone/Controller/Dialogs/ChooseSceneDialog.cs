@@ -92,7 +92,7 @@ namespace Medical.GUI
         {
             if (sceneFileGrid.SelectedItem != null)
             {
-                controller.changeScene(sceneFileGrid.SelectedItem.UserObject.ToString());
+                controller.openNewScene(sceneFileGrid.SelectedItem.UserObject.ToString());
             }
             this.close();
         }

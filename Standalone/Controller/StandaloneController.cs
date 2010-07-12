@@ -131,6 +131,16 @@ namespace Standalone
         }
 
         /// <summary>
+        /// Opens a scene as a "new" scene by opening the given file and clearing the states.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void openNewScene(String filename)
+        {
+            medicalStateController.clearStates();
+            changeScene(filename);
+        }
+
+        /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
         /// </summary>
@@ -210,7 +220,7 @@ namespace Standalone
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        public bool changeScene(String file)
+        private bool changeScene(String file)
         {
             sceneViewController.resetAllCameraPositions();
             navigationController.recalculateClosestNonHiddenStates();

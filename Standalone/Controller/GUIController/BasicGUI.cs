@@ -138,6 +138,7 @@ namespace Medical.GUI
         {
             basicRibbon.sceneLoaded(scene);
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
+            this.changeLeftPanel(null);
         }
 
         public ScreenLayoutManager ScreenLayout
