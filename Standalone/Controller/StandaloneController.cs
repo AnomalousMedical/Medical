@@ -210,7 +210,7 @@ namespace Standalone
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(String file)
+        public bool changeScene(String file)
         {
             sceneViewController.resetAllCameraPositions();
             navigationController.recalculateClosestNonHiddenStates();

@@ -9,6 +9,7 @@ using Engine.Renderer;
 using Logging;
 using OgreWrapper;
 using OgrePlugin;
+using MyGUIPlugin;
 
 namespace Medical.Controller
 {
@@ -226,7 +227,7 @@ namespace Medical.Controller
         /// <returns>True if the camera should be allowed to move.  False if it should stay still.</returns>
         public bool allowMotion(int x, int y)
         {
-            return (x > Location.x && x < Location.x + WorkingSize.Width) && (y > Location.y && y < Location.y + WorkingSize.Height);
+            return !InputManager.Instance.isModalAny() && (x > Location.x && x < Location.x + WorkingSize.Width) && (y > Location.y && y < Location.y + WorkingSize.Height);
         }
 
         /// <summary>

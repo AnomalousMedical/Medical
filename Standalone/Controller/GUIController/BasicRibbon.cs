@@ -16,17 +16,22 @@ namespace Medical.GUI
         private SequencesGUIController sequencesGUIController;
         private Layout ribbon;
         private StandaloneController standaloneController;
+        private BasicGUI basicGUI;
 
-        public BasicRibbon(Gui gui, StandaloneController standaloneController)
+        public BasicRibbon(Gui gui, BasicGUI basicGUI, StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
+            this.basicGUI = basicGUI;
 
             ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
             layerGUIController = new LayerGUIController(gui, standaloneController.LayerController);
             mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
             sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
 
+            Button changeSceneButton = gui.findWidgetT("File/ChangeScene") as Button;
             Button quitButton = gui.findWidgetT("File/Quit") as Button;
+
+            changeSceneButton.MouseButtonClick += new MyGUIEvent(changeSceneButton_MouseButtonClick);
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
         }
 
@@ -44,6 +49,11 @@ namespace Medical.GUI
         public void sceneLoaded(SimScene scene)
         {
             mandibleGUIController.sceneLoaded(scene);
+        }
+
+        void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            basicGUI.showChooseSceneDialog();
         }
 
         void quitButton_MouseButtonClick(Widget source, EventArgs e)

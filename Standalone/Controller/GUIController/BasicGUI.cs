@@ -24,6 +24,9 @@ namespace Medical.GUI
         private StateList stateList;
         private StateWizardRibbonTab wizardRibbonTab;
 
+        //Dialogs
+        private ChooseSceneDialog chooseSceneDialog;
+
         public BasicGUI(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
@@ -38,13 +41,11 @@ namespace Medical.GUI
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
 
-            LanguageManager.Instance.loadUserTags("core_theme_black_orange_tag.xml");
-            gui.load("core_skin.xml");
             gui.load("Imagesets.xml");
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
-            basicRibbon = new BasicRibbon(gui, standaloneController);
+            basicRibbon = new BasicRibbon(gui, this, standaloneController);
             basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayoutManager.Root.Top = topAnimatedContainer;
@@ -63,6 +64,9 @@ namespace Medical.GUI
             createWizardPanels();
 
             wizardRibbonTab = new StateWizardRibbonTab(gui, stateWizardController, this);
+
+            chooseSceneDialog = new ChooseSceneDialog("ChooseSceneDialog.layout", standaloneController);
+
         }
 
         void stateWizardController_StateCreated(MedicalState state)
@@ -72,6 +76,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            chooseSceneDialog.Dispose();
             wizardRibbonTab.Dispose();
             stateWizardController.Dispose();
             stateWizardPanelController.Dispose();
@@ -109,6 +114,11 @@ namespace Medical.GUI
                 leftContainer.bringToFront();
             }
             leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
+        }
+
+        public void showChooseSceneDialog()
+        {
+            chooseSceneDialog.open(true);
         }
 
         private void animationCompleted(LayoutContainer oldChild)

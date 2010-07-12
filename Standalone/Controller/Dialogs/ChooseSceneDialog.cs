@@ -1,0 +1,100 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MyGUIPlugin;
+using Standalone;
+using Engine;
+using System.IO;
+using System.Drawing;
+
+namespace Medical.GUI
+{
+    class ChooseSceneDialog : Dialog
+    {
+        private StandaloneController controller;
+        private ButtonGrid sceneFileGrid;
+        private ImageAtlas imageAtlas;
+
+        public ChooseSceneDialog(String layoutFile, StandaloneController controller)
+            :base(layoutFile)
+        {
+            this.controller = controller;
+
+            Gui gui = Gui.Instance;
+
+            Button openButton = gui.findWidgetT("ChooseScene/Open") as Button;
+            Button cancelButton = gui.findWidgetT("ChooseScene/Cancel") as Button;
+            sceneFileGrid = new ButtonGrid(gui.findWidgetT("ChooseScene/FileSelect") as ScrollView);
+            sceneFileGrid.ItemActivated += new EventHandler(sceneFileGrid_ItemActivated);
+
+            imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight), new Size2(512, 512));
+
+            openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            findSceneFiles();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            imageAtlas.Dispose();
+        }
+
+        void findSceneFiles()
+        {
+            VirtualFileSystem archive = VirtualFileSystem.Instance;
+            String sceneDirectory = MedicalConfig.SceneDirectory;
+            String[] files = archive.listFiles(sceneDirectory, "*.sim.xml", false);
+            foreach (String file in files)
+            {
+                String fileName = VirtualFileSystem.GetFileName(file);
+                String baseName = fileName.Substring(0, fileName.IndexOf('.'));
+                String pictureFileName = sceneDirectory + "/" + baseName + ".png";
+                String imageKey = null;
+                if (archive.exists(pictureFileName))
+                {
+                    using (Stream imageStream = archive.openStream(pictureFileName, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read))
+                    {
+                        Image image = Image.FromStream(imageStream);
+                        if (image != null)
+                        {
+                            imageKey = imageAtlas.addImage(pictureFileName, image);
+                        }
+                    }
+                }
+                ButtonGridItem item = sceneFileGrid.addItem("Main", baseName, imageKey);
+                item.UserObject = file;
+            }
+            if (sceneFileGrid.Count > 0)
+            {
+                sceneFileGrid.SelectedItem = sceneFileGrid.getItem(0);
+            }
+        }
+
+        void sceneFileGrid_ItemActivated(object sender, EventArgs e)
+        {
+            changeScene();
+        }
+
+        void openButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            changeScene();
+        }
+
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            this.close();
+        }
+
+        void changeScene()
+        {
+            if (sceneFileGrid.SelectedItem != null)
+            {
+                controller.changeScene(sceneFileGrid.SelectedItem.UserObject.ToString());
+            }
+            this.close();
+        }
+    }
+}
