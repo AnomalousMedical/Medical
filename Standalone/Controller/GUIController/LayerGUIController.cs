@@ -30,6 +30,7 @@ namespace Medical.GUI
             //Predefined layers
             this.layerController = layerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
+            layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
             predefinedLayerGallery = new ButtonGrid(ribbonLayout.findWidgetT("Layers/Predefined") as ScrollView);
             predefinedLayerGallery.SelectedValueChanged += new EventHandler(predefinedLayerGallery_SelectedValueChanged);
             predefinedImageAtlas = new ImageAtlas("PredefinedLayers", new Size2(100, 100), new Size2(512, 512));
@@ -82,6 +83,74 @@ namespace Medical.GUI
             //{
             //    basicForm.customLayersGroup.Visible = false;
             //}
+        }
+
+        public void resetMenus()
+        {
+            skinMenu.setAlpha(1.0f);
+            musclesMenu.setAlpha(1.0f);
+            skullMenu.setAlpha(1.0f);
+            mandibleMenu.setAlpha(1.0f);
+            hyoidMenu.setAlpha(1.0f);
+            spineMenu.setAlpha(1.0f);
+            discsMenu.setAlpha(1.0f);
+            topTeethMenu.setAlpha(1.0f);
+            bottomTeethMenu.setAlpha(1.0f);
+        }
+
+        void synchronizeLayerMenus(LayerController controller)
+        {
+            foreach (LayerEntry layerEntry in controller.CurrentLayerState.Entries)
+            {
+                if (layerEntry.RenderGroup == RenderGroup.Skin && layerEntry.TransparencyObject == "Skin")
+                {
+                    skinMenu.setAlpha(layerEntry.AlphaValue);
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Muscles && layerEntry.TransparencyObject == "Left Masseter")
+                {
+                    musclesMenu.setAlpha(layerEntry.AlphaValue);
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Bones)
+                {
+                    if (layerEntry.TransparencyObject == "Skull")
+                    {
+                        skullMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Mandible")
+                    {
+                        mandibleMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Hyoid")
+                    {
+                        hyoidMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Spine)
+                {
+                    if (layerEntry.TransparencyObject == "C1")
+                    {
+                        spineMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.TMJ)
+                {
+                    if (layerEntry.TransparencyObject == "Left TMJ Disc")
+                    {
+                        discsMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+                else if (layerEntry.RenderGroup == RenderGroup.Teeth)
+                {
+                    if (layerEntry.TransparencyObject == "Tooth 10")
+                    {
+                        topTeethMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                    else if (layerEntry.TransparencyObject == "Tooth 25")
+                    {
+                        bottomTeethMenu.setAlpha(layerEntry.AlphaValue);
+                    }
+                }
+            }
         }
 
         void showContacts_MouseButtonClick(Widget source, EventArgs e)

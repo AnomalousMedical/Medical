@@ -49,6 +49,7 @@ namespace Medical.GUI
         public void sceneLoaded(SimScene scene)
         {
             mandibleGUIController.sceneLoaded(scene);
+            layerGUIController.resetMenus();
         }
 
         void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
