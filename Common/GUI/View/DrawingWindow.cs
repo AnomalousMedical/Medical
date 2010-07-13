@@ -91,7 +91,7 @@ namespace Medical
                 CameraResolver.addMotionValidator(this);
                 camera.showSceneStats(showSceneStats);
                 OgreSceneView ogreCamera = ((OgreSceneView)camera);
-                ogreCamera.FindVisibleObjects += camera_PreFindVisibleObjects;
+                ogreCamera.FindVisibleObjects += ogreCamera_FindVisibleObjects;
                 if (CameraCreated != null)
                 {
                     CameraCreated.Invoke(this);
@@ -113,7 +113,7 @@ namespace Medical
                 {
                     CameraDestroyed.Invoke(this);
                 }
-                ((OgreSceneView)camera).PreFindVisibleObjects -= camera_PreFindVisibleObjects;
+                camera.FindVisibleObjects -= ogreCamera_FindVisibleObjects;
                 cameraMover.setCamera(null);
                 window.destroySceneView(camera);
                 mainTimer.removeFixedUpdateListener(cameraMover);
@@ -141,11 +141,11 @@ namespace Medical
             }
         }
 
-        void camera_PreFindVisibleObjects(bool callingCameraRender)
+        void ogreCamera_FindVisibleObjects(SceneView sceneView)
         {
             if (PreFindVisibleObjects != null)
             {
-                PreFindVisibleObjects.Invoke(this, callingCameraRender);
+                PreFindVisibleObjects.Invoke(this, camera.CurrentlyRendering);
             }
         }
 

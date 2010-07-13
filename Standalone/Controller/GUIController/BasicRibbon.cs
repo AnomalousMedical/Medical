@@ -29,9 +29,13 @@ namespace Medical.GUI
             sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
 
             Button changeSceneButton = gui.findWidgetT("File/ChangeScene") as Button;
+            Button saveButton = gui.findWidgetT("File/Save") as Button;
+            Button saveAsButton = gui.findWidgetT("File/SaveAs") as Button;
             Button quitButton = gui.findWidgetT("File/Quit") as Button;
 
             changeSceneButton.MouseButtonClick += new MyGUIEvent(changeSceneButton_MouseButtonClick);
+            saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
+            saveAsButton.MouseButtonClick += new MyGUIEvent(saveAsButton_MouseButtonClick);
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
         }
 
@@ -55,6 +59,16 @@ namespace Medical.GUI
         void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
         {
             basicGUI.showChooseSceneDialog();
+        }
+
+        void saveButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            basicGUI.save();
+        }
+
+        void saveAsButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            basicGUI.saveAs();
         }
 
         void quitButton_MouseButtonClick(Widget source, EventArgs e)

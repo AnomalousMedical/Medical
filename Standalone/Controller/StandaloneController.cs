@@ -140,16 +140,14 @@ namespace Standalone
             changeScene(filename);
         }
 
-        /// <summary>
-        /// Helper function to create the default window. This is the callback
-        /// to the PluginManager.
-        /// </summary>
-        /// <param name="defaultWindow"></param>
-        private void createWindow(out DefaultWindowInfo defaultWindow)
+        public void saveMedicalState(PatientDataFile patientData)
         {
-            defaultWindow = new DefaultWindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
-            defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
-            defaultWindow.MonitorIndex = 0;
+            if (medicalStateController.getNumStates() == 0)
+            {
+                medicalStateController.createNormalStateFromScene();
+            }
+            patientData.SavedStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
+            patientData.save();
         }
 
         public MedicalController MedicalController
@@ -369,6 +367,18 @@ namespace Standalone
             {
                 navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
             }
+        }
+
+        /// <summary>
+        /// Helper function to create the default window. This is the callback
+        /// to the PluginManager.
+        /// </summary>
+        /// <param name="defaultWindow"></param>
+        private void createWindow(out DefaultWindowInfo defaultWindow)
+        {
+            defaultWindow = new DefaultWindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+            defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
+            defaultWindow.MonitorIndex = 0;
         }
 
         /// <summary>

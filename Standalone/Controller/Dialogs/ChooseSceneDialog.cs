@@ -21,11 +21,9 @@ namespace Medical.GUI
         {
             this.controller = controller;
 
-            Gui gui = Gui.Instance;
-
-            Button openButton = gui.findWidgetT("ChooseScene/Open") as Button;
-            Button cancelButton = gui.findWidgetT("ChooseScene/Cancel") as Button;
-            sceneFileGrid = new ButtonGrid(gui.findWidgetT("ChooseScene/FileSelect") as ScrollView);
+            Button openButton = window.findWidget("ChooseScene/Open") as Button;
+            Button cancelButton = window.findWidget("ChooseScene/Cancel") as Button;
+            sceneFileGrid = new ButtonGrid(window.findWidget("ChooseScene/FileSelect") as ScrollView);
             sceneFileGrid.ItemActivated += new EventHandler(sceneFileGrid_ItemActivated);
 
             imageAtlas = new ImageAtlas("ChooseSceneDialog", new Size2(sceneFileGrid.ItemWidth, sceneFileGrid.ItemHeight), new Size2(512, 512));

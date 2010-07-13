@@ -26,6 +26,7 @@ namespace Medical.GUI
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
+        private SavePatientDialog savePatientDialog;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -66,7 +67,8 @@ namespace Medical.GUI
             wizardRibbonTab = new StateWizardRibbonTab(gui, stateWizardController, this);
 
             chooseSceneDialog = new ChooseSceneDialog("ChooseSceneDialog.layout", standaloneController);
-
+            savePatientDialog = new SavePatientDialog("SavePatientDialog.layout");
+            savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
         }
 
         void stateWizardController_StateCreated(MedicalState state)
@@ -119,6 +121,21 @@ namespace Medical.GUI
         public void showChooseSceneDialog()
         {
             chooseSceneDialog.open(true);
+        }
+
+        public void save()
+        {
+            savePatientDialog.save();
+        }
+
+        public void saveAs()
+        {
+            savePatientDialog.saveAs();
+        }
+
+        void savePatientDialog_SaveFile(object sender, EventArgs e)
+        {
+            standaloneController.saveMedicalState(savePatientDialog.PatientData);
         }
 
         private void animationCompleted(LayoutContainer oldChild)
