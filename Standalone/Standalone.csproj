@@ -83,6 +83,7 @@
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\Dialogs\ChooseSceneDialog.cs" />
+    <Compile Include="Controller\Dialogs\OpenPatientDialog.cs" />
     <Compile Include="Controller\Dialogs\SavePatientDialog.cs" />
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Controller\StatePicker\StateWizardRibbonTab.cs" />
     <Compile Include="Controller\StatePicker\WizardIconPanel.cs" />
     <Compile Include="Controller\States\StateList.cs" />
+    <Compile Include="Controller\ThreadManager.cs" />
     <Compile Include="Controller\Watermark\SideLogoWatermark.cs" />
     <Compile Include="Controller\Watermark\TextWatermark.cs" />
     <Compile Include="Controller\Watermark\Watermark.cs" />

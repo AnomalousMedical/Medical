@@ -112,6 +112,7 @@ namespace Standalone
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
+            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
 
             createBackground();
 
@@ -122,6 +123,11 @@ namespace Standalone
             {
                 medicalController.start();
             }
+        }
+
+        void medicalController_FixedLoopUpdate(Clock time)
+        {
+            ThreadManager.doInvoke();
         }
 
         public void shutdown()

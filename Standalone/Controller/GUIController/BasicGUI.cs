@@ -27,6 +27,7 @@ namespace Medical.GUI
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
         private SavePatientDialog savePatientDialog;
+        private OpenPatientDialog openPatientDialog;
 
         public BasicGUI(StandaloneController standaloneController)
         {
@@ -68,6 +69,8 @@ namespace Medical.GUI
 
             chooseSceneDialog = new ChooseSceneDialog("ChooseSceneDialog.layout", standaloneController);
             savePatientDialog = new SavePatientDialog("SavePatientDialog.layout");
+            openPatientDialog = new OpenPatientDialog("OpenPatientDialog.layout");
+
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
         }
 
@@ -121,6 +124,11 @@ namespace Medical.GUI
         public void showChooseSceneDialog()
         {
             chooseSceneDialog.open(true);
+        }
+
+        public void open()
+        {
+            openPatientDialog.open(true);
         }
 
         public void save()
