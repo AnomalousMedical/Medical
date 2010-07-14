@@ -131,23 +131,32 @@ namespace Medical.GUI
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            String filename = SavePath;
-            bool saveFile = true;
-            if (File.Exists(filename))
+            if (File.Exists(SavePath))
             {
-                //if (MessageBox.Show(this, String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Caption), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-                //{
-                //    saveFile = false;
-                //}
+                MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", fileNameTextBox.Caption),
+                    "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteMessageCallback);
             }
-            if (saveFile)
+            else
             {
-                patientData = new PatientDataFile(filename);
-                patientData.FirstName = firstText.Caption;
-                patientData.LastName = lastText.Caption;
-                this.close();
-                fireSaveFile();
+                doSaveAndClose();
             }
+        }
+
+        private void overwriteMessageCallback(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                doSaveAndClose();
+            }
+        }
+
+        private void doSaveAndClose()
+        {
+            patientData = new PatientDataFile(SavePath);
+            patientData.FirstName = firstText.Caption;
+            patientData.LastName = lastText.Caption;
+            this.close();
+            fireSaveFile();
         }
 
         public PatientDataFile PatientData
