@@ -86,10 +86,14 @@ namespace Medical.GUI
         public OpenPatientDialog(String layoutFile)
             :base(layoutFile)
         {
+            this.SmoothShow = false;
+
             fileDataGrid = window.findWidget("Open/FileList") as MultiList;
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;
 
-            fileDataGrid.addColumn("Name", 100);
+            fileDataGrid.addColumn("First Name", fileDataGrid.getWidth() / 3);
+            fileDataGrid.addColumn("Last Name", fileDataGrid.getWidth() / 3);
+            fileDataGrid.addColumn("Date Modified", fileDataGrid.getWidth() / 3);
             fileDataGrid.ListChangePosition += new MyGUIEvent(fileDataGrid_ListChangePosition);
             //fileDataGrid.SelectionChanged += new EventHandler(fileDataGrid_SelectionChanged);
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
@@ -97,7 +101,7 @@ namespace Medical.GUI
             //fileDataGrid.CellClick += new DataGridViewCellEventHandler(fileDataGrid_CellClick);
             
             locationTextBox.Caption = MedicalConfig.SaveDirectory;
-            locationTextBox.EventEditTextChange +=new MyGUIEvent(locationTextBox_EventEditTextChange);
+            locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             //searchBox.TextChanged += new EventHandler(searchBox_TextChanged);
 
@@ -255,6 +259,7 @@ namespace Medical.GUI
 
         void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Log.Debug("Listing files");
             int bufferSize = 15;
             int bufMax = bufferSize - 1;
             PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
@@ -292,6 +297,7 @@ namespace Medical.GUI
                     fileListWorker.ReportProgress(0);
                 }
             }
+            Log.Debug("Finished Listing files");
         }
 
         void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
@@ -299,6 +305,9 @@ namespace Medical.GUI
             for (int i = 0; i <= dataFileBufferPosition; ++i)
             {
                 fileDataGrid.addItem(dataFileBuffer[i].FirstName);
+                uint newIndex = fileDataGrid.getItemCount() - 1;
+                fileDataGrid.setSubItemNameAt(1, newIndex, dataFileBuffer[i].LastName);
+                fileDataGrid.setSubItemNameAt(2, newIndex, dataFileBuffer[i].DateModified.ToString());
                 //patientData.Add(dataFileBuffer[i]);
             }
         }
