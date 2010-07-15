@@ -92,8 +92,6 @@ namespace Medical.GUI
         public OpenPatientDialog(String layoutFile)
             :base(layoutFile)
         {
-            this.SmoothShow = false;
-
             fileDataGrid = window.findWidget("Open/FileList") as MultiList;
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;
             warningImage = window.findWidget("Open/WarningImage") as StaticImage;
@@ -103,11 +101,13 @@ namespace Medical.GUI
             deleteButton = window.findWidget("Open/DeleteButton") as Button;
             Button cancelButton = window.findWidget("Open/CancelButton") as Button;
 
-            fileDataGrid.addColumn("First Name", fileDataGrid.getWidth() / 3);
-            fileDataGrid.addColumn("Last Name", fileDataGrid.getWidth() / 3);
-            fileDataGrid.addColumn("Date Modified", fileDataGrid.getWidth() / 3);
+            int fileGridWidth = fileDataGrid.getWidth() - 2;
+            fileDataGrid.addColumn("First Name", fileGridWidth / 3);
+            fileDataGrid.addColumn("Last Name", fileGridWidth / 3);
+            fileDataGrid.addColumn("Date Modified", fileGridWidth / 3);
             fileDataGrid.ListChangePosition += new MyGUIEvent(fileDataGrid_ListChangePosition);
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
+            fileDataGrid.SortOnChanges = false;
             
             locationTextBox.Caption = MedicalConfig.SaveDirectory;
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
@@ -269,13 +269,13 @@ namespace Medical.GUI
         {
             if (validSearchDirectory)
             {
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
+                //Stopwatch sw = new Stopwatch();
+                //sw.Start();
 
                 String[] files = Directory.GetFiles(locationTextBox.Caption, "*.pdt");
                 int totalFiles = files.Length;
 
-                int bufferSize = totalFiles / 3 + totalFiles % 3;
+                int bufferSize = 200;// totalFiles / 3 + totalFiles % 3;
                 int bufMax = bufferSize - 1;
                 PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
                 int dataFileBufferPosition = 0;
@@ -308,16 +308,13 @@ namespace Medical.GUI
                     fileListWorker.ReportProgress(0);
                 }
 
-                sw.Stop();
-                Log.Debug("Scanned files in {0}", sw.ElapsedMilliseconds);
+                //sw.Stop();
+                //Log.Debug("Scanned files in {0}", sw.ElapsedMilliseconds);
             }
         }
 
         void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             for (int i = 0; i <= dataFileBufferPosition; ++i)
             {
                 fileDataGrid.addItem(dataFileBuffer[i].FirstName, dataFileBuffer[i]);
@@ -325,9 +322,6 @@ namespace Medical.GUI
                 fileDataGrid.setSubItemNameAt(1, newIndex, dataFileBuffer[i].LastName);
                 fileDataGrid.setSubItemNameAt(2, newIndex, dataFileBuffer[i].DateModified.ToString());
             }
-
-            sw.Stop();
-            Log.Debug("Updated list in {0}.", sw.ElapsedMilliseconds);
         }
 
         void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -338,7 +332,7 @@ namespace Medical.GUI
         void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadingProgress.Visible = false;
-            Log.Debug("Total patients {0}.", fileDataGrid.getItemCount());
+            //Log.Debug("Total patients {0}.", fileDataGrid.getItemCount());
             if (startNewDirectoryScanOnBackgroundThreadStop)
             {
                 listFiles();

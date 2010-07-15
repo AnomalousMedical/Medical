@@ -53,7 +53,7 @@ namespace Medical.Controller
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
-            sceneView.BackgroundColor = Engine.Color.Black;
+            sceneView.BackgroundColor = new Color(0.149f, 0.149f, 0.149f);
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
