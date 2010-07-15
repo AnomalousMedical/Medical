@@ -26,9 +26,9 @@ namespace Medical.GUI
         private Progress loadingProgress;
         private Button openButton;
         private Button deleteButton;
+        private Edit searchBox;
 
         private PatientDataFile currentFile = null;
-        //private PropertyDescriptor lastNameDescriptor;
         private bool validSearchDirectory = true;
 
         private delegate void UpdateCallback(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition);
@@ -102,6 +102,7 @@ namespace Medical.GUI
             openButton = window.findWidget("Open/OpenButton") as Button;
             deleteButton = window.findWidget("Open/DeleteButton") as Button;
             Button cancelButton = window.findWidget("Open/CancelButton") as Button;
+            searchBox = window.findWidget("Open/SearchText") as Edit;
 
             int fileGridWidth = fileDataGrid.getWidth() - 2;
             fileDataGrid.addColumn("First Name", fileGridWidth / 3);
@@ -114,13 +115,12 @@ namespace Medical.GUI
             locationTextBox.Caption = MedicalConfig.SaveDirectory;
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
-            //searchBox.TextChanged += new EventHandler(searchBox_TextChanged);
+            searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
 
             warningImage.Visible = warningText.Visible = false;
             loadingProgress.Visible = false;
             loadingProgress.Range = 100;
 
-            //lastNameDescriptor = TypeDescriptor.GetProperties(typeof(PatientBindingSource)).Find("LastName", false);
             fileListWorker.WorkerReportsProgress = true;
             fileListWorker.WorkerSupportsCancellation = true;
             fileListWorker.DoWork += new DoWorkEventHandler(fileListWorker_DoWork);
@@ -135,14 +135,13 @@ namespace Medical.GUI
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
         }
 
-        void searchBox_TextChanged(object sender, EventArgs e)
+        void searchBox_EventEditTextChange(Widget source, EventArgs e)
         {
-            //int index = ((IBindingList)patientData).Find(lastNameDescriptor, searchBox.Text);
-            //if (index != -1)
-            //{
-            //    fileDataGrid.Rows[index].Selected = true;
-            //    fileDataGrid.FirstDisplayedScrollingRowIndex = index;
-            //}
+            uint index;
+            if (fileDataGrid.findSubItemWith(1, searchBox.Caption, out index))
+            {
+                fileDataGrid.setIndexSelected(index);
+            }
         }
 
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
