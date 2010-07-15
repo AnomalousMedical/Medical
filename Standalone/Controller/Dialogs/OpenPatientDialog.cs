@@ -16,6 +16,8 @@ namespace Medical.GUI
 {
     public partial class OpenPatientDialog : Dialog
     {
+        public event EventHandler OpenFile;
+
         private BackgroundWorker fileListWorker = new BackgroundWorker();
         private MultiList fileDataGrid;
         private Edit locationTextBox;
@@ -175,6 +177,10 @@ namespace Medical.GUI
         {
             base.onClosed(e);
             fileDataGrid.removeAllItems();
+            if (FileChosen && OpenFile != null)
+            {
+                OpenFile.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public bool FileChosen

@@ -61,8 +61,6 @@ namespace Medical.Controller
             cameraMover.setCamera(sceneView);
             CameraResolver.addMotionValidator(this);
             sceneView.showSceneStats(true);
-            //basicGUI.ScreenLayout.Root.Center = new SceneViewLayoutItem(sceneView);
-            //OgreCameraControl ogreCamera = ((OgreCameraControl)camera);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             if (CameraCreated != null)
             {

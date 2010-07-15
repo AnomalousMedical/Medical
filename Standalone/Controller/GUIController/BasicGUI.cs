@@ -70,6 +70,7 @@ namespace Medical.GUI
             chooseSceneDialog = new ChooseSceneDialog("ChooseSceneDialog.layout", standaloneController);
             savePatientDialog = new SavePatientDialog("SavePatientDialog.layout");
             openPatientDialog = new OpenPatientDialog("OpenPatientDialog.layout");
+            openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
         }
@@ -144,6 +145,11 @@ namespace Medical.GUI
         void savePatientDialog_SaveFile(object sender, EventArgs e)
         {
             standaloneController.saveMedicalState(savePatientDialog.PatientData);
+        }
+
+        void openPatientDialog_OpenFile(object sender, EventArgs e)
+        {
+            standaloneController.openPatientFile(openPatientDialog.CurrentFile);
         }
 
         private void animationCompleted(LayoutContainer oldChild)

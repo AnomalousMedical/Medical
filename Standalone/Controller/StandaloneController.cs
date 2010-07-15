@@ -162,6 +162,25 @@ namespace Standalone
             patientData.save();
         }
 
+        public void openPatientFile(PatientDataFile dataFile)
+        {
+            if (dataFile.loadData())
+            {
+                SavedMedicalStates states = dataFile.SavedStates;
+                if (states != null)
+                {
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
+                    medicalStateController.setStates(states);
+                    medicalStateController.blend(0.0f);
+                }
+                dataFile.closeData();
+            }
+            else
+            {
+                MessageBox.show(String.Format("Error loading file {0}.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
+        }
+
         public MedicalController MedicalController
         {
             get
