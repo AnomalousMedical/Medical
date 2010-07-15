@@ -18,6 +18,11 @@ namespace Medical.GUI
         private BackgroundWorker fileListWorker = new BackgroundWorker();
         private MultiList fileDataGrid;
         private Edit locationTextBox;
+        private StaticImage warningImage;
+        private StaticText warningText;
+        private Widget loadingProgress;
+        private Button openButton;
+        private Button deleteButton;
 
         private PatientDataFile currentFile = null;
         //private PropertyDescriptor lastNameDescriptor;
@@ -90,23 +95,26 @@ namespace Medical.GUI
 
             fileDataGrid = window.findWidget("Open/FileList") as MultiList;
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;
+            warningImage = window.findWidget("Open/WarningImage") as StaticImage;
+            warningText = window.findWidget("Open/WarningText") as StaticText;
+            loadingProgress = window.findWidget("Open/LoadingProgress");
+            openButton = window.findWidget("Open/OpenButton") as Button;
+            deleteButton = window.findWidget("Open/DeleteButton") as Button;
+            Button cancelButton = window.findWidget("Open/CancelButton") as Button;
 
             fileDataGrid.addColumn("First Name", fileDataGrid.getWidth() / 3);
             fileDataGrid.addColumn("Last Name", fileDataGrid.getWidth() / 3);
             fileDataGrid.addColumn("Date Modified", fileDataGrid.getWidth() / 3);
             fileDataGrid.ListChangePosition += new MyGUIEvent(fileDataGrid_ListChangePosition);
-            //fileDataGrid.SelectionChanged += new EventHandler(fileDataGrid_SelectionChanged);
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
-            //fileDataGrid.CellDoubleClick += new DataGridViewCellEventHandler(fileDataGrid_CellDoubleClick);
-            //fileDataGrid.CellClick += new DataGridViewCellEventHandler(fileDataGrid_CellClick);
             
             locationTextBox.Caption = MedicalConfig.SaveDirectory;
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             //searchBox.TextChanged += new EventHandler(searchBox_TextChanged);
 
-            //warningLabel.Visible = false;
-            //loadingProgress.Visible = false;
+            warningImage.Visible = warningText.Visible = false;
+            loadingProgress.Visible = false;
 
             //lastNameDescriptor = TypeDescriptor.GetProperties(typeof(PatientBindingSource)).Find("LastName", false);
             fileListWorker.WorkerReportsProgress = true;
@@ -117,6 +125,10 @@ namespace Medical.GUI
 
             updateFileListCallback = new UpdateCallback(this.updateFileList);
             cancelListFilesCallback = new CancelCallback(listFilesCanceled);
+
+            openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
+            deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
+            cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
         }
 
         void searchBox_TextChanged(object sender, EventArgs e)
@@ -132,7 +144,7 @@ namespace Medical.GUI
         void locationTextBox_EventEditTextChange(Widget source, EventArgs e)
         {
             validSearchDirectory = Directory.Exists(locationTextBox.Caption);
-            //warningLabel.Visible = !validSearchDirectory;
+            warningImage.Visible = warningText.Visible = !validSearchDirectory;
             listFiles();
         }
 
@@ -141,7 +153,8 @@ namespace Medical.GUI
             base.onShown(e);
             listFiles();
             currentFile = null;
-            //openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
+            openButton.Enabled = fileDataGrid.hasItemSelected();
+            deleteButton.Enabled = fileDataGrid.hasItemSelected();
             cancelPostAction = CancelPostAction.None;
         }
 
@@ -162,11 +175,6 @@ namespace Medical.GUI
             fileDataGrid.removeAllItems();
         }
 
-        void fileList_ItemActivate(object sender, EventArgs e)
-        {
-            openButton_Click(null, null);
-        }
-
         public bool FileChosen
         {
             get
@@ -183,50 +191,48 @@ namespace Medical.GUI
             }
         }
 
-        //Dont need this one it is the sort
-        //void fileDataGrid_CellClick(object sender, EventArgs e)
-        //{
-        //    if (e.RowIndex == -1)
-        //    {
-        //        int columnIndex = e.ColumnIndex;
-        //        DataGridViewColumn column = fileDataGrid.Columns[columnIndex];
-        //        SortOrder order = SortOrder.Ascending;
-        //        ListSortDirection direction = ListSortDirection.Ascending;
-        //        if (column.HeaderCell.SortGlyphDirection == SortOrder.Ascending)
-        //        {
-        //            order = SortOrder.Descending;
-        //            direction = ListSortDirection.Descending;
-        //        }
-        //        fileDataGrid.Sort(column, direction);
-        //        column.HeaderCell.SortGlyphDirection = order;
-        //    }
-        //}
-
-
-
         void fileDataGrid_ListSelectAccept(Widget source, EventArgs e)
         {
-            openButton_Click(null, null);
+            openButton_MouseButtonClick(null, null);
         }
 
         void fileDataGrid_ListChangePosition(Widget source, EventArgs e)
         {
-            //openButton.Enabled = fileDataGrid.SelectedRows.Count > 0;
+            deleteButton.Enabled = openButton.Enabled = fileDataGrid.hasItemSelected();
         }
 
-        private void openButton_Click(object sender, EventArgs e)
-        {
-            //if (fileDataGrid.SelectedRows.Count > 0)
-            //{
-            //    currentFile = fileDataGrid.SelectedRows[0].DataBoundItem as PatientDataFile;
-            //    this.close();
-            //}
-        }
-
-        private void cancelButton_Click(object sender, EventArgs e)
+        void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             currentFile = null;
             this.close();
+        }
+
+        void deleteButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (fileDataGrid.hasItemSelected())
+            {
+                uint selectedIndex = fileDataGrid.getIndexSelected();
+                PatientDataFile deleteFile = (PatientDataFile)fileDataGrid.getItemDataAt(selectedIndex);
+                try
+                {
+                    File.Delete(deleteFile.BackingFile);
+                    fileDataGrid.removeItemAt(selectedIndex);
+                    fileDataGrid_ListChangePosition(null, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.show(String.Format("Could not delete file {0}.\nReason\n{1}.", deleteFile.BackingFile, ex.Message), "Delete Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError, null);
+                }
+            }
+        }
+
+        void openButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (fileDataGrid.hasItemSelected())
+            {
+                currentFile = (PatientDataFile)fileDataGrid.getItemDataAt(fileDataGrid.getIndexSelected());
+                this.close();
+            }
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -251,7 +257,7 @@ namespace Medical.GUI
                 {
                     startNewDirectoryScanOnBackgroundThreadStop = false;
                     bgThreadKnowsAboutCancel = false;
-                    //loadingProgress.Visible = true;
+                    loadingProgress.Visible = true;
                     fileListWorker.RunWorkerAsync();
                 }
             }
@@ -259,7 +265,6 @@ namespace Medical.GUI
 
         void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Log.Debug("Listing files");
             int bufferSize = 15;
             int bufMax = bufferSize - 1;
             PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
@@ -291,24 +296,22 @@ namespace Medical.GUI
                         }
                     }
                 }
-                if (!bgThreadKnowsAboutCancel)
+                if (!bgThreadKnowsAboutCancel && files.Length > 0)
                 {
                     ThreadManager.invoke(updateFileListCallback, dataFileBuffer, currentPosition);
                     fileListWorker.ReportProgress(0);
                 }
             }
-            Log.Debug("Finished Listing files");
         }
 
         void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
         {
             for (int i = 0; i <= dataFileBufferPosition; ++i)
             {
-                fileDataGrid.addItem(dataFileBuffer[i].FirstName);
+                fileDataGrid.addItem(dataFileBuffer[i].FirstName, dataFileBuffer[i]);
                 uint newIndex = fileDataGrid.getItemCount() - 1;
                 fileDataGrid.setSubItemNameAt(1, newIndex, dataFileBuffer[i].LastName);
                 fileDataGrid.setSubItemNameAt(2, newIndex, dataFileBuffer[i].DateModified.ToString());
-                //patientData.Add(dataFileBuffer[i]);
             }
         }
 
@@ -320,7 +323,7 @@ namespace Medical.GUI
 
         void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //loadingProgress.Visible = false;
+            loadingProgress.Visible = false;
             //Log.Debug("Total patients {0}.", patientData.Count);
             if (startNewDirectoryScanOnBackgroundThreadStop)
             {
