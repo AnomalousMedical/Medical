@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Medical.Controller
 {
@@ -9,6 +10,7 @@ namespace Medical.Controller
     {
         private Delegate func;
         private Object[] args;
+        private AutoResetEvent threadEvent = new AutoResetEvent(false);
 
         public TargetEntry(Delegate func, object[] args)
         {
@@ -19,7 +21,16 @@ namespace Medical.Controller
         public void invoke()
         {
             func.DynamicInvoke(args);
+            threadEvent.Set();
+            Finished = true;
         }
+
+        public void wait()
+        {
+            threadEvent.WaitOne();
+        }
+
+        public bool Finished { get; set; }
     }
 
     class ThreadManager
@@ -37,9 +48,14 @@ namespace Medical.Controller
         /// <param name="target"></param>
         public static void invoke(Delegate target, params object[] args)
         {
+            TargetEntry entry = new TargetEntry(target, args);
             lock (targets)
             {
-                targets.Add(new TargetEntry(target, args));
+                targets.Add(entry);
+            }
+            if (!entry.Finished)
+            {
+                entry.wait();
             }
         }
 

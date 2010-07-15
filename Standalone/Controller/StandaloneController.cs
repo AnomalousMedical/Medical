@@ -113,6 +113,7 @@ namespace Standalone
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
+            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             createBackground();
 
@@ -125,9 +126,14 @@ namespace Standalone
             }
         }
 
-        void medicalController_FixedLoopUpdate(Clock time)
+        void medicalController_FullSpeedLoopUpdate(Clock time)
         {
             ThreadManager.doInvoke();
+        }
+
+        void medicalController_FixedLoopUpdate(Clock time)
+        {
+            
         }
 
         public void shutdown()

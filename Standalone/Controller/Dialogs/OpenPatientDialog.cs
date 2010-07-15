@@ -10,6 +10,7 @@ using Logging;
 using System.Threading;
 using MyGUIPlugin;
 using Medical.Controller;
+using System.Diagnostics;
 
 namespace Medical.GUI
 {
@@ -20,7 +21,7 @@ namespace Medical.GUI
         private Edit locationTextBox;
         private StaticImage warningImage;
         private StaticText warningText;
-        private Widget loadingProgress;
+        private Progress loadingProgress;
         private Button openButton;
         private Button deleteButton;
 
@@ -97,7 +98,7 @@ namespace Medical.GUI
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;
             warningImage = window.findWidget("Open/WarningImage") as StaticImage;
             warningText = window.findWidget("Open/WarningText") as StaticText;
-            loadingProgress = window.findWidget("Open/LoadingProgress");
+            loadingProgress = window.findWidget("Open/LoadingProgress") as Progress;
             openButton = window.findWidget("Open/OpenButton") as Button;
             deleteButton = window.findWidget("Open/DeleteButton") as Button;
             Button cancelButton = window.findWidget("Open/CancelButton") as Button;
@@ -115,6 +116,7 @@ namespace Medical.GUI
 
             warningImage.Visible = warningText.Visible = false;
             loadingProgress.Visible = false;
+            loadingProgress.Range = 100;
 
             //lastNameDescriptor = TypeDescriptor.GetProperties(typeof(PatientBindingSource)).Find("LastName", false);
             fileListWorker.WorkerReportsProgress = true;
@@ -265,16 +267,20 @@ namespace Medical.GUI
 
         void fileListWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            int bufferSize = 15;
-            int bufMax = bufferSize - 1;
-            PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
-            int dataFileBufferPosition = 0;
-            int totalFiles = 0;
             if (validSearchDirectory)
             {
-                dataFileBufferPosition = 0;
+                Stopwatch sw = new Stopwatch();
+                sw.Start();
+
                 String[] files = Directory.GetFiles(locationTextBox.Caption, "*.pdt");
-                totalFiles = files.Length;
+                int totalFiles = files.Length;
+
+                int bufferSize = totalFiles / 3 + totalFiles % 3;
+                int bufMax = bufferSize - 1;
+                PatientDataFile[] dataFileBuffer = new PatientDataFile[bufferSize];
+                int dataFileBufferPosition = 0;
+
+                dataFileBufferPosition = 0;
                 int currentPosition = 0;
                 foreach (String file in files)
                 {
@@ -301,11 +307,17 @@ namespace Medical.GUI
                     ThreadManager.invoke(updateFileListCallback, dataFileBuffer, currentPosition);
                     fileListWorker.ReportProgress(0);
                 }
+
+                sw.Stop();
+                Log.Debug("Scanned files in {0}", sw.ElapsedMilliseconds);
             }
         }
 
         void updateFileList(PatientDataFile[] dataFileBuffer, int dataFileBufferPosition)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             for (int i = 0; i <= dataFileBufferPosition; ++i)
             {
                 fileDataGrid.addItem(dataFileBuffer[i].FirstName, dataFileBuffer[i]);
@@ -313,18 +325,20 @@ namespace Medical.GUI
                 fileDataGrid.setSubItemNameAt(1, newIndex, dataFileBuffer[i].LastName);
                 fileDataGrid.setSubItemNameAt(2, newIndex, dataFileBuffer[i].DateModified.ToString());
             }
+
+            sw.Stop();
+            Log.Debug("Updated list in {0}.", sw.ElapsedMilliseconds);
         }
 
         void fileListWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            //loadingProgress.Step = e.ProgressPercentage - loadingProgress.Value;
-            //loadingProgress.PerformStep();
+            loadingProgress.Position = (uint)e.ProgressPercentage;
         }
 
         void fileListWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             loadingProgress.Visible = false;
-            //Log.Debug("Total patients {0}.", patientData.Count);
+            Log.Debug("Total patients {0}.", fileDataGrid.getItemCount());
             if (startNewDirectoryScanOnBackgroundThreadStop)
             {
                 listFiles();
