@@ -172,12 +172,17 @@ namespace Standalone
                     changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     medicalStateController.setStates(states);
                     medicalStateController.blend(0.0f);
+                    basicGUI.changeLeftPanel(null);
+                }
+                else
+                {
+                    MessageBox.show(String.Format("Error loading file {0}.\nCould not read state information.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
                 dataFile.closeData();
             }
             else
             {
-                MessageBox.show(String.Format("Error loading file {0}.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                MessageBox.show(String.Format("Error loading file {0}.\nCould not load patient data.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 

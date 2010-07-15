@@ -113,13 +113,16 @@ namespace Medical.GUI
                 leftContainer.Visible = true;
                 leftContainer.bringToFront();
             }
-            else if(standaloneController.MedicalStateController.getNumStates() > 0)
+            else if (standaloneController.MedicalStateController.getNumStates() > 0)
             {
                 leftContainer = stateList.LayoutContainer;
                 leftContainer.Visible = true;
                 leftContainer.bringToFront();
             }
-            leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
+            if (leftAnimatedContainer.CurrentContainer != leftContainer)
+            {
+                leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
+            }
         }
 
         public void showChooseSceneDialog()

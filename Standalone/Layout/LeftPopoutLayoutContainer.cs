@@ -196,5 +196,13 @@ namespace Medical
                 }
             }
         }
+
+        public LayoutContainer CurrentContainer
+        {
+            get
+            {
+                return childContainer;
+            }
+        }
     }
 }

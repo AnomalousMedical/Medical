@@ -29,6 +29,8 @@ namespace Medical
         {
             this.BackingFile = backingFile;
             DateModified = File.GetLastWriteTime(backingFile);
+            FirstName = "";
+            LastName = "";
         }
 
         public void save()
