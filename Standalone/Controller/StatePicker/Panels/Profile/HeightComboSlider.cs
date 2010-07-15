@@ -41,6 +41,7 @@ namespace Medical.GUI
             if (condyle != null)
             {
                 valueTrackBar.Value = 0;
+                valueTrackBar_ScrollChangePosition(null, null);
             }
         }
 

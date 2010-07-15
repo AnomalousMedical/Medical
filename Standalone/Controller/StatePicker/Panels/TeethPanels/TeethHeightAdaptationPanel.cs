@@ -76,7 +76,12 @@ namespace Medical.GUI
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to reset the teeth to normal?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to reset the teeth to normal?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
+        }
+
+        private void doMakeNormalButtonClick(MessageBoxStyle style)
+        {
+            if (style == MessageBoxStyle.Yes)
             {
                 TeethController.setAllOffsets(Vector3.Zero);
                 TeethController.setAllRotations(Quaternion.Identity);
@@ -86,7 +91,12 @@ namespace Medical.GUI
 
         void undoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to undo the teeth to how they were before the wizard was opened?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to undo the teeth to how they were before the wizard was opened?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doUndoButtonClick);
+        }
+
+        private void doUndoButtonClick(MessageBoxStyle style)
+        {
+            if (style == MessageBoxStyle.Yes)
             {
                 TeethState undo = controller.StateBlender.UndoState.Teeth;
                 foreach (ToothState toothState in undo.StateEnum)

@@ -43,7 +43,12 @@ namespace Medical.GUI
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to reset the condylar growth to normal?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to reset the condylar growth to normal?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
+        }
+
+        private void doMakeNormalButtonClick(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
             {
                 setToDefault();
             }
@@ -51,7 +56,12 @@ namespace Medical.GUI
 
         void undoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to undo the condylar growth to before the wizard was opened?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to undo the condylar growth to before the wizard was opened?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doUndoButtonClick);
+        }
+
+        private void doUndoButtonClick(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
             {
                 resetToOpeningState();
             }

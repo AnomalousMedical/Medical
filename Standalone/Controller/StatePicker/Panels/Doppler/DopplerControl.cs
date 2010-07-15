@@ -410,7 +410,12 @@ namespace Medical.GUI
 
         void resetButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to reset the doppler settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to reset the doppler settings?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doResetButtonClick);
+        }
+
+        private void doResetButtonClick(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
             {
                 setToDefault();
             }
