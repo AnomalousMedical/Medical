@@ -126,7 +126,6 @@ namespace Standalone
                 navigationController.recalculateClosestNonHiddenStates();
                 //end hack
 
-                navigationController.ShowOverlays = true;
                 medicalController.start();
             }
         }
