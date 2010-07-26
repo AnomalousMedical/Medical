@@ -20,6 +20,8 @@ namespace Medical.Controller
         public event SceneViewWindowEvent CameraCreated;
         public event SceneViewWindowEvent CameraDestroyed;
         public event SceneViewWindowRenderEvent FindVisibleObjects;
+        public event SceneViewWindowRenderEvent RenderingStarted;
+        public event SceneViewWindowRenderEvent RenderingEnded;
 
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -64,6 +66,8 @@ namespace Medical.Controller
             CameraResolver.addMotionValidator(this);
             sceneView.showSceneStats(true);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
+            sceneView.RenderingStarted += sceneView_RenderingStarted;
+            sceneView.RenderingEnded += sceneView_RenderingEnded;
             if (CameraCreated != null)
             {
                 CameraCreated.Invoke(this);
@@ -77,6 +81,8 @@ namespace Medical.Controller
                 Log.Info("Destroying SceneView for {0}.", name);
                 CameraResolver.removeMotionValidator(this);
                 sceneView.FindVisibleObjects -= sceneView_FindVisibleObjects;
+                sceneView.RenderingStarted -= sceneView_RenderingStarted;
+                sceneView.RenderingEnded -= sceneView_RenderingEnded;
                 cameraMover.setCamera(null);
                 window.destroySceneView(sceneView);
                 sceneView = null;
@@ -258,6 +264,22 @@ namespace Medical.Controller
             if (FindVisibleObjects != null)
             {
                 FindVisibleObjects.Invoke(this, sceneView.CurrentlyRendering);
+            }
+        }
+
+        void sceneView_RenderingEnded(SceneView sceneView)
+        {
+            if (RenderingEnded != null)
+            {
+                RenderingEnded.Invoke(this, sceneView.CurrentlyRendering);
+            }
+        }
+
+        void sceneView_RenderingStarted(SceneView sceneView)
+        {
+            if (RenderingStarted != null)
+            {
+                RenderingStarted.Invoke(this, sceneView.CurrentlyRendering);
             }
         }
 

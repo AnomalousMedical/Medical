@@ -132,6 +132,7 @@ namespace Medical
             window.CameraCreated += window_CameraCreated;
             window.CameraDestroyed += window_CameraDestroyed;
             window.FindVisibleObjects += window_FindVisibleObjects;
+            window.RenderingEnded += new SceneViewWindowRenderEvent(window_RenderingEnded);
 
             //window.MouseClick += new System.Windows.Forms.MouseEventHandler(window_MouseClick);
 
@@ -293,6 +294,11 @@ namespace Medical
         {
             Vector3 mousePos = eventManager.Mouse.getAbsMouse();
             this.setVisible(callingCameraRender && window.Focused);
+        }
+
+        void window_RenderingEnded(SceneViewWindow window, bool currentCameraRender)
+        {
+            this.setVisible(false);
         }
 
         #region UpdateListener Members
