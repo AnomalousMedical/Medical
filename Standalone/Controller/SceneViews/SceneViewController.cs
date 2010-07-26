@@ -23,6 +23,8 @@ namespace Medical.Controller
         private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
+        private bool camerasCreated = false;
+        private SimScene currentScene = null;
 
         public SceneViewController(EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow)
         {
@@ -46,26 +48,43 @@ namespace Medical.Controller
             {
                 WindowCreated.Invoke(window);
             }
+            if (camerasCreated)
+            {
+                createCameras(currentScene);
+            }
         }
 
         public void createCameras(SimScene scene)
         {
-            window.createSceneView(rendererWindow, scene);
-            layoutContainer.setWindow(window);
+            if (window != null)
+            {
+                window.createSceneView(rendererWindow, scene);
+                layoutContainer.setWindow(window);
 
-            MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
-            OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
-            rm.setActiveViewport(1);
+                MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
+                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
+                rm.setActiveViewport(1);
+            }
+            camerasCreated = true;
+            currentScene = scene;
         }
 
         public void destroyCameras()
         {
-            window.destroySceneView();
+            if (window != null)
+            {
+                window.destroySceneView();
+            }
+            camerasCreated = false;
+            currentScene = null;
         }
 
         public void resetAllCameraPositions()
         {
-            window.resetToStartPosition();
+            if (window != null)
+            {
+                window.resetToStartPosition();
+            }
         }
 
         public LayoutContainer LayoutContainer

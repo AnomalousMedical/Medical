@@ -88,7 +88,7 @@ namespace Medical.GUI
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         Log.Error("Could not open image preview file {0}.", fullImageName);
                     }

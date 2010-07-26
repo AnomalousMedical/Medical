@@ -109,7 +109,7 @@ namespace Medical
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -140,7 +140,7 @@ namespace Medical
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 loaded = false;
             }

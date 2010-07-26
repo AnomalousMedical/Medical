@@ -11,27 +11,27 @@ using Medical.Controller;
 
 namespace Medical.Controller
 {
-    public delegate void NavigationControllerEvent(NavigationController controller);
+    delegate void NavigationControllerEvent(NavigationController controller);
 
-    public class NavigationController : IDisposable
+    class NavigationController : IDisposable
     {
         public event NavigationControllerEvent NavigationStateSetChanged;
 
-        //private DrawingWindowController windowController;
+        private SceneViewController windowController;
         private EventManager eventManager;
         private UpdateTimer timer;
-        //private Dictionary<DrawingWindow, NavigationOverlay> overlays = new Dictionary<DrawingWindow,NavigationOverlay>();
+        private Dictionary<SceneViewWindow, NavigationOverlay> overlays = new Dictionary<SceneViewWindow, NavigationOverlay>();
         private bool showOverlays = false;
         private NavigationStateSet navigationSet;
         private String currentCameraFile;
 
-        public NavigationController(/*DrawingWindowController windowController,*/ EventManager eventManager, UpdateTimer timer)
+        public NavigationController(SceneViewController windowController, EventManager eventManager, UpdateTimer timer)
         {
             this.eventManager = eventManager;
             this.timer = timer;
-            //this.windowController = windowController;
-            //windowController.WindowCreated += windowController_WindowCreated;
-            //windowController.WindowDestroyed += windowController_WindowDestroyed;
+            this.windowController = windowController;
+            windowController.WindowCreated += windowController_WindowCreated;
+            windowController.WindowDestroyed += windowController_WindowDestroyed;
         }
 
         public void Dispose()
@@ -121,15 +121,13 @@ namespace Medical.Controller
             if (state != null)
             {
                 window.setPosition(state.Translation, state.LookAt);
-                //overlays[window].setNavigationState(state);
+                overlays[window].setNavigationState(state);
             }
         }
 
         public NavigationState getNavigationState(SceneViewWindow window)
         {
-            //this is temporary
-            return navigationSet.findClosestNonHiddenState(window.Translation);
-            //return overlays[window].getNavigationState();
+            return overlays[window].getNavigationState();
         }
 
         public NavigationState findClosestNonHiddenState(Vector3 position)
@@ -146,10 +144,13 @@ namespace Medical.Controller
         /// </summary>
         public void recalculateClosestNonHiddenStates()
         {
-            //foreach (DrawingWindow window in overlays.Keys)
-            //{
-            //    overlays[window].setNavigationState(findClosestNonHiddenState(window.Translation));
-            //}
+            if (navigationSet != null)
+            {
+                foreach (SceneViewWindow window in overlays.Keys)
+                {
+                    overlays[window].setNavigationState(findClosestNonHiddenState(window.Translation));
+                }
+            }
         }
 
         public EventManager EventManager
@@ -199,31 +200,31 @@ namespace Medical.Controller
             }
         }
 
-        //void windowController_WindowCreated(DrawingWindow window)
-        //{
-        //    if (window.AllowNavigation)
-        //    {
-        //        NavigationOverlay overlay = new NavigationOverlay(window.CameraName, window, this);
-        //        overlay.ShowOverlay = showOverlays;
-        //        NavigationState closestState = findClosestNonHiddenState(window.Translation);
-        //        if (closestState != null)
-        //        {
-        //            overlay.setNavigationState(closestState);
-        //        }
-        //        overlays.Add(window, overlay);
-        //    }
-        //}
+        void windowController_WindowCreated(SceneViewWindow window)
+        {
+            if (window.AllowNavigation)
+            {
+                NavigationOverlay overlay = new NavigationOverlay(window.Name, window, this);
+                overlay.ShowOverlay = showOverlays;
+                NavigationState closestState = findClosestNonHiddenState(window.Translation);
+                if (closestState != null)
+                {
+                    overlay.setNavigationState(closestState);
+                }
+                overlays.Add(window, overlay);
+            }
+        }
 
-        //void windowController_WindowDestroyed(DrawingWindow window)
-        //{
-        //    NavigationOverlay overlay;
-        //    overlays.TryGetValue(window, out overlay);
-        //    if (overlay != null)
-        //    {
-        //        overlays.Remove(window);
-        //        overlay.Dispose();
-        //    }
-        //}
+        void windowController_WindowDestroyed(SceneViewWindow window)
+        {
+            NavigationOverlay overlay;
+            overlays.TryGetValue(window, out overlay);
+            if (overlay != null)
+            {
+                overlays.Remove(window);
+                overlay.Dispose();
+            }
+        }
 
         public bool ShowOverlays
         {
@@ -234,10 +235,10 @@ namespace Medical.Controller
             set
             {
                 showOverlays = value;
-                //foreach (NavigationOverlay overlay in overlays.Values)
-                //{
-                //    overlay.ShowOverlay = showOverlays;
-                //}
+                foreach (NavigationOverlay overlay in overlays.Values)
+                {
+                    overlay.ShowOverlay = showOverlays;
+                }
             }
         }
     }

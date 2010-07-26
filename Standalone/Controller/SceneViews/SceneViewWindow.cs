@@ -39,6 +39,8 @@ namespace Medical.Controller
             this.startPosition = cameraMover.Translation;
             this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
+            AllowNavigation = true;
+            Focused = true;
         }
 
         public void Dispose()
@@ -134,6 +136,16 @@ namespace Medical.Controller
             
         }
 
+        public Vector3 getScreenPosition(Vector3 worldPosition)
+        {
+            Matrix4x4 proj = sceneView.ProjectionMatrix;
+            Matrix4x4 view = sceneView.ViewMatrix;
+            Vector3 screenPos = proj * (view * worldPosition);
+            screenPos.x = (screenPos.x / 2.0f + 0.5f) * sceneView.RenderWidth;
+            screenPos.y = (1 - (screenPos.y / 2.0f + 0.5f)) * sceneView.RenderHeight;
+            return screenPos;
+        }
+
         public override bool Visible
         {
             get
@@ -206,6 +218,40 @@ namespace Medical.Controller
                 sceneView.BackgroundColor = value;
             }
         }
+
+        public bool AllowNavigation { get; set; }
+
+        public int RenderWidth
+        {
+            get
+            {
+                if (sceneView != null)
+                {
+                    return sceneView.RenderWidth;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        public int RenderHeight
+        {
+            get
+            {
+                if (sceneView != null)
+                {
+                    return sceneView.RenderHeight;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        public bool Focused { get; set; }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace Medical
 {
@@ -9,7 +10,7 @@ namespace Medical
     {
         private String state;
         private LinkedList<NavigationMenuEntry> subEntries;
-        //private Bitmap thumbnail;
+        private Bitmap thumbnail;
 
         internal NavigationMenuEntry(String text)
         {
@@ -25,10 +26,10 @@ namespace Medical
                     entry.Dispose();
                 }
             }
-            //if (thumbnail != null)
-            //{
-            //    thumbnail.Dispose();
-            //}
+            if (thumbnail != null)
+            {
+                thumbnail.Dispose();
+            }
         }
 
         internal NavigationMenuEntry addNavigationState(NavigationState state)
@@ -82,21 +83,21 @@ namespace Medical
         /// be disposed by this class. If a copy needs to be made make before
         /// setting this property.
         /// </summary>
-        //public Bitmap Thumbnail
-        //{
-        //    get
-        //    {
-        //        return thumbnail;
-        //    }
-        //    set
-        //    {
-        //        if (thumbnail != null)
-        //        {
-        //            thumbnail.Dispose();
-        //        }
-        //        thumbnail = value;
-        //    }
-        //}
+        public Bitmap Thumbnail
+        {
+            get
+            {
+                return thumbnail;
+            }
+            set
+            {
+                if (thumbnail != null)
+                {
+                    thumbnail.Dispose();
+                }
+                thumbnail = value;
+            }
+        }
 
         public IEnumerable<NavigationMenuEntry> SubEntries
         {

@@ -74,7 +74,7 @@ namespace Standalone
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
 
             //Navigation and layers
-            navigationController = new NavigationController(medicalController.EventManager, medicalController.MainTimer);
+            navigationController = new NavigationController(sceneViewController, medicalController.EventManager, medicalController.MainTimer);
             layerController = new LayerController();
 
             //Watermark
@@ -122,6 +122,11 @@ namespace Standalone
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
+                //temp hack to show navigation arrows for initial scene
+                navigationController.recalculateClosestNonHiddenStates();
+                //end hack
+
+                navigationController.ShowOverlays = true;
                 medicalController.start();
             }
         }
@@ -423,6 +428,7 @@ namespace Standalone
         void myGUI_RenderStarted(object sender, EventArgs e)
         {
             watermark.Visible = false;
+            //navigationController.ShowOverlays = false;
         }
 
         /// <summary>
@@ -431,6 +437,7 @@ namespace Standalone
         void myGUI_RenderEnded(object sender, EventArgs e)
         {
             watermark.Visible = true;
+            //navigationController.ShowOverlays = true;
         }
     }
 }

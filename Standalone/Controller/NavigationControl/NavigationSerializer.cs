@@ -7,6 +7,8 @@ using Engine;
 using System.IO;
 using Logging;
 using Engine.Platform;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Medical
 {
@@ -30,7 +32,7 @@ namespace Medical
         private const String NAVIGATION_MENU = "NavigationMenu";
         private const String NAVIGATION_MENU_ENTRY = "NavigationMenuEntry";
         private const String TEXT = "Text";
-        private const String BITMAP_SIZE = "Size2";
+        private const String BITMAP_SIZE = "Size";
         private const String LAYER_STATE = "LayerState";
         private const String MENU_ENTRY_NAVIGATION_STATE = "MenuEntryNavigationState";
 
@@ -80,10 +82,10 @@ namespace Medical
             {
                 xmlWriter.WriteElementString(MENU_ENTRY_NAVIGATION_STATE, entry.NavigationState);
             }
-            //if (entry.Thumbnail != null)
-            //{
-            //    writeThumbnail(xmlWriter, entry.Thumbnail);
-            //}
+            if (entry.Thumbnail != null)
+            {
+                writeThumbnail(xmlWriter, entry.Thumbnail);
+            }
             if (entry.SubEntries != null)
             {
                 foreach (NavigationMenuEntry subEntry in entry.SubEntries)
@@ -94,18 +96,18 @@ namespace Medical
             xmlWriter.WriteEndElement();
         }
 
-        //private static void writeThumbnail(XmlWriter xmlWriter, Bitmap image)
-        //{
-        //    xmlWriter.WriteStartElement(THUMBNAIL);
-        //    using (MemoryStream memStream = new MemoryStream())
-        //    {
-        //        image.Save(memStream, ImageFormat.Png);
-        //        byte[] buffer = memStream.GetBuffer();
-        //        xmlWriter.WriteAttributeString(BITMAP_SIZE, buffer.Length.ToString());
-        //        xmlWriter.WriteBinHex(buffer, 0, buffer.Length);
-        //    }
-        //    xmlWriter.WriteEndElement();
-        //}
+        private static void writeThumbnail(XmlWriter xmlWriter, Bitmap image)
+        {
+            xmlWriter.WriteStartElement(THUMBNAIL);
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                image.Save(memStream, ImageFormat.Png);
+                byte[] buffer = memStream.GetBuffer();
+                xmlWriter.WriteAttributeString(BITMAP_SIZE, buffer.Length.ToString());
+                xmlWriter.WriteBinHex(buffer, 0, buffer.Length);
+            }
+            xmlWriter.WriteEndElement();
+        }
 
         public static NavigationStateSet readNavigationStateSet(XmlReader xmlReader)
         {
@@ -246,10 +248,10 @@ namespace Medical
                     {
                         menuEntry.LayerState = xmlReader.ReadElementContentAsString();
                     }
-                    //else if (xmlReader.Name == THUMBNAIL)
-                    //{
-                    //    menuEntry.Thumbnail = readThumbnail(xmlReader);
-                    //}
+                    else if (xmlReader.Name == THUMBNAIL)
+                    {
+                        menuEntry.Thumbnail = readThumbnail(xmlReader);
+                    }
                     else if (xmlReader.Name == NAVIGATION_MENU_ENTRY)
                     {
                         menuEntry.addSubEntry(readNavMenuEntryData(navStateSet, xmlReader));
@@ -264,16 +266,16 @@ namespace Medical
             return menuEntry;
         }
 
-        //private static Bitmap readThumbnail(XmlReader xmlReader)
-        //{
-        //    int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
-        //    byte[] buffer = new byte[size];
-        //    xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
-        //    using (MemoryStream memStream = new MemoryStream(buffer))
-        //    {
-        //        return new Bitmap(memStream);
-        //    }
-        //}
+        private static Bitmap readThumbnail(XmlReader xmlReader)
+        {
+            int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
+            byte[] buffer = new byte[size];
+            xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
+            using (MemoryStream memStream = new MemoryStream(buffer))
+            {
+                return new Bitmap(memStream);
+            }
+        }
 
         private static bool isEndElement(XmlReader xmlReader, String elementName)
         {
