@@ -31,6 +31,8 @@ namespace Medical.Controller
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
+            AllowRotation = true;
+            AllowZoom = true;
         }
 
         public void Dispose()
@@ -43,6 +45,8 @@ namespace Medical.Controller
         {
             //temp, will soon have more than one window variable
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
+            orbitCamera.AllowRotation = AllowRotation;
+            orbitCamera.AllowZoom = AllowZoom;
             window = new SceneViewWindow(mainTimer, orbitCamera, name);
             if (WindowCreated != null)
             {
@@ -102,5 +106,9 @@ namespace Medical.Controller
                 return window;
             }
         }
+
+        public bool AllowRotation { get; set; }
+
+        public bool AllowZoom { get; set; }
     }
 }

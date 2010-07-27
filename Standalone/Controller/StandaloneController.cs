@@ -72,6 +72,8 @@ namespace Standalone
 
             //SceneView
             sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow);
+            sceneViewController.AllowRotation = false;
+            sceneViewController.AllowZoom = false;
 
             //Navigation and layers
             navigationController = new NavigationController(sceneViewController, medicalController.EventManager, medicalController.MainTimer);
@@ -118,7 +120,7 @@ namespace Standalone
             createBackground();
 
             //Create scene view windows
-            sceneViewController.createWindow("DefaultWindow", new Vector3(0, -5, 150), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("DefaultWindow", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
