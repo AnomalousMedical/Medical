@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using MyGUIPlugin;
+using Logging;
 
 namespace Medical.Controller
 {
@@ -17,11 +19,14 @@ namespace Medical.Controller
         private float alpha = 1.0f;
         private bool visible = true;
         private LayoutType layoutType;
-        private float padding;
+        private int padding;
 
         private List<LayoutContainer> children = new List<LayoutContainer>();
 
-        public SceneViewLayoutContainer(LayoutType layoutType, float padding)
+        private Gui gui = Gui.Instance;
+        private List<Widget> separatorWidgets = new List<Widget>();
+
+        public SceneViewLayoutContainer(LayoutType layoutType, int padding)
         {
             this.layoutType = layoutType;
             this.padding = padding;
@@ -35,6 +40,7 @@ namespace Medical.Controller
             child.setAlpha(alpha);
             child._setParent(this);
             child.SuppressLayout = false;
+            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
             invalidate();
         }
 
@@ -77,6 +83,8 @@ namespace Medical.Controller
                 {
                      totalWidth += child.DesiredSize.Width + padding;
                 }
+                totalWidth -= padding; //remove the last window's worth of padding
+                int i = 0;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
@@ -84,7 +92,9 @@ namespace Medical.Controller
                     child.WorkingSize = acutalSize;
                     child.Location = currentLocation;
                     child.layout();
-                    currentLocation.x += acutalSize.Width + padding;
+                    currentLocation.x += acutalSize.Width;
+                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)child.Location.y, padding, (int)acutalSize.Height);
+                    currentLocation.x += padding;
                 }
             }
             else
@@ -148,7 +158,7 @@ namespace Medical.Controller
             }
         }
 
-        public float Padding
+        public int Padding
         {
             get
             {

@@ -121,7 +121,8 @@ namespace Standalone
             createBackground();
 
             //Create scene view windows
-            sceneViewController.createWindow("DefaultWindow", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera2", new Vector3(0, -5, -170), new Vector3(0, -5, 0));
 
             if (changeScene(MedicalConfig.DefaultScene))
             {

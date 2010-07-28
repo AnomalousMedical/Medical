@@ -18,7 +18,7 @@ namespace Medical.Controller
         public event SceneViewWindowEvent WindowDestroyed;
         public event SceneViewWindowEvent ActiveWindowChanged;
 
-        private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer(SceneViewLayoutContainer.LayoutType.Horizontal, 0.0f);
+        private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer(SceneViewLayoutContainer.LayoutType.Horizontal, 5);
         private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
