@@ -113,7 +113,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
-    <Compile Include="Controller\SceneViews\MDIWindow.cs" />
+    <Compile Include="Layout\MDI\MDIWindow.cs" />
     <Compile Include="Controller\StatePicker\Panels\Notes\ThumbnailPicker.cs" />
     <Compile Include="Controller\StatePicker\Panels\Profile\HeightComboSlider.cs" />
     <Compile Include="Controller\StatePicker\Panels\Profile\HeightControl.cs" />
@@ -144,7 +144,7 @@
     <Compile Include="Controller\GUIController\MandibleControlSlider.cs" />
     <Compile Include="Controller\GUIController\MandibleGUIController.cs" />
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
-    <Compile Include="Controller\SceneViews\SceneViewLayoutContainer.cs" />
+    <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />

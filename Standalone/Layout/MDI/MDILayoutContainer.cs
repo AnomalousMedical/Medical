@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    class SceneViewLayoutContainer : LayoutContainer
+    class MDILayoutContainer : LayoutContainer
     {
         public enum LayoutType
         {
@@ -26,7 +26,7 @@ namespace Medical.Controller
         private Gui gui = Gui.Instance;
         private List<Widget> separatorWidgets = new List<Widget>();
 
-        public SceneViewLayoutContainer(LayoutType layoutType, int padding)
+        public MDILayoutContainer(LayoutType layoutType, int padding)
         {
             this.layoutType = layoutType;
             this.padding = padding;
