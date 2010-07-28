@@ -88,23 +88,35 @@ namespace Medical.Controller
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 acutalSize = new Size2(WorkingSize.Width * (childSize.Width / totalWidth), WorkingSize.Height);
-                    child.WorkingSize = acutalSize;
+                    Size2 actualSize = new Size2(WorkingSize.Width * (childSize.Width / totalWidth), WorkingSize.Height);
+                    child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
-                    currentLocation.x += acutalSize.Width;
-                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)child.Location.y, padding, (int)acutalSize.Height);
+                    currentLocation.x += actualSize.Width;
+                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)currentLocation.y, padding, (int)actualSize.Height);
                     currentLocation.x += padding;
                 }
             }
             else
             {
+                //Get the total size all child controls want to be
+                float totalHeight = 0.0f;
+                foreach (LayoutContainer child in children)
+                {
+                    totalHeight += child.DesiredSize.Height + padding;
+                }
+                totalHeight -= padding; //remove the last window's worth of padding
+                int i = 0;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    child.WorkingSize = childSize;
+                    Size2 actualSize = new Size2(WorkingSize.Width, WorkingSize.Height * (childSize.Height / totalHeight));
+                    child.WorkingSize = actualSize;
                     child.Location = currentLocation;
-                    currentLocation.y += childSize.Height + padding;
+                    child.layout();
+                    currentLocation.y += actualSize.Height;
+                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)currentLocation.y, (int)actualSize.Width, padding);
+                    currentLocation.y += padding;
                 }
             }
         }
