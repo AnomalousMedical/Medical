@@ -18,7 +18,7 @@ namespace Medical.Controller
         public event SceneViewWindowEvent WindowDestroyed;
         public event SceneViewWindowEvent ActiveWindowChanged;
 
-        private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer();
+        private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer(SceneViewLayoutContainer.LayoutType.Horizontal, 0.0f);
         private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
@@ -78,7 +78,7 @@ namespace Medical.Controller
         private void createCameraForWindow(SceneViewWindow window, SimScene scene)
         {
             window.createSceneView(rendererWindow, scene);
-            layoutContainer.setWindow(window);
+            layoutContainer.addChild(window);
             rm.setActiveViewport(rm.getActiveViewport() + 1);
         }
 
