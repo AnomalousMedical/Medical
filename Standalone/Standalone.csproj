@@ -113,6 +113,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
+    <Compile Include="Controller\SceneViews\MDIWindow.cs" />
     <Compile Include="Controller\StatePicker\Panels\Notes\ThumbnailPicker.cs" />
     <Compile Include="Controller\StatePicker\Panels\Profile\HeightComboSlider.cs" />
     <Compile Include="Controller\StatePicker\Panels\Profile\HeightControl.cs" />

@@ -78,8 +78,17 @@ namespace Medical.Controller
         private void createCameraForWindow(SceneViewWindow window, SimScene scene)
         {
             window.createSceneView(rendererWindow, scene);
-            layoutContainer.addChild(window);
             rm.setActiveViewport(rm.getActiveViewport() + 1);
+
+            //temporary
+            MDIWindow childWindow = new MDIWindow("MDIWindow.layout", window.Name);
+            childWindow.SuppressLayout = true;
+            childWindow.Content = window;
+            childWindow.SuppressLayout = false;
+            childWindow.Caption = window.Name;
+            layoutContainer.addChild(childWindow);
+            
+            //layoutContainer.addChild(window);
         }
 
         public void destroyCameras()
