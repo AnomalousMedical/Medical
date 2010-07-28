@@ -19,73 +19,83 @@ namespace Medical.Controller
         public event SceneViewWindowEvent ActiveWindowChanged;
 
         private SceneViewLayoutContainer layoutContainer = new SceneViewLayoutContainer();
-        private SceneViewWindow window;
         private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
         private bool camerasCreated = false;
         private SimScene currentScene = null;
+        private OgreRenderManager rm;
 
-        public SceneViewController(EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow)
+        private List<SceneViewWindow> windows = new List<SceneViewWindow>();
+
+        public SceneViewController(EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
         {
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
             AllowRotation = true;
             AllowZoom = true;
+
+            rm = renderManager;
         }
 
         public void Dispose()
         {
             destroyCameras();
-            window.Dispose();
+            foreach (SceneViewWindow window in windows)
+            {
+                window.Dispose();
+            }
         }
 
         public void createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
-            //temp, will soon have more than one window variable
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            window = new SceneViewWindow(mainTimer, orbitCamera, name);
+            SceneViewWindow window = new SceneViewWindow(mainTimer, orbitCamera, name);
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(window);
             }
             if (camerasCreated)
             {
-                createCameras(currentScene);
+                createCameraForWindow(window, currentScene);
             }
+            windows.Add(window);
         }
 
         public void createCameras(SimScene scene)
         {
-            if (window != null)
+            foreach (SceneViewWindow window in windows)
             {
-                window.createSceneView(rendererWindow, scene);
-                layoutContainer.setWindow(window);
-
-                MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
-                OgreRenderManager rm = myGui.OgrePlatform.getRenderManager();
-                rm.setActiveViewport(1);
+                createCameraForWindow(window, scene);
             }
             camerasCreated = true;
             currentScene = scene;
         }
 
+        private void createCameraForWindow(SceneViewWindow window, SimScene scene)
+        {
+            window.createSceneView(rendererWindow, scene);
+            layoutContainer.setWindow(window);
+            rm.setActiveViewport(rm.getActiveViewport() + 1);
+        }
+
         public void destroyCameras()
         {
-            if (window != null)
+            foreach (SceneViewWindow window in windows)
             {
                 window.destroySceneView();
             }
+            rm.setActiveViewport(0);
             camerasCreated = false;
             currentScene = null;
         }
 
         public void resetAllCameraPositions()
         {
-            if (window != null)
+            foreach (SceneViewWindow window in windows)
             {
                 window.resetToStartPosition();
             }
@@ -103,7 +113,7 @@ namespace Medical.Controller
         {
             get
             {
-                return window;
+                return windows[0];
             }
         }
 
