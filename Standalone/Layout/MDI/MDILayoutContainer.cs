@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    class MDILayoutContainer : LayoutContainer
+    class MDILayoutContainer : LayoutContainer, IDisposable
     {
         public enum LayoutType
         {
@@ -32,16 +32,44 @@ namespace Medical.Controller
             this.padding = padding;
         }
 
+        public void Dispose()
+        {
+            foreach (Widget widget in separatorWidgets)
+            {
+                gui.destroyWidget(widget);
+            }
+        }
+
         public void addChild(LayoutContainer child)
         {
-            child.SuppressLayout = true;
-            children.Add(child);
-            child.Visible = visible;
-            child.setAlpha(alpha);
-            child._setParent(this);
-            child.SuppressLayout = false;
-            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
+            setChildProperties(child);
             invalidate();
+        }
+
+        public void insertChild(LayoutContainer child, LayoutContainer previous, bool after)
+        {
+            int index = children.IndexOf(previous);
+            if (index == -1)
+            {
+                throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
+            }
+            setChildProperties(child);
+            if (after)
+            {
+                //Increment index and make sure it isnt the end of the list
+                if (++index == children.Count)
+                {
+                    children.Add(child);
+                }
+                else
+                {
+                    children.Insert(index, child);
+                }
+            }
+            else
+            {
+                children.Insert(index, child);
+            }
         }
 
         public void removeChild(LayoutContainer child)
@@ -181,6 +209,21 @@ namespace Medical.Controller
                 padding = value;
                 invalidate();
             }
+        }
+
+        /// <summary>
+        /// This method sets the child up to be a child of this container.
+        /// </summary>
+        /// <param name="child">The child to setup.</param>
+        private void setChildProperties(LayoutContainer child)
+        {
+            child.SuppressLayout = true;
+            children.Add(child);
+            child.Visible = visible;
+            child.setAlpha(alpha);
+            child._setParent(this);
+            child.SuppressLayout = false;
+            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
         }
     }
 }

@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.Controller
 {
-    class MDIWindow : LayoutContainer, IDisposable
+    public class MDIWindow : LayoutContainer, IDisposable
     {
         public event EventHandler Closed;
 
@@ -126,6 +126,24 @@ namespace Medical.Controller
                 captionButton.setSize((int)FontManager.Instance.measureStringWidth(captionButton.Font, value) + 50, captionButton.getHeight());
             }
         }
+
+        /// <summary>
+        /// The horizontal layout container for this window.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal MDILayoutContainer _HorizontalContainer { get; set; }
+
+        /// <summary>
+        /// The vertical layout container for this window.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal MDILayoutContainer _VerticalContainer { get; set; }
+
+        /// <summary>
+        /// The container this window is currently inside of.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal MDILayoutContainer _CurrentContainer { get; set; }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {

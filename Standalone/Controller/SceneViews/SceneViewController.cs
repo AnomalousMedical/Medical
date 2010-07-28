@@ -18,7 +18,7 @@ namespace Medical.Controller
         public event SceneViewWindowEvent WindowDestroyed;
         public event SceneViewWindowEvent ActiveWindowChanged;
 
-        private MDILayoutContainer layoutContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+        private MDILayoutManager mdiLayout;
         private EventManager eventManager;
         private UpdateTimer mainTimer;
         private RendererWindow rendererWindow;
@@ -28,11 +28,12 @@ namespace Medical.Controller
 
         private List<SceneViewWindow> windows = new List<SceneViewWindow>();
 
-        public SceneViewController(EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
+        public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
         {
             this.eventManager = eventManager;
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
+            this.mdiLayout = mdiLayout;
             AllowRotation = true;
             AllowZoom = true;
 
@@ -86,7 +87,7 @@ namespace Medical.Controller
             childWindow.Content = window;
             childWindow.SuppressLayout = false;
             childWindow.Caption = window.Name;
-            layoutContainer.addChild(childWindow);
+            mdiLayout.addWindow(childWindow);
             
             //layoutContainer.addChild(window);
         }
@@ -107,14 +108,6 @@ namespace Medical.Controller
             foreach (SceneViewWindow window in windows)
             {
                 window.resetToStartPosition();
-            }
-        }
-
-        public LayoutContainer LayoutContainer
-        {
-            get
-            {
-                return layoutContainer;
             }
         }
 

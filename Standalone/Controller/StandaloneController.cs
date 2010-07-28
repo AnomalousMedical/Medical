@@ -44,6 +44,7 @@ namespace Standalone
         private Watermark watermark;
         private BackgroundController backgroundController;
         private ViewportBackground background;
+        private MDILayoutManager mdiLayout;
 
         public StandaloneController()
         {
@@ -59,6 +60,7 @@ namespace Standalone
             sceneViewController.Dispose();
             layerController.Dispose();
             navigationController.Dispose();
+            mdiLayout.Dispose();
             medicalController.Dispose();
         }
 
@@ -70,9 +72,12 @@ namespace Standalone
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
+            //MDI Layout
+            mdiLayout = new MDILayoutManager();
+
             //SceneView
             MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
-            sceneViewController = new SceneViewController(medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
+            sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
             sceneViewController.AllowRotation = false;
             sceneViewController.AllowZoom = false;
 
@@ -114,7 +119,7 @@ namespace Standalone
             myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
             basicGUI = new BasicGUI(this);
-            basicGUI.ScreenLayout.Root.Center = sceneViewController.LayoutContainer;
+            basicGUI.ScreenLayout.Root.Center = mdiLayout.LayoutContainer;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
