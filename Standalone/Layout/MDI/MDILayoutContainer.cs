@@ -105,18 +105,13 @@ namespace Medical.Controller
             Vector2 currentLocation = Location;
             if (layoutType == LayoutType.Horizontal)
             {
-                //Get the total size all child controls want to be
-                float totalWidth = 0.0f;
-                foreach (LayoutContainer child in children)
-                {
-                     totalWidth += child.DesiredSize.Width + padding;
-                }
-                totalWidth -= padding; //remove the last window's worth of padding
                 int i = 0;
+                int childCount = children.Count - 1;
+                float paddingOffset = padding / childCount != 0 ? children.Count - 1 : 0;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width * (childSize.Width / totalWidth), WorkingSize.Height);
+                    Size2 actualSize = new Size2(WorkingSize.Width / children.Count - paddingOffset, WorkingSize.Height);
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();

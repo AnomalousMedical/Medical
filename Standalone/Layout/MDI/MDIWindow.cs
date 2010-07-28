@@ -128,18 +128,6 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// The horizontal layout container for this window.
-        /// Do not touch unless you are MDILayoutManager.
-        /// </summary>
-        internal MDILayoutContainer _HorizontalContainer { get; set; }
-
-        /// <summary>
-        /// The vertical layout container for this window.
-        /// Do not touch unless you are MDILayoutManager.
-        /// </summary>
-        internal MDILayoutContainer _VerticalContainer { get; set; }
-
-        /// <summary>
         /// The container this window is currently inside of.
         /// Do not touch unless you are MDILayoutManager.
         /// </summary>

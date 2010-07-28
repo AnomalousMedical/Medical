@@ -119,15 +119,17 @@ namespace Standalone
             myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
             myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
             basicGUI = new BasicGUI(this);
-            basicGUI.ScreenLayout.Root.Center = mdiLayout.LayoutContainer;
+            basicGUI.ScreenLayout.Root.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             createBackground();
 
             //Create scene view windows
-            sceneViewController.createWindow("Camera1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
-            sceneViewController.createWindow("Camera2", new Vector3(0, -5, -170), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera 3", new Vector3(170, -5, 0), new Vector3(0, -5, 0));
+            sceneViewController.createWindow("Camera 4", new Vector3(-170, -5, 0), new Vector3(0, -5, 0));
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
