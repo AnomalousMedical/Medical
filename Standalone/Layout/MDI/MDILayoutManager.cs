@@ -40,7 +40,7 @@ namespace Medical.Controller
 
         public void addWindow(MDIWindow window)
         {
-            window._setMDILayoutManager(this);
+            setWindowProperties(window);
             //Normal operation where the root is the MDILayoutContainer as expected
             if (rootContainer is MDILayoutContainer)
             {
@@ -79,7 +79,7 @@ namespace Medical.Controller
             {
                 throw new MDIException("Previous window cannot be null.");
             }
-            window._setMDILayoutManager(this);
+            setWindowProperties(window);
             switch (alignment)
             {
                 case WindowAlignment.Left:
@@ -194,6 +194,15 @@ namespace Medical.Controller
             invalidate();
         }
 
+        public void removeWindow(MDIWindow window)
+        {
+            if (!windows.Contains(window))
+            {
+                throw new MDIException("Attempted to remove a window that is not part of this MDILayoutManager.");
+            }
+            window._CurrentContainer.removeChild(window);
+        }
+
         public override void bringToFront()
         {
             if (rootContainer != null)
@@ -275,6 +284,12 @@ namespace Medical.Controller
                     }
                 }
             }
+        }
+
+        private void setWindowProperties(MDIWindow window)
+        {
+            window._setMDILayoutManager(this);
+            windows.Add(window);
         }
     }
 }

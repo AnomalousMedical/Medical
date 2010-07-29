@@ -28,6 +28,7 @@ namespace Medical.Controller
         private UpdateTimer mainTimer;
         private RendererWindow window;
         private String name;
+        private SceneViewController controller;
 
         private Vector3 startPosition;
         private Vector3 startLookAt;
@@ -37,8 +38,9 @@ namespace Medical.Controller
         private Vector2 location = new Vector2(0.0f, 0.0f);
         private Size2 size = new Size2(1.0f, 1.0f);
 
-        public SceneViewWindow(UpdateTimer mainTimer, CameraMover cameraMover, String name)
+        public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
+            this.controller = controller;
             this.cameraMover = cameraMover;
             cameraMover.MotionValidator = this;
             this.name = name;
@@ -54,11 +56,13 @@ namespace Medical.Controller
             mdiWindow.Content = this;
             mdiWindow.SuppressLayout = false;
             mdiWindow.Caption = Name;
+            mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
         }
 
         public void Dispose()
         {
             mainTimer.removeFixedUpdateListener(cameraMover);
+            mdiWindow.Dispose();
         }
 
         public void createSceneView(RendererWindow window, SimScene scene)
@@ -290,6 +294,11 @@ namespace Medical.Controller
         internal MDIWindow _getMDIWindow()
         {
             return mdiWindow;
+        }
+
+        void mdiWindow_Closed(object sender, EventArgs e)
+        {
+            controller.destroyWindow(this);
         }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)

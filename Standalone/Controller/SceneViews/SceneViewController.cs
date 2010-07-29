@@ -12,7 +12,7 @@ namespace Medical.Controller
 {
     public delegate void SceneViewWindowEvent(SceneViewWindow window);
 
-    class SceneViewController : IDisposable
+    public class SceneViewController : IDisposable
     {
         public event SceneViewWindowEvent WindowCreated;
         public event SceneViewWindowEvent WindowDestroyed;
@@ -65,6 +65,28 @@ namespace Medical.Controller
             return window;
         }
 
+        public void destroyWindow(SceneViewWindow window)
+        {
+            if (activeWindow == window)
+            {
+                if (windows.Count > 1)
+                {
+                    activeWindow = windows[0];
+                }
+                else
+                {
+                    activeWindow = null;
+                }
+            }
+            if (camerasCreated)
+            {
+                window.destroySceneView();
+                rm.setActiveViewport(rm.getActiveViewport() - 1);
+            }
+            windows.Remove(window);
+            window.Dispose();
+        }
+
         public void createCameras(SimScene scene)
         {
             foreach (SceneViewWindow window in windows)
@@ -73,12 +95,6 @@ namespace Medical.Controller
             }
             camerasCreated = true;
             currentScene = scene;
-        }
-
-        private void createCameraForWindow(SceneViewWindow window, SimScene scene)
-        {
-            window.createSceneView(rendererWindow, scene);
-            rm.setActiveViewport(rm.getActiveViewport() + 1);
         }
 
         public void destroyCameras()
@@ -146,7 +162,7 @@ namespace Medical.Controller
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            SceneViewWindow window = new SceneViewWindow(mainTimer, orbitCamera, name);
+            SceneViewWindow window = new SceneViewWindow(this, mainTimer, orbitCamera, name);
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(window);
@@ -157,6 +173,12 @@ namespace Medical.Controller
             }
             windows.Add(window);
             return window;
+        }
+
+        private void createCameraForWindow(SceneViewWindow window, SimScene scene)
+        {
+            window.createSceneView(rendererWindow, scene);
+            rm.setActiveViewport(rm.getActiveViewport() + 1);
         }
     }
 }
