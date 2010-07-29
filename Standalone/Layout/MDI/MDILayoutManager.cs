@@ -200,6 +200,21 @@ namespace Medical.Controller
             {
                 throw new MDIException("Attempted to remove a window that is not part of this MDILayoutManager.");
             }
+            windows.Remove(window);
+            //Check to see if this window was the active window.
+            if (window == ActiveWindow)
+            {
+                //If there are windows left use the first one as the new active window, otherwise set the active window to null.
+                if (windows.Count > 0)
+                {
+
+                    ActiveWindow = windows[0];
+                }
+                else
+                {
+                    ActiveWindow = null;
+                }
+            }
             window._CurrentContainer.removeChild(window);
         }
 

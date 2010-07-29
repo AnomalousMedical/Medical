@@ -67,17 +67,6 @@ namespace Medical.Controller
 
         public void destroyWindow(SceneViewWindow window)
         {
-            if (activeWindow == window)
-            {
-                if (windows.Count > 1)
-                {
-                    activeWindow = windows[0];
-                }
-                else
-                {
-                    activeWindow = null;
-                }
-            }
             if (camerasCreated)
             {
                 window.destroySceneView();
@@ -135,6 +124,7 @@ namespace Medical.Controller
         private void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
         {
             //Check to see if the active window is one of the SceneViewWindow's MDIWindow
+            bool foundWindow = false;
             MDIWindow activeMDIWindow = mdiLayout.ActiveWindow;
             foreach (SceneViewWindow window in windows)
             {
@@ -145,7 +135,17 @@ namespace Medical.Controller
                     {
                         ActiveWindowChanged.Invoke(window);
                     }
+                    foundWindow = true;
                     break;
+                }
+            }
+            //If we did not find the window specified, use the first window as the current window
+            if (!foundWindow && windows.Count > 0)
+            {
+                activeWindow = windows[0];
+                if (ActiveWindowChanged != null)
+                {
+                    ActiveWindowChanged.Invoke(activeWindow);
                 }
             }
         }

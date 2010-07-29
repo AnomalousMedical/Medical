@@ -172,11 +172,11 @@ namespace Medical.Controller
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            layoutManager.removeWindow(this);
             if (Closed != null)
             {
                 Closed.Invoke(this, EventArgs.Empty);
             }
-            layoutManager.removeWindow(this);
         }
 
         void captionButton_MouseButtonClick(Widget source, EventArgs e)
