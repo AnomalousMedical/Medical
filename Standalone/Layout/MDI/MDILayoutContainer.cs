@@ -43,6 +43,7 @@ namespace Medical.Controller
         public void addChild(LayoutContainer child)
         {
             setChildProperties(child);
+            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
             children.Add(child);
             invalidate();
         }
@@ -55,6 +56,7 @@ namespace Medical.Controller
                 throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
             }
             setChildProperties(child);
+            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
             if (after)
             {
                 //Increment index and make sure it isnt the end of the list
@@ -87,13 +89,24 @@ namespace Medical.Controller
 
         public void removeChild(LayoutContainer child)
         {
-            children.Remove(child);
-            invalidate();
+            if (children.Contains(child))
+            {
+                Widget separator = separatorWidgets[separatorWidgets.Count - 1];
+                Gui.Instance.destroyWidget(separator);
+                separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
+                children.Remove(child);
+                invalidate();
+            }
         }
 
         public void clearChildren()
         {
             children.Clear();
+            foreach (Widget separator in separatorWidgets)
+            {
+                Gui.Instance.destroyWidget(separator);
+            }
+            separatorWidgets.Clear();
         }
 
         public override void bringToFront()
@@ -230,7 +243,6 @@ namespace Medical.Controller
             child.setAlpha(alpha);
             child._setParent(this);
             child.SuppressLayout = false;
-            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
         }
     }
 }

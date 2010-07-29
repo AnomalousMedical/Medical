@@ -85,13 +85,13 @@ namespace Medical.Controller
                         mdiLayout.addWindow(childWindow);
                         break;
                     case 1:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Left);
                         break;
                     case 2:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Bottom);
                         break;
                     case 3:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Right);
                         break;
                 }
                 previousWindow = childWindow;
