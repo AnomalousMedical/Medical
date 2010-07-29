@@ -51,46 +51,18 @@ namespace Medical.Controller
             }
         }
 
-        //temp
-        MDIWindow previousWindow = null;
-        int i = 0;
-        //end temp
-
-        public void createWindow(String name, Vector3 translation, Vector3 lookAt)
+        public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
-            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
-            orbitCamera.AllowRotation = AllowRotation;
-            orbitCamera.AllowZoom = AllowZoom;
-            SceneViewWindow window = new SceneViewWindow(mainTimer, orbitCamera, name);
-            if (WindowCreated != null)
-            {
-                WindowCreated.Invoke(window);
-            }
-            if (camerasCreated)
-            {
-                createCameraForWindow(window, currentScene);
-            }
-            windows.Add(window);
+            SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
+            mdiLayout.addWindow(window._getMDIWindow());
+            return window;
+        }
 
-            //temporary
-            MDIWindow childWindow = window._getMDIWindow();
-            switch (i++)
-            {
-                case 0:
-                    mdiLayout.addWindow(childWindow);
-                    break;
-                case 1:
-                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Left);
-                    break;
-                case 2:
-                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Bottom);
-                    break;
-                case 3:
-                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Right);
-                    break;
-            }
-            previousWindow = childWindow;
-            //end temp
+        public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, SceneViewWindow previous, WindowAlignment alignment)
+        {
+            SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
+            mdiLayout.addWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
+            return window;
         }
 
         public void createCameras(SimScene scene)
@@ -144,7 +116,7 @@ namespace Medical.Controller
 
         public bool AllowZoom { get; set; }
 
-        void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
+        private void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
         {
             //Check to see if the active window is one of the SceneViewWindow's MDIWindow
             MDIWindow activeMDIWindow = mdiLayout.ActiveWindow;
@@ -160,6 +132,31 @@ namespace Medical.Controller
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// This method will create the actual window.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="translation"></param>
+        /// <param name="lookAt"></param>
+        /// <returns></returns>
+        private SceneViewWindow doCreateWindow(String name, ref Vector3 translation, ref Vector3 lookAt)
+        {
+            OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
+            orbitCamera.AllowRotation = AllowRotation;
+            orbitCamera.AllowZoom = AllowZoom;
+            SceneViewWindow window = new SceneViewWindow(mainTimer, orbitCamera, name);
+            if (WindowCreated != null)
+            {
+                WindowCreated.Invoke(window);
+            }
+            if (camerasCreated)
+            {
+                createCameraForWindow(window, currentScene);
+            }
+            windows.Add(window);
+            return window;
         }
     }
 }
