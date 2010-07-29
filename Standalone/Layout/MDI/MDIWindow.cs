@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.Controller
 {
-    public class MDIWindow : LayoutContainer, IDisposable
+    public class MDIWindow : MDIContainerBase, IDisposable
     {
         public event EventHandler Closed;
 
@@ -15,7 +15,6 @@ namespace Medical.Controller
         private Widget mainWidget;
         private LayoutContainer content;
         private Button captionButton;
-        private MDILayoutManager layoutManager;
         private bool activeWindow = false;
 
         public MDIWindow(String layoutFile, String caption)
@@ -143,21 +142,6 @@ namespace Medical.Controller
                     layoutManager.ActiveWindow = this;
                 }
             }
-        }
-
-        /// <summary>
-        /// The container this window is currently inside of.
-        /// Do not touch unless you are MDILayoutManager.
-        /// </summary>
-        internal MDILayoutContainer _CurrentContainer { get; set; }
-
-        /// <summary>
-        /// Set the MDILayoutManager.
-        /// Do not touch unless you are MDILayoutManager.
-        /// </summary>
-        internal void _setMDILayoutManager(MDILayoutManager layoutManager)
-        {
-            this.layoutManager = layoutManager;
         }
 
         /// <summary>

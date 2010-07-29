@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.Controller
 {
-    class MDILayoutContainer : LayoutContainer, IDisposable
+    public class MDILayoutContainer : MDIContainerBase, IDisposable
     {
         public enum LayoutType
         {
@@ -21,15 +21,16 @@ namespace Medical.Controller
         private LayoutType layoutType;
         private int padding;
 
-        private List<LayoutContainer> children = new List<LayoutContainer>();
+        private List<MDIContainerBase> children = new List<MDIContainerBase>();
 
         private Gui gui = Gui.Instance;
         private List<Widget> separatorWidgets = new List<Widget>();
 
-        public MDILayoutContainer(LayoutType layoutType, int padding)
+        public MDILayoutContainer(LayoutType layoutType, int padding, MDILayoutManager layoutManager)
         {
             this.layoutType = layoutType;
             this.padding = padding;
+            this.layoutManager = layoutManager;
         }
 
         public void Dispose()
@@ -40,7 +41,7 @@ namespace Medical.Controller
             }
         }
 
-        public void addChild(LayoutContainer child)
+        public void addChild(MDIContainerBase child)
         {
             setChildProperties(child);
             separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
@@ -48,7 +49,7 @@ namespace Medical.Controller
             invalidate();
         }
 
-        public void insertChild(LayoutContainer child, LayoutContainer previous, bool after)
+        public void insertChild(MDIContainerBase child, MDIContainerBase previous, bool after)
         {
             int index = children.IndexOf(previous);
             if (index == -1)
@@ -75,7 +76,7 @@ namespace Medical.Controller
             }
         }
 
-        public void swapAndRemove(LayoutContainer newChild, LayoutContainer oldChild)
+        public void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
         {
             int index = children.IndexOf(oldChild);
             if (index == -1)
@@ -87,7 +88,7 @@ namespace Medical.Controller
             children.Remove(oldChild);
         }
 
-        public void removeChild(LayoutContainer child)
+        public void removeChild(MDIContainerBase child)
         {
             if (children.Contains(child))
             {
@@ -95,7 +96,18 @@ namespace Medical.Controller
                 Gui.Instance.destroyWidget(separator);
                 separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
                 children.Remove(child);
-                invalidate();
+                if (children.Count == 0)
+                {
+                    //All children are deleted remove this container too
+                    if (_CurrentContainer != null)
+                    {
+                        _CurrentContainer.removeChild(this);
+                    }
+                }
+                else
+                {
+                    invalidate();
+                }
             }
         }
 
@@ -111,7 +123,7 @@ namespace Medical.Controller
 
         public override void bringToFront()
         {
-            foreach (LayoutContainer child in children)
+            foreach (MDIContainerBase child in children)
             {
                 child.bringToFront();
             }
@@ -120,7 +132,7 @@ namespace Medical.Controller
         public override void setAlpha(float alpha)
         {
             this.alpha = alpha;
-            foreach (LayoutContainer child in children)
+            foreach (MDIContainerBase child in children)
             {
                 child.setAlpha(alpha);
             }
@@ -134,7 +146,7 @@ namespace Medical.Controller
             if (layoutType == LayoutType.Horizontal)
             {
                 float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
-                foreach (LayoutContainer child in children)
+                foreach (MDIContainerBase child in children)
                 {
                     Size2 childSize = child.DesiredSize;
                     Size2 actualSize = new Size2(sizeWithoutPadding / children.Count, WorkingSize.Height);
@@ -153,7 +165,7 @@ namespace Medical.Controller
             else
             {
                 float sizeWithoutPadding = WorkingSize.Height - padding * childCount;
-                foreach (LayoutContainer child in children)
+                foreach (MDIContainerBase child in children)
                 {
                     Size2 childSize = child.DesiredSize;
                     Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding / children.Count);
@@ -178,7 +190,7 @@ namespace Medical.Controller
                 Size2 desiredSize = new Size2();
                 if (layoutType == LayoutType.Horizontal)
                 {
-                    foreach (LayoutContainer child in children)
+                    foreach (MDIContainerBase child in children)
                     {
                         Size2 childSize = child.DesiredSize;
                         if (childSize.Height > desiredSize.Height)
@@ -190,7 +202,7 @@ namespace Medical.Controller
                 }
                 else
                 {
-                    foreach (LayoutContainer child in children)
+                    foreach (MDIContainerBase child in children)
                     {
                         Size2 childSize = child.DesiredSize;
                         if (childSize.Width > desiredSize.Width)
@@ -213,7 +225,7 @@ namespace Medical.Controller
             set
             {
                 visible = value;
-                foreach (LayoutContainer child in children)
+                foreach (MDIContainerBase child in children)
                 {
                     child.Visible = visible;
                 }
@@ -245,12 +257,13 @@ namespace Medical.Controller
         /// This method sets the child up to be a child of this container.
         /// </summary>
         /// <param name="child">The child to setup.</param>
-        private void setChildProperties(LayoutContainer child)
+        private void setChildProperties(MDIContainerBase child)
         {
             child.SuppressLayout = true;
             child.Visible = visible;
             child.setAlpha(alpha);
             child._setParent(this);
+            child._CurrentContainer = this;
             child.SuppressLayout = false;
         }
     }
