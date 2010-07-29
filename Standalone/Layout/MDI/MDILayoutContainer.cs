@@ -130,14 +130,14 @@ namespace Medical.Controller
         {
             Vector2 currentLocation = Location;
             int i = 0;
-            int childCount = children.Count - 1;
-            float paddingOffset = childCount != 0 ? padding / childCount : 0;
+            int childCount = children.Count - 1;            
             if (layoutType == LayoutType.Horizontal)
             {
+                float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width / children.Count - paddingOffset, WorkingSize.Height);
+                    Size2 actualSize = new Size2(sizeWithoutPadding / children.Count, WorkingSize.Height);
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -148,10 +148,11 @@ namespace Medical.Controller
             }
             else
             {
+                float sizeWithoutPadding = WorkingSize.Height - padding * childCount;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width, WorkingSize.Height / children.Count - paddingOffset);
+                    Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding / children.Count);
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();

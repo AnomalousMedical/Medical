@@ -16,6 +16,8 @@ namespace Medical.Controller
 
     public class MDILayoutManager : LayoutContainer, IDisposable
     {
+        private const int PADDING_SIZE = 5;
+
         private List<MDIWindow> windows = new List<MDIWindow>();
         private LayoutContainer rootContainer = null;
         private List<MDILayoutContainer> childContainers = new List<MDILayoutContainer>();
@@ -52,7 +54,7 @@ namespace Medical.Controller
             //If one other container has been added, create a horizontal alignment and readd both containers to it
             else if (rootContainer is MDIWindow)
             {
-                MDILayoutContainer horizRoot = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+                MDILayoutContainer horizRoot = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
                 horizRoot._setParent(this);
                 childContainers.Add(horizRoot);
                 MDIWindow oldRoot = rootContainer as MDIWindow;
@@ -73,7 +75,7 @@ namespace Medical.Controller
                 case WindowAlignment.Left:
                     if (previous._CurrentContainer == null && previous == rootContainer)
                     {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
                         parentContainer._setParent(this);
                         previous._CurrentContainer = parentContainer;
                         window._CurrentContainer = parentContainer;
@@ -88,7 +90,7 @@ namespace Medical.Controller
                     }
                     else
                     {
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
                         MDILayoutContainer parentContainer = previous._CurrentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         previous._CurrentContainer = newContainer;
@@ -100,7 +102,7 @@ namespace Medical.Controller
                 case WindowAlignment.Right:
                     if (previous._CurrentContainer == null && previous == rootContainer)
                     {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
                         parentContainer._setParent(this);
                         previous._CurrentContainer = parentContainer;
                         window._CurrentContainer = parentContainer;
@@ -115,7 +117,7 @@ namespace Medical.Controller
                     }
                     else
                     {
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, 5);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
                         MDILayoutContainer parentContainer = previous._CurrentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         previous._CurrentContainer = newContainer;
@@ -127,7 +129,7 @@ namespace Medical.Controller
                 case WindowAlignment.Top:
                     if (previous._CurrentContainer == null && previous == rootContainer)
                     {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, 5);
+                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE);
                         parentContainer._setParent(this);
                         previous._CurrentContainer = parentContainer;
                         window._CurrentContainer = parentContainer;
@@ -142,7 +144,7 @@ namespace Medical.Controller
                     }
                     else
                     {
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, 5);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE);
                         MDILayoutContainer parentContainer = previous._CurrentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         previous._CurrentContainer = newContainer;
@@ -154,7 +156,7 @@ namespace Medical.Controller
                 case WindowAlignment.Bottom:
                     if (previous._CurrentContainer == null && previous == rootContainer)
                     {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, 5);
+                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE);
                         parentContainer._setParent(this);
                         previous._CurrentContainer = parentContainer;
                         window._CurrentContainer = parentContainer;
@@ -169,7 +171,7 @@ namespace Medical.Controller
                     }
                     else
                     {
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, 5);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE);
                         MDILayoutContainer parentContainer = previous._CurrentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         previous._CurrentContainer = newContainer;
