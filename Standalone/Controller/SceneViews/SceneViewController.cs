@@ -68,9 +68,34 @@ namespace Medical.Controller
 
         public void createCameras(SimScene scene)
         {
+            MDIWindow previousWindow = null;
+            int i = 0;
             foreach (SceneViewWindow window in windows)
             {
                 createCameraForWindow(window, scene);
+                //temporary
+                MDIWindow childWindow = new MDIWindow("MDIWindow.layout", window.Name);
+                childWindow.SuppressLayout = true;
+                childWindow.Content = window;
+                childWindow.SuppressLayout = false;
+                childWindow.Caption = window.Name;
+                switch (i++)
+                {
+                    case 0:
+                        mdiLayout.addWindow(childWindow);
+                        break;
+                    case 1:
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        break;
+                    case 2:
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        break;
+                    case 3:
+                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Top);
+                        break;
+                }
+                previousWindow = childWindow;
+                //end temp
             }
             camerasCreated = true;
             currentScene = scene;
@@ -81,13 +106,7 @@ namespace Medical.Controller
             window.createSceneView(rendererWindow, scene);
             rm.setActiveViewport(rm.getActiveViewport() + 1);
 
-            //temporary
-            MDIWindow childWindow = new MDIWindow("MDIWindow.layout", window.Name);
-            childWindow.SuppressLayout = true;
-            childWindow.Content = window;
-            childWindow.SuppressLayout = false;
-            childWindow.Caption = window.Name;
-            mdiLayout.addWindow(childWindow);
+            
             
             //layoutContainer.addChild(window);
         }

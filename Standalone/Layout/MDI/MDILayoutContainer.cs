@@ -43,6 +43,7 @@ namespace Medical.Controller
         public void addChild(LayoutContainer child)
         {
             setChildProperties(child);
+            children.Add(child);
             invalidate();
         }
 
@@ -70,6 +71,18 @@ namespace Medical.Controller
             {
                 children.Insert(index, child);
             }
+        }
+
+        public void swapAndRemove(LayoutContainer newChild, LayoutContainer oldChild)
+        {
+            int index = children.IndexOf(oldChild);
+            if (index == -1)
+            {
+                throw new MDIException("Attempted to swap a MDIWindow with a old child window that does not exist in this collection.");
+            }
+            setChildProperties(newChild);
+            children.Insert(index, newChild);
+            children.Remove(oldChild);
         }
 
         public void removeChild(LayoutContainer child)
@@ -103,11 +116,11 @@ namespace Medical.Controller
         public override void layout()
         {
             Vector2 currentLocation = Location;
+            int i = 0;
+            int childCount = children.Count - 1;
+            float paddingOffset = childCount != 0 ? padding / childCount : 0;
             if (layoutType == LayoutType.Horizontal)
             {
-                int i = 0;
-                int childCount = children.Count - 1;
-                float paddingOffset = padding / childCount != 0 ? children.Count - 1 : 0;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
@@ -122,18 +135,10 @@ namespace Medical.Controller
             }
             else
             {
-                //Get the total size all child controls want to be
-                float totalHeight = 0.0f;
-                foreach (LayoutContainer child in children)
-                {
-                    totalHeight += child.DesiredSize.Height + padding;
-                }
-                totalHeight -= padding; //remove the last window's worth of padding
-                int i = 0;
                 foreach (LayoutContainer child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width, WorkingSize.Height * (childSize.Height / totalHeight));
+                    Size2 actualSize = new Size2(WorkingSize.Width, WorkingSize.Height / children.Count - paddingOffset);
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -206,6 +211,14 @@ namespace Medical.Controller
             }
         }
 
+        public LayoutType Layout
+        {
+            get
+            {
+                return layoutType;
+            }
+        }
+
         /// <summary>
         /// This method sets the child up to be a child of this container.
         /// </summary>
@@ -213,7 +226,6 @@ namespace Medical.Controller
         private void setChildProperties(LayoutContainer child)
         {
             child.SuppressLayout = true;
-            children.Add(child);
             child.Visible = visible;
             child.setAlpha(alpha);
             child._setParent(this);
