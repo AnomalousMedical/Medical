@@ -138,6 +138,10 @@ namespace Medical.Controller
                 {
                     Size2 childSize = child.DesiredSize;
                     Size2 actualSize = new Size2(sizeWithoutPadding / children.Count, WorkingSize.Height);
+                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
+                    {
+                        actualSize.Width = WorkingSize.Width + Location.x - currentLocation.x;
+                    }
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
@@ -153,6 +157,10 @@ namespace Medical.Controller
                 {
                     Size2 childSize = child.DesiredSize;
                     Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding / children.Count);
+                    if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
+                    {
+                        actualSize.Height = WorkingSize.Height + Location.y - currentLocation.y;
+                    }
                     child.WorkingSize = actualSize;
                     child.Location = currentLocation;
                     child.layout();
