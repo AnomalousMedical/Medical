@@ -34,6 +34,9 @@ namespace Medical.Controller
 
         private MDIWindow mdiWindow;
 
+        private Vector2 location = new Vector2(0.0f, 0.0f);
+        private Size2 size = new Size2(1.0f, 1.0f);
+
         public SceneViewWindow(UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.cameraMover = cameraMover;
@@ -65,6 +68,7 @@ namespace Medical.Controller
             SimSubScene defaultScene = scene.getDefaultSubScene();
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
+            sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
             sceneView.BackgroundColor = new Color(0.149f, 0.149f, 0.149f);
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
@@ -122,9 +126,11 @@ namespace Medical.Controller
             {
                 totalSize.Height = 1.0f;
             }
+            location = new Vector2(Location.x / totalSize.Width, Location.y / totalSize.Height);
+            size = new Size2(WorkingSize.Width / totalSize.Width, WorkingSize.Height / totalSize.Height);
             if (sceneView != null)
             {
-                sceneView.setDimensions(Location.x / totalSize.Width, Location.y / totalSize.Height, WorkingSize.Width / totalSize.Width, WorkingSize.Height / totalSize.Height);
+                sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
             }
         }
 

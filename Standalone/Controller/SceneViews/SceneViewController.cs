@@ -51,6 +51,11 @@ namespace Medical.Controller
             }
         }
 
+        //temp
+        MDIWindow previousWindow = null;
+        int i = 0;
+        //end temp
+
         public void createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
@@ -66,34 +71,33 @@ namespace Medical.Controller
                 createCameraForWindow(window, currentScene);
             }
             windows.Add(window);
+
+            //temporary
+            MDIWindow childWindow = window._getMDIWindow();
+            switch (i++)
+            {
+                case 0:
+                    mdiLayout.addWindow(childWindow);
+                    break;
+                case 1:
+                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Left);
+                    break;
+                case 2:
+                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Bottom);
+                    break;
+                case 3:
+                    mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Right);
+                    break;
+            }
+            previousWindow = childWindow;
+            //end temp
         }
 
         public void createCameras(SimScene scene)
         {
-            MDIWindow previousWindow = null;
-            int i = 0;
             foreach (SceneViewWindow window in windows)
             {
                 createCameraForWindow(window, scene);
-                //temporary
-                MDIWindow childWindow = window._getMDIWindow();
-                switch (i++)
-                {
-                    case 0:
-                        mdiLayout.addWindow(childWindow);
-                        break;
-                    case 1:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Left);
-                        break;
-                    case 2:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Bottom);
-                        break;
-                    case 3:
-                        mdiLayout.addWindow(childWindow, previousWindow, WindowAlignment.Right);
-                        break;
-                }
-                previousWindow = childWindow;
-                //end temp
             }
             camerasCreated = true;
             currentScene = scene;
@@ -103,10 +107,6 @@ namespace Medical.Controller
         {
             window.createSceneView(rendererWindow, scene);
             rm.setActiveViewport(rm.getActiveViewport() + 1);
-
-            
-            
-            //layoutContainer.addChild(window);
         }
 
         public void destroyCameras()
