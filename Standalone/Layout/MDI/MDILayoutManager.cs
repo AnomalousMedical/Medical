@@ -16,11 +16,14 @@ namespace Medical.Controller
 
     public class MDILayoutManager : LayoutContainer, IDisposable
     {
+        public event EventHandler ActiveWindowChanged;
+
         private const int PADDING_SIZE = 5;
 
         private List<MDIWindow> windows = new List<MDIWindow>();
         private LayoutContainer rootContainer = null;
         private List<MDILayoutContainer> childContainers = new List<MDILayoutContainer>();
+        private MDIWindow activeWindow = null;
 
         public MDILayoutManager()
         {
@@ -37,6 +40,7 @@ namespace Medical.Controller
 
         public void addWindow(MDIWindow window)
         {
+            window._setMDILayoutManager(this);
             //Normal operation where the root is the MDILayoutContainer as expected
             if (rootContainer is MDILayoutContainer)
             {
@@ -50,6 +54,7 @@ namespace Medical.Controller
                 rootContainer = window;
                 window._CurrentContainer = null;
                 window._setParent(this);
+                ActiveWindow = window;
             }
             //If one other container has been added, create a horizontal alignment and readd both containers to it
             else if (rootContainer is MDIWindow)
@@ -70,6 +75,11 @@ namespace Medical.Controller
 
         public void addWindow(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
+            if (previous == null)
+            {
+                throw new MDIException("Previous window cannot be null.");
+            }
+            window._setMDILayoutManager(this);
             switch (alignment)
             {
                 case WindowAlignment.Left:
@@ -236,6 +246,33 @@ namespace Medical.Controller
                 if (rootContainer != null)
                 {
                     rootContainer.Visible = value;
+                }
+            }
+        }
+
+        public MDIWindow ActiveWindow
+        {
+            get
+            {
+                return activeWindow;
+            }
+            set
+            {
+                if (activeWindow != value)
+                {
+                    if (activeWindow != null)
+                    {
+                        activeWindow._doSetActive(false);
+                    }
+                    activeWindow = value;
+                    if (activeWindow != null)
+                    {
+                        activeWindow._doSetActive(true);
+                    }
+                    if (ActiveWindowChanged != null)
+                    {
+                        ActiveWindowChanged.Invoke(this, EventArgs.Empty);
+                    }
                 }
             }
         }

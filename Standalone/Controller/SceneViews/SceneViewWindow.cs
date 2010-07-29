@@ -32,6 +32,8 @@ namespace Medical.Controller
         private Vector3 startPosition;
         private Vector3 startLookAt;
 
+        private MDIWindow mdiWindow;
+
         public SceneViewWindow(UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.cameraMover = cameraMover;
@@ -42,7 +44,13 @@ namespace Medical.Controller
             this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
             AllowNavigation = true;
-            Focused = true;
+
+            //MDI Window
+            mdiWindow = new MDIWindow("MDIWindow.layout", Name);
+            mdiWindow.SuppressLayout = true;
+            mdiWindow.Content = this;
+            mdiWindow.SuppressLayout = false;
+            mdiWindow.Caption = Name;
         }
 
         public void Dispose()
@@ -257,7 +265,26 @@ namespace Medical.Controller
             }
         }
 
-        public bool Focused { get; set; }
+        public bool Focused
+        {
+            get
+            {
+                return mdiWindow.Active;
+            }
+            set
+            {
+                mdiWindow.Active = value;
+            }
+        }
+
+        /// <summary>
+        /// Get the MDIWindow for this window. Do not touch unless you are SceneViewController.
+        /// </summary>
+        /// <returns>The MDIWindow for this window.</returns>
+        internal MDIWindow _getMDIWindow()
+        {
+            return mdiWindow;
+        }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)
         {

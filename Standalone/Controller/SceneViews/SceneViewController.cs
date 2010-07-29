@@ -25,6 +25,7 @@ namespace Medical.Controller
         private bool camerasCreated = false;
         private SimScene currentScene = null;
         private OgreRenderManager rm;
+        private SceneViewWindow activeWindow = null;
 
         private List<SceneViewWindow> windows = new List<SceneViewWindow>();
 
@@ -38,6 +39,7 @@ namespace Medical.Controller
             AllowZoom = true;
 
             rm = renderManager;
+            mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
         }
 
         public void Dispose()
@@ -74,11 +76,7 @@ namespace Medical.Controller
             {
                 createCameraForWindow(window, scene);
                 //temporary
-                MDIWindow childWindow = new MDIWindow("MDIWindow.layout", window.Name);
-                childWindow.SuppressLayout = true;
-                childWindow.Content = window;
-                childWindow.SuppressLayout = false;
-                childWindow.Caption = window.Name;
+                MDIWindow childWindow = window._getMDIWindow();
                 switch (i++)
                 {
                     case 0:
@@ -134,12 +132,34 @@ namespace Medical.Controller
         {
             get
             {
-                return windows[0];
+                if (activeWindow == null)
+                {
+                    return windows[0];
+                }
+                return activeWindow;
             }
         }
 
         public bool AllowRotation { get; set; }
 
         public bool AllowZoom { get; set; }
+
+        void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
+        {
+            //Check to see if the active window is one of the SceneViewWindow's MDIWindow
+            MDIWindow activeMDIWindow = mdiLayout.ActiveWindow;
+            foreach (SceneViewWindow window in windows)
+            {
+                if (window._getMDIWindow() == activeMDIWindow)
+                {
+                    activeWindow = window;
+                    if (ActiveWindowChanged != null)
+                    {
+                        ActiveWindowChanged.Invoke(window);
+                    }
+                    break;
+                }
+            }
+        }
     }
 }

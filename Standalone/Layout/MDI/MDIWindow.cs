@@ -15,6 +15,8 @@ namespace Medical.Controller
         private Widget mainWidget;
         private LayoutContainer content;
         private Button captionButton;
+        private MDILayoutManager layoutManager;
+        private bool activeWindow = false;
 
         public MDIWindow(String layoutFile, String caption)
         {
@@ -22,6 +24,7 @@ namespace Medical.Controller
             mainWidget = guiLayout.getWidget(0);
 
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
+            captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
 
             Button closeButton = mainWidget.findWidget("CloseButton") as Button;
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -127,11 +130,45 @@ namespace Medical.Controller
             }
         }
 
+        public bool Active
+        {
+            get
+            {
+                return activeWindow;
+            }
+            set
+            {
+                if (value)
+                {
+                    layoutManager.ActiveWindow = this;
+                }
+            }
+        }
+
         /// <summary>
         /// The container this window is currently inside of.
         /// Do not touch unless you are MDILayoutManager.
         /// </summary>
         internal MDILayoutContainer _CurrentContainer { get; set; }
+
+        /// <summary>
+        /// Set the MDILayoutManager.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal void _setMDILayoutManager(MDILayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        /// <summary>
+        /// Change the active status of this window.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal void _doSetActive(bool active)
+        {
+            activeWindow = active;
+            captionButton.StateCheck = activeWindow;
+        }
 
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -139,6 +176,11 @@ namespace Medical.Controller
             {
                 Closed.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        void captionButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            layoutManager.ActiveWindow = this;
         }
     }
 }
