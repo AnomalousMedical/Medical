@@ -67,6 +67,10 @@ namespace Medical.Controller
 
         public void destroyWindow(SceneViewWindow window)
         {
+            if (WindowDestroyed != null)
+            {
+                WindowDestroyed.Invoke(window);
+            }
             if (camerasCreated)
             {
                 window.destroySceneView();
