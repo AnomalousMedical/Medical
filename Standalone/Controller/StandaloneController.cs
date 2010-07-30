@@ -74,6 +74,7 @@ namespace Standalone
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
+            medicalController.MainTimer.addFixedUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
 
             //SceneView
             MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
@@ -139,16 +140,6 @@ namespace Standalone
 
                 medicalController.start();
             }
-        }
-
-        void medicalController_FullSpeedLoopUpdate(Clock time)
-        {
-            ThreadManager.doInvoke();
-        }
-
-        void medicalController_FixedLoopUpdate(Clock time)
-        {
-            
         }
 
         public void shutdown()
@@ -448,6 +439,16 @@ namespace Standalone
         {
             watermark.Visible = true;
             //navigationController.ShowOverlays = true;
+        }
+
+        void medicalController_FullSpeedLoopUpdate(Clock time)
+        {
+            ThreadManager.doInvoke();
+        }
+
+        void medicalController_FixedLoopUpdate(Clock time)
+        {
+            
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.Controller
 {
@@ -97,7 +98,6 @@ namespace Medical.Controller
             //Check to see if this window was the active window.
             if (window == ActiveWindow)
             {
-                //If there are windows left use the first one as the new active window, otherwise set the active window to null.
                 if (windows.Count > 0)
                 {
 
@@ -109,6 +109,47 @@ namespace Medical.Controller
                 }
             }
             window._ParentContainer.removeChild(window);
+        }
+
+        /// <summary>
+        /// Inject a mouse button down event.
+        /// </summary>
+        /// <param name="absMouse">The location of the event.</param>
+        /// <param name="mouseButton">The mouse button that was pressed.</param>
+        public void injectMouseDown(Vector3 absMouse, MouseButtonCode mouseButton)
+        {
+            
+        }
+
+        /// <summary>
+        /// Inject a mouse button up event.
+        /// </summary>
+        /// <param name="absMouse">The location of the event.</param>
+        /// <param name="mouseButton">The mouse button that was pressed.</param>
+        public void injectMouseUp(Vector3 absMouse, MouseButtonCode mouseButton)
+        {
+            if (mouseButton == MouseButtonCode.MB_BUTTON0)
+            {
+                foreach (MDIWindow window in windows)
+                {
+                    Vector2 topLeft = window.Location;
+                    Vector2 bottomRight = new Vector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
+                    if (topLeft.x < absMouse.x && topLeft.y < absMouse.y && bottomRight.x > absMouse.x && bottomRight.y > absMouse.y)
+                    {
+                        ActiveWindow = window;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inject the mouse location.
+        /// </summary>
+        /// <param name="absMouse">The location of the mouse cursor.</param>
+        public void injectMouseLocation(Vector3 absMouse)
+        {
+
         }
 
         /// <summary>
