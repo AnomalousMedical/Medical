@@ -35,6 +35,10 @@ namespace Medical.Controller
             mainWidget = guiLayout.getWidget(0);
 
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
+            if (captionButton != null)
+            {
+                captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
+            }
 
             Button closeButton = mainWidget.findWidget("CloseButton") as Button;
             if (closeButton != null)
@@ -225,6 +229,11 @@ namespace Medical.Controller
             {
                 Closed.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        void captionButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            layoutManager.ActiveWindow = this;
         }
     }
 }

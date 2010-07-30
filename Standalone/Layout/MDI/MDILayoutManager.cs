@@ -116,7 +116,8 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="absMouse">The location of the event.</param>
         /// <param name="mouseButton">The mouse button that was pressed.</param>
-        public void injectMouseDown(Vector3 absMouse, MouseButtonCode mouseButton)
+        /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
+        public void injectMouseDown(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
         {
             
         }
@@ -126,9 +127,10 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="absMouse">The location of the event.</param>
         /// <param name="mouseButton">The mouse button that was pressed.</param>
-        public void injectMouseUp(Vector3 absMouse, MouseButtonCode mouseButton)
+        /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
+        public void injectMouseUp(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
         {
-            if (mouseButton == MouseButtonCode.MB_BUTTON0)
+            if (!mouseAlreadyHandled && mouseButton == MouseButtonCode.MB_BUTTON0)
             {
                 foreach (MDIWindow window in windows)
                 {
