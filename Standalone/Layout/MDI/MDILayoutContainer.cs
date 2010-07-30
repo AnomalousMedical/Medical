@@ -26,11 +26,10 @@ namespace Medical.Controller
         private Gui gui = Gui.Instance;
         private List<Widget> separatorWidgets = new List<Widget>();
 
-        public MDILayoutContainer(LayoutType layoutType, int padding, MDILayoutManager layoutManager)
+        public MDILayoutContainer(LayoutType layoutType, int padding)
         {
             this.layoutType = layoutType;
             this.padding = padding;
-            this.layoutManager = layoutManager;
         }
 
         public void Dispose()
@@ -49,43 +48,67 @@ namespace Medical.Controller
             invalidate();
         }
 
-        public void insertChild(MDIWindow child, MDIWindow previous, bool after)
+        public void addChild(MDIWindow child, MDIWindow previous, WindowAlignment alignment)
         {
-            int index = children.IndexOf(previous);
-            if (index == -1)
+            switch (alignment)
             {
-                throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
+                case WindowAlignment.Left:
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                    {
+                        previous._CurrentContainer.insertChild(child, previous, true);
+                    }
+                    else
+                    {
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
+                        MDILayoutContainer parentContainer = previous._CurrentContainer;
+                        parentContainer.swapAndRemove(newContainer, previous);
+                        newContainer.addChild(previous);
+                        newContainer.addChild(child);
+                    }
+                    break;
+                case WindowAlignment.Right:
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                    {
+                        previous._CurrentContainer.insertChild(child, previous, false);
+                    }
+                    else
+                    {
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
+                        MDILayoutContainer parentContainer = previous._CurrentContainer;
+                        parentContainer.swapAndRemove(newContainer, previous);
+                        newContainer.addChild(child);
+                        newContainer.addChild(previous);
+                    }
+                    break;
+                case WindowAlignment.Top:
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
+                    {
+                        previous._CurrentContainer.insertChild(child, previous, false);
+                    }
+                    else
+                    {
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding);
+                        MDILayoutContainer parentContainer = previous._CurrentContainer;
+                        parentContainer.swapAndRemove(newContainer, previous);
+                        newContainer.addChild(child);
+                        newContainer.addChild(previous);
+                    }
+                    break;
+                case WindowAlignment.Bottom:
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
+                    {
+                        previous._CurrentContainer.insertChild(child, previous, true);
+                    }
+                    else
+                    {
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding);
+                        MDILayoutContainer parentContainer = previous._CurrentContainer;
+                        parentContainer.swapAndRemove(newContainer, previous);
+                        newContainer.addChild(previous);
+                        newContainer.addChild(child);
+                    }
+                    break;
             }
-            setChildProperties(child);
-            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
-            if (after)
-            {
-                //Increment index and make sure it isnt the end of the list
-                if (++index == children.Count)
-                {
-                    children.Add(child);
-                }
-                else
-                {
-                    children.Insert(index, child);
-                }
-            }
-            else
-            {
-                children.Insert(index, child);
-            }
-        }
-
-        public void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
-        {
-            int index = children.IndexOf(oldChild);
-            if (index == -1)
-            {
-                throw new MDIException("Attempted to swap a MDIWindow with a old child window that does not exist in this collection.");
-            }
-            setChildProperties(newChild);
-            children.Insert(index, newChild);
-            children.Remove(oldChild);
         }
 
         public void removeChild(MDIWindow child)
@@ -269,6 +292,45 @@ namespace Medical.Controller
             child._setParent(this);
             child._CurrentContainer = this;
             child.SuppressLayout = false;
+        }
+
+        private void insertChild(MDIWindow child, MDIWindow previous, bool after)
+        {
+            int index = children.IndexOf(previous);
+            if (index == -1)
+            {
+                throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
+            }
+            setChildProperties(child);
+            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
+            if (after)
+            {
+                //Increment index and make sure it isnt the end of the list
+                if (++index == children.Count)
+                {
+                    children.Add(child);
+                }
+                else
+                {
+                    children.Insert(index, child);
+                }
+            }
+            else
+            {
+                children.Insert(index, child);
+            }
+        }
+
+        private void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
+        {
+            int index = children.IndexOf(oldChild);
+            if (index == -1)
+            {
+                throw new MDIException("Attempted to swap a MDIWindow with a old child window that does not exist in this collection.");
+            }
+            setChildProperties(newChild);
+            children.Insert(index, newChild);
+            children.Remove(oldChild);
         }
     }
 }
