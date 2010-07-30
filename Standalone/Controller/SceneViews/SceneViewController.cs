@@ -54,14 +54,14 @@ namespace Medical.Controller
         public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
             SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
-            mdiLayout.addWindow(window._getMDIWindow());
+            mdiLayout.showWindow(window._getMDIWindow());
             return window;
         }
 
         public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, SceneViewWindow previous, WindowAlignment alignment)
         {
             SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
-            mdiLayout.addWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
+            mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
             return window;
         }
 

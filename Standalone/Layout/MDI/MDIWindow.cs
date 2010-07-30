@@ -7,6 +7,9 @@ using Engine;
 
 namespace Medical.Controller
 {
+    /// <summary>
+    /// The base class for windows in the MDILayoutManager.
+    /// </summary>
     public class MDIWindow : MDIContainerBase, IDisposable
     {
         public event EventHandler Closed;
@@ -16,24 +19,45 @@ namespace Medical.Controller
         private LayoutContainer content;
         private Button captionButton;
         private bool activeWindow = false;
+        private MDILayoutManager layoutManager;
 
+        /// <summary>
+        /// Constructor. Can load custom layout files for the header. These files may contain two buttons for custom behavior:
+        /// CaptionButton - The button that the text will go on. Must be a button.
+        /// CloseButton - The button that is used to close the window. Must be a button.
+        /// If these widgets are missing the associated functions will not be avaliable.
+        /// </summary>
+        /// <param name="layoutFile"></param>
+        /// <param name="caption"></param>
         public MDIWindow(String layoutFile, String caption)
         {
             guiLayout = LayoutManager.Instance.loadLayout(layoutFile);
             mainWidget = guiLayout.getWidget(0);
 
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
-            captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
+            if (captionButton != null)
+            {
+                captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
+            }
 
             Button closeButton = mainWidget.findWidget("CloseButton") as Button;
-            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+            if (closeButton != null)
+            {
+                closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+            }
         }
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose()
         {
             LayoutManager.Instance.unloadLayout(guiLayout);
         }
 
+        /// <summary>
+        /// LayoutContainer method.
+        /// </summary>
         public override void bringToFront()
         {
             LayerManager.Instance.upLayerItem(mainWidget);
@@ -43,6 +67,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// LayoutContainer method.
+        /// </summary>
         public override void setAlpha(float alpha)
         {
             mainWidget.Alpha = alpha;
@@ -52,6 +79,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// LayoutContainer method.
+        /// </summary>
         public override void layout()
         {
             mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.getHeight());
@@ -63,6 +93,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// LayoutContainer property.
+        /// </summary>
         public override Size2 DesiredSize
         {
             get 
@@ -78,6 +111,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// LayoutContainer property.
+        /// </summary>
         public override bool Visible
         {
             get
@@ -94,6 +130,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// The content LayoutContainer for this window.
+        /// </summary>
         public LayoutContainer Content
         {
             get
@@ -116,19 +155,34 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// The caption for this window. Will only work if the layout contained
+        /// a CaptionButton. Otherwise it is always null.
+        /// </summary>
         public String Caption
         {
             get
             {
-                return captionButton.Caption;
+                if (captionButton != null)
+                {
+                    return captionButton.Caption;
+                }
+                else return null;
             }
             set
             {
-                captionButton.Caption = value;
-                captionButton.setSize((int)FontManager.Instance.measureStringWidth(captionButton.Font, value) + 50, captionButton.getHeight());
+                if (captionButton != null)
+                {
+                    captionButton.Caption = value;
+                    captionButton.setSize((int)FontManager.Instance.measureStringWidth(captionButton.Font, value) + 50, captionButton.getHeight());
+                }
             }
         }
 
+        /// <summary>
+        /// True if this is the currently active window. Setting this to true
+        /// will make the window active. Setting it to false does nothing.
+        /// </summary>
         public bool Active
         {
             get
@@ -145,6 +199,15 @@ namespace Medical.Controller
         }
 
         /// <summary>
+        /// Set the MDILayoutManager.
+        /// Do not touch unless you are MDILayoutManager.
+        /// </summary>
+        internal void _setMDILayoutManager(MDILayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        /// <summary>
         /// Change the active status of this window.
         /// Do not touch unless you are MDILayoutManager.
         /// </summary>
@@ -154,15 +217,25 @@ namespace Medical.Controller
             captionButton.StateCheck = activeWindow;
         }
 
+        /// <summary>
+        /// Close button callback.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            layoutManager.removeWindow(this);
+            layoutManager.closeWindow(this);
             if (Closed != null)
             {
                 Closed.Invoke(this, EventArgs.Empty);
             }
         }
 
+        /// <summary>
+        /// Caption button click callback.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         void captionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             layoutManager.ActiveWindow = this;

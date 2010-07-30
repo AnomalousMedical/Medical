@@ -6,6 +6,9 @@ using Engine;
 
 namespace Medical.Controller
 {
+    /// <summary>
+    /// Descibes the alignment of one window to another.
+    /// </summary>
     public enum WindowAlignment
     {
         Left,
@@ -14,54 +17,81 @@ namespace Medical.Controller
         Bottom,
     }
 
+    /// <summary>
+    /// This class provides a MDI-like interface for hosting multiple windows at once.
+    /// </summary>
     public class MDILayoutManager : LayoutContainer, IDisposable
     {
         public event EventHandler ActiveWindowChanged;
 
-        private const int PADDING_SIZE = 5;
-
         private List<MDIWindow> windows = new List<MDIWindow>();
         private MDILayoutContainer rootContainer;
-        private List<MDILayoutContainer> childContainers = new List<MDILayoutContainer>();
         private MDIWindow activeWindow = null;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MDILayoutManager()
+            :this(5)
         {
-            rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE);
+
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="padding">The amount of padding between elements.</param>
+        public MDILayoutManager(int padding)
+        {
+            rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
             rootContainer._setParent(this);
         }
 
+        /// <summary>
+        /// Dispose method.
+        /// </summary>
         public void Dispose()
         {
-            foreach (MDILayoutContainer child in childContainers)
-            {
-                child.Dispose();
-            }
+            rootContainer.Dispose();
         }
 
-        public void addWindow(MDIWindow window)
+        /// <summary>
+        /// Show a window where the location does not matter.
+        /// </summary>
+        /// <param name="window">The window to add.</param>
+        public void showWindow(MDIWindow window)
         {
             setWindowProperties(window);
             rootContainer.addChild(window);
             invalidate();
         }
 
-        public void addWindow(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
+        /// <summary>
+        /// Show a window relative to another window.
+        /// </summary>
+        /// <param name="window">The window to show.</param>
+        /// <param name="previous">The window to show window relative to.</param>
+        /// <param name="alignment">The alignemnt of window to previous.</param>
+        public void showWindow(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
             if (previous == null)
             {
                 throw new MDIException("Previous window cannot be null.");
             }
             setWindowProperties(window);
-            previous._CurrentContainer.addChild(window, previous, alignment);
+            previous._ParentContainer.addChild(window, previous, alignment);
             invalidate();
         }
 
-        public void removeWindow(MDIWindow window)
+        /// <summary>
+        /// Close a window.
+        /// </summary>
+        /// <param name="window"></param>
+        public void closeWindow(MDIWindow window)
         {
             if (!windows.Contains(window))
             {
-                throw new MDIException("Attempted to remove a window that is not part of this MDILayoutManager.");
+                throw new MDIException("Attempted to close a window that is not part of this MDILayoutManager.");
             }
             windows.Remove(window);
             //Check to see if this window was the active window.
@@ -78,19 +108,28 @@ namespace Medical.Controller
                     ActiveWindow = null;
                 }
             }
-            window._CurrentContainer.removeChild(window);
+            window._ParentContainer.removeChild(window);
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override void bringToFront()
         {
             rootContainer.bringToFront();
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override void setAlpha(float alpha)
         {
             rootContainer.setAlpha(alpha);
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override void layout()
         {
             rootContainer.WorkingSize = WorkingSize;
@@ -98,6 +137,9 @@ namespace Medical.Controller
             rootContainer.layout();
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override Size2 DesiredSize
         {
             get 
@@ -106,6 +148,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// LayoutContainer function
+        /// </summary>
         public override bool Visible
         {
             get
@@ -118,6 +163,9 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// Get or set the "Active" window in the MDI interface. This is basicly which window is focused.
+        /// </summary>
         public MDIWindow ActiveWindow
         {
             get
@@ -145,8 +193,16 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// Helper function to intialize windows that are added to the MDILayoutManager.
+        /// </summary>
+        /// <param name="window">The window to initialize.</param>
         private void setWindowProperties(MDIWindow window)
         {
+            if (windows.Count == 0)
+            {
+                ActiveWindow = window;
+            }
             window._setMDILayoutManager(this);
             windows.Add(window);
         }
