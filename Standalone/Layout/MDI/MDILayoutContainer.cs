@@ -29,6 +29,7 @@ namespace Medical.Controller
 
         private Gui gui = Gui.Instance;
         private List<Widget> separatorWidgets = new List<Widget>();
+        private float totalScale = 0.0f;
 
         /// <summary>
         /// Constructor.
@@ -59,8 +60,9 @@ namespace Medical.Controller
         public void addChild(MDIWindow child)
         {
             setChildProperties(child);
-            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
+            createSeparatorWidget();
             children.Add(child);
+            totalScale += child.Scale;
             invalidate();
         }
 
@@ -156,6 +158,7 @@ namespace Medical.Controller
                 Gui.Instance.destroyWidget(separator);
                 separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
                 children.Remove(child);
+                totalScale -= child.Scale;
                 if (_ParentContainer != null && children.Count == 1)
                 {
                     //Promote the child, which will destroy this container in the process as it is no longer needed.
@@ -198,14 +201,14 @@ namespace Medical.Controller
         {
             Vector2 currentLocation = Location;
             int i = 0;
-            int childCount = children.Count - 1;            
+            int childCount = children.Count - 1;
             if (layoutType == LayoutType.Horizontal)
             {
                 float sizeWithoutPadding = WorkingSize.Width - padding * childCount;
                 foreach (MDIContainerBase child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(sizeWithoutPadding / children.Count, WorkingSize.Height);
+                    Size2 actualSize = new Size2(sizeWithoutPadding * (child.Scale / totalScale), WorkingSize.Height);
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
                         actualSize.Width = WorkingSize.Width + Location.x - currentLocation.x;
@@ -224,7 +227,7 @@ namespace Medical.Controller
                 foreach (MDIContainerBase child in children)
                 {
                     Size2 childSize = child.DesiredSize;
-                    Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding / children.Count);
+                    Size2 actualSize = new Size2(WorkingSize.Width, sizeWithoutPadding * (child.Scale / totalScale));
                     if (i == childCount) //Make sure to stretch the last child out completely, sometimes there is an extra pixel. This stops unsightly flickering.
                     {
                         actualSize.Height = WorkingSize.Height + Location.y - currentLocation.y;
@@ -349,7 +352,7 @@ namespace Medical.Controller
                 throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
             }
             setChildProperties(child);
-            separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
+            createSeparatorWidget();
             if (after)
             {
                 //Increment index and make sure it isnt the end of the list
@@ -366,6 +369,7 @@ namespace Medical.Controller
             {
                 children.Insert(index, child);
             }
+            totalScale += child.Scale;
         }
 
         /// <summary>
@@ -384,6 +388,7 @@ namespace Medical.Controller
             setChildProperties(newChild);
             children.Insert(index, newChild);
             children.Remove(oldChild);
+            newChild.Scale = oldChild.Scale;
         }
 
         /// <summary>
@@ -398,6 +403,65 @@ namespace Medical.Controller
             swapAndRemove(child, formerParent);
             formerParent.Dispose();
             invalidate();
+        }
+
+        private void createSeparatorWidget()
+        {
+            Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", "");
+            separatorWidgets.Add(separator);
+            separator.MouseDrag += separator_MouseDrag;
+            separator.MouseButtonPressed += separator_MouseButtonPressed;
+            separator.MouseButtonReleased += separator_MouseButtonReleased;
+        }
+
+        private Vector2 dragStartPosition;
+        private MDIContainerBase dragLowChild;
+        private float dragLowScaleStart;
+        private MDIContainerBase dragHighChild;
+        private float dragHighScaleStart;
+        private float dragTotalScale;
+
+        void separator_MouseDrag(Widget source, EventArgs e)
+        {
+            if (dragLowChild != null)
+            {
+                MouseEventArgs me = e as MouseEventArgs;
+                Vector2 offset = me.Position - dragStartPosition;
+
+                if (Layout == LayoutType.Horizontal)
+                {
+                    dragLowChild.Scale = dragLowScaleStart + offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart + offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
+                }
+                else
+                {
+                    dragLowChild.Scale = dragLowScaleStart + offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart + offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
+                }
+
+                invalidate();
+            }
+        }
+
+        void separator_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            int sepIndex = separatorWidgets.IndexOf(source);
+            //ignore the last separator and do not allow the drag to happen if it is clicked.
+            if (sepIndex != separatorWidgets.Count - 1)
+            {
+                dragStartPosition = ((MouseEventArgs)e).Position;
+                dragLowChild = children[sepIndex];
+                dragLowScaleStart = dragLowChild.Scale;
+                dragHighChild = children[sepIndex + 1];
+                dragHighScaleStart = dragHighChild.Scale;
+                dragTotalScale = dragLowScaleStart + dragHighScaleStart;
+            }
+        }
+
+        void separator_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            dragLowChild = null;
+            dragHighChild = null;
         }
     }
 }
