@@ -20,7 +20,7 @@ namespace Medical.Controller
 
         /// <summary>
         /// The container this window is currently inside of.
-        /// Do not touch accessor unless you are MDILayoutManager or setter unless you are MDILayoutContainer.
+        /// Do not touch unless you are MDILayoutManager or MDILayoutContainer.
         /// </summary>
         internal MDILayoutContainer _CurrentContainer { get; set; }
     }

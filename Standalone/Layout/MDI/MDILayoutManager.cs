@@ -141,57 +141,38 @@ namespace Medical.Controller
 
         public override void bringToFront()
         {
-            if (rootContainer != null)
-            {
-                rootContainer.bringToFront();
-            }
+            rootContainer.bringToFront();
         }
 
         public override void setAlpha(float alpha)
         {
-            if (rootContainer != null)
-            {
-                rootContainer.setAlpha(alpha);
-            }
+            rootContainer.setAlpha(alpha);
         }
 
         public override void layout()
         {
-            if (rootContainer != null)
-            {
-                rootContainer.WorkingSize = WorkingSize;
-                rootContainer.Location = Location;
-                rootContainer.layout();
-            }
+            rootContainer.WorkingSize = WorkingSize;
+            rootContainer.Location = Location;
+            rootContainer.layout();
         }
 
         public override Size2 DesiredSize
         {
             get 
             {
-                if (rootContainer != null)
-                {
-                    return rootContainer.DesiredSize;
-                }
-                return new Size2();
+                return rootContainer.DesiredSize;
             }
         }
-
-        private bool visible = true;
 
         public override bool Visible
         {
             get
             {
-                return visible;
+                return rootContainer.Visible;
             }
             set
             {
-                visible = value;
-                if (rootContainer != null)
-                {
-                    rootContainer.Visible = value;
-                }
+                rootContainer.Visible = value;
             }
         }
 

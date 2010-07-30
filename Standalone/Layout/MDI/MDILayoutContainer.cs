@@ -96,18 +96,49 @@ namespace Medical.Controller
                 Gui.Instance.destroyWidget(separator);
                 separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
                 children.Remove(child);
-                if (children.Count == 0)
+                //if (children.Count == 0)
+                //{
+                //    //All children are deleted remove this container too
+                //    if (_CurrentContainer != null)
+                //    {
+                //        _CurrentContainer.removeChild(this);
+                //    }
+                //}
+                if (_CurrentContainer != null && children.Count == 1)
                 {
-                    //All children are deleted remove this container too
-                    if (_CurrentContainer != null)
-                    {
-                        _CurrentContainer.removeChild(this);
-                    }
+                    //Promote the child, which will destroy this container in the process as it is no longer needed.
+                    _CurrentContainer.promoteChild(children[0], this);
                 }
                 else
                 {
                     invalidate();
                 }
+            }
+        }
+
+        private void promoteChild(MDIContainerBase child, MDILayoutContainer formerParent)
+        {
+            if (_CurrentContainer != null)
+            {
+                //Check to see if this container only contains formerParent, if so promote again
+                if (children.Count == 1 && children[0] == formerParent)
+                {
+                    formerParent.Dispose();
+                    _CurrentContainer.promoteChild(child, this);
+                }
+                //Add child as a new child element
+                else
+                {
+                    swapAndRemove(child, formerParent);
+                    formerParent.Dispose();
+                    invalidate();
+                }
+            }
+            else
+            {
+                swapAndRemove(child, formerParent);
+                formerParent.Dispose();
+                invalidate();
             }
         }
 
