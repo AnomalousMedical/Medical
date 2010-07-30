@@ -21,13 +21,14 @@ namespace Medical.Controller
         private const int PADDING_SIZE = 5;
 
         private List<MDIWindow> windows = new List<MDIWindow>();
-        private LayoutContainer rootContainer = null;
+        private MDILayoutContainer rootContainer;
         private List<MDILayoutContainer> childContainers = new List<MDILayoutContainer>();
         private MDIWindow activeWindow = null;
 
         public MDILayoutManager()
         {
-
+            rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE, this);
+            rootContainer._setParent(this);
         }
 
         public void Dispose()
@@ -41,31 +42,7 @@ namespace Medical.Controller
         public void addWindow(MDIWindow window)
         {
             setWindowProperties(window);
-            //Normal operation where the root is the MDILayoutContainer as expected
-            if (rootContainer is MDILayoutContainer)
-            {
-                MDILayoutContainer mdiRoot = rootContainer as MDILayoutContainer;
-                mdiRoot.addChild(window);
-            }
-            //If no other containers have been added, use the root window directly.
-            else if (rootContainer == null)
-            {
-                rootContainer = window;
-                window._setParent(this);
-                ActiveWindow = window;
-            }
-            //If one other container has been added, create a horizontal alignment and readd both containers to it
-            else if (rootContainer is MDIWindow)
-            {
-                MDILayoutContainer horizRoot = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE, this);
-                horizRoot._setParent(this);
-                childContainers.Add(horizRoot);
-                MDIWindow oldRoot = rootContainer as MDIWindow;
-                horizRoot.addChild(oldRoot);
-                rootContainer = horizRoot;
-
-                horizRoot.addChild(window);
-            }
+            rootContainer.addChild(window);
             invalidate();
         }
 
@@ -79,15 +56,7 @@ namespace Medical.Controller
             switch (alignment)
             {
                 case WindowAlignment.Left:
-                    if (previous._CurrentContainer == null && previous == rootContainer)
-                    {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE, this);
-                        parentContainer._setParent(this);
-                        parentContainer.addChild(previous);
-                        parentContainer.addChild(window);
-                        rootContainer = parentContainer;
-                    }
-                    else if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
                     {
                         previous._CurrentContainer.insertChild(window, previous, true);
                     }
@@ -101,15 +70,7 @@ namespace Medical.Controller
                     }
                     break;
                 case WindowAlignment.Right:
-                    if (previous._CurrentContainer == null && previous == rootContainer)
-                    {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, PADDING_SIZE, this);
-                        parentContainer._setParent(this);
-                        parentContainer.addChild(window);
-                        parentContainer.addChild(previous);
-                        rootContainer = parentContainer;
-                    }
-                    else if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
                     {
                         previous._CurrentContainer.insertChild(window, previous, false);
                     }
@@ -123,15 +84,7 @@ namespace Medical.Controller
                     }
                     break;
                 case WindowAlignment.Top:
-                    if (previous._CurrentContainer == null && previous == rootContainer)
-                    {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE, this);
-                        parentContainer._setParent(this);
-                        parentContainer.addChild(window);
-                        parentContainer.addChild(previous);
-                        rootContainer = parentContainer;
-                    }
-                    else if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
                     {
                         previous._CurrentContainer.insertChild(window, previous, false);
                     }
@@ -145,15 +98,7 @@ namespace Medical.Controller
                     }
                     break;
                 case WindowAlignment.Bottom:
-                    if (previous._CurrentContainer == null && previous == rootContainer)
-                    {
-                        MDILayoutContainer parentContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, PADDING_SIZE, this);
-                        parentContainer._setParent(this);
-                        parentContainer.addChild(previous);
-                        parentContainer.addChild(window);
-                        rootContainer = parentContainer;
-                    }
-                    else if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
+                    if (previous._CurrentContainer.Layout == MDILayoutContainer.LayoutType.Vertical)
                     {
                         previous._CurrentContainer.insertChild(window, previous, true);
                     }

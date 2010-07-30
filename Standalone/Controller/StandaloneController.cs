@@ -130,6 +130,7 @@ namespace Standalone
             SceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
             SceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
             SceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
+            SceneViewWindow camera5 = sceneViewController.createWindow("Camera 5", new Vector3(170, -5, 170), new Vector3(0, -5, 0), camera2, WindowAlignment.Right);
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
