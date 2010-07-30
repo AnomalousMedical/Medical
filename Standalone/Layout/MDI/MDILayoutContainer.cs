@@ -41,7 +41,7 @@ namespace Medical.Controller
             }
         }
 
-        public void addChild(MDIContainerBase child)
+        public void addChild(MDIWindow child)
         {
             setChildProperties(child);
             separatorWidgets.Add(gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", ""));
@@ -49,7 +49,7 @@ namespace Medical.Controller
             invalidate();
         }
 
-        public void insertChild(MDIContainerBase child, MDIContainerBase previous, bool after)
+        public void insertChild(MDIWindow child, MDIWindow previous, bool after)
         {
             int index = children.IndexOf(previous);
             if (index == -1)
@@ -88,7 +88,7 @@ namespace Medical.Controller
             children.Remove(oldChild);
         }
 
-        public void removeChild(MDIContainerBase child)
+        public void removeChild(MDIWindow child)
         {
             if (children.Contains(child))
             {
@@ -96,14 +96,6 @@ namespace Medical.Controller
                 Gui.Instance.destroyWidget(separator);
                 separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
                 children.Remove(child);
-                //if (children.Count == 0)
-                //{
-                //    //All children are deleted remove this container too
-                //    if (_CurrentContainer != null)
-                //    {
-                //        _CurrentContainer.removeChild(this);
-                //    }
-                //}
                 if (_CurrentContainer != null && children.Count == 1)
                 {
                     //Promote the child, which will destroy this container in the process as it is no longer needed.
@@ -118,28 +110,9 @@ namespace Medical.Controller
 
         private void promoteChild(MDIContainerBase child, MDILayoutContainer formerParent)
         {
-            if (_CurrentContainer != null)
-            {
-                //Check to see if this container only contains formerParent, if so promote again
-                if (children.Count == 1 && children[0] == formerParent)
-                {
-                    formerParent.Dispose();
-                    _CurrentContainer.promoteChild(child, this);
-                }
-                //Add child as a new child element
-                else
-                {
-                    swapAndRemove(child, formerParent);
-                    formerParent.Dispose();
-                    invalidate();
-                }
-            }
-            else
-            {
-                swapAndRemove(child, formerParent);
-                formerParent.Dispose();
-                invalidate();
-            }
+            swapAndRemove(child, formerParent);
+            formerParent.Dispose();
+            invalidate();
         }
 
         public void clearChildren()
