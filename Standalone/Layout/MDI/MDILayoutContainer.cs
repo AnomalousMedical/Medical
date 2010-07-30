@@ -431,12 +431,24 @@ namespace Medical.Controller
                 if (Layout == LayoutType.Horizontal)
                 {
                     dragLowChild.Scale = dragLowScaleStart + offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart + offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
                 }
                 else
                 {
                     dragLowChild.Scale = dragLowScaleStart + offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart + offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
+                }
+
+                //Bounds checking
+                if (dragLowChild.Scale < 0)
+                {
+                    dragLowChild.Scale = 0.0f;
+                    dragHighChild.Scale = dragTotalScale;
+                }
+                else if (dragHighChild.Scale < 0)
+                {
+                    dragLowChild.Scale = dragTotalScale;
+                    dragHighChild.Scale = 0.0f;
                 }
 
                 invalidate();
