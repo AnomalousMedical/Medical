@@ -44,6 +44,10 @@ namespace Medical.Controller
             ViewportBackground newBackground = sourceBackground.clone(window.Name + "Background");
             backgrounds.Add(window, newBackground);
             window.FindVisibleObjects += newBackground.preRenderCallback;
+            if (currentSceneManager != null)
+            {
+                newBackground.createBackground(currentSceneManager);
+            }
         }
 
         void sceneViewController_WindowDestroyed(SceneViewWindow window)
@@ -51,6 +55,10 @@ namespace Medical.Controller
             ViewportBackground background = backgrounds[window];
             window.FindVisibleObjects -= background.preRenderCallback;
             backgrounds.Remove(window);
+            if (currentSceneManager != null)
+            {
+                background.destroyBackground();
+            }
         }
     }
 }

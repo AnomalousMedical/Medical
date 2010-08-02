@@ -415,6 +415,7 @@ namespace Medical.Controller
         }
 
         private Vector2 dragStartPosition;
+        private Size2 dragScaleArea;
         private MDIContainerBase dragLowChild;
         private float dragLowScaleStart;
         private MDIContainerBase dragHighChild;
@@ -426,17 +427,17 @@ namespace Medical.Controller
             if (dragLowChild != null)
             {
                 MouseEventArgs me = e as MouseEventArgs;
-                Vector2 offset = me.Position - dragStartPosition;
+                Vector2 offset = me.Position - dragStartPosition - Location;
 
                 if (Layout == LayoutType.Horizontal)
                 {
-                    dragLowChild.Scale = dragLowScaleStart + offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.x / Gui.Instance.getViewWidth() * dragTotalScale;
+                    dragLowChild.Scale = dragLowScaleStart + offset.x / dragScaleArea.Width * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.x / dragScaleArea.Width * dragTotalScale;
                 }
                 else
                 {
-                    dragLowChild.Scale = dragLowScaleStart + offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.y / Gui.Instance.getViewHeight() * dragTotalScale;
+                    dragLowChild.Scale = dragLowScaleStart + offset.y / dragScaleArea.Height * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.y / dragScaleArea.Height * dragTotalScale;
                 }
 
                 //Bounds checking
@@ -461,12 +462,13 @@ namespace Medical.Controller
             //ignore the last separator and do not allow the drag to happen if it is clicked.
             if (sepIndex != separatorWidgets.Count - 1)
             {
-                dragStartPosition = ((MouseEventArgs)e).Position;
+                dragStartPosition = ((MouseEventArgs)e).Position - Location;
                 dragLowChild = children[sepIndex];
                 dragLowScaleStart = dragLowChild.Scale;
                 dragHighChild = children[sepIndex + 1];
                 dragHighScaleStart = dragHighChild.Scale;
                 dragTotalScale = dragLowScaleStart + dragHighScaleStart;
+                dragScaleArea = dragTotalScale / totalScale * WorkingSize;
             }
         }
 
