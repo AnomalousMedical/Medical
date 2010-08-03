@@ -89,6 +89,7 @@
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
     <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
+    <Compile Include="Controller\GUIController\RenderGUIController.cs" />
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
+    <Compile Include="Controller\Platform\WinformsMessagePump.cs" />
     <Compile Include="GUI\PictureForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -47,6 +47,7 @@
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Controls.Add(this.pictureWindow1);
             this.Name = "PictureForm";
+            this.ShowIcon = false;
             this.Text = "PictureForm";
             this.ResumeLayout(false);
 

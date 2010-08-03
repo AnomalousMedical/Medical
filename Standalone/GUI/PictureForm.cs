@@ -15,5 +15,10 @@ namespace Medical.GUI
         {
             InitializeComponent();
         }
+
+        public void initialize(Bitmap picture)
+        {
+            pictureWindow1.initialize(picture);
+        }
     }
 }

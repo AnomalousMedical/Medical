@@ -68,7 +68,12 @@ namespace Standalone
         {
             //Engine core
             medicalController = new MedicalController();
-            medicalController.initialize(null, new AgnosticMessagePump(), createWindow);
+#if CALL_DO_EVENTS //If we need to call DoEvents use the WinformsMessagePump (OSX).
+            OSMessagePump messagePump = new WinformsMessagePump();
+#else
+            OSMessagePump messagePump = new AgnosticMessagePump();
+#endif
+            medicalController.initialize(null, messagePump, createWindow);
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
 
@@ -444,9 +449,6 @@ namespace Standalone
         void medicalController_FullSpeedLoopUpdate(Clock time)
         {
             ThreadManager.doInvoke();
-#if CALL_DO_EVENTS
-            System.Windows.Forms.Application.DoEvents();
-#endif
         }
 
         void medicalController_FixedLoopUpdate(Clock time)

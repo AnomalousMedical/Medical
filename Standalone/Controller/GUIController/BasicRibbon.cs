@@ -15,6 +15,7 @@ namespace Medical.GUI
         private MandibleGUIController mandibleGUIController;
         private SequencesGUIController sequencesGUIController;
         private NavigationGUIController navigationGUIController;
+        private RenderGUIController renderGUIController;
         private Layout ribbon;
         private StandaloneController standaloneController;
         private BasicGUI basicGUI;
@@ -29,6 +30,7 @@ namespace Medical.GUI
             mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
             sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
             navigationGUIController = new NavigationGUIController(ribbon.getWidget(0), standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
+            renderGUIController = new RenderGUIController(ribbon.getWidget(0), standaloneController.SceneViewController, standaloneController.ImageRenderer);
 
             Button changeSceneButton = gui.findWidgetT("File/ChangeScene") as Button;
             Button openButton = gui.findWidgetT("File/Open") as Button;
