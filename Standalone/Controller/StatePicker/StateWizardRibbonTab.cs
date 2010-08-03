@@ -28,9 +28,9 @@ namespace Medical.GUI
                     caption += "\n" + wizard.TextLine2;
                 }
                 Button wizardButton = distortionTab.createWidgetT("Button", "RibbonButton", currentPosition, 6, 78, 64, Align.Default, wizard.Name) as Button;
-                int buttonWidth = (int)FontManager.Instance.measureStringWidth(wizardButton.Font, caption) + 45;
-                wizardButton.setSize(buttonWidth, 64);
                 wizardButton.Caption = caption;
+                int buttonWidth = (int)wizardButton.getTextSize().Width + 45;
+                wizardButton.setSize(buttonWidth, 64);
                 wizardButton.UserObject = wizard;
                 wizardButton.StaticImage.setItemResource(wizard.ImageKey);
                 wizardButton.MouseButtonClick += new MyGUIEvent(wizardButton_MouseButtonClick);

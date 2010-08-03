@@ -174,7 +174,7 @@ namespace Medical.Controller
                 if (captionButton != null)
                 {
                     captionButton.Caption = value;
-                    captionButton.setSize((int)FontManager.Instance.measureStringWidth(captionButton.Font, value) + 50, captionButton.getHeight());
+                    captionButton.setSize((int)captionButton.getTextSize().Width + 50, captionButton.getHeight());
                 }
             }
         }

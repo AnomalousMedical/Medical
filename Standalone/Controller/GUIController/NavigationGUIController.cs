@@ -65,7 +65,7 @@ namespace Medical.GUI
             {
                 Button itemButton = navigationTab.createWidgetT("Button", "RibbonButton", 0, 0, 50, buttonHeight, Align.Left | Align.Top, "") as Button;
                 itemButton.Caption = topEntry.Text;
-                itemButton.setSize((int)FontManager.Instance.measureStringWidth(itemButton.Font, itemButton.Caption) + 50, buttonHeight);
+                itemButton.setSize((int)itemButton.getTextSize().Width + 35, buttonHeight);
                 itemButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(itemButton, topEntry.Thumbnail));
 
                 flowLayout.addChild(new MyGUILayoutContainer(itemButton));
@@ -80,7 +80,7 @@ namespace Medical.GUI
             flowLayout.invalidate();
         }
 
-        ButtonGrid createImageGallerySubMenu(NavigationMenuEntry topEntry)
+        PopupContainer createImageGallerySubMenu(NavigationMenuEntry topEntry)
         {
             ScrollView scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
             scrollView.CanvasAlign = Align.Left | Align.Top;
@@ -104,7 +104,9 @@ namespace Medical.GUI
             buttonGrid.SuppressLayout = false;
             buttonGrid.layoutAndResize(mostElements);
             scrollView.Visible = false;
-            return buttonGrid;
+            PopupContainer popup = new PopupContainer(scrollView);
+            popup.UserObject = buttonGrid;
+            return popup;
         }
 
         int addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
@@ -142,11 +144,8 @@ namespace Medical.GUI
 
         void itemButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            ButtonGrid buttonGrid = source.UserObject as ButtonGrid;
-            ScrollView scrollView = buttonGrid.UserObject as ScrollView;
-            LayerManager.Instance.upLayerItem(scrollView);
-            scrollView.setPosition(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
-            scrollView.Visible = true;
+            PopupContainer popup = source.UserObject as PopupContainer;
+            popup.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
         }
 
         void clearMenuItems()
@@ -154,7 +153,8 @@ namespace Medical.GUI
             flowLayout.clearChildren();
             foreach (Button button in menuButtons)
             {
-                ButtonGrid buttonGrid = button.UserObject as ButtonGrid;
+                PopupContainer popup = button.UserObject as PopupContainer;
+                ButtonGrid buttonGrid = popup.UserObject as ButtonGrid;
                 ScrollView scrollView = buttonGrid.UserObject as ScrollView;
                 buttonGrid.Dispose();
                 Gui.Instance.destroyWidget(scrollView);
