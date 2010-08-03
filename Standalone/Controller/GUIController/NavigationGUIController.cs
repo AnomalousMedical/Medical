@@ -84,6 +84,7 @@ namespace Medical.GUI
         {
             ScrollView scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
             scrollView.CanvasAlign = Align.Left | Align.Top;
+            scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
             ButtonGrid buttonGrid = new ButtonGrid(scrollView);
             buttonGrid.UserObject = scrollView;
             buttonGrid.ItemWidth = 69;
@@ -100,9 +101,8 @@ namespace Medical.GUI
                     mostElements = numElements;
                 }
             }
-            buttonGrid.resizeToFitElements(mostElements);
             buttonGrid.SuppressLayout = false;
-            buttonGrid.layout();
+            buttonGrid.layoutAndResize(mostElements);
             scrollView.Visible = false;
             return buttonGrid;
         }
