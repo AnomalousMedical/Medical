@@ -84,7 +84,6 @@ namespace Medical.GUI
         {
             ScrollView scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
             scrollView.CanvasAlign = Align.Left | Align.Top;
-            scrollView.CanvasSize = new Size2(300, 300);
             ButtonGrid buttonGrid = new ButtonGrid(scrollView);
             buttonGrid.UserObject = scrollView;
             buttonGrid.ItemWidth = 69;
@@ -92,27 +91,27 @@ namespace Medical.GUI
             buttonGrid.ButtonSkin = "ButtonGridImageButton";
             buttonGrid.GroupSeparatorSkin = "Separator3";
             buttonGrid.SuppressLayout = true;
+            int mostElements = 0;
             foreach (NavigationMenuEntry entry in topEntry.SubEntries)
             {
-                addEntriesAsImages(entry, buttonGrid);
+                int numElements = addEntriesAsImages(entry, buttonGrid);
+                if (numElements > mostElements)
+                {
+                    mostElements = numElements;
+                }
             }
+            buttonGrid.resizeToFitElements(mostElements);
             buttonGrid.SuppressLayout = false;
             buttonGrid.layout();
             scrollView.Visible = false;
             return buttonGrid;
         }
 
-        void addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
+        int addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
         {
+            int numElements = 0;
             if (currentEntry.SubEntries != null)
             {
-                //KryptonContextMenuHeading heading = new KryptonContextMenuHeading(currentEntry.Text);
-                //menu.Items.Add(heading);
-                //KryptonContextMenuImageSelect imageSelect = new KryptonContextMenuImageSelect();
-                //imageSelect.ImageList = menuImageList;
-                //imageSelect.ImageIndexStart = menuImageList.Images.Count;
-                //imageSelect.SelectedIndexChanged += imageSelect_SelectedIndexChanged;
-                //menu.Items.Add(imageSelect);
                 foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
                 {
                     ButtonGridItem item = menu.addItem(currentEntry.Text, "", gridItemIcons.addImage(entry, entry.Thumbnail));
@@ -124,17 +123,8 @@ namespace Medical.GUI
                         layerState = currentEntry.LayerState;
                     }
                     item.UserObject = new MenuImageIndex(entry.NavigationState, layerState);
+                    ++numElements;
                 }
-                //imageSelect.ImageIndexEnd = menuImageList.Images.Count - 1;
-                //int lineSize = imageSelect.ImageIndexEnd - imageSelect.ImageIndexStart + 1;
-                //if (lineSize < 6)
-                //{
-                //    imageSelect.LineItems = lineSize;
-                //}
-                //else
-                //{
-                //    imageSelect.LineItems = 6;
-                //}
             }
             if (currentEntry.SubEntries != null)
             {
@@ -143,6 +133,11 @@ namespace Medical.GUI
                     addEntriesAsImages(entry, menu);
                 }
             }
+            if (numElements > 6)
+            {
+                numElements = 6;
+            }
+            return numElements;
         }
 
         void itemButton_MouseButtonClick(Widget source, EventArgs e)
