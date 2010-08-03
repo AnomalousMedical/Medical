@@ -37,7 +37,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MacRelease|AnyCPU' ">
     <OutputPath>..\OSXBuild\DotNetAssemblies\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;CALL_DO_EVENTS</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -70,6 +70,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -113,6 +114,18 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
+    <Compile Include="GUI\PictureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\PictureForm.Designer.cs">
+      <DependentUpon>PictureForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PictureWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\PictureWindow.Designer.cs">
+      <DependentUpon>PictureWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />
     <Compile Include="Layout\MDI\MDILayoutManager.cs" />
@@ -172,6 +185,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />
     <Compile Include="Controller\WindowListener.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
@@ -181,6 +199,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="skull.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\PictureForm.resx">
+      <DependentUpon>PictureForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\PictureWindow.resx">
+      <DependentUpon>PictureWindow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

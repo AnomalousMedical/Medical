@@ -444,6 +444,9 @@ namespace Standalone
         void medicalController_FullSpeedLoopUpdate(Clock time)
         {
             ThreadManager.doInvoke();
+#if CALL_DO_EVENTS
+            System.Windows.Forms.Application.DoEvents();
+#endif
         }
 
         void medicalController_FixedLoopUpdate(Clock time)

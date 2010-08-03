@@ -15,13 +15,17 @@ using Engine.ObjectManagement;
 using System.IO;
 using Engine.Saving.XMLSaver;
 using OgreWrapper;
+using System.Windows.Forms;
 
 namespace Standalone
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             using (StandaloneController controller = new StandaloneController())
             {
                 //try
