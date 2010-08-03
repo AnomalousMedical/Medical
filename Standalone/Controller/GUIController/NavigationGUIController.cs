@@ -86,7 +86,6 @@ namespace Medical.GUI
             scrollView.CanvasAlign = Align.Left | Align.Top;
             scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
             ButtonGrid buttonGrid = new ButtonGrid(scrollView);
-            buttonGrid.UserObject = scrollView;
             buttonGrid.ItemWidth = 69;
             buttonGrid.ItemHeight = 51;
             buttonGrid.ButtonSkin = "ButtonGridImageButton";
@@ -106,6 +105,7 @@ namespace Medical.GUI
             scrollView.Visible = false;
             PopupContainer popup = new PopupContainer(scrollView);
             popup.UserObject = buttonGrid;
+            buttonGrid.UserObject = popup;
             return popup;
         }
 
@@ -155,7 +155,7 @@ namespace Medical.GUI
             {
                 PopupContainer popup = button.UserObject as PopupContainer;
                 ButtonGrid buttonGrid = popup.UserObject as ButtonGrid;
-                ScrollView scrollView = buttonGrid.UserObject as ScrollView;
+                ScrollView scrollView = popup.Widget as ScrollView;
                 buttonGrid.Dispose();
                 Gui.Instance.destroyWidget(scrollView);
                 Gui.Instance.destroyWidget(button);
@@ -175,8 +175,8 @@ namespace Medical.GUI
                 layerController.applyLayerState(index.LayerState);
             }
             ButtonGrid grid = item.ButtonGrid;
-            ScrollView scrollView = grid.UserObject as ScrollView;
-            scrollView.Visible = false;
+            PopupContainer popup = grid.UserObject as PopupContainer;
+            popup.hide();
         }
 
         void showNavigationButton_CheckedChanged(Widget source, EventArgs e)

@@ -46,6 +46,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             layerGUIController.Dispose();
+            navigationGUIController.Dispose();
             LayoutManager.Instance.unloadLayout(ribbon);
         }
 
