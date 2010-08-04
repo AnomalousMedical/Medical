@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PictureWindow));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.saveButton = new System.Windows.Forms.ToolStripButton();
             this.zoomStrechButton = new System.Windows.Forms.ToolStripButton();
@@ -57,7 +56,7 @@
             // 
             this.saveButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.saveButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveButton.Image")));
+            this.saveButton.Image = global::Medical.Properties.Resources.SaveSmall;
             this.saveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(23, 22);
@@ -67,7 +66,7 @@
             // zoomStrechButton
             // 
             this.zoomStrechButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.zoomStrechButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomStrechButton.Image")));
+            this.zoomStrechButton.Image = global::Medical.Properties.Resources.ResizeUpSmall;
             this.zoomStrechButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.zoomStrechButton.Name = "zoomStrechButton";
             this.zoomStrechButton.Size = new System.Drawing.Size(23, 22);
@@ -78,7 +77,7 @@
             // 
             this.exploreButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.exploreButton.Enabled = false;
-            this.exploreButton.Image = ((System.Drawing.Image)(resources.GetObject("exploreButton.Image")));
+            this.exploreButton.Image = global::Medical.Properties.Resources.ExploreIconSmall;
             this.exploreButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.exploreButton.Name = "exploreButton";
             this.exploreButton.Size = new System.Drawing.Size(23, 22);

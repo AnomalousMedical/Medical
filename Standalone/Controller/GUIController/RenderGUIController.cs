@@ -8,10 +8,25 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class RenderGUIController
+    class RenderGUIController : IDisposable
     {
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;
+
+        private ComboBox aaCombo;
+        private NumericEdit width;
+        private NumericEdit height;
+
+        private Layout resolutionMenu;
+        private PopupContainer resolutionMenuPopup;
+        private ButtonGroup resolutionMenuGroup;
+        private Button onePointThreeMegapixel;
+        private Button fourMegapixel;
+        private Button sixMegapixel;
+        private Button eightMegapixel;
+        private Button tenMegapixel;
+        private Button twelveMegapixel;
+        private Button custom;
 
         public RenderGUIController(Widget ribbonGui, SceneViewController sceneViewController, ImageRenderer imageRenderer)
         {
@@ -20,11 +35,90 @@ namespace Medical.GUI
 
             Button renderButton = ribbonGui.findWidget("RenderingTab/RenderButton") as Button;
             renderButton.MouseButtonClick +=new MyGUIEvent(renderButton_MouseButtonClick);
+
+            aaCombo = ribbonGui.findWidget("RenderingTab/AACombo") as ComboBox;
+            aaCombo.SelectedIndex = 0;
+
+            width = new NumericEdit(ribbonGui.findWidget("RenderingTab/WidthEdit") as Edit);
+            height = new NumericEdit(ribbonGui.findWidget("RenderingTab/HeightEdit") as Edit);
+
+            Button sizeButton = ribbonGui.findWidget("RenderingTab/SizeButton") as Button;
+            sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
+
+            //ResolutionMenu
+            resolutionMenu = LayoutManager.Instance.loadLayout("ResolutionMenu.layout");
+            Widget resolutionMenuWidget = resolutionMenu.getWidget(0);
+            resolutionMenuWidget.Visible = false;
+            resolutionMenuPopup = new PopupContainer(resolutionMenuWidget);
+            onePointThreeMegapixel = resolutionMenuWidget.findWidget("1Point3Megapixel") as Button;
+            fourMegapixel = resolutionMenuWidget.findWidget("4Megapixel") as Button;
+            sixMegapixel = resolutionMenuWidget.findWidget("6Megapixel") as Button;
+            eightMegapixel = resolutionMenuWidget.findWidget("8Megapixel") as Button;
+            tenMegapixel = resolutionMenuWidget.findWidget("10Megapixel") as Button;
+            twelveMegapixel = resolutionMenuWidget.findWidget("12Megapixel") as Button;
+            custom = resolutionMenuWidget.findWidget("Custom") as Button;
+
+            resolutionMenuGroup = new ButtonGroup();
+            resolutionMenuGroup.SelectedButtonChanged += new EventHandler(resolutionMenuGroup_SelectedButtonChanged);
+            resolutionMenuGroup.addButton(onePointThreeMegapixel);
+            resolutionMenuGroup.addButton(fourMegapixel);
+            resolutionMenuGroup.addButton(sixMegapixel);
+            resolutionMenuGroup.addButton(eightMegapixel);
+            resolutionMenuGroup.addButton(tenMegapixel);
+            resolutionMenuGroup.addButton(twelveMegapixel);
+            resolutionMenuGroup.addButton(custom);
+            resolutionMenuGroup.SelectedButton = custom;
         }
 
-        void  renderButton_MouseButtonClick(Widget source, EventArgs e)
+        public void Dispose()
+        {
+            LayoutManager.Instance.unloadLayout(resolutionMenu);
+        }
+
+        void resolutionMenuGroup_SelectedButtonChanged(object sender, EventArgs e)
+        {
+            Button selectedButton = resolutionMenuGroup.SelectedButton;
+            width.Edit.Enabled = height.Edit.Enabled = selectedButton == custom;
+            if(selectedButton == onePointThreeMegapixel)
+            {
+                width.IntValue = 1280;
+                height.IntValue = 1024;
+            }
+            else if (selectedButton == fourMegapixel)
+            {
+                width.IntValue = 2448;
+                height.IntValue = 1632;
+            }
+            else if (selectedButton == sixMegapixel)
+            {
+                width.IntValue = 3000;
+                height.IntValue = 2000;
+            }
+            else if (selectedButton == eightMegapixel)
+            {
+                width.IntValue = 3456;
+                height.IntValue = 2304;
+            }
+            else if (selectedButton == tenMegapixel)
+            {
+                width.IntValue = 3648;
+                height.IntValue = 2736;
+            }
+            else if (selectedButton == twelveMegapixel)
+            {
+                width.IntValue = 4000;
+                height.IntValue = 3000;
+            }
+        }
+
+        void renderButton_MouseButtonClick(Widget source, EventArgs e)
         {
  	        render();
+        }
+
+        void sizeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            resolutionMenuPopup.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
         }
 
         private void render()
@@ -33,14 +127,14 @@ namespace Medical.GUI
             SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;
             if (drawingWindow != null)
             {
-                int width = 1024;// (int)this.width.Value;
-                int height = 768;// (int)this.height.Value;
+                int width = this.width.IntValue;
+                int height = this.height.IntValue;
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
                 imageProperties.Width = width;
                 imageProperties.Height = height;
                 imageProperties.UseWindowBackgroundColor = false;
                 imageProperties.CustomBackgroundColor = Engine.Color.Black;// Engine.Color.FromARGB(backgroundColorButton.SelectedColor.ToArgb());
-                imageProperties.AntiAliasingMode = 1;// (int)Math.Pow(2, aaCombo.SelectedIndex);
+                imageProperties.AntiAliasingMode = (int)Math.Pow(2, aaCombo.SelectedIndex);
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
