@@ -28,6 +28,8 @@ namespace Medical.GUI
         private Button twelveMegapixel;
         private Button custom;
 
+        private ColorMenu colorMenu;
+
         public RenderGUIController(Widget ribbonGui, SceneViewController sceneViewController, ImageRenderer imageRenderer)
         {
             this.sceneViewController = sceneViewController;
@@ -44,6 +46,11 @@ namespace Medical.GUI
 
             Button sizeButton = ribbonGui.findWidget("RenderingTab/SizeButton") as Button;
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
+
+            Button colorButton = ribbonGui.findWidget("RenderingTab/ColorButton") as Button;
+            colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
+
+            colorMenu = new ColorMenu("ColorMenu.layout");
 
             //ResolutionMenu
             resolutionMenu = LayoutManager.Instance.loadLayout("ResolutionMenu.layout");
@@ -72,6 +79,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            colorMenu.Dispose();
             LayoutManager.Instance.unloadLayout(resolutionMenu);
         }
 
@@ -121,6 +129,11 @@ namespace Medical.GUI
             resolutionMenuPopup.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
         }
 
+        void colorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            colorMenu.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+        }
+
         private void render()
         {
             //StatusController.SetStatus("Rendering image...");
@@ -133,7 +146,7 @@ namespace Medical.GUI
                 imageProperties.Width = width;
                 imageProperties.Height = height;
                 imageProperties.UseWindowBackgroundColor = false;
-                imageProperties.CustomBackgroundColor = Engine.Color.Black;// Engine.Color.FromARGB(backgroundColorButton.SelectedColor.ToArgb());
+                imageProperties.CustomBackgroundColor = colorMenu.SelectedColor;
                 imageProperties.AntiAliasingMode = (int)Math.Pow(2, aaCombo.SelectedIndex);
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)

@@ -97,6 +97,9 @@ namespace Standalone
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
+            //Background
+            createBackground();
+
             //Image Renderer
             imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
@@ -128,8 +131,6 @@ namespace Standalone
             basicGUI.ScreenLayout.Root.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
-
-            createBackground();
 
             //Create scene view windows
             SceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));

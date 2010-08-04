@@ -88,6 +88,7 @@
     <Compile Include="Controller\Dialogs\SavePatientDialog.cs" />
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
+    <Compile Include="Controller\GUIController\ColorMenu.cs" />
     <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
     <Compile Include="Controller\GUIController\RenderGUIController.cs" />
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
