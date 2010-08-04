@@ -92,6 +92,7 @@
     <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
     <Compile Include="Controller\GUIController\RenderGUIController.cs" />
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
+    <Compile Include="Controller\GUIController\WindowGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />

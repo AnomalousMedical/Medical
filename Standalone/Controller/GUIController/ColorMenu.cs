@@ -10,6 +10,8 @@ namespace Medical.GUI
 {
     class ColorMenu : IDisposable
     {
+        public event EventHandler ColorChanged;
+
         private Layout layout;
         private PopupContainer popupContainer;
         private ButtonGrid colorGrid;
@@ -53,6 +55,10 @@ namespace Medical.GUI
 
         void colorGrid_SelectedValueChanged(object sender, EventArgs e)
         {
+            if (ColorChanged != null)
+            {
+                ColorChanged.Invoke(this, EventArgs.Empty);
+            }
             popupContainer.hide();
         }
 

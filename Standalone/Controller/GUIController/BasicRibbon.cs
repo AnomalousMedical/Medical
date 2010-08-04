@@ -16,6 +16,7 @@ namespace Medical.GUI
         private SequencesGUIController sequencesGUIController;
         private NavigationGUIController navigationGUIController;
         private RenderGUIController renderGUIController;
+        private WindowGUIController windowGUIController;
         private Layout ribbon;
         private StandaloneController standaloneController;
         private BasicGUI basicGUI;
@@ -31,6 +32,7 @@ namespace Medical.GUI
             sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
             navigationGUIController = new NavigationGUIController(ribbon.getWidget(0), standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             renderGUIController = new RenderGUIController(ribbon.getWidget(0), standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            windowGUIController = new WindowGUIController(ribbon.getWidget(0), standaloneController.SceneViewController);
 
             Button changeSceneButton = gui.findWidgetT("File/ChangeScene") as Button;
             Button openButton = gui.findWidgetT("File/Open") as Button;
@@ -47,6 +49,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            windowGUIController.Dispose();
             renderGUIController.Dispose();
             layerGUIController.Dispose();
             navigationGUIController.Dispose();
