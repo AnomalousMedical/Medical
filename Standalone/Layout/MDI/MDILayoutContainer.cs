@@ -407,7 +407,7 @@ namespace Medical.Controller
 
         private void createSeparatorWidget()
         {
-            Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Main", "");
+            Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Back", "");
             separatorWidgets.Add(separator);
             separator.MouseDrag += separator_MouseDrag;
             separator.MouseButtonPressed += separator_MouseButtonPressed;
