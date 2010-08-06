@@ -109,6 +109,11 @@ namespace Medical.Controller
             }
         }
 
+        public void changeRendererWindow(RendererWindow rendererWindow)
+        {
+            this.rendererWindow = rendererWindow;
+        }
+
         public SceneViewWindow ActiveWindow
         {
             get

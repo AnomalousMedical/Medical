@@ -203,6 +203,18 @@ namespace Medical
             mainTimer.stopLoop();
         }
 
+        public void destroyInputHandler()
+        {
+            eventManager.destroyInputObjects();
+            PCPlatformPlugin.Instance.destroyInputHandler(inputHandler);
+        }
+
+        public void recreateInputHandler(OSWindow window)
+        {
+            inputHandler = PCPlatformPlugin.Instance.createInputHandler(window, false, false, false);
+            eventManager.changeInputHandler(inputHandler);
+        }
+
         /// <summary>
         /// Attempt to open the given scene file. Will return true if the scene was loaded correctly.
         /// </summary>

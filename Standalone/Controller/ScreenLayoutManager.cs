@@ -21,6 +21,17 @@ namespace Medical
             window.addListener(this);
         }
 
+        public void changeOSWindow(OSWindow newWindow)
+        {
+            if (window != null)
+            {
+                window.removeListener(this);
+            }
+            this.window = newWindow;
+            window.addListener(this);
+            resized(window);
+        }
+
         public BorderLayoutContainer Root
         {
             get

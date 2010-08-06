@@ -12,6 +12,8 @@ namespace Medical.GUI
 {
     class OptionsDialog : Dialog
     {
+        public event EventHandler OptionsChanged;
+
         private ComboBox aaCombo;
         private ComboBox resolutionCombo;
         private CheckButton fullscreenCheck;
@@ -114,6 +116,10 @@ namespace Medical.GUI
             MedicalConfig.EngineConfig.HorizontalRes = int.Parse(res[0]);
             MedicalConfig.EngineConfig.VerticalRes = int.Parse(res[1]);
             this.close();
+            if (OptionsChanged != null)
+            {
+                OptionsChanged.Invoke(this, EventArgs.Empty);
+            }
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)

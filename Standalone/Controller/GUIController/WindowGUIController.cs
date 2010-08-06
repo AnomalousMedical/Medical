@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
+using Standalone;
 
 namespace Medical.GUI
 {
@@ -11,11 +12,13 @@ namespace Medical.GUI
     {
         private ColorMenu colorMenu;
         private SceneViewController sceneViewController;
+        private StandaloneController standaloneController;
         private OptionsDialog options;
 
-        public WindowGUIController(Widget ribbonWidget, SceneViewController sceneViewController)
+        public WindowGUIController(Widget ribbonWidget, StandaloneController standaloneController)
         {
-            this.sceneViewController = sceneViewController;
+            this.standaloneController = standaloneController;
+            this.sceneViewController = standaloneController.SceneViewController;
 
             Button colorButton = ribbonWidget.findWidget("WindowTab/BackgroundButton") as Button;
             colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
@@ -27,6 +30,7 @@ namespace Medical.GUI
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
 
             options = new OptionsDialog("Options.layout");
+            options.OptionsChanged += new EventHandler(options_OptionsChanged);
 
             Button optionsButton = ribbonWidget.findWidget("WindowTab/Options") as Button;
             optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
@@ -55,6 +59,11 @@ namespace Medical.GUI
         void optionsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             options.Visible = true;
+        }
+
+        void options_OptionsChanged(object sender, EventArgs e)
+        {
+            standaloneController.recreateMainWindow();
         }
     }
 }

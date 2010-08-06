@@ -8,6 +8,7 @@ using OgreWrapper;
 using Engine.ObjectManagement;
 using Medical.Controller;
 using Logging;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -89,6 +90,11 @@ namespace Medical.GUI
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             basicRibbon.Dispose();
+        }
+
+        public void windowChanged(OSWindow newWindow)
+        {
+            screenLayoutManager.changeOSWindow(newWindow);
         }
 
         public void changeTopPanel(LayoutContainer topContainer)

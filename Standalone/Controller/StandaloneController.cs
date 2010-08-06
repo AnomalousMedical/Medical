@@ -262,6 +262,22 @@ namespace Standalone
             }
         }
 
+        public void recreateMainWindow()
+        {
+            sceneViewController.destroyCameras();
+            MyGUIInterface.Instance.destroyViewport();
+            medicalController.destroyInputHandler();
+
+            RendererWindow window = OgreInterface.Instance.recreatePrimaryWindow();
+
+            medicalController.recreateInputHandler(window.Handle);
+            MyGUIInterface.Instance.recreateViewport(window);
+            sceneViewController.changeRendererWindow(window);
+            sceneViewController.createCameras(medicalController.CurrentScene);
+            window.Handle.addListener(windowListener);
+            basicGUI.windowChanged(window.Handle);
+        }
+
         /// <summary>
         /// Change the scene to the specified filename.
         /// </summary>
