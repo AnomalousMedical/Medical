@@ -5,6 +5,8 @@ using System.Text;
 using MyGUIPlugin;
 using OgreWrapper;
 using OgrePlugin;
+using Logging;
+using System.Text.RegularExpressions;
 
 namespace Medical.GUI
 {
@@ -15,6 +17,7 @@ namespace Medical.GUI
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
         private static readonly char[] seps = { 'x' };
+        private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
         public OptionsDialog(String layoutFile)
             :base(layoutFile)
@@ -34,7 +37,6 @@ namespace Medical.GUI
                 {
                     aaCombo.addItem(value);
                 }
-                aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             }
             else
             {
@@ -46,12 +48,13 @@ namespace Medical.GUI
                 ConfigOption configOption = rs.getConfigOption("Video Mode");
                 foreach (String value in configOption.PossibleValues)
                 {
-                    if(value.Contains(" @ 32-bit colour"))
+                    Match match = Regex.Match(value, resolutionRegex);
+                    String resString = value.Substring(match.Index, match.Length);
+                    if (resolutionCombo.findItemIndexWith(resString) == uint.MaxValue)
                     {
-                        resolutionCombo.addItem(value.Replace(" @ 32-bit colour", ""));
+                        resolutionCombo.addItem(resString);
                     }
                 }
-                resolutionCombo.SelectedIndex = 0;
             }
 
             fullscreenCheck = new CheckButton(window.findWidget("FullscreenCheck") as Button);
@@ -81,6 +84,24 @@ namespace Medical.GUI
             else
             {
                 resolutionCombo.SelectedIndex = resIndex;
+            }
+
+            uint aaIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
+            if (aaIndex == uint.MaxValue)
+            {
+                if (aaCombo.getItemCount() == 0)
+                {
+                    aaCombo.addItem(OgreConfig.FSAA);
+                    aaCombo.SelectedIndex = aaCombo.getItemCount() - 1;
+                }
+                else
+                {
+                    aaCombo.SelectedIndex = 0;
+                }
+            }
+            else
+            {
+                aaCombo.SelectedIndex = aaIndex;
             }
         }
 
