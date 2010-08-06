@@ -38,6 +38,9 @@ namespace Medical.Controller
         private Vector2 location = new Vector2(0.0f, 0.0f);
         private Size2 size = new Size2(1.0f, 1.0f);
 
+        private Color backColor = new Color(0.149f, 0.149f, 0.149f);
+        private bool showStats = false;
+
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.controller = controller;
@@ -73,14 +76,14 @@ namespace Medical.Controller
 
             sceneView = window.createSceneView(defaultScene, name, cameraMover.Translation, cameraMover.LookAt);
             sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
-            sceneView.BackgroundColor = new Color(0.149f, 0.149f, 0.149f);
+            sceneView.BackgroundColor = backColor;
             sceneView.addLight();
             sceneView.setNearClipDistance(1.0f);
             sceneView.setFarClipDistance(1000.0f);
             //camera.setRenderingMode(renderingMode);
             cameraMover.setCamera(sceneView);
             CameraResolver.addMotionValidator(this);
-            sceneView.showSceneStats(true);
+            sceneView.showSceneStats(showStats);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             sceneView.RenderingStarted += sceneView_RenderingStarted;
             sceneView.RenderingEnded += sceneView_RenderingEnded;
@@ -235,11 +238,31 @@ namespace Medical.Controller
         {
             get
             {
-                return sceneView.BackgroundColor;
+                return backColor;
             }
             set
             {
-                sceneView.BackgroundColor = value;
+                backColor = value;
+                if (sceneView != null)
+                {
+                    sceneView.BackgroundColor = value;
+                }
+            }
+        }
+
+        public bool ShowStats
+        {
+            get
+            {
+                return showStats;
+            }
+            set
+            {
+                showStats = value;
+                if (sceneView != null)
+                {
+                    sceneView.showSceneStats(value);
+                }
             }
         }
 

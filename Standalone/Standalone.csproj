@@ -90,6 +90,7 @@
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
     <Compile Include="Controller\GUIController\ColorMenu.cs" />
     <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
+    <Compile Include="Controller\GUIController\OptionsDialog.cs" />
     <Compile Include="Controller\GUIController\RenderGUIController.cs" />
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
     <Compile Include="Controller\GUIController\WindowGUIController.cs" />
