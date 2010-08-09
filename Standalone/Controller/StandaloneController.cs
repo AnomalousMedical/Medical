@@ -76,6 +76,7 @@ namespace Standalone
             medicalController.initialize(null, messagePump, createWindow);
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
+            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
 
             //MDI Layout
             mdiLayout = new MDILayoutManager();
@@ -264,18 +265,28 @@ namespace Standalone
 
         public void recreateMainWindow()
         {
-            sceneViewController.destroyCameras();
-            MyGUIInterface.Instance.destroyViewport();
-            medicalController.destroyInputHandler();
+            //sceneViewController.destroyCameras();
+            //MyGUIInterface.Instance.destroyViewport();
+            //medicalController.destroyInputHandler();
 
-            RendererWindow window = OgreInterface.Instance.recreatePrimaryWindow();
+            //RendererWindow window = OgreInterface.Instance.recreatePrimaryWindow();
 
-            medicalController.recreateInputHandler(window.Handle);
-            MyGUIInterface.Instance.recreateViewport(window);
-            sceneViewController.changeRendererWindow(window);
-            sceneViewController.createCameras(medicalController.CurrentScene);
-            window.Handle.addListener(windowListener);
-            basicGUI.windowChanged(window.Handle);
+            //medicalController.recreateInputHandler(window.Handle);
+            //MyGUIInterface.Instance.recreateViewport(window);
+            //sceneViewController.changeRendererWindow(window);
+            //sceneViewController.createCameras(medicalController.CurrentScene);
+            //window.Handle.addListener(windowListener);
+            //basicGUI.windowChanged(window.Handle);
+
+            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to shut down now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);   
+        }
+
+        void displayParameterChangeCallback(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                this.shutdown();
+            }
         }
 
         /// <summary>
