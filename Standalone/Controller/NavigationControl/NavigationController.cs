@@ -8,6 +8,7 @@ using Engine.Platform;
 using Engine.Resources;
 using System.Xml;
 using Medical.Controller;
+using MyGUIPlugin;
 
 namespace Medical.Controller
 {
@@ -15,7 +16,22 @@ namespace Medical.Controller
 
     class NavigationController : IDisposable
     {
+        static MessageEvent toggleNavigation;
+
+        enum NavigationEvents
+        {
+            ToggleNavigation,
+        }
+
+        static NavigationController()
+        {
+            toggleNavigation = new MessageEvent(NavigationEvents.ToggleNavigation);
+            toggleNavigation.addButton(KeyboardButtonCode.KC_SPACE);
+            DefaultEvents.registerDefaultEvent(toggleNavigation);
+        }
+
         public event NavigationControllerEvent NavigationStateSetChanged;
+        public event NavigationControllerEvent ShowOverlaysChanged;
 
         private SceneViewController windowController;
         private EventManager eventManager;
@@ -32,6 +48,8 @@ namespace Medical.Controller
             this.windowController = windowController;
             windowController.WindowCreated += windowController_WindowCreated;
             windowController.WindowDestroyed += windowController_WindowDestroyed;
+
+            toggleNavigation.FirstFrameUpEvent += new MessageEventCallback(toggleNavigation_FirstFrameUpEvent);
         }
 
         public void Dispose()
@@ -226,6 +244,14 @@ namespace Medical.Controller
             }
         }
 
+        void toggleNavigation_FirstFrameUpEvent()
+        {
+            if (!Gui.Instance.HandledKeyboardButtons)
+            {
+                ShowOverlays = !ShowOverlays;
+            }
+        }
+
         public bool ShowOverlays
         {
             get
@@ -234,10 +260,17 @@ namespace Medical.Controller
             }
             set
             {
-                showOverlays = value;
-                foreach (NavigationOverlay overlay in overlays.Values)
+                if (showOverlays != value)
                 {
-                    overlay.ShowOverlay = showOverlays;
+                    showOverlays = value;
+                    foreach (NavigationOverlay overlay in overlays.Values)
+                    {
+                        overlay.ShowOverlay = showOverlays;
+                    }
+                    if (ShowOverlaysChanged != null)
+                    {
+                        ShowOverlaysChanged.Invoke(this);
+                    }
                 }
             }
         }

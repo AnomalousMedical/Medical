@@ -99,5 +99,17 @@ namespace Medical.GUI
                 return ribbon.getWidget(0);
             }
         }
+
+        public bool AllowLayerShortcuts
+        {
+            get
+            {
+                return layerGUIController.AllowShortcuts;
+            }
+            set
+            {
+                layerGUIController.AllowShortcuts = value;
+            }
+        }
     }
 }

@@ -106,6 +106,10 @@ namespace Medical.GUI
                     navigationController.setNavigationState(navigationStateBeforeShown, CurrentSceneView);
                 }
                 layerStatusBeforeShown.apply();
+                if (Finished != null)
+                {
+                    Finished.Invoke();
+                }
             }
         }
 

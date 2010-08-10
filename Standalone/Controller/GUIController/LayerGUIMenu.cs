@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -21,8 +22,11 @@ namespace Medical.GUI
 
         private bool allowUpdates = true;
 
+        private MessageEvent menuShortcut;
+
         public LayerGUIMenu(Button mainButton, Button menuButton)
         {
+            AllowShortcuts = true;
             Gui gui = Gui.Instance;
 
             contextMenu = gui.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
@@ -48,6 +52,27 @@ namespace Medical.GUI
             }
         }
 
+        public void Dispose()
+        {
+            Gui.Instance.destroyWidget(contextMenu);
+        }
+
+        public void createShortcuts(KeyboardButtonCode keyCode)
+        {
+            menuShortcut = new MessageEvent(this);
+            menuShortcut.addButton(keyCode);
+            DefaultEvents.registerDefaultEvent(menuShortcut);
+            menuShortcut.FirstFrameUpEvent += new MessageEventCallback(menuShortcut_FirstFrameUpEvent);
+        }
+
+        void menuShortcut_FirstFrameUpEvent()
+        {
+            if (AllowShortcuts)
+            {
+                mainButton_MouseButtonClick(null, null);
+            }
+        }
+
         void menuButton_MouseButtonClick(Widget source, EventArgs e)
         {
             contextMenu.setVisibleSmooth(true);
@@ -69,11 +94,6 @@ namespace Medical.GUI
             {
                 setAlpha(1.0f);
             }
-        }
-
-        public void Dispose()
-        {
-            //contextMenu.Dispose();
         }
 
         public void setAlpha(float alpha)
@@ -104,6 +124,8 @@ namespace Medical.GUI
                 TransparencyChanged(alpha);
             }
         }
+
+        public bool AllowShortcuts { get; set; }
 
         void hiddenButton_MouseButtonClick(Widget source, EventArgs e)
         {

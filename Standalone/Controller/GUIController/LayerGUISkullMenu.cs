@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -21,23 +22,27 @@ namespace Medical.GUI
             showEminence.MouseButtonClick += new MyGUIEvent(showEminence_MouseButtonClick);
         }
 
+        public void createEminanceShortcut(KeyboardButtonCode keyboardButtonCode)
+        {
+            MessageEvent eminanceShortcut = new MessageEvent(new Object());
+            eminanceShortcut.addButton(keyboardButtonCode);
+            DefaultEvents.registerDefaultEvent(eminanceShortcut);
+            eminanceShortcut.FirstFrameUpEvent += new MessageEventCallback(eminanceShortcut_FirstFrameUpEvent);
+        }
+
+        void eminanceShortcut_FirstFrameUpEvent()
+        {
+            if (AllowShortcuts)
+            {
+                ShowEminance = !ShowEminance;
+            }
+        }
+
         void showEminence_MouseButtonClick(Widget source, EventArgs e)
         {
             ShowEminance = !ShowEminance;
             contextMenu.setVisibleSmooth(false);
         }
-
-        //public void createEminanceShortcut(String name, ShortcutGroup shortcutGroup, Keys key)
-        //{
-        //    ShortcutEventCommand eminanceShortcut = new ShortcutEventCommand(name, key, false);
-        //    eminanceShortcut.Execute += new ShortcutEventCommand.ExecuteEvent(eminanceShortcut_Execute);
-        //    shortcutGroup.addShortcut(eminanceShortcut);
-        //}
-
-        //void eminanceShortcut_Execute(ShortcutEventCommand shortcut)
-        //{
-        //    showEminence.Checked = !showEminence.Checked;
-        //}
 
         public bool ShowEminance
         {

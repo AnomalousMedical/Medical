@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -30,7 +31,6 @@ namespace Medical.GUI
             //Predefined layers
             this.layerController = layerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
-            layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
             predefinedLayerGallery = new ButtonGrid(ribbonLayout.findWidgetT("Layers/Predefined") as ScrollView);
             predefinedLayerGallery.SelectedValueChanged += new EventHandler(predefinedLayerGallery_SelectedValueChanged);
             predefinedImageAtlas = new ImageAtlas("PredefinedLayers", new Size2(100, 100), new Size2(512, 512));
@@ -40,43 +40,43 @@ namespace Medical.GUI
 
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CUSTOM_LAYERS))
             {
-                //layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
+                layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
 
                 skinMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Skin") as Button, ribbonLayout.findWidgetT("Layers/SkinMenu") as Button);
-                //skinMenu.createShortcuts("SkinToggle", group, Keys.F1);
+                skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
                 skinMenu.TransparencyChanged += changeSkinTransparency;
 
                 musclesMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Muscles") as Button, ribbonLayout.findWidgetT("Layers/MusclesMenu") as Button);
-                //musclesMenu.createShortcuts("MusclesToggle", group, Keys.F2);
+                musclesMenu.createShortcuts(KeyboardButtonCode.KC_F2);
                 musclesMenu.TransparencyChanged += changeMuscleTransparency;
 
                 skullMenu = new LayerGUISkullMenu(ribbonLayout.findWidgetT("Layers/Skull") as Button, ribbonLayout.findWidgetT("Layers/SkullMenu") as Button);
-                //skullMenu.createShortcuts("SkullToggle", group, Keys.F3);
-                //skullMenu.createEminanceShortcut("EminanceToggle", group, Keys.F4);
+                skullMenu.createShortcuts(KeyboardButtonCode.KC_F3);
+                skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_F4);
                 skullMenu.TransparencyChanged += changeSkullTransparency;
 
                 mandibleMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Mandible") as Button, ribbonLayout.findWidgetT("Layers/MandibleMenu") as Button);
-                //mandibleMenu.createShortcuts("MandibleToggle", group, Keys.F5);
+                mandibleMenu.createShortcuts(KeyboardButtonCode.KC_F5);
                 mandibleMenu.TransparencyChanged += changeMandibleTransparency;
 
                 discsMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Discs") as Button, ribbonLayout.findWidgetT("Layers/DiscsMenu") as Button);
-                //discsMenu.createShortcuts("DiscsToggle", group, Keys.F6);
+                discsMenu.createShortcuts(KeyboardButtonCode.KC_F6);
                 discsMenu.TransparencyChanged += changeDiscTransparency;
 
                 spineMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Spine") as Button, ribbonLayout.findWidgetT("Layers/SpineMenu") as Button);
-                //spineMenu.createShortcuts("SpineToggle", group, Keys.F7);
+                spineMenu.createShortcuts(KeyboardButtonCode.KC_F7);
                 spineMenu.TransparencyChanged += changeSpineTransparency;
 
                 hyoidMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/Hyoid") as Button, ribbonLayout.findWidgetT("Layers/HyoidMenu") as Button);
-                //hyoidMenu.createShortcuts("HyoidToggle", group, Keys.F8);
+                hyoidMenu.createShortcuts(KeyboardButtonCode.KC_F8);
                 hyoidMenu.TransparencyChanged += changeHyoidTransparency;
 
                 topTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MaxillaryTeeth") as Button, ribbonLayout.findWidgetT("Layers/MaxillaryTeethMenu") as Button);
-                //topTeethMenu.createShortcuts("TopTeethToggle", group, Keys.F9);
+                topTeethMenu.createShortcuts(KeyboardButtonCode.KC_F9);
                 topTeethMenu.TransparencyChanged += changeTopToothTransparency;
 
                 bottomTeethMenu = new LayerGUIMenu(ribbonLayout.findWidgetT("Layers/MandibularTeeth") as Button, ribbonLayout.findWidgetT("Layers/MandibularTeethMenu") as Button);
-                //bottomTeethMenu.createShortcuts("BottomTeethToggle", group, Keys.F10);
+                bottomTeethMenu.createShortcuts(KeyboardButtonCode.KC_F10);
                 bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
             }
             //else
@@ -194,6 +194,33 @@ namespace Medical.GUI
             hyoidMenu.Dispose();
             topTeethMenu.Dispose();
             bottomTeethMenu.Dispose();
+        }
+
+        public bool AllowShortcuts
+        {
+            get
+            {
+                if (skinMenu != null)
+                {
+                    return skinMenu.AllowShortcuts;
+                }
+                return false;
+            }
+            set
+            {
+                if (skinMenu != null)
+                {
+                    skinMenu.AllowShortcuts = value;
+                    musclesMenu.AllowShortcuts = value;
+                    skullMenu.AllowShortcuts = value;
+                    mandibleMenu.AllowShortcuts = value;
+                    discsMenu.AllowShortcuts = value;
+                    spineMenu.AllowShortcuts = value;
+                    hyoidMenu.AllowShortcuts = value;
+                    topTeethMenu.AllowShortcuts = value;
+                    bottomTeethMenu.AllowShortcuts = value;
+                }
+            }
         }
 
         #region Transparency Helper Functions

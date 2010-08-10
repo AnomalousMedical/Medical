@@ -49,6 +49,8 @@ namespace Medical.GUI
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
             flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(showNavigationButton.Button.getRight() + 10.0f, showNavigationButton.Button.getTop()));
+
+            navigationController.ShowOverlaysChanged += new NavigationControllerEvent(navigationController_ShowOverlaysChanged);
         }
 
         public void Dispose()
@@ -184,6 +186,9 @@ namespace Medical.GUI
             navigationController.ShowOverlays = showNavigationButton.Checked;
         }
 
-
+        void navigationController_ShowOverlaysChanged(NavigationController controller)
+        {
+            showNavigationButton.Checked = navigationController.ShowOverlays;
+        }
     }
 }

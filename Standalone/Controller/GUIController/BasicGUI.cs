@@ -61,6 +61,7 @@ namespace Medical.GUI
             stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer);
             stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, this);
             stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
+            stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
             stateList = new StateList("StateList.layout", standaloneController.MedicalStateController);
 
@@ -199,6 +200,12 @@ namespace Medical.GUI
             stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard(wizard);
+            basicRibbon.AllowLayerShortcuts = false;
+        }
+
+        void stateWizardController_Finished()
+        {
+            basicRibbon.AllowLayerShortcuts = true;
         }
 
         private void createWizardPanels()
