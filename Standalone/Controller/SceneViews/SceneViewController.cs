@@ -53,16 +53,16 @@ namespace Medical.Controller
             }
         }
 
-        public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt)
+        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
-            SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
+            MDISceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
             mdiLayout.showWindow(window._getMDIWindow());
             return window;
         }
 
-        public SceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, SceneViewWindow previous, WindowAlignment alignment)
+        public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, MDISceneViewWindow previous, WindowAlignment alignment)
         {
-            SceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
+            MDISceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
             mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
             return window;
         }
@@ -76,7 +76,6 @@ namespace Medical.Controller
             if (camerasCreated)
             {
                 window.destroySceneView();
-                rm.setActiveViewport(rm.getActiveViewport() - 1);
             }
             windows.Remove(window);
             window.Dispose();
@@ -86,7 +85,7 @@ namespace Medical.Controller
         {
             foreach (SceneViewWindow window in windows)
             {
-                createCameraForWindow(window, scene);
+                window.createSceneView(rendererWindow, scene);
             }
             camerasCreated = true;
             currentScene = scene;
@@ -119,13 +118,20 @@ namespace Medical.Controller
         public void createClone(SceneViewWindow windowToClone)
         {
             CloneCamera cloneCamera = new CloneCamera(windowToClone);
-            OgreWindow ogreWindow = rendererWindow as OgreWindow;
             //Dictionary<String, String> miscParams = new Dictionary<string, string>();
             //miscParams.Add("monitorIndex", "0");
             RendererWindow window = OgreInterface.Instance.createRendererWindow("Test");
             ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
-            SceneViewWindow sceneWindow = new SceneViewWindow(this, mainTimer, cloneCamera, "Test");
-            sceneWindow.createSceneView(window, currentScene);
+            SceneViewWindow sceneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Test");
+            if (WindowCreated != null)
+            {
+                WindowCreated.Invoke(sceneWindow);
+            }
+            if (camerasCreated)
+            {
+                sceneWindow.createSceneView(window, currentScene);
+            }
+            windows.Add(sceneWindow);
         }
 
         public SceneViewWindow ActiveWindow
@@ -151,7 +157,8 @@ namespace Medical.Controller
             MDIWindow activeMDIWindow = mdiLayout.ActiveWindow;
             foreach (SceneViewWindow window in windows)
             {
-                if (window._getMDIWindow() == activeMDIWindow)
+                MDISceneViewWindow mdiSceneWindow = window as MDISceneViewWindow;
+                if (mdiSceneWindow != null && mdiSceneWindow._getMDIWindow() == activeMDIWindow)
                 {
                     activeWindow = window;
                     if (ActiveWindowChanged != null)
@@ -180,28 +187,22 @@ namespace Medical.Controller
         /// <param name="translation"></param>
         /// <param name="lookAt"></param>
         /// <returns></returns>
-        private SceneViewWindow doCreateWindow(String name, ref Vector3 translation, ref Vector3 lookAt)
+        private MDISceneViewWindow doCreateWindow(String name, ref Vector3 translation, ref Vector3 lookAt)
         {
             OrbitCameraController orbitCamera = new OrbitCameraController(translation, lookAt, null, eventManager);
             orbitCamera.AllowRotation = AllowRotation;
             orbitCamera.AllowZoom = AllowZoom;
-            SceneViewWindow window = new SceneViewWindow(this, mainTimer, orbitCamera, name);
+            MDISceneViewWindow window = new MDISceneViewWindow(rm, this, mainTimer, orbitCamera, name);
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(window);
             }
             if (camerasCreated)
             {
-                createCameraForWindow(window, currentScene);
+                window.createSceneView(rendererWindow, currentScene);
             }
             windows.Add(window);
             return window;
-        }
-
-        private void createCameraForWindow(SceneViewWindow window, SimScene scene)
-        {
-            window.createSceneView(rendererWindow, scene);
-            rm.setActiveViewport(rm.getActiveViewport() + 1);
         }
     }
 }

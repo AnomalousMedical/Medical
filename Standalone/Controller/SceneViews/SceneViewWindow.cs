@@ -15,7 +15,7 @@ namespace Medical.Controller
 {
     public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
 
-    public class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
+    public abstract class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
     {
         public event SceneViewWindowEvent CameraCreated;
         public event SceneViewWindowEvent CameraDestroyed;
@@ -28,12 +28,10 @@ namespace Medical.Controller
         private UpdateTimer mainTimer;
         private RendererWindow window;
         private String name;
-        private SceneViewController controller;
+        protected SceneViewController controller;
 
         private Vector3 startPosition;
         private Vector3 startLookAt;
-
-        private MDIWindow mdiWindow;
 
         private Vector2 location = new Vector2(0.0f, 0.0f);
         private Size2 size = new Size2(1.0f, 1.0f);
@@ -52,23 +50,14 @@ namespace Medical.Controller
             this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
             AllowNavigation = true;
-
-            //MDI Window
-            mdiWindow = new MDIWindow("MDIWindow.layout", Name);
-            mdiWindow.SuppressLayout = true;
-            mdiWindow.Content = this;
-            mdiWindow.SuppressLayout = false;
-            mdiWindow.Caption = Name;
-            mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             mainTimer.removeFixedUpdateListener(cameraMover);
-            mdiWindow.Dispose();
         }
 
-        public void createSceneView(RendererWindow window, SimScene scene)
+        public virtual void createSceneView(RendererWindow window, SimScene scene)
         {
             Log.Info("Creating SceneView for {0}.", name);
             this.window = window;
@@ -93,7 +82,7 @@ namespace Medical.Controller
             }
         }
 
-        public void destroySceneView()
+        public virtual void destroySceneView()
         {
             if (sceneView != null)
             {
@@ -298,30 +287,10 @@ namespace Medical.Controller
             }
         }
 
-        public bool Focused
+        public abstract bool Focused
         {
-            get
-            {
-                return mdiWindow.Active;
-            }
-            set
-            {
-                mdiWindow.Active = value;
-            }
-        }
-
-        /// <summary>
-        /// Get the MDIWindow for this window. Do not touch unless you are SceneViewController.
-        /// </summary>
-        /// <returns>The MDIWindow for this window.</returns>
-        internal MDIWindow _getMDIWindow()
-        {
-            return mdiWindow;
-        }
-
-        void mdiWindow_Closed(object sender, EventArgs e)
-        {
-            controller.destroyWindow(this);
+            get;
+            set;
         }
 
         void sceneView_FindVisibleObjects(SceneView sceneView)

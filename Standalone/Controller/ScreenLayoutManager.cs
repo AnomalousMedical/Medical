@@ -60,5 +60,15 @@ namespace Medical
             rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             layout();
         }
+
+        public void closed(OSWindow window)
+        {
+
+        }
+
+        public void focusChanged(OSWindow window)
+        {
+
+        }
     }
 }

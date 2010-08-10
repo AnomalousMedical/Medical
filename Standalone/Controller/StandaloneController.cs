@@ -134,10 +134,10 @@ namespace Standalone
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             //Create scene view windows
-            SceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
-            SceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
-            SceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
-            SceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
+            MDISceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
+            MDISceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
+            MDISceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
+            MDISceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
 
             if (changeScene(MedicalConfig.DefaultScene))
             {
