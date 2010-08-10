@@ -7,6 +7,8 @@ using Engine.Platform;
 using Engine.Renderer;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
+using OgreWrapper;
+using OgrePlugin;
 
 namespace Medical.Controller
 {
@@ -112,6 +114,18 @@ namespace Medical.Controller
         public void changeRendererWindow(RendererWindow rendererWindow)
         {
             this.rendererWindow = rendererWindow;
+        }
+
+        public void createClone(SceneViewWindow windowToClone)
+        {
+            CloneCamera cloneCamera = new CloneCamera(windowToClone);
+            OgreWindow ogreWindow = rendererWindow as OgreWindow;
+            //Dictionary<String, String> miscParams = new Dictionary<string, string>();
+            //miscParams.Add("monitorIndex", "0");
+            RendererWindow window = OgreInterface.Instance.createRendererWindow("Test");
+            ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
+            SceneViewWindow sceneWindow = new SceneViewWindow(this, mainTimer, cloneCamera, "Test");
+            sceneWindow.createSceneView(window, currentScene);
         }
 
         public SceneViewWindow ActiveWindow

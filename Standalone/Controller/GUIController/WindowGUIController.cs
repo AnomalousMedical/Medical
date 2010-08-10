@@ -34,6 +34,9 @@ namespace Medical.GUI
 
             Button optionsButton = ribbonWidget.findWidget("WindowTab/Options") as Button;
             optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
+
+            Button cloneButton = ribbonWidget.findWidget("WindowTab/CloneButton") as Button;
+            cloneButton.MouseButtonClick += new MyGUIEvent(cloneButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -64,6 +67,11 @@ namespace Medical.GUI
         void options_OptionsChanged(object sender, EventArgs e)
         {
             standaloneController.recreateMainWindow();
+        }
+
+        void cloneButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.SceneViewController.createClone(standaloneController.SceneViewController.ActiveWindow);
         }
     }
 }

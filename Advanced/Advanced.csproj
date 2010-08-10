@@ -99,7 +99,6 @@
     <Compile Include="Controller\MuscleGroup.cs" />
     <Compile Include="Controller\TeethSelectionGroup.cs" />
     <Compile Include="GUI\AdvancedForm.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\AdvancedForm.Designer.cs">
       <DependentUpon>AdvancedForm.cs</DependentUpon>

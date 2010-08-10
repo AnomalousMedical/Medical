@@ -119,6 +119,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
     <Compile Include="Controller\Platform\WinformsMessagePump.cs" />
+    <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="GUI\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
