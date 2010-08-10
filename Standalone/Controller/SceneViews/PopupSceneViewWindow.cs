@@ -20,6 +20,12 @@ namespace Medical.Controller
             AllowNavigation = false;
         }
 
+        public override void createSceneView(RendererWindow window, Engine.ObjectManagement.SimScene scene)
+        {
+            //Ignore the window passed in and use the member one instead
+            base.createSceneView(rendererWindow, scene);
+        }
+
         public override bool Focused
         {
             get

@@ -214,7 +214,6 @@
   <ItemGroup>
     <None Include="Resources\ResizeDownSmall.png" />
     <None Include="Resources\ExploreIconSmall.png" />
-    <None Include="Resources\ResizeDownSmall1.png" />
     <None Include="Resources\ResizeUpSmall.png" />
     <None Include="Resources\SaveSmall.png" />
     <Content Include="skull.ico" />
