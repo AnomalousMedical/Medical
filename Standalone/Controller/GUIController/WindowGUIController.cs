@@ -14,6 +14,7 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
         private OptionsDialog options;
+        private CloneWindowDialog cloneWindowDialog;
 
         public WindowGUIController(Widget ribbonWidget, StandaloneController standaloneController)
         {
@@ -31,6 +32,9 @@ namespace Medical.GUI
 
             options = new OptionsDialog("Options.layout");
             options.OptionsChanged += new EventHandler(options_OptionsChanged);
+
+            cloneWindowDialog = new CloneWindowDialog("CloneWindowProperties.layout");
+            cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
 
             Button optionsButton = ribbonWidget.findWidget("WindowTab/Options") as Button;
             optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
@@ -71,7 +75,12 @@ namespace Medical.GUI
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.SceneViewController.createCloneWindow();
+            cloneWindowDialog.open(true);
+        }
+
+        void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
+        {
+            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
         }
     }
 }

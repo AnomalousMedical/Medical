@@ -336,7 +336,7 @@ namespace Standalone
             {
                 if (splashScreen != null)
                 {
-                    splashScreen.updateStatus(75, "Loading scene properties.");
+                    splashScreen.updateStatus(75, "Loading Scene Properties");
                 }
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
