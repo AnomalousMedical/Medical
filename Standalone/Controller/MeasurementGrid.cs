@@ -180,7 +180,10 @@ namespace Medical.Controller
             }
             set
             {
-                textWatermark.Visible = !value;
+                if (visible)
+                {
+                    textWatermark.Visible = !value;
+                }
             }
         }
 

@@ -107,7 +107,6 @@ namespace Standalone
             measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
             SceneUnloading += measurementGrid.sceneUnloading;
             SceneLoaded += measurementGrid.sceneLoaded;
-            measurementGrid.Visible = true;
 
             //Image Renderer
             imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
