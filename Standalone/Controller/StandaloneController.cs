@@ -161,11 +161,12 @@ namespace Standalone
 
             splashScreen.updateStatus(40, "Loading Scene");
 
-            if (changeScene(MedicalConfig.DefaultScene))
+            if (changeScene(MedicalConfig.DefaultScene, splashScreen))
             {
                 //temp hack to show navigation arrows for initial scene
                 navigationController.recalculateClosestNonHiddenStates();
                 //end hack
+                splashScreen.updateStatus(100, "");
                 splashScreen.hide();
                 medicalController.start();
             }
@@ -184,7 +185,7 @@ namespace Standalone
         public void openNewScene(String filename)
         {
             medicalStateController.clearStates();
-            changeScene(filename);
+            changeScene(filename, null);
         }
 
         public void saveMedicalState(PatientDataFile patientData)
@@ -204,7 +205,7 @@ namespace Standalone
                 SavedMedicalStates states = dataFile.SavedStates;
                 if (states != null)
                 {
-                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName, null);
                     medicalStateController.setStates(states);
                     medicalStateController.blend(0.0f);
                     basicGUI.changeLeftPanel(null);
@@ -315,7 +316,7 @@ namespace Standalone
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(String file)
+        private bool changeScene(String file, SplashScreen splashScreen)
         {
             sceneViewController.resetAllCameraPositions();
             navigationController.recalculateClosestNonHiddenStates();
@@ -333,6 +334,10 @@ namespace Standalone
             backgroundController.sceneUnloading();
             if (medicalController.openScene(file))
             {
+                if (splashScreen != null)
+                {
+                    splashScreen.updateStatus(75, "Loading scene properties.");
+                }
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
