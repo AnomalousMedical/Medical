@@ -38,6 +38,14 @@ namespace Medical.Controller
             }
         }
 
+        public RendererWindow RendererWindow
+        {
+            get
+            {
+                return rendererWindow;
+            }
+        }
+
         #region OSWindowListener Members
 
         public void closing(OSWindow window)

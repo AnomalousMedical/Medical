@@ -28,6 +28,7 @@ namespace Medical.Controller
         private SimScene currentScene = null;
         private OgreRenderManager rm;
         private SceneViewWindow activeWindow = null;
+        private PopupSceneViewWindow cloneWindow = null;
 
         private List<SceneViewWindow> windows = new List<SceneViewWindow>();
 
@@ -117,22 +118,31 @@ namespace Medical.Controller
 
         public void createCloneWindow()
         {
-            CloneCamera cloneCamera = new CloneCamera(this);
-            WindowInfo windowInfo = new WindowInfo("Clone", 1680, 1050);
-            windowInfo.MonitorIndex = 1;
-            windowInfo.Fullscreen = false;
-            RendererWindow window = OgreInterface.Instance.createRendererWindow(windowInfo);
-            ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
-            SceneViewWindow sceneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Clone");
-            if (WindowCreated != null)
+            if (cloneWindow == null)
             {
-                WindowCreated.Invoke(sceneWindow);
+                CloneCamera cloneCamera = new CloneCamera(this);
+                WindowInfo windowInfo = new WindowInfo("Clone", 1680, 1050);
+                windowInfo.MonitorIndex = 1;
+                windowInfo.Fullscreen = false;
+                RendererWindow window = OgreInterface.Instance.createRendererWindow(windowInfo);
+                ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
+                cloneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Clone");
+                if (WindowCreated != null)
+                {
+                    WindowCreated.Invoke(cloneWindow);
+                }
+                if (camerasCreated)
+                {
+                    cloneWindow.createSceneView(window, currentScene);
+                }
+                windows.Add(cloneWindow);
             }
-            if (camerasCreated)
+            else
             {
-                sceneWindow.createSceneView(window, currentScene);
+                destroyWindow(cloneWindow);
+                OgreInterface.Instance.destroyRendererWindow(cloneWindow.RendererWindow);
+                cloneWindow = null;
             }
-            windows.Add(sceneWindow);
         }
 
         public SceneViewWindow ActiveWindow

@@ -76,6 +76,20 @@ namespace Standalone
             OSMessagePump messagePump = new AgnosticMessagePump();
 #endif
             medicalController.initialize(null, messagePump, createWindow);
+
+            //Splash screen
+            Gui gui = Gui.Instance;
+            gui.setVisiblePointer(false);
+            SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100);
+
+            messagePump.processMessages();
+            splashScreen.updateStatus(10, "Initializing Core");
+
+            //Setup MyGUI listeners
+            MyGUIInterface myGUI = MyGUIInterface.Instance;
+            myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
+            myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
+
             windowListener = new WindowListener(this);
             medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(windowListener);
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.DeactivateOnFocusChange = false;
@@ -85,7 +99,7 @@ namespace Standalone
             medicalController.MainTimer.addFixedUpdateListener(new MDIUpdate(medicalController.EventManager, mdiLayout));
 
             //SceneView
-            MyGUIInterface myGui = PluginManager.Instance.getPlugin("MyGUIPlugin") as MyGUIInterface;
+            MyGUIInterface myGui = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
             sceneViewController.AllowRotation = false;
             sceneViewController.AllowZoom = false;
@@ -131,10 +145,9 @@ namespace Standalone
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
+            splashScreen.updateStatus(20, "Creating GUI");
+
             //GUI
-            MyGUIInterface myGUI = medicalController.PluginManager.getPlugin("MyGUIPlugin") as MyGUIInterface;
-            myGUI.RenderEnded += new EventHandler(myGUI_RenderEnded);
-            myGUI.RenderStarted += new EventHandler(myGUI_RenderStarted);
             basicGUI = new BasicGUI(this);
             basicGUI.ScreenLayout.Root.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
@@ -146,12 +159,14 @@ namespace Standalone
             MDISceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
             MDISceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
 
+            splashScreen.updateStatus(40, "Loading Scene");
+
             if (changeScene(MedicalConfig.DefaultScene))
             {
                 //temp hack to show navigation arrows for initial scene
                 navigationController.recalculateClosestNonHiddenStates();
                 //end hack
-
+                splashScreen.hide();
                 medicalController.start();
             }
         }
