@@ -45,6 +45,7 @@ namespace Standalone
         private BackgroundController backgroundController;
         private ViewportBackground background;
         private MDILayoutManager mdiLayout;
+        private MeasurementGrid measurementGrid;
 
         public StandaloneController()
         {
@@ -55,6 +56,7 @@ namespace Standalone
         {
             basicGUI.Dispose();
             watermark.Dispose();
+            measurementGrid.Dispose();
             movementSequenceController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
@@ -101,12 +103,18 @@ namespace Standalone
             //Background
             createBackground();
 
+            //Measurement grid
+            measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
+            SceneUnloading += measurementGrid.sceneUnloading;
+            SceneLoaded += measurementGrid.sceneLoaded;
+            measurementGrid.Visible = true;
+
             //Image Renderer
             imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
             imageRenderer.Watermark = watermark;
             imageRenderer.Background = background;
-            //imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
-            //imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
+            imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
+            imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
             
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
@@ -449,9 +457,9 @@ namespace Standalone
         /// to the PluginManager.
         /// </summary>
         /// <param name="defaultWindow"></param>
-        private void createWindow(out DefaultWindowInfo defaultWindow)
+        private void createWindow(out WindowInfo defaultWindow)
         {
-            defaultWindow = new DefaultWindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+            defaultWindow = new WindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
             defaultWindow.MonitorIndex = 0;
         }
@@ -462,7 +470,7 @@ namespace Standalone
         void myGUI_RenderStarted(object sender, EventArgs e)
         {
             watermark.Visible = false;
-            //navigationController.ShowOverlays = false;
+            measurementGrid.HideCaption = true;
         }
 
         /// <summary>
@@ -471,7 +479,7 @@ namespace Standalone
         void myGUI_RenderEnded(object sender, EventArgs e)
         {
             watermark.Visible = true;
-            //navigationController.ShowOverlays = true;
+            measurementGrid.HideCaption = false;
         }
 
         void medicalController_FullSpeedLoopUpdate(Clock time)

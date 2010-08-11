@@ -9,12 +9,12 @@ namespace Medical.Controller
 {
     class CloneCamera : CameraMover
     {
-        private SceneViewWindow followWindow;
+        private SceneViewController sceneViewController;
         private SceneView camera;
 
-        public CloneCamera(SceneViewWindow followWindow)
+        public CloneCamera(SceneViewController sceneViewController)
         {
-            this.followWindow = followWindow;
+            this.sceneViewController = sceneViewController;
         }
 
         public override void setCamera(SceneView camera)
@@ -34,7 +34,8 @@ namespace Medical.Controller
 
         public override void sendUpdate(Clock clock)
         {
-            if (camera != null)
+            SceneViewWindow followWindow = sceneViewController.ActiveWindow;
+            if (camera != null && followWindow != null)
             {
                 camera.Translation = followWindow.Translation;
                 camera.LookAt = followWindow.LookAt;
@@ -45,7 +46,12 @@ namespace Medical.Controller
         {
             get
             {
-                return followWindow.Translation;
+                SceneViewWindow followWindow = sceneViewController.ActiveWindow;
+                if (followWindow != null)
+                {
+                    return followWindow.Translation;
+                }
+                return Vector3.Zero;
             }
         }
 
@@ -53,7 +59,12 @@ namespace Medical.Controller
         {
             get
             {
-                return followWindow.LookAt;
+                SceneViewWindow followWindow = sceneViewController.ActiveWindow;
+                if (followWindow != null)
+                {
+                    return followWindow.LookAt;
+                }
+                return Vector3.Zero;
             }
         }
 

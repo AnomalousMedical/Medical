@@ -71,7 +71,7 @@ namespace Medical.GUI
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.SceneViewController.createClone(standaloneController.SceneViewController.ActiveWindow);
+            standaloneController.SceneViewController.createCloneWindow();
         }
     }
 }

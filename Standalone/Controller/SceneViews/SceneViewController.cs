@@ -115,14 +115,15 @@ namespace Medical.Controller
             this.rendererWindow = rendererWindow;
         }
 
-        public void createClone(SceneViewWindow windowToClone)
+        public void createCloneWindow()
         {
-            CloneCamera cloneCamera = new CloneCamera(windowToClone);
-            //Dictionary<String, String> miscParams = new Dictionary<string, string>();
-            //miscParams.Add("monitorIndex", "0");
-            RendererWindow window = OgreInterface.Instance.createRendererWindow("Test");
+            CloneCamera cloneCamera = new CloneCamera(this);
+            WindowInfo windowInfo = new WindowInfo("Clone", 1680, 1050);
+            windowInfo.MonitorIndex = 1;
+            windowInfo.Fullscreen = false;
+            RendererWindow window = OgreInterface.Instance.createRendererWindow(windowInfo);
             ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
-            SceneViewWindow sceneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Test");
+            SceneViewWindow sceneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Clone");
             if (WindowCreated != null)
             {
                 WindowCreated.Invoke(sceneWindow);
