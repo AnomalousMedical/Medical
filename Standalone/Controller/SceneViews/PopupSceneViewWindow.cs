@@ -10,6 +10,8 @@ namespace Medical.Controller
 {
     class PopupSceneViewWindow : SceneViewWindow, OSWindowListener
     {
+        public event EventHandler Closed;
+
         private RendererWindow rendererWindow;
 
         public PopupSceneViewWindow(RendererWindow rendererWindow, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
@@ -65,6 +67,10 @@ namespace Medical.Controller
 
         public void closed(OSWindow window)
         {
+            if (Closed != null)
+            {
+                Closed.Invoke(this, EventArgs.Empty);
+            }
             OgreInterface.Instance.destroyRendererWindow(rendererWindow);
         }
 

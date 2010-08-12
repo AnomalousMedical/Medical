@@ -124,6 +124,7 @@ namespace Medical.Controller
                 RendererWindow window = OgreInterface.Instance.createRendererWindow(windowInfo);
                 ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
                 cloneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Clone");
+                cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {
                     WindowCreated.Invoke(cloneWindow);
@@ -134,11 +135,25 @@ namespace Medical.Controller
                 }
                 windows.Add(cloneWindow);
             }
-            else
+        }
+
+        public void destroyCloneWindow()
+        {
+            destroyWindow(cloneWindow);
+            OgreInterface.Instance.destroyRendererWindow(cloneWindow.RendererWindow);
+            cloneWindow = null;
+        }
+
+        void cloneWindow_Closed(object sender, EventArgs e)
+        {
+            cloneWindow = null;
+        }
+
+        public bool HasCloneWindow
+        {
+            get
             {
-                destroyWindow(cloneWindow);
-                OgreInterface.Instance.destroyRendererWindow(cloneWindow.RendererWindow);
-                cloneWindow = null;
+                return cloneWindow != null;
             }
         }
 

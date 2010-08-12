@@ -75,7 +75,14 @@ namespace Medical.GUI
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            cloneWindowDialog.open(true);
+            if (sceneViewController.HasCloneWindow)
+            {
+                sceneViewController.destroyCloneWindow();
+            }
+            else
+            {
+                cloneWindowDialog.open(true);
+            }
         }
 
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
