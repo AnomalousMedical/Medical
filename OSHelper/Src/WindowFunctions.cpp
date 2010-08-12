@@ -13,31 +13,35 @@ enum WindowIcons
 
 extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(HWND hwnd, WindowIcons icon)
 {
+	int errorCode = 0;
 	HMODULE module;
-	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,  reinterpret_cast<LPCTSTR>(WindowFunctions_changeWindowIcon), &module))
+	if(!GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, reinterpret_cast<LPCTSTR>(WindowFunctions_changeWindowIcon), &module))
 	{
-		return GetLastError();
+		errorCode = GetLastError();
 	}
+	else
+	{
+		HICON hIcon = NULL;
 
-	HICON hIcon = NULL;
+		switch(icon)
+		{
+			case ICON_SKULL:
+			default:
+				hIcon = LoadIcon(module, MAKEINTRESOURCE(IDI_SKULL));
+				break;
+		}
 
-	switch(icon)
-	{
-		case ICON_SKULL:
-		default:
-			hIcon = LoadIcon(module, MAKEINTRESOURCE(IDI_SKULL));
-			break;
+		if(hIcon == NULL)
+		{
+			errorCode = GetLastError();
+		}
+		else if(!SetClassLongPtr(hwnd, GCL_HICON, (LONG_PTR)hIcon))
+		{
+			errorCode = GetLastError();
+		}
+		FreeModule(module);
 	}
-
-	if(hIcon == NULL)
-	{
-		return GetLastError();
-	}
-    if(!SetClassLongPtr(hwnd, GCL_HICON, (LONG_PTR)hIcon))
-	{
-		return GetLastError();
-	}
-	return 0;
+	return errorCode;
 }
 
 #endif
