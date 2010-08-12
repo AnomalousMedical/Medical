@@ -62,4 +62,9 @@ extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(void* hwnd, int
 	return 0;
 }
 
+extern "C" _AnomalousExport int WindowFunctions_maximizeWindow(void* hwnd)
+{
+	return 0;
+}
+
 #endif
