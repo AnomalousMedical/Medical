@@ -76,6 +76,7 @@ namespace Standalone
             OSMessagePump messagePump = new AgnosticMessagePump();
 #endif
             medicalController.initialize(null, messagePump, createWindow);
+            WindowFunctions.setWindowIcon(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle, WindowIcons.ICON_SKULL);
 
             //Splash screen
             Gui gui = Gui.Instance;
@@ -478,7 +479,7 @@ namespace Standalone
         /// <param name="defaultWindow"></param>
         private void createWindow(out WindowInfo defaultWindow)
         {
-            defaultWindow = new WindowInfo("Articulometrics", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+            defaultWindow = new WindowInfo("Piper's Joint Based Occlusion", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
             defaultWindow.MonitorIndex = 0;
         }

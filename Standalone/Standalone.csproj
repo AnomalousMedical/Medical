@@ -15,6 +15,8 @@
     <StartupObject>
     </StartupObject>
     <ApplicationIcon>skull.ico</ApplicationIcon>
+    <Win32Resource>
+    </Win32Resource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,7 +31,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -120,6 +122,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
+    <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
     <Compile Include="Controller\Platform\WinformsMessagePump.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
