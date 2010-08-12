@@ -44,6 +44,15 @@ extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(HWND hwnd, Wind
 	return errorCode;
 }
 
+extern "C" _AnomalousExport int WindowFunctions_maximizeWindow(HWND hwnd)
+{
+	if(!ShowWindow(hwnd, SW_MAXIMIZE))
+	{
+		return GetLastError();
+	}
+	return 0;
+}
+
 #endif
 
 #ifdef MAC_OSX

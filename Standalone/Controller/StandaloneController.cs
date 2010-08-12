@@ -46,6 +46,7 @@ namespace Standalone
         private ViewportBackground background;
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
+        private SceneViewWindowPresetController windowPresetController;
 
         public StandaloneController()
         {
@@ -76,7 +77,6 @@ namespace Standalone
             OSMessagePump messagePump = new AgnosticMessagePump();
 #endif
             medicalController.initialize(null, messagePump, createWindow);
-            WindowFunctions.setWindowIcon(medicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle, WindowIcons.ICON_SKULL);
 
             //Splash screen
             Gui gui = Gui.Instance;
@@ -147,6 +147,9 @@ namespace Standalone
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
             splashScreen.updateStatus(20, "Creating GUI");
+
+            windowPresetController = new SceneViewWindowPresetController();
+            createWindowPresets();
 
             //GUI
             basicGUI = new BasicGUI(this);
@@ -472,6 +475,73 @@ namespace Standalone
             }
         }
 
+        private void createWindowPresets()
+        {
+            windowPresetController.clearPresetSets();
+            SceneViewWindowPresetSet primary = new SceneViewWindowPresetSet("Primary");
+            SceneViewWindowPreset preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            primary.addPreset(preset);
+            primary.Hidden = true;
+            windowPresetController.addPresetSet(primary);
+
+            SceneViewWindowPresetSet oneWindow = new SceneViewWindowPresetSet("One Window");
+            //oneWindow.Image = Resources.OneWindowLayout;
+            preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            oneWindow.addPreset(preset);
+            windowPresetController.addPresetSet(oneWindow);
+
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
+            //    UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT) ||
+            //    UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) ||
+            //    UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            //{
+                SceneViewWindowPresetSet twoWindows = new SceneViewWindowPresetSet("Two Windows");
+                //twoWindows.Image = Resources.TwoWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                twoWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = SceneViewWindowPosition.Right;
+                twoWindows.addPreset(preset);
+                windowPresetController.addPresetSet(twoWindows);
+            //}
+
+            //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            //{
+                SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
+                //threeWindows.Image = Resources.ThreeWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                threeWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = SceneViewWindowPosition.Left;
+                threeWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = SceneViewWindowPosition.Right;
+                threeWindows.addPreset(preset);
+                windowPresetController.addPresetSet(threeWindows);
+
+                SceneViewWindowPresetSet fourWindows = new SceneViewWindowPresetSet("Four Windows");
+                //fourWindows.Image = Resources.FourWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = SceneViewWindowPosition.Right;
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = SceneViewWindowPosition.Bottom;
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 3";
+                preset.WindowPosition = SceneViewWindowPosition.Right;
+                fourWindows.addPreset(preset);
+                windowPresetController.addPresetSet(fourWindows);
+            //}
+        }
+
         /// <summary>
         /// Helper function to create the default window. This is the callback
         /// to the PluginManager.
@@ -481,7 +551,24 @@ namespace Standalone
         {
             defaultWindow = new WindowInfo("Piper's Joint Based Occlusion", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
+            if (!defaultWindow.Fullscreen)
+            {
+                defaultWindow.Width = 800;
+                defaultWindow.Height = 600;
+            }
             defaultWindow.MonitorIndex = 0;
+            defaultWindow.WindowCreated += new EventHandler(defaultWindow_WindowCreated);
+        }
+
+        void defaultWindow_WindowCreated(object sender, EventArgs e)
+        {
+            OSWindow createdWindow = ((WindowInfoEventArgs)e).CreatedWindow.Handle;
+            WindowInfo windowInfo = sender as WindowInfo;
+            WindowFunctions.setWindowIcon(createdWindow, WindowIcons.ICON_SKULL);
+            if (!windowInfo.Fullscreen)
+            {
+                WindowFunctions.maximizeWindow(createdWindow);
+            }
         }
 
         /// <summary>
