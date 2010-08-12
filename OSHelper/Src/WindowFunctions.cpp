@@ -48,9 +48,9 @@ extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(HWND hwnd, Wind
 
 #ifdef MAC_OSX
 
-extern "C" _AnomalousExport void WindowFunctions_changeWindowIcon(void* hwnd, int iconID)
+extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(void* hwnd, int iconID)
 {
-
+	return 0;
 }
 
 #endif

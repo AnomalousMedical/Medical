@@ -1,6 +1,10 @@
 #!/bin/sh
 
+#Delete old app
 rm -r -f Articulometrics.app
+
+#Compile native libs
+xcodebuild -project OSHelper/OSHelper.xcodeproj -alltargets
 
 #Do the macpack
 macpack -n Articulometrics -a DotNetAssemblies/Standalone.exe -m cocoa -i Skull.icns
@@ -11,6 +15,9 @@ cp DotNetAssemblies/Standalone.exe Articulometrics.app/Contents/Resources/Articu
 
 #Copy the mac native dylibs
 cp ../../Engine/OSXBuild/Release/*.dylib Articulometrics.app/Contents/Resources
+
+#Copy the Medical native dylibs
+cp OSHelper/build/Release/libOSHelper.dylib Articulometrics.app/Contents/Resources
 
 #Copy the frameworks
 mkdir Articulometrics.app/Contents/Frameworks
