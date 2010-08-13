@@ -113,6 +113,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="Include"
 				PreprocessorDefinitions="WINDOWS;WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -202,6 +203,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Src\UserPermissions.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\WindowFunctions.cpp"
 				>
 			</File>
@@ -212,11 +217,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Include\Features.h"
+				>
+			</File>
+			<File
 				RelativePath=".\resource.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\UserPermissions.h"
 				>
 			</File>
 		</Filter>

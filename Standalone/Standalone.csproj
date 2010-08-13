@@ -123,6 +123,7 @@
     <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
     <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
+    <Compile Include="Controller\OSHelper\UserPermissions.cs" />
     <Compile Include="Controller\Platform\WinformsMessagePump.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
