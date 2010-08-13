@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
 using Standalone;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -58,6 +59,15 @@ namespace Medical.GUI
                     item.MouseButtonClick += item_MouseButtonClick;
                 }
             }
+
+            //Update
+            Button updateButton = ribbonWidget.findWidget("WindowTab/UpdateButton") as Button;
+            updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
+        }
+
+        void updateButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
         }
 
         void item_MouseButtonClick(Widget source, EventArgs e)
