@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
+    <Compile Include="Controller\Dialogs\AboutDialog.cs" />
     <Compile Include="Controller\Dialogs\ChooseSceneDialog.cs" />
     <Compile Include="Controller\Dialogs\OpenPatientDialog.cs" />
     <Compile Include="Controller\Dialogs\SavePatientDialog.cs" />

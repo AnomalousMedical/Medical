@@ -17,6 +17,7 @@ namespace Medical.GUI
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
         private PopupMenu windowMenu;
+        private AboutDialog aboutDialog;
 
         public WindowGUIController(Widget ribbonWidget, StandaloneController standaloneController)
         {
@@ -60,27 +61,14 @@ namespace Medical.GUI
                 }
             }
 
+            //About
+            Button aboutButton = ribbonWidget.findWidget("WindowTab/AboutButton") as Button;
+            aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
+            aboutDialog = new AboutDialog("AboutBox.layout");
+
             //Update
             Button updateButton = ribbonWidget.findWidget("WindowTab/UpdateButton") as Button;
             updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
-        }
-
-        void updateButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
-        }
-
-        void item_MouseButtonClick(Widget source, EventArgs e)
-        {
-            standaloneController.SceneViewController.createFromPresets(standaloneController.PresetWindows.getPresetSet(source.UserObject.ToString()));
-            windowMenu.setVisibleSmooth(false);
-        }
-
-        void windowLayout_MouseButtonClick(Widget source, EventArgs e)
-        {
-            LayerManager.Instance.upLayerItem(windowMenu);
-            windowMenu.setPosition(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
-            windowMenu.setVisibleSmooth(true);
         }
 
         public void Dispose()
@@ -128,6 +116,29 @@ namespace Medical.GUI
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
         {
             standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
+        }
+
+        void aboutButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            aboutDialog.open(true);
+        }
+
+        void updateButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
+        }
+
+        void item_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.SceneViewController.createFromPresets(standaloneController.PresetWindows.getPresetSet(source.UserObject.ToString()));
+            windowMenu.setVisibleSmooth(false);
+        }
+
+        void windowLayout_MouseButtonClick(Widget source, EventArgs e)
+        {
+            LayerManager.Instance.upLayerItem(windowMenu);
+            windowMenu.setPosition(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            windowMenu.setVisibleSmooth(true);
         }
     }
 }
