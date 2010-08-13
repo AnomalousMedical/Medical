@@ -55,6 +55,15 @@ namespace Medical.Controller
             LayoutManager.Instance.unloadLayout(guiLayout);
         }
 
+        public void close()
+        {
+            layoutManager.closeWindow(this);
+            if (Closed != null)
+            {
+                Closed.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         /// <summary>
         /// LayoutContainer method.
         /// </summary>
@@ -224,11 +233,7 @@ namespace Medical.Controller
         /// <param name="e"></param>
         void closeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            layoutManager.closeWindow(this);
-            if (Closed != null)
-            {
-                Closed.Invoke(this, EventArgs.Empty);
-            }
+            close();
         }
 
         void captionButton_MouseButtonClick(Widget source, EventArgs e)

@@ -46,6 +46,11 @@ namespace Medical.Controller
             rm.setActiveViewport(rm.getActiveViewport() - 1);
         }
 
+        public override void close()
+        {
+            mdiWindow.close();
+        }
+
         public override bool Focused
         {
             get

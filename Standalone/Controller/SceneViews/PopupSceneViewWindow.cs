@@ -28,6 +28,11 @@ namespace Medical.Controller
             base.createSceneView(rendererWindow, scene);
         }
 
+        public override void close()
+        {
+            
+        }
+
         public override bool Focused
         {
             get

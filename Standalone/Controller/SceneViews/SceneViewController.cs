@@ -173,7 +173,7 @@ namespace Medical.Controller
             {
                 if (window != cloneWindow)
                 {
-                    destroyWindow(window);
+                    window.close();
                 }
             }
         }

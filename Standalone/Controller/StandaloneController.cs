@@ -159,10 +159,6 @@ namespace Standalone
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             //Create scene view windows
-            //MDISceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
-            //MDISceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
-            //MDISceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
-            //MDISceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
 
             splashScreen.updateStatus(40, "Loading Scene");
@@ -289,6 +285,14 @@ namespace Standalone
             get
             {
                 return imageRenderer;
+            }
+        }
+
+        public SceneViewWindowPresetController PresetWindows
+        {
+            get
+            {
+                return windowPresetController;
             }
         }
 

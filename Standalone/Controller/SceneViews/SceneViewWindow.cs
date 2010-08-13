@@ -101,6 +101,8 @@ namespace Medical.Controller
             }
         }
 
+        public abstract void close();
+
         public void setPosition(Vector3 translation, Vector3 lookAt)
         {
             cameraMover.setNewPosition(translation, lookAt);
