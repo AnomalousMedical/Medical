@@ -4,23 +4,15 @@ using System.Linq;
 using System.Text;
 using Engine;
 
-namespace Medical
+namespace Medical.Controller
 {
-    public enum SceneViewWindowPosition
-    {
-        Left,
-        Top,
-        Right,
-        Bottom,
-    }
-
     public class SceneViewWindowPreset
     {
         String name;
         Vector3 position;
         Vector3 lookAt;
         String parentWindow;
-        SceneViewWindowPosition windowPosition = SceneViewWindowPosition.Top;
+        WindowAlignment windowPosition = WindowAlignment.Top;
 
         public SceneViewWindowPreset(String name, Vector3 position, Vector3 lookAt)
         {
@@ -77,7 +69,7 @@ namespace Medical
             }
         }
 
-        public SceneViewWindowPosition WindowPosition
+        public WindowAlignment WindowPosition
         {
             get
             {

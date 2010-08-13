@@ -82,22 +82,6 @@ namespace Medical.Controller
                     if (previous._ParentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
                     {
                         //The child can simply be appended.
-                        previous._ParentContainer.insertChild(child, previous, true);
-                    }
-                    else
-                    {
-                        //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
-                        MDILayoutContainer parentContainer = previous._ParentContainer;
-                        parentContainer.swapAndRemove(newContainer, previous);
-                        newContainer.addChild(previous);
-                        newContainer.addChild(child);
-                    }
-                    break;
-                case WindowAlignment.Right:
-                    if (previous._ParentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
-                    {
-                        //The child can simply be appended.
                         previous._ParentContainer.insertChild(child, previous, false);
                     }
                     else
@@ -108,6 +92,22 @@ namespace Medical.Controller
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
                         newContainer.addChild(previous);
+                    }
+                    break;
+                case WindowAlignment.Right:
+                    if (previous._ParentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                    {
+                        //The child can simply be appended.
+                        previous._ParentContainer.insertChild(child, previous, true);
+                    }
+                    else
+                    {
+                        //The child needs a new subcontainer created.
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
+                        MDILayoutContainer parentContainer = previous._ParentContainer;
+                        parentContainer.swapAndRemove(newContainer, previous);
+                        newContainer.addChild(previous);
+                        newContainer.addChild(child);
                     }
                     break;
                 case WindowAlignment.Top:

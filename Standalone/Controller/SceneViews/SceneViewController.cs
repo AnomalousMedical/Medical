@@ -56,16 +56,33 @@ namespace Medical.Controller
 
         public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt)
         {
-            MDISceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
-            mdiLayout.showWindow(window._getMDIWindow());
-            return window;
+            return createWindow(name, translation, lookAt, null, WindowAlignment.Left);
         }
 
         public MDISceneViewWindow createWindow(String name, Vector3 translation, Vector3 lookAt, MDISceneViewWindow previous, WindowAlignment alignment)
         {
             MDISceneViewWindow window = doCreateWindow(name, ref translation, ref lookAt);
-            mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
+            if (previous != null)
+            {
+                mdiLayout.showWindow(window._getMDIWindow(), previous._getMDIWindow(), alignment);
+            }
+            else
+            {
+                mdiLayout.showWindow(window._getMDIWindow());
+            }
             return window;
+        }
+
+        public MDISceneViewWindow findWindow(String name)
+        {
+            foreach (SceneViewWindow window in windows)
+            {
+                if (window.Name == name)
+                {
+                    return window as MDISceneViewWindow;
+                }
+            }
+            return null;
         }
 
         public void destroyWindow(SceneViewWindow window)
@@ -147,6 +164,30 @@ namespace Medical.Controller
         void cloneWindow_Closed(object sender, EventArgs e)
         {
             cloneWindow = null;
+        }
+
+        public void closeAllWindows()
+        {
+            List<SceneViewWindow> windowListCopy = new List<SceneViewWindow>(windows);
+            foreach (SceneViewWindow window in windowListCopy)
+            {
+                if (window != cloneWindow)
+                {
+                    destroyWindow(window);
+                }
+            }
+        }
+
+        public void createFromPresets(SceneViewWindowPresetSet presets)
+        {
+            //StatusController.SetStatus("Recreating viewports...");
+            closeAllWindows();
+            SceneViewWindow camera;
+            foreach (SceneViewWindowPreset preset in presets.getPresetEnum())
+            {
+                camera = createWindow(preset.Name, preset.Position, preset.LookAt, findWindow(preset.ParentWindow), preset.WindowPosition);
+            }
+            //StatusController.TaskCompleted();
         }
 
         public bool HasCloneWindow

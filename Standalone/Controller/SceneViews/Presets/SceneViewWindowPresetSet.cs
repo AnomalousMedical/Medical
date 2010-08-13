@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace Medical
+namespace Medical.Controller
 {
     public class SceneViewWindowPresetSet
     {

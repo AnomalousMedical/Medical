@@ -37,6 +37,7 @@ namespace Standalone
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
+        private OSMessagePump messagePump;
 
         //GUI
         private BasicGUI basicGUI;
@@ -72,18 +73,18 @@ namespace Standalone
             //Engine core
             medicalController = new MedicalController();
 #if CALL_DO_EVENTS //If we need to call DoEvents use the WinformsMessagePump (OSX).
-            OSMessagePump messagePump = new WinformsMessagePump();
+            messagePump = new WinformsMessagePump();
 #else
-            OSMessagePump messagePump = new AgnosticMessagePump();
+            messagePump = new AgnosticMessagePump();
 #endif
             medicalController.initialize(null, messagePump, createWindow);
+            messagePump.processMessages();
 
             //Splash screen
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
             SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100);
 
-            messagePump.processMessages();
             splashScreen.updateStatus(10, "Initializing Core");
 
             //Setup MyGUI listeners
@@ -158,10 +159,11 @@ namespace Standalone
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             //Create scene view windows
-            MDISceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
-            MDISceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
-            MDISceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
-            MDISceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
+            //MDISceneViewWindow camera1 = sceneViewController.createWindow("Camera 1", new Vector3(0, -5, 170), new Vector3(0, -5, 0));
+            //MDISceneViewWindow camera2 = sceneViewController.createWindow("Camera 2", new Vector3(0, -5, -170), new Vector3(0, -5, 0), camera1, WindowAlignment.Left);
+            //MDISceneViewWindow camera3 = sceneViewController.createWindow("Camera 3", new Vector3(-170, -5, 0), new Vector3(0, -5, 0), camera1, WindowAlignment.Bottom);
+            //MDISceneViewWindow camera4 = sceneViewController.createWindow("Camera 4", new Vector3(170, -5, 0), new Vector3(0, -5, 0), camera2, WindowAlignment.Bottom);
+            sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
 
             splashScreen.updateStatus(40, "Loading Scene");
 
@@ -501,7 +503,7 @@ namespace Standalone
                 twoWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = SceneViewWindowPosition.Right;
+                preset.WindowPosition = WindowAlignment.Right;
                 twoWindows.addPreset(preset);
                 windowPresetController.addPresetSet(twoWindows);
             //}
@@ -514,11 +516,11 @@ namespace Standalone
                 threeWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = SceneViewWindowPosition.Left;
+                preset.WindowPosition = WindowAlignment.Left;
                 threeWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = SceneViewWindowPosition.Right;
+                preset.WindowPosition = WindowAlignment.Right;
                 threeWindows.addPreset(preset);
                 windowPresetController.addPresetSet(threeWindows);
 
@@ -528,15 +530,15 @@ namespace Standalone
                 fourWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = SceneViewWindowPosition.Right;
+                preset.WindowPosition = WindowAlignment.Right;
                 fourWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
                 preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = SceneViewWindowPosition.Bottom;
+                preset.WindowPosition = WindowAlignment.Bottom;
                 fourWindows.addPreset(preset);
                 preset = new SceneViewWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-                preset.ParentWindow = "Camera 3";
-                preset.WindowPosition = SceneViewWindowPosition.Right;
+                preset.ParentWindow = "Camera 2";
+                preset.WindowPosition = WindowAlignment.Bottom;
                 fourWindows.addPreset(preset);
                 windowPresetController.addPresetSet(fourWindows);
             //}
@@ -569,6 +571,7 @@ namespace Standalone
             {
                 WindowFunctions.maximizeWindow(createdWindow);
             }
+            messagePump.processMessages();
         }
 
         /// <summary>
