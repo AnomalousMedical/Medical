@@ -564,6 +564,7 @@ namespace Standalone
             else
             {
                 mainWindow.Show();
+                mainWindow.Maximized = true;
             }
         }
 

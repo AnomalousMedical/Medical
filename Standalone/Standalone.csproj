@@ -81,7 +81,10 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL" />
+    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\dependencies\wxDotNet\Bin\wx.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Background\BackgroundController.cs" />
@@ -147,7 +150,6 @@
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\WxOSWindow.cs" />
-    <Compile Include="GUI\WxTimer.cs" />
     <Compile Include="GUI\WxUpdateTimer.cs" />
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />

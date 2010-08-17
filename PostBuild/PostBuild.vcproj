@@ -106,7 +106,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;$(ENGINE_HOME)\Release\cg.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\cg.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\BulletWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\BulletWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Zip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\Zip.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\PCPlatform.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\PCPlatform.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreCWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\OgreCWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreMain.dll&quot; $(OutDir)\OgreMain.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll&quot; $(OutDir)\Plugin_CgProgramManager.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll&quot; $(OutDir)\RenderSystem_Direct3D9.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\MyGUIWrapper.dll&quot; $(OutDir)\MyGUIWrapper.dll&#x0D;&#x0A;"
+				CommandLine="copy &quot;$(ENGINE_HOME)\Release\cg.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\cg.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\BulletWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\BulletWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Zip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\Zip.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\PCPlatform.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\PCPlatform.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreCWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\OgreCWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreMain.dll&quot; $(OutDir)\OgreMain.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll&quot; $(OutDir)\Plugin_CgProgramManager.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll&quot; $(OutDir)\RenderSystem_Direct3D9.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\MyGUIWrapper.dll&quot; $(OutDir)\MyGUIWrapper.dll&#x0D;&#x0A;copy &quot;$(WXDOTNET_HOME)\Bin\wx-c.dll&quot; $(OutDir)\wx-c.dll&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -152,7 +152,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\*.dll&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\Standalone.exe&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;"
+				CommandLine="xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\*.dll&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)OSXBuild\DotNetAssemblies\Standalone.exe&quot; /D /Y /S /I /C &quot;$(OSX_BUILD_HOME)\DotNetAssemblies&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
