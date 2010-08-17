@@ -17,6 +17,7 @@
     <ApplicationIcon>skull.ico</ApplicationIcon>
     <Win32Resource>
     </Win32Resource>
+    <ApplicationManifest>Properties\Standalone.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +32,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS ALLOW_OVERRIDE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -72,7 +73,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -81,14 +81,24 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
+    <Compile Include="Controller\Camera\CameraMover.cs" />
+    <Compile Include="Controller\Camera\OrbitCameraController.cs" />
+    <Compile Include="Controller\Camera\SavedCameraController.cs" />
+    <Compile Include="Controller\Camera\SavedCameraDefinition.cs" />
+    <Compile Include="Controller\Config\EngineConfig.cs" />
+    <Compile Include="Controller\Config\MedicalConfig.cs" />
+    <Compile Include="Controller\Config\RecentDocuments.cs" />
     <Compile Include="Controller\Dialogs\AboutDialog.cs" />
     <Compile Include="Controller\Dialogs\ChooseSceneDialog.cs" />
     <Compile Include="Controller\Dialogs\OpenPatientDialog.cs" />
     <Compile Include="Controller\Dialogs\SavePatientDialog.cs" />
+    <Compile Include="Controller\FixedMedicalUpdate.cs" />
+    <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
     <Compile Include="Controller\GUIController\CloneWindowDialog.cs" />
@@ -105,6 +115,8 @@
     <Compile Include="Controller\Layers\LayerState.cs" />
     <Compile Include="Controller\Layers\LayerStateSet.cs" />
     <Compile Include="Controller\MeasurementGrid.cs" />
+    <Compile Include="Controller\MedicalController.cs" />
+    <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />
     <Compile Include="Controller\MedicalStates\PatientDataFile.cs" />
     <Compile Include="Controller\MedicalStates\SavedMedicalStates.cs" />
@@ -125,7 +137,6 @@
     <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
     <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
     <Compile Include="Controller\OSHelper\UserPermissions.cs" />
-    <Compile Include="Controller\Platform\WinformsMessagePump.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
     <Compile Include="Controller\SceneViews\PopupSceneViewWindow.cs" />
@@ -134,24 +145,10 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
-    <Compile Include="GUI\MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\PictureForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\PictureForm.Designer.cs">
-      <DependentUpon>PictureForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\PictureWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\PictureWindow.Designer.cs">
-      <DependentUpon>PictureWindow.cs</DependentUpon>
-    </Compile>
+    <Compile Include="GUI\MainWindow.cs" />
+    <Compile Include="GUI\WxOSWindow.cs" />
+    <Compile Include="GUI\WxTimer.cs" />
+    <Compile Include="GUI\WxUpdateTimer.cs" />
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />
     <Compile Include="Layout\MDI\MDILayoutManager.cs" />
@@ -224,6 +221,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\ResizeDownSmall.png" />
     <None Include="Resources\ExploreIconSmall.png" />
     <None Include="Resources\ResizeUpSmall.png" />
@@ -231,13 +229,6 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\PictureForm.resx">
-      <DependentUpon>PictureForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\PictureWindow.resx">
-      <DependentUpon>PictureWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

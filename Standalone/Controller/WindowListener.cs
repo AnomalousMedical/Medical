@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using PCPlatform;
 using Medical;
+using MyGUIPlugin;
 
 namespace Standalone
 {
@@ -29,7 +30,7 @@ namespace Standalone
 
         public void resized(OSWindow window)
         {
-            
+            MyGUIInterface.Instance.OgrePlatform.getRenderManager().windowMovedOrResized();
         }
 
         public void closed(OSWindow window)

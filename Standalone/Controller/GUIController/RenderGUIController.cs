@@ -151,10 +151,7 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
-                    PictureForm picture = new PictureForm();
-                    picture.initialize(bitmap);
-                    picture.Text = String.Format("{0} - {1}x{2}", drawingWindow.Name, width, height);
-                    picture.Show();
+                    bitmap.Dispose();
                 }
             }
             //StatusController.TaskCompleted();

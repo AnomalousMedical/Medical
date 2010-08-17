@@ -15,67 +15,75 @@ using Engine.ObjectManagement;
 using System.IO;
 using Engine.Saving.XMLSaver;
 using OgreWrapper;
-using System.Windows.Forms;
 using Medical.Controller;
+using wx;
+using System.Drawing;
 
 namespace Standalone
 {
-    class Program
+    class StandaloneApp : App
     {
-        [STAThread]
-        static void Main(string[] args)
+        UserPermissions permissions;
+        StandaloneController controller;
+
+        public override bool OnInit()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            return startApplication();
+        }
+
+        public override int OnExit()
+        {
+            controller.Dispose();
+            permissions.Dispose();
+            return base.OnExit();
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
+        public bool startApplication()
+        {
             bool connectionLoop = true;
+            bool startupSuceeded = false;
 #if ENABLE_HASP_PROTECTION
-            using (UserPermissions permissions = new UserPermissions())
+            permissions = new UserPermissions()
 #else
-            using (UserPermissions permissions = new UserPermissions(getSimulatedVersion()))
+            permissions = new UserPermissions(getSimulatedVersion());
 #endif
+            while (connectionLoop)
             {
-                while (connectionLoop)
+                ConnectionResult result = UserPermissions.Instance.checkConnection();
+                if (result == ConnectionResult.Ok)
                 {
-                    ConnectionResult result = UserPermissions.Instance.checkConnection();
-                    if (result == ConnectionResult.Ok)
+                    connectionLoop = false;
+                    if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
-                        connectionLoop = false;
-                        if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
-                        {
-                            using (StandaloneController controller = new StandaloneController())
-                            {
-                                //try
-                                {
-                                    controller.go();
-                                }
-                                //catch (Exception e)
-                                //{
-                                //    Log.Default.printException(e);
-                                //    String errorMessage = e.Message + "\n" + e.StackTrace;
-                                //    while (e.InnerException != null)
-                                //    {
-                                //        e = e.InnerException;
-                                //        errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
-                                //    }
-                                //    //MessageBox.Show(errorMessage, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                //}
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        controller = new StandaloneController();
+                        controller.go();
+                        startupSuceeded = true;
                     }
-                    else if (result == ConnectionResult.TooManyUsers)
+                    else
                     {
-                        connectionLoop = MessageBox.Show("Too many users currently connected. Please shut down the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
-                    }
-                    else if (result == ConnectionResult.NoDongle)
-                    {
-                        connectionLoop = MessageBox.Show("Please connect your dongle.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                        //MessageBox.Show("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+                else if (result == ConnectionResult.TooManyUsers)
+                {
+                    connectionLoop = false;// MessageBox.Show("Too many users currently connected. Please shut down the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                }
+                else if (result == ConnectionResult.NoDongle)
+                {
+                    connectionLoop = false;// MessageBox.Show("Please connect your dongle.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                }
             }
+            return startupSuceeded;
         }
 
 #if !ENABLE_HASP_PROTECTION
@@ -101,5 +109,29 @@ namespace Standalone
             }
         }
 #endif
+    }
+
+    class Program
+    {
+        [STAThread]
+        static void Main(string[] args)
+        {
+            try
+            {
+                StandaloneApp app = new StandaloneApp();
+                app.Run();
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Default.printException(e);
+                String errorMessage = e.Message + "\n" + e.StackTrace;
+                while (e.InnerException != null)
+                {
+                    e = e.InnerException;
+                    errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
+                }
+                //MessageBox.Show(errorMessage, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

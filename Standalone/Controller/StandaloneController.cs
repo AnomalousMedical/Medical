@@ -16,6 +16,7 @@ using System.Reflection;
 using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller;
+using System.Drawing;
 
 namespace Standalone
 {
@@ -49,6 +50,9 @@ namespace Standalone
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
 
+        //Frame
+        private MainWindow mainWindow;
+
         public StandaloneController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Articulometrics/Standalone");
@@ -77,8 +81,10 @@ namespace Standalone
 #else
             messagePump = new AgnosticMessagePump();
 #endif
-            medicalController.initialize(null, messagePump, createWindow);
+            mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
+            medicalController.initialize(mainWindow.InputWindow, messagePump, createWindow);
             messagePump.processMessages();
+            mainWindow.setTimer(medicalController.MainTimer);
 
             //Splash screen
             Gui gui = Gui.Instance;
@@ -170,14 +176,15 @@ namespace Standalone
                 //end hack
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
+
                 medicalController.start();
             }
         }
 
         public void shutdown()
         {
-            sceneViewController.destroyCameras();
-            medicalController.shutdown();
+            mainWindow.Close(true);
+            //medicalController.shutdown();
         }
 
         /// <summary>
@@ -545,27 +552,19 @@ namespace Standalone
         /// <param name="defaultWindow"></param>
         private void createWindow(out WindowInfo defaultWindow)
         {
-            defaultWindow = new WindowInfo("Piper's Joint Based Occlusion", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+            defaultWindow = new WindowInfo(mainWindow.RenderWindow, "Primary");
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
-            if (!defaultWindow.Fullscreen)
-            {
-                defaultWindow.Width = 800;
-                defaultWindow.Height = 600;
-            }
             defaultWindow.MonitorIndex = 0;
-            defaultWindow.WindowCreated += new EventHandler(defaultWindow_WindowCreated);
-        }
 
-        void defaultWindow_WindowCreated(object sender, EventArgs e)
-        {
-            OSWindow createdWindow = ((WindowInfoEventArgs)e).CreatedWindow.Handle;
-            WindowInfo windowInfo = sender as WindowInfo;
-            WindowFunctions.setWindowIcon(createdWindow, WindowIcons.ICON_SKULL);
-            if (!windowInfo.Fullscreen)
+            if (MedicalConfig.EngineConfig.Fullscreen)
             {
-                WindowFunctions.maximizeWindow(createdWindow);
+                mainWindow.ShowFullScreen(true);
+                mainWindow.SetSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             }
-            messagePump.processMessages();
+            else
+            {
+                mainWindow.Show();
+            }
         }
 
         /// <summary>
