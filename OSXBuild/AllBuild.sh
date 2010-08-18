@@ -19,6 +19,9 @@ cp ../../Engine/OSXBuild/Release/*.dylib Articulometrics.app/Contents/Resources
 #Copy the Medical native dylibs
 cp OSHelper/build/Release/libOSHelper.dylib Articulometrics.app/Contents/Resources
 
+#Copy the wx.NET native dylibs
+cp ../../Dependencies/wxDotNet/Build/OSXBuild/wxDotNet/build/Release/libwx-c.dylib Articulometrics.app/Contents/Resources
+
 #Copy the frameworks
 mkdir Articulometrics.app/Contents/Frameworks
 mkdir Articulometrics.app/Contents/Frameworks/Cg.framework

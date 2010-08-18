@@ -10,6 +10,9 @@
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
 		01F031F4121470420054F63B /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F031F2121470420054F63B /* Stdafx.h */; };
 		01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0325B121474620054F63B /* WindowFunctions.cpp */; };
+		01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0327C1215C0330054F63B /* UserPermissions.cpp */; };
+		01F032811215C0480054F63B /* Features.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F0327F1215C0480054F63B /* Features.h */; };
+		01F032821215C0480054F63B /* UserPermissions.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F032801215C0480054F63B /* UserPermissions.h */; };
 		D2AAC0CC05546C4400DB518D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -17,6 +20,9 @@
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01F031F2121470420054F63B /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../../OSHelper/Stdafx.h; sourceTree = SOURCE_ROOT; };
 		01F0325B121474620054F63B /* WindowFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunctions.cpp; path = ../../OSHelper/Src/WindowFunctions.cpp; sourceTree = SOURCE_ROOT; };
+		01F0327C1215C0330054F63B /* UserPermissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserPermissions.cpp; path = ../../OSHelper/Src/UserPermissions.cpp; sourceTree = SOURCE_ROOT; };
+		01F0327F1215C0480054F63B /* Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Features.h; path = ../../OSHelper/Include/Features.h; sourceTree = SOURCE_ROOT; };
+		01F032801215C0480054F63B /* UserPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserPermissions.h; path = ../../OSHelper/Include/UserPermissions.h; sourceTree = SOURCE_ROOT; };
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -40,9 +46,19 @@
 		01F0325A1214743E0054F63B /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				01F0327C1215C0330054F63B /* UserPermissions.cpp */,
 				01F0325B121474620054F63B /* WindowFunctions.cpp */,
 			);
 			name = Src;
+			sourceTree = "<group>";
+		};
+		01F0327E1215C0360054F63B /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				01F0327F1215C0480054F63B /* Features.h */,
+				01F032801215C0480054F63B /* UserPermissions.h */,
+			);
+			name = Include;
 			sourceTree = "<group>";
 		};
 		034768DFFF38A50411DB9C8B /* Products */ = {
@@ -76,6 +92,7 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				01F0327E1215C0360054F63B /* Include */,
 				01F0325A1214743E0054F63B /* Src */,
 				01F031F1121470420054F63B /* Stdafx.cpp */,
 				01F031F2121470420054F63B /* Stdafx.h */,
@@ -117,6 +134,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				01F031F4121470420054F63B /* Stdafx.h in Headers */,
+				01F032811215C0480054F63B /* Features.h in Headers */,
+				01F032821215C0480054F63B /* UserPermissions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +184,7 @@
 			files = (
 				01F031F3121470420054F63B /* Stdafx.cpp in Sources */,
 				01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */,
+				01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

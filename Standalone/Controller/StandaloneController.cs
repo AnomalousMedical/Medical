@@ -76,11 +76,7 @@ namespace Standalone
         {
             //Engine core
             medicalController = new MedicalController();
-#if CALL_DO_EVENTS //If we need to call DoEvents use the WinformsMessagePump (OSX).
-            messagePump = new WinformsMessagePump();
-#else
             messagePump = new AgnosticMessagePump();
-#endif
             mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
             medicalController.initialize(mainWindow.InputWindow, messagePump, createWindow);
             messagePump.processMessages();
