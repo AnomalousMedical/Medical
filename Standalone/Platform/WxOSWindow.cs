@@ -5,9 +5,9 @@ using System.Text;
 using Engine.Platform;
 using wx;
 
-namespace Medical.GUI
+namespace Medical
 {
-    class WxOSWindow : OSWindow
+    public class WxOSWindow : OSWindow
     {
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
 
@@ -28,6 +28,14 @@ namespace Medical.GUI
             foreach (OSWindowListener listener in listeners)
             {
                 listener.resized(this);
+            }
+        }
+
+        public Window WxWindow
+        {
+            get
+            {
+                return wxWindow;
             }
         }
 

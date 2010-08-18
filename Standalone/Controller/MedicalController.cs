@@ -35,7 +35,7 @@ namespace Medical
         private SystemTimer systemTimer;
         private WxUpdateTimer mainTimer;
         private EventManager eventManager;
-        private InputHandler inputHandler;
+        private WxInputHandler inputHandler;
         private EventUpdateListener eventUpdate;
         private FixedMedicalUpdate fixedUpdate;
         private FullSpeedMedicalUpdate fullSpeedUpdate;
@@ -133,7 +133,7 @@ namespace Medical
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
-            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
+            inputHandler = new WxInputHandler(mainForm as WxOSWindow);
             eventManager = new EventManager(inputHandler);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addFixedUpdateListener(eventUpdate);
@@ -162,7 +162,7 @@ namespace Medical
             }
             if (inputHandler != null)
             {
-                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
+                inputHandler.Dispose();
             }
             if (systemTimer != null)
             {
@@ -206,12 +206,12 @@ namespace Medical
         public void destroyInputHandler()
         {
             eventManager.destroyInputObjects();
-            PCPlatformPlugin.Instance.destroyInputHandler(inputHandler);
+            inputHandler.Dispose();
         }
 
         public void recreateInputHandler(OSWindow window)
         {
-            inputHandler = PCPlatformPlugin.Instance.createInputHandler(window, false, false, false);
+            inputHandler = new WxInputHandler(window as WxOSWindow);
             eventManager.changeInputHandler(inputHandler);
         }
 

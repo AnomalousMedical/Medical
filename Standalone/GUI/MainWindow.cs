@@ -20,16 +20,16 @@ namespace Medical.GUI
         {
             this.BackgroundColour = Colour.wxBLACK;
 
-            InputWindow = new WxOSWindow(this);
-
             if (fullscreen)
             {
-                RenderWindow = new WxOSWindow(this);                
+                RenderWindow = new WxOSWindow(this);
+                InputWindow = new WxOSWindow(this);
             }
             else
             {
                 renderPanel = new Panel(this, -1);
                 RenderWindow = new WxOSWindow(renderPanel);
+                InputWindow = new WxOSWindow(renderPanel);
             }
 
             Center();

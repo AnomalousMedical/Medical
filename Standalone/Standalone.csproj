@@ -149,8 +149,10 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="GUI\MainWindow.cs" />
-    <Compile Include="GUI\WxOSWindow.cs" />
-    <Compile Include="GUI\WxUpdateTimer.cs" />
+    <Compile Include="Platform\WxKeyboard.cs" />
+    <Compile Include="Platform\WxMouse.cs" />
+    <Compile Include="Platform\WxOSWindow.cs" />
+    <Compile Include="Platform\WxUpdateTimer.cs" />
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />
     <Compile Include="Layout\MDI\MDILayoutManager.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Layout\LayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
     <Compile Include="Layout\TopPopoutLayoutContainer.cs" />
+    <Compile Include="Platform\WxInputHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controller\StandaloneController.cs" />

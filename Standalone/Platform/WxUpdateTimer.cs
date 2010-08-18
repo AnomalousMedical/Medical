@@ -5,7 +5,7 @@ using System.Text;
 using Engine.Platform;
 using wx;
 
-namespace Medical.GUI
+namespace Medical
 {
     public class WxUpdateTimer : UpdateTimer
     {
