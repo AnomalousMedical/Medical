@@ -29,7 +29,9 @@ namespace Medical
 
         public void Dispose()
         {
-            
+            window.WxWindow.RemoveListener(OnKeyDown);
+            window.WxWindow.RemoveListener(OnChar);
+            window.WxWindow.RemoveListener(OnKeyUp);
         }
 
         public override void capture()

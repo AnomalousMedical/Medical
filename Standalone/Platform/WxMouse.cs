@@ -22,9 +22,11 @@ namespace Medical
 
             window.WxWindow.AddEventListener(Event.wxEVT_LEFT_DOWN, OnMouseLeftDown);
             window.WxWindow.AddEventListener(Event.wxEVT_LEFT_UP, OnMouseLeftUp);
+            window.WxWindow.AddEventListener(Event.wxEVT_LEFT_DCLICK, OnMouseLeftDouble); //WxWidgets will block the double click, but we want to fire off the events anyway
 
             window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_DOWN, OnMouseRightDown);
             window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_UP, OnMouseRightUp);
+            window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_DCLICK, OnMouseRightDouble); //WxWidgets will block the double click, but we want to fire off the events anyway
 
             window.WxWindow.AddEventListener(Event.wxEVT_MIDDLE_DOWN, OnMouseMiddleDown);
             window.WxWindow.AddEventListener(Event.wxEVT_MIDDLE_UP, OnMouseMiddleUp);
@@ -38,9 +40,11 @@ namespace Medical
         {
             window.WxWindow.RemoveListener(OnMouseLeftDown);
             window.WxWindow.RemoveListener(OnMouseLeftUp);
+            window.WxWindow.RemoveListener(OnMouseLeftDouble);
 
             window.WxWindow.RemoveListener(OnMouseRightDown);
             window.WxWindow.RemoveListener(OnMouseRightUp);
+            window.WxWindow.RemoveListener(OnMouseRightDouble);
 
             window.WxWindow.RemoveListener(OnMouseMiddleDown);
             window.WxWindow.RemoveListener(OnMouseMiddleUp);
@@ -97,6 +101,12 @@ namespace Medical
             fireButtonUp(MouseButtonCode.MB_BUTTON0);
         }
 
+        void OnMouseLeftDouble(object sender, Event evt)
+        {
+            OnMouseLeftDown(sender, evt);
+            OnMouseLeftUp(sender, evt);
+        }
+
         void OnMouseRightDown(object sender, Event evt)
         {
             buttonDownStatus[1] = true;
@@ -107,6 +117,12 @@ namespace Medical
         {
             buttonDownStatus[1] = false;
             fireButtonUp(MouseButtonCode.MB_BUTTON1);
+        }
+
+        void OnMouseRightDouble(object sender, Event evt)
+        {
+            OnMouseRightDown(sender, evt);
+            OnMouseRightUp(sender, evt);
         }
 
         void OnMouseMiddleDown(object sender, Event evt)
