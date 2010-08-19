@@ -53,12 +53,12 @@ namespace Medical
 
         public int WindowHeight
         {
-            get { return wxWindow.Height; }
+            get { return wxWindow.ClientSize.Height; }
         }
 
         public int WindowWidth
         {
-            get { return wxWindow.Width; }
+            get { return wxWindow.ClientSize.Width; }
         }
 
         public void addListener(OSWindowListener listener)

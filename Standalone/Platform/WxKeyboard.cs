@@ -23,6 +23,8 @@ namespace Medical
 
             window.WxWindow.AddEventListener(wx.Event.wxEVT_KEY_DOWN, OnKeyDown);
             window.WxWindow.AddEventListener(wx.Event.wxEVT_KEY_UP, OnKeyUp);
+
+            //window.WxWindow.AddEventListener(wx.Event.wxEVT_CHAR, OnChar);
         }
 
         public void Dispose()
@@ -59,6 +61,8 @@ namespace Medical
             {
                 KeyPressed.Invoke(buttonCode, kevt.UnicodeChar);
             }
+
+            Logging.Log.Debug("Down Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
         }
 
         void OnKeyUp(object sender, wx.Event evt)
@@ -86,7 +90,35 @@ namespace Medical
                 KeyReleased.Invoke(buttonCode, kevt.UnicodeChar);
             }
 
-            Logging.Log.Debug("Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
+            Logging.Log.Debug("Up Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
+        }
+
+        void OnChar(object sender, wx.Event evt)
+        {
+            evt.Skip();
+            wx.KeyEvent kevt = (wx.KeyEvent)evt;
+            KeyboardButtonCode buttonCode = keyConverter[kevt.KeyCode];
+            keysDown[(int)buttonCode] = false;
+            switch ((wx.KeyCode)kevt.KeyCode)
+            {
+                case wx.KeyCode.WXK_SHIFT:
+                    shiftDown = false;
+                    break;
+
+                case wx.KeyCode.WXK_ALT:
+                    altDown = false;
+                    break;
+
+                case wx.KeyCode.WXK_CONTROL:
+                    ctrlDown = false;
+                    break;
+            }
+            if (KeyReleased != null)
+            {
+                //KeyReleased.Invoke(buttonCode, kevt.UnicodeChar);
+            }
+
+            Logging.Log.Debug("Char Keycode {0} Internal Keycode {1} Char {2}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString(), (char)kevt.UnicodeChar);
         }
 
         public override string getAsString(KeyboardButtonCode code)
@@ -153,6 +185,7 @@ namespace Medical
             keyConverter[57] = KeyboardButtonCode.KC_9;
             keyConverter[45] = KeyboardButtonCode.KC_MINUS;
             keyConverter[43] = KeyboardButtonCode.KC_EQUALS;
+            keyConverter[61] = KeyboardButtonCode.KC_EQUALS;
             keyConverter[(int)wx.KeyCode.WXK_BACK] = KeyboardButtonCode.KC_BACK;
 
             //QWERTY Row
