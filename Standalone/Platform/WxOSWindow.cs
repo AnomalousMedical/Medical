@@ -53,12 +53,12 @@ namespace Medical
 
         public int WindowHeight
         {
-            get { return wxWindow.ClientSize.Height; }
+            get { return MedicalConfig.EngineConfig.Fullscreen ? wxWindow.Height : wxWindow.ClientSize.Height; }
         }
 
         public int WindowWidth
         {
-            get { return wxWindow.ClientSize.Width; }
+            get { return MedicalConfig.EngineConfig.Fullscreen ? wxWindow.Width : wxWindow.ClientSize.Width; }
         }
 
         public void addListener(OSWindowListener listener)
