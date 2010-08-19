@@ -87,6 +87,8 @@ namespace Standalone
             gui.setVisiblePointer(false);
             SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100);
 
+            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
+
             splashScreen.updateStatus(10, "Initializing Core");
 
             //Setup MyGUI listeners

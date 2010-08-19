@@ -121,7 +121,7 @@ namespace Medical
                         KeyPressed.Invoke(buttonCode, sendChar);
                     }
 
-                    Logging.Log.Debug("Down Wx Keycode {0} Internal Keycode {1} Char \'{2}\'", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString(), sendChar != 0 ? (char)sendChar : ' ');
+                    //Logging.Log.Debug("Down Wx Keycode {0} Internal Keycode {1} Char \'{2}\'", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString(), sendChar != 0 ? (char)sendChar : ' ');
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace Medical
                     KeyPressed.Invoke(buttonCode, kevt.UnicodeChar);
                 }
 
-                Logging.Log.Debug("Char Keycode {0} Internal Keycode {1} Char \'{2}\'", downKeyCode.ToString(), buttonCode, (char)kevt.UnicodeChar);
+                //Logging.Log.Debug("Char Keycode {0} Internal Keycode {1} Char \'{2}\'", downKeyCode.ToString(), buttonCode, (char)kevt.UnicodeChar);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Medical
                 KeyReleased.Invoke(buttonCode, 0);
             }
 
-            Logging.Log.Debug("Up Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
+            //Logging.Log.Debug("Up Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
         }
 
         public override string getAsString(KeyboardButtonCode code)
