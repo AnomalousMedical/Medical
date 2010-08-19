@@ -16,15 +16,15 @@ namespace Medical
         bool altDown = false;
         bool ctrlDown = false;
         bool shiftDown = false;
+        private int downKeyCode = 0;
 
         public WxKeyboard(WxOSWindow window)
         {
             this.window = window;
 
             window.WxWindow.AddEventListener(wx.Event.wxEVT_KEY_DOWN, OnKeyDown);
+            window.WxWindow.AddEventListener(wx.Event.wxEVT_CHAR, OnChar);
             window.WxWindow.AddEventListener(wx.Event.wxEVT_KEY_UP, OnKeyUp);
-
-            //window.WxWindow.AddEventListener(wx.Event.wxEVT_CHAR, OnChar);
         }
 
         public void Dispose()
@@ -39,30 +39,107 @@ namespace Medical
 
         void OnKeyDown(object sender, wx.Event evt)
         {
-            evt.Skip();
             wx.KeyEvent kevt = (wx.KeyEvent)evt;
-            KeyboardButtonCode buttonCode = keyConverter[kevt.KeyCode];
-            keysDown[(int)buttonCode] = true;
-            switch ((wx.KeyCode)kevt.KeyCode)
+            //If not one of the special case keys allow the Char event to handle the key press.
+            downKeyCode = kevt.KeyCode;
+            if (downKeyCode < 300)
             {
-                case wx.KeyCode.WXK_SHIFT:
-                    shiftDown = true;
-                    break;
-
-                case wx.KeyCode.WXK_ALT:
-                    altDown = true;
-                    break;
-
-                case wx.KeyCode.WXK_CONTROL:
-                    ctrlDown = true;
-                    break;
+                evt.Skip();
             }
-            if (KeyPressed != null)
+            else
             {
-                KeyPressed.Invoke(buttonCode, kevt.UnicodeChar);
-            }
+                KeyboardButtonCode buttonCode = keyConverter[kevt.KeyCode];
+                if (!keysDown[(int)buttonCode])
+                {
+                    keysDown[(int)buttonCode] = true;
+                    switch ((wx.KeyCode)kevt.KeyCode)
+                    {
+                        case wx.KeyCode.WXK_SHIFT:
+                            shiftDown = true;
+                            break;
 
-            Logging.Log.Debug("Down Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
+                        case wx.KeyCode.WXK_ALT:
+                            altDown = true;
+                            break;
+
+                        case wx.KeyCode.WXK_CONTROL:
+                            ctrlDown = true;
+                            break;
+                    }
+                    uint sendChar = 0;
+                    //Check to see if one of the special buttons needs to be translated to a symbol or number
+                    switch (buttonCode)
+                    {
+                        case KeyboardButtonCode.KC_NUMPAD7:
+                            sendChar = '7';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD8:
+                            sendChar = '8';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD9:
+                            sendChar = '9';
+                            break;
+                        case KeyboardButtonCode.KC_SUBTRACT:
+                            sendChar = '-';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD4:
+                            sendChar = '4';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD5:
+                            sendChar = '5';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD6:
+                            sendChar = '6';
+                            break;
+                        case KeyboardButtonCode.KC_ADD:
+                            sendChar = '+';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD1:
+                            sendChar = '1';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD2:
+                            sendChar = '2';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD3:
+                            sendChar = '3';
+                            break;
+                        case KeyboardButtonCode.KC_NUMPAD0:
+                            sendChar = '0';
+                            break;
+                        case KeyboardButtonCode.KC_DECIMAL:
+                            sendChar = '.';
+                            break;
+                        case KeyboardButtonCode.KC_DIVIDE:
+                            sendChar = '/';
+                            break;
+                        case KeyboardButtonCode.KC_MULTIPLY:
+                            sendChar = '*';
+                            break;
+                    }
+                    if (KeyPressed != null)
+                    {
+                        KeyPressed.Invoke(buttonCode, sendChar);
+                    }
+
+                    Logging.Log.Debug("Down Wx Keycode {0} Internal Keycode {1} Char \'{2}\'", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString(), sendChar != 0 ? (char)sendChar : ' ');
+                }
+            }
+        }
+
+        void OnChar(object sender, wx.Event evt)
+        {
+            wx.KeyEvent kevt = (wx.KeyEvent)evt;
+            KeyboardButtonCode buttonCode = keyConverter[downKeyCode];
+            if (!keysDown[(int)buttonCode])
+            {
+                keysDown[(int)buttonCode] = true;
+                if (KeyPressed != null)
+                {
+                    KeyPressed.Invoke(buttonCode, kevt.UnicodeChar);
+                }
+
+                Logging.Log.Debug("Char Keycode {0} Internal Keycode {1} Char \'{2}\'", downKeyCode.ToString(), buttonCode, (char)kevt.UnicodeChar);
+            }
         }
 
         void OnKeyUp(object sender, wx.Event evt)
@@ -87,38 +164,10 @@ namespace Medical
             }
             if (KeyReleased != null)
             {
-                KeyReleased.Invoke(buttonCode, kevt.UnicodeChar);
+                KeyReleased.Invoke(buttonCode, 0);
             }
 
             Logging.Log.Debug("Up Wx Keycode {0} Internal Keycode {1}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString());
-        }
-
-        void OnChar(object sender, wx.Event evt)
-        {
-            evt.Skip();
-            wx.KeyEvent kevt = (wx.KeyEvent)evt;
-            KeyboardButtonCode buttonCode = keyConverter[kevt.KeyCode];
-            keysDown[(int)buttonCode] = false;
-            switch ((wx.KeyCode)kevt.KeyCode)
-            {
-                case wx.KeyCode.WXK_SHIFT:
-                    shiftDown = false;
-                    break;
-
-                case wx.KeyCode.WXK_ALT:
-                    altDown = false;
-                    break;
-
-                case wx.KeyCode.WXK_CONTROL:
-                    ctrlDown = false;
-                    break;
-            }
-            if (KeyReleased != null)
-            {
-                //KeyReleased.Invoke(buttonCode, kevt.UnicodeChar);
-            }
-
-            Logging.Log.Debug("Char Keycode {0} Internal Keycode {1} Char {2}", ((wx.KeyCode)kevt.KeyCode).ToString(), keyConverter[kevt.KeyCode].ToString(), (char)kevt.UnicodeChar);
         }
 
         public override string getAsString(KeyboardButtonCode code)
@@ -173,6 +222,7 @@ namespace Medical
 
             //Number row
             keyConverter[126] = KeyboardButtonCode.KC_GRAVE;
+            keyConverter[96] = KeyboardButtonCode.KC_GRAVE;
             keyConverter[48] = KeyboardButtonCode.KC_0;
             keyConverter[49] = KeyboardButtonCode.KC_1;
             keyConverter[50] = KeyboardButtonCode.KC_2;
@@ -209,6 +259,7 @@ namespace Medical
             //Spacebar Row
             keyConverter[(int)wx.KeyCode.WXK_CONTROL] = KeyboardButtonCode.KC_LCONTROL;
             keyConverter[(int)wx.KeyCode.WXK_WINDOWS_LEFT] = KeyboardButtonCode.KC_LWIN;
+            keyConverter[(int)wx.KeyCode.WXK_COMMAND] = KeyboardButtonCode.KC_LWIN;
             keyConverter[(int)wx.KeyCode.WXK_ALT] = KeyboardButtonCode.KC_LMENU;
             keyConverter[(int)wx.KeyCode.WXK_SPACE] = KeyboardButtonCode.KC_SPACE;
             keyConverter[(int)wx.KeyCode.WXK_WINDOWS_RIGHT] = KeyboardButtonCode.KC_RWIN;
@@ -343,7 +394,6 @@ namespace Medical
             //keyConverter[(int)wx.KeyCode.WXK_SEPARATOR];
             //keyConverter[(int)wx.KeyCode.WXK_NUMPAD_SEPARATOR];
             //keyConverter[(int)wx.KeyCode.WXK_WINDOWS_MENU];
-            //keyConverter[(int)wx.KeyCode.WXK_COMMAND];
         }
     }
 }
