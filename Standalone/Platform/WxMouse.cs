@@ -88,31 +88,37 @@ namespace Medical
         void OnMouseLeftDown(object sender, Event evt)
         {
             buttonDownStatus[0] = true;
+            fireButtonDown(MouseButtonCode.MB_BUTTON0);
         }
 
         void OnMouseLeftUp(object sender, Event evt)
         {
             buttonDownStatus[0] = false;
+            fireButtonUp(MouseButtonCode.MB_BUTTON0);
         }
 
         void OnMouseRightDown(object sender, Event evt)
         {
             buttonDownStatus[1] = true;
+            fireButtonDown(MouseButtonCode.MB_BUTTON1);
         }
 
         void OnMouseRightUp(object sender, Event evt)
         {
             buttonDownStatus[1] = false;
+            fireButtonUp(MouseButtonCode.MB_BUTTON1);
         }
 
         void OnMouseMiddleDown(object sender, Event evt)
         {
             buttonDownStatus[2] = true;
+            fireButtonDown(MouseButtonCode.MB_BUTTON2);
         }
 
         void OnMouseMiddleUp(object sender, Event evt)
         {
             buttonDownStatus[2] = false;
+            fireButtonUp(MouseButtonCode.MB_BUTTON2);
         }
 
         void OnMouseMotion(object sender, Event evt)
@@ -125,6 +131,8 @@ namespace Medical
             relMouse.y = mevt.Y - lastMouse.y;
 
             lastMouse = absMouse;
+
+            fireMoved(MouseButtonCode.NUM_BUTTONS);
         }
 
         void OnMouseWheel(object sender, Event evt)
@@ -132,6 +140,8 @@ namespace Medical
             MouseEvent mevt = ((MouseEvent)evt);
             absMouse.z += mevt.WheelRotation;
             relMouse.z = mevt.WheelRotation;
+
+            fireMoved(MouseButtonCode.NUM_BUTTONS);
         }
     }
 }
