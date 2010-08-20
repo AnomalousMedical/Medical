@@ -36,7 +36,7 @@ namespace Medical
 
         public void destroyTimer(SystemTimer timer)
         {
-            WxPlatformPlugin pcTimer = timer as WxPlatformPlugin;
+            WxSystemTimer pcTimer = timer as WxSystemTimer;
             if (pcTimer != null)
             {
                 pcTimer.Dispose();
