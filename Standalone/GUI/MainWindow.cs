@@ -13,9 +13,12 @@ namespace Medical.GUI
     {
         private WxUpdateTimer updateTimer;
 
+        public static MainWindow Instance { get; private set; }
+
         public MainWindow(bool fullscreen)
             :base("Piper's Joint Based Occlusion", wxDefaultPosition, new Size(800, 600))
         {
+            Instance = this;
             this.BackgroundColour = Colour.wxBLACK;
 
             RenderWindow = new WxOSWindow(this);

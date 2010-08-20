@@ -144,7 +144,9 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
+    <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />
+    <Compile Include="GUI\ImageWindow.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />

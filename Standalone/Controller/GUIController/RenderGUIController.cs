@@ -151,7 +151,7 @@ namespace Medical.GUI
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
-                    bitmap.Dispose();
+                    ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap);
                 }
             }
             //StatusController.TaskCompleted();

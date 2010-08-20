@@ -68,6 +68,7 @@ namespace Standalone
             navigationController.Dispose();
             mdiLayout.Dispose();
             medicalController.Dispose();
+            mainWindow.Dispose();
         }
 
         public void go()
