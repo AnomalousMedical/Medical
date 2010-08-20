@@ -27,9 +27,6 @@ namespace Medical.GUI
             }
         }
 
-        /**
-         * The bitmap to be displayed.
-         */
         public wx.Bitmap Bitmap
         {
             set
@@ -41,23 +38,33 @@ namespace Medical.GUI
                     scaleMasterImage();
                 }
 
-                if (scaleImage)
-                {
-                    SetScrollbars(1, 1, 0, 0, 0, 0, true);
-                }
-                else
-                {
-                    SetScrollbars(1, 1, masterBitmap.Width, masterBitmap.Height, 0, 0, true);
-                }
+                configureScrollBars();
 
-                // Redraw the window
                 Refresh();
+            }
+            get
+            {
+                return masterBitmap;
             }
         }
 
-        /**
-         * Override the OnDraw method so we can draw the bitmap.
-         */
+        public bool ScaleImage
+        {
+            get
+            {
+                return scaleImage;
+            }
+            set
+            {
+                if (scaleImage != value)
+                {
+                    scaleImage = value;
+                    configureScrollBars();
+                    Refresh();
+                }
+            }
+        }
+
         public override void OnDraw(DC dc)
         {
             if (masterBitmap != null)
@@ -90,7 +97,7 @@ namespace Medical.GUI
                 scaledBitmap.Dispose();
             }
             wx.Image image = masterBitmap.ConvertToImage();
-            Size windowSize = this.Parent.ClientSize;
+            Size windowSize = this.ClientSize;
 
             double sx = (double)windowSize.Width / image.Width;
             double sy = (double)windowSize.Height / image.Height;
@@ -99,6 +106,18 @@ namespace Medical.GUI
             image.Rescale((int)(image.Width * scale), (int)(image.Height * scale));
             scaledBitmap = new wx.Bitmap(image);
             image.Dispose();
+        }
+
+        private void configureScrollBars()
+        {
+            if (scaleImage)
+            {
+                SetScrollbars(1, 1, 0, 0, 0, 0, true);
+            }
+            else
+            {
+                SetScrollbars(1, 1, masterBitmap.Width, masterBitmap.Height, 0, 0, true);
+            }
         }
     }
 }
