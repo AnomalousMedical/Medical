@@ -15,7 +15,6 @@ using Engine.Resources;
 using System.IO;
 using BulletPlugin;
 using System.Drawing;
-using PCPlatform;
 using MyGUIPlugin;
 using Medical.GUI;
 
@@ -35,7 +34,7 @@ namespace Medical
         private SystemTimer systemTimer;
         private WxUpdateTimer mainTimer;
         private EventManager eventManager;
-        private WxInputHandler inputHandler;
+        private InputHandler inputHandler;
         private EventUpdateListener eventUpdate;
         private FixedMedicalUpdate fixedUpdate;
         private FullSpeedMedicalUpdate fullSpeedUpdate;
@@ -76,7 +75,7 @@ namespace Medical
         /// <param name="mainForm">The form to use for input, or null to use the primary render window.</param>
         /// <param name="messagePump"></param>
         /// <param name="configureWindow"></param>
-        public void initialize(OSWindow mainForm, OSMessagePump messagePump, ConfigureDefaultWindow configureWindow)
+        public void initialize(OSWindow mainForm, ConfigureDefaultWindow configureWindow)
         {
             //Create the log.
             logListener = new LogFileListener();
@@ -117,7 +116,7 @@ namespace Medical
             pluginManager.OnConfigureDefaultWindow = configureWindow;
             pluginManager.addPluginAssembly(typeof(OgreInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
-            pluginManager.addPluginAssembly(typeof(PCPlatformPlugin).Assembly);
+            pluginManager.addPluginAssembly(typeof(MedicalController).Assembly);
             pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
             pluginManager.initializePlugins();
             if(mainForm == null)
@@ -133,7 +132,7 @@ namespace Medical
             mainTimer = win32Timer;
             
             mainTimer.FramerateCap = MedicalConfig.EngineConfig.MaxFPS;
-            inputHandler = new WxInputHandler(mainForm as WxOSWindow);
+            inputHandler = pluginManager.PlatformPlugin.createInputHandler(mainForm, false, false, false);
             eventManager = new EventManager(inputHandler);
             eventUpdate = new EventUpdateListener(eventManager);
             mainTimer.addFixedUpdateListener(eventUpdate);
@@ -162,7 +161,7 @@ namespace Medical
             }
             if (inputHandler != null)
             {
-                inputHandler.Dispose();
+                pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
             }
             if (systemTimer != null)
             {
@@ -206,7 +205,7 @@ namespace Medical
         public void destroyInputHandler()
         {
             eventManager.destroyInputObjects();
-            inputHandler.Dispose();
+            pluginManager.PlatformPlugin.destroyInputHandler(inputHandler);
         }
 
         public void recreateInputHandler(OSWindow window)

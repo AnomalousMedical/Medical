@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using wx;
-using PCPlatform;
 using System.Drawing;
 using MyGUIPlugin;
 

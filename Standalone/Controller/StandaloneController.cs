@@ -8,7 +8,6 @@ using Engine;
 using Engine.Platform;
 using Logging;
 using Medical;
-using PCPlatform;
 using OgrePlugin;
 using OgreWrapper;
 using System.Runtime.InteropServices;
@@ -38,7 +37,6 @@ namespace Standalone
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
-        private OSMessagePump messagePump;
 
         //GUI
         private BasicGUI basicGUI;
@@ -76,10 +74,8 @@ namespace Standalone
         {
             //Engine core
             medicalController = new MedicalController();
-            messagePump = new AgnosticMessagePump();
             mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
-            medicalController.initialize(mainWindow.InputWindow, messagePump, createWindow);
-            messagePump.processMessages();
+            medicalController.initialize(mainWindow.InputWindow, createWindow);
             mainWindow.setTimer(medicalController.MainTimer);
 
             //Splash screen

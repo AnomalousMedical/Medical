@@ -64,10 +64,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Engine\Release\OgrePlugin.dll</HintPath>
     </Reference>
-    <Reference Include="PCPlatformPlugin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\PCPlatformPlugin.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -152,6 +148,8 @@
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />
+    <Compile Include="Platform\WxPlatformPlugin.cs" />
+    <Compile Include="Platform\WxSystemTimer.cs" />
     <Compile Include="Platform\WxUpdateTimer.cs" />
     <Compile Include="Layout\MDI\MDIContainerBase.cs" />
     <Compile Include="Layout\MDI\MDIException.cs" />

@@ -6,7 +6,6 @@ using Logging;
 using Engine;
 using OgrePlugin;
 using BulletPlugin;
-using PCPlatform;
 using Engine.Platform;
 using Engine.Renderer;
 using Medical;

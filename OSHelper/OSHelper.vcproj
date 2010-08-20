@@ -183,6 +183,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Src\PerformanceCounter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Stdafx.cpp"
 				>
 				<FileConfiguration
@@ -218,6 +222,10 @@
 			>
 			<File
 				RelativePath=".\Include\Features.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\PerformanceCounter.h"
 				>
 			</File>
 			<File
