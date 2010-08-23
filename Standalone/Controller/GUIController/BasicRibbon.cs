@@ -91,6 +91,8 @@ namespace Medical.GUI
             exit.Select += new wx.EventListener(exit_Select);
 
             menu.Append(fileMenu, "&File");
+
+            windowGUIController.createMenus(menu);
         }
 
         void exit_Select(object sender, wx.Event e)

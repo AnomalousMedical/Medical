@@ -86,10 +86,18 @@ namespace Medical.GUI
         {
             wx.Menu helpMenu = new wx.Menu();
 
+            wx.MenuItem help = helpMenu.Append((int)wx.MenuIDs.wxID_HELP, "Piper's JBO Help", "Open Piper's JBO user manual.");
+            help.Select += new wx.EventListener(help_Select);
+
             wx.MenuItem about = helpMenu.Append((int)wx.MenuIDs.wxID_ABOUT, "About", "About this program.");
             about.Select += new wx.EventListener(about_Select);
 
             menu.Append(helpMenu, "&Help");
+        }
+
+        void help_Select(object sender, wx.Event e)
+        {
+            standaloneController.openHelpTopic(0);
         }
 
         void about_Select(object sender, wx.Event e)
