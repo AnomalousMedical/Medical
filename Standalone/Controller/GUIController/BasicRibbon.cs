@@ -67,6 +67,59 @@ namespace Medical.GUI
             layerGUIController.resetMenus();
         }
 
+#if CREATE_MAINWINDOW_MENU
+
+        public void createMenus(wx.MenuBar menu)
+        {
+            wx.Menu fileMenu = new wx.Menu();
+            
+            wx.MenuItem changeScene = fileMenu.Append((int)wx.MenuIDs.wxID_NEW, "Cha&nge Scene...\tCtrl+N", "Change to a new scene.");
+            changeScene.Select += new wx.EventListener(changeScene_Select);
+            
+            wx.MenuItem open = fileMenu.Append((int)wx.MenuIDs.wxID_OPEN, "&Open...\tCtrl+O", "Open existing distortions.");
+            open.Select += new wx.EventListener(open_Select);
+            
+            wx.MenuItem save = fileMenu.Append((int)wx.MenuIDs.wxID_SAVE, "&Save...\tCtrl+S", "Save current distortions.");
+            save.Select += new wx.EventListener(save_Select);
+
+            wx.MenuItem saveAs = fileMenu.Append((int)wx.MenuIDs.wxID_SAVEAS, "Save &As...", "Save current distortions as.");
+            saveAs.Select += new wx.EventListener(saveAs_Select);
+
+            fileMenu.AppendSeparator();
+
+            wx.MenuItem exit = fileMenu.Append((int)wx.MenuIDs.wxID_EXIT, "&Exit", "Exit the program.");
+            exit.Select += new wx.EventListener(exit_Select);
+
+            menu.Append(fileMenu, "&File");
+        }
+
+        void exit_Select(object sender, wx.Event e)
+        {
+            standaloneController.shutdown();
+        }
+
+        void saveAs_Select(object sender, wx.Event e)
+        {
+            basicGUI.saveAs();
+        }
+
+        void save_Select(object sender, wx.Event e)
+        {
+            basicGUI.save();
+        }
+
+        void open_Select(object sender, wx.Event e)
+        {
+            basicGUI.open();
+        }
+
+        void changeScene_Select(object sender, wx.Event e)
+        {
+            basicGUI.showChooseSceneDialog();
+        }
+
+#endif
+
         void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
         {
             basicGUI.showChooseSceneDialog();

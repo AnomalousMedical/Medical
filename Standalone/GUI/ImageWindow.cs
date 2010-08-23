@@ -15,25 +15,37 @@ namespace Medical.GUI
         wx.Bitmap bmp;
         ImageViewer imageViewer;
 
+        
+        private const int SAVE_ID = 0;
+        private const int EXPLORE_ID = 1;
+        private const int CLOSE_ID = 2;
+        private const int RESIZE_ID = 3;
+        
+
         public ImageWindow(Window parent, String windowTitle, System.Drawing.Bitmap image)
             :base(parent, windowTitle, wxDefaultPosition, new System.Drawing.Size(640, 480))
         {
-            //Button panel
-            Panel buttonPanel = new Panel(this);
-            BoxSizer buttonSizer = new BoxSizer(Orientation.wxHORIZONTAL);
-            Button resizeButton = new Button(buttonPanel, "Resize");
-            resizeButton.Click += new EventListener(resizeButton_Click);
-            buttonSizer.Add(resizeButton, 1, 0);
-            Button saveButton = new Button(buttonPanel, "Save");
-            saveButton.Click += new EventListener(saveButton_Click);
-            buttonSizer.Add(saveButton, 1, 0);
-            Button exploreButton = new Button(buttonPanel, "Explore");
-            exploreButton.Click += new EventListener(exploreButton_Click);
-            buttonSizer.Add(exploreButton, 1, 0);
-            buttonPanel.SetSizer(buttonSizer);
+            //Menu
+            MenuBar menuBar = new MenuBar();
+
+            Menu fileMenu = new Menu();
+            fileMenu.Append(SAVE_ID, "&Save...\tCtrl+S", "Save this image to disk.");
+            fileMenu.Append(EXPLORE_ID, "&Explore...\tCtrl+E", "Open this image's location.");
+            fileMenu.Append(CLOSE_ID, "&Close...\tCtrl+C", "Close this window.");
+
+            Menu imageMenu = new Menu();
+            imageMenu.Append(RESIZE_ID, "&Resize...\tCtrl+R", "Change the scaling mode of this image.");
+
+            menuBar.Append(fileMenu, "&File");
+            menuBar.Append(imageMenu, "&Image");
+            this.MenuBar = menuBar;
 
             BoxSizer formSizer = new BoxSizer(Orientation.wxVERTICAL);
-            formSizer.Add(buttonPanel);
+
+            EVT_MENU(SAVE_ID, save);
+            EVT_MENU(EXPLORE_ID, explore);
+            EVT_MENU(CLOSE_ID, menuClose);
+            EVT_MENU(RESIZE_ID, resizeImage);
 
             //Bit of voodoo to get image into wxWidgets.
             String imageFile = (MedicalConfig.DocRoot + "/TempImage.png");
@@ -66,12 +78,12 @@ namespace Medical.GUI
             imageViewer.Dispose();
         }
 
-        void resizeButton_Click(object sender, Event e)
+        void resizeImage(object sender, Event e)
         {
             imageViewer.ScaleImage = !imageViewer.ScaleImage;
         }
 
-        void exploreButton_Click(object sender, Event e)
+        void explore(object sender, Event e)
         {
             if (File.Exists(this.Title))
             {
@@ -86,7 +98,7 @@ namespace Medical.GUI
             }
         }
 
-        void saveButton_Click(object sender, Event e)
+        void save(object sender, Event e)
         {
             using (FileDialog saveFile = new FileDialog(this, "Choose location to save image.", Utils.GetHomeDir(), "", "JPEG(*.jpg)|*.jpg;|PNG(*.png)|*.png;|TIFF(*.tiff)|*.tiff;|BMP(*.bmp)|*.bmp;", WindowStyles.FD_SAVE|WindowStyles.FD_OVERWRITE_PROMPT))
             {
@@ -113,6 +125,11 @@ namespace Medical.GUI
                 imageViewer.Bitmap.SaveFile(saveFile.Path, format);
                 this.Title = saveFile.Path;
             }
+        }
+
+        void menuClose(object sender, Event e)
+        {
+            this.Close();
         }
     }
 }

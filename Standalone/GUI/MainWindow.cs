@@ -5,7 +5,6 @@ using System.Text;
 using Engine.Platform;
 using wx;
 using System.Drawing;
-using MyGUIPlugin;
 
 namespace Medical.GUI
 {

@@ -16,6 +16,8 @@ using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller;
 using System.Drawing;
+using wx.Html.Help;
+using wx.FileSys;
 
 namespace Standalone
 {
@@ -47,6 +49,7 @@ namespace Standalone
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
+        private HtmlHelpController htmlHelpController;
 
         //Frame
         private MainWindow mainWindow;
@@ -87,6 +90,12 @@ namespace Standalone
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
 
             splashScreen.updateStatus(10, "Initializing Core");
+
+            //Help
+            wx.Image.AddHandler(new wx.JPEGHandler());
+            htmlHelpController = new HtmlHelpController();
+            wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
+            htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -159,6 +168,10 @@ namespace Standalone
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
+#if CREATE_MAINWINDOW_MENU
+            mainWindow.MenuBar = basicGUI.createMenuBar();
+#endif
+
             //Create scene view windows
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
 
@@ -180,6 +193,11 @@ namespace Standalone
         {
             mainWindow.Close(true);
             //medicalController.shutdown();
+        }
+
+        public void openHelpTopic(int index)
+        {
+            htmlHelpController.Display(index);
         }
 
         /// <summary>

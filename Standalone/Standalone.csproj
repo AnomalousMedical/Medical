@@ -40,7 +40,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MacRelease|AnyCPU' ">
     <OutputPath>..\OSXBuild\DotNetAssemblies\</OutputPath>
-    <DefineConstants>TRACE;ALLOW_OVERRIDE</DefineConstants>
+    <DefineConstants>TRACE;ALLOW_OVERRIDE CREATE_MAINWINDOW_MENU</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>

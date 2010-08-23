@@ -200,6 +200,17 @@ namespace Medical.GUI
             basicRibbon.AllowLayerShortcuts = false;
         }
 
+#if CREATE_MAINWINDOW_MENU
+
+        public wx.MenuBar createMenuBar()
+        {
+            wx.MenuBar menu = new wx.MenuBar();
+            basicRibbon.createMenus(menu);
+            return menu;
+        }
+
+#endif
+
         void stateWizardController_Finished()
         {
             basicRibbon.AllowLayerShortcuts = true;

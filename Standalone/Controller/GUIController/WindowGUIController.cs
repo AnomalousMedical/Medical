@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Standalone;
 using System.Reflection;
+using wx.Html.Help;
 
 namespace Medical.GUI
 {
@@ -61,6 +62,10 @@ namespace Medical.GUI
                 }
             }
 
+            //Help
+            Button helpButton = ribbonWidget.findWidget("WindowTab/HelpButton") as Button;
+            helpButton.MouseButtonClick += new MyGUIEvent(helpButton_MouseButtonClick);        
+
             //About
             Button aboutButton = ribbonWidget.findWidget("WindowTab/AboutButton") as Button;
             aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
@@ -75,6 +80,23 @@ namespace Medical.GUI
         {
             Gui.Instance.destroyWidget(windowMenu);
         }
+
+#if CREATE_MAINWINDOW_MENU
+        public void createMenus(wx.MenuBar menu)
+        {
+            wx.Menu helpMenu = new wx.Menu();
+
+            wx.MenuItem about = helpMenu.Append((int)wx.MenuIDs.wxID_ABOUT, "About", "About this program.");
+            about.Select += new wx.EventListener(about_Select);
+
+            menu.Append(helpMenu, "&Help");
+        }
+
+        void about_Select(object sender, wx.Event e)
+        {
+            aboutDialog.open(true);
+        }
+#endif
 
         void colorButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -139,6 +161,11 @@ namespace Medical.GUI
             LayerManager.Instance.upLayerItem(windowMenu);
             windowMenu.setPosition(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
             windowMenu.setVisibleSmooth(true);
+        }
+
+        void helpButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.openHelpTopic(0);
         }
     }
 }
