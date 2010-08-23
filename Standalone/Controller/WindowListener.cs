@@ -19,7 +19,7 @@ namespace Standalone
 
         public void closing(OSWindow window)
         {
-            controller.shutdown();
+            
         }
 
         public void moved(OSWindow window)

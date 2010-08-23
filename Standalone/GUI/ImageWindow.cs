@@ -15,11 +15,12 @@ namespace Medical.GUI
         wx.Bitmap bmp;
         ImageViewer imageViewer;
 
+        private MenuItem exploreItem;
         
-        private const int SAVE_ID = 0;
-        private const int EXPLORE_ID = 1;
-        private const int CLOSE_ID = 2;
-        private const int RESIZE_ID = 3;
+        private const int SAVE_ID = 1000;
+        private const int EXPLORE_ID = 1001;
+        private const int CLOSE_ID = 1002;
+        private const int RESIZE_ID = 1003;
         
 
         public ImageWindow(Window parent, String windowTitle, System.Drawing.Bitmap image)
@@ -30,7 +31,8 @@ namespace Medical.GUI
 
             Menu fileMenu = new Menu();
             fileMenu.Append(SAVE_ID, "&Save...\tCtrl+S", "Save this image to disk.");
-            fileMenu.Append(EXPLORE_ID, "&Explore...\tCtrl+E", "Open this image's location.");
+            exploreItem = fileMenu.Append(EXPLORE_ID, "&Explore...\tCtrl+E", "Open this image's location.");
+            exploreItem.Enabled = false;
             fileMenu.Append(CLOSE_ID, "&Close...\tCtrl+C", "Close this window.");
 
             Menu imageMenu = new Menu();
@@ -89,7 +91,11 @@ namespace Medical.GUI
             {
                 try
                 {
+#if WINDOWS
                     Process.Start("explorer.exe", "/select," + Path.GetFullPath(this.Title));
+#elif MAC_OSX   
+                    Process.Start("open", Path.GetDirectoryName(Path.GetFullPath(this.Title)));
+#endif
                 }
                 catch (Exception ex)
                 {
@@ -100,6 +106,7 @@ namespace Medical.GUI
 
         void save(object sender, Event e)
         {
+            Logging.Log.Debug("Save clicked");
             using (FileDialog saveFile = new FileDialog(this, "Choose location to save image.", Utils.GetHomeDir(), "", "JPEG(*.jpg)|*.jpg;|PNG(*.png)|*.png;|TIFF(*.tiff)|*.tiff;|BMP(*.bmp)|*.bmp;", WindowStyles.FD_SAVE|WindowStyles.FD_OVERWRITE_PROMPT))
             {
                 if (saveFile.ShowModal() == ShowModalResult.CANCEL)
@@ -124,6 +131,7 @@ namespace Medical.GUI
                 }
                 imageViewer.Bitmap.SaveFile(saveFile.Path, format);
                 this.Title = saveFile.Path;
+                exploreItem.Enabled = true;
             }
         }
 

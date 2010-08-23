@@ -20,6 +20,7 @@ namespace Medical
 
             resizedListener = new EventListener(onResize);
             wxWindow.EVT_SIZE(resizedListener);
+            wxWindow.EVT_CLOSE(onClosed);
         }
 
         private void onResize(object sender, Event e)
@@ -28,6 +29,20 @@ namespace Medical
             foreach (OSWindowListener listener in listeners)
             {
                 listener.resized(this);
+            }
+        }
+
+        private void onClosed(object sender, Event e)
+        {
+            e.Skip();
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.closing(this);
+            }
+
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.closed(this);
             }
         }
 

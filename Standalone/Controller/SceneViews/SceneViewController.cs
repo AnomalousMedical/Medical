@@ -9,6 +9,8 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using OgreWrapper;
 using OgrePlugin;
+using System.Drawing;
+using Medical.GUI;
 
 namespace Medical.Controller
 {
@@ -138,9 +140,7 @@ namespace Medical.Controller
             if (cloneWindow == null)
             {
                 CloneCamera cloneCamera = new CloneCamera(this);
-                RendererWindow window = OgreInterface.Instance.createRendererWindow(windowInfo);
-                ((OgreWindow)window).OgreRenderWindow.DeactivateOnFocusChange = false;
-                cloneWindow = new PopupSceneViewWindow(window, this, mainTimer, cloneCamera, "Clone");
+                cloneWindow = new PopupSceneViewWindow(windowInfo, this, mainTimer, cloneCamera, "Clone");
                 cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {
@@ -148,7 +148,7 @@ namespace Medical.Controller
                 }
                 if (camerasCreated)
                 {
-                    cloneWindow.createSceneView(window, currentScene);
+                    cloneWindow.createSceneView(null, currentScene);
                 }
                 windows.Add(cloneWindow);
             }
@@ -156,9 +156,7 @@ namespace Medical.Controller
 
         public void destroyCloneWindow()
         {
-            destroyWindow(cloneWindow);
-            OgreInterface.Instance.destroyRendererWindow(cloneWindow.RendererWindow);
-            cloneWindow = null;
+            cloneWindow.close();
         }
 
         void cloneWindow_Closed(object sender, EventArgs e)
