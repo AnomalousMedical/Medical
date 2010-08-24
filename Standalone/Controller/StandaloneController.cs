@@ -79,6 +79,7 @@ namespace Standalone
             //Engine core
             medicalController = new MedicalController();
             mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
+            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
             medicalController.initialize(mainWindow.InputWindow, createWindow);
             mainWindow.setTimer(medicalController.MainTimer);
 
@@ -92,7 +93,6 @@ namespace Standalone
             splashScreen.updateStatus(10, "Initializing Core");
 
             //Help
-            wx.Image.AddHandler(new wx.JPEGHandler());
             htmlHelpController = new HtmlHelpController();
             wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
             htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");

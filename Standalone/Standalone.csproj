@@ -227,10 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
-    <None Include="Resources\ResizeDownSmall.png" />
-    <None Include="Resources\ExploreIconSmall.png" />
-    <None Include="Resources\ResizeUpSmall.png" />
-    <None Include="Resources\SaveSmall.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +234,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
