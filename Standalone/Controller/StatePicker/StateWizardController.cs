@@ -23,6 +23,7 @@ namespace Medical.GUI
         //Controllers
         private TemporaryStateBlender stateBlender;
         private NavigationController navigationController;
+        private LayerController layerController;
 
         //Wizard state
         private LayerState layerStatusBeforeShown = new LayerState("WizardStartLayerStatus");
@@ -38,11 +39,12 @@ namespace Medical.GUI
         private StateWizardButtons stateWizardButtons;
         private WizardIconPanel wizardIconPanel;
 
-        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, BasicGUI basicGUI)
+        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
         {
             this.basicGUI = basicGUI;
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
+            this.layerController = layerController;
 
             screenLayout = new BorderLayoutContainer();
             stateWizardButtons = new StateWizardButtons(this);
@@ -105,7 +107,7 @@ namespace Medical.GUI
                 {
                     navigationController.setNavigationState(navigationStateBeforeShown, CurrentSceneView);
                 }
-                layerStatusBeforeShown.apply();
+                layerController.CurrentLayerState = layerStatusBeforeShown;
                 if (Finished != null)
                 {
                     Finished.Invoke();
@@ -133,7 +135,6 @@ namespace Medical.GUI
             stateWizardButtons.setNextButtonActive(currentIndex != maxIndex - 1);
             panel.LayoutContainer.Visible = true;
             panel.LayoutContainer.bringToFront();
-            //screenLayout.Center = panel.LayoutContainer;
             crossFadeContainer.changePanel(panel.LayoutContainer, 0.25f, animationCompleted);
             wizardIconPanel.indexChanged(currentIndex);
         }
@@ -145,7 +146,6 @@ namespace Medical.GUI
         internal void hidePanel(StateWizardPanel stateWizardPanel)
         {
             stateWizardPanel.LayoutContainer.Visible = false;
-            //screenLayout.Center = null;
         }
 
         /// <summary>
