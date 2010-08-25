@@ -27,6 +27,7 @@ namespace Standalone
 
         public override bool OnInit()
         {
+            wx.Image.InitAllHandlers();
             return startApplication();
         }
 

@@ -82,17 +82,23 @@ namespace Medical.GUI
 
         void mainButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            float alpha = 0.0f;
+            //if (transparentButton.StateCheck)
+            //{
+            //    alpha = 0.0f;
+            //} else
             if (opaqueButton.StateCheck)
             {
-                setAlpha(0.7f);
-            }
-            else if (transparentButton.StateCheck)
-            {
-                setAlpha(0.0f);
+                alpha = 0.7f;
             }
             else if (hiddenButton.StateCheck)
             {
-                setAlpha(1.0f);
+                alpha = 1.0f;
+            }
+            setAlpha(alpha);
+            if (TransparencyChanged != null)
+            {
+                TransparencyChanged(alpha);
             }
         }
 
@@ -118,11 +124,6 @@ namespace Medical.GUI
                 transparentButton.StateCheck = true;
             }
             allowUpdates = true;
-
-            if (TransparencyChanged != null)
-            {
-                TransparencyChanged(alpha);
-            }
         }
 
         public bool AllowShortcuts { get; set; }
@@ -130,18 +131,30 @@ namespace Medical.GUI
         void hiddenButton_MouseButtonClick(Widget source, EventArgs e)
         {
             setAlpha(0.0f);
+            if (TransparencyChanged != null)
+            {
+                TransparencyChanged(0.0f);
+            }
             contextMenu.setVisibleSmooth(false);
         }
 
         void transparentButton_MouseButtonClick(Widget source, EventArgs e)
         {
             setAlpha(0.7f);
+            if (TransparencyChanged != null)
+            {
+                TransparencyChanged(0.7f);
+            }
             contextMenu.setVisibleSmooth(false);
         }
 
         void opaqueButton_MouseButtonClick(Widget source, EventArgs e)
         {
             setAlpha(1.0f);
+            if (TransparencyChanged != null)
+            {
+                TransparencyChanged(1.0f);
+            }
             contextMenu.setVisibleSmooth(false);
         }
     }
