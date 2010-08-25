@@ -15,6 +15,7 @@ namespace Medical.GUI
         private Layout layout;
         private PopupContainer popupContainer;
         private ButtonGrid colorGrid;
+        private Color customColor = Color.Black;
 
         public ColorMenu(String layoutFile)
         {
@@ -29,6 +30,9 @@ namespace Medical.GUI
                 item.UserObject = i;
             }
             colorGrid.SelectedValueChanged += new EventHandler(colorGrid_SelectedValueChanged);
+
+            Button moreColorsButton = mainWidget.findWidget("MoreColorsButton") as Button;
+            moreColorsButton.MouseButtonClick += new MyGUIEvent(moreColorsButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -49,7 +53,7 @@ namespace Medical.GUI
                 {
                     return colorTable[(int)colorGrid.SelectedItem.UserObject];
                 }
-                return Color.Black;
+                return customColor;
             }
         }
 
@@ -60,6 +64,28 @@ namespace Medical.GUI
                 ColorChanged.Invoke(this, EventArgs.Empty);
             }
             popupContainer.hide();
+        }
+
+        void moreColorsButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Color selectedColor = SelectedColor;
+            using (wx.Colour color = new wx.Colour((byte)(selectedColor.r * 255), (byte)(selectedColor.g * 255), (byte)(selectedColor.b * 255), (byte)(selectedColor.a * 255)))
+            {
+                using (wx.ColourData data = new wx.ColourData(color))
+                {
+                    using (wx.ColourDialog colorDialog = new wx.ColourDialog(MainWindow.Instance, data))
+                    {
+                        if (colorDialog.ShowModal() == wx.ShowModalResult.OK)
+                        {
+                            wx.Colour chosenColor = colorDialog.ColourData.Colour;
+                            float byteMax = (float)byte.MaxValue;
+                            colorGrid.SelectedItem = null;
+                            customColor = new Color(chosenColor.Red / byteMax, chosenColor.Green / byteMax, chosenColor.Blue / byteMax, chosenColor.Alpha / byteMax);
+                            colorGrid_SelectedValueChanged(this, EventArgs.Empty);
+                        }
+                    }
+                }
+            }
         }
 
         private static Color[] colorTable = {
