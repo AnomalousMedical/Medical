@@ -39,7 +39,7 @@ namespace Medical.GUI
             renderButton.MouseButtonClick +=new MyGUIEvent(renderButton_MouseButtonClick);
 
             aaCombo = ribbonGui.findWidget("RenderingTab/AACombo") as ComboBox;
-            aaCombo.SelectedIndex = 0;
+            aaCombo.SelectedIndex = aaCombo.getItemCount() - 1;
 
             width = new NumericEdit(ribbonGui.findWidget("RenderingTab/WidthEdit") as Edit);
             height = new NumericEdit(ribbonGui.findWidget("RenderingTab/HeightEdit") as Edit);
