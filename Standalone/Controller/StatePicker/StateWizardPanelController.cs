@@ -44,15 +44,14 @@ namespace Medical.GUI
         private NavigationController navigationController;
         private LayerController layerController;
         private ImageRenderer imageRenderer;
-        //private ImageList imageList;
         private MovementSequenceController movementSequenceController;
         private XmlSaver saver = new XmlSaver();
         private SceneViewController sceneViewController;
         private NotesPanel notesPanel;
         private TemporaryStateBlender stateBlender;
-        //private MeasurementGrid measurementGrid;
+        private MeasurementGrid measurementGrid;
 
-        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController, TemporaryStateBlender stateBlender, MovementSequenceController movementSequenceController, ImageRenderer imageRenderer/*, MeasurementGrid measurementGrid*/)
+        public StateWizardPanelController(Gui gui, MedicalController medicalController, MedicalStateController stateController, NavigationController navigationController, LayerController layerController, SceneViewController sceneViewController, TemporaryStateBlender stateBlender, MovementSequenceController movementSequenceController, ImageRenderer imageRenderer, MeasurementGrid measurementGrid)
         {
             this.stateBlender = stateBlender;
             this.medicalController = medicalController;
@@ -62,7 +61,7 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
             this.movementSequenceController = movementSequenceController;
-            //this.measurementGrid = measurementGrid;
+            this.measurementGrid = measurementGrid;
 
             notesPanel = new NotesPanel("DistortionPanels/NotesPanel.layout", this);
             notesPanel.ImageKey = "DistortionPanelIcons/Notes";
@@ -142,6 +141,14 @@ namespace Medical.GUI
             get
             {
                 return imageRenderer;
+            }
+        }
+
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return measurementGrid;
             }
         }
 

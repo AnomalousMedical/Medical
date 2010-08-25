@@ -55,7 +55,7 @@ namespace Medical.GUI
             ScreenLayout.Root.Left = leftAnimatedContainer;
             screenLayoutManager.Root.SuppressLayout = false;
 
-            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer);
+            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
             stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
             stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);

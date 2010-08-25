@@ -98,6 +98,7 @@
     <Compile Include="Controller\Dialogs\SavePatientDialog.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
+    <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\GUIController\BasicGUI.cs" />
     <Compile Include="Controller\GUIController\BasicRibbon.cs" />
     <Compile Include="Controller\GUIController\CloneWindowDialog.cs" />
@@ -113,7 +114,7 @@
     <Compile Include="Controller\Layers\LayerEntry.cs" />
     <Compile Include="Controller\Layers\LayerState.cs" />
     <Compile Include="Controller\Layers\LayerStateSet.cs" />
-    <Compile Include="Controller\MeasurementGrid.cs" />
+    <Compile Include="Controller\Grid\MeasurementGrid.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />
     <Compile Include="Controller\MedicalStates\MedicalStateController.cs" />

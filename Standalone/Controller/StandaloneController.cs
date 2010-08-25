@@ -316,6 +316,14 @@ namespace Standalone
             }
         }
 
+        public MeasurementGrid MeasurementGrid
+        {
+            get
+            {
+                return measurementGrid;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();
