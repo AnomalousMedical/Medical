@@ -350,6 +350,14 @@ namespace Medical
                         scaledPiecewiseBitmap.Dispose();
                     }
                 }
+                if (turnedOffWatermark)
+                {
+                    float imageFinalHeight = fullBitmap.Height * 0.0447f;
+                    Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
+                    float scale = imageFinalHeight / logo.Height;
+                    float imageFinalWidth = logo.Width * scale;
+                    g.DrawImage(Medical.Properties.Resources.AnomalousMedical, new Rectangle(0, fullBitmap.Height - (int)imageFinalHeight, (int)imageFinalWidth, (int)imageFinalHeight));
+                }
             }
 
             if (turnedOffWatermark)

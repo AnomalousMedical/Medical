@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
+    <None Include="Resources\AnomalousMedical.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -234,9 +235,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

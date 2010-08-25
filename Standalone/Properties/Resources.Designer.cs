@@ -59,5 +59,12 @@ namespace Medical.Properties {
                 resourceCulture = value;
             }
         }
+        
+        internal static System.Drawing.Bitmap AnomalousMedical {
+            get {
+                object obj = ResourceManager.GetObject("AnomalousMedical", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
