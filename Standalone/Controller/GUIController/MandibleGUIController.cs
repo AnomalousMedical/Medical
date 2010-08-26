@@ -33,24 +33,24 @@ namespace Medical.GUI
         private float leftCPPosition;
         private float rightCPPosition;
 
-        public MandibleGUIController(Gui gui, MedicalController medicalController)
+        public MandibleGUIController(Widget ribbonWidget, MedicalController medicalController)
         {
             this.medicalController = medicalController;
 
-            openTrackBar = new MandibleControlSlider(gui.findWidgetT("Movement/HingeSlider") as HScroll);
+            openTrackBar = new MandibleControlSlider(ribbonWidget.findWidget("Movement/HingeSlider") as HScroll);
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
-            rightForwardBack = new MandibleControlSlider(gui.findWidgetT("Movement/ExcursionRightSlider") as HScroll);
+            rightForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionRightSlider") as HScroll);
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
-            leftForwardBack = new MandibleControlSlider(gui.findWidgetT("Movement/ExcursionLeftSlider") as HScroll);
+            leftForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionLeftSlider") as HScroll);
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
-            bothForwardBack = new MandibleControlSlider(gui.findWidgetT("Movement/ProtrusionSlider") as HScroll);
+            bothForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ProtrusionSlider") as HScroll);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
-            resetButton = gui.findWidgetT("Movement/Reset") as Button;
-            restoreButton = gui.findWidgetT("Movement/Restore") as Button;
+            resetButton = ribbonWidget.findWidget("Movement/Reset") as Button;
+            restoreButton = ribbonWidget.findWidget("Movement/Restore") as Button;
             restoreButton.Enabled = false;
 
             openTrackBar.ValueChanged += openTrackBar_ValueChanged;

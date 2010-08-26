@@ -19,36 +19,34 @@ namespace Medical.GUI
         private WindowGUIController windowGUIController;
         private Layout ribbon;
         private StandaloneController standaloneController;
-        private PiperJBOGUI basicGUI;
+        private PiperJBOGUI piperGUI;
+        private AppMenu appMenu;
 
-        public PiperJBORibbon(Gui gui, PiperJBOGUI basicGUI, StandaloneController standaloneController)
+        public PiperJBORibbon(PiperJBOGUI piperGUI, StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
-            this.basicGUI = basicGUI;
+            this.piperGUI = piperGUI;
 
             ribbon = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.PiperJBORibbon.layout");
-            layerGUIController = new LayerGUIController(gui, standaloneController.LayerController);
-            mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
-            sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);
-            navigationGUIController = new NavigationGUIController(ribbon.getWidget(0), standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
-            renderGUIController = new RenderGUIController(ribbon.getWidget(0), standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            windowGUIController = new WindowGUIController(ribbon.getWidget(0), standaloneController);
 
-            Button changeSceneButton = gui.findWidgetT("File/ChangeScene") as Button;
-            Button openButton = gui.findWidgetT("File/Open") as Button;
-            Button saveButton = gui.findWidgetT("File/Save") as Button;
-            Button saveAsButton = gui.findWidgetT("File/SaveAs") as Button;
-            Button quitButton = gui.findWidgetT("File/Quit") as Button;
+            Widget ribbonWidget = ribbon.getWidget(0);
 
-            changeSceneButton.MouseButtonClick += new MyGUIEvent(changeSceneButton_MouseButtonClick);
-            openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
-            saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
-            saveAsButton.MouseButtonClick += new MyGUIEvent(saveAsButton_MouseButtonClick);
-            quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
+            layerGUIController = new LayerGUIController(ribbonWidget, standaloneController.LayerController);
+            mandibleGUIController = new MandibleGUIController(ribbonWidget, standaloneController.MedicalController);
+            sequencesGUIController = new SequencesGUIController(ribbonWidget, standaloneController.MovementSequenceController);
+            navigationGUIController = new NavigationGUIController(ribbonWidget, standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
+            renderGUIController = new RenderGUIController(ribbonWidget, standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            windowGUIController = new WindowGUIController(ribbonWidget, standaloneController);
+
+            appMenu = new AppMenu(piperGUI, standaloneController);
+
+            Button appButton = ribbonWidget.findWidget("AppButton") as Button;
+            appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
         }
 
         public void Dispose()
         {
+            appMenu.Dispose();
             windowGUIController.Dispose();
             renderGUIController.Dispose();
             layerGUIController.Dispose();
@@ -102,49 +100,28 @@ namespace Medical.GUI
 
         void saveAs_Select(object sender, wx.Event e)
         {
-            basicGUI.saveAs();
+            piperGUI.saveAs();
         }
 
         void save_Select(object sender, wx.Event e)
         {
-            basicGUI.save();
+            piperGUI.save();
         }
 
         void open_Select(object sender, wx.Event e)
         {
-            basicGUI.open();
+            piperGUI.open();
         }
 
         void changeScene_Select(object sender, wx.Event e)
         {
-            basicGUI.showChooseSceneDialog();
+            piperGUI.showChooseSceneDialog();
         }
 
 #endif
-
-        void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
+        void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            basicGUI.showChooseSceneDialog();
-        }
-
-        void saveButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            basicGUI.save();
-        }
-
-        void saveAsButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            basicGUI.saveAs();
-        }
-
-        void openButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            basicGUI.open();
-        }
-
-        void quitButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            standaloneController.shutdown();
+            appMenu.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
         }
 
         public Widget RibbonRootWidget

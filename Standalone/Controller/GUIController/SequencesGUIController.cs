@@ -19,15 +19,15 @@ namespace Medical.GUI
         private Button stopButton;
         private StaticText nowPlayingLabel;
 
-        public SequencesGUIController(Gui ribbonLayout, MovementSequenceController movementSequenceController)
+        public SequencesGUIController(Widget ribbonWidget, MovementSequenceController movementSequenceController)
         {
             this.sequenceController = movementSequenceController;
-            sequencesButton = ribbonLayout.findWidgetT("SequencesTab/SequenceButton") as Button;
-            this.playButton = ribbonLayout.findWidgetT("SequencesTab/PlayButton") as Button;
-            this.stopButton = ribbonLayout.findWidgetT("SequencesTab/StopButton") as Button;
-            this.nowPlayingLabel = ribbonLayout.findWidgetT("SequencesTab/NowPlaying") as StaticText;
+            sequencesButton = ribbonWidget.findWidget("SequencesTab/SequenceButton") as Button;
+            this.playButton = ribbonWidget.findWidget("SequencesTab/PlayButton") as Button;
+            this.stopButton = ribbonWidget.findWidget("SequencesTab/StopButton") as Button;
+            this.nowPlayingLabel = ribbonWidget.findWidget("SequencesTab/NowPlaying") as StaticText;
 
-            sequenceMenu = ribbonLayout.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
+            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
             sequenceMenu.Visible = false;
 
             sequencesButton.MouseButtonClick += new MyGUIEvent(sequencesButton_MouseButtonClick);

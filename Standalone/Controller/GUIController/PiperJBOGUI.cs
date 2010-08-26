@@ -47,7 +47,7 @@ namespace Medical.GUI
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
-            basicRibbon = new PiperJBORibbon(gui, this, standaloneController);
+            basicRibbon = new PiperJBORibbon(this, standaloneController);
             basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayoutManager.Root.Top = topAnimatedContainer;
