@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="0 28 724 529" layer="Modal">
+        <Property key="Widget_Caption" value="Open"/>
+        <Widget type="MultiList" skin="MultiList" position="0 0 714 360" name="Open/FileList"/>
+        <Widget type="StaticText" skin="StaticText" position="5 367 150 15">
+            <Property key="Widget_Caption" value="Search Last Name"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="5 384 226 25" name="Open/SearchText"/>
+        <Widget type="StaticText" skin="StaticText" position="6 412 155 15">
+            <Property key="Widget_Caption" value="Load Location"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="5 431 398 25" name="Open/LoadLocation"/>
+        <Widget type="Button" skin="Button" position="405 431 72 25">
+            <Property key="Widget_Caption" value="Browse"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="535 435 174 15" name="Open/WarningText">
+            <Property key="Widget_Caption" value="This directory does not exist."/>
+        </Widget>
+        <Widget type="StaticImage" skin="StaticImage" position="481 418 50 50" name="Open/WarningImage">
+            <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
+            <Property key="Image_Group" value="Icons"/>
+            <Property key="Image_Name" value="Warning"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="8 461 88 25" name="Open/OpenButton">
+            <Property key="Widget_Caption" value="Open"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="99 461 88 25" name="Open/DeleteButton">
+            <Property key="Widget_Caption" value="Delete"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="190 461 88 25" name="Open/CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="Progress" skin="ProgressFill" position="567 464 140 23" name="Open/LoadingProgress"/>
+    </Widget>
+</MyGUI>

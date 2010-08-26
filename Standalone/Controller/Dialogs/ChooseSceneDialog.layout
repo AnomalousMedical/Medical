@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="143 85 563 388" layer="Modal">
+        <Property key="Widget_Caption" value="Choose Scene"/>
+        <Property key="Window_MinSize" value="563 388"/>
+        <Property key="Window_MaxSize" value="563 388"/>
+        <Widget type="ScrollView" skin="CustomScrollView2" position="2 2 553 313" name="ChooseScene/FileSelect">
+            <Property key="ScrollView_CanvasSize" value="539 300"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ShowGroupCaptions" value="False"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="2 319 82 30" name="ChooseScene/Open">
+            <Property key="Widget_Caption" value="Open"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="86 319 82 30" name="ChooseScene/Cancel">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+    </Widget>
+</MyGUI>

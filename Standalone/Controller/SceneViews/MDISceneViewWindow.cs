@@ -20,7 +20,7 @@ namespace Medical.Controller
             this.rm = rm;
 
             //MDI Window
-            mdiWindow = new MDIWindow("MDIWindow.layout", Name);
+            mdiWindow = new MDIWindow(Name);
             mdiWindow.SuppressLayout = true;
             mdiWindow.Content = this;
             mdiWindow.SuppressLayout = false;

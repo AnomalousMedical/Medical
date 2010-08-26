@@ -22,8 +22,8 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
-        public ProfileDistortionPanel(String panelFile, StateWizardPanelController controller)
-            :base(panelFile, controller)
+        public ProfileDistortionPanel(StateWizardPanelController controller)
+            :base("Medical.Controller.StatePicker.Panels.Profile.ProfileDistortionPanel.layout", controller)
         {
             
 

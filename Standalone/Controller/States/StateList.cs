@@ -18,7 +18,7 @@ namespace Medical.GUI
         private MyGUILayoutContainer layoutContainer;
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
 
-        public StateList(String stateListFile, MedicalStateController stateController)
+        public StateList(MedicalStateController stateController)
         {
             this.stateController = stateController;
             stateController.StateAdded += new MedicalStateAdded(stateController_StateAdded);
@@ -29,7 +29,7 @@ namespace Medical.GUI
             stateController.BlendingStopped += new MedicalStateEvent(stateController_BlendingStopped);
             stateController.StateUpdated += new MedicalStateStatusUpdate(stateController_StateUpdated);
 
-            layout = LayoutManager.Instance.loadLayout(stateListFile);
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.States.StateList.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             layoutContainer = new MyGUILayoutContainer(mainWidget);

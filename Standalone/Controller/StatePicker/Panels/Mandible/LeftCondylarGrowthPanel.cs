@@ -19,8 +19,8 @@ namespace Medical.GUI
 
         private GridPropertiesControl gridPropertiesControl;
 
-        public LeftCondylarGrowthPanel(String panelFile, StateWizardPanelController controller)
-            : base(panelFile, controller)
+        public LeftCondylarGrowthPanel(StateWizardPanelController controller)
+            : base("Medical.Controller.StatePicker.Panels.Mandible.LeftCondylarGrowthPanel.layout", controller)
         {
             leftRamusHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/RamusHeightSlider") as VScroll);
             leftCondyleHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/CondyleHeightSlider") as VScroll);

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="173 266 229 206" layer="Modal">
+        <Property key="Widget_Caption" value="Options"/>
+        <Widget type="StaticText" skin="StaticText" position="5 6 76 15">
+            <Property key="Widget_Caption" value="Anti Aliasing"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="5 25 213 23" name="AACombo">
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="5 109 107 17" name="VSyncCheck">
+            <Property key="Widget_Caption" value="Vertical Sync"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="5 94 111 13" name="FullscreenCheck">
+            <Property key="Widget_Caption" value="Fullscreen"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="5 49 70 15">
+            <Property key="Widget_Caption" value="Resolution"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="5 67 213 23" name="ResolutionCombo">
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="32 140 76 25" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="113 140 76 25" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+    </Widget>
+</MyGUI>

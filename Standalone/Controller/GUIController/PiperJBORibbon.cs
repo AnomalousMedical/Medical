@@ -9,7 +9,7 @@ using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
-    class BasicRibbon : IDisposable
+    class PiperJBORibbon : IDisposable
     {
         private LayerGUIController layerGUIController;
         private MandibleGUIController mandibleGUIController;
@@ -19,14 +19,14 @@ namespace Medical.GUI
         private WindowGUIController windowGUIController;
         private Layout ribbon;
         private StandaloneController standaloneController;
-        private BasicGUI basicGUI;
+        private PiperJBOGUI basicGUI;
 
-        public BasicRibbon(Gui gui, BasicGUI basicGUI, StandaloneController standaloneController)
+        public PiperJBORibbon(Gui gui, PiperJBOGUI basicGUI, StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             this.basicGUI = basicGUI;
 
-            ribbon = LayoutManager.Instance.loadLayout("Ribbon.layout");
+            ribbon = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.PiperJBORibbon.layout");
             layerGUIController = new LayerGUIController(gui, standaloneController.LayerController);
             mandibleGUIController = new MandibleGUIController(gui, standaloneController.MedicalController);
             sequencesGUIController = new SequencesGUIController(gui, standaloneController.MovementSequenceController);

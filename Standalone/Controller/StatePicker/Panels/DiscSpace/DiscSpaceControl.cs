@@ -445,9 +445,14 @@ namespace Medical.GUI
             computeDiscSpaceStage();
         }
 
-        private void resetButton_Click(object sender, EventArgs e)
+        void resetButton_Click(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to reset the disc space settings?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to reset the disc space settings?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
+        }
+
+        private void doMakeNormalButtonClick(MessageBoxStyle style)
+        {
+            if (style == MessageBoxStyle.Yes)
             {
                 this.setToDefault();
             }

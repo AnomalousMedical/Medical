@@ -12,10 +12,10 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class BasicGUI : IDisposable
+    class PiperJBOGUI : IDisposable
     {
         private ScreenLayoutManager screenLayoutManager;
-        private BasicRibbon basicRibbon;
+        private PiperJBORibbon basicRibbon;
         private MyGUILayoutContainer basicRibbonContainer;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer leftAnimatedContainer;
@@ -30,7 +30,7 @@ namespace Medical.GUI
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
 
-        public BasicGUI(StandaloneController standaloneController)
+        public PiperJBOGUI(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
@@ -38,14 +38,16 @@ namespace Medical.GUI
 
             Gui gui = Gui.Instance;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Layouts", "EngineArchive", "MyGUI", true);
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(PiperJBOGUI).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+
+            typeof(PiperJBOGUI).Assembly.GetManifestResourceNames();
 
             gui.load("Imagesets.xml");
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
-            basicRibbon = new BasicRibbon(gui, this, standaloneController);
+            basicRibbon = new PiperJBORibbon(gui, this, standaloneController);
             basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayoutManager.Root.Top = topAnimatedContainer;
@@ -60,15 +62,15 @@ namespace Medical.GUI
             stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
-            stateList = new StateList("StateList.layout", standaloneController.MedicalStateController);
+            stateList = new StateList(standaloneController.MedicalStateController);
 
             createWizardPanels();
 
             wizardRibbonTab = new StateWizardRibbonTab(gui, stateWizardController, this);
 
-            chooseSceneDialog = new ChooseSceneDialog("ChooseSceneDialog.layout", standaloneController);
-            savePatientDialog = new SavePatientDialog("SavePatientDialog.layout");
-            openPatientDialog = new OpenPatientDialog("OpenPatientDialog.layout");
+            chooseSceneDialog = new ChooseSceneDialog(standaloneController);
+            savePatientDialog = new SavePatientDialog();
+            openPatientDialog = new OpenPatientDialog();
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);

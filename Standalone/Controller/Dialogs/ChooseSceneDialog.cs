@@ -16,8 +16,8 @@ namespace Medical.GUI
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
 
-        public ChooseSceneDialog(String layoutFile, StandaloneController controller)
-            :base(layoutFile)
+        public ChooseSceneDialog(StandaloneController controller)
+            : base("Medical.Controller.Dialogs.ChooseSceneDialog.layout")
         {
             this.controller = controller;
 

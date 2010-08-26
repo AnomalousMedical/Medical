@@ -50,10 +50,10 @@ namespace Medical.GUI
             Button colorButton = ribbonGui.findWidget("RenderingTab/ColorButton") as Button;
             colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
 
-            colorMenu = new ColorMenu("ColorMenu.layout");
+            colorMenu = new ColorMenu();
 
             //ResolutionMenu
-            resolutionMenu = LayoutManager.Instance.loadLayout("ResolutionMenu.layout");
+            resolutionMenu = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.ResolutionMenu.layout");
             Widget resolutionMenuWidget = resolutionMenu.getWidget(0);
             resolutionMenuWidget.Visible = false;
             resolutionMenuPopup = new PopupContainer(resolutionMenuWidget);

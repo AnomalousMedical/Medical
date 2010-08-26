@@ -33,13 +33,13 @@ namespace Medical.GUI
         private StateWizard currentWizard;
 
         //UI
-        private BasicGUI basicGUI;
+        private PiperJBOGUI basicGUI;
         private BorderLayoutContainer screenLayout;
         private CrossFadeLayoutContainer crossFadeContainer;
         private StateWizardButtons stateWizardButtons;
         private WizardIconPanel wizardIconPanel;
 
-        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, BasicGUI basicGUI)
+        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, PiperJBOGUI basicGUI)
         {
             this.basicGUI = basicGUI;
             this.stateBlender = stateBlender;

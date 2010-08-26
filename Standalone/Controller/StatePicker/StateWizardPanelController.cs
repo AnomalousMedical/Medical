@@ -63,7 +63,7 @@ namespace Medical.GUI
             this.movementSequenceController = movementSequenceController;
             this.measurementGrid = measurementGrid;
 
-            notesPanel = new NotesPanel("DistortionPanels/NotesPanel.layout", this);
+            notesPanel = new NotesPanel(this);
             notesPanel.ImageKey = "DistortionPanelIcons/Notes";
             panelDictionary.Add(WizardPanels.NotesPanel, notesPanel);
 
@@ -209,7 +209,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftCondylarGrowth()
         {
-            LeftCondylarGrowthPanel leftCondyle = new LeftCondylarGrowthPanel("DistortionPanels/LeftCondylarGrowthPanel.layout", this);
+            LeftCondylarGrowthPanel leftCondyle = new LeftCondylarGrowthPanel(this);
             leftCondyle.LayerState = "MandibleSliderSizeLayers";
             leftCondyle.NavigationState = "WizardGrowthLeftCameraAngle";
             leftCondyle.TextLine1 = "Left Condyle";
@@ -220,7 +220,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftCondylarDegeneration()
         {
-            LeftCondylarDegenerationPanel leftCondyle = new LeftCondylarDegenerationPanel("DistortionPanels/LeftCondyleDegenerationPanel.layout", this);
+            LeftCondylarDegenerationPanel leftCondyle = new LeftCondylarDegenerationPanel(this);
             leftCondyle.LayerState = "MandibleSliderSizeLayers";
             leftCondyle.NavigationState = "WizardDegenerationLeftCameraAngle";
             leftCondyle.TextLine1 = "Left Condyle";
@@ -231,7 +231,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightCondylarGrowth()
         {
-            RightCondylarGrowthPanel rightCondyle = new RightCondylarGrowthPanel("DistortionPanels/RightCondylarGrowthPanel.layout", this);
+            RightCondylarGrowthPanel rightCondyle = new RightCondylarGrowthPanel(this);
             rightCondyle.LayerState = "MandibleSliderSizeLayers";
             rightCondyle.NavigationState = "WizardGrowthRightCameraAngle";
             rightCondyle.TextLine1 = "Right Condyle";
@@ -242,7 +242,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightCondylarDegeneration()
         {
-            RightCondylarDegenerationPanel rightCondyle = new RightCondylarDegenerationPanel("DistortionPanels/RightCondyleDegenerationPanel.layout", this);
+            RightCondylarDegenerationPanel rightCondyle = new RightCondylarDegenerationPanel(this);
             rightCondyle.LayerState = "MandibleSliderSizeLayers";
             rightCondyle.NavigationState = "WizardDegenerationRightCameraAngle";
             rightCondyle.TextLine1 = "Right Condyle";
@@ -253,9 +253,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftFossaPanel()
         {
-            FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "DistortionPanels/LeftFossaPanel.layout", this);
-            //leftFossaPanel.NormalImage = Resources.LeftFossaNormal;
-            //leftFossaPanel.DistortedImage = Resources.LeftFossaFlat;
+            FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "Medical.Controller.StatePicker.Panels.Fossa.FossaPanelLeft.layout", this);
             leftFossaPanel.NavigationState = "WizardLeftTMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             leftFossaPanel.TextLine1 = "Left Fossa";
@@ -265,9 +263,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightFossaPanel()
         {
-            FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "DistortionPanels/RightFossaPanel.layout", this);
-            //rightFossaPanel.NormalImage = Resources.RightFossaNormal;
-            //rightFossaPanel.DistortedImage = Resources.RightFossaFlat;
+            FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "Medical.Controller.StatePicker.Panels.Fossa.FossaPanelRight.layout", this);
             rightFossaPanel.NavigationState = "WizardRightTMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             rightFossaPanel.TextLine1 = "Right Fossa";
@@ -277,7 +273,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDopplerPanel()
         {
-            DopplerPanel leftDopplerPanel = new DopplerPanel("DistortionPanels/DopplerPanel.layout", this, "LeftDoppler", "WizardLeftTMJ", "WizardLeftTMJSuperior");
+            DopplerPanel leftDopplerPanel = new DopplerPanel(this, "LeftDoppler", "WizardLeftTMJ", "WizardLeftTMJSuperior");
             leftDopplerPanel.NavigationState = "WizardBothTMJSuperior";
             leftDopplerPanel.LayerState = "JointMenuLayers";
             leftDopplerPanel.TextLine1 = "Left TMJ";
@@ -288,7 +284,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightDopplerPanel()
         {
-            DopplerPanel rightDopplerPanel = new DopplerPanel("DistortionPanels/DopplerPanel.layout", this, "RightDoppler", "WizardRightTMJ", "WizardRightTMJSuperior");
+            DopplerPanel rightDopplerPanel = new DopplerPanel(this, "RightDoppler", "WizardRightTMJ", "WizardRightTMJSuperior");
             rightDopplerPanel.NavigationState = "WizardBothTMJSuperior";
             rightDopplerPanel.LayerState = "JointMenuLayers";
             rightDopplerPanel.TextLine1 = "Right TMJ";
@@ -299,7 +295,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createProfileDistortionPanel()
         {
-            ProfileDistortionPanel profileDistortionPicker = new ProfileDistortionPanel("DistortionPanels/ProfileDistortionPanel.layout", this);
+            ProfileDistortionPanel profileDistortionPicker = new ProfileDistortionPanel(this);
             profileDistortionPicker.NavigationState = "WizardRightLateral";
             profileDistortionPicker.LayerState = "ProfileLayers";
             profileDistortionPicker.TextLine1 = "Profile";
@@ -309,7 +305,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createBottomTeethRemovalPanel()
         {
-            ToothPanel panel = new ToothPanel("DistortionPanels/BottomTeethRemovalPanel.layout", this);
+            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.Controller.StatePicker.Panels.TeethPanels.ToothRemovalPanelBottom.layout", this);
             panel.LayerState = "BottomTeethLayers";
             panel.NavigationState = "WizardBottomTeeth";
             panel.TextLine1 = "Remove";
@@ -320,7 +316,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createTopTeethRemovalPanel()
         {
-            ToothPanel panel = new ToothPanel("DistortionPanels/TopTeethRemovalPanel.layout", this);
+            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.Controller.StatePicker.Panels.TeethPanels.ToothRemovalPanelTop.layout", this);
             panel.LayerState = "TopTeethLayers";
             panel.NavigationState = "WizardTopTeeth";
             panel.TextLine1 = "Remove";
@@ -331,7 +327,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createTeethHeightAdaptationPanel()
         {
-            TeethHeightAdaptationPanel teethHeightAdaptation = new TeethHeightAdaptationPanel("DistortionPanels/TeethHeightAdaptationPanel.layout", this);
+            TeethHeightAdaptationPanel teethHeightAdaptation = new TeethHeightAdaptationPanel(this);
             teethHeightAdaptation.NavigationState = "WizardTeethMidlineAnterior";
             teethHeightAdaptation.LayerState = "TeethLayers";
             teethHeightAdaptation.TextLine1 = "Teeth";
@@ -341,7 +337,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDiscSpacePanel()
         {
-            DiscSpacePanel leftDiscPanel = new DiscSpacePanel("FossaLayers", "LeftDiscSpace", "DistortionPanels/DiscSpacePanel.layout", this);
+            DiscSpacePanel leftDiscPanel = new DiscSpacePanel("FossaLayers", "LeftDiscSpace", this);
             leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "FossaLayers";
             leftDiscPanel.TextLine1 = "Left Disc";
@@ -352,7 +348,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightDiscSpacePanel()
         {
-            DiscSpacePanel rightDiscPanel = new DiscSpacePanel("FossaLayers", "RightDiscSpace", "DistortionPanels/DiscSpacePanel.layout", this);
+            DiscSpacePanel rightDiscPanel = new DiscSpacePanel("FossaLayers", "RightDiscSpace", this);
             rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "FossaLayers";
             rightDiscPanel.TextLine1 = "Right Disc";
@@ -363,7 +359,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftDiscClockFacePanel()
         {
-            PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", "DistortionPanels/PresetStatePanel.layout", this);
+            PresetStatePanel leftDiscPanel = new PresetStatePanel("LeftDisc", this);
             leftDiscPanel.NavigationState = "WizardLeftTMJ";
             leftDiscPanel.LayerState = "DiscLayers";
             leftDiscPanel.TextLine1 = "Left TMJ";
@@ -373,7 +369,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightDiscClockFacePanel()
         {
-            PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", "DistortionPanels/PresetStatePanel.layout", this);
+            PresetStatePanel rightDiscPanel = new PresetStatePanel("RightDisc", this);
             rightDiscPanel.NavigationState = "WizardRightTMJ";
             rightDiscPanel.LayerState = "DiscLayers";
             rightDiscPanel.TextLine1 = "Right TMJ";
@@ -383,7 +379,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createDisclaimerPanel()
         {
-            StateWizardPanel panel = new StateWizardPanel("DistortionPanels/DisclaimerPanel.layout", this);
+            StateWizardPanel panel = new StateWizardPanel("Medical.Controller.StatePicker.Panels.Disclaimer.DisclaimerPanel.layout", this);
             panel.TextLine1 = "Disclaimer";
             panel.ImageKey = "DistortionPanelIcons/Disclaimer";
             return panel;
@@ -391,7 +387,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createTeethAdaptationPanel()
         {
-            TeethAdaptationPanel teethPanel = new TeethAdaptationPanel("DistortionPanels/TeethAdaptationPanel.layout", this);
+            TeethAdaptationPanel teethPanel = new TeethAdaptationPanel(this);
             teethPanel.LayerState = "TeethLayers";
             teethPanel.NavigationState = "WizardTeethMidlineAnterior";
             teethPanel.TextLine1 = "Teeth";

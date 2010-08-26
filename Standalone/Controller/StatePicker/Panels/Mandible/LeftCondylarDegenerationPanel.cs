@@ -21,8 +21,8 @@ namespace Medical.GUI
 
         private GridPropertiesControl gridPropertiesControl;
 
-        public LeftCondylarDegenerationPanel(String panelFile, StateWizardPanelController controller)
-            : base(panelFile, controller)
+        public LeftCondylarDegenerationPanel(StateWizardPanelController controller)
+            : base("Medical.Controller.StatePicker.Panels.Mandible.LeftCondylarDegenerationPanel.layout", controller)
         {
             leftCondyleDegenerationSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleDegen/CondyleSlider") as VScroll);
             leftLateralPoleSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleDegen/LateralPoleSlider") as VScroll);

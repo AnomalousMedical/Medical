@@ -10,11 +10,11 @@ namespace Medical.GUI
 {
     class StateWizardRibbonTab : IDisposable
     {
-        private BasicGUI basicGUI;
+        private PiperJBOGUI basicGUI;
 
         private List<Button> buttons = new List<Button>();
 
-        public StateWizardRibbonTab(Gui gui, StateWizardController stateWizardController, BasicGUI basicGUI)
+        public StateWizardRibbonTab(Gui gui, StateWizardController stateWizardController, PiperJBOGUI basicGUI)
         {
             this.basicGUI = basicGUI;
 

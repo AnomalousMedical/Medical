@@ -29,9 +29,9 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="layoutFile"></param>
         /// <param name="caption"></param>
-        public MDIWindow(String layoutFile, String caption)
+        public MDIWindow(String caption)
         {
-            guiLayout = LayoutManager.Instance.loadLayout(layoutFile);
+            guiLayout = LayoutManager.Instance.loadLayout("Medical.Layout.MDI.MDIWindow.layout");
             mainWidget = guiLayout.getWidget(0);
 
             captionButton = mainWidget.findWidget("CaptionButton") as Button;

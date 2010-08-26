@@ -91,8 +91,8 @@ namespace Medical.GUI
         private bool bgThreadKnowsAboutCancel = false;
         private bool startNewDirectoryScanOnBackgroundThreadStop = false;
 
-        public OpenPatientDialog(String layoutFile)
-            :base(layoutFile)
+        public OpenPatientDialog()
+            : base("Medical.Controller.Dialogs.OpenPatientDialog.layout")
         {
             fileDataGrid = window.findWidget("Open/FileList") as MultiList;
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;

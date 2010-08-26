@@ -7,12 +7,12 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ToothPanel : StateWizardPanel
+    class ToothRemovalPanel : StateWizardPanel
     {
         private Dictionary<ToothButton, bool> openCheckStatus = new Dictionary<ToothButton, bool>();
         private List<ToothButton> toothButtons = new List<ToothButton>();
 
-        public ToothPanel(String toothPanelFile, StateWizardPanelController controller)
+        public ToothRemovalPanel(String toothPanelFile, StateWizardPanelController controller)
             : base(toothPanelFile, controller)
         {
             uint numChildren = mainWidget.getChildCount();

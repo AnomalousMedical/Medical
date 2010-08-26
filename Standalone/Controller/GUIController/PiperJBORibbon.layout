@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="PanelMasterBack" position="0 24 1616 115" layer="Overlapped" name="RibbonPanel">
+        <Widget type="Tab" skin="Tab" position_real="0 0 1 1" align="Stretch" name="RibbonTabs">
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="FileTab">
+                <Property key="Widget_Caption" value="File"/>
+                <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 0 1607 83">
+                    <Property key="ScrollView_CanvasSize" value="800 72"/>
+                    <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                    <Widget type="Button" skin="RibbonButton" position="276 2 66 64" name="File/Quit">
+                        <Property key="Widget_Caption" value="Quit"/>
+                        <Property key="Button_ImageResource" value="FileToolstrip/Exit"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="0 2 66 64" name="File/ChangeScene">
+                        <Property key="Widget_Caption" value="Change\nScene"/>
+                        <Property key="Button_ImageResource" value="FileToolstrip/ChangeScene"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="69 2 66 64" name="File/Open">
+                        <Property key="Widget_Caption" value="Open"/>
+                        <Property key="Button_ImageResource" value="FileToolstrip/Open"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="138 2 66 64" name="File/Save">
+                        <Property key="Widget_Caption" value="Save"/>
+                        <Property key="Button_ImageResource" value="FileToolstrip/Save"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="207 2 66 64" name="File/SaveAs">
+                        <Property key="Widget_Caption" value="Save As"/>
+                        <Property key="Button_ImageResource" value="FileToolstrip/SaveAs"/>
+                    </Widget>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="NavigationTab">
+                <Property key="Widget_Caption" value="Navigation"/>
+                <Widget type="Button" skin="RibbonButton" position="0 2 73 64" name="Navigation/ShowNavigationButton">
+                    <Property key="Widget_Caption" value="Show\nNavigation"/>
+                    <Property key="Button_ImageResource" value="NavigationToolstrip/ShowNavigation"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="LayersTab">
+                <Property key="Widget_Caption" value="Layers"/>
+                <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
+                    <Property key="ScrollView_CanvasSize" value="1015 72"/>
+                    <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                    <Property key="ScrollView_VisibleVScroll" value="false"/>
+                    <Widget type="Widget" skin="PanelEmpty" position="435 2 484 72">
+                        <Widget type="Button" skin="RibbonButton" position="2 2 36 38" name="Layers/Skin">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Skin"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="40 2 61 38" name="Layers/Muscles">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Muscles"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="103 2 40 38" name="Layers/Skull">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Skull"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="145 2 62 38" name="Layers/Mandible">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Mandible"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="209 2 41 38" name="Layers/Discs">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Discs"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="252 2 43 38" name="Layers/Spine">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Spine"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="297 2 44 38" name="Layers/Hyoid">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/Hyoid"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="343 2 64 38" name="Layers/MaxillaryTeeth">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/MaxillaryTeeth"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonButton" position="409 2 75 38" name="Layers/MandibularTeeth">
+                            <Property key="Button_ImageResource" value="LayersToolstrip/MandibularTeeth"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="2 39 36 28" name="Layers/SkinMenu">
+                            <Property key="Widget_Caption" value="Skin"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="40 39 61 28" name="Layers/MusclesMenu">
+                            <Property key="Widget_Caption" value="Muscles"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="103 39 40 28" name="Layers/SkullMenu">
+                            <Property key="Widget_Caption" value="Skull"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="145 39 62 28" name="Layers/MandibleMenu">
+                            <Property key="Widget_Caption" value="Mandible"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="209 39 41 28" name="Layers/DiscsMenu">
+                            <Property key="Widget_Caption" value="Discs"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="252 39 43 28" name="Layers/SpineMenu">
+                            <Property key="Widget_Caption" value="Spine"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="297 39 44 28" name="Layers/HyoidMenu">
+                            <Property key="Widget_Caption" value="Hyoid"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="343 39 64 28" name="Layers/MaxillaryTeethMenu">
+                            <Property key="Widget_Caption" value="Maxillary\nTeeth"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                        <Widget type="Button" skin="RibbonSplitButton" position="409 39 75 28" name="Layers/MandibularTeethMenu">
+                            <Property key="Widget_Caption" value="Mandibular\nTeeth"/>
+                            <Property key="Text_TextAlign" value="HCenter Top"/>
+                        </Widget>
+                    </Widget>
+                    <Widget type="ScrollView" skin="CustomScrollView" position="0 2 430 66" name="Layers/Predefined">
+                        <Property key="ScrollView_CanvasSize" value="406 49"/>
+                        <UserString key="ButtonSkin" value="ButtonGridImageButton"/>
+                        <UserString key="ItemWidth" value="48"/>
+                        <UserString key="ItemHeight" value="48"/>
+                        <UserString key="ShowGroupCaptions" value="False"/>
+                        <UserString key="ItemPaddingY" value="2"/>
+                        <UserString key="ItemPaddingX" value="10"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="923 2 92 66" name="Layers/ShowContacts">
+                        <Property key="Widget_Caption" value="Show Occlusal\nContacts"/>
+                        <Property key="Button_ImageResource" value="LayersToolstrip/ShowContacts"/>
+                    </Widget>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="DistortionsTab">
+                <Property key="Widget_Caption" value="Distortions"/>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="MovementTab">
+                <Property key="Widget_Caption" value="Movement"/>
+                <Widget type="HScroll" skin="HSlider" position="20 22 100 16" name="Movement/HingeSlider">
+                    <Property key="Scroll_Range" value="1000"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="20 46 108 24" name="Movement/HingeOpenText">
+                    <Property key="Widget_Caption" value="Hinge Opening"/>
+                </Widget>
+                <Widget type="Widget" skin="Separator1" position="140 0 2 72" align="Default" name="Movement/Sep1"/>
+                <Widget type="HScroll" skin="HSlider" position="160 22 100 16" name="Movement/ExcursionRightSlider">
+                    <Property key="Scroll_Range" value="1000"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="156 46 108 24" name="Movement/ExcursionRightText">
+                    <Property key="Widget_Caption" value="Excursion Right"/>
+                </Widget>
+                <Widget type="Widget" skin="Separator1" position="280 0 2 72" align="Default" name="Movement/Sep2"/>
+                <Widget type="HScroll" skin="HSlider" position="300 22 100 16" name="Movement/ExcursionLeftSlider">
+                    <Property key="Scroll_Range" value="1000"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="300 46 100 24" name="Movement/ExcursionLeftText">
+                    <Property key="Widget_Caption" value="Excursion Left"/>
+                </Widget>
+                <Widget type="Widget" skin="Separator1" position="420 0 2 72" align="Default" name="Movement/Sep3"/>
+                <Widget type="HScroll" skin="HSlider" position="440 22 100 16" name="Movement/ProtrusionSlider">
+                    <Property key="Scroll_Range" value="1000"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="456 46 72 24" name="Movement/ProtrusionText">
+                    <Property key="Widget_Caption" value="Protrusion"/>
+                </Widget>
+                <Widget type="Widget" skin="Separator1" position="560 0 2 72" align="Default" name="Movement/Sep4"/>
+                <Widget type="Button" skin="RibbonButton" position="567 4 72 64" name="Movement/Reset">
+                    <Property key="Widget_Caption" value="Reset"/>
+                    <Property key="Button_ImageResource" value="MovementToolstrip/Reset"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="641 4 72 64" name="Movement/Restore">
+                    <Property key="Widget_Caption" value="Restore"/>
+                    <Property key="Button_ImageResource" value="MovementToolstrip/Restore"/>
+                </Widget>
+                <Widget type="Widget" skin="Separator1" position="716 0 2 72" align="Default" name="Movement/Sep5"/>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="SequencesTab">
+                <Property key="Widget_Caption" value="Sequences"/>
+                <Widget type="Button" skin="RibbonButton" position="2 2 74 66" name="SequencesTab/SequenceButton">
+                    <Property key="Widget_Caption" value="Sequence"/>
+                    <Property key="Button_ImageResource" value="SequenceToolstrip/Sequence"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButtonSmall" position="82 46 50 22" name="SequencesTab/PlayButton">
+                    <Property key="Widget_Caption" value="Play"/>
+                    <Property key="Button_ImageResource" value="SequenceToolstrip/Play"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButtonSmall" position="136 46 50 22" name="SequencesTab/StopButton">
+                    <Property key="Widget_Caption" value="Stop"/>
+                    <Property key="Button_ImageResource" value="SequenceToolstrip/Stop"/>
+                </Widget>
+                <Widget type="StaticText" skin="RibbonStaticText" position="83 14 77 16">
+                    <Property key="Widget_Caption" value="Now Playing:"/>
+                </Widget>
+                <Widget type="StaticText" skin="RibbonStaticText" position="161 14 239 16" name="SequencesTab/NowPlaying">
+                    <Property key="Widget_Caption" value="None"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="RenderingTab">
+                <Property key="Widget_Caption" value="Rendering"/>
+                <Widget type="Button" skin="RibbonButton" position="351 2 66 64" name="RenderingTab/RenderButton">
+                    <Property key="Widget_Caption" value="Render"/>
+                    <Property key="Button_ImageResource" value="RenderingToolstrip/Render"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="0 2 66 64" name="RenderingTab/SizeButton">
+                    <Property key="Widget_Caption" value="Size"/>
+                    <Property key="Button_ImageResource" value="RenderingToolstrip/Size"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="72 2 66 64" name="RenderingTab/ColorButton">
+                    <Property key="Widget_Caption" value="Color"/>
+                    <Property key="Button_ImageResource" value="RenderingToolstrip/Color"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="144 11 34 14">
+                    <Property key="Widget_Caption" value="Width"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="242 11 42 14">
+                    <Property key="Widget_Caption" value="Height"/>
+                </Widget>
+                <Widget type="Edit" skin="Edit" position="181 8 59 20" name="RenderingTab/WidthEdit">
+                    <Property key="Widget_Caption" value="1024"/>
+                    <UserString key="AllowFloat" value="False"/>
+                    <UserString key="MinValue" value="1"/>
+                    <UserString key="MaxValue" value="4096"/>
+                </Widget>
+                <Widget type="Edit" skin="Edit" position="285 8 59 20" name="RenderingTab/HeightEdit">
+                    <Property key="Widget_Caption" value="768"/>
+                    <UserString key="MaxValue" value="4096"/>
+                    <UserString key="MinValue" value="1"/>
+                    <UserString key="AllowFloat" value="False"/>
+                </Widget>
+                <Widget type="StaticText" skin="StaticText" position="144 41 75 14">
+                    <Property key="Widget_Caption" value="Anti Aliasing"/>
+                </Widget>
+                <Widget type="ComboBox" skin="ComboBox" position="223 38 121 20" name="RenderingTab/AACombo">
+                    <Property key="ComboBox_AddItem" value="None"/>
+                    <Property key="ComboBox_AddItem" value="2x"/>
+                    <Property key="ComboBox_AddItem" value="4x"/>
+                    <Property key="ComboBox_AddItem" value="8x"/>
+                    <Property key="Edit_Static" value="true"/>
+                </Widget>
+            </Widget>
+            <Widget type="TabItem" skin="" position="4 26 1607 83" name="WindowTab">
+                <Property key="Widget_Caption" value="Window"/>
+                <Widget type="Button" skin="RibbonButton" position="0 2 79 68" name="WindowTab/BackgroundButton">
+                    <Property key="Widget_Caption" value="Background\nColor"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/BackgroundColor"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="82 2 79 68" name="WindowTab/Options">
+                    <Property key="Widget_Caption" value="Options"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Options"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="164 2 79 68" name="WindowTab/ShowStatsButton">
+                    <Property key="Widget_Caption" value="Show\nStatistics"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Statistics"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="246 2 79 68" name="WindowTab/WindowLayoutButton">
+                    <Property key="Widget_Caption" value="Window\nLayout"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/WindowLayout"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="328 2 79 68" name="WindowTab/CloneButton">
+                    <Property key="Widget_Caption" value="Clone"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Clone"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="410 2 79 68" name="WindowTab/HelpButton">
+                    <Property key="Widget_Caption" value="Help"/>
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Help"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="492 2 79 68" name="WindowTab/AboutButton">
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Info"/>
+                    <Property key="Widget_Caption" value="About"/>
+                </Widget>
+                <Widget type="Button" skin="RibbonButton" position="574 2 79 68" name="WindowTab/UpdateButton">
+                    <Property key="Button_ImageResource" value="WindowToolstrip/Updates"/>
+                    <Property key="Widget_Caption" value="Check for\nUpdates"/>
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

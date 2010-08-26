@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanel" position="132 162 179 161" layer="Overlapped">
+        <Widget type="StaticText" skin="StaticText" position="10 1 45 14">
+            <Property key="Widget_Caption" value="Colors"/>
+        </Widget>
+        <Widget type="Widget" skin="Separator3" position="0 16 177 1"/>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="1 18 177 120" name="ColorGrid">
+            <Property key="ScrollView_CanvasSize" value="177 120"/>
+            <Property key="ScrollView_VisibleVScroll" value="false"/>
+            <Property key="ScrollView_VisibleHScroll" value="false"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ItemWidth" value="14"/>
+            <UserString key="ItemHeight" value="14"/>
+            <UserString key="ButtonSkin" value="ButtonGridImageButton"/>
+            <UserString key="ItemPaddingX" value="2"/>
+            <UserString key="ItemPaddingY" value="2"/>
+            <UserString key="ShowGroupCaptions" value="False"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="2 138 88 20" align="Left Bottom" name="MoreColorsButton">
+            <Property key="Widget_Caption" value="More Colors"/>
+        </Widget>
+    </Widget>
+</MyGUI>

@@ -19,8 +19,8 @@ namespace Medical.GUI
 
         GridPropertiesControl gridPropertiesControl;
 
-        public RightCondylarGrowthPanel(String panelFile, StateWizardPanelController controller)
-            : base(panelFile, controller)
+        public RightCondylarGrowthPanel(StateWizardPanelController controller)
+            : base("Medical.Controller.StatePicker.Panels.Mandible.RightCondylarGrowthPanel.layout", controller)
         {
 
             rightRamusHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/RamusHeightSlider") as VScroll);

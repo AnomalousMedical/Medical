@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="6 31 352 36" layer="Overlapped">
+        <Widget type="Button" skin="Button" position="3 3 85 30" name="StateWizardButtons/Cancel">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="90 3 85 30" name="StateWizardButtons/Previous">
+            <Property key="Widget_Caption" value="Previous"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="177 3 85 30" name="StateWizardButtons/Next">
+            <Property key="Widget_Caption" value="Next"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="264 3 85 30" name="StateWizardButtons/Finish">
+            <Property key="Widget_Caption" value="Finish"/>
+        </Widget>
+    </Widget>
+</MyGUI>

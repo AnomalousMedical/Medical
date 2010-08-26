@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="53 80 273 600" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="3 3 109 14">
+            <Property key="Widget_Caption" value="Distortion Name"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="6 21 262 21" align="HStretch Top" name="Notes/DistortionName">
+            <Property key="Widget_Caption" value="Custom Distortion"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 42 110 14">
+            <Property key="Widget_Caption" value="Date Created"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="6 60 262 21" align="HStretch Top" name="Notes/DateCreated"/>
+        <Widget type="StaticText" skin="StaticText" position="3 81 110 14">
+            <Property key="Widget_Caption" value="Distortion Wizard"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="6 99 262 21" align="HStretch Top" name="Notes/DistortionWizard">
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 122 116 14">
+            <Property key="Widget_Caption" value="Select Thumbnail"/>
+        </Widget>
+        <Widget type="ScrollView" skin="CustomScrollView2" position="4 140 265 165" align="HStretch Top" name="Notes/Thumbnails">
+            <Property key="ScrollView_CanvasSize" value="255 10"/>
+            <UserString key="ShowGroupCaptions" value="False"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 304 47 14">
+            <Property key="Widget_Caption" value="Notes"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanel" position="3 319 266 277" align="HStretch VStretch">
+            <Widget type="Edit" skin="WordWrap" position="0 0 265 550" align="HCenter Top" name="Notes/NotesText">
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Edit_MaxTextLength" value="2900"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

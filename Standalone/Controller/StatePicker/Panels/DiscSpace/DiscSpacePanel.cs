@@ -25,8 +25,8 @@ namespace Medical.GUI
         private DiscSpaceControl discSpaceControl;
         private CheckButton showDiscCheckBox;
 
-        public DiscSpacePanel(String defaultLayerState, String subDirectory, String panelFile, StateWizardPanelController controller)
-            : base(panelFile, controller)
+        public DiscSpacePanel(String defaultLayerState, String subDirectory, StateWizardPanelController controller)
+            : base("Medical.Controller.StatePicker.Panels.DiscSpace.DiscSpacePanel.layout", controller)
         {
             this.defaultLayerState = defaultLayerState;
             this.subDirectory = subDirectory;

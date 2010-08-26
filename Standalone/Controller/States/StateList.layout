@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanelOnPanel2" position="83 279 217 466" layer="Overlapped">
+        <Widget type="ScrollView" skin="CustomScrollView" position="0 0 217 466" align="Stretch" name="StateList/ScrollView">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="ScrollView_CanvasSize" value="209 10"/>
+            <UserString key="ButtonSkin" value="ButtonListIconButton"/>
+            <UserString key="ItemHeight" value="102"/>
+        </Widget>
+    </Widget>
+</MyGUI>

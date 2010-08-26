@@ -31,13 +31,13 @@ namespace Medical.GUI
             Button showStatsButton = ribbonWidget.findWidget("WindowTab/ShowStatsButton") as Button;
             showStatsButton.MouseButtonClick += new MyGUIEvent(showStatsButton_MouseButtonClick);
 
-            colorMenu = new ColorMenu("ColorMenu.layout");
+            colorMenu = new ColorMenu();
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
 
-            options = new OptionsDialog("Options.layout");
+            options = new OptionsDialog();
             options.OptionsChanged += new EventHandler(options_OptionsChanged);
 
-            cloneWindowDialog = new CloneWindowDialog("CloneWindowProperties.layout");
+            cloneWindowDialog = new CloneWindowDialog();
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
 
             Button optionsButton = ribbonWidget.findWidget("WindowTab/Options") as Button;
@@ -69,7 +69,7 @@ namespace Medical.GUI
             //About
             Button aboutButton = ribbonWidget.findWidget("WindowTab/AboutButton") as Button;
             aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
-            aboutDialog = new AboutDialog("AboutBox.layout");
+            aboutDialog = new AboutDialog();
 
             //Update
             Button updateButton = ribbonWidget.findWidget("WindowTab/UpdateButton") as Button;

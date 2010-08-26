@@ -21,8 +21,8 @@ namespace Medical.GUI
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
-        public OptionsDialog(String layoutFile)
-            :base(layoutFile)
+        public OptionsDialog()
+            :base("Medical.Controller.GUIController.OptionsDialog.layout")
         {
             this.Modal = true;
             this.SmoothShow = true;

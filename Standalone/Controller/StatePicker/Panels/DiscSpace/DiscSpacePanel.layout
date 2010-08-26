@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="63 107 194 451" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="0 4 214 14">
+            <Property key="Widget_Caption" value="Check this box to show the disc."/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="14 23 117 23" name="DiscSpace/ShowDisc">
+            <Property key="Widget_Caption" value="Show Disc"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 50 147 17">
+            <Property key="Widget_Caption" value="Input Joint Location"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="8 71 121 17">
+            <Property key="Widget_Caption" value="Vertical Space"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="4 90 184 24" name="DiscSpace/VerticalSpaceCombo">
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="ComboBox_AddItem" value="Normal"/>
+            <Property key="ComboBox_AddItem" value="Increased"/>
+            <Property key="ComboBox_AddItem" value="Decreased"/>
+            <Property key="ComboBox_AddItem" value="Bone on Bone"/>
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="8 115 121 17">
+            <Property key="Widget_Caption" value="Horizontal Space"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="4 134 184 24" name="DiscSpace/HorizontalSpaceCombo">
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="ComboBox_AddItem" value="Normal"/>
+            <Property key="ComboBox_AddItem" value="Posterior Shift"/>
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="8 158 121 17">
+            <Property key="Widget_Caption" value="Condyle Shape"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="4 177 184 24" name="DiscSpace/CondyleShapeCombo">
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="ComboBox_AddItem" value="Normal"/>
+            <Property key="ComboBox_AddItem" value="Osteophyte"/>
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanelOnPanel2" position="4 219 184 224">
+            <Widget type="StaticText" skin="StaticText" position="2 3 42 14">
+                <Property key="Widget_Caption" value="Stage"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 21 57 23" name="DiscSpace/StageI">
+                <Property key="Widget_Caption" value="I"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 46 57 23" name="DiscSpace/StageII">
+                <Property key="Widget_Caption" value="II"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 71 57 23" name="DiscSpace/StageIIIa">
+                <Property key="Widget_Caption" value="IIIa"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 96 57 23" name="DiscSpace/StageIIIb">
+                <Property key="Widget_Caption" value="IIIb"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 121 57 23" name="DiscSpace/StageIVa">
+                <Property key="Widget_Caption" value="IVa"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 146 57 23" name="DiscSpace/StageIVb">
+                <Property key="Widget_Caption" value="IVb"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 171 57 23" name="DiscSpace/StageVa">
+                <Property key="Widget_Caption" value="Va"/>
+            </Widget>
+            <Widget type="Button" skin="RadioBox" position="9 196 57 23" name="DiscSpace/StageVb">
+                <Property key="Widget_Caption" value="Vb"/>
+            </Widget>
+            <Widget type="Widget" skin="CustomPanelOnPanel" position="66 10 111 101">
+                <Property key="Widget_Enabled" value="false"/>
+                <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
+                    <Property key="Widget_Caption" value="Clock Face"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 21 91 23" name="DiscSpace/Clock12">
+                    <Property key="Widget_Caption" value="12 O&apos;Clock"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 46 91 23" name="DiscSpace/Clock11">
+                    <Property key="Widget_Caption" value="11 O&apos;Clock"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 71 91 23" name="DiscSpace/Clock10">
+                    <Property key="Widget_Caption" value="10 O&apos;Clock"/>
+                </Widget>
+            </Widget>
+            <Widget type="Widget" skin="CustomPanelOnPanel" position="66 115 111 101">
+                <Property key="Widget_Enabled" value="false"/>
+                <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
+                    <Property key="Widget_Caption" value="RDA Reduction"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 21 91 23" name="DiscSpace/RDAMild">
+                    <Property key="Widget_Caption" value="Mild"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 46 91 23" name="DiscSpace/RDAModerate">
+                    <Property key="Widget_Caption" value="Moderate"/>
+                </Widget>
+                <Widget type="Button" skin="RadioBox" position="9 71 91 23" name="DiscSpace/RDASevere">
+                    <Property key="Widget_Caption" value="Severe"/>
+                </Widget>
+            </Widget>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 202 160 14">
+            <Property key="Widget_Caption" value="Piper Classification Stage"/>
+        </Widget>
+    </Widget>
+</MyGUI>

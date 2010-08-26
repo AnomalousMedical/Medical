@@ -65,7 +65,7 @@ namespace Medical.GUI
 
         public WizardIconPanel()
         {
-            layout = LayoutManager.Instance.loadLayout("DistortionPanels/WizardIconPanel.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.StatePicker.WizardIconPanel.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             layoutContainer = new MyGUILayoutContainer(mainWidget);

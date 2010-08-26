@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomRibbonPanel" position="13 27 1634 92" layer="Overlapped" name="WizardIconPanel"/>
+</MyGUI>

@@ -41,7 +41,7 @@ namespace Standalone
         private ImageRenderer imageRenderer;
 
         //GUI
-        private BasicGUI basicGUI;
+        private PiperJBOGUI basicGUI;
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private BackgroundController backgroundController;
@@ -163,7 +163,7 @@ namespace Standalone
             createWindowPresets();
 
             //GUI
-            basicGUI = new BasicGUI(this);
+            basicGUI = new PiperJBOGUI(this);
             basicGUI.ScreenLayout.Root.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);

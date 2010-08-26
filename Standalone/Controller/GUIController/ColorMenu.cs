@@ -17,9 +17,9 @@ namespace Medical.GUI
         private ButtonGrid colorGrid;
         private Color customColor = Color.Black;
 
-        public ColorMenu(String layoutFile)
+        public ColorMenu()
         {
-            layout = LayoutManager.Instance.loadLayout(layoutFile);
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.ColorMenu.layout");
             Widget mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);

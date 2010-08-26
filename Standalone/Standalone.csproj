@@ -99,8 +99,8 @@
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
-    <Compile Include="Controller\GUIController\BasicGUI.cs" />
-    <Compile Include="Controller\GUIController\BasicRibbon.cs" />
+    <Compile Include="Controller\GUIController\PiperJBOGUI.cs" />
+    <Compile Include="Controller\GUIController\PiperJBORibbon.cs" />
     <Compile Include="Controller\GUIController\CloneWindowDialog.cs" />
     <Compile Include="Controller\GUIController\ColorMenu.cs" />
     <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
@@ -192,7 +192,7 @@
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
     <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothButton.cs" />
-    <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothPanel.cs" />
+    <Compile Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardRibbonTab.cs" />
     <Compile Include="Controller\StatePicker\WizardIconPanel.cs" />
@@ -232,6 +232,36 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controller\Dialogs\AboutDialog.layout" />
+    <EmbeddedResource Include="Controller\Dialogs\ChooseSceneDialog.layout" />
+    <EmbeddedResource Include="Controller\Dialogs\OpenPatientDialog.layout" />
+    <EmbeddedResource Include="Controller\Dialogs\SavePatientDialog.layout" />
+    <EmbeddedResource Include="Controller\GUIController\CloneWindowDialog.layout" />
+    <EmbeddedResource Include="Controller\GUIController\ColorMenu.layout" />
+    <EmbeddedResource Include="Controller\GUIController\OptionsDialog.layout" />
+    <EmbeddedResource Include="Controller\GUIController\PiperJBORibbon.layout" />
+    <EmbeddedResource Include="Controller\GUIController\ResolutionMenu.layout" />
+    <None Include="Controller\StatePicker\Panels\GridControlTemplate.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Disclaimer\DisclaimerPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\DiscSpace\DiscSpacePanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Doppler\DopplerPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Fossa\FossaPanelLeft.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Fossa\FossaPanelRight.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Mandible\LeftCondylarGrowthPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Mandible\LeftCondylarDegenerationPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Mandible\RightCondylarGrowthPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Mandible\RightCondylarDegenerationPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Notes\NotesPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Preset\PresetStatePanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\Profile\ProfileDistortionPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanelBottom.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\TeethAdaptationPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\TeethHeightAdaptationPanel.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanelTop.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\StateWizardButtons.layout" />
+    <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
+    <EmbeddedResource Include="Controller\States\StateList.layout" />
+    <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
