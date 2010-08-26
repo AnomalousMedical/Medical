@@ -71,16 +71,16 @@ namespace Standalone
                     }
                     else
                     {
-                        //MessageBox.Show("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        wx.MessageDialog.ShowModal("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", WindowStyles.DIALOG_OK | WindowStyles.ICON_ERROR);
                     }
                 }
                 else if (result == ConnectionResult.TooManyUsers)
                 {
-                    connectionLoop = false;// MessageBox.Show("Too many users currently connected. Please shut down the program on another workstation.", "Network Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                    connectionLoop = wx.MessageDialog.ShowModal("Too many users currently connected. Please shut down the program on another workstation. Would you like to try to connect again?", "Network Dongle Connection Failure", WindowStyles.DIALOG_YES_NO | WindowStyles.ICON_QUESTION) == ShowModalResult.YES;
                 }
                 else if (result == ConnectionResult.NoDongle)
                 {
-                    connectionLoop = false;// MessageBox.Show("Please connect your dongle.", "Dongle Connection Failure", MessageBoxButtons.RetryCancel, MessageBoxIcon.Exclamation) == DialogResult.Retry;
+                    connectionLoop = wx.MessageDialog.ShowModal("Please connect your dongle. Would you like to try to connect again?", "Dongle Connection Failure", WindowStyles.DIALOG_YES_NO | WindowStyles.ICON_QUESTION) == ShowModalResult.YES;
                 }
             }
             return startupSuceeded;
@@ -130,7 +130,7 @@ namespace Standalone
                     e = e.InnerException;
                     errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
                 }
-                //MessageBox.Show(errorMessage, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                wx.MessageDialog.ShowModal(errorMessage, "Exception", WindowStyles.DIALOG_OK | WindowStyles.ICON_ERROR);
             }
         }
     }
