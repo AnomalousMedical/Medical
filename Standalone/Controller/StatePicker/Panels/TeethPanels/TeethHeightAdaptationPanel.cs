@@ -15,10 +15,11 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
+        GridPropertiesControl gridPropertiesControl;
+
         public TeethHeightAdaptationPanel(String panelFile, StateWizardPanelController panelController)
             : base(panelFile, panelController)
         {
-            //gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
             heightControl = new HeightControl(mainWidget.findWidget("TeethAdaptPanel/LeftSideSlider") as VScroll,
                 mainWidget.findWidget("TeethAdaptPanel/RightSideSlider") as VScroll,
                 mainWidget.findWidget("TeethAdaptPanel/BothSidesSlider") as VScroll);
@@ -29,6 +30,9 @@ namespace Medical.GUI
 
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
+
+            gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            gridPropertiesControl.GridSpacing = 2;
         }
 
         public override void applyToState(MedicalState state)
@@ -61,8 +65,8 @@ namespace Medical.GUI
 
         protected override void onPanelOpening()
         {
-            //gridPropertiesControl1.Origin = TeethController.getToothCenter();
-            //gridPropertiesControl1.updateGrid();
+            gridPropertiesControl.Origin = TeethController.getToothCenter();
+            gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
             heightControl.getPositionFromScene();
         }
@@ -70,7 +74,7 @@ namespace Medical.GUI
         protected override void onPanelClosing()
         {
             TeethController.showTeethTools(false, false);
-            //controller.MeasurementGrid.Visible = false;
+            controller.MeasurementGrid.Visible = false;
             teethMovementPanel.disableAllButtons();
         }
 

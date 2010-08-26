@@ -17,10 +17,11 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
+        GridPropertiesControl gridPropertiesControl;
+
         public RightCondylarGrowthPanel(String panelFile, StateWizardPanelController controller)
             : base(panelFile, controller)
         {
-            //gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
 
             rightRamusHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/RamusHeightSlider") as VScroll);
             rightCondyleHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/CondyleHeightSlider") as VScroll);
@@ -39,6 +40,9 @@ namespace Medical.GUI
 
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
+
+            gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            gridPropertiesControl.GridSpacing = 5;
         }
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
@@ -70,13 +74,13 @@ namespace Medical.GUI
         protected override void onPanelOpening()
         {
             base.onPanelOpening();
-            //gridPropertiesControl1.updateGrid();
+            gridPropertiesControl.updateGrid();
         }
 
         protected override void onPanelClosing()
         {
             base.onPanelClosing();
-            //panelController.MeasurementGrid.Visible = false;
+            controller.MeasurementGrid.Visible = false;
         }
     }
 }

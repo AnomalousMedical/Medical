@@ -15,11 +15,12 @@ namespace Medical.GUI
         private Button undoButton;
         private Button resetButton;
 
+        GridPropertiesControl gridPropertiesControl;
+
         public TeethAdaptationPanel(String panelFile, StateWizardPanelController controller)
             : base(panelFile, controller)
         {
             this.panelController = controller;
-            //gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
             teethMovementPanel = new TeethMovementPanel(controller, mainWidget);
 
             undoButton = mainWidget.findWidget("TeethAdaptationPanel/UndoButton") as Button;
@@ -27,6 +28,9 @@ namespace Medical.GUI
 
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             resetButton.MouseButtonClick += new MyGUIEvent(resetButton_MouseButtonClick);
+
+            gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            gridPropertiesControl.GridSpacing = 2;
         }
 
         public override void applyToState(MedicalState state)
@@ -54,21 +58,26 @@ namespace Medical.GUI
 
         protected override void onPanelOpening()
         {
-            //gridPropertiesControl1.Origin = TeethController.getToothCenter();
-            //gridPropertiesControl1.updateGrid();
+            gridPropertiesControl.Origin = TeethController.getToothCenter();
+            gridPropertiesControl.updateGrid();
             teethMovementPanel.setDefaultTools();
         }
 
         protected override void onPanelClosing()
         {
             TeethController.showTeethTools(false, false);
-            //panelController.MeasurementGrid.Visible = false;
+            controller.MeasurementGrid.Visible = false;
             teethMovementPanel.disableAllButtons();
         }
 
         void resetButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to reset the teeth to normal?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to reset the teeth alignment to normal?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
+        }
+
+        private void doMakeNormalButtonClick(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
             {
                 TeethController.setAllOffsets(Vector3.Zero);
                 TeethController.setAllRotations(Quaternion.Identity);
@@ -77,7 +86,12 @@ namespace Medical.GUI
 
         void undoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (MessageBox.Show(this, "Are you sure you want to undo the teeth to how they were before the wizard was opened?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+            MessageBox.show("Are you sure you want to undo the teeth alignment to before the wizard was opened?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doUndoButtonClick);
+        }
+
+        private void doUndoButtonClick(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
             {
                 TeethState undo = panelController.StateBlender.UndoState.Teeth;
                 foreach (ToothState toothState in undo.StateEnum)

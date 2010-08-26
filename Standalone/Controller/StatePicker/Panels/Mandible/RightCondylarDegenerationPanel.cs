@@ -19,11 +19,11 @@ namespace Medical.GUI
         private Button undoButton;
         private Button makeNormalButton;
 
+        GridPropertiesControl gridPropertiesControl;
+
         public RightCondylarDegenerationPanel(String panelFile, StateWizardPanelController controller)
             : base(panelFile, controller)
         {
-            //gridPropertiesControl1.setGrid(panelController.MeasurementGrid);
-
             rightCondyleDegenerationSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleDegen/CondyleSlider") as VScroll);
             rightLateralPoleSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleDegen/LateralPoleSlider") as VScroll);
             rightMedialPoleScaleSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleDegen/MedialPoleSlider") as VScroll);
@@ -44,6 +44,9 @@ namespace Medical.GUI
 
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
+
+            gridPropertiesControl = new GridPropertiesControl(controller.MeasurementGrid, mainWidget);
+            gridPropertiesControl.GridSpacing = 5;
         }
 
         void wearSlider_ValueChanged(object sender, EventArgs e)
@@ -98,7 +101,7 @@ namespace Medical.GUI
         {
             base.onPanelOpening();
             allowCameraChange = true;
-            //gridPropertiesControl1.updateGrid();
+            gridPropertiesControl.updateGrid();
             showingWear = false;
         }
 
@@ -106,7 +109,7 @@ namespace Medical.GUI
         {
             base.onPanelClosing();
             allowCameraChange = false;
-            //panelController.MeasurementGrid.Visible = false;
+            controller.MeasurementGrid.Visible = false;
         }
     }
 }
