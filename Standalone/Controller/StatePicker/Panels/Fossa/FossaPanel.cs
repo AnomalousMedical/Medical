@@ -24,6 +24,12 @@ namespace Medical.GUI
 
             eminanceSlider.ScrollChangePosition += new MyGUIEvent(eminanceSlider_ValueChanged);
             this.fossaName = fossaName;
+
+            Button undoButton = mainWidget.findWidget("UndoButton") as Button;
+            undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
+
+            Button makeNormalButton = mainWidget.findWidget("MakeNormalButton") as Button;
+            makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
         }
 
         public override void sceneChanged(MedicalController medicalController, SimulationScene simScene)
@@ -85,30 +91,6 @@ namespace Medical.GUI
             }
         }
 
-        //public Image NormalImage
-        //{
-        //    get
-        //    {
-        //        return normalImagePanel.BackgroundImage;
-        //    }
-        //    set
-        //    {
-        //        normalImagePanel.BackgroundImage = value;
-        //    }
-        //}
-
-        //public Image DistortedImage
-        //{
-        //    get
-        //    {
-        //        return distortedImagePanel.BackgroundImage;
-        //    }
-        //    set
-        //    {
-        //        distortedImagePanel.BackgroundImage = value;
-        //    }
-        //}
-
         private void synchronize(Object source, float value)
         {
             if (source != fossa && fossa != null)
@@ -135,7 +117,7 @@ namespace Medical.GUI
 
         void makeNormalButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            MessageBox.show("Are you sure you want to undo the fossa to before the wizard was opened?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
+            MessageBox.show("Are you sure you want to reset the fossa to normal?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doMakeNormalButtonClick);
         }
 
         private void doMakeNormalButtonClick(MessageBoxStyle result)
@@ -148,7 +130,7 @@ namespace Medical.GUI
 
         void undoButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            MessageBox.show("Are you sure you want to reset the fossa to normal?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doUndoButtonClick);
+            MessageBox.show("Are you sure you want to undo the fossa to before the wizard was opened?", "Confirm", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, doUndoButtonClick);
         }
 
         private void doUndoButtonClick(MessageBoxStyle result)

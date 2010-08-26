@@ -17,10 +17,10 @@
         <Widget type="StaticImage" skin="StaticImage" position="269 32 60 60">
             <Property key="Image_Resource" value="FossaImages/RightFossaFlat"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="3 99 100 30" name="RightFossa/UndoButton">
+        <Widget type="Button" skin="Button" position="3 99 100 30" name="UndoButton">
             <Property key="Widget_Caption" value="Undo"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="105 99 100 30" name="RightFossa/MakeNormalButton">
+        <Widget type="Button" skin="Button" position="105 99 100 30" name="MakeNormalButton">
             <Property key="Widget_Caption" value="Make Normal"/>
         </Widget>
     </Widget>
