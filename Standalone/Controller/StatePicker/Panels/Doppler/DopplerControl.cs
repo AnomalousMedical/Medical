@@ -123,6 +123,15 @@ namespace Medical.GUI
             translatoryCombo.SelectedIndex = translatoryCombo.findItemIndexWith("Unknown");
             clickCombo.SelectedIndex = clickCombo.findItemIndexWith("Unknown");
             stageGroup.SelectedButton = stageIButton;
+
+            stageIButton.Enabled = true;
+            stageIIButton.Enabled = true;
+            stageIIIaButton.Enabled = true;
+            stageIIIbButton.Enabled = true;
+            stageIVaButton.Enabled = true;
+            stageIVbButton.Enabled = true;
+            stageVaButton.Enabled = true;
+            stageVbButton.Enabled = true;
         }
 
         /// <summary>
