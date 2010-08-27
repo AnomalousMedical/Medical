@@ -214,11 +214,23 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The alpha value for this interface. Note that if it is currently in
+        /// transition the target opacity will be returned and not the actual
+        /// current value.
+        /// </summary>
         public float CurrentAlpha
         {
             get
             {
-                return currentAlpha;
+                if (changingOpacity)
+                {
+                    return targetOpacity;
+                }
+                else
+                {
+                    return currentAlpha;
+                }
             }
         }
 
