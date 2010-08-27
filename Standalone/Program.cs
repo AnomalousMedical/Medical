@@ -86,6 +86,14 @@ namespace Standalone
             return startupSuceeded;
         }
 
+        public void saveCrashLog()
+        {
+            if (controller != null)
+            {
+                controller.saveCrashLog();
+            }
+        }
+
 #if !ENABLE_HASP_PROTECTION
         private static SimulatedVersion getSimulatedVersion()
         {
@@ -116,14 +124,19 @@ namespace Standalone
         [STAThread]
         static void Main(string[] args)
         {
+            StandaloneApp app = null;
             try
             {
-                StandaloneApp app = new StandaloneApp();
+                app = new StandaloneApp();
                 app.Run();
             }
             catch (Exception e)
             {
                 Logging.Log.Default.printException(e);
+                if (app != null)
+                {
+                    app.saveCrashLog();
+                }
                 String errorMessage = e.Message + "\n" + e.StackTrace;
                 while (e.InnerException != null)
                 {

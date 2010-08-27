@@ -339,7 +339,15 @@ namespace Standalone
             //window.Handle.addListener(windowListener);
             //basicGUI.windowChanged(window.Handle);
 
-            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to shut down now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);   
+            MessageBox.show("You will need to restart the program to apply your settings.\nWould you like to shut down now?", "Apply Changes?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, displayParameterChangeCallback);
+        }
+
+        public void saveCrashLog()
+        {
+            if (medicalController != null)
+            {
+                medicalController.saveCrashLog();
+            }
         }
 
         void displayParameterChangeCallback(MessageBoxStyle result)
