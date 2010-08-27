@@ -69,6 +69,7 @@ namespace Medical.GUI
                 itemButton.Caption = topEntry.Text;
                 itemButton.setSize((int)itemButton.getTextSize().Width + 35, buttonHeight);
                 itemButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(itemButton, topEntry.Thumbnail));
+                menuButtons.Add(itemButton);
 
                 flowLayout.addChild(new MyGUILayoutContainer(itemButton));
 
