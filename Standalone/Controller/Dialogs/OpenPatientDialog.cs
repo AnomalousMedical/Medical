@@ -103,6 +103,7 @@ namespace Medical.GUI
             deleteButton = window.findWidget("Open/DeleteButton") as Button;
             Button cancelButton = window.findWidget("Open/CancelButton") as Button;
             searchBox = window.findWidget("Open/SearchText") as Edit;
+            Button browseButton = window.findWidget("Open/BrowseButton") as Button;
 
             int fileGridWidth = fileDataGrid.getWidth() - 2;
             fileDataGrid.addColumn("First Name", fileGridWidth / 3);
@@ -133,6 +134,7 @@ namespace Medical.GUI
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+            browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -356,6 +358,18 @@ namespace Medical.GUI
                     break;
             }
             cancelPostAction = CancelPostAction.None;
+        }
+
+        void browseButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption))
+            {
+                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    locationTextBox.Caption = dirDialog.Path;
+                    listFiles();
+                }
+            }
         }
     }
 }

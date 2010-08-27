@@ -21,7 +21,7 @@
             <Property key="Widget_Caption" value="Save Location"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="3 133 342 23" name="Save/Location"/>
-        <Widget type="Button" skin="Button" position="347 133 80 23">
+        <Widget type="Button" skin="Button" position="347 133 80 23" name="Save/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="3 159 69 15">

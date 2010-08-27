@@ -35,6 +35,7 @@ namespace Medical.GUI
             warningImage = window.findWidget("Save/WarningImage") as StaticImage;
             saveButton = window.findWidget("Save/SaveButton") as Button;
             cancelButton = window.findWidget("Save/CancelButton") as Button;
+            Button browseButton = window.findWidget("Save/BrowseButton") as Button;
 
             lastText.EventEditTextChange +=new MyGUIEvent(lastText_EventEditTextChange);
             firstText.EventEditTextChange += new MyGUIEvent(firstText_EventEditTextChange);
@@ -44,6 +45,7 @@ namespace Medical.GUI
             warningImage.Visible = false;
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+            browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
         }
 
         public void save()
@@ -187,12 +189,15 @@ namespace Medical.GUI
             }
         }
 
-        private void browseButton_Click(object sender, EventArgs e)
+        void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
-            //{
-            //    locationTextBox.Caption = folderBrowserDialog.SelectedPath;
-            //}
+            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption))
+            {
+                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    locationTextBox.Caption = dirDialog.Path;
+                }
+            }
         }
     }
 }

@@ -11,7 +11,7 @@
             <Property key="Widget_Caption" value="Load Location"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="5 431 398 25" name="Open/LoadLocation"/>
-        <Widget type="Button" skin="Button" position="405 431 72 25">
+        <Widget type="Button" skin="Button" position="405 431 72 25" name="Open/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="535 435 174 15" name="Open/WarningText">
