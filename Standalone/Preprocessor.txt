@@ -1,0 +1,14 @@
+﻿This file defines what the various preprocessor definitions are for Piper's JBO.
+
+
+
+MAC_OSX - Sections that have special code only for OSX.
+
+WINDOWS - Sections that have special code only for Windows.
+
+ALLOW_OVERRIDE - Allow the override.ini file to be processed and used.
+
+CREATE_MAINWINDOW_MENU - Create a menu bar as part of the main window.
+
+ENABLE_HASP_PROTECTION - Enable the hasp protection. When this is not defined the program can 
+simulate all the various versions. If you define this you should also define it in OSHelper.
