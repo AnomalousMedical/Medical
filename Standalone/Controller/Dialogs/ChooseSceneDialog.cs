@@ -15,11 +15,13 @@ namespace Medical.GUI
         private StandaloneController controller;
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
+        private PiperJBOGUI piperGUI;
 
-        public ChooseSceneDialog(StandaloneController controller)
+        public ChooseSceneDialog(StandaloneController controller, PiperJBOGUI piperGUI)
             : base("Medical.Controller.Dialogs.ChooseSceneDialog.layout")
         {
             this.controller = controller;
+            this.piperGUI = piperGUI;
 
             Button openButton = window.findWidget("ChooseScene/Open") as Button;
             Button cancelButton = window.findWidget("ChooseScene/Cancel") as Button;
@@ -90,6 +92,7 @@ namespace Medical.GUI
         {
             if (sceneFileGrid.SelectedItem != null)
             {
+                piperGUI.changeActiveFile(null);
                 controller.openNewScene(sceneFileGrid.SelectedItem.UserObject.ToString());
             }
             this.close();

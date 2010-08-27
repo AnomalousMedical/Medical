@@ -68,7 +68,7 @@ namespace Medical.GUI
 
             wizardRibbonTab = new StateWizardRibbonTab(gui, stateWizardController, this);
 
-            chooseSceneDialog = new ChooseSceneDialog(standaloneController);
+            chooseSceneDialog = new ChooseSceneDialog(standaloneController, this);
             savePatientDialog = new SavePatientDialog();
             openPatientDialog = new OpenPatientDialog();
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
@@ -151,41 +151,16 @@ namespace Medical.GUI
             savePatientDialog.saveAs();
         }
 
-        void savePatientDialog_SaveFile(object sender, EventArgs e)
+        public void changeActiveFile(PatientDataFile patientData)
         {
-            standaloneController.saveMedicalState(savePatientDialog.PatientData);
-        }
-
-        void openPatientDialog_OpenFile(object sender, EventArgs e)
-        {
-            standaloneController.openPatientFile(openPatientDialog.CurrentFile);
-        }
-
-        private void animationCompleted(LayoutContainer oldChild)
-        {
-            if (oldChild != null)
+            if (patientData != null)
             {
-                oldChild.Visible = false;
+                MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
+                MedicalConfig.RecentDocuments.addDocument(patientData.BackingFile);
             }
-        }
-
-        void standaloneController_SceneUnloading(SimScene scene)
-        {
-            basicRibbon.sceneUnloading(scene);
-        }
-
-        void standaloneController_SceneLoaded(SimScene scene)
-        {
-            basicRibbon.sceneLoaded(scene);
-            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
-            this.changeLeftPanel(null);
-        }
-
-        public ScreenLayoutManager ScreenLayout
-        {
-            get
+            else
             {
-                return screenLayoutManager;
+                MainWindow.Instance.clearWindowTitle();
             }
         }
 
@@ -200,6 +175,48 @@ namespace Medical.GUI
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard(wizard);
             basicRibbon.AllowLayerShortcuts = false;
+        }
+
+        public ScreenLayoutManager ScreenLayout
+        {
+            get
+            {
+                return screenLayoutManager;
+            }
+        }
+
+        private void savePatientDialog_SaveFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = savePatientDialog.PatientData;
+            changeActiveFile(patientData);
+            standaloneController.saveMedicalState(patientData);
+        }
+
+        private void openPatientDialog_OpenFile(object sender, EventArgs e)
+        {
+            PatientDataFile patientData = openPatientDialog.CurrentFile;
+            changeActiveFile(patientData);
+            standaloneController.openPatientFile(patientData);
+        }
+
+        private void animationCompleted(LayoutContainer oldChild)
+        {
+            if (oldChild != null)
+            {
+                oldChild.Visible = false;
+            }
+        }
+
+        private void standaloneController_SceneUnloading(SimScene scene)
+        {
+            basicRibbon.sceneUnloading(scene);
+        }
+
+        private void standaloneController_SceneLoaded(SimScene scene)
+        {
+            basicRibbon.sceneLoaded(scene);
+            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
+            this.changeLeftPanel(null);
         }
 
 #if CREATE_MAINWINDOW_MENU

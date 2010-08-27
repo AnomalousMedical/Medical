@@ -39,6 +39,16 @@ namespace Medical
             invalidate();
         }
 
+        public void insertChild(LayoutContainer child, int index)
+        {
+            child.SuppressLayout = true;
+            children.Insert(index, child);
+            child.Visible = visible;
+            child.setAlpha(alpha);
+            child.SuppressLayout = false;
+            invalidate();
+        }
+
         public void removeChild(LayoutContainer child)
         {
             children.Remove(child);
@@ -88,6 +98,7 @@ namespace Medical
                     Size2 childSize = child.DesiredSize;
                     child.WorkingSize = childSize;
                     child.Location = currentLocation;
+                    child.layout();
                     currentLocation.y += childSize.Height + padding;
                 }
             }

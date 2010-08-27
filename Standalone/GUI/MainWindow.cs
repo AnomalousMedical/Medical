@@ -11,6 +11,7 @@ namespace Medical.GUI
     public class MainWindow : Frame
     {
         private WxUpdateTimer updateTimer;
+        private String windowDefaultText;
 
         public static MainWindow Instance { get; private set; }
 
@@ -30,6 +31,35 @@ namespace Medical.GUI
         {
             this.updateTimer = updateTimer;
             this.EVT_IDLE(updateTimer.IdleListener);
+        }
+
+        /// <summary>
+        /// Update the title of the window to reflect a current filename or other info.
+        /// </summary>
+        /// <param name="subName">A name to place as a secondary name in the title.</param>
+        public void updateWindowTitle(String subName)
+        {
+            if (windowDefaultText == null)
+            {
+                windowDefaultText = this.Title;
+            }
+
+#if WINDOWS
+            Title = String.Format("{0} - {1}", windowDefaultText, subName);
+#elif MAC_OSX
+            Title = subName;
+#endif
+        }
+
+        /// <summary>
+        /// Clear the window title back to the default text.
+        /// </summary>
+        public void clearWindowTitle()
+        {
+            if (windowDefaultText != null)
+            {
+                Title = windowDefaultText;
+            }
         }
 
         public OSWindow RenderWindow { get; private set; }
