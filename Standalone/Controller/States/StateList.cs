@@ -85,6 +85,9 @@ namespace Medical.GUI
             datePicker = mainWidget.findWidget("Notes/DateCreated") as Edit;
             distortionWizard = mainWidget.findWidget("Notes/DistortionWizard") as Edit;
             notes = mainWidget.findWidget("Notes/NotesText") as Edit;
+
+            Button deleteButton = mainWidget.findWidget("StateList/DeleteButton") as Button;
+            deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -220,6 +223,14 @@ namespace Medical.GUI
             {
                 statePickerPanel.Visible = false;
                 notesPanel.Visible = true;
+            }
+        }
+
+        void deleteButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (stateListBox.SelectedItem != null)
+            {
+                stateController.destroyState(stateListBox.SelectedIndex);
             }
         }
     }

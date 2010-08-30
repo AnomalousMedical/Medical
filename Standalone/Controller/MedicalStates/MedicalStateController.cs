@@ -165,9 +165,7 @@ namespace Medical
         public void createNormalStateFromScene()
         {
             MedicalState normalState = this.createAndAddState("Normal");
-            normalState.Notes.Notes = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Microsoft Sans Serif;}}
-\viewkind4\uc1\pard\f0\fs17 Normal\par
-}";
+            normalState.Notes.Notes = "Normal";
             normalState.Notes.DataSource = "";
         }
 

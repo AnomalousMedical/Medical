@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelOnPanel2" position="83 292 235 453" layer="Overlapped">
-        <Widget type="Widget" skin="PanelEmpty" position="18 0 217 453" align="Stretch" name="StateList/StatePicker">
+        <Widget type="Widget" skin="PanelEmpty" position="19 0 217 453" align="Stretch" name="StateList/StatePicker">
             <Property key="Widget_Visible" value="true"/>
-            <Widget type="ScrollView" skin="CustomScrollView" position="0 0 217 453" align="Stretch" name="StateList/ScrollView">
+            <Widget type="ScrollView" skin="CustomScrollView" position="0 22 217 431" align="Stretch" name="StateList/ScrollView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="209 10"/>
                 <UserString key="ButtonSkin" value="ButtonListIconButton"/>
                 <UserString key="ItemHeight" value="102"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="3 3 49 18" align="Left Top" name="StateList/DeleteButton">
+                <Property key="Widget_Caption" value="Delete"/>
             </Widget>
         </Widget>
         <Widget type="Button" skin="ButtonLeft" position="2 5 16 16" name="StateList/CollapseButton"/>
