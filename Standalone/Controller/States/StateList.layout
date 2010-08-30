@@ -1,11 +1,53 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelOnPanel2" position="83 279 217 466" layer="Overlapped">
-        <Widget type="ScrollView" skin="CustomScrollView" position="0 0 217 466" align="Stretch" name="StateList/ScrollView">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Property key="ScrollView_CanvasSize" value="209 10"/>
-            <UserString key="ButtonSkin" value="ButtonListIconButton"/>
-            <UserString key="ItemHeight" value="102"/>
+    <Widget type="Widget" skin="CustomPanelOnPanel2" position="83 292 235 453" layer="Overlapped">
+        <Widget type="Widget" skin="PanelEmpty" position="18 0 217 453" align="Stretch" name="StateList/StatePicker">
+            <Property key="Widget_Visible" value="true"/>
+            <Widget type="ScrollView" skin="CustomScrollView" position="0 0 217 453" align="Stretch" name="StateList/ScrollView">
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="ScrollView_CanvasSize" value="209 10"/>
+                <UserString key="ButtonSkin" value="ButtonListIconButton"/>
+                <UserString key="ItemHeight" value="102"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="ButtonLeft" position="2 5 16 16" name="StateList/CollapseButton"/>
+        <Widget type="Button" skin="Button" position="3 25 14 166" name="StateList/Distortions">
+            <Property key="Widget_Caption" value="D\ni\ns\nt\no\nr\nt\ni\no\nn\ns"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="3 193 14 74" name="StateList/Notes">
+            <Property key="Widget_Caption" value="N\no\nt\ne\ns"/>
+        </Widget>
+        <Widget type="Button" skin="ButtonRight" position="2 5 16 16" name="StateList/ExpandButton">
+            <Property key="Widget_Visible" value="false"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="18 0 217 453" align="Stretch" name="StateList/NotesPanel">
+            <Property key="Widget_Visible" value="false"/>
+            <Widget type="StaticText" skin="StaticText" position="3 3 109 14">
+                <Property key="Widget_Caption" value="Distortion Name"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="6 21 207 21" align="HStretch Top" name="Notes/DistortionName">
+                <Property key="Widget_Caption" value="Custom Distortion"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="3 42 110 14">
+                <Property key="Widget_Caption" value="Date Created"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="6 60 207 21" align="HStretch Top" name="Notes/DateCreated"/>
+            <Widget type="StaticText" skin="StaticText" position="3 81 110 14">
+                <Property key="Widget_Caption" value="Distortion Wizard"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="6 99 207 21" align="HStretch Top" name="Notes/DistortionWizard">
+                <Property key="Edit_ReadOnly" value="true"/>
+                <Property key="Edit_Static" value="true"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="3 120 47 14">
+                <Property key="Widget_Caption" value="Notes"/>
+            </Widget>
+            <Widget type="Widget" skin="CustomPanel" position="3 138 210 313" align="Stretch">
+                <Widget type="Edit" skin="WordWrap" position="0 0 210 313" align="Stretch" name="Notes/NotesText">
+                    <Property key="Edit_MultiLine" value="true"/>
+                    <Property key="Edit_MaxTextLength" value="2900"/>
+                </Widget>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

@@ -29,7 +29,7 @@
             <Property key="Widget_Caption" value="Notes"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanel" position="3 319 266 277" align="HStretch VStretch">
-            <Widget type="Edit" skin="WordWrap" position="0 0 265 550" align="HCenter Top" name="Notes/NotesText">
+            <Widget type="Edit" skin="WordWrap" position="0 0 266 277" align="Stretch" name="Notes/NotesText">
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Edit_MaxTextLength" value="2900"/>
             </Widget>

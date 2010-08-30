@@ -18,6 +18,24 @@ namespace Medical.GUI
         private MyGUILayoutContainer layoutContainer;
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
 
+        private int normalWidth;
+        private int smallWidth;
+
+        private Button collapseButton;
+        private Button expandButton;
+
+        private ButtonGroup modeButtons;
+        private Button distortionsButton;
+        private Button notesButton;
+
+        private Widget statePickerPanel;
+        private Widget notesPanel;
+
+        private Edit stateNameTextBox;
+        private Edit datePicker;
+        private Edit distortionWizard;
+        private Edit notes;
+
         public StateList(MedicalStateController stateController)
         {
             this.stateController = stateController;
@@ -41,6 +59,32 @@ namespace Medical.GUI
             //stateListBox.ListBox.KeyUp += new KeyEventHandler(ListBox_KeyUp);
 
             //deleteCommand.Execute += new EventHandler(deleteCommand_Execute);
+
+            collapseButton = mainWidget.findWidget("StateList/CollapseButton") as Button;
+            collapseButton.MouseButtonClick += new MyGUIEvent(collapseButton_MouseButtonClick);
+
+            expandButton = mainWidget.findWidget("StateList/ExpandButton") as Button;
+            expandButton.MouseButtonClick += new MyGUIEvent(expandButton_MouseButtonClick);
+
+            normalWidth = mainWidget.Width;
+            smallWidth = collapseButton.Right;
+
+            distortionsButton = mainWidget.findWidget("StateList/Distortions") as Button;
+            notesButton = mainWidget.findWidget("StateList/Notes") as Button;
+
+            modeButtons = new ButtonGroup();
+            modeButtons.addButton(distortionsButton);
+            modeButtons.addButton(notesButton);
+            modeButtons.SelectedButton = distortionsButton;
+            modeButtons.SelectedButtonChanged += new EventHandler(modeButtons_SelectedButtonChanged);
+
+            statePickerPanel = mainWidget.findWidget("StateList/StatePicker") as Widget;
+            notesPanel = mainWidget.findWidget("StateList/NotesPanel") as Widget;
+
+            stateNameTextBox = mainWidget.findWidget("Notes/DistortionName") as Edit;
+            datePicker = mainWidget.findWidget("Notes/DateCreated") as Edit;
+            distortionWizard = mainWidget.findWidget("Notes/DistortionWizard") as Edit;
+            notes = mainWidget.findWidget("Notes/NotesText") as Edit;
         }
 
         public void Dispose()
@@ -103,6 +147,7 @@ namespace Medical.GUI
             String imageId = imageAtlas.addImage(state, state.Thumbnail);
             ButtonListItem entry = stateListBox.addItem(state.Name, imageId);
             entries.Add(state, entry);
+            stateListBox.SelectedItem = entries[state];
         }
 
         void stateController_StateRemoved(MedicalStateController controller, MedicalState state, int index)
@@ -131,6 +176,10 @@ namespace Medical.GUI
             if (!ignoreIndexChanges)
             {
                 stateListBox.SelectedItem = entries[state];
+                stateNameTextBox.Caption = state.Name;
+                datePicker.Caption = state.Notes.ProcedureDate.ToString();
+                distortionWizard.Caption = state.Notes.DataSource;
+                notes.Caption = state.Notes.Notes;
             }
         }
 
@@ -144,6 +193,34 @@ namespace Medical.GUI
         {
             ignoreIndexChanges = true;
             //StatusController.SetStatus("Blending...");
+        }
+
+        void expandButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            layoutContainer.changeDesiredSize(new Size2(normalWidth, 100));
+            expandButton.Visible = false;
+            collapseButton.Visible = true;
+        }
+
+        void collapseButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            layoutContainer.changeDesiredSize(new Size2(smallWidth, 100));
+            collapseButton.Visible = false;
+            expandButton.Visible = true;
+        }
+
+        void modeButtons_SelectedButtonChanged(object sender, EventArgs e)
+        {
+            if (sender == distortionsButton)
+            {
+                statePickerPanel.Visible = true;
+                notesPanel.Visible = false;
+            }
+            else
+            {
+                statePickerPanel.Visible = false;
+                notesPanel.Visible = true;
+            }
         }
     }
 }

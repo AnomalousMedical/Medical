@@ -18,6 +18,16 @@ namespace Medical
             this.desiredSize = new Size2(widget.Width, widget.Height);
         }
 
+        /// <summary>
+        /// Change the desired size and invalidate.
+        /// </summary>
+        /// <param name="desiredSize">The new desired size.</param>
+        public void changeDesiredSize(Size2 desiredSize)
+        {
+            this.desiredSize = desiredSize;
+            invalidate();
+        }
+
         public override void setAlpha(float alpha)
         {
             widget.Alpha = alpha;

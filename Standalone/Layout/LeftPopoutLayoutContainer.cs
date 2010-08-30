@@ -112,7 +112,21 @@ namespace Medical
         {
             get 
             {
-                return currentSize;
+                if (animating)
+                {
+                    return currentSize;
+                }
+                else
+                {
+                    if (childContainer != null)
+                    {
+                        return childContainer.DesiredSize;
+                    }
+                    else
+                    {
+                        return new Size2();
+                    }
+                }
             }
         }
 
