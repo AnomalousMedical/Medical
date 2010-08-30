@@ -40,7 +40,7 @@ namespace Medical
             configFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
-            sceneDirectory = "/Scenes";
+            sceneDirectory = "Scenes";
 
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 0)
