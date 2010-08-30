@@ -15,7 +15,7 @@ namespace Medical
         public MyGUILayoutContainer(Widget widget)
         {
             this.widget = widget;
-            this.desiredSize = new Size2(widget.getWidth(), widget.getHeight());
+            this.desiredSize = new Size2(widget.Width, widget.Height);
         }
 
         public override void setAlpha(float alpha)

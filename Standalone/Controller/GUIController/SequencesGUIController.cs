@@ -83,7 +83,7 @@ namespace Medical.GUI
         {
             sequenceMenu.setVisibleSmooth(true);
             LayerManager.Instance.upLayerItem(sequenceMenu);
-            sequenceMenu.setPosition(sequencesButton.getAbsoluteLeft(), sequencesButton.getAbsoluteTop() + sequencesButton.getHeight());
+            sequenceMenu.setPosition(sequencesButton.AbsoluteLeft, sequencesButton.AbsoluteTop + sequencesButton.Height);
         }
 
         void stopButton_MouseButtonClick(Widget source, EventArgs e)

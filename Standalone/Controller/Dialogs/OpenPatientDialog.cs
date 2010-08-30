@@ -105,7 +105,7 @@ namespace Medical.GUI
             searchBox = window.findWidget("Open/SearchText") as Edit;
             Button browseButton = window.findWidget("Open/BrowseButton") as Button;
 
-            int fileGridWidth = fileDataGrid.getWidth() - 2;
+            int fileGridWidth = fileDataGrid.Width - 2;
             fileDataGrid.addColumn("First Name", fileGridWidth / 3);
             fileDataGrid.addColumn("Last Name", fileGridWidth / 3);
             fileDataGrid.addColumn("Date Modified", fileGridWidth / 3);

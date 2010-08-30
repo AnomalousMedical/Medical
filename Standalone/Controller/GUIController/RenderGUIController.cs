@@ -126,12 +126,12 @@ namespace Medical.GUI
 
         void sizeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            resolutionMenuPopup.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            resolutionMenuPopup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         void colorButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            colorMenu.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            colorMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         private void render()

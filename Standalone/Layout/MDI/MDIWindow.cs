@@ -93,11 +93,11 @@ namespace Medical.Controller
         /// </summary>
         public override void layout()
         {
-            mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.getHeight());
+            mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.Height);
             if (content != null)
             {
-                content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - mainWidget.getHeight());
-                content.Location = new Vector2(Location.x, Location.y + mainWidget.getHeight());
+                content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - mainWidget.Height);
+                content.Location = new Vector2(Location.x, Location.y + mainWidget.Height);
                 content.layout();
             }
         }
@@ -109,7 +109,7 @@ namespace Medical.Controller
         {
             get 
             {
-                Size2 desiredSize = new Size2(mainWidget.getWidth(), mainWidget.getHeight());
+                Size2 desiredSize = new Size2(mainWidget.Width, mainWidget.Height);
                 if (content != null)
                 {
                     Size2 contentSize = content.DesiredSize;
@@ -183,7 +183,7 @@ namespace Medical.Controller
                 if (captionButton != null)
                 {
                     captionButton.Caption = value;
-                    captionButton.setSize((int)captionButton.getTextSize().Width + 50, captionButton.getHeight());
+                    captionButton.setSize((int)captionButton.getTextSize().Width + 50, captionButton.Height);
                 }
             }
         }

@@ -77,7 +77,7 @@ namespace Medical.GUI
         {
             contextMenu.setVisibleSmooth(true);
             LayerManager.Instance.upLayerItem(contextMenu);
-            contextMenu.setPosition(menuButton.getAbsoluteLeft(), menuButton.getAbsoluteTop() + menuButton.getHeight());
+            contextMenu.setPosition(menuButton.AbsoluteLeft, menuButton.AbsoluteTop + menuButton.Height);
         }
 
         void mainButton_MouseButtonClick(Widget source, EventArgs e)

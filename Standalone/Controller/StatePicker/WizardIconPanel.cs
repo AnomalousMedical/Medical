@@ -98,7 +98,7 @@ namespace Medical.GUI
                 button.Caption = caption;
                 button.MouseButtonClick += iconClicked;
                 int captionWidth = (int)button.getTextSize().Width;
-                button.setSize(captionWidth + 45, button.getHeight());
+                button.setSize(captionWidth + 45, button.Height);
                 button.StaticImage.setItemResource(panel.ImageKey);
                 container = new WizardButtonContainer(button);
             }

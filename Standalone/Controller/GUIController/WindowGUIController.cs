@@ -108,7 +108,7 @@ namespace Medical.GUI
 
         void colorButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            colorMenu.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            colorMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         void colorMenu_ColorChanged(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace Medical.GUI
         void windowLayout_MouseButtonClick(Widget source, EventArgs e)
         {
             LayerManager.Instance.upLayerItem(windowMenu);
-            windowMenu.setPosition(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            windowMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
             windowMenu.setVisibleSmooth(true);
         }
 

@@ -48,7 +48,7 @@ namespace Medical.GUI
             this.navigationController = navigationController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
-            flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(showNavigationButton.Button.getRight() + 10.0f, showNavigationButton.Button.getTop()));
+            flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(showNavigationButton.Button.Right + 10.0f, showNavigationButton.Button.Top));
 
             navigationController.ShowOverlaysChanged += new NavigationControllerEvent(navigationController_ShowOverlaysChanged);
         }
@@ -61,7 +61,7 @@ namespace Medical.GUI
         void navigationController_NavigationStateSetChanged(NavigationController controller)
         {
             clearMenuItems();
-            int buttonHeight = showNavigationButton.Button.getHeight();
+            int buttonHeight = showNavigationButton.Button.Height;
             flowLayout.SuppressLayout = true;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
@@ -148,7 +148,7 @@ namespace Medical.GUI
         void itemButton_MouseButtonClick(Widget source, EventArgs e)
         {
             PopupContainer popup = source.UserObject as PopupContainer;
-            popup.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            popup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         void clearMenuItems()

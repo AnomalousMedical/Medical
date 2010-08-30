@@ -75,7 +75,7 @@ namespace Medical.GUI
 #endif
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            appMenu.show(source.getAbsoluteLeft(), source.getAbsoluteTop() + source.getHeight());
+            appMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         public Widget RibbonRootWidget
