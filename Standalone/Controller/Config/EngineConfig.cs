@@ -55,7 +55,12 @@ namespace Medical
         {
             get
             {
+#if MAC_OSX
+                //Fullscreen does not work on mac, so block it.
+                return false;
+#else
                 return section.getValue("Fullscreen", false);
+#endif
             }
             set
             {
