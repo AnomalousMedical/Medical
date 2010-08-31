@@ -38,6 +38,8 @@ namespace Medical
         private MedicalState directStartState;
         private int directEndState;
 
+        private MedicalState normalState;
+
         public MedicalStateController(ImageRenderer imageRenderer, MedicalController medicalController)
         {
             this.imageRenderer = imageRenderer;
@@ -88,6 +90,16 @@ namespace Medical
 
         public void addState(MedicalState state)
         {
+            //No states and normal state defined, add it as the first state.
+            if (states.Count == 0 && normalState != null)
+            {
+                states.Add(normalState);
+                if (StateAdded != null)
+                {
+                    StateAdded.Invoke(this, normalState, states.Count - 1);
+                }
+                normalState = null;//Normal state added, does not need to be added again so null it.
+            }
             states.Add(state);
             if (state.Thumbnail == null)
             {
@@ -134,6 +146,11 @@ namespace Medical
 
         public void clearStates()
         {
+            if (normalState != null)
+            {
+                normalState.Dispose();
+            }
+            normalState = null;
             currentState = -1;
             foreach (MedicalState state in states)
             {
@@ -164,9 +181,10 @@ namespace Medical
         /// </summary>
         public void createNormalStateFromScene()
         {
-            MedicalState normalState = this.createAndAddState("Normal");
+            normalState = this.createState("Normal");
             normalState.Notes.Notes = "Normal";
             normalState.Notes.DataSource = "";
+            normalState.Thumbnail = imageRenderer.renderImage(imageProperties);
         }
 
         /// <summary>
