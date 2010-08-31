@@ -294,7 +294,7 @@ namespace Medical.GUI
                     if (fileListWorker.CancellationPending)
                     {
                         bgThreadKnowsAboutCancel = true;
-                        ThreadManager.invoke(cancelListFilesCallback);
+                        ThreadManager.invokeAndWait(cancelListFilesCallback);
                         break;
                     }
                     PatientDataFile patient = new PatientDataFile(file);
@@ -304,14 +304,14 @@ namespace Medical.GUI
                         dataFileBuffer[currentPosition] = patient;
                         if (currentPosition == bufMax)
                         {
-                            ThreadManager.invoke(updateFileListCallback, dataFileBuffer, currentPosition);
+                            ThreadManager.invokeAndWait(updateFileListCallback, dataFileBuffer, currentPosition);
                             fileListWorker.ReportProgress((int)(((float)dataFileBufferPosition / totalFiles) * 100.0f));
                         }
                     }
                 }
                 if (!bgThreadKnowsAboutCancel && files.Length > 0)
                 {
-                    ThreadManager.invoke(updateFileListCallback, dataFileBuffer, currentPosition);
+                    ThreadManager.invokeAndWait(updateFileListCallback, dataFileBuffer, currentPosition);
                     fileListWorker.ReportProgress(0);
                 }
 

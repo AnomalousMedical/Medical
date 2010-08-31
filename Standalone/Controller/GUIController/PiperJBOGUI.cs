@@ -143,12 +143,26 @@ namespace Medical.GUI
 
         public void save()
         {
-            savePatientDialog.save();
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.save();
+            }
         }
 
         public void saveAs()
         {
-            savePatientDialog.saveAs();
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.saveAs();
+            }
         }
 
         public void changeActiveFile(PatientDataFile patientData)

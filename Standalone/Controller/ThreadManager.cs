@@ -46,7 +46,7 @@ namespace Medical.Controller
         /// Exectue a Delegate when doInvoke is called on the thread that calls doInvoke
         /// </summary>
         /// <param name="target"></param>
-        public static void invoke(Delegate target, params object[] args)
+        public static void invokeAndWait(Delegate target, params object[] args)
         {
             TargetEntry entry = new TargetEntry(target, args);
             lock (targets)
@@ -56,6 +56,15 @@ namespace Medical.Controller
             if (!entry.Finished)
             {
                 entry.wait();
+            }
+        }
+
+        public static void invoke(Delegate target, params object[] args)
+        {
+            TargetEntry entry = new TargetEntry(target, args);
+            lock (targets)
+            {
+                targets.Add(entry);
             }
         }
 
