@@ -185,6 +185,8 @@ namespace Standalone
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
 
+                medicalStateController.createNormalStateFromScene();
+
                 medicalController.start();
             }
         }
@@ -208,6 +210,7 @@ namespace Standalone
         {
             medicalStateController.clearStates();
             changeScene(filename, null);
+            medicalStateController.createNormalStateFromScene();
         }
 
         public void saveMedicalState(PatientDataFile patientData)

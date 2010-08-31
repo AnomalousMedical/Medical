@@ -94,6 +94,7 @@ namespace Medical
                 blacklist("Could not find TransparencyInterface {0}", transparencyInterface);
             }
             TeethController.addTooth(Owner.Name, this);
+            HighlightColor = Color.White;
         }
 
         protected override void destroy()
