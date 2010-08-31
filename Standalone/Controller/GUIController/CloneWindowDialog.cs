@@ -29,7 +29,7 @@ namespace Medical.GUI
             monitorCombo = window.findWidget("MonitorCombo") as ComboBox;
             resolutionCombo = window.findWidget("ResolutionCombo") as ComboBox;
 
-            uint numMonitors = Root.getSingleton().getDisplayMonitorCount();
+            uint numMonitors = (uint)wx.Display.Count;//Root.getSingleton().getDisplayMonitorCount();
             for(uint i = 0; i < numMonitors; ++i)
             {
                 monitorCombo.addItem("Monitor " + i);
