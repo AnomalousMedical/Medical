@@ -197,6 +197,8 @@ namespace Medical
                         sceneManager.SceneManager.destroySceneNode(node);
                         sceneManager.SceneManager.destroyCamera(camera);
 
+                        TextureManager.getInstance().remove(texture);
+
                         return bitmap;
                     }
                 }
