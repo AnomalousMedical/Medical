@@ -21,10 +21,9 @@ namespace Medical.Controller
             :base(controller, mainTimer, cameraMover, name)
         {
             Point location = new Point(-1, -1);
-#if WINDOWS //For some reason this is not working on mac, so for now just ignore it.
             wx.Display targetDisplay = wx.Display.GetDisplay(windowInfo.MonitorIndex);
             location = targetDisplay.Geometry.Location;
-#endif
+            location.Y = -1;
             frame = new wx.Frame(Medical.GUI.MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height));
             osWindow = new WxOSWindow(frame);
             this.rendererWindow = OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
