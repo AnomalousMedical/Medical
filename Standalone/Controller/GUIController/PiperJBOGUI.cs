@@ -180,6 +180,7 @@ namespace Medical.GUI
 
         public void startWizard(StateWizard wizard)
         {
+            stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard(wizard);

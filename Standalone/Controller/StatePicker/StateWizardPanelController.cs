@@ -152,6 +152,8 @@ namespace Medical.GUI
             }
         }
 
+        public String CurrentWizardName { get; set; }
+
         internal void setNavigationState(string name)
         {
             navigationController.setNavigationState(name, CurrentSceneView);

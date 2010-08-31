@@ -183,7 +183,7 @@ namespace Medical
         {
             normalState = this.createState("Normal");
             normalState.Notes.Notes = "Normal";
-            normalState.Notes.DataSource = "";
+            normalState.Notes.DataSource = "Automatic";
             normalState.Thumbnail = imageRenderer.renderImage(imageProperties);
         }
 

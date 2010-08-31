@@ -66,20 +66,9 @@ namespace Medical.GUI
             state.Thumbnail = thumbnailPicker.SelectedThumbnail;
         }
 
-        public String DistortionWizardText
-        {
-            get
-            {
-                return distortionWizard.Caption;
-            }
-            set
-            {
-                distortionWizard.Caption = value;
-            }
-        }
-
         protected override void onPanelOpening()
         {
+            distortionWizard.Caption = controller.CurrentWizardName;
             thumbnailPicker.updateThumbnails();
         }
     }
