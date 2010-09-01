@@ -30,7 +30,7 @@ namespace Medical.GUI
 
         private List<Button> menuButtons = new List<Button>();
         private FlowLayoutContainer flowLayout;
-        private Widget navigationTab;
+        private ScrollView navigationTab;
         private ImageAtlas ribbonMenuIcons = new ImageAtlas("NavigationRibbonMenus", new Size2(32, 32), new Size2(512, 512));
         private ImageAtlas gridItemIcons = new ImageAtlas("NavigationGridItemIcons", new Size2(69, 51), new Size2(512, 512));
 
@@ -43,7 +43,7 @@ namespace Medical.GUI
             showNavigationButton = new CheckButton(ribbonWidget.findWidget("Navigation/ShowNavigationButton") as Button);
             showNavigationButton.CheckedChanged += new MyGUIEvent(showNavigationButton_CheckedChanged);
 
-            navigationTab = ribbonWidget.findWidget("NavigationTab");
+            navigationTab = ribbonWidget.findWidget("NavigationTab/ScrollView") as ScrollView;
 
             this.navigationController = navigationController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
@@ -63,6 +63,7 @@ namespace Medical.GUI
             clearMenuItems();
             int buttonHeight = showNavigationButton.Button.Height;
             flowLayout.SuppressLayout = true;
+            Button lastButton = showNavigationButton.Button;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
                 Button itemButton = navigationTab.createWidgetT("Button", "RibbonButton", 0, 0, 50, buttonHeight, Align.Left | Align.Top, "") as Button;
@@ -78,9 +79,15 @@ namespace Medical.GUI
                     itemButton.UserObject = createImageGallerySubMenu(topEntry);
                     itemButton.MouseButtonClick += new MyGUIEvent(itemButton_MouseButtonClick);
                 }
+
+                lastButton = itemButton;
             }
             flowLayout.SuppressLayout = false;
             flowLayout.invalidate();
+
+            Size2 scrollSize = navigationTab.CanvasSize;
+            scrollSize.Width = lastButton.Right + 2;
+            navigationTab.CanvasSize = scrollSize;
         }
 
         PopupContainer createImageGallerySubMenu(NavigationMenuEntry topEntry)
