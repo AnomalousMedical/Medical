@@ -1,27 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="Panel" position="63 73 335 135" layer="Overlapped">
-        <Widget type="StaticText" skin="StaticText" position="5 6 320 15">
-            <Property key="Widget_Caption" value="Adjust the slider to change the right fossa flatness."/>
-        </Widget>
-        <Widget type="StaticText" skin="StaticText" position="67 34 79 17">
-            <Property key="Widget_Caption" value="Flatness"/>
-        </Widget>
-        <Widget type="HScroll" skin="HSlider" position="67 55 197 17" name="FlatnessSlider">
-            <Property key="Scroll_Range" value="10000"/>
-            <Property key="Scroll_Position" value="0"/>
-        </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="3 32 60 60">
-            <Property key="Image_Resource" value="FossaImages/RightFossaNormal"/>
-        </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="269 32 60 60">
-            <Property key="Image_Resource" value="FossaImages/RightFossaFlat"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="3 99 100 30" name="UndoButton">
-            <Property key="Widget_Caption" value="Undo"/>
-        </Widget>
-        <Widget type="Button" skin="Button" position="105 99 100 30" name="MakeNormalButton">
-            <Property key="Widget_Caption" value="Make Normal"/>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
+            <Property key="ScrollView_CanvasSize" value="335 135"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Widget type="StaticText" skin="StaticText" position="5 6 320 15">
+                <Property key="Widget_Caption" value="Adjust the slider to change the right fossa flatness."/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="67 34 79 17">
+                <Property key="Widget_Caption" value="Flatness"/>
+            </Widget>
+            <Widget type="HScroll" skin="HSlider" position="67 55 197 17" name="FlatnessSlider">
+                <Property key="Scroll_Range" value="10000"/>
+                <Property key="Scroll_Position" value="0"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="3 32 60 60">
+                <Property key="Image_Resource" value="FossaImages/RightFossaNormal"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="269 32 60 60">
+                <Property key="Image_Resource" value="FossaImages/RightFossaFlat"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="3 99 100 30" name="UndoButton">
+                <Property key="Widget_Caption" value="Undo"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="105 99 100 30" name="MakeNormalButton">
+                <Property key="Widget_Caption" value="Make Normal"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>
