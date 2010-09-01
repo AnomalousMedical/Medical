@@ -49,7 +49,7 @@ namespace Medical.GUI
         {
             stateNameTextBox.Caption = "Custom Distortion";
             notes.Caption = "";
-            //datePicker.Value = DateTime.Now;
+            datePicker.Caption = DateTime.Now.ToString();
         }
 
         public override void recordOpeningState()
