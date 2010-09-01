@@ -50,6 +50,7 @@ namespace Standalone
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
         private HtmlHelpController htmlHelpController;
+        private CursorManager cursorManager;
 
         //Frame
         private MainWindow mainWindow;
@@ -70,6 +71,7 @@ namespace Standalone
             layerController.Dispose();
             navigationController.Dispose();
             mdiLayout.Dispose();
+            cursorManager.Dispose();
             medicalController.Dispose();
             mainWindow.Dispose();
         }
@@ -82,6 +84,8 @@ namespace Standalone
             Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
             medicalController.initialize(mainWindow.InputWindow, createWindow);
             mainWindow.setTimer(medicalController.MainTimer);
+
+            cursorManager = new CursorManager(mainWindow);
 
             //Splash screen
             Gui gui = Gui.Instance;

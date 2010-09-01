@@ -92,6 +92,7 @@
     <Compile Include="Controller\Config\EngineConfig.cs" />
     <Compile Include="Controller\Config\MedicalConfig.cs" />
     <Compile Include="Controller\Config\RecentDocuments.cs" />
+    <Compile Include="Controller\CursorManager.cs" />
     <Compile Include="Controller\Dialogs\AboutDialog.cs" />
     <Compile Include="Controller\Dialogs\ChooseSceneDialog.cs" />
     <Compile Include="Controller\Dialogs\OpenPatientDialog.cs" />
