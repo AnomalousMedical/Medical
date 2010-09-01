@@ -84,6 +84,19 @@ namespace Medical.GUI
 #if CREATE_MAINWINDOW_MENU
         public void createMenus(wx.MenuBar menu)
         {
+            wx.Menu toolsMenu = new wx.Menu();
+
+            wx.MenuItem cloneWindow = toolsMenu.Append(-1, "Clone Window", "Open a window that displays the main window with no controls.");
+            cloneWindow.Select += new wx.EventListener(cloneWindow_Select);
+
+            wx.MenuItem showStats = toolsMenu.Append(-1, "Show Statistics", "Show performance statistics.");
+            showStats.Select += new wx.EventListener(showStats_Select);
+
+            wx.MenuItem preferences = toolsMenu.Append((int)wx.MenuIDs.wxID_PREFERENCES, "Preferences", "Set program configuration.");
+            preferences.Select += new wx.EventListener(preferences_Select);
+
+            menu.Append(toolsMenu, "&Tools");
+
             wx.Menu helpMenu = new wx.Menu();
 
             wx.MenuItem help = helpMenu.Append((int)wx.MenuIDs.wxID_HELP, "Piper's JBO Help", "Open Piper's JBO user manual.");
@@ -93,6 +106,21 @@ namespace Medical.GUI
             about.Select += new wx.EventListener(about_Select);
 
             menu.Append(helpMenu, "&Help");
+        }
+
+        void showStats_Select(object sender, wx.Event e)
+        {
+            showStatsButton_MouseButtonClick(null, EventArgs.Empty);
+        }
+
+        void cloneWindow_Select(object sender, wx.Event e)
+        {
+            cloneButton_MouseButtonClick(null, EventArgs.Empty);
+        }
+
+        void preferences_Select(object sender, wx.Event e)
+        {
+            options.open(true);
         }
 
         void help_Select(object sender, wx.Event e)
