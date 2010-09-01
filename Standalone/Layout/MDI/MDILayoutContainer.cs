@@ -412,6 +412,14 @@ namespace Medical.Controller
             separator.MouseDrag += separator_MouseDrag;
             separator.MouseButtonPressed += separator_MouseButtonPressed;
             separator.MouseButtonReleased += separator_MouseButtonReleased;
+            if (layoutType == LayoutType.Horizontal)
+            {
+                separator.Pointer = CursorManager.SIZE_HORZ;
+            }
+            else
+            {
+                separator.Pointer = CursorManager.SIZE_VERT;
+            }
         }
 
         private Vector2 dragStartPosition;
