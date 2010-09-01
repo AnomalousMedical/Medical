@@ -107,6 +107,11 @@
             </Widget>
             <Widget type="TabItem" skin="" position="4 26 1607 83" name="DistortionsTab">
                 <Property key="Widget_Caption" value="Distortions"/>
+                <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch" name="DistortionsTab/ScrollView">
+                    <Property key="ScrollView_CanvasSize" value="1015 72"/>
+                    <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                    <Property key="ScrollView_VisibleVScroll" value="false"/>
+                </Widget>
             </Widget>
             <Widget type="TabItem" skin="" position="4 26 1607 83" name="MovementTab">
                 <Property key="Widget_Caption" value="Movement"/>

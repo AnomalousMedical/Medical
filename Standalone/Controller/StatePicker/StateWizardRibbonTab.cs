@@ -18,7 +18,7 @@ namespace Medical.GUI
         {
             this.basicGUI = basicGUI;
 
-            Widget distortionTab = gui.findWidgetT("DistortionsTab");
+            ScrollView distortionTab = gui.findWidgetT("DistortionsTab/ScrollView") as ScrollView;
             int currentPosition = 3;
             foreach (StateWizard wizard in stateWizardController.WizardEnum)
             {
@@ -29,13 +29,16 @@ namespace Medical.GUI
                 }
                 Button wizardButton = distortionTab.createWidgetT("Button", "RibbonButton", currentPosition, 6, 78, 64, Align.Default, wizard.Name) as Button;
                 wizardButton.Caption = caption;
-                int buttonWidth = (int)wizardButton.getTextSize().Width + 45;
+                int buttonWidth = (int)wizardButton.getTextSize().Width + 10;
                 wizardButton.setSize(buttonWidth, 64);
                 wizardButton.UserObject = wizard;
                 wizardButton.StaticImage.setItemResource(wizard.ImageKey);
                 wizardButton.MouseButtonClick += new MyGUIEvent(wizardButton_MouseButtonClick);
                 currentPosition += buttonWidth + 3;
             }
+            Size2 scrollSize = distortionTab.CanvasSize;
+            scrollSize.Width = currentPosition;
+            distortionTab.CanvasSize = scrollSize;
         }
 
         public void Dispose()

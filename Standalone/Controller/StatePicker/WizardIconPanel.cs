@@ -53,10 +53,18 @@ namespace Medical.GUI
                     button.StateCheck = value;
                 }
             }
+
+            public int RightEdge
+            {
+                get
+                {
+                    return button.Right;
+                }
+            }
         }
 
         private Layout layout;
-        private Widget mainWidget;
+        private ScrollView iconScrollView;
         private MyGUILayoutContainer layoutContainer;
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(0.0f, 10.0f));
         private Dictionary<StateWizardPanel, WizardButtonContainer> panels = new Dictionary<StateWizardPanel, WizardButtonContainer>();
@@ -66,9 +74,14 @@ namespace Medical.GUI
         public WizardIconPanel()
         {
             layout = LayoutManager.Instance.loadLayout("Medical.Controller.StatePicker.WizardIconPanel.layout");
-            mainWidget = layout.getWidget(0);
+            Widget mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             layoutContainer = new MyGUILayoutContainer(mainWidget);
+
+            iconScrollView = mainWidget.findWidget("WizardIconPanel/ScrollView") as ScrollView;
+            Size2 size = iconScrollView.CanvasSize;
+            size.Width = 10;
+            iconScrollView.CanvasSize = size;
         }
 
         public void Dispose()
@@ -89,7 +102,7 @@ namespace Medical.GUI
             WizardButtonContainer container;
             if (!panels.TryGetValue(panel, out container))
             {
-                Button button = mainWidget.createWidgetT("Button", "RibbonButton", 0, 0, 78, 64, Align.Default, "") as Button;
+                Button button = iconScrollView.createWidgetT("Button", "RibbonButton", 0, 0, 78, 64, Align.Default, "") as Button;
                 String caption = panel.TextLine1;
                 if (panel.TextLine2 != null)
                 {
@@ -98,7 +111,7 @@ namespace Medical.GUI
                 button.Caption = caption;
                 button.MouseButtonClick += iconClicked;
                 int captionWidth = (int)button.getTextSize().Width;
-                button.setSize(captionWidth + 45, button.Height);
+                button.setSize(captionWidth + 10, button.Height);
                 button.StaticImage.setItemResource(panel.ImageKey);
                 container = new WizardButtonContainer(button);
             }
@@ -106,6 +119,11 @@ namespace Medical.GUI
             container.Visible = true;
             flowLayout.addChild(container.Layout);
             currentButtons.Add(container);
+
+            //Adjust scroll area size
+            Size2 size = iconScrollView.CanvasSize;
+            size.Width = flowLayout.DesiredSize.Width;
+            iconScrollView.CanvasSize = size;
         }
 
         public void clearPanels()
