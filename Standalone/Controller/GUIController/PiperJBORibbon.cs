@@ -72,6 +72,18 @@ namespace Medical.GUI
             windowGUIController.createMenus(menu);
         }
 
+        public bool MenuEnabled
+        {
+            get
+            {
+                return appMenu.MenuEnabled;
+            }
+            set
+            {
+                appMenu.MenuEnabled = value;
+            }
+        }
+
 #endif
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {

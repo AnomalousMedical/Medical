@@ -170,14 +170,21 @@ namespace Medical.GUI
         private Dictionary<String, wx.MenuItem> recentDocMenuItems = new Dictionary<string, wx.MenuItem>();
         private Dictionary<int, string> menuIDsToFiles = new Dictionary<int, string>();
 
+        private wx.Menu fileMenu;
+        private wx.MenuItem changeScene;
+        private wx.MenuItem open;
+        private wx.MenuItem save;
+        private wx.MenuItem saveAs;
+        private wx.MenuItem exit;
+
         public void createMenus(wx.MenuBar menu)
         {
-            wx.Menu fileMenu = new wx.Menu();
+            fileMenu = new wx.Menu();
 
-            wx.MenuItem changeScene = fileMenu.Append((int)wx.MenuIDs.wxID_NEW, "&New Scene...\tCtrl+N", "Change to a new scene.");
+            changeScene = fileMenu.Append((int)wx.MenuIDs.wxID_NEW, "&New Scene...\tCtrl+N", "Change to a new scene.");
             changeScene.Select += new wx.EventListener(changeScene_Select);
 
-            wx.MenuItem open = fileMenu.Append((int)wx.MenuIDs.wxID_OPEN, "&Open...\tCtrl+O", "Open existing distortions.");
+            open = fileMenu.Append((int)wx.MenuIDs.wxID_OPEN, "&Open...\tCtrl+O", "Open existing distortions.");
             open.Select += new wx.EventListener(open_Select);
 
             recentPatients = fileMenu.Append(-1, "Recent Patients", new wx.Menu());
@@ -186,18 +193,34 @@ namespace Medical.GUI
                 createWindowMenuDocument(document);
             }
 
-            wx.MenuItem save = fileMenu.Append((int)wx.MenuIDs.wxID_SAVE, "&Save...\tCtrl+S", "Save current distortions.");
+            save = fileMenu.Append((int)wx.MenuIDs.wxID_SAVE, "&Save...\tCtrl+S", "Save current distortions.");
             save.Select += new wx.EventListener(save_Select);
 
-            wx.MenuItem saveAs = fileMenu.Append((int)wx.MenuIDs.wxID_SAVEAS, "Save &As...", "Save current distortions as.");
+            saveAs = fileMenu.Append((int)wx.MenuIDs.wxID_SAVEAS, "Save &As...", "Save current distortions as.");
             saveAs.Select += new wx.EventListener(saveAs_Select);
 
             fileMenu.AppendSeparator();
 
-            wx.MenuItem exit = fileMenu.Append((int)wx.MenuIDs.wxID_EXIT, "&Exit", "Exit the program.");
+            exit = fileMenu.Append((int)wx.MenuIDs.wxID_EXIT, "&Exit", "Exit the program.");
             exit.Select += new wx.EventListener(exit_Select);
 
             menu.Append(fileMenu, "&File");
+        }
+
+        public bool MenuEnabled
+        {
+            get
+            {
+                return changeScene.Enabled;
+            }
+            set
+            {
+                changeScene.Enabled = value;
+                open.Enabled = value;
+                save.Enabled = value;
+                saveAs.Enabled = value;
+                recentPatients.Enabled = value;
+            }
         }
 
         void exit_Select(object sender, wx.Event e)
