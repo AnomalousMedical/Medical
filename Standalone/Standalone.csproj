@@ -109,6 +109,7 @@
     <Compile Include="Controller\GUIController\OptionsDialog.cs" />
     <Compile Include="Controller\GUIController\RenderGUIController.cs" />
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
+    <Compile Include="Controller\GUIController\NavigationShortcut.cs" />
     <Compile Include="Controller\GUIController\WindowGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />

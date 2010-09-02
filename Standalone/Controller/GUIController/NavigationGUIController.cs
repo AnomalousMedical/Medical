@@ -6,29 +6,18 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Logging;
 using Engine;
+using System.Drawing;
 
 namespace Medical.GUI
 {
     class NavigationGUIController : IDisposable
     {
-        private class MenuImageIndex
-        {
-            public MenuImageIndex(String entryName, String layerState)
-            {
-                this.EntryName = entryName;
-                this.LayerState = layerState;
-            }
-
-            public String EntryName { get; set; }
-            public String LayerState { get; set; }
-        }
-
         private NavigationController navigationController;
         private SceneViewController sceneViewController;
         private LayerController layerController;
         private CheckButton showNavigationButton;
 
-        private List<Button> menuButtons = new List<Button>();
+        private List<NavigationShortcut> menuButtons = new List<NavigationShortcut>();
         private FlowLayoutContainer flowLayout;
         private ScrollView navigationTab;
         private ImageAtlas ribbonMenuIcons = new ImageAtlas("NavigationRibbonMenus", new Size2(32, 32), new Size2(512, 512));
@@ -58,29 +47,41 @@ namespace Medical.GUI
             clearMenuItems();
         }
 
-        void navigationController_NavigationStateSetChanged(NavigationController controller)
+        internal String _addImage(object key, Bitmap thumbnail)
+        {
+            return gridItemIcons.addImage(key, thumbnail);
+        }
+
+        private void navigationController_NavigationStateSetChanged(NavigationController controller)
         {
             clearMenuItems();
-            int buttonHeight = showNavigationButton.Button.Height;
+            int menuButtonHeight = 25;
+            int mainButtonHeight = showNavigationButton.Button.Height - menuButtonHeight;
             flowLayout.SuppressLayout = true;
             Button lastButton = showNavigationButton.Button;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
-                Button itemButton = navigationTab.createWidgetT("Button", "RibbonButton", 0, 0, 50, buttonHeight, Align.Left | Align.Top, "") as Button;
-                itemButton.Caption = topEntry.Text;
-                itemButton.setSize((int)itemButton.getTextSize().Width + 35, buttonHeight);
-                itemButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(itemButton, topEntry.Thumbnail));
-                menuButtons.Add(itemButton);
+                Button menuButton = navigationTab.createWidgetT("Button", "RibbonSplitButton", 0, 0, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
+                menuButton.Caption = topEntry.Text;
+                menuButton.setSize((int)menuButton.getTextSize().Width + 35, menuButtonHeight);
 
-                flowLayout.addChild(new MyGUILayoutContainer(itemButton));
+                Button mainButton = navigationTab.createWidgetT("Button", "RibbonButton", 0, 0, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
+                mainButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(mainButton, topEntry.Thumbnail));
+                mainButton.setSize(menuButton.Width, mainButtonHeight);
+
+                NavigationShortcut navShortcut = new NavigationShortcut(mainButton, menuButton, this);
+                navShortcut.ShortcutActivated += new NavigationShortcutEvent(navShortcut_ShortcutActivated);
+
+                menuButtons.Add(navShortcut);
+
+                flowLayout.addChild(navShortcut);
 
                 if (topEntry.SubEntries != null)
                 {
-                    itemButton.UserObject = createImageGallerySubMenu(topEntry);
-                    itemButton.MouseButtonClick += new MyGUIEvent(itemButton_MouseButtonClick);
+                    navShortcut.createSubMenu(topEntry);
                 }
 
-                lastButton = itemButton;
+                lastButton = mainButton;
             }
             flowLayout.SuppressLayout = false;
             flowLayout.invalidate();
@@ -90,111 +91,33 @@ namespace Medical.GUI
             navigationTab.CanvasSize = scrollSize;
         }
 
-        PopupContainer createImageGallerySubMenu(NavigationMenuEntry topEntry)
+        void navShortcut_ShortcutActivated(string navigationState, string layerState)
         {
-            ScrollView scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
-            scrollView.CanvasAlign = Align.Left | Align.Top;
-            scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
-            ButtonGrid buttonGrid = new ButtonGrid(scrollView);
-            buttonGrid.ItemWidth = 69;
-            buttonGrid.ItemHeight = 51;
-            buttonGrid.ButtonSkin = "ButtonGridImageButton";
-            buttonGrid.GroupSeparatorSkin = "Separator3";
-            buttonGrid.SuppressLayout = true;
-            int mostElements = 0;
-            foreach (NavigationMenuEntry entry in topEntry.SubEntries)
+            navigationController.setNavigationState(navigationState, sceneViewController.ActiveWindow);
+            if (layerState != null)
             {
-                int numElements = addEntriesAsImages(entry, buttonGrid);
-                if (numElements > mostElements)
-                {
-                    mostElements = numElements;
-                }
+                layerController.applyLayerState(layerState);
             }
-            buttonGrid.SuppressLayout = false;
-            buttonGrid.layoutAndResize(mostElements);
-            scrollView.Visible = false;
-            PopupContainer popup = new PopupContainer(scrollView);
-            popup.UserObject = buttonGrid;
-            buttonGrid.UserObject = popup;
-            return popup;
         }
 
-        int addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
-        {
-            int numElements = 0;
-            if (currentEntry.SubEntries != null)
-            {
-                foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
-                {
-                    ButtonGridItem item = menu.addItem(currentEntry.Text, "", gridItemIcons.addImage(entry, entry.Thumbnail));
-                    item.ItemClicked += new EventHandler(item_ItemClicked);
-                    //Set the parent's layer state if the entry's layer state is null
-                    String layerState = entry.LayerState;
-                    if (layerState == null)
-                    {
-                        layerState = currentEntry.LayerState;
-                    }
-                    item.UserObject = new MenuImageIndex(entry.NavigationState, layerState);
-                    ++numElements;
-                }
-            }
-            if (currentEntry.SubEntries != null)
-            {
-                foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
-                {
-                    addEntriesAsImages(entry, menu);
-                }
-            }
-            if (numElements > 6)
-            {
-                numElements = 6;
-            }
-            return numElements;
-        }
-
-        void itemButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            PopupContainer popup = source.UserObject as PopupContainer;
-            popup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
-        }
-
-        void clearMenuItems()
+        private void clearMenuItems()
         {
             flowLayout.clearChildren();
-            foreach (Button button in menuButtons)
+            foreach (NavigationShortcut button in menuButtons)
             {
-                PopupContainer popup = button.UserObject as PopupContainer;
-                ButtonGrid buttonGrid = popup.UserObject as ButtonGrid;
-                ScrollView scrollView = popup.Widget as ScrollView;
-                buttonGrid.Dispose();
-                Gui.Instance.destroyWidget(scrollView);
-                Gui.Instance.destroyWidget(button);
+                button.Dispose();
             }
             menuButtons.Clear();
             ribbonMenuIcons.clear();
             gridItemIcons.clear();
         }
 
-        void item_ItemClicked(object sender, EventArgs e)
-        {
-            ButtonGridItem item = sender as ButtonGridItem;
-            MenuImageIndex index = item.UserObject as MenuImageIndex;
-            navigationController.setNavigationState(index.EntryName, sceneViewController.ActiveWindow);
-            if (index.LayerState != null)
-            {
-                layerController.applyLayerState(index.LayerState);
-            }
-            ButtonGrid grid = item.ButtonGrid;
-            PopupContainer popup = grid.UserObject as PopupContainer;
-            popup.hide();
-        }
-
-        void showNavigationButton_CheckedChanged(Widget source, EventArgs e)
+        private void showNavigationButton_CheckedChanged(Widget source, EventArgs e)
         {
             navigationController.ShowOverlays = showNavigationButton.Checked;
         }
 
-        void navigationController_ShowOverlaysChanged(NavigationController controller)
+        private void navigationController_ShowOverlaysChanged(NavigationController controller)
         {
             showNavigationButton.Checked = navigationController.ShowOverlays;
         }
