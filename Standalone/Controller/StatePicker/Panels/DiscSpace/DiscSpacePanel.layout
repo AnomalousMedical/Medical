@@ -71,7 +71,6 @@
                     <Property key="Widget_Caption" value="Vb"/>
                 </Widget>
                 <Widget type="Widget" skin="CustomPanelOnPanel" position="66 10 111 101" name="DiscSpace/ClockFace">
-                    <Property key="Widget_Enabled" value="false"/>
                     <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
                         <Property key="Widget_Caption" value="Clock Face"/>
                     </Widget>
@@ -86,7 +85,6 @@
                     </Widget>
                 </Widget>
                 <Widget type="Widget" skin="CustomPanelOnPanel" position="66 115 111 101" name="DiscSpace/RDAReduction">
-                    <Property key="Widget_Enabled" value="false"/>
                     <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
                         <Property key="Widget_Caption" value="RDA Reduction"/>
                     </Widget>
