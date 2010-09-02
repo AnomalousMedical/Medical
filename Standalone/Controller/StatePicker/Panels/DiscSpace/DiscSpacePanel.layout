@@ -70,7 +70,7 @@
                 <Widget type="Button" skin="RadioBox" position="9 196 57 23" name="DiscSpace/StageVb">
                     <Property key="Widget_Caption" value="Vb"/>
                 </Widget>
-                <Widget type="Widget" skin="CustomPanelOnPanel" position="66 10 111 101">
+                <Widget type="Widget" skin="CustomPanelOnPanel" position="66 10 111 101" name="DiscSpace/ClockFace">
                     <Property key="Widget_Enabled" value="false"/>
                     <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
                         <Property key="Widget_Caption" value="Clock Face"/>
@@ -85,7 +85,7 @@
                         <Property key="Widget_Caption" value="10 O&apos;Clock"/>
                     </Widget>
                 </Widget>
-                <Widget type="Widget" skin="CustomPanelOnPanel" position="66 115 111 101">
+                <Widget type="Widget" skin="CustomPanelOnPanel" position="66 115 111 101" name="DiscSpace/RDAReduction">
                     <Property key="Widget_Enabled" value="false"/>
                     <Widget type="StaticText" skin="StaticText" position="2 3 92 14">
                         <Property key="Widget_Caption" value="RDA Reduction"/>

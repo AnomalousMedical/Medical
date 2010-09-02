@@ -51,6 +51,9 @@ namespace Medical.GUI
         private Button severeRDAReductionButton;
         private ButtonGroup rdaReductionGroup = new ButtonGroup();
 
+        private Widget clockFacePanel;
+        private Widget rdaPanel;
+
         public DiscSpaceControl(Widget widget)
         {
             stageMap.Add(PiperStage.I, 0);
@@ -111,8 +114,11 @@ namespace Medical.GUI
             rdaReductionGroup.addButton(severeRDAReductionButton);
             rdaReductionGroup.SelectedButtonChanged += new EventHandler(RDAReductionButton_CheckedChanged);
 
-            rdaReductionGroup.Enabled = false;
-            clockGroup.Enabled = false;
+            clockFacePanel = widget.findWidget("DiscSpace/ClockFace");
+            rdaPanel = widget.findWidget("DiscSpace/RDAReduction");
+
+            rdaPanel.Visible = false;
+            clockFacePanel.Visible = false;
 
             computeDiscSpaceStage();
         }
@@ -123,6 +129,7 @@ namespace Medical.GUI
             horizontalSpaceCombo.SelectedIndex = 0;
             condyleShapeCombo.SelectedIndex = 0;
             stageGroup.SelectedButton = stageIButton;
+            computeDiscSpaceStage();
         }
 
         /// <summary>
@@ -349,18 +356,18 @@ namespace Medical.GUI
             if (clock10Radio.StateCheck)
             {
                 currentClockFace = ClockFace.Clock10;
-                rdaReductionGroup.Enabled = true;
-                mildRDAReductionButton.StateCheck = true;
+                rdaPanel.Visible = true;
+                rdaReductionGroup.SelectedButton = mildRDAReductionButton;
             }
             else if (clock11Radio.StateCheck)
             {
                 currentClockFace = ClockFace.Clock11;
-                rdaReductionGroup.Enabled = false;
+                rdaPanel.Visible = false;
             }
             else if (clock12Radio.StateCheck)
             {
                 currentClockFace = ClockFace.Clock12;
-                rdaReductionGroup.Enabled = false;
+                rdaPanel.Visible = false;
             }
             if (allowClockChangeEventFire && oldClockFace != currentClockFace)
             {
@@ -377,55 +384,55 @@ namespace Medical.GUI
             if (stageIButton.StateCheck)
             {
                 currentStage = PiperStage.I;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else if (stageIIButton.StateCheck)
             {
                 currentStage = PiperStage.II;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else if (stageIIIaButton.StateCheck)
             {
                 currentStage = PiperStage.IIIa;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else if (stageIIIbButton.StateCheck)
             {
                 currentStage = PiperStage.IIIb;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else if (stageIVaButton.StateCheck)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVa;
-                rdaReductionGroup.Enabled = clock10Radio.StateCheck;
-                mildRDAReductionButton.StateCheck = true;
-                clockGroup.Enabled = true;
+                rdaPanel.Visible = clock10Radio.StateCheck;
+                rdaReductionGroup.SelectedButton = mildRDAReductionButton;
+                clockFacePanel.Visible = true;
                 allowRdaReductionEventFire = true;
             }
             else if (stageIVbButton.StateCheck)
             {
                 allowRdaReductionEventFire = false;
                 currentStage = PiperStage.IVb;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
                 allowRdaReductionEventFire = true;
             }
             else if (stageVaButton.StateCheck)
             {
                 currentStage = PiperStage.Va;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else if (stageVbButton.StateCheck)
             {
                 currentStage = PiperStage.Vb;
-                rdaReductionGroup.Enabled = false;
-                clockGroup.Enabled = false;
+                rdaPanel.Visible = false;
+                clockFacePanel.Visible = false;
             }
             else
             {
