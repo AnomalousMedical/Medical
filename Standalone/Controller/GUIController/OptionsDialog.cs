@@ -87,7 +87,7 @@ namespace Medical.GUI
             {
                 cameraSpeedCombo.SelectedIndex = 2;
             }
-            else if (cameraTransitionTime >= 0.2f)
+            else if (cameraTransitionTime >= 0.25f)
             {
                 cameraSpeedCombo.SelectedIndex = 1;
             }
@@ -141,7 +141,7 @@ namespace Medical.GUI
                     MedicalConfig.TransparencyChangeMultiplier = 1000.0f;
                     break;
                 case 1:
-                    MedicalConfig.CameraTransitionTime = 0.2f;
+                    MedicalConfig.CameraTransitionTime = 0.25f;
                     MedicalConfig.TransparencyChangeMultiplier = 5.0f;
                     break;
                 case 2:
