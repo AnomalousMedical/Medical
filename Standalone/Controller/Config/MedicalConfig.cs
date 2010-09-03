@@ -26,6 +26,9 @@ namespace Medical
 
         private static String updateURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
 
+        private static float cameraTransitionTime;
+        private static float transparencyChangeMultiplier;
+
         public MedicalConfig(String docRoot)
         {
             MedicalConfig.docRoot = docRoot;
@@ -51,6 +54,9 @@ namespace Medical
             {
                 programDirectory = ".";
             }
+            cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
+            transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
+
 #if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))
             {
@@ -184,6 +190,32 @@ namespace Medical
             get
             {
                 return updateURL;
+            }
+        }
+
+        public static float CameraTransitionTime
+        {
+            get
+            {
+                return cameraTransitionTime;
+            }
+            set
+            {
+                cameraTransitionTime = value;
+                program.setValue("CameraTransitionTime", value);
+            }
+        }
+
+        public static float TransparencyChangeMultiplier
+        {
+            get
+            {
+                return transparencyChangeMultiplier;
+            }
+            set
+            {
+                transparencyChangeMultiplier = value;
+                program.setValue("TransparencyChangeMultiplier", value);
             }
         }
     }

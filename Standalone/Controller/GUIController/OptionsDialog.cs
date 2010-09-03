@@ -12,7 +12,9 @@ namespace Medical.GUI
 {
     class OptionsDialog : Dialog
     {
-        public event EventHandler OptionsChanged;
+        public event EventHandler VideoOptionsChanged;
+
+        private ComboBox cameraSpeedCombo;
 
         private ComboBox aaCombo;
         private ComboBox resolutionCombo;
@@ -26,6 +28,8 @@ namespace Medical.GUI
         {
             this.Modal = true;
             this.SmoothShow = true;
+
+            cameraSpeedCombo = window.findWidget("CameraSpeedCombo") as ComboBox; 
 
             aaCombo = window.findWidget("AACombo") as ComboBox;
             resolutionCombo = window.findWidget("ResolutionCombo") as ComboBox;
@@ -72,6 +76,27 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
+
+            //Program options
+            float cameraTransitionTime = MedicalConfig.CameraTransitionTime;
+            if (cameraTransitionTime >= 1.0f)
+            {
+                cameraSpeedCombo.SelectedIndex = 3;
+            }
+            else if (cameraTransitionTime >= 0.5f)
+            {
+                cameraSpeedCombo.SelectedIndex = 2;
+            }
+            else if (cameraTransitionTime >= 0.2f)
+            {
+                cameraSpeedCombo.SelectedIndex = 1;
+            }
+            else
+            {
+                cameraSpeedCombo.SelectedIndex = 0;
+            }
+
+            //Graphics Options
             aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
             vsyncCheck.Checked = OgreConfig.VSync;
@@ -109,17 +134,37 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            switch(cameraSpeedCombo.SelectedIndex)
+            {
+                case 0:
+                    MedicalConfig.CameraTransitionTime = 0.01f;
+                    MedicalConfig.TransparencyChangeMultiplier = 1000.0f;
+                    break;
+                case 1:
+                    MedicalConfig.CameraTransitionTime = 0.2f;
+                    MedicalConfig.TransparencyChangeMultiplier = 5.0f;
+                    break;
+                case 2:
+                    MedicalConfig.CameraTransitionTime = 0.5f;
+                    MedicalConfig.TransparencyChangeMultiplier = 2.0f;
+                    break;
+                case 3:
+                    MedicalConfig.CameraTransitionTime = 1.0f;
+                    MedicalConfig.TransparencyChangeMultiplier = 1.0f;
+                    break;
+            }
+
             OgreConfig.FSAA = aaCombo.getItemNameAt(aaCombo.SelectedIndex);
             OgreConfig.VSync = vsyncCheck.Checked;
             MedicalConfig.EngineConfig.Fullscreen = fullscreenCheck.Checked;
             String[] res = resolutionCombo.getItemNameAt(resolutionCombo.SelectedIndex).Split(seps, StringSplitOptions.RemoveEmptyEntries);
             MedicalConfig.EngineConfig.HorizontalRes = int.Parse(res[0]);
             MedicalConfig.EngineConfig.VerticalRes = int.Parse(res[1]);
-            this.close();
-            if (OptionsChanged != null)
+            if (VideoOptionsChanged != null)
             {
-                OptionsChanged.Invoke(this, EventArgs.Empty);
+                VideoOptionsChanged.Invoke(this, EventArgs.Empty);
             }
+            this.close();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)

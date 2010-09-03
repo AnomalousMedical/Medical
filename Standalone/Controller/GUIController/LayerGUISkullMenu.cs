@@ -68,16 +68,16 @@ namespace Medical.GUI
                 TransparencyInterface skull = group.getTransparencyObject("Skull");
                 TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
                 TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-                leftEminence.smoothBlend(skull.CurrentAlpha);
-                rightEminence.smoothBlend(skull.CurrentAlpha);
+                leftEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
+                rightEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
             }
             else
             {
                 TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
                 TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
                 TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-                leftEminence.smoothBlend(0.0f);
-                rightEminence.smoothBlend(0.0f);
+                leftEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
+                rightEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
     }

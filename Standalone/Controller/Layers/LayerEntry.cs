@@ -27,7 +27,7 @@ namespace Medical
                 TransparencyInterface obj = group.getTransparencyObject(transparencyObject);
                 if (obj != null)
                 {
-                    obj.smoothBlend(alphaValue);
+                    obj.smoothBlend(alphaValue, MedicalConfig.TransparencyChangeMultiplier);
                 }
             }
         }

@@ -35,7 +35,7 @@ namespace Medical.GUI
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
 
             options = new OptionsDialog();
-            options.OptionsChanged += new EventHandler(options_OptionsChanged);
+            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             cloneWindowDialog = new CloneWindowDialog();
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
@@ -154,7 +154,7 @@ namespace Medical.GUI
             options.Visible = true;
         }
 
-        void options_OptionsChanged(object sender, EventArgs e)
+        void options_VideoOptionsChanged(object sender, EventArgs e)
         {
             standaloneController.recreateMainWindow();
         }

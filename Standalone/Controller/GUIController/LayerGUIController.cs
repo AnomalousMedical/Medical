@@ -229,41 +229,41 @@ namespace Medical.GUI
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             TransparencyInterface skull = group.getTransparencyObject("Hyoid");
-            skull.smoothBlend(alpha);
+            skull.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeSkullTransparency(float alpha)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             TransparencyInterface skull = group.getTransparencyObject("Skull");
-            skull.smoothBlend(alpha);
+            skull.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             TransparencyInterface skullInterior = group.getTransparencyObject("Skull Interior");
-            skullInterior.smoothBlend(alpha);
+            skullInterior.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             if (skullMenu.ShowEminance)
             {
                 TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
                 TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-                leftEminence.smoothBlend(alpha);
-                rightEminence.smoothBlend(alpha);
+                leftEminence.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
+                rightEminence.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             }
             TransparencyInterface maxillarySinus = group.getTransparencyObject("Maxillary Sinus");
-            maxillarySinus.smoothBlend(alpha);
+            maxillarySinus.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeDiscTransparency(float alpha)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
             TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
-            leftDisc.smoothBlend(alpha);
+            leftDisc.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             TransparencyInterface rightDisc = group.getTransparencyObject("Right TMJ Disc");
-            rightDisc.smoothBlend(alpha);
+            rightDisc.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeMandibleTransparency(float alpha)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             TransparencyInterface skull = group.getTransparencyObject("Mandible");
-            skull.smoothBlend(alpha);
+            skull.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeTopToothTransparency(float alpha)
@@ -271,7 +271,7 @@ namespace Medical.GUI
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
             for (int i = 1; i < 17; ++i)
             {
-                group.getTransparencyObject("Tooth " + i).smoothBlend(alpha);
+                group.getTransparencyObject("Tooth " + i).smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
 
@@ -280,7 +280,7 @@ namespace Medical.GUI
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
             for (int i = 17; i < 33; ++i)
             {
-                group.getTransparencyObject("Tooth " + i).smoothBlend(alpha);
+                group.getTransparencyObject("Tooth " + i).smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
 
@@ -288,13 +288,13 @@ namespace Medical.GUI
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
             TransparencyInterface skin = group.getTransparencyObject("Skin");
-            skin.smoothBlend(alpha);
+            skin.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             TransparencyInterface leftEye = group.getTransparencyObject("Left Eye");
-            leftEye.smoothBlend(alpha);
+            leftEye.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             TransparencyInterface rightEye = group.getTransparencyObject("Right Eye");
-            rightEye.smoothBlend(alpha);
+            rightEye.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             TransparencyInterface eyebrowsAndEyelashes = group.getTransparencyObject("Eyebrows and Eyelashes");
-            eyebrowsAndEyelashes.smoothBlend(alpha);
+            eyebrowsAndEyelashes.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeMuscleTransparency(float alpha)
@@ -302,7 +302,7 @@ namespace Medical.GUI
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Muscles);
             foreach (TransparencyInterface item in group.getTransparencyObjectIter())
             {
-                item.smoothBlend(alpha);
+                item.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
 
@@ -311,7 +311,7 @@ namespace Medical.GUI
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Spine);
             foreach (TransparencyInterface item in group.getTransparencyObjectIter())
             {
-                item.smoothBlend(alpha);
+                item.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
 

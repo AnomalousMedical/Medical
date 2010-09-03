@@ -104,9 +104,9 @@ namespace Medical
                 if (automaticMovement)
                 {
                     totalTime += (float)clock.Seconds;
-                    if (totalTime > 1.0f)
+                    if (totalTime > MedicalConfig.CameraTransitionTime)
                     {
-                        totalTime = 1.0f;
+                        totalTime = MedicalConfig.CameraTransitionTime;
                         automaticMovement = false;
 
                         orbitDistance = targetOrbitDistance;
@@ -116,15 +116,16 @@ namespace Medical
                         rotatedUp = targetRotatedUp;
                         rotatedLeft = targetRotatedLeft;
                     }
-                    this.lookAt = startLookAt.lerp(ref targetLookAt, ref totalTime);
-                    Quaternion rotation = startRotation.slerp(ref targetRotation, totalTime);
+                    float slerpAmount = totalTime / MedicalConfig.CameraTransitionTime;
+                    this.lookAt = startLookAt.lerp(ref targetLookAt, ref slerpAmount);
+                    Quaternion rotation = startRotation.slerp(ref targetRotation, slerpAmount);
                     //If the rotation is not a valid number just use the target rotation
                     if (!rotation.isNumber())
                     {
                         rotation = targetRotation;
                     }
                     Vector3 currentNormalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                    float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * totalTime;
+                    float currentOrbit = startOrbitDistance + (targetOrbitDistance - startOrbitDistance) * slerpAmount;
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }

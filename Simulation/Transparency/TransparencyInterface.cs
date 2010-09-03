@@ -59,6 +59,10 @@ namespace Medical
         [DoNotSave]
         private List<TransparencySubInterface> subInterfaces;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private float opacityChangeMultiplier = 1.0f;
+
         public TransparencyInterface()
         {
             ObjectName = "";
@@ -119,10 +123,11 @@ namespace Medical
             }
         }
 
-        public void smoothBlend(float targetOpacity)
+        public void smoothBlend(float targetOpacity, float changeMultiplier)
         {
             changingOpacity = true;
             this.targetOpacity = targetOpacity;
+            this.opacityChangeMultiplier = changeMultiplier;
         }
 
         internal void addSubInterface(TransparencySubInterface subInterface)
@@ -246,15 +251,13 @@ namespace Medical
             }
         }
 
-        private const float opacityChangeRate = 1.0f;
-
         public override void update(Clock clock, EventManager eventManager)
         {
             if (changingOpacity)
             {
                 if (currentAlpha > targetOpacity)
                 {
-                    currentAlpha -= (float)clock.Seconds * opacityChangeRate;
+                    currentAlpha -= (float)clock.Seconds * opacityChangeMultiplier;
                     if (currentAlpha < targetOpacity)
                     {
                         currentAlpha = targetOpacity;
@@ -263,7 +266,7 @@ namespace Medical
                 }
                 else
                 {
-                    currentAlpha += (float)clock.Seconds * opacityChangeRate;
+                    currentAlpha += (float)clock.Seconds * opacityChangeMultiplier;
                     if (currentAlpha > targetOpacity)
                     {
                         currentAlpha = targetOpacity;
