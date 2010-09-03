@@ -154,13 +154,33 @@ namespace Medical.GUI
                     break;
             }
 
-            OgreConfig.FSAA = aaCombo.getItemNameAt(aaCombo.SelectedIndex);
-            OgreConfig.VSync = vsyncCheck.Checked;
-            MedicalConfig.EngineConfig.Fullscreen = fullscreenCheck.Checked;
+            bool videoOptionsChanged = false;
+
+            if (OgreConfig.FSAA != aaCombo.getItemNameAt(aaCombo.SelectedIndex))
+            {
+                OgreConfig.FSAA = aaCombo.getItemNameAt(aaCombo.SelectedIndex);
+                videoOptionsChanged = true;
+            }
+            if (OgreConfig.VSync != vsyncCheck.Checked)
+            {
+                OgreConfig.VSync = vsyncCheck.Checked;
+                videoOptionsChanged = true;
+            }
+            if (MedicalConfig.EngineConfig.Fullscreen != fullscreenCheck.Checked)
+            {
+                MedicalConfig.EngineConfig.Fullscreen = fullscreenCheck.Checked;
+                videoOptionsChanged = true;
+            }
             String[] res = resolutionCombo.getItemNameAt(resolutionCombo.SelectedIndex).Split(seps, StringSplitOptions.RemoveEmptyEntries);
-            MedicalConfig.EngineConfig.HorizontalRes = int.Parse(res[0]);
-            MedicalConfig.EngineConfig.VerticalRes = int.Parse(res[1]);
-            if (VideoOptionsChanged != null)
+            int horizRes = int.Parse(res[0]);
+            int vertRes = int.Parse(res[1]);
+            if(MedicalConfig.EngineConfig.HorizontalRes != horizRes || MedicalConfig.EngineConfig.VerticalRes != vertRes)
+            {
+                MedicalConfig.EngineConfig.HorizontalRes = horizRes;
+                MedicalConfig.EngineConfig.VerticalRes = vertRes;
+                videoOptionsChanged = true;
+            }
+            if (videoOptionsChanged && VideoOptionsChanged != null)
             {
                 VideoOptionsChanged.Invoke(this, EventArgs.Empty);
             }
