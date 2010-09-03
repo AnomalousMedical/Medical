@@ -36,6 +36,9 @@ namespace Medical.GUI
 
             showDiscCheckBox = new CheckButton(mainWidget.findWidget("DiscSpace/ShowDisc") as Button);
             showDiscCheckBox.CheckedChanged += new MyGUIEvent(showDiscCheckBox_CheckedChanged);
+
+            Button resetButton = mainWidget.findWidget("DiscSpace/Reset") as Button;
+            resetButton.MouseButtonClick += new MyGUIEvent(resetButton_MouseButtonClick);
         }
 
         void discSpaceControl1_CurrentStageChanged(object sender, EventArgs e)
@@ -161,7 +164,7 @@ namespace Medical.GUI
             showing = false;
         }
 
-        public override void setToDefault()
+        void resetButton_MouseButtonClick(Widget source, EventArgs e)
         {
             discSpaceControl.setToDefault();
         }

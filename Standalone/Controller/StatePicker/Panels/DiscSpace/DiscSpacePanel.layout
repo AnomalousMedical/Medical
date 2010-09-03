@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="63 107 194 451" layer="Back">
+    <Widget type="Widget" skin="Panel" position="63 107 194 480" layer="Back">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-            <Property key="ScrollView_CanvasSize" value="194 451"/>
+            <Property key="ScrollView_CanvasSize" value="194 480"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="0 4 214 14">
                 <Property key="Widget_Caption" value="Check this box to show the disc."/>
@@ -101,6 +101,9 @@
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="3 202 160 14">
                 <Property key="Widget_Caption" value="Piper Classification Stage"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="4 447 70 26" name="DiscSpace/Reset">
+                <Property key="Widget_Caption" value="Reset"/>
             </Widget>
         </Widget>
     </Widget>
