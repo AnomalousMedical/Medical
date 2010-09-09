@@ -32,13 +32,10 @@ namespace Medical
         //An optional alpha material, if this is defined the alpha suffix will be ignored
         //and this material will be used instead.
         [Editable] private String alphaMaterialName = null;
-        [Editable] private float currentAlpha = 1.0f;
         [Editable] private String nodeName;
         [Editable] private String childNodeName;
         [Editable] private String entityName;
         [Editable] private bool disableOnHidden = true;
-        [Editable] private float targetOpacity = 1.0f;
-        [Editable] private bool changingOpacity = false;
         [Editable] private int renderGroupOffset = 0;
         [Editable] private uint subEntityIndex = 0;
 
@@ -61,7 +58,11 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        private float opacityChangeMultiplier = 1.0f;
+        private List<TransparencyState> transparencyStates;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private int activeTransparencyState = 0;
 
         public TransparencyInterface()
         {
@@ -71,7 +72,6 @@ namespace Medical
 
         public void setAlpha(float alpha)
         {
-            currentAlpha = alpha;
             diffuse.a = alpha;
             alphaMaterial.Value.setDiffuse(diffuse);
             if (disableOnHidden)
@@ -118,16 +118,14 @@ namespace Medical
             {
                 foreach (TransparencySubInterface subInterface in subInterfaces)
                 {
-                    subInterface.setAlpha(currentAlpha);
+                    subInterface.setAlpha(alpha);
                 }
             }
         }
 
         public void smoothBlend(float targetOpacity, float changeMultiplier)
         {
-            changingOpacity = true;
-            this.targetOpacity = targetOpacity;
-            this.opacityChangeMultiplier = changeMultiplier;
+            transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
         }
 
         internal void addSubInterface(TransparencySubInterface subInterface)
@@ -147,8 +145,35 @@ namespace Medical
             }
         }
 
+        internal void createTransparencyState()
+        {
+            transparencyStates.Add(new TransparencyState());
+        }
+
+        internal void removeTransparencyState(int index)
+        {
+            transparencyStates.RemoveAt(index);
+            if (activeTransparencyState >= index)
+            {
+                activeTransparencyState = 0;
+            }
+        }
+
+        internal void applyTransparencyState(int index)
+        {
+            float workingAlpha = transparencyStates[index].WorkingAlpha;
+            if (workingAlpha != diffuse.a)
+            {
+                setAlpha(workingAlpha);
+            }
+        }
+
         protected override void constructed()
         {
+            transparencyStates = new List<TransparencyState>();
+            transparencyStates.Add(new TransparencyState());
+            activeTransparencyState = 0;
+
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode != null)
             {
@@ -200,7 +225,8 @@ namespace Medical
             subEntity.setMaterialName(alphaMaterial.Value.getName());
             diffuse = alphaMaterial.Value.getTechnique(0).getPass("Color").getDiffuse();
             TransparencyController.addTransparencyObject(this);
-            setAlpha(currentAlpha);
+
+            setAlpha(transparencyStates[activeTransparencyState].WorkingAlpha);
         }
 
         protected override void destroy()
@@ -228,14 +254,7 @@ namespace Medical
         {
             get
             {
-                if (changingOpacity)
-                {
-                    return targetOpacity;
-                }
-                else
-                {
-                    return currentAlpha;
-                }
+                return transparencyStates[activeTransparencyState].CurrentAlpha;
             }
         }
 
@@ -251,29 +270,24 @@ namespace Medical
             }
         }
 
+        [DoNotCopy]
+        internal int ActiveTransparencyState
+        {
+            get
+            {
+                return activeTransparencyState;
+            }
+            set
+            {
+                activeTransparencyState = value;
+            }
+        }
+
         public override void update(Clock clock, EventManager eventManager)
         {
-            if (changingOpacity)
+            foreach (TransparencyState state in transparencyStates)
             {
-                if (currentAlpha > targetOpacity)
-                {
-                    currentAlpha -= (float)clock.Seconds * opacityChangeMultiplier;
-                    if (currentAlpha < targetOpacity)
-                    {
-                        currentAlpha = targetOpacity;
-                        changingOpacity = false;
-                    }
-                }
-                else
-                {
-                    currentAlpha += (float)clock.Seconds * opacityChangeMultiplier;
-                    if (currentAlpha > targetOpacity)
-                    {
-                        currentAlpha = targetOpacity;
-                        changingOpacity = false;
-                    }
-                }
-                setAlpha(currentAlpha);
+                state.update(clock);
             }
         }
     }

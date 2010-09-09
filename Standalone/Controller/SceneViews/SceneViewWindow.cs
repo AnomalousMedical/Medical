@@ -39,6 +39,8 @@ namespace Medical.Controller
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
         private bool showStats = false;
 
+        private String transparencyStateName;
+
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {
             this.controller = controller;
@@ -50,11 +52,15 @@ namespace Medical.Controller
             this.startLookAt = cameraMover.LookAt;
             mainTimer.addFixedUpdateListener(cameraMover);
             AllowNavigation = true;
+            transparencyStateName = name;
+            TransparencyController.createTransparencyState(transparencyStateName);
+            UseDefaultTransparency = false;
         }
 
         public virtual void Dispose()
         {
             mainTimer.removeFixedUpdateListener(cameraMover);
+            TransparencyController.removeTransparencyState(transparencyStateName);
         }
 
         public virtual void createSceneView(RendererWindow window, SimScene scene)
@@ -208,6 +214,16 @@ namespace Medical.Controller
             }
         }
 
+        public String CurrentTransparencyState
+        {
+            get
+            {
+                return UseDefaultTransparency ? TransparencyController.DefaultTransparencyState : transparencyStateName;
+            }
+        }
+
+        public bool UseDefaultTransparency { get; set; }
+
         public String Name
         {
             get
@@ -313,6 +329,7 @@ namespace Medical.Controller
 
         void sceneView_RenderingStarted(SceneView sceneView)
         {
+            TransparencyController.applyTransparencyState(CurrentTransparencyState);
             if (RenderingStarted != null)
             {
                 RenderingStarted.Invoke(this, sceneView.CurrentlyRendering);

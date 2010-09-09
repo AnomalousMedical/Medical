@@ -26,6 +26,7 @@ namespace Medical.Controller
             mdiWindow.SuppressLayout = false;
             mdiWindow.Caption = Name;
             mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
+            mdiWindow.ActiveStatusChanged += new EventHandler(mdiWindow_ActiveStatusChanged);
         }
 
         public override void Dispose()
@@ -75,6 +76,14 @@ namespace Medical.Controller
         void mdiWindow_Closed(object sender, EventArgs e)
         {
             controller.destroyWindow(this);
+        }
+
+        void mdiWindow_ActiveStatusChanged(object sender, EventArgs e)
+        {
+            if (mdiWindow.Active)
+            {
+                TransparencyController.ActiveTransparencyState = CurrentTransparencyState;
+            }
         }
     }
 }
