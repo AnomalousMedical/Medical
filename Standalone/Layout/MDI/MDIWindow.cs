@@ -56,6 +56,11 @@ namespace Medical.Controller
             LayoutManager.Instance.unloadLayout(guiLayout);
         }
 
+        public Widget findChildWidget(String name)
+        {
+            return mainWidget.findWidget(name);
+        }
+
         public void close()
         {
             layoutManager.closeWindow(this);

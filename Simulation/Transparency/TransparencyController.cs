@@ -7,6 +7,8 @@ namespace Medical
 {
     public class TransparencyController
     {
+        public static event EventHandler ActiveTransparencyStateChanged;
+
         public static readonly String DefaultTransparencyState = "Default";
 
         static NaturalSort<RenderGroup> sorter = new NaturalSort<RenderGroup>();
@@ -128,6 +130,10 @@ namespace Medical
                     foreach (TransparencyInterface transInterface in transparencyInterfaces)
                     {
                         transInterface.ActiveTransparencyState = stateIndex;
+                    }
+                    if (ActiveTransparencyStateChanged != null)
+                    {
+                        ActiveTransparencyStateChanged.Invoke(null, EventArgs.Empty);
                     }
                 }
             }

@@ -27,13 +27,8 @@ namespace Medical.GUI
 
         private Button showContacts;
 
-        private SceneViewController sceneViewController;
-
-        public LayerGUIController(Widget ribbonWidget, LayerController layerController, SceneViewController sceneViewController)
+        public LayerGUIController(Widget ribbonWidget, LayerController layerController)
         {
-            this.sceneViewController = sceneViewController;
-            sceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(sceneViewController_ActiveWindowChanged);
-
             //Predefined layers
             this.layerController = layerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
@@ -90,6 +85,8 @@ namespace Medical.GUI
             //{
             //    basicForm.customLayersGroup.Visible = false;
             //}
+
+            TransparencyController.ActiveTransparencyStateChanged += new EventHandler(TransparencyController_ActiveTransparencyStateChanged);
         }
 
         public void resetMenus()
@@ -190,7 +187,7 @@ namespace Medical.GUI
             }
         }
 
-        void sceneViewController_ActiveWindowChanged(SceneViewWindow window)
+        void TransparencyController_ActiveTransparencyStateChanged(object sender, EventArgs e)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             if (group != null)
