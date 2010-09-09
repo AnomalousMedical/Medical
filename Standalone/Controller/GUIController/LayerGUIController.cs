@@ -32,6 +32,7 @@ namespace Medical.GUI
         public LayerGUIController(Widget ribbonWidget, LayerController layerController, SceneViewController sceneViewController)
         {
             this.sceneViewController = sceneViewController;
+            sceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(sceneViewController_ActiveWindowChanged);
 
             //Predefined layers
             this.layerController = layerController;
@@ -189,6 +190,62 @@ namespace Medical.GUI
             }
         }
 
+        void sceneViewController_ActiveWindowChanged(SceneViewWindow window)
+        {
+            TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+            if (group != null)
+            {
+                TransparencyInterface skull = group.getTransparencyObject("Skull");
+                skullMenu.setAlpha(skull.CurrentAlpha);
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                skullMenu.ShowEminance = leftEminence.CurrentAlpha == skull.CurrentAlpha;
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
+            if (group != null)
+            {
+                TransparencyInterface leftDisc = group.getTransparencyObject("Left TMJ Disc");
+                discsMenu.setAlpha(leftDisc.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+            if (group != null)
+            {
+                TransparencyInterface mandible = group.getTransparencyObject("Mandible");
+                mandibleMenu.setAlpha(mandible.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
+            if(group != null)
+            {
+                TransparencyInterface topTooth = group.getTransparencyObject("Tooth 1");
+                topTeethMenu.setAlpha(topTooth.CurrentAlpha);
+                TransparencyInterface bottomTooth = group.getTransparencyObject("Tooth 17");
+                bottomTeethMenu.setAlpha(bottomTooth.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Skin);
+            if (group != null)
+            {
+                TransparencyInterface skin = group.getTransparencyObject("Skin");
+                skinMenu.setAlpha(skin.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Muscles);
+            if (group != null)
+            {
+                TransparencyInterface muscle = group.getTransparencyObject("Left Masseter");
+                musclesMenu.setAlpha(muscle.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Spine);
+            if (group != null)
+            {
+                TransparencyInterface spine = group.getTransparencyObject("C1");
+                spineMenu.setAlpha(spine.CurrentAlpha);
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+            if (group != null)
+            {
+                TransparencyInterface hyoid = group.getTransparencyObject("Hyoid");
+                hyoidMenu.setAlpha(hyoid.CurrentAlpha);
+            }
+        }
+
         public void Dispose()
         {
             skinMenu.Dispose();
@@ -234,8 +291,8 @@ namespace Medical.GUI
         void changeHyoidTransparency(float alpha)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-            TransparencyInterface skull = group.getTransparencyObject("Hyoid");
-            skull.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
+            TransparencyInterface hyoid = group.getTransparencyObject("Hyoid");
+            hyoid.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
         }
 
         private void changeSkullTransparency(float alpha)
