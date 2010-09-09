@@ -185,6 +185,7 @@ namespace Medical.GUI
             stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard(wizard);
             basicRibbon.AllowLayerShortcuts = false;
+            standaloneController.MDILayout.AllowActiveWindowChanges = false;
 #if CREATE_MAINWINDOW_MENU
             basicRibbon.MenuEnabled = false;
 #endif
@@ -246,6 +247,7 @@ namespace Medical.GUI
         void stateWizardController_Finished()
         {
             basicRibbon.AllowLayerShortcuts = true;
+            standaloneController.MDILayout.AllowActiveWindowChanges = true;
 #if CREATE_MAINWINDOW_MENU
             basicRibbon.MenuEnabled = true;
 #endif

@@ -331,6 +331,14 @@ namespace Standalone
             }
         }
 
+        public MDILayoutManager MDILayout
+        {
+            get
+            {
+                return mdiLayout;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();

@@ -46,6 +46,7 @@ namespace Medical.Controller
         {
             rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
             rootContainer._setParent(this);
+            AllowActiveWindowChanges = true;
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace Medical.Controller
             }
             set
             {
-                if (activeWindow != value)
+                if (activeWindow != value && AllowActiveWindowChanges)
                 {
                     if (activeWindow != null)
                     {
@@ -235,6 +236,13 @@ namespace Medical.Controller
                 }
             }
         }
+
+        /// <summary>
+        /// True if the ActiveWindow can change, false to block changes. False
+        /// will lock the active window and it will not be able to be changed by
+        /// the user or code.
+        /// </summary>
+        public bool AllowActiveWindowChanges { get; set; }
 
         /// <summary>
         /// Helper function to intialize windows that are added to the MDILayoutManager.
