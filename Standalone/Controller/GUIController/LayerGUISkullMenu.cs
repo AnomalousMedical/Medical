@@ -7,12 +7,8 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    delegate void ToggleEminanceCallback(bool show);
-
     class LayerGUISkullMenu : LayerGUIMenu
     {
-        public event ToggleEminanceCallback ToggleEminance;
-
         MenuItem separator;
         MenuItem showEminence;
 
@@ -66,9 +62,22 @@ namespace Medical.GUI
 
         private void toggleShowEminance()
         {
-            if (ToggleEminance != null)
+            if (showEminence.StateCheck)
             {
-                ToggleEminance.Invoke(showEminence.StateCheck);
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface skull = group.getTransparencyObject("Skull");
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                leftEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
+                rightEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
+            }
+            else
+            {
+                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
+                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
+                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
+                leftEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
+                rightEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
     }

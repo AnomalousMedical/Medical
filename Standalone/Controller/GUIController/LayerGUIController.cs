@@ -5,7 +5,6 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using Engine.Platform;
-using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -27,12 +26,8 @@ namespace Medical.GUI
 
         private Button showContacts;
 
-        private SceneViewController sceneViewController;
-
-        public LayerGUIController(Widget ribbonWidget, LayerController layerController, SceneViewController sceneViewController)
+        public LayerGUIController(Widget ribbonWidget, LayerController layerController)
         {
-            this.sceneViewController = sceneViewController;
-
             //Predefined layers
             this.layerController = layerController;
             layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
@@ -59,7 +54,6 @@ namespace Medical.GUI
                 skullMenu.createShortcuts(KeyboardButtonCode.KC_F3);
                 skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_F4);
                 skullMenu.TransparencyChanged += changeSkullTransparency;
-                skullMenu.ToggleEminance += toggleShowEminance;
 
                 mandibleMenu = new LayerGUIMenu(ribbonWidget.findWidget("Layers/Mandible") as Button, ribbonWidget.findWidget("Layers/MandibleMenu") as Button);
                 mandibleMenu.createShortcuts(KeyboardButtonCode.KC_F5);
@@ -318,27 +312,6 @@ namespace Medical.GUI
             foreach (TransparencyInterface item in group.getTransparencyObjectIter())
             {
                 item.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
-            }
-        }
-
-        private void toggleShowEminance(bool show)
-        {
-            if (show)
-            {
-                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-                TransparencyInterface skull = group.getTransparencyObject("Skull");
-                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
-                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-                leftEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
-                rightEminence.smoothBlend(skull.CurrentAlpha, MedicalConfig.TransparencyChangeMultiplier);
-            }
-            else
-            {
-                TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
-                TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
-                TransparencyInterface rightEminence = group.getTransparencyObject("Right Eminence");
-                leftEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                rightEminence.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
             }
         }
 

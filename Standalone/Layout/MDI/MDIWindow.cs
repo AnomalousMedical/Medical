@@ -13,7 +13,6 @@ namespace Medical.Controller
     public class MDIWindow : MDIContainerBase, IDisposable
     {
         public event EventHandler Closed;
-        public event EventHandler ActiveStatusChanged;
 
         private Layout guiLayout;
         private Widget mainWidget;
@@ -225,10 +224,6 @@ namespace Medical.Controller
         {
             activeWindow = active;
             captionButton.StateCheck = activeWindow;
-            if (ActiveStatusChanged != null)
-            {
-                ActiveStatusChanged.Invoke(this, EventArgs.Empty);
-            }
         }
 
         /// <summary>
