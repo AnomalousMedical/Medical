@@ -112,6 +112,7 @@
     <Compile Include="Controller\GUIController\NavigationShortcut.cs" />
     <Compile Include="Controller\GUIController\WindowGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
@@ -247,6 +248,7 @@
     <EmbeddedResource Include="Controller\GUIController\PiperJBORibbon.layout" />
     <EmbeddedResource Include="Controller\GUIController\ResolutionMenu.layout" />
     <None Include="Controller\StatePicker\Panels\GridControlTemplate.layout" />
+    <EmbeddedResource Include="Controller\ImageRenderer\ImageRendererProgress.layout" />
     <EmbeddedResource Include="Controller\StatePicker\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="Controller\StatePicker\Panels\DiscSpace\DiscSpacePanel.layout" />
     <EmbeddedResource Include="Controller\StatePicker\Panels\Doppler\DopplerPanel.layout" />

@@ -76,6 +76,8 @@ namespace Medical.GUI
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
+
+            standaloneController.ImageRenderer.ImageRendererProgress = new ImageRendererProgress();
         }
 
         public void Dispose()

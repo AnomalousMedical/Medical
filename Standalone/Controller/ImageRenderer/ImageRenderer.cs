@@ -45,6 +45,8 @@ namespace Medical
         private LayerController layerController;
         private NavigationController navigationController;
 
+        private ImageRendererProgress imageRendererProgress;
+
         public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, LayerController layerController, NavigationController navigationController)
         {
             this.controller = controller;
@@ -56,6 +58,12 @@ namespace Medical
 
         public Bitmap renderImage(ImageRendererProperties properties)
         {
+            if (imageRendererProgress != null)
+            {
+                imageRendererProgress.Visible = true;
+                imageRendererProgress.update(0, "Rendering Image");
+            }
+
             Bitmap bitmap = null;
             SceneViewWindow sceneWindow = sceneViewController.ActiveWindow;
             if (sceneWindow != null)
@@ -147,7 +155,24 @@ namespace Medical
                 }
             }
 
+            if (imageRendererProgress != null)
+            {
+                imageRendererProgress.Visible = false;
+            }
+
             return bitmap;
+        }
+
+        public ImageRendererProgress ImageRendererProgress
+        {
+            get
+            {
+                return imageRendererProgress;
+            }
+            set
+            {
+                imageRendererProgress = value;
+            }
         }
 
         private Bitmap createRender(int width, int height, int gridSize, int aaMode, bool showWatermark, bool transparentBG, Engine.Color backColor, Camera cloneCamera, Vector3 position, Vector3 lookAt)
@@ -194,7 +219,7 @@ namespace Medical
                         }
                         else
                         {
-                            bitmap = gridRender(width, height, gridSize, aaMode, renderTexture, camera);
+                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera);
                         }
 
                         renderTexture.destroyViewport(viewport);
@@ -264,14 +289,9 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, RenderTexture renderTexture, Camera camera)
+        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera)
         {
-            bool turnedOffWatermark = false;
-            if (watermark != null && watermark.Visible)
-            {
-                turnedOffWatermark = true;
-                watermark.Visible = false;
-            }
+            renderTexture.getViewport(0).setOverlaysEnabled(false);
 
             float originalLeft, originalRight, originalTop, originalBottom;
             camera.getFrustumExtents(out originalLeft, out originalRight, out originalTop, out originalBottom);
@@ -290,6 +310,8 @@ namespace Medical
 
             float left, right, top, bottom;
             int totalSS = gridSize * gridSize;
+
+            String updateString = "Rendering piece {0} of " + totalSS;
 
             OgreWrapper.PixelFormat format = OgreWrapper.PixelFormat.PF_A8R8G8B8;
             System.Drawing.Imaging.PixelFormat bitmapFormat = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
@@ -351,6 +373,11 @@ namespace Medical
                             g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
                         }
                         //Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
+
+                        if (imageRendererProgress != null)
+                        {
+                            imageRendererProgress.update((uint)(((float)(i + 1) / totalSS) * 100.0f), String.Format(updateString, i + 1));
+                        }
                     }
                     if (scaledPiecewiseBitmap != null)
                     {
@@ -358,7 +385,7 @@ namespace Medical
                         scaledPiecewiseBitmap.Dispose();
                     }
                 }
-                if (turnedOffWatermark)
+                if (showWatermark)
                 {
                     float imageFinalHeight = fullBitmap.Height * 0.0447f;
                     Bitmap logo = Medical.Properties.Resources.AnomalousMedical;
@@ -368,10 +395,7 @@ namespace Medical
                 }
             }
 
-            if (turnedOffWatermark)
-            {
-                watermark.Visible = true;
-            }
+            renderTexture.getViewport(0).setOverlaysEnabled(true);
 
             return fullBitmap;
         }
