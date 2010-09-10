@@ -54,7 +54,7 @@ namespace Medical.Controller
             AllowNavigation = true;
             transparencyStateName = name;
             TransparencyController.createTransparencyState(transparencyStateName);
-            UseDefaultTransparency = true;
+            UseDefaultTransparency = false;
         }
 
         public virtual void Dispose()
