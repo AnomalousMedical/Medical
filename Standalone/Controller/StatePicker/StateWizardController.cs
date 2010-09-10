@@ -107,7 +107,7 @@ namespace Medical.GUI
                 {
                     navigationController.setNavigationState(navigationStateBeforeShown, CurrentSceneView);
                 }
-                layerController.CurrentLayerState = layerStatusBeforeShown;
+                layerController.applyLayerState(layerStatusBeforeShown);
                 if (Finished != null)
                 {
                     Finished.Invoke();

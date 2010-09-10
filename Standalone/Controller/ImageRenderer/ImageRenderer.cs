@@ -24,6 +24,8 @@ namespace Medical
 
     class ImageRenderer
     {
+        private static readonly String TRANSPARENCY_STATE = "ImageRenderer";
+
         /// <summary>
         /// Called before the image is rendered or any modifications for
         /// rendering of the scene have been made.
@@ -49,6 +51,7 @@ namespace Medical
             this.sceneViewController = sceneViewController;
             this.layerController = layerController;
             this.navigationController = navigationController;
+            TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
         public Bitmap renderImage(ImageRendererProperties properties)
@@ -108,11 +111,14 @@ namespace Medical
                 }
 
                 //Layer override
-                LayerState currentLayers = null;
+                String activeTransparencyState = TransparencyController.ActiveTransparencyState;
                 if (properties.OverrideLayers && layerController != null)
                 {
-                    currentLayers = layerController.applyLayerStateTemporaryUndisruptive(properties.LayerState);
+                    TransparencyController.ActiveTransparencyState = TRANSPARENCY_STATE;
+                    layerController.instantlyApplyLayerState(properties.LayerState, false);
                 }
+
+                TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);
 
                 //Render
                 bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
@@ -120,7 +126,7 @@ namespace Medical
                 //Turn off layer override
                 if (properties.OverrideLayers && layerController != null)
                 {
-                    layerController.restoreConditions(currentLayers);
+                    TransparencyController.ActiveTransparencyState = activeTransparencyState;
                 }
 
                 //Background deactivation

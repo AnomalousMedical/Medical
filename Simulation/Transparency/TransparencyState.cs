@@ -69,6 +69,10 @@ namespace Medical
                     return workingAlpha;
                 }
             }
+            set
+            {
+                workingAlpha = value;
+            }
         }
 
         /// <summary>

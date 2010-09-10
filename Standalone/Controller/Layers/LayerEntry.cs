@@ -32,7 +32,7 @@ namespace Medical
             }
         }
 
-        internal void applyTemporaryUndisruptive()
+        public void instantlyApply()
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
             if (group != null)
@@ -40,7 +40,7 @@ namespace Medical
                 TransparencyInterface obj = group.getTransparencyObject(transparencyObject);
                 if (obj != null)
                 {
-                    obj.setAlpha(alphaValue);
+                    obj.CurrentAlpha = alphaValue;
                 }
             }
         }

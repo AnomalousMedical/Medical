@@ -15,13 +15,12 @@ namespace Medical
     public class LayerController : IDisposable
     {
         public event LayerControllerEvent LayerStateSetChanged;
-        public event LayerControllerEvent CurrentLayerStateChanged;
+        public event LayerControllerEvent LayerStateApplied;
 
         private LayerStateSet currentLayers;
         private XmlSaver xmlSaver = new XmlSaver();
 
         private String lastLayersFile;
-        private LayerState currentLayerState;
 
         public LayerController()
         {
@@ -38,37 +37,30 @@ namespace Medical
 
         public void applyLayerState(String name)
         {
-            CurrentLayerState = currentLayers.getState(name);
+            applyLayerState(currentLayers.getState(name));
         }
 
-        /// <summary>
-        /// Apply a layer state quicky without causing any disruption to the
-        /// current layering including any transitions currently in effect. This
-        /// will be valid until the next update. It is intended for use by the
-        /// ImageRenderer so images can be captured with transparency that is
-        /// different from the current transparency.
-        /// </summary>
-        /// <param name="name">The name of the state to apply.</param>
-        /// <returns>A LayerState that can restore the scene to how it was before this fuction was called.</returns>
-        public LayerState applyLayerStateTemporaryUndisruptive(String name)
+        public void applyLayerState(LayerState state)
         {
-            LayerState currentConditions = new LayerState("CurrentConditions");
-            currentConditions.captureState();
-
-            LayerState tempState = currentLayers.getState(name);
-            tempState.applyTemporaryUndisruptive();
-
-            return currentConditions;
+            state.apply();
+            if (LayerStateApplied != null)
+            {
+                LayerStateApplied.Invoke(this);
+            }
         }
 
-        /// <summary>
-        /// Call this function to restore the old conditions that were returned
-        /// from applyLayerStateTemporaryUndisruptive.
-        /// </summary>
-        /// <param name="oldConditions"></param>
-        public void restoreConditions(LayerState oldConditions)
+        public void instantlyApplyLayerState(String name, bool reportChanges)
         {
-            oldConditions.applyTemporaryUndisruptive();
+            instantlyApplyLayerState(currentLayers.getState(name), reportChanges);
+        }
+
+        public void instantlyApplyLayerState(LayerState state, bool reportChanges)
+        {
+            state.instantlyApply();
+            if (reportChanges && LayerStateApplied != null)
+            {
+                LayerStateApplied.Invoke(this);
+            }
         }
 
         public void saveLayerStateSet(String filename)
@@ -142,34 +134,10 @@ namespace Medical
                 {
                     currentLayers.Dispose();
                 }
-                currentLayerState = null;
                 currentLayers = value;
                 if (LayerStateSetChanged != null)
                 {
                     LayerStateSetChanged.Invoke(this);
-                }
-            }
-        }
-
-        public LayerState CurrentLayerState
-        {
-            get
-            {
-                return currentLayerState;
-            }
-            set
-            {
-                if (currentLayerState != value)
-                {
-                    currentLayerState = value;
-                    if (currentLayerState != null)
-                    {
-                        currentLayerState.apply();
-                        if (CurrentLayerStateChanged != null)
-                        {
-                            CurrentLayerStateChanged.Invoke(this);
-                        }
-                    }
                 }
             }
         }

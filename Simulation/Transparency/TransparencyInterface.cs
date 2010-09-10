@@ -70,59 +70,6 @@ namespace Medical
             RenderGroup = RenderGroup.None;
         }
 
-        public void setAlpha(float alpha)
-        {
-            diffuse.a = alpha;
-            alphaMaterial.Value.setDiffuse(diffuse);
-            if (disableOnHidden)
-            {
-                subEntity.setVisible(alpha != 0.0f);
-            }
-            if (alpha == 1.0f)
-            {
-                subEntity.setMaterialName(baseMaterialName);
-                entity.setRenderQueueGroup(0);
-            }
-            else
-            {
-                subEntity.setMaterialName(alphaMaterial.Value.getName());
-                switch (RenderGroup)
-                {
-                    case RenderGroup.None:
-                        entity.setRenderQueueGroup((byte)(95 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Teeth:
-                        entity.setRenderQueueGroup((byte)(0 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Bones:
-                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Muscles:
-                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Skin:
-                        entity.setRenderQueueGroup((byte)(90 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Spine:
-                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                        break;
-                    case RenderGroup.Nasal:
-                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
-                        break;
-                    case RenderGroup.TMJ:
-                        entity.setRenderQueueGroup((byte)(60 + renderGroupOffset));
-                        break;
-                }
-            }
-            if (subInterfaces != null)
-            {
-                foreach (TransparencySubInterface subInterface in subInterfaces)
-                {
-                    subInterface.setAlpha(alpha);
-                }
-            }
-        }
-
         public void smoothBlend(float targetOpacity, float changeMultiplier)
         {
             transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
@@ -164,7 +111,7 @@ namespace Medical
             float workingAlpha = transparencyStates[index].WorkingAlpha;
             if (workingAlpha != diffuse.a)
             {
-                setAlpha(workingAlpha);
+                applyAlphaToMaterial(workingAlpha);
             }
         }
 
@@ -226,7 +173,7 @@ namespace Medical
             diffuse = alphaMaterial.Value.getTechnique(0).getPass("Color").getDiffuse();
             TransparencyController.addTransparencyObject(this);
 
-            setAlpha(transparencyStates[activeTransparencyState].WorkingAlpha);
+            applyAlphaToMaterial(transparencyStates[activeTransparencyState].WorkingAlpha);
         }
 
         protected override void destroy()
@@ -250,11 +197,16 @@ namespace Medical
         /// transition the target opacity will be returned and not the actual
         /// current value.
         /// </summary>
+        [DoNotCopy]
         public float CurrentAlpha
         {
             get
             {
                 return transparencyStates[activeTransparencyState].CurrentAlpha;
+            }
+            set
+            {
+                transparencyStates[activeTransparencyState].CurrentAlpha = value;
             }
         }
 
@@ -288,6 +240,59 @@ namespace Medical
             foreach (TransparencyState state in transparencyStates)
             {
                 state.update(clock);
+            }
+        }
+
+        private void applyAlphaToMaterial(float alpha)
+        {
+            diffuse.a = alpha;
+            alphaMaterial.Value.setDiffuse(diffuse);
+            if (disableOnHidden)
+            {
+                subEntity.setVisible(alpha != 0.0f);
+            }
+            if (alpha == 1.0f)
+            {
+                subEntity.setMaterialName(baseMaterialName);
+                entity.setRenderQueueGroup(0);
+            }
+            else
+            {
+                subEntity.setMaterialName(alphaMaterial.Value.getName());
+                switch (RenderGroup)
+                {
+                    case RenderGroup.None:
+                        entity.setRenderQueueGroup((byte)(95 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Teeth:
+                        entity.setRenderQueueGroup((byte)(0 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Bones:
+                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Muscles:
+                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Skin:
+                        entity.setRenderQueueGroup((byte)(90 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Spine:
+                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Nasal:
+                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
+                        break;
+                    case RenderGroup.TMJ:
+                        entity.setRenderQueueGroup((byte)(60 + renderGroupOffset));
+                        break;
+                }
+            }
+            if (subInterfaces != null)
+            {
+                foreach (TransparencySubInterface subInterface in subInterfaces)
+                {
+                    subInterface.setAlpha(alpha);
+                }
             }
         }
     }

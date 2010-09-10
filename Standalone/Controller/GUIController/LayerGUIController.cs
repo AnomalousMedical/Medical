@@ -41,7 +41,7 @@ namespace Medical.GUI
 
             //if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CUSTOM_LAYERS))
             {
-                layerController.CurrentLayerStateChanged += new LayerControllerEvent(synchronizeLayerMenus);
+                layerController.LayerStateApplied += new LayerControllerEvent(layerStateChanged);
 
                 skinMenu = new LayerGUIMenu(ribbonWidget.findWidget("Layers/Skin") as Button, ribbonWidget.findWidget("Layers/SkinMenu") as Button);
                 skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
@@ -102,59 +102,9 @@ namespace Medical.GUI
             bottomTeethMenu.setAlpha(1.0f);
         }
 
-        void synchronizeLayerMenus(LayerController controller)
+        void layerStateChanged(LayerController controller)
         {
-            foreach (LayerEntry layerEntry in controller.CurrentLayerState.Entries)
-            {
-                if (layerEntry.RenderGroup == RenderGroup.Skin && layerEntry.TransparencyObject == "Skin")
-                {
-                    skinMenu.setAlpha(layerEntry.AlphaValue);
-                }
-                else if (layerEntry.RenderGroup == RenderGroup.Muscles && layerEntry.TransparencyObject == "Left Masseter")
-                {
-                    musclesMenu.setAlpha(layerEntry.AlphaValue);
-                }
-                else if (layerEntry.RenderGroup == RenderGroup.Bones)
-                {
-                    if (layerEntry.TransparencyObject == "Skull")
-                    {
-                        skullMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                    else if (layerEntry.TransparencyObject == "Mandible")
-                    {
-                        mandibleMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                    else if (layerEntry.TransparencyObject == "Hyoid")
-                    {
-                        hyoidMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                }
-                else if (layerEntry.RenderGroup == RenderGroup.Spine)
-                {
-                    if (layerEntry.TransparencyObject == "C1")
-                    {
-                        spineMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                }
-                else if (layerEntry.RenderGroup == RenderGroup.TMJ)
-                {
-                    if (layerEntry.TransparencyObject == "Left TMJ Disc")
-                    {
-                        discsMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                }
-                else if (layerEntry.RenderGroup == RenderGroup.Teeth)
-                {
-                    if (layerEntry.TransparencyObject == "Tooth 10")
-                    {
-                        topTeethMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                    else if (layerEntry.TransparencyObject == "Tooth 25")
-                    {
-                        bottomTeethMenu.setAlpha(layerEntry.AlphaValue);
-                    }
-                }
-            }
+            synchronizeLayerMenus();
         }
 
         void showContacts_MouseButtonClick(Widget source, EventArgs e)
@@ -189,6 +139,11 @@ namespace Medical.GUI
 
         void TransparencyController_ActiveTransparencyStateChanged(object sender, EventArgs e)
         {
+            synchronizeLayerMenus();
+        }
+
+        void synchronizeLayerMenus()
+        {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             if (group != null)
             {
@@ -210,7 +165,7 @@ namespace Medical.GUI
                 mandibleMenu.setAlpha(mandible.CurrentAlpha);
             }
             group = TransparencyController.getTransparencyGroup(RenderGroup.Teeth);
-            if(group != null)
+            if (group != null)
             {
                 TransparencyInterface topTooth = group.getTransparencyObject("Tooth 1");
                 topTeethMenu.setAlpha(topTooth.CurrentAlpha);

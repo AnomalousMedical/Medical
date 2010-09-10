@@ -54,11 +54,11 @@ namespace Medical
             }
         }
 
-        internal void applyTemporaryUndisruptive()
+        internal void instantlyApply()
         {
             foreach (LayerEntry entry in entries)
             {
-                entry.applyTemporaryUndisruptive();
+                entry.instantlyApply();
             }
         }
 
