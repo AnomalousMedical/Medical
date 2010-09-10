@@ -74,11 +74,8 @@ namespace Medical.GUI
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
 
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
-        }
 
-        void stateWizardController_StateCreated(MedicalState state)
-        {
-            standaloneController.MedicalStateController.addState(state);
+            standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
         }
 
         public void Dispose()
@@ -178,18 +175,38 @@ namespace Medical.GUI
             }
         }
 
+        void SceneViewController_ActiveWindowChanged(SceneViewWindow window)
+        {
+            stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
+            stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
+        }
+
+        #region StateWizard Callbacks
+
         public void startWizard(StateWizard wizard)
         {
             stateWizardPanelController.CurrentWizardName = wizard.Name;
-            stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
-            stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
             stateWizardController.startWizard(wizard);
             basicRibbon.AllowLayerShortcuts = false;
-            standaloneController.MDILayout.AllowActiveWindowChanges = false;
-#if CREATE_MAINWINDOW_MENU
+            #if CREATE_MAINWINDOW_MENU
             basicRibbon.MenuEnabled = false;
-#endif
+            #endif
         }
+
+        void stateWizardController_Finished()
+        {
+            basicRibbon.AllowLayerShortcuts = true;
+            #if CREATE_MAINWINDOW_MENU
+            basicRibbon.MenuEnabled = true;
+            #endif
+        }
+
+        void stateWizardController_StateCreated(MedicalState state)
+        {
+            standaloneController.MedicalStateController.addState(state);
+        }
+
+        #endregion StateWizard Callbacks
 
         public ScreenLayoutManager ScreenLayout
         {
@@ -243,15 +260,6 @@ namespace Medical.GUI
         }
 
 #endif
-
-        void stateWizardController_Finished()
-        {
-            basicRibbon.AllowLayerShortcuts = true;
-            standaloneController.MDILayout.AllowActiveWindowChanges = true;
-#if CREATE_MAINWINDOW_MENU
-            basicRibbon.MenuEnabled = true;
-#endif
-        }
 
         private void createWizardPanels()
         {
