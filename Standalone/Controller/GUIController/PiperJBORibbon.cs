@@ -49,6 +49,7 @@ namespace Medical.GUI
             appMenu.Dispose();
             windowGUIController.Dispose();
             renderGUIController.Dispose();
+            sequencesGUIController.Dispose();
             layerGUIController.Dispose();
             navigationGUIController.Dispose();
             LayoutManager.Instance.unloadLayout(ribbon);

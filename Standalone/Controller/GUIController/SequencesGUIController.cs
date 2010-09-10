@@ -7,10 +7,11 @@ using Engine.ObjectManagement;
 using Engine.Resources;
 using Medical.Muscles;
 using MyGUIPlugin;
+using Logging;
 
 namespace Medical.GUI
 {
-    class SequencesGUIController
+    class SequencesGUIController : IDisposable
     {
         private MovementSequenceController sequenceController;
         private Button sequencesButton;
@@ -27,9 +28,6 @@ namespace Medical.GUI
             this.stopButton = ribbonWidget.findWidget("SequencesTab/StopButton") as Button;
             this.nowPlayingLabel = ribbonWidget.findWidget("SequencesTab/NowPlaying") as StaticText;
 
-            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
-            sequenceMenu.Visible = false;
-
             sequencesButton.MouseButtonClick += new MyGUIEvent(sequencesButton_MouseButtonClick);
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
             stopButton.MouseButtonClick += new MyGUIEvent(stopButton_MouseButtonClick);
@@ -40,10 +38,25 @@ namespace Medical.GUI
             sequenceController.CurrentSequenceChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceChanged);
         }
 
+        public void Dispose()
+        {
+            if (sequenceMenu != null)
+            {
+                Gui.Instance.destroyWidget(sequenceMenu);
+            }
+        }
+
         void sequenceController_CurrentSequenceSetChanged(MovementSequenceController controller)
         {
+            if (sequenceMenu != null)
+            {
+                Gui.Instance.destroyWidget(sequenceMenu);
+            }
             MovementSequenceSet currentSet = controller.SequenceSet;
-            sequenceMenu.removeAllItems();
+
+            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
+            sequenceMenu.Visible = false;
+
             foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
                 MenuItem groupItem = sequenceMenu.addItem(sequenceGroup.Name, MenuItemType.Popup);
