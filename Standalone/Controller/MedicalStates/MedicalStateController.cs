@@ -130,6 +130,7 @@ namespace Medical
 
         public void destroyState(MedicalState state)
         {
+            stopBlending();
             int index = states.IndexOf(state);
             states.RemoveAt(index);
             if (StateRemoved != null)
