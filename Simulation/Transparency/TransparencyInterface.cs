@@ -102,7 +102,7 @@ namespace Medical
             transparencyStates.RemoveAt(index);
             if (activeTransparencyState >= index)
             {
-                activeTransparencyState = 0;
+                --activeTransparencyState;
             }
         }
 
@@ -119,7 +119,6 @@ namespace Medical
         {
             transparencyStates = new List<TransparencyState>();
             transparencyStates.Add(new TransparencyState());
-            activeTransparencyState = 0;
 
             SceneNodeElement sceneNode = Owner.getElement(nodeName) as SceneNodeElement;
             if (sceneNode != null)
