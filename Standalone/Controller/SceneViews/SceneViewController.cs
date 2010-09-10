@@ -30,9 +30,9 @@ namespace Medical.Controller
         private SimScene currentScene = null;
         private OgreRenderManager rm;
         private SceneViewWindow activeWindow = null;
-        private PopupSceneViewWindow cloneWindow = null;
 
-        private List<SceneViewWindow> windows = new List<SceneViewWindow>();
+        private PopupSceneViewWindow cloneWindow = null;
+        private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
 
         public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
         {
@@ -50,7 +50,7 @@ namespace Medical.Controller
         public void Dispose()
         {
             destroyCameras();
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 window.Dispose();
             }
@@ -77,7 +77,7 @@ namespace Medical.Controller
 
         public MDISceneViewWindow findWindow(String name)
         {
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 if (window.Name == name)
                 {
@@ -97,13 +97,25 @@ namespace Medical.Controller
             {
                 window.destroySceneView();
             }
-            windows.Remove(window);
+            if (window == cloneWindow)
+            {
+                cloneWindow = null;
+            }
+            else
+            {
+                mdiWindows.Remove((MDISceneViewWindow)window);
+                //On the last window, disable closing it.
+                if (mdiWindows.Count == 1)
+                {
+                    mdiWindows[0].AllowClose = false;
+                }
+            }
             window.Dispose();
         }
 
         public void createCameras(SimScene scene)
         {
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 window.createSceneView(rendererWindow, scene);
             }
@@ -113,7 +125,7 @@ namespace Medical.Controller
 
         public void destroyCameras()
         {
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 window.destroySceneView();
             }
@@ -124,7 +136,7 @@ namespace Medical.Controller
 
         public void resetAllCameraPositions()
         {
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 window.resetToStartPosition();
             }
@@ -150,7 +162,6 @@ namespace Medical.Controller
                 {
                     cloneWindow.createSceneView(null, currentScene);
                 }
-                windows.Add(cloneWindow);
             }
         }
 
@@ -166,13 +177,10 @@ namespace Medical.Controller
 
         public void closeAllWindows()
         {
-            List<SceneViewWindow> windowListCopy = new List<SceneViewWindow>(windows);
-            foreach (SceneViewWindow window in windowListCopy)
+            List<MDISceneViewWindow> windowListCopy = new List<MDISceneViewWindow>(mdiWindows);
+            foreach (MDISceneViewWindow window in windowListCopy)
             {
-                if (window != cloneWindow)
-                {
-                    window.close();
-                }
+                window.close();
             }
         }
 
@@ -202,7 +210,7 @@ namespace Medical.Controller
             {
                 if (activeWindow == null)
                 {
-                    return windows[0];
+                    return mdiWindows[0];
                 }
                 return activeWindow;
             }
@@ -217,7 +225,7 @@ namespace Medical.Controller
             //Check to see if the active window is one of the SceneViewWindow's MDIWindow
             bool foundWindow = false;
             MDIWindow activeMDIWindow = mdiLayout.ActiveWindow;
-            foreach (SceneViewWindow window in windows)
+            foreach (SceneViewWindow window in mdiWindows)
             {
                 MDISceneViewWindow mdiSceneWindow = window as MDISceneViewWindow;
                 if (mdiSceneWindow != null && mdiSceneWindow._getMDIWindow() == activeMDIWindow)
@@ -232,9 +240,9 @@ namespace Medical.Controller
                 }
             }
             //If we did not find the window specified, use the first window as the current window
-            if (!foundWindow && windows.Count > 0)
+            if (!foundWindow && mdiWindows.Count > 0)
             {
-                activeWindow = windows[0];
+                activeWindow = mdiWindows[0];
                 if (ActiveWindowChanged != null)
                 {
                     ActiveWindowChanged.Invoke(activeWindow);
@@ -263,7 +271,17 @@ namespace Medical.Controller
             {
                 window.createSceneView(rendererWindow, currentScene);
             }
-            windows.Add(window);
+            //Count is 0, disable close button on first window
+            if (mdiWindows.Count == 0)
+            {
+                window.AllowClose = false;
+            }
+            //Count is 1, enable the close button on the first window
+            if (mdiWindows.Count == 1)
+            {
+                mdiWindows[0].AllowClose = true;
+            }
+            mdiWindows.Add(window);
             return window;
         }
     }

@@ -68,6 +68,18 @@ namespace Medical.Controller
             }
         }
 
+        public bool AllowClose
+        {
+            get
+            {
+                return mdiWindow.AllowClose;
+            }
+            set
+            {
+                mdiWindow.AllowClose = value;
+            }
+        }
+
         /// <summary>
         /// Get the MDIWindow for this window. Do not touch unless you are SceneViewController.
         /// </summary>

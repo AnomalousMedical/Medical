@@ -21,6 +21,7 @@ namespace Medical.Controller
         private Button captionButton;
         private bool activeWindow = false;
         private MDILayoutManager layoutManager;
+        private Button closeButton;
 
         /// <summary>
         /// Constructor. Can load custom layout files for the header. These files may contain two buttons for custom behavior:
@@ -41,7 +42,7 @@ namespace Medical.Controller
                 captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
             }
 
-            Button closeButton = mainWidget.findWidget("CloseButton") as Button;
+            closeButton = mainWidget.findWidget("CloseButton") as Button;
             if (closeButton != null)
             {
                 closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
@@ -142,6 +143,18 @@ namespace Medical.Controller
                 {
                     content.Visible = value;
                 }
+            }
+        }
+
+        public bool AllowClose
+        {
+            get
+            {
+                return closeButton.Visible;
+            }
+            set
+            {
+                closeButton.Visible = value;
             }
         }
 
