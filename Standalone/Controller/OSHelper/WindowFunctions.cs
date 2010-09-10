@@ -35,12 +35,20 @@ namespace Medical.Controller
             WindowFunctions_maximizeWindow(new IntPtr(long.Parse(windowHandle.WindowHandle)));
         }
 
+        public static void pumpMessages()
+        {
+            WindowFunctions_pumpMessages();
+        }
+
 #region PInvoke
         [DllImport("OSHelper")]
         private static extern int WindowFunctions_changeWindowIcon(IntPtr hwnd, WindowIcons icon);
 
         [DllImport("OSHelper")]
         private static extern int WindowFunctions_maximizeWindow(IntPtr hwnd);
+
+        [DllImport("OSHelper")]
+        private static extern void WindowFunctions_pumpMessages();
 
 #endregion
     }

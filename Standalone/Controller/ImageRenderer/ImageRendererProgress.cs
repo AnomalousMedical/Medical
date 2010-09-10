@@ -1,51 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MyGUIPlugin;
-using OgreWrapper;
-
 namespace Medical
 {
-    class ImageRendererProgress
+    interface ImageRendererProgress
     {
-        private Layout layout;
-        private Widget mainWidget;
-
-        private Progress rendererProgress;
-        private StaticText statusText;
-
-        public ImageRendererProgress()
-        {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.ImageRenderer.ImageRendererProgress.layout");
-            mainWidget = layout.getWidget(0);
-
-            rendererProgress = mainWidget.findWidget("RenderingProgress") as Progress;
-            statusText = mainWidget.findWidget("StatusText") as StaticText;
-
-            Visible = false;
-        }
-
-        public void update(uint percentage, String status)
-        {
-            rendererProgress.Position = percentage;
-            statusText.Caption = status;
-            Root.getSingleton()._updateAllRenderTargets();
-        }
-
-        public bool Visible
-        {
-            get
-            {
-                return mainWidget.Visible;
-            }
-            set
-            {
-                int x = (int)((Gui.Instance.getViewWidth() - mainWidget.Width) / 2.0f);
-                int y = (int)((Gui.Instance.getViewHeight() - mainWidget.Height) / 2.0f);
-                mainWidget.setPosition(x, y);
-                mainWidget.Visible = value;
-            }
-        }
+        void update(uint percentage, string status);
+        bool Visible { get; set; }
     }
 }

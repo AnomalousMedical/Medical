@@ -77,7 +77,7 @@ namespace Medical.GUI
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
 
-            standaloneController.ImageRenderer.ImageRendererProgress = new ImageRendererProgress();
+            standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
         }
 
         public void Dispose()
