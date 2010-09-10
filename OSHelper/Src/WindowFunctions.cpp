@@ -67,6 +67,8 @@ extern "C" _AnomalousExport void WindowFunctions_pumpMessages()
 
 #ifdef MAC_OSX
 
+#include <Carbon/Carbon.h>
+
 extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(void* hwnd, int iconID)
 {
 	return 0;
