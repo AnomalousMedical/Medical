@@ -15,11 +15,11 @@ namespace Medical.GUI
         private float maximum = 0.0f;
         private float sequentialChange = 0.0f;
 
-        private HScroll scrollBar;
+        private VScroll scrollBar;
         //private KryptonRibbonGroupButton previousButton;
         //private KryptonRibbonGroupButton nextButton;
 
-        public MandibleControlSlider(HScroll scrollBar)
+        public MandibleControlSlider(VScroll scrollBar)
         {
             this.scrollBar = scrollBar;
             scrollBar.ScrollChangePosition += new MyGUIEvent(scrollBar_ScrollChangePosition);

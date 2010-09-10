@@ -116,52 +116,7 @@
             <Widget type="TabItem" skin="" position="4 26 1607 83" name="MovementTab">
                 <Property key="Widget_Caption" value="Movement"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-                    <Property key="ScrollView_CanvasSize" value="718 72"/>
-                    <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-                    <Property key="ScrollView_VisibleVScroll" value="false"/>
-                    <Widget type="HScroll" skin="HSlider" position="20 22 100 16" name="Movement/HingeSlider">
-                        <Property key="Scroll_Range" value="1000"/>
-                    </Widget>
-                    <Widget type="StaticText" skin="StaticText" position="20 46 108 24" name="Movement/HingeOpenText">
-                        <Property key="Widget_Caption" value="Hinge Opening"/>
-                    </Widget>
-                    <Widget type="Widget" skin="Separator1" position="140 0 2 72" align="Default" name="Movement/Sep1"/>
-                    <Widget type="HScroll" skin="HSlider" position="160 22 100 16" name="Movement/ExcursionRightSlider">
-                        <Property key="Scroll_Range" value="1000"/>
-                    </Widget>
-                    <Widget type="StaticText" skin="StaticText" position="156 46 108 24" name="Movement/ExcursionRightText">
-                        <Property key="Widget_Caption" value="Excursion Right"/>
-                    </Widget>
-                    <Widget type="Widget" skin="Separator1" position="280 0 2 72" align="Default" name="Movement/Sep2"/>
-                    <Widget type="HScroll" skin="HSlider" position="300 22 100 16" name="Movement/ExcursionLeftSlider">
-                        <Property key="Scroll_Range" value="1000"/>
-                    </Widget>
-                    <Widget type="StaticText" skin="StaticText" position="300 46 100 24" name="Movement/ExcursionLeftText">
-                        <Property key="Widget_Caption" value="Excursion Left"/>
-                    </Widget>
-                    <Widget type="Widget" skin="Separator1" position="420 0 2 72" align="Default" name="Movement/Sep3"/>
-                    <Widget type="HScroll" skin="HSlider" position="440 22 100 16" name="Movement/ProtrusionSlider">
-                        <Property key="Scroll_Range" value="1000"/>
-                    </Widget>
-                    <Widget type="StaticText" skin="StaticText" position="456 46 72 24" name="Movement/ProtrusionText">
-                        <Property key="Widget_Caption" value="Protrusion"/>
-                    </Widget>
-                    <Widget type="Widget" skin="Separator1" position="560 0 2 72" align="Default" name="Movement/Sep4"/>
-                    <Widget type="Button" skin="RibbonButton" position="567 4 72 64" name="Movement/Reset">
-                        <Property key="Widget_Caption" value="Reset"/>
-                        <Property key="Button_ImageResource" value="MovementToolstrip/Reset"/>
-                    </Widget>
-                    <Widget type="Button" skin="RibbonButton" position="641 4 72 64" name="Movement/Restore">
-                        <Property key="Widget_Caption" value="Restore"/>
-                        <Property key="Button_ImageResource" value="MovementToolstrip/Restore"/>
-                    </Widget>
-                    <Widget type="Widget" skin="Separator1" position="716 0 2 72" align="Default" name="Movement/Sep5"/>
-                </Widget>
-            </Widget>
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="SequencesTab">
-                <Property key="Widget_Caption" value="Sequences"/>
-                <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-                    <Property key="ScrollView_CanvasSize" value="400 72"/>
+                    <Property key="ScrollView_CanvasSize" value="775 72"/>
                     <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                     <Property key="ScrollView_VisibleVScroll" value="false"/>
                     <Widget type="Button" skin="RibbonButton" position="2 2 74 66" name="SequencesTab/SequenceButton">
@@ -176,11 +131,68 @@
                         <Property key="Widget_Caption" value="Stop"/>
                         <Property key="Button_ImageResource" value="SequenceToolstrip/Stop"/>
                     </Widget>
-                    <Widget type="StaticText" skin="RibbonStaticText" position="83 14 77 16">
+                    <Widget type="StaticText" skin="RibbonStaticText" position="83 3 77 16">
                         <Property key="Widget_Caption" value="Now Playing:"/>
                     </Widget>
-                    <Widget type="StaticText" skin="RibbonStaticText" position="161 14 239 16" name="SequencesTab/NowPlaying">
+                    <Widget type="Edit" skin="WordWrap" position="83 14 177 31" name="SequencesTab/NowPlaying">
                         <Property key="Widget_Caption" value="None"/>
+                        <Property key="Edit_Static" value="true"/>
+                    </Widget>
+                    <Widget type="StaticText" skin="StaticText" position="480 4 91 16" name="Movement/HingeOpenText">
+                        <Property key="Widget_Caption" value="Hinge Opening"/>
+                    </Widget>
+                    <Widget type="HScroll" skin="HSlider" position="300 22 100 16" name="Movement/ExcursionRightSlider">
+                        <Property key="Scroll_Range" value="1000"/>
+                    </Widget>
+                    <Widget type="StaticText" skin="StaticText" position="300 5 92 15" name="Movement/ExcursionRightText">
+                        <Property key="Widget_Caption" value="Excursion Right"/>
+                    </Widget>
+                    <Widget type="HScroll" skin="HSlider" position="300 57 100 16" name="Movement/ExcursionLeftSlider">
+                        <Property key="Scroll_Range" value="1000"/>
+                    </Widget>
+                    <Widget type="StaticText" skin="StaticText" position="300 43 90 13" name="Movement/ExcursionLeftText">
+                        <Property key="Widget_Caption" value="Excursion Left"/>
+                    </Widget>
+                    <Widget type="HScroll" skin="HSlider" position="480 55 100 16" name="Movement/ProtrusionSlider">
+                        <Property key="Scroll_Range" value="1000"/>
+                    </Widget>
+                    <Widget type="StaticText" skin="StaticText" position="480 39 64 15" name="Movement/ProtrusionText">
+                        <Property key="Widget_Caption" value="Protrusion"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="628 4 72 64" name="Movement/Reset">
+                        <Property key="Widget_Caption" value="Reset"/>
+                        <Property key="Button_ImageResource" value="MovementToolstrip/Reset"/>
+                    </Widget>
+                    <Widget type="Button" skin="RibbonButton" position="702 4 72 64" name="Movement/Restore">
+                        <Property key="Widget_Caption" value="Restore"/>
+                        <Property key="Button_ImageResource" value="MovementToolstrip/Restore"/>
+                    </Widget>
+                    <Widget type="HScroll" skin="HSlider" position="480 21 100 16" name="Movement/HingeSlider">
+                        <Property key="Scroll_Range" value="1000"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="264 6 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/RightClose"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="264 42 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/LeftClose"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="404 6 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/RightOpen"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="404 42 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/LeftOpen"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="444 6 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/Close"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="444 42 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/BothClose"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="584 6 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/Open"/>
+                    </Widget>
+                    <Widget type="StaticImage" skin="StaticImage" position="584 42 32 32">
+                        <Property key="Image_Resource" value="MovementToolstrip/BothOpen"/>
                     </Widget>
                 </Widget>
             </Widget>

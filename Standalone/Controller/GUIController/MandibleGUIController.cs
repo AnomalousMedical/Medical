@@ -37,16 +37,16 @@ namespace Medical.GUI
         {
             this.medicalController = medicalController;
 
-            openTrackBar = new MandibleControlSlider(ribbonWidget.findWidget("Movement/HingeSlider") as HScroll);
+            openTrackBar = new MandibleControlSlider(ribbonWidget.findWidget("Movement/HingeSlider") as VScroll);
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
-            rightForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionRightSlider") as HScroll);
+            rightForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionRightSlider") as VScroll);
             rightForwardBack.Minimum = 0;
             rightForwardBack.Maximum = 1;
-            leftForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionLeftSlider") as HScroll);
+            leftForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ExcursionLeftSlider") as VScroll);
             leftForwardBack.Minimum = 0;
             leftForwardBack.Maximum = 1;
-            bothForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ProtrusionSlider") as HScroll);
+            bothForwardBack = new MandibleControlSlider(ribbonWidget.findWidget("Movement/ProtrusionSlider") as VScroll);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
             resetButton = ribbonWidget.findWidget("Movement/Reset") as Button;
