@@ -52,6 +52,7 @@ namespace Medical.Controller
             progressBar.Position = position;
             statusText.Caption = status;
             ogreWindow.OgreRenderWindow.update();
+            WindowFunctions.pumpMessages();
         }
 
         void SplashScreen_Hidden(object sender, EventArgs e)
