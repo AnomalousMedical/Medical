@@ -87,14 +87,15 @@ extern "C" _AnomalousExport void WindowFunctions_pumpMessages()
 	targetWindow = GetEventDispatcherTarget();
 	
 	// If we are unable to get the target then we no longer care about events.
-	if( !targetWindow ) return false;
-	
-	// Grab the next event, process it if it is a window event
-	if( ReceiveNextEvent( 0, NULL, kEventDurationNoWait, true, &event ) == noErr )
+	if( targetWindow )
 	{
-		// Dispatch the event
-		SendEventToEventTarget( event, targetWindow );
-		ReleaseEvent( event );
+		// Grab the next event, process it if it is a window event
+		if( ReceiveNextEvent( 0, NULL, kEventDurationNoWait, true, &event ) == noErr )
+		{
+			// Dispatch the event
+			SendEventToEventTarget( event, targetWindow );
+			ReleaseEvent( event );
+		}
 	}
 }
 
