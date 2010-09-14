@@ -22,8 +22,6 @@ namespace Medical.GUI
         private LayerGUIMenu bottomTeethMenu;
 
         private LayerController layerController;
-        private ImageAtlas predefinedImageAtlas;
-        private ButtonGrid predefinedLayerGallery;
 
         private Button showContacts;
 
@@ -31,10 +29,6 @@ namespace Medical.GUI
         {
             //Predefined layers
             this.layerController = layerController;
-            layerController.LayerStateSetChanged += new LayerControllerEvent(layerController_LayerStateSetChanged);
-            predefinedLayerGallery = new ButtonGrid(ribbonWidget.findWidget("Layers/Predefined") as ScrollView);
-            predefinedLayerGallery.SelectedValueChanged += new EventHandler(predefinedLayerGallery_SelectedValueChanged);
-            predefinedImageAtlas = new ImageAtlas("PredefinedLayers", new Size2(100, 100), new Size2(512, 512));
 
             showContacts = ribbonWidget.findWidget("Layers/ShowContacts") as Button;
             showContacts.MouseButtonClick += new MyGUIEvent(showContacts_MouseButtonClick);
@@ -111,30 +105,6 @@ namespace Medical.GUI
         {
             TeethController.HighlightContacts = !TeethController.HighlightContacts;
             showContacts.StateCheck = TeethController.HighlightContacts;
-        }
-
-        void predefinedLayerGallery_SelectedValueChanged(object sender, EventArgs e)
-        {
-            ButtonGridItem selectedItem = predefinedLayerGallery.SelectedItem;
-            if (selectedItem != null)
-            {
-                layerController.applyLayerState(selectedItem.UserObject.ToString());
-            }
-        }
-
-        void layerController_LayerStateSetChanged(LayerController controller)
-        {
-            predefinedImageAtlas.clear();
-            predefinedLayerGallery.clear();
-            foreach (LayerState state in controller.CurrentLayers.LayerStates)
-            {
-                if (!state.Hidden && state.Thumbnail != null)
-                {
-                    String imageKey = predefinedImageAtlas.addImage(state, state.Thumbnail);
-                    ButtonGridItem item = predefinedLayerGallery.addItem("Main", state.Name, imageKey);
-                    item.UserObject = state.Name;
-                }
-            }
         }
 
         void TransparencyController_ActiveTransparencyStateChanged(object sender, EventArgs e)

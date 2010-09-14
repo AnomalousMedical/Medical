@@ -23,11 +23,17 @@ namespace Medical.GUI
         private ImageAtlas ribbonMenuIcons = new ImageAtlas("NavigationRibbonMenus", new Size2(32, 32), new Size2(512, 512));
         private ImageAtlas gridItemIcons = new ImageAtlas("NavigationGridItemIcons", new Size2(69, 51), new Size2(512, 512));
 
+        private Widget customLayersPanel;
+        private Widget displayOptionsPanel;
+
         public NavigationGUIController(Widget ribbonWidget, NavigationController navigationController, SceneViewController sceneViewController, LayerController layerController)
         {
             this.navigationController = navigationController;
             this.sceneViewController = sceneViewController;
             this.layerController = layerController;
+
+            customLayersPanel = ribbonWidget.findWidget("CustomLayersPanel");
+            displayOptionsPanel = ribbonWidget.findWidget("View/DisplayOptionsPanel");
 
             showNavigationButton = new CheckButton(ribbonWidget.findWidget("Navigation/ShowNavigationButton") as Button);
             showNavigationButton.CheckedChanged += new MyGUIEvent(showNavigationButton_CheckedChanged);
@@ -37,7 +43,7 @@ namespace Medical.GUI
             this.navigationController = navigationController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
-            flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(showNavigationButton.Button.Right + 10.0f, showNavigationButton.Button.Top));
+            flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(displayOptionsPanel.Right, showNavigationButton.Button.Top));
 
             navigationController.ShowOverlaysChanged += new NavigationControllerEvent(navigationController_ShowOverlaysChanged);
         }
@@ -55,15 +61,21 @@ namespace Medical.GUI
         private void navigationController_NavigationStateSetChanged(NavigationController controller)
         {
             clearMenuItems();
-            int menuButtonHeight = 25;
+            int menuButtonHeight = 30;
             int mainButtonHeight = showNavigationButton.Button.Height - menuButtonHeight;
             flowLayout.SuppressLayout = true;
             Button lastButton = showNavigationButton.Button;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
                 Button menuButton = navigationTab.createWidgetT("Button", "RibbonSplitButton", 0, 0, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
+                menuButton.TextAlign = Align.HCenter | Align.Top;
                 menuButton.Caption = topEntry.Text;
-                menuButton.setSize((int)menuButton.getTextSize().Width + 35, menuButtonHeight);
+                int buttonWidth = (int)menuButton.getTextSize().Width + 5;
+                if (buttonWidth < 38)
+                {
+                    buttonWidth = 38;
+                }
+                menuButton.setSize(buttonWidth, menuButtonHeight);
 
                 Button mainButton = navigationTab.createWidgetT("Button", "RibbonButton", 0, 0, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
                 mainButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(mainButton, topEntry.Thumbnail));
@@ -86,8 +98,10 @@ namespace Medical.GUI
             flowLayout.SuppressLayout = false;
             flowLayout.invalidate();
 
+            customLayersPanel.setPosition(lastButton.Right + 2, customLayersPanel.Top);
+
             Size2 scrollSize = navigationTab.CanvasSize;
-            scrollSize.Width = lastButton.Right + 2;
+            scrollSize.Width = customLayersPanel.Right;
             navigationTab.CanvasSize = scrollSize;
         }
 
