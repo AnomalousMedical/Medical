@@ -39,7 +39,7 @@ namespace Medical.Controller
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
         private bool showStats = false;
 
-        private String transparencyStateName;
+        protected String transparencyStateName;
 
         public SceneViewWindow(SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
         {

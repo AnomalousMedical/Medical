@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Medical.Controller
 {
-    class PopupSceneViewWindow : SceneViewWindow
+    class SingleViewCloneWindow : SceneViewWindow
     {
         public event EventHandler Closed;
 
@@ -17,7 +17,7 @@ namespace Medical.Controller
         private wx.Frame frame;
         private WxOSWindow osWindow;
 
-        public PopupSceneViewWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
+        public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
             :base(controller, mainTimer, cameraMover, name)
         {
             Point location = new Point(-1, -1);
@@ -30,6 +30,8 @@ namespace Medical.Controller
             AllowNavigation = false;
             frame.Show();
             frame.EVT_CLOSE(onClose);
+
+            controller.ActiveWindowChanged += controller_ActiveWindowChanged;
         }
 
         public override void createSceneView(RendererWindow window, Engine.ObjectManagement.SimScene scene)
@@ -72,6 +74,12 @@ namespace Medical.Controller
                 Closed.Invoke(this, EventArgs.Empty);
             }
             OgreInterface.Instance.destroyRendererWindow(rendererWindow);
+            controller.ActiveWindowChanged -= controller_ActiveWindowChanged;
+        }
+
+        void controller_ActiveWindowChanged(SceneViewWindow window)
+        {
+            transparencyStateName = window.CurrentTransparencyState;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Medical.Controller
         private OgreRenderManager rm;
         private SceneViewWindow activeWindow = null;
 
-        private PopupSceneViewWindow cloneWindow = null;
+        private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
 
         public SceneViewController(MDILayoutManager mdiLayout, EventManager eventManager, UpdateTimer mainTimer, RendererWindow rendererWindow, OgreRenderManager renderManager)
@@ -152,7 +152,7 @@ namespace Medical.Controller
             if (cloneWindow == null)
             {
                 CloneCamera cloneCamera = new CloneCamera(this);
-                cloneWindow = new PopupSceneViewWindow(windowInfo, this, mainTimer, cloneCamera, "Clone");
+                cloneWindow = new SingleViewCloneWindow(windowInfo, this, mainTimer, cloneCamera, "Clone");
                 cloneWindow.Closed += new EventHandler(cloneWindow_Closed);
                 if (WindowCreated != null)
                 {

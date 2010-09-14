@@ -144,7 +144,7 @@
     <Compile Include="Controller\OSHelper\UserPermissions.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
-    <Compile Include="Controller\SceneViews\PopupSceneViewWindow.cs" />
+    <Compile Include="Controller\SceneViews\SingleViewCloneWindow.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPreset.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
