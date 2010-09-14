@@ -29,6 +29,7 @@ namespace Medical.GUI
         private ChooseSceneDialog chooseSceneDialog;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
+        private AboutDialog aboutDialog;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -72,6 +73,7 @@ namespace Medical.GUI
             savePatientDialog = new SavePatientDialog();
             openPatientDialog = new OpenPatientDialog();
             openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
+            aboutDialog = new AboutDialog();
 
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
@@ -82,6 +84,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
             wizardRibbonTab.Dispose();
             stateWizardController.Dispose();
@@ -162,6 +165,11 @@ namespace Medical.GUI
             {
                 savePatientDialog.saveAs();
             }
+        }
+
+        public void showAboutDialog()
+        {
+            aboutDialog.open(true);
         }
 
         public void changeActiveFile(PatientDataFile patientData)

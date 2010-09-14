@@ -270,23 +270,12 @@
                         <Property key="Widget_Caption" value="Clone"/>
                         <Property key="Button_ImageResource" value="WindowToolstrip/Clone"/>
                     </Widget>
-                    <Widget type="Button" skin="RibbonButton" position="410 2 79 68" name="WindowTab/HelpButton">
-                        <Property key="Widget_Caption" value="Help"/>
-                        <Property key="Button_ImageResource" value="WindowToolstrip/Help"/>
-                    </Widget>
-                    <Widget type="Button" skin="RibbonButton" position="492 2 79 68" name="WindowTab/AboutButton">
-                        <Property key="Button_ImageResource" value="WindowToolstrip/Info"/>
-                        <Property key="Widget_Caption" value="About"/>
-                    </Widget>
-                    <Widget type="Button" skin="RibbonButton" position="574 2 79 68" name="WindowTab/UpdateButton">
-                        <Property key="Button_ImageResource" value="WindowToolstrip/Updates"/>
-                        <Property key="Widget_Caption" value="Check for\nUpdates"/>
-                    </Widget>
                 </Widget>
             </Widget>
         </Widget>
         <Widget type="Button" skin="AppButton" position="1 0 51 26" name="AppButton">
             <Property key="Widget_Caption" value="File"/>
+            <Property key="Button_ImageResource" value="AppButton/Image"/>
         </Widget>
     </Widget>
 </MyGUI>

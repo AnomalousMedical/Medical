@@ -18,12 +18,13 @@ namespace Medical.GUI
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
         private PopupMenu windowMenu;
-        private AboutDialog aboutDialog;
+        private PiperJBOGUI piperGUI;
 
-        public WindowGUIController(Widget ribbonWidget, StandaloneController standaloneController)
+        public WindowGUIController(Widget ribbonWidget, PiperJBOGUI piperGUI, StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             this.sceneViewController = standaloneController.SceneViewController;
+            this.piperGUI = piperGUI;
 
             Button colorButton = ribbonWidget.findWidget("WindowTab/BackgroundButton") as Button;
             colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
@@ -61,19 +62,6 @@ namespace Medical.GUI
                     item.MouseButtonClick += item_MouseButtonClick;
                 }
             }
-
-            //Help
-            Button helpButton = ribbonWidget.findWidget("WindowTab/HelpButton") as Button;
-            helpButton.MouseButtonClick += new MyGUIEvent(helpButton_MouseButtonClick);        
-
-            //About
-            Button aboutButton = ribbonWidget.findWidget("WindowTab/AboutButton") as Button;
-            aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
-            aboutDialog = new AboutDialog();
-
-            //Update
-            Button updateButton = ribbonWidget.findWidget("WindowTab/UpdateButton") as Button;
-            updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -130,7 +118,7 @@ namespace Medical.GUI
 
         void about_Select(object sender, wx.Event e)
         {
-            aboutDialog.open(true);
+            piperGUI.showAboutDialog();
         }
 #endif
 
@@ -176,16 +164,6 @@ namespace Medical.GUI
             standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
         }
 
-        void aboutButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            aboutDialog.open(true);
-        }
-
-        void updateButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
-        }
-
         void item_MouseButtonClick(Widget source, EventArgs e)
         {
             standaloneController.SceneViewController.createFromPresets(standaloneController.PresetWindows.getPresetSet(source.UserObject.ToString()));
@@ -197,11 +175,6 @@ namespace Medical.GUI
             LayerManager.Instance.upLayerItem(windowMenu);
             windowMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
             windowMenu.setVisibleSmooth(true);
-        }
-
-        void helpButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            standaloneController.openHelpTopic(0);
         }
     }
 }

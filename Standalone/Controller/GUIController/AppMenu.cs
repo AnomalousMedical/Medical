@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Standalone;
 using Engine;
 using System.IO;
+using System.Reflection;
 
 namespace Medical.GUI
 {
@@ -20,6 +21,11 @@ namespace Medical.GUI
         private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
         private FlowLayoutContainer recentDocumentsLayout;
         private Widget mainWidget;
+
+        private int recentDocsLeft;
+        private int recentDocsTop;
+        private int recentDocsWidth;
+        private int recentDocsHeight;
 
         public AppMenu(PiperJBOGUI piperGUI, StandaloneController standaloneController)
         {
@@ -36,6 +42,13 @@ namespace Medical.GUI
             Button saveButton = mainWidget.findWidget("File/Save") as Button;
             Button saveAsButton = mainWidget.findWidget("File/SaveAs") as Button;
             Button quitButton = mainWidget.findWidget("File/Quit") as Button;
+            Widget recentDocsHorizDivider = mainWidget.findWidget("RecentDocsHorizDivider");
+            Widget recentDocsVertDivider = mainWidget.findWidget("RecentDocsVertDivider");
+
+            recentDocsLeft = recentDocsHorizDivider.Left + recentDocsHorizDivider.Width + 1;
+            recentDocsTop = recentDocsVertDivider.Top + recentDocsVertDivider.Height + 1;
+            recentDocsWidth = recentDocsVertDivider.Width;
+            recentDocsHeight = 20;
 
             changeSceneButton.MouseButtonClick += new MyGUIEvent(changeSceneButton_MouseButtonClick);
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
@@ -43,7 +56,7 @@ namespace Medical.GUI
             saveAsButton.MouseButtonClick += new MyGUIEvent(saveAsButton_MouseButtonClick);
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
 
-            recentDocumentsLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(149, 14));
+            recentDocumentsLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(recentDocsLeft, recentDocsTop));
             recentDocuments.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
             recentDocuments.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
             recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
@@ -54,6 +67,18 @@ namespace Medical.GUI
             }
             recentDocumentsLayout.SuppressLayout = false;
             recentDocumentsLayout.layout();
+
+            //Help
+            Button helpButton = mainWidget.findWidget("Help") as Button;
+            helpButton.MouseButtonClick += new MyGUIEvent(helpButton_MouseButtonClick);
+
+            //About
+            Button aboutButton = mainWidget.findWidget("About") as Button;
+            aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
+
+            //Update
+            Button updateButton = mainWidget.findWidget("Updates") as Button;
+            updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -136,7 +161,7 @@ namespace Medical.GUI
 
         private void addDocumentToMenu(string document)
         {
-            Button recentDocButton = mainWidget.createWidgetT("Button", "AppMenuItemButton", 149, 14, 248, 20, Align.Left | Align.Top, document) as Button;
+            Button recentDocButton = mainWidget.createWidgetT("Button", "AppMenuItemButton", recentDocsLeft, recentDocsTop, recentDocsWidth, recentDocsHeight, Align.Left | Align.Top, document) as Button;
             recentDocButton.Caption = Path.GetFileNameWithoutExtension(document);
             recentDocButton.MouseButtonClick += recentDocButton_MouseButtonClick;
             MyGUILayoutContainer container = new MyGUILayoutContainer(recentDocButton);
@@ -162,6 +187,21 @@ namespace Medical.GUI
             {
                 MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
+        }
+
+        void aboutButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            piperGUI.showAboutDialog();
+        }
+
+        void updateButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
+        }
+
+        void helpButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.openHelpTopic(0);
         }
 
 #if CREATE_MAINWINDOW_MENU

@@ -36,7 +36,7 @@ namespace Medical.GUI
             sequencesGUIController = new SequencesGUIController(ribbonWidget, standaloneController.MovementSequenceController);
             navigationGUIController = new NavigationGUIController(ribbonWidget, standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             renderGUIController = new RenderGUIController(ribbonWidget, standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            windowGUIController = new WindowGUIController(ribbonWidget, standaloneController);
+            windowGUIController = new WindowGUIController(ribbonWidget, piperGUI, standaloneController);
 
             appMenu = new AppMenu(piperGUI, standaloneController);
 
