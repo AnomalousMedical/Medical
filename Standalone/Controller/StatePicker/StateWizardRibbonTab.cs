@@ -14,12 +14,17 @@ namespace Medical.GUI
 
         private List<Button> buttons = new List<Button>();
 
-        public StateWizardRibbonTab(Gui gui, StateWizardController stateWizardController, PiperJBOGUI basicGUI)
+        public StateWizardRibbonTab(Widget ribbonWidget, StateWizardController stateWizardController, PiperJBOGUI basicGUI)
         {
             this.basicGUI = basicGUI;
 
-            ScrollView distortionTab = gui.findWidgetT("DistortionsTab/ScrollView") as ScrollView;
-            int currentPosition = 3;
+            ScrollView distortionTab = ribbonWidget.findWidget("DistortionsTab/ScrollView") as ScrollView;
+
+            Widget anatomyDistortionPanel = ribbonWidget.findWidget("AnatomyDistortionPanel");
+            Widget examDistortionPanel = ribbonWidget.findWidget("ExamDistortionPanel");
+
+            int anatomyPosition = 3;
+            int examPosition = 7;
             foreach (StateWizard wizard in stateWizardController.WizardEnum)
             {
                 String caption = wizard.TextLine1;
@@ -27,17 +32,42 @@ namespace Medical.GUI
                 {
                     caption += "\n" + wizard.TextLine2;
                 }
-                Button wizardButton = distortionTab.createWidgetT("Button", "RibbonButton", currentPosition, 6, 78, 64, Align.Default, wizard.Name) as Button;
+                Button wizardButton;
+                if (wizard.WizardType == WizardType.Anatomy)
+                {
+                    wizardButton = anatomyDistortionPanel.createWidgetT("Button", "RibbonButton", anatomyPosition, 2, 78, 68, Align.Default, wizard.Name) as Button;
+                }
+                else
+                {
+                    wizardButton = examDistortionPanel.createWidgetT("Button", "RibbonButton", examPosition, 2, 78, 68, Align.Default, wizard.Name) as Button;
+                }
                 wizardButton.Caption = caption;
                 int buttonWidth = (int)wizardButton.getTextSize().Width + 10;
-                wizardButton.setSize(buttonWidth, 64);
+                if (buttonWidth < 38)
+                {
+                    buttonWidth = 38;
+                }
+                wizardButton.setSize(buttonWidth, wizardButton.Height);
                 wizardButton.UserObject = wizard;
                 wizardButton.StaticImage.setItemResource(wizard.ImageKey);
                 wizardButton.MouseButtonClick += new MyGUIEvent(wizardButton_MouseButtonClick);
-                currentPosition += buttonWidth + 3;
+                if (wizard.WizardType == WizardType.Anatomy)
+                {
+                    anatomyPosition += buttonWidth + 3;
+                }
+                else
+                {
+                    examPosition += buttonWidth + 3;
+                }
             }
+            anatomyPosition -= 3;
+            examPosition -= 3;
+            anatomyDistortionPanel.setSize(anatomyPosition, anatomyDistortionPanel.Height);
+            examDistortionPanel.setSize(examPosition, examDistortionPanel.Height);
+            examDistortionPanel.setPosition(anatomyDistortionPanel.Right, examDistortionPanel.Top);
+
             Size2 scrollSize = distortionTab.CanvasSize;
-            scrollSize.Width = currentPosition;
+            scrollSize.Width = examDistortionPanel.Right;
             distortionTab.CanvasSize = scrollSize;
         }
 

@@ -23,7 +23,6 @@ namespace Medical.GUI
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
         private StateList stateList;
-        private StateWizardRibbonTab wizardRibbonTab;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -47,9 +46,16 @@ namespace Medical.GUI
 
             gui.load("Imagesets.xml");
 
+            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
+            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
+            stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
+            stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
+
+            createWizardPanels();
+
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
-            basicRibbon = new PiperJBORibbon(this, standaloneController);
+            basicRibbon = new PiperJBORibbon(this, standaloneController, stateWizardController);
             basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayoutManager.Root.Top = topAnimatedContainer;
@@ -59,16 +65,7 @@ namespace Medical.GUI
             ScreenLayout.Root.Left = leftAnimatedContainer;
             screenLayoutManager.Root.SuppressLayout = false;
 
-            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
-            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
-            stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
-            stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
-
             stateList = new StateList(standaloneController.MedicalStateController);
-
-            createWizardPanels();
-
-            wizardRibbonTab = new StateWizardRibbonTab(gui, stateWizardController, this);
 
             chooseSceneDialog = new ChooseSceneDialog(standaloneController, this);
             savePatientDialog = new SavePatientDialog();
@@ -90,7 +87,6 @@ namespace Medical.GUI
         {
             aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
-            wizardRibbonTab.Dispose();
             stateWizardController.Dispose();
             stateWizardPanelController.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
@@ -291,7 +287,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DOPPLER))
             {
                 //Doppler
-                StateWizard dopplerWizard = new StateWizard("Doppler", stateWizardController);
+                StateWizard dopplerWizard = new StateWizard("Doppler", stateWizardController, WizardType.Exam);
                 dopplerWizard.TextLine1 = "Doppler";
                 dopplerWizard.ImageKey = "DistortionsToolstrip/Doppler";
                 dopplerWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -304,7 +300,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DENTITION))
             {
                 //Teeth
-                StateWizard teethWizard = new StateWizard("Dentition", stateWizardController);
+                StateWizard teethWizard = new StateWizard("Dentition", stateWizardController, WizardType.Anatomy);
                 teethWizard.TextLine1 = "Dentition";
                 teethWizard.ImageKey = "DistortionsToolstrip/Dentition";
                 teethWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -318,7 +314,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CEPHALOMETRIC))
             {
                 //Profile
-                StateWizard profileWizard = new StateWizard("Cephalometric", stateWizardController);
+                StateWizard profileWizard = new StateWizard("Cephalometric", stateWizardController, WizardType.Anatomy);
                 profileWizard.TextLine1 = "Cephalometric";
                 profileWizard.ImageKey = "DistortionsToolstrip/Cephalometric";
                 profileWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -332,7 +328,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MANDIBLE))
             {
                 //Bone
-                StateWizard boneWizard = new StateWizard("Mandible", stateWizardController);
+                StateWizard boneWizard = new StateWizard("Mandible", stateWizardController, WizardType.Anatomy);
                 boneWizard.TextLine1 = "Mandible";
                 boneWizard.ImageKey = "DistortionsToolstrip/Mandible";
                 boneWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -347,7 +343,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_SPACE))
             {
                 //Disc
-                StateWizard discWizard = new StateWizard("Disc Space", stateWizardController);
+                StateWizard discWizard = new StateWizard("Disc Space", stateWizardController, WizardType.Exam);
                 discWizard.TextLine1 = "Disc Space";
                 discWizard.ImageKey = "DistortionsToolstrip/DiscSpace";
                 discWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
@@ -360,7 +356,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_DISC_CLOCK))
             {
                 //Disc
-                StateWizard discClockWizard = new StateWizard("Disc Clock Face", stateWizardController);
+                StateWizard discClockWizard = new StateWizard("Disc Clock Face", stateWizardController, WizardType.Anatomy);
                 discClockWizard.TextLine1 = "Disc";
                 discClockWizard.TextLine2 = "Clock Face";
                 discClockWizard.ImageKey = "DistortionsToolstrip/DiscClockFace";
@@ -376,7 +372,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION))
             {
                 //Profile + Teeth
-                StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", stateWizardController);
+                StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", stateWizardController, WizardType.Exam);
                 profileTeethWizard.TextLine1 = "Cephalometric";
                 profileTeethWizard.TextLine2 = "and Dentition";
                 profileTeethWizard.ImageKey = "DistortionsToolstrip/CephalometricAndDentition";
@@ -392,7 +388,7 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_CLINICAL_DOPPLER))
             {
                 //Clinical
-                StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", stateWizardController);
+                StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", stateWizardController, WizardType.Exam);
                 clinicalWizard.TextLine1 = "Clinical";
                 clinicalWizard.TextLine2 = "and Doppler";
                 clinicalWizard.ImageKey = "DistortionsToolstrip/ClinicalAndDoppler";
@@ -410,9 +406,8 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_RADIOGRAPHY))
             {
                 //CT/Radiography Wizard
-                StateWizard ctWizard = new StateWizard("Clinical and Radiography", stateWizardController);
-                ctWizard.TextLine1 = "Clinical and";
-                ctWizard.TextLine2 = "Radiography";
+                StateWizard ctWizard = new StateWizard("Clinical and Radiography", stateWizardController, WizardType.Exam);
+                ctWizard.TextLine1 = "Radiography";
                 ctWizard.ImageKey = "DistortionsToolstrip/ClinicalAndRadiography";
                 ctWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 ctWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscSpacePanel));
@@ -433,9 +428,8 @@ namespace Medical.GUI
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_WIZARD_MRI))
             {
                 //MRI Wizard
-                StateWizard mriWizard = new StateWizard("Clinical and MRI", stateWizardController);
-                mriWizard.TextLine1 = "Clinical";
-                mriWizard.TextLine2 = "and MRI";
+                StateWizard mriWizard = new StateWizard("Clinical and MRI", stateWizardController, WizardType.Exam);
+                mriWizard.TextLine1 = "MRI";
                 mriWizard.ImageKey = "DistortionsToolstrip/ClinicalAndMRI";
                 mriWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.DisclaimerPanel));
                 mriWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftDiscClockFacePanel));

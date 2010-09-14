@@ -17,12 +17,13 @@ namespace Medical.GUI
         private NavigationGUIController navigationGUIController;
         private RenderGUIController renderGUIController;
         private WindowGUIController windowGUIController;
+        private StateWizardRibbonTab wizardRibbonTab;
         private Layout ribbon;
         private StandaloneController standaloneController;
         private PiperJBOGUI piperGUI;
         private AppMenu appMenu;
 
-        public PiperJBORibbon(PiperJBOGUI piperGUI, StandaloneController standaloneController)
+        public PiperJBORibbon(PiperJBOGUI piperGUI, StandaloneController standaloneController, StateWizardController stateWizardController)
         {
             this.standaloneController = standaloneController;
             this.piperGUI = piperGUI;
@@ -37,6 +38,7 @@ namespace Medical.GUI
             navigationGUIController = new NavigationGUIController(ribbonWidget, standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             renderGUIController = new RenderGUIController(ribbonWidget, standaloneController.SceneViewController, standaloneController.ImageRenderer);
             windowGUIController = new WindowGUIController(ribbonWidget, piperGUI, standaloneController);
+            wizardRibbonTab = new StateWizardRibbonTab(ribbonWidget, stateWizardController, piperGUI);
 
             appMenu = new AppMenu(piperGUI, standaloneController);
 
@@ -47,6 +49,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             appMenu.Dispose();
+            wizardRibbonTab.Dispose();
             windowGUIController.Dispose();
             renderGUIController.Dispose();
             sequencesGUIController.Dispose();

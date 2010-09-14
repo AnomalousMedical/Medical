@@ -6,16 +6,23 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
+    enum WizardType
+    {
+        Anatomy,
+        Exam
+    }
+
     class StateWizard : IDisposable
     {
         private List<StateWizardPanel> panels = new List<StateWizardPanel>();
         private bool updatePanel = true;
         private StateWizardController wizardController;
 
-        public StateWizard(String name, StateWizardController wizardController)
+        public StateWizard(String name, StateWizardController wizardController, WizardType wizardType)
         {
             this.Name = name;
             this.wizardController = wizardController;
+            this.WizardType = wizardType;
         }
 
         public void Dispose()
@@ -87,5 +94,7 @@ namespace Medical.GUI
         public String TextLine2 { get; set; }
 
         public String ImageKey { get; set; }
+
+        public WizardType WizardType { get; set; }
     }
 }
