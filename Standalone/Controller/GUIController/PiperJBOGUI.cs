@@ -30,6 +30,7 @@ namespace Medical.GUI
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
         private AboutDialog aboutDialog;
+        private OptionsDialog options;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -78,6 +79,9 @@ namespace Medical.GUI
             savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
+
+            options = new OptionsDialog();
+            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
         }
@@ -172,6 +176,11 @@ namespace Medical.GUI
             aboutDialog.open(true);
         }
 
+        public void showOptions()
+        {
+            options.Visible = true;
+        }
+
         public void changeActiveFile(PatientDataFile patientData)
         {
             if (patientData != null)
@@ -258,6 +267,11 @@ namespace Medical.GUI
             basicRibbon.sceneLoaded(scene);
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
+        }
+
+        void options_VideoOptionsChanged(object sender, EventArgs e)
+        {
+            standaloneController.recreateMainWindow();
         }
 
 #if CREATE_MAINWINDOW_MENU

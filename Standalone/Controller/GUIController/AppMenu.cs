@@ -79,6 +79,10 @@ namespace Medical.GUI
             //Update
             Button updateButton = mainWidget.findWidget("Updates") as Button;
             updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
+
+            //Options
+            Button optionsButton = mainWidget.findWidget("Options") as Button;
+            optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
         }
 
         public void Dispose()
@@ -118,6 +122,30 @@ namespace Medical.GUI
         void quitButton_MouseButtonClick(Widget source, EventArgs e)
         {
             standaloneController.shutdown();
+            popupContainer.hide();
+        }
+
+        void optionsButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            piperGUI.showOptions();
+            popupContainer.hide();
+        }
+
+        void aboutButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            piperGUI.showAboutDialog();
+            popupContainer.hide();
+        }
+
+        void updateButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
+            popupContainer.hide();
+        }
+
+        void helpButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.openHelpTopic(0);
             popupContainer.hide();
         }
 
@@ -187,21 +215,6 @@ namespace Medical.GUI
             {
                 MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
-        }
-
-        void aboutButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            piperGUI.showAboutDialog();
-        }
-
-        void updateButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
-        }
-
-        void helpButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            standaloneController.openHelpTopic(0);
         }
 
 #if CREATE_MAINWINDOW_MENU

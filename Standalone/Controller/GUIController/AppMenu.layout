@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel" position="190 155 398 313" layer="Overlapped">
-        <Widget type="Widget" skin="Separator4" position="156 0 1 312" name="RecentDocsHorizDivider"/>
+    <Widget type="Widget" skin="CustomPanel" position="190 155 398 365" layer="Overlapped">
+        <Widget type="Widget" skin="Separator4" position="156 0 1 364" name="RecentDocsHorizDivider"/>
         <Widget type="Widget" skin="Separator1" position="157 14 240 1" name="RecentDocsVertDivider"/>
         <Widget type="StaticText" skin="StaticText" position="158 1 117 14">
             <Property key="Widget_Caption" value="Recent Documents"/>
@@ -24,23 +24,28 @@
             <Property key="Widget_Caption" value="Save As..."/>
             <Property key="Button_ImageResource" value="FileToolstrip/SaveAs"/>
         </Widget>
-        <Widget type="Button" skin="AppMenuIconButton" position="3 277 153 34" name="File/Quit">
+        <Widget type="Button" skin="AppMenuIconButton" position="3 329 153 34" name="File/Quit">
             <Property key="Widget_Caption" value="Exit"/>
             <Property key="Button_ImageResource" value="FileToolstrip/Exit"/>
         </Widget>
-        <Widget type="Button" skin="AppMenuIconButton" position="3 158 153 34" name="Help">
+        <Widget type="Button" skin="AppMenuIconButton" position="3 207 153 34" name="Help">
             <Property key="Widget_Caption" value="Help"/>
             <Property key="Button_ImageResource" value="FileToolstrip/Help"/>
         </Widget>
-        <Widget type="Button" skin="AppMenuIconButton" position="3 195 153 34" name="About">
+        <Widget type="Button" skin="AppMenuIconButton" position="3 244 153 34" name="About">
             <Property key="Widget_Caption" value="About"/>
             <Property key="Button_ImageResource" value="FileToolstrip/About"/>
         </Widget>
-        <Widget type="Button" skin="AppMenuIconButton" position="3 232 153 34" name="Updates">
+        <Widget type="Button" skin="AppMenuIconButton" position="3 281 153 34" name="Updates">
             <Property key="Widget_Caption" value="Check for Updates"/>
             <Property key="Button_ImageResource" value="FileToolstrip/CheckForUpdates"/>
         </Widget>
         <Widget type="Widget" skin="Separator1" position="0 153 156 1"/>
-        <Widget type="Widget" skin="Separator1" position="0 272 156 1"/>
+        <Widget type="Widget" skin="Separator1" position="0 321 156 1"/>
+        <Widget type="Button" skin="AppMenuIconButton" position="3 160 153 34" name="Options">
+            <Property key="Widget_Caption" value="Options"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/Options"/>
+        </Widget>
+        <Widget type="Widget" skin="Separator1" position="0 200 156 1"/>
     </Widget>
 </MyGUI>

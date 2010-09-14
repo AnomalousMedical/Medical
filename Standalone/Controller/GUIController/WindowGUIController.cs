@@ -15,7 +15,6 @@ namespace Medical.GUI
         private ColorMenu colorMenu;
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
-        private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
         private PopupMenu windowMenu;
         private PiperJBOGUI piperGUI;
@@ -26,29 +25,23 @@ namespace Medical.GUI
             this.sceneViewController = standaloneController.SceneViewController;
             this.piperGUI = piperGUI;
 
-            Button colorButton = ribbonWidget.findWidget("WindowTab/BackgroundButton") as Button;
+            Button colorButton = ribbonWidget.findWidget("UtilityTab/BackgroundButton") as Button;
             colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
 
-            Button showStatsButton = ribbonWidget.findWidget("WindowTab/ShowStatsButton") as Button;
+            Button showStatsButton = ribbonWidget.findWidget("UtilityTab/ShowStatsButton") as Button;
             showStatsButton.MouseButtonClick += new MyGUIEvent(showStatsButton_MouseButtonClick);
 
             colorMenu = new ColorMenu();
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
 
-            options = new OptionsDialog();
-            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
-
             cloneWindowDialog = new CloneWindowDialog();
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
 
-            Button optionsButton = ribbonWidget.findWidget("WindowTab/Options") as Button;
-            optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
-
-            Button cloneButton = ribbonWidget.findWidget("WindowTab/CloneButton") as Button;
+            Button cloneButton = ribbonWidget.findWidget("UtilityTab/CloneButton") as Button;
             cloneButton.MouseButtonClick += new MyGUIEvent(cloneButton_MouseButtonClick);
 
             //Window Layout
-            Button windowLayout = ribbonWidget.findWidget("WindowTab/WindowLayoutButton") as Button;
+            Button windowLayout = ribbonWidget.findWidget("UtilityTab/WindowLayoutButton") as Button;
             windowLayout.MouseButtonClick += new MyGUIEvent(windowLayout_MouseButtonClick);
 
             windowMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
@@ -135,16 +128,6 @@ namespace Medical.GUI
         void showStatsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             sceneViewController.ActiveWindow.ShowStats = !sceneViewController.ActiveWindow.ShowStats;
-        }
-
-        void optionsButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            options.Visible = true;
-        }
-
-        void options_VideoOptionsChanged(object sender, EventArgs e)
-        {
-            standaloneController.recreateMainWindow();
         }
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)
