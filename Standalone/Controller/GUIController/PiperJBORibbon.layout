@@ -201,10 +201,10 @@
             <Widget type="TabItem" skin="" position="4 26 1607 86" name="UtilityTab">
                 <Property key="Widget_Caption" value="Utilities"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-                    <Property key="ScrollView_CanvasSize" value="681 72"/>
+                    <Property key="ScrollView_CanvasSize" value="681 85"/>
                     <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                     <Property key="ScrollView_VisibleVScroll" value="false"/>
-                    <Widget type="Widget" skin="PanelEmpty" position="354 0 248 72" align="Left Top">
+                    <Widget type="Widget" skin="PanelEmpty" position="351 0 244 85" align="Left Top">
                         <Widget type="Button" skin="RibbonButton" position="0 2 79 68" name="UtilityTab/BackgroundButton">
                             <Property key="Widget_Caption" value="Background\nColor"/>
                             <Property key="Button_ImageResource" value="WindowToolstrip/BackgroundColor"/>
@@ -217,8 +217,11 @@
                             <Property key="Widget_Caption" value="Clone"/>
                             <Property key="Button_ImageResource" value="WindowToolstrip/Clone"/>
                         </Widget>
+                        <Widget type="StaticText" skin="StaticText" position="105 71 33 13" align="HCenter Bottom">
+                            <Property key="Widget_Caption" value="Tools"/>
+                        </Widget>
                     </Widget>
-                    <Widget type="Widget" skin="PanelEmpty" position="0 0 352 72" align="Left Top">
+                    <Widget type="Widget" skin="PanelEmpty" position="0 0 344 85" align="Left Top">
                         <Widget type="Button" skin="RibbonButton" position="278 2 66 68" name="RenderingTab/RenderButton">
                             <Property key="Widget_Caption" value="Render"/>
                             <Property key="Button_ImageResource" value="RenderingToolstrip/Render"/>
@@ -255,8 +258,11 @@
                             <Property key="ComboBox_AddItem" value="8x"/>
                             <Property key="Edit_Static" value="true"/>
                         </Widget>
-                        <Widget type="Widget" skin="Separator1" position="348 8 2 56" align="Right Top"/>
+                        <Widget type="StaticText" skin="StaticText" position="141 71 61 13" align="HCenter Bottom">
+                            <Property key="Widget_Caption" value="Rendering"/>
+                        </Widget>
                     </Widget>
+                    <Widget type="Widget" skin="Separator1" position="347 6 1 70"/>
                 </Widget>
             </Widget>
         </Widget>
