@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelMasterBack" position="0 24 1616 115" layer="Overlapped" name="RibbonPanel">
+    <Widget type="Widget" skin="PanelMasterBack" position="0 24 1616 118" layer="Overlapped" name="RibbonPanel">
         <Widget type="Tab" skin="Tab" position_real="0 0 1 1" align="Stretch" name="RibbonTabs">
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="FileTab">
+            <Widget type="TabItem" skin="" position="4 26 1607 86" name="FileTab">
                 <Property key="Widget_Caption" value=""/>
                 <Property key="TabItem_ButtonWidth" value="44"/>
             </Widget>
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="NavigationTab">
+            <Widget type="TabItem" skin="" position="4 26 1607 86" name="NavigationTab">
                 <Property key="Widget_Caption" value="View"/>
                 <Property key="TabItem_Select" value="true"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch" name="NavigationTab/ScrollView">
-                    <Property key="ScrollView_CanvasSize" value="1015 100"/>
+                    <Property key="ScrollView_CanvasSize" value="1015 85"/>
                     <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                     <Property key="ScrollView_VisibleVScroll" value="false"/>
-                    <Widget type="Widget" skin="PanelEmpty" position="0 0 227 84" align="Left Top" name="View/DisplayOptionsPanel">
+                    <Widget type="Widget" skin="PanelEmpty" position="0 0 227 85" align="Left Top" name="View/DisplayOptionsPanel">
                         <Widget type="Button" skin="RibbonButton" position="171 2 56 68" name="UtilityTab/WindowLayoutButton">
                             <Property key="Widget_Caption" value="Window\nLayout"/>
                             <Property key="Button_ImageResource" value="WindowToolstrip/WindowLayout"/>
@@ -30,7 +30,7 @@
                             <Property key="Widget_Caption" value="View"/>
                         </Widget>
                     </Widget>
-                    <Widget type="Widget" skin="PanelEmpty" position="450 0 493 84" name="CustomLayersPanel">
+                    <Widget type="Widget" skin="PanelEmpty" position="450 0 493 85" name="CustomLayersPanel">
                         <Widget type="Button" skin="RibbonButton" position="8 2 36 38" name="Layers/Skin">
                             <Property key="Button_ImageResource" value="LayersToolstrip/Skin"/>
                         </Widget>
@@ -99,7 +99,7 @@
                         </Widget>
                         <Widget type="Widget" skin="Separator1" position="3 6 1 70"/>
                     </Widget>
-                    <Widget type="Widget" skin="PanelEmpty" position="234 0 170 84" name="View/QuickViewPanel">
+                    <Widget type="Widget" skin="PanelEmpty" position="234 0 170 85" name="View/QuickViewPanel">
                         <Widget type="StaticText" skin="StaticText" position="52 71 66 13" align="HCenter Bottom">
                             <Property key="Widget_Caption" value="Quick View"/>
                         </Widget>
@@ -107,7 +107,7 @@
                     <Widget type="Widget" skin="Separator1" position="230 6 1 70"/>
                 </Widget>
             </Widget>
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="DistortionsTab">
+            <Widget type="TabItem" skin="" position="4 26 1607 86" name="DistortionsTab">
                 <Property key="Widget_Caption" value="Distortions"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch" name="DistortionsTab/ScrollView">
                     <Property key="ScrollView_CanvasSize" value="1015 72"/>
@@ -115,7 +115,7 @@
                     <Property key="ScrollView_VisibleVScroll" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="MovementTab">
+            <Widget type="TabItem" skin="" position="4 26 1607 86" name="MovementTab">
                 <Property key="Widget_Caption" value="Movement"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
                     <Property key="ScrollView_CanvasSize" value="775 72"/>
@@ -198,7 +198,7 @@
                     </Widget>
                 </Widget>
             </Widget>
-            <Widget type="TabItem" skin="" position="4 26 1607 83" name="UtilityTab">
+            <Widget type="TabItem" skin="" position="4 26 1607 86" name="UtilityTab">
                 <Property key="Widget_Caption" value="Utilities"/>
                 <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
                     <Property key="ScrollView_CanvasSize" value="681 72"/>
