@@ -225,7 +225,7 @@ namespace Medical.GUI
             stateWizardController.startWizard(wizard);
             basicRibbon.AllowLayerShortcuts = false;
             #if CREATE_MAINWINDOW_MENU
-            basicRibbon.MenuEnabled = false;
+            systemMenu.FileMenuEnabled = false;
             #endif
         }
 
@@ -233,7 +233,7 @@ namespace Medical.GUI
         {
             basicRibbon.AllowLayerShortcuts = true;
             #if CREATE_MAINWINDOW_MENU
-            basicRibbon.MenuEnabled = true;
+            systemMenu.FileMenuEnabled = true;
             #endif
         }
 
@@ -293,10 +293,12 @@ namespace Medical.GUI
 
 #if CREATE_MAINWINDOW_MENU
 
+        private SystemMenu systemMenu;
+
         public wx.MenuBar createMenuBar()
         {
             wx.MenuBar menu = new wx.MenuBar();
-            basicRibbon.createMenus(menu);
+            systemMenu = new SystemMenu(menu, this, standaloneController);
             return menu;
         }
 

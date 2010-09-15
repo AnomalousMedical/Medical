@@ -16,7 +16,7 @@ namespace Medical.GUI
         private SequencesGUIController sequencesGUIController;
         private NavigationGUIController navigationGUIController;
         private RenderGUIController renderGUIController;
-        private WindowGUIController windowGUIController;
+        private UtilityGUIController utilityGUIController;
         private StateWizardRibbonTab wizardRibbonTab;
         private Layout ribbon;
         private StandaloneController standaloneController;
@@ -38,7 +38,7 @@ namespace Medical.GUI
             sequencesGUIController = new SequencesGUIController(ribbonWidget, standaloneController.MovementSequenceController);
             navigationGUIController = new NavigationGUIController(ribbonWidget, standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             renderGUIController = new RenderGUIController(ribbonWidget, standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            windowGUIController = new WindowGUIController(ribbonWidget, piperGUI, standaloneController);
+            utilityGUIController = new UtilityGUIController(ribbonWidget, piperGUI, standaloneController);
             wizardRibbonTab = new StateWizardRibbonTab(ribbonWidget, stateWizardController, piperGUI);
 
             appMenu = new AppMenu(piperGUI, standaloneController);
@@ -54,7 +54,7 @@ namespace Medical.GUI
             windowLayoutGUIController.Dispose();
             appMenu.Dispose();
             wizardRibbonTab.Dispose();
-            windowGUIController.Dispose();
+            utilityGUIController.Dispose();
             renderGUIController.Dispose();
             sequencesGUIController.Dispose();
             layerGUIController.Dispose();
@@ -72,28 +72,7 @@ namespace Medical.GUI
             mandibleGUIController.sceneLoaded(scene);
             layerGUIController.resetMenus();
         }
-#if CREATE_MAINWINDOW_MENU
 
-        private SystemMenu systemMenu;
-
-        public void createMenus(wx.MenuBar menu)
-        {
-            systemMenu = new SystemMenu(menu, piperGUI, standaloneController);
-        }
-
-        public bool MenuEnabled
-        {
-            get
-            {
-                return systemMenu.MenuEnabled;
-            }
-            set
-            {
-                systemMenu.MenuEnabled = value;
-            }
-        }
-
-#endif
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
             appMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);

@@ -10,14 +10,14 @@ using wx.Html.Help;
 
 namespace Medical.GUI
 {
-    class WindowGUIController : IDisposable
+    class UtilityGUIController : IDisposable
     {
         private ColorMenu colorMenu;
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
         private PiperJBOGUI piperGUI;
 
-        public WindowGUIController(Widget ribbonWidget, PiperJBOGUI piperGUI, StandaloneController standaloneController)
+        public UtilityGUIController(Widget ribbonWidget, PiperJBOGUI piperGUI, StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             this.sceneViewController = standaloneController.SceneViewController;

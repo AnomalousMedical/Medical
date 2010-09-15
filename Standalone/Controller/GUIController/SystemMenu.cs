@@ -113,7 +113,7 @@ namespace Medical.GUI
             piperGUI.showAboutDialog();
         }
 
-        public bool MenuEnabled
+        public bool FileMenuEnabled
         {
             get
             {
