@@ -8,6 +8,7 @@ using Engine.Platform;
 using MyGUIPlugin;
 using Standalone;
 using Logging;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -32,8 +33,9 @@ namespace Medical.GUI
         private Vector3 movingMusclePosition;
         private float leftCPPosition;
         private float rightCPPosition;
+        private bool restoreEnabled = false;
 
-        public MandibleGUIController(Widget ribbonWidget, MedicalController medicalController)
+        public MandibleGUIController(Widget ribbonWidget, MedicalController medicalController, MovementSequenceController movementSequenceController)
         {
             this.medicalController = medicalController;
 
@@ -59,6 +61,21 @@ namespace Medical.GUI
             bothForwardBack.ValueChanged += bothForwardBackChanged;
             resetButton.MouseButtonClick += resetButton_Click;
             restoreButton.MouseButtonClick += restoreButton_Click;
+
+            movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
+            movementSequenceController.PlaybackStopped += new MovementSequenceEvent(movementSequenceController_PlaybackStopped);
+        }
+
+        void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
+        {
+            resetButton.Enabled = true;
+            restoreButton.Enabled = restoreEnabled;
+        }
+
+        void movementSequenceController_PlaybackStarted(MovementSequenceController controller)
+        {
+            resetButton.Enabled = false;
+            restoreButton.Enabled = false;
         }
 
         public bool AllowSceneManipulation
@@ -189,6 +206,7 @@ namespace Medical.GUI
             leftCPPosition = leftCP.CurrentLocation;
             rightCPPosition = rightCP.CurrentLocation;
             movingMusclePosition = movingMuscleTarget.Offset;
+            restoreEnabled = true;
 
             synchronizeLeftCP(resetButton, leftCP.getNeutralLocation());
             synchronizeRightCP(resetButton, rightCP.getNeutralLocation());
@@ -203,6 +221,7 @@ namespace Medical.GUI
             synchronizeRightCP(resetButton, rightCPPosition);
             synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
             restoreButton.Enabled = false;
+            restoreEnabled = false;
         }
 
         private void subscribeToUpdates()

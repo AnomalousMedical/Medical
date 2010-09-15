@@ -87,7 +87,6 @@ namespace Medical
 
             //Config plugins
             MyGUIInterface.LogFile = MedicalConfig.DocRoot + "/MyGUI.log";
-            MyGUIInterface.Theme = "core_theme_black_orange.xml";
 
             //Create pluginmanager
             pluginManager = new PluginManager(MedicalConfig.ConfigFile);

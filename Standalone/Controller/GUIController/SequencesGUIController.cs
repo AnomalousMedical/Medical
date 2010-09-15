@@ -32,6 +32,9 @@ namespace Medical.GUI
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
             stopButton.MouseButtonClick += new MyGUIEvent(stopButton_MouseButtonClick);
 
+            playButton.Enabled = false;
+            stopButton.Enabled = false;
+
             sequenceController.CurrentSequenceSetChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceSetChanged);
             sequenceController.PlaybackStarted += new MovementSequenceEvent(sequenceController_PlaybackStarted);
             sequenceController.PlaybackStopped += new MovementSequenceEvent(sequenceController_PlaybackStopped);

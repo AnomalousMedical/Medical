@@ -34,7 +34,7 @@ namespace Medical.GUI
             Widget ribbonWidget = ribbon.getWidget(0);
 
             layerGUIController = new LayerGUIController(ribbonWidget, standaloneController.LayerController);
-            mandibleGUIController = new MandibleGUIController(ribbonWidget, standaloneController.MedicalController);
+            mandibleGUIController = new MandibleGUIController(ribbonWidget, standaloneController.MedicalController, standaloneController.MovementSequenceController);
             sequencesGUIController = new SequencesGUIController(ribbonWidget, standaloneController.MovementSequenceController);
             navigationGUIController = new NavigationGUIController(ribbonWidget, standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             renderGUIController = new RenderGUIController(ribbonWidget, standaloneController.SceneViewController, standaloneController.ImageRenderer);
