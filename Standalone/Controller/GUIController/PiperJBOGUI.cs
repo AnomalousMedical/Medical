@@ -224,6 +224,7 @@ namespace Medical.GUI
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
             basicRibbon.AllowLayerShortcuts = false;
+            standaloneController.MovementSequenceController.stopPlayback();
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = false;
             #endif
