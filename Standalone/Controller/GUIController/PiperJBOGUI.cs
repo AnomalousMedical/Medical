@@ -30,6 +30,7 @@ namespace Medical.GUI
         private OpenPatientDialog openPatientDialog;
         private AboutDialog aboutDialog;
         private OptionsDialog options;
+        private CloneWindowDialog cloneWindowDialog;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -81,6 +82,9 @@ namespace Medical.GUI
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
+
+            cloneWindowDialog = new CloneWindowDialog();
+            cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
         }
 
         public void Dispose()
@@ -188,6 +192,23 @@ namespace Medical.GUI
             {
                 MainWindow.Instance.clearWindowTitle();
             }
+        }
+
+        public void toggleCloneWindow()
+        {
+            if (standaloneController.SceneViewController.HasCloneWindow)
+            {
+                standaloneController.SceneViewController.destroyCloneWindow();
+            }
+            else
+            {
+                cloneWindowDialog.open(true);
+            }
+        }
+
+        void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
+        {
+            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
         }
 
         void SceneViewController_ActiveWindowChanged(SceneViewWindow window)

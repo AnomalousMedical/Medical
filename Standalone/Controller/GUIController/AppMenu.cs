@@ -159,10 +159,6 @@ namespace Medical.GUI
                 recentDocsMap.Remove(document);
                 Gui.Instance.destroyWidget(doc);
             }
-
-#if CREATE_MAINWINDOW_MENU
-            windowMenuDocumentRemoved(document);
-#endif
         }
 
         void recentDocuments_DocumentReaccessed(RecentDocuments source, string document)
@@ -176,10 +172,6 @@ namespace Medical.GUI
                 recentDocumentsLayout.SuppressLayout = false;
                 recentDocumentsLayout.insertChild(layout, 0);
             }
-
-#if CREATE_MAINWINDOW_MENU
-            windowMenuDocumentReaccessed(document);
-#endif
         }
 
         void recentDocuments_DocumentAdded(RecentDocuments source, string document)
@@ -196,10 +188,6 @@ namespace Medical.GUI
             recentDocButton.UserObject = container;
             recentDocumentsLayout.insertChild(container, 0);
             recentDocsMap.Add(document, recentDocButton);
-
-#if CREATE_MAINWINDOW_MENU
-            createWindowMenuDocument(document);
-#endif
         }
 
         void recentDocButton_MouseButtonClick(Widget source, EventArgs e)
@@ -216,139 +204,5 @@ namespace Medical.GUI
                 MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
-
-#if CREATE_MAINWINDOW_MENU
-
-        private wx.MenuItem recentPatients;
-        private Dictionary<String, wx.MenuItem> recentDocMenuItems = new Dictionary<string, wx.MenuItem>();
-        private Dictionary<int, string> menuIDsToFiles = new Dictionary<int, string>();
-
-        private wx.Menu fileMenu;
-        private wx.MenuItem changeScene;
-        private wx.MenuItem open;
-        private wx.MenuItem save;
-        private wx.MenuItem saveAs;
-        private wx.MenuItem exit;
-
-        public void createMenus(wx.MenuBar menu)
-        {
-            fileMenu = new wx.Menu();
-
-            changeScene = fileMenu.Append((int)wx.MenuIDs.wxID_NEW, "&New Scene...\tCtrl+N", "Change to a new scene.");
-            changeScene.Select += new wx.EventListener(changeScene_Select);
-
-            open = fileMenu.Append((int)wx.MenuIDs.wxID_OPEN, "&Open...\tCtrl+O", "Open existing distortions.");
-            open.Select += new wx.EventListener(open_Select);
-
-            recentPatients = fileMenu.Append(-1, "Recent Patients", new wx.Menu());
-            foreach (String document in recentDocuments)
-            {
-                createWindowMenuDocument(document);
-            }
-
-            save = fileMenu.Append((int)wx.MenuIDs.wxID_SAVE, "&Save...\tCtrl+S", "Save current distortions.");
-            save.Select += new wx.EventListener(save_Select);
-
-            saveAs = fileMenu.Append((int)wx.MenuIDs.wxID_SAVEAS, "Save &As...", "Save current distortions as.");
-            saveAs.Select += new wx.EventListener(saveAs_Select);
-
-            fileMenu.AppendSeparator();
-
-            exit = fileMenu.Append((int)wx.MenuIDs.wxID_EXIT, "&Exit", "Exit the program.");
-            exit.Select += new wx.EventListener(exit_Select);
-
-            menu.Append(fileMenu, "&File");
-        }
-
-        public bool MenuEnabled
-        {
-            get
-            {
-                return changeScene.Enabled;
-            }
-            set
-            {
-                changeScene.Enabled = value;
-                open.Enabled = value;
-                save.Enabled = value;
-                saveAs.Enabled = value;
-                recentPatients.Enabled = value;
-            }
-        }
-
-        void exit_Select(object sender, wx.Event e)
-        {
-            standaloneController.shutdown();
-        }
-
-        void saveAs_Select(object sender, wx.Event e)
-        {
-            piperGUI.saveAs();
-        }
-
-        void save_Select(object sender, wx.Event e)
-        {
-            piperGUI.save();
-        }
-
-        void open_Select(object sender, wx.Event e)
-        {
-            piperGUI.open();
-        }
-
-        void changeScene_Select(object sender, wx.Event e)
-        {
-            piperGUI.showChooseSceneDialog();
-        }
-
-        void recentDocMenuItem_Click(object sender, wx.Event e)
-        {
-            String document = menuIDsToFiles[e.ID];
-            PatientDataFile patientData = new PatientDataFile(document);
-            if (patientData.loadHeader())
-            {
-                piperGUI.changeActiveFile(patientData);
-                standaloneController.openPatientFile(patientData);
-            }
-            else
-            {
-                MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
-        }
-
-        private void createWindowMenuDocument(string document)
-        {
-            if (recentPatients != null)
-            {
-                wx.MenuItem recentDocMenuItem = recentPatients.SubMenu.Insert(0, -1, Path.GetFileNameWithoutExtension(document));
-                MainWindow.Instance.EVT_MENU(recentDocMenuItem.ID, recentDocMenuItem_Click);
-                recentDocMenuItem.Help = document;
-                menuIDsToFiles.Add(recentDocMenuItem.ID, document);
-                recentDocMenuItems.Add(document, recentDocMenuItem);
-            }
-        }
-
-        private void windowMenuDocumentReaccessed(string document)
-        {
-            wx.MenuItem recentDocMenuItem;
-            if (recentDocMenuItems.TryGetValue(document, out recentDocMenuItem))
-            {
-                recentPatients.SubMenu.Remove(recentDocMenuItem);
-                recentPatients.SubMenu.Insert(0, recentDocMenuItem);
-            }
-        }
-
-        private void windowMenuDocumentRemoved(string document)
-        {
-            wx.MenuItem recentDocMenuItem;
-            if (recentDocMenuItems.TryGetValue(document, out recentDocMenuItem))
-            {
-                recentDocMenuItems.Remove(document);
-                menuIDsToFiles.Remove(recentDocMenuItem.ID);
-                recentPatients.SubMenu.Remove(recentDocMenuItem);
-                recentDocMenuItem.Dispose();
-            }
-        }
-#endif
     }
 }

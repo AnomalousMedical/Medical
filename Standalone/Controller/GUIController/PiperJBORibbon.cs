@@ -74,21 +74,22 @@ namespace Medical.GUI
         }
 #if CREATE_MAINWINDOW_MENU
 
+        private SystemMenu systemMenu;
+
         public void createMenus(wx.MenuBar menu)
         {
-            appMenu.createMenus(menu);
-            windowGUIController.createMenus(menu);
+            systemMenu = new SystemMenu(menu, piperGUI, standaloneController);
         }
 
         public bool MenuEnabled
         {
             get
             {
-                return appMenu.MenuEnabled;
+                return systemMenu.MenuEnabled;
             }
             set
             {
-                appMenu.MenuEnabled = value;
+                systemMenu.MenuEnabled = value;
             }
         }
 

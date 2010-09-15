@@ -15,7 +15,6 @@ namespace Medical.GUI
         private ColorMenu colorMenu;
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
-        private CloneWindowDialog cloneWindowDialog;
         private PiperJBOGUI piperGUI;
 
         public WindowGUIController(Widget ribbonWidget, PiperJBOGUI piperGUI, StandaloneController standaloneController)
@@ -33,9 +32,6 @@ namespace Medical.GUI
             colorMenu = new ColorMenu();
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
 
-            cloneWindowDialog = new CloneWindowDialog();
-            cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
-
             Button cloneButton = ribbonWidget.findWidget("UtilityTab/CloneButton") as Button;
             cloneButton.MouseButtonClick += new MyGUIEvent(cloneButton_MouseButtonClick);
         }
@@ -44,59 +40,6 @@ namespace Medical.GUI
         {
 
         }
-
-#if CREATE_MAINWINDOW_MENU
-        public void createMenus(wx.MenuBar menu)
-        {
-            wx.Menu toolsMenu = new wx.Menu();
-
-            wx.MenuItem cloneWindow = toolsMenu.Append(-1, "Clone Window", "Open a window that displays the main window with no controls.");
-            cloneWindow.Select += new wx.EventListener(cloneWindow_Select);
-
-            wx.MenuItem showStats = toolsMenu.Append(-1, "Show Statistics", "Show performance statistics.");
-            showStats.Select += new wx.EventListener(showStats_Select);
-
-            wx.MenuItem preferences = toolsMenu.Append((int)wx.MenuIDs.wxID_PREFERENCES, "Preferences", "Set program configuration.");
-            preferences.Select += new wx.EventListener(preferences_Select);
-
-            menu.Append(toolsMenu, "&Tools");
-
-            wx.Menu helpMenu = new wx.Menu();
-
-            wx.MenuItem help = helpMenu.Append((int)wx.MenuIDs.wxID_HELP, "Piper's JBO Help", "Open Piper's JBO user manual.");
-            help.Select += new wx.EventListener(help_Select);
-
-            wx.MenuItem about = helpMenu.Append((int)wx.MenuIDs.wxID_ABOUT, "About", "About this program.");
-            about.Select += new wx.EventListener(about_Select);
-
-            menu.Append(helpMenu, "&Help");
-        }
-
-        void showStats_Select(object sender, wx.Event e)
-        {
-            showStatsButton_MouseButtonClick(null, EventArgs.Empty);
-        }
-
-        void cloneWindow_Select(object sender, wx.Event e)
-        {
-            cloneButton_MouseButtonClick(null, EventArgs.Empty);
-        }
-
-        void preferences_Select(object sender, wx.Event e)
-        {
-            piperGUI.showOptions();
-        }
-
-        void help_Select(object sender, wx.Event e)
-        {
-            standaloneController.openHelpTopic(0);
-        }
-
-        void about_Select(object sender, wx.Event e)
-        {
-            piperGUI.showAboutDialog();
-        }
-#endif
 
         void colorButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -115,19 +58,7 @@ namespace Medical.GUI
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (sceneViewController.HasCloneWindow)
-            {
-                sceneViewController.destroyCloneWindow();
-            }
-            else
-            {
-                cloneWindowDialog.open(true);
-            }
-        }
-
-        void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
-        {
-            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
+            piperGUI.toggleCloneWindow();
         }
     }
 }
