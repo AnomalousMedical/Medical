@@ -111,6 +111,7 @@
     <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
     <Compile Include="Controller\GUIController\NavigationShortcut.cs" />
     <Compile Include="Controller\GUIController\WindowGUIController.cs" />
+    <Compile Include="Controller\GUIController\WindowLayoutGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\MyGUIImageRendererProgress.cs" />

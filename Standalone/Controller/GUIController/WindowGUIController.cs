@@ -16,7 +16,6 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
         private StandaloneController standaloneController;
         private CloneWindowDialog cloneWindowDialog;
-        private PopupMenu windowMenu;
         private PiperJBOGUI piperGUI;
 
         public WindowGUIController(Widget ribbonWidget, PiperJBOGUI piperGUI, StandaloneController standaloneController)
@@ -39,27 +38,11 @@ namespace Medical.GUI
 
             Button cloneButton = ribbonWidget.findWidget("UtilityTab/CloneButton") as Button;
             cloneButton.MouseButtonClick += new MyGUIEvent(cloneButton_MouseButtonClick);
-
-            //Window Layout
-            Button windowLayout = ribbonWidget.findWidget("UtilityTab/WindowLayoutButton") as Button;
-            windowLayout.MouseButtonClick += new MyGUIEvent(windowLayout_MouseButtonClick);
-
-            windowMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
-            windowMenu.Visible = false;
-            foreach (SceneViewWindowPresetSet preset in standaloneController.PresetWindows.PresetSets)
-            {
-                if (!preset.Hidden)
-                {
-                    MenuItem item = windowMenu.addItem(preset.Name, MenuItemType.Normal);
-                    item.UserObject = preset.Name;
-                    item.MouseButtonClick += item_MouseButtonClick;
-                }
-            }
         }
 
         public void Dispose()
         {
-            Gui.Instance.destroyWidget(windowMenu);
+
         }
 
 #if CREATE_MAINWINDOW_MENU
@@ -101,7 +84,7 @@ namespace Medical.GUI
 
         void preferences_Select(object sender, wx.Event e)
         {
-            options.open(true);
+            piperGUI.showOptions();
         }
 
         void help_Select(object sender, wx.Event e)
@@ -145,19 +128,6 @@ namespace Medical.GUI
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
         {
             standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
-        }
-
-        void item_MouseButtonClick(Widget source, EventArgs e)
-        {
-            standaloneController.SceneViewController.createFromPresets(standaloneController.PresetWindows.getPresetSet(source.UserObject.ToString()));
-            windowMenu.setVisibleSmooth(false);
-        }
-
-        void windowLayout_MouseButtonClick(Widget source, EventArgs e)
-        {
-            LayerManager.Instance.upLayerItem(windowMenu);
-            windowMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
-            windowMenu.setVisibleSmooth(true);
         }
     }
 }

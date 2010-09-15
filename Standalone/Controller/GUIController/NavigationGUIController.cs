@@ -42,7 +42,6 @@ namespace Medical.GUI
 
             navigationTab = ribbonWidget.findWidget("NavigationTab/ScrollView") as ScrollView;
 
-            this.navigationController = navigationController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
             flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(0, 2));

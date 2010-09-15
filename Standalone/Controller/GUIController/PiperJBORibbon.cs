@@ -22,6 +22,7 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
         private PiperJBOGUI piperGUI;
         private AppMenu appMenu;
+        private WindowLayoutGUIController windowLayoutGUIController;
 
         public PiperJBORibbon(PiperJBOGUI piperGUI, StandaloneController standaloneController, StateWizardController stateWizardController)
         {
@@ -44,10 +45,13 @@ namespace Medical.GUI
 
             Button appButton = ribbonWidget.findWidget("AppButton") as Button;
             appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+
+            windowLayoutGUIController = new WindowLayoutGUIController(ribbonWidget, standaloneController);
         }
 
         public void Dispose()
         {
+            windowLayoutGUIController.Dispose();
             appMenu.Dispose();
             wizardRibbonTab.Dispose();
             windowGUIController.Dispose();
