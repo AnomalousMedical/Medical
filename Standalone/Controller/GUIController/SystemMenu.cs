@@ -62,19 +62,19 @@ namespace Medical.GUI
 
             menu.Append(fileMenu, "&File");
 
-            //Tools Menu
-            wx.Menu toolsMenu = new wx.Menu();
+            //Utilities Menu
+            wx.Menu utilitiesMenu = new wx.Menu();
 
-            wx.MenuItem cloneWindow = toolsMenu.Append(-1, "Clone Window", "Open a window that displays the main window with no controls.");
+            wx.MenuItem cloneWindow = utilitiesMenu.Append(-1, "Clone Window", "Open a window that displays the main window with no controls.");
             cloneWindow.Select += new wx.EventListener(cloneWindow_Select);
 
-            wx.MenuItem showStats = toolsMenu.Append(-1, "Show Statistics", "Show performance statistics.");
+            wx.MenuItem showStats = utilitiesMenu.Append(-1, "Show Statistics", "Show performance statistics.");
             showStats.Select += new wx.EventListener(showStats_Select);
 
-            wx.MenuItem preferences = toolsMenu.Append((int)wx.MenuIDs.wxID_PREFERENCES, "Preferences", "Set program configuration.");
+            wx.MenuItem preferences = utilitiesMenu.Append((int)wx.MenuIDs.wxID_PREFERENCES, "Preferences", "Set program configuration.");
             preferences.Select += new wx.EventListener(preferences_Select);
 
-            menu.Append(toolsMenu, "&Tools");
+            menu.Append(utilitiesMenu, "&Utilities");
 
             //Help Menu
             wx.Menu helpMenu = new wx.Menu();
