@@ -13,7 +13,6 @@ namespace Medical.Controller
     {
         private MDIWindow mdiWindow;
         private OgreRenderManager rm;
-        private Button transparencyMode;
 
         public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
             :base(controller, mainTimer, cameraMover, name)
@@ -28,9 +27,6 @@ namespace Medical.Controller
             mdiWindow.Caption = Name;
             mdiWindow.Closed += new EventHandler(mdiWindow_Closed);
             mdiWindow.ActiveStatusChanged += new EventHandler(mdiWindow_ActiveStatusChanged);
-
-            transparencyMode = mdiWindow.findChildWidget("TransparencyModeButton") as Button;
-            transparencyMode.MouseButtonClick += new MyGUIEvent(transparencyMode_MouseButtonClick);
         }
 
         public override void Dispose()
@@ -100,20 +96,6 @@ namespace Medical.Controller
             {
                 TransparencyController.ActiveTransparencyState = CurrentTransparencyState;
             }
-        }
-
-        void transparencyMode_MouseButtonClick(Widget source, EventArgs e)
-        {
-            UseDefaultTransparency = !UseDefaultTransparency;
-            if (UseDefaultTransparency)
-            {
-                transparencyMode.Caption = "Global";
-            }
-            else
-            {
-                transparencyMode.Caption = "Local";
-            }
-            TransparencyController.ActiveTransparencyState = CurrentTransparencyState;
         }
     }
 }
