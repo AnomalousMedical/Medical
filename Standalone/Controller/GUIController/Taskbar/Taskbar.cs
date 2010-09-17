@@ -67,27 +67,39 @@ namespace Medical.GUI
 
         public override void layout()
         {
-            Vector2 currentLocation = startLocation;
-
-            foreach (TaskbarItem item in taskbarItems)
+            if (Visible)
             {
-                if (currentLocation.y + itemSize.Height > WorkingSize.Height)
+                Vector2 currentLocation = startLocation;
+
+                foreach (TaskbarItem item in taskbarItems)
                 {
-                    currentLocation.x += itemSize.Width + padding;
-                    currentLocation.y = startLocation.y;
+                    if (currentLocation.y + itemSize.Height > WorkingSize.Height)
+                    {
+                        currentLocation.x += itemSize.Width + padding;
+                        currentLocation.y = startLocation.y;
+                    }
+
+                    item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                    currentLocation.y += itemSize.Height + padding;
                 }
 
-                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
-                currentLocation.y += itemSize.Height + padding;
+                taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width + 3), (int)WorkingSize.Height);
+
+                if (Child != null)
+                {
+                    Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
+                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                    Child.layout();
+                }
             }
-
-            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width + 3), (int)WorkingSize.Height);
-
-            if (Child != null)
+            else
             {
-                Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
-                Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
-                Child.layout();
+                if (Child != null)
+                {
+                    Child.Location = Location;
+                    Child.WorkingSize = WorkingSize;
+                    Child.layout();
+                }
             }
         }
 
@@ -108,6 +120,7 @@ namespace Medical.GUI
             set
             {
                 taskbarWidget.Visible = value;
+                invalidate();
             }
         }
 
