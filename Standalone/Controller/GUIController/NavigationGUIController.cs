@@ -54,11 +54,6 @@ namespace Medical.GUI
             clearMenuItems();
         }
 
-        internal String _addImage(object key, Bitmap thumbnail)
-        {
-            return gridItemIcons.addImage(key, thumbnail);
-        }
-
         private void navigationController_NavigationStateSetChanged(NavigationController controller)
         {
             clearMenuItems();
@@ -82,7 +77,7 @@ namespace Medical.GUI
                 mainButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(mainButton, topEntry.Thumbnail));
                 mainButton.setSize(menuButton.Width, mainButtonHeight);
 
-                NavigationShortcut navShortcut = new NavigationShortcut(mainButton, menuButton, this);
+                NavigationShortcut navShortcut = new NavigationShortcut(mainButton, menuButton, gridItemIcons);
                 navShortcut.ShortcutActivated += new NavigationShortcutEvent(navShortcut_ShortcutActivated);
 
                 menuButtons.Add(navShortcut);

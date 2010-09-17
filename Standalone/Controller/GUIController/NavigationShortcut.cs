@@ -26,7 +26,7 @@ namespace Medical.GUI
             public String LayerState { get; set; }
         }
 
-        private NavigationGUIController navigationController;
+        private ImageAtlas imageAtlas;
         private Button mainButton;
         private Button menuButton;
         private PopupContainer popupMenu;
@@ -34,11 +34,11 @@ namespace Medical.GUI
         private ScrollView scrollView;
         private MenuImageIndex defaultItem = null;
 
-        public NavigationShortcut(Button mainButton, Button menuButton, NavigationGUIController navigationController)
+        public NavigationShortcut(Button mainButton, Button menuButton, ImageAtlas navigationController)
         {
             this.mainButton = mainButton;
             this.menuButton = menuButton;
-            this.navigationController = navigationController;
+            this.imageAtlas = navigationController;
         }
 
         public void Dispose()
@@ -90,7 +90,7 @@ namespace Medical.GUI
             {
                 foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
                 {
-                    ButtonGridItem item = menu.addItem(currentEntry.Text, "", navigationController._addImage(entry, entry.Thumbnail));
+                    ButtonGridItem item = menu.addItem(currentEntry.Text, "", imageAtlas.addImage(entry, entry.Thumbnail));
                     item.ItemClicked += new EventHandler(item_ItemClicked);
                     //Set the parent's layer state if the entry's layer state is null
                     String layerState = entry.LayerState;
