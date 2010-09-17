@@ -12,17 +12,30 @@ namespace Medical.GUI
     {
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;
+        private RenderPropertiesPopup properties;
 
         public RenderTaskbarItem(SceneViewController sceneViewController, ImageRenderer imageRenderer)
             :base("Render", "RenderIconLarge")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
+            properties = new RenderPropertiesPopup();
+        }
+
+        public override void Dispose()
+        {
+            properties.Dispose();
+            base.Dispose();
         }
 
         public override void clicked(Widget source, EventArgs e)
         {
             render();
+        }
+
+        public override void rightClicked(Widget source, EventArgs e)
+        {
+            properties.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         private void render()
@@ -31,13 +44,13 @@ namespace Medical.GUI
             SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;
             if (drawingWindow != null)
             {
-                int width = 1280;//this.width.IntValue;
-                int height = 1024;// this.height.IntValue;
+                int width = properties.Width;
+                int height = properties.Height;
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
                 imageProperties.Width = width;
                 imageProperties.Height = height;
                 imageProperties.UseWindowBackgroundColor = true;
-                imageProperties.AntiAliasingMode = (int)Math.Pow(2, 4);//aaCombo.SelectedIndex);
+                imageProperties.AntiAliasingMode = properties.AAValue;
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
                 if (bitmap != null)
                 {
