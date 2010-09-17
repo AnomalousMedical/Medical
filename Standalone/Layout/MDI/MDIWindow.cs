@@ -103,8 +103,8 @@ namespace Medical.Controller
             mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.Height);
             if (content != null)
             {
-                content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - mainWidget.Height);
-                content.Location = new Vector2(Location.x, Location.y + mainWidget.Height);
+                content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height);
+                content.Location = new Vector2(Location.x, Location.y);
                 content.layout();
             }
         }

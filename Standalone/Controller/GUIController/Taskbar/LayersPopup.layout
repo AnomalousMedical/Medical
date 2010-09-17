@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanel" position="68 144 497 89" layer="Overlapped">
+        <Widget type="Button" skin="RibbonButton" position="8 2 36 38" name="Layers/Skin">
+            <Property key="Button_ImageResource" value="View/LayersSkinLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="46 2 61 38" name="Layers/Muscles">
+            <Property key="Button_ImageResource" value="View/LayersMuscleLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="109 2 40 38" name="Layers/Skull">
+            <Property key="Button_ImageResource" value="View/LayersSkullLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="151 2 62 38" name="Layers/Mandible">
+            <Property key="Button_ImageResource" value="View/LayersMandibleLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="215 2 41 38" name="Layers/Discs">
+            <Property key="Button_ImageResource" value="View/LayersTMJLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="258 2 43 38" name="Layers/Spine">
+            <Property key="Button_ImageResource" value="View/LayersSpineLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="303 2 44 38" name="Layers/Hyoid">
+            <Property key="Button_ImageResource" value="View/LayersHyoidLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="349 2 64 38" name="Layers/MaxillaryTeeth">
+            <Property key="Button_ImageResource" value="View/LayersTopTeethLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="415 2 75 38" name="Layers/MandibularTeeth">
+            <Property key="Button_ImageResource" value="View/LayersBottomTeethLarge"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="8 39 36 30" name="Layers/SkinMenu">
+            <Property key="Widget_Caption" value="Skin"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="46 39 61 30" name="Layers/MusclesMenu">
+            <Property key="Widget_Caption" value="Muscles"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="109 39 40 30" name="Layers/SkullMenu">
+            <Property key="Widget_Caption" value="Skull"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="151 39 62 30" name="Layers/MandibleMenu">
+            <Property key="Widget_Caption" value="Mandible"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="215 39 41 30" name="Layers/DiscsMenu">
+            <Property key="Widget_Caption" value="Discs"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="258 39 43 30" name="Layers/SpineMenu">
+            <Property key="Widget_Caption" value="Spine"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="303 39 44 30" name="Layers/HyoidMenu">
+            <Property key="Widget_Caption" value="Hyoid"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="349 39 64 30" name="Layers/MaxillaryTeethMenu">
+            <Property key="Widget_Caption" value="Maxillary\nTeeth"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonSplitButton" position="415 39 75 30" name="Layers/MandibularTeethMenu">
+            <Property key="Widget_Caption" value="Mandibular\nTeeth"/>
+            <Property key="Text_TextAlign" value="HCenter Top"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="228 72 41 14" align="HCenter Top">
+            <Property key="Widget_Caption" value="Layers"/>
+            <Property key="Text_TextColour" value="FFFFFF"/>
+        </Widget>
+    </Widget>
+</MyGUI>

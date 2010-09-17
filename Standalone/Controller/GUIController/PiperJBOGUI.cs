@@ -9,20 +9,24 @@ using Engine.ObjectManagement;
 using Medical.Controller;
 using Logging;
 using Engine.Platform;
+using Engine;
 
 namespace Medical.GUI
 {
     class PiperJBOGUI : IDisposable
     {
         private ScreenLayoutManager screenLayoutManager;
-        private PiperJBORibbon basicRibbon;
-        private MyGUILayoutContainer basicRibbonContainer;
+        //private PiperJBORibbon basicRibbon;
+        //private MyGUILayoutContainer basicRibbonContainer;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer leftAnimatedContainer;
         private TopPopoutLayoutContainer topAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
         private StateList stateList;
+
+        private Taskbar taskbar;
+        private BorderLayoutContainer innerBorderLayout;
 
         //Dialogs
         private ChooseSceneDialog chooseSceneDialog;
@@ -56,14 +60,34 @@ namespace Medical.GUI
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.Root.SuppressLayout = true;
-            basicRibbon = new PiperJBORibbon(this, standaloneController, stateWizardController);
-            basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
+            innerBorderLayout = new BorderLayoutContainer();
+            screenLayoutManager.Root.Center = innerBorderLayout;
+            //basicRibbon = new PiperJBORibbon(this, standaloneController, stateWizardController);
+            //basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
             topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            screenLayoutManager.Root.Top = topAnimatedContainer;
-            topAnimatedContainer.setInitialPanel(basicRibbonContainer);
+            innerBorderLayout.Top = topAnimatedContainer;
+            //topAnimatedContainer.setInitialPanel(basicRibbonContainer);
+
+            taskbar = new Taskbar(this, standaloneController);
+            taskbar.beginSetup();
+            taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
+            taskbar.addItem(new ShowToothContactsTaskbarItem());
+            taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
+            taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
+            taskbar.addItem(new LayersTaskbarItem(standaloneController.LayerController));
+            taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
+            taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
+            taskbar.addItem(new MandibleMovementTaskbarItem(standaloneController));
+            taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
+            taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
+            taskbar.addItem(new ShowStatsTaskbarItem(standaloneController.SceneViewController));
+            taskbar.addItem(new CloneWindowTaskbarItem(this));
+            taskbar.endSetup();
+            screenLayoutManager.Root.Left = taskbar.Container;
 
             leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            ScreenLayout.Root.Left = leftAnimatedContainer;
+            innerBorderLayout.Left = leftAnimatedContainer;
+
             screenLayoutManager.Root.SuppressLayout = false;
 
             stateList = new StateList(standaloneController.MedicalStateController);
@@ -95,7 +119,8 @@ namespace Medical.GUI
             stateWizardPanelController.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
-            basicRibbon.Dispose();
+            //basicRibbon.Dispose();
+            taskbar.Dispose();
         }
 
         public void windowChanged(OSWindow newWindow)
@@ -115,7 +140,8 @@ namespace Medical.GUI
 
         public void resetTopPanel()
         {
-            changeTopPanel(basicRibbonContainer);
+            //changeTopPanel(basicRibbonContainer);
+            changeTopPanel(null);
         }
 
         public void changeLeftPanel(LayoutContainer leftContainer)
@@ -223,7 +249,9 @@ namespace Medical.GUI
         {
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
-            basicRibbon.AllowLayerShortcuts = false;
+            //basicRibbon.AllowLayerShortcuts = false;
+            screenLayoutManager.Root.Left = null;
+            taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = false;
@@ -232,7 +260,9 @@ namespace Medical.GUI
 
         void stateWizardController_Finished()
         {
-            basicRibbon.AllowLayerShortcuts = true;
+            //basicRibbon.AllowLayerShortcuts = true;
+            screenLayoutManager.Root.Left = taskbar.Container;
+            taskbar.Visible = true;
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;
             #endif
@@ -245,11 +275,11 @@ namespace Medical.GUI
 
         #endregion StateWizard Callbacks
 
-        public ScreenLayoutManager ScreenLayout
+        public BorderLayoutContainer ScreenLayout
         {
             get
             {
-                return screenLayoutManager;
+                return innerBorderLayout;
             }
         }
 
@@ -277,12 +307,12 @@ namespace Medical.GUI
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
-            basicRibbon.sceneUnloading(scene);
+            //basicRibbon.sceneUnloading(scene);
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
         {
-            basicRibbon.sceneLoaded(scene);
+            //basicRibbon.sceneLoaded(scene);
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
         }
