@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="77 136 53 46" layer="Back">
-        <Widget type="Button" skin="AppButton" position="2 4 48 38" name="AppButton">
+    <Widget type="Widget" skin="Panel" position="77 136 53 56" layer="Back">
+        <Widget type="Button" skin="AppButton" position="2 4 48 48" name="AppButton">
             <Property key="Button_ImageResource" value="AppButton/Image"/>
         </Widget>
     </Widget>

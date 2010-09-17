@@ -16,6 +16,7 @@ namespace Medical.GUI
         private AppMenu appMenu;
         private Vector2 startLocation;
         private float padding = 3;
+        Size2 itemSize = new Size2(48, 48);
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
@@ -45,7 +46,7 @@ namespace Medical.GUI
         public void addItem(TaskbarItem item)
         {
             taskbarItems.Add(item);
-            Button taskbarButton = taskbarWidget.createWidgetT("Button", "RibbonButton", 0, 0, 48, 48, Align.Left | Align.Top, item.Name) as Button;
+            Button taskbarButton = taskbarWidget.createWidgetT("Button", "RibbonButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
             item.TaskbarButton = taskbarButton;
             taskbarButton.StaticImage.setItemResource(item.IconName);
             taskbarButton.MouseButtonClick += item.clicked;
@@ -69,7 +70,6 @@ namespace Medical.GUI
 
         public override void layout()
         {
-            Size2 itemSize = new Size2(48, 48);
             Vector2 currentLocation = startLocation;
 
             foreach (TaskbarItem item in taskbarItems)
@@ -91,7 +91,7 @@ namespace Medical.GUI
         {
             get 
             {
-                return new Size2(53, taskbarItems.Count * 51 + appButton.Bottom);
+                return new Size2(itemSize.Width + 6, taskbarItems.Count * (itemSize.Height + padding) + appButton.Bottom);
             }
         }
 
