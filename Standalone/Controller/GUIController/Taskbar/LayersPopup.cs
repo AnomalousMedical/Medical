@@ -40,40 +40,49 @@ namespace Medical.GUI
             skinMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Skin") as Button, layerPanel.findWidget("Layers/SkinMenu") as Button);
             skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
             skinMenu.TransparencyChanged += changeSkinTransparency;
+            popupContainer.addChildPopup(skinMenu.ContextMenu);
 
             musclesMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Muscles") as Button, layerPanel.findWidget("Layers/MusclesMenu") as Button);
             musclesMenu.createShortcuts(KeyboardButtonCode.KC_F2);
             musclesMenu.TransparencyChanged += changeMuscleTransparency;
+            popupContainer.addChildPopup(musclesMenu.ContextMenu);
 
             skullMenu = new LayerGUISkullMenu(layerPanel.findWidget("Layers/Skull") as Button, layerPanel.findWidget("Layers/SkullMenu") as Button);
             skullMenu.createShortcuts(KeyboardButtonCode.KC_F3);
             skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_F4);
             skullMenu.TransparencyChanged += changeSkullTransparency;
             skullMenu.ToggleEminance += toggleShowEminance;
+            popupContainer.addChildPopup(skullMenu.ContextMenu);
 
             mandibleMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Mandible") as Button, layerPanel.findWidget("Layers/MandibleMenu") as Button);
             mandibleMenu.createShortcuts(KeyboardButtonCode.KC_F5);
             mandibleMenu.TransparencyChanged += changeMandibleTransparency;
+            popupContainer.addChildPopup(mandibleMenu.ContextMenu);
 
             discsMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Discs") as Button, layerPanel.findWidget("Layers/DiscsMenu") as Button);
             discsMenu.createShortcuts(KeyboardButtonCode.KC_F6);
             discsMenu.TransparencyChanged += changeDiscTransparency;
+            popupContainer.addChildPopup(discsMenu.ContextMenu);
 
             spineMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Spine") as Button, layerPanel.findWidget("Layers/SpineMenu") as Button);
             spineMenu.createShortcuts(KeyboardButtonCode.KC_F7);
             spineMenu.TransparencyChanged += changeSpineTransparency;
+            popupContainer.addChildPopup(spineMenu.ContextMenu);
 
             hyoidMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Hyoid") as Button, layerPanel.findWidget("Layers/HyoidMenu") as Button);
             hyoidMenu.createShortcuts(KeyboardButtonCode.KC_F8);
             hyoidMenu.TransparencyChanged += changeHyoidTransparency;
+            popupContainer.addChildPopup(hyoidMenu.ContextMenu);
 
             topTeethMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/MaxillaryTeeth") as Button, layerPanel.findWidget("Layers/MaxillaryTeethMenu") as Button);
             topTeethMenu.createShortcuts(KeyboardButtonCode.KC_F9);
             topTeethMenu.TransparencyChanged += changeTopToothTransparency;
+            popupContainer.addChildPopup(topTeethMenu.ContextMenu);
 
             bottomTeethMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/MandibularTeeth") as Button, layerPanel.findWidget("Layers/MandibularTeethMenu") as Button);
             bottomTeethMenu.createShortcuts(KeyboardButtonCode.KC_F10);
             bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
+            popupContainer.addChildPopup(bottomTeethMenu.ContextMenu);
 
             TransparencyController.ActiveTransparencyStateChanged += new EventHandler(TransparencyController_ActiveTransparencyStateChanged);
         }

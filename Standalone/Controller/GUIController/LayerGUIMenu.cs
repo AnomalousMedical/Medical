@@ -128,6 +128,14 @@ namespace Medical.GUI
 
         public bool AllowShortcuts { get; set; }
 
+        public PopupMenu ContextMenu
+        {
+            get
+            {
+                return contextMenu;
+            }
+        }
+
         void hiddenButton_MouseButtonClick(Widget source, EventArgs e)
         {
             setAlpha(0.0f);
