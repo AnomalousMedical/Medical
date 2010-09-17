@@ -47,11 +47,7 @@ namespace Medical.GUI
         public void addItem(TaskbarItem item)
         {
             taskbarItems.Add(item);
-            Button taskbarButton = taskbarWidget.createWidgetT("Button", "RibbonButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
-            item.TaskbarButton = taskbarButton;
-            taskbarButton.StaticImage.setItemResource(item.IconName);
-            taskbarButton.MouseButtonClick += item.clicked;
-            MyGUILayoutContainer container = new MyGUILayoutContainer(taskbarButton);
+            item.TaskbarButton = taskbarWidget.createWidgetT("Button", "RibbonButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
         }
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
@@ -85,7 +81,7 @@ namespace Medical.GUI
                 currentLocation.y += itemSize.Height + padding;
             }
 
-            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width), (int)WorkingSize.Height);
+            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width + 3), (int)WorkingSize.Height);
 
             if (Child != null)
             {

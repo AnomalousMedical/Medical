@@ -23,6 +23,11 @@ namespace Medical.GUI
 
         public abstract void clicked(Widget source, EventArgs e);
 
+        public virtual void rightClicked(Widget source, EventArgs e)
+        {
+            
+        }
+
         public String IconName { get; private set; }
 
         public String Name { get; private set; }
@@ -36,6 +41,18 @@ namespace Medical.GUI
             set
             {
                 this.taskbarButton = value;
+                taskbarButton.StaticImage.setItemResource(IconName);
+                taskbarButton.MouseButtonClick += clicked;
+                taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
+            }
+        }
+
+        void taskbarButton_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = e as MouseEventArgs;
+            if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON1)
+            {
+                rightClicked(source, e);
             }
         }
     }
