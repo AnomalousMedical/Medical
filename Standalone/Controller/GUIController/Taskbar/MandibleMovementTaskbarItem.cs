@@ -29,6 +29,14 @@ namespace Medical.GUI
             mandibleDialog.Visible = !mandibleDialog.Visible;
         }
 
+        public void closeDialog()
+        {
+            if (mandibleDialog.Visible)
+            {
+                mandibleDialog.close();
+            }
+        }
+
         void standaloneController_SceneUnloading(SimScene scene)
         {
             mandibleDialog.sceneUnloading(scene);

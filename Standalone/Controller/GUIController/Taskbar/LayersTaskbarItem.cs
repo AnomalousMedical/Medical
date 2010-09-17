@@ -26,5 +26,17 @@ namespace Medical.GUI
         {
             layersPopup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
+
+        public bool AllowShortcuts
+        {
+            get
+            {
+                return layersPopup.AllowShortcuts;
+            }
+            set
+            {
+                layersPopup.AllowShortcuts = value;
+            }
+        }
     }
 }
