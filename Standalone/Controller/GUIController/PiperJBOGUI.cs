@@ -69,7 +69,7 @@ namespace Medical.GUI
             //topAnimatedContainer.setInitialPanel(basicRibbonContainer);
 
             taskbar = new Taskbar(this, standaloneController);
-            taskbar.beginSetup();
+            taskbar.SuppressLayout = true;
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
@@ -82,8 +82,8 @@ namespace Medical.GUI
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new ShowStatsTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            taskbar.endSetup();
-            screenLayoutManager.Root.Left = taskbar.Container;
+            taskbar.SuppressLayout = false;
+            screenLayoutManager.Root.Left = taskbar;
 
             leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Left = leftAnimatedContainer;
@@ -261,7 +261,7 @@ namespace Medical.GUI
         void stateWizardController_Finished()
         {
             //basicRibbon.AllowLayerShortcuts = true;
-            screenLayoutManager.Root.Left = taskbar.Container;
+            screenLayoutManager.Root.Left = taskbar;
             taskbar.Visible = true;
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;

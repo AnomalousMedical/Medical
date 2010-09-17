@@ -8,32 +8,29 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class Taskbar : IDisposable
+    class Taskbar : LayoutContainer, IDisposable
     {
-        private Layout layout;
+        private Layout myGUIlayout;
         private Widget taskbarWidget;
         private Button appButton;
-        private MyGUILayoutContainer myGUIContainer;
         private AppMenu appMenu;
+        private Vector2 startLocation;
+        private float padding = 3;
 
-        private GridLayoutContainer itemContainer;
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
         public Taskbar(PiperJBOGUI piperGUI, StandaloneController controller)
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.Taskbar.layout");
+            myGUIlayout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.Taskbar.layout");
 
-            taskbarWidget = layout.getWidget(0);
-            myGUIContainer = new MyGUILayoutContainer(taskbarWidget);
-            myGUIContainer.LaidOut += new EventHandler(myGUIContainer_LaidOut);
+            taskbarWidget = myGUIlayout.getWidget(0);
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
             appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
 
             appMenu = new AppMenu(piperGUI, controller);
 
-            itemContainer = new GridLayoutContainer(GridLayoutContainer.LayoutType.Vertical, 3.0f, new Vector2(appButton.Left, appButton.Bottom + 3));
-            itemContainer.GridLaidOut += new EventHandler(itemContainer_GridLaidOut);
+            startLocation = new Vector2(appButton.Left, appButton.Bottom + padding);
         }
 
         public void Dispose()
@@ -42,16 +39,7 @@ namespace Medical.GUI
             {
                 item.Dispose();
             }
-        }
-
-        public void beginSetup()
-        {
-            itemContainer.SuppressLayout = true;
-        }
-
-        public void endSetup()
-        {
-            itemContainer.SuppressLayout = false;
+            LayoutManager.Instance.unloadLayout(myGUIlayout);
         }
 
         public void addItem(TaskbarItem item)
@@ -62,18 +50,52 @@ namespace Medical.GUI
             taskbarButton.StaticImage.setItemResource(item.IconName);
             taskbarButton.MouseButtonClick += item.clicked;
             MyGUILayoutContainer container = new MyGUILayoutContainer(taskbarButton);
-            itemContainer.addChild(container);
         }
 
-        public MyGUILayoutContainer Container
+        void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            get
+            appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
+        }
+
+        public override void bringToFront()
+        {
+            LayerManager.Instance.upLayerItem(taskbarWidget);
+        }
+
+        public override void setAlpha(float alpha)
+        {
+            taskbarWidget.Alpha = alpha;
+        }
+
+        public override void layout()
+        {
+            Size2 itemSize = new Size2(48, 48);
+            Vector2 currentLocation = startLocation;
+
+            foreach (TaskbarItem item in taskbarItems)
             {
-                return myGUIContainer;
+                if (currentLocation.y + itemSize.Height > WorkingSize.Height)
+                {
+                    currentLocation.x += itemSize.Width + padding;
+                    currentLocation.y = startLocation.y;
+                }
+
+                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                currentLocation.y += itemSize.Height + padding;
+            }
+
+            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
+        }
+
+        public override Size2 DesiredSize
+        {
+            get 
+            {
+                return new Size2(53, taskbarItems.Count * 51 + appButton.Bottom);
             }
         }
 
-        public bool Visible
+        public override bool Visible
         {
             get
             {
@@ -83,26 +105,6 @@ namespace Medical.GUI
             {
                 taskbarWidget.Visible = value;
             }
-        }
-
-        void appButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
-        }
-
-        void myGUIContainer_LaidOut(object sender, EventArgs e)
-        {
-            itemContainer.WorkingSize = myGUIContainer.WorkingSize;
-            itemContainer.invalidate();
-        }
-
-        void itemContainer_GridLaidOut(object sender, EventArgs e)
-        {
-            //Size2 newSize = new Size2(itemContainer.GridSize.Width, taskbarWidget.Height);
-            //if (newSize != myGUIContainer.DesiredSize)
-            //{
-            //    myGUIContainer.changeDesiredSize(newSize);
-            //}
         }
     }
 }
