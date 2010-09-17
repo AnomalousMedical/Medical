@@ -65,12 +65,12 @@ namespace Medical.GUI
             taskbar.SuppressLayout = true;
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new LayersTaskbarItem(standaloneController.LayerController));
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             taskbar.addItem(new MandibleMovementTaskbarItem(standaloneController));
+            taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new ShowStatsTaskbarItem(standaloneController.SceneViewController));
