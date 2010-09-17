@@ -11,13 +11,12 @@ namespace Medical
 {
     public class ScreenLayoutManager : OSWindowListener
     {
-        private BorderLayoutContainer rootContainer = new BorderLayoutContainer();
-        OSWindow window;
+        private LayoutContainer rootContainer;
+        private OSWindow window;
 
         public ScreenLayoutManager(OSWindow window)
         {
             this.window = window;
-            rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             window.addListener(this);
         }
 
@@ -32,11 +31,16 @@ namespace Medical
             resized(window);
         }
 
-        public BorderLayoutContainer Root
+        public LayoutContainer Root
         {
             get
             {
                 return rootContainer;
+            }
+            set
+            {
+                rootContainer = value;
+                rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             }
         }
 

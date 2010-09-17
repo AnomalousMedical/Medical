@@ -59,15 +59,8 @@ namespace Medical.GUI
             createWizardPanels();
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
-            screenLayoutManager.Root.SuppressLayout = true;
             innerBorderLayout = new BorderLayoutContainer();
-            screenLayoutManager.Root.Center = innerBorderLayout;
-            //basicRibbon = new PiperJBORibbon(this, standaloneController, stateWizardController);
-            //basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
-            topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
-            innerBorderLayout.Top = topAnimatedContainer;
-            //topAnimatedContainer.setInitialPanel(basicRibbonContainer);
-
+            
             taskbar = new Taskbar(this, standaloneController);
             taskbar.SuppressLayout = true;
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
@@ -82,8 +75,14 @@ namespace Medical.GUI
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new ShowStatsTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            taskbar.SuppressLayout = false;
-            screenLayoutManager.Root.Left = taskbar;
+            taskbar.Child = innerBorderLayout;
+            screenLayoutManager.Root = taskbar;
+
+            //basicRibbon = new PiperJBORibbon(this, standaloneController, stateWizardController);
+            //basicRibbonContainer = new MyGUILayoutContainer(basicRibbon.RibbonRootWidget);
+            topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Top = topAnimatedContainer;
+            //topAnimatedContainer.setInitialPanel(basicRibbonContainer);
 
             leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Left = leftAnimatedContainer;
@@ -109,6 +108,9 @@ namespace Medical.GUI
 
             cloneWindowDialog = new CloneWindowDialog();
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
+
+            taskbar.SuppressLayout = false;
+            taskbar.layout();
         }
 
         public void Dispose()
@@ -250,7 +252,7 @@ namespace Medical.GUI
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
             //basicRibbon.AllowLayerShortcuts = false;
-            screenLayoutManager.Root.Left = null;
+            //screenLayoutManager.Root.Left = null;
             taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
             #if CREATE_MAINWINDOW_MENU
@@ -261,7 +263,7 @@ namespace Medical.GUI
         void stateWizardController_Finished()
         {
             //basicRibbon.AllowLayerShortcuts = true;
-            screenLayoutManager.Root.Left = taskbar;
+            //screenLayoutManager.Root.Left = taskbar;
             taskbar.Visible = true;
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;

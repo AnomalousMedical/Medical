@@ -16,7 +16,8 @@ namespace Medical.GUI
         private AppMenu appMenu;
         private Vector2 startLocation;
         private float padding = 3;
-        Size2 itemSize = new Size2(48, 48);
+        private Size2 itemSize = new Size2(48, 48);
+        private LayoutContainer child;
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
@@ -84,7 +85,14 @@ namespace Medical.GUI
                 currentLocation.y += itemSize.Height + padding;
             }
 
-            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)WorkingSize.Height);
+            taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width), (int)WorkingSize.Height);
+
+            if (Child != null)
+            {
+                Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
+                Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                Child.layout();
+            }
         }
 
         public override Size2 DesiredSize
@@ -104,6 +112,26 @@ namespace Medical.GUI
             set
             {
                 taskbarWidget.Visible = value;
+            }
+        }
+
+        public LayoutContainer Child
+        {
+            get
+            {
+                return child;
+            }
+            set
+            {
+                if (child != null)
+                {
+                    child._setParent(null);
+                }
+                child = value;
+                if(child != null)
+                {
+                    child._setParent(this);
+                }
             }
         }
     }
