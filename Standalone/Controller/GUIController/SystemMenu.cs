@@ -68,9 +68,6 @@ namespace Medical.GUI
             wx.MenuItem cloneWindow = utilitiesMenu.Append(-1, "Clone Window", "Open a window that displays the main window with no controls.");
             cloneWindow.Select += new wx.EventListener(cloneWindow_Select);
 
-            wx.MenuItem showStats = utilitiesMenu.Append(-1, "Show Statistics", "Show performance statistics.");
-            showStats.Select += new wx.EventListener(showStats_Select);
-
             wx.MenuItem preferences = utilitiesMenu.Append((int)wx.MenuIDs.wxID_PREFERENCES, "Preferences", "Set program configuration.");
             preferences.Select += new wx.EventListener(preferences_Select);
 
@@ -86,11 +83,6 @@ namespace Medical.GUI
             about.Select += new wx.EventListener(about_Select);
 
             menu.Append(helpMenu, "&Help");
-        }
-
-        void showStats_Select(object sender, wx.Event e)
-        {
-            standaloneController.SceneViewController.ActiveWindow.ShowStats = !standaloneController.SceneViewController.ActiveWindow.ShowStats;
         }
 
         void cloneWindow_Select(object sender, wx.Event e)

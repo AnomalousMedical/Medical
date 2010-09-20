@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Standalone;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -26,6 +27,10 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
+            if (!mandibleDialog.Visible)
+            {
+                mandibleDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            }
             mandibleDialog.Visible = !mandibleDialog.Visible;
         }
 

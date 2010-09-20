@@ -79,7 +79,6 @@ namespace Medical.GUI
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
-            taskbar.addItem(new ShowStatsTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;

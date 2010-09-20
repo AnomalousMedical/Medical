@@ -20,6 +20,7 @@ namespace Medical.GUI
         private ComboBox resolutionCombo;
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
+        private CheckButton showStatsCheck;
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
@@ -65,6 +66,7 @@ namespace Medical.GUI
 
             fullscreenCheck = new CheckButton(window.findWidget("FullscreenCheck") as Button);
             vsyncCheck = new CheckButton(window.findWidget("VSyncCheck") as Button);
+            showStatsCheck = new CheckButton(window.findWidget("ShowStatsCheck") as Button);
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -100,6 +102,7 @@ namespace Medical.GUI
             aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
             vsyncCheck.Checked = OgreConfig.VSync;
+            showStatsCheck.Checked = MedicalConfig.EngineConfig.ShowStatistics;
 
             String resString = String.Format("{0} x {1}", MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             uint resIndex = resolutionCombo.findItemIndexWith(resString);
@@ -153,6 +156,7 @@ namespace Medical.GUI
                     MedicalConfig.TransparencyChangeMultiplier = 1.0f;
                     break;
             }
+            MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
 
             bool videoOptionsChanged = false;
 

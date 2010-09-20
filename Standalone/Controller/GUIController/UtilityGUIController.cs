@@ -53,7 +53,7 @@ namespace Medical.GUI
 
         void showStatsButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            sceneViewController.ActiveWindow.ShowStats = !sceneViewController.ActiveWindow.ShowStats;
+            //sceneViewController.ActiveWindow.ShowStats = !sceneViewController.ActiveWindow.ShowStats;
         }
 
         void cloneButton_MouseButtonClick(Widget source, EventArgs e)

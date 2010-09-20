@@ -124,7 +124,6 @@
     <Compile Include="Controller\GUIController\Taskbar\QuickViewTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\RenderPropertiesPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\RenderTaskbarItem.cs" />
-    <Compile Include="Controller\GUIController\Taskbar\ShowStatsTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\TaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\SequencesTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\ShowNavigationTaskbarItem.cs" />

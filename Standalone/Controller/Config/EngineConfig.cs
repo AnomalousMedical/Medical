@@ -67,5 +67,17 @@ namespace Medical
                 section.setValue("Fullscreen", value);
             }
         }
+
+        public bool ShowStatistics
+        {
+            get
+            {
+                return section.getValue("ShowStats", false);
+            }
+            set
+            {
+                section.setValue("ShowStats", value);
+            }
+        }
     }
 }

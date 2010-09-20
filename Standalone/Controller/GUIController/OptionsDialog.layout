@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="64 109 237 298" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="64 109 237 308" layer="Modal">
         <Property key="Widget_Caption" value="Options"/>
-        <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 78 224 151">
+        <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 78 224 160">
             <Widget type="StaticText" skin="StaticText" position="5 21 76 15">
                 <Property key="Widget_Caption" value="Anti Aliasing"/>
             </Widget>
@@ -24,11 +24,14 @@
             <Widget type="StaticText" skin="StaticText" position="5 4 105 14">
                 <Property key="Widget_Caption" value="Graphics Options"/>
             </Widget>
+            <Widget type="Button" skin="CheckBox" position="5 141 114 17" name="ShowStatsCheck">
+                <Property key="Widget_Caption" value="Show Statistics"/>
+            </Widget>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 234 76 25" align="Left Bottom" name="ApplyButton">
+        <Widget type="Button" skin="Button" position="4 244 76 25" align="Left Bottom" name="ApplyButton">
             <Property key="Widget_Caption" value="Apply"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="84 234 76 25" align="Left Bottom" name="CancelButton">
+        <Widget type="Button" skin="Button" position="84 244 76 25" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 5 225 69">

@@ -37,7 +37,6 @@ namespace Medical.Controller
         private Size2 size = new Size2(1.0f, 1.0f);
 
         private Color backColor = new Color(0.149f, 0.149f, 0.149f);
-        private bool showStats = false;
 
         protected String transparencyStateName;
 
@@ -79,7 +78,7 @@ namespace Medical.Controller
             //camera.setRenderingMode(renderingMode);
             cameraMover.setCamera(sceneView);
             CameraResolver.addMotionValidator(this);
-            sceneView.showSceneStats(showStats);
+            sceneView.showSceneStats(MedicalConfig.EngineConfig.ShowStatistics);
             sceneView.FindVisibleObjects += sceneView_FindVisibleObjects;
             sceneView.RenderingStarted += sceneView_RenderingStarted;
             sceneView.RenderingEnded += sceneView_RenderingEnded;
@@ -254,22 +253,6 @@ namespace Medical.Controller
                 if (sceneView != null)
                 {
                     sceneView.BackgroundColor = value;
-                }
-            }
-        }
-
-        public bool ShowStats
-        {
-            get
-            {
-                return showStats;
-            }
-            set
-            {
-                showStats = value;
-                if (sceneView != null)
-                {
-                    sceneView.showSceneStats(value);
                 }
             }
         }
