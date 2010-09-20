@@ -61,7 +61,10 @@ namespace Medical
 
         public override void capture()
         {
-            
+            relMouse.x = absMouse.x - lastMouse.x;
+            relMouse.y = absMouse.y - lastMouse.y;
+
+            lastMouse = absMouse;
         }
 
         public override Vector3 getAbsMouse()
@@ -142,11 +145,6 @@ namespace Medical
             MouseEvent mevt = ((MouseEvent)evt);
             absMouse.x = mevt.X;
             absMouse.y = mevt.Y;
-
-            relMouse.x = mevt.X - lastMouse.x;
-            relMouse.y = mevt.Y - lastMouse.y;
-
-            lastMouse = absMouse;
 
             fireMoved(MouseButtonCode.NUM_BUTTONS);
         }
