@@ -101,6 +101,7 @@
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\GUIController\AppMenu.cs" />
+    <Compile Include="Controller\GUIController\NavigationMenu.cs" />
     <Compile Include="Controller\GUIController\PiperJBOGUI.cs" />
     <Compile Include="Controller\GUIController\PiperJBORibbon.cs" />
     <Compile Include="Controller\GUIController\CloneWindowDialog.cs" />

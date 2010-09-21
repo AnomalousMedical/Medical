@@ -14,136 +14,51 @@ namespace Medical.GUI
     {
         public event NavigationShortcutEvent ShortcutActivated;
 
-        private class MenuImageIndex
-        {
-            public MenuImageIndex(String entryName, String layerState)
-            {
-                this.EntryName = entryName;
-                this.LayerState = layerState;
-            }
-
-            public String EntryName { get; set; }
-            public String LayerState { get; set; }
-        }
-
-        private ImageAtlas imageAtlas;
         private Button mainButton;
         private Button menuButton;
-        private PopupContainer popupMenu;
-        private ButtonGrid buttonGrid;
-        private ScrollView scrollView;
-        private MenuImageIndex defaultItem = null;
+        private NavigationMenu navigationMenu;
 
-        public NavigationShortcut(Button mainButton, Button menuButton, ImageAtlas navigationController)
+        public NavigationShortcut(Button mainButton, Button menuButton, ImageAtlas imageAtlas)
         {
             this.mainButton = mainButton;
             this.menuButton = menuButton;
-            this.imageAtlas = navigationController;
+            navigationMenu = new NavigationMenu(imageAtlas);
+            navigationMenu.ItemActivated += new NavigationShortcutEvent(navigationMenu_ItemActivated);
         }
 
         public void Dispose()
         {
-            buttonGrid.Dispose();
-            Gui.Instance.destroyWidget(scrollView);
+            navigationMenu.Dispose();
             Gui.Instance.destroyWidget(mainButton);
             Gui.Instance.destroyWidget(menuButton);
         }
 
         public void createSubMenu(NavigationMenuEntry topEntry)
         {
-            createImageGallerySubMenu(topEntry);
+            navigationMenu.createImageGallerySubMenu(topEntry);
             menuButton.MouseButtonClick += new MyGUIEvent(menuButton_MouseButtonClick);
             mainButton.MouseButtonClick += new MyGUIEvent(mainButton_MouseButtonClick);
-        }
-
-        void createImageGallerySubMenu(NavigationMenuEntry topEntry)
-        {
-            scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
-            scrollView.CanvasAlign = Align.Left | Align.Top;
-            scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
-
-            buttonGrid = new ButtonGrid(scrollView);
-            buttonGrid.ItemWidth = 69;
-            buttonGrid.ItemHeight = 51;
-            buttonGrid.ButtonSkin = "ButtonGridImageButton";
-            buttonGrid.GroupSeparatorSkin = "Separator3";
-            buttonGrid.SuppressLayout = true;
-            int mostElements = 0;
-            foreach (NavigationMenuEntry entry in topEntry.SubEntries)
-            {
-                int numElements = addEntriesAsImages(entry, buttonGrid);
-                if (numElements > mostElements)
-                {
-                    mostElements = numElements;
-                }
-            }
-            buttonGrid.SuppressLayout = false;
-            buttonGrid.layoutAndResize(mostElements);
-            scrollView.Visible = false;
-            popupMenu = new PopupContainer(scrollView);
-        }
-
-        int addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
-        {
-            int numElements = 0;
-            if (currentEntry.SubEntries != null)
-            {
-                foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
-                {
-                    ButtonGridItem item = menu.addItem(currentEntry.Text, "", imageAtlas.addImage(entry, entry.Thumbnail));
-                    item.ItemClicked += new EventHandler(item_ItemClicked);
-                    //Set the parent's layer state if the entry's layer state is null
-                    String layerState = entry.LayerState;
-                    if (layerState == null)
-                    {
-                        layerState = currentEntry.LayerState;
-                    }
-                    MenuImageIndex index = new MenuImageIndex(entry.NavigationState, layerState);
-                    item.UserObject = index;
-                    ++numElements;
-                    if (defaultItem == null)
-                    {
-                        defaultItem = index;
-                    }
-                }
-            }
-            if (currentEntry.SubEntries != null)
-            {
-                foreach (NavigationMenuEntry entry in currentEntry.SubEntries)
-                {
-                    addEntriesAsImages(entry, menu);
-                }
-            }
-            if (numElements > 6)
-            {
-                numElements = 6;
-            }
-            return numElements;
-        }
-
-        void item_ItemClicked(object sender, EventArgs e)
-        {
-            ButtonGridItem item = sender as ButtonGridItem;
-            MenuImageIndex index = item.UserObject as MenuImageIndex;
-            if (ShortcutActivated != null)
-            {
-                ShortcutActivated.Invoke(index.EntryName, index.LayerState);
-            }
-            ButtonGrid grid = item.ButtonGrid;
-            popupMenu.hide();
         }
 
         void mainButton_MouseButtonClick(Widget source, EventArgs e)
         {
             if (ShortcutActivated != null)
             {
-                ShortcutActivated.Invoke(defaultItem.EntryName, defaultItem.LayerState);
+                ShortcutActivated.Invoke(navigationMenu.DefaultItem.EntryName, navigationMenu.DefaultItem.LayerState);
+            }
+        }
+
+        void navigationMenu_ItemActivated(string navigationState, string layerState)
+        {
+            if (ShortcutActivated != null)
+            {
+                ShortcutActivated.Invoke(navigationState, layerState);
             }
         }
 
         void menuButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            popupMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            navigationMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
         #region LayoutContainer
