@@ -73,6 +73,7 @@ namespace Medical.GUI
             taskbar.addItem(layersItem);
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
+            taskbar.addItem(new NotesTaskbarItem(standaloneController.MedicalStateController));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             mandibleMovement = new MandibleMovementTaskbarItem(standaloneController);
             taskbar.addItem(mandibleMovement);

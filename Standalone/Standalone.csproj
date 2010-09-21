@@ -121,6 +121,8 @@
     <Compile Include="Controller\GUIController\Taskbar\LayersTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\MandibleMovementDialog.cs" />
     <Compile Include="Controller\GUIController\Taskbar\MandibleMovementTaskbarItem.cs" />
+    <Compile Include="Controller\GUIController\Taskbar\NotesDialog.cs" />
+    <Compile Include="Controller\GUIController\Taskbar\NotesTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\QuickViewPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\QuickViewTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\RenderPropertiesPopup.cs" />
@@ -273,6 +275,7 @@
     <EmbeddedResource Include="Controller\GUIController\PiperJBORibbon.layout" />
     <EmbeddedResource Include="Controller\GUIController\ResolutionMenu.layout" />
     <None Include="Controller\StatePicker\Panels\GridControlTemplate.layout" />
+    <EmbeddedResource Include="Controller\GUIController\Taskbar\NotesDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\RenderPropertiesPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\DistortionsPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\LayersPopup.layout" />
