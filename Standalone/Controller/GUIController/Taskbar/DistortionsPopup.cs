@@ -30,7 +30,7 @@ namespace Medical.GUI
             Widget examDistortionPanel = mainWidget.findWidget("ExamDistortionPanel");
 
             int anatomyPosition = 3;
-            int examPosition = 7;
+            int examPosition = 3;
             foreach (StateWizard wizard in stateWizardController.WizardEnum)
             {
                 String caption = wizard.TextLine1;
@@ -66,14 +66,20 @@ namespace Medical.GUI
                     examPosition += buttonWidth + 3;
                 }
             }
-            anatomyPosition -= 3;
-            examPosition -= 3;
+            //anatomyPosition -= 3;
+            //examPosition -= 3;
             anatomyDistortionPanel.setSize(anatomyPosition, anatomyDistortionPanel.Height);
             examDistortionPanel.setSize(examPosition, examDistortionPanel.Height);
-            examDistortionPanel.setPosition(anatomyDistortionPanel.Right, examDistortionPanel.Top);
 
             Size2 size = new Size2(mainWidget.Width, mainWidget.Height);
-            size.Width = examDistortionPanel.Right;
+            if (examDistortionPanel.Right > anatomyDistortionPanel.Right)
+            {
+                size.Width = examDistortionPanel.Right;
+            }
+            else
+            {
+                size.Width = anatomyDistortionPanel.Right;
+            }
             mainWidget.setSize((int)size.Width, (int)size.Height);
         }
 

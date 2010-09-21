@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 108 514 109" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="131 108 183 247" layer="Overlapped">
         <Property key="Widget_Caption" value="Mandible Movement"/>
-        <Widget type="StaticText" skin="StaticText" position="216 1 91 16" name="Movement/HingeOpenText">
+        <Widget type="StaticText" skin="StaticText" position="36 112 91 16" name="Movement/HingeOpenText">
             <Property key="Widget_Caption" value="Hinge Opening"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="36 19 100 16" name="Movement/ExcursionRightSlider">
@@ -17,21 +17,21 @@
         <Widget type="StaticText" skin="StaticText" position="36 40 90 13" name="Movement/ExcursionLeftText">
             <Property key="Widget_Caption" value="Excursion Left"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="216 52 100 16" name="Movement/ProtrusionSlider">
+        <Widget type="HScroll" skin="HSlider" position="36 90 100 16" name="Movement/ProtrusionSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="216 36 64 15" name="Movement/ProtrusionText">
+        <Widget type="StaticText" skin="StaticText" position="36 76 64 15" name="Movement/ProtrusionText">
             <Property key="Widget_Caption" value="Protrusion"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="361 4 72 64" name="Movement/Reset">
+        <Widget type="Button" skin="RibbonButton" position="13 146 72 64" name="Movement/Reset">
             <Property key="Widget_Caption" value="Reset"/>
             <Property key="Button_ImageResource" value="Movement/ManipResetLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="435 4 72 64" name="Movement/Restore">
+        <Widget type="Button" skin="RibbonButton" position="88 146 72 64" name="Movement/Restore">
             <Property key="Widget_Caption" value="Restore"/>
             <Property key="Button_ImageResource" value="Movement/ManipRestoreLarge"/>
         </Widget>
-        <Widget type="HScroll" skin="HSlider" position="216 18 100 16" name="Movement/HingeSlider">
+        <Widget type="HScroll" skin="HSlider" position="36 126 100 16" name="Movement/HingeSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="0 3 32 32">
@@ -46,16 +46,16 @@
         <Widget type="StaticImage" skin="StaticImage" position="140 39 32 32">
             <Property key="Image_Resource" value="Movement/ManipLeftHorizontalForward"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="180 3 32 32">
+        <Widget type="StaticImage" skin="StaticImage" position="0 111 32 32">
             <Property key="Image_Resource" value="Movement/ManipVerticalClosed"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="180 39 32 32">
+        <Widget type="StaticImage" skin="StaticImage" position="0 75 32 32">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothBack"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="320 3 32 32">
+        <Widget type="StaticImage" skin="StaticImage" position="140 111 32 32">
             <Property key="Image_Resource" value="Movement/ManipVerticalOpen"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="320 39 32 32">
+        <Widget type="StaticImage" skin="StaticImage" position="140 75 32 32">
             <Property key="Image_Resource" value="Movement/ManipHorizontalBothForward"/>
         </Widget>
     </Widget>

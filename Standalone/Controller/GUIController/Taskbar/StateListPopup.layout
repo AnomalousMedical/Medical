@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanel" position="153 245 235 424" align="Default" layer="Overlapped" name="StateList/StatePicker">
+        <Property key="Widget_Visible" value="true"/>
+        <Widget type="ScrollView" skin="CustomScrollView" position="0 22 235 402" align="Stretch" name="StateList/ScrollView">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="ScrollView_CanvasSize" value="209 10"/>
+            <UserString key="ButtonSkin" value="ButtonListIconButton"/>
+            <UserString key="ItemHeight" value="102"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="3 3 49 18" align="Left Top" name="StateList/DeleteButton">
+            <Property key="Widget_Caption" value="Delete"/>
+        </Widget>
+    </Widget>
+</MyGUI>

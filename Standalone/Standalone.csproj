@@ -125,6 +125,8 @@
     <Compile Include="Controller\GUIController\Taskbar\QuickViewTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\RenderPropertiesPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\RenderTaskbarItem.cs" />
+    <Compile Include="Controller\GUIController\Taskbar\StateListPopup.cs" />
+    <Compile Include="Controller\GUIController\Taskbar\StateListTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\TaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\SequencesTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\ShowNavigationTaskbarItem.cs" />
@@ -276,6 +278,7 @@
     <EmbeddedResource Include="Controller\GUIController\Taskbar\LayersPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\MandibleMovementDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\QuickViewPopup.layout" />
+    <EmbeddedResource Include="Controller\GUIController\Taskbar\StateListPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="Controller\ImageRenderer\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="Controller\StatePicker\Panels\Disclaimer\DisclaimerPanel.layout" />

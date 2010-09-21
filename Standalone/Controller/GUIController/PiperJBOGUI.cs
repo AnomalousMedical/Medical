@@ -23,7 +23,6 @@ namespace Medical.GUI
         private TopPopoutLayoutContainer topAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
-        private StateList stateList;
 
         private Taskbar taskbar;
         private BorderLayoutContainer innerBorderLayout;
@@ -73,6 +72,7 @@ namespace Medical.GUI
             layersItem = new LayersTaskbarItem(standaloneController.LayerController);
             taskbar.addItem(layersItem);
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
+            taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             mandibleMovement = new MandibleMovementTaskbarItem(standaloneController);
             taskbar.addItem(mandibleMovement);
@@ -90,8 +90,6 @@ namespace Medical.GUI
             innerBorderLayout.Left = leftAnimatedContainer;
 
             screenLayoutManager.Root.SuppressLayout = false;
-
-            stateList = new StateList(standaloneController.MedicalStateController);
 
             chooseSceneDialog = new ChooseSceneDialog(standaloneController, this);
             savePatientDialog = new SavePatientDialog();
@@ -150,12 +148,6 @@ namespace Medical.GUI
         {
             if (leftContainer != null)
             {
-                leftContainer.Visible = true;
-                leftContainer.bringToFront();
-            }
-            else if (standaloneController.MedicalStateController.getNumStates() > 0)
-            {
-                leftContainer = stateList.LayoutContainer;
                 leftContainer.Visible = true;
                 leftContainer.bringToFront();
             }

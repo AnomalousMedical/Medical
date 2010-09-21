@@ -15,7 +15,7 @@ namespace Medical.GUI
         private MandibleMovementDialog mandibleDialog;
 
         public MandibleMovementTaskbarItem(StandaloneController standaloneController)
-            :base("Manual Movement", "Joint")
+            : base("Manual Movement", "MovementIcon")
         {
             standaloneController.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
             standaloneController.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
