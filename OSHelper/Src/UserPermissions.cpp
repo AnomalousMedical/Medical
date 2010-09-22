@@ -95,11 +95,7 @@ UserPermissions::UserPermissions(SimulatedVersion simVersion)
 UserPermissions::UserPermissions()
 :handle(HASP_INVALID_HANDLE_VALUE)
 {
-	if(instance != nullptr)
-	{
-		throw gcnew System::Exception("Only one UserPermissions instance can be created at a time.");
-	}
-	instance = this;
+	
 }
 #endif
 
@@ -174,7 +170,7 @@ ConnectionResult UserPermissions::checkConnection()
 const std::string& UserPermissions::getId()
 {
 #ifdef ENABLE_HASP_PROTECTION
-	System::String^ returnVal = "Error";
+	id = "Error";
 	if(checkConnection() == ConnectionResult::Ok)
 	{
 		char *info = 0;
@@ -192,15 +188,16 @@ const std::string& UserPermissions::getId()
 		/* check if operation was successful */
 		if (status == HASP_STATUS_OK)
 		{
-			System::String^ managedInfo = gcnew System::String(info);
+			/*System::String^ managedInfo = gcnew System::String(info);
 			int idIndex = managedInfo->IndexOf("id=\"") + 4;
 			int endQuoteIndex = managedInfo->IndexOf("\"", idIndex);
-			returnVal = managedInfo->Substring(idIndex, endQuoteIndex - idIndex);
+			returnVal = managedInfo->Substring(idIndex, endQuoteIndex - idIndex);*/
+			id = info;
 		}
 
 		hasp_free(info);
 	}
-	return returnVal;
+	return id;
 #else
 	return id;
 #endif

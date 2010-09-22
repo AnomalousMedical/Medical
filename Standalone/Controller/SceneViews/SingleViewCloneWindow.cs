@@ -31,6 +31,7 @@ namespace Medical.Controller
             frame.Show();
             frame.EVT_CLOSE(onClose);
 
+            transparencyStateName = controller.ActiveWindow.CurrentTransparencyState;
             controller.ActiveWindowChanged += controller_ActiveWindowChanged;
         }
 

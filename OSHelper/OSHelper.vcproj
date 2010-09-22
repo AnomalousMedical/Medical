@@ -113,7 +113,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="Include"
+				AdditionalIncludeDirectories="$(HASP_HOME);Include"
 				PreprocessorDefinitions="WINDOWS;WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
@@ -131,8 +131,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib user32.lib Winmm.lib $(NoInherit)"
+				AdditionalDependencies="libhasp_windows_92548.lib kernel32.lib user32.lib Winmm.lib $(NoInherit)"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(HASP_HOME)"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
