@@ -188,11 +188,10 @@ const std::string& UserPermissions::getId()
 		/* check if operation was successful */
 		if (status == HASP_STATUS_OK)
 		{
-			/*System::String^ managedInfo = gcnew System::String(info);
-			int idIndex = managedInfo->IndexOf("id=\"") + 4;
-			int endQuoteIndex = managedInfo->IndexOf("\"", idIndex);
-			returnVal = managedInfo->Substring(idIndex, endQuoteIndex - idIndex);*/
 			id = info;
+			int idIndex = id.find("id=\"") + 4;
+			int endQuoteIndex = id.find("\"", idIndex);
+			id = id.substr(idIndex, endQuoteIndex - idIndex);
 		}
 
 		hasp_free(info);
