@@ -150,7 +150,7 @@ ConnectionResult UserPermissions::checkConnection()
 		status = hasp_read(handle, HASP_FILEID_RO, 0, 1, data);
 		if(status == HASP_STATUS_OK)
 		{
-			return ConnectionResult::Ok;
+			return Ok;
 		}
 		else
 		{
@@ -171,7 +171,7 @@ const std::string& UserPermissions::getId()
 {
 #ifdef ENABLE_HASP_PROTECTION
 	id = "Error";
-	if(checkConnection() == ConnectionResult::Ok)
+	if(checkConnection() == Ok)
 	{
 		char *info = 0;
 

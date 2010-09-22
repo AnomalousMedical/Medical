@@ -12,6 +12,8 @@
 #define _AnomalousExport __attribute__ ((visibility("default")))
 #endif
 
+//#define ENABLE_HASP_PROTECTION
+
 typedef unsigned int uint;
 typedef unsigned char byte;
 typedef unsigned short ushort;
