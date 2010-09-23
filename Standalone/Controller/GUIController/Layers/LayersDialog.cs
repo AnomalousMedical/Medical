@@ -7,7 +7,7 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class LayersPopup : IDisposable
+    class LayersDialog : Dialog
     {
         private LayerGUIMenu skinMenu;
         private LayerGUIMenu musclesMenu;
@@ -21,73 +21,56 @@ namespace Medical.GUI
 
         private LayerController layerController;
 
-        private Layout layout;
-        private Widget layerPanel;
-        private PopupContainer popupContainer;
-
-        public LayersPopup(LayerController layerController)
+        public LayersDialog(LayerController layerController)
+            :base("Medical.Controller.GUIController.Layers.LayersDialog.layout")
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Layers.LayersPopup.layout");
-            layerPanel = layout.getWidget(0);
-            layerPanel.Visible = false;
-            popupContainer = new PopupContainer(layerPanel);
-
             //Predefined layers
             this.layerController = layerController;
 
             layerController.LayerStateApplied += new LayerControllerEvent(layerStateChanged);
 
-            skinMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Skin") as Button, layerPanel.findWidget("Layers/SkinMenu") as Button);
+            skinMenu = new LayerGUIMenu(window.findWidget("Layers/Skin") as Button, window.findWidget("Layers/SkinMenu") as Button);
             skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
             skinMenu.TransparencyChanged += changeSkinTransparency;
-            popupContainer.addChildPopup(skinMenu.ContextMenu);
 
-            musclesMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Muscles") as Button, layerPanel.findWidget("Layers/MusclesMenu") as Button);
+            musclesMenu = new LayerGUIMenu(window.findWidget("Layers/Muscles") as Button, window.findWidget("Layers/MusclesMenu") as Button);
             musclesMenu.createShortcuts(KeyboardButtonCode.KC_F2);
             musclesMenu.TransparencyChanged += changeMuscleTransparency;
-            popupContainer.addChildPopup(musclesMenu.ContextMenu);
 
-            skullMenu = new LayerGUISkullMenu(layerPanel.findWidget("Layers/Skull") as Button, layerPanel.findWidget("Layers/SkullMenu") as Button);
+            skullMenu = new LayerGUISkullMenu(window.findWidget("Layers/Skull") as Button, window.findWidget("Layers/SkullMenu") as Button);
             skullMenu.createShortcuts(KeyboardButtonCode.KC_F3);
             skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_F4);
             skullMenu.TransparencyChanged += changeSkullTransparency;
             skullMenu.ToggleEminance += toggleShowEminance;
-            popupContainer.addChildPopup(skullMenu.ContextMenu);
 
-            mandibleMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Mandible") as Button, layerPanel.findWidget("Layers/MandibleMenu") as Button);
+            mandibleMenu = new LayerGUIMenu(window.findWidget("Layers/Mandible") as Button, window.findWidget("Layers/MandibleMenu") as Button);
             mandibleMenu.createShortcuts(KeyboardButtonCode.KC_F5);
             mandibleMenu.TransparencyChanged += changeMandibleTransparency;
-            popupContainer.addChildPopup(mandibleMenu.ContextMenu);
 
-            discsMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Discs") as Button, layerPanel.findWidget("Layers/DiscsMenu") as Button);
+            discsMenu = new LayerGUIMenu(window.findWidget("Layers/Discs") as Button, window.findWidget("Layers/DiscsMenu") as Button);
             discsMenu.createShortcuts(KeyboardButtonCode.KC_F6);
             discsMenu.TransparencyChanged += changeDiscTransparency;
-            popupContainer.addChildPopup(discsMenu.ContextMenu);
 
-            spineMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Spine") as Button, layerPanel.findWidget("Layers/SpineMenu") as Button);
+            spineMenu = new LayerGUIMenu(window.findWidget("Layers/Spine") as Button, window.findWidget("Layers/SpineMenu") as Button);
             spineMenu.createShortcuts(KeyboardButtonCode.KC_F7);
             spineMenu.TransparencyChanged += changeSpineTransparency;
-            popupContainer.addChildPopup(spineMenu.ContextMenu);
 
-            hyoidMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/Hyoid") as Button, layerPanel.findWidget("Layers/HyoidMenu") as Button);
+            hyoidMenu = new LayerGUIMenu(window.findWidget("Layers/Hyoid") as Button, window.findWidget("Layers/HyoidMenu") as Button);
             hyoidMenu.createShortcuts(KeyboardButtonCode.KC_F8);
             hyoidMenu.TransparencyChanged += changeHyoidTransparency;
-            popupContainer.addChildPopup(hyoidMenu.ContextMenu);
 
-            topTeethMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/MaxillaryTeeth") as Button, layerPanel.findWidget("Layers/MaxillaryTeethMenu") as Button);
+            topTeethMenu = new LayerGUIMenu(window.findWidget("Layers/MaxillaryTeeth") as Button, window.findWidget("Layers/MaxillaryTeethMenu") as Button);
             topTeethMenu.createShortcuts(KeyboardButtonCode.KC_F9);
             topTeethMenu.TransparencyChanged += changeTopToothTransparency;
-            popupContainer.addChildPopup(topTeethMenu.ContextMenu);
 
-            bottomTeethMenu = new LayerGUIMenu(layerPanel.findWidget("Layers/MandibularTeeth") as Button, layerPanel.findWidget("Layers/MandibularTeethMenu") as Button);
+            bottomTeethMenu = new LayerGUIMenu(window.findWidget("Layers/MandibularTeeth") as Button, window.findWidget("Layers/MandibularTeethMenu") as Button);
             bottomTeethMenu.createShortcuts(KeyboardButtonCode.KC_F10);
             bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
-            popupContainer.addChildPopup(bottomTeethMenu.ContextMenu);
 
             TransparencyController.ActiveTransparencyStateChanged += new EventHandler(TransparencyController_ActiveTransparencyStateChanged);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             skinMenu.Dispose();
             musclesMenu.Dispose();
@@ -98,12 +81,7 @@ namespace Medical.GUI
             hyoidMenu.Dispose();
             topTeethMenu.Dispose();
             bottomTeethMenu.Dispose();
-            LayoutManager.Instance.unloadLayout(layout);
-        }
-
-        public void show(int left, int top)
-        {
-            popupContainer.show(left, top);
+            base.Dispose();
         }
 
         public void resetMenus()

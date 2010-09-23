@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel" position="68 144 497 89" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="68 144 497 106" layer="Overlapped">
+        <Property key="Widget_Caption" value="Layers"/>
         <Widget type="Button" skin="RibbonButton" position="8 2 36 38" name="Layers/Skin">
             <Property key="Button_ImageResource" value="View/LayersSkinLarge"/>
         </Widget>
@@ -63,10 +64,6 @@
         <Widget type="Button" skin="RibbonSplitButton" position="415 39 75 30" name="Layers/MandibularTeethMenu">
             <Property key="Widget_Caption" value="Mandibular\nTeeth"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
-        </Widget>
-        <Widget type="StaticText" skin="StaticText" position="228 72 41 14" align="HCenter Top">
-            <Property key="Widget_Caption" value="Layers"/>
-            <Property key="Text_TextColour" value="FFFFFF"/>
         </Widget>
     </Widget>
 </MyGUI>

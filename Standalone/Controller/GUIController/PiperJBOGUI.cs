@@ -36,9 +36,7 @@ namespace Medical.GUI
 
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
-
-        //Taskbar items
-        private LayersTaskbarItem layersItem;
+        private LayersDialog layersPopup;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -71,6 +69,8 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(notesDialog);
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MedicalController, standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(mandibleMovementDialog);
+            layersPopup = new LayersDialog(standaloneController.LayerController);
+            dialogManager.addManagedDialog(layersPopup);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -78,8 +78,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
-            layersItem = new LayersTaskbarItem(standaloneController.LayerController);
-            taskbar.addItem(layersItem);
+            taskbar.addItem(new DialogOpenTaskbarItem(layersPopup, "Custom Layers", "ManualObject"));
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
@@ -256,7 +255,7 @@ namespace Medical.GUI
         {
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
-            layersItem.AllowShortcuts = false;
+            layersPopup.AllowShortcuts = false;
             taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
             #if CREATE_MAINWINDOW_MENU
@@ -266,7 +265,7 @@ namespace Medical.GUI
 
         void stateWizardController_Finished()
         {
-            layersItem.AllowShortcuts = true;
+            layersPopup.AllowShortcuts = true;
             taskbar.Visible = true;
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;

@@ -114,8 +114,7 @@
     <Compile Include="Controller\GUIController\Distortions\DistortionsPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\DialogOpenTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\DistortionsTaskbarItem.cs" />
-    <Compile Include="Controller\GUIController\Layers\LayersPopup.cs" />
-    <Compile Include="Controller\GUIController\Taskbar\LayersTaskbarItem.cs" />
+    <Compile Include="Controller\GUIController\Layers\LayersDialog.cs" />
     <Compile Include="Controller\GUIController\MandibleMovement\MandibleMovementDialog.cs" />
     <Compile Include="Controller\GUIController\Notes\NotesDialog.cs" />
     <Compile Include="Controller\GUIController\QuickView\QuickViewPopup.cs" />
@@ -268,7 +267,7 @@
     <EmbeddedResource Include="Controller\GUIController\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\Render\RenderPropertiesPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\Distortions\DistortionsPopup.layout" />
-    <EmbeddedResource Include="Controller\GUIController\Layers\LayersPopup.layout" />
+    <EmbeddedResource Include="Controller\GUIController\Layers\LayersDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\MandibleMovement\MandibleMovementDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\QuickView\QuickViewPopup.layout" />
     <EmbeddedResource Include="Controller\GUIController\StateList\StateListPopup.layout" />
