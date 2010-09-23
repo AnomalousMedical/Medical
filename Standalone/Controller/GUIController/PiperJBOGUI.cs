@@ -62,6 +62,7 @@ namespace Medical.GUI
             createWizardPanels();
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
+            screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
             innerBorderLayout = new BorderLayoutContainer();
 
             //Dialogs
@@ -78,7 +79,7 @@ namespace Medical.GUI
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
             taskbar.SuppressLayout = true;
-            taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
+            //taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
@@ -261,6 +262,7 @@ namespace Medical.GUI
             layers.AllowShortcuts = false;
             taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
+            dialogManager.temporarilyCloseDialogs();
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = false;
             #endif
@@ -270,6 +272,7 @@ namespace Medical.GUI
         {
             layers.AllowShortcuts = true;
             taskbar.Visible = true;
+            dialogManager.reopenDialogs();
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;
             #endif
@@ -314,13 +317,11 @@ namespace Medical.GUI
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
-            //basicRibbon.sceneUnloading(scene);
             mandibleMovementDialog.sceneUnloading(scene);
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
         {
-            //basicRibbon.sceneLoaded(scene);
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
             mandibleMovementDialog.sceneLoaded(scene);
@@ -329,6 +330,11 @@ namespace Medical.GUI
         void options_VideoOptionsChanged(object sender, EventArgs e)
         {
             standaloneController.recreateMainWindow();
+        }
+
+        void screenLayoutManager_ScreenSizeChanged(int width, int height)
+        {
+            dialogManager.windowResized();
         }
 
 #if CREATE_MAINWINDOW_MENU

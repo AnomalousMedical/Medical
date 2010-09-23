@@ -9,8 +9,12 @@ using OgreWrapper;
 
 namespace Medical
 {
+    public delegate void ScreenSizeChanged(int width, int height);
+
     public class ScreenLayoutManager : OSWindowListener
     {
+        public event ScreenSizeChanged ScreenSizeChanged;
+
         private LayoutContainer rootContainer;
         private OSWindow window;
 
@@ -63,6 +67,10 @@ namespace Medical
         {
             rootContainer.WorkingSize = new Size2(window.WindowWidth, window.WindowHeight);
             layout();
+            if (ScreenSizeChanged != null)
+            {
+                ScreenSizeChanged.Invoke(window.WindowWidth, window.WindowHeight);
+            }
         }
 
         public void closed(OSWindow window)
