@@ -22,7 +22,7 @@ namespace Medical.GUI
 
         public StateListPopup(MedicalStateController stateController)
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.StateListPopup.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.StateList.StateListPopup.layout");
             mainPanel = layout.getWidget(0);
             mainPanel.Visible = false;
             popupContainer = new PopupContainer(mainPanel);

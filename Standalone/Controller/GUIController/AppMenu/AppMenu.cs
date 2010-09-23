@@ -32,7 +32,7 @@ namespace Medical.GUI
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
 
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.AppMenu.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.AppMenu.AppMenu.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);

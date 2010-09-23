@@ -34,7 +34,7 @@ namespace Medical.GUI
         private bool restoreEnabled = false;
 
         public MandibleMovementDialog(MedicalController medicalController, MovementSequenceController movementSequenceController)
-            :base("Medical.Controller.GUIController.Taskbar.MandibleMovementDialog.layout")
+            : base("Medical.Controller.GUIController.MandibleMovement.MandibleMovementDialog.layout")
         {
             this.medicalController = medicalController;
             

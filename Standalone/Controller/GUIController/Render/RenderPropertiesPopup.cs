@@ -29,7 +29,7 @@ namespace Medical.GUI
 
         public RenderPropertiesPopup()
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.RenderPropertiesPopup.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Render.RenderPropertiesPopup.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);
@@ -44,7 +44,7 @@ namespace Medical.GUI
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
 
             //ResolutionMenu
-            resolutionMenu = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.ResolutionMenu.layout");
+            resolutionMenu = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Render.ResolutionMenu.layout");
             Widget resolutionMenuWidget = resolutionMenu.getWidget(0);
             resolutionMenuWidget.Visible = false;
             resolutionMenuPopup = new PopupContainer(resolutionMenuWidget);

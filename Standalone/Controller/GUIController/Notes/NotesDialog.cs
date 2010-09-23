@@ -16,7 +16,7 @@ namespace Medical.GUI
         private Edit notes;
 
         public NotesDialog(MedicalStateController stateController)
-            : base("Medical.Controller.GUIController.Taskbar.NotesDialog.layout")
+            : base("Medical.Controller.GUIController.Notes.NotesDialog.layout")
         {
             window.Visible = false;
 

@@ -34,6 +34,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
+        private NotesDialog notesDialog;
 
         //Taskbar items
         private LayersTaskbarItem layersItem;
@@ -63,7 +64,11 @@ namespace Medical.GUI
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             innerBorderLayout = new BorderLayoutContainer();
+
+            //Dialogs
+            notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             
+            //Taskbar
             taskbar = new Taskbar(this, standaloneController);
             taskbar.SuppressLayout = true;
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
@@ -73,7 +78,7 @@ namespace Medical.GUI
             taskbar.addItem(layersItem);
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
-            taskbar.addItem(new NotesTaskbarItem(standaloneController.MedicalStateController));
+            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             mandibleMovement = new MandibleMovementTaskbarItem(standaloneController);
             taskbar.addItem(mandibleMovement);
@@ -116,6 +121,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            notesDialog.Dispose();
             aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
             stateWizardController.Dispose();

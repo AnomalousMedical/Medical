@@ -19,7 +19,7 @@ namespace Medical.GUI
 
         public DistortionsPopup(StateWizardController stateWizardController, PiperJBOGUI piperGUI)
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.DistortionsPopup.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Distortions.DistortionsPopup.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);

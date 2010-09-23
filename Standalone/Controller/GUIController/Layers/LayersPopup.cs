@@ -27,7 +27,7 @@ namespace Medical.GUI
 
         public LayersPopup(LayerController layerController)
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.LayersPopup.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Layers.LayersPopup.layout");
             layerPanel = layout.getWidget(0);
             layerPanel.Visible = false;
             popupContainer = new PopupContainer(layerPanel);
