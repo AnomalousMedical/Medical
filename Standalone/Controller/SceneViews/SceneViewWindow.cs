@@ -170,6 +170,14 @@ namespace Medical.Controller
             return screenPos;
         }
 
+        public void showSceneStats(bool show)
+        {
+            if (sceneView != null)
+            {
+                sceneView.showSceneStats(show);
+            }
+        }
+
         public override bool Visible
         {
             get

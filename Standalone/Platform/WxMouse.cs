@@ -63,6 +63,7 @@ namespace Medical
         {
             relMouse.x = absMouse.x - lastMouse.x;
             relMouse.y = absMouse.y - lastMouse.y;
+            relMouse.z = absMouse.z - lastMouse.z;
 
             lastMouse = absMouse;
         }
@@ -153,7 +154,6 @@ namespace Medical
         {
             MouseEvent mevt = ((MouseEvent)evt);
             absMouse.z += mevt.WheelRotation;
-            relMouse.z = mevt.WheelRotation;
 
             fireMoved(MouseButtonCode.NUM_BUTTONS);
         }

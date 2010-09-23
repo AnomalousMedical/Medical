@@ -8,6 +8,8 @@ namespace Medical
 {
     public class EngineConfig
     {
+        public event EventHandler ShowStatsToggled;
+
         private ConfigSection section;
 
         public EngineConfig(ConfigFile configFile)
@@ -77,6 +79,10 @@ namespace Medical
             set
             {
                 section.setValue("ShowStats", value);
+                if (ShowStatsToggled != null)
+                {
+                    ShowStatsToggled.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }

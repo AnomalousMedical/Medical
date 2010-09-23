@@ -117,8 +117,6 @@ namespace Standalone
             //SceneView
             MyGUIInterface myGui = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
-            sceneViewController.AllowRotation = false;
-            sceneViewController.AllowZoom = false;
 
             //Navigation and layers
             navigationController = new NavigationController(sceneViewController, medicalController.EventManager, medicalController.MainTimer);
