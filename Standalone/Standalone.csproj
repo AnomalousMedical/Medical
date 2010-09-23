@@ -103,13 +103,9 @@
     <Compile Include="Controller\GUIController\AppMenu.cs" />
     <Compile Include="Controller\GUIController\NavigationMenu.cs" />
     <Compile Include="Controller\GUIController\PiperJBOGUI.cs" />
-    <Compile Include="Controller\GUIController\PiperJBORibbon.cs" />
     <Compile Include="Controller\GUIController\CloneWindowDialog.cs" />
     <Compile Include="Controller\GUIController\ColorMenu.cs" />
-    <Compile Include="Controller\GUIController\NavigationGUIController.cs" />
     <Compile Include="Controller\GUIController\OptionsDialog.cs" />
-    <Compile Include="Controller\GUIController\RenderGUIController.cs" />
-    <Compile Include="Controller\GUIController\SequencesGUIController.cs" />
     <Compile Include="Controller\GUIController\NavigationShortcut.cs" />
     <Compile Include="Controller\GUIController\SystemMenu.cs" />
     <Compile Include="Controller\GUIController\Taskbar\BackgroundColorTaskbarItem.cs" />
@@ -135,8 +131,6 @@
     <Compile Include="Controller\GUIController\Taskbar\ShowToothContactsTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\Taskbar.cs" />
     <Compile Include="Controller\GUIController\Taskbar\WindowLayoutTaskbarItem.cs" />
-    <Compile Include="Controller\GUIController\UtilityGUIController.cs" />
-    <Compile Include="Controller\GUIController\WindowLayoutGUIController.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\ImageRenderer\MyGUIImageRendererProgress.cs" />
@@ -214,11 +208,9 @@
     <Compile Include="Controller\StatePicker\StateWizardController.cs" />
     <Compile Include="Controller\StatePicker\StateWizard.cs" />
     <Compile Include="Controller\StatePicker\StateWizardPanelController.cs" />
-    <Compile Include="Controller\GUIController\LayerGUIController.cs" />
     <Compile Include="Controller\GUIController\LayerGUIMenu.cs" />
     <Compile Include="Controller\GUIController\LayerGUISkullMenu.cs" />
     <Compile Include="Controller\GUIController\MandibleControlSlider.cs" />
-    <Compile Include="Controller\GUIController\MandibleGUIController.cs" />
     <Compile Include="Controller\SceneViews\SceneViewController.cs" />
     <Compile Include="Layout\MDI\MDILayoutContainer.cs" />
     <Compile Include="Controller\SceneViews\SceneViewWindow.cs" />
@@ -272,7 +264,6 @@
     <EmbeddedResource Include="Controller\GUIController\CloneWindowDialog.layout" />
     <EmbeddedResource Include="Controller\GUIController\ColorMenu.layout" />
     <EmbeddedResource Include="Controller\GUIController\OptionsDialog.layout" />
-    <EmbeddedResource Include="Controller\GUIController\PiperJBORibbon.layout" />
     <EmbeddedResource Include="Controller\GUIController\ResolutionMenu.layout" />
     <None Include="Controller\StatePicker\Panels\GridControlTemplate.layout" />
     <EmbeddedResource Include="Controller\GUIController\Taskbar\NotesDialog.layout" />

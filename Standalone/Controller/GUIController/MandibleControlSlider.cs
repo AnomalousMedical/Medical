@@ -16,8 +16,6 @@ namespace Medical.GUI
         private float sequentialChange = 0.0f;
 
         private VScroll scrollBar;
-        //private KryptonRibbonGroupButton previousButton;
-        //private KryptonRibbonGroupButton nextButton;
 
         public MandibleControlSlider(VScroll scrollBar)
         {
@@ -88,46 +86,6 @@ namespace Medical.GUI
                 scrollBar.Enabled = value;
             }
         }
-
-        //public KryptonRibbonGroupButton PreviousButton
-        //{
-        //    get
-        //    {
-        //        return previousButton;
-        //    }
-        //    set
-        //    {
-        //        if (previousButton != null)
-        //        {
-        //            previousButton.Click -= previousButton_Click;
-        //        }
-        //        previousButton = value;
-        //        if (previousButton != null)
-        //        {
-        //            previousButton.Click += previousButton_Click;
-        //        }
-        //    }
-        //}
-
-        //public KryptonRibbonGroupButton NextButton
-        //{
-        //    get
-        //    {
-        //        return nextButton;
-        //    }
-        //    set
-        //    {
-        //        if (nextButton != null)
-        //        {
-        //            nextButton.Click -= nextButton_Click;
-        //        }
-        //        nextButton = value;
-        //        if (nextButton != null)
-        //        {
-        //            nextButton.Click += nextButton_Click;
-        //        }
-        //    }
-        //}
 
         void scrollBar_ScrollChangePosition(Widget source, EventArgs e)
         {
