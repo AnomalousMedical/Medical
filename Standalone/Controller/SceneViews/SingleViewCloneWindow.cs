@@ -35,6 +35,13 @@ namespace Medical.Controller
             controller.ActiveWindowChanged += controller_ActiveWindowChanged;
         }
 
+        public override void Dispose()
+        {
+            //Reset the transparencyStateName so that it does not wipe out an existing state
+            transparencyStateName = Name;
+            base.Dispose();
+        }
+
         public override void createSceneView(RendererWindow window, Engine.ObjectManagement.SimScene scene)
         {
             //Ignore the window passed in and use the member one instead
