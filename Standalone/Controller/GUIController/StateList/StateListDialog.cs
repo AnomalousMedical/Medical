@@ -7,12 +7,8 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class StateListPopup : IDisposable
+    class StateListPopup : Dialog
     {
-        private Layout layout;
-        private Widget mainPanel;
-        private PopupContainer popupContainer;
-
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
         ButtonList stateListBox;
         private Dictionary<MedicalState, ButtonListItem> entries = new Dictionary<MedicalState, ButtonListItem>();
@@ -21,16 +17,12 @@ namespace Medical.GUI
         private MedicalStateController stateController;
 
         public StateListPopup(MedicalStateController stateController)
+            :base("Medical.Controller.GUIController.StateList.StateListDialog.layout")
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.StateList.StateListPopup.layout");
-            mainPanel = layout.getWidget(0);
-            mainPanel.Visible = false;
-            popupContainer = new PopupContainer(mainPanel);
-
-            stateListBox = new ButtonList(mainPanel.findWidget("StateList/ScrollView") as ScrollView);
+            stateListBox = new ButtonList(window.findWidget("StateList/ScrollView") as ScrollView);
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
 
-            Button deleteButton = mainPanel.findWidget("StateList/DeleteButton") as Button;
+            Button deleteButton = window.findWidget("StateList/DeleteButton") as Button;
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
 
             this.stateController = stateController;
@@ -43,10 +35,9 @@ namespace Medical.GUI
             stateController.StateUpdated += stateController_StateUpdated;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             stateListBox.Dispose();
-            LayoutManager.Instance.unloadLayout(layout);
 
             stateController.StateAdded -= stateController_StateAdded;
             stateController.StateRemoved -= stateController_StateRemoved;
@@ -55,11 +46,8 @@ namespace Medical.GUI
             stateController.BlendingStarted -= stateController_BlendingStarted;
             stateController.BlendingStopped -= stateController_BlendingStopped;
             stateController.StateUpdated -= stateController_StateUpdated;
-        }
 
-        public void show(int left, int top)
-        {
-            popupContainer.show(left, top);
+            base.Dispose();
         }
 
         void stateListBox_SelectedValueChanged(object sender, EventArgs e)

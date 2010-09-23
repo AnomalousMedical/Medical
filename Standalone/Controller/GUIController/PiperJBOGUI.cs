@@ -36,7 +36,8 @@ namespace Medical.GUI
 
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
-        private LayersDialog layersPopup;
+        private LayersDialog layers;
+        private StateListPopup stateList;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -69,8 +70,10 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(notesDialog);
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MedicalController, standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(mandibleMovementDialog);
-            layersPopup = new LayersDialog(standaloneController.LayerController);
-            dialogManager.addManagedDialog(layersPopup);
+            layers = new LayersDialog(standaloneController.LayerController);
+            dialogManager.addManagedDialog(layers);
+            stateList = new StateListPopup(standaloneController.MedicalStateController);
+            dialogManager.addManagedDialog(stateList);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -78,9 +81,9 @@ namespace Medical.GUI
             taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
-            taskbar.addItem(new DialogOpenTaskbarItem(layersPopup, "Custom Layers", "ManualObject"));
+            taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
-            taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
+            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
@@ -255,7 +258,7 @@ namespace Medical.GUI
         {
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
-            layersPopup.AllowShortcuts = false;
+            layers.AllowShortcuts = false;
             taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
             #if CREATE_MAINWINDOW_MENU
@@ -265,7 +268,7 @@ namespace Medical.GUI
 
         void stateWizardController_Finished()
         {
-            layersPopup.AllowShortcuts = true;
+            layers.AllowShortcuts = true;
             taskbar.Visible = true;
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = true;
