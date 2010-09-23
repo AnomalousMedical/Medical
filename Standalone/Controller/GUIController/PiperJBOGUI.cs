@@ -16,8 +16,6 @@ namespace Medical.GUI
     class PiperJBOGUI : IDisposable
     {
         private ScreenLayoutManager screenLayoutManager;
-        //private PiperJBORibbon basicRibbon;
-        //private MyGUILayoutContainer basicRibbonContainer;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer leftAnimatedContainer;
         private TopPopoutLayoutContainer topAnimatedContainer;
@@ -28,17 +26,19 @@ namespace Medical.GUI
         private BorderLayoutContainer innerBorderLayout;
 
         //Dialogs
+        private DialogManager dialogManager;
         private ChooseSceneDialog chooseSceneDialog;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
         private AboutDialog aboutDialog;
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
+
         private NotesDialog notesDialog;
+        private MandibleMovementDialog mandibleMovementDialog;
 
         //Taskbar items
         private LayersTaskbarItem layersItem;
-        private MandibleMovementTaskbarItem mandibleMovement;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -66,7 +66,11 @@ namespace Medical.GUI
             innerBorderLayout = new BorderLayoutContainer();
 
             //Dialogs
+            dialogManager = new DialogManager();
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
+            dialogManager.addManagedDialog(notesDialog);
+            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MedicalController, standaloneController.MovementSequenceController);
+            dialogManager.addManagedDialog(mandibleMovementDialog);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -80,8 +84,7 @@ namespace Medical.GUI
             taskbar.addItem(new StateListTaskbarItem(standaloneController.MedicalStateController));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
-            mandibleMovement = new MandibleMovementTaskbarItem(standaloneController);
-            taskbar.addItem(mandibleMovement);
+            taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
@@ -117,10 +120,13 @@ namespace Medical.GUI
 
             taskbar.SuppressLayout = false;
             taskbar.layout();
+
+            dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
         }
 
         public void Dispose()
         {
+            dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
             notesDialog.Dispose();
             aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
@@ -253,7 +259,6 @@ namespace Medical.GUI
             layersItem.AllowShortcuts = false;
             taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
-            mandibleMovement.closeDialog();
             #if CREATE_MAINWINDOW_MENU
             systemMenu.FileMenuEnabled = false;
             #endif
@@ -308,6 +313,7 @@ namespace Medical.GUI
         private void standaloneController_SceneUnloading(SimScene scene)
         {
             //basicRibbon.sceneUnloading(scene);
+            mandibleMovementDialog.sceneUnloading(scene);
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
@@ -315,6 +321,7 @@ namespace Medical.GUI
             //basicRibbon.sceneLoaded(scene);
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
+            mandibleMovementDialog.sceneLoaded(scene);
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)

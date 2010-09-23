@@ -101,6 +101,7 @@
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\GUIController\AppMenu\AppMenu.cs" />
+    <Compile Include="Controller\GUIController\DialogManager.cs" />
     <Compile Include="Controller\GUIController\QuickView\NavigationMenu.cs" />
     <Compile Include="Controller\GUIController\PiperJBOGUI.cs" />
     <Compile Include="Controller\GUIController\CloneWindow\CloneWindowDialog.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="Controller\GUIController\Layers\LayersPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\LayersTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\MandibleMovement\MandibleMovementDialog.cs" />
-    <Compile Include="Controller\GUIController\Taskbar\MandibleMovementTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Notes\NotesDialog.cs" />
     <Compile Include="Controller\GUIController\QuickView\QuickViewPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\QuickViewTaskbarItem.cs" />

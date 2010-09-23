@@ -21,10 +21,6 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
-            if (!dialog.Visible)
-            {
-                dialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
-            }
             dialog.Visible = !dialog.Visible;
         }
 
