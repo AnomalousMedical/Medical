@@ -72,6 +72,7 @@ namespace Medical
 
         private bool automaticMovement = false;
         private float totalTime = 0.0f;
+        private float animationDuration = 0.0f;
         private Vector3 startLookAt;
         private float startOrbitDistance;
         private Quaternion startRotation;
@@ -104,9 +105,9 @@ namespace Medical
                 if (automaticMovement)
                 {
                     totalTime += (float)clock.Seconds;
-                    if (totalTime > MedicalConfig.CameraTransitionTime)
+                    if (totalTime > animationDuration)
                     {
-                        totalTime = MedicalConfig.CameraTransitionTime;
+                        totalTime = animationDuration;
                         automaticMovement = false;
 
                         orbitDistance = targetOrbitDistance;
@@ -116,7 +117,7 @@ namespace Medical
                         rotatedUp = targetRotatedUp;
                         rotatedLeft = targetRotatedLeft;
                     }
-                    float slerpAmount = totalTime / MedicalConfig.CameraTransitionTime;
+                    float slerpAmount = totalTime / animationDuration;
                     this.lookAt = startLookAt.lerp(ref targetLookAt, ref slerpAmount);
                     Quaternion rotation = startRotation.slerp(ref targetRotation, slerpAmount);
                     //If the rotation is not a valid number just use the target rotation
@@ -278,6 +279,12 @@ namespace Medical
         /// <param name="lookAt">The look at point of the camera.</param>
         public override void setNewPosition(Vector3 position, Vector3 lookAt)
         {
+            setNewPosition(position, lookAt, MedicalConfig.CameraTransitionTime);
+        }
+
+        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration)
+        {
+            animationDuration = duration;
             if (camera != null)
             {
                 //If the camera is currently moving the final positions are not yet recorded so do that now.

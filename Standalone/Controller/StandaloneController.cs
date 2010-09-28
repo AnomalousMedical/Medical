@@ -39,6 +39,7 @@ namespace Standalone
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
+        private TimelineController timelineController;
 
         //GUI
         private PiperJBOGUI basicGUI;
@@ -163,6 +164,9 @@ namespace Standalone
 
             windowPresetController = new SceneViewWindowPresetController();
             createWindowPresets();
+
+            //Timeline
+            timelineController = new TimelineController(this);
 
             //GUI
             basicGUI = new PiperJBOGUI(this);
@@ -334,6 +338,14 @@ namespace Standalone
             get
             {
                 return mdiLayout;
+            }
+        }
+
+        public TimelineController TimelineController
+        {
+            get
+            {
+                return timelineController;
             }
         }
 

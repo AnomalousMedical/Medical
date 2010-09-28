@@ -110,6 +110,7 @@
     <Compile Include="Controller\GUIController\QuickView\NavigationShortcut.cs" />
     <Compile Include="Controller\GUIController\AppMenu\SystemMenu.cs" />
     <Compile Include="Controller\GUIController\Taskbar\BackgroundColorTaskbarItem.cs" />
+    <Compile Include="Controller\GUIController\Taskbar\CallbackTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Taskbar\CloneWindowTaskbarItem.cs" />
     <Compile Include="Controller\GUIController\Distortions\DistortionsPopup.cs" />
     <Compile Include="Controller\GUIController\Taskbar\DialogOpenTaskbarItem.cs" />
@@ -166,6 +167,11 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
+    <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
+    <Compile Include="Controller\Timeline\TestTimelineAction.cs" />
+    <Compile Include="Controller\Timeline\Timeline.cs" />
+    <Compile Include="Controller\Timeline\TimelineAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineController.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />

@@ -27,6 +27,11 @@ namespace Medical.Controller
 
         }
 
+        public override void setNewPosition(Vector3 position, Vector3 lookAt, float duration)
+        {
+
+        }
+
         public override void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
         {
 

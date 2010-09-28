@@ -92,6 +92,13 @@ namespace Medical.GUI
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
+
+            //Temp
+            CallbackTaskbarItem timelineTest = new CallbackTaskbarItem("Test Timeline", "Timeline");
+            timelineTest.OnClicked += new EventHandler(timelineTest_OnClicked);
+            taskbar.addItem(timelineTest);
+            //end temp
+
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
 
@@ -125,6 +132,21 @@ namespace Medical.GUI
             taskbar.layout();
 
             dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
+        }
+
+        void timelineTest_OnClicked(object sender, EventArgs e)
+        {
+            Timeline testTl = new Timeline();
+            //testTl.addAction(new TestTimelineAction("Immediate", 0.0f, 10.0f));
+            //testTl.addAction(new TestTimelineAction("One Second", 1.0f, 3.0f));
+            //testTl.addAction(new TestTimelineAction("Two Second", 2.0f, 2.5f));
+            //testTl.addAction(new TestTimelineAction("Four Second 1", 4.0f, 5.0f));
+            //testTl.addAction(new TestTimelineAction("Four Second 2", 4.0f, 6.0f));
+
+            testTl.addAction(new MoveCameraAction(0.0f, "Camera 1", new Vector3(0.0f, 0.0f, -150.0f), Vector3.Zero));
+            testTl.addAction(new MoveCameraAction(1.0f, "Camera 1", new Vector3(0.0f, 0.0f, 150.0f), Vector3.Zero));
+
+            standaloneController.TimelineController.startPlayback(testTl);
         }
 
         public void Dispose()
