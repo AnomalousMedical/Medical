@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller;
 using Logging;
 using Engine.Platform;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -27,7 +28,8 @@ namespace Medical.GUI
 
         //Wizard state
         private LayerState layerStatusBeforeShown = new LayerState("WizardStartLayerStatus");
-        private String navigationStateBeforeShown;
+        private Vector3 cameraTranslationBeforeShown = Vector3.Zero;
+        private Vector3 cameraLookAtBeforeShown = Vector3.Zero;
         private int currentIndex;
         private int maxIndex = 0;
         private StateWizard currentWizard;
@@ -71,15 +73,8 @@ namespace Medical.GUI
             if (currentWizard != null)
             {
                 layerStatusBeforeShown.captureState();
-                NavigationState currentState = navigationController.getNavigationState(CurrentSceneView);
-                if (currentState != null)
-                {
-                    navigationStateBeforeShown = currentState.Name;
-                }
-                else
-                {
-                    navigationStateBeforeShown = null;
-                }
+                cameraLookAtBeforeShown = CurrentSceneView.LookAt;
+                cameraTranslationBeforeShown = CurrentSceneView.Translation;
                 stateBlender.recordUndoState();
                 maxIndex = 0;
                 currentIndex = 0;
@@ -103,10 +98,7 @@ namespace Medical.GUI
                 basicGUI.changeLeftPanel(null);
                 basicGUI.resetTopPanel();
                 currentWizard = null;
-                if (navigationStateBeforeShown != null)
-                {
-                    navigationController.setNavigationState(navigationStateBeforeShown, CurrentSceneView);
-                }
+                CurrentSceneView.setPosition(cameraTranslationBeforeShown, cameraLookAtBeforeShown);
                 layerController.applyLayerState(layerStatusBeforeShown);
                 if (Finished != null)
                 {
