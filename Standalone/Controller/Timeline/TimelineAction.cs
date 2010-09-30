@@ -6,16 +6,31 @@ using Engine.Platform;
 
 namespace Medical
 {
-    interface TimelineAction
+    abstract class TimelineAction
     {
-        void started(float timelineTime, Clock clock);
+        private Timeline timeline;
 
-        void stopped(float timelineTime, Clock clock);
+        internal void _setTimeline(Timeline timeline)
+        {
+            this.timeline = timeline;
+        }
 
-        void update(float timelineTime, Clock clock);
+        public abstract void started(float timelineTime, Clock clock);
 
-        float StartTime { get; }
+        public abstract void stopped(float timelineTime, Clock clock);
 
-        bool Finished { get; }
+        public abstract void update(float timelineTime, Clock clock);
+
+        public virtual float StartTime { get; set; }
+
+        public abstract bool Finished { get; }
+
+        public TimelineController TimelineController
+        {
+            get
+            {
+                return timeline.TimelineController;
+            }
+        }
     }
 }

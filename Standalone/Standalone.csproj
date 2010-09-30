@@ -170,6 +170,7 @@
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
     <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
+    <Compile Include="Controller\Timeline\PlaySequenceAction.cs" />
     <Compile Include="Controller\Timeline\TestTimelineAction.cs" />
     <Compile Include="Controller\Timeline\Timeline.cs" />
     <Compile Include="Controller\Timeline\TimelineAction.cs" />

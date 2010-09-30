@@ -10,12 +10,6 @@ namespace Medical
 {
     class TimelineController : UpdateListener
     {
-        public static TimelineController Instance
-        {
-            get;
-            private set;
-        }
-
         private Timeline activeTimeline;
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
@@ -23,14 +17,6 @@ namespace Medical
 
         public TimelineController(StandaloneController standaloneController)
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                throw new Exception("Can only create one instance of TimelineController");
-            }
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
         }
@@ -48,6 +34,7 @@ namespace Medical
             if (!updating)
             {
                 activeTimeline = timeline;
+                activeTimeline.TimelineController = this;
                 activeTimeline.start();
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
@@ -60,6 +47,7 @@ namespace Medical
             {
                 activeTimeline.stop();
                 mainTimer.removeFixedUpdateListener(this);
+                activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;
             }
@@ -101,6 +89,14 @@ namespace Medical
             get
             {
                 return standaloneController.MedicalStateController;
+            }
+        }
+
+        public MovementSequenceController MovementSequenceController
+        {
+            get
+            {
+                return standaloneController.MovementSequenceController;
             }
         }
     }

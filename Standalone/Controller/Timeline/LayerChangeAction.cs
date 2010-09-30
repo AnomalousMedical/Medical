@@ -24,7 +24,7 @@ namespace Medical
             this.StartTime = startTime;
         }
 
-        public void started(float timelineTime, Clock clock)
+        public override void started(float timelineTime, Clock clock)
         {
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
             TransparencyController.ActiveTransparencyState = transparencyState;
@@ -32,23 +32,17 @@ namespace Medical
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 
-        public void stopped(float timelineTime, Clock clock)
+        public override void stopped(float timelineTime, Clock clock)
         {
             
         }
 
-        public void update(float timelineTime, Clock clock)
+        public override void update(float timelineTime, Clock clock)
         {
             
         }
 
-        public float StartTime
-        {
-            get;
-            set;
-        }
-
-        public bool Finished
+        public override bool Finished
         {
             get { return true; }
         }

@@ -21,6 +21,7 @@ namespace Medical
 
         public void addAction(TimelineAction action)
         {
+            action._setTimeline(this);
             actions.Add(action);
             actions.Sort(sort);
         }
@@ -82,6 +83,8 @@ namespace Medical
                 return newActionStartIndex == actions.Count && activeActions.Count == 0;
             }
         }
+
+        public TimelineController TimelineController { get; internal set; }
 
         private int sort(TimelineAction x, TimelineAction y)
         {

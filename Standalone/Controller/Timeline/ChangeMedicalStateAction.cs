@@ -19,28 +19,22 @@ namespace Medical
             this.StartTime = StartTime;
         }
 
-        public void started(float timelineTime, Clock clock)
+        public override void started(float timelineTime, Clock clock)
         {
-            TimelineController.Instance.MedicalStateController.directBlend(State, 1.0f);
+            TimelineController.MedicalStateController.directBlend(State, 1.0f);
         }
 
-        public void stopped(float timelineTime, Clock clock)
-        {
-            
-        }
-
-        public void update(float timelineTime, Clock clock)
+        public override void stopped(float timelineTime, Clock clock)
         {
             
         }
 
-        public float StartTime
+        public override void update(float timelineTime, Clock clock)
         {
-            get;
-            set;
+            
         }
 
-        public bool Finished
+        public override bool Finished
         {
             get { return true; }
         }

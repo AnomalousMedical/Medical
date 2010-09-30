@@ -23,28 +23,22 @@ namespace Medical
             this.LookAt = lookAt;
         }
 
-        public void started(float timelineTime, Clock clock)
+        public override void started(float timelineTime, Clock clock)
         {
-            TimelineController.Instance.SceneViewController.findWindow(CameraName).setPosition(Translation, LookAt, Duration);
+            TimelineController.SceneViewController.findWindow(CameraName).setPosition(Translation, LookAt, Duration);
         }
 
-        public void stopped(float timelineTime, Clock clock)
-        {
-            
-        }
-
-        public void update(float timelineTime, Clock clock)
+        public override void stopped(float timelineTime, Clock clock)
         {
             
         }
 
-        public float StartTime
+        public override void update(float timelineTime, Clock clock)
         {
-            get;
-            private set;
+            
         }
 
-        public bool Finished
+        public override bool Finished
         {
             get
             {
