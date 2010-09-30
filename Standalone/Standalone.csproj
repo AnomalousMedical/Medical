@@ -167,6 +167,7 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
+    <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
     <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
     <Compile Include="Controller\Timeline\TestTimelineAction.cs" />
     <Compile Include="Controller\Timeline\Timeline.cs" />

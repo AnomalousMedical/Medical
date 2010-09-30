@@ -48,9 +48,14 @@ namespace Medical
 
         internal void apply()
         {
+            apply(MedicalConfig.TransparencyChangeMultiplier);
+        }
+
+        internal void apply(float multiplier)
+        {
             foreach (LayerEntry entry in entries)
             {
-                entry.apply();
+                entry.apply(multiplier);
             }
         }
 

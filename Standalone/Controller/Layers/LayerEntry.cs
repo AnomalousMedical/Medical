@@ -19,7 +19,7 @@ namespace Medical
             alphaValue = trans.CurrentAlpha;
         }
 
-        public void apply()
+        public void apply(float multiplier)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
             if(group != null)
@@ -27,7 +27,7 @@ namespace Medical
                 TransparencyInterface obj = group.getTransparencyObject(transparencyObject);
                 if (obj != null)
                 {
-                    obj.smoothBlend(alphaValue, MedicalConfig.TransparencyChangeMultiplier);
+                    obj.smoothBlend(alphaValue, multiplier);
                 }
             }
         }

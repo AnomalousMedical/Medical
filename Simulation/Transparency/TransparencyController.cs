@@ -113,7 +113,7 @@ namespace Medical
         /// This is the transparency state that will be modified when set alpha
         /// or blend functions are called. This does not mean that the scene is
         /// currently setup with this transparency, however. That must be
-        /// modified by DisplayedTransparencyState.
+        /// modified by applyTransparencyState.
         /// </summary>
         public static String ActiveTransparencyState
         {
