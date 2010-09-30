@@ -76,6 +76,11 @@ namespace Medical
 
         #endregion
 
+        public void openNewScene(String filename)
+        {
+            standaloneController.openNewScene(filename);
+        }
+
         public SceneViewController SceneViewController
         {
             get

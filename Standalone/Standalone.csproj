@@ -168,13 +168,16 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
+    <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
+    <Compile Include="Controller\Timeline\OpenNewSceneAction.cs" />
     <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
     <Compile Include="Controller\Timeline\PlaySequenceAction.cs" />
     <Compile Include="Controller\Timeline\TestTimelineAction.cs" />
     <Compile Include="Controller\Timeline\Timeline.cs" />
     <Compile Include="Controller\Timeline\TimelineAction.cs" />
     <Compile Include="Controller\Timeline\TimelineController.cs" />
+    <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />

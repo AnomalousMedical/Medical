@@ -10,6 +10,8 @@ namespace Medical
     {
         private List<TimelineAction> actions = new List<TimelineAction>();
         private List<TimelineAction> activeActions = new List<TimelineAction>();
+        private List<TimelineInstantAction> preActions = new List<TimelineInstantAction>();
+        private List<TimelineInstantAction> postActions = new List<TimelineInstantAction>();
 
         int newActionStartIndex;
         float currentTime;
@@ -19,6 +21,18 @@ namespace Medical
             
         }
 
+        public void addPreAction(TimelineInstantAction action)
+        {
+            action._setTimeline(this);
+            preActions.Add(action);
+        }
+
+        public void removePreAction(TimelineInstantAction action)
+        {
+            action._setTimeline(null);
+            preActions.Remove(action);
+        }
+
         public void addAction(TimelineAction action)
         {
             action._setTimeline(this);
@@ -26,15 +40,40 @@ namespace Medical
             actions.Sort(sort);
         }
 
+        public void removeAction(TimelineAction action)
+        {
+            action._setTimeline(null);
+            actions.Remove(action);
+        }
+
+        public void addPostAction(TimelineInstantAction action)
+        {
+            action._setTimeline(this);
+            postActions.Add(action);
+        }
+
+        public void removePostAction(TimelineInstantAction action)
+        {
+            action._setTimeline(null);
+            postActions.Remove(action);
+        }
+
         public void start()
         {
             newActionStartIndex = 0;
             currentTime = 0.0f;
+            foreach (TimelineInstantAction action in preActions)
+            {
+                action.doAction();
+            }
         }
 
         public void stop()
         {
-
+            foreach (TimelineInstantAction action in postActions)
+            {
+                action.doAction();
+            }
         }
 
         public void update(Clock clock)
