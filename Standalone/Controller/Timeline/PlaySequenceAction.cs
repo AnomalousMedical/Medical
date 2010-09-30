@@ -20,6 +20,8 @@ namespace Medical
         public PlaySequenceAction(MovementSequence movementSequence, float startTime, float duration)
         {
             this.MovementSequence = movementSequence;
+            this.StartTime = startTime;
+            this.Duration = duration;
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -41,6 +43,12 @@ namespace Medical
                 finished = true;
                 TimelineController.MovementSequenceController.stopPlayback();
             }
+        }
+
+        public override void reset()
+        {
+            finished = false;
+            base.reset();
         }
 
         public override bool Finished

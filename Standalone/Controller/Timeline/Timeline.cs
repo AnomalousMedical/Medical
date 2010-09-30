@@ -75,6 +75,14 @@ namespace Medical
             }
         }
 
+        public void reset()
+        {
+            foreach (TimelineAction action in actions)
+            {
+                action.reset();
+            }
+        }
+
         public bool Finished
         {
             get
