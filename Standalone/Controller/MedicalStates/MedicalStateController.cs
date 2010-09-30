@@ -24,7 +24,6 @@ namespace Medical
         public event MedicalStateStatusUpdate StateUpdated;
 
         private List<MedicalState> states = new List<MedicalState>();
-        private int currentState = -1;
         private ImageRenderer imageRenderer;
         private ImageRendererProperties imageProperties;
         private MedicalController medicalController;
@@ -34,9 +33,8 @@ namespace Medical
         private float blendTarget = 0.0f;
         private bool playing = false;
 
-        private bool directBlending = false;
         private MedicalState directStartState;
-        private int directEndState;
+        private MedicalState directEndState;
 
         private MedicalState normalState;
 
@@ -152,7 +150,6 @@ namespace Medical
                 normalState.Dispose();
             }
             normalState = null;
-            currentState = -1;
             foreach (MedicalState state in states)
             {
                 state.Dispose();
@@ -197,49 +194,17 @@ namespace Medical
         /// <param name="percent">The index and percentage to blend.</param>
         public void blend(float percent)
         {
-            if (directBlending)
+            if (percent >= 1.0f)
             {
-                if (percent >= 1.0f)
+                directEndState.blend(0, directEndState);
+                if (StateChanged != null)
                 {
-                    states[directEndState].blend(0, states[directEndState]);
-                    blendLocation = directEndState;
-                    directBlending = false;
-                    if (currentState != directEndState)
-                    {
-                        currentState = directEndState;
-                        if (StateChanged != null)
-                        {
-                            StateChanged.Invoke(states[directEndState]);
-                        }
-                    }
-                }
-                else
-                {
-                    directStartState.blend(percent, states[directEndState]);
-                    blendLocation = percent;
+                    StateChanged.Invoke(directEndState);
                 }
             }
             else
             {
-                int startState = (int)percent;
-                int endState = startState + 1;
-                if (endState < states.Count)
-                {
-                    states[startState].blend(percent - startState, states[endState]);
-                }
-                //Be sure to blend if on the exact frame of the last state.
-                else if (startState == states.Count - 1 && startState >= 0)
-                {
-                    states[startState].blend(1.0f, states[startState]);
-                }
-                if (startState != currentState)
-                {
-                    currentState = startState;
-                    if (StateChanged != null)
-                    {
-                        StateChanged.Invoke(states[startState]);
-                    }
-                }
+                directStartState.blend(percent, directEndState);
                 blendLocation = percent;
             }
         }
@@ -258,26 +223,15 @@ namespace Medical
             }
         }
 
-        public void blendTo(int index, float speed)
-        {
-            directBlending = false;
-            if (index > blendTarget)
-            {
-                blendSpeed = speed;
-            }
-            else
-            {
-                blendSpeed = -speed;
-            }
-            blendTarget = index;
-            startPlayback();
-        }
-
         public void directBlend(int endIndex, float speed)
         {
-            directBlending = true;
+            directBlend(states[endIndex], speed);
+        }
+
+        public void directBlend(MedicalState state, float speed)
+        {
             this.directStartState = createState("DirectStart");
-            this.directEndState = endIndex;
+            this.directEndState = state;
             blendLocation = 0.0f;
             blendTarget = 1.0f;
             startPlayback();
@@ -293,18 +247,6 @@ namespace Medical
                 {
                     BlendingStopped.Invoke(this);
                 }
-            }
-        }
-
-        public MedicalState CurrentState
-        {
-            get
-            {
-                if (currentState != -1)
-                {
-                    return states[currentState];
-                }
-                return null;
             }
         }
 

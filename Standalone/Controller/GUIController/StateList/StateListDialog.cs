@@ -91,7 +91,9 @@ namespace Medical.GUI
         {
             if (!ignoreIndexChanges)
             {
-                stateListBox.SelectedItem = entries[state];
+                ButtonListItem stateItem;
+                entries.TryGetValue(state, out stateItem);
+                stateListBox.SelectedItem = stateItem;
             }
         }
 

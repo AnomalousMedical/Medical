@@ -167,6 +167,7 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
+    <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
     <Compile Include="Controller\Timeline\MoveCameraAction.cs" />
     <Compile Include="Controller\Timeline\TestTimelineAction.cs" />
@@ -223,7 +224,6 @@
     <Compile Include="Controller\StatePicker\StateWizardPanel.cs" />
     <Compile Include="Controller\StatePicker\StateWizardRibbonTab.cs" />
     <Compile Include="Controller\StatePicker\WizardIconPanel.cs" />
-    <Compile Include="Controller\States\StateList.cs" />
     <Compile Include="Controller\ThreadManager.cs" />
     <Compile Include="Controller\Watermark\SideLogoWatermark.cs" />
     <Compile Include="Controller\Watermark\TextWatermark.cs" />
@@ -297,7 +297,6 @@
     <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanelTop.layout" />
     <EmbeddedResource Include="Controller\StatePicker\StateWizardButtons.layout" />
     <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
-    <EmbeddedResource Include="Controller\States\StateList.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
