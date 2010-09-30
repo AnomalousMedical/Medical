@@ -51,7 +51,5 @@ namespace Medical
         public Vector3 LookAt { get; set; }
 
         public String CameraName { get; set; }
-
-        public float Duration { get; set; }
     }
 }

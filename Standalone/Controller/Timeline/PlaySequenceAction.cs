@@ -60,7 +60,5 @@ namespace Medical
         }
 
         public MovementSequence MovementSequence { get; set; }
-
-        public float Duration { get; set; }
     }
 }

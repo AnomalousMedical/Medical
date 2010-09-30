@@ -28,6 +28,8 @@ namespace Medical
 
         public virtual float StartTime { get; set; }
 
+        public virtual float Duration { get; set; }
+
         public abstract bool Finished { get; }
 
         public TimelineController TimelineController
