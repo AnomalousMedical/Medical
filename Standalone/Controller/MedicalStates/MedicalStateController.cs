@@ -126,6 +126,11 @@ namespace Medical
             }
         }
 
+        public MedicalState getState(int index)
+        {
+            return states[index];
+        }
+
         public void destroyState(MedicalState state)
         {
             stopBlending();

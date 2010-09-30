@@ -4,25 +4,24 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 
-namespace Medical.Controller.Timeline
+namespace Medical
 {
     class ChangeMedicalStateAction : TimelineAction
     {
-        private MedicalState state;
-
         public ChangeMedicalStateAction()
         {
 
         }
 
-        public ChangeMedicalStateAction(MedicalState state)
+        public ChangeMedicalStateAction(MedicalState state, float startTime)
         {
-            
+            State = state;
+            this.StartTime = StartTime;
         }
 
         public void started(float timelineTime, Clock clock)
         {
-            
+            TimelineController.Instance.MedicalStateController.directBlend(State, 1.0f);
         }
 
         public void stopped(float timelineTime, Clock clock)
@@ -45,5 +44,7 @@ namespace Medical.Controller.Timeline
         {
             get { return true; }
         }
+
+        public MedicalState State { get; set; }
     }
 }

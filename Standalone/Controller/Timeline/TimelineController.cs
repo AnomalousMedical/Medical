@@ -95,5 +95,13 @@ namespace Medical
                 return standaloneController.SceneViewController;
             }
         }
+
+        public MedicalStateController MedicalStateController
+        {
+            get
+            {
+                return standaloneController.MedicalStateController;
+            }
+        }
     }
 }

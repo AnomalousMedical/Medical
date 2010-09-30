@@ -143,8 +143,9 @@ namespace Medical.GUI
             //testTl.addAction(new TestTimelineAction("Four Second 1", 4.0f, 5.0f));
             //testTl.addAction(new TestTimelineAction("Four Second 2", 4.0f, 6.0f));
 
-            testTl.addAction(new MoveCameraAction(0.0f, "Camera 1", new Vector3(0.0f, 0.0f, -150.0f), Vector3.Zero));
+            testTl.addAction(new MoveCameraAction(0.0f, "Camera 1", new Vector3(0.0f, -10.0f, -150.0f), new Vector3(0.0f, -10.0f, 0.0f)));
             testTl.addAction(new LayerChangeAction("Camera 1", standaloneController.LayerController.CurrentLayers.getState("Skull no transparency"), 0.0f));
+            //testTl.addAction(new ChangeMedicalStateAction(standaloneController.MedicalStateController.getState(1), 0.5f));
             testTl.addAction(new MoveCameraAction(1.5f, "Camera 1", new Vector3(0.0f, 0.0f, 150.0f), Vector3.Zero));
             testTl.addAction(new LayerChangeAction("Camera 1", standaloneController.LayerController.CurrentLayers.getState("Skin no transparency"), 1.5f));
 
