@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -40,5 +41,23 @@ namespace Medical
         }
 
         public MedicalState State { get; set; }
+
+        #region Saveable
+
+        private static readonly String MEDICAL_STATE = "MedicalState";
+
+        protected ChangeMedicalStateAction(LoadInfo info)
+            :base(info)
+        {
+            State = info.GetValue<MedicalState>(MEDICAL_STATE);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue(MEDICAL_STATE, State);
+            base.getInfo(info);
+        }
+
+        #endregion
     }
 }

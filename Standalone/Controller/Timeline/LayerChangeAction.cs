@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.Saving;
 
 namespace Medical
 {
     class LayerChangeAction : TimelineAction
     {
-        private LayerState layerState;
-        private String transparencyState;
-
         public LayerChangeAction(String transparencyState, LayerState layerState)
         {
-            this.transparencyState = transparencyState;
-            this.layerState = layerState;
+            this.TransparencyState = transparencyState;
+            this.LayerState = layerState;
             ChangeMultiplier = 1.0f;
         }
 
@@ -27,8 +25,8 @@ namespace Medical
         public override void started(float timelineTime, Clock clock)
         {
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
-            TransparencyController.ActiveTransparencyState = transparencyState;
-            layerState.apply(ChangeMultiplier);
+            TransparencyController.ActiveTransparencyState = TransparencyState;
+            LayerState.apply(ChangeMultiplier);
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 
@@ -47,6 +45,34 @@ namespace Medical
             get { return true; }
         }
 
+        public LayerState LayerState { get; set; }
+
+        public String TransparencyState { get; set; }
+
         public float ChangeMultiplier { get; set; }
+
+        #region Saveable
+
+        private static readonly String LAYER_STATE = "LayerState";
+        private static readonly String TRANSPARENCY_STATE = "TransparencyState";
+        private static readonly String CHANGE_MULTIPLIER = "ChangeMultiplier";
+
+        protected LayerChangeAction(LoadInfo info)
+            : base(info)
+        {
+            LayerState = info.GetValue<LayerState>(LAYER_STATE);
+            TransparencyState = info.GetString(TRANSPARENCY_STATE);
+            ChangeMultiplier = info.GetSingle(CHANGE_MULTIPLIER, 1.0f);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue(LAYER_STATE, LayerState);
+            info.AddValue(TRANSPARENCY_STATE, TransparencyState);
+            info.AddValue(CHANGE_MULTIPLIER, ChangeMultiplier);
+            base.getInfo(info);
+        }
+
+        #endregion
     }
 }

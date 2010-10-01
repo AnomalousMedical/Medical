@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Medical.Muscles;
+using Engine.Saving;
 
 namespace Medical
 {
     class PlaySequenceAction : TimelineAction
     {
-        private float endTime;
-        private bool finished =false;
+        private bool finished = false;
 
         public PlaySequenceAction()
         {
@@ -28,7 +28,7 @@ namespace Medical
         {
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
             TimelineController.MovementSequenceController.playCurrentSequence();
-            endTime = timelineTime + Duration;
+            EndTime = timelineTime + Duration;
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -38,7 +38,7 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            if (timelineTime > endTime)
+            if (timelineTime > EndTime)
             {
                 finished = true;
                 TimelineController.MovementSequenceController.stopPlayback();
@@ -59,6 +59,29 @@ namespace Medical
             }
         }
 
+        public float EndTime { get; set; }
+
         public MovementSequence MovementSequence { get; set; }
+
+        #region Saveable
+
+        private static readonly String END_TIME = "EndTime";
+        private static readonly String MOVEMENT_SEQUENCE = "MovementSequence";
+
+        protected PlaySequenceAction(LoadInfo info)
+            : base(info)
+        {
+            EndTime = info.GetFloat(END_TIME);
+            MovementSequence = info.GetValue<MovementSequence>(MOVEMENT_SEQUENCE);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue(END_TIME, EndTime);
+            info.AddValue(MOVEMENT_SEQUENCE, MovementSequence);
+            base.getInfo(info);
+        }
+
+        #endregion
     }
 }

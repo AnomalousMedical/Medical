@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -51,5 +52,29 @@ namespace Medical
         public Vector3 LookAt { get; set; }
 
         public String CameraName { get; set; }
+
+        #region Saveable
+
+        private static readonly String TRANSLATION = "Translation";
+        private static readonly String LOOKAT = "LookAt";
+        private static readonly String CAMERA_NAME = "CameraName";
+
+        protected MoveCameraAction(LoadInfo info)
+            : base(info)
+        {
+            Translation = info.GetVector3(TRANSLATION);
+            LookAt = info.GetVector3(LOOKAT);
+            CameraName = info.GetString(CAMERA_NAME);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue(TRANSLATION, Translation);
+            info.AddValue(LOOKAT, LookAt);
+            info.AddValue(CAMERA_NAME, CameraName);
+            base.getInfo(info);
+        }
+
+        #endregion
     }
 }

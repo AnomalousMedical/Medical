@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.Saving;
 
 namespace Medical
 {
-    class Timeline
+    class Timeline : Saveable
     {
         private List<TimelineAction> actions = new List<TimelineAction>();
         private List<TimelineAction> activeActions = new List<TimelineAction>();
@@ -137,5 +138,42 @@ namespace Medical
         {
             return x.StartTime.CompareTo(y.StartTime);
         }
+
+        #region Saveable Members
+
+        private static readonly String PRE_ACTIONS = "PreActions";
+        private static readonly String POST_ACTIONS = "PostActions";
+        private static readonly String ACTIONS = "Actions";
+
+        protected Timeline(LoadInfo info)
+        {
+            info.RebuildList<TimelineInstantAction>(PRE_ACTIONS, preActions);
+            info.RebuildList<TimelineInstantAction>(POST_ACTIONS, postActions);
+            info.RebuildList<TimelineAction>(ACTIONS, actions);
+
+            foreach (TimelineInstantAction action in preActions)
+            {
+                action._setTimeline(this);
+            }
+
+            foreach (TimelineInstantAction action in postActions)
+            {
+                action._setTimeline(this);
+            }
+
+            foreach (TimelineAction action in actions)
+            {
+                action._setTimeline(this);
+            }
+        }
+
+        public void getInfo(SaveInfo info)
+        {
+            info.ExtractList<TimelineInstantAction>(PRE_ACTIONS, preActions);
+            info.ExtractList<TimelineInstantAction>(POST_ACTIONS, postActions);
+            info.ExtractList<TimelineAction>(ACTIONS, actions);
+        }
+
+        #endregion
     }
 }

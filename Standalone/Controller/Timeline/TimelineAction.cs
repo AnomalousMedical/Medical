@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.Saving;
 
 namespace Medical
 {
-    abstract class TimelineAction
+    abstract class TimelineAction : Saveable
     {
         private Timeline timeline;
+
+        protected TimelineAction()
+        {
+
+        }
 
         internal void _setTimeline(Timeline timeline)
         {
@@ -39,5 +45,24 @@ namespace Medical
                 return timeline.TimelineController;
             }
         }
+
+        #region Saveable Members
+
+        private static readonly String START_TIME = "StartTime";
+        private static readonly String DURATION = "Duration";
+
+        protected TimelineAction(LoadInfo info)
+        {
+            StartTime = info.GetSingle(START_TIME, 0.0f);
+            Duration = info.GetSingle(DURATION, 0.0f);
+        }
+
+        public virtual void getInfo(SaveInfo info)
+        {
+            info.AddValue(START_TIME, StartTime);
+            info.AddValue(DURATION, Duration);
+        }
+
+        #endregion
     }
 }

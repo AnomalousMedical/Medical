@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine.Saving;
 
 namespace Medical
 {
-    abstract class TimelineInstantAction
+    abstract class TimelineInstantAction : Saveable
     {
-
         private Timeline timeline;
+
+        protected TimelineInstantAction()
+        {
+
+        }
 
         internal void _setTimeline(Timeline timeline)
         {
@@ -24,5 +29,19 @@ namespace Medical
                 return timeline.TimelineController;
             }
         }
+
+        #region Saveable Members
+
+        protected TimelineInstantAction(LoadInfo info)
+        {
+
+        }
+
+        public virtual void getInfo(SaveInfo info)
+        {
+            
+        }
+
+        #endregion
     }
 }

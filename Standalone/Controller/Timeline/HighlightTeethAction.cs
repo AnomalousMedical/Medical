@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -40,5 +41,23 @@ namespace Medical
         }
 
         public bool EnableHighlight { get; set; }
+
+        #region Saveable
+
+        private static readonly String ENABLE_HIGHLIGHT = "EnableHighlight";
+
+        protected HighlightTeethAction(LoadInfo info)
+            :base(info)
+        {
+            EnableHighlight = info.GetBoolean(ENABLE_HIGHLIGHT, false);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            info.AddValue(ENABLE_HIGHLIGHT, EnableHighlight);
+            base.getInfo(info);
+        }
+
+        #endregion
     }
 }
