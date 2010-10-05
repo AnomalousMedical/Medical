@@ -9,6 +9,8 @@ namespace Medical
 {
     class OpenNewSceneAction : TimelineInstantAction
     {
+        public static readonly String Name = "Change Scene";
+
         public OpenNewSceneAction()
         {
 

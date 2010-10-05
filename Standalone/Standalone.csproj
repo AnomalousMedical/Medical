@@ -167,7 +167,9 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
+    <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
+    <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
     <Compile Include="Controller\Timeline\OpenNewSceneAction.cs" />
@@ -300,6 +302,7 @@
     <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanelTop.layout" />
     <EmbeddedResource Include="Controller\StatePicker\StateWizardButtons.layout" />
     <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
+    <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

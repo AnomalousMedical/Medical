@@ -7,8 +7,24 @@ using Engine.Saving;
 
 namespace Medical
 {
+    class TimelineActionEventArgs : EventArgs
+    {
+        public TimelineActionEventArgs(TimelineAction action, int index)
+        {
+            this.Action = action;
+            this.Index = index;
+        }
+
+        public TimelineAction Action { get; private set; }
+
+        public int Index { get; set; }
+    }
+
     class Timeline : Saveable
     {
+        public event EventHandler<TimelineActionEventArgs> ActionAdded;
+        public event EventHandler<TimelineActionEventArgs> ActionRemoved;
+
         private List<TimelineAction> actions = new List<TimelineAction>();
         private List<TimelineAction> activeActions = new List<TimelineAction>();
         private List<TimelineInstantAction> preActions = new List<TimelineInstantAction>();
@@ -39,12 +55,20 @@ namespace Medical
             action._setTimeline(this);
             actions.Add(action);
             actions.Sort(sort);
+            if (ActionAdded != null)
+            {
+                ActionAdded.Invoke(this, new TimelineActionEventArgs(action, actions.IndexOf(action)));
+            }
         }
 
         public void removeAction(TimelineAction action)
         {
             action._setTimeline(null);
             actions.Remove(action);
+            if (ActionRemoved != null)
+            {
+                ActionRemoved.Invoke(this, new TimelineActionEventArgs(action, 0));
+            }
         }
 
         public void addPostAction(TimelineInstantAction action)
@@ -133,6 +157,8 @@ namespace Medical
         }
 
         public TimelineController TimelineController { get; internal set; }
+
+        public IEnumerable<TimelineAction> Actions { get { return actions; } }
 
         private int sort(TimelineAction x, TimelineAction y)
         {

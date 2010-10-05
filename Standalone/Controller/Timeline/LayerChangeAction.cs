@@ -9,6 +9,8 @@ namespace Medical
 {
     class LayerChangeAction : TimelineAction
     {
+        public static readonly String Name = "Change Layers";
+
         public LayerChangeAction(String transparencyState, LayerState layerState)
         {
             this.TransparencyState = transparencyState;
@@ -43,6 +45,11 @@ namespace Medical
         public override bool Finished
         {
             get { return true; }
+        }
+
+        public override String TypeName
+        {
+            get { return Name; }
         }
 
         public LayerState LayerState { get; set; }

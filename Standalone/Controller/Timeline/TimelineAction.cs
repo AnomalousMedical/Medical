@@ -38,6 +38,8 @@ namespace Medical
 
         public abstract bool Finished { get; }
 
+        public abstract String TypeName { get; }
+
         public TimelineController TimelineController
         {
             get

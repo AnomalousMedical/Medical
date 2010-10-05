@@ -5,11 +5,19 @@ using System.Text;
 using Engine.Platform;
 using Standalone;
 using Medical.Controller;
+using Engine.Saving.XMLSaver;
+using Engine;
+using System.IO;
+using System.Xml;
 
 namespace Medical
 {
     class TimelineController : UpdateListener
     {
+        public event EventHandler PlaybackStarted;
+        public event EventHandler PlaybackStopped;
+
+        private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
@@ -29,6 +37,43 @@ namespace Medical
             }
         }
 
+        public bool Playing
+        {
+            get
+            {
+                return updating;
+            }
+        }
+
+        public Timeline openTimeline(String filename)
+        {
+            //Look on the virtual file system first. If it is not found there search the real file system.
+            VirtualFileSystem vfs = VirtualFileSystem.Instance;
+            if (vfs.exists(filename))
+            {
+                using (XmlTextReader file = new XmlTextReader(vfs.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
+                {
+                    return xmlSaver.restoreObject(file) as Timeline;
+                }
+            }
+            else
+            {
+                using (XmlTextReader file = new XmlTextReader(filename))
+                {
+                    return xmlSaver.restoreObject(file) as Timeline;
+                }
+            }
+        }
+
+        public void saveTimeline(Timeline timeline, String filename)
+        {
+            using (XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default))
+            {
+                writer.Formatting = Formatting.Indented;
+                xmlSaver.saveObject(timeline, writer);
+            }
+        }
+
         public void startPlayback(Timeline timeline)
         {
             if (!updating)
@@ -38,6 +83,10 @@ namespace Medical
                 activeTimeline.start();
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
+                if (PlaybackStarted != null)
+                {
+                    PlaybackStarted.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -45,6 +94,10 @@ namespace Medical
         {
             if (updating)
             {
+                if (PlaybackStopped != null)
+                {
+                    PlaybackStopped.Invoke(this, EventArgs.Empty);
+                }
                 activeTimeline.stop();
                 mainTimer.removeFixedUpdateListener(this);
                 activeTimeline.TimelineController = null;

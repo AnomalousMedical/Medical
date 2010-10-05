@@ -9,6 +9,8 @@ namespace Medical
 {
     class HighlightTeethAction : TimelineAction
     {
+        public static readonly String Name = "Highlight Teeth";
+
         public HighlightTeethAction()
         {
 
@@ -38,6 +40,11 @@ namespace Medical
         public override bool Finished
         {
             get { return true; }
+        }
+
+        public override String TypeName
+        {
+            get { return Name; }
         }
 
         public bool EnableHighlight { get; set; }

@@ -9,6 +9,8 @@ namespace Medical
 {
     class ChangeMedicalStateAction : TimelineAction
     {
+        public static readonly String Name = "Change Medical State";
+
         public ChangeMedicalStateAction()
         {
 
@@ -38,6 +40,11 @@ namespace Medical
         public override bool Finished
         {
             get { return true; }
+        }
+
+        public override String TypeName
+        {
+            get { return Name; }
         }
 
         public MedicalState State { get; set; }

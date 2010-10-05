@@ -10,6 +10,8 @@ namespace Medical
 {
     class PlaySequenceAction : TimelineAction
     {
+        public static readonly String Name = "Play Sequence";
+
         private bool finished = false;
 
         public PlaySequenceAction()
@@ -57,6 +59,11 @@ namespace Medical
             {
                 return finished;
             }
+        }
+
+        public override String TypeName
+        {
+            get { return Name; }
         }
 
         public float EndTime { get; set; }
