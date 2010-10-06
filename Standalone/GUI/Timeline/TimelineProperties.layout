@@ -1,42 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="203 195 544 411" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="204 195 923 321" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
-        <Widget type="Widget" skin="Panel" position="2 25 297 312" align="Stretch">
-            <Widget type="MultiList" skin="MultiList" position="2 47 293 238" align="Stretch" name="ActionList"/>
-            <Widget type="ComboBox" skin="ComboBox" position="77 21 214 23" align="HStretch Top" name="AddActionCombo">
+        <Widget type="Widget" skin="Panel" position="2 25 676 259" align="Stretch">
+            <Widget type="ComboBox" skin="ComboBox" position="2 2 189 22" align="Left Top" name="AddActionCombo">
                 <Property key="Edit_Static" value="true"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 21 71 23" align="Left Top" name="AddAction">
+            <Widget type="Button" skin="Button" position="193 1 35 23" align="Left Top" name="AddAction">
                 <Property key="Widget_Caption" value="Add"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="2 285 71 23" align="Left Bottom" name="RemoveAction">
-                <Property key="Widget_Caption" value="Remove"/>
-            </Widget>
-            <Widget type="StaticText" skin="StaticText" position="4 3 103 15">
-                <Property key="Widget_Caption" value="Timeline Actions"/>
-            </Widget>
-        </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 539 23" align="HStretch Top" name="MenuBar"/>
-        <Widget type="Widget" skin="Panel" position="3 340 534 33" align="HStretch Bottom">
-            <Widget type="Button" skin="Button" position="3 4 75 23" name="PlayButton">
+            <Widget type="ScrollView" skin="ScrollView" position="189 25 483 205" align="Stretch"/>
+            <Widget type="Button" skin="Button" position="190 231 75 23" align="Left Bottom" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
+            <Widget type="ScrollView" skin="ScrollView" position="3 25 187 232" align="Left VStretch"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="300 25 237 314" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="MenuBar" skin="MenuBar" position="0 0 918 23" align="HStretch Top" name="MenuBar"/>
+        <Widget type="ScrollView" skin="ScrollView" position="680 25 237 260" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="1 2 207 16" align="HStretch Top" name="PropertiesText">
+            <Widget type="StaticText" skin="StaticText" position="1 26 207 16" align="HStretch Top" name="PropertiesText">
                 <Property key="Widget_Caption" value="Properties"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="1 20 74 15">
+            <Widget type="StaticText" skin="StaticText" position="1 46 74 15">
                 <Property key="Widget_Caption" value="Start Time"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="76 19 132 18" name="StartTime"/>
-            <Widget type="StaticText" skin="StaticText" position="1 39 65 15">
+            <Widget type="Edit" skin="Edit" position="76 46 132 18" name="StartTime"/>
+            <Widget type="StaticText" skin="StaticText" position="1 67 65 15">
                 <Property key="Widget_Caption" value="Duration"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="76 39 132 18" name="Duration"/>
+            <Widget type="Edit" skin="Edit" position="76 67 132 18" name="Duration"/>
+            <Widget type="Button" skin="Button" position="1 1 73 23" name="RemoveAction">
+                <Property key="Widget_Caption" value="Remove"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

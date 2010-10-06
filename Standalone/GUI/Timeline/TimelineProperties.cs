@@ -14,9 +14,7 @@ namespace Medical.GUI
         private TimelineController timelineController;
         private MenuCtrl fileMenuCtrl;
         private String currentTimelineFile;
-        private MultiList actionList;
         private ActionProperties actionProperties;
-        private bool allowListPositionChanges = true;
 
         private Button playButton;
 
@@ -58,12 +56,6 @@ namespace Medical.GUI
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
             removeActionButton.MouseButtonClick += new MyGUIEvent(removeActionButton_MouseButtonClick);
 
-            //Action list
-            actionList = window.findWidget("ActionList") as MultiList;
-            actionList.addColumn("Start", START_COLUMN_WIDTH);
-            actionList.addColumn("Action", actionList.Width - START_COLUMN_WIDTH);
-            actionList.ListChangePosition += new MyGUIEvent(actionList_ListChangePosition);
-
             //Play Button
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
@@ -76,7 +68,7 @@ namespace Medical.GUI
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            actionList.setColumnWidthAt(1, actionList.Width - START_COLUMN_WIDTH);
+            
         }
 
         public void setCurrentTimeline(Timeline timeline)
@@ -102,15 +94,15 @@ namespace Medical.GUI
                 window.Caption = "Timeline";
             }
             currentTimeline = timeline;
-            actionList.removeAllItems();
-            foreach (TimelineAction action in currentTimeline.Actions)
-            {
-                actionList.addItem(action.TypeName);
-                uint newIndex = actionList.getItemCount() - 1;
-                actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
-                actionList.setSubItemNameAt(1, newIndex, action.TypeName);
-                actionList.setItemDataAt(newIndex, action);
-            }
+            //actionList.removeAllItems();
+            //foreach (TimelineAction action in currentTimeline.Actions)
+            //{
+            //    actionList.addItem(action.TypeName);
+            //    uint newIndex = actionList.getItemCount() - 1;
+            //    actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
+            //    actionList.setSubItemNameAt(1, newIndex, action.TypeName);
+            //    actionList.setItemDataAt(newIndex, action);
+            //}
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionStartTimeChanged += currentTimeline_ActionStartTimeChanged;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
@@ -177,39 +169,11 @@ namespace Medical.GUI
             playButton.Caption = "Stop";
         }
 
-        void actionList_ListChangePosition(Widget source, EventArgs e)
-        {
-            if (allowListPositionChanges)
-            {
-                bool selected = actionList.hasItemSelected();
-                actionProperties.Visible = selected;
-                if (selected)
-                {
-                    actionProperties.CurrentAction = actionList.getItemDataAt(actionList.getIndexSelected()) as TimelineAction;
-                }
-            }
-        }
-
         #region CurrentTimeline callbacks
 
         void currentTimeline_ActionStartTimeChanged(object sender, TimelineActionEventArgs e)
         {
-            uint newIndex = (uint)e.Index;
-            TimelineAction action = e.Action;
-            if (e.IndexChanged)
-            {
-                allowListPositionChanges = false;
-                //Remove old entry
-                actionList.removeItemAt((uint)e.OldIndex);
-                //Create new entry
-                actionList.insertItemAt(newIndex, action.TypeName);
-                actionList.setSubItemNameAt(1, newIndex, action.TypeName);
-                actionList.setItemDataAt(newIndex, action);
-                actionList.setIndexSelected(newIndex);
-                allowListPositionChanges = true;
-            }
-            //Update start time
-            actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
+            
         }
 
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
