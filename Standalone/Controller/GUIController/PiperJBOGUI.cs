@@ -77,6 +77,7 @@ namespace Medical.GUI
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(stateList);
             timelineProperties = new TimelineProperties(standaloneController.TimelineController);
+            dialogManager.addManagedDialog(timelineProperties);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);

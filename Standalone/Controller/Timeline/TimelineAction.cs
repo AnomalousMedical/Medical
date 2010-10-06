@@ -21,6 +21,11 @@ namespace Medical
             this.timeline = timeline;
         }
 
+        internal void _sortAction()
+        {
+            timeline._actionStartChanged(this);
+        }
+
         public abstract void started(float timelineTime, Clock clock);
 
         public abstract void stopped(float timelineTime, Clock clock);

@@ -169,6 +169,8 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
+    <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />
+    <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
@@ -302,6 +304,7 @@
     <EmbeddedResource Include="Controller\StatePicker\Panels\TeethPanels\ToothRemovalPanelTop.layout" />
     <EmbeddedResource Include="Controller\StatePicker\StateWizardButtons.layout" />
     <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
+    <EmbeddedResource Include="GUI\Timeline\ActionProperties\MoveCameraProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -12,9 +12,11 @@ namespace Medical.GUI
         private ComboBox addActionCombo;
         private Timeline currentTimeline;
         private TimelineController timelineController;
-        private MenuItem fileMenu;
+        private MenuCtrl fileMenuCtrl;
         private String currentTimelineFile;
         private MultiList actionList;
+        private ActionProperties actionProperties;
+        private bool allowListPositionChanges = true;
 
         private Button playButton;
 
@@ -31,8 +33,8 @@ namespace Medical.GUI
 
             //Menu
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
-            fileMenu = menuBar.addItem("File", MenuItemType.Popup);
-            MenuCtrl fileMenuCtrl = fileMenu.createItemChild();
+            MenuItem fileMenu = menuBar.addItem("File", MenuItemType.Popup);
+            fileMenuCtrl = fileMenu.createItemChild();
             MenuItem openTimeline = fileMenuCtrl.addItem("Open");
             openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
             MenuItem saveTimeline = fileMenuCtrl.addItem("Save");
@@ -60,10 +62,16 @@ namespace Medical.GUI
             actionList = window.findWidget("ActionList") as MultiList;
             actionList.addColumn("Start", START_COLUMN_WIDTH);
             actionList.addColumn("Action", actionList.Width - START_COLUMN_WIDTH);
+            actionList.ListChangePosition += new MyGUIEvent(actionList_ListChangePosition);
 
             //Play Button
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
+
+            //Action Properties
+            ScrollView actionPropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            actionProperties = new ActionProperties(actionPropertiesScrollView);
+            actionProperties.Visible = false;
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -78,6 +86,12 @@ namespace Medical.GUI
 
         public void setCurrentTimeline(Timeline timeline, String filename)
         {
+            if (currentTimeline != null)
+            {
+                currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
+                currentTimeline.ActionStartTimeChanged -= currentTimeline_ActionStartTimeChanged;
+                currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
+            }
             currentTimelineFile = filename;
             if (currentTimelineFile != null)
             {
@@ -95,7 +109,11 @@ namespace Medical.GUI
                 uint newIndex = actionList.getItemCount() - 1;
                 actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
                 actionList.setSubItemNameAt(1, newIndex, action.TypeName);
+                actionList.setItemDataAt(newIndex, action);
             }
+            currentTimeline.ActionAdded += currentTimeline_ActionAdded;
+            currentTimeline.ActionStartTimeChanged += currentTimeline_ActionStartTimeChanged;
+            currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
         }
 
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
@@ -124,7 +142,7 @@ namespace Medical.GUI
                     setCurrentTimeline(timelineController.openTimeline(openDialog.Path), openDialog.Path);
                 }
             }
-            fileMenu.Visible = false;
+            fileMenuCtrl.Visible = false;
         }
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
@@ -143,7 +161,7 @@ namespace Medical.GUI
             {
                 timelineController.stopPlayback();
             }
-            else
+            else if(currentTimeline != null)
             {
                 timelineController.startPlayback(currentTimeline);
             }
@@ -158,5 +176,52 @@ namespace Medical.GUI
         {
             playButton.Caption = "Stop";
         }
+
+        void actionList_ListChangePosition(Widget source, EventArgs e)
+        {
+            if (allowListPositionChanges)
+            {
+                bool selected = actionList.hasItemSelected();
+                actionProperties.Visible = selected;
+                if (selected)
+                {
+                    actionProperties.CurrentAction = actionList.getItemDataAt(actionList.getIndexSelected()) as TimelineAction;
+                }
+            }
+        }
+
+        #region CurrentTimeline callbacks
+
+        void currentTimeline_ActionStartTimeChanged(object sender, TimelineActionEventArgs e)
+        {
+            uint newIndex = (uint)e.Index;
+            TimelineAction action = e.Action;
+            if (e.IndexChanged)
+            {
+                allowListPositionChanges = false;
+                //Remove old entry
+                actionList.removeItemAt((uint)e.OldIndex);
+                //Create new entry
+                actionList.insertItemAt(newIndex, action.TypeName);
+                actionList.setSubItemNameAt(1, newIndex, action.TypeName);
+                actionList.setItemDataAt(newIndex, action);
+                actionList.setIndexSelected(newIndex);
+                allowListPositionChanges = true;
+            }
+            //Update start time
+            actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
+        }
+
+        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
+        {
+            
+        }
+
+        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
+        {
+            
+        }
+
+        #endregion
     }
 }

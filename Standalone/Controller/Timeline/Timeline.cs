@@ -13,17 +13,30 @@ namespace Medical
         {
             this.Action = action;
             this.Index = index;
+            this.OldIndex = index;
+        }
+
+        public TimelineActionEventArgs(TimelineAction action, int oldIndex, int newIndex)
+        {
+            this.Action = action;
+            this.Index = newIndex;
+            this.OldIndex = oldIndex;
         }
 
         public TimelineAction Action { get; private set; }
 
         public int Index { get; set; }
+
+        public int OldIndex { get; set; }
+
+        public bool IndexChanged { get { return OldIndex != Index; } }
     }
 
     class Timeline : Saveable
     {
         public event EventHandler<TimelineActionEventArgs> ActionAdded;
         public event EventHandler<TimelineActionEventArgs> ActionRemoved;
+        public event EventHandler<TimelineActionEventArgs> ActionStartTimeChanged;
 
         private List<TimelineAction> actions = new List<TimelineAction>();
         private List<TimelineAction> activeActions = new List<TimelineAction>();
@@ -159,6 +172,17 @@ namespace Medical
         public TimelineController TimelineController { get; internal set; }
 
         public IEnumerable<TimelineAction> Actions { get { return actions; } }
+
+        internal void _actionStartChanged(TimelineAction action)
+        {
+            int oldIndex = actions.IndexOf(action);
+            actions.Sort(sort);
+            int newIndex = actions.IndexOf(action);
+            if (ActionStartTimeChanged != null)
+            {
+                ActionStartTimeChanged.Invoke(this, new TimelineActionEventArgs(action, oldIndex, newIndex));
+            }
+        }
 
         private int sort(TimelineAction x, TimelineAction y)
         {
