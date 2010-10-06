@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ActionFilter
+    class ActionFilter : IDisposable
     {
         private ScrollView scrollView;
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(0.0f, 0.0f));
@@ -20,6 +20,11 @@ namespace Medical.GUI
         {
             this.scrollView = scrollView;
             buttonWidth = (int)scrollView.CanvasSize.Width;
+        }
+
+        public void Dispose()
+        {
+            removeAllItems();
         }
 
         public void actionAdded(TimelineAction action)

@@ -16,6 +16,7 @@ namespace Medical.GUI
         private String currentTimelineFile;
         private ActionProperties actionProperties;
         private ActionFilter actionFilter;
+        private ActionView actionView;
 
         private Button playButton;
 
@@ -69,6 +70,17 @@ namespace Medical.GUI
             //Action filter
             ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
             actionFilter = new ActionFilter(actionFilterScrollView);
+
+            //Action view
+            ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
+            actionView = new ActionView(actionViewScrollView);
+        }
+
+        public override void Dispose()
+        {
+            actionFilter.Dispose();
+            actionView.Dispose();
+            base.Dispose();
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -100,9 +112,11 @@ namespace Medical.GUI
             }
             currentTimeline = timeline;
             actionFilter.removeAllItems();
+            actionView.removeAllActions();
             foreach (TimelineAction action in currentTimeline.Actions)
             {
                 actionFilter.actionAdded(action);
+                actionView.addAction(action);
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionStartTimeChanged += currentTimeline_ActionStartTimeChanged;
