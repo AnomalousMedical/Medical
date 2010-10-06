@@ -15,6 +15,7 @@ namespace Medical.GUI
         private MenuCtrl fileMenuCtrl;
         private String currentTimelineFile;
         private ActionProperties actionProperties;
+        private ActionFilter actionFilter;
 
         private Button playButton;
 
@@ -64,6 +65,10 @@ namespace Medical.GUI
             ScrollView actionPropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new ActionProperties(actionPropertiesScrollView);
             actionProperties.Visible = false;
+
+            //Action filter
+            ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            actionFilter = new ActionFilter(actionFilterScrollView);
         }
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
@@ -94,15 +99,11 @@ namespace Medical.GUI
                 window.Caption = "Timeline";
             }
             currentTimeline = timeline;
-            //actionList.removeAllItems();
-            //foreach (TimelineAction action in currentTimeline.Actions)
-            //{
-            //    actionList.addItem(action.TypeName);
-            //    uint newIndex = actionList.getItemCount() - 1;
-            //    actionList.setSubItemNameAt(0, newIndex, action.StartTime.ToString());
-            //    actionList.setSubItemNameAt(1, newIndex, action.TypeName);
-            //    actionList.setItemDataAt(newIndex, action);
-            //}
+            actionFilter.removeAllItems();
+            foreach (TimelineAction action in currentTimeline.Actions)
+            {
+                actionFilter.actionAdded(action);
+            }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionStartTimeChanged += currentTimeline_ActionStartTimeChanged;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;

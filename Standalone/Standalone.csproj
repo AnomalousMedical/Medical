@@ -169,6 +169,8 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
+    <Compile Include="GUI\Timeline\ActionFilter.cs" />
+    <Compile Include="GUI\Timeline\ActionFilterButton.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
@@ -185,7 +187,6 @@
     <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
-    <Compile Include="GUI\Timeline\TimelineTrack.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />
@@ -307,7 +308,6 @@
     <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MoveCameraProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
-    <EmbeddedResource Include="GUI\Timeline\TimelineTrack.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

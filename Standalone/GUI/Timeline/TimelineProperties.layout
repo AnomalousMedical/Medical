@@ -9,11 +9,16 @@
             <Widget type="Button" skin="Button" position="193 1 35 23" align="Left Top" name="AddAction">
                 <Property key="Widget_Caption" value="Add"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollView" position="189 25 483 205" align="Stretch"/>
+            <Widget type="ScrollView" skin="ScrollView" position="189 25 485 205" align="Stretch" name="TimelineScroller">
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            </Widget>
             <Widget type="Button" skin="Button" position="190 231 75 23" align="Left Bottom" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollView" position="3 25 187 232" align="Left VStretch"/>
+            <Widget type="ScrollView" skin="ScrollView" position="3 25 187 232" align="Left VStretch" name="ActionFilter">
+                <Property key="ScrollView_CanvasSize" value="179 200"/>
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            </Widget>
         </Widget>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 918 23" align="HStretch Top" name="MenuBar"/>
         <Widget type="ScrollView" skin="ScrollView" position="680 25 237 260" align="Right VStretch" name="ActionPropertiesScrollView">
