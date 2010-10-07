@@ -11,11 +11,17 @@ namespace Medical.GUI
     {
         private ScrollView scrollView;
         private int pixelsPerSecond = 100;
-        private Dictionary<String, List<ActionViewButton>> buttons = new Dictionary<string, List<ActionViewButton>>();
+        private Dictionary<String, ActionViewRow> rows = new Dictionary<string, ActionViewRow>();
 
         public ActionView(ScrollView scrollView)
         {
             this.scrollView = scrollView;
+            int y = 0;
+            foreach (String actionName in TimelineActionFactory.ActionNames)
+            {
+                rows.Add(actionName, new ActionViewRow(y));
+                y += 10;
+            }
         }
 
         public void Dispose()
@@ -26,7 +32,7 @@ namespace Medical.GUI
         public void addAction(TimelineAction action)
         {
             Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
-            ActionViewButton viewButton = new ActionViewButton(button, action);
+            rows[action.TypeName].addButton(button, action);
             if (button.Right > scrollView.CanvasSize.Width)
             {
                 Size2 canvasSize = scrollView.CanvasSize;
