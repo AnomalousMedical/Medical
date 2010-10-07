@@ -169,6 +169,7 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionFilter.cs" />
     <Compile Include="GUI\Timeline\ActionFilterButton.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />

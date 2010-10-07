@@ -44,9 +44,9 @@ namespace Medical.GUI
 
             //Add action combo box.
             addActionCombo = window.findWidget("AddActionCombo") as ComboBox;
-            foreach (String actionName in TimelineActionFactory.ActionNames)
+            foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                addActionCombo.addItem(actionName);
+                addActionCombo.addItem(actionProp.TypeName);
             }
             addActionCombo.SelectedIndex = 0;
 

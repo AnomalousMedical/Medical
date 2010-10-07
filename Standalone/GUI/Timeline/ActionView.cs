@@ -17,9 +17,9 @@ namespace Medical.GUI
         {
             this.scrollView = scrollView;
             int y = 3;
-            foreach (String actionName in TimelineActionFactory.ActionNames)
+            foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                rows.Add(actionName, new ActionViewRow(y));
+                rows.Add(actionProp.TypeName, new ActionViewRow(y, actionProp.Color));
                 y += 19;
             }
         }

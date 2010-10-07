@@ -8,10 +8,9 @@ using Engine.Saving;
 
 namespace Medical
 {
+    [TimelineActionProperties("Move Camera", 192 / 255f, 80 / 255f, 77 / 255f)]
     class MoveCameraAction : TimelineAction
     {
-        public static readonly String Name = "Move Camera";
-
         public MoveCameraAction(float startTime, String cameraName)
         {
             this.StartTime = startTime;
@@ -47,11 +46,6 @@ namespace Medical
             {
                 return true;
             }
-        }
-
-        public override String TypeName
-        {
-            get { return Name; }
         }
 
         public Vector3 Translation { get; set; }

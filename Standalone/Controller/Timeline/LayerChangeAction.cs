@@ -7,10 +7,9 @@ using Engine.Saving;
 
 namespace Medical
 {
+    [TimelineActionProperties("Change Layers", 155 / 255f, 187 / 255f, 89 / 255f)]
     class LayerChangeAction : TimelineAction
     {
-        public static readonly String Name = "Change Layers";
-
         public LayerChangeAction(String transparencyState, LayerState layerState)
         {
             this.TransparencyState = transparencyState;
@@ -45,11 +44,6 @@ namespace Medical
         public override bool Finished
         {
             get { return true; }
-        }
-
-        public override String TypeName
-        {
-            get { return Name; }
         }
 
         public LayerState LayerState { get; set; }

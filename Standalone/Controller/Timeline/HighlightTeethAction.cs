@@ -7,10 +7,9 @@ using Engine.Saving;
 
 namespace Medical
 {
+    [TimelineActionProperties("Highlight Teeth", 247 / 255f, 150 / 255f, 70 / 255f)]
     class HighlightTeethAction : TimelineAction
     {
-        public static readonly String Name = "Highlight Teeth";
-
         public HighlightTeethAction()
         {
 
@@ -40,11 +39,6 @@ namespace Medical
         public override bool Finished
         {
             get { return true; }
-        }
-
-        public override String TypeName
-        {
-            get { return Name; }
         }
 
         public bool EnableHighlight { get; set; }

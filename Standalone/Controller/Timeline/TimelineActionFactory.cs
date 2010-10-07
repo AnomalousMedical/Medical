@@ -7,18 +7,31 @@ namespace Medical
 {
     class TimelineActionFactory
     {
-        private static Dictionary<String, Type> actions = new Dictionary<String, Type>();
+        private static Dictionary<TimelineActionProperties, Type> actions = new Dictionary<TimelineActionProperties, Type>();
 
         static TimelineActionFactory()
         {
-            actions.Add(ChangeMedicalStateAction.Name, typeof(ChangeMedicalStateAction));
-            actions.Add(HighlightTeethAction.Name, typeof(HighlightTeethAction));
-            actions.Add(LayerChangeAction.Name, typeof(LayerChangeAction));
-            actions.Add(MoveCameraAction.Name, typeof(MoveCameraAction));
-            actions.Add(PlaySequenceAction.Name, typeof(PlaySequenceAction));
+            addType(typeof(ChangeMedicalStateAction));
+            addType(typeof(HighlightTeethAction));
+            addType(typeof(LayerChangeAction));
+            addType(typeof(MoveCameraAction));
+            addType(typeof(PlaySequenceAction));
         }
 
-        public static IEnumerable<String> ActionNames
+        private static void addType(Type type)
+        {
+            try
+            {
+                TimelineActionProperties properties = (TimelineActionProperties)(type.GetCustomAttributes(typeof(TimelineActionProperties), false)[0]);
+                actions.Add(properties, type);
+            }
+            catch (Exception)
+            {
+                throw new Exception("All TimelineActions added to the factory must have a TimelineActionProperties attribute.");
+            }
+        }
+
+        public static IEnumerable<TimelineActionProperties> ActionProperties
         {
             get
             {

@@ -8,10 +8,9 @@ using Engine.Saving;
 
 namespace Medical
 {
+    [TimelineActionProperties("Play Sequence", 31 / 255f, 73 / 255f, 125 / 255f)]
     class PlaySequenceAction : TimelineAction
     {
-        public static readonly String Name = "Play Sequence";
-
         private bool finished = false;
 
         public PlaySequenceAction()
@@ -59,11 +58,6 @@ namespace Medical
             {
                 return finished;
             }
-        }
-
-        public override String TypeName
-        {
-            get { return Name; }
         }
 
         public float EndTime { get; set; }

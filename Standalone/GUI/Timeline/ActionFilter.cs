@@ -21,13 +21,15 @@ namespace Medical.GUI
             this.scrollView = scrollView;
             buttonWidth = (int)scrollView.CanvasSize.Width;
 
-            foreach (String actionName in TimelineActionFactory.ActionNames)
+            foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
+                String actionName = actionProp.TypeName;
                 Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, buttonWidth, buttonHeight, Align.Default, "") as Button;
                 ActionFilterButton filterButton = new ActionFilterButton(button, actionName);
                 flowLayout.addChild(filterButton.Layout);
                 scrollView.CanvasSize = flowLayout.DesiredSize;
                 filterButtons.Add(actionName, filterButton);
+                button.TextColor = actionProp.Color;
             }
         }
 
