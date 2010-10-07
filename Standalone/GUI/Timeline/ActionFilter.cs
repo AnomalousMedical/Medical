@@ -20,37 +20,20 @@ namespace Medical.GUI
         {
             this.scrollView = scrollView;
             buttonWidth = (int)scrollView.CanvasSize.Width;
+
+            foreach (String actionName in TimelineActionFactory.ActionNames)
+            {
+                Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, buttonWidth, buttonHeight, Align.Default, "") as Button;
+                ActionFilterButton filterButton = new ActionFilterButton(button, actionName);
+                flowLayout.addChild(filterButton.Layout);
+                scrollView.CanvasSize = flowLayout.DesiredSize;
+                filterButtons.Add(actionName, filterButton);
+            }
         }
 
         public void Dispose()
         {
-            removeAllItems();
-        }
-
-        public void actionAdded(TimelineAction action)
-        {
-            if (!filterButtons.ContainsKey(action.TypeName))
-            {
-                Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, buttonWidth, buttonHeight, Align.Default, "") as Button;
-                ActionFilterButton filterButton = new ActionFilterButton(button, action.TypeName);
-                flowLayout.addChild(filterButton.Layout);
-                scrollView.CanvasSize = flowLayout.DesiredSize;
-                filterButtons.Add(action.TypeName, filterButton);
-            }
-        }
-
-        public void removeAllItems()
-        {
-            flowLayout.SuppressLayout = true;
-            foreach (ActionFilterButton filterButton in filterButtons.Values)
-            {
-                flowLayout.removeChild(filterButton.Layout);
-                filterButton.Dispose();
-            }
-            filterButtons.Clear();
-            flowLayout.SuppressLayout = false;
-            flowLayout.layout();
-            scrollView.CanvasSize = flowLayout.DesiredSize;
+            
         }
     }
 }

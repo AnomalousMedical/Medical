@@ -16,11 +16,11 @@ namespace Medical.GUI
         public ActionView(ScrollView scrollView)
         {
             this.scrollView = scrollView;
-            int y = 0;
+            int y = 3;
             foreach (String actionName in TimelineActionFactory.ActionNames)
             {
                 rows.Add(actionName, new ActionViewRow(y));
-                y += 10;
+                y += 19;
             }
         }
 
@@ -37,6 +37,12 @@ namespace Medical.GUI
             {
                 Size2 canvasSize = scrollView.CanvasSize;
                 canvasSize.Width = button.Right;
+                scrollView.CanvasSize = canvasSize;
+            }
+            if (button.Bottom > scrollView.CanvasSize.Height)
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Height = button.Bottom;
                 scrollView.CanvasSize = canvasSize;
             }
         }

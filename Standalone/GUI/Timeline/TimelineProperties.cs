@@ -111,11 +111,9 @@ namespace Medical.GUI
                 window.Caption = "Timeline";
             }
             currentTimeline = timeline;
-            actionFilter.removeAllItems();
             actionView.removeAllActions();
             foreach (TimelineAction action in currentTimeline.Actions)
             {
-                actionFilter.actionAdded(action);
                 actionView.addAction(action);
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
