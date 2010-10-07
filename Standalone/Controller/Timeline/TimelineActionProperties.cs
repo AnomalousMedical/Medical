@@ -33,5 +33,7 @@ namespace Medical
                 return typeName;
             }
         }
+
+        public Type GUIType { get; set; }
     }
 }

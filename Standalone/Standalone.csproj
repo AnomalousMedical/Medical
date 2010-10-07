@@ -173,6 +173,7 @@
     <Compile Include="GUI\Timeline\ActionFilter.cs" />
     <Compile Include="GUI\Timeline\ActionFilterButton.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />
+    <Compile Include="GUI\Timeline\ActionProperties\ActionPropertiesPanel.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionView.cs" />
     <Compile Include="GUI\Timeline\ActionViewButton.cs" />

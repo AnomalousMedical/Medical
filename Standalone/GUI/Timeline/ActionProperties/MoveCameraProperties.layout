@@ -1,3 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
+    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 193" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="1 1 74 15">
+            <Property key="Widget_Caption" value="Translation"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="76 1 132 18" align="HStretch Top" name="TranslationEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="1 21 74 15">
+            <Property key="Widget_Caption" value="Look At"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="76 21 132 18" name="LookAtEdit"/>
+        <Widget type="Button" skin="Button" position="3 41 88 24" name="UseCurrentButton">
+            <Property key="Widget_Caption" value="Use Current"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="3 68 88 24" name="PreviewButton">
+            <Property key="Widget_Caption" value="Preview"/>
+        </Widget>
+    </Widget>
 </MyGUI>
