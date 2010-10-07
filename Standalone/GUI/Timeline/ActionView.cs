@@ -22,7 +22,7 @@ namespace Medical.GUI
             int y = 3;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                rows.Add(actionProp.TypeName, new ActionViewRow(y, actionProp.Color));
+                rows.Add(actionProp.TypeName, new ActionViewRow(y, pixelsPerSecond, actionProp.Color));
                 y += 19;
             }
         }
@@ -66,7 +66,7 @@ namespace Medical.GUI
                 currentButton.StateCheck = false;
             }
             currentButton = sender as ActionViewButton;
-            actionProperties.CurrentAction = currentButton.Action;
+            actionProperties.CurrentAction = currentButton;
             actionProperties.Visible = true;
             currentButton.StateCheck = true;
         }

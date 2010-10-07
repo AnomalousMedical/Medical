@@ -9,7 +9,7 @@ namespace Medical.GUI
     class ActionProperties
     {
         private ScrollView actionPropertiesScroll;
-        private TimelineAction action;
+        private ActionViewButton action;
 
         private NumericEdit startTime;
         private NumericEdit duration;
@@ -24,7 +24,7 @@ namespace Medical.GUI
             duration.ValueChanged += new MyGUIEvent(duration_ValueChanged);
         }
 
-        public TimelineAction CurrentAction
+        public ActionViewButton CurrentAction
         {
             get
             {
@@ -71,7 +71,6 @@ namespace Medical.GUI
             if (action != null)
             {
                 action.StartTime = startTime.FloatValue;
-                action._sortAction();
             }
         }
     }

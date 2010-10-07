@@ -11,12 +11,14 @@ namespace Medical.GUI
     {
         private List<ActionViewButton> buttons = new List<ActionViewButton>();
         private int yPosition;
+        private int pixelsPerSecond;
         private Color color;
 
-        public ActionViewRow(int yPosition, Color color)
+        public ActionViewRow(int yPosition, int pixelsPerSecond, Color color)
         {
             this.yPosition = yPosition;
             this.color = color;
+            this.pixelsPerSecond = pixelsPerSecond;
         }
 
         public void Dispose()
@@ -29,7 +31,7 @@ namespace Medical.GUI
 
         public ActionViewButton addButton(Button button, TimelineAction action)
         {
-            ActionViewButton viewButton = new ActionViewButton(button, action);
+            ActionViewButton viewButton = new ActionViewButton(pixelsPerSecond, button, action);
             buttons.Add(viewButton);
             button.setPosition(button.Left, yPosition);
             button.setColour(color);
