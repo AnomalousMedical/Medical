@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ActionViewRow
+    class ActionViewRow : IDisposable
     {
         private List<ActionViewButton> buttons = new List<ActionViewButton>();
         private int yPosition;
@@ -19,12 +19,21 @@ namespace Medical.GUI
             this.color = color;
         }
 
-        public void addButton(Button button, TimelineAction action)
+        public void Dispose()
+        {
+            foreach (ActionViewButton button in buttons)
+            {
+                button.Dispose();
+            }
+        }
+
+        public ActionViewButton addButton(Button button, TimelineAction action)
         {
             ActionViewButton viewButton = new ActionViewButton(button, action);
             buttons.Add(viewButton);
             button.setPosition(button.Left, yPosition);
             button.setColour(color);
+            return viewButton;
         }
     }
 }

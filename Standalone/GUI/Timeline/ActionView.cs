@@ -12,10 +12,13 @@ namespace Medical.GUI
         private ScrollView scrollView;
         private int pixelsPerSecond = 100;
         private Dictionary<String, ActionViewRow> rows = new Dictionary<string, ActionViewRow>();
+        private ActionProperties actionProperties;
+        private ActionViewButton currentButton;
 
-        public ActionView(ScrollView scrollView)
+        public ActionView(ScrollView scrollView, ActionProperties actionProperties)
         {
             this.scrollView = scrollView;
+            this.actionProperties = actionProperties;
             int y = 3;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
@@ -26,13 +29,17 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            removeAllActions();
+            foreach (ActionViewRow row in rows.Values)
+            {
+                row.Dispose();
+            }
         }
 
         public void addAction(TimelineAction action)
         {
             Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
-            rows[action.TypeName].addButton(button, action);
+            ActionViewButton actionButton = rows[action.TypeName].addButton(button, action);
+            actionButton.Clicked += new EventHandler(actionButton_Clicked);
             if (button.Right > scrollView.CanvasSize.Width)
             {
                 Size2 canvasSize = scrollView.CanvasSize;
@@ -50,6 +57,18 @@ namespace Medical.GUI
         public void removeAllActions()
         {
 
+        }
+
+        void actionButton_Clicked(object sender, EventArgs e)
+        {
+            if (currentButton != null)
+            {
+                currentButton.StateCheck = false;
+            }
+            currentButton = sender as ActionViewButton;
+            actionProperties.CurrentAction = currentButton.Action;
+            actionProperties.Visible = true;
+            currentButton.StateCheck = true;
         }
     }
 }

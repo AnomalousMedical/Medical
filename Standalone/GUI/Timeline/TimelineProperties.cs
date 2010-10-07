@@ -73,7 +73,7 @@ namespace Medical.GUI
 
             //Action view
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
-            actionView = new ActionView(actionViewScrollView);
+            actionView = new ActionView(actionViewScrollView, actionProperties);
         }
 
         public override void Dispose()
