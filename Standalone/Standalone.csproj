@@ -175,6 +175,7 @@
     <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionPropertiesPanel.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
+    <Compile Include="GUI\Timeline\ActionProperties\HighlightTeethProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionView.cs" />
     <Compile Include="GUI\Timeline\ActionViewButton.cs" />
@@ -313,6 +314,7 @@
     <EmbeddedResource Include="Controller\StatePicker\StateWizardButtons.layout" />
     <EmbeddedResource Include="Controller\StatePicker\WizardIconPanel.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />
+    <EmbeddedResource Include="GUI\Timeline\ActionProperties\HighlightTeethProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MoveCameraProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />

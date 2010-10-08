@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Highlight Teeth", 247 / 255f, 150 / 255f, 70 / 255f)]
+    [TimelineActionProperties("Highlight Teeth", 247 / 255f, 150 / 255f, 70 / 255f, GUIType=typeof(Medical.GUI.HighlightTeethProperties))]
     class HighlightTeethAction : TimelineAction
     {
         public HighlightTeethAction()
