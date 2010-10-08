@@ -12,13 +12,13 @@ namespace Medical.GUI
         private ScrollView scrollView;
         private int pixelsPerSecond = 100;
         private Dictionary<String, ActionViewRow> rows = new Dictionary<string, ActionViewRow>();
-        private ActionProperties actionProperties;
         private ActionViewButton currentButton;
 
-        public ActionView(ScrollView scrollView, ActionProperties actionProperties)
+        public event EventHandler ActiveActionChanged;
+
+        public ActionView(ScrollView scrollView)
         {
             this.scrollView = scrollView;
-            this.actionProperties = actionProperties;
             int y = 3;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
@@ -59,16 +59,30 @@ namespace Medical.GUI
 
         }
 
+        public ActionViewButton CurrentAction
+        {
+            get
+            {
+                return currentButton;
+            }
+            set
+            {
+                if (currentButton != null)
+                {
+                    currentButton.StateCheck = false;
+                }
+                currentButton = value;
+                currentButton.StateCheck = true;
+                if (ActiveActionChanged != null)
+                {
+                    ActiveActionChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
+
         void actionButton_Clicked(object sender, EventArgs e)
         {
-            if (currentButton != null)
-            {
-                currentButton.StateCheck = false;
-            }
-            currentButton = sender as ActionViewButton;
-            actionProperties.CurrentAction = currentButton;
-            actionProperties.Visible = true;
-            currentButton.StateCheck = true;
+            CurrentAction = sender as ActionViewButton;
         }
     }
 }

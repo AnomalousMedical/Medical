@@ -74,7 +74,8 @@ namespace Medical.GUI
 
             //Action view
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
-            actionView = new ActionView(actionViewScrollView, actionProperties);
+            actionView = new ActionView(actionViewScrollView);
+            actionView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
         }
 
         public override void Dispose()
@@ -182,6 +183,20 @@ namespace Medical.GUI
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
+        }
+
+        void actionView_ActiveActionChanged(object sender, EventArgs e)
+        {
+            if (actionView.CurrentAction != null)
+            {
+                actionProperties.CurrentAction = actionView.CurrentAction;
+                actionProperties.Visible = true;
+            }
+            else
+            {
+                actionProperties.CurrentAction = null;
+                actionProperties.Visible = false;
+            }
         }
 
         #region CurrentTimeline callbacks
