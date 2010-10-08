@@ -101,7 +101,6 @@ namespace Medical.GUI
             if (currentTimeline != null)
             {
                 currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
-                currentTimeline.ActionStartTimeChanged -= currentTimeline_ActionStartTimeChanged;
                 currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
             }
             currentTimelineFile = filename;
@@ -120,7 +119,6 @@ namespace Medical.GUI
                 actionView.addAction(action);
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
-            currentTimeline.ActionStartTimeChanged += currentTimeline_ActionStartTimeChanged;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
         }
 

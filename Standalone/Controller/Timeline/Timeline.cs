@@ -36,7 +36,6 @@ namespace Medical
     {
         public event EventHandler<TimelineActionEventArgs> ActionAdded;
         public event EventHandler<TimelineActionEventArgs> ActionRemoved;
-        public event EventHandler<TimelineActionEventArgs> ActionStartTimeChanged;
 
         private List<TimelineAction> actions = new List<TimelineAction>();
         private List<TimelineAction> activeActions = new List<TimelineAction>();
@@ -108,6 +107,15 @@ namespace Medical
 
         public void stop()
         {
+            //Stop any running actions in case this was done during playback
+            if (activeActions.Count != 0)
+            {
+                Clock clock = new Clock();
+                foreach (TimelineAction action in activeActions)
+                {
+                    action.stopped(currentTime, clock);
+                }
+            }
             foreach (TimelineInstantAction action in postActions)
             {
                 action.doAction();
@@ -175,13 +183,7 @@ namespace Medical
 
         internal void _actionStartChanged(TimelineAction action)
         {
-            int oldIndex = actions.IndexOf(action);
             actions.Sort(sort);
-            int newIndex = actions.IndexOf(action);
-            if (ActionStartTimeChanged != null)
-            {
-                ActionStartTimeChanged.Invoke(this, new TimelineActionEventArgs(action, oldIndex, newIndex));
-            }
         }
 
         private int sort(TimelineAction x, TimelineAction y)
