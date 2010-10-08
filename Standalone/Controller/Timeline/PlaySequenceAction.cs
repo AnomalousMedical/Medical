@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Play Sequence", 31 / 255f, 73 / 255f, 125 / 255f)]
+    [TimelineActionProperties("Play Sequence", 31 / 255f, 73 / 255f, 125 / 255f, GUIType=typeof(Medical.GUI.PlaySequenceProperties))]
     class PlaySequenceAction : TimelineAction
     {
         private bool finished = false;
@@ -50,6 +50,21 @@ namespace Medical
         {
             finished = false;
             base.reset();
+        }
+
+        internal void preview()
+        {
+            TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
+            TimelineController.MovementSequenceController.playCurrentSequence();
+        }
+
+        internal void captureCurrent()
+        {
+            MovementSequence sequence = TimelineController.MovementSequenceController.CurrentSequence;
+            if (sequence != null)
+            {
+                MovementSequence = sequence;
+            }
         }
 
         public override bool Finished
