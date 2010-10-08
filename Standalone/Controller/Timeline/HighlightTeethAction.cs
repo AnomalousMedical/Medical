@@ -11,6 +11,7 @@ namespace Medical
     class HighlightTeethAction : TimelineAction
     {
         public HighlightTeethAction()
+            :this(false, 0.0f)
         {
 
         }

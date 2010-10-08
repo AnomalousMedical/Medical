@@ -11,14 +11,16 @@ namespace Medical
     class ChangeMedicalStateAction : TimelineAction
     {
         public ChangeMedicalStateAction()
+            :this(null, 0.0f)
         {
-            Duration = 1.0f;
+            
         }
 
         public ChangeMedicalStateAction(MedicalState state, float startTime)
         {
             State = state;
             this.StartTime = StartTime;
+            Duration = 1.0f;
         }
 
         public override void started(float timelineTime, Clock clock)

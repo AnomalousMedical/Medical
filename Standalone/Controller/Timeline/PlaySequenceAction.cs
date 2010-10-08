@@ -14,6 +14,7 @@ namespace Medical
         private bool finished = false;
 
         public PlaySequenceAction()
+            :this(null, 0.0f, 1.0f)
         {
 
         }

@@ -10,6 +10,12 @@ namespace Medical
     [TimelineActionProperties("Change Layers", 155 / 255f, 187 / 255f, 89 / 255f, GUIType=typeof(Medical.GUI.LayerChangeProperties))]
     class LayerChangeAction : TimelineAction
     {
+        public LayerChangeAction()
+            : this(null, null)
+        {
+
+        }
+
         public LayerChangeAction(String transparencyState, LayerState layerState)
         {
             this.TransparencyState = transparencyState;

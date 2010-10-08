@@ -31,6 +31,11 @@ namespace Medical
             }
         }
 
+        public static TimelineAction createAction(TimelineActionProperties key)
+        {
+            return (TimelineAction)Activator.CreateInstance(actions[key]);
+        }
+
         public static IEnumerable<TimelineActionProperties> ActionProperties
         {
             get

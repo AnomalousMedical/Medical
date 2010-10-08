@@ -12,6 +12,12 @@ namespace Medical
     [TimelineActionProperties("Move Camera", 192 / 255f, 80 / 255f, 77 / 255f, GUIType=typeof(Medical.GUI.MoveCameraProperties))]
     class MoveCameraAction : TimelineAction
     {
+        public MoveCameraAction()
+            :this(0.0f, null)
+        {
+
+        }
+
         public MoveCameraAction(float startTime, String cameraName)
         {
             this.StartTime = startTime;
@@ -54,6 +60,7 @@ namespace Medical
             SceneViewWindow currentWindow = TimelineController.SceneViewController.ActiveWindow;
             Translation = currentWindow.Translation;
             LookAt = currentWindow.LookAt;
+            CameraName = currentWindow.Name;
         }
 
         public void preview()

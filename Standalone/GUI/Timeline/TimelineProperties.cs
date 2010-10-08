@@ -47,6 +47,7 @@ namespace Medical.GUI
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
                 addActionCombo.addItem(actionProp.TypeName);
+                addActionCombo.setItemDataAt(addActionCombo.getItemCount() - 1, actionProp);
             }
             addActionCombo.SelectedIndex = 0;
 
@@ -158,7 +159,7 @@ namespace Medical.GUI
 
         void addActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-
+            currentTimeline.addAction(TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex)));
         }
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)

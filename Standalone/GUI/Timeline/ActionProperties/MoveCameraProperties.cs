@@ -13,6 +13,7 @@ namespace Medical.GUI
         private Edit translationEdit;
         private Edit lookAtEdit;
         private Color defaultColor;
+        private StaticText cameraText;
 
         public MoveCameraProperties(Widget parent)
             :base(parent, "Medical.GUI.Timeline.ActionProperties.MoveCameraProperties.layout")
@@ -28,6 +29,8 @@ namespace Medical.GUI
 
             Button previewButton = mainWidget.findWidget("PreviewButton") as Button;
             previewButton.MouseButtonClick += new MyGUIEvent(previewButton_MouseButtonClick);
+
+            cameraText = mainWidget.findWidget("CameraText") as StaticText;
         }
 
         public override TimelineAction CurrentAction
@@ -43,6 +46,7 @@ namespace Medical.GUI
                 {
                     translationEdit.Caption = moveAction.Translation.ToString();
                     lookAtEdit.Caption = moveAction.LookAt.ToString();
+                    cameraText.Caption = moveAction.CameraName;
                 }
             }
         }
@@ -52,6 +56,7 @@ namespace Medical.GUI
             moveAction.captureFromScene();
             translationEdit.Caption = moveAction.Translation.ToString();
             lookAtEdit.Caption = moveAction.LookAt.ToString();
+            cameraText.Caption = moveAction.CameraName;
         }
 
         void previewButton_MouseButtonClick(Widget source, EventArgs e)
