@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Layers", 155 / 255f, 187 / 255f, 89 / 255f)]
+    [TimelineActionProperties("Change Layers", 155 / 255f, 187 / 255f, 89 / 255f, GUIType=typeof(Medical.GUI.LayerChangeProperties))]
     class LayerChangeAction : TimelineAction
     {
         public LayerChangeAction(String transparencyState, LayerState layerState)
@@ -38,7 +38,21 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            
+
+        }
+
+        public void capture()
+        {
+            TransparencyState = TransparencyController.ActiveTransparencyState;
+            LayerState.captureState();
+        }
+
+        public void preview()
+        {
+            String currentTransparencyState = TransparencyController.ActiveTransparencyState;
+            TransparencyController.ActiveTransparencyState = TransparencyState;
+            LayerState.apply(ChangeMultiplier);
+            TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 
         public override bool Finished
