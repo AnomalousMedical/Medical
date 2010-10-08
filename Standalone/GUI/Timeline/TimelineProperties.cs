@@ -95,6 +95,7 @@ namespace Medical.GUI
 
         public void setCurrentTimeline(Timeline timeline, String filename)
         {
+            timelineController.EditingTimeline = timeline;
             if (currentTimeline != null)
             {
                 currentTimeline.ActionAdded -= currentTimeline_ActionAdded;

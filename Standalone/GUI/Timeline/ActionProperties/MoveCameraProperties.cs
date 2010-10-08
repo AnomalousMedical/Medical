@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -17,6 +18,9 @@ namespace Medical.GUI
         {
             translationEdit = mainWidget.findWidget("TranslationEdit") as Edit;
             lookAtEdit = mainWidget.findWidget("LookAtEdit") as Edit;
+
+            Button useCurrentButton = mainWidget.findWidget("UseCurrentButton") as Button;
+            useCurrentButton.MouseButtonClick += new MyGUIEvent(useCurrentButton_MouseButtonClick);
         }
 
         public override TimelineAction CurrentAction
@@ -34,6 +38,13 @@ namespace Medical.GUI
                     lookAtEdit.Caption = moveAction.LookAt.ToString();
                 }
             }
+        }
+
+        void useCurrentButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            moveAction.captureFromScene();
+            translationEdit.Caption = moveAction.Translation.ToString();
+            lookAtEdit.Caption = moveAction.LookAt.ToString();
         }
     }
 }

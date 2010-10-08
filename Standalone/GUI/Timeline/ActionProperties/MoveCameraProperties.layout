@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 193" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="1 68 211 97" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="1 1 74 15">
             <Property key="Widget_Caption" value="Translation"/>
         </Widget>

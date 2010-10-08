@@ -19,6 +19,7 @@ namespace Medical
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
+        private Timeline editingTimeline;
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
         private bool updating = false;
@@ -100,10 +101,18 @@ namespace Medical
                 }
                 activeTimeline.stop();
                 mainTimer.removeFixedUpdateListener(this);
-                activeTimeline.TimelineController = null;
+                if (activeTimeline != editingTimeline)
+                {
+                    activeTimeline.TimelineController = null;
+                }
                 activeTimeline = null;
                 updating = false;
             }
+        }
+
+        public void openNewScene(String filename)
+        {
+            standaloneController.openNewScene(filename);
         }
 
         #region UpdateListener Members
@@ -129,9 +138,29 @@ namespace Medical
 
         #endregion
 
-        public void openNewScene(String filename)
+        /// <summary>
+        /// Set a timeline as the current editing target. This will give the
+        /// timeline access to the controller and will keep the controller from
+        /// being nulled out if the timeline is played.
+        /// </summary>
+        public Timeline EditingTimeline
         {
-            standaloneController.openNewScene(filename);
+            get
+            {
+                return editingTimeline;
+            }
+            set
+            {
+                if (editingTimeline != null)
+                {
+                    editingTimeline.TimelineController = null;
+                }
+                editingTimeline = value;
+                if (editingTimeline != null)
+                {
+                    editingTimeline.TimelineController = this;
+                }
+            }
         }
 
         public SceneViewController SceneViewController

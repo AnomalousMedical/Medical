@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine;
 using Engine.Saving;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -46,6 +47,13 @@ namespace Medical
             {
                 return true;
             }
+        }
+
+        public void captureFromScene()
+        {
+            SceneViewWindow currentWindow = TimelineController.SceneViewController.ActiveWindow;
+            Translation = currentWindow.Translation;
+            LookAt = currentWindow.LookAt;
         }
 
         public Vector3 Translation { get; set; }
