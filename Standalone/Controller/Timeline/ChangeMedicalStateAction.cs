@@ -7,12 +7,12 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Medical State", 128 / 255f, 0 / 255f, 255 / 255f)]
+    [TimelineActionProperties("Change Medical State", 128 / 255f, 0 / 255f, 255 / 255f, GUIType=typeof(Medical.GUI.ChangeMedicalStateProperties))]
     class ChangeMedicalStateAction : TimelineAction
     {
         public ChangeMedicalStateAction()
         {
-
+            Duration = 1.0f;
         }
 
         public ChangeMedicalStateAction(MedicalState state, float startTime)
@@ -23,7 +23,7 @@ namespace Medical
 
         public override void started(float timelineTime, Clock clock)
         {
-            TimelineController.MedicalStateController.directBlend(State, 1.0f);
+            TimelineController.MedicalStateController.directBlend(State, Duration);
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -34,6 +34,16 @@ namespace Medical
         public override void update(float timelineTime, Clock clock)
         {
             
+        }
+
+        public void captureCurrent()
+        {
+            State = TimelineController.MedicalStateController.createState("");
+        }
+
+        public void preview()
+        {
+            TimelineController.MedicalStateController.directBlend(State, 1.0f);
         }
 
         public override bool Finished
