@@ -35,6 +35,8 @@ namespace Medical.GUI
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
             MenuItem fileMenu = menuBar.addItem("File", MenuItemType.Popup);
             fileMenuCtrl = fileMenu.createItemChild();
+            MenuItem newTimeline = fileMenuCtrl.addItem("New");
+            newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
             MenuItem openTimeline = fileMenuCtrl.addItem("Open");
             openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
             MenuItem saveTimeline = fileMenuCtrl.addItem("Save");
@@ -76,6 +78,8 @@ namespace Medical.GUI
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
             actionView = new ActionView(actionViewScrollView);
             actionView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
+
+            createNewTimeline();
         }
 
         public override void Dispose()
@@ -122,9 +126,56 @@ namespace Medical.GUI
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
         }
 
+        public void createNewTimeline()
+        {
+            Timeline timeline = new Timeline();
+            setCurrentTimeline(timeline);
+        }
+
+        #region Action Management
+
+        void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            currentTimeline.removeAction(actionView.CurrentAction.Action);
+        }
+
+        void addActionButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            currentTimeline.addAction(TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex)));
+        }
+
+        void actionView_ActiveActionChanged(object sender, EventArgs e)
+        {
+            if (actionView.CurrentAction != null)
+            {
+                actionProperties.CurrentAction = actionView.CurrentAction;
+                actionProperties.Visible = true;
+            }
+            else
+            {
+                actionProperties.CurrentAction = null;
+                actionProperties.Visible = false;
+            }
+        }
+
+        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
+        {
+            ActionViewButton button = actionView.addAction(e.Action);
+            actionView.CurrentAction = button;
+        }
+
+        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
+        {
+            actionView.removeAction(e.Action);
+        }
+
+        #endregion
+
+        #region File Menu
+
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+
         }
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
@@ -151,15 +202,14 @@ namespace Medical.GUI
             fileMenuCtrl.Visible = false;
         }
 
-        void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
+        void newTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            currentTimeline.removeAction(actionView.CurrentAction.Action);
+            createNewTimeline();
         }
 
-        void addActionButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            currentTimeline.addAction(TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex)));
-        }
+        #endregion
+
+        #region Playback
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -167,7 +217,7 @@ namespace Medical.GUI
             {
                 timelineController.stopPlayback();
             }
-            else if(currentTimeline != null)
+            else if (currentTimeline != null)
             {
                 timelineController.startPlayback(currentTimeline);
             }
@@ -181,33 +231,6 @@ namespace Medical.GUI
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
-        }
-
-        void actionView_ActiveActionChanged(object sender, EventArgs e)
-        {
-            if (actionView.CurrentAction != null)
-            {
-                actionProperties.CurrentAction = actionView.CurrentAction;
-                actionProperties.Visible = true;
-            }
-            else
-            {
-                actionProperties.CurrentAction = null;
-                actionProperties.Visible = false;
-            }
-        }
-
-        #region CurrentTimeline callbacks
-
-        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
-        {
-            ActionViewButton button = actionView.addAction(e.Action);
-            actionView.CurrentAction = button;
-        }
-
-        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
-        {
-            actionView.removeAction(e.Action);
         }
 
         #endregion

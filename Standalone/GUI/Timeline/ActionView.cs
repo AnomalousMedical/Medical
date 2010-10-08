@@ -68,7 +68,13 @@ namespace Medical.GUI
 
         public void removeAllActions()
         {
-
+            foreach (ActionViewRow row in rows.Values)
+            {
+                row.removeAllActions();
+            }
+            currentButton = null;
+            CurrentAction = null;
+            scrollView.CanvasSize = new Size2(0.0f, 0.0f);
         }
 
         public ActionViewButton CurrentAction

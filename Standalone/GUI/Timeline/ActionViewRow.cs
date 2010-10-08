@@ -56,5 +56,14 @@ namespace Medical.GUI
             }
             return removeMe;
         }
+
+        internal void removeAllActions()
+        {
+            foreach (ActionViewButton button in buttons)
+            {
+                button.Dispose();
+            }
+            buttons.Clear();
+        }
     }
 }
