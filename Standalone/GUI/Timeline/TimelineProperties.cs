@@ -193,7 +193,7 @@ namespace Medical.GUI
 
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
-            
+            actionView.addAction(e.Action);
         }
 
         void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
