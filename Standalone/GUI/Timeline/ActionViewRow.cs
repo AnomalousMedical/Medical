@@ -37,5 +37,24 @@ namespace Medical.GUI
             button.setColour(color);
             return viewButton;
         }
+
+        public ActionViewButton removeButton(TimelineAction action)
+        {
+            ActionViewButton removeMe = null;
+            foreach (ActionViewButton button in buttons)
+            {
+                if (button.Action == action)
+                {
+                    removeMe = button;
+                    break;
+                }
+            }
+            if (removeMe != null)
+            {
+                buttons.Remove(removeMe);
+                removeMe.Dispose();
+            }
+            return removeMe;
+        }
     }
 }

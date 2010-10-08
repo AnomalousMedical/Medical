@@ -153,7 +153,7 @@ namespace Medical.GUI
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            currentTimeline.removeAction(actionView.CurrentAction.Action);
         }
 
         void addActionButton_MouseButtonClick(Widget source, EventArgs e)
@@ -199,19 +199,15 @@ namespace Medical.GUI
 
         #region CurrentTimeline callbacks
 
-        void currentTimeline_ActionStartTimeChanged(object sender, TimelineActionEventArgs e)
-        {
-            
-        }
-
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
-            actionView.addAction(e.Action);
+            ActionViewButton button = actionView.addAction(e.Action);
+            actionView.CurrentAction = button;
         }
 
         void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
         {
-            
+            actionView.removeAction(e.Action);
         }
 
         #endregion

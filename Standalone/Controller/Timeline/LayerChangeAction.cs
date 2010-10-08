@@ -11,9 +11,9 @@ namespace Medical
     class LayerChangeAction : TimelineAction
     {
         public LayerChangeAction()
-            : this(null, null)
+            : this(null, new LayerState(""))
         {
-
+            LayerState.captureState();
         }
 
         public LayerChangeAction(String transparencyState, LayerState layerState)

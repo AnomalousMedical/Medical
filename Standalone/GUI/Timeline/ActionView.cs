@@ -35,7 +35,7 @@ namespace Medical.GUI
             }
         }
 
-        public void addAction(TimelineAction action)
+        public ActionViewButton addAction(TimelineAction action)
         {
             Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
             ActionViewButton actionButton = rows[action.TypeName].addButton(button, action);
@@ -51,6 +51,18 @@ namespace Medical.GUI
                 Size2 canvasSize = scrollView.CanvasSize;
                 canvasSize.Height = button.Bottom;
                 scrollView.CanvasSize = canvasSize;
+            }
+            return actionButton;
+        }
+
+        public void removeAction(TimelineAction action)
+        {
+            ActionViewButton button = rows[action.TypeName].removeButton(action);
+            if (button == CurrentAction)
+            {
+                //Null the internal property first as you do not want to toggle the state of the button that has already been disposed.
+                currentButton = null;
+                CurrentAction = null;
             }
         }
 
@@ -72,7 +84,10 @@ namespace Medical.GUI
                     currentButton.StateCheck = false;
                 }
                 currentButton = value;
-                currentButton.StateCheck = true;
+                if (currentButton != null)
+                {
+                    currentButton.StateCheck = true;
+                }
                 if (ActiveActionChanged != null)
                 {
                     ActiveActionChanged.Invoke(this, EventArgs.Empty);
