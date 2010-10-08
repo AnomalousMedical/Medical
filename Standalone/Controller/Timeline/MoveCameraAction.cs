@@ -56,6 +56,11 @@ namespace Medical
             LookAt = currentWindow.LookAt;
         }
 
+        public void preview()
+        {
+            TimelineController.SceneViewController.ActiveWindow.setPosition(Translation, LookAt);
+        }
+
         public Vector3 Translation { get; set; }
 
         public Vector3 LookAt { get; set; }
