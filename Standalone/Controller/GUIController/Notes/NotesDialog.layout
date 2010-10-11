@@ -23,8 +23,8 @@
         <Widget type="StaticText" skin="StaticText" position="3 120 47 14">
             <Property key="Widget_Caption" value="Notes"/>
         </Widget>
-        <Widget type="Widget" skin="CustomPanel" position="3 138 210 464" align="Stretch">
-            <Widget type="Edit" skin="WordWrap" position="0 0 210 464" align="Stretch" name="Notes/NotesText">
+        <Widget type="Widget" skin="CustomPanel" position="3 138 210 236" align="Stretch">
+            <Widget type="Edit" skin="WordWrap" position="0 0 210 236" align="Stretch" name="Notes/NotesText">
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Edit_MaxTextLength" value="2900"/>
             </Widget>
