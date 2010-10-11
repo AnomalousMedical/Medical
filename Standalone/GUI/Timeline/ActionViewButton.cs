@@ -11,6 +11,8 @@ namespace Medical.GUI
         private Button button;
         private TimelineAction action;
         private int pixelsPerSecond;
+        private float dragStartPos;
+        private float dragStartTime;
 
         public event EventHandler Clicked;
 
@@ -20,7 +22,30 @@ namespace Medical.GUI
             this.action = action;
             this.button = button;
             button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
+            button.MouseDrag += new MyGUIEvent(button_MouseDrag);
+            button.MouseButtonPressed += new MyGUIEvent(button_MouseButtonPressed);
             setDurationWidth();
+        }
+
+        void button_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = e as MouseEventArgs;
+            if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON0)
+            {
+                dragStartPos = me.Position.x;
+                dragStartTime = StartTime;
+            }
+        }
+
+        void button_MouseDrag(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = e as MouseEventArgs;
+            float newStartTime = dragStartTime + (me.Position.x - dragStartPos) / pixelsPerSecond;
+            if(newStartTime < 0.0f)
+            {
+                newStartTime = 0.0f;
+            }
+            StartTime = newStartTime;
         }
 
         public void Dispose()
