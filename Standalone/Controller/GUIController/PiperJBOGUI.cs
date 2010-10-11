@@ -95,7 +95,7 @@ namespace Medical.GUI
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "Timeline"));
+            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;

@@ -47,7 +47,7 @@ namespace Medical.GUI
         public void addItem(TaskbarItem item)
         {
             taskbarItems.Add(item);
-            item.TaskbarButton = taskbarWidget.createWidgetT("Button", "RibbonButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
+            item.TaskbarButton = taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
         }
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
