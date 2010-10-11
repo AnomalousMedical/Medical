@@ -39,7 +39,7 @@ namespace Medical.GUI
 
         void useCurrent_MouseButtonClick(Widget source, EventArgs e)
         {
-            changeStateAction.captureCurrent();
+            changeStateAction.capture();
         }
     }
 }

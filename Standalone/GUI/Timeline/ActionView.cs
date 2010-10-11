@@ -66,6 +66,12 @@ namespace Medical.GUI
             }
         }
 
+        public void setCurrentAction(TimelineAction action)
+        {
+            ActionViewButton button = rows[action.TypeName].findButtonForAction(action);
+            CurrentAction = button;
+        }
+
         public void removeAllActions()
         {
             foreach (ActionViewRow row in rows.Values)

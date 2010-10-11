@@ -38,7 +38,7 @@ namespace Medical
             
         }
 
-        public void captureCurrent()
+        public override void capture()
         {
             State = TimelineController.MedicalStateController.createState("");
         }

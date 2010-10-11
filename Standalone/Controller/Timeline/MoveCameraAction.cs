@@ -55,7 +55,7 @@ namespace Medical
             }
         }
 
-        public void captureFromScene()
+        public override void capture()
         {
             SceneViewWindow currentWindow = TimelineController.SceneViewController.ActiveWindow;
             Translation = currentWindow.Translation;

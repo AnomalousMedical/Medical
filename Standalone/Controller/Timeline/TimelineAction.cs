@@ -26,6 +26,14 @@ namespace Medical
             timeline._actionStartChanged(this);
         }
 
+        /// <summary>
+        /// This function will capture the state of the scene to the action. What this does is action specific and may do nothing.
+        /// </summary>
+        public virtual void capture()
+        {
+
+        }
+
         public abstract void started(float timelineTime, Clock clock);
 
         public abstract void stopped(float timelineTime, Clock clock);

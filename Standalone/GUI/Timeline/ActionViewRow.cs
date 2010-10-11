@@ -57,6 +57,18 @@ namespace Medical.GUI
             return removeMe;
         }
 
+        public ActionViewButton findButtonForAction(TimelineAction action)
+        {
+            foreach (ActionViewButton button in buttons)
+            {
+                if (button.Action == action)
+                {
+                    return button;
+                }
+            }
+            return null;
+        }
+
         internal void removeAllActions()
         {
             foreach (ActionViewButton button in buttons)

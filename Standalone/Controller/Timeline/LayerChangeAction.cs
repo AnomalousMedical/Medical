@@ -47,7 +47,7 @@ namespace Medical
 
         }
 
-        public void capture()
+        public override void capture()
         {
             TransparencyState = TransparencyController.ActiveTransparencyState;
             LayerState.captureState();

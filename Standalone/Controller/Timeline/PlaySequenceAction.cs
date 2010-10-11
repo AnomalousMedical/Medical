@@ -58,7 +58,7 @@ namespace Medical
             TimelineController.MovementSequenceController.playCurrentSequence();
         }
 
-        internal void captureCurrent()
+        public override void capture()
         {
             MovementSequence sequence = TimelineController.MovementSequenceController.CurrentSequence;
             if (sequence != null)

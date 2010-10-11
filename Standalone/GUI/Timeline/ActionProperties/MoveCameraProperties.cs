@@ -53,7 +53,7 @@ namespace Medical.GUI
 
         void useCurrentButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            moveAction.captureFromScene();
+            moveAction.capture();
             translationEdit.Caption = moveAction.Translation.ToString();
             lookAtEdit.Caption = moveAction.LookAt.ToString();
             cameraText.Caption = moveAction.CameraName;

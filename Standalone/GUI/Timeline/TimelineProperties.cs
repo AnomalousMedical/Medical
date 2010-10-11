@@ -141,7 +141,10 @@ namespace Medical.GUI
 
         void addActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            currentTimeline.addAction(TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex)));
+            TimelineAction action = TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex));
+            currentTimeline.addAction(action);
+            action.capture();
+            actionView.setCurrentAction(action);
         }
 
         void actionView_ActiveActionChanged(object sender, EventArgs e)
@@ -161,7 +164,6 @@ namespace Medical.GUI
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
             ActionViewButton button = actionView.addAction(e.Action);
-            actionView.CurrentAction = button;
         }
 
         void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
@@ -175,14 +177,22 @@ namespace Medical.GUI
 
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {
-
+            using (wx.FileDialog saveDialog = new wx.FileDialog(MainWindow.Instance, "Save a timeline"))
+            {
+                saveDialog.StyleFlags = wx.WindowStyles.FD_SAVE;
+                saveDialog.Wildcard = "Timeline files (*.tl)|*.tl";
+                if (saveDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    timelineController.saveTimeline(currentTimeline, saveDialog.Path);
+                }
+            }
         }
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
             if (currentTimelineFile != null)
             {
-
+                timelineController.saveTimeline(currentTimeline, currentTimelineFile);
             }
             else
             {
@@ -194,6 +204,8 @@ namespace Medical.GUI
         {
             using (wx.FileDialog openDialog = new wx.FileDialog(MainWindow.Instance, "Open a timeline"))
             {
+                openDialog.StyleFlags = wx.WindowStyles.FD_OPEN;
+                openDialog.Wildcard = "Timeline files (*.tl)|*.tl";
                 if (openDialog.ShowModal() == wx.ShowModalResult.OK)
                 {
                     setCurrentTimeline(timelineController.openTimeline(openDialog.Path), openDialog.Path);

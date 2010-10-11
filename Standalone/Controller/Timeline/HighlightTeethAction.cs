@@ -22,6 +22,11 @@ namespace Medical
             this.StartTime = startTime;
         }
 
+        public override void capture()
+        {
+            EnableHighlight = TeethController.HighlightContacts;
+        }
+
         public override void started(float timelineTime, Clock clock)
         {
             TeethController.HighlightContacts = EnableHighlight;
