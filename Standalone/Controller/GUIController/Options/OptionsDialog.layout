@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="64 109 237 308" layer="Modal">
         <Property key="Widget_Caption" value="Options"/>
-        <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 78 224 160">
+        <Widget type="Widget" skin="CustomPanelOnPanel" position="3 78 224 160">
             <Widget type="StaticText" skin="StaticText" position="5 21 76 15">
                 <Property key="Widget_Caption" value="Anti Aliasing"/>
             </Widget>
@@ -34,7 +34,7 @@
         <Widget type="Button" skin="Button" position="84 244 76 25" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
-        <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 5 225 69">
+        <Widget type="Widget" skin="CustomPanelOnPanel" position="3 5 225 69">
             <Widget type="StaticText" skin="StaticText" position="5 4 105 14">
                 <Property key="Widget_Caption" value="Program Options"/>
             </Widget>

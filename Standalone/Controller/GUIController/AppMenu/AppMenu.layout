@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel" position="190 155 398 365" layer="Overlapped">
         <Widget type="Widget" skin="Separator4" position="156 0 1 364" name="RecentDocsHorizDivider"/>
-        <Widget type="Widget" skin="Separator1" position="157 14 240 1" name="RecentDocsVertDivider"/>
+        <Widget type="Widget" skin="Separator1" position="157 14 238 1" name="RecentDocsVertDivider"/>
         <Widget type="StaticText" skin="StaticText" position="158 1 117 14">
             <Property key="Widget_Caption" value="Recent Documents"/>
             <Property key="Text_TextColour" value="FFFFFFFF"/>

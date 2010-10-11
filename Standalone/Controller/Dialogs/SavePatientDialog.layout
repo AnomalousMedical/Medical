@@ -4,19 +4,18 @@
         <Property key="Widget_Caption" value="Save"/>
         <Property key="Window_MinSize" value="440 283"/>
         <Property key="Window_MaxSize" value="440 283"/>
-        <Widget type="Widget" skin="CustomPanelSmall" position="0 0 205 110">
-            <Widget type="StaticText" skin="StaticText" position="3 3 83 15">
-                <Property key="Widget_Caption" value="Patient Data"/>
-            </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 20 66 15">
-                <Property key="Widget_Caption" value="First Name"/>
-            </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 64 71 15">
-                <Property key="Widget_Caption" value="Last Name"/>
-            </Widget>
-            <Widget type="Edit" skin="Edit" position="3 38 197 23" name="Save/FirstName"/>
-            <Widget type="Edit" skin="Edit" position="3 82 197 23" name="Save/LastName"/>
-        </Widget>
+      <Widget type="StaticText" skin="StaticText" position="3 3 83 15">
+        <Property key="Widget_Caption" value="Patient Data"/>
+      </Widget>
+      <Widget type="StaticText" skin="StaticText" position="3 20 66 15">
+        <Property key="Widget_Caption" value="First Name"/>
+      </Widget>
+      <Widget type="StaticText" skin="StaticText" position="3 64 71 15">
+        <Property key="Widget_Caption" value="Last Name"/>
+      </Widget>
+      <Widget type="Edit" skin="Edit" position="3 38 197 23" name="Save/FirstName"/>
+      <Widget type="Edit" skin="Edit" position="3 82 197 23" name="Save/LastName"/>  
+  
         <Widget type="StaticText" skin="StaticText" position="3 115 92 15">
             <Property key="Widget_Caption" value="Save Location"/>
         </Widget>
