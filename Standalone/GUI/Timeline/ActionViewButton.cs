@@ -22,7 +22,6 @@ namespace Medical.GUI
             this.pixelsPerSecond = pixelsPerSecond;
             this.action = action;
             this.button = button;
-            button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
             button.MouseDrag += new MyGUIEvent(button_MouseDrag);
             button.MouseButtonPressed += new MyGUIEvent(button_MouseButtonPressed);
             setDurationWidth();
@@ -33,6 +32,11 @@ namespace Medical.GUI
             MouseEventArgs me = e as MouseEventArgs;
             if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON0)
             {
+                if (Clicked != null)
+                {
+                    Clicked.Invoke(this, e);
+                }
+
                 dragStartPos = me.Position.x;
                 dragStartTime = StartTime;
             }
@@ -134,14 +138,6 @@ namespace Medical.GUI
             get
             {
                 return button.Bottom;
-            }
-        }
-
-        void button_MouseButtonClick(Widget source, EventArgs e)
-        {
-            if (Clicked != null)
-            {
-                Clicked.Invoke(this, e);
             }
         }
 
