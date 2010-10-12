@@ -94,16 +94,59 @@ namespace Medical.GUI
                 if (currentButton != null)
                 {
                     currentButton.StateCheck = false;
+                    currentButton.CoordChanged -= currentButton_CoordChanged;
                 }
                 currentButton = value;
                 if (currentButton != null)
                 {
                     currentButton.StateCheck = true;
+                    currentButton.CoordChanged += currentButton_CoordChanged;
                 }
                 if (ActiveActionChanged != null)
                 {
                     ActiveActionChanged.Invoke(this, EventArgs.Empty);
                 }
+            }
+        }
+
+        void currentButton_CoordChanged(object sender, EventArgs e)
+        {
+            //Ensure the canvas is large enough.
+            if (currentButton.Right > scrollView.CanvasSize.Width)
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Width = currentButton.Right;
+                scrollView.CanvasSize = canvasSize;
+            }
+            if (currentButton.Bottom > scrollView.CanvasSize.Height)
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Height = currentButton.Bottom;
+                scrollView.CanvasSize = canvasSize;
+            }
+
+            //Ensure the button is still visible.
+            Vector2 canvasPosition = scrollView.CanvasPosition;
+            Vector2 visibleSize = canvasPosition;
+            IntCoord clientCoord = scrollView.ClientCoord;
+            visibleSize.x += clientCoord.width;
+            int rightSide = currentButton.Right;
+            //If the button is longer than the display area tweak the right side value.
+            if (currentButton.Width > clientCoord.width)
+            {
+                rightSide = currentButton.Left + clientCoord.width;
+            }
+            //Ensure the right side is visible
+            if (rightSide > visibleSize.x)
+            {
+                canvasPosition.x += rightSide - visibleSize.x;
+                scrollView.CanvasPosition = canvasPosition;
+            }
+            //Ensure the left side is visible as well
+            else if (currentButton.Left < canvasPosition.x)
+            {
+                canvasPosition.x = currentButton.Left;
+                scrollView.CanvasPosition = canvasPosition;
             }
         }
 

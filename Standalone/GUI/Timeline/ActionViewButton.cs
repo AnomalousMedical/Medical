@@ -15,6 +15,7 @@ namespace Medical.GUI
         private float dragStartTime;
 
         public event EventHandler Clicked;
+        public event EventHandler CoordChanged;
 
         public ActionViewButton(int pixelsPerSecond, Button button, TimelineAction action)
         {
@@ -84,6 +85,10 @@ namespace Medical.GUI
                 action.StartTime = value;
                 action._sortAction();
                 button.setPosition((int)(action.StartTime * pixelsPerSecond), button.Top);
+                if (CoordChanged != null)
+                {
+                    CoordChanged.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -97,6 +102,38 @@ namespace Medical.GUI
             {
                 action.Duration = value;
                 setDurationWidth();
+            }
+        }
+
+        public int Left
+        {
+            get
+            {
+                return button.Left;
+            }
+        }
+
+        public int Right
+        {
+            get
+            {
+                return button.Right;
+            }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return button.Width;
+            }
+        }
+
+        public int Bottom
+        {
+            get
+            {
+                return button.Bottom;
             }
         }
 
@@ -116,6 +153,10 @@ namespace Medical.GUI
                 buttonWidth = 10;
             }
             button.setSize(buttonWidth, button.Height);
+            if (CoordChanged != null)
+            {
+                CoordChanged.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }
