@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine;
 using Logging;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -130,7 +131,7 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else
+                else if (!Gui.Instance.HandledMouseButtons && !Gui.Instance.HandledKeyboardButtons)
                 {
                     manualMove();
                 }

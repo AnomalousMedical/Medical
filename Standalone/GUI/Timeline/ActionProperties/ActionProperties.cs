@@ -25,8 +25,10 @@ namespace Medical.GUI
 
             startTime = new NumericEdit(actionPropertiesScroll.findWidget("StartTime") as Edit);
             startTime.ValueChanged += new MyGUIEvent(startTime_ValueChanged);
+            startTime.MaxValue = float.MaxValue;
             duration = new NumericEdit(actionPropertiesScroll.findWidget("Duration") as Edit);
             duration.ValueChanged += new MyGUIEvent(duration_ValueChanged);
+            duration.MaxValue = float.MaxValue;
 
             additionalPropertiesPosition = new Vector2(1, duration.Edit.Bottom + 2);
 
