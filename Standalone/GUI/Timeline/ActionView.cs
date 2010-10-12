@@ -140,7 +140,7 @@ namespace Medical.GUI
             //If the button is longer than the display area tweak the right side value.
             if (currentButton.Width > clientCoord.width)
             {
-                rightSide = currentButton.Left + clientCoord.width;
+                rightSide = currentButton.Left + clientCoord.width - PREVIEW_PADDING * 2;
             }
             //Ensure the right side is visible
             if (rightSide > visibleSize)
