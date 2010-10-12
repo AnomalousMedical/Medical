@@ -109,6 +109,8 @@ namespace Medical.GUI
             }
         }
 
+        private int PREVIEW_PADDING = 10;
+
         void currentButton_CoordChanged(object sender, EventArgs e)
         {
             Size2 canvasSize = scrollView.CanvasSize;
@@ -130,6 +132,10 @@ namespace Medical.GUI
             IntCoord clientCoord = scrollView.ClientCoord;
 
             float visibleSize = canvasPosition.x + clientCoord.width;
+            if (visibleSize + PREVIEW_PADDING < scrollView.CanvasSize.Width)
+            {
+                visibleSize -= PREVIEW_PADDING;
+            }
             int rightSide = currentButton.Right;
             //If the button is longer than the display area tweak the right side value.
             if (currentButton.Width > clientCoord.width)
@@ -143,9 +149,13 @@ namespace Medical.GUI
                 scrollView.CanvasPosition = canvasPosition;
             }
             //Ensure the left side is visible as well
-            else if (currentButton.Left < canvasPosition.x)
+            else if (currentButton.Left < canvasPosition.x + PREVIEW_PADDING)
             {
-                canvasPosition.x = currentButton.Left;
+                canvasPosition.x = currentButton.Left - PREVIEW_PADDING;
+                if (canvasPosition.x < 0.0f)
+                {
+                    canvasPosition.x = 0.0f;
+                }
                 scrollView.CanvasPosition = canvasPosition;
             }
         }
