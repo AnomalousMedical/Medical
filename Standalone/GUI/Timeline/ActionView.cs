@@ -87,6 +87,25 @@ namespace Medical.GUI
             scrollView.CanvasSize = new Size2(0.0f, 0.0f);
         }
 
+        public void trimVisibleArea()
+        {
+            ActionViewButton rightmostButton = null;
+            foreach (ActionViewRow row in rows.Values)
+            {
+                row.findRightmostButton(ref rightmostButton);
+            }
+            if (rightmostButton != null)
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Width = rightmostButton.Right;
+                scrollView.CanvasSize = canvasSize;
+            }
+            else
+            {
+                scrollView.CanvasSize = new Size2(0.0f, 0.0f);
+            }
+        }
+
         public ActionViewButton CurrentAction
         {
             get
@@ -196,6 +215,7 @@ namespace Medical.GUI
             {
                 row.changePixelsPerSecond(pixelsPerSecond);
             }
+            trimVisibleArea();
         }
 
         void scrollView_MouseLostFocus(Widget source, EventArgs e)

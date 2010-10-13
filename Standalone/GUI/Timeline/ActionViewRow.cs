@@ -86,5 +86,20 @@ namespace Medical.GUI
                 button.changePixelsPerSecond(pixelsPerSecond);
             }
         }
+
+        public void findRightmostButton(ref ActionViewButton rightmostButton)
+        {
+            if (rightmostButton == null && buttons.Count > 0)
+            {
+                rightmostButton = buttons[0];
+            }
+            foreach (ActionViewButton button in buttons)
+            {
+                if (button.Right > rightmostButton.Right)
+                {
+                    rightmostButton = button;
+                }
+            }
+        }
     }
 }
