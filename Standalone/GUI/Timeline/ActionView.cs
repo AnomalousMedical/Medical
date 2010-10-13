@@ -209,8 +209,11 @@ namespace Medical.GUI
         void scrollView_MouseWheel(Widget source, EventArgs e)
         {
             MouseEventArgs me = e as MouseEventArgs;
-            Logging.Log.Debug(me.RelativeWheelPosition.ToString());
             pixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
+            if (pixelsPerSecond < 10)
+            {
+                pixelsPerSecond = 10;
+            }
             foreach (ActionViewRow row in rows.Values)
             {
                 row.changePixelsPerSecond(pixelsPerSecond);
@@ -220,7 +223,15 @@ namespace Medical.GUI
 
         void scrollView_MouseLostFocus(Widget source, EventArgs e)
         {
-            scrollView.AllowMouseScroll = true;
+            FocusEventArgs fe = e as FocusEventArgs;
+            Widget newFocus = fe.OtherWidget;
+            int absRight = scrollView.AbsoluteLeft + scrollView.Width;
+            int absBottom = scrollView.AbsoluteTop + scrollView.Height;
+            if (newFocus.AbsoluteLeft < scrollView.AbsoluteLeft || newFocus.AbsoluteLeft > absRight
+                                        || newFocus.AbsoluteTop < scrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
+            {
+                scrollView.AllowMouseScroll = true;
+            }
         }
     }
 }
