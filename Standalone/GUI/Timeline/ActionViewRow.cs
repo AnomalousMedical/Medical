@@ -69,13 +69,22 @@ namespace Medical.GUI
             return null;
         }
 
-        internal void removeAllActions()
+        public void removeAllActions()
         {
             foreach (ActionViewButton button in buttons)
             {
                 button.Dispose();
             }
             buttons.Clear();
+        }
+
+        public void changePixelsPerSecond(int pixelsPerSecond)
+        {
+            this.pixelsPerSecond = pixelsPerSecond;
+            foreach (ActionViewButton button in buttons)
+            {
+                button.changePixelsPerSecond(pixelsPerSecond);
+            }
         }
     }
 }

@@ -19,6 +19,10 @@ namespace Medical.GUI
         public ActionView(ScrollView scrollView)
         {
             this.scrollView = scrollView;
+            scrollView.MouseLostFocus += new MyGUIEvent(scrollView_MouseLostFocus);
+            scrollView.MouseWheel += new MyGUIEvent(scrollView_MouseWheel);
+            scrollView.KeyButtonPressed += new MyGUIEvent(scrollView_KeyButtonPressed);
+            scrollView.KeyButtonReleased += new MyGUIEvent(scrollView_KeyButtonReleased);
             int y = 3;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
@@ -163,6 +167,40 @@ namespace Medical.GUI
         void actionButton_Clicked(object sender, EventArgs e)
         {
             CurrentAction = sender as ActionViewButton;
+        }
+
+        void scrollView_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = e as KeyEventArgs;
+            if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_LCONTROL)
+            {
+                scrollView.AllowMouseScroll = true;
+            }
+        }
+
+        void scrollView_KeyButtonPressed(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = e as KeyEventArgs;
+            if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_LCONTROL)
+            {
+                scrollView.AllowMouseScroll = false;
+            }
+        }
+
+        void scrollView_MouseWheel(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = e as MouseEventArgs;
+            Logging.Log.Debug(me.RelativeWheelPosition.ToString());
+            pixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
+            foreach (ActionViewRow row in rows.Values)
+            {
+                row.changePixelsPerSecond(pixelsPerSecond);
+            }
+        }
+
+        void scrollView_MouseLostFocus(Widget source, EventArgs e)
+        {
+            scrollView.AllowMouseScroll = true;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Medical.GUI
             this.button = button;
             button.MouseDrag += new MyGUIEvent(button_MouseDrag);
             button.MouseButtonPressed += new MyGUIEvent(button_MouseButtonPressed);
-            setDurationWidth();
+            updateDurationWidth();
         }
 
         void button_MouseButtonPressed(Widget source, EventArgs e)
@@ -88,11 +88,7 @@ namespace Medical.GUI
             {
                 action.StartTime = value;
                 action._sortAction();
-                button.setPosition((int)(action.StartTime * pixelsPerSecond), button.Top);
-                if (CoordChanged != null)
-                {
-                    CoordChanged.Invoke(this, EventArgs.Empty);
-                }
+                updatePosition();
             }
         }
 
@@ -105,7 +101,7 @@ namespace Medical.GUI
             set
             {
                 action.Duration = value;
-                setDurationWidth();
+                updateDurationWidth();
             }
         }
 
@@ -141,7 +137,23 @@ namespace Medical.GUI
             }
         }
 
-        private void setDurationWidth()
+        internal void changePixelsPerSecond(int pixelsPerSecond)
+        {
+            this.pixelsPerSecond = pixelsPerSecond;
+            updatePosition();
+            updateDurationWidth();
+        }
+
+        private void updatePosition()
+        {
+            button.setPosition((int)(action.StartTime * pixelsPerSecond), button.Top);
+            if (CoordChanged != null)
+            {
+                CoordChanged.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void updateDurationWidth()
         {
             int buttonWidth = (int)(action.Duration * pixelsPerSecond);
             if (buttonWidth < 10)
