@@ -175,7 +175,8 @@ namespace Medical.GUI
         {
             for(int i = 0; i < sortedStackedButtons.Count - 1; ++i)
             {
-                if (sortedStackedButtons[i].Bottom + STACKED_BUTTON_SPACE != sortedStackedButtons[i + 1].Bottom)
+                if (sortedStackedButtons[i].Bottom + STACKED_BUTTON_SPACE != sortedStackedButtons[i + 1].Bottom || //Index is not next expected y position
+                    sortedStackedButtons[i].Bottom != sortedStackedButtons[i + 1].Bottom) //Y positions are not the same
                 {
                     return i;
                 }
