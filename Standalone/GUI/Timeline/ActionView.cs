@@ -32,9 +32,10 @@ namespace Medical.GUI
             int y = TRACK_START_Y;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                rows.Add(new ActionViewRow(y, pixelsPerSecond, actionProp.Color));
+                ActionViewRow actionViewRow = new ActionViewRow(y, pixelsPerSecond, actionProp.Color);
+                rows.Add(actionViewRow);
                 rowIndexes.Add(actionProp.TypeName, rows.Count - 1);
-                y += 19;
+                y = actionViewRow.Bottom;
             }
             Size2 canvasSize = scrollView.CanvasSize;
             canvasSize.Height = y;

@@ -3,9 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using System.ComponentModel;
 
 namespace Medical.GUI
 {
+    class ActionViewButtonEventArgs : EventArgs
+    {
+        public int OldLeft { get; private set; }
+        public int OldRight { get; private set; }
+        public int OldTop { get; private set; }
+        public int OldBottom { get; private set; }
+
+        internal void _setValues(Button button)
+        {
+            OldLeft = button.Left;
+            OldTop = button.Top;
+            OldRight = button.Right;
+            OldBottom = button.Bottom;
+        }
+    }
+
     class ActionViewButton
     {
         private Button button;
@@ -17,6 +34,8 @@ namespace Medical.GUI
         public event EventHandler Clicked;
         public event EventHandler CoordChanged;
 
+        private static ActionViewButtonEventArgs sharedEventArgs = new ActionViewButtonEventArgs();
+
         public ActionViewButton(int pixelsPerSecond, Button button, TimelineAction action)
         {
             this.pixelsPerSecond = pixelsPerSecond;
@@ -25,6 +44,16 @@ namespace Medical.GUI
             button.MouseDrag += new MyGUIEvent(button_MouseDrag);
             button.MouseButtonPressed += new MyGUIEvent(button_MouseButtonPressed);
             updateDurationWidth();
+        }
+
+        /// <summary>
+        /// Move the top of the button, should only be called by ActionViewRow.
+        /// This will not fire the coordChanged event.
+        /// </summary>
+        /// <param name="top"></param>
+        internal void _moveTop(int top)
+        {
+            button.setPosition(button.Left, top);
         }
 
         void button_MouseButtonPressed(Widget source, EventArgs e)
@@ -105,6 +134,14 @@ namespace Medical.GUI
             }
         }
 
+        public int Top
+        {
+            get
+            {
+                return button.Top;
+            }
+        }
+
         public int Left
         {
             get
@@ -146,15 +183,17 @@ namespace Medical.GUI
 
         private void updatePosition()
         {
+            sharedEventArgs._setValues(button);
             button.setPosition((int)(action.StartTime * pixelsPerSecond), button.Top);
             if (CoordChanged != null)
             {
-                CoordChanged.Invoke(this, EventArgs.Empty);
+                CoordChanged.Invoke(this, sharedEventArgs);
             }
         }
 
         private void updateDurationWidth()
         {
+            sharedEventArgs._setValues(button);
             int buttonWidth = (int)(action.Duration * pixelsPerSecond);
             if (buttonWidth < 10)
             {
@@ -163,7 +202,7 @@ namespace Medical.GUI
             button.setSize(buttonWidth, button.Height);
             if (CoordChanged != null)
             {
-                CoordChanged.Invoke(this, EventArgs.Empty);
+                CoordChanged.Invoke(this, sharedEventArgs);
             }
         }
     }
