@@ -19,18 +19,18 @@
         <Widget type="StaticText" skin="StaticText" position="231 401 116 13" name="AnomalousMedicalLink">
             <Property key="Widget_Caption" value="Anomalous Medical"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="2 168 347 216" name="DeveloperPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
             <Property key="Widget_Visible" value="true"/>
             <Widget type="StaticText" skin="StaticText" position="3 5 145 90">
                 <Property key="Widget_Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 143 336 13" name="SerialNumberText">
+            <Widget type="StaticText" skin="StaticText" position="4 143 336 13" name="SerialNumberText">
                 <Property key="Widget_Caption" value="Serial Number"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="4 158 336 13" name="VersionText">
                 <Property key="Widget_Caption" value="Version "/>
             </Widget>
-            <Widget type="Button" skin="Button" position="252 183 91 28" name="DeveloperMoreButton">
+            <Widget type="Button" skin="Button" position="248 183 91 28" name="DeveloperMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
         </Widget>

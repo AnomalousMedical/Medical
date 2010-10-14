@@ -10,7 +10,7 @@
             <Widget type="StaticText" skin="StaticText" position="70 29 79 15">
                 <Property key="Widget_Caption" value="Ramus Height"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 46 170 18" name="LeftCondyleGrowth/RamusHeightSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 46 200 18" name="LeftCondyleGrowth/RamusHeightSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
@@ -18,18 +18,18 @@
             <Widget type="StaticImage" skin="StaticImage" position="6 25 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftRamusHeight"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="237 25 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="268 25 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftRamusHeightSmall"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="70 94 92 15">
                 <Property key="Widget_Caption" value="Condyle Height"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 111 170 17" name="LeftCondyleGrowth/CondyleHeightSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 111 200 17" name="LeftCondyleGrowth/CondyleHeightSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleHeightMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="237 90 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="268 90 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleHeightSmall"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="6 90 60 60">
@@ -38,12 +38,12 @@
             <Widget type="StaticText" skin="StaticText" position="70 159 92 15">
                 <Property key="Widget_Caption" value="Condyle Rotation"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 176 170 17" name="LeftCondyleGrowth/CondyleRotationSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 176 200 17" name="LeftCondyleGrowth/CondyleRotationSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleRotationMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="237 155 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="268 155 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftCondyleRotationRotated"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="6 155 60 60">
@@ -52,12 +52,12 @@
             <Widget type="StaticText" skin="StaticText" position="70 224 92 15">
                 <Property key="Widget_Caption" value="Mandibular Notch"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 241 170 17" name="LeftCondyleGrowth/MandibularNotchSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 241 200 17" name="LeftCondyleGrowth/MandibularNotchSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftMandibularNotchMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="237 220 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="268 220 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftMandibularNotchDistorted"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="6 220 60 60">
@@ -66,24 +66,24 @@
             <Widget type="StaticText" skin="StaticText" position="70 289 125 15">
                 <Property key="Widget_Caption" value="Antegonial Notch"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 306 170 17" name="LeftCondyleGrowth/AntegonialNotchSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 306 200 17" name="LeftCondyleGrowth/AntegonialNotchSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftAntegonialNotchMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="237 285 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="268 285 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftAntegonialNotchDistorted"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="6 285 60 60">
                 <Property key="Image_Resource" value="GrowthImages/GrowthLeftAntegonialNotch"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 397 88 30" name="LeftCondyleGrowth/UndoButton">
+            <Widget type="Button" skin="Button" position="4 398 88 30" name="LeftCondyleGrowth/UndoButton">
                 <Property key="Widget_Caption" value="Undo"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="96 397 88 30" name="LeftCondyleGrowth/MakeNormalButton">
+            <Widget type="Button" skin="Button" position="96 398 88 30" name="LeftCondyleGrowth/MakeNormalButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
-            <Widget type="Widget" skin="PanelEmpty" position="4 349 263 44" layer="Back" name="GridControl">
+            <Widget type="Widget" skin="PanelEmpty" position="4 350 326 44" layer="Back" name="GridControl">
                 <Widget type="StaticText" skin="StaticText" position="0 0 262 15">
                     <Property key="Widget_Caption" value="Turn the grid on or off and adjust its spacing."/>
                 </Widget>

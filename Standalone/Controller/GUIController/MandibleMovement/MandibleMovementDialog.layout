@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 108 178 238" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="131 108 178 238" layer="Overlapped">
         <Property key="Widget_Caption" value="Mandible Movement"/>
         <Property key="Window_MinSize" value="178 238"/>
         <Property key="Window_MaxSize" value="178 238"/>

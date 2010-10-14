@@ -7,14 +7,14 @@
             <Widget type="StaticText" skin="StaticText" position="4 4 300 15">
                 <Property key="Widget_Caption" value="Adjust the slider to change the left fossa flatness."/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="70 23 60 15">
+            <Widget type="StaticText" skin="StaticText" position="69 23 60 15">
                 <Property key="Widget_Caption" value="Flatness"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="70 46 197 17" name="FlatnessSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 46 200 17" name="FlatnessSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="6 23 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="4 23 60 60">
                 <Property key="Image_Resource" value="FossaImages/LeftFossaNormal"/>
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="270 23 60 60">
