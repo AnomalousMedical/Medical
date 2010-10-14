@@ -13,6 +13,7 @@ namespace Medical.GUI
         private int yPosition;
         private int pixelsPerSecond;
         private Color color;
+        private int ROW_HEIGHT = 19;
 
         public ActionViewRow(int yPosition, int pixelsPerSecond, Color color)
         {
@@ -99,6 +100,14 @@ namespace Medical.GUI
                 {
                     rightmostButton = button;
                 }
+            }
+        }
+
+        public int Bottom
+        {
+            get
+            {
+                return yPosition + ROW_HEIGHT;
             }
         }
     }

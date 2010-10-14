@@ -11,10 +11,16 @@ namespace Medical.GUI
     {
         private ScrollView scrollView;
         private int pixelsPerSecond = 100;
-        private Dictionary<String, ActionViewRow> rows = new Dictionary<string, ActionViewRow>();
+        private Dictionary<String, int> rowIndexes = new Dictionary<string, int>();
+        private List<ActionViewRow> rows = new List<ActionViewRow>();
         private ActionViewButton currentButton;
+        private List<IActionViewExtension> extensions = new List<IActionViewExtension>();
 
         public event EventHandler ActiveActionChanged;
+
+        private const int PREVIEW_PADDING = 10;
+        private const int TRACK_START_Y = 3;
+
 
         public ActionView(ScrollView scrollView)
         {
@@ -23,26 +29,43 @@ namespace Medical.GUI
             scrollView.MouseWheel += new MyGUIEvent(scrollView_MouseWheel);
             scrollView.KeyButtonPressed += new MyGUIEvent(scrollView_KeyButtonPressed);
             scrollView.KeyButtonReleased += new MyGUIEvent(scrollView_KeyButtonReleased);
-            int y = 3;
+            int y = TRACK_START_Y;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                rows.Add(actionProp.TypeName, new ActionViewRow(y, pixelsPerSecond, actionProp.Color));
+                rows.Add(new ActionViewRow(y, pixelsPerSecond, actionProp.Color));
+                rowIndexes.Add(actionProp.TypeName, rows.Count - 1);
                 y += 19;
             }
+            Size2 canvasSize = scrollView.CanvasSize;
+            canvasSize.Height = y;
+            scrollView.CanvasSize = canvasSize;
         }
 
         public void Dispose()
         {
-            foreach (ActionViewRow row in rows.Values)
+            foreach (ActionViewRow row in rows)
             {
                 row.Dispose();
             }
         }
 
+        public void addExtension(IActionViewExtension extension)
+        {
+            extensions.Add(extension);
+            extension.pixelsPerSecondChanged(pixelsPerSecond);
+            extension.scrollCanvasSizeChanged(scrollView.CanvasSize);
+            extension.scrollPositionChanged(scrollView.CanvasPosition);
+        }
+
+        public void removeExtension(IActionViewExtension extension)
+        {
+            extensions.Remove(extension);
+        }
+
         public ActionViewButton addAction(TimelineAction action)
         {
             Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
-            ActionViewButton actionButton = rows[action.TypeName].addButton(button, action);
+            ActionViewButton actionButton = rows[rowIndexes[action.TypeName]].addButton(button, action);
             actionButton.Clicked += new EventHandler(actionButton_Clicked);
             if (button.Right > scrollView.CanvasSize.Width)
             {
@@ -50,18 +73,12 @@ namespace Medical.GUI
                 canvasSize.Width = button.Right;
                 scrollView.CanvasSize = canvasSize;
             }
-            if (button.Bottom > scrollView.CanvasSize.Height)
-            {
-                Size2 canvasSize = scrollView.CanvasSize;
-                canvasSize.Height = button.Bottom;
-                scrollView.CanvasSize = canvasSize;
-            }
             return actionButton;
         }
 
         public void removeAction(TimelineAction action)
         {
-            ActionViewButton button = rows[action.TypeName].removeButton(action);
+            ActionViewButton button = rows[rowIndexes[action.TypeName]].removeButton(action);
             if (button == CurrentAction)
             {
                 //Null the internal property first as you do not want to toggle the state of the button that has already been disposed.
@@ -72,25 +89,25 @@ namespace Medical.GUI
 
         public void setCurrentAction(TimelineAction action)
         {
-            ActionViewButton button = rows[action.TypeName].findButtonForAction(action);
+            ActionViewButton button = rows[rowIndexes[action.TypeName]].findButtonForAction(action);
             CurrentAction = button;
         }
 
         public void removeAllActions()
         {
-            foreach (ActionViewRow row in rows.Values)
+            foreach (ActionViewRow row in rows)
             {
                 row.removeAllActions();
             }
             currentButton = null;
             CurrentAction = null;
-            scrollView.CanvasSize = new Size2(0.0f, 0.0f);
+            scrollView.CanvasSize = new Size2(0.0f, rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f);
         }
 
         public void trimVisibleArea()
         {
             ActionViewButton rightmostButton = null;
-            foreach (ActionViewRow row in rows.Values)
+            foreach (ActionViewRow row in rows)
             {
                 row.findRightmostButton(ref rightmostButton);
             }
@@ -102,7 +119,7 @@ namespace Medical.GUI
             }
             else
             {
-                scrollView.CanvasSize = new Size2(0.0f, 0.0f);
+                scrollView.CanvasSize = new Size2(0.0f, rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f);
             }
         }
 
@@ -132,7 +149,26 @@ namespace Medical.GUI
             }
         }
 
-        private int PREVIEW_PADDING = 10;
+        public int PixelsPerSecond
+        {
+            get
+            {
+                return pixelsPerSecond;
+            }
+            set
+            {
+                pixelsPerSecond = value;
+                if (pixelsPerSecond < 10)
+                {
+                    pixelsPerSecond = 10;
+                }
+                foreach (ActionViewRow row in rows)
+                {
+                    row.changePixelsPerSecond(pixelsPerSecond);
+                }
+                trimVisibleArea();
+            }
+        }
 
         void currentButton_CoordChanged(object sender, EventArgs e)
         {
@@ -143,27 +179,21 @@ namespace Medical.GUI
                 canvasSize.Width = currentButton.Right;
                 scrollView.CanvasSize = canvasSize;
             }
-            if (currentButton.Bottom > scrollView.CanvasSize.Height)
-            {
-                canvasSize = scrollView.CanvasSize;
-                canvasSize.Height = currentButton.Bottom;
-                scrollView.CanvasSize = canvasSize;
-            }
 
             //Ensure the button is still visible.
             Vector2 canvasPosition = scrollView.CanvasPosition;
-            IntCoord clientCoord = scrollView.ClientCoord;
+            int clientWidth = scrollView.ClientCoord.width;
 
-            float visibleSize = canvasPosition.x + clientCoord.width;
+            float visibleSize = canvasPosition.x + clientWidth;
             if (visibleSize + PREVIEW_PADDING < scrollView.CanvasSize.Width)
             {
                 visibleSize -= PREVIEW_PADDING;
             }
             int rightSide = currentButton.Right;
             //If the button is longer than the display area tweak the right side value.
-            if (currentButton.Width > clientCoord.width)
+            if (currentButton.Width > clientWidth)
             {
-                rightSide = currentButton.Left + clientCoord.width - PREVIEW_PADDING * 2;
+                rightSide = currentButton.Left + clientWidth - PREVIEW_PADDING * 2;
             }
             //Ensure the right side is visible
             if (rightSide > visibleSize)
@@ -209,16 +239,7 @@ namespace Medical.GUI
         void scrollView_MouseWheel(Widget source, EventArgs e)
         {
             MouseEventArgs me = e as MouseEventArgs;
-            pixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
-            if (pixelsPerSecond < 10)
-            {
-                pixelsPerSecond = 10;
-            }
-            foreach (ActionViewRow row in rows.Values)
-            {
-                row.changePixelsPerSecond(pixelsPerSecond);
-            }
-            trimVisibleArea();
+            PixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
         }
 
         void scrollView_MouseLostFocus(Widget source, EventArgs e)
@@ -231,6 +252,32 @@ namespace Medical.GUI
                                         || newFocus.AbsoluteTop < scrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
             {
                 scrollView.AllowMouseScroll = true;
+            }
+        }
+
+        void firePixelsPerSecondChanged()
+        {
+            foreach (IActionViewExtension extension in extensions)
+            {
+                extension.pixelsPerSecondChanged(pixelsPerSecond);
+            }
+        }
+
+        void fireScrollCanvasSizeChanged()
+        {
+            Size2 size = scrollView.CanvasSize;
+            foreach (IActionViewExtension extension in extensions)
+            {
+                extension.scrollCanvasSizeChanged(size);
+            }
+        }
+
+        void firePositionChanged()
+        {
+            Vector2 position = scrollView.CanvasPosition;
+            foreach (IActionViewExtension extension in extensions)
+            {
+                extension.scrollPositionChanged(position);
             }
         }
     }

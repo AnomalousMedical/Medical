@@ -17,6 +17,7 @@ namespace Medical.GUI
         private ActionProperties actionProperties;
         private ActionFilter actionFilter;
         private ActionView actionView;
+        private NumberLine numberLine;
 
         private Button playButton;
 
@@ -78,6 +79,8 @@ namespace Medical.GUI
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
             actionView = new ActionView(actionViewScrollView);
             actionView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
+
+            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView);
 
             createNewTimeline();
         }
