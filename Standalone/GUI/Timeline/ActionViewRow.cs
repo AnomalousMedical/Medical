@@ -124,11 +124,6 @@ namespace Medical.GUI
             findIntersectingButtons(currentStackedButtons, movedButton.Left, movedButton.Right);
             currentStackedButtons.Remove(movedButton);
 
-            //Find the buttons that intersect the old position
-            List<ActionViewButton> formerStackedButtons = new List<ActionViewButton>();
-            findIntersectingButtons(formerStackedButtons, avbe.OldLeft, avbe.OldRight);
-            formerStackedButtons.Remove(movedButton);
-
             //If there are no buttons currently intersecting the new position, put the button at the top.
             if (currentStackedButtons.Count == 0)
             {
@@ -140,12 +135,18 @@ namespace Medical.GUI
                 insertButtonIntoStack(currentStackedButtons, movedButton);
             }
 
-          //Move up any former buttons that can be moved up.
-            //Remove all buttons that are in the current stack.
-            //foreach (ActionViewButton button in currentStackedButtons)
-            //{
-            //    formerStackedButtons.Remove(button);
-            //}
+            //Move any buttons that can be moved up.
+            //Find the buttons that intersect the old position
+            List<ActionViewButton> formerStackedButtons = new List<ActionViewButton>();
+            if (avbe.OldLeft > movedButton.Left)//Moved left
+            {
+                findIntersectingButtons(formerStackedButtons, movedButton.Right, avbe.OldRight);
+            }
+            else //Moved right
+            {
+                findIntersectingButtons(formerStackedButtons, avbe.OldLeft, movedButton.Left);
+            }
+            formerStackedButtons.Remove(movedButton);
 
             //Sort the old stack by top.
             formerStackedButtons.Sort(topSortButtons);
