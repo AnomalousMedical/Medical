@@ -4,86 +4,86 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="335 370"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="5 6 320 15">
+            <Widget type="StaticText" skin="StaticText" position="4 4 320 15">
                 <Property key="Widget_Caption" value="Adjust the sliders to match the patient&apos;s left condyle."/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="67 34 79 17">
+            <Widget type="StaticText" skin="StaticText" position="70 29 79 15">
                 <Property key="Widget_Caption" value="Condyle"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 55 197 17" name="LeftCondyleDegen/CondyleSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 46 170 18" name="LeftCondyleDegen/CondyleSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleDegenerationMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="3 32 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="6 25 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyle"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="269 32 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="237 25 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleDistorted"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="67 99 92 17">
+            <Widget type="StaticText" skin="StaticText" position="70 94 92 15">
                 <Property key="Widget_Caption" value="Lateral Pole"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 120 197 17" name="LeftCondyleDegen/LateralPoleSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 111 170 17" name="LeftCondyleDegen/LateralPoleSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftLateralPoleMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="269 97 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="237 90 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleLateralPoleDistorted"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="3 97 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="6 90 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleLateralPole"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="67 164 92 17">
+            <Widget type="StaticText" skin="StaticText" position="70 159 92 15">
                 <Property key="Widget_Caption" value="Medial Pole"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 185 197 17" name="LeftCondyleDegen/MedialPoleSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 176 170 17" name="LeftCondyleDegen/MedialPoleSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftMedialPoleScaleMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="269 162 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="237 155 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleMedialPoleDistorted"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="3 162 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="6 155 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleMedialPole"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="67 229 92 17">
+            <Widget type="StaticText" skin="StaticText" position="70 224 92 15">
                 <Property key="Widget_Caption" value="Wear"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="67 250 197 17" name="LeftCondyleDegen/WearSlider">
+            <Widget type="HScroll" skin="HSlider" position="67 241 170 17" name="LeftCondyleDegen/WearSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftCondyleRoughnessMandible"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="269 227 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="237 220 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleRoughnessDistorted"/>
             </Widget>
-            <Widget type="StaticImage" skin="StaticImage" position="3 227 60 60">
+            <Widget type="StaticImage" skin="StaticImage" position="6 220 60 60">
                 <Property key="Image_Resource" value="DegenerationImages/DegenerationLeftCondyleRoughness"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="3 337 100 30" name="LeftCondyleDegen/UndoButton">
+            <Widget type="Button" skin="Button" position="4 331 88 30" name="LeftCondyleDegen/UndoButton">
                 <Property key="Widget_Caption" value="Undo"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="106 337 100 30" name="LeftCondyleDegen/MakeNormalButton">
+            <Widget type="Button" skin="Button" position="96 331 88 30" name="LeftCondyleDegen/MakeNormalButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
-            <Widget type="Widget" skin="PanelEmpty" position="3 290 263 44" layer="Back" name="GridControl">
-                <Widget type="StaticText" skin="StaticText" position="0 0 262 16">
+            <Widget type="Widget" skin="PanelEmpty" position="4 284 263 44" layer="Back" name="GridControl">
+                <Widget type="StaticText" skin="StaticText" position="0 0 262 15">
                     <Property key="Widget_Caption" value="Turn the grid on or off and adjust its spacing."/>
                 </Widget>
-                <Widget type="Button" skin="CheckBox" position="5 20 89 20" name="GridControl/ShowGrid">
+                <Widget type="Button" skin="CheckBox" position="6 22 89 15" name="GridControl/ShowGrid">
                     <Property key="Widget_Caption" value="Show Grid"/>
                 </Widget>
-                <Widget type="StaticText" skin="StaticText" position="96 20 50 20">
+                <Widget type="StaticText" skin="StaticText" position="96 22 50 15">
                     <Property key="Widget_Caption" value="Spacing"/>
                     <Property key="Text_TextAlign" value="Left VCenter"/>
                 </Widget>
                 <Widget type="Edit" skin="Edit" position="150 20 67 20" name="GridControl/GridSpace"/>
                 <Widget type="Button" skin="ButtonUp" position="218 20 10 10" name="GridControl/GridSpaceUp"/>
                 <Widget type="Button" skin="ButtonDown" position="218 30 10 10" name="GridControl/GridSpaceDown"/>
-                <Widget type="StaticText" skin="StaticText" position="231 20 21 20">
+                <Widget type="StaticText" skin="StaticText" position="231 22 21 15">
                     <Property key="Text_TextAlign" value="Left VCenter"/>
                     <Property key="Widget_Caption" value="MM"/>
                 </Widget>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanel" position="190 155 398 370" layer="Overlapped">
-        <Widget type="Widget" skin="Separator4" position="156 2 1 355" name="RecentDocsHorizDivider"/>
-        <Widget type="Widget" skin="Separator1" position="157 14 237 1" name="RecentDocsVertDivider"/>
-        <Widget type="StaticText" skin="StaticText" position="158 1 117 14">
+        <Widget type="Widget" skin="Separator4" position="156 2 1 365" name="RecentDocsHorizDivider"/>
+        <Widget type="Widget" skin="Separator1" position="157 16 237 1" name="RecentDocsVertDivider"/>
+        <Widget type="StaticText" skin="StaticText" position="158 3 117 14">
             <Property key="Widget_Caption" value="Recent Documents"/>
             <Property key="Text_TextColour" value="FFFFFFFF"/>
         </Widget>

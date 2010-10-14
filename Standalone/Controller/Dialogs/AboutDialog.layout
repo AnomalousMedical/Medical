@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="84 144 356 456" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="84 144 356 441" layer="Modal">
         <Property key="Widget_Caption" value="About"/>
+        <Property key="Window_MinSize" value="356 441"/>
+        <Property key="Window_MaxSize" value="356 441"/>
         <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
             <Property key="Image_Resource" value="AboutImage/Image"/>
             <Widget type="StaticText" skin="StaticText" position="117 81 200 13" name="FeatureLevelText">
@@ -11,13 +13,13 @@
                 <Property key="Widget_Caption" value="Copyright 2009-2010 Anomalous Medical"/>
             </Widget>
         </Widget>
-        <Widget type="Button" skin="Button" position="5 388 91 28" name="CloseButton">
+        <Widget type="Button" skin="Button" position="4 387 91 28" name="CloseButton">
             <Property key="Widget_Caption" value="Close"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="228 400 116 13" name="AnomalousMedicalLink">
+        <Widget type="StaticText" skin="StaticText" position="231 401 116 13" name="AnomalousMedicalLink">
             <Property key="Widget_Caption" value="Anomalous Medical"/>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="1 168 347 216" name="DeveloperPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="2 168 347 216" name="DeveloperPanel">
             <Property key="Widget_Visible" value="true"/>
             <Widget type="StaticText" skin="StaticText" position="3 5 145 90">
                 <Property key="Widget_Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>

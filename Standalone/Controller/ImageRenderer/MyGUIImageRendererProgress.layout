@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="Panel" position="68 216 360 41" layer="Overlapped">
-        <Widget type="Progress" skin="ProgressFill" position="7 20 345 18" align="HStretch Top" name="RenderingProgress">
+        <Widget type="Progress" skin="ProgressFill" position="4 20 352 18" align="HStretch Top" name="RenderingProgress">
             <Property key="Progress_Range" value="100"/>
             <Property key="Progress_Position" value="0"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="9 3 342 16" align="HStretch Top" name="StatusText">
+        <Widget type="StaticText" skin="StaticText" position="4 4 342 15" align="HStretch Top" name="StatusText">
             <Property key="Widget_Caption" value="Rendering Image"/>
         </Widget>
     </Widget>

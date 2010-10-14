@@ -1,67 +1,69 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="68 144 497 106" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="68 144 510 98" layer="Overlapped">
         <Property key="Widget_Caption" value="Layers"/>
-        <Widget type="Button" skin="RibbonButton" position="8 2 36 38" name="Layers/Skin">
+        <Property key="Window_MinSize" value="510 98"/>
+        <Property key="Window_MaxSize" value="510 98"/>
+        <Widget type="Button" skin="RibbonButton" position="4 4 36 38" name="Layers/Skin">
             <Property key="Button_ImageResource" value="View/LayersSkinLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="46 2 61 38" name="Layers/Muscles">
+        <Widget type="Button" skin="RibbonButton" position="44 4 61 38" name="Layers/Muscles">
             <Property key="Button_ImageResource" value="View/LayersMuscleLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="109 2 40 38" name="Layers/Skull">
+        <Widget type="Button" skin="RibbonButton" position="109 4 40 38" name="Layers/Skull">
             <Property key="Button_ImageResource" value="View/LayersSkullLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="151 2 62 38" name="Layers/Mandible">
+        <Widget type="Button" skin="RibbonButton" position="153 4 62 38" name="Layers/Mandible">
             <Property key="Button_ImageResource" value="View/LayersMandibleLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="215 2 41 38" name="Layers/Discs">
+        <Widget type="Button" skin="RibbonButton" position="219 4 41 38" name="Layers/Discs">
             <Property key="Button_ImageResource" value="View/LayersTMJLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="258 2 43 38" name="Layers/Spine">
+        <Widget type="Button" skin="RibbonButton" position="264 4 43 38" name="Layers/Spine">
             <Property key="Button_ImageResource" value="View/LayersSpineLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="303 2 44 38" name="Layers/Hyoid">
+        <Widget type="Button" skin="RibbonButton" position="311 4 44 38" name="Layers/Hyoid">
             <Property key="Button_ImageResource" value="View/LayersHyoidLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="349 2 64 38" name="Layers/MaxillaryTeeth">
+        <Widget type="Button" skin="RibbonButton" position="359 4 64 38" name="Layers/MaxillaryTeeth">
             <Property key="Button_ImageResource" value="View/LayersTopTeethLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="415 2 75 38" name="Layers/MandibularTeeth">
+        <Widget type="Button" skin="RibbonButton" position="427 4 75 38" name="Layers/MandibularTeeth">
             <Property key="Button_ImageResource" value="View/LayersBottomTeethLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="8 39 36 30" name="Layers/SkinMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="4 42 36 30" name="Layers/SkinMenu">
             <Property key="Widget_Caption" value="Skin"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="46 39 61 30" name="Layers/MusclesMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="44 42 61 30" name="Layers/MusclesMenu">
             <Property key="Widget_Caption" value="Muscles"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="109 39 40 30" name="Layers/SkullMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="109 42 40 30" name="Layers/SkullMenu">
             <Property key="Widget_Caption" value="Skull"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="151 39 62 30" name="Layers/MandibleMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="153 42 62 30" name="Layers/MandibleMenu">
             <Property key="Widget_Caption" value="Mandible"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="215 39 41 30" name="Layers/DiscsMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="219 42 41 30" name="Layers/DiscsMenu">
             <Property key="Widget_Caption" value="Discs"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="258 39 43 30" name="Layers/SpineMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="264 42 43 30" name="Layers/SpineMenu">
             <Property key="Widget_Caption" value="Spine"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="303 39 44 30" name="Layers/HyoidMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="311 42 44 30" name="Layers/HyoidMenu">
             <Property key="Widget_Caption" value="Hyoid"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="349 39 64 30" name="Layers/MaxillaryTeethMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="359 42 64 30" name="Layers/MaxillaryTeethMenu">
             <Property key="Widget_Caption" value="Maxillary\nTeeth"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
-        <Widget type="Button" skin="RibbonSplitButton" position="415 39 75 30" name="Layers/MandibularTeethMenu">
+        <Widget type="Button" skin="RibbonSplitButton" position="427 42 75 30" name="Layers/MandibularTeethMenu">
             <Property key="Widget_Caption" value="Mandibular\nTeeth"/>
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
