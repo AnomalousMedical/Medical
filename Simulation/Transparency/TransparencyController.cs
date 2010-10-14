@@ -14,7 +14,6 @@ namespace Medical
         static NaturalSort<RenderGroup> sorter = new NaturalSort<RenderGroup>();
         static SortedList<RenderGroup, TransparencyGroup> groups = new SortedList<RenderGroup, TransparencyGroup>(sorter);
         static List<TransparencyInterface> transparencyInterfaces = new List<TransparencyInterface>();
-        static int activeTransparencyState = 0;
         static List<String> transparencyStateNames = new List<string>();
 
         static TransparencyController()
@@ -34,7 +33,7 @@ namespace Medical
             {
                 alphaObject.createTransparencyState();
             }
-            alphaObject.ActiveTransparencyState = activeTransparencyState;
+            alphaObject.ActiveTransparencyState = TransparencyStateIndex;
             transparencyInterfaces.Add(alphaObject);
         }
 
@@ -90,9 +89,13 @@ namespace Medical
                 {
                     transInterface.removeTransparencyState(stateIndex);
                 }
-                if (activeTransparencyState == stateIndex)
+                if (TransparencyStateIndex == stateIndex)
                 {
-                    activeTransparencyState = 0;
+                    TransparencyStateIndex = 0;
+                }
+                else if (TransparencyStateIndex > stateIndex)
+                {
+                    TransparencyStateIndex--;
                 }
             }
         }
@@ -119,22 +122,36 @@ namespace Medical
         {
             get
             {
-                return transparencyStateNames[activeTransparencyState];
+                return transparencyStateNames[TransparencyStateIndex];
             }
             set
             {
                 int stateIndex = transparencyStateNames.IndexOf(value);
-                if (stateIndex != -1 && stateIndex != activeTransparencyState)
+                if (stateIndex != -1 && stateIndex != TransparencyStateIndex)
                 {
-                    activeTransparencyState = stateIndex;
-                    foreach (TransparencyInterface transInterface in transparencyInterfaces)
-                    {
-                        transInterface.ActiveTransparencyState = stateIndex;
-                    }
+                    TransparencyStateIndex = stateIndex;
+                    
                     if (ActiveTransparencyStateChanged != null)
                     {
                         ActiveTransparencyStateChanged.Invoke(null, EventArgs.Empty);
                     }
+                }
+            }
+        }
+
+        private static int transparencyStateIndex = 0;//Do not modify directly, use property instead.
+        private static int TransparencyStateIndex
+        {
+            get
+            {
+                return transparencyStateIndex;
+            }
+            set
+            {
+                transparencyStateIndex = value;
+                foreach (TransparencyInterface transInterface in transparencyInterfaces)
+                {
+                    transInterface.ActiveTransparencyState = transparencyStateIndex;
                 }
             }
         }
