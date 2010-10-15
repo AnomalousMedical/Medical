@@ -189,7 +189,9 @@ namespace Medical.GUI
             foreach (ActionViewButton compare in buttons)
             {
                 if ((left >= compare.Left && left <= compare.Right) ||
-                    (right >= compare.Left && right <= compare.Right))
+                    (right >= compare.Left && right <= compare.Right) ||
+                    (compare.Left >= left && compare.Left <= right) ||
+                    (compare.Right >= left && compare.Right <= right))
                 {
                     results.Add(compare);
                 }
