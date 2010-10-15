@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="84 144 356 441" layer="Modal">
+    <Widget type="Window" skin="WindowCX" position="84 144 356 441" layer="Modal">
         <Property key="Widget_Caption" value="About"/>
         <Property key="Window_MinSize" value="356 441"/>
         <Property key="Window_MaxSize" value="356 441"/>

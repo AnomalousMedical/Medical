@@ -84,7 +84,7 @@
                 <Property key="Button_ImageResource" value="TeethButtons/Tooth24"/>
                 <UserString key="Tooth" value="Tooth24"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="0 0 227 27" align="HStretch Top">
+            <Widget type="Edit" skin="WordWrapSimple" position="4 0 222 31" align="HStretch Top">
                 <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
                 <Property key="Edit_Static" value="true"/>
             </Widget>

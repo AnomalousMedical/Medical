@@ -13,19 +13,19 @@
         <Widget type="StaticText" skin="StaticText" position="6 66 71 15">
             <Property key="Widget_Caption" value="Last Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 39 197 23" name="Save/FirstName"/>
-        <Widget type="Edit" skin="Edit" position="4 83 197 23" name="Save/LastName"/>
+        <Widget type="Edit" skin="Edit" position="8 39 197 23" name="Save/FirstName"/>
+        <Widget type="Edit" skin="Edit" position="8 83 197 23" name="Save/LastName"/>
         <Widget type="StaticText" skin="StaticText" position="6 110 92 15">
             <Property key="Widget_Caption" value="Save Location"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 127 342 23" name="Save/Location"/>
-        <Widget type="Button" skin="Button" position="347 127 80 23" name="Save/BrowseButton">
+        <Widget type="Edit" skin="Edit" position="8 127 342 23" name="Save/Location"/>
+        <Widget type="Button" skin="Button" position="352 127 80 23" name="Save/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="6 154 69 15">
             <Property key="Widget_Caption" value="FIle Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 171 223 23" name="Save/Filename"/>
+        <Widget type="Edit" skin="Edit" position="8 171 223 23" name="Save/Filename"/>
         <Widget type="StaticText" skin="StaticText" position="279 176 139 15" name="Save/WarningLabel">
             <Property key="Widget_Caption" value="This file already exists."/>
         </Widget>

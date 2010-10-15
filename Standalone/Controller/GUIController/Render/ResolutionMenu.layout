@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel" position="85 89 121 141" layer="Overlapped" name="ResolutionMenu">
+    <Widget type="Widget" skin="CustomPanel" position="85 89 121 143" layer="Overlapped" name="ResolutionMenu">
         <Widget type="StaticText" skin="StaticText" position="4 4 70 15">
             <Property key="Widget_Caption" value="Resolution"/>
         </Widget>
