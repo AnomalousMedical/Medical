@@ -202,15 +202,20 @@ namespace Medical.GUI
             buttonStack.Sort(topSortButtons);
             //Search the stack looking for a space in the buttons.
             int insertYPos = yPosition;
+            int lastButtonYPos = -1;
             foreach (ActionViewButton button in buttonStack)
             {
-                if (button.Top == insertYPos)
+                if (lastButtonYPos != button.Top) //Make sure the next button is actually lower, its possible that it is not
                 {
-                    insertYPos = button.Bottom + STACKED_BUTTON_SPACE;
-                }
-                else
-                {
-                    break;
+                    lastButtonYPos = button.Top;
+                    if (button.Top == insertYPos)
+                    {
+                        insertYPos = button.Bottom + STACKED_BUTTON_SPACE;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
             insert._moveTop(insertYPos);

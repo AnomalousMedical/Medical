@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using System.ComponentModel;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -172,6 +173,11 @@ namespace Medical.GUI
             {
                 return button.Bottom;
             }
+        }
+
+        public void setColor(Color color)
+        {
+            button.setColour(color);
         }
 
         internal void changePixelsPerSecond(int pixelsPerSecond)

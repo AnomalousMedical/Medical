@@ -247,12 +247,19 @@ namespace Medical.GUI
         {
             FocusEventArgs fe = e as FocusEventArgs;
             Widget newFocus = fe.OtherWidget;
-            int absRight = scrollView.AbsoluteLeft + scrollView.Width;
-            int absBottom = scrollView.AbsoluteTop + scrollView.Height;
-            if (newFocus.AbsoluteLeft < scrollView.AbsoluteLeft || newFocus.AbsoluteLeft > absRight
-                                        || newFocus.AbsoluteTop < scrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
+            if (newFocus == null)
             {
                 scrollView.AllowMouseScroll = true;
+            }
+            else
+            {
+                int absRight = scrollView.AbsoluteLeft + scrollView.Width;
+                int absBottom = scrollView.AbsoluteTop + scrollView.Height;
+                if (newFocus.AbsoluteLeft < scrollView.AbsoluteLeft || newFocus.AbsoluteLeft > absRight
+                                            || newFocus.AbsoluteTop < scrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
+                {
+                    scrollView.AllowMouseScroll = true;
+                }
             }
         }
 
