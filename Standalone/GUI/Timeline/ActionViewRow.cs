@@ -38,6 +38,7 @@ namespace Medical.GUI
             button.setPosition(button.Left, yPosition);
             button.setColour(color);
             viewButton.CoordChanged += viewButton_CoordChanged;
+            computeButtonPosition(viewButton);
             return viewButton;
         }
 
@@ -56,6 +57,7 @@ namespace Medical.GUI
             {
                 buttons.Remove(removeMe);
                 removeMe.CoordChanged -= viewButton_CoordChanged;
+                closeGaps(removeMe, removeMe.Left, removeMe.Right);
                 removeMe.Dispose();
             }
             return removeMe;
@@ -118,7 +120,12 @@ namespace Medical.GUI
         {
             ActionViewButtonEventArgs avbe = e as ActionViewButtonEventArgs;
             ActionViewButton movedButton = sender as ActionViewButton;
+            computeButtonPosition(movedButton);           
+            closeGaps(movedButton, avbe.OldLeft, avbe.OldRight);
+        }
 
+        private void computeButtonPosition(ActionViewButton movedButton)
+        {
             //Find the buttons that currently intersect the moved button
             List<ActionViewButton> currentStackedButtons = new List<ActionViewButton>();
             findIntersectingButtons(currentStackedButtons, movedButton.Left, movedButton.Right);
@@ -134,17 +141,24 @@ namespace Medical.GUI
             {
                 insertButtonIntoStack(currentStackedButtons, movedButton);
             }
+        }
 
+        private void closeGaps(ActionViewButton movedButton, int oldLeft, int oldRight)
+        {
             //Move any buttons that can be moved up.
             //Find the buttons that intersect the old position
             List<ActionViewButton> formerStackedButtons = new List<ActionViewButton>();
-            if (avbe.OldLeft > movedButton.Left)//Moved left
+            if (oldLeft == movedButton.Left && oldRight == movedButton.Right) //Did not move, could be removed.
             {
-                findIntersectingButtons(formerStackedButtons, movedButton.Right, avbe.OldRight);
+                findIntersectingButtons(formerStackedButtons, oldLeft, oldRight);
+            }
+            else if (oldLeft > movedButton.Left)//Moved left
+            {
+                findIntersectingButtons(formerStackedButtons, movedButton.Right, oldRight);
             }
             else //Moved right
             {
-                findIntersectingButtons(formerStackedButtons, avbe.OldLeft, movedButton.Left);
+                findIntersectingButtons(formerStackedButtons, oldLeft, movedButton.Left);
             }
             formerStackedButtons.Remove(movedButton);
 
@@ -155,7 +169,7 @@ namespace Medical.GUI
             int gapIndex = findGapIndex(formerStackedButtons);
             if (gapIndex != -1)
             {
-                for (int i = 0; i < formerStackedButtons.Count; ++i)
+                for (int i = gapIndex; i < formerStackedButtons.Count; ++i)
                 {
                     moveUp(formerStackedButtons[i]);
                 }
