@@ -56,7 +56,7 @@
                 <Property key="ComboBox_AddItem" value="Unknown"/>
                 <Property key="Edit_ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Widget" skin="CustomPanelOnPanel2" position="4 256 180 176">
+            <Widget type="Widget" skin="MultiListCustomPanel" position="4 256 180 176">
                 <Widget type="StaticText" skin="StaticText" position="4 4 42 14">
                     <Property key="Widget_Caption" value="Stage"/>
                 </Widget>

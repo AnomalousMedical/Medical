@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel" position="168 187 220 171" layer="Overlapped">
+    <Widget type="Widget" skin="CustomPanelNoTranspo" position="168 187 220 171" layer="Overlapped">
         <Widget type="Widget" skin="PanelEmpty" position="0 0 159 85" name="AnatomyDistortionPanel">
             <Widget type="StaticText" skin="StaticText" position="52 71 54 13" align="HCenter Bottom">
                 <Property key="Widget_Caption" value="Anatomy"/>

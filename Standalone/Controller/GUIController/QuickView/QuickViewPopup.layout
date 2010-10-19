@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanel" position="168 187 168 89" layer="Overlapped">
+    <Widget type="Widget" skin="CustomPanelNoTranspo" position="168 187 168 89" layer="Overlapped">
         <Widget type="StaticText" skin="StaticText" position="49 72 66 14" align="HCenter Top">
             <Property key="Widget_Caption" value="Quick View"/>
             <Property key="Text_TextColour" value="FFFFFF"/>

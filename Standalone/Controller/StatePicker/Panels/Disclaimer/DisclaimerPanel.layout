@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Widget" skin="Panel" position="81 114 273 600" layer="Overlapped">
-        <Widget type="Widget" skin="CustomPanel" position="4 52 265 545" align="HStretch VStretch">
-            <Widget type="Edit" skin="WordWrap" position="1 1 262 542" align="HStretch VStretch">
+        <Widget type="Widget" skin="MultiListCustomPanel" position="4 52 265 545" align="HStretch VStretch">
+            <Widget type="Edit" skin="WordWrap" position="0 1 265 544" align="HStretch VStretch">
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_MaxTextLength" value="2900"/>
