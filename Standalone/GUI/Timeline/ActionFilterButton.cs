@@ -9,14 +9,12 @@ namespace Medical.GUI
     class ActionFilterButton : IDisposable
     {
         private Button button;
-        private MyGUILayoutContainer layout;
         private CheckButton checkButton;
 
         public ActionFilterButton(Button button, String actionType)
         {
             this.button = button;
             button.Caption = actionType;
-            layout = new MyGUILayoutContainer(button);
             checkButton = new CheckButton(button);
             checkButton.Checked = true;
             checkButton.CheckedChanged += new MyGUIEvent(checkButton_CheckedChanged);
@@ -27,9 +25,9 @@ namespace Medical.GUI
             Gui.Instance.destroyWidget(button);
         }
 
-        public MyGUILayoutContainer Layout
+        public void moveButtonTop(int newPosition)
         {
-            get { return layout; }
+            button.setPosition(button.Left, newPosition);
         }
 
         void checkButton_CheckedChanged(Widget source, EventArgs e)

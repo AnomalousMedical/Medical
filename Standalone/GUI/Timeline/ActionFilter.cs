@@ -10,32 +10,45 @@ namespace Medical.GUI
     class ActionFilter : IDisposable
     {
         private ScrollView scrollView;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(0.0f, 0.0f));
-        private Dictionary<String, ActionFilterButton> filterButtons = new Dictionary<string, ActionFilterButton>();
+        private Dictionary<ActionViewRow, ActionFilterButton> filterButtons = new Dictionary<ActionViewRow, ActionFilterButton>();
 
         private int buttonWidth;
         private int buttonHeight = 19;
 
-        public ActionFilter(ScrollView scrollView)
+        public ActionFilter(ScrollView scrollView, ActionView actionView)
         {
             this.scrollView = scrollView;
             buttonWidth = (int)scrollView.CanvasSize.Width;
 
-            foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
+            actionView.RowPositionChanged += new ActionViewRowEvent(actionView_RowPositionChanged);
+            actionView.CanvasHeightChanged += new CanvasSizeChanged(actionView_CanvasHeightChanged);
+
+            foreach (ActionViewRow row in actionView.Rows)
             {
-                String actionName = actionProp.TypeName;
-                Button button = scrollView.createWidgetT("Button", "CheckBox", 0, 0, buttonWidth, buttonHeight, Align.Default, "") as Button;
+                String actionName = row.Name;
+                Button button = scrollView.createWidgetT("Button", "CheckBox", 0, row.Top, buttonWidth, buttonHeight, Align.Default, "") as Button;
                 ActionFilterButton filterButton = new ActionFilterButton(button, actionName);
-                flowLayout.addChild(filterButton.Layout);
-                scrollView.CanvasSize = flowLayout.DesiredSize;
-                filterButtons.Add(actionName, filterButton);
-                button.TextColor = actionProp.Color;
+                filterButtons.Add(row, filterButton);
+                button.TextColor = row.Color;
             }
         }
 
         public void Dispose()
         {
-            
+
+        }
+
+        void actionView_RowPositionChanged(ActionViewRow row)
+        {
+            ActionFilterButton button = filterButtons[row];
+            button.moveButtonTop(row.Top);
+        }
+
+        void actionView_CanvasHeightChanged(float newSize)
+        {
+            Size2 canvasSize = scrollView.CanvasSize;
+            canvasSize.Height = newSize;
+            scrollView.CanvasSize = canvasSize;
         }
     }
 }

@@ -7,6 +7,9 @@ using Engine;
 
 namespace Medical.GUI
 {
+    delegate void ActionViewRowEvent(ActionViewRow row);
+    delegate void CanvasSizeChanged(float newSize);
+
     class ActionView : IDisposable
     {
         private ScrollView scrollView;
@@ -14,9 +17,11 @@ namespace Medical.GUI
         private Dictionary<String, int> rowIndexes = new Dictionary<string, int>();
         private List<ActionViewRow> rows = new List<ActionViewRow>();
         private ActionViewButton currentButton;
-        private List<IActionViewExtension> extensions = new List<IActionViewExtension>();
 
         public event EventHandler ActiveActionChanged;
+        public event ActionViewRowEvent RowPositionChanged;
+        public event CanvasSizeChanged CanvasWidthChanged;
+        public event CanvasSizeChanged CanvasHeightChanged;
 
         private const int PREVIEW_PADDING = 10;
         private const int TRACK_START_Y = 3;
@@ -32,14 +37,13 @@ namespace Medical.GUI
             int y = TRACK_START_Y;
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                ActionViewRow actionViewRow = new ActionViewRow(y, pixelsPerSecond, actionProp.Color);
+                ActionViewRow actionViewRow = new ActionViewRow(actionProp.TypeName, y, pixelsPerSecond, actionProp.Color);
+                actionViewRow.BottomChanged += new EventHandler(actionViewRow_BottomChanged);
                 rows.Add(actionViewRow);
                 rowIndexes.Add(actionProp.TypeName, rows.Count - 1);
                 y = actionViewRow.Bottom;
             }
-            Size2 canvasSize = scrollView.CanvasSize;
-            canvasSize.Height = y;
-            scrollView.CanvasSize = canvasSize;
+            CanvasHeight = y;
         }
 
         public void Dispose()
@@ -50,19 +54,6 @@ namespace Medical.GUI
             }
         }
 
-        public void addExtension(IActionViewExtension extension)
-        {
-            extensions.Add(extension);
-            extension.pixelsPerSecondChanged(pixelsPerSecond);
-            extension.scrollCanvasSizeChanged(scrollView.CanvasSize);
-            extension.scrollPositionChanged(scrollView.CanvasPosition);
-        }
-
-        public void removeExtension(IActionViewExtension extension)
-        {
-            extensions.Remove(extension);
-        }
-
         public ActionViewButton addAction(TimelineAction action)
         {
             Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
@@ -70,9 +61,7 @@ namespace Medical.GUI
             actionButton.Clicked += new EventHandler(actionButton_Clicked);
             if (button.Right > scrollView.CanvasSize.Width)
             {
-                Size2 canvasSize = scrollView.CanvasSize;
-                canvasSize.Width = button.Right;
-                scrollView.CanvasSize = canvasSize;
+                CanvasWidth = button.Right;
             }
             return actionButton;
         }
@@ -171,6 +160,14 @@ namespace Medical.GUI
             }
         }
 
+        public IEnumerable<ActionViewRow> Rows
+        {
+            get
+            {
+                return rows;
+            }
+        }
+
         void currentButton_CoordChanged(object sender, EventArgs e)
         {
             Size2 canvasSize = scrollView.CanvasSize;
@@ -263,29 +260,70 @@ namespace Medical.GUI
             }
         }
 
-        void firePixelsPerSecondChanged()
+        void fireRowPositionChanged(ActionViewRow row)
         {
-            foreach (IActionViewExtension extension in extensions)
+            if (RowPositionChanged != null)
             {
-                extension.pixelsPerSecondChanged(pixelsPerSecond);
+                RowPositionChanged.Invoke(row);
             }
         }
 
-        void fireScrollCanvasSizeChanged()
+        void actionViewRow_BottomChanged(object sender, EventArgs e)
         {
-            Size2 size = scrollView.CanvasSize;
-            foreach (IActionViewExtension extension in extensions)
+            bool shiftRow = false;
+            int lastBottom = 0;
+            foreach (ActionViewRow row in rows)
             {
-                extension.scrollCanvasSizeChanged(size);
+                if (shiftRow)
+                {
+                    row.moveEntireRow(lastBottom);
+                    fireRowPositionChanged(row);
+                }
+                else
+                {
+                    shiftRow = row == sender;
+                }
+                lastBottom = row.Bottom;
+            }
+            CanvasHeight = lastBottom;
+        }
+
+        private float CanvasWidth
+        {
+            get
+            {
+                return scrollView.CanvasSize.Width;
+            }
+            set
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Width = value;
+                scrollView.CanvasSize = canvasSize;
+                if (CanvasWidthChanged != null)
+                {
+                    CanvasWidthChanged.Invoke(value);
+                }
             }
         }
 
-        void firePositionChanged()
+        private float CanvasHeight
         {
-            Vector2 position = scrollView.CanvasPosition;
-            foreach (IActionViewExtension extension in extensions)
+            get
             {
-                extension.scrollPositionChanged(position);
+                return scrollView.CanvasSize.Height;
+            }
+            set
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                if (canvasSize.Height != value)
+                {
+                    canvasSize.Height = value;
+                    scrollView.CanvasSize = canvasSize;
+                    if (CanvasHeightChanged != null)
+                    {
+                        CanvasHeightChanged.Invoke(value);
+                    }
+                }
             }
         }
     }

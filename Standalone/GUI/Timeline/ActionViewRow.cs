@@ -9,18 +9,23 @@ namespace Medical.GUI
 {
     class ActionViewRow : IDisposable
     {
+        public event EventHandler BottomChanged;
+
         private List<ActionViewButton> buttons = new List<ActionViewButton>();
         private int yPosition;
         private int pixelsPerSecond;
         private Color color;
         private int ROW_HEIGHT = 19;
         private int STACKED_BUTTON_SPACE = 3;
+        private int bottom;
 
-        public ActionViewRow(int yPosition, int pixelsPerSecond, Color color)
+        public ActionViewRow(String name, int yPosition, int pixelsPerSecond, Color color)
         {
+            this.Name = name;
             this.yPosition = yPosition;
             this.color = color;
             this.pixelsPerSecond = pixelsPerSecond;
+            bottom = yPosition + ROW_HEIGHT;
         }
 
         public void Dispose()
@@ -39,6 +44,7 @@ namespace Medical.GUI
             button.setColour(color);
             viewButton.CoordChanged += viewButton_CoordChanged;
             computeButtonPosition(viewButton);
+            findLowestButton();
             return viewButton;
         }
 
@@ -60,6 +66,7 @@ namespace Medical.GUI
                 closeGaps(removeMe, removeMe.Left, removeMe.Right);
                 removeMe.Dispose();
             }
+            findLowestButton();
             return removeMe;
         }
 
@@ -108,11 +115,44 @@ namespace Medical.GUI
             }
         }
 
+        public void moveEntireRow(int newYPosition)
+        {
+            bottom = newYPosition + ROW_HEIGHT;
+            int delta = newYPosition - yPosition;
+            foreach (ActionViewButton button in buttons)
+            {
+                button._moveTop(button.Top + delta);
+                if (button.Bottom > bottom)
+                {
+                    bottom = button.Bottom;
+                }
+            }
+            yPosition = newYPosition;
+        }
+
         public int Bottom
         {
             get
             {
-                return yPosition + ROW_HEIGHT;
+                return bottom;
+            }
+        }
+
+        public int Top
+        {
+            get
+            {
+                return yPosition;
+            }
+        }
+
+        public String Name { get; private set; }
+
+        public Color Color
+        {
+            get
+            {
+                return color;
             }
         }
 
@@ -122,6 +162,7 @@ namespace Medical.GUI
             ActionViewButton movedButton = sender as ActionViewButton;
             computeButtonPosition(movedButton);           
             closeGaps(movedButton, avbe.OldLeft, avbe.OldRight);
+            findLowestButton();
         }
 
         private void computeButtonPosition(ActionViewButton movedButton)
@@ -240,6 +281,26 @@ namespace Medical.GUI
         int topSortButtons(ActionViewButton a1, ActionViewButton a2)
         {
             return a1.Top - a2.Top;
+        }
+
+        void findLowestButton()
+        {
+            int lowest = 0;
+            foreach (ActionViewButton button in buttons)
+            {
+                if (button.Bottom > lowest)
+                {
+                    lowest = button.Bottom;
+                }
+            }
+            if (lowest != bottom)
+            {
+                bottom = lowest + STACKED_BUTTON_SPACE;
+                if (BottomChanged != null)
+                {
+                    BottomChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
         }
     }
 }

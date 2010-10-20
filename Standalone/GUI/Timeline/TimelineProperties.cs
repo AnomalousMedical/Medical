@@ -71,14 +71,14 @@ namespace Medical.GUI
             actionProperties = new ActionProperties(actionPropertiesScrollView);
             actionProperties.Visible = false;
 
-            //Action filter
-            ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
-            actionFilter = new ActionFilter(actionFilterScrollView);
-
             //Action view
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
             actionView = new ActionView(actionViewScrollView);
             actionView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
+
+            //Action filter
+            ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            actionFilter = new ActionFilter(actionFilterScrollView, actionView);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView);
 

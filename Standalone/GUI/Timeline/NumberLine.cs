@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class NumberLine : IActionViewExtension
+    class NumberLine
     {
         private ScrollView numberlineScroller;
         private int pixelsPerSecond = 100;
@@ -44,6 +44,11 @@ namespace Medical.GUI
         public void scrollCanvasSizeChanged(Size2 size)
         {
             
+        }
+
+        public void rowPositionChanged(ActionViewRow row)
+        {
+
         }
 
         #endregion
