@@ -42,7 +42,7 @@
                 <Property key="ComboBox_AddItem" value="Osteophyte"/>
                 <Property key="Edit_Static" value="true"/>
             </Widget>
-            <Widget type="Widget" skin="CustomPanelOnPanel2" position="4 219 184 180">
+            <Widget type="Widget" skin="MultiListCustomPanel" position="4 219 184 180">
                 <Widget type="StaticText" skin="StaticText" position="4 4 42 15">
                     <Property key="Widget_Caption" value="Stage"/>
                 </Widget>
@@ -70,7 +70,7 @@
                 <Widget type="Button" skin="RadioBox" position="9 156 57 15" name="DiscSpace/StageVb">
                     <Property key="Widget_Caption" value="Vb"/>
                 </Widget>
-                <Widget type="Widget" skin="CustomPanelOnPanel" position="77 4 103 83" name="DiscSpace/ClockFace">
+                <Widget type="Widget" skin="MultiListCustomPanel" position="77 4 103 83" name="DiscSpace/ClockFace">
                     <Widget type="StaticText" skin="StaticText" position="4 4 92 15">
                         <Property key="Widget_Caption" value="Clock Face"/>
                     </Widget>
@@ -84,7 +84,7 @@
                         <Property key="Widget_Caption" value="10 O&apos;Clock"/>
                     </Widget>
                 </Widget>
-                <Widget type="Widget" skin="CustomPanelOnPanel" position="77 91 103 85" name="DiscSpace/RDAReduction">
+                <Widget type="Widget" skin="MultiListCustomPanel" position="77 91 103 85" name="DiscSpace/RDAReduction">
                     <Widget type="StaticText" skin="StaticText" position="4 4 92 15">
                         <Property key="Widget_Caption" value="RDA Reduction"/>
                     </Widget>

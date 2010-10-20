@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="55 42 716 515" layer="Modal">
         <Property key="Widget_Caption" value="Open"/>
-        <Widget type="MultiList" skin="MultiList" position="4 4 705 360" name="Open/FileList"/>
+        <Widget type="MultiList" skin="MultiList" position="4 4 712 360" name="Open/FileList"/>
         <Widget type="StaticText" skin="StaticText" position="4 369 150 15">
             <Property key="Widget_Caption" value="Search Last Name"/>
         </Widget>
@@ -14,10 +14,10 @@
         <Widget type="Button" skin="Button" position="409 435 72 25" name="Open/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="520 443 174 15" name="Open/WarningText">
+        <Widget type="StaticText" skin="StaticText" position="531 443 174 15" name="Open/WarningText">
             <Property key="Widget_Caption" value="This directory does not exist."/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="479 425 50 50" name="Open/WarningImage">
+        <Widget type="StaticImage" skin="StaticImage" position="481 425 50 50" name="Open/WarningImage">
             <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
             <Property key="Image_Group" value="Icons"/>
             <Property key="Image_Name" value="Warning"/>

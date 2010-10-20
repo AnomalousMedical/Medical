@@ -84,7 +84,7 @@
                 <Widget type="Button" skin="RadioBox" position="6 156 57 15" name="DopplerPanel/StageVb">
                     <Property key="Widget_Caption" value="Vb"/>
                 </Widget>
-                <Widget type="Widget" skin="CustomPanelOnPanel" position="78 4 98 83" name="DopplerPanel/RDAReductionGroupBox">
+                <Widget type="Widget" skin="MultiListCustomPanel" position="78 4 98 83" name="DopplerPanel/RDAReductionGroupBox">
                     <Property key="Widget_Enabled" value="true"/>
                     <Widget type="StaticText" skin="StaticText" position="4 4 92 15">
                         <Property key="Widget_Caption" value="RDA Reduction"/>
