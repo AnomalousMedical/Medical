@@ -43,6 +43,18 @@ namespace Medical.GUI
             }
         }
 
+        public event CanvasPositionChanged CanvasPositionChanged
+        {
+            add
+            {
+                timelineScrollView.CanvasPositionChanged += value;
+            }
+            remove
+            {
+                timelineScrollView.CanvasPositionChanged -= value;
+            }
+        }
+
         private const int PREVIEW_PADDING = 10;
         private const int TRACK_START_Y = 3;
 

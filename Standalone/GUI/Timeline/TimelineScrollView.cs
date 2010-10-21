@@ -8,16 +8,28 @@ using Engine;
 namespace Medical.GUI
 {
     delegate void CanvasSizeChanged(float newSize);
+    delegate void CanvasPositionChanged(CanvasEventArgs info);
 
     class TimelineScrollView
     {
         private ScrollView scrollView;
         public event CanvasSizeChanged CanvasWidthChanged;
         public event CanvasSizeChanged CanvasHeightChanged;
+        public event CanvasPositionChanged CanvasPositionChanged;
 
         public TimelineScrollView(ScrollView scrollView)
         {
             this.scrollView = scrollView;
+            scrollView.CanvasPositionChanged += new MyGUIEvent(scrollView_CanvasPositionChanged);
+        }
+
+        void scrollView_CanvasPositionChanged(Widget source, EventArgs e)
+        {
+            if (CanvasPositionChanged != null)
+            {
+                CanvasEventArgs cea = e as CanvasEventArgs;
+                CanvasPositionChanged.Invoke(cea);
+            }
         }
 
         public Button createButton(float left, float width)

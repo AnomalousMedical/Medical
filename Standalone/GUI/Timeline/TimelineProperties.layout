@@ -19,6 +19,8 @@
             <Widget type="ScrollView" skin="ScrollView" position="3 25 187 207" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="ScrollView_VisibleVScroll" value="false"/>
+                <Property key="ScrollView_VisibleHScroll" value="false"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 232 484 21" align="HStretch Bottom" name="NumberLine">
                 <Property key="ScrollView_VisibleVScroll" value="false"/>

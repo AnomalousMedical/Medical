@@ -22,14 +22,23 @@ namespace Medical.GUI
 
             actionView.RowPositionChanged += new ActionViewRowEvent(actionView_RowPositionChanged);
             actionView.CanvasHeightChanged += new CanvasSizeChanged(actionView_CanvasHeightChanged);
+            actionView.CanvasPositionChanged += new CanvasPositionChanged(actionView_CanvasPositionChanged);
 
+            Button button = null;
             foreach (ActionViewRow row in actionView.Rows)
             {
                 String actionName = row.Name;
-                Button button = scrollView.createWidgetT("Button", "CheckBox", 0, row.Top, buttonWidth, buttonHeight, Align.Default, "") as Button;
+                button = scrollView.createWidgetT("Button", "CheckBox", 0, row.Top, buttonWidth, buttonHeight, Align.Default, "") as Button;
                 ActionFilterButton filterButton = new ActionFilterButton(button, actionName);
                 filterButtons.Add(row, filterButton);
                 button.TextColor = row.Color;
+            }
+
+            if (button != null)
+            {
+                Size2 canvasSize = scrollView.CanvasSize;
+                canvasSize.Height = button.Bottom;
+                scrollView.CanvasSize = canvasSize;
             }
         }
 
@@ -49,6 +58,13 @@ namespace Medical.GUI
             Size2 canvasSize = scrollView.CanvasSize;
             canvasSize.Height = newSize;
             scrollView.CanvasSize = canvasSize;
+        }
+
+        void actionView_CanvasPositionChanged(CanvasEventArgs info)
+        {
+            Vector2 currentPos = scrollView.CanvasPosition;
+            currentPos.y = -info.Top;
+            scrollView.CanvasPosition = currentPos;
         }
     }
 }
