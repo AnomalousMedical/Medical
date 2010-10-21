@@ -44,7 +44,6 @@ namespace Medical.GUI
             this.button = button;
             button.MouseDrag += new MyGUIEvent(button_MouseDrag);
             button.MouseButtonPressed += new MyGUIEvent(button_MouseButtonPressed);
-            updateDurationWidth();
         }
 
         /// <summary>

@@ -76,7 +76,7 @@ namespace Medical.GUI
 
         public ActionViewButton addAction(TimelineAction action)
         {
-            Button button = timelineScrollView.createButton(pixelsPerSecond * action.StartTime);
+            Button button = timelineScrollView.createButton(pixelsPerSecond * action.StartTime, pixelsPerSecond * action.Duration);
             ActionViewButton actionButton = rows[rowIndexes[action.TypeName]].addButton(button, action);
             actionButton.Clicked += new EventHandler(actionButton_Clicked);
             return actionButton;
