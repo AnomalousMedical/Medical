@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="84 144 356 441" layer="Modal">
+    <Widget type="Window" skin="WindowCX" position="84 144 350 441" layer="Modal">
         <Property key="Widget_Caption" value="About"/>
-        <Property key="Window_MinSize" value="356 441"/>
-        <Property key="Window_MaxSize" value="356 441"/>
+        <Property key="Window_MinSize" value="350 441"/>
+        <Property key="Window_MaxSize" value="350 441"/>
         <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
             <Property key="Image_Resource" value="AboutImage/Image"/>
             <Widget type="StaticText" skin="StaticText" position="117 81 200 13" name="FeatureLevelText">
@@ -18,6 +18,7 @@
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="231 401 116 13" name="AnomalousMedicalLink">
             <Property key="Widget_Caption" value="Anomalous Medical"/>
+            <Property key="Text_TextColour" value="008de6"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
             <Property key="Widget_Visible" value="true"/>
@@ -39,32 +40,40 @@
             <Widget type="StaticText" skin="StaticText" position="3 5 132 13">
                 <Property key="Widget_Caption" value="Open Source Projects"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 23 51 13" name="Ogre3DLink">
+            <Widget type="StaticText" skin="StaticText" position="5 23 51 13" name="Ogre3DLink">
                 <Property key="Widget_Caption" value="Ogre 3D"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="Button" skin="Button" position="252 183 91 28" name="OpenSourceMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 38 41 13" name="MyGUILink">
+            <Widget type="StaticText" skin="StaticText" position="5 38 41 13" name="MyGUILink">
                 <Property key="Widget_Caption" value="MyGUI"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 53 81 13" name="BulletPhysicsLink">
+            <Widget type="StaticText" skin="StaticText" position="5 53 81 13" name="BulletPhysicsLink">
                 <Property key="Widget_Caption" value="Bullet Physics"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 68 24 13" name="OISLink">
+            <Widget type="StaticText" skin="StaticText" position="5 68 24 13" name="OISLink">
                 <Property key="Widget_Caption" value="OIS"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 83 41 13" name="ZZiplibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 83 41 13" name="ZZiplibLink">
                 <Property key="Widget_Caption" value="Zziplib"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 98 25 13" name="ZlibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 98 25 13" name="ZlibLink">
                 <Property key="Widget_Caption" value="Zlib"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 113 55 13" name="FreetypeLink">
+            <Widget type="StaticText" skin="StaticText" position="5 113 55 13" name="FreetypeLink">
                 <Property key="Widget_Caption" value="Freetype"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="3 128 63 13" name="FreeimageLink">
+            <Widget type="StaticText" skin="StaticText" position="5 128 63 13" name="FreeimageLink">
                 <Property key="Widget_Caption" value="Freeimage"/>
+                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
         </Widget>
     </Widget>

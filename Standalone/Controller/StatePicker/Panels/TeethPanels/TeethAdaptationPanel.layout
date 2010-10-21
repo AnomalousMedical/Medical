@@ -34,7 +34,7 @@
                 <Property key="Widget_Caption" value="Automatic"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="4 173 284 47">
-                <Property key="Widget_Caption" value="Manually move the teeth to fine tune their\npositions. Or manually move and rotate the teeth\nto match your patient exactly."/>
+                <Property key="Widget_Caption" value="Manually move the teeth to fine tune their\npositions. Or manually move and rotate the\nteeth to match your patient exactly."/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 224 160 30" name="TeethMovmentPanel/MoveButton">
                 <Property key="Widget_Caption" value="Linear Movements"/>
