@@ -55,7 +55,7 @@ namespace Medical
                     MessageBox.show("Your current version is up to date.", "Update", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.show("Could not find update information, please try again later.", "Cannot find update", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
             }

@@ -8,11 +8,10 @@ using Engine;
 namespace Medical.GUI
 {
     delegate void ActionViewRowEvent(ActionViewRow row);
-    delegate void CanvasSizeChanged(float newSize);
 
     class ActionView : IDisposable
     {
-        private ScrollView scrollView;
+        private TimelineScrollView timelineScrollView;
         private int pixelsPerSecond = 100;
         private Dictionary<String, int> rowIndexes = new Dictionary<string, int>();
         private List<ActionViewRow> rows = new List<ActionViewRow>();
@@ -20,8 +19,29 @@ namespace Medical.GUI
 
         public event EventHandler ActiveActionChanged;
         public event ActionViewRowEvent RowPositionChanged;
-        public event CanvasSizeChanged CanvasWidthChanged;
-        public event CanvasSizeChanged CanvasHeightChanged;
+        public event CanvasSizeChanged CanvasWidthChanged
+        {
+            add
+            {
+                timelineScrollView.CanvasWidthChanged += value;
+            }
+            remove
+            {
+                timelineScrollView.CanvasWidthChanged -= value;
+            }
+        }
+
+        public event CanvasSizeChanged CanvasHeightChanged
+        {
+            add
+            {
+                timelineScrollView.CanvasHeightChanged += value;
+            }
+            remove
+            {
+                timelineScrollView.CanvasHeightChanged -= value;
+            }
+        }
 
         private const int PREVIEW_PADDING = 10;
         private const int TRACK_START_Y = 3;
@@ -29,7 +49,7 @@ namespace Medical.GUI
 
         public ActionView(ScrollView scrollView)
         {
-            this.scrollView = scrollView;
+            timelineScrollView = new TimelineScrollView(scrollView);
             scrollView.MouseLostFocus += new MyGUIEvent(scrollView_MouseLostFocus);
             scrollView.MouseWheel += new MyGUIEvent(scrollView_MouseWheel);
             scrollView.KeyButtonPressed += new MyGUIEvent(scrollView_KeyButtonPressed);
@@ -43,7 +63,7 @@ namespace Medical.GUI
                 rowIndexes.Add(actionProp.TypeName, rows.Count - 1);
                 y = actionViewRow.Bottom;
             }
-            CanvasHeight = y;
+            timelineScrollView.CanvasHeight = y;
         }
 
         public void Dispose()
@@ -56,13 +76,9 @@ namespace Medical.GUI
 
         public ActionViewButton addAction(TimelineAction action)
         {
-            Button button = scrollView.createWidgetT("Button", "Button", (int)(pixelsPerSecond * action.StartTime), 0, 10, 10, Align.Left | Align.Top, "") as Button;
+            Button button = timelineScrollView.createButton(pixelsPerSecond * action.StartTime);
             ActionViewButton actionButton = rows[rowIndexes[action.TypeName]].addButton(button, action);
             actionButton.Clicked += new EventHandler(actionButton_Clicked);
-            if (button.Right > scrollView.CanvasSize.Width)
-            {
-                CanvasWidth = button.Right;
-            }
             return actionButton;
         }
 
@@ -91,7 +107,8 @@ namespace Medical.GUI
             }
             currentButton = null;
             CurrentAction = null;
-            scrollView.CanvasSize = new Size2(0.0f, rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f);
+            timelineScrollView.CanvasWidth = 0.0f;
+            timelineScrollView.CanvasHeight = rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f;
         }
 
         public void trimVisibleArea()
@@ -103,13 +120,12 @@ namespace Medical.GUI
             }
             if (rightmostButton != null)
             {
-                Size2 canvasSize = scrollView.CanvasSize;
-                canvasSize.Width = rightmostButton.Right;
-                scrollView.CanvasSize = canvasSize;
+                timelineScrollView.CanvasWidth = rightmostButton.Right;
             }
             else
             {
-                scrollView.CanvasSize = new Size2(0.0f, rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f);
+                timelineScrollView.CanvasWidth = 0.0f;
+                timelineScrollView.CanvasHeight = rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f;
             }
         }
 
@@ -170,20 +186,19 @@ namespace Medical.GUI
 
         void currentButton_CoordChanged(object sender, EventArgs e)
         {
-            Size2 canvasSize = scrollView.CanvasSize;
+            float canvasWidth = timelineScrollView.CanvasWidth;
             //Ensure the canvas is large enough.
-            if (currentButton.Right > scrollView.CanvasSize.Width)
+            if (currentButton.Right > canvasWidth)
             {
-                canvasSize.Width = currentButton.Right;
-                scrollView.CanvasSize = canvasSize;
+                timelineScrollView.CanvasWidth = currentButton.Right;
             }
 
             //Ensure the button is still visible.
-            Vector2 canvasPosition = scrollView.CanvasPosition;
-            int clientWidth = scrollView.ClientCoord.width;
+            Vector2 canvasPosition = timelineScrollView.CanvasPosition;
+            int clientWidth = timelineScrollView.ClientCoord.width;
 
             float visibleSize = canvasPosition.x + clientWidth;
-            if (visibleSize + PREVIEW_PADDING < scrollView.CanvasSize.Width)
+            if (visibleSize + PREVIEW_PADDING < canvasWidth)
             {
                 visibleSize -= PREVIEW_PADDING;
             }
@@ -197,7 +212,7 @@ namespace Medical.GUI
             if (rightSide > visibleSize)
             {
                 canvasPosition.x += rightSide - visibleSize;
-                scrollView.CanvasPosition = canvasPosition;
+                timelineScrollView.CanvasPosition = canvasPosition;
             }
             //Ensure the left side is visible as well
             else if (currentButton.Left < canvasPosition.x + PREVIEW_PADDING)
@@ -207,7 +222,7 @@ namespace Medical.GUI
                 {
                     canvasPosition.x = 0.0f;
                 }
-                scrollView.CanvasPosition = canvasPosition;
+                timelineScrollView.CanvasPosition = canvasPosition;
             }
         }
 
@@ -221,7 +236,7 @@ namespace Medical.GUI
             KeyEventArgs ke = e as KeyEventArgs;
             if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_LCONTROL)
             {
-                scrollView.AllowMouseScroll = true;
+                timelineScrollView.AllowMouseScroll = true;
             }
         }
 
@@ -230,7 +245,7 @@ namespace Medical.GUI
             KeyEventArgs ke = e as KeyEventArgs;
             if (ke.Key == Engine.Platform.KeyboardButtonCode.KC_LCONTROL)
             {
-                scrollView.AllowMouseScroll = false;
+                timelineScrollView.AllowMouseScroll = false;
             }
         }
 
@@ -246,16 +261,16 @@ namespace Medical.GUI
             Widget newFocus = fe.OtherWidget;
             if (newFocus == null)
             {
-                scrollView.AllowMouseScroll = true;
+                timelineScrollView.AllowMouseScroll = true;
             }
             else
             {
-                int absRight = scrollView.AbsoluteLeft + scrollView.Width;
-                int absBottom = scrollView.AbsoluteTop + scrollView.Height;
-                if (newFocus.AbsoluteLeft < scrollView.AbsoluteLeft || newFocus.AbsoluteLeft > absRight
-                                            || newFocus.AbsoluteTop < scrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
+                int absRight = timelineScrollView.AbsoluteLeft + timelineScrollView.Width;
+                int absBottom = timelineScrollView.AbsoluteTop + timelineScrollView.Height;
+                if (newFocus.AbsoluteLeft < timelineScrollView.AbsoluteLeft || newFocus.AbsoluteLeft > absRight
+                                            || newFocus.AbsoluteTop < timelineScrollView.AbsoluteTop || newFocus.AbsoluteTop > absBottom)
                 {
-                    scrollView.AllowMouseScroll = true;
+                    timelineScrollView.AllowMouseScroll = true;
                 }
             }
         }
@@ -285,46 +300,7 @@ namespace Medical.GUI
                 }
                 lastBottom = row.Bottom;
             }
-            CanvasHeight = lastBottom;
-        }
-
-        private float CanvasWidth
-        {
-            get
-            {
-                return scrollView.CanvasSize.Width;
-            }
-            set
-            {
-                Size2 canvasSize = scrollView.CanvasSize;
-                canvasSize.Width = value;
-                scrollView.CanvasSize = canvasSize;
-                if (CanvasWidthChanged != null)
-                {
-                    CanvasWidthChanged.Invoke(value);
-                }
-            }
-        }
-
-        private float CanvasHeight
-        {
-            get
-            {
-                return scrollView.CanvasSize.Height;
-            }
-            set
-            {
-                Size2 canvasSize = scrollView.CanvasSize;
-                if (canvasSize.Height != value)
-                {
-                    canvasSize.Height = value;
-                    scrollView.CanvasSize = canvasSize;
-                    if (CanvasHeightChanged != null)
-                    {
-                        CanvasHeightChanged.Invoke(value);
-                    }
-                }
-            }
+            timelineScrollView.CanvasHeight = lastBottom;
         }
     }
 }

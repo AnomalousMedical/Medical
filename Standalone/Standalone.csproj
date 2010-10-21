@@ -197,6 +197,7 @@
     <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
+    <Compile Include="GUI\Timeline\TimelineScrollView.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />

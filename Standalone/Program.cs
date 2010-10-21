@@ -105,7 +105,7 @@ namespace Standalone
                     SimulatedVersion version = (SimulatedVersion)Enum.Parse(typeof(SimulatedVersion), args[2]);
                     return version;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.Error.WriteLine(String.Format("The edition specified \'{0}\' is not valid.", args[2]));
                     return SimulatedVersion.Graphics;
