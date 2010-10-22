@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="53 80 273 600" layer="Back">
+    <Widget type="Widget" skin="Panel" position="53 80 352 600" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="4 4 109 15">
             <Property key="Widget_Caption" value="Distortion Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 23 262 21" align="HStretch Top" name="Notes/DistortionName">
+        <Widget type="Edit" skin="Edit" position="6 23 341 21" align="HStretch Top" name="Notes/DistortionName">
             <Property key="Widget_Caption" value="Custom Distortion"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 48 110 15">
             <Property key="Widget_Caption" value="Date Created"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 67 262 21" align="HStretch Top" name="Notes/DateCreated">
+        <Widget type="Edit" skin="Edit" position="6 67 341 21" align="HStretch Top" name="Notes/DateCreated">
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 92 110 15">
             <Property key="Widget_Caption" value="Distortion Wizard"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 111 262 21" align="HStretch Top" name="Notes/DistortionWizard">
+        <Widget type="Edit" skin="Edit" position="6 111 341 21" align="HStretch Top" name="Notes/DistortionWizard">
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 136 116 15">
             <Property key="Widget_Caption" value="Select Thumbnail"/>
         </Widget>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="6 155 260 165" align="HStretch Top" name="Notes/Thumbnails">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="6 155 339 165" align="HStretch Top" name="Notes/Thumbnails">
             <Property key="ScrollView_CanvasSize" value="245 10"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 325 47 15">
             <Property key="Widget_Caption" value="Notes"/>
         </Widget>
-        <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="6 344 261 251" align="HStretch VStretch">
-            <Widget type="Edit" skin="WordWrap" position="0 0 261 251" align="Stretch" name="Notes/NotesText">
+        <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="6 344 340 251" align="HStretch VStretch">
+            <Widget type="Edit" skin="WordWrap" position="0 0 340 251" align="Stretch" name="Notes/NotesText">
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Edit_MaxTextLength" value="2900"/>
             </Widget>

@@ -1,40 +1,40 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="101 199 291 374" layer="Overlapped">
+    <Widget type="Widget" skin="Panel" position="101 199 352 374" layer="Overlapped">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-            <Property key="ScrollView_CanvasSize" value="291 374"/>
+            <Property key="ScrollView_CanvasSize" value="352 374"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="4 4 291 15">
                 <Property key="Widget_Caption" value="Choose a camera angle.  Change when required."/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="3 23 53 53" name="TeethMovementPanel/TopCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="17 23 53 53" name="TeethMovementPanel/TopCameraButton">
                 <Property key="Widget_Caption" value="Top"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptTopTeeth"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="61 23 53 53" name="TeethMovementPanel/BottomCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="84 23 53 53" name="TeethMovementPanel/BottomCameraButton">
                 <Property key="Widget_Caption" value="Bottom"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptBottomTeeth"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="119 23 53 53" name="TeethMovementPanel/LeftLateralCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="150 23 53 53" name="TeethMovementPanel/LeftLateralCameraButton">
                 <Property key="Widget_Caption" value="Right"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptRightLateral"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="177 23 53 53" name="TeethMovementPanel/MidlineAnteriorCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="216 23 53 53" name="TeethMovementPanel/MidlineAnteriorCameraButton">
                 <Property key="Widget_Caption" value="Midline"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptMidlineAnterior"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="235 23 53 53" name="TeethMovementPanel/RightLateralCameraButton">
+            <Widget type="Button" skin="ButtonImageBackground" position="282 23 53 53" name="TeethMovementPanel/RightLateralCameraButton">
                 <Property key="Widget_Caption" value="Left"/>
                 <Property key="Button_ImageResource" value="TeethMovementIcons/AdaptLeftLateral"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="4 78 284 57">
-                <Property key="Widget_Caption" value="Click the Automatic button to automatically adapt\nthe teeth to fit the mandible you have created.\nClick it again to stop the adaptation if it is\nsuitable."/>
+            <Widget type="StaticText" skin="StaticText" position="4 78 344 57">
+                <Property key="Widget_Caption" value="Click the Automatic button to automatically adapt the\nteeth to fit the mandible you have created. Click it again\nto stop the adaptation if it is suitable."/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 138 88 30" name="TeethMovmentPanel/AdaptButton">
                 <Property key="Widget_Caption" value="Automatic"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="4 173 284 47">
-                <Property key="Widget_Caption" value="Manually move the teeth to fine tune their\npositions. Or manually move and rotate the\nteeth to match your patient exactly."/>
+            <Widget type="StaticText" skin="StaticText" position="4 173 344 47">
+                <Property key="Widget_Caption" value="Manually move the teeth to fine tune their positions.\nOr manually move and rotate the teeth to match your\npatient exactly."/>
             </Widget>
             <Widget type="Button" skin="Button" position="4 224 160 30" name="TeethMovmentPanel/MoveButton">
                 <Property key="Widget_Caption" value="Linear Movements"/>
@@ -48,7 +48,7 @@
             <Widget type="Button" skin="Button" position="96 340 98 30" name="TeethAdaptationPanel/ResetButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
-            <Widget type="Widget" skin="PanelEmpty" position="4 293 283 44" layer="Back" name="GridControl">
+            <Widget type="Widget" skin="PanelEmpty" position="4 293 344 44" layer="Back" name="GridControl">
                 <Widget type="StaticText" skin="StaticText" position="4 4 262 15">
                     <Property key="Widget_Caption" value="Turn the grid on or off and adjust its spacing."/>
                 </Widget>

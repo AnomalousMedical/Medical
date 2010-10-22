@@ -1,92 +1,94 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="76 175 227 274" layer="Overlapped">
+    <Widget type="Widget" skin="Panel" position="76 175 352 274" layer="Overlapped">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-            <Property key="ScrollView_CanvasSize" value="227 274"/>
+            <Property key="ScrollView_CanvasSize" value="352 274"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="Button" skin="ButtonImage" position="3 34 42 44" name="BottomTeethRemoval/Tooth32">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth32"/>
-                <UserString key="Tooth" value="Tooth32"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="182 36 42 44" name="BottomTeethRemoval/Tooth17">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth17"/>
-                <UserString key="Tooth" value="Tooth17"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="5 77 42 42" name="BottomTeethRemoval/Tooth31">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth31"/>
-                <UserString key="Tooth" value="Tooth31"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="180 77 42 42" name="BottomTeethRemoval/Tooth18">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth18"/>
-                <UserString key="Tooth" value="Tooth18"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="6 116 44 45" name="BottomTeethRemoval/Tooth30">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth30"/>
-                <UserString key="Tooth" value="Tooth30"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="176 116 44 45" name="BottomTeethRemoval/Tooth19">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth19"/>
-                <UserString key="Tooth" value="Tooth19"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="17 159 33 32" name="BottomTeethRemoval/Tooth29">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth29"/>
-                <UserString key="Tooth" value="Tooth29"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="176 159 34 32" name="BottomTeethRemoval/Tooth20">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth20"/>
-                <UserString key="Tooth" value="Tooth20"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="25 188 32 32" name="BottomTeethRemoval/Tooth28">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth28"/>
-                <UserString key="Tooth" value="Tooth28"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="169 187 34 32" name="BottomTeethRemoval/Tooth21">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth21"/>
-                <UserString key="Tooth" value="Tooth21"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="42 214 30 33" name="BottomTeethRemoval/Tooth27">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth27"/>
-                <UserString key="Tooth" value="Tooth27"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="157 214 30 33" name="BottomTeethRemoval/Tooth22">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth22"/>
-                <UserString key="Tooth" value="Tooth22"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="65 230 28 33" name="BottomTeethRemoval/Tooth26">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth26"/>
-                <UserString key="Tooth" value="Tooth26"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="133 229 28 33" name="BottomTeethRemoval/Tooth23">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth23"/>
-                <UserString key="Tooth" value="Tooth23"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="88 236 27 31" name="BottomTeethRemoval/Tooth25">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth25"/>
-                <UserString key="Tooth" value="Tooth25"/>
-            </Widget>
-            <Widget type="Button" skin="ButtonImage" position="110 236 27 31" name="BottomTeethRemoval/Tooth24">
-                <Property key="Button_ModeImage" value="true"/>
-                <Property key="Button_ImageResource" value="TeethButtons/Tooth24"/>
-                <UserString key="Tooth" value="Tooth24"/>
-            </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="4 0 222 31" align="HStretch Top">
-                <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
-                <Property key="Edit_Static" value="true"/>
+            <Widget type="Widget" skin="PanelEmpty" position="61 0 230 274" align="Left Top">
+                <Widget type="Button" skin="ButtonImage" position="3 34 42 44" name="BottomTeethRemoval/Tooth32">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth32"/>
+                    <UserString key="Tooth" value="Tooth32"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="182 36 42 44" name="BottomTeethRemoval/Tooth17">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth17"/>
+                    <UserString key="Tooth" value="Tooth17"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="5 77 42 42" name="BottomTeethRemoval/Tooth31">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth31"/>
+                    <UserString key="Tooth" value="Tooth31"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="180 77 42 42" name="BottomTeethRemoval/Tooth18">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth18"/>
+                    <UserString key="Tooth" value="Tooth18"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="6 116 44 45" name="BottomTeethRemoval/Tooth30">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth30"/>
+                    <UserString key="Tooth" value="Tooth30"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="176 116 44 45" name="BottomTeethRemoval/Tooth19">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth19"/>
+                    <UserString key="Tooth" value="Tooth19"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="17 159 33 32" name="BottomTeethRemoval/Tooth29">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth29"/>
+                    <UserString key="Tooth" value="Tooth29"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="176 159 34 32" name="BottomTeethRemoval/Tooth20">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth20"/>
+                    <UserString key="Tooth" value="Tooth20"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="25 188 32 32" name="BottomTeethRemoval/Tooth28">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth28"/>
+                    <UserString key="Tooth" value="Tooth28"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="169 187 34 32" name="BottomTeethRemoval/Tooth21">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth21"/>
+                    <UserString key="Tooth" value="Tooth21"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="42 214 30 33" name="BottomTeethRemoval/Tooth27">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth27"/>
+                    <UserString key="Tooth" value="Tooth27"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="157 214 30 33" name="BottomTeethRemoval/Tooth22">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth22"/>
+                    <UserString key="Tooth" value="Tooth22"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="65 230 28 33" name="BottomTeethRemoval/Tooth26">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth26"/>
+                    <UserString key="Tooth" value="Tooth26"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="133 229 28 33" name="BottomTeethRemoval/Tooth23">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth23"/>
+                    <UserString key="Tooth" value="Tooth23"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="88 236 27 31" name="BottomTeethRemoval/Tooth25">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth25"/>
+                    <UserString key="Tooth" value="Tooth25"/>
+                </Widget>
+                <Widget type="Button" skin="ButtonImage" position="110 236 27 31" name="BottomTeethRemoval/Tooth24">
+                    <Property key="Button_ModeImage" value="true"/>
+                    <Property key="Button_ImageResource" value="TeethButtons/Tooth24"/>
+                    <UserString key="Tooth" value="Tooth24"/>
+                </Widget>
+                <Widget type="Edit" skin="WordWrapSimple" position="4 0 226 31" align="HStretch Top">
+                    <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
+                    <Property key="Edit_Static" value="true"/>
+                </Widget>
             </Widget>
         </Widget>
     </Widget>
