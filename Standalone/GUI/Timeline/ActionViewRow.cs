@@ -18,6 +18,7 @@ namespace Medical.GUI
         private int ROW_HEIGHT = 19;
         private int STACKED_BUTTON_SPACE = 3;
         private int bottom;
+        private bool processButtonChanges = true;
 
         public ActionViewRow(String name, int yPosition, int pixelsPerSecond, Color color)
         {
@@ -117,6 +118,7 @@ namespace Medical.GUI
 
         public void moveEntireRow(int newYPosition)
         {
+            processButtonChanges = false;
             bottom = newYPosition + ROW_HEIGHT;
             int delta = newYPosition - yPosition;
             foreach (ActionViewButton button in buttons)
@@ -128,6 +130,7 @@ namespace Medical.GUI
                 }
             }
             yPosition = newYPosition;
+            processButtonChanges = true;
         }
 
         public int Bottom
@@ -158,11 +161,14 @@ namespace Medical.GUI
 
         void viewButton_CoordChanged(object sender, EventArgs e)
         {
-            ActionViewButtonEventArgs avbe = e as ActionViewButtonEventArgs;
-            ActionViewButton movedButton = sender as ActionViewButton;
-            computeButtonPosition(movedButton);           
-            closeGaps(movedButton, avbe.OldLeft, avbe.OldRight);
-            findLowestButton();
+            if (processButtonChanges)
+            {
+                ActionViewButtonEventArgs avbe = e as ActionViewButtonEventArgs;
+                ActionViewButton movedButton = sender as ActionViewButton;
+                computeButtonPosition(movedButton);
+                closeGaps(movedButton, avbe.OldLeft, avbe.OldRight);
+                findLowestButton();
+            }
         }
 
         private void computeButtonPosition(ActionViewButton movedButton)

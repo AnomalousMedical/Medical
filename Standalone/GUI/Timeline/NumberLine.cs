@@ -106,7 +106,19 @@ namespace Medical.GUI
             {
                 pixelsPerSecond = value;
                 Logging.Log.Debug(pixelsPerSecond.ToString());
-                if (pixelsPerSecond <= 10)
+                if (pixelsPerSecond == 1)
+                {
+                    numberSeparationDuration = 40.0f;
+                }
+                else if (pixelsPerSecond <= 3)
+                {
+                    numberSeparationDuration = 20.0f;
+                }
+                else if (pixelsPerSecond <= 7)
+                {
+                    numberSeparationDuration = 10.0f;
+                }
+                else if (pixelsPerSecond <= 10)
                 {
                     numberSeparationDuration = 5.0f;
                 }

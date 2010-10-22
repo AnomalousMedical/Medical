@@ -179,9 +179,13 @@ namespace Medical.GUI
                 if (pixelsPerSecond != value)
                 {
                     pixelsPerSecond = value;
-                    if (pixelsPerSecond < 10)
+                    if (pixelsPerSecond < 1)
                     {
-                        pixelsPerSecond = 10;
+                        pixelsPerSecond = 1;
+                    }
+                    else if (pixelsPerSecond > 150)
+                    {
+                        pixelsPerSecond = 150;
                     }
                     foreach (ActionViewRow row in rows)
                     {
@@ -272,7 +276,25 @@ namespace Medical.GUI
         void scrollView_MouseWheel(Widget source, EventArgs e)
         {
             MouseEventArgs me = e as MouseEventArgs;
-            PixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
+            if (PixelsPerSecond > 10)
+            {
+                PixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
+            }
+            else if (PixelsPerSecond < 10)
+            {
+                PixelsPerSecond += (int)((me.RelativeWheelPosition / 120.0f));
+            }
+            else if (PixelsPerSecond == 10)
+            {
+                if (me.RelativeWheelPosition > 0)
+                {
+                    PixelsPerSecond += (int)(10 * (me.RelativeWheelPosition / 120.0f));
+                }
+                else
+                {
+                    PixelsPerSecond += (int)((me.RelativeWheelPosition / 120.0f));
+                }
+            }
         }
 
         void scrollView_MouseLostFocus(Widget source, EventArgs e)
