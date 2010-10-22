@@ -19,6 +19,7 @@ namespace Medical.GUI
 
         public event EventHandler ActiveActionChanged;
         public event ActionViewRowEvent RowPositionChanged;
+        public event EventHandler PixelsPerSecondChanged;
         public event CanvasSizeChanged CanvasWidthChanged
         {
             add
@@ -175,16 +176,23 @@ namespace Medical.GUI
             }
             set
             {
-                pixelsPerSecond = value;
-                if (pixelsPerSecond < 10)
+                if (pixelsPerSecond != value)
                 {
-                    pixelsPerSecond = 10;
+                    pixelsPerSecond = value;
+                    if (pixelsPerSecond < 10)
+                    {
+                        pixelsPerSecond = 10;
+                    }
+                    foreach (ActionViewRow row in rows)
+                    {
+                        row.changePixelsPerSecond(pixelsPerSecond);
+                    }
+                    trimVisibleArea();
+                    if (PixelsPerSecondChanged != null)
+                    {
+                        PixelsPerSecondChanged.Invoke(this, EventArgs.Empty);
+                    }
                 }
-                foreach (ActionViewRow row in rows)
-                {
-                    row.changePixelsPerSecond(pixelsPerSecond);
-                }
-                trimVisibleArea();
             }
         }
 

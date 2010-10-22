@@ -12,13 +12,13 @@ namespace Medical.GUI
         private StaticText text;
         private Widget hashMark;
         private float time;
-        private int pixelsPerSecond;
+        private NumberLine numberLine;
 
-        public NumberLineNumber(StaticText text, Widget hashMark, int pixelsPerSecond)
+        public NumberLineNumber(StaticText text, Widget hashMark, NumberLine numberLine)
         {
             this.text = text;
             this.hashMark = hashMark;
-            this.pixelsPerSecond = pixelsPerSecond;
+            this.numberLine = numberLine;
         }
 
         public int Left
@@ -46,25 +46,20 @@ namespace Medical.GUI
             set
             {
                 time = value;
-                text.Caption = time.ToString();
+                int min = (int)(time / 60);
+                int sec = (int)(time % 60);
+                if (sec < 10)
+                {
+                    text.Caption = String.Format("{0}:0{1}", min, sec);
+                }
+                else
+                {
+                    text.Caption = String.Format("{0}:{1}", min, sec);
+                }
                 Size2 textSize = text.getTextSize();
                 text.setSize((int)textSize.Width, (int)textSize.Height);
-                text.setPosition((int)((pixelsPerSecond * time) - text.Width / 2), text.Top);
-                hashMark.setPosition((int)(pixelsPerSecond * time), hashMark.Top);
-            }
-        }
-
-        public int PixelsPerSecond
-        {
-            get
-            {
-                return pixelsPerSecond;
-            }
-            set
-            {
-                pixelsPerSecond = value;
-                text.setPosition((int)((pixelsPerSecond * time) - text.Width / 2), text.Top);
-                hashMark.setPosition((int)(pixelsPerSecond * time), hashMark.Top);
+                text.setPosition((int)((numberLine.PixelsPerSecond * time) - text.Width / 2), text.Top);
+                hashMark.setPosition((int)(numberLine.PixelsPerSecond * time), hashMark.Top);
             }
         }
 
@@ -77,6 +72,7 @@ namespace Medical.GUI
             set
             {
                 text.Visible = value;
+                hashMark.Visible = value;
             }
         }
     }
@@ -96,13 +92,7 @@ namespace Medical.GUI
             pixelsPerSecond = actionView.PixelsPerSecond;
             actionView.CanvasPositionChanged += new CanvasPositionChanged(actionView_CanvasPositionChanged);
             actionView.CanvasWidthChanged += new CanvasSizeChanged(actionView_CanvasWidthChanged);
-
-            canvasModified();
-        }
-
-        void actionView_CanvasWidthChanged(float newSize)
-        {
-            numberlineScroller.CanvasSize = new Size2(newSize > numberlineScroller.Width ? newSize : numberlineScroller.Width, numberlineScroller.Height);
+            actionView.PixelsPerSecondChanged += new EventHandler(actionView_PixelsPerSecondChanged);
             canvasModified();
         }
 
@@ -115,12 +105,47 @@ namespace Medical.GUI
             set
             {
                 pixelsPerSecond = value;
+                Logging.Log.Debug(pixelsPerSecond.ToString());
+                if (pixelsPerSecond <= 10)
+                {
+                    numberSeparationDuration = 5.0f;
+                }
+                else if (pixelsPerSecond <= 20)
+                {
+                    numberSeparationDuration = 3.0f;
+                }
+                else if (pixelsPerSecond <= 40)
+                {
+                    numberSeparationDuration = 2.0f;
+                }
+                else
+                {
+                    numberSeparationDuration = 1.0f;
+                }
+                foreach(NumberLineNumber number in activeNumbers)
+                {
+                    returnNumberToPool(number);
+                }
+                activeNumbers.Clear();
+                canvasModified();
             }
         }
 
         void actionView_CanvasPositionChanged(CanvasEventArgs info)
         {
             numberlineScroller.CanvasPosition = new Vector2(-info.Left, 0.0f);
+            canvasModified();
+        }
+
+        void actionView_PixelsPerSecondChanged(object sender, EventArgs e)
+        {
+            ActionView actionView = (ActionView)sender;
+            this.PixelsPerSecond = actionView.PixelsPerSecond;
+        }
+
+        void actionView_CanvasWidthChanged(float newSize)
+        {
+            numberlineScroller.CanvasSize = new Size2(newSize > numberlineScroller.Width ? newSize : numberlineScroller.Width, numberlineScroller.Height);
             canvasModified();
         }
 
@@ -175,6 +200,7 @@ namespace Medical.GUI
             //If there are currently no active numbers
             else
             {
+                //NEED TO COMPUTE THE STARTING VALUE CORRECTLY SO IT STAYS ALIGNED
                 float startingPoint = leftSide / pixelsPerSecond;
                 NumberLineNumber number = null;
                 for (float i = startingPoint; i * pixelsPerSecond < rightSide; i += numberSeparationDuration)
@@ -200,15 +226,15 @@ namespace Medical.GUI
             else
             {
                 number = new NumberLineNumber(numberlineScroller.createWidgetT("StaticText", "StaticText", 0, 9, 10, 15, Align.Left | Align.Top, "") as StaticText,
-                    numberlineScroller.createWidgetT("Widget", "Separator1", 0, 0, 1, 8, Align.Left | Align.Top, ""), pixelsPerSecond);
+                    numberlineScroller.createWidgetT("Widget", "Separator1", 0, 0, 1, 8, Align.Left | Align.Top, ""), this);
             }
             return number;
         }
 
-        private void returnNumberToPool(NumberLineNumber text)
+        private void returnNumberToPool(NumberLineNumber number)
         {
-            text.Visible = false;
-            inactiveNumbers.Add(text);
+            number.Visible = false;
+            inactiveNumbers.Add(number);
         }
     }
 }
