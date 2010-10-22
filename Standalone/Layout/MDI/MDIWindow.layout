@@ -4,6 +4,6 @@
         <Widget type="Button" skin="Button" position="1 1 83 25" align="Left Top" name="CaptionButton">
             <Property key="Widget_Caption" value="Caption"/>
         </Widget>
-        <Widget type="Button" skin="ButtonXBig" position="338 3 19 14" align="Right Top" name="CloseButton"/>
+        <Widget type="Button" skin="ButtonXBig" position="332 3 24 20" align="Right Top" name="CloseButton"/>
     </Widget>
 </MyGUI>
