@@ -121,8 +121,8 @@ namespace Medical.GUI
 
         void canvasModified()
         {
-            float leftSide = numberlineScroller.CanvasPosition.x - pixelsPerSecond;
-            float rightSide = leftSide + numberlineScroller.ClientCoord.width + pixelsPerSecond;
+            float leftSide = numberlineScroller.CanvasPosition.x - pixelsPerSecond * numberSeparationDuration;
+            float rightSide = leftSide + numberlineScroller.ClientCoord.width + pixelsPerSecond * numberSeparationDuration;
 
             Logging.Log.Debug("{0} {1}", leftSide, rightSide);
 
@@ -132,11 +132,13 @@ namespace Medical.GUI
                 NumberLineNumber number = activeNumbers[i];
                 if (number.Right < leftSide)
                 {
+                    Logging.Log.Debug("Removing number at index {0}", i);
                     activeNumbers.RemoveAt(i--);
                     returnNumberToPool(number);
                 }
                 if (number.Left > rightSide)
                 {
+                    Logging.Log.Debug("Removing number at index {0}", i);
                     activeNumbers.RemoveAt(i--);
                     returnNumberToPool(number);
                 }
@@ -146,18 +148,20 @@ namespace Medical.GUI
             if (activeNumbers.Count > 0)
             {
                 //See if any numbers need to be added to the front of the list
-                float startingPoint = activeNumbers[0].Time;
-                for (int i = 1; (startingPoint - i) * pixelsPerSecond > leftSide; ++i)
+                float startingPoint = activeNumbers[0].Time - numberSeparationDuration;
+                for (float i = startingPoint; i * pixelsPerSecond > leftSide; i -= numberSeparationDuration)
                 {
+                    Logging.Log.Debug("Adding FRONT number at time {0}", i);
                     NumberLineNumber number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Insert(0, number);
                 }
 
                 //Add numbers to the back of the list
-                startingPoint = activeNumbers[activeNumbers.Count - 1].Time;
-                for (int i = 1; (startingPoint + i) * pixelsPerSecond < rightSide; ++i)
+                startingPoint = activeNumbers[activeNumbers.Count - 1].Time + numberSeparationDuration;
+                for (float i = startingPoint; i * pixelsPerSecond < rightSide; i += numberSeparationDuration)
                 {
+                    Logging.Log.Debug("Adding REAR number at time {0}", i);
                     NumberLineNumber number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Add(number);
@@ -168,8 +172,9 @@ namespace Medical.GUI
             {
                 float startingPoint = leftSide / pixelsPerSecond;
                 NumberLineNumber number = null;
-                for (int i = (int)startingPoint; i * pixelsPerSecond < rightSide; ++i)
+                for (float i = startingPoint; i * pixelsPerSecond < rightSide; i += numberSeparationDuration)
                 {
+                    Logging.Log.Debug("Adding NEW number at time {0}", i);
                     number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Add(number);
