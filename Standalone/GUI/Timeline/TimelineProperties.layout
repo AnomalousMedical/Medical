@@ -9,14 +9,14 @@
             <Widget type="Button" skin="Button" position="193 1 35 23" align="Left Top" name="AddAction">
                 <Property key="Widget_Caption" value="Add"/>
             </Widget>
-            <Widget type="ScrollView" skin="CustomScrollView2" position="189 25 485 205" align="Stretch" name="ActionView">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 205" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
             <Widget type="Button" skin="Button" position="114 231 75 23" align="Left Bottom" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollView" position="3 25 187 207" align="Left VStretch" name="ActionFilter">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 207" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
@@ -25,6 +25,7 @@
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 232 484 21" align="HStretch Bottom" name="NumberLine">
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
         </Widget>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 918 23" align="HStretch Top" name="MenuBar"/>

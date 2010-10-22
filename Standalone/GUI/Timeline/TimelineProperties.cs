@@ -80,7 +80,7 @@ namespace Medical.GUI
             ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
             actionFilter = new ActionFilter(actionFilterScrollView, actionView);
 
-            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView);
+            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, actionView);
 
             createNewTimeline();
         }
