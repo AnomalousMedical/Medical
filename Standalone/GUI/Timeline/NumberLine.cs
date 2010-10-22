@@ -10,12 +10,14 @@ namespace Medical.GUI
     class NumberLineNumber
     {
         private StaticText text;
+        private Widget hashMark;
         private float time;
         private int pixelsPerSecond;
 
-        public NumberLineNumber(StaticText text, int pixelsPerSecond)
+        public NumberLineNumber(StaticText text, Widget hashMark, int pixelsPerSecond)
         {
             this.text = text;
+            this.hashMark = hashMark;
             this.pixelsPerSecond = pixelsPerSecond;
         }
 
@@ -47,7 +49,8 @@ namespace Medical.GUI
                 text.Caption = time.ToString();
                 Size2 textSize = text.getTextSize();
                 text.setSize((int)textSize.Width, (int)textSize.Height);
-                text.setPosition((int)(pixelsPerSecond * time), text.Top);
+                text.setPosition((int)((pixelsPerSecond * time) - text.Width / 2), text.Top);
+                hashMark.setPosition((int)(pixelsPerSecond * time), hashMark.Top);
             }
         }
 
@@ -60,7 +63,8 @@ namespace Medical.GUI
             set
             {
                 pixelsPerSecond = value;
-                text.setPosition((int)(pixelsPerSecond * time), text.Top);
+                text.setPosition((int)((pixelsPerSecond * time) - text.Width / 2), text.Top);
+                hashMark.setPosition((int)(pixelsPerSecond * time), hashMark.Top);
             }
         }
 
@@ -80,7 +84,7 @@ namespace Medical.GUI
     class NumberLine
     {
         private ScrollView numberlineScroller;
-        private int pixelsPerSecond = 100;
+        private int pixelsPerSecond;
         private float numberSeparationDuration = 1.0f;
 
         private List<NumberLineNumber> activeNumbers = new List<NumberLineNumber>();
@@ -89,6 +93,7 @@ namespace Medical.GUI
         public NumberLine(ScrollView numberlineScroller, ActionView actionView)
         {
             this.numberlineScroller = numberlineScroller;
+            pixelsPerSecond = actionView.PixelsPerSecond;
             actionView.CanvasPositionChanged += new CanvasPositionChanged(actionView_CanvasPositionChanged);
             actionView.CanvasWidthChanged += new CanvasSizeChanged(actionView_CanvasWidthChanged);
 
@@ -194,7 +199,8 @@ namespace Medical.GUI
             }
             else
             {
-                number = new NumberLineNumber(numberlineScroller.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Left | Align.Top, "") as StaticText, pixelsPerSecond);
+                number = new NumberLineNumber(numberlineScroller.createWidgetT("StaticText", "StaticText", 0, 9, 10, 15, Align.Left | Align.Top, "") as StaticText,
+                    numberlineScroller.createWidgetT("Widget", "Separator1", 0, 0, 1, 8, Align.Left | Align.Top, ""), pixelsPerSecond);
             }
             return number;
         }
