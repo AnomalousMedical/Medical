@@ -84,7 +84,7 @@ namespace Medical
                 }
                 catch (Exception ex)
                 {
-                    Log.Debug("Error loading navigation file.\n{0}", ex.Message);
+                    Log.Error("Error loading navigation file.\n{0}", ex.Message);
                 }
             }
             return null;

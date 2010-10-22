@@ -49,7 +49,7 @@ namespace Medical.Controller
             }
             else
             {
-                Log.Debug("Cannot find window preset set {0}. Loading default.", name);
+                Log.Warning("Cannot find window preset set {0}. Loading default.", name);
                 windowController.createFromPresets(defaultPreset);
             }
         }

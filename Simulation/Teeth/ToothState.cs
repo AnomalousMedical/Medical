@@ -25,12 +25,12 @@ namespace Medical
             this.offset = offset;
             if (!offset.isNumber())
             {
-                Log.Debug("Got a non numerical offset for tooth {0}", Name);
+                Log.Warning("Got a non numerical offset for tooth {0}", Name);
             }
             this.rotation = rotation;
             if (!rotation.isNumber())
             {
-                Log.Debug("Got a non numerical rotation for tooth {0}", Name);
+                Log.Warning("Got a non numerical rotation for tooth {0}", Name);
             }
         }
 

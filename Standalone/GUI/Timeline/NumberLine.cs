@@ -166,21 +166,17 @@ namespace Medical.GUI
             float leftSide = numberlineScroller.CanvasPosition.x - pixelsPerSecond * numberSeparationDuration;
             float rightSide = leftSide + numberlineScroller.ClientCoord.width + pixelsPerSecond * numberSeparationDuration;
 
-            Logging.Log.Debug("{0} {1}", leftSide, rightSide);
-
             //Remove inactive numbers
             for (int i = 0; i < activeNumbers.Count; ++i)
             {
                 NumberLineNumber number = activeNumbers[i];
                 if (number.Right < leftSide)
                 {
-                    Logging.Log.Debug("Removing number at index {0}", i);
                     activeNumbers.RemoveAt(i--);
                     returnNumberToPool(number);
                 }
                 if (number.Left > rightSide)
                 {
-                    Logging.Log.Debug("Removing number at index {0}", i);
                     activeNumbers.RemoveAt(i--);
                     returnNumberToPool(number);
                 }
@@ -193,7 +189,6 @@ namespace Medical.GUI
                 float startingPoint = activeNumbers[0].Time - numberSeparationDuration;
                 for (float i = startingPoint; i * pixelsPerSecond > leftSide; i -= numberSeparationDuration)
                 {
-                    Logging.Log.Debug("Adding FRONT number at time {0}", i);
                     NumberLineNumber number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Insert(0, number);
@@ -203,7 +198,6 @@ namespace Medical.GUI
                 startingPoint = activeNumbers[activeNumbers.Count - 1].Time + numberSeparationDuration;
                 for (float i = startingPoint; i * pixelsPerSecond < rightSide; i += numberSeparationDuration)
                 {
-                    Logging.Log.Debug("Adding REAR number at time {0}", i);
                     NumberLineNumber number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Add(number);
@@ -217,7 +211,6 @@ namespace Medical.GUI
                 NumberLineNumber number = null;
                 for (float i = startingPoint; i * pixelsPerSecond < rightSide; i += numberSeparationDuration)
                 {
-                    Logging.Log.Debug("Adding NEW number at time {0}", i);
                     number = getPooledNumber();
                     number.Time = i;
                     activeNumbers.Add(number);
