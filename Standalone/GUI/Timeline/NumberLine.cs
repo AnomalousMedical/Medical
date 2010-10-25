@@ -230,8 +230,8 @@ namespace Medical.GUI
             }
             else
             {
-                number = new NumberLineNumber(numberlineScroller.createWidgetT("StaticText", "StaticText", 0, 9, 10, 15, Align.Left | Align.Top, "") as StaticText,
-                    numberlineScroller.createWidgetT("Widget", "Separator1", 0, 0, 1, 8, Align.Left | Align.Top, ""), this);
+                number = new NumberLineNumber(numberlineScroller.createWidgetT("StaticText", "StaticText", 0, 0, 10, 15, Align.Left | Align.Top, "") as StaticText,
+                    numberlineScroller.createWidgetT("Widget", "Separator1", 0, 16, 1, numberlineScroller.Height - 16, Align.Left | Align.Top, ""), this);
             }
             return number;
         }

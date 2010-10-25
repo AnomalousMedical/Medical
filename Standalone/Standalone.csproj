@@ -183,6 +183,7 @@
     <Compile Include="GUI\Timeline\ActionViewButton.cs" />
     <Compile Include="GUI\Timeline\ActionViewRow.cs" />
     <Compile Include="GUI\Timeline\NumberLine.cs" />
+    <Compile Include="GUI\Timeline\TimelineMarker.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />

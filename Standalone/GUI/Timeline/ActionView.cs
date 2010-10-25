@@ -16,6 +16,7 @@ namespace Medical.GUI
         private Dictionary<String, int> rowIndexes = new Dictionary<string, int>();
         private List<ActionViewRow> rows = new List<ActionViewRow>();
         private ActionViewButton currentButton;
+        private TimelineMarker timelineMarker;
 
         public event EventHandler ActiveActionChanged;
         public event ActionViewRowEvent RowPositionChanged;
@@ -77,6 +78,9 @@ namespace Medical.GUI
                 y = actionViewRow.Bottom;
             }
             timelineScrollView.CanvasHeight = y;
+
+            timelineMarker = new TimelineMarker(this, scrollView);
+            timelineMarker.CoordChanged += new EventHandler(timelineMarker_CoordChanged);
         }
 
         public void Dispose()
@@ -208,13 +212,23 @@ namespace Medical.GUI
             }
         }
 
+        void timelineMarker_CoordChanged(object sender, EventArgs e)
+        {
+            respondToCoordChange(timelineMarker.Left, timelineMarker.Right, timelineMarker.Width);
+        }
+
         void currentButton_CoordChanged(object sender, EventArgs e)
+        {
+            respondToCoordChange(currentButton.Left, currentButton.Right, currentButton.Width);
+        }
+
+        private void respondToCoordChange(int left, int right, int width)
         {
             float canvasWidth = timelineScrollView.CanvasWidth;
             //Ensure the canvas is large enough.
-            if (currentButton.Right > canvasWidth)
+            if (right > canvasWidth)
             {
-                timelineScrollView.CanvasWidth = currentButton.Right;
+                timelineScrollView.CanvasWidth = right;
             }
 
             //Ensure the button is still visible.
@@ -226,11 +240,11 @@ namespace Medical.GUI
             {
                 visibleSize -= PREVIEW_PADDING;
             }
-            int rightSide = currentButton.Right;
+            int rightSide = right;
             //If the button is longer than the display area tweak the right side value.
-            if (currentButton.Width > clientWidth)
+            if (width > clientWidth)
             {
-                rightSide = currentButton.Left + clientWidth - PREVIEW_PADDING * 2;
+                rightSide = left + clientWidth - PREVIEW_PADDING * 2;
             }
             //Ensure the right side is visible
             if (rightSide > visibleSize)
@@ -239,9 +253,9 @@ namespace Medical.GUI
                 timelineScrollView.CanvasPosition = canvasPosition;
             }
             //Ensure the left side is visible as well
-            else if (currentButton.Left < canvasPosition.x + PREVIEW_PADDING)
+            else if (left < canvasPosition.x + PREVIEW_PADDING)
             {
-                canvasPosition.x = currentButton.Left - PREVIEW_PADDING;
+                canvasPosition.x = left - PREVIEW_PADDING;
                 if (canvasPosition.x < 0.0f)
                 {
                     canvasPosition.x = 0.0f;
