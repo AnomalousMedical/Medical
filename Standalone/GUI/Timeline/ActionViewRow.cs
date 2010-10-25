@@ -291,7 +291,7 @@ namespace Medical.GUI
 
         void findLowestButton()
         {
-            int lowest = 0;
+            int lowest = yPosition + ROW_HEIGHT;
             foreach (ActionViewButton button in buttons)
             {
                 if (button.Bottom > lowest)

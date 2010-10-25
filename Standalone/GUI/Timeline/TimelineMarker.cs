@@ -7,7 +7,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class TimelineMarker
+    class TimelineMarker : IDisposable
     {
         private Widget widget;
         private int pixelsPerSecond;
@@ -27,6 +27,11 @@ namespace Medical.GUI
             pixelsPerSecond = actionView.PixelsPerSecond;
             actionView.CanvasHeightChanged += new CanvasSizeChanged(actionView_CanvasHeightChanged);
             actionView.PixelsPerSecondChanged += new EventHandler(actionView_PixelsPerSecondChanged);
+        }
+
+        public void Dispose()
+        {
+            Gui.Instance.destroyWidget(widget);
         }
 
         public float Time

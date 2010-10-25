@@ -179,7 +179,21 @@ namespace Medical
 
         public TimelineController TimelineController { get; internal set; }
 
-        public IEnumerable<TimelineAction> Actions { get { return actions; } }
+        public IEnumerable<TimelineAction> Actions
+        {
+            get
+            {
+                return actions;
+            }
+        }
+
+        public float CurrentTime
+        {
+            get
+            {
+                return currentTime;
+            }
+        }
 
         internal void _actionStartChanged(TimelineAction action)
         {

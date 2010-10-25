@@ -29,6 +29,7 @@ namespace Medical.GUI
             this.timelineController = timelineController;
             timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
+            timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -145,6 +146,7 @@ namespace Medical.GUI
         void addActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             TimelineAction action = TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex));
+            action.StartTime = actionView.MarkerTime;
             currentTimeline.addAction(action);
             action.capture();
             actionView.setCurrentAction(action);
@@ -246,6 +248,11 @@ namespace Medical.GUI
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
+        }
+
+        void timelineController_TimeTicked(float currentTime)
+        {
+            actionView.MarkerTime = currentTime;
         }
 
         #endregion

@@ -12,10 +12,13 @@ using System.Xml;
 
 namespace Medical
 {
+    delegate void TimeTickEvent(float currentTime);
+
     class TimelineController : UpdateListener
     {
         public event EventHandler PlaybackStarted;
         public event EventHandler PlaybackStopped;
+        public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
@@ -130,6 +133,10 @@ namespace Medical
         public void sendUpdate(Clock clock)
         {
             activeTimeline.update(clock);
+            if (TimeTicked != null)
+            {
+                TimeTicked.Invoke(activeTimeline.CurrentTime);
+            }
             if (activeTimeline.Finished)
             {
                 stopPlayback();

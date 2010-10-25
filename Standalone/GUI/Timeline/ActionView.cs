@@ -89,6 +89,7 @@ namespace Medical.GUI
             {
                 row.Dispose();
             }
+            timelineMarker.Dispose();
         }
 
         public ActionViewButton addAction(TimelineAction action)
@@ -124,7 +125,7 @@ namespace Medical.GUI
             }
             currentButton = null;
             CurrentAction = null;
-            timelineScrollView.CanvasWidth = 0.0f;
+            timelineScrollView.CanvasWidth = 2.0f;
             timelineScrollView.CanvasHeight = rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f;
         }
 
@@ -141,7 +142,7 @@ namespace Medical.GUI
             }
             else
             {
-                timelineScrollView.CanvasWidth = 0.0f;
+                timelineScrollView.CanvasWidth = 2.0f;
                 timelineScrollView.CanvasHeight = rows.Count != 0 ? rows[rows.Count - 1].Bottom : 0.0f;
             }
         }
@@ -209,6 +210,18 @@ namespace Medical.GUI
             get
             {
                 return rows;
+            }
+        }
+
+        public float MarkerTime
+        {
+            get
+            {
+                return timelineMarker.Time;
+            }
+            set
+            {
+                timelineMarker.Time = value;
             }
         }
 
