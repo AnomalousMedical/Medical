@@ -11,7 +11,7 @@ namespace Medical
     [TimelineActionProperties("Play Sequence", 31 / 255f, 73 / 255f, 125 / 255f, GUIType=typeof(Medical.GUI.PlaySequenceProperties))]
     class PlaySequenceAction : TimelineAction
     {
-        private bool finished = false;
+        private float lastTime;
 
         public PlaySequenceAction()
             :this(null, 0.0f, 1.0f)
@@ -30,7 +30,6 @@ namespace Medical
         {
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
             TimelineController.MovementSequenceController.playCurrentSequence();
-            EndTime = timelineTime + Duration;
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -40,16 +39,7 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            if (timelineTime > EndTime)
-            {
-                finished = true;
-            }
-        }
-
-        public override void reset()
-        {
-            finished = false;
-            base.reset();
+            lastTime = timelineTime;
         }
 
         internal void preview()
@@ -71,29 +61,24 @@ namespace Medical
         {
             get
             {
-                return finished;
+                return lastTime > StartTime + Duration;
             }
         }
-
-        public float EndTime { get; set; }
 
         public MovementSequence MovementSequence { get; set; }
 
         #region Saveable
 
-        private static readonly String END_TIME = "EndTime";
         private static readonly String MOVEMENT_SEQUENCE = "MovementSequence";
 
         protected PlaySequenceAction(LoadInfo info)
             : base(info)
         {
-            EndTime = info.GetFloat(END_TIME);
             MovementSequence = info.GetValue<MovementSequence>(MOVEMENT_SEQUENCE);
         }
 
         public override void getInfo(SaveInfo info)
         {
-            info.AddValue(END_TIME, EndTime);
             info.AddValue(MOVEMENT_SEQUENCE, MovementSequence);
             base.getInfo(info);
         }

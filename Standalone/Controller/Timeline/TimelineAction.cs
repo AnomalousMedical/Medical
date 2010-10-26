@@ -40,11 +40,6 @@ namespace Medical
 
         public abstract void update(float timelineTime, Clock clock);
 
-        public virtual void reset()
-        {
-
-        }
-
         public virtual float StartTime { get; set; }
 
         public virtual float Duration { get; set; }
