@@ -9,16 +9,16 @@ namespace Medical.GUI
 {
     class TimelineProperties : Dialog
     {
-        private ComboBox addActionCombo;
         private Timeline currentTimeline;
         private TimelineController timelineController;
         private MenuCtrl fileMenuCtrl;
         private String currentTimelineFile;
         private ActionProperties actionProperties;
         private TrackFilter actionFilter;
-        private TimelineView actionView;
+        private TimelineView timelineView;
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
+        private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
 
         private Button playButton;
 
@@ -46,11 +46,7 @@ namespace Medical.GUI
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
             MenuItem saveTimelineAs = fileMenuCtrl.addItem("Save As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
-
-            //Add action button
-            Button addActionButton = window.findWidget("AddAction") as Button;
-            addActionButton.MouseButtonClick += new MyGUIEvent(addActionButton_MouseButtonClick);
-            
+           
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
             removeActionButton.MouseButtonClick += new MyGUIEvent(removeActionButton_MouseButtonClick);
@@ -66,24 +62,22 @@ namespace Medical.GUI
 
             //Action view
             ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
-            actionView = new TimelineView(actionViewScrollView);
-            actionView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
+            timelineView = new TimelineView(actionViewScrollView);
+            timelineView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
 
             //Action filter
             ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
-            actionFilter = new TrackFilter(actionFilterScrollView, actionView);
+            actionFilter = new TrackFilter(actionFilterScrollView, timelineView);
+            actionFilter.AddTrack += new AddTrackCallback(actionFilter_AddTrack);
 
-            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, actionView);
+            numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
-            //Add action combo box.
-            addActionCombo = window.findWidget("AddActionCombo") as ComboBox;
+            //Add tracks to timeline.
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
-                addActionCombo.addItem(actionProp.TypeName);
-                addActionCombo.setItemDataAt(addActionCombo.getItemCount() - 1, actionProp);
-                actionView.addTrack(actionProp.TypeName, actionProp.Color);
+                timelineView.addTrack(actionProp.TypeName, actionProp.Color);
+                properties.Add(actionProp.TypeName, actionProp);
             }
-            addActionCombo.SelectedIndex = 0;
 
             createNewTimeline();
         }
@@ -91,7 +85,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             actionFilter.Dispose();
-            actionView.Dispose();
+            timelineView.Dispose();
             base.Dispose();
         }
 
@@ -123,10 +117,10 @@ namespace Medical.GUI
                 window.Caption = "Timeline";
             }
             currentTimeline = timeline;
-            actionView.removeAllData();
+            timelineView.removeAllData();
             foreach (TimelineAction action in currentTimeline.Actions)
             {
-                actionView.addData(new TimelineActionData(action));
+                timelineView.addData(new TimelineActionData(action));
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
@@ -142,23 +136,23 @@ namespace Medical.GUI
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            currentTimeline.removeAction(((TimelineActionData)actionView.CurrentData).Action);
+            currentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
         }
 
-        void addActionButton_MouseButtonClick(Widget source, EventArgs e)
+        void actionFilter_AddTrack(string name)
         {
-            TimelineAction action = TimelineActionFactory.createAction((TimelineActionProperties)addActionCombo.getItemDataAt(addActionCombo.SelectedIndex));
-            action.StartTime = actionView.MarkerTime;
+            TimelineAction action = TimelineActionFactory.createAction(properties[name]);
+            action.StartTime = timelineView.MarkerTime;
             currentTimeline.addAction(action);
             action.capture();
-            actionView.CurrentData = actionDataBindings[action];
+            timelineView.CurrentData = actionDataBindings[action];
         }
 
         void actionView_ActiveActionChanged(object sender, EventArgs e)
         {
-            if (actionView.CurrentData != null)
+            if (timelineView.CurrentData != null)
             {
-                actionProperties.CurrentAction = (TimelineActionData)actionView.CurrentData;
+                actionProperties.CurrentAction = (TimelineActionData)timelineView.CurrentData;
                 actionProperties.Visible = true;
             }
             else
@@ -172,12 +166,12 @@ namespace Medical.GUI
         {
             TimelineActionData data = new TimelineActionData(e.Action);
             actionDataBindings.Add(e.Action, data);
-            actionView.addData(data);
+            timelineView.addData(data);
         }
 
         void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
         {
-            actionView.removeData(actionDataBindings[e.Action]);
+            timelineView.removeData(actionDataBindings[e.Action]);
         }
 
         #endregion
@@ -256,7 +250,7 @@ namespace Medical.GUI
 
         void timelineController_TimeTicked(float currentTime)
         {
-            actionView.MarkerTime = currentTime;
+            timelineView.MarkerTime = currentTime;
         }
 
         #endregion

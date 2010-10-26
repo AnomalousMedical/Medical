@@ -3,20 +3,14 @@
     <Widget type="Window" skin="WindowCSX" position="204 195 923 328" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
         <Widget type="Widget" skin="Panel" position="2 25 676 284" align="Stretch">
-            <Widget type="ComboBox" skin="ComboBox" position="2 2 149 22" align="Left Top" name="AddActionCombo">
-                <Property key="Edit_Static" value="true"/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="152 1 35 23" align="Left Top" name="AddAction">
-                <Property key="Widget_Caption" value="Add"/>
-            </Widget>
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 230" align="Stretch" name="ActionView">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 254" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="114 256 75 23" align="Left Bottom" name="PlayButton">
+            <Widget type="Button" skin="Button" position="114 0 75 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 232" align="Left VStretch" name="ActionFilter">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 254" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
