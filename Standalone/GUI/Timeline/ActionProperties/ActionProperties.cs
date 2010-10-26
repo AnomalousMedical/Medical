@@ -10,7 +10,7 @@ namespace Medical.GUI
     class ActionProperties
     {
         private ScrollView actionPropertiesScroll;
-        private ActionViewButton action;
+        private TimelineActionData action;
 
         private NumericEdit startTime;
         private NumericEdit duration;
@@ -51,7 +51,7 @@ namespace Medical.GUI
             }
         }
 
-        public ActionViewButton CurrentAction
+        public TimelineActionData CurrentAction
         {
             get
             {
@@ -70,11 +70,11 @@ namespace Medical.GUI
                 {
                     startTime.FloatValue = action.StartTime;
                     duration.FloatValue = action.Duration;
-                    additionalProperties.TryGetValue(action.Action.TypeName, out currentPanel);
+                    additionalProperties.TryGetValue(action.Track, out currentPanel);
                     if (currentPanel != null)
                     {
                         currentPanel.Visible = true;
-                        currentPanel.CurrentAction = action.Action;
+                        currentPanel.CurrentAction = value.Action;
                         canvasSize.Height = currentPanel.Bottom;
                     }
                 }

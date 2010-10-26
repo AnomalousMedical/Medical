@@ -170,8 +170,6 @@
     <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
-    <Compile Include="GUI\Timeline\ActionFilter.cs" />
-    <Compile Include="GUI\Timeline\ActionFilterButton.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ActionPropertiesPanel.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
@@ -179,11 +177,7 @@
     <Compile Include="GUI\Timeline\ActionProperties\LayerChangeProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.cs" />
-    <Compile Include="GUI\Timeline\ActionView.cs" />
-    <Compile Include="GUI\Timeline\ActionViewButton.cs" />
-    <Compile Include="GUI\Timeline\ActionViewRow.cs" />
-    <Compile Include="GUI\Timeline\NumberLine.cs" />
-    <Compile Include="GUI\Timeline\TimelineMarker.cs" />
+    <Compile Include="GUI\Timeline\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
     <Compile Include="Controller\Timeline\LayerChangeAction.cs" />
@@ -198,7 +192,6 @@
     <Compile Include="GUI\ImageViewer.cs" />
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
-    <Compile Include="GUI\Timeline\TimelineScrollView.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />
