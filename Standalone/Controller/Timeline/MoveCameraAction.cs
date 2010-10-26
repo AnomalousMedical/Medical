@@ -12,6 +12,8 @@ namespace Medical
     [TimelineActionProperties("Move Camera", 192 / 255f, 80 / 255f, 77 / 255f, GUIType=typeof(Medical.GUI.MoveCameraProperties))]
     class MoveCameraAction : TimelineAction
     {
+        private float lastTime;
+
         public MoveCameraAction()
             :this(0.0f, null)
         {
@@ -44,14 +46,14 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            
+            lastTime = timelineTime;
         }
 
         public override bool Finished
         {
             get
             {
-                return true;
+                return lastTime > StartTime + Duration;
             }
         }
 
