@@ -50,19 +50,18 @@ namespace Medical.GUI
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
 
-            //Action Properties
-            ScrollView actionPropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
-            actionProperties = new TimelineDataProperties(actionPropertiesScrollView);
+            //Timeline view
+            ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
+            timelineView = new TimelineView(timelineViewScrollView);
+
+            //Properties
+            ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
 
-            //Action view
-            ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
-            timelineView = new TimelineView(actionViewScrollView);
-            
-
-            //Action filter
-            ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
-            trackFilter = new TrackFilter(actionFilterScrollView, timelineView);
+            //Timeline filter
+            ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
             
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);

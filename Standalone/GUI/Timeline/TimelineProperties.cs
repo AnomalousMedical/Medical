@@ -55,15 +55,14 @@ namespace Medical.GUI
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
 
-            //Properties
-            ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
-            dataProperties = new TimelineDataProperties(propertiesScrollView);
-            dataProperties.Visible = false;
-
             //Timeline view
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
-            timelineView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
+
+            //Properties
+            ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            dataProperties = new TimelineDataProperties(propertiesScrollView, timelineView);
+            dataProperties.Visible = false;
 
             //Track filter
             ScrollView trackFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
@@ -160,20 +159,6 @@ namespace Medical.GUI
             currentTimeline.addAction(action);
             action.capture();
             timelineView.CurrentData = actionDataBindings[action];
-        }
-
-        void actionView_ActiveActionChanged(object sender, EventArgs e)
-        {
-            if (timelineView.CurrentData != null)
-            {
-                dataProperties.CurrentData = timelineView.CurrentData;
-                dataProperties.Visible = true;
-            }
-            else
-            {
-                dataProperties.CurrentData = null;
-                dataProperties.Visible = false;
-            }
         }
 
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
