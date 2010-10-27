@@ -47,5 +47,13 @@ namespace Medical.GUI
                 sequence.sortStates();
             }
         }
+
+        public MovementSequenceState KeyFrame
+        {
+            get
+            {
+                return keyframe;
+            }
+        }
     }
 }

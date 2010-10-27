@@ -44,8 +44,9 @@ namespace Medical.GUI
             MenuItem saveSequenceAs = fileMenuCtrl.addItem("Save As");
             
 
-            //Remove action button
-            Button removeActionButton = window.findWidget("RemoveAction") as Button;
+            //Remove button
+            Button removeButton = window.findWidget("RemoveAction") as Button;
+            removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
             
             //Duration Edit
             durationEdit = new NumericEdit(window.findWidget("SequenceDuration") as Edit);
@@ -95,6 +96,13 @@ namespace Medical.GUI
             MovementSequence movementSequence = new MovementSequence();
             movementSequence.Duration = 5.0f;
             movementSequenceController.CurrentSequence = movementSequence;
+        }
+
+        void removeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            MovementKeyframeData data = timelineView.CurrentData as MovementKeyframeData;
+            timelineView.removeData(data);
+            movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
         }
 
         #region MovementSequenceController Callbacks
