@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class ChangeMedicalStateProperties : ActionPropertiesPanel
+    class ChangeMedicalStateProperties : TimelineDataPanel
     {
         private ChangeMedicalStateAction changeStateAction;
 
@@ -20,16 +20,9 @@ namespace Medical.GUI
             preview.MouseButtonClick += new MyGUIEvent(preview_MouseButtonClick);
         }
 
-        public override TimelineAction CurrentAction
+        public override void setCurrentData(TimelineData data)
         {
-            get
-            {
-                return changeStateAction;
-            }
-            set
-            {
-                changeStateAction = (ChangeMedicalStateAction)value;
-            }
+            changeStateAction = (ChangeMedicalStateAction)((TimelineActionData)data).Action;
         }
 
         void preview_MouseButtonClick(Widget source, EventArgs e)

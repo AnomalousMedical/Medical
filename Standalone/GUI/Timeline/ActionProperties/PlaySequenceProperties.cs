@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class PlaySequenceProperties : ActionPropertiesPanel
+    class PlaySequenceProperties : TimelineDataPanel
     {
         private PlaySequenceAction playSequence;
 
@@ -20,16 +20,9 @@ namespace Medical.GUI
             preview.MouseButtonClick += new MyGUIEvent(preview_MouseButtonClick);
         }
 
-        public override TimelineAction CurrentAction
+        public override void setCurrentData(TimelineData data)
         {
-            get
-            {
-                return playSequence;
-            }
-            set
-            {
-                playSequence = (PlaySequenceAction)value;
-            }
+            playSequence = (PlaySequenceAction)((TimelineActionData)data).Action;
         }
 
         void preview_MouseButtonClick(Widget source, EventArgs e)

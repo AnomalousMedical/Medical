@@ -13,7 +13,7 @@ namespace Medical.GUI
         private TimelineController timelineController;
         private MenuCtrl fileMenuCtrl;
         private String currentTimelineFile;
-        private ActionProperties actionProperties;
+        private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
@@ -55,28 +55,42 @@ namespace Medical.GUI
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
 
-            //Action Properties
-            ScrollView actionPropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
-            actionProperties = new ActionProperties(actionPropertiesScrollView);
-            actionProperties.Visible = false;
+            //Properties
+            ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
+            dataProperties = new TimelineDataProperties(propertiesScrollView);
+            dataProperties.Visible = false;
 
-            //Action view
-            ScrollView actionViewScrollView = window.findWidget("ActionView") as ScrollView;
-            timelineView = new TimelineView(actionViewScrollView);
+            //Timeline view
+            ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
+            timelineView = new TimelineView(timelineViewScrollView);
             timelineView.ActiveActionChanged += new EventHandler(actionView_ActiveActionChanged);
 
-            //Action filter
-            ScrollView actionFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
-            actionFilter = new TrackFilter(actionFilterScrollView, timelineView);
+            //Track filter
+            ScrollView trackFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
+            actionFilter = new TrackFilter(trackFilterScrollView, timelineView);
             actionFilter.AddTrack += new AddTrackCallback(actionFilter_AddTrack);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Add tracks to timeline.
+            object[] args = { propertiesScrollView };
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
             {
                 timelineView.addTrack(actionProp.TypeName, actionProp.Color);
                 properties.Add(actionProp.TypeName, actionProp);
+
+                if (actionProp.GUIType != null)
+                {
+                    try
+                    {
+                        TimelineDataPanel propPanel = (TimelineDataPanel)Activator.CreateInstance(actionProp.GUIType, args);
+                        dataProperties.addPanel(actionProp.TypeName, propPanel);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception(String.Format("Could not create the GUI for {0}. Make sure it extends ActionPropertiesPanel and has a constructor that takes a Widget."));
+                    }
+                }
             }
 
             createNewTimeline();
@@ -152,13 +166,13 @@ namespace Medical.GUI
         {
             if (timelineView.CurrentData != null)
             {
-                actionProperties.CurrentAction = (TimelineActionData)timelineView.CurrentData;
-                actionProperties.Visible = true;
+                dataProperties.CurrentData = timelineView.CurrentData;
+                dataProperties.Visible = true;
             }
             else
             {
-                actionProperties.CurrentAction = null;
-                actionProperties.Visible = false;
+                dataProperties.CurrentData = null;
+                dataProperties.Visible = false;
             }
         }
 

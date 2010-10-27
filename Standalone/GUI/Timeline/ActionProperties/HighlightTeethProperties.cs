@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class HighlightTeethProperties : ActionPropertiesPanel
+    class HighlightTeethProperties : TimelineDataPanel
     {
         private HighlightTeethAction highlightTeeth;
         private CheckButton enableHighlight;
@@ -18,20 +18,13 @@ namespace Medical.GUI
             enableHighlight.CheckedChanged += new MyGUIEvent(enableHighlight_CheckedChanged);
         }
 
-        public override TimelineAction CurrentAction
+        public override void setCurrentData(TimelineData data)
         {
-            get
+            highlightTeeth = (HighlightTeethAction)((TimelineActionData)data).Action;
+            if (highlightTeeth != null)
             {
-                return highlightTeeth;
-            }
-            set
-            {
-                highlightTeeth = (HighlightTeethAction)value;
-                if (highlightTeeth != null)
-                {
-                    enableHighlight.Checked = highlightTeeth.EnableHighlight;
-                }
-            }
+                enableHighlight.Checked = highlightTeeth.EnableHighlight;
+            }   
         }
 
         void enableHighlight_CheckedChanged(Widget source, EventArgs e)

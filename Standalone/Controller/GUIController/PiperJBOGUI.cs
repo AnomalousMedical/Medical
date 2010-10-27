@@ -34,6 +34,7 @@ namespace Medical.GUI
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
         private TimelineProperties timelineProperties;
+        private MovementSequenceEditor movementSequenceEditor;
 
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
@@ -78,6 +79,8 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(stateList);
             timelineProperties = new TimelineProperties(standaloneController.TimelineController);
             dialogManager.addManagedDialog(timelineProperties);
+            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
+            dialogManager.addManagedDialog(movementSequenceEditor);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -96,6 +99,7 @@ namespace Medical.GUI
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
             taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
@@ -131,36 +135,6 @@ namespace Medical.GUI
 
             dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
         }
-
-        //void timelineTest_OnClicked(object sender, EventArgs e)
-        //{
-        //    //Timeline testTl = new Timeline();
-
-        //    //testTl.addPreAction(new OpenNewSceneAction("Scenes/Female.sim.xml"));
-        //    //testTl.addAction(new HighlightTeethAction(true, 1.0f));
-        //    //testTl.addAction(new MoveCameraAction(0.0f, "Camera 1", new Vector3(0.0f, -10.0f, -150.0f), new Vector3(0.0f, -10.0f, 0.0f)));
-        //    //testTl.addAction(new LayerChangeAction("Camera 1", standaloneController.LayerController.CurrentLayers.getState("Skull no transparency"), 0.0f));
-        //    //testTl.addAction(new PlaySequenceAction(standaloneController.MovementSequenceController.loadSequence("Scenes/MasterScene/Sequences/Doppler.seq"), 1.0f, 10.0f));
-        //    //testTl.addAction(new ChangeMedicalStateAction(standaloneController.MedicalStateController.getState(1), 0.5f));
-        //    //testTl.addAction(new MoveCameraAction(1.5f, "Camera 1", new Vector3(150.0f, -10.0f, 0.0f), new Vector3(0.0f, -10.0f, 0.0f)));
-        //    //testTl.addAction(new HighlightTeethAction(false, 5.0f));
-        //    //testTl.addAction(new LayerChangeAction("Camera 1", standaloneController.LayerController.CurrentLayers.getState("Skull no transparency cut eminance + Discs"), 1.5f));
-
-        //    //Engine.Saving.XMLSaver.XmlSaver xmlSaver = new Engine.Saving.XMLSaver.XmlSaver();
-        //    //System.Xml.XmlTextWriter writer = new System.Xml.XmlTextWriter(MedicalConfig.DocRoot + "/TestTimeline.xml", Encoding.Default);
-        //    //writer.Formatting = System.Xml.Formatting.Indented;
-        //    //xmlSaver.saveObject(testTl, writer);
-        //    //writer.Close();
-
-
-        //    //System.Xml.XmlTextReader reader = new System.Xml.XmlTextReader(MedicalConfig.DocRoot + "/TestTimeline.xml");
-        //    //Engine.Saving.XMLSaver.XmlSaver xmlSaver = new Engine.Saving.XMLSaver.XmlSaver();
-        //    //Timeline loadedTimeline = xmlSaver.restoreObject(reader) as Timeline;
-
-        //    //standaloneController.TimelineController.startPlayback(loadedTimeline);
-
-
-        //}
 
         public void Dispose()
         {

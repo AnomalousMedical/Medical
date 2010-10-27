@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="204 195 923 328" layer="Overlapped">
+        <Property key="Widget_Caption" value="Movement Sequence"/>
+        <Widget type="Widget" skin="Panel" position="2 25 676 284" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 254" align="Stretch" name="ActionView">
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="ScrollView_CanvasSize" value="0 100"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="114 0 75 23" align="Left Top" name="PlayButton">
+                <Property key="Widget_Caption" value="Play"/>
+            </Widget>
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 254" align="Left VStretch" name="ActionFilter">
+                <Property key="ScrollView_CanvasSize" value="179 200"/>
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="ScrollView_VisibleVScroll" value="false"/>
+                <Property key="ScrollView_VisibleHScroll" value="false"/>
+            </Widget>
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 2 484 21" align="HStretch Top" name="NumberLine">
+                <Property key="ScrollView_VisibleVScroll" value="false"/>
+                <Property key="ScrollView_VisibleHScroll" value="false"/>
+                <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            </Widget>
+        </Widget>
+        <Widget type="MenuBar" skin="MenuBar" position="0 0 918 23" align="HStretch Top" name="MenuBar"/>
+        <Widget type="ScrollView" skin="ScrollView" position="680 25 237 284" align="Right VStretch" name="ActionPropertiesScrollView">
+            <Property key="ScrollView_CanvasSize" value="214 314"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Widget type="StaticText" skin="StaticText" position="1 26 207 16" align="HStretch Top" name="PropertiesText">
+                <Property key="Widget_Caption" value="Properties"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="1 46 74 15">
+                <Property key="Widget_Caption" value="Start Time"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="76 46 132 18" name="StartTime"/>
+            <Widget type="StaticText" skin="StaticText" position="1 67 65 15">
+                <Property key="Widget_Caption" value="Duration"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="76 67 132 18" name="Duration"/>
+            <Widget type="Button" skin="Button" position="1 1 73 23" name="RemoveAction">
+                <Property key="Widget_Caption" value="Remove"/>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

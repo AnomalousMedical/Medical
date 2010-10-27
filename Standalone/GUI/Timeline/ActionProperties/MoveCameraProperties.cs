@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class MoveCameraProperties : ActionPropertiesPanel
+    class MoveCameraProperties : TimelineDataPanel
     {
         private MoveCameraAction moveAction;
         private Edit translationEdit;
@@ -33,21 +33,14 @@ namespace Medical.GUI
             cameraText = mainWidget.findWidget("CameraText") as StaticText;
         }
 
-        public override TimelineAction CurrentAction
+        public override void setCurrentData(TimelineData data)
         {
-            get
+            moveAction = (MoveCameraAction)((TimelineActionData)data).Action;
+            if (moveAction != null)
             {
-                return moveAction;
-            }
-            set
-            {
-                moveAction = (MoveCameraAction)value;
-                if (moveAction != null)
-                {
-                    translationEdit.Caption = moveAction.Translation.ToString();
-                    lookAtEdit.Caption = moveAction.LookAt.ToString();
-                    cameraText.Caption = moveAction.CameraName;
-                }
+                translationEdit.Caption = moveAction.Translation.ToString();
+                lookAtEdit.Caption = moveAction.LookAt.ToString();
+                cameraText.Caption = moveAction.CameraName;
             }
         }
 

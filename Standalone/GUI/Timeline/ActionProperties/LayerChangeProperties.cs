@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class LayerChangeProperties : ActionPropertiesPanel
+    class LayerChangeProperties : TimelineDataPanel
     {
         private LayerChangeAction layerChange;
         private StaticText windowText;
@@ -23,19 +23,12 @@ namespace Medical.GUI
             windowText = mainWidget.findWidget("WindowText") as StaticText;
         }
 
-        public override TimelineAction CurrentAction
+        public override void setCurrentData(TimelineData data)
         {
-            get
+            layerChange = (LayerChangeAction)((TimelineActionData)data).Action;
+            if (layerChange != null)
             {
-                return layerChange;
-            }
-            set
-            {
-                layerChange = (LayerChangeAction)value;
-                if (layerChange != null)
-                {
-                    windowText.Caption = layerChange.TransparencyState;
-                }
+                windowText.Caption = layerChange.TransparencyState;
             }
         }
 

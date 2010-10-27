@@ -27,6 +27,7 @@ namespace Medical.Controller
         public event MovementSequenceEvent CurrentSequenceSetChanged;
         public event MovementSequenceEvent PlaybackStarted;
         public event MovementSequenceEvent PlaybackStopped;
+        public event MovementSequenceEvent PlaybackUpdate;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private MovementSequence currentSequence;
@@ -199,15 +200,31 @@ namespace Medical.Controller
             }
         }
 
+        public float CurrentTime
+        {
+            get
+            {
+                return currentTime;
+            }
+            set
+            {
+                currentTime = value;
+                currentTime %= currentSequence.Duration;
+                currentSequence.setPosition(currentTime);
+            }
+        }
+
         /// <summary>
         /// Update function during playback.
         /// </summary>
         /// <param name="time">The time delta.</param>
         void medicalController_FixedLoopUpdate(Clock time)
         {
-            currentTime += (float)time.Seconds;
-            currentTime %= currentSequence.Duration;
-            currentSequence.setPosition(currentTime);
+            CurrentTime += (float)time.Seconds;
+            if (PlaybackUpdate != null)
+            {
+                PlaybackUpdate.Invoke(this);
+            }
         }
     }
 }
