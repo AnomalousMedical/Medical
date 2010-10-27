@@ -6,6 +6,8 @@ using MyGUIPlugin;
 using Engine;
 using Medical.Controller;
 using Medical.Muscles;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical.GUI
 {
@@ -19,6 +21,9 @@ namespace Medical.GUI
         private Button playButton;
         private NumericEdit durationEdit;
         private bool allowSynchronization = true;
+        private String currentSequenceFile = null;
+        private bool loadingSequenceFromFile = false;
+        private XmlSaver xmlSaver = new XmlSaver();
 
         private MovementSequenceController movementSequenceController;
 
@@ -36,13 +41,13 @@ namespace Medical.GUI
             MenuItem fileMenu = menuBar.addItem("File", MenuItemType.Popup);
             fileMenuCtrl = fileMenu.createItemChild();
             MenuItem newSequence = fileMenuCtrl.addItem("New");
-
+            newSequence.MouseButtonClick += new MyGUIEvent(newSequence_MouseButtonClick);
             MenuItem openSequence = fileMenuCtrl.addItem("Open");
-            
+            openSequence.MouseButtonClick += new MyGUIEvent(openSequence_MouseButtonClick);
             MenuItem saveSequence = fileMenuCtrl.addItem("Save");
-            
+            saveSequence.MouseButtonClick += new MyGUIEvent(saveSequence_MouseButtonClick);
             MenuItem saveSequenceAs = fileMenuCtrl.addItem("Save As");
-            
+            saveSequenceAs.MouseButtonClick += new MyGUIEvent(saveSequenceAs_MouseButtonClick);
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -105,6 +110,26 @@ namespace Medical.GUI
             movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
         }
 
+        private String CurrentSequenceFile
+        {
+            get
+            {
+                return currentSequenceFile;
+            }
+            set
+            {
+                currentSequenceFile = value;
+                if (currentSequenceFile != null)
+                {
+                    window.Caption = String.Format("Movement Sequence - {0}", currentSequenceFile);
+                }
+                else
+                {
+                    window.Caption = "Movement Sequence";
+                }
+            }
+        }
+
         #region MovementSequenceController Callbacks
 
         void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
@@ -124,6 +149,10 @@ namespace Medical.GUI
 
         void movementSequenceController_CurrentSequenceChanged(MovementSequenceController controller)
         {
+            if (!loadingSequenceFromFile)
+            {
+                CurrentSequenceFile = null;
+            }
             timelineView.removeAllData();
             MovementSequence movementSequence = controller.CurrentSequence;
             if (movementSequence != null)
@@ -186,6 +215,69 @@ namespace Medical.GUI
         void durationEdit_ValueChanged(Widget source, EventArgs e)
         {
             synchronizeDuration(durationEdit, durationEdit.FloatValue);
+        }
+
+        #endregion
+
+        #region File Menu
+
+        void newSequence_MouseButtonClick(Widget source, EventArgs e)
+        {
+            createNewSequence();
+        }
+
+        void saveSequenceAs_MouseButtonClick(Widget source, EventArgs e)
+        {
+            using (wx.FileDialog saveDialog = new wx.FileDialog(MainWindow.Instance, "Save a sequence."))
+            {
+                saveDialog.StyleFlags = wx.WindowStyles.FD_SAVE;
+                saveDialog.Wildcard = "Sequence files (*.seq)|*.seq";
+                if (saveDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    using(XmlTextWriter textWriter = new XmlTextWriter(saveDialog.Path, Encoding.Default))
+                    {
+                        textWriter.Formatting = Formatting.Indented;
+                        xmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
+                        CurrentSequenceFile = saveDialog.Path;
+                    }
+                }
+            }
+        }
+
+        void saveSequence_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (CurrentSequenceFile != null)
+            {
+                using (XmlTextWriter textWriter = new XmlTextWriter(CurrentSequenceFile, Encoding.Default))
+                {
+                    textWriter.Formatting = Formatting.Indented;
+                    xmlSaver.saveObject(movementSequenceController.CurrentSequence, textWriter);
+                }
+            }
+            else
+            {
+                saveSequenceAs_MouseButtonClick(source, e);
+            }
+        }
+
+        void openSequence_MouseButtonClick(Widget source, EventArgs e)
+        {
+            using (wx.FileDialog openDialog = new wx.FileDialog(MainWindow.Instance, "Open a sequence."))
+            {
+                openDialog.StyleFlags = wx.WindowStyles.FD_OPEN;
+                openDialog.Wildcard = "Sequence files (*.seq)|*.seq";
+                if (openDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    using (XmlReader xmlReader = new XmlTextReader(openDialog.Path))
+                    {
+                        loadingSequenceFromFile = true;
+                        CurrentSequenceFile = openDialog.Path;
+                        MovementSequence movementSequence = xmlSaver.restoreObject(xmlReader) as MovementSequence;
+                        movementSequenceController.CurrentSequence = movementSequence;
+                        loadingSequenceFromFile = false;
+                    }
+                }
+            }
         }
 
         #endregion
