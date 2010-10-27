@@ -10,10 +10,12 @@ namespace Medical.GUI
     class MovementKeyframeData : TimelineData
     {
         private MovementSequenceState keyframe;
+        private MovementSequence sequence;
 
-        public MovementKeyframeData(MovementSequenceState keyframe)
+        public MovementKeyframeData(MovementSequenceState keyframe, MovementSequence sequence)
         {
             this.keyframe = keyframe;
+            this.sequence = sequence;
         }
 
         public override string Track
@@ -42,6 +44,7 @@ namespace Medical.GUI
             set
             {
                 keyframe.StartTime = value;
+                sequence.sortStates();
             }
         }
     }

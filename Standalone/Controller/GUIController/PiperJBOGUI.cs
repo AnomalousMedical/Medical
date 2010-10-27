@@ -71,7 +71,7 @@ namespace Medical.GUI
             dialogManager = new DialogManager();
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(notesDialog);
-            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MedicalController, standaloneController.MovementSequenceController);
+            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(mandibleMovementDialog);
             layers = new LayersDialog(standaloneController.LayerController);
             dialogManager.addManagedDialog(layers);

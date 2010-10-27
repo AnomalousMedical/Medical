@@ -107,7 +107,7 @@ namespace Medical.GUI
             {
                 foreach(MovementSequenceState state in movementSequence.States)
                 {
-                    timelineView.addData(new MovementKeyframeData(state));
+                    timelineView.addData(new MovementKeyframeData(state, movementSequence));
                 }
             }
         }

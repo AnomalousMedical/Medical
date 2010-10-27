@@ -18,13 +18,12 @@ namespace Medical.GUI
         private MovingMuscleTarget movingMuscleTarget;
         private bool allowSyncronization = true;
         private bool allowSceneManipulation = true;
-        private bool lowForce = true;
-        private MedicalController medicalController;
 
         private MandibleControlSlider openTrackBar;
         private MandibleControlSlider rightForwardBack;
         private MandibleControlSlider leftForwardBack;
         private MandibleControlSlider bothForwardBack;
+        private MandibleControlSlider forceSlider;
         private Button resetButton;
         private Button restoreButton;
 
@@ -33,11 +32,9 @@ namespace Medical.GUI
         private float rightCPPosition;
         private bool restoreEnabled = false;
 
-        public MandibleMovementDialog(MedicalController medicalController, MovementSequenceController movementSequenceController)
+        public MandibleMovementDialog(MovementSequenceController movementSequenceController)
             : base("Medical.Controller.GUIController.MandibleMovement.MandibleMovementDialog.layout")
-        {
-            this.medicalController = medicalController;
-            
+        {            
             openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll);
             openTrackBar.Minimum = -3;
             openTrackBar.Maximum = 10;
@@ -50,6 +47,9 @@ namespace Medical.GUI
             bothForwardBack = new MandibleControlSlider(window.findWidget("Movement/ProtrusionSlider") as VScroll);
             bothForwardBack.Minimum = 0;
             bothForwardBack.Maximum = 1;
+            forceSlider = new MandibleControlSlider(window.findWidget("Movement/ForceSlider") as VScroll);
+            forceSlider.Minimum = 0;
+            forceSlider.Maximum = 100;
             resetButton = window.findWidget("Movement/Reset") as Button;
             restoreButton = window.findWidget("Movement/Restore") as Button;
             restoreButton.Enabled = false;
@@ -58,6 +58,7 @@ namespace Medical.GUI
             rightForwardBack.ValueChanged += rightSliderValueChanged;
             leftForwardBack.ValueChanged += leftSliderValueChanged;
             bothForwardBack.ValueChanged += bothForwardBackChanged;
+            forceSlider.ValueChanged += forceSlider_ValueChanged;
             resetButton.MouseButtonClick += resetButton_Click;
             restoreButton.MouseButtonClick += restoreButton_Click;
 
@@ -86,14 +87,6 @@ namespace Medical.GUI
             set
             {
                 allowSceneManipulation = value;
-                if (allowSceneManipulation)
-                {
-                    this.subscribeToUpdates();
-                }
-                else
-                {
-                    this.unsubscribeFromUpdates();
-                }
             }
         }
 
@@ -110,27 +103,7 @@ namespace Medical.GUI
                 leftForwardBack.Enabled = value;
                 bothForwardBack.Enabled = value;
                 resetButton.Enabled = value;
-            }
-        }
-
-        protected void fixedLoopUpdate(Clock time)
-        {
-            //If teeth are touching and we are moving upward
-            if (TeethController.anyTeethTouching() && movingMuscleTarget.Owner.Translation.y > movingMuscle.Owner.Translation.y - 5.5f)
-            {
-                if (!lowForce)
-                {
-                    movingMuscle.changeForce(6.0f);
-                    lowForce = true;
-                }
-            }
-            else
-            {
-                if (lowForce)
-                {
-                    movingMuscle.changeForce(100.0f);
-                    lowForce = false;
-                }
+                forceSlider.Enabled = value;
             }
         }
 
@@ -157,16 +130,13 @@ namespace Medical.GUI
                 bothForwardBack.Minimum = rightForwardBack.Minimum < leftForwardBack.Minimum ? rightForwardBack.Minimum : leftForwardBack.Minimum;
                 bothForwardBack.SequentialChange = rightForwardBack.SequentialChange;
                 synchronizeMovingMuscleOffset(movingMuscleTarget, movingMuscleTarget.Offset);
+                synchronizeForce(movingMuscle, movingMuscle.getForce());
 
                 //setup callbacks
                 leftCP.PositionChanged += leftCP_PositionChanged;
                 rightCP.PositionChanged += rightCP_PositionChanged;
                 movingMuscleTarget.OffsetChanged += movingMuscleTarget_OffsetChanged;
-            }
-
-            if (allowSceneManipulation)
-            {
-                this.subscribeToUpdates();
+                movingMuscle.ForceChanged += movingMuscle_ForceChanged;
             }
         }
 
@@ -174,7 +144,13 @@ namespace Medical.GUI
         {
             if (movingMuscle != null)
             {
+                movingMuscle.ForceChanged -= movingMuscle_ForceChanged;
                 movingMuscle = null;
+            }
+            if (movingMuscleTarget != null)
+            {
+                movingMuscleTarget.OffsetChanged -= movingMuscleTarget_OffsetChanged;
+                movingMuscleTarget = null;
             }
             if (leftCP != null)
             {
@@ -185,11 +161,6 @@ namespace Medical.GUI
             {
                 rightCP.PositionChanged -= rightCP_PositionChanged;
                 rightCP = null;
-            }
-
-            if (allowSceneManipulation)
-            {
-                this.unsubscribeFromUpdates();
             }
         }
 
@@ -221,16 +192,6 @@ namespace Medical.GUI
             synchronizeMovingMuscleOffset(resetButton, movingMusclePosition);
             restoreButton.Enabled = false;
             restoreEnabled = false;
-        }
-
-        private void subscribeToUpdates()
-        {
-            medicalController.FixedLoopUpdate += fixedLoopUpdate;
-        }
-
-        private void unsubscribeFromUpdates()
-        {
-            medicalController.FixedLoopUpdate -= fixedLoopUpdate;
         }
 
         //Synchronize methods
@@ -316,6 +277,33 @@ namespace Medical.GUI
         void rightSliderValueChanged(object sender, EventArgs e)
         {
             synchronizeRightCP(rightForwardBack, rightForwardBack.Value);
+        }
+
+        void synchronizeForce(object sender, float force)
+        {
+            if (allowSyncronization)
+            {
+                allowSyncronization = false;
+                if (sender != forceSlider)
+                {
+                    forceSlider.Value = force;
+                }
+                if (sender != movingMuscle)
+                {
+                    movingMuscle.changeForce(force);
+                }
+                allowSyncronization = true;
+            }
+        }
+
+        void forceSlider_ValueChanged(object sender, EventArgs e)
+        {
+            synchronizeForce(sender, forceSlider.Value);
+        }
+
+        void movingMuscle_ForceChanged(MuscleBehavior source, float force)
+        {
+            synchronizeForce(movingMuscle, movingMuscle.getForce());
         }
     }
 }
