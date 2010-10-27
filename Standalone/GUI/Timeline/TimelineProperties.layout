@@ -26,18 +26,18 @@
         <Widget type="ScrollView" skin="ScrollView" position="680 25 237 284" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="1 26 207 16" align="HStretch Top" name="PropertiesText">
+            <Widget type="StaticText" skin="StaticText" position="1 1 66 16" align="HStretch Top" name="PropertiesText">
                 <Property key="Widget_Caption" value="Properties"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="1 46 74 15">
+            <Widget type="StaticText" skin="StaticText" position="1 19 74 15">
                 <Property key="Widget_Caption" value="Start Time"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="76 46 132 18" name="StartTime"/>
-            <Widget type="StaticText" skin="StaticText" position="1 67 65 15">
+            <Widget type="Edit" skin="Edit" position="76 19 132 18" name="StartTime"/>
+            <Widget type="StaticText" skin="StaticText" position="1 38 65 15">
                 <Property key="Widget_Caption" value="Duration"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="76 67 132 18" name="Duration"/>
-            <Widget type="Button" skin="Button" position="1 1 73 23" name="RemoveAction">
+            <Widget type="Edit" skin="Edit" position="76 38 132 18" name="Duration"/>
+            <Widget type="Button" skin="Button" position="133 1 73 16" name="RemoveAction">
                 <Property key="Widget_Caption" value="Remove"/>
             </Widget>
         </Widget>

@@ -67,7 +67,7 @@ namespace Medical.GUI
             //Track filter
             ScrollView trackFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
             actionFilter = new TrackFilter(trackFilterScrollView, timelineView);
-            actionFilter.AddTrack += new AddTrackCallback(actionFilter_AddTrack);
+            actionFilter.AddTrackItem += new AddTrackItemCallback(actionFilter_AddTrackItem);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
@@ -152,7 +152,7 @@ namespace Medical.GUI
             currentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
         }
 
-        void actionFilter_AddTrack(string name)
+        void actionFilter_AddTrackItem(string name)
         {
             TimelineAction action = TimelineActionFactory.createAction(properties[name]);
             action.StartTime = timelineView.MarkerTime;
