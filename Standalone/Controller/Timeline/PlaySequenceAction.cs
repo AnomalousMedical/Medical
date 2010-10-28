@@ -54,6 +54,10 @@ namespace Medical
             {
                 MovementSequence = sequence;
             }
+            else
+            {
+                MovementSequence = new MovementSequence();
+            }
         }
 
         public override bool Finished

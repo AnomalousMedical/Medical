@@ -13,7 +13,7 @@ namespace Medical.GUI
 {
     class MovementSequenceEditor : Dialog
     {
-        private MenuCtrl fileMenuCtrl;
+        private PopupMenu fileMenu;
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
@@ -37,16 +37,17 @@ namespace Medical.GUI
             movementSequenceController.PlaybackUpdate += new MovementSequenceEvent(movementSequenceController_PlaybackUpdate);
 
             //Menu
-            MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
-            MenuItem fileMenu = menuBar.addItem("File", MenuItemType.Popup);
-            fileMenuCtrl = fileMenu.createItemChild();
-            MenuItem newSequence = fileMenuCtrl.addItem("New");
+            Button fileButton = window.findWidget("FileButton") as Button;
+            fileButton.MouseButtonClick += new MyGUIEvent(fileButton_MouseButtonClick);
+            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
+            fileMenu.Visible = false;
+            MenuItem newSequence = fileMenu.addItem("New");
             newSequence.MouseButtonClick += new MyGUIEvent(newSequence_MouseButtonClick);
-            MenuItem openSequence = fileMenuCtrl.addItem("Open");
+            MenuItem openSequence = fileMenu.addItem("Open");
             openSequence.MouseButtonClick += new MyGUIEvent(openSequence_MouseButtonClick);
-            MenuItem saveSequence = fileMenuCtrl.addItem("Save");
+            MenuItem saveSequence = fileMenu.addItem("Save");
             saveSequence.MouseButtonClick += new MyGUIEvent(saveSequence_MouseButtonClick);
-            MenuItem saveSequenceAs = fileMenuCtrl.addItem("Save As");
+            MenuItem saveSequenceAs = fileMenu.addItem("Save As");
             saveSequenceAs.MouseButtonClick += new MyGUIEvent(saveSequenceAs_MouseButtonClick);
 
             //Remove button
@@ -221,9 +222,17 @@ namespace Medical.GUI
 
         #region File Menu
 
+        void fileButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fileMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            LayerManager.Instance.upLayerItem(fileMenu);
+            fileMenu.setVisibleSmooth(true);
+        }
+
         void newSequence_MouseButtonClick(Widget source, EventArgs e)
         {
             createNewSequence();
+            fileMenu.setVisibleSmooth(false);
         }
 
         void saveSequenceAs_MouseButtonClick(Widget source, EventArgs e)
@@ -242,6 +251,7 @@ namespace Medical.GUI
                     }
                 }
             }
+            fileMenu.setVisibleSmooth(false);
         }
 
         void saveSequence_MouseButtonClick(Widget source, EventArgs e)
@@ -258,6 +268,7 @@ namespace Medical.GUI
             {
                 saveSequenceAs_MouseButtonClick(source, e);
             }
+            fileMenu.setVisibleSmooth(false);
         }
 
         void openSequence_MouseButtonClick(Widget source, EventArgs e)
@@ -278,6 +289,7 @@ namespace Medical.GUI
                     }
                 }
             }
+            fileMenu.setVisibleSmooth(false);
         }
 
         #endregion

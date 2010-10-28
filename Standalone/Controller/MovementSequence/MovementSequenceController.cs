@@ -209,7 +209,10 @@ namespace Medical.Controller
             set
             {
                 currentTime = value;
-                currentTime %= currentSequence.Duration;
+                if (currentSequence.Duration != 0.0f)
+                {
+                    currentTime %= currentSequence.Duration;
+                }
                 currentSequence.setPosition(currentTime);
             }
         }

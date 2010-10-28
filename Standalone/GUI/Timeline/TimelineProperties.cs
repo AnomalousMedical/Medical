@@ -11,7 +11,7 @@ namespace Medical.GUI
     {
         private Timeline currentTimeline;
         private TimelineController timelineController;
-        private MenuCtrl fileMenuCtrl;
+        private PopupMenu fileMenu;
         private String currentTimelineFile;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
@@ -35,16 +35,17 @@ namespace Medical.GUI
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             //Menu
-            MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
-            MenuItem fileMenu = menuBar.addItem("File", MenuItemType.Popup);
-            fileMenuCtrl = fileMenu.createItemChild();
-            MenuItem newTimeline = fileMenuCtrl.addItem("New");
+            Button fileButton = window.findWidget("FileButton") as Button;
+            fileButton.MouseButtonClick += new MyGUIEvent(fileButton_MouseButtonClick);
+            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
+            fileMenu.Visible = false;
+            MenuItem newTimeline = fileMenu.addItem("New");
             newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            MenuItem openTimeline = fileMenuCtrl.addItem("Open");
+            MenuItem openTimeline = fileMenu.addItem("Open");
             openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            MenuItem saveTimeline = fileMenuCtrl.addItem("Save");
+            MenuItem saveTimeline = fileMenu.addItem("Save");
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            MenuItem saveTimelineAs = fileMenuCtrl.addItem("Save As");
+            MenuItem saveTimelineAs = fileMenu.addItem("Save As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
            
             //Remove action button
@@ -177,6 +178,13 @@ namespace Medical.GUI
 
         #region File Menu
 
+        void fileButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fileMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            LayerManager.Instance.upLayerItem(fileMenu);
+            fileMenu.setVisibleSmooth(true);
+        }
+
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {
             using (wx.FileDialog saveDialog = new wx.FileDialog(MainWindow.Instance, "Save a timeline"))
@@ -188,6 +196,7 @@ namespace Medical.GUI
                     timelineController.saveTimeline(currentTimeline, saveDialog.Path);
                 }
             }
+            fileMenu.setVisibleSmooth(false);
         }
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
@@ -200,6 +209,7 @@ namespace Medical.GUI
             {
                 saveTimelineAs_MouseButtonClick(source, e);
             }
+            fileMenu.setVisibleSmooth(false);
         }
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
@@ -213,12 +223,13 @@ namespace Medical.GUI
                     setCurrentTimeline(timelineController.openTimeline(openDialog.Path), openDialog.Path);
                 }
             }
-            fileMenuCtrl.Visible = false;
+            fileMenu.setVisibleSmooth(false);
         }
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
             createNewTimeline();
+            fileMenu.setVisibleSmooth(false);
         }
 
         #endregion

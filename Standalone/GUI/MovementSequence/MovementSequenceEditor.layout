@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="204 195 923 115" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="204 195 923 91" layer="Overlapped">
         <Property key="Widget_Caption" value="Movement Sequence"/>
-        <Widget type="Widget" skin="Panel" position="2 25 676 71" align="Stretch">
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 41" align="Stretch" name="ActionView">
+        <Widget type="Widget" skin="Panel" position="2 3 676 69" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 39" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
             <Widget type="Button" skin="Button" position="143 1 45 20" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 41" align="Left VStretch" name="ActionFilter">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
@@ -21,14 +21,16 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Edit" skin="Edit" position="60 1 81 20" name="SequenceDuration"/>
-            <Widget type="StaticText" skin="StaticText" position="3 1 55 19">
+            <Widget type="Edit" skin="Edit" position="90 1 52 20" name="SequenceDuration"/>
+            <Widget type="StaticText" skin="StaticText" position="39 1 50 19">
                 <Property key="Widget_Caption" value="Duration"/>
                 <Property key="Text_TextAlign" value="Left VCenter"/>
             </Widget>
+            <Widget type="Button" skin="Button" position="1 1 38 20" name="FileButton">
+                <Property key="Widget_Caption" value="File"/>
+            </Widget>
         </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 918 23" align="HStretch Top" name="MenuBar"/>
-        <Widget type="ScrollView" skin="ScrollView" position="680 25 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="0 1 66 16" align="HStretch Top" name="PropertiesText">
