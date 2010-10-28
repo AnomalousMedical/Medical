@@ -34,7 +34,7 @@ namespace Medical
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            TimelineController.MovementSequenceController.stopPlayback();
+            TimelineController.MovementSequenceController.pausePlayback();
         }
 
         public override void update(float timelineTime, Clock clock)
@@ -42,7 +42,7 @@ namespace Medical
             lastTime = timelineTime;
         }
 
-        internal void edit()
+        public override void editing()
         {
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
         }
@@ -57,6 +57,7 @@ namespace Medical
             else
             {
                 MovementSequence = new MovementSequence();
+                MovementSequence.Duration = Duration;
             }
         }
 

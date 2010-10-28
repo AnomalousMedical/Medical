@@ -17,9 +17,6 @@ namespace Medical.GUI
             Button capture = mainWidget.findWidget("Capture") as Button;
             capture.MouseButtonClick += new MyGUIEvent(capture_MouseButtonClick);
 
-            Button preview = mainWidget.findWidget("Preview") as Button;
-            preview.MouseButtonClick += new MyGUIEvent(preview_MouseButtonClick);
-
             windowText = mainWidget.findWidget("WindowText") as StaticText;
         }
 
@@ -30,11 +27,6 @@ namespace Medical.GUI
             {
                 windowText.Caption = layerChange.TransparencyState;
             }
-        }
-
-        void preview_MouseButtonClick(Widget source, EventArgs e)
-        {
-            layerChange.preview();
         }
 
         void capture_MouseButtonClick(Widget source, EventArgs e)

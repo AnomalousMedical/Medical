@@ -15,19 +15,11 @@ namespace Medical.GUI
         {
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
-
-            Button preview = mainWidget.findWidget("Preview") as Button;
-            preview.MouseButtonClick += new MyGUIEvent(preview_MouseButtonClick);
         }
 
         public override void setCurrentData(TimelineData data)
         {
             changeStateAction = (ChangeMedicalStateAction)((TimelineActionData)data).Action;
-        }
-
-        void preview_MouseButtonClick(Widget source, EventArgs e)
-        {
-            changeStateAction.preview();
         }
 
         void useCurrent_MouseButtonClick(Widget source, EventArgs e)

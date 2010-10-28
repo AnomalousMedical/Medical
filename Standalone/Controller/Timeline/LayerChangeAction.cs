@@ -53,7 +53,7 @@ namespace Medical
             LayerState.captureState();
         }
 
-        public void preview()
+        public override void editing()
         {
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
             TransparencyController.ActiveTransparencyState = TransparencyState;

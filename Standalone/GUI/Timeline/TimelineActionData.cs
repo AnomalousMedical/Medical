@@ -15,6 +15,11 @@ namespace Medical.GUI
             this.action = action;
         }
 
+        public override void editingStarted()
+        {
+            action.editing();
+        }
+
         public TimelineAction Action
         {
             get

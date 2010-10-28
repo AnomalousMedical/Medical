@@ -40,6 +40,8 @@ namespace Medical
 
         public abstract void update(float timelineTime, Clock clock);
 
+        public abstract void editing();
+
         public virtual float StartTime { get; set; }
 
         public virtual float Duration { get; set; }

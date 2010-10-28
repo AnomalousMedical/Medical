@@ -65,7 +65,7 @@ namespace Medical
             CameraName = currentWindow.Name;
         }
 
-        public void preview()
+        public override void editing()
         {
             TimelineController.SceneViewController.ActiveWindow.setPosition(Translation, LookAt);
         }

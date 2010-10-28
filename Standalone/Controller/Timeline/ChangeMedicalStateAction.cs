@@ -43,7 +43,7 @@ namespace Medical
             State = TimelineController.MedicalStateController.createState("");
         }
 
-        public void preview()
+        public override void editing()
         {
             TimelineController.MedicalStateController.directBlend(State, 1.0f);
         }

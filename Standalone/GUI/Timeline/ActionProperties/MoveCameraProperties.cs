@@ -27,9 +27,6 @@ namespace Medical.GUI
             Button useCurrentButton = mainWidget.findWidget("UseCurrentButton") as Button;
             useCurrentButton.MouseButtonClick += new MyGUIEvent(useCurrentButton_MouseButtonClick);
 
-            Button previewButton = mainWidget.findWidget("PreviewButton") as Button;
-            previewButton.MouseButtonClick += new MyGUIEvent(previewButton_MouseButtonClick);
-
             cameraText = mainWidget.findWidget("CameraText") as StaticText;
         }
 
@@ -50,11 +47,6 @@ namespace Medical.GUI
             translationEdit.Caption = moveAction.Translation.ToString();
             lookAtEdit.Caption = moveAction.LookAt.ToString();
             cameraText.Caption = moveAction.CameraName;
-        }
-
-        void previewButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            moveAction.preview();
         }
 
         void translationEdit_EventEditTextChange(Widget source, EventArgs e)

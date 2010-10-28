@@ -42,6 +42,11 @@ namespace Medical
             
         }
 
+        public override void editing()
+        {
+            TeethController.HighlightContacts = EnableHighlight;
+        }
+
         public override bool Finished
         {
             get { return true; }

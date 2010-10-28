@@ -159,6 +159,24 @@ namespace Medical.Controller
         }
 
         /// <summary>
+        /// Stops playing the current sequence, but does not reset the time back
+        /// to 0. This will effectivly leave the scene as it was when the
+        /// sequence was playing. Still fires the PlaybackStopped event.
+        /// </summary>
+        public void pausePlayback()
+        {
+            if (playing)
+            {
+                medicalController.FixedLoopUpdate -= medicalController_FixedLoopUpdate;
+                playing = false;
+                if (PlaybackStopped != null)
+                {
+                    PlaybackStopped.Invoke(this);
+                }
+            }
+        }
+
+        /// <summary>
         /// The sequence that is currently loaded for playback or manipulation.
         /// </summary>
         public MovementSequence CurrentSequence

@@ -12,9 +12,6 @@
         <Widget type="Button" skin="Button" position="3 61 88 24" name="UseCurrentButton">
             <Property key="Widget_Caption" value="Use Current"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="92 61 88 24" name="PreviewButton">
-            <Property key="Widget_Caption" value="Preview"/>
-        </Widget>
         <Widget type="StaticText" skin="StaticText" position="1 1 74 15">
             <Property key="Widget_Caption" value="Camera"/>
         </Widget>
