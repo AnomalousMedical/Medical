@@ -42,10 +42,9 @@ namespace Medical
             lastTime = timelineTime;
         }
 
-        internal void preview()
+        internal void edit()
         {
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
-            TimelineController.MovementSequenceController.playCurrentSequence();
         }
 
         public override void capture()

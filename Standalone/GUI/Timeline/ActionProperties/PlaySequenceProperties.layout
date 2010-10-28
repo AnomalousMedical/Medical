@@ -4,8 +4,8 @@
         <Widget type="Button" skin="Button" position="0 2 80 21" name="UseCurrent">
             <Property key="Widget_Caption" value="Use Current"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="0 24 80 21" name="Preview">
-            <Property key="Widget_Caption" value="Preview"/>
+        <Widget type="Button" skin="Button" position="0 24 80 21" name="Edit">
+            <Property key="Widget_Caption" value="Edit"/>
         </Widget>
     </Widget>
 </MyGUI>
