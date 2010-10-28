@@ -18,6 +18,11 @@ namespace Medical.GUI
             this.sequence = sequence;
         }
 
+        public override void editingStarted()
+        {
+            keyframe.preview();
+        }
+
         public override string Track
         {
             get { return "Muscle Position"; }

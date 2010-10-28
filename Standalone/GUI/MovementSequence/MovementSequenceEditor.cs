@@ -74,6 +74,7 @@ namespace Medical.GUI
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
+            actionProperties.addPanel("Muscle Position", new MovementKeyframeProperties(timelinePropertiesScrollView));
 
             //Timeline filter
             ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;

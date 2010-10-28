@@ -38,6 +38,11 @@ namespace Medical.Muscles
             rightCPPosition = temp;
         }
 
+        public void preview()
+        {
+            blend(this, 0.0f, 1.0f);
+        }
+
         internal void blend(MovementSequenceState targetState, float currentTime, float duration)
         {
             float endTime;
