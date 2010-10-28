@@ -23,6 +23,7 @@ namespace Medical.GUI
         private bool allowUpdates = true;
 
         private MessageEvent menuShortcut;
+        private ShowMenuButton showMenuButton;
 
         public LayerGUIMenu(Button mainButton, Button menuButton)
         {
@@ -48,7 +49,7 @@ namespace Medical.GUI
             this.menuButton = menuButton;
             if (menuButton != null)
             {
-                menuButton.MouseButtonClick += new MyGUIEvent(menuButton_MouseButtonClick);
+                showMenuButton = new ShowMenuButton(menuButton, contextMenu);
             }
         }
 
@@ -71,13 +72,6 @@ namespace Medical.GUI
             {
                 mainButton_MouseButtonClick(null, null);
             }
-        }
-
-        void menuButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            contextMenu.setVisibleSmooth(true);
-            LayerManager.Instance.upLayerItem(contextMenu);
-            contextMenu.setPosition(menuButton.AbsoluteLeft, menuButton.AbsoluteTop + menuButton.Height);
         }
 
         void mainButton_MouseButtonClick(Widget source, EventArgs e)

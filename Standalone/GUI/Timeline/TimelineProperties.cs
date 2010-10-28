@@ -19,6 +19,7 @@ namespace Medical.GUI
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
         private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
+        private ShowMenuButton showMenuButton;
 
         private Button playButton;
 
@@ -36,7 +37,6 @@ namespace Medical.GUI
 
             //Menu
             Button fileButton = window.findWidget("FileButton") as Button;
-            fileButton.MouseButtonClick += new MyGUIEvent(fileButton_MouseButtonClick);
             fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
             fileMenu.Visible = false;
             MenuItem newTimeline = fileMenu.addItem("New");
@@ -47,6 +47,7 @@ namespace Medical.GUI
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
             MenuItem saveTimelineAs = fileMenu.addItem("Save As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
+            showMenuButton = new ShowMenuButton(fileButton, fileMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -100,6 +101,7 @@ namespace Medical.GUI
         {
             actionFilter.Dispose();
             timelineView.Dispose();
+            Gui.Instance.destroyWidget(fileMenu);
             base.Dispose();
         }
 
@@ -177,13 +179,6 @@ namespace Medical.GUI
         #endregion
 
         #region File Menu
-
-        void fileButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            fileMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
-            LayerManager.Instance.upLayerItem(fileMenu);
-            fileMenu.setVisibleSmooth(true);
-        }
 
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {

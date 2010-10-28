@@ -24,6 +24,7 @@ namespace Medical.GUI
         private String currentSequenceFile = null;
         private bool loadingSequenceFromFile = false;
         private XmlSaver xmlSaver = new XmlSaver();
+        private ShowMenuButton showMenuButton;
 
         private MovementSequenceController movementSequenceController;
 
@@ -38,7 +39,6 @@ namespace Medical.GUI
 
             //Menu
             Button fileButton = window.findWidget("FileButton") as Button;
-            fileButton.MouseButtonClick += new MyGUIEvent(fileButton_MouseButtonClick);
             fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
             fileMenu.Visible = false;
             MenuItem newSequence = fileMenu.addItem("New");
@@ -49,6 +49,7 @@ namespace Medical.GUI
             saveSequence.MouseButtonClick += new MyGUIEvent(saveSequence_MouseButtonClick);
             MenuItem saveSequenceAs = fileMenu.addItem("Save As");
             saveSequenceAs.MouseButtonClick += new MyGUIEvent(saveSequenceAs_MouseButtonClick);
+            showMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -83,6 +84,12 @@ namespace Medical.GUI
 
             //Add tracks to timeline.
             timelineView.addTrack("Muscle Position", Color.Red);
+        }
+
+        public override void Dispose()
+        {
+            Gui.Instance.destroyWidget(fileMenu);
+            base.Dispose();
         }
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
@@ -221,13 +228,6 @@ namespace Medical.GUI
         #endregion
 
         #region File Menu
-
-        void fileButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            fileMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
-            LayerManager.Instance.upLayerItem(fileMenu);
-            fileMenu.setVisibleSmooth(true);
-        }
 
         void newSequence_MouseButtonClick(Widget source, EventArgs e)
         {

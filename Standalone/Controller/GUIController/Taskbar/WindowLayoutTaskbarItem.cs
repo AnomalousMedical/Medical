@@ -46,8 +46,34 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
+            int left = source.AbsoluteLeft;
+            int top = source.AbsoluteTop + source.Height;
+            int guiWidth = Gui.Instance.getViewWidth();
+            int guiHeight = Gui.Instance.getViewHeight();
+
+            int right = left + windowMenu.Width;
+            int bottom = top + windowMenu.Height;
+
+            if (right > guiWidth)
+            {
+                left -= right - guiWidth;
+                if (left < 0)
+                {
+                    left = 0;
+                }
+            }
+
+            if (bottom > guiHeight)
+            {
+                top -= bottom - guiHeight;
+                if (top < 0)
+                {
+                    top = 0;
+                }
+            }
+
+            windowMenu.setPosition(left, top);
             LayerManager.Instance.upLayerItem(windowMenu);
-            windowMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
             windowMenu.setVisibleSmooth(true);
         }
 
