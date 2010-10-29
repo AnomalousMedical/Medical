@@ -7,15 +7,15 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PreActionEditor : Dialog
+    class ChangeSceneEditor : Dialog
     {
         private ComboBox sceneCombo;
         private CheckButton openSceneCheck;
         private OpenNewSceneAction newSceneAction;
         private Timeline currentTimeline;
 
-        public PreActionEditor()
-            :base("Medical.GUI.Timeline.PreActionEditor.layout")
+        public ChangeSceneEditor()
+            : base("Medical.GUI.Timeline.ChangeSceneEditor.layout")
         {
             openSceneCheck = new CheckButton(window.findWidget("OpenSceneCheck") as Button);
             sceneCombo = window.findWidget("SceneCombo") as ComboBox;

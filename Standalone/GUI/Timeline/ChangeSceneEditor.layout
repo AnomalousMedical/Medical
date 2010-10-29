@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="133 290 219 89" layer="Overlapped">
-        <Property key="Widget_Caption" value="Preactions"/>
+        <Property key="Widget_Caption" value="Change Scene"/>
         <Widget type="Button" skin="CheckBox" position="3 4 218 17" name="OpenSceneCheck">
             <Property key="Widget_Caption" value="Open scene when started."/>
         </Widget>

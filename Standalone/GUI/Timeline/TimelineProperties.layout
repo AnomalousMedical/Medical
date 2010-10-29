@@ -24,8 +24,8 @@
             <Widget type="Button" skin="Button" position="1 0 40 23" name="FileButton">
                 <Property key="Widget_Caption" value="File"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="44 0 99 23" name="PrePostActionsButton">
-                <Property key="Widget_Caption" value="Pre/Post Actions"/>
+            <Widget type="Button" skin="Button" position="44 0 99 23" name="OtherActionsButton">
+                <Property key="Widget_Caption" value="Other Actions"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">

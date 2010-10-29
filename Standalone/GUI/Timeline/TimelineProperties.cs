@@ -22,11 +22,11 @@ namespace Medical.GUI
         private ShowMenuButton fileMenuButton;
         private PopupMenu fileMenu;
         private ShowMenuButton prePostActionsMenuButton;
-        private PopupMenu prePostActionsMenu;
+        private PopupMenu otherActionsMenu;
         private MenuItem testActions;
 
         //Dialogs
-        private PreActionEditor preActionEditor;
+        private ChangeSceneEditor changeSceneEditor;
 
         private Button playButton;
 
@@ -56,20 +56,17 @@ namespace Medical.GUI
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
-            //Pre/Post Actions Menu
-            Button prePostActionsButton = window.findWidget("PrePostActionsButton") as Button;
-            prePostActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
-            prePostActionsMenu.Visible = false;
-            MenuItem preActions = prePostActionsMenu.addItem("Edit Preactions");
-            preActions.MouseButtonClick += new MyGUIEvent(preActions_MouseButtonClick);
-            MenuItem postActions = prePostActionsMenu.addItem("Edit Postactions");
-            postActions.MouseButtonClick += new MyGUIEvent(postActions_MouseButtonClick);
-            prePostActionsMenu.addItem("", MenuItemType.Separator);
-            testActions = prePostActionsMenu.addItem("Enable Pre/Post Actions");
+            //Other Actions Menu
+            Button otherActionsButton = window.findWidget("OtherActionsButton") as Button;
+            otherActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+            otherActionsMenu.Visible = false;
+            MenuItem changeScene = otherActionsMenu.addItem("Change Scene");
+            changeScene.MouseButtonClick += new MyGUIEvent(changeScene_MouseButtonClick);
+            otherActionsMenu.addItem("", MenuItemType.Separator);
+            testActions = otherActionsMenu.addItem("Enable Other Actions");
             testActions.StateCheck = true;
             testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
-
-            prePostActionsMenuButton = new ShowMenuButton(prePostActionsButton, prePostActionsMenu);
+            prePostActionsMenuButton = new ShowMenuButton(otherActionsButton, otherActionsMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -117,7 +114,7 @@ namespace Medical.GUI
             }
 
             //Dialogs
-            preActionEditor = new PreActionEditor();
+            changeSceneEditor = new ChangeSceneEditor();
 
             createNewTimeline();
         }
@@ -127,7 +124,7 @@ namespace Medical.GUI
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(fileMenu);
-            Gui.Instance.destroyWidget(prePostActionsMenu);
+            Gui.Instance.destroyWidget(otherActionsMenu);
             base.Dispose();
         }
 
@@ -166,7 +163,7 @@ namespace Medical.GUI
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
-            preActionEditor.CurrentTimeline = currentTimeline;
+            changeSceneEditor.CurrentTimeline = currentTimeline;
         }
 
         public void createNewTimeline()
@@ -263,15 +260,10 @@ namespace Medical.GUI
             testActions.StateCheck = !testActions.StateCheck;
         }
 
-        void postActions_MouseButtonClick(Widget source, EventArgs e)
+        void changeScene_MouseButtonClick(Widget source, EventArgs e)
         {
-            
-        }
-
-        void preActions_MouseButtonClick(Widget source, EventArgs e)
-        {
-            preActionEditor.open(true);
-            preActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            changeSceneEditor.open(true);
+            changeSceneEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
         }
 
         #endregion
