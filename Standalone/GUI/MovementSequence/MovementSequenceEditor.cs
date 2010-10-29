@@ -50,6 +50,9 @@ namespace Medical.GUI
             MenuItem saveSequenceAs = fileMenu.addItem("Save As");
             saveSequenceAs.MouseButtonClick += new MyGUIEvent(saveSequenceAs_MouseButtonClick);
             showMenuButton = new ShowMenuButton(fileButton, fileMenu);
+            fileMenu.addItem("Sep", MenuItemType.Separator);
+            MenuItem reverseSides = fileMenu.addItem("Reverse Sides");
+            reverseSides.MouseButtonClick += new MyGUIEvent(reverseSides_MouseButtonClick);
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -291,6 +294,15 @@ namespace Medical.GUI
                         loadingSequenceFromFile = false;
                     }
                 }
+            }
+            fileMenu.setVisibleSmooth(false);
+        }
+
+        void reverseSides_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (movementSequenceController.CurrentSequence != null)
+            {
+                movementSequenceController.CurrentSequence.reverseSides();
             }
             fileMenu.setVisibleSmooth(false);
         }
