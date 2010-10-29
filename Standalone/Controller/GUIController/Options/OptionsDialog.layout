@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="63 113 230 294" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="63 113 230 288" layer="Modal">
         <Property key="Widget_Caption" value="Options"/>
-        <Property key="Window_MinSize" value="230 294"/>
-        <Property key="Window_MaxSize" value="230 294"/>
+        <Property key="Window_MinSize" value="230 288"/>
+        <Property key="Window_MaxSize" value="230 288"/>
         <Widget type="StaticText" skin="StaticText" position="6 93 76 15">
             <Property key="Widget_Caption" value="Anti Aliasing"/>
         </Widget>

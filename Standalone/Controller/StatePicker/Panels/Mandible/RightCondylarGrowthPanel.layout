@@ -4,8 +4,9 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="352 430"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="4 4 320 15">
+            <Widget type="StaticText" skin="StaticText" position="4 4 343 15">
                 <Property key="Widget_Caption" value="Adjust the sliders to match the patient&apos;s right condyle."/>
+                <Property key="Text_TextAlign" value="Center"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="70 29 79 15">
                 <Property key="Widget_Caption" value="Ramus Height"/>

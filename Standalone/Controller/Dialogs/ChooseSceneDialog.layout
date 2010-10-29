@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="143 85 563 376" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="143 85 563 371" layer="Modal">
         <Property key="Widget_Caption" value="Choose Scene"/>
-        <Property key="Window_MinSize" value="563 376"/>
-        <Property key="Window_MaxSize" value="563 376"/>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="2 2 553 313" name="ChooseScene/FileSelect">
+        <Property key="Window_MinSize" value="563 371"/>
+        <Property key="Window_MaxSize" value="563 371"/>
+        <Widget type="ScrollView" skin="CustomScrollView2" position="2 2 559 313" name="ChooseScene/FileSelect">
             <Property key="ScrollView_CanvasSize" value="539 300"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>

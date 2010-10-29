@@ -64,5 +64,11 @@
         <Widget type="StaticText" skin="StaticText" position="38 149 91 15">
             <Property key="Widget_Caption" value="Force"/>
         </Widget>
+        <Widget type="StaticImage" skin="StaticImage" position="4 148 32 32">
+            <Property key="Image_Resource" value="ManipForceDown"/>
+        </Widget>
+        <Widget type="StaticImage" skin="StaticImage" position="143 148 32 32">
+            <Property key="Image_Resource" value="ManipForceUp"/>
+        </Widget>
     </Widget>
 </MyGUI>

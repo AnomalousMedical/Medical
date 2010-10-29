@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="Panel" position="76 175 352 300" layer="Overlapped">
+    <Widget type="Widget" skin="Panel" position="76 175 352 290" layer="Overlapped">
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
-            <Property key="ScrollView_CanvasSize" value="352 300"/>
+            <Property key="ScrollView_CanvasSize" value="352 290"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Widget type="Edit" skin="WordWrapSimple" position="4 0 344 31" align="HStretch Top">
+                <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
+                <Property key="Edit_Static" value="true"/>
+                <Property key="Text_TextAlign" value="Center"/>
+            </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="49 0 254 289" align="Left Top" name="ToothPanel">
                 <Widget type="Button" skin="ButtonImage" position="6 249 37 37" name="TopTeethRemoval/Tooth1">
                     <Property key="Button_ModeImage" value="true"/>
@@ -84,10 +89,6 @@
                     <Property key="Button_ModeImage" value="true"/>
                     <Property key="Button_ImageResource" value="TeethButtons/Tooth09"/>
                     <UserString key="Tooth" value="Tooth09"/>
-                </Widget>
-                <Widget type="Edit" skin="WordWrapSimple" position="0 4 278 28" align="HStretch Top">
-                    <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
-                    <Property key="Edit_Static" value="true"/>
                 </Widget>
             </Widget>
         </Widget>

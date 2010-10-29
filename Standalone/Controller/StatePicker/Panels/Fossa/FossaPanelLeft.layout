@@ -4,8 +4,9 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="352 135"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="StaticText" skin="StaticText" position="4 4 300 15">
+            <Widget type="StaticText" skin="StaticText" position="4 4 344 15">
                 <Property key="Widget_Caption" value="Adjust the slider to change the left fossa flatness."/>
+                <Property key="Text_TextAlign" value="Center"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="69 23 60 15">
                 <Property key="Widget_Caption" value="Flatness"/>

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="112 187 440 255" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="112 187 440 243" layer="Modal">
         <Property key="Widget_Caption" value="Save"/>
-        <Property key="Window_MinSize" value="440 255"/>
-        <Property key="Window_MaxSize" value="440 255"/>
+        <Property key="Window_MinSize" value="440 243"/>
+        <Property key="Window_MaxSize" value="440 243"/>
         <Widget type="StaticText" skin="StaticText" position="4 4 83 15">
             <Property key="Widget_Caption" value="Patient Data"/>
         </Widget>
@@ -29,10 +29,10 @@
         <Widget type="StaticText" skin="StaticText" position="279 176 139 15" name="Save/WarningLabel">
             <Property key="Widget_Caption" value="This file already exists."/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 205 88 23" name="Save/SaveButton">
+        <Widget type="Button" skin="Button" position="4 198 88 23" name="Save/SaveButton">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 205 88 23" name="Save/CancelButton">
+        <Widget type="Button" skin="Button" position="96 198 88 23" name="Save/CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="230 158 50 50" name="Save/WarningImage">

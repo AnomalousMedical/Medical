@@ -4,6 +4,11 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="352 274"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Widget type="Edit" skin="WordWrapSimple" position="4 0 344 31" align="HStretch Top">
+                <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
+                <Property key="Edit_Static" value="true"/>
+                <Property key="Text_TextAlign" value="Center"/>
+            </Widget>
             <Widget type="Widget" skin="PanelEmpty" position="61 0 230 274" align="Left Top" name="ToothPanel">
                 <Widget type="Button" skin="ButtonImage" position="3 34 42 44" name="BottomTeethRemoval/Tooth32">
                     <Property key="Button_ModeImage" value="true"/>
@@ -84,10 +89,6 @@
                     <Property key="Button_ModeImage" value="true"/>
                     <Property key="Button_ImageResource" value="TeethButtons/Tooth24"/>
                     <UserString key="Tooth" value="Tooth24"/>
-                </Widget>
-                <Widget type="Edit" skin="WordWrapSimple" position="4 0 226 31" align="HStretch Top">
-                    <Property key="Widget_Caption" value="Click the teeth to remove them from the model."/>
-                    <Property key="Edit_Static" value="true"/>
                 </Widget>
             </Widget>
         </Widget>
