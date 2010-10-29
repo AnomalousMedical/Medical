@@ -15,11 +15,11 @@ namespace Medical.GUI
         public ToothRemovalPanel(String toothPanelFile, StateWizardPanelController controller)
             : base(toothPanelFile, controller)
         {
-            Widget scrollPane = mainWidget.getChildAt(0);
-            uint numChildren = scrollPane.ChildCount;
+            Widget toothPanel = mainWidget.findWidget("ToothPanel");
+            uint numChildren = toothPanel.ChildCount;
             for (uint i = 0; i < numChildren; ++i)
             {
-                Button toothGUIButton = scrollPane.getChildAt(i) as Button;
+                Button toothGUIButton = toothPanel.getChildAt(i) as Button;
                 if (toothGUIButton != null)
                 {
                     ToothButton toothButton = new ToothButton(toothGUIButton);

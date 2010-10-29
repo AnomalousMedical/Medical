@@ -4,7 +4,7 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position_real="0 0 1 1" align="Stretch">
             <Property key="ScrollView_CanvasSize" value="352 274"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Widget type="Widget" skin="PanelEmpty" position="61 0 230 274" align="Left Top">
+            <Widget type="Widget" skin="PanelEmpty" position="61 0 230 274" align="Left Top" name="ToothPanel">
                 <Widget type="Button" skin="ButtonImage" position="3 34 42 44" name="BottomTeethRemoval/Tooth32">
                     <Property key="Button_ModeImage" value="true"/>
                     <Property key="Button_ImageResource" value="TeethButtons/Tooth32"/>
