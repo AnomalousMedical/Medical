@@ -65,10 +65,10 @@
             <Property key="Widget_Caption" value="Force"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="4 148 32 32">
-            <Property key="Image_Resource" value="ManipForceDown"/>
+            <Property key="Image_Resource" value="Movement/ManipForceDown"/>
         </Widget>
         <Widget type="StaticImage" skin="StaticImage" position="143 148 32 32">
-            <Property key="Image_Resource" value="ManipForceUp"/>
+            <Property key="Image_Resource" value="Movement/ManipForceUp"/>
         </Widget>
     </Widget>
 </MyGUI>
