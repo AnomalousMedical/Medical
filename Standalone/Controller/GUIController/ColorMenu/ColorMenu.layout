@@ -12,7 +12,7 @@
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ItemWidth" value="14"/>
             <UserString key="ItemHeight" value="14"/>
-            <UserString key="ButtonSkin" value="ButtonGridImageButton"/>
+            <UserString key="ButtonSkin" value="ColorSwatchButton"/>
             <UserString key="ItemPaddingX" value="2"/>
             <UserString key="ItemPaddingY" value="2"/>
             <UserString key="ShowGroupCaptions" value="False"/>
