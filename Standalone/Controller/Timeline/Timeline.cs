@@ -95,17 +95,20 @@ namespace Medical
             postActions.Remove(action);
         }
 
-        public void start()
+        public void start(bool playPreActions)
         {
             newActionStartIndex = 0;
             currentTime = 0.0f;
-            foreach (TimelineInstantAction action in preActions)
+            if (playPreActions)
             {
-                action.doAction();
+                foreach (TimelineInstantAction action in preActions)
+                {
+                    action.doAction();
+                }
             }
         }
 
-        public void stop()
+        public void stop(bool playPostActions)
         {
             //Stop any running actions in case this was done during playback
             if (activeActions.Count != 0)
@@ -116,9 +119,12 @@ namespace Medical
                     action.stopped(currentTime, clock);
                 }
             }
-            foreach (TimelineInstantAction action in postActions)
+            if (playPostActions)
             {
-                action.doAction();
+                foreach (TimelineInstantAction action in postActions)
+                {
+                    action.doAction();
+                }
             }
         }
 

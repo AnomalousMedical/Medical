@@ -7,7 +7,7 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="114 0 75 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="Button" position="145 0 44 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
             </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 277" align="Left VStretch" name="ActionFilter">
@@ -21,8 +21,11 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="1 0 75 23" name="FileButton">
+            <Widget type="Button" skin="Button" position="1 0 40 23" name="FileButton">
                 <Property key="Widget_Caption" value="File"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="44 0 99 23" name="PrePostActionsButton">
+                <Property key="Widget_Caption" value="Pre/Post Actions"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">

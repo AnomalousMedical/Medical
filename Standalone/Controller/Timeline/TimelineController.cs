@@ -26,6 +26,7 @@ namespace Medical
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
         private bool updating = false;
+        private bool playPrePostActions = true;
 
         public TimelineController(StandaloneController standaloneController)
         {
@@ -80,11 +81,17 @@ namespace Medical
 
         public void startPlayback(Timeline timeline)
         {
+            startPlayback(timeline, true);
+        }
+
+        public void startPlayback(Timeline timeline, bool playPrePostActions)
+        {
             if (!updating)
             {
+                this.playPrePostActions = playPrePostActions;
                 activeTimeline = timeline;
                 activeTimeline.TimelineController = this;
-                activeTimeline.start();
+                activeTimeline.start(playPrePostActions);
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
                 if (PlaybackStarted != null)
@@ -96,13 +103,18 @@ namespace Medical
 
         public void stopPlayback()
         {
+            stopPlayback(playPrePostActions);
+        }
+
+        public void stopPlayback(bool playPostActions)
+        {
             if (updating)
             {
                 if (PlaybackStopped != null)
                 {
                     PlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
-                activeTimeline.stop();
+                activeTimeline.stop(playPostActions);
                 mainTimer.removeFixedUpdateListener(this);
                 if (activeTimeline != editingTimeline)
                 {

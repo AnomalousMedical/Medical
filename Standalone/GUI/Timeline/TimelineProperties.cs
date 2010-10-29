@@ -11,7 +11,6 @@ namespace Medical.GUI
     {
         private Timeline currentTimeline;
         private TimelineController timelineController;
-        private PopupMenu fileMenu;
         private String currentTimelineFile;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
@@ -19,7 +18,11 @@ namespace Medical.GUI
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
         private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
-        private ShowMenuButton showMenuButton;
+        private ShowMenuButton fileMenuButton;
+        private PopupMenu fileMenu;
+        private ShowMenuButton prePostActionsMenuButton;
+        private PopupMenu prePostActionsMenu;
+        private MenuItem testActions;
 
         private Button playButton;
 
@@ -35,9 +38,9 @@ namespace Medical.GUI
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
-            //Menu
+            //File Menu
             Button fileButton = window.findWidget("FileButton") as Button;
-            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "LayerMenu") as PopupMenu;
+            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             fileMenu.Visible = false;
             MenuItem newTimeline = fileMenu.addItem("New");
             newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
@@ -47,7 +50,22 @@ namespace Medical.GUI
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
             MenuItem saveTimelineAs = fileMenu.addItem("Save As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
-            showMenuButton = new ShowMenuButton(fileButton, fileMenu);
+            fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
+
+            //Pre/Post Actions Menu
+            Button prePostActionsButton = window.findWidget("PrePostActionsButton") as Button;
+            prePostActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+            prePostActionsMenu.Visible = false;
+            MenuItem preActions = prePostActionsMenu.addItem("Edit Preactions");
+            preActions.MouseButtonClick += new MyGUIEvent(preActions_MouseButtonClick);
+            MenuItem postActions = prePostActionsMenu.addItem("Edit Postactions");
+            postActions.MouseButtonClick += new MyGUIEvent(postActions_MouseButtonClick);
+            prePostActionsMenu.addItem("", MenuItemType.Separator);
+            testActions = prePostActionsMenu.addItem("Enable Pre/Post Actions");
+            testActions.StateCheck = true;
+            testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
+
+            prePostActionsMenuButton = new ShowMenuButton(prePostActionsButton, prePostActionsMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -102,6 +120,7 @@ namespace Medical.GUI
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(fileMenu);
+            Gui.Instance.destroyWidget(prePostActionsMenu);
             base.Dispose();
         }
 
@@ -229,17 +248,36 @@ namespace Medical.GUI
 
         #endregion
 
+        #region Pre/Post Actions Menu
+
+        void testActions_MouseButtonClick(Widget source, EventArgs e)
+        {
+            testActions.StateCheck = !testActions.StateCheck;
+        }
+
+        void postActions_MouseButtonClick(Widget source, EventArgs e)
+        {
+            
+        }
+
+        void preActions_MouseButtonClick(Widget source, EventArgs e)
+        {
+            
+        }
+
+        #endregion
+
         #region Playback
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
         {
             if (timelineController.Playing)
             {
-                timelineController.stopPlayback();
+                timelineController.stopPlayback(false);
             }
             else if (currentTimeline != null)
             {
-                timelineController.startPlayback(currentTimeline);
+                timelineController.startPlayback(currentTimeline, testActions.StateCheck);
             }
         }
 
