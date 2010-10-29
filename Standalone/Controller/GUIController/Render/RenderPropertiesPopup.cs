@@ -35,7 +35,7 @@ namespace Medical.GUI
             popupContainer = new PopupContainer(mainWidget);
 
             aaCombo = mainWidget.findWidget("RenderingTab/AACombo") as ComboBox;
-            aaCombo.SelectedIndex = aaCombo.getItemCount() - 1;
+            aaCombo.SelectedIndex = aaCombo.ItemCount - 1;
 
             width = new NumericEdit(mainWidget.findWidget("RenderingTab/WidthEdit") as Edit);
             height = new NumericEdit(mainWidget.findWidget("RenderingTab/HeightEdit") as Edit);

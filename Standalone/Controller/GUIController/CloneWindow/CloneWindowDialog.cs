@@ -72,7 +72,7 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
-            if (monitorCombo.getItemCount() > 1)
+            if (monitorCombo.ItemCount > 1)
             {
                 monitorCombo.SelectedIndex = 1;
             }

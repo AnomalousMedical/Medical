@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="133 290 219 89" layer="Back">
+    <Widget type="Window" skin="WindowCX" position="133 290 219 89" layer="Overlapped">
         <Property key="Widget_Caption" value="Preactions"/>
-        <Widget type="Button" skin="CheckBox" position="3 4 218 17">
+        <Widget type="Button" skin="CheckBox" position="3 4 218 17" name="OpenSceneCheck">
             <Property key="Widget_Caption" value="Open scene when started."/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="4 23 211 20"/>
+        <Widget type="ComboBox" skin="ComboBox" position="4 23 211 20" name="SceneCombo"/>
         <Widget type="Button" skin="Button" position="4 48 68 20" name="ApplyButton">
             <Property key="Widget_Caption" value="Apply"/>
         </Widget>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using System.IO;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -23,6 +24,9 @@ namespace Medical.GUI
         private ShowMenuButton prePostActionsMenuButton;
         private PopupMenu prePostActionsMenu;
         private MenuItem testActions;
+
+        //Dialogs
+        private PreActionEditor preActionEditor;
 
         private Button playButton;
 
@@ -112,6 +116,9 @@ namespace Medical.GUI
                 }
             }
 
+            //Dialogs
+            preActionEditor = new PreActionEditor();
+
             createNewTimeline();
         }
 
@@ -159,6 +166,7 @@ namespace Medical.GUI
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
+            preActionEditor.CurrentTimeline = currentTimeline;
         }
 
         public void createNewTimeline()
@@ -262,7 +270,8 @@ namespace Medical.GUI
 
         void preActions_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            preActionEditor.open(true);
+            preActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
         }
 
         #endregion

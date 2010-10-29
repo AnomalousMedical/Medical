@@ -109,7 +109,7 @@ namespace Medical.GUI
             if (resIndex == uint.MaxValue)
             {
                 resolutionCombo.addItem(resString);
-                resolutionCombo.SelectedIndex = resolutionCombo.getItemCount() - 1;
+                resolutionCombo.SelectedIndex = resolutionCombo.ItemCount - 1;
             }
             else
             {
@@ -119,10 +119,10 @@ namespace Medical.GUI
             uint aaIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             if (aaIndex == uint.MaxValue)
             {
-                if (aaCombo.getItemCount() == 0)
+                if (aaCombo.ItemCount == 0)
                 {
                     aaCombo.addItem(OgreConfig.FSAA);
-                    aaCombo.SelectedIndex = aaCombo.getItemCount() - 1;
+                    aaCombo.SelectedIndex = aaCombo.ItemCount - 1;
                 }
                 else
                 {

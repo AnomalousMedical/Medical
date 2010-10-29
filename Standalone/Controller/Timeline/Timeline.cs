@@ -185,6 +185,22 @@ namespace Medical
             }
         }
 
+        public IEnumerable<TimelineInstantAction> PreActions
+        {
+            get
+            {
+                return preActions;
+            }
+        }
+
+        public IEnumerable<TimelineInstantAction> PostActions
+        {
+            get
+            {
+                return postActions;
+            }
+        }
+
         public float CurrentTime
         {
             get
