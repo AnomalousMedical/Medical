@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCS" position="157 188 262 405" layer="Back">
+        <Property key="Widget_Caption" value="Finish Action"/>
+        <Widget type="Button" skin="RadioBox" position="5 5 110 18">
+            <Property key="Widget_Caption" value="Do Nothing"/>
+        </Widget>
+        <Widget type="Button" skin="RadioBox" position="5 23 162 18">
+            <Property key="Widget_Caption" value="Load Another Timeline"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="29 44 22 14">
+            <Property key="Widget_Caption" value="File"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="31 62 126 16">
+            <Property key="Widget_Caption" value="Continue Prompt"/>
+        </Widget>
+        <Widget type="Button" skin="RadioBox" position="5 84 105 15">
+            <Property key="Widget_Caption" value="Ask Question"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="217 42 42 17">
+            <Property key="Widget_Caption" value="Import"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="53 42 161 19"/>
+    </Widget>
+</MyGUI>

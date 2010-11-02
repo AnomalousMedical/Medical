@@ -27,6 +27,9 @@ namespace Medical.GUI
 
         //Dialogs
         private ChangeSceneEditor changeSceneEditor;
+        private NewProjectDialog newProjectDialog;
+        private OpenTimelineDialog openTimelineDialog;
+        private SaveTimelineDialog saveTimelineDialog;
 
         private Button playButton;
 
@@ -46,13 +49,18 @@ namespace Medical.GUI
             Button fileButton = window.findWidget("FileButton") as Button;
             fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             fileMenu.Visible = false;
-            MenuItem newTimeline = fileMenu.addItem("New");
+            MenuItem newProject = fileMenu.addItem("New Project");
+            newProject.MouseButtonClick += new MyGUIEvent(newProject_MouseButtonClick);
+            MenuItem openProject = fileMenu.addItem("Open Project");
+            openProject.MouseButtonClick += new MyGUIEvent(openProject_MouseButtonClick);
+            fileMenu.addItem("", MenuItemType.Separator);
+            MenuItem newTimeline = fileMenu.addItem("New Timeline");
             newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            MenuItem openTimeline = fileMenu.addItem("Open");
+            MenuItem openTimeline = fileMenu.addItem("Open Timeline");
             openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            MenuItem saveTimeline = fileMenu.addItem("Save");
+            MenuItem saveTimeline = fileMenu.addItem("Save Timeline");
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            MenuItem saveTimelineAs = fileMenu.addItem("Save As");
+            MenuItem saveTimelineAs = fileMenu.addItem("Save Timeline As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
@@ -115,6 +123,12 @@ namespace Medical.GUI
 
             //Dialogs
             changeSceneEditor = new ChangeSceneEditor();
+            newProjectDialog = new NewProjectDialog();
+            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
+            openTimelineDialog = new OpenTimelineDialog(timelineController);
+            openTimelineDialog.OpenFile += new EventHandler(openTimelineDialog_OpenFile);
+            saveTimelineDialog = new SaveTimelineDialog();
+            saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
 
             createNewTimeline();
         }
@@ -147,14 +161,7 @@ namespace Medical.GUI
                 currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
             }
             currentTimelineFile = filename;
-            if (currentTimelineFile != null)
-            {
-                window.Caption = String.Format("Timeline - {0}", currentTimelineFile);
-            }
-            else
-            {
-                window.Caption = "Timeline";
-            }
+            updateWindowCaption();
             currentTimeline = timeline;
             timelineView.removeAllData();
             foreach (TimelineAction action in currentTimeline.Actions)
@@ -164,6 +171,25 @@ namespace Medical.GUI
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
             changeSceneEditor.CurrentTimeline = currentTimeline;
+        }
+
+        private void updateWindowCaption()
+        {
+            if (timelineController.ResourceDirectory != null)
+            {
+                if (currentTimelineFile != null)
+                {
+                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceDirectory);
+                }
+                else
+                {
+                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceDirectory);
+                }
+            }
+            else
+            {
+                window.Caption = "Timeline";
+            }
         }
 
         public void createNewTimeline()
@@ -204,18 +230,40 @@ namespace Medical.GUI
 
         #region File Menu
 
-        void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
+        void newProject_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog saveDialog = new wx.FileDialog(MainWindow.Instance, "Save a timeline"))
+            newProjectDialog.open(true);
+            newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+        }
+
+        void openProject_MouseButtonClick(Widget source, EventArgs e)
+        {
+            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", newProjectDialog.ProjectLocation))
             {
-                saveDialog.StyleFlags = wx.WindowStyles.FD_SAVE;
-                saveDialog.Wildcard = "Timeline files (*.tl)|*.tl";
-                if (saveDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
                 {
-                    timelineController.saveTimeline(currentTimeline, saveDialog.Path);
+                    timelineController.ResourceDirectory = dirDialog.Path;
+                    updateWindowCaption();
                 }
             }
+        }
+
+        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
+        {
+            timelineController.ResourceDirectory = newProjectDialog.FullProjectName;
+            updateWindowCaption();
+        }
+
+        void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
+        {
+            saveTimelineDialog.open(true);
+            saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             fileMenu.setVisibleSmooth(false);
+        }
+
+        void saveTimelineDialog_SaveFile(object sender, EventArgs e)
+        {
+            timelineController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
         }
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
@@ -223,26 +271,24 @@ namespace Medical.GUI
             if (currentTimelineFile != null)
             {
                 timelineController.saveTimeline(currentTimeline, currentTimelineFile);
+                fileMenu.setVisibleSmooth(false);
             }
             else
             {
                 saveTimelineAs_MouseButtonClick(source, e);
             }
-            fileMenu.setVisibleSmooth(false);
         }
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog openDialog = new wx.FileDialog(MainWindow.Instance, "Open a timeline"))
-            {
-                openDialog.StyleFlags = wx.WindowStyles.FD_OPEN;
-                openDialog.Wildcard = "Timeline files (*.tl)|*.tl";
-                if (openDialog.ShowModal() == wx.ShowModalResult.OK)
-                {
-                    setCurrentTimeline(timelineController.openTimeline(openDialog.Path), openDialog.Path);
-                }
-            }
+            openTimelineDialog.open(true);
+            openTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             fileMenu.setVisibleSmooth(false);
+        }
+
+        void openTimelineDialog_OpenFile(object sender, EventArgs e)
+        {
+            setCurrentTimeline(timelineController.openTimeline(openTimelineDialog.SelectedFile), openTimelineDialog.SelectedFile);
         }
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)

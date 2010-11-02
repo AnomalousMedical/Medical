@@ -9,6 +9,7 @@ using Engine.Saving.XMLSaver;
 using Engine;
 using System.IO;
 using System.Xml;
+using Logging;
 
 namespace Medical
 {
@@ -52,6 +53,7 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
+            filename = Path.Combine(ResourceDirectory, filename);
             //Look on the virtual file system first. If it is not found there search the real file system.
             VirtualFileSystem vfs = VirtualFileSystem.Instance;
             if (vfs.exists(filename))
@@ -72,6 +74,7 @@ namespace Medical
 
         public void saveTimeline(Timeline timeline, String filename)
         {
+            filename = Path.Combine(ResourceDirectory, filename);
             using (XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default))
             {
                 writer.Formatting = Formatting.Indented;
@@ -128,6 +131,23 @@ namespace Medical
         public void openNewScene(String filename)
         {
             standaloneController.openNewScene(filename);
+        }
+
+        /// <summary>
+        /// List the files in the current resource location that match pattern.
+        /// </summary>
+        /// <param name="pattern"></param>
+        public String[] listResourceFiles(String pattern)
+        {
+            try
+            {
+                return Directory.GetFiles(ResourceDirectory, pattern, SearchOption.TopDirectoryOnly);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceDirectory, ex.Message);
+                return new String[0];
+            }
         }
 
         #region UpdateListener Members
@@ -205,5 +225,10 @@ namespace Medical
                 return standaloneController.MovementSequenceController;
             }
         }
+
+        /// <summary>
+        /// The current directory to read external resources out of.
+        /// </summary>
+        public String ResourceDirectory { get; set; }
     }
 }

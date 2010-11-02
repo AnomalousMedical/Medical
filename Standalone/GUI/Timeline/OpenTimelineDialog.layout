@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="146 390 204 280" layer="Overlapped">
+        <Property key="Widget_Caption" value="Open Timeline"/>
+        <Widget type="MultiList" skin="MultiList" position="0 0 204 232" align="Stretch" name="FileList"/>
+        <Widget type="Button" skin="Button" position="5 237 61 19" align="Left Bottom" name="OpenButton">
+            <Property key="Widget_Caption" value="Open"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="70 237 61 19" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+    </Widget>
+</MyGUI>

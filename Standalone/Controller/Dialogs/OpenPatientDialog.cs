@@ -244,14 +244,6 @@ namespace Medical.GUI
             }
         }
 
-        private void browseButton_Click(object sender, EventArgs e)
-        {
-            //if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
-            //{
-            //    locationTextBox.Text = folderBrowserDialog.SelectedPath;
-            //}
-        }
-
         private void listFiles()
         {
             if (fileListWorker.IsBusy)

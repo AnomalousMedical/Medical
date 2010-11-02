@@ -179,6 +179,9 @@
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.cs" />
     <Compile Include="GUI\Timeline\ChangeSceneEditor.cs" />
+    <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
+    <Compile Include="GUI\Timeline\OpenTimelineDialog.cs" />
+    <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
     <Compile Include="Controller\Timeline\HighlightTeethAction.cs" />
@@ -321,6 +324,10 @@
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MoveCameraProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ChangeSceneEditor.layout" />
+    <EmbeddedResource Include="GUI\Timeline\FinishActionEditor.layout" />
+    <EmbeddedResource Include="GUI\Timeline\NewProjectDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\OpenTimelineDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
