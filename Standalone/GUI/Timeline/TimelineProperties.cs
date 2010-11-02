@@ -35,6 +35,12 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
+        //File Menu
+        MenuItem newTimeline;
+        MenuItem openTimeline;
+        MenuItem saveTimeline;
+        MenuItem saveTimelineAs;
+
         public TimelineProperties(TimelineController timelineController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
@@ -42,6 +48,7 @@ namespace Medical.GUI
             timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
+            timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -54,14 +61,18 @@ namespace Medical.GUI
             MenuItem openProject = fileMenu.addItem("Open Project");
             openProject.MouseButtonClick += new MyGUIEvent(openProject_MouseButtonClick);
             fileMenu.addItem("", MenuItemType.Separator);
-            MenuItem newTimeline = fileMenu.addItem("New Timeline");
+            newTimeline = fileMenu.addItem("New Timeline");
             newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            MenuItem openTimeline = fileMenu.addItem("Open Timeline");
+            newTimeline.Enabled = false;
+            openTimeline = fileMenu.addItem("Open Timeline");
             openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            MenuItem saveTimeline = fileMenu.addItem("Save Timeline");
+            openTimeline.Enabled = false;
+            saveTimeline = fileMenu.addItem("Save Timeline");
             saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            MenuItem saveTimelineAs = fileMenu.addItem("Save Timeline As");
+            saveTimeline.Enabled = false;
+            saveTimelineAs = fileMenu.addItem("Save Timeline As");
             saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
+            saveTimelineAs.Enabled = false;
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
             //Other Actions Menu
@@ -175,15 +186,15 @@ namespace Medical.GUI
 
         private void updateWindowCaption()
         {
-            if (timelineController.ResourceDirectory != null)
+            if (timelineController.ResourceLocation != null)
             {
                 if (currentTimelineFile != null)
                 {
-                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceDirectory);
+                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceLocation);
                 }
                 else
                 {
-                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceDirectory);
+                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceLocation);
                 }
             }
             else
@@ -242,7 +253,7 @@ namespace Medical.GUI
             {
                 if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
                 {
-                    timelineController.ResourceDirectory = dirDialog.Path;
+                    timelineController.ResourceLocation = dirDialog.Path;
                     updateWindowCaption();
                 }
             }
@@ -250,7 +261,7 @@ namespace Medical.GUI
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
         {
-            timelineController.ResourceDirectory = newProjectDialog.FullProjectName;
+            timelineController.ResourceLocation = newProjectDialog.FullProjectName;
             updateWindowCaption();
         }
 
@@ -295,6 +306,14 @@ namespace Medical.GUI
         {
             createNewTimeline();
             fileMenu.setVisibleSmooth(false);
+        }
+
+        void timelineController_ResourceLocationChanged(object sender, EventArgs e)
+        {
+            newTimeline.Enabled = timelineController.ResourceLocation != null;
+            openTimeline.Enabled = timelineController.ResourceLocation != null;
+            saveTimeline.Enabled = timelineController.ResourceLocation != null;
+            saveTimelineAs.Enabled = timelineController.ResourceLocation != null;
         }
 
         #endregion

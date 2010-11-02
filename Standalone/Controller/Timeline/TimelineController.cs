@@ -17,6 +17,7 @@ namespace Medical
 
     class TimelineController : UpdateListener
     {
+        public event EventHandler ResourceLocationChanged;
         public event EventHandler PlaybackStarted;
         public event EventHandler PlaybackStopped;
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
@@ -28,6 +29,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private bool updating = false;
         private bool playPrePostActions = true;
+        private String resourceLocation = null;
 
         public TimelineController(StandaloneController standaloneController)
         {
@@ -53,7 +55,7 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
-            filename = Path.Combine(ResourceDirectory, filename);
+            filename = Path.Combine(ResourceLocation, filename);
             //Look on the virtual file system first. If it is not found there search the real file system.
             VirtualFileSystem vfs = VirtualFileSystem.Instance;
             if (vfs.exists(filename))
@@ -74,7 +76,7 @@ namespace Medical
 
         public void saveTimeline(Timeline timeline, String filename)
         {
-            filename = Path.Combine(ResourceDirectory, filename);
+            filename = Path.Combine(ResourceLocation, filename);
             using (XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default))
             {
                 writer.Formatting = Formatting.Indented;
@@ -141,11 +143,11 @@ namespace Medical
         {
             try
             {
-                return Directory.GetFiles(ResourceDirectory, pattern, SearchOption.TopDirectoryOnly);
+                return Directory.GetFiles(ResourceLocation, pattern, SearchOption.TopDirectoryOnly);
             }
             catch (Exception ex)
             {
-                Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceDirectory, ex.Message);
+                Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceLocation, ex.Message);
                 return new String[0];
             }
         }
@@ -229,6 +231,20 @@ namespace Medical
         /// <summary>
         /// The current directory to read external resources out of.
         /// </summary>
-        public String ResourceDirectory { get; set; }
+        public String ResourceLocation
+        {
+            get
+            {
+                return resourceLocation;
+            }
+            set
+            {
+                resourceLocation = value;
+                if (ResourceLocationChanged != null)
+                {
+                    ResourceLocationChanged.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
     }
 }
