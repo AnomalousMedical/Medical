@@ -24,7 +24,7 @@
             <Property key="Widget_Caption" value="Notes"/>
         </Widget>
         <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="6 155 213 223" align="Stretch">
-            <Widget type="Edit" skin="WordWrap" position="0 0 213 223" align="Stretch" name="Notes/NotesText">
+            <Widget type="Edit" skin="WordWrap" position="0 0 213 223" align="HStretch VCenter" name="Notes/NotesText">
                 <Property key="Edit_MultiLine" value="true"/>
                 <Property key="Edit_MaxTextLength" value="2900"/>
             </Widget>
