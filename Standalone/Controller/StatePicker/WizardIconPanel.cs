@@ -66,7 +66,7 @@ namespace Medical.GUI
         private Layout layout;
         private ScrollView iconScrollView;
         private MyGUILayoutContainer layoutContainer;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(0.0f, 10.0f));
+        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(4.0f, 10.0f));
         private Dictionary<StateWizardPanel, WizardButtonContainer> panels = new Dictionary<StateWizardPanel, WizardButtonContainer>();
         private WizardButtonContainer selectedButton;
         private List<WizardButtonContainer> currentButtons = new List<WizardButtonContainer>();
