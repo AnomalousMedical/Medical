@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="68 144 510 98" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="68 144 505 98" layer="Overlapped">
         <Property key="Widget_Caption" value="Layers"/>
-        <Property key="Window_MinSize" value="510 98"/>
-        <Property key="Window_MaxSize" value="510 98"/>
+        <Property key="Window_MinSize" value="505 98"/>
+        <Property key="Window_MaxSize" value="505 98"/>
         <Widget type="Button" skin="RibbonButton" position="4 4 36 38" name="Layers/Skin">
             <Property key="Button_ImageResource" value="View/LayersSkinLarge"/>
         </Widget>
