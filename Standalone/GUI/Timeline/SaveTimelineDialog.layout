@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="139 366 236 87" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="139 366 236 85" layer="Overlapped">
         <Property key="Widget_Caption" value="Save Timeline"/>
         <Widget type="StaticText" skin="StaticText" position="4 5 35 14">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="4 21 226 20" name="Filename"/>
-        <Widget type="Button" skin="Button" position="4 45 59 19" name="SaveButton">
+        <Widget type="Button" skin="Button" position="4 44 59 19" name="SaveButton">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="66 45 59 19" name="CancelButton">
+        <Widget type="Button" skin="Button" position="66 44 59 19" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
     </Widget>
