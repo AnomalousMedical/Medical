@@ -151,6 +151,18 @@ namespace Medical
             standaloneController.openNewScene(filename);
         }
 
+        public void showContinuePrompt(ContinuePromptCallback callback)
+        {
+            if (ContinuePrompt != null)
+            {
+                ContinuePrompt.showPrompt(callback);
+            }
+            else
+            {
+                throw new Exception("No Continue Prompt defined.");
+            }
+        }
+
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
@@ -243,6 +255,8 @@ namespace Medical
                 return standaloneController.MovementSequenceController;
             }
         }
+
+        public ContinuePromptProvider ContinuePrompt { get; set; }
 
         /// <summary>
         /// The current directory to read external resources out of.

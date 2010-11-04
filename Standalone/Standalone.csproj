@@ -98,6 +98,7 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.cs" />
     <Compile Include="GUI\Timeline\ChangeSceneEditor.cs" />
+    <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
     <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
     <Compile Include="GUI\Timeline\OpenTimelineDialog.cs" />
     <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />

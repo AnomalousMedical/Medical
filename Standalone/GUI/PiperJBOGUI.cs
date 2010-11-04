@@ -35,11 +35,13 @@ namespace Medical.GUI
         private CloneWindowDialog cloneWindowDialog;
         private TimelineProperties timelineProperties;
         private MovementSequenceEditor movementSequenceEditor;
-
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
         private LayersDialog layers;
         private StateListPopup stateList;
+
+        //Other GUI Elements
+        MyGUIContinuePromptProvider continuePrompt;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -134,10 +136,14 @@ namespace Medical.GUI
             taskbar.layout();
 
             dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
+
+            continuePrompt = new MyGUIContinuePromptProvider();
+            standaloneController.TimelineController.ContinuePrompt = continuePrompt;
         }
 
         public void Dispose()
         {
+            continuePrompt.Dispose();
             dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
             notesDialog.Dispose();
             aboutDialog.Dispose();
@@ -344,6 +350,7 @@ namespace Medical.GUI
         void screenLayoutManager_ScreenSizeChanged(int width, int height)
         {
             dialogManager.windowResized();
+            continuePrompt.ensureVisible();
         }
 
 #if CREATE_MAINWINDOW_MENU
