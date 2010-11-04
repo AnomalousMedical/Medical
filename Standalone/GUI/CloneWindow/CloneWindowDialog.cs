@@ -20,7 +20,7 @@ namespace Medical.GUI
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
         public CloneWindowDialog()
-            :base("Medical.Controller.GUIController.CloneWindow.CloneWindowDialog.layout")
+            :base("Medical.GUI.CloneWindow.CloneWindowDialog.layout")
         {
             this.Modal = true;
             this.SmoothShow = true;

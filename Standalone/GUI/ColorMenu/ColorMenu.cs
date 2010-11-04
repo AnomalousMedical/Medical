@@ -19,7 +19,7 @@ namespace Medical.GUI
 
         public ColorMenu()
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.ColorMenu.ColorMenu.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.GUI.ColorMenu.ColorMenu.layout");
             Widget mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);

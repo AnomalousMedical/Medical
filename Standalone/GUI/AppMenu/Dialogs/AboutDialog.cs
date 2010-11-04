@@ -15,7 +15,7 @@ namespace Medical.GUI
         private Widget openSourcePanel;
 
         public AboutDialog()
-            :base("Medical.Controller.Dialogs.AboutDialog.layout")
+            :base("Medical.GUI.AppMenu.Dialogs.AboutDialog.layout")
         {
             developerPanel = window.findWidget("DeveloperPanel");
             openSourcePanel = window.findWidget("OpenSourcePanel");

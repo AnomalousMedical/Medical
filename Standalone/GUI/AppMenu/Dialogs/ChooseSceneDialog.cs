@@ -18,7 +18,7 @@ namespace Medical.GUI
         private PiperJBOGUI piperGUI;
 
         public ChooseSceneDialog(StandaloneController controller, PiperJBOGUI piperGUI)
-            : base("Medical.Controller.Dialogs.ChooseSceneDialog.layout")
+            : base("Medical.GUI.AppMenu.Dialogs.ChooseSceneDialog.layout")
         {
             this.controller = controller;
             this.piperGUI = piperGUI;

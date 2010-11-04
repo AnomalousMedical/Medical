@@ -25,7 +25,7 @@ namespace Medical.GUI
         Button cancelButton;
 
         public SavePatientDialog()
-            : base("Medical.Controller.Dialogs.SavePatientDialog.layout")
+            : base("Medical.GUI.AppMenu.Dialogs.SavePatientDialog.layout")
         {
             firstText = window.findWidget("Save/FirstName") as Edit;
             lastText = window.findWidget("Save/LastName") as Edit;

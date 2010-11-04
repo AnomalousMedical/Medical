@@ -22,7 +22,7 @@ namespace Medical.GUI
         private LayerController layerController;
 
         public LayersDialog(LayerController layerController)
-            :base("Medical.Controller.GUIController.Layers.LayersDialog.layout")
+            :base("Medical.GUI.Layers.LayersDialog.layout")
         {
             //Predefined layers
             this.layerController = layerController;

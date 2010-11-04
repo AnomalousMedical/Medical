@@ -23,7 +23,7 @@ namespace Medical.GUI
 
         public Taskbar(PiperJBOGUI piperGUI, StandaloneController controller)
         {
-            myGUIlayout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.Taskbar.Taskbar.layout");
+            myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
             taskbarWidget = myGUIlayout.getWidget(0);
 

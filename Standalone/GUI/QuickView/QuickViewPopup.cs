@@ -30,7 +30,7 @@ namespace Medical.GUI
             this.layerController = layerController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
-            layout = LayoutManager.Instance.loadLayout("Medical.Controller.GUIController.QuickView.QuickViewPopup.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.GUI.QuickView.QuickViewPopup.layout");
             quickViewPanel = layout.getWidget(0);
             popupContainer = new PopupContainer(quickViewPanel);
             flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(2, 2));

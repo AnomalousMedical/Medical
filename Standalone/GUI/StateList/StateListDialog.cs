@@ -17,7 +17,7 @@ namespace Medical.GUI
         private MedicalStateController stateController;
 
         public StateListPopup(MedicalStateController stateController)
-            :base("Medical.Controller.GUIController.StateList.StateListDialog.layout")
+            :base("Medical.GUI.StateList.StateListDialog.layout")
         {
             stateListBox = new ButtonList(window.findWidget("StateList/ScrollView") as ScrollView);
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);

@@ -33,7 +33,7 @@ namespace Medical.GUI
         private bool restoreEnabled = false;
 
         public MandibleMovementDialog(MovementSequenceController movementSequenceController)
-            : base("Medical.Controller.GUIController.MandibleMovement.MandibleMovementDialog.layout")
+            : base("Medical.GUI.MandibleMovement.MandibleMovementDialog.layout")
         {            
             openTrackBar = new MandibleControlSlider(window.findWidget("Movement/HingeSlider") as VScroll);
             openTrackBar.Minimum = -3;
