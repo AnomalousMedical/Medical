@@ -6,7 +6,7 @@ using MyGUIPlugin;
 using OgreWrapper;
 using Medical.Controller;
 
-namespace Medical
+namespace Medical.GUI
 {
     class MyGUIImageRendererProgress : ImageRendererProgress
     {

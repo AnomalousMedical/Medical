@@ -98,7 +98,7 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
-    <Compile Include="Controller\ImageRenderer\MyGUIImageRendererProgress.cs" />
+    <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
@@ -280,7 +280,7 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controller\ImageRenderer\MyGUIImageRendererProgress.layout" />
+    <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\AppMenu\AppMenu.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\AboutDialog.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\ChooseSceneDialog.layout" />
