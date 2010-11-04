@@ -167,6 +167,7 @@
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetController.cs" />
     <Compile Include="Controller\SceneViews\Presets\SceneViewWindowPresetSet.cs" />
     <Compile Include="Controller\SplashScreen.cs" />
+    <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />

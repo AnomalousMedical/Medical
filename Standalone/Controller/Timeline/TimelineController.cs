@@ -25,6 +25,7 @@ namespace Medical
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
         private Timeline editingTimeline;
+        private Timeline queuedTimeline;
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
         private bool updating = false;
@@ -127,7 +128,22 @@ namespace Medical
                 }
                 activeTimeline = null;
                 updating = false;
+                if (queuedTimeline != null)
+                {
+                    startPlayback(queuedTimeline, playPostActions);
+                    clearQueuedTimeline();
+                }
             }
+        }
+
+        public void queueTimeline(Timeline timeline)
+        {
+            queuedTimeline = timeline;
+        }
+
+        public void clearQueuedTimeline()
+        {
+            queuedTimeline = null;
         }
 
         public void openNewScene(String filename)

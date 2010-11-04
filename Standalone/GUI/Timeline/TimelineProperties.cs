@@ -355,6 +355,10 @@ namespace Medical.GUI
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
+            if (timelineController.ActiveTimeline != currentTimeline)
+            {
+                setCurrentTimeline(timelineController.ActiveTimeline);
+            }
         }
 
         void timelineController_TimeTicked(float currentTime)
