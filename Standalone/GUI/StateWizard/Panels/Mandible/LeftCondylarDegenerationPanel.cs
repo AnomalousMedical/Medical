@@ -22,7 +22,7 @@ namespace Medical.GUI
         private GridPropertiesControl gridPropertiesControl;
 
         public LeftCondylarDegenerationPanel(StateWizardPanelController controller)
-            : base("Medical.Controller.StatePicker.Panels.Mandible.LeftCondylarDegenerationPanel.layout", controller)
+            : base("Medical.GUI.StateWizard.Panels.Mandible.LeftCondylarDegenerationPanel.layout", controller)
         {
             leftCondyleDegenerationSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleDegen/CondyleSlider") as VScroll);
             leftLateralPoleSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleDegen/LateralPoleSlider") as VScroll);

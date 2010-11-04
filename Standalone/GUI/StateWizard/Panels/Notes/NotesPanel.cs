@@ -16,7 +16,7 @@ namespace Medical.GUI
         private ThumbnailPicker thumbnailPicker;
 
         public NotesPanel(StateWizardPanelController controller)
-            : base("Medical.Controller.StatePicker.Panels.Notes.NotesPanel.layout", controller)
+            : base("Medical.GUI.StateWizard.Panels.Notes.NotesPanel.layout", controller)
         {
             this.LayerState = "MandibleSizeLayers";
             this.NavigationState = "WizardMidlineAnterior";

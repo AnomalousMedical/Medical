@@ -23,7 +23,7 @@ namespace Medical.GUI
         private ButtonGrid presetListView;
 
         public PresetStatePanel(String subDirectory, StateWizardPanelController controller)
-            : base("Medical.Controller.StatePicker.Panels.Preset.PresetStatePanel.layout", controller)
+            : base("Medical.GUI.StateWizard.Panels.Preset.PresetStatePanel.layout", controller)
         {
             this.subDirectory = subDirectory;
 

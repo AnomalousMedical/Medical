@@ -23,7 +23,7 @@ namespace Medical.GUI
         private Button makeNormalButton;
 
         public ProfileDistortionPanel(StateWizardPanelController controller)
-            :base("Medical.Controller.StatePicker.Panels.Profile.ProfileDistortionPanel.layout", controller)
+            :base("Medical.GUI.StateWizard.Panels.Profile.ProfileDistortionPanel.layout", controller)
         {
             
 

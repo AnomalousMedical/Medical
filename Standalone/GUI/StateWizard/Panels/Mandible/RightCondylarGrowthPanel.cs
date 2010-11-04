@@ -6,36 +6,37 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class LeftCondylarGrowthPanel : BoneManipulatorPanel
+    class RightCondylarGrowthPanel : BoneManipulatorPanel
     {
-        private BoneManipulatorSlider leftRamusHeightSlider;
-        private BoneManipulatorSlider leftCondyleHeightSlider;
-        private BoneManipulatorSlider leftCondyleRotationSlider;
-        private BoneManipulatorSlider leftMandibularNotchSlider;
-        private BoneManipulatorSlider leftAntegonialNotchSlider;
+        private BoneManipulatorSlider rightRamusHeightSlider;
+        private BoneManipulatorSlider rightCondyleHeightSlider;
+        private BoneManipulatorSlider rightCondyleRotationSlider;
+        private BoneManipulatorSlider rightMandibularNotchSlider;
+        private BoneManipulatorSlider rightAntegonialNotchSlider;
 
         private Button undoButton;
         private Button makeNormalButton;
 
-        private GridPropertiesControl gridPropertiesControl;
+        GridPropertiesControl gridPropertiesControl;
 
-        public LeftCondylarGrowthPanel(StateWizardPanelController controller)
-            : base("Medical.Controller.StatePicker.Panels.Mandible.LeftCondylarGrowthPanel.layout", controller)
+        public RightCondylarGrowthPanel(StateWizardPanelController controller)
+            : base("Medical.GUI.StateWizard.Panels.Mandible.RightCondylarGrowthPanel.layout", controller)
         {
-            leftRamusHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/RamusHeightSlider") as VScroll);
-            leftCondyleHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/CondyleHeightSlider") as VScroll);
-            leftCondyleRotationSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/CondyleRotationSlider") as VScroll);
-            leftMandibularNotchSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/MandibularNotchSlider") as VScroll);
-            leftAntegonialNotchSlider = new BoneManipulatorSlider(mainWidget.findWidget("LeftCondyleGrowth/AntegonialNotchSlider") as VScroll);
 
-            addBoneManipulator(leftRamusHeightSlider);
-            addBoneManipulator(leftCondyleHeightSlider);
-            addBoneManipulator(leftCondyleRotationSlider);
-            addBoneManipulator(leftMandibularNotchSlider);
-            addBoneManipulator(leftAntegonialNotchSlider);
+            rightRamusHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/RamusHeightSlider") as VScroll);
+            rightCondyleHeightSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/CondyleHeightSlider") as VScroll);
+            rightCondyleRotationSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/CondyleRotationSlider") as VScroll);
+            rightMandibularNotchSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/MandibularNotchSlider") as VScroll);
+            rightAntegonialNotchSlider = new BoneManipulatorSlider(mainWidget.findWidget("RightCondyleGrowth/AntegonialNotchSlider") as VScroll);
 
-            undoButton = mainWidget.findWidget("LeftCondyleGrowth/UndoButton") as Button;
-            makeNormalButton = mainWidget.findWidget("LeftCondyleGrowth/MakeNormalButton") as Button;
+            addBoneManipulator(rightRamusHeightSlider);
+            addBoneManipulator(rightCondyleHeightSlider);
+            addBoneManipulator(rightCondyleRotationSlider);
+            addBoneManipulator(rightMandibularNotchSlider);
+            addBoneManipulator(rightAntegonialNotchSlider);
+
+            undoButton = mainWidget.findWidget("RightCondyleGrowth/UndoButton") as Button;
+            makeNormalButton = mainWidget.findWidget("RightCondyleGrowth/MakeNormalButton") as Button;
 
             undoButton.MouseButtonClick += new MyGUIEvent(undoButton_MouseButtonClick);
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);

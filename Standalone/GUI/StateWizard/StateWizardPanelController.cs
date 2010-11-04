@@ -255,7 +255,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createLeftFossaPanel()
         {
-            FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "Medical.Controller.StatePicker.Panels.Fossa.FossaPanelLeft.layout", this);
+            FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "Medical.GUI.StateWizard.Panels.Fossa.FossaPanelLeft.layout", this);
             leftFossaPanel.NavigationState = "WizardLeftTMJ";
             leftFossaPanel.LayerState = "FossaLayers";
             leftFossaPanel.TextLine1 = "Left Fossa";
@@ -265,7 +265,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createRightFossaPanel()
         {
-            FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "Medical.Controller.StatePicker.Panels.Fossa.FossaPanelRight.layout", this);
+            FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "Medical.GUI.StateWizard.Panels.Fossa.FossaPanelRight.layout", this);
             rightFossaPanel.NavigationState = "WizardRightTMJ";
             rightFossaPanel.LayerState = "FossaLayers";
             rightFossaPanel.TextLine1 = "Right Fossa";
@@ -307,7 +307,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createBottomTeethRemovalPanel()
         {
-            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.Controller.StatePicker.Panels.TeethPanels.ToothRemovalPanelBottom.layout", this);
+            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.GUI.StateWizard.Panels.TeethPanels.ToothRemovalPanelBottom.layout", this);
             panel.LayerState = "BottomTeethLayers";
             panel.NavigationState = "WizardBottomTeeth";
             panel.TextLine1 = "Remove";
@@ -318,7 +318,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createTopTeethRemovalPanel()
         {
-            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.Controller.StatePicker.Panels.TeethPanels.ToothRemovalPanelTop.layout", this);
+            ToothRemovalPanel panel = new ToothRemovalPanel("Medical.GUI.StateWizard.Panels.TeethPanels.ToothRemovalPanelTop.layout", this);
             panel.LayerState = "TopTeethLayers";
             panel.NavigationState = "WizardTopTeeth";
             panel.TextLine1 = "Remove";
@@ -381,7 +381,7 @@ namespace Medical.GUI
 
         private StateWizardPanel createDisclaimerPanel()
         {
-            StateWizardPanel panel = new StateWizardPanel("Medical.Controller.StatePicker.Panels.Disclaimer.DisclaimerPanel.layout", this);
+            StateWizardPanel panel = new StateWizardPanel("Medical.GUI.StateWizard.Panels.Disclaimer.DisclaimerPanel.layout", this);
             panel.TextLine1 = "Disclaimer";
             panel.ImageKey = "DistortionPanelIcons/Disclaimer";
             return panel;

@@ -18,7 +18,7 @@ namespace Medical.GUI
         GridPropertiesControl gridPropertiesControl;
 
         public TeethHeightAdaptationPanel(StateWizardPanelController panelController)
-            : base("Medical.Controller.StatePicker.Panels.TeethPanels.TeethHeightAdaptationPanel.layout", panelController)
+            : base("Medical.GUI.StateWizard.Panels.TeethPanels.TeethHeightAdaptationPanel.layout", panelController)
         {
             heightControl = new HeightControl(mainWidget.findWidget("TeethAdaptPanel/LeftSideSlider") as VScroll,
                 mainWidget.findWidget("TeethAdaptPanel/RightSideSlider") as VScroll,

@@ -18,7 +18,7 @@ namespace Medical.GUI
         GridPropertiesControl gridPropertiesControl;
 
         public TeethAdaptationPanel(StateWizardPanelController controller)
-            : base("Medical.Controller.StatePicker.Panels.TeethPanels.TeethAdaptationPanel.layout", controller)
+            : base("Medical.GUI.StateWizard.Panels.TeethPanels.TeethAdaptationPanel.layout", controller)
         {
             this.panelController = controller;
             teethMovementPanel = new TeethMovementPanel(controller, mainWidget);

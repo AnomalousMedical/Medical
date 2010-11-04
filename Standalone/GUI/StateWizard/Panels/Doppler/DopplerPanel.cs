@@ -33,7 +33,7 @@ namespace Medical.GUI
         private Button bothJointsCameraButton;
 
         public DopplerPanel(StateWizardPanelController controller, String presetSubDirectory, String jointCameraName, String superiorJointCameraName)
-            : base("Medical.Controller.StatePicker.Panels.Doppler.DopplerPanel.layout", controller)
+            : base("Medical.GUI.StateWizard.Panels.Doppler.DopplerPanel.layout", controller)
         {
             dopplerControl = new DopplerControl(mainWidget);
 

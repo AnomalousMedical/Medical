@@ -24,7 +24,7 @@ namespace Medical.GUI
         {
             this.stateWizardController = stateWizardController;
 
-            stateWizardButtons = LayoutManager.Instance.loadLayout("Medical.Controller.StatePicker.StateWizardButtons.layout");
+            stateWizardButtons = LayoutManager.Instance.loadLayout("Medical.GUI.StateWizard.StateWizardButtons.layout");
             stateWizardButtonsRoot = stateWizardButtons.getWidget(0);
 
             cancelButton = stateWizardButtonsRoot.findWidget("StateWizardButtons/Cancel") as Button;
