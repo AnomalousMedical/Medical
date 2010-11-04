@@ -245,6 +245,13 @@ namespace Medical.GUI
         {
             newProjectDialog.open(true);
             newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            newProjectDialog.ensureVisible();
+        }
+
+        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
+        {
+            timelineController.ResourceLocation = newProjectDialog.FullProjectName;
+            updateWindowCaption();
         }
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
@@ -259,16 +266,11 @@ namespace Medical.GUI
             }
         }
 
-        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
-        {
-            timelineController.ResourceLocation = newProjectDialog.FullProjectName;
-            updateWindowCaption();
-        }
-
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {
             saveTimelineDialog.open(true);
             saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            saveTimelineDialog.ensureVisible();
             fileMenu.setVisibleSmooth(false);
         }
 
@@ -294,6 +296,7 @@ namespace Medical.GUI
         {
             openTimelineDialog.open(true);
             openTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            openTimelineDialog.ensureVisible();
             fileMenu.setVisibleSmooth(false);
         }
 
