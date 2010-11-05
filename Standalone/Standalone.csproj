@@ -213,6 +213,7 @@
     <Compile Include="GUI\Timeline\ActionProperties\MoveCameraProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.cs" />
     <Compile Include="GUI\Timeline\ChangeSceneEditor.cs" />
+    <Compile Include="GUI\Timeline\FinishActionEditor.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
     <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
     <Compile Include="GUI\Timeline\OpenTimelineDialog.cs" />

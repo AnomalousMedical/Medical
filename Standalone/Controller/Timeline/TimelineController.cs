@@ -169,15 +169,18 @@ namespace Medical
         /// <param name="pattern"></param>
         public String[] listResourceFiles(String pattern)
         {
-            try
+            if (ResourceLocation != null)
             {
-                return Directory.GetFiles(ResourceLocation, pattern, SearchOption.TopDirectoryOnly);
+                try
+                {
+                    return Directory.GetFiles(ResourceLocation, pattern, SearchOption.TopDirectoryOnly);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceLocation, ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceLocation, ex.Message);
-                return new String[0];
-            }
+            return new String[0];
         }
 
         #region UpdateListener Members

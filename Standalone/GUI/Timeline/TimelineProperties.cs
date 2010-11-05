@@ -30,6 +30,7 @@ namespace Medical.GUI
         private NewProjectDialog newProjectDialog;
         private OpenTimelineDialog openTimelineDialog;
         private SaveTimelineDialog saveTimelineDialog;
+        private FinishActionEditor finishActionEditor;
 
         private Button playButton;
 
@@ -81,6 +82,8 @@ namespace Medical.GUI
             otherActionsMenu.Visible = false;
             MenuItem changeScene = otherActionsMenu.addItem("Change Scene");
             changeScene.MouseButtonClick += new MyGUIEvent(changeScene_MouseButtonClick);
+            MenuItem finishAction = otherActionsMenu.addItem("Finish Action");
+            finishAction.MouseButtonClick += new MyGUIEvent(finishAction_MouseButtonClick);
             otherActionsMenu.addItem("", MenuItemType.Separator);
             testActions = otherActionsMenu.addItem("Enable Other Actions");
             testActions.StateCheck = true;
@@ -140,12 +143,18 @@ namespace Medical.GUI
             openTimelineDialog.OpenFile += new EventHandler(openTimelineDialog_OpenFile);
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
+            finishActionEditor = new FinishActionEditor(timelineController);
 
             createNewTimeline();
         }
 
         public override void Dispose()
         {
+            finishActionEditor.Dispose();
+            newProjectDialog.Dispose();
+            openTimelineDialog.Dispose();
+            saveTimelineDialog.Dispose();
+            changeSceneEditor.Dispose();
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(fileMenu);
@@ -182,6 +191,7 @@ namespace Medical.GUI
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
             changeSceneEditor.CurrentTimeline = currentTimeline;
+            finishActionEditor.CurrentTimeline = currentTimeline;
         }
 
         private void updateWindowCaption()
@@ -321,7 +331,7 @@ namespace Medical.GUI
 
         #endregion
 
-        #region Pre/Post Actions Menu
+        #region Other Actions Menu
 
         void testActions_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -332,6 +342,14 @@ namespace Medical.GUI
         {
             changeSceneEditor.open(true);
             changeSceneEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            changeSceneEditor.ensureVisible();
+        }
+
+        void finishAction_MouseButtonClick(Widget source, EventArgs e)
+        {
+            finishActionEditor.open(true);
+            finishActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            finishActionEditor.ensureVisible();
         }
 
         #endregion

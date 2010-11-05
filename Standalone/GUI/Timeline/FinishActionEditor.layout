@@ -1,25 +1,31 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCS" position="157 188 262 117" layer="Back">
+    <Widget type="Window" skin="WindowCX" position="157 188 262 148" layer="Overlapped">
         <Property key="Widget_Caption" value="Finish Action"/>
-        <Widget type="Button" skin="RadioBox" position="4 4 110 15">
+        <Widget type="Button" skin="RadioBox" position="4 4 110 15" name="DoNothingRadio">
             <Property key="Widget_Caption" value="Do Nothing"/>
         </Widget>
-        <Widget type="Button" skin="RadioBox" position="4 23 162 15">
+        <Widget type="Button" skin="RadioBox" position="4 23 162 15" name="LoadTimelineRadio">
             <Property key="Widget_Caption" value="Load Another Timeline"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="25 44 22 14">
             <Property key="Widget_Caption" value="File"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="31 62 126 15">
+        <Widget type="Button" skin="CheckBox" position="31 62 126 15" name="ContinueCheck">
             <Property key="Widget_Caption" value="Continue Prompt"/>
         </Widget>
-        <Widget type="Button" skin="RadioBox" position="4 79 105 15">
+        <Widget type="Button" skin="RadioBox" position="4 79 105 15" name="AskQuestionRadio">
             <Property key="Widget_Caption" value="Ask Question"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="212 40 47 22">
+        <Widget type="Button" skin="Button" position="212 40 47 22" name="ImportButton">
             <Property key="Widget_Caption" value="Import"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="49 42 161 19"/>
+        <Widget type="ComboBox" skin="ComboBox" position="49 42 161 19" name="TimelineFileCombo"/>
+        <Widget type="Button" skin="Button" position="4 106 60 21" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="66 106 60 21" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
     </Widget>
 </MyGUI>
