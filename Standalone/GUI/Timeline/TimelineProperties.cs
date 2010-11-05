@@ -28,7 +28,7 @@ namespace Medical.GUI
         //Dialogs
         private ChangeSceneEditor changeSceneEditor;
         private NewProjectDialog newProjectDialog;
-        private TimelineFileBrowserDialog openTimelineDialog;
+        private TimelineFileBrowserDialog fileBrowserDialog;
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
 
@@ -139,10 +139,10 @@ namespace Medical.GUI
             changeSceneEditor = new ChangeSceneEditor();
             newProjectDialog = new NewProjectDialog();
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-            openTimelineDialog = new TimelineFileBrowserDialog(timelineController);
+            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
-            finishActionEditor = new FinishActionEditor(timelineController);
+            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
 
             createNewTimeline();
         }
@@ -151,7 +151,7 @@ namespace Medical.GUI
         {
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
-            openTimelineDialog.Dispose();
+            fileBrowserDialog.Dispose();
             saveTimelineDialog.Dispose();
             changeSceneEditor.Dispose();
             actionFilter.Dispose();
@@ -303,9 +303,9 @@ namespace Medical.GUI
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            openTimelineDialog.promptForFile("*.tl", openTimelineDialog_OpenFile);
-            openTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            openTimelineDialog.ensureVisible();
+            fileBrowserDialog.promptForFile("*.tl", openTimelineDialog_OpenFile);
+            fileBrowserDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            fileBrowserDialog.ensureVisible();
             fileMenu.setVisibleSmooth(false);
         }
 

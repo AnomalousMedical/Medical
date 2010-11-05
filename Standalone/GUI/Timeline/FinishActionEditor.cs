@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
-using System.IO;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -15,19 +15,21 @@ namespace Medical.GUI
         private Button loadTimelineButton;
         private Button askQuestionButton;
 
-        private ComboBox timelineFileCombo;
+        private Edit fileText;
         private CheckButton continueCheck;
-        private Button importButton;
+        private Button chooseButton;
 
         private Timeline currentTimeline;
         private LoadAnotherTimeline loadAnotherTimelineAction;
 
         private TimelineController timelineController;
+        private TimelineFileBrowserDialog fileBrowser;
 
-        public FinishActionEditor(TimelineController timelineController)
+        public FinishActionEditor(TimelineController timelineController, TimelineFileBrowserDialog fileBrowser)
             :base("Medical.GUI.Timeline.FinishActionEditor.layout")
         {
             this.timelineController = timelineController;
+            this.fileBrowser = fileBrowser;
 
             doNothingButton = window.findWidget("DoNothingRadio") as Button;
             actionGroup.addButton(doNothingButton);
@@ -37,9 +39,10 @@ namespace Medical.GUI
             actionGroup.addButton(askQuestionButton);
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
-            timelineFileCombo = window.findWidget("TimelineFileCombo") as ComboBox;
+            fileText = window.findWidget("FileText") as Edit;
             continueCheck = new CheckButton(window.findWidget("ContinueCheck") as Button);
-            importButton = window.findWidget("ImportButton") as Button;
+            chooseButton = window.findWidget("ChooseButton") as Button;
+            chooseButton.MouseButtonClick += new MyGUIEvent(chooseButton_MouseButtonClick);
             setLoadTimelinePropertiesEnabled(false);
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
@@ -73,29 +76,10 @@ namespace Medical.GUI
                 }
             }
 
-            timelineFileCombo.removeAllItems();
-            String[] files = timelineController.listResourceFiles("*.tl");
-            foreach (String file in files)
-            {
-                timelineFileCombo.addItem(Path.GetFileNameWithoutExtension(file), Path.GetFileName(file));
-            }
-
             if (loadAnotherTimelineAction != null)
             {
                 actionGroup.SelectedButton = loadTimelineButton;
-                uint index = timelineFileCombo.findItemIndexWith(Path.GetFileNameWithoutExtension(loadAnotherTimelineAction.TargetTimeline));
-                if (index == uint.MaxValue)
-                {
-                    MessageBox.show("The transition target timeline does not exist. Please choose another.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                    if (timelineFileCombo.ItemCount > 0)
-                    {
-                        timelineFileCombo.SelectedIndex = 0;
-                    }
-                }
-                else
-                {
-                    timelineFileCombo.SelectedIndex = index;
-                }
+                fileText.Caption = loadAnotherTimelineAction.TargetTimeline;
                 continueCheck.Checked = loadAnotherTimelineAction.ShowContinuePrompt;
             }
             else
@@ -122,15 +106,14 @@ namespace Medical.GUI
             }
             else if (actionGroup.SelectedButton == loadTimelineButton)
             {
-                uint comboIndex = timelineFileCombo.SelectedIndex;
-                if (comboIndex != uint.MaxValue)
+                if (timelineController.listResourceFiles(fileText.Caption).Length > 0)
                 {
                     if (loadAnotherTimelineAction == null)
                     {
                         loadAnotherTimelineAction = new LoadAnotherTimeline();
                         currentTimeline.addPostAction(loadAnotherTimelineAction);
                     }
-                    loadAnotherTimelineAction.TargetTimeline = timelineFileCombo.getItemDataAt(timelineFileCombo.SelectedIndex).ToString();
+                    loadAnotherTimelineAction.TargetTimeline = fileText.Caption;
                     loadAnotherTimelineAction.ShowContinuePrompt = continueCheck.Checked;
                     this.close();
                 }
@@ -163,9 +146,21 @@ namespace Medical.GUI
 
         private void setLoadTimelinePropertiesEnabled(bool enabled)
         {
-            timelineFileCombo.Enabled = enabled;
+            fileText.Enabled = enabled;
             continueCheck.Enabled = enabled;
-            importButton.Enabled = enabled;
+            chooseButton.Enabled = enabled;
+        }
+
+        void chooseButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            fileBrowser.ensureVisible();
+            fileBrowser.promptForFile("*.tl", fileChosen);
+        }
+
+        void fileChosen(String filename)
+        {
+            fileText.Caption = filename;
         }
     }
 }
