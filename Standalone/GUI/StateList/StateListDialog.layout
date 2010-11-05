@@ -3,7 +3,7 @@
     <Widget type="Window" skin="WindowCSX" position="153 245 244 485" align="Default" layer="Overlapped" name="StateList/StatePicker">
         <Property key="Widget_Visible" value="true"/>
         <Property key="Widget_Caption" value="States"/>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="4 22 237 442" align="Stretch" name="StateList/ScrollView">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="4 22 236 442" align="Stretch" name="StateList/ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="209 10"/>
             <UserString key="ButtonSkin" value="ButtonListIconButton"/>

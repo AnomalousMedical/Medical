@@ -16,42 +16,42 @@
         <Widget type="Button" skin="Button" position="4 387 91 28" name="CloseButton">
             <Property key="Widget_Caption" value="Close"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="231 401 116 13" name="AnomalousMedicalLink">
+        <Widget type="StaticText" skin="StaticText" position="231 403 116 13" name="AnomalousMedicalLink">
             <Property key="Widget_Caption" value="Anomalous Medical"/>
             <Property key="Text_TextColour" value="008de6"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="DeveloperPanel">
             <Property key="Widget_Visible" value="true"/>
-            <Widget type="StaticText" skin="StaticText" position="3 5 145 90">
+            <Widget type="StaticText" skin="StaticText" position="0 4 145 90">
                 <Property key="Widget_Caption" value="Developers\n\nDr. Mark Piper DMD MD\nAndrew Piper\nChase Donald\nGreg Chance"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="4 143 336 13" name="SerialNumberText">
+            <Widget type="StaticText" skin="StaticText" position="0 143 336 13" name="SerialNumberText">
                 <Property key="Widget_Caption" value="Serial Number"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="4 158 336 13" name="VersionText">
                 <Property key="Widget_Caption" value="Version "/>
             </Widget>
-            <Widget type="Button" skin="Button" position="248 183 91 28" name="DeveloperMoreButton">
+            <Widget type="Button" skin="Button" position="255 183 88 28" name="DeveloperMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="1 168 347 216" name="OpenSourcePanel">
+        <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="OpenSourcePanel">
             <Property key="Widget_Visible" value="false"/>
-            <Widget type="StaticText" skin="StaticText" position="3 5 132 13">
+            <Widget type="StaticText" skin="StaticText" position="0 4 132 13">
                 <Property key="Widget_Caption" value="Open Source Projects"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 23 51 13" name="Ogre3DLink">
+            <Widget type="StaticText" skin="StaticText" position="4 20 51 13" name="Ogre3DLink">
                 <Property key="Widget_Caption" value="Ogre 3D"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="252 183 91 28" name="OpenSourceMoreButton">
+            <Widget type="Button" skin="Button" position="255 183 88 28" name="OpenSourceMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 38 41 13" name="MyGUILink">
+            <Widget type="StaticText" skin="StaticText" position="5 36 41 13" name="MyGUILink">
                 <Property key="Widget_Caption" value="MyGUI"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 53 81 13" name="BulletPhysicsLink">
+            <Widget type="StaticText" skin="StaticText" position="5 52 81 13" name="BulletPhysicsLink">
                 <Property key="Widget_Caption" value="Bullet Physics"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
@@ -59,19 +59,19 @@
                 <Property key="Widget_Caption" value="OIS"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 83 41 13" name="ZZiplibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 84 41 13" name="ZZiplibLink">
                 <Property key="Widget_Caption" value="Zziplib"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 98 25 13" name="ZlibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 100 25 13" name="ZlibLink">
                 <Property key="Widget_Caption" value="Zlib"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 113 55 13" name="FreetypeLink">
+            <Widget type="StaticText" skin="StaticText" position="5 116 55 13" name="FreetypeLink">
                 <Property key="Widget_Caption" value="Freetype"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 128 63 13" name="FreeimageLink">
+            <Widget type="StaticText" skin="StaticText" position="5 132 63 13" name="FreeimageLink">
                 <Property key="Widget_Caption" value="Freeimage"/>
                 <Property key="Text_TextColour" value="008de6"/>
             </Widget>
