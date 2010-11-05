@@ -1,13 +1,16 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="146 390 204 276" layer="Overlapped">
-        <Property key="Widget_Caption" value="Open Timeline"/>
+        <Property key="Widget_Caption" value="Choose Timeline"/>
         <Widget type="MultiList" skin="MultiList" position="0 0 204 231" align="Stretch" name="FileList"/>
         <Widget type="Button" skin="Button" position="4 235 61 19" align="Left Bottom" name="OpenButton">
             <Property key="Widget_Caption" value="Open"/>
         </Widget>
         <Widget type="Button" skin="Button" position="67 235 61 19" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="130 235 61 19" name="ImportButton">
+            <Property key="Widget_Caption" value="Import"/>
         </Widget>
     </Widget>
 </MyGUI>

@@ -28,7 +28,7 @@ namespace Medical.GUI
         //Dialogs
         private ChangeSceneEditor changeSceneEditor;
         private NewProjectDialog newProjectDialog;
-        private OpenTimelineDialog openTimelineDialog;
+        private ChooseTimelineDialog openTimelineDialog;
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
 
@@ -139,8 +139,7 @@ namespace Medical.GUI
             changeSceneEditor = new ChangeSceneEditor();
             newProjectDialog = new NewProjectDialog();
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-            openTimelineDialog = new OpenTimelineDialog(timelineController);
-            openTimelineDialog.OpenFile += new EventHandler(openTimelineDialog_OpenFile);
+            openTimelineDialog = new ChooseTimelineDialog(timelineController);
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
             finishActionEditor = new FinishActionEditor(timelineController);
@@ -304,15 +303,15 @@ namespace Medical.GUI
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            openTimelineDialog.open(true);
+            openTimelineDialog.promptForFile(openTimelineDialog_OpenFile);
             openTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             openTimelineDialog.ensureVisible();
             fileMenu.setVisibleSmooth(false);
         }
 
-        void openTimelineDialog_OpenFile(object sender, EventArgs e)
+        void openTimelineDialog_OpenFile(String filename)
         {
-            setCurrentTimeline(timelineController.openTimeline(openTimelineDialog.SelectedFile), openTimelineDialog.SelectedFile);
+            setCurrentTimeline(timelineController.openTimeline(filename), filename);
         }
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)

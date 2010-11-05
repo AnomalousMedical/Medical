@@ -216,7 +216,7 @@
     <Compile Include="GUI\Timeline\FinishActionEditor.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
     <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
-    <Compile Include="GUI\Timeline\OpenTimelineDialog.cs" />
+    <Compile Include="GUI\Timeline\ChooseTimelineDialog.cs" />
     <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
@@ -330,7 +330,7 @@
     <EmbeddedResource Include="GUI\Timeline\ChangeSceneEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\FinishActionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\NewProjectDialog.layout" />
-    <EmbeddedResource Include="GUI\Timeline\OpenTimelineDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\ChooseTimelineDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />

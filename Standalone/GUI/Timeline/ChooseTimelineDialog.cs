@@ -7,15 +7,16 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    class OpenTimelineDialog : Dialog
-    {
-        public event EventHandler OpenFile;
+    public delegate void FileChosenCallback(String filename);
 
+    class ChooseTimelineDialog : Dialog
+    {
         private MultiList fileList;
         private TimelineController timelineController;
+        private FileChosenCallback callback;
 
-        public OpenTimelineDialog(TimelineController timelineController)
-            :base("Medical.GUI.Timeline.OpenTimelineDialog.layout")
+        public ChooseTimelineDialog(TimelineController timelineController)
+            :base("Medical.GUI.Timeline.ChooseTimelineDialog.layout")
         {
             this.timelineController = timelineController;
 
@@ -27,10 +28,27 @@ namespace Medical.GUI
 
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            Button importButton = window.findWidget("ImportButton") as Button;
+            importButton.MouseButtonClick += new MyGUIEvent(importButton_MouseButtonClick);
+        }
+
+        /// <summary>
+        /// This method is the one that should be called to open a file. It sets up the appropriate callbacks.
+        /// </summary>
+        /// <param name="callback"></param>
+        public void promptForFile(FileChosenCallback callback)
+        {
+            this.callback = callback;
+            this.open(true);
         }
 
         protected override void onShown(EventArgs args)
         {
+            if (callback == null)
+            {
+                throw new Exception("ChooseTimelineDialog opened without a callback. Use the promptForFile function not the show functions to show the dialog.");
+            }
             fileList.removeAllItems();
             String[] files = timelineController.listResourceFiles("*.tl");
             foreach (String file in files)
@@ -38,6 +56,12 @@ namespace Medical.GUI
                 fileList.addItem(Path.GetFileNameWithoutExtension(file), Path.GetFileName(file));
             }
             base.onShown(args);
+        }
+
+        protected override void onClosed(EventArgs args)
+        {
+            callback = null;
+            base.onClosed(args);
         }
 
         public String SelectedFile { get; private set; }
@@ -53,16 +77,18 @@ namespace Medical.GUI
             if (selectedIndex != uint.MaxValue)
             {
                 SelectedFile = fileList.getItemDataAt(selectedIndex).ToString();
-                if (OpenFile != null)
-                {
-                    OpenFile.Invoke(this, EventArgs.Empty);
-                }
+                callback.Invoke(SelectedFile);
                 this.close();
             }
             else
             {
                 MessageBox.show("Please select a file to open.", "Warning", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
             }
+        }
+
+        void importButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            
         }
     }
 }
