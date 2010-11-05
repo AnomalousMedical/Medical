@@ -35,54 +35,54 @@
             <Widget type="StaticText" skin="StaticText" position="6 97 103 15">
                 <Property key="Widget_Caption" value="Left Side"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="5 114 342 17" name="TeethAdaptPanel/LeftSideSlider">
+            <Widget type="HScroll" skin="HSlider" position="5 112 342 17" name="TeethAdaptPanel/LeftSideSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="6 135 103 15">
+            <Widget type="StaticText" skin="StaticText" position="6 134 103 15">
                 <Property key="Widget_Caption" value="Right Side"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="5 152 342 17" name="TeethAdaptPanel/RightSideSlider">
+            <Widget type="HScroll" skin="HSlider" position="5 149 342 17" name="TeethAdaptPanel/RightSideSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="4 173 103 15">
+            <Widget type="StaticText" skin="StaticText" position="4 171 103 15">
                 <Property key="Widget_Caption" value="Both Sides"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="6 190 342 17" name="TeethAdaptPanel/BothSidesSlider">
+            <Widget type="HScroll" skin="HSlider" position="6 186 342 17" name="TeethAdaptPanel/BothSidesSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="4 211 344 48">
+            <Widget type="Edit" skin="WordWrapSimple" position="4 206 344 48">
                 <Property key="Widget_Caption" value="Click the button to automatically adapt the teeth to fit the profile you have created. Click it again to stop the adaptation if it is suitable."/>
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Edit_ReadOnly" value="true"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 258 98 30" name="TeethMovmentPanel/AdaptButton">
+            <Widget type="Button" skin="Button" position="4 253 98 30" name="TeethMovmentPanel/AdaptButton">
                 <Property key="Widget_Caption" value="Adapt Teeth"/>
                 <Property key="Text_TextAlign" value="Center"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 415 88 30" name="TeethAdaptPanel/UndoButton">
+            <Widget type="Button" skin="Button" position="4 410 88 30" name="TeethAdaptPanel/UndoButton">
                 <Property key="Widget_Caption" value="Undo"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="96 415 98 30" name="TeethAdaptPanel/MakeNormalButton">
+            <Widget type="Button" skin="Button" position="96 410 98 30" name="TeethAdaptPanel/MakeNormalButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="4 292 344 46">
+            <Widget type="Edit" skin="WordWrapSimple" position="4 287 344 46">
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_Static" value="true"/>
                 <Property key="Widget_Caption" value="Manually move the teeth to fine tune their positions.\nOr manually move and rotate the teeth to match your patient exactly."/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 340 141 30" name="TeethMovmentPanel/MoveButton">
+            <Widget type="Button" skin="Button" position="4 335 141 30" name="TeethMovmentPanel/MoveButton">
                 <Property key="Widget_Caption" value="Linear Movements"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="146 340 141 30" name="TeethMovmentPanel/RotateButton">
+            <Widget type="Button" skin="Button" position="146 335 141 30" name="TeethMovmentPanel/RotateButton">
                 <Property key="Widget_Caption" value="Rotational Movements"/>
             </Widget>
-            <Widget type="Widget" skin="PanelEmpty" position="4 374 344 39" layer="Back" name="GridControl">
+            <Widget type="Widget" skin="PanelEmpty" position="4 369 344 39" layer="Back" name="GridControl">
                 <Widget type="StaticText" skin="StaticText" position="0 0 262 15">
                     <Property key="Widget_Caption" value="Turn the grid on or off and adjust its spacing."/>
                 </Widget>

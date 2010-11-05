@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="112 187 440 238" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="112 187 440 236" layer="Modal">
         <Property key="Widget_Caption" value="Save"/>
-        <Property key="Window_MinSize" value="440 238"/>
-        <Property key="Window_MaxSize" value="440 238"/>
+        <Property key="Window_MinSize" value="440 236"/>
+        <Property key="Window_MaxSize" value="440 236"/>
         <Widget type="StaticText" skin="StaticText" position="4 4 83 15">
             <Property key="Widget_Caption" value="Patient Data"/>
         </Widget>
@@ -13,29 +13,29 @@
         <Widget type="StaticText" skin="StaticText" position="6 65 71 15">
             <Property key="Widget_Caption" value="Last Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 39 197 23" name="Save/FirstName"/>
-        <Widget type="Edit" skin="Edit" position="8 82 197 23" name="Save/LastName"/>
+        <Widget type="Edit" skin="Edit" position="8 36 197 23" name="Save/FirstName"/>
+        <Widget type="Edit" skin="Edit" position="8 79 197 23" name="Save/LastName"/>
         <Widget type="StaticText" skin="StaticText" position="6 108 92 15">
             <Property key="Widget_Caption" value="Save Location"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 125 342 23" name="Save/Location"/>
+        <Widget type="Edit" skin="Edit" position="8 122 342 23" name="Save/Location"/>
         <Widget type="Button" skin="Button" position="352 125 80 23" name="Save/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="6 151 69 15">
             <Property key="Widget_Caption" value="FIle Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 168 223 23" name="Save/Filename"/>
-        <Widget type="StaticText" skin="StaticText" position="279 173 139 15" name="Save/WarningLabel">
+        <Widget type="Edit" skin="Edit" position="8 165 223 23" name="Save/Filename"/>
+        <Widget type="StaticText" skin="StaticText" position="279 170 139 15" name="Save/WarningLabel">
             <Property key="Widget_Caption" value="This file already exists."/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 193 88 23" name="Save/SaveButton">
+        <Widget type="Button" skin="Button" position="4 192 88 23" name="Save/SaveButton">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 193 88 23" name="Save/CancelButton">
+        <Widget type="Button" skin="Button" position="96 192 88 23" name="Save/CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="230 154 50 50" name="Save/WarningImage">
+        <Widget type="StaticImage" skin="StaticImage" position="230 151 50 50" name="Save/WarningImage">
             <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
             <Property key="Image_Index" value="Warning"/>
             <Property key="Image_Group" value="Icons"/>

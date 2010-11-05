@@ -1,36 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="55 42 716 506" layer="Modal">
+    <Widget type="Window" skin="WindowCSX" position="55 42 716 502" layer="Modal">
         <Property key="Widget_Caption" value="Open"/>
         <Widget type="MultiList" skin="MultiList" position="4 4 708 360" name="Open/FileList"/>
         <Widget type="StaticText" skin="StaticText" position="4 368 150 15">
             <Property key="Widget_Caption" value="Search Last Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 385 226 25" name="Open/SearchText"/>
-        <Widget type="StaticText" skin="StaticText" position="4 413 155 15">
+        <Widget type="Edit" skin="Edit" position="8 382 226 25" name="Open/SearchText"/>
+        <Widget type="StaticText" skin="StaticText" position="4 412 155 15">
             <Property key="Widget_Caption" value="Load Location"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="8 430 398 25" name="Open/LoadLocation"/>
-        <Widget type="Button" skin="Button" position="407 430 72 25" name="Open/BrowseButton">
+        <Widget type="Edit" skin="Edit" position="8 426 398 25" name="Open/LoadLocation"/>
+        <Widget type="Button" skin="Button" position="407 426 72 25" name="Open/BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="531 436 174 15" name="Open/WarningText">
+        <Widget type="StaticText" skin="StaticText" position="531 432 174 15" name="Open/WarningText">
             <Property key="Widget_Caption" value="This directory does not exist."/>
         </Widget>
-        <Widget type="StaticImage" skin="StaticImage" position="481 418 50 50" name="Open/WarningImage">
+        <Widget type="StaticImage" skin="StaticImage" position="481 414 50 50" name="Open/WarningImage">
             <Property key="Image_Resource" value="pic_CoreMessageIcon"/>
             <Property key="Image_Group" value="Icons"/>
             <Property key="Image_Name" value="Warning"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 459 88 25" name="Open/OpenButton">
+        <Widget type="Button" skin="Button" position="4 455 88 25" name="Open/OpenButton">
             <Property key="Widget_Caption" value="Open"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="94 459 88 25" name="Open/DeleteButton">
+        <Widget type="Button" skin="Button" position="94 455 88 25" name="Open/DeleteButton">
             <Property key="Widget_Caption" value="Delete"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="184 459 88 25" name="Open/CancelButton">
+        <Widget type="Button" skin="Button" position="184 455 88 25" name="Open/CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
-        <Widget type="Progress" skin="ProgressFill" position="573 462 140 23" name="Open/LoadingProgress"/>
+        <Widget type="Progress" skin="ProgressFill" position="573 458 140 23" name="Open/LoadingProgress"/>
     </Widget>
 </MyGUI>

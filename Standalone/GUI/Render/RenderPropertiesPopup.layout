@@ -33,7 +33,7 @@
             <Property key="ComboBox_AddItem" value="8x"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="108 5 124 13" align="HCenter Bottom">
+        <Widget type="StaticText" skin="StaticText" position="108 4 124 13" align="HCenter Bottom">
             <Property key="Widget_Caption" value="Rendering Properties"/>
         </Widget>
     </Widget>

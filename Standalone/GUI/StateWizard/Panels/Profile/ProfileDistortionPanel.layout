@@ -35,7 +35,7 @@
             <Widget type="StaticText" skin="StaticText" position="6 99 103 15">
                 <Property key="Widget_Caption" value="Left Side"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="6 117 340 17" name="ProfilePanel/LeftSideSlider">
+            <Widget type="HScroll" skin="HSlider" position="6 114 340 17" name="ProfilePanel/LeftSideSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
@@ -43,7 +43,7 @@
             <Widget type="StaticText" skin="StaticText" position="6 138 103 15">
                 <Property key="Widget_Caption" value="Right Side"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="6 156 340 17" name="ProfilePanel/RightSideSlider">
+            <Widget type="HScroll" skin="HSlider" position="6 153 340 17" name="ProfilePanel/RightSideSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
@@ -51,24 +51,24 @@
             <Widget type="StaticText" skin="StaticText" position="6 177 103 15">
                 <Property key="Widget_Caption" value="Both Sides"/>
             </Widget>
-            <Widget type="HScroll" skin="HSlider" position="6 195 340 17" name="ProfilePanel/BothSidesSlider">
+            <Widget type="HScroll" skin="HSlider" position="6 192 340 17" name="ProfilePanel/BothSidesSlider">
                 <Property key="Scroll_Range" value="10000"/>
                 <Property key="Scroll_Position" value="0"/>
                 <UserString key="BoneManipulator" value="leftRamusHeightMandible"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="5 216 341 48">
+            <Widget type="Edit" skin="WordWrapSimple" position="5 212 341 48">
                 <Property key="Widget_Caption" value="Click the button to automatically adapt the teeth to fit the profile you have created. Click it again to stop the adaptation if it is suitable."/>
                 <Property key="Edit_ReadOnly" value="true"/>
                 <Property key="Edit_Static" value="true"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 263 88 30" name="ProfilePanel/AdaptButton">
+            <Widget type="Button" skin="Button" position="4 259 88 30" name="ProfilePanel/AdaptButton">
                 <Property key="Widget_Caption" value="Adapt Teeth"/>
                 <Property key="Text_TextAlign" value="Center"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 297 88 30" name="ProfilePanel/UndoButton">
+            <Widget type="Button" skin="Button" position="4 293 88 30" name="ProfilePanel/UndoButton">
                 <Property key="Widget_Caption" value="Undo"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="96 297 88 30" name="ProfilePanel/MakeNormalButton">
+            <Widget type="Button" skin="Button" position="96 293 88 30" name="ProfilePanel/MakeNormalButton">
                 <Property key="Widget_Caption" value="Make Normal"/>
             </Widget>
         </Widget>

@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="280 224 291 126" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="280 224 291 122" layer="Overlapped">
         <Property key="Widget_Caption" value="New Timeline Project"/>
-        <Widget type="Edit" skin="Edit" position="4 19 283 22" name="ProjectName"/>
+        <Widget type="Edit" skin="Edit" position="4 16 283 22" name="ProjectName"/>
         <Widget type="StaticText" skin="StaticText" position="4 4 80 13">
             <Property key="Widget_Caption" value="Project Name"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 44 98 14">
+        <Widget type="StaticText" skin="StaticText" position="4 43 98 14">
             <Property key="Widget_Caption" value="Project Location"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 60 256 22" name="ProjectLocation"/>
-        <Widget type="Button" skin="Button" position="263 60 23 22" name="BrowseButton">
+        <Widget type="Edit" skin="Edit" position="4 56 256 22" name="ProjectLocation"/>
+        <Widget type="Button" skin="Button" position="263 56 23 22" name="BrowseButton">
             <Property key="Widget_Caption" value="..."/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 85 70 20" name="CreateButton">
+        <Widget type="Button" skin="Button" position="4 81 70 20" name="CreateButton">
             <Property key="Widget_Caption" value="Create"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="78 85 70 20" name="CancelButton">
+        <Widget type="Button" skin="Button" position="78 81 70 20" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
     </Widget>
