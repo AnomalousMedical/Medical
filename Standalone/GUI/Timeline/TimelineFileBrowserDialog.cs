@@ -9,14 +9,15 @@ namespace Medical.GUI
 {
     public delegate void FileChosenCallback(String filename);
 
-    class ChooseTimelineDialog : Dialog
+    class TimelineFileBrowserDialog : Dialog
     {
         private MultiList fileList;
         private TimelineController timelineController;
         private FileChosenCallback callback;
+        private String filterString;
 
-        public ChooseTimelineDialog(TimelineController timelineController)
-            :base("Medical.GUI.Timeline.ChooseTimelineDialog.layout")
+        public TimelineFileBrowserDialog(TimelineController timelineController)
+            : base("Medical.GUI.Timeline.TimelineFileBrowserDialog.layout")
         {
             this.timelineController = timelineController;
 
@@ -37,8 +38,9 @@ namespace Medical.GUI
         /// This method is the one that should be called to open a file. It sets up the appropriate callbacks.
         /// </summary>
         /// <param name="callback"></param>
-        public void promptForFile(FileChosenCallback callback)
+        public void promptForFile(String filterString, FileChosenCallback callback)
         {
+            this.filterString = filterString;
             this.callback = callback;
             this.open(true);
         }
@@ -50,7 +52,7 @@ namespace Medical.GUI
                 throw new Exception("ChooseTimelineDialog opened without a callback. Use the promptForFile function not the show functions to show the dialog.");
             }
             fileList.removeAllItems();
-            String[] files = timelineController.listResourceFiles("*.tl");
+            String[] files = timelineController.listResourceFiles(filterString);
             foreach (String file in files)
             {
                 fileList.addItem(Path.GetFileNameWithoutExtension(file), Path.GetFileName(file));
