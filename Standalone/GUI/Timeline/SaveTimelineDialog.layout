@@ -2,10 +2,10 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="139 366 236 85" layer="Overlapped">
         <Property key="Widget_Caption" value="Save Timeline"/>
-        <Widget type="StaticText" skin="StaticText" position="4 5 35 14">
+        <Widget type="StaticText" skin="StaticText" position="4 4 35 14">
             <Property key="Widget_Caption" value="Name"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="4 21 226 20" name="Filename"/>
+        <Widget type="Edit" skin="Edit" position="4 20 226 20" name="Filename"/>
         <Widget type="Button" skin="Button" position="4 44 59 19" name="SaveButton">
             <Property key="Widget_Caption" value="Save"/>
         </Widget>

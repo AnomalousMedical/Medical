@@ -30,7 +30,7 @@
                 <Property key="Widget_Caption" value="File"/>
             </Widget>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="0 1 66 16" align="HStretch Top" name="PropertiesText">

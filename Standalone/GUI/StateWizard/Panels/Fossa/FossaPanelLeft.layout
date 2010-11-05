@@ -8,7 +8,7 @@
                 <Property key="Widget_Caption" value="Adjust the slider to change the left fossa flatness."/>
                 <Property key="Text_TextAlign" value="Center"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="69 23 60 15">
+            <Widget type="StaticText" skin="StaticText" position="69 22 60 15">
                 <Property key="Widget_Caption" value="Flatness"/>
             </Widget>
             <Widget type="HScroll" skin="HSlider" position="67 46 219 17" name="FlatnessSlider">

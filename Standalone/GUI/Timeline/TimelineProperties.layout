@@ -28,7 +28,7 @@
                 <Property key="Widget_Caption" value="Other Actions"/>
             </Widget>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="1 1 66 16" align="HStretch Top" name="PropertiesText">
