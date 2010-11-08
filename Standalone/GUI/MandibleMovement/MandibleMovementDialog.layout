@@ -23,13 +23,13 @@
         <Widget type="StaticText" skin="StaticText" position="38 76 64 15" name="Movement/ProtrusionText">
             <Property key="Widget_Caption" value="Protrusion"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="4 187 85 64" name="Movement/Reset">
+        <Widget type="Button" skin="RibbonButton" position="5 187 83 64" name="Movement/Reset">
             <Property key="Widget_Caption" value="Reset"/>
             <Property key="Button_ImageResource" value="Movement/ManipResetLarge"/>
         </Widget>
-        <Widget type="Button" skin="RibbonButton" position="90 187 85 64" name="Movement/Restore">
+        <Widget type="Button" skin="RibbonButton" position="91 187 83 64" name="Movement/Restore">
             <Property key="Widget_Caption" value="Restore"/>
-            <Property key="Button_ImageResource" value="Movement/ManipRestoreLarge"/>
+            <Property key="Button_ImageResource" value="Movement/ManipResetDisable"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="37 126 106 16" name="Movement/HingeSlider">
             <Property key="Scroll_Range" value="1000"/>

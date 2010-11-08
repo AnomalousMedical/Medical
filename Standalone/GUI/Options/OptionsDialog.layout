@@ -28,10 +28,10 @@
         <Widget type="Button" skin="CheckBox" position="6 204 114 15" name="ShowStatsCheck">
             <Property key="Widget_Caption" value="Show Statistics"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 224 88 25" name="ApplyButton">
+        <Widget type="Button" skin="Button" position="25 224 88 25" name="ApplyButton">
             <Property key="Widget_Caption" value="Apply"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="96 224 88 25" name="CancelButton">
+        <Widget type="Button" skin="Button" position="116 224 88 25" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 4 105 15">

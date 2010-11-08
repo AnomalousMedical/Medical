@@ -42,39 +42,32 @@
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="4 20 51 13" name="Ogre3DLink">
                 <Property key="Widget_Caption" value="Ogre 3D"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="Button" skin="Button" position="255 183 88 28" name="OpenSourceMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 36 41 13" name="MyGUILink">
                 <Property key="Widget_Caption" value="MyGUI"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 52 81 13" name="BulletPhysicsLink">
                 <Property key="Widget_Caption" value="Bullet Physics"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 68 24 13" name="OISLink">
                 <Property key="Widget_Caption" value="OIS"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 84 41 13" name="ZZiplibLink">
                 <Property key="Widget_Caption" value="Zziplib"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 100 25 13" name="ZlibLink">
                 <Property key="Widget_Caption" value="Zlib"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 116 55 13" name="FreetypeLink">
                 <Property key="Widget_Caption" value="Freetype"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
             <Widget type="StaticText" skin="StaticText" position="5 132 63 13" name="FreeimageLink">
                 <Property key="Widget_Caption" value="Freeimage"/>
-                <Property key="Text_TextColour" value="008de6"/>
             </Widget>
         </Widget>
+        <Widget type="Widget" skin="Separator3" position="1 162 349 2"/>
     </Widget>
 </MyGUI>
