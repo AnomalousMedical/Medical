@@ -17,6 +17,7 @@ using BulletPlugin;
 using System.Drawing;
 using MyGUIPlugin;
 using Medical.GUI;
+using SoundPlugin;
 
 namespace Medical
 {
@@ -117,6 +118,7 @@ namespace Medical
             pluginManager.addPluginAssembly(typeof(BulletInterface).Assembly);
             pluginManager.addPluginAssembly(typeof(MedicalController).Assembly);
             pluginManager.addPluginAssembly(typeof(MyGUIInterface).Assembly);
+            pluginManager.addPluginAssembly(typeof(SoundPluginInterface).Assembly);
             pluginManager.initializePlugins();
             if(mainForm == null)
             {
