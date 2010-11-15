@@ -166,8 +166,16 @@ namespace Medical
 
         public Source playSound(String soundFile)
         {
-            Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
-            return SoundPluginInterface.Instance.SoundManager.streamPlayAndForgetSound(soundStream);
+            try
+            {
+                Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
+                return SoundPluginInterface.Instance.SoundManager.streamPlayAndForgetSound(soundStream);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("Could not load sound {0} because {1}.", soundFile, e.Message);
+            }
+            return null;
         }
 
         /// <summary>

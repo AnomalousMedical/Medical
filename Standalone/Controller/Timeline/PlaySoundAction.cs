@@ -21,6 +21,10 @@ namespace Medical
             {
                 source.PlaybackFinished += source_PlaybackFinished;
             }
+            else
+            {
+                finished = true;
+            }
         }
 
         void source_PlaybackFinished(Source source)
