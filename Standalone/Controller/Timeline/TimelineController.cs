@@ -10,6 +10,7 @@ using Engine;
 using System.IO;
 using System.Xml;
 using Logging;
+using SoundPlugin;
 
 namespace Medical
 {
@@ -161,6 +162,12 @@ namespace Medical
             {
                 throw new Exception("No Continue Prompt defined.");
             }
+        }
+
+        public Source playSound(String soundFile)
+        {
+            Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
+            return SoundPluginInterface.Instance.SoundManager.streamPlayAndForgetSound(soundStream);
         }
 
         /// <summary>
