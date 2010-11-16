@@ -224,6 +224,22 @@ namespace Medical
             return new String[0];
         }
 
+        /// <summary>
+        /// Import a file into the current ResourceLocation.
+        /// </summary>
+        /// <param name="path"></param>
+        public void importFile(String path)
+        {
+            String fileName = Path.GetFileName(path);
+            String newPath = Path.Combine(ResourceLocation, fileName);
+            File.Copy(path, newPath, true);
+        }
+
+        public bool resourceExists(String filename)
+        {
+            return File.Exists(Path.Combine(ResourceLocation, filename));
+        }
+
         #region UpdateListener Members
 
         public void exceededMaxDelta()
