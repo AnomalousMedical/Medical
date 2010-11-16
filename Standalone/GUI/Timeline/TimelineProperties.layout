@@ -7,7 +7,7 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="PlayButton" position="145 0 44 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="145 0 44 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
