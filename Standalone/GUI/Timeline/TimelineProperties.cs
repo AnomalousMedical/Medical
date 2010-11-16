@@ -114,6 +114,16 @@ namespace Medical.GUI
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
+            //Dialogs
+            changeSceneEditor = new ChangeSceneEditor();
+            newProjectDialog = new NewProjectDialog();
+            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
+            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
+            timelineController.FileBrowser = fileBrowserDialog;
+            saveTimelineDialog = new SaveTimelineDialog();
+            saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
+            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
+
             //Add tracks to timeline.
             object[] args = { propertiesScrollView };
             foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
@@ -135,15 +145,6 @@ namespace Medical.GUI
                 }
             }
 
-            //Dialogs
-            changeSceneEditor = new ChangeSceneEditor();
-            newProjectDialog = new NewProjectDialog();
-            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
-            saveTimelineDialog = new SaveTimelineDialog();
-            saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
-            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
-
             createNewTimeline();
         }
 
@@ -151,6 +152,7 @@ namespace Medical.GUI
         {
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
+            timelineController.FileBrowser = null;
             fileBrowserDialog.Dispose();
             saveTimelineDialog.Dispose();
             changeSceneEditor.Dispose();

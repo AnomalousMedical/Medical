@@ -192,6 +192,18 @@ namespace Medical
             return 0.0;
         }
 
+        public void promptForFile(String filterString, FileChosenCallback callback)
+        {
+            if (FileBrowser != null)
+            {
+                FileBrowser.promptForFile(filterString, callback);
+            }
+            else
+            {
+                Log.Warning("Tried to show ITimelineFileBrowser, but it is null. Nothing changed.");
+            }
+        }
+
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
@@ -263,6 +275,8 @@ namespace Medical
                 }
             }
         }
+
+        public ITimelineFileBrowser FileBrowser { get; set; }
 
         public SceneViewController SceneViewController
         {

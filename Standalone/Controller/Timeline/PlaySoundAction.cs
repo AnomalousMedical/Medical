@@ -78,22 +78,6 @@ namespace Medical
             }
         }
 
-        public override float Duration
-        {
-            get
-            {
-                if (soundFile != null)
-                {
-                    return (float)TimelineController.getSoundDuration(soundFile);
-                }
-                return 0.0f;
-            }
-            set
-            {
-                
-            }
-        }
-
         public String SoundFile
         {
             get

@@ -7,9 +7,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public delegate void FileChosenCallback(String filename);
-
-    class TimelineFileBrowserDialog : Dialog
+    class TimelineFileBrowserDialog : Dialog, ITimelineFileBrowser
     {
         private MultiList fileList;
         private TimelineController timelineController;
