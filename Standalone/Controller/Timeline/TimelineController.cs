@@ -178,6 +178,20 @@ namespace Medical
             return null;
         }
 
+        public double getSoundDuration(String soundFile)
+        {
+            try
+            {
+                Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
+                return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
+            }
+            catch (Exception e)
+            {
+                Log.Warning("Could not load sound {0} because {1}.", soundFile, e.Message);
+            }
+            return 0.0;
+        }
+
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
