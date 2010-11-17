@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="255 117 196 237" layer="Back">
+    <Widget type="Window" skin="WindowCSX" position="255 117 214 237" layer="Back">
         <Property key="Widget_Caption" value="Advanced Layers"/>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 0 196 219" align="Stretch" name="LayerScroll">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 0 214 219" align="Stretch" name="LayerScroll">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Property key="ScrollView_CanvasSize" value="196 219"/>
+            <Property key="ScrollView_CanvasSize" value="214 219"/>
         </Widget>
     </Widget>
 </MyGUI>

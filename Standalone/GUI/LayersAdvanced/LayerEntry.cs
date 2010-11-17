@@ -37,6 +37,7 @@ namespace Medical.GUI
         public void setAlpha(float alpha)
         {
             transparency.FloatValue = alpha;
+            transparencyInterface.CurrentAlpha = transparency.FloatValue;
         }
 
         void transparency_ValueChanged(Widget source, EventArgs e)

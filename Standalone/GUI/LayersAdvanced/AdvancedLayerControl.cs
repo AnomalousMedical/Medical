@@ -12,7 +12,7 @@ namespace Medical.GUI
     {
         private List<LayerSection> sections = new List<LayerSection>();
         private ScrollView widgetScroll;
-        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 2.0f, new Vector2(0.0f, 0.0f));
+        private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 2.0f, new Vector2(0.0f, 2.0f));
 
         public AdvancedLayerControl()
             :base("Medical.GUI.LayersAdvanced.AdvancedLayerControl.layout")
