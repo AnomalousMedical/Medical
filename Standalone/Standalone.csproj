@@ -105,6 +105,10 @@
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
+    <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />
+    <Compile Include="GUI\LayersAdvanced\LayerControlAdvanced.cs" />
+    <Compile Include="GUI\LayersAdvanced\LayerEntry.cs" />
+    <Compile Include="GUI\LayersAdvanced\LayerSection.cs" />
     <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
@@ -290,6 +294,9 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\LayersAdvanced\AdvancedLayerControl.layout" />
+    <EmbeddedResource Include="GUI\LayersAdvanced\LayerEntry.layout" />
+    <EmbeddedResource Include="GUI\LayersAdvanced\LayerSection.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\AppMenu\AppMenu.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\AboutDialog.layout" />

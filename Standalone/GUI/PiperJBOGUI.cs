@@ -39,6 +39,7 @@ namespace Medical.GUI
         private MandibleMovementDialog mandibleMovementDialog;
         private LayersDialog layers;
         private StateListPopup stateList;
+        private AdvancedLayerControl advancedLayerControl;
 
         //Other GUI Elements
         MyGUIContinuePromptProvider continuePrompt;
@@ -83,6 +84,8 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(timelineProperties);
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(movementSequenceEditor);
+            advancedLayerControl = new AdvancedLayerControl();
+            dialogManager.addManagedDialog(advancedLayerControl);
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -91,6 +94,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
+            taskbar.addItem(new DialogOpenTaskbarItem(advancedLayerControl, "Advanced Layers", "ManualObject"));
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
@@ -143,13 +147,17 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            continuePrompt.Dispose();
+            //Dialogs
             dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
+            advancedLayerControl.Dispose();
             notesDialog.Dispose();
             aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
             stateWizardController.Dispose();
             stateWizardPanelController.Dispose();
+
+            //Other
+            continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
             taskbar.Dispose();
@@ -333,6 +341,7 @@ namespace Medical.GUI
         private void standaloneController_SceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
+            advancedLayerControl.sceneUnloading();
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
@@ -340,6 +349,7 @@ namespace Medical.GUI
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
             mandibleMovementDialog.sceneLoaded(scene);
+            advancedLayerControl.sceneLoaded(scene);
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)

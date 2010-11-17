@@ -33,6 +33,7 @@ namespace Medical
         {
             child.SuppressLayout = true;
             children.Add(child);
+            child._setParent(this);
             child.Visible = visible;
             child.setAlpha(alpha);
             child.SuppressLayout = false;
@@ -43,6 +44,7 @@ namespace Medical
         {
             child.SuppressLayout = true;
             children.Insert(index, child);
+            child._setParent(this);
             child.Visible = visible;
             child.setAlpha(alpha);
             child.SuppressLayout = false;
@@ -51,12 +53,19 @@ namespace Medical
 
         public void removeChild(LayoutContainer child)
         {
-            children.Remove(child);
-            invalidate();
+            if (children.Remove(child))
+            {
+                invalidate();
+                child._setParent(null);
+            }
         }
 
         public void clearChildren()
         {
+            foreach (LayoutContainer child in children)
+            {
+                child._setParent(null);
+            }
             children.Clear();
         }
 
