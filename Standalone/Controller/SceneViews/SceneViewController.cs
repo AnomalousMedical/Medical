@@ -121,6 +121,10 @@ namespace Medical.Controller
             {
                 window.createSceneView(rendererWindow, scene);
             }
+            if (cloneWindow != null)
+            {
+                cloneWindow.createSceneView(rendererWindow, scene);
+            }
             camerasCreated = true;
             currentScene = scene;
         }
@@ -130,6 +134,10 @@ namespace Medical.Controller
             foreach (SceneViewWindow window in mdiWindows)
             {
                 window.destroySceneView();
+            }
+            if (cloneWindow != null)
+            {
+                cloneWindow.destroySceneView();
             }
             rm.setActiveViewport(0);
             camerasCreated = false;
