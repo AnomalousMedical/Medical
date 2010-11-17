@@ -32,7 +32,7 @@ namespace Medical.GUI
             myGUIContainer = new MyGUILayoutContainer(widget);
 
             categoryLabel = widget.findWidget("CategoryLabel") as StaticText;
-            transparencyEdit = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit);
+            transparencyEdit = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit, widget.findWidget("IncButton") as Button, widget.findWidget("DecButton") as Button);
             transparencyEdit.FloatValue = 1.0f;
             transparencyEdit.MinValue = 0.0f;
             transparencyEdit.MaxValue = 1.0f;

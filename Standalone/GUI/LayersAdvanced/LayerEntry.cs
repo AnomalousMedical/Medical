@@ -24,7 +24,7 @@ namespace Medical.GUI
             myGUIContainer = new MyGUILayoutContainer(widget);
 
             entryCheck = new CheckButton(widget.findWidget("EntryCheck") as Button);
-            transparency = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit);
+            transparency = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit, widget.findWidget("IncButton") as Button, widget.findWidget("DecButton") as Button);
             transparency.MinValue = 0;
             transparency.MaxValue = 1;
             transparency.Increment = 0.1f;
