@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -14,10 +15,11 @@ namespace Medical.GUI
         private CheckButton entryCheck;
         private MyGUILayoutContainer myGUIContainer;
 
-        public LayerEntry(TransparencyInterface transparencyInterface, Widget parent)
+        public LayerEntry(TransparencyInterface transparencyInterface, Widget parent, int startingWidth)
             :base("Medical.GUI.LayersAdvanced.LayerEntry.layout")
         {
             widget.attachToWidget(parent);
+            widget.setSize(startingWidth, widget.Height);
 
             myGUIContainer = new MyGUILayoutContainer(widget);
 
@@ -43,6 +45,12 @@ namespace Medical.GUI
         void transparency_ValueChanged(Widget source, EventArgs e)
         {
             transparencyInterface.CurrentAlpha = transparency.FloatValue;
+        }
+
+        internal void changeWidth(int newWidth)
+        {
+            myGUIContainer.changeDesiredSize(new Size2(newWidth, widget.Height));
+            widget.setSize(newWidth, widget.Height);
         }
 
         public bool Selected

@@ -5,6 +5,7 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 0 214 219" align="Stretch" name="LayerScroll">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="214 219"/>
+            <Property key="ScrollView_VisibleVScroll" value="true"/>
         </Widget>
     </Widget>
 </MyGUI>

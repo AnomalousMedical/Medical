@@ -23,12 +23,13 @@ namespace Medical.GUI
 
         private MyGUILayoutContainer myGUIContainer;
 
-        public LayerSection(TransparencyGroup group, Widget parent)
+        public LayerSection(TransparencyGroup group, Widget parent, int startingWidth)
             :base("Medical.GUI.LayersAdvanced.LayerSection.layout")
         {
-            myGUIContainer = new MyGUILayoutContainer(widget);
-
             widget.attachToWidget(parent);
+            widget.setSize(startingWidth, widget.Height);
+
+            myGUIContainer = new MyGUILayoutContainer(widget);
 
             categoryLabel = widget.findWidget("CategoryLabel") as StaticText;
             transparencyEdit = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit);
@@ -49,7 +50,7 @@ namespace Medical.GUI
             transparencyEdit.ValueChanged += new MyGUIEvent(transparencyEdit_ValueChanged);
             foreach (TransparencyInterface transparency in group.getTransparencyObjectIter())
             {
-                LayerEntry entry = new LayerEntry(transparency, widget);
+                LayerEntry entry = new LayerEntry(transparency, widget, startingWidth);
                 layerEntries.Add(entry);
                 flowLayout.addChild(entry.Container);
             }
@@ -64,7 +65,21 @@ namespace Medical.GUI
                 entry.Dispose();
             }
             layerEntries.Clear();
+            flowLayout.clearChildren();
             base.Dispose();
+        }
+
+        public void changeWidth(int newWidth)
+        {
+            myGUIContainer.changeDesiredSize(new Size2(newWidth, widget.Height));
+            widget.setSize(newWidth, widget.Height);
+
+            flowLayout.SuppressLayout = true;
+            foreach (LayerEntry entry in layerEntries)
+            {
+                entry.changeWidth(newWidth);
+            }
+            flowLayout.SuppressLayout = false;
         }
 
         void transparencyEdit_ValueChanged(Widget source, EventArgs e)

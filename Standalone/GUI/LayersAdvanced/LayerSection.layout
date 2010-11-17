@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="73 162 196 21" align="HStretch Top" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="73 162 196 21" layer="Back">
         <Widget type="Button" skin="ButtonMinusPlus" position="3 0 23 21" name="ExpandButton"/>
-        <Widget type="StaticText" skin="StaticText" position="26 0 132 21" align="HStretch Top" name="CategoryLabel">
+        <Widget type="StaticText" skin="StaticText" position="26 0 132 21" name="CategoryLabel">
             <Property key="Text_TextAlign" value="Left VCenter"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="158 0 38 20" align="Right Top" name="TransparencyEdit"/>

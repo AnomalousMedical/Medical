@@ -13,11 +13,13 @@ namespace Medical.GUI
         private List<LayerSection> sections = new List<LayerSection>();
         private ScrollView widgetScroll;
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 2.0f, new Vector2(0.0f, 2.0f));
+        private int lastWidth = 0;
 
         public AdvancedLayerControl()
             :base("Medical.GUI.LayersAdvanced.AdvancedLayerControl.layout")
         {
             widgetScroll = window.findWidget("LayerScroll") as ScrollView;
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
         }
 
         public void sceneUnloading()
@@ -27,6 +29,7 @@ namespace Medical.GUI
                 section.Dispose();
             }
             sections.Clear();
+            flowLayout.clearChildren();
         }
 
         public void sceneLoaded(SimScene scene)
@@ -42,23 +45,26 @@ namespace Medical.GUI
                 this.Visible = true;
                 wasHidden = true;
             }
+
+            lastWidth = getNewWidth();
+
             flowLayout.SuppressLayout = true;
             LayerSection section = null;
             foreach (TransparencyGroup group in TransparencyController.getGroupIter())
             {
-                section = new LayerSection(group, widgetScroll);
+                section = new LayerSection(group, widgetScroll, lastWidth);
                 section.SizeChanged += section_SizeChanged;
                 sections.Add(section);
                 flowLayout.addChild(section.Container);
             }
             flowLayout.SuppressLayout = false;
             flowLayout.layout();
+
             if (section != null)
             {
-                Size2 canvasSize = widgetScroll.CanvasSize;
-                canvasSize.Height = section.Bottom;
-                widgetScroll.CanvasSize = canvasSize;
+                widgetScroll.CanvasSize = new Size2(lastWidth, section.Bottom);
             }
+
             if (wasHidden)
             {
                 this.Visible = false;
@@ -72,6 +78,40 @@ namespace Medical.GUI
                 Size2 canvasSize = widgetScroll.CanvasSize;
                 canvasSize.Height = sections[sections.Count - 1].Bottom;
                 widgetScroll.CanvasSize = canvasSize;
+            }
+            adjustToWidth(getNewWidth());
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            adjustToWidth(getNewWidth());
+        }
+
+        int getNewWidth()
+        {
+            int newWidth = widgetScroll.ClientCoord.width;
+            if (newWidth < 214)
+            {
+                newWidth = 214;
+            }
+            return newWidth;
+        }
+
+        void adjustToWidth(int newWidth)
+        {
+            if (newWidth != lastWidth)
+            {
+                flowLayout.SuppressLayout = true;
+                Size2 canvasSize = widgetScroll.CanvasSize;
+                canvasSize.Width = newWidth;
+                widgetScroll.CanvasSize = canvasSize;
+
+                foreach (LayerSection section in sections)
+                {
+                    section.changeWidth(newWidth);
+                }
+                lastWidth = newWidth;
+                flowLayout.SuppressLayout = false;
             }
         }
     }
