@@ -31,6 +31,17 @@ namespace Medical.GUI
 
         public void sceneLoaded(SimScene scene)
         {
+            /// We must make the dialog visible so that all the new widgets
+            /// added to it are properly hidden. This will check to see if the
+            /// dialog is visible, if it isn't it will be made visible for the
+            /// duration of this function. It will then be rehidden if it was
+            /// hidden when the function was called.
+            bool wasHidden = false;
+            if (!Visible)
+            {
+                this.Visible = true;
+                wasHidden = true;
+            }
             flowLayout.SuppressLayout = true;
             LayerSection section = null;
             foreach (TransparencyGroup group in TransparencyController.getGroupIter())
@@ -47,6 +58,10 @@ namespace Medical.GUI
                 Size2 canvasSize = widgetScroll.CanvasSize;
                 canvasSize.Height = section.Bottom;
                 widgetScroll.CanvasSize = canvasSize;
+            }
+            if (wasHidden)
+            {
+                this.Visible = false;
             }
         }
 

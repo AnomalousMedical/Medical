@@ -17,7 +17,6 @@ namespace Medical.GUI
         public LayerEntry(TransparencyInterface transparencyInterface, Widget parent)
             :base("Medical.GUI.LayersAdvanced.LayerEntry.layout")
         {
-            widget.Visible = false;
             widget.attachToWidget(parent);
 
             myGUIContainer = new MyGUILayoutContainer(widget);
@@ -26,6 +25,7 @@ namespace Medical.GUI
             transparency = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit);
             transparency.MinValue = 0;
             transparency.MaxValue = 1;
+            transparency.Increment = 0.1f;
 
             transparency.ValueChanged += new MyGUIEvent(transparency_ValueChanged);
 

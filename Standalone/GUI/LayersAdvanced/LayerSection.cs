@@ -28,11 +28,14 @@ namespace Medical.GUI
         {
             myGUIContainer = new MyGUILayoutContainer(widget);
 
-            widget.Visible = false;
             widget.attachToWidget(parent);
 
             categoryLabel = widget.findWidget("CategoryLabel") as StaticText;
             transparencyEdit = new NumericEdit(widget.findWidget("TransparencyEdit") as Edit);
+            transparencyEdit.FloatValue = 1.0f;
+            transparencyEdit.MinValue = 0.0f;
+            transparencyEdit.MaxValue = 1.0f;
+            transparencyEdit.Increment = 0.1f;
             expandButton = new CheckButton(widget.findWidget("ExpandButton") as Button);
             expandButton.Checked = !expanded;
             expandButton.CheckedChanged += new MyGUIEvent(expandButton_CheckedChanged);
