@@ -41,10 +41,10 @@ namespace Medical.GUI
         private const int START_COLUMN_WIDTH = 100;
 
         //File Menu
-        MenuItem newTimeline;
-        MenuItem openTimeline;
-        MenuItem saveTimeline;
-        MenuItem saveTimelineAs;
+        MenuItem newTimelineItem;
+        MenuItem openTimelineItem;
+        MenuItem saveTimelineItem;
+        MenuItem saveTimelineAsItem;
 
         public TimelineProperties(TimelineController timelineController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
@@ -66,18 +66,18 @@ namespace Medical.GUI
             MenuItem openProject = fileMenu.addItem("Open Project");
             openProject.MouseButtonClick += new MyGUIEvent(openProject_MouseButtonClick);
             fileMenu.addItem("", MenuItemType.Separator);
-            newTimeline = fileMenu.addItem("New Timeline");
-            newTimeline.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            newTimeline.Enabled = false;
-            openTimeline = fileMenu.addItem("Open Timeline");
-            openTimeline.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            openTimeline.Enabled = false;
-            saveTimeline = fileMenu.addItem("Save Timeline");
-            saveTimeline.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            saveTimeline.Enabled = false;
-            saveTimelineAs = fileMenu.addItem("Save Timeline As");
-            saveTimelineAs.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
-            saveTimelineAs.Enabled = false;
+            newTimelineItem = fileMenu.addItem("New Timeline");
+            newTimelineItem.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
+            newTimelineItem.Enabled = false;
+            openTimelineItem = fileMenu.addItem("Open Timeline");
+            openTimelineItem.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
+            openTimelineItem.Enabled = false;
+            saveTimelineItem = fileMenu.addItem("Save Timeline");
+            saveTimelineItem.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
+            saveTimelineItem.Enabled = false;
+            saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
+            saveTimelineAsItem.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
+            saveTimelineAsItem.Enabled = false;
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
             //Other Actions Menu
@@ -261,6 +261,30 @@ namespace Medical.GUI
 
         #region File Menu
 
+        /// <summary>
+        /// Create a new project. You can optionally delete the old project.
+        /// </summary>
+        /// <param name="filename">The file name of the new project.</param>
+        /// <param name="deleteOld">True to delete any existing project first.</param>
+        void createNewProject(String filename, bool deleteOld)
+        {
+            try
+            {
+                if (deleteOld)
+                {
+                    File.Delete(filename);
+                }
+                timelineController.createProject(filename);
+                updateWindowCaption();
+            }
+            catch (Exception ex)
+            {
+                String errorMessage = String.Format("Error creating new project {0}.", ex.Message);
+                Log.Error(errorMessage);
+                MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
+        }
+
         void newProject_MouseButtonClick(Widget source, EventArgs e)
         {
             newProjectDialog.open(true);
@@ -277,17 +301,7 @@ namespace Medical.GUI
             }
             else
             {
-                try
-                {
-                    timelineController.createProject(newProjectDialog.FullProjectName);
-                    updateWindowCaption();
-                }
-                catch (Exception ex)
-                {
-                    String errorMessage = String.Format("Error creating new project {0}.", ex.Message);
-                    Log.Error(errorMessage);
-                    MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }
+                createNewProject(newProjectName, false);
             }
         }
 
@@ -295,18 +309,7 @@ namespace Medical.GUI
         {
             if (result == MessageBoxStyle.Yes)
             {
-                try
-                {
-                    File.Delete(newProjectDialog.FullProjectName);
-                    timelineController.createProject(newProjectDialog.FullProjectName);
-                    updateWindowCaption();
-                }
-                catch (Exception e)
-                {
-                    String errorMessage = String.Format("Error creating new project {0}.", e.Message);
-                    Log.Error(errorMessage);
-                    MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-                }
+                createNewProject(newProjectDialog.FullProjectName, true);
             }
         }
 
@@ -330,6 +333,12 @@ namespace Medical.GUI
             fileMenu.setVisibleSmooth(false);
         }
 
+        void saveTimeline(Timeline timeline, String filename)
+        {
+            timelineController.saveTimeline(timeline, filename);
+            changeTimelineFile(filename);
+        }
+
         void saveTimelineDialog_SaveFile(object sender, EventArgs e)
         {
             String filename = saveTimelineDialog.Filename;
@@ -339,17 +348,15 @@ namespace Medical.GUI
             }
             else
             {
-                timelineController.saveTimeline(currentTimeline, filename);
-                changeTimelineFile(filename);
+                saveTimeline(currentTimeline, filename);
             }
         }
 
-        public void overwriteTimelineResult(MessageBoxStyle result)
+        void overwriteTimelineResult(MessageBoxStyle result)
         {
             if (result == MessageBoxStyle.Yes)
             {
-                timelineController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
-                changeTimelineFile(saveTimelineDialog.Filename);
+                saveTimeline(currentTimeline, saveTimelineDialog.Filename);
             }
         }
 
@@ -387,10 +394,10 @@ namespace Medical.GUI
 
         void timelineController_ResourceLocationChanged(object sender, EventArgs e)
         {
-            newTimeline.Enabled = timelineController.ResourceLocation != null;
-            openTimeline.Enabled = timelineController.ResourceLocation != null;
-            saveTimeline.Enabled = timelineController.ResourceLocation != null;
-            saveTimelineAs.Enabled = timelineController.ResourceLocation != null;
+            newTimelineItem.Enabled = timelineController.ResourceLocation != null;
+            openTimelineItem.Enabled = timelineController.ResourceLocation != null;
+            saveTimelineItem.Enabled = timelineController.ResourceLocation != null;
+            saveTimelineAsItem.Enabled = timelineController.ResourceLocation != null;
         }
 
         #endregion
