@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml;
 using Logging;
 using SoundPlugin;
+using ZipAccess;
 
 namespace Medical
 {
@@ -32,6 +33,7 @@ namespace Medical
         private bool updating = false;
         private bool playPrePostActions = true;
         private String resourceLocation = null;
+        private ZipFile resourceFile = null;
 
         public TimelineController(StandaloneController standaloneController)
         {
@@ -57,32 +59,9 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
-            filename = Path.Combine(ResourceLocation, filename);
-            //Look on the virtual file system first. If it is not found there search the real file system.
-            VirtualFileSystem vfs = VirtualFileSystem.Instance;
-            if (vfs.exists(filename))
+            using (XmlTextReader file = new XmlTextReader(resourceFile.openFile(filename)))
             {
-                using (XmlTextReader file = new XmlTextReader(vfs.openStream(filename, Engine.Resources.FileMode.Open, Engine.Resources.FileAccess.Read)))
-                {
-                    return xmlSaver.restoreObject(file) as Timeline;
-                }
-            }
-            else
-            {
-                using (XmlTextReader file = new XmlTextReader(filename))
-                {
-                    return xmlSaver.restoreObject(file) as Timeline;
-                }
-            }
-        }
-
-        public void saveTimeline(Timeline timeline, String filename)
-        {
-            filename = Path.Combine(ResourceLocation, filename);
-            using (XmlTextWriter writer = new XmlTextWriter(filename, Encoding.Default))
-            {
-                writer.Formatting = Formatting.Indented;
-                xmlSaver.saveObject(timeline, writer);
+                return xmlSaver.restoreObject(file) as Timeline;
             }
         }
 
@@ -168,7 +147,7 @@ namespace Medical
         {
             try
             {
-                Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
+                Stream soundStream = resourceFile.openFile(soundFile);
                 return SoundPluginInterface.Instance.SoundManager.streamPlayAndForgetSound(soundStream);
             }
             catch (Exception e)
@@ -182,7 +161,7 @@ namespace Medical
         {
             try
             {
-                Stream soundStream = new FileStream(Path.Combine(ResourceLocation, soundFile), FileMode.Open, FileAccess.Read);
+                Stream soundStream = resourceFile.openFile(soundFile);
                 return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
             }
             catch (Exception e)
@@ -204,17 +183,72 @@ namespace Medical
             }
         }
 
+        internal void createProject(string projectName)
+        {
+            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
+            {
+                ionicZip.Save();
+            }
+            ResourceLocation = projectName;
+        }
+
+        public void saveTimeline(Timeline timeline, String filename)
+        {
+            if (resourceFile != null)
+            {
+                resourceFile.Dispose();
+                try
+                {
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        using (XmlTextWriter writer = new XmlTextWriter(memoryStream, Encoding.Default))
+                        {
+                            writer.Formatting = Formatting.Indented;
+                            xmlSaver.saveObject(timeline, writer);
+                            writer.Flush();
+
+                            memoryStream.Seek(0, SeekOrigin.Begin);
+                            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                            {
+                                if (ionicZip.ContainsEntry(filename))
+                                {
+                                    ionicZip.UpdateEntry(filename, memoryStream);
+                                }
+                                else
+                                {
+                                    ionicZip.AddEntry(filename, memoryStream);
+                                }
+                                ionicZip.Save();
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Could not save timeline because of {0}.", e.Message);
+                }
+                resourceFile = new ZipFile(resourceLocation);
+            }
+        }
+
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
         /// <param name="pattern"></param>
         public String[] listResourceFiles(String pattern)
         {
-            if (ResourceLocation != null)
+            if (resourceFile != null)
             {
                 try
                 {
-                    return Directory.GetFiles(ResourceLocation, pattern, SearchOption.TopDirectoryOnly);
+                    List<ZipFileInfo> zipFiles = resourceFile.listFiles("/", pattern, false);
+                    String[] ret = new String[zipFiles.Count];
+                    int i = 0;
+                    foreach (ZipFileInfo info in zipFiles)
+                    {
+                        ret[i++] = info.FullName;
+                    }
+                    return ret;
                 }
                 catch (Exception ex)
                 {
@@ -230,26 +264,44 @@ namespace Medical
         /// <param name="path"></param>
         public void importFile(String path)
         {
-            String fileName = Path.GetFileName(path);
-            String newPath = Path.Combine(ResourceLocation, fileName);
-            File.Copy(path, newPath, true);
+            if (resourceFile != null)
+            {
+                resourceFile.Dispose();
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                {
+                    if (ionicZip.ContainsEntry(path))
+                    {
+                        ionicZip.UpdateFile(path, "");
+                    }
+                    else
+                    {
+                        ionicZip.AddFile(path, "");
+                    }
+                    ionicZip.Save();
+                }
+                resourceFile = new ZipFile(resourceLocation);
+            }
         }
 
         public bool resourceExists(String filename)
         {
-            return File.Exists(Path.Combine(ResourceLocation, filename));
+            if (resourceFile != null)
+            {
+                return resourceFile.exists(filename);
+            }
+            return false;
         }
 
         #region UpdateListener Members
 
         public void exceededMaxDelta()
         {
-            
+
         }
 
         public void loopStarting()
         {
-            
+
         }
 
         public void sendUpdate(Clock clock)
@@ -331,7 +383,12 @@ namespace Medical
             }
             set
             {
+                if (resourceFile != null)
+                {
+                    resourceFile.Dispose();
+                }
                 resourceLocation = value;
+                resourceFile = new ZipFile(resourceLocation);
                 if (ResourceLocationChanged != null)
                 {
                     ResourceLocationChanged.Invoke(this, EventArgs.Empty);

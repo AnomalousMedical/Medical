@@ -14,10 +14,13 @@ namespace Medical.GUI
 
         private Edit projectName;
         private Edit projectLocation;
+        private String extension;
 
-        public NewProjectDialog()
+        public NewProjectDialog(String extension)
             :base("Medical.GUI.Timeline.NewProjectDialog.layout")
         {
+            this.extension = extension;
+
             projectName = window.findWidget("ProjectName") as Edit;
             projectLocation = window.findWidget("ProjectLocation") as Edit;
             projectLocation.Caption = MedicalConfig.DocRoot + "/Timeline Projects";
@@ -57,7 +60,12 @@ namespace Medical.GUI
         {
             get
             {
-                return Path.Combine(projectLocation.Caption, projectName.Caption);
+                String projName = projectName.Caption;
+                if (!projName.EndsWith(extension))
+                {
+                    projName += extension;
+                }
+                return Path.Combine(projectLocation.Caption, projName);
             }
         }
 
@@ -100,7 +108,6 @@ namespace Medical.GUI
         {
             try
             {
-                Directory.CreateDirectory(FullProjectName);
                 if (ProjectCreated != null)
                 {
                     ProjectCreated.Invoke(this, EventArgs.Empty);

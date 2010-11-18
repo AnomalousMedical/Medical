@@ -10,6 +10,9 @@ namespace Medical.GUI
 {
     class TimelineProperties : Dialog
     {
+        private const String PROJECT_EXTENSION = ".tlp";
+        private const String PROJECT_WILDCARD = "Timeline Projects (*.tlp)|*.tlp";
+
         private Timeline currentTimeline;
         private TimelineController timelineController;
         private String currentTimelineFile;
@@ -116,7 +119,7 @@ namespace Medical.GUI
 
             //Dialogs
             changeSceneEditor = new ChangeSceneEditor();
-            newProjectDialog = new NewProjectDialog();
+            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
             fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
             timelineController.FileBrowser = fileBrowserDialog;
@@ -261,17 +264,17 @@ namespace Medical.GUI
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
         {
-            timelineController.ResourceLocation = newProjectDialog.FullProjectName;
+            timelineController.createProject(newProjectDialog.FullProjectName);
             updateWindowCaption();
         }
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", newProjectDialog.ProjectLocation))
+            using (wx.FileDialog fileDialog = new wx.FileDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD))
             {
-                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (fileDialog.ShowModal() == wx.ShowModalResult.OK)
                 {
-                    timelineController.ResourceLocation = dirDialog.Path;
+                    timelineController.ResourceLocation = fileDialog.Path;
                     updateWindowCaption();
                 }
             }
