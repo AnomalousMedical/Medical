@@ -36,6 +36,7 @@ namespace Medical.GUI
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
 
+        private Button otherActionsButton;
         private Button playButton;
 
         private const int START_COLUMN_WIDTH = 100;
@@ -68,20 +69,16 @@ namespace Medical.GUI
             fileMenu.addItem("", MenuItemType.Separator);
             newTimelineItem = fileMenu.addItem("New Timeline");
             newTimelineItem.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            newTimelineItem.Enabled = false;
             openTimelineItem = fileMenu.addItem("Open Timeline");
             openTimelineItem.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            openTimelineItem.Enabled = false;
             saveTimelineItem = fileMenu.addItem("Save Timeline");
             saveTimelineItem.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            saveTimelineItem.Enabled = false;
             saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
             saveTimelineAsItem.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
-            saveTimelineAsItem.Enabled = false;
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
             //Other Actions Menu
-            Button otherActionsButton = window.findWidget("OtherActionsButton") as Button;
+            otherActionsButton = window.findWidget("OtherActionsButton") as Button;
             otherActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             otherActionsMenu.Visible = false;
             MenuItem changeScene = otherActionsMenu.addItem("Change Scene");
@@ -90,7 +87,7 @@ namespace Medical.GUI
             finishAction.MouseButtonClick += new MyGUIEvent(finishAction_MouseButtonClick);
             otherActionsMenu.addItem("", MenuItemType.Separator);
             testActions = otherActionsMenu.addItem("Enable Other Actions");
-            testActions.StateCheck = true;
+            testActions.StateCheck = false;
             testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
             prePostActionsMenuButton = new ShowMenuButton(otherActionsButton, otherActionsMenu);
            
@@ -148,6 +145,8 @@ namespace Medical.GUI
                     }
                 }
             }
+
+            setEnabled(false);
 
             createNewTimeline();
         }
@@ -394,10 +393,19 @@ namespace Medical.GUI
 
         void timelineController_ResourceLocationChanged(object sender, EventArgs e)
         {
-            newTimelineItem.Enabled = timelineController.ResourceLocation != null;
-            openTimelineItem.Enabled = timelineController.ResourceLocation != null;
-            saveTimelineItem.Enabled = timelineController.ResourceLocation != null;
-            saveTimelineAsItem.Enabled = timelineController.ResourceLocation != null;
+            setEnabled(timelineController.ResourceLocation != null);
+        }
+
+        private void setEnabled(bool enabled)
+        {
+            newTimelineItem.Enabled = enabled;
+            openTimelineItem.Enabled = enabled;
+            saveTimelineItem.Enabled = enabled;
+            saveTimelineAsItem.Enabled = enabled;
+            actionFilter.Enabled = enabled;
+            otherActionsButton.Enabled = enabled;
+            playButton.Enabled = enabled;
+            timelineView.Enabled = enabled;
         }
 
         #endregion
