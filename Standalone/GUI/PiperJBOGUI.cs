@@ -105,7 +105,7 @@ namespace Medical.GUI
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
             taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
