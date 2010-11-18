@@ -185,8 +185,7 @@ namespace Medical.GUI
                 currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
                 currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
             }
-            currentTimelineFile = filename;
-            updateWindowCaption();
+            changeTimelineFile(filename);
             currentTimeline = timeline;
             timelineView.removeAllData();
             foreach (TimelineAction action in currentTimeline.Actions)
@@ -197,6 +196,12 @@ namespace Medical.GUI
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
             changeSceneEditor.CurrentTimeline = currentTimeline;
             finishActionEditor.CurrentTimeline = currentTimeline;
+        }
+
+        private void changeTimelineFile(String filename)
+        {
+            currentTimelineFile = filename;
+            updateWindowCaption();
         }
 
         private void updateWindowCaption()
@@ -335,6 +340,7 @@ namespace Medical.GUI
             else
             {
                 timelineController.saveTimeline(currentTimeline, filename);
+                changeTimelineFile(filename);
             }
         }
 
@@ -343,6 +349,7 @@ namespace Medical.GUI
             if (result == MessageBoxStyle.Yes)
             {
                 timelineController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
+                changeTimelineFile(saveTimelineDialog.Filename);
             }
         }
 
