@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using System.IO;
 using Engine;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -264,8 +265,44 @@ namespace Medical.GUI
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
         {
-            timelineController.createProject(newProjectDialog.FullProjectName);
-            updateWindowCaption();
+            String newProjectName = newProjectDialog.FullProjectName;
+            if (File.Exists(newProjectName))
+            {
+                MessageBox.show(String.Format("A project named {0} already exists. Would you like to overwrite it?", newProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteNewProject);
+            }
+            else
+            {
+                try
+                {
+                    timelineController.createProject(newProjectDialog.FullProjectName);
+                    updateWindowCaption();
+                }
+                catch (Exception ex)
+                {
+                    String errorMessage = String.Format("Error creating new project {0}.", ex.Message);
+                    Log.Error(errorMessage);
+                    MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+            }
+        }
+
+        void overwriteNewProject(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                try
+                {
+                    File.Delete(newProjectDialog.FullProjectName);
+                    timelineController.createProject(newProjectDialog.FullProjectName);
+                    updateWindowCaption();
+                }
+                catch (Exception e)
+                {
+                    String errorMessage = String.Format("Error creating new project {0}.", e.Message);
+                    Log.Error(errorMessage);
+                    MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+            }
         }
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
@@ -293,7 +330,7 @@ namespace Medical.GUI
             String filename = saveTimelineDialog.Filename;
             if (timelineController.resourceExists(filename))
             {
-                MessageBox.show("The file {0} already exists. Would you like to overwrite it?", "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteTimelineResult);
+                MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", filename), "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteTimelineResult);
             }
             else
             {
