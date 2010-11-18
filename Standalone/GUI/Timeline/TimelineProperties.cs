@@ -290,7 +290,23 @@ namespace Medical.GUI
 
         void saveTimelineDialog_SaveFile(object sender, EventArgs e)
         {
-            timelineController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
+            String filename = saveTimelineDialog.Filename;
+            if (timelineController.resourceExists(filename))
+            {
+                MessageBox.show("The file {0} already exists. Would you like to overwrite it?", "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteTimelineResult);
+            }
+            else
+            {
+                timelineController.saveTimeline(currentTimeline, filename);
+            }
+        }
+
+        public void overwriteTimelineResult(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                timelineController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
+            }
         }
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)

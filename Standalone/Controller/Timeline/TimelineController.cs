@@ -269,7 +269,7 @@ namespace Medical
                 resourceFile.Dispose();
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
                 {
-                    if (ionicZip.ContainsEntry(path))
+                    if (ionicZip.ContainsEntry(Path.GetFileName(path)))
                     {
                         ionicZip.UpdateFile(path, "");
                     }
