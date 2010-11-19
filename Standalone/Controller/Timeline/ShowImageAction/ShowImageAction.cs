@@ -82,7 +82,7 @@ namespace Medical
         protected ShowImageAction(LoadInfo info)
             :base(info)
         {
-            info.GetString(IMAGE_FILE, imageFile);
+            imageFile = info.GetString(IMAGE_FILE, imageFile);
         }
 
         public override void getInfo(SaveInfo info)
