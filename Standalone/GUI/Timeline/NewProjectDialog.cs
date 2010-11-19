@@ -22,6 +22,7 @@ namespace Medical.GUI
             this.extension = extension;
 
             projectName = window.findWidget("ProjectName") as Edit;
+            projectName.EventEditSelectAccept += new MyGUIEvent(projectName_EventEditSelectAccept);
             projectLocation = window.findWidget("ProjectLocation") as Edit;
             projectLocation.Caption = MedicalConfig.DocRoot + "/Timeline Projects";
             if (!Directory.Exists(projectLocation.Caption))
@@ -76,6 +77,27 @@ namespace Medical.GUI
 
         void createButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            startCreatingTimelineProject();
+        }
+
+        void projectName_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            startCreatingTimelineProject();
+        }
+
+        void browseButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", projectLocation.Caption))
+            {
+                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
+                {
+                    projectLocation.Caption = dirDialog.Path;
+                }
+            }
+        }
+
+        private void startCreatingTimelineProject()
+        {
             if (Directory.Exists(projectLocation.Caption))
             {
                 if (Directory.Exists(FullProjectName))
@@ -90,17 +112,6 @@ namespace Medical.GUI
             else
             {
                 MessageBox.show(String.Format("Could not create project {0}.\nReason: The Project Location does not exist.", FullProjectName), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-            }
-        }
-
-        void browseButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", projectLocation.Caption))
-            {
-                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
-                {
-                    projectLocation.Caption = dirDialog.Path;
-                }
             }
         }
 

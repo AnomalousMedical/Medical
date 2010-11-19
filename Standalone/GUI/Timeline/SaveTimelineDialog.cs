@@ -17,6 +17,7 @@ namespace Medical.GUI
             :base("Medical.GUI.Timeline.SaveTimelineDialog.layout")
         {
             filename = window.findWidget("Filename") as Edit;
+            filename.EventEditSelectAccept += new MyGUIEvent(filename_EventEditSelectAccept);
 
             Button saveButton = window.findWidget("SaveButton") as Button;
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
@@ -46,7 +47,17 @@ namespace Medical.GUI
             this.close();
         }
 
+        void filename_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            save();
+        }
+
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            save();
+        }
+
+        private void save()
         {
             if (filename.Caption.Length > 0)
             {

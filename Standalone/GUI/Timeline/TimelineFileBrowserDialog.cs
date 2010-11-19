@@ -21,6 +21,7 @@ namespace Medical.GUI
 
             fileList = window.findWidget("FileList") as MultiList;
             fileList.addColumn("File", fileList.Width);
+            fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);
 
             Button openButton = window.findWidget("OpenButton") as Button;
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
@@ -72,6 +73,16 @@ namespace Medical.GUI
         }
 
         void openButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            acceptSelected();
+        }
+
+        void fileList_ListSelectAccept(Widget source, EventArgs e)
+        {
+            acceptSelected();
+        }
+
+        private void acceptSelected()
         {
             uint selectedIndex = fileList.getIndexSelected();
             if (selectedIndex != uint.MaxValue)
