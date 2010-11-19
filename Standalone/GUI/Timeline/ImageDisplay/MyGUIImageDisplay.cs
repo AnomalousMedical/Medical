@@ -13,16 +13,22 @@ namespace Medical.GUI
     {
         private ImageAtlas imageAtlas;
         private StaticImage imageBox;
+        private MyGUIImageDisplayFactory displayFactory;
+        private Vector2 position = new Vector2();
+        private Size2 size = new Size2();
 
-        public MyGUIImageDisplay()
+        public MyGUIImageDisplay(MyGUIImageDisplayFactory displayFactory)
             :base("Medical.GUI.Timeline.ImageDisplay.MyGUIImageDisplay.layout")
         {
+            this.displayFactory = displayFactory;
+
             widget.Visible = false;
             imageBox = widget.findWidget("ImageBox") as StaticImage;
         }
 
         public override void Dispose()
         {
+            displayFactory.displayDisposed(this);
             base.Dispose();
             imageAtlas.Dispose();
         }
@@ -48,14 +54,21 @@ namespace Medical.GUI
             widget.Visible = true;
         }
 
+        public void screenResized(int width, int height)
+        {
+            widget.setPosition((int)(position.x * Gui.Instance.getViewWidth()), (int)(position.y * Gui.Instance.getViewHeight()));
+            widget.setSize((int)(size.Width * Gui.Instance.getViewWidth()), (int)(size.Height * Gui.Instance.getViewHeight()));
+        }
+
         public Vector2 Position
         {
             get
             {
-                return new Vector2((float)widget.Left / Gui.Instance.getViewWidth(), (float)widget.Top / Gui.Instance.getViewHeight());
+                return position;
             }
             set
             {
+                position = value;
                 widget.setPosition((int)(value.x * Gui.Instance.getViewWidth()), (int)(value.y * Gui.Instance.getViewHeight()));
             }
         }
@@ -64,10 +77,11 @@ namespace Medical.GUI
         {
             get
             {
-                return new Size2((float)widget.Width / Gui.Instance.getViewWidth(), (float)widget.Height / Gui.Instance.getViewHeight());
+                return size;
             }
             set
             {
+                size = value;
                 widget.setSize((int)(value.Width * Gui.Instance.getViewWidth()), (int)(value.Height * Gui.Instance.getViewHeight()));
             }
         }

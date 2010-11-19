@@ -52,6 +52,7 @@ namespace Standalone
         private SceneViewWindowPresetController windowPresetController;
         private HtmlHelpController htmlHelpController;
         private CursorManager cursorManager;
+        private MyGUIImageDisplayFactory imageDisplayFactory;
 
         //Frame
         private MainWindow mainWindow;
@@ -167,7 +168,9 @@ namespace Standalone
 
             //Timeline
             timelineController = new TimelineController(this);
-            timelineController.ImageDisplayFactory = new MyGUIImageDisplayFactory();
+            imageDisplayFactory = new MyGUIImageDisplayFactory();
+            MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
+            timelineController.ImageDisplayFactory = imageDisplayFactory;
 
             //GUI
             basicGUI = new PiperJBOGUI(this);
