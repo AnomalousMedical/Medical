@@ -173,6 +173,30 @@ namespace Medical
             return 0.0;
         }
 
+        public IImageDisplay showImage(String imageName)
+        {
+            IImageDisplay imageDisplay = null;
+            try
+            {
+                using (Stream imageStream = resourceFile.openFile(imageName))
+                {
+                    imageDisplay = ImageDisplayFactory.createImageDisplay();
+                    imageDisplay.setImage(imageStream);
+                    imageDisplay.show();
+                    return imageDisplay;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Warning("Could not display image {0} Reason: {1}", imageName, ex.Message);
+                if (imageDisplay != null)
+                {
+                    imageDisplay.Dispose();
+                }
+                return null;
+            }
+        }
+
         public void promptForFile(String filterString, FileChosenCallback callback)
         {
             if (FileBrowser != null)
@@ -348,6 +372,8 @@ namespace Medical
         }
 
         public ITimelineFileBrowser FileBrowser { get; set; }
+
+        public IImageDisplayFactory ImageDisplayFactory { get; set; }
 
         public SceneViewController SceneViewController
         {

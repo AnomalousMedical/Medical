@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="PanelEmpty" position="99 352 211 48" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="3 5 66 13">
+            <Property key="Widget_Caption" value="Image File"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="71 3 137 17" name="ImageFileEdit">
+            <Property key="Edit_Static" value="true"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="71 23 57 18" name="BrowseButton">
+            <Property key="Widget_Caption" value="Browse"/>
+        </Widget>
+    </Widget>
+</MyGUI>

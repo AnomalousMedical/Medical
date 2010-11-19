@@ -16,6 +16,7 @@ namespace Medical
             addType(typeof(LayerChangeAction));
             addType(typeof(MoveCameraAction));
             addType(typeof(PlaySequenceAction));
+            addType(typeof(ShowImageAction));
             addType(typeof(PlaySoundAction));
         }
 

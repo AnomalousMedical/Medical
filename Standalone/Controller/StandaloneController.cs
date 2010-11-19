@@ -167,6 +167,7 @@ namespace Standalone
 
             //Timeline
             timelineController = new TimelineController(this);
+            timelineController.ImageDisplayFactory = new MyGUIImageDisplayFactory();
 
             //GUI
             basicGUI = new PiperJBOGUI(this);

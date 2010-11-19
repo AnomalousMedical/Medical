@@ -54,7 +54,8 @@ namespace Medical.GUI
             String[] files = timelineController.listResourceFiles(filterString);
             foreach (String file in files)
             {
-                fileList.addItem(Path.GetFileNameWithoutExtension(file), Path.GetFileName(file));
+                String fileName = Path.GetFileName(file);
+                fileList.addItem(fileName, fileName);
             }
             base.onShown(args);
         }
