@@ -33,6 +33,11 @@ namespace Medical
                 {
                     finished = true;
                 }
+                else
+                {
+                    imageDisplay.Position = position;
+                    imageDisplay.Size = size;
+                }
             }
             else
             {
@@ -59,6 +64,11 @@ namespace Medical
             if (imageFile != null)
             {
                 imageDisplay = TimelineController.showImage(imageFile);
+                if (imageDisplay != null)
+                {
+                    imageDisplay.Position = position;
+                    imageDisplay.Size = size;
+                }
             }
         }
 
@@ -125,19 +135,23 @@ namespace Medical
         #region Saving
 
         private static String IMAGE_FILE = "ImageFile";
-        private static String SIZE = "Size";
         private static String POSITION = "Position";
+        private static String SIZE = "Size";
 
         protected ShowImageAction(LoadInfo info)
             :base(info)
         {
             imageFile = info.GetString(IMAGE_FILE, imageFile);
+            position = info.GetValue<Vector2>(POSITION);
+            size = info.GetValue<Size2>(SIZE);
         }
 
         public override void getInfo(SaveInfo info)
         {
             base.getInfo(info);
             info.AddValue(IMAGE_FILE, imageFile);
+            info.AddValue(POSITION, position);
+            info.AddValue(SIZE, size);
         }
 
         #endregion
