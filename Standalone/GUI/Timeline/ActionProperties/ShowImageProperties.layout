@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="99 352 211 48" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="99 352 211 88" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="3 5 66 13">
             <Property key="Widget_Caption" value="Image File"/>
         </Widget>
@@ -9,6 +9,34 @@
         </Widget>
         <Widget type="Button" skin="Button" position="71 23 57 18" name="BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 44 56 17">
+            <Property key="Widget_Caption" value="Position"/>
+            <Property key="Text_TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="71 44 11 17">
+            <Property key="Widget_Caption" value="X"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="84 44 50 17" name="XPositionEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="136 44 11 17">
+            <Property key="Widget_Caption" value="Y"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="149 44 50 17" name="YPositionEdit"/>
+        <Widget type="Edit" skin="Edit" position="84 66 50 17" name="WidthEdit"/>
+        <Widget type="Edit" skin="Edit" position="149 66 50 17" name="HeightEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="3 66 48 17">
+            <Property key="Widget_Caption" value="Size"/>
+            <Property key="Text_TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="71 66 11 17">
+            <Property key="Widget_Caption" value="W"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="136 66 11 17">
+            <Property key="Widget_Caption" value="H"/>
+            <Property key="Text_TextAlign" value="Center"/>
         </Widget>
     </Widget>
 </MyGUI>

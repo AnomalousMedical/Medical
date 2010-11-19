@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Engine;
 
 namespace Medical
 {
@@ -13,10 +14,13 @@ namespace Medical
         private bool finished = false;
         private IImageDisplay imageDisplay;
         private String imageFile;
+        private Size2 size;
+        private Vector2 position;
 
         public ShowImageAction()
         {
-
+            size = new Size2(0.2f, 0.2f);
+            position = new Vector2(0.0f, 0.0f);
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -86,9 +90,43 @@ namespace Medical
             }
         }
 
+        public Vector2 Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                position = value;
+                if(imageDisplay != null)
+                {
+                    imageDisplay.Position = position;
+                }
+            }
+        }
+
+        public Size2 Size
+        {
+            get
+            {
+                return size;
+            }
+            set
+            {
+                size = value;
+                if (imageDisplay != null)
+                {
+                    imageDisplay.Size = size;
+                }
+            }
+        }
+
         #region Saving
 
         private static String IMAGE_FILE = "ImageFile";
+        private static String SIZE = "Size";
+        private static String POSITION = "Position";
 
         protected ShowImageAction(LoadInfo info)
             :base(info)

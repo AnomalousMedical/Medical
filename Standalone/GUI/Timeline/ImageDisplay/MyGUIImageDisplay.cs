@@ -44,7 +44,32 @@ namespace Medical.GUI
 
         public void show()
         {
+            LayerManager.Instance.upLayerItem(widget);
             widget.Visible = true;
+        }
+
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2((float)widget.Left / Gui.Instance.getViewWidth(), (float)widget.Top / Gui.Instance.getViewHeight());
+            }
+            set
+            {
+                widget.setPosition((int)(value.x * Gui.Instance.getViewWidth()), (int)(value.y * Gui.Instance.getViewHeight()));
+            }
+        }
+
+        public Size2 Size
+        {
+            get
+            {
+                return new Size2((float)widget.Width / Gui.Instance.getViewWidth(), (float)widget.Height / Gui.Instance.getViewHeight());
+            }
+            set
+            {
+                widget.setSize((int)(value.Width * Gui.Instance.getViewWidth()), (int)(value.Height * Gui.Instance.getViewHeight()));
+            }
         }
     }
 }
