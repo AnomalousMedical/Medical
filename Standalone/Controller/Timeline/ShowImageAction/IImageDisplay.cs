@@ -32,5 +32,10 @@ namespace Medical
         /// The size of the image. This is expressed as a floating point value between 0 and 1.
         /// </summary>
         Size2 Size { get; set; }
+
+        /// <summary>
+        /// Specify whether to keep the original aspect ratio of the image or not.
+        /// </summary>
+        bool KeepAspectRatio { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="99 352 211 88" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="99 352 211 104" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="3 5 66 13">
             <Property key="Widget_Caption" value="Image File"/>
         </Widget>
@@ -37,6 +37,9 @@
         <Widget type="StaticText" skin="StaticText" position="136 66 11 17">
             <Property key="Widget_Caption" value="H"/>
             <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="3 88 134 13" name="KeepAspectCheck">
+            <Property key="Widget_Caption" value="Keep Aspect Ratio"/>
         </Widget>
     </Widget>
 </MyGUI>

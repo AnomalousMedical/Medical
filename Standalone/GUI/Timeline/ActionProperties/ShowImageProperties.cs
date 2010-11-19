@@ -18,6 +18,8 @@ namespace Medical.GUI
         private NumericEdit width;
         private NumericEdit height;
 
+        private CheckButton keepAspectRatio;
+
         public ShowImageProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowImageProperties.layout")
         {
@@ -49,6 +51,9 @@ namespace Medical.GUI
             height.MinValue = 0.0f;
             height.MaxValue = 1.0f;
             height.Increment = 0.05f;
+
+            keepAspectRatio = new CheckButton(mainWidget.findWidget("KeepAspectCheck") as Button);
+            keepAspectRatio.CheckedChanged += new MyGUIEvent(keepAspectRatio_CheckedChanged);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -62,6 +67,7 @@ namespace Medical.GUI
             Size2 size = showImage.Size;
             width.FloatValue = size.Width;
             height.FloatValue = size.Height;
+            keepAspectRatio.Checked = showImage.KeepAspectRatio;
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -83,6 +89,11 @@ namespace Medical.GUI
         void size_ValueChanged(Widget source, EventArgs e)
         {
             showImage.Size = new Size2(width.FloatValue, height.FloatValue);
+        }
+
+        void keepAspectRatio_CheckedChanged(Widget source, EventArgs e)
+        {
+            showImage.KeepAspectRatio = keepAspectRatio.Checked;
         }
     }
 }

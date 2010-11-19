@@ -16,6 +16,7 @@ namespace Medical
         private String imageFile;
         private Size2 size;
         private Vector2 position;
+        private bool keepAspectRatio = true;
 
         public ShowImageAction()
         {
@@ -35,6 +36,7 @@ namespace Medical
                 }
                 else
                 {
+                    imageDisplay.KeepAspectRatio = keepAspectRatio;
                     imageDisplay.Position = position;
                     imageDisplay.Size = size;
                 }
@@ -66,6 +68,7 @@ namespace Medical
                 imageDisplay = TimelineController.showImage(imageFile);
                 if (imageDisplay != null)
                 {
+                    imageDisplay.KeepAspectRatio = keepAspectRatio;
                     imageDisplay.Position = position;
                     imageDisplay.Size = size;
                 }
@@ -132,11 +135,28 @@ namespace Medical
             }
         }
 
+        public bool KeepAspectRatio
+        {
+            get
+            {
+                return keepAspectRatio;
+            }
+            set
+            {
+                keepAspectRatio = value;
+                if (imageDisplay != null)
+                {
+                    imageDisplay.KeepAspectRatio = keepAspectRatio;
+                }
+            }
+        }
+
         #region Saving
 
         private static String IMAGE_FILE = "ImageFile";
         private static String POSITION = "Position";
         private static String SIZE = "Size";
+        private static String KEEP_ASPECT_RATIO = "KeepAspectRatio";
 
         protected ShowImageAction(LoadInfo info)
             :base(info)
@@ -144,6 +164,7 @@ namespace Medical
             imageFile = info.GetString(IMAGE_FILE, imageFile);
             position = info.GetValue<Vector2>(POSITION);
             size = info.GetValue<Size2>(SIZE);
+            keepAspectRatio = info.GetValue(KEEP_ASPECT_RATIO, keepAspectRatio);
         }
 
         public override void getInfo(SaveInfo info)
@@ -152,6 +173,7 @@ namespace Medical
             info.AddValue(IMAGE_FILE, imageFile);
             info.AddValue(POSITION, position);
             info.AddValue(SIZE, size);
+            info.AddValue(KEEP_ASPECT_RATIO, keepAspectRatio);
         }
 
         #endregion

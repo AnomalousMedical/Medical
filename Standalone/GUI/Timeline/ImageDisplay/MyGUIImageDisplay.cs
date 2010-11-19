@@ -16,6 +16,8 @@ namespace Medical.GUI
         private MyGUIImageDisplayFactory displayFactory;
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
+        private Size bitmapSize;
+        private bool keepAspectRatio = true;
 
         public MyGUIImageDisplay(MyGUIImageDisplayFactory displayFactory)
             :base("Medical.GUI.Timeline.ImageDisplay.MyGUIImageDisplay.layout")
@@ -41,7 +43,8 @@ namespace Medical.GUI
                 {
                     imageAtlas.Dispose();
                 }
-                Size2 imageSize = new Size2(bitmap.Size.Width, bitmap.Size.Height);
+                bitmapSize = bitmap.Size;
+                Size2 imageSize = new Size2(bitmapSize.Width, bitmapSize.Height);
                 imageAtlas = new ImageAtlas("MyGUIImageDisplay_", imageSize, imageSize);
                 String imageKey = imageAtlas.addImage(this, bitmap);
                 imageBox.setItemResource(imageKey);
@@ -56,8 +59,38 @@ namespace Medical.GUI
 
         public void screenResized(int width, int height)
         {
-            widget.setPosition((int)(position.x * Gui.Instance.getViewWidth()), (int)(position.y * Gui.Instance.getViewHeight()));
-            widget.setSize((int)(size.Width * Gui.Instance.getViewWidth()), (int)(size.Height * Gui.Instance.getViewHeight()));
+            adjustPosition(width, height);
+            adjustSize(width, height);
+        }
+
+        private void adjustPosition(int width, int height)
+        {
+            widget.setPosition((int)(position.x * width), (int)(position.y * height));
+        }
+
+        private void adjustSize(int width, int height)
+        {
+            if (keepAspectRatio)
+            {
+                if (height < width)
+                {
+                    int newHeight = (int)(size.Height * height);
+                    float heightRatio = (float)newHeight / bitmapSize.Height;
+                    int newWidth = (int)(heightRatio * bitmapSize.Width);
+                    widget.setSize(newWidth, newHeight);
+                }
+                else
+                {
+                    int newWidth = (int)(size.Width * width);
+                    float widthRatio = (float)newWidth / bitmapSize.Width;
+                    int newHeight = (int)(widthRatio * bitmapSize.Height);
+                    widget.setSize(newWidth, newHeight);
+                }
+            }
+            else
+            {
+                widget.setSize((int)(size.Width * width), (int)(size.Height * height));
+            }
         }
 
         public Vector2 Position
@@ -69,7 +102,7 @@ namespace Medical.GUI
             set
             {
                 position = value;
-                widget.setPosition((int)(value.x * Gui.Instance.getViewWidth()), (int)(value.y * Gui.Instance.getViewHeight()));
+                adjustPosition(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
             }
         }
 
@@ -82,7 +115,23 @@ namespace Medical.GUI
             set
             {
                 size = value;
-                widget.setSize((int)(value.Width * Gui.Instance.getViewWidth()), (int)(value.Height * Gui.Instance.getViewHeight()));
+                adjustSize(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
+            }
+        }
+
+        public bool KeepAspectRatio
+        {
+            get
+            {
+                return keepAspectRatio;
+            }
+            set
+            {
+                if (keepAspectRatio != value)
+                {
+                    keepAspectRatio = value;
+                    adjustSize(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
+                }
             }
         }
     }
