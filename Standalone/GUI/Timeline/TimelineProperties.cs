@@ -189,7 +189,7 @@ namespace Medical.GUI
             timelineView.removeAllData();
             foreach (TimelineAction action in currentTimeline.Actions)
             {
-                timelineView.addData(new TimelineActionData(action));
+                addActionToTimeline(action);
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
@@ -246,8 +246,13 @@ namespace Medical.GUI
 
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
-            TimelineActionData data = new TimelineActionData(e.Action);
-            actionDataBindings.Add(e.Action, data);
+            addActionToTimeline(e.Action);
+        }
+
+        private void addActionToTimeline(TimelineAction action)
+        {
+            TimelineActionData data = new TimelineActionData(action);
+            actionDataBindings.Add(action, data);
             timelineView.addData(data);
         }
 
@@ -450,11 +455,13 @@ namespace Medical.GUI
         void timelineController_PlaybackStopped(object sender, EventArgs e)
         {
             playButton.Caption = "Play";
+            playButton.StaticImage.setItemResource("Timeline/PlayIcon");
         }
 
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
             playButton.Caption = "Stop";
+            playButton.StaticImage.setItemResource("Timeline/StopIcon");
             if (timelineController.ActiveTimeline != currentTimeline)
             {
                 setCurrentTimeline(timelineController.ActiveTimeline);
