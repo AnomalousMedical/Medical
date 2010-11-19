@@ -149,11 +149,13 @@ namespace Medical.GUI
         void movementSequenceController_PlaybackStopped(MovementSequenceController controller)
         {
             playButton.Caption = "Play";
+            playButton.StaticImage.setItemResource("Timeline/PlayIcon");
         }
 
         void movementSequenceController_PlaybackStarted(MovementSequenceController controller)
         {
             playButton.Caption = "Stop";
+            playButton.StaticImage.setItemResource("Timeline/StopIcon");
         }
 
         void movementSequenceController_PlaybackUpdate(MovementSequenceController controller)
