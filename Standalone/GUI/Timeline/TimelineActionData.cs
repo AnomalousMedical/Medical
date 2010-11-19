@@ -20,6 +20,11 @@ namespace Medical.GUI
             action.editing();
         }
 
+        public override void editingCompleted()
+        {
+            action.editingCompleted();
+        }
+
         public TimelineAction Action
         {
             get

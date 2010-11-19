@@ -42,6 +42,11 @@ namespace Medical
 
         public abstract void editing();
 
+        public virtual void editingCompleted()
+        {
+            
+        }
+
         public virtual float StartTime { get; set; }
 
         public virtual float Duration { get; set; }

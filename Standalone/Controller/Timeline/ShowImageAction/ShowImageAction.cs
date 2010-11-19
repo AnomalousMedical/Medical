@@ -52,7 +52,18 @@ namespace Medical
 
         public override void editing()
         {
-            
+            if (imageFile != null)
+            {
+                imageDisplay = TimelineController.showImage(imageFile);
+            }
+        }
+
+        public override void editingCompleted()
+        {
+            if (imageDisplay != null)
+            {
+                imageDisplay.Dispose();
+            }
         }
 
         public override bool Finished

@@ -457,6 +457,7 @@ namespace Medical.GUI
 
         void timelineController_PlaybackStarted(object sender, EventArgs e)
         {
+            timelineView.CurrentData = null;
             playButton.Caption = "Stop";
             playButton.StaticImage.setItemResource("Timeline/StopIcon");
             if (timelineController.ActiveTimeline != currentTimeline)
