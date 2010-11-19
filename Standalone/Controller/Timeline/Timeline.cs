@@ -175,6 +175,13 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The file this timeline loaded out of. Will be set by the
+        /// TimelineController if it is loaded that way, otherwise this can be
+        /// set manually. It is not used by the timeline in any way, it is just a reference.
+        /// </summary>
+        public String SourceFile { get; set; }
+
         public TimelineController TimelineController { get; internal set; }
 
         public IEnumerable<TimelineAction> Actions

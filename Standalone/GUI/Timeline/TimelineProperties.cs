@@ -173,11 +173,8 @@ namespace Medical.GUI
 
         public void setCurrentTimeline(Timeline timeline)
         {
-            setCurrentTimeline(timeline, null);
-        }
+            String filename = timeline.SourceFile;
 
-        public void setCurrentTimeline(Timeline timeline, String filename)
-        {
             timelineController.EditingTimeline = timeline;
             if (currentTimeline != null)
             {
@@ -387,7 +384,7 @@ namespace Medical.GUI
 
         void openTimelineDialog_OpenFile(String filename)
         {
-            setCurrentTimeline(timelineController.openTimeline(filename), filename);
+            setCurrentTimeline(timelineController.openTimeline(filename));
         }
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)

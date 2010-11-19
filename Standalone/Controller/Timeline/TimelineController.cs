@@ -61,7 +61,9 @@ namespace Medical
         {
             using (XmlTextReader file = new XmlTextReader(resourceFile.openFile(filename)))
             {
-                return xmlSaver.restoreObject(file) as Timeline;
+                Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
+                timeline.SourceFile = filename;
+                return timeline;
             }
         }
 
@@ -222,6 +224,7 @@ namespace Medical
                             }
                         }
                     }
+                    timeline.SourceFile = filename;
                 }
                 catch (Exception e)
                 {
