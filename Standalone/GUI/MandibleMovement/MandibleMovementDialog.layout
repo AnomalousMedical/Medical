@@ -25,11 +25,12 @@
         </Widget>
         <Widget type="Button" skin="RibbonButton" position="5 187 83 64" name="Movement/Reset">
             <Property key="Widget_Caption" value="Reset"/>
-            <Property key="Button_ImageResource" value="Movement/ManipResetLarge"/>
+            <Property key="Button_ImageResource" value="Movement/Reset"/>
         </Widget>
         <Widget type="Button" skin="RibbonButton" position="91 187 83 64" name="Movement/Restore">
             <Property key="Widget_Caption" value="Restore"/>
-            <Property key="Button_ImageResource" value="Movement/ManipResetDisable"/>
+            <Property key="Button_ImageResource" value="Movement/Restore"/>
+            <Property key="Button_ModeImage" value="true"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="37 126 106 16" name="Movement/HingeSlider">
             <Property key="Scroll_Range" value="1000"/>

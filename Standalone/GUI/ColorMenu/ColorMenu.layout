@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelNoTranspo" position="132 162 179 164" layer="Overlapped">
+    <Widget type="Widget" skin="CustomPanelNoTranspo" position="132 162 181 166" layer="Overlapped">
         <Widget type="StaticText" skin="StaticText" position="4 4 45 15">
             <Property key="Widget_Caption" value="Colors"/>
         </Widget>
-        <Widget type="Widget" skin="Separator3" position="1 16 178 1"/>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="1 18 177 120" name="ColorGrid">
+        <Widget type="Widget" skin="Separator3" position="1 16 180 1"/>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="4 20 177 120" name="ColorGrid">
             <Property key="ScrollView_CanvasSize" value="177 120"/>
             <Property key="ScrollView_VisibleVScroll" value="false"/>
             <Property key="ScrollView_VisibleHScroll" value="false"/>
@@ -17,7 +17,7 @@
             <UserString key="ItemPaddingY" value="2"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 141 88 20" align="Left Bottom" name="MoreColorsButton">
+        <Widget type="Button" skin="Button" position="4 143 88 20" align="Left Bottom" name="MoreColorsButton">
             <Property key="Widget_Caption" value="More Colors"/>
             <Property key="Text_TextAlign" value="HCenter VCenter"/>
         </Widget>
