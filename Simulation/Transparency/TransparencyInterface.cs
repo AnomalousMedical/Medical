@@ -75,6 +75,17 @@ namespace Medical
             transparencyStates[activeTransparencyState].smoothBlend(targetOpacity, changeMultiplier);
         }
 
+        public void timedBlend(float targetOpacity, float time)
+        {
+            float currentAlpha = transparencyStates[activeTransparencyState].WorkingAlpha;
+            float delta = Math.Abs(targetOpacity - currentAlpha);
+            if (delta != 0.0f)
+            {
+                float changeMultiplier = delta / time;
+                smoothBlend(targetOpacity, changeMultiplier);
+            }
+        }
+
         internal void addSubInterface(TransparencySubInterface subInterface)
         {
             if (subInterfaces == null)

@@ -59,6 +59,14 @@ namespace Medical
             }
         }
 
+        internal void timedApply(float time)
+        {
+            foreach (LayerEntry entry in entries)
+            {
+                entry.timedApply(time);
+            }
+        }
+
         internal void instantlyApply()
         {
             foreach (LayerEntry entry in entries)
