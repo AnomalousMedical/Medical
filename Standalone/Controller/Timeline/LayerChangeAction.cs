@@ -60,7 +60,7 @@ namespace Medical
         {
             String currentTransparencyState = TransparencyController.ActiveTransparencyState;
             TransparencyController.ActiveTransparencyState = TransparencyState;
-            LayerState.apply(1.0f);
+            LayerState.apply(3.0f);
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 
