@@ -10,6 +10,8 @@ namespace Medical
     [TimelineActionProperties("Change Medical State", 128 / 255f, 0 / 255f, 255 / 255f, GUIType=typeof(Medical.GUI.ChangeMedicalStateProperties))]
     class ChangeMedicalStateAction : TimelineAction
     {
+        private bool finished = false;
+
         public ChangeMedicalStateAction()
             :this(null, 0.0f)
         {
@@ -26,16 +28,17 @@ namespace Medical
         public override void started(float timelineTime, Clock clock)
         {
             TimelineController.MedicalStateController.directBlend(State, Duration);
+            finished = false;
         }
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            
+
         }
 
         public override void update(float timelineTime, Clock clock)
         {
-            
+            finished = timelineTime > StartTime + Duration;
         }
 
         public override void capture()
@@ -50,7 +53,7 @@ namespace Medical
 
         public override bool Finished
         {
-            get { return true; }
+            get { return finished; }
         }
 
         public MedicalState State { get; set; }
