@@ -401,6 +401,8 @@ namespace Medical
 
         public ContinuePromptProvider ContinuePrompt { get; set; }
 
+        public IQuestionProvider QuestionProvider { get; set; }
+
         /// <summary>
         /// The current directory to read external resources out of.
         /// </summary>

@@ -42,7 +42,8 @@ namespace Medical.GUI
         private AdvancedLayerControl advancedLayerControl;
 
         //Other GUI Elements
-        MyGUIContinuePromptProvider continuePrompt;
+        private MyGUIContinuePromptProvider continuePrompt;
+        private MyGUIQuestionProvider questionProvider;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -143,6 +144,9 @@ namespace Medical.GUI
 
             continuePrompt = new MyGUIContinuePromptProvider();
             standaloneController.TimelineController.ContinuePrompt = continuePrompt;
+
+            questionProvider = new MyGUIQuestionProvider();
+            standaloneController.TimelineController.QuestionProvider = questionProvider;
         }
 
         public void Dispose()
@@ -157,6 +161,7 @@ namespace Medical.GUI
             stateWizardPanelController.Dispose();
 
             //Other
+            questionProvider.Dispose();
             continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;

@@ -124,7 +124,12 @@ namespace Medical.GUI
             }
             else if (actionGroup.SelectedButton == askQuestionButton)
             {
-                
+                ShowPromptAction showPrompt = new ShowPromptAction();
+                PromptQuestion question = new PromptQuestion("Does this test question work?");
+                question.addAnswer(new PromptAnswer("Yes"));
+                question.addAnswer(new PromptAnswer("No"));
+                showPrompt.addQuestion(question);
+                currentTimeline.addPostAction(showPrompt);
             }
         }
 

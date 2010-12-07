@@ -109,6 +109,12 @@
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\IQuestionProvider.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\PromptAnswer.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\PromptAnswerAction.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\PromptLoadTimelineAction.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\PromptQuestion.cs" />
+    <Compile Include="Controller\Timeline\QuestionPrompt\ShowPromptAction.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
@@ -237,6 +243,7 @@
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
     <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
+    <Compile Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.cs" />
     <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineActionData.cs" />
@@ -357,6 +364,7 @@
     <EmbeddedResource Include="GUI\Timeline\FinishActionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\NewProjectDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
