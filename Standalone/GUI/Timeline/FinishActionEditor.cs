@@ -16,6 +16,8 @@ namespace Medical.GUI
         private Button askQuestionButton;
 
         private FinishLoadTimelineEditor loadTimelineEditor;
+        private QuestionEditor questionEditor;
+        private Button questionEditorButton;
 
         private Timeline currentTimeline;
 
@@ -37,6 +39,11 @@ namespace Medical.GUI
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
+            questionEditor = new QuestionEditor();
+
+            questionEditorButton = window.findWidget("QuestionEditorButton") as Button;
+            questionEditorButton.MouseButtonClick += new MyGUIEvent(questionEditorButton_MouseButtonClick);
+            questionEditorButton.Enabled = false;
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -127,15 +134,23 @@ namespace Medical.GUI
             if (actionGroup.SelectedButton == doNothingButton)
             {
                 loadTimelineEditor.Enabled = false;
+                questionEditorButton.Enabled = false;
             }
             else if (actionGroup.SelectedButton == loadTimelineButton)
             {
                 loadTimelineEditor.Enabled = true;
+                questionEditorButton.Enabled = false;
             }
             else if (actionGroup.SelectedButton == askQuestionButton)
             {
                 loadTimelineEditor.Enabled = false;
+                questionEditorButton.Enabled = true;
             }
+        }
+
+        void questionEditorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            questionEditor.open(true);
         }
     }
 }

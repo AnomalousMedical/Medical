@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="163 167 511 345" layer="Back">
+        <Property key="Widget_Caption" value="Question Editor"/>
+        <Widget type="StaticText" skin="StaticText" position="4 6 56 14">
+            <Property key="Widget_Caption" value="Question"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="5 22 502 67" align="HStretch Top">
+            <Widget type="Edit" skin="WordWrap" position_real="0 0 1 1" align="Stretch" name="QuestionText"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="4 91 52 14">
+            <Property key="Widget_Caption" value="Answers"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="4 302 52 21" align="Left Bottom" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="58 302 52 21" align="Left Bottom" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="4 275 92 21" align="Left Bottom" name="AddAnswerButton">
+            <Property key="Widget_Caption" value="Add Answer"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="4 121 504 151" align="Stretch" name="AnswerScroll">
+            <Property key="ScrollView_CanvasSize" value="0 0"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="39 106 34 14">
+            <Property key="Widget_Caption" value="Text"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="324 106 57 13" align="Right Top">
+            <Property key="Widget_Caption" value="Timeline"/>
+        </Widget>
+    </Widget>
+</MyGUI>
