@@ -239,6 +239,7 @@
     <Compile Include="GUI\Timeline\ActionProperties\ShowImageProperties.cs" />
     <Compile Include="GUI\Timeline\ChangeSceneEditor.cs" />
     <Compile Include="GUI\Timeline\FinishActionEditor.cs" />
+    <Compile Include="GUI\Timeline\FinishLoadTimelineEditor.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />

@@ -15,12 +15,11 @@ namespace Medical.GUI
         private Button loadTimelineButton;
         private Button askQuestionButton;
 
-        private Edit fileText;
-        private CheckButton continueCheck;
-        private Button chooseButton;
+        private FinishLoadTimelineEditor loadTimelineEditor;
 
         private Timeline currentTimeline;
         private LoadAnotherTimeline loadAnotherTimelineAction;
+        private ShowPromptAction showPromptAction;
 
         private TimelineController timelineController;
         private TimelineFileBrowserDialog fileBrowser;
@@ -39,11 +38,7 @@ namespace Medical.GUI
             actionGroup.addButton(askQuestionButton);
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
-            fileText = window.findWidget("FileText") as Edit;
-            continueCheck = new CheckButton(window.findWidget("ContinueCheck") as Button);
-            chooseButton = window.findWidget("ChooseButton") as Button;
-            chooseButton.MouseButtonClick += new MyGUIEvent(chooseButton_MouseButtonClick);
-            setLoadTimelinePropertiesEnabled(false);
+            loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -67,6 +62,7 @@ namespace Medical.GUI
         {
             base.onShown(args);
             loadAnotherTimelineAction = null;
+            showPromptAction = null;
             foreach (TimelineInstantAction action in currentTimeline.PostActions)
             {
                 if (action is LoadAnotherTimeline)
@@ -74,13 +70,20 @@ namespace Medical.GUI
                     loadAnotherTimelineAction = action as LoadAnotherTimeline;
                     break;
                 }
+                if (action is ShowPromptAction)
+                {
+                    showPromptAction = action as ShowPromptAction;
+                }
             }
 
             if (loadAnotherTimelineAction != null)
             {
                 actionGroup.SelectedButton = loadTimelineButton;
-                fileText.Caption = loadAnotherTimelineAction.TargetTimeline;
-                continueCheck.Checked = loadAnotherTimelineAction.ShowContinuePrompt;
+                loadTimelineEditor.setProperties(loadAnotherTimelineAction);
+            }
+            else if (showPromptAction != null)
+            {
+                actionGroup.SelectedButton = askQuestionButton;
             }
             else
             {
@@ -97,24 +100,25 @@ namespace Medical.GUI
         {
             if (actionGroup.SelectedButton == doNothingButton)
             {
-                if (loadAnotherTimelineAction != null)
-                {
-                    currentTimeline.removePostAction(loadAnotherTimelineAction);
-                    loadAnotherTimelineAction = null;
-                }
+                currentTimeline.clearPostActions();
+                showPromptAction = null;
+                loadAnotherTimelineAction = null;
                 this.close();
             }
             else if (actionGroup.SelectedButton == loadTimelineButton)
             {
-                if (timelineController.listResourceFiles(fileText.Caption).Length > 0)
+                String timelineFileName = loadTimelineEditor.File;
+                if (timelineController.listResourceFiles(timelineFileName).Length > 0)
                 {
+                    currentTimeline.clearPostActions();
+
                     if (loadAnotherTimelineAction == null)
                     {
                         loadAnotherTimelineAction = new LoadAnotherTimeline();
-                        currentTimeline.addPostAction(loadAnotherTimelineAction);
                     }
-                    loadAnotherTimelineAction.TargetTimeline = fileText.Caption;
-                    loadAnotherTimelineAction.ShowContinuePrompt = continueCheck.Checked;
+                    loadAnotherTimelineAction.TargetTimeline = timelineFileName;
+                    loadAnotherTimelineAction.ShowContinuePrompt = loadTimelineEditor.ShowContinuePrompt;
+                    currentTimeline.addPostAction(loadAnotherTimelineAction);
                     this.close();
                 }
                 else
@@ -126,6 +130,7 @@ namespace Medical.GUI
             {
                 currentTimeline.clearPostActions();
 
+                //Temp create prompt
                 ShowPromptAction showPrompt = new ShowPromptAction();
                 PromptQuestion question = new PromptQuestion("Does this test question work?");
                 PromptAnswer yes = new PromptAnswer("Yes");
@@ -143,35 +148,16 @@ namespace Medical.GUI
         {
             if (actionGroup.SelectedButton == doNothingButton)
             {
-                setLoadTimelinePropertiesEnabled(false);
+                loadTimelineEditor.Enabled = false;
             }
             else if (actionGroup.SelectedButton == loadTimelineButton)
             {
-                setLoadTimelinePropertiesEnabled(true);
+                loadTimelineEditor.Enabled = true;
             }
             else if (actionGroup.SelectedButton == askQuestionButton)
             {
-                setLoadTimelinePropertiesEnabled(false);
+                loadTimelineEditor.Enabled = false;
             }
-        }
-
-        private void setLoadTimelinePropertiesEnabled(bool enabled)
-        {
-            fileText.Enabled = enabled;
-            continueCheck.Enabled = enabled;
-            chooseButton.Enabled = enabled;
-        }
-
-        void chooseButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            fileBrowser.ensureVisible();
-            fileBrowser.promptForFile("*.tl", fileChosen);
-        }
-
-        void fileChosen(String filename)
-        {
-            fileText.Caption = filename;
         }
     }
 }
