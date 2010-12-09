@@ -7,32 +7,14 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PromptTextArea
+    abstract class PromptTextArea : IDisposable
     {
-        private const int EXTRA_HEIGHT = 5;
+        protected const int EXTRA_HEIGHT = 5;
 
-        private ScrollView parent;
-        private String text;
-        private Edit questionEdit;
+        public abstract void Dispose();
 
-        public PromptTextArea(String text, ScrollView parent, int questionWidth)
-        {
-            this.parent = parent;
-            this.text = text;
+        public abstract int Top { get; set; }
 
-            questionEdit = parent.createWidgetT("Edit", "WordWrapSimple", 0, 0, questionWidth, 0, Align.Stretch, "") as Edit;
-            questionEdit.Caption = text;
-            questionEdit.EditReadOnly = true;
-            Size2 textSize = questionEdit.getTextSize();
-            questionEdit.setSize(questionWidth, (int)textSize.Height + EXTRA_HEIGHT);
-        }
-
-        public int Bottom
-        {
-            get
-            {
-                return questionEdit.Top + questionEdit.Height;
-            }
-        }
+        public abstract int Bottom { get; }
     }
 }

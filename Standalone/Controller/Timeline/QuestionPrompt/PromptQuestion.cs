@@ -32,6 +32,14 @@ namespace Medical
 
         public String Text { get; set; }
 
+        public IEnumerable<PromptAnswer> Answers
+        {
+            get
+            {
+                return answers;
+            }
+        }
+
         #region Saveable Members
 
         private const String TEXT = "Text";

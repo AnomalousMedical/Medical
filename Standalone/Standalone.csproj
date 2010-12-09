@@ -244,6 +244,8 @@
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
     <Compile Include="GUI\Timeline\NewProjectDialog.cs" />
     <Compile Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.cs" />
+    <Compile Include="GUI\Timeline\QuestionProvider\PromptAnswerTextArea.cs" />
+    <Compile Include="GUI\Timeline\QuestionProvider\PromptQuestionTextArea.cs" />
     <Compile Include="GUI\Timeline\QuestionProvider\PromptTextArea.cs" />
     <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\SaveTimelineDialog.cs" />
