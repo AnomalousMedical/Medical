@@ -30,6 +30,14 @@ namespace Medical.GUI
             continueCheck.Checked = loadAnotherTimelineAction.ShowContinuePrompt;
         }
 
+        public TimelineInstantAction createAction()
+        {
+            LoadAnotherTimeline loadAnotherTimelineAction = new LoadAnotherTimeline();
+            loadAnotherTimelineAction.TargetTimeline = File;
+            loadAnotherTimelineAction.ShowContinuePrompt = ShowContinuePrompt;
+            return loadAnotherTimelineAction;
+        }
+
         public bool Enabled
         {
             get

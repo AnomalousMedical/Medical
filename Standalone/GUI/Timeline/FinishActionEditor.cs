@@ -18,8 +18,6 @@ namespace Medical.GUI
         private FinishLoadTimelineEditor loadTimelineEditor;
 
         private Timeline currentTimeline;
-        private LoadAnotherTimeline loadAnotherTimelineAction;
-        private ShowPromptAction showPromptAction;
 
         private TimelineController timelineController;
         private TimelineFileBrowserDialog fileBrowser;
@@ -61,33 +59,22 @@ namespace Medical.GUI
         protected override void onShown(EventArgs args)
         {
             base.onShown(args);
-            loadAnotherTimelineAction = null;
-            showPromptAction = null;
+
+            actionGroup.SelectedButton = doNothingButton;
+
             foreach (TimelineInstantAction action in currentTimeline.PostActions)
             {
                 if (action is LoadAnotherTimeline)
                 {
-                    loadAnotherTimelineAction = action as LoadAnotherTimeline;
+                    loadTimelineEditor.setProperties(action as LoadAnotherTimeline);
+                    actionGroup.SelectedButton = loadTimelineButton;
                     break;
                 }
                 if (action is ShowPromptAction)
                 {
-                    showPromptAction = action as ShowPromptAction;
+                    actionGroup.SelectedButton = askQuestionButton;
+                    break;
                 }
-            }
-
-            if (loadAnotherTimelineAction != null)
-            {
-                actionGroup.SelectedButton = loadTimelineButton;
-                loadTimelineEditor.setProperties(loadAnotherTimelineAction);
-            }
-            else if (showPromptAction != null)
-            {
-                actionGroup.SelectedButton = askQuestionButton;
-            }
-            else
-            {
-                actionGroup.SelectedButton = doNothingButton;
             }
         }
 
@@ -101,8 +88,6 @@ namespace Medical.GUI
             if (actionGroup.SelectedButton == doNothingButton)
             {
                 currentTimeline.clearPostActions();
-                showPromptAction = null;
-                loadAnotherTimelineAction = null;
                 this.close();
             }
             else if (actionGroup.SelectedButton == loadTimelineButton)
@@ -111,14 +96,7 @@ namespace Medical.GUI
                 if (timelineController.listResourceFiles(timelineFileName).Length > 0)
                 {
                     currentTimeline.clearPostActions();
-
-                    if (loadAnotherTimelineAction == null)
-                    {
-                        loadAnotherTimelineAction = new LoadAnotherTimeline();
-                    }
-                    loadAnotherTimelineAction.TargetTimeline = timelineFileName;
-                    loadAnotherTimelineAction.ShowContinuePrompt = loadTimelineEditor.ShowContinuePrompt;
-                    currentTimeline.addPostAction(loadAnotherTimelineAction);
+                    currentTimeline.addPostAction(loadTimelineEditor.createAction());
                     this.close();
                 }
                 else
