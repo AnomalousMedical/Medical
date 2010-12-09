@@ -79,6 +79,12 @@ namespace Medical.GUI
                 }
                 if (action is ShowPromptAction)
                 {
+                    ShowPromptAction showPromptAction = action as ShowPromptAction;
+                    foreach(PromptQuestion question in showPromptAction.Questions)
+                    {
+                        questionEditor.setData(question);
+                        break;
+                    }
                     actionGroup.SelectedButton = askQuestionButton;
                     break;
                 }
@@ -115,18 +121,13 @@ namespace Medical.GUI
             {
                 currentTimeline.clearPostActions();
 
-                //Temp create prompt
                 ShowPromptAction showPrompt = new ShowPromptAction();
-                PromptQuestion question = new PromptQuestion("Does this test question work?");
-                PromptAnswer yes = new PromptAnswer("Yes");
-                yes.Action = new PromptLoadTimelineAction("yes.tl");
-                question.addAnswer(yes);
-                PromptAnswer no = new PromptAnswer("No");
-                no.Action = new PromptLoadTimelineAction("no.tl");
-                question.addAnswer(no);
+                PromptQuestion question = questionEditor.createQuestion();
                 showPrompt.addQuestion(question);
                 currentTimeline.addPostAction(showPrompt);
             }
+
+            questionEditor.clear();
         }
 
         void actionGroup_SelectedButtonChanged(object sender, EventArgs e)

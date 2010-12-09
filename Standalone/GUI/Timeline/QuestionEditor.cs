@@ -34,14 +34,51 @@ namespace Medical.GUI
             lastWidth = window.Width;
         }
 
+        public void setData(PromptQuestion question)
+        {
+            questionText.Caption = question.Text;
+
+            foreach (PromptAnswer answer in question.Answers)
+            {
+                String timeline = "";
+                PromptLoadTimelineAction loadTimeline = answer.Action as PromptLoadTimelineAction;
+                if (loadTimeline != null)
+                {
+                    timeline = loadTimeline.TargetTimeline;
+                }
+                addRow(answer.Text, timeline);
+            }
+        }
+
+        public void clear()
+        {
+            questionText.Caption = "";
+            foreach (QuestionEditorAnswerRow row in rows)
+            {
+                row.Dispose();
+            }
+            rows.Clear();
+        }
+
+        public PromptQuestion createQuestion()
+        {
+            PromptQuestion question = new PromptQuestion(questionText.Caption);
+            foreach (QuestionEditorAnswerRow row in rows)
+            {
+                PromptAnswer answer = new PromptAnswer(row.AnswerText);
+                String timeline = row.Timeline;
+                if (timeline != null && timeline != "")
+                {
+                    answer.Action = new PromptLoadTimelineAction(timeline);
+                }
+                question.addAnswer(answer);
+            }
+            return question;
+        }
+
         void addAnswerButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
-
-            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos);
-            rows.Add(row);
-
-            answerScroll.CanvasSize = new Size2(row.Width, row.Bottom);
+            addRow("", "");
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
@@ -64,15 +101,52 @@ namespace Medical.GUI
                 {
                     row.Width = scrollWidth;
                 }
-                QuestionEditorAnswerRow lastRow = rows.Count > 0 ? rows[rows.Count - 1] : null;
-                if (lastRow != null)
-                {
-                    answerScroll.CanvasSize = new Size2(lastRow.Width, lastRow.Bottom);
-                }
-                else
-                {
-                    answerScroll.CanvasSize = new Size2(0, 0);
-                }
+                adjustCanvasForRows();
+            }
+        }
+
+        private void addRow(String answerText, String timeline)
+        {
+            int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
+
+            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos);
+            row.RemoveRow += new EventHandler(row_RemoveRow);
+            row.AnswerText = answerText;
+            row.Timeline = timeline;
+            rows.Add(row);
+
+            answerScroll.CanvasSize = new Size2(row.Width, row.Bottom);
+        }
+
+        void row_RemoveRow(object sender, EventArgs e)
+        {
+            QuestionEditorAnswerRow row = sender as QuestionEditorAnswerRow;
+            rows.Remove(row);
+            row.Dispose();
+            closeRowGaps();
+        }
+
+        private void closeRowGaps()
+        {
+            int yPos = 0;
+            foreach (QuestionEditorAnswerRow moveRow in rows)
+            {
+                moveRow.Top = yPos;
+                yPos = moveRow.Bottom;
+            }
+            adjustCanvasForRows();
+        }
+
+        private void adjustCanvasForRows()
+        {
+            QuestionEditorAnswerRow lastRow = rows.Count > 0 ? rows[rows.Count - 1] : null;
+            if (lastRow != null)
+            {
+                answerScroll.CanvasSize = new Size2(lastRow.Width, lastRow.Bottom);
+            }
+            else
+            {
+                answerScroll.CanvasSize = new Size2(0, 0);
             }
         }
     }

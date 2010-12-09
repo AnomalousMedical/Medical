@@ -37,6 +37,14 @@ namespace Medical
             questions.Remove(question);
         }
 
+        public IEnumerable<PromptQuestion> Questions
+        {
+            get
+            {
+                return questions;
+            }
+        }
+
         private void answerSelected(PromptAnswer answer)
         {
             if (answer.Action != null)
