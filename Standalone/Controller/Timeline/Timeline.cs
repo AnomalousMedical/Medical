@@ -62,6 +62,15 @@ namespace Medical
             preActions.Remove(action);
         }
 
+        public void clearPreActions()
+        {
+            foreach (TimelineInstantAction action in preActions)
+            {
+                action._setTimeline(null);
+            }
+            preActions.Clear();
+        }
+
         public void addAction(TimelineAction action)
         {
             action._setTimeline(this);
@@ -93,6 +102,15 @@ namespace Medical
         {
             action._setTimeline(null);
             postActions.Remove(action);
+        }
+
+        public void clearPostActions()
+        {
+            foreach (TimelineInstantAction action in postActions)
+            {
+                action._setTimeline(null);
+            }
+            postActions.Clear();
         }
 
         public void start(bool playPreActions)

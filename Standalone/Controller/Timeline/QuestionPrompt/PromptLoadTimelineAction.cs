@@ -14,11 +14,16 @@ namespace Medical
 
         }
 
+        public PromptLoadTimelineAction(String timeline)
+        {
+            TargetTimeline = timeline;
+        }
+
         public void execute(TimelineController timelineController)
         {
             if (TargetTimeline != null)
             {
-                timelineController.queueTimeline(timelineController.openTimeline(TargetTimeline));
+                timelineController.startPlayback(timelineController.openTimeline(TargetTimeline));
             }
             else
             {
