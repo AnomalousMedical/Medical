@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -38,7 +39,14 @@ namespace Medical
 
         private void answerSelected(PromptAnswer answer)
         {
-            answer.Action.execute(TimelineController);
+            if (answer.Action != null)
+            {
+                answer.Action.execute(TimelineController);
+            }
+            else
+            {
+                Log.Warning("Answer {0} does not have an action. Nothing will be done", answer.Text);
+            }
         }
 
         #region Saving

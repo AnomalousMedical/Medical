@@ -12,17 +12,19 @@ namespace Medical.GUI
         private ScrollView parent;
         private Button answerButton;
         private MyGUIQuestionProvider questionProvider;
+        private PromptAnswer answer;
 
-        public PromptAnswerTextArea(MyGUIQuestionProvider questionProvider, String text, ScrollView parent, int left, int right, int top)
+        public PromptAnswerTextArea(MyGUIQuestionProvider questionProvider, PromptAnswer answer, ScrollView parent, int left, int right, int top)
         {
             this.questionProvider = questionProvider;
             this.parent = parent;
+            this.answer = answer;
 
             int textAreaWidth = right - left;
 
             answerButton = parent.createWidgetT("Button", "PromptAnswerTextArea", left, top, textAreaWidth, 0, Align.Stretch, "") as Button;
             answerButton.SubWidgetText.setWordWrap(true);
-            answerButton.Caption = text;
+            answerButton.Caption = answer.Text;
             Size2 textSize = answerButton.getTextSize();
             answerButton.setSize(textAreaWidth, (int)textSize.Height + EXTRA_HEIGHT);
 
@@ -56,7 +58,7 @@ namespace Medical.GUI
 
         void answerButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            questionProvider.questionSelected(this);
+            questionProvider.answerSelected(answer);
         }
     }
 }

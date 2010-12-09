@@ -11,6 +11,7 @@ namespace Medical.GUI
     {
         private ScrollView questionScroll;
         private List<PromptTextArea> textAreas = new List<PromptTextArea>();
+        private PromptAnswerSelected answerSelectedCallback;
 
         public MyGUIQuestionProvider()
             :base("Medical.GUI.Timeline.QuestionProvider.MyGUIQuestionProvider.layout")
@@ -28,7 +29,7 @@ namespace Medical.GUI
             PromptTextArea answerTextArea = null;
             foreach (PromptAnswer answer in question.Answers)
             {
-                answerTextArea = new PromptAnswerTextArea(this, answer.Text, questionScroll, 25, window.Width, verticalPosition);
+                answerTextArea = new PromptAnswerTextArea(this, answer, questionScroll, 25, window.Width, verticalPosition);
                 textAreas.Add(answerTextArea);
                 verticalPosition = answerTextArea.Bottom;
             }
@@ -39,6 +40,7 @@ namespace Medical.GUI
 
         public void showPrompt(PromptAnswerSelected answerSelectedCallback)
         {
+            this.answerSelectedCallback = answerSelectedCallback;
             this.open(true);
         }
 
@@ -51,9 +53,11 @@ namespace Medical.GUI
             textAreas.Clear();
         }
 
-        internal void questionSelected(PromptAnswerTextArea answerText)
+        internal void answerSelected(PromptAnswer answer)
         {
-            Logging.Log.Debug("Answer selected");
+            answerSelectedCallback(answer);
+            this.close();
+            answerSelectedCallback = null;
         }
     }
 }
