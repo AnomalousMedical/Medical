@@ -14,13 +14,15 @@ namespace Medical.GUI
         private int lastWidth;
         private TimelineFileBrowserDialog fileBrowser;
         private PromptQuestion currentSourceQuestion = null;
+        private TimelineController timelineController;
 
         private List<QuestionEditorAnswerRow> rows = new List<QuestionEditorAnswerRow>();
 
-        public QuestionEditor(TimelineFileBrowserDialog fileBrowser)
+        public QuestionEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
             :base("Medical.GUI.Timeline.QuestionEditor.layout")
         {
             this.fileBrowser = fileBrowser;
+            this.timelineController = timelineController;
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -83,16 +85,52 @@ namespace Medical.GUI
 
         private PromptQuestion createQuestion()
         {
-            PromptQuestion question = new PromptQuestion(questionText.Caption);
-            foreach (QuestionEditorAnswerRow row in rows)
+            PromptQuestion question = null;
+            if (questionText.Caption == null || questionText.Caption == "")
             {
-                PromptAnswer answer = new PromptAnswer(row.AnswerText);
-                String timeline = row.Timeline;
-                if (timeline != null && timeline != "")
+                MessageBox.show("You must enter some text for the question.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
+            else
+            {
+                if (rows.Count > 0)
                 {
-                    answer.Action = new PromptLoadTimelineAction(timeline);
+                    question = new PromptQuestion(questionText.Caption);
+                    int i = 0;
+                    foreach (QuestionEditorAnswerRow row in rows)
+                    {
+                        if (row.AnswerText != null && row.AnswerText != "")
+                        {
+                            PromptAnswer answer = new PromptAnswer(row.AnswerText);
+                            String timeline = row.Timeline;
+                            if (timeline != null && timeline != "")
+                            {
+                                if (timelineController.listResourceFiles(timeline).Length > 0)
+                                {
+                                    answer.Action = new PromptLoadTimelineAction(timeline);
+                                }
+                                else
+                                {
+                                    MessageBox.show(String.Format("Answer number {0} points to a timeline that does not exist. Please correct it or leave it blank to specify that you do not wish to load another timeline.", i), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                                    question = null;
+                                    break;
+                                }
+                            }
+                            question.addAnswer(answer);
+                        }
+                        else
+                        {
+                            MessageBox.show(String.Format("Answer number {0} does not have any text. Please add some.", i), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                            question = null;
+                            break;
+                        }
+                        ++i;
+                    }
                 }
-                question.addAnswer(answer);
+                else
+                {
+                    MessageBox.show("Cannot create a question with no answers. Please add some.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                    question = null;
+                }
             }
             return question;
         }
@@ -104,8 +142,12 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            currentSourceQuestion = createQuestion();
-            this.close();
+            PromptQuestion newQuestion = createQuestion();
+            if (newQuestion != null)
+            {
+                currentSourceQuestion = newQuestion;
+                this.close();
+            }
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
