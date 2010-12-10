@@ -108,12 +108,15 @@ namespace Medical.GUI
         private void addRow(String answerText, String timeline)
         {
             int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
+            bool wasVisible = this.Visible;
 
+            this.Visible = true;
             QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos);
             row.RemoveRow += new EventHandler(row_RemoveRow);
             row.AnswerText = answerText;
             row.Timeline = timeline;
             rows.Add(row);
+            this.Visible = wasVisible;
 
             answerScroll.CanvasSize = new Size2(row.Width, row.Bottom);
         }
