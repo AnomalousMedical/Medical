@@ -147,6 +147,7 @@ namespace Medical.GUI
 
             questionProvider = new MyGUIQuestionProvider();
             standaloneController.TimelineController.QuestionProvider = questionProvider;
+            innerBorderLayout.Bottom = questionProvider.LayoutContainer;
         }
 
         public void Dispose()
