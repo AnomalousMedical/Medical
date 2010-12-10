@@ -82,7 +82,7 @@ namespace Medical.GUI
                     ShowPromptAction showPromptAction = action as ShowPromptAction;
                     foreach(PromptQuestion question in showPromptAction.Questions)
                     {
-                        questionEditor.setData(question);
+                        questionEditor.Question = question;
                         break;
                     }
                     actionGroup.SelectedButton = askQuestionButton;
@@ -122,9 +122,10 @@ namespace Medical.GUI
                 currentTimeline.clearPostActions();
 
                 ShowPromptAction showPrompt = new ShowPromptAction();
-                PromptQuestion question = questionEditor.createQuestion();
+                PromptQuestion question = questionEditor.Question;
                 showPrompt.addQuestion(question);
                 currentTimeline.addPostAction(showPrompt);
+                this.close();
             }
 
             questionEditor.clear();

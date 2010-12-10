@@ -13,6 +13,7 @@ namespace Medical.GUI
         private ScrollView answerScroll;
         private int lastWidth;
         private TimelineFileBrowserDialog fileBrowser;
+        private PromptQuestion currentSourceQuestion = null;
 
         private List<QuestionEditorAnswerRow> rows = new List<QuestionEditorAnswerRow>();
 
@@ -37,24 +38,9 @@ namespace Medical.GUI
             lastWidth = window.Width;
         }
 
-        public void setData(PromptQuestion question)
-        {
-            questionText.Caption = question.Text;
-
-            foreach (PromptAnswer answer in question.Answers)
-            {
-                String timeline = "";
-                PromptLoadTimelineAction loadTimeline = answer.Action as PromptLoadTimelineAction;
-                if (loadTimeline != null)
-                {
-                    timeline = loadTimeline.TargetTimeline;
-                }
-                addRow(answer.Text, timeline);
-            }
-        }
-
         public void clear()
         {
+            currentSourceQuestion = null;
             questionText.Caption = "";
             foreach (QuestionEditorAnswerRow row in rows)
             {
@@ -63,7 +49,39 @@ namespace Medical.GUI
             rows.Clear();
         }
 
-        public PromptQuestion createQuestion()
+        public PromptQuestion Question
+        {
+            get
+            {
+                return currentSourceQuestion;
+            }
+            set
+            {
+                setData(value);
+            }
+        }
+
+        private void setData(PromptQuestion question)
+        {
+            if (question != null)
+            {
+                questionText.Caption = question.Text;
+
+                foreach (PromptAnswer answer in question.Answers)
+                {
+                    String timeline = "";
+                    PromptLoadTimelineAction loadTimeline = answer.Action as PromptLoadTimelineAction;
+                    if (loadTimeline != null)
+                    {
+                        timeline = loadTimeline.TargetTimeline;
+                    }
+                    addRow(answer.Text, timeline);
+                }
+            }
+            currentSourceQuestion = question;
+        }
+
+        private PromptQuestion createQuestion()
         {
             PromptQuestion question = new PromptQuestion(questionText.Caption);
             foreach (QuestionEditorAnswerRow row in rows)
@@ -86,11 +104,15 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            currentSourceQuestion = createQuestion();
             this.close();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            PromptQuestion tempQuestionStorage = currentSourceQuestion;
+            this.clear();
+            this.setData(tempQuestionStorage);
             this.close();
         }
 
