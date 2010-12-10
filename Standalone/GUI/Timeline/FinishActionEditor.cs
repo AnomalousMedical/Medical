@@ -39,7 +39,7 @@ namespace Medical.GUI
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
-            questionEditor = new QuestionEditor();
+            questionEditor = new QuestionEditor(fileBrowser);
 
             questionEditorButton = window.findWidget("QuestionEditorButton") as Button;
             questionEditorButton.MouseButtonClick += new MyGUIEvent(questionEditorButton_MouseButtonClick);

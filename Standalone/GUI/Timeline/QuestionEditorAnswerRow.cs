@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -14,10 +15,13 @@ namespace Medical.GUI
 
         private Edit answerText;
         private Edit timelineText;
+        private TimelineFileBrowserDialog fileBrowser;
 
-        public QuestionEditorAnswerRow(Widget parent, int yPos)
+        public QuestionEditorAnswerRow(Widget parent, int yPos, TimelineFileBrowserDialog fileBrowser)
             :base("Medical.GUI.Timeline.QuestionEditorAnswerRow.layout")
         {
+            this.fileBrowser = fileBrowser;
+
             widget.setPosition(0, yPos);
             widget.setSize(parent.Width - ROW_SIZE_ADJUST, widget.Height);
             widget.attachToWidget(parent);
@@ -54,11 +58,6 @@ namespace Medical.GUI
             {
                 timelineText.Caption = value;
             }
-        }
-
-        void browseButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-
         }
 
         public int Width
@@ -99,6 +98,18 @@ namespace Medical.GUI
             {
                 RemoveRow.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        void browseButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            fileBrowser.ensureVisible();
+            fileBrowser.promptForFile("*.tl", fileChosen);
+        }
+
+        private void fileChosen(String filename)
+        {
+            timelineText.Caption = filename;
         }
     }
 }

@@ -12,12 +12,15 @@ namespace Medical.GUI
         private Edit questionText;
         private ScrollView answerScroll;
         private int lastWidth;
+        private TimelineFileBrowserDialog fileBrowser;
 
         private List<QuestionEditorAnswerRow> rows = new List<QuestionEditorAnswerRow>();
 
-        public QuestionEditor()
+        public QuestionEditor(TimelineFileBrowserDialog fileBrowser)
             :base("Medical.GUI.Timeline.QuestionEditor.layout")
         {
+            this.fileBrowser = fileBrowser;
+
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
 
@@ -111,7 +114,7 @@ namespace Medical.GUI
             bool wasVisible = this.Visible;
 
             this.Visible = true;
-            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos);
+            QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos, fileBrowser);
             row.RemoveRow += new EventHandler(row_RemoveRow);
             row.AnswerText = answerText;
             row.Timeline = timeline;
