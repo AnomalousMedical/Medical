@@ -119,13 +119,20 @@ namespace Medical.GUI
             }
             else if (actionGroup.SelectedButton == askQuestionButton)
             {
-                currentTimeline.clearPostActions();
+                if (questionEditor.Question != null)
+                {
+                    currentTimeline.clearPostActions();
 
-                ShowPromptAction showPrompt = new ShowPromptAction();
-                PromptQuestion question = questionEditor.Question;
-                showPrompt.addQuestion(question);
-                currentTimeline.addPostAction(showPrompt);
-                this.close();
+                    ShowPromptAction showPrompt = new ShowPromptAction();
+                    PromptQuestion question = questionEditor.Question;
+                    showPrompt.addQuestion(question);
+                    currentTimeline.addPostAction(showPrompt);
+                    this.close();
+                }
+                else
+                {
+                    MessageBox.show("There is no question currently defined. Please open the question editor and create one.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                }
             }
 
             questionEditor.clear();
