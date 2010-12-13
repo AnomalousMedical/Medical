@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class TopPopoutLayoutContainer : LayoutContainer, UpdateListener
+    class VerticalPopoutLayoutContainer : LayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -23,7 +23,7 @@ namespace Medical
         private Size2 sizeDelta;
         private Size2 currentSize;
 
-        public TopPopoutLayoutContainer(UpdateTimer mainTimer)
+        public VerticalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
             mainTimer.addFixedUpdateListener(this);

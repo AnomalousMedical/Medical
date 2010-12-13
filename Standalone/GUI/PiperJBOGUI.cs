@@ -18,7 +18,8 @@ namespace Medical.GUI
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer leftAnimatedContainer;
-        private TopPopoutLayoutContainer topAnimatedContainer;
+        private VerticalPopoutLayoutContainer topAnimatedContainer;
+        private VerticalPopoutLayoutContainer bottomAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
 
@@ -111,11 +112,14 @@ namespace Medical.GUI
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
 
-            topAnimatedContainer = new TopPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
 
             leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Left = leftAnimatedContainer;
+
+            bottomAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Bottom = bottomAnimatedContainer;
 
             screenLayoutManager.Root.SuppressLayout = false;
 
@@ -145,9 +149,8 @@ namespace Medical.GUI
             continuePrompt = new MyGUIContinuePromptProvider();
             standaloneController.TimelineController.ContinuePrompt = continuePrompt;
 
-            questionProvider = new MyGUIQuestionProvider();
+            questionProvider = new MyGUIQuestionProvider(this);
             standaloneController.TimelineController.QuestionProvider = questionProvider;
-            innerBorderLayout.Bottom = questionProvider.LayoutContainer;
         }
 
         public void Dispose()
@@ -200,6 +203,16 @@ namespace Medical.GUI
             {
                 leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
             }
+        }
+
+        public void changeBottomPanel(LayoutContainer bottomContainer)
+        {
+            if (bottomContainer != null)
+            {
+                bottomContainer.Visible = true;
+                bottomContainer.bringToFront();
+            }
+            bottomAnimatedContainer.changePanel(bottomContainer, 0.25f, animationCompleted);
         }
 
         public void showChooseSceneDialog()

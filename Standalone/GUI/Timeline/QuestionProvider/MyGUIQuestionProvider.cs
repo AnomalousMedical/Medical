@@ -13,15 +13,17 @@ namespace Medical.GUI
         private List<PromptTextArea> textAreas = new List<PromptTextArea>();
         private PromptAnswerSelected answerSelectedCallback;
         private MyGUILayoutContainer layoutContainer;
+        private PiperJBOGUI piperGUI;
 
-        public MyGUIQuestionProvider()
+        public MyGUIQuestionProvider(PiperJBOGUI piperGUI)
             :base("Medical.GUI.Timeline.QuestionProvider.MyGUIQuestionProvider.layout")
         {
+            this.piperGUI = piperGUI;
+
             widget.Visible = false;
             questionScroll = widget.findWidget("QuestionScroll") as ScrollView;
 
             layoutContainer = new MyGUILayoutContainer(widget);
-            layoutContainer.changeDesiredSize(new Size2(0, 0));
         }
 
         public override void Dispose()
@@ -55,7 +57,7 @@ namespace Medical.GUI
             widget.Visible = true;
             InputManager.Instance.addWidgetModal(widget);
             layoutContainer.changeDesiredSize(questionScroll.CanvasSize);
-            layoutContainer.invalidate();
+            piperGUI.changeBottomPanel(layoutContainer);
         }
 
         public void clear()
@@ -80,8 +82,7 @@ namespace Medical.GUI
             answerSelectedCallback(answer);
             InputManager.Instance.removeWidgetModal(widget);
             widget.Visible = false;
-            layoutContainer.changeDesiredSize(new Size2(0, 0));
-            layoutContainer.invalidate();
+            piperGUI.changeBottomPanel(null);
             answerSelectedCallback = null;
         }
     }
