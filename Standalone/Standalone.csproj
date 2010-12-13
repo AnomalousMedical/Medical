@@ -118,6 +118,8 @@
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineIndex.cs" />
+    <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />
     <Compile Include="GUI\LayersAdvanced\LayerControlAdvanced.cs" />
     <Compile Include="GUI\LayersAdvanced\LayerEntry.cs" />
@@ -292,7 +294,7 @@
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Layout\LayoutContainer.cs" />
     <Compile Include="Controller\ScreenLayoutManager.cs" />
-    <Compile Include="Layout\TopPopoutLayoutContainer.cs" />
+    <Compile Include="Layout\VerticalPopoutLayoutContainer.cs" />
     <Compile Include="Platform\WxInputHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

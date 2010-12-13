@@ -19,6 +19,8 @@ namespace Medical
 
     class TimelineController : UpdateListener
     {
+        private const String INDEX_FILE_NAME = "index.tix";
+
         public event EventHandler ResourceLocationChanged;
         public event EventHandler PlaybackStarted;
         public event EventHandler PlaybackStopped;
@@ -34,6 +36,7 @@ namespace Medical
         private bool playPrePostActions = true;
         private String resourceLocation = null;
         private ZipFile resourceFile = null;
+        private TimelineIndex currentIndex = null;
 
         public TimelineController(StandaloneController standaloneController)
         {
@@ -213,7 +216,17 @@ namespace Medical
         {
             using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
             {
-                ionicZip.Save();
+                using(MemoryStream memStream = new MemoryStream())
+                {
+                    XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
+                    xmlWriter.Formatting = Formatting.Indented;
+                    TimelineIndex index = new TimelineIndex();
+                    xmlSaver.saveObject(index, xmlWriter);
+                    xmlWriter.Flush();
+                    memStream.Seek(0, SeekOrigin.Begin);
+                    ionicZip.AddEntry(INDEX_FILE_NAME, memStream);
+                    ionicZip.Save();
+                }
             }
             ResourceLocation = projectName;
         }
@@ -303,6 +316,31 @@ namespace Medical
                     else
                     {
                         ionicZip.AddFile(path, "");
+                    }
+                    ionicZip.Save();
+                }
+                resourceFile = new ZipFile(resourceLocation);
+            }
+        }
+
+        /// <summary>
+        /// Import a file into the current ResourceLocation.
+        /// </summary>
+        /// <param name="path"></param>
+        public void importStream(String path, Stream stream)
+        {
+            if (resourceFile != null)
+            {
+                resourceFile.Dispose();
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
+                {
+                    if (ionicZip.ContainsEntry(Path.GetFileName(path)))
+                    {
+                        ionicZip.UpdateEntry(path, stream);
+                    }
+                    else
+                    {
+                        ionicZip.AddEntry(path, stream);
                     }
                     ionicZip.Save();
                 }
@@ -414,12 +452,41 @@ namespace Medical
             }
             set
             {
+                currentIndex = null;
                 if (resourceFile != null)
                 {
                     resourceFile.Dispose();
                 }
                 resourceLocation = value;
                 resourceFile = new ZipFile(resourceLocation);
+                if (resourceFile.exists(INDEX_FILE_NAME))
+                {
+                    using (XmlTextReader file = new XmlTextReader(resourceFile.openFile(INDEX_FILE_NAME)))
+                    {
+                        currentIndex = xmlSaver.restoreObject(file) as TimelineIndex;
+                    }
+                }
+
+                //Legacy check for indexes. This can probably be removed since no real timelines have been created yet.
+                if (currentIndex == null)
+                {
+                    Log.Warning("Loaded timeline project with no index file. Creating default index.");
+
+                    using (MemoryStream memStream = new MemoryStream())
+                    {
+                        //Save index to memory stream.
+                        XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
+                        xmlWriter.Formatting = Formatting.Indented;
+                        currentIndex = new TimelineIndex();
+                        xmlSaver.saveObject(currentIndex, xmlWriter);
+                        xmlWriter.Flush();
+                        memStream.Seek(0, SeekOrigin.Begin);
+
+                        //Import the stream.
+                        importStream(INDEX_FILE_NAME, memStream);
+                    }
+                }
+
                 if (ResourceLocationChanged != null)
                 {
                     ResourceLocationChanged.Invoke(this, EventArgs.Empty);
