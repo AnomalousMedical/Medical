@@ -10,8 +10,14 @@ namespace Medical
     {
         public TimelineIndexItem(String timelineName)
         {
-
             this.TimelineName = timelineName;
+        }
+
+        public TimelineIndexItem(TimelineIndexItem source)
+        {
+            this.TimelineName = source.TimelineName;
+            this.Name = source.Name;
+            this.Description = source.Description;
         }
 
         public String Name { get; set; }

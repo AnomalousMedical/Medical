@@ -271,6 +271,23 @@ namespace Medical
             }
         }
 
+        public void saveIndex(TimelineIndex index)
+        {
+            using (MemoryStream memStream = new MemoryStream())
+            {
+                //Save index to memory stream.
+                XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
+                xmlWriter.Formatting = Formatting.Indented;
+                xmlSaver.saveObject(index, xmlWriter);
+                xmlWriter.Flush();
+                memStream.Seek(0, SeekOrigin.Begin);
+
+                //Import the stream.
+                importStream(INDEX_FILE_NAME, memStream);
+            }
+            currentIndex = index;
+        }
+
         /// <summary>
         /// List the files in the current resource location that match pattern.
         /// </summary>
@@ -409,6 +426,14 @@ namespace Medical
             }
         }
 
+        public TimelineIndex CurrentTimelineIndex
+        {
+            get
+            {
+                return currentIndex;
+            }
+        }
+
         public ITimelineFileBrowser FileBrowser { get; set; }
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
@@ -474,16 +499,7 @@ namespace Medical
 
                     using (MemoryStream memStream = new MemoryStream())
                     {
-                        //Save index to memory stream.
-                        XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                        xmlWriter.Formatting = Formatting.Indented;
-                        currentIndex = new TimelineIndex();
-                        xmlSaver.saveObject(currentIndex, xmlWriter);
-                        xmlWriter.Flush();
-                        memStream.Seek(0, SeekOrigin.Begin);
-
-                        //Import the stream.
-                        importStream(INDEX_FILE_NAME, memStream);
+                        saveIndex(new TimelineIndex());
                     }
                 }
 

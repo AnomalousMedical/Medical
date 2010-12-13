@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="192 196 474 306" layer="Overlapped">
+        <Property key="Widget_Caption" value="Timeline Index Editor"/>
+        <Widget type="StaticText" skin="StaticText" position="3 3 112 14">
+            <Property key="Widget_Caption" value="Startup Timelines"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 239 72 21" align="Left Bottom" name="AddButton">
+            <Property key="Widget_Caption" value="Add"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="79 239 72 21" align="Left Bottom" name="RemoveButton">
+            <Property key="Widget_Caption" value="Remove"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="156 3 49 14">
+            <Property key="Widget_Caption" value="Name"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="156 17 315 21" align="HStretch Top" name="NameEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="156 40 81 15">
+            <Property key="Widget_Caption" value="Description"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="155 57 315 203" align="Stretch">
+            <Widget type="Edit" skin="WordWrap" position="0 0 315 203" align="Stretch" name="DescriptionEdit">
+                <Property key="Edit_MultiLine" value="true"/>
+                <Property key="Edit_MaxTextLength" value="2900"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 264 72 21" align="Left Bottom" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="79 264 72 21" align="Left Bottom" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+        <Widget type="MultiList" skin="MultiList" position="3 18 148 218" align="Left VStretch" name="StartupTimelinesList"/>
+    </Widget>
+</MyGUI>

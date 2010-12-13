@@ -35,6 +35,7 @@ namespace Medical.GUI
         private TimelineFileBrowserDialog fileBrowserDialog;
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
+        private TimelineIndexEditor timelineIndexEditor;
 
         private Button otherActionsButton;
         private Button playButton;
@@ -81,6 +82,8 @@ namespace Medical.GUI
             otherActionsButton = window.findWidget("OtherActionsButton") as Button;
             otherActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             otherActionsMenu.Visible = false;
+            MenuItem editTimelineIndex = otherActionsMenu.addItem("Edit Timeline Index");
+            editTimelineIndex.MouseButtonClick += new MyGUIEvent(editTimelineIndex_MouseButtonClick);
             MenuItem changeScene = otherActionsMenu.addItem("Change Scene");
             changeScene.MouseButtonClick += new MyGUIEvent(changeScene_MouseButtonClick);
             MenuItem finishAction = otherActionsMenu.addItem("Finish Action");
@@ -124,6 +127,8 @@ namespace Medical.GUI
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
             finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
+            timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
+            timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 
             //Add tracks to timeline.
             object[] args = { propertiesScrollView };
@@ -413,6 +418,20 @@ namespace Medical.GUI
         #endregion
 
         #region Other Actions Menu
+
+        void editTimelineIndex_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineIndexEditor.setData(timelineController.CurrentTimelineIndex);
+            timelineIndexEditor.open(true);
+            timelineIndexEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            timelineIndexEditor.ensureVisible();
+        }
+
+        void timelineIndexEditor_SaveIndexData(object sender, EventArgs e)
+        {
+            TimelineIndex index = timelineIndexEditor.createIndex();
+            timelineController.saveIndex(index);
+        }
 
         void testActions_MouseButtonClick(Widget source, EventArgs e)
         {
