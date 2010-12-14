@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="55 42 716 502" layer="Modal">
         <Property key="Widget_Caption" value="Open"/>
-        <Widget type="MultiList" skin="MultiList" position="4 4 708 360" name="Open/FileList"/>
+        <Widget type="MultiList" skin="MultiList" position="4 4 710 360" name="Open/FileList"/>
         <Widget type="StaticText" skin="StaticText" position="4 368 150 15">
             <Property key="Widget_Caption" value="Search Last Name"/>
         </Widget>
