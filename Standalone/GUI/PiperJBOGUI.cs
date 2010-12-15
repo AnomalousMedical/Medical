@@ -284,6 +284,28 @@ namespace Medical.GUI
             }
         }
 
+        public void setMainInterfaceEnabled(bool enabled)
+        {
+            if (enabled)
+            {
+                layers.AllowShortcuts = true;
+                taskbar.Visible = true;
+                dialogManager.reopenDialogs();
+                #if CREATE_MAINWINDOW_MENU
+                systemMenu.FileMenuEnabled = true;
+                #endif
+            }
+            else
+            {
+                layers.AllowShortcuts = false;
+                taskbar.Visible = false;
+                dialogManager.temporarilyCloseDialogs();
+                #if CREATE_MAINWINDOW_MENU
+                systemMenu.FileMenuEnabled = false;
+                #endif
+            }
+        }
+
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
         {
             standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
@@ -301,23 +323,13 @@ namespace Medical.GUI
         {
             stateWizardPanelController.CurrentWizardName = wizard.Name;
             stateWizardController.startWizard(wizard);
-            layers.AllowShortcuts = false;
-            taskbar.Visible = false;
             standaloneController.MovementSequenceController.stopPlayback();
-            dialogManager.temporarilyCloseDialogs();
-            #if CREATE_MAINWINDOW_MENU
-            systemMenu.FileMenuEnabled = false;
-            #endif
+            setMainInterfaceEnabled(false);
         }
 
         void stateWizardController_Finished()
         {
-            layers.AllowShortcuts = true;
-            taskbar.Visible = true;
-            dialogManager.reopenDialogs();
-            #if CREATE_MAINWINDOW_MENU
-            systemMenu.FileMenuEnabled = true;
-            #endif
+            setMainInterfaceEnabled(true);
         }
 
         void stateWizardController_StateCreated(MedicalState state)
