@@ -106,6 +106,7 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\Props\PropFactory.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />

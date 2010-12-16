@@ -40,6 +40,7 @@ namespace Standalone
         private SimObjectMover teethMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
+        private PropFactory propFactory;
 
         //GUI
         private PiperJBOGUI basicGUI;
@@ -171,6 +172,20 @@ namespace Standalone
             imageDisplayFactory = new MyGUIImageDisplayFactory();
             MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
             timelineController.ImageDisplayFactory = imageDisplayFactory;
+
+            //Props
+            propFactory = new PropFactory(this);
+            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition("ArrowPrototype");
+            arrowSimObject.Enabled = true;
+            EntityDefinition entityDefinition = new EntityDefinition(ArrowBehavior.EntityName);
+            entityDefinition.MeshName = "Arrow.mesh";
+            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(ArrowBehavior.NodeName);
+            nodeDefinition.addMovableObjectDefinition(entityDefinition);
+            arrowSimObject.addElement(nodeDefinition);
+            ArrowBehavior arrowBehavior = new ArrowBehavior();
+            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition("Behavior", arrowBehavior);
+            arrowSimObject.addElement(arrowBehaviorDef);
+            propFactory.addDefinition("Arrow", arrowSimObject);
 
             //GUI
             basicGUI = new PiperJBOGUI(this);

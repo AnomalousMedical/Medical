@@ -104,6 +104,7 @@
     <Compile Include="Animation\PoseManipulator.cs" />
     <Compile Include="Animation\PoseManipulatorStateEntry.cs" />
     <Compile Include="Animation\Tracer.cs" />
+    <Compile Include="Arrow\ArrowBehavior.cs" />
     <Compile Include="ControlPoint\ControlPointBehavior.cs" />
     <Compile Include="ControlPoint\ControlPointController.cs" />
     <Compile Include="ControlPoint\DiscController.cs" />
