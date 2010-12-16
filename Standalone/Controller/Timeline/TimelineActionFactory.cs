@@ -18,6 +18,7 @@ namespace Medical
             addType(typeof(PlaySequenceAction));
             addType(typeof(ShowImageAction));
             addType(typeof(PlaySoundAction));
+            addType(typeof(ShowPropAction));
         }
 
         private static void addType(Type type)

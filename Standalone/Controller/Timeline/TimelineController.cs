@@ -462,6 +462,14 @@ namespace Medical
             }
         }
 
+        public PropFactory PropFactory
+        {
+            get
+            {
+                return standaloneController.PropFactory;
+            }
+        }
+
         public ContinuePromptProvider ContinuePrompt { get; set; }
 
         public IQuestionProvider QuestionProvider { get; set; }

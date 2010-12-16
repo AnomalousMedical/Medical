@@ -368,6 +368,14 @@ namespace Standalone
             }
         }
 
+        public PropFactory PropFactory
+        {
+            get
+            {
+                return propFactory;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();

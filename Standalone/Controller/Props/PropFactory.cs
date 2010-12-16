@@ -54,9 +54,6 @@ namespace Medical.Controller
         {
             this.scene = scene;
             this.subScene = scene.getDefaultSubScene();
-
-            //temp
-            createSimObject("Arrow");
         }
     }
 }
