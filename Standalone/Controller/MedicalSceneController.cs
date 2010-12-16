@@ -107,6 +107,11 @@ namespace Medical
             return package;
         }
 
+        public void addSimObject(SimObjectBase simObject)
+        {
+            currentSimObjects.addSimObject(simObject);
+        }
+
         public SimScene CurrentScene
         {
             get

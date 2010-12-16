@@ -12,9 +12,12 @@ namespace Medical.Controller
         private Dictionary<String, SimObjectDefinition> prototypes = new Dictionary<String, SimObjectDefinition>();
         private SimSubScene subScene;
         private SimScene scene;
+        private MedicalController medicalController;
 
         public PropFactory(StandaloneController standaloneController)
         {
+            this.medicalController = standaloneController.MedicalController;
+
             standaloneController.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
             standaloneController.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
         }
@@ -33,6 +36,7 @@ namespace Medical.Controller
                 if (definition != null)
                 {
                     SimObjectBase instance = definition.register(subScene);
+                    medicalController.addSimObject(instance);
                     scene.buildScene();
                     return instance;
                 }

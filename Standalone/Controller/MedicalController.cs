@@ -278,6 +278,11 @@ namespace Medical
             }
         }
 
+        public void addSimObject(SimObjectBase simObject)
+        {
+            medicalScene.addSimObject(simObject);
+        }
+
         internal void _sendFullSpeedUpdate(Clock clock)
         {
             if (FullSpeedLoopUpdate != null)

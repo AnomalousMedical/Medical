@@ -46,6 +46,11 @@ namespace Medical
             Color = color;
         }
 
+        protected override void destroy()
+        {
+            base.destroy();
+        }
+
         [DoNotCopy]
         public Color Color
         {
