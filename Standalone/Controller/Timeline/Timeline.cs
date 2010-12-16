@@ -136,6 +136,7 @@ namespace Medical
                 {
                     action.stopped(currentTime, clock);
                 }
+                activeActions.Clear();
             }
             if (playPostActions)
             {

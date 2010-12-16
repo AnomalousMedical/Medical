@@ -22,6 +22,7 @@ namespace Medical
         public override void stopped(float timelineTime, Clock clock)
         {
             simObject.destroy();
+            simObject = null;
         }
 
         public override void update(float timelineTime, Clock clock)
