@@ -5,20 +5,24 @@ using System.Text;
 using Engine.Platform;
 using Engine.ObjectManagement;
 using Engine;
+using Medical.GUI;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Prop", 128 / 255f, 0 / 255f, 255 / 255f, GUIType = null)]
+    [TimelineActionProperties("Show Prop", 128 / 255f, 0 / 255f, 255 / 255f, GUIType = typeof(ShowPropProperties))]
     class ShowPropAction : TimelineAction
     {
         private bool finished;
-        private SimObject simObject;
+        private SimObjectBase simObject;
+        private String propType;
+        private Vector3 translation;
+        private Quaternion rotation;
 
         public ShowPropAction()
         {
-            PropType = "PointingHandRight";
-            Translation = Vector3.Zero;
-            Rotation = Quaternion.Identity;
+            propType = "Arrow";
+            translation = Vector3.Zero;
+            rotation = Quaternion.Identity;
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -29,8 +33,7 @@ namespace Medical
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            simObject.destroy();
-            simObject = null;
+            destroyProp();
         }
 
         public override void update(float timelineTime, Clock clock)
@@ -46,8 +49,7 @@ namespace Medical
         public override void editingCompleted()
         {
             base.editingCompleted();
-            simObject.destroy();
-            simObject = null;
+            destroyProp();
         }
 
         public override bool Finished
@@ -58,15 +60,64 @@ namespace Medical
             }
         }
 
-        public String PropType { get; set; }
+        public String PropType
+        {
+            get
+            {
+                return propType;
+            }
+            set
+            {
+                propType = value;
+                if (simObject != null)
+                {
+                    destroyProp();
+                    makeProp();
+                }
+            }
+        }
 
-        public Vector3 Translation { get; set; }
+        public Vector3 Translation
+        {
+            get
+            {
+                return translation;
+            }
+            set
+            {
+                translation = value;
+                if (simObject != null)
+                {
+                    simObject.updateTranslation(ref value, null);
+                }
+            }
+        }
 
-        public Quaternion Rotation { get; set; }
+        public Quaternion Rotation
+        {
+            get
+            {
+                return rotation;
+            }
+            set
+            {
+                rotation = value;
+                if (simObject != null)
+                {
+                    simObject.updateRotation(ref value, null);
+                }
+            }
+        }
 
         private void makeProp()
         {
-            simObject = TimelineController.PropFactory.createProp(PropType, Translation, Rotation);
+            simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
+        }
+
+        private void destroyProp()
+        {
+            simObject.destroy();
+            simObject = null;
         }
     }
 }

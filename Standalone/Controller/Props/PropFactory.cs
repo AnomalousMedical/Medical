@@ -28,7 +28,7 @@ namespace Medical
             prototypes.Add(name, definition);
         }
 
-        public SimObject createProp(String propName, Vector3 translation, Quaternion rotation)
+        public SimObjectBase createProp(String propName, Vector3 translation, Quaternion rotation)
         {
             if (subScene != null)
             {
@@ -46,6 +46,14 @@ namespace Medical
                 }
             }
             return null;
+        }
+
+        public IEnumerable<String> PropNames
+        {
+            get
+            {
+                return prototypes.Keys;
+            }
         }
 
         void standaloneController_SceneUnloading(SimScene scene)
