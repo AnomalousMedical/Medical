@@ -37,7 +37,8 @@ namespace Standalone
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
-        private SimObjectMover simObjectMover;
+        private SimObjectMover teethMover;
+        private SimObjectMover propMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
@@ -153,12 +154,12 @@ namespace Standalone
             //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
 
-            //SimObject mover
-            simObjectMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
-            this.SceneLoaded += simObjectMover.sceneLoaded;
-            this.SceneUnloading += simObjectMover.sceneUnloading;
-            TeethController.TeethMover = simObjectMover;
-            medicalController.FixedLoopUpdate += simObjectMover.update;
+            //Teeth mover
+            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            this.SceneLoaded += teethMover.sceneLoaded;
+            this.SceneUnloading += teethMover.sceneUnloading;
+            TeethController.TeethMover = teethMover;
+            medicalController.FixedLoopUpdate += teethMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
@@ -167,11 +168,11 @@ namespace Standalone
             windowPresetController = new SceneViewWindowPresetController();
             createWindowPresets();
 
-            //Timeline
-            timelineController = new TimelineController(this);
-            imageDisplayFactory = new MyGUIImageDisplayFactory();
-            MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
-            timelineController.ImageDisplayFactory = imageDisplayFactory;
+            //Prop Mover
+            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
+            this.SceneLoaded += propMover.sceneLoaded;
+            this.SceneUnloading += propMover.sceneUnloading;
+            medicalController.FixedLoopUpdate += propMover.update;
 
             //Props
             propFactory = new PropFactory(this);
@@ -179,6 +180,13 @@ namespace Standalone
             Ruler.createPropDefinition(propFactory);
             PointingHand.createPropDefinition(propFactory);
             //Mustache.createPropDefinition(propFactory);
+
+            //Timeline
+            timelineController = new TimelineController(this);
+            imageDisplayFactory = new MyGUIImageDisplayFactory();
+            MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
+            timelineController.ImageDisplayFactory = imageDisplayFactory;
+            timelineController.SimObjectMover = propMover;
 
             //GUI
             basicGUI = new PiperJBOGUI(this);

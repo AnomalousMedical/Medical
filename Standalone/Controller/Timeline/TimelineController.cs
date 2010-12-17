@@ -438,6 +438,8 @@ namespace Medical
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
 
+        public SimObjectMover SimObjectMover { get; set; }
+
         public SceneViewController SceneViewController
         {
             get
