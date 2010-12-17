@@ -14,6 +14,13 @@ namespace Medical
         private bool finished;
         private SimObject simObject;
 
+        public ShowPropAction()
+        {
+            PropType = "PointingHandRight";
+            Translation = Vector3.Zero;
+            Rotation = Quaternion.Identity;
+        }
+
         public override void started(float timelineTime, Clock clock)
         {
             finished = false;
@@ -51,9 +58,15 @@ namespace Medical
             }
         }
 
+        public String PropType { get; set; }
+
+        public Vector3 Translation { get; set; }
+
+        public Quaternion Rotation { get; set; }
+
         private void makeProp()
         {
-            simObject = TimelineController.PropFactory.createProp("Arrow", new Vector3(3, 0, 0), Quaternion.Identity);
+            simObject = TimelineController.PropFactory.createProp(PropType, Translation, Rotation);
         }
     }
 }

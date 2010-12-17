@@ -106,7 +106,10 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\Props\Arrow.cs" />
+    <Compile Include="Controller\Props\PointingHand.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
+    <Compile Include="Controller\Props\Ruler.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />

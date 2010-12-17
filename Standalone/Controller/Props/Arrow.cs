@@ -7,10 +7,11 @@ using Engine.Platform;
 using OgreWrapper;
 using OgrePlugin;
 using Engine.Attributes;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public class ArrowBehavior : Interface
+    class Arrow : Interface
     {
         public const String NodeName = "Node";
         public const String EntityName = "Entity";
@@ -19,7 +20,22 @@ namespace Medical
         private SubEntity subEntity;
         private Color color = Color.Red;
 
-        public ArrowBehavior()
+        public static void createPropDefinition(PropFactory propFactory)
+        {
+            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition("ArrowPrototype");
+            arrowSimObject.Enabled = true;
+            EntityDefinition entityDefinition = new EntityDefinition(Arrow.EntityName);
+            entityDefinition.MeshName = "Arrow.mesh";
+            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(Arrow.NodeName);
+            nodeDefinition.addMovableObjectDefinition(entityDefinition);
+            arrowSimObject.addElement(nodeDefinition);
+            Arrow arrowBehavior = new Arrow();
+            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition("Behavior", arrowBehavior);
+            arrowSimObject.addElement(arrowBehaviorDef);
+            propFactory.addDefinition("Arrow", arrowSimObject);
+        }
+
+        public Arrow()
         {
 
         }

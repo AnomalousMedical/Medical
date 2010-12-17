@@ -175,17 +175,9 @@ namespace Standalone
 
             //Props
             propFactory = new PropFactory(this);
-            GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition("ArrowPrototype");
-            arrowSimObject.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(ArrowBehavior.EntityName);
-            entityDefinition.MeshName = "Arrow.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(ArrowBehavior.NodeName);
-            nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            arrowSimObject.addElement(nodeDefinition);
-            ArrowBehavior arrowBehavior = new ArrowBehavior();
-            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition("Behavior", arrowBehavior);
-            arrowSimObject.addElement(arrowBehaviorDef);
-            propFactory.addDefinition("Arrow", arrowSimObject);
+            Arrow.createPropDefinition(propFactory);
+            Ruler.createPropDefinition(propFactory);
+            PointingHand.createPropDefinition(propFactory);
 
             //GUI
             basicGUI = new PiperJBOGUI(this);

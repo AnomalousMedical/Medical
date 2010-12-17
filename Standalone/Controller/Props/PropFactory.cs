@@ -6,7 +6,7 @@ using Standalone;
 using Engine.ObjectManagement;
 using Engine;
 
-namespace Medical.Controller
+namespace Medical
 {
     class PropFactory
     {
