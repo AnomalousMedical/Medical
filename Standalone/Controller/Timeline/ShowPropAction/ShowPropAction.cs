@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical
 {
@@ -16,7 +17,7 @@ namespace Medical
         public override void started(float timelineTime, Clock clock)
         {
             finished = false;
-            simObject = TimelineController.PropFactory.createSimObject("Arrow");
+            makeProp();
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -32,7 +33,14 @@ namespace Medical
 
         public override void editing()
         {
-            
+            makeProp();
+        }
+
+        public override void editingCompleted()
+        {
+            base.editingCompleted();
+            simObject.destroy();
+            simObject = null;
         }
 
         public override bool Finished
@@ -41,6 +49,11 @@ namespace Medical
             {
                 return finished;
             }
+        }
+
+        private void makeProp()
+        {
+            simObject = TimelineController.PropFactory.createProp("Arrow", new Vector3(3, 0, 0), Quaternion.Identity);
         }
     }
 }

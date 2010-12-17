@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Standalone;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical.Controller
 {
@@ -27,14 +28,17 @@ namespace Medical.Controller
             prototypes.Add(name, definition);
         }
 
-        public SimObject createSimObject(String name)
+        public SimObject createProp(String propName, Vector3 translation, Quaternion rotation)
         {
             if (subScene != null)
             {
                 SimObjectDefinition definition;
-                prototypes.TryGetValue(name, out definition);
+                prototypes.TryGetValue(propName, out definition);
                 if (definition != null)
                 {
+                    definition.Name = UniqueKeyGenerator.generateStringKey();
+                    definition.Translation = translation;
+                    definition.Rotation = rotation;
                     SimObjectBase instance = definition.register(subScene);
                     medicalController.addSimObject(instance);
                     scene.buildScene();
