@@ -37,7 +37,7 @@ namespace Standalone
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
-        private SimObjectMover teethMover;
+        private SimObjectMover simObjectMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
@@ -153,12 +153,12 @@ namespace Standalone
             //Movement sequences
             movementSequenceController = new MovementSequenceController(medicalController);
 
-            //Teeth mover
-            teethMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
-            this.SceneLoaded += teethMover.sceneLoaded;
-            this.SceneUnloading += teethMover.sceneUnloading;
-            TeethController.TeethMover = teethMover;
-            medicalController.FixedLoopUpdate += teethMover.update;
+            //SimObject mover
+            simObjectMover = new SimObjectMover("Teeth", medicalController.PluginManager, medicalController.EventManager);
+            this.SceneLoaded += simObjectMover.sceneLoaded;
+            this.SceneUnloading += simObjectMover.sceneUnloading;
+            TeethController.TeethMover = simObjectMover;
+            medicalController.FixedLoopUpdate += simObjectMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
@@ -178,6 +178,7 @@ namespace Standalone
             Arrow.createPropDefinition(propFactory);
             Ruler.createPropDefinition(propFactory);
             PointingHand.createPropDefinition(propFactory);
+            //Mustache.createPropDefinition(propFactory);
 
             //GUI
             basicGUI = new PiperJBOGUI(this);
