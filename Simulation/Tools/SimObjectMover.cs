@@ -34,6 +34,7 @@ namespace Medical
         private MovableObjectTools currentTools = null;
         private bool showMoveTools = false;
         private bool showRotateTools = false;
+        private float toolSize = 1.0f;
 
         public SimObjectMover(String name, PluginManager pluginManager, EventManager events)
         {
@@ -138,7 +139,7 @@ namespace Medical
 
         public void addMovableObject(String name, MovableObject movable)
         {
-            MovableObjectTools tools = new MovableObjectTools(name, movable);
+            MovableObjectTools tools = new MovableObjectTools(name, movable, toolSize);
             movableObjects.Add(tools);
             tools.MoveToolVisible = showMoveTools;
             tools.RotateToolVisible = showRotateTools;
@@ -206,6 +207,22 @@ namespace Medical
                 foreach (MovableObjectTools tools in movableObjects)
                 {
                     tools.RotateToolVisible = value;
+                }
+            }
+        }
+
+        public float ToolSize
+        {
+            get
+            {
+                return toolSize;
+            }
+            set
+            {
+                toolSize = value;
+                foreach (MovableObjectTools tools in movableObjects)
+                {
+                    tools.setToolSize(toolSize);
                 }
             }
         }

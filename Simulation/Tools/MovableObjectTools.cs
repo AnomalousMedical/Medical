@@ -30,12 +30,12 @@ namespace Medical
         private MoveTool moveTool;
         private RotateTool rotateTool;
 
-        public MovableObjectTools(String name, MovableObject movable)
+        public MovableObjectTools(String name, MovableObject movable, float size)
         {
             this.movable = movable;
-            moveTool = new MoveTool(name, movable, 1.0f);
+            moveTool = new MoveTool(name, movable, size);
             MoveToolVisible = false;
-            rotateTool = new RotateTool(name, movable, 0.3f);
+            rotateTool = new RotateTool(name, movable, size * 0.3f);
         }
 
         public bool checkBoundingBoxCollision(ref Ray3 spaceRay)
@@ -88,6 +88,12 @@ namespace Medical
         {
             moveTool.drawAxis(axisSurface);
             rotateTool.drawCircles(axisSurface);
+        }
+
+        public void setToolSize(float size)
+        {
+            moveTool.resizeAxes(size);
+            rotateTool.resizeAxes(size * 0.3f);
         }
 
         public MovableObject Movable

@@ -50,6 +50,7 @@ namespace Medical.GUI
             {
                 simObjectMover = showProp.TimelineController.SimObjectMover;
                 simObjectMover.ShowMoveTools = true;
+                simObjectMover.ToolSize = 3.0f;
                 PropFactory propFactory = showProp.TimelineController.PropFactory;
                 foreach (String propName in propFactory.PropNames)
                 {
