@@ -49,6 +49,7 @@ namespace Medical.GUI
             if (comboUninitialized)
             {
                 simObjectMover = showProp.TimelineController.SimObjectMover;
+                simObjectMover.ShowMoveTools = true;
                 PropFactory propFactory = showProp.TimelineController.PropFactory;
                 foreach (String propName in propFactory.PropNames)
                 {
@@ -67,16 +68,14 @@ namespace Medical.GUI
             rotationEdit.Caption = euler.ToString();
             simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
             simObjectMover.addMovableObject("Prop", this);
-            simObjectMover.ShowMoveTools = toolButtonGroup.SelectedButton == translationButton;
-            simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
+            simObjectMover.setDrawingSurfaceVisible(true);
         }
 
         public override void editingCompleted()
         {
             showProp = null;
             simObjectMover.removeMovableObject(this);
-            simObjectMover.ShowMoveTools = false;
-            simObjectMover.ShowRotateTools = false;
+            simObjectMover.setDrawingSurfaceVisible(false);
         }
 
         void propTypes_EventComboChangePosition(Widget source, EventArgs e)

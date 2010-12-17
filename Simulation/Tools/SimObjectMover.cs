@@ -140,6 +140,8 @@ namespace Medical
         {
             MovableObjectTools tools = new MovableObjectTools(name, movable);
             movableObjects.Add(tools);
+            tools.MoveToolVisible = showMoveTools;
+            tools.RotateToolVisible = showRotateTools;
         }
 
         public void removeMovableObject(MovableObject movable)
