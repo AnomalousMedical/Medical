@@ -6,6 +6,7 @@ using Engine.Platform;
 using Engine.ObjectManagement;
 using Engine;
 using Medical.GUI;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -119,5 +120,29 @@ namespace Medical
             simObject.destroy();
             simObject = null;
         }
+
+        #region Saveable
+
+        private const String PROP_TYPE = "propType";
+        private const String TRANSLATION = "translation";
+        private const String ROTATION = "rotation";
+
+        protected ShowPropAction(LoadInfo info)
+            :base(info)
+        {
+            propType = info.GetString(PROP_TYPE);
+            translation = info.GetVector3(TRANSLATION);
+            rotation = info.GetQuaternion(ROTATION);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.AddValue(PROP_TYPE, propType);
+            info.AddValue(TRANSLATION, translation);
+            info.AddValue(ROTATION, rotation);
+        }
+
+        #endregion Saveable
     }
 }
