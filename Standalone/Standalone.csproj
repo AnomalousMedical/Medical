@@ -85,9 +85,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL">
+    <Reference Include="WxPlatformPlugin, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\wxDotNet\Bin\wx.NET.dll</HintPath>
+      <HintPath>..\..\Engine\Release\WxPlatformPlugin.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +124,7 @@
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
+    <Compile Include="Controller\Timeline\TimelineException.cs" />
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />

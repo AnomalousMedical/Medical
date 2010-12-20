@@ -130,9 +130,9 @@ namespace Medical
         protected ShowPropAction(LoadInfo info)
             :base(info)
         {
-            propType = info.GetString(PROP_TYPE);
-            translation = info.GetVector3(TRANSLATION);
-            rotation = info.GetQuaternion(ROTATION);
+            propType = info.GetString(PROP_TYPE, "Arrow");
+            translation = info.GetVector3(TRANSLATION, Vector3.Zero);
+            rotation = info.GetQuaternion(ROTATION, Quaternion.Identity);
         }
 
         public override void getInfo(SaveInfo info)

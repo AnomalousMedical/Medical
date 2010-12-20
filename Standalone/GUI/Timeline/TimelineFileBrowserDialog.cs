@@ -114,15 +114,22 @@ namespace Medical.GUI
                         }
                         if(copyFile)
                         {
-                            timelineController.importFile(path);
-                            uint index;
-                            String itemName = Path.GetFileNameWithoutExtension(path);
-                            if(!fileList.findSubItemWith(0, itemName, out index))
+                            try
                             {
-                                fileList.addItem(itemName, Path.GetFileName(path));
-                                index = fileList.getItemCount() - 1;
+                                timelineController.importFile(path);
+                                uint index;
+                                String itemName = Path.GetFileNameWithoutExtension(path);
+                                if (!fileList.findSubItemWith(0, itemName, out index))
+                                {
+                                    fileList.addItem(itemName, Path.GetFileName(path));
+                                    index = fileList.getItemCount() - 1;
+                                }
+                                fileList.setIndexSelected(index);
                             }
-                            fileList.setIndexSelected(index);
+                            catch (Exception ex)
+                            {
+                                MessageBox.show("Error importing file. Reason:\n" + ex.Message, "Import Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                            }
                         }
                     }
                 }

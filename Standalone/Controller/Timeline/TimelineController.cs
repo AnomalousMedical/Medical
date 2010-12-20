@@ -12,6 +12,7 @@ using System.Xml;
 using Logging;
 using SoundPlugin;
 using ZipAccess;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -216,7 +217,7 @@ namespace Medical
         {
             using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
             {
-                using(MemoryStream memStream = new MemoryStream())
+                using (MemoryStream memStream = new MemoryStream())
                 {
                     XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
                     xmlWriter.Formatting = Formatting.Indented;
@@ -321,7 +322,11 @@ namespace Medical
         /// <param name="path"></param>
         public void importFile(String path)
         {
-            if (resourceFile != null)
+            if (path.EndsWith(".tlp"))
+            {
+                throw new TimelineException("Do not import Timeline Projects (.tlp) into other Timeline Projects. No changes made.");
+            }
+            else if (resourceFile != null)
             {
                 resourceFile.Dispose();
                 using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
