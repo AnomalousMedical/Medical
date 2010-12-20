@@ -85,9 +85,9 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WxPlatformPlugin, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Engine\Release\WxPlatformPlugin.dll</HintPath>
+      <HintPath>..\..\dependencies\wxDotNet\Bin\wx.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
