@@ -389,7 +389,14 @@ namespace Medical.GUI
 
         void openTimelineDialog_OpenFile(String filename)
         {
-            setCurrentTimeline(timelineController.openTimeline(filename));
+            try
+            {
+                setCurrentTimeline(timelineController.openTimeline(filename));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.show(String.Format("Error loading timeline {0}.\n{1}", filename, ex.Message), "Load Timeline Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            }
         }
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)
