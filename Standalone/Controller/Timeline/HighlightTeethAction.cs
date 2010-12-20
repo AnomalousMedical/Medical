@@ -7,9 +7,11 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Highlight Teeth", 247 / 255f, 150 / 255f, 70 / 255f, GUIType=typeof(Medical.GUI.HighlightTeethProperties))]
+    [TimelineActionProperties("Highlight Teeth", 247 / 255f, 150 / 255f, 70 / 255f)]
     class HighlightTeethAction : TimelineAction
     {
+        private bool finished;
+
         public HighlightTeethAction()
             :this(false, 0.0f)
         {
@@ -18,55 +20,56 @@ namespace Medical
 
         public HighlightTeethAction(bool enable, float startTime)
         {
-            this.EnableHighlight = enable;
             this.StartTime = startTime;
         }
 
         public override void capture()
         {
-            EnableHighlight = TeethController.HighlightContacts;
+            
         }
 
         public override void started(float timelineTime, Clock clock)
         {
-            TeethController.HighlightContacts = EnableHighlight;
+            finished = false;
+            TeethController.HighlightContacts = true;
         }
 
         public override void stopped(float timelineTime, Clock clock)
         {
-            
+            TeethController.HighlightContacts = false;
         }
 
         public override void update(float timelineTime, Clock clock)
         {
-            
+            finished = timelineTime > StartTime + Duration;
         }
 
         public override void editing()
         {
-            TeethController.HighlightContacts = EnableHighlight;
+            TeethController.HighlightContacts = true;
+        }
+
+        public override void editingCompleted()
+        {
+            TeethController.HighlightContacts = false;
+            base.editingCompleted();
         }
 
         public override bool Finished
         {
-            get { return true; }
+            get { return finished; }
         }
 
-        public bool EnableHighlight { get; set; }
-
         #region Saveable
-
-        private static readonly String ENABLE_HIGHLIGHT = "EnableHighlight";
 
         protected HighlightTeethAction(LoadInfo info)
             :base(info)
         {
-            EnableHighlight = info.GetBoolean(ENABLE_HIGHLIGHT, false);
+            
         }
 
         public override void getInfo(SaveInfo info)
         {
-            info.AddValue(ENABLE_HIGHLIGHT, EnableHighlight);
             base.getInfo(info);
         }
 
