@@ -87,14 +87,14 @@ namespace Medical.GUI
         void translationEdit_EventEditSelectAccept(Widget source, EventArgs e)
         {
             Vector3 trans = new Vector3();
-            trans.setValue(translationEdit.Caption);
+            trans.setValue(translationEdit.OnlyText);
             showProp.Translation = trans;
         }
 
         void rotationEdit_EventEditSelectAccept(Widget source, EventArgs e)
         {
             Vector3 euler = new Vector3();
-            euler.setValue(rotationEdit.Caption);
+            euler.setValue(rotationEdit.OnlyText);
             euler *= 0.0174532925f;
             Quaternion rotation = new Quaternion(euler.x, euler.y, euler.z);
             showProp.Rotation = rotation;
