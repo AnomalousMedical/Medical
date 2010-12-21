@@ -7,7 +7,7 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="145 0 44 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="142 0 47 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
@@ -25,8 +25,11 @@
             <Widget type="Button" skin="Button" position="1 0 40 23" name="FileButton">
                 <Property key="Widget_Caption" value="File"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="44 0 99 23" name="OtherActionsButton">
-                <Property key="Widget_Caption" value="Other Actions"/>
+            <Widget type="Button" skin="Button" position="83 0 58 23" name="OtherActionsButton">
+                <Property key="Widget_Caption" value="Actions"/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="42 0 40 23" name="EditButton">
+                <Property key="Widget_Caption" value="Edit"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">

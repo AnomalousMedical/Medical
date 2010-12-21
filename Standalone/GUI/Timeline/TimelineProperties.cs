@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using System.IO;
 using Engine;
 using Logging;
+using Engine.Saving;
 
 namespace Medical.GUI
 {
@@ -23,9 +24,14 @@ namespace Medical.GUI
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
         private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
+        private TimelineAction copySourceAction;
+
+        //Menus
         private ShowMenuButton fileMenuButton;
         private PopupMenu fileMenu;
-        private ShowMenuButton prePostActionsMenuButton;
+        private ShowMenuButton editMenuButton;
+        private PopupMenu editMenu;
+        private ShowMenuButton otherActionsMenuButton;
         private PopupMenu otherActionsMenu;
         private MenuItem testActions;
 
@@ -37,7 +43,6 @@ namespace Medical.GUI
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
 
-        private Button otherActionsButton;
         private Button playButton;
 
         private const int START_COLUMN_WIDTH = 100;
@@ -78,8 +83,18 @@ namespace Medical.GUI
             saveTimelineAsItem.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
             fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
 
+            //Edit button
+            Button editButton = window.findWidget("EditButton") as Button;
+            editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+            editMenu.Visible = false;
+            MenuItem copy = editMenu.addItem("Copy");
+            copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
+            MenuItem paste = editMenu.addItem("Paste");
+            paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
+            editMenuButton = new ShowMenuButton(editButton, editMenu);
+
             //Other Actions Menu
-            otherActionsButton = window.findWidget("OtherActionsButton") as Button;
+            Button otherActionsButton = window.findWidget("OtherActionsButton") as Button;
             otherActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             otherActionsMenu.Visible = false;
             MenuItem editTimelineIndex = otherActionsMenu.addItem("Edit Timeline Index");
@@ -92,7 +107,7 @@ namespace Medical.GUI
             testActions = otherActionsMenu.addItem("Enable Other Actions");
             testActions.StateCheck = false;
             testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
-            prePostActionsMenuButton = new ShowMenuButton(otherActionsButton, otherActionsMenu);
+            otherActionsMenuButton = new ShowMenuButton(otherActionsButton, otherActionsMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -167,6 +182,7 @@ namespace Medical.GUI
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(fileMenu);
+            Gui.Instance.destroyWidget(editMenu);
             Gui.Instance.destroyWidget(otherActionsMenu);
             base.Dispose();
         }
@@ -417,12 +433,39 @@ namespace Medical.GUI
             saveTimelineItem.Enabled = enabled;
             saveTimelineAsItem.Enabled = enabled;
             actionFilter.Enabled = enabled;
-            otherActionsButton.Enabled = enabled;
+            otherActionsMenuButton.Enabled = enabled;
+            editMenuButton.Enabled = enabled;
             playButton.Enabled = enabled;
             timelineView.Enabled = enabled;
         }
 
         #endregion
+
+        #region Edit Menu
+
+        void paste_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (copySourceAction != null)
+            {
+                CopySaver copySaver = new CopySaver();
+                TimelineAction copiedAction = (TimelineAction)copySaver.copyObject(copySourceAction);
+                copiedAction.StartTime = timelineView.MarkerTime;
+                currentTimeline.addAction(copiedAction);
+                timelineView.CurrentData = actionDataBindings[copiedAction];
+            }
+            editMenu.setVisibleSmooth(false);
+        }
+
+        void copy_MouseButtonClick(Widget source, EventArgs e)
+        {
+            TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
+            if (currentData != null)
+            {
+                copySourceAction = currentData.Action;
+            }
+        }
+
+        #endregion Edit Menu
 
         #region Other Actions Menu
 
