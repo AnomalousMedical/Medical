@@ -25,6 +25,7 @@ namespace Medical.GUI
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
         private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
         private TimelineAction copySourceAction;
+        private CopySaver copySaver = new CopySaver();
 
         //Menus
         private ShowMenuButton fileMenuButton;
@@ -447,8 +448,7 @@ namespace Medical.GUI
         {
             if (copySourceAction != null)
             {
-                CopySaver copySaver = new CopySaver();
-                TimelineAction copiedAction = (TimelineAction)copySaver.copyObject(copySourceAction);
+                TimelineAction copiedAction = copySaver.copy<TimelineAction>(copySourceAction);
                 copiedAction.StartTime = timelineView.MarkerTime;
                 currentTimeline.addAction(copiedAction);
                 timelineView.CurrentData = actionDataBindings[copiedAction];
@@ -461,7 +461,7 @@ namespace Medical.GUI
             TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
             if (currentData != null)
             {
-                copySourceAction = currentData.Action;
+                copySourceAction = copySaver.copy<TimelineAction>(currentData.Action);
             }
         }
 
