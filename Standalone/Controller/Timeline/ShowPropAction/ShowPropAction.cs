@@ -52,6 +52,7 @@ namespace Medical
             if (propFade != null && timelineTime > endTime - fadeDuration)
             {
                 propFade.fade(0.0f, fadeDuration);
+                propFade = null; //Null this out, we are done with it here.
             }
             finished = timelineTime > endTime;
         }

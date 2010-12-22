@@ -29,6 +29,9 @@ namespace Medical
             Arrow arrowBehavior = new Arrow();
             BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition("Behavior", arrowBehavior);
             arrowSimObject.addElement(arrowBehaviorDef);
+            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
+            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
+            arrowSimObject.addElement(propFadeBehaviorDef);
             propFactory.addDefinition("Arrow", arrowSimObject);
         }
 
