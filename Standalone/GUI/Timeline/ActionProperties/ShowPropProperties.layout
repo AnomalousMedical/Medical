@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="63 113 211 135" layer="Back">
+    <Widget type="Widget" skin="PanelSmall" position="63 113 211 171" layer="Back">
         <Widget type="ComboBox" skin="ComboBox" position="3 21 204 20" name="PropTypeCombo">
             <Property key="Edit_ReadOnly" value="true"/>
             <Property key="Edit_Static" value="true"/>
@@ -16,5 +16,9 @@
         <Widget type="Button" skin="Button" position="3 43 79 20" name="TranslationButton">
             <Property key="Widget_Caption" value="Translation"/>
         </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 130 83 13">
+            <Property key="Widget_Caption" value="Fade Duration"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="3 144 204 20" name="FadeDurationEdit"/>
     </Widget>
 </MyGUI>

@@ -16,6 +16,7 @@ namespace Medical.GUI
         private ComboBox propTypes;
         private Edit translationEdit;
         private Edit rotationEdit;
+        private NumericEdit fadeDurationEdit;
         private ButtonGroup toolButtonGroup = new ButtonGroup();
 
         private Button translationButton;
@@ -32,6 +33,12 @@ namespace Medical.GUI
 
             rotationEdit = mainWidget.findWidget("RotationEdit") as Edit;
             rotationEdit.EventEditSelectAccept += new MyGUIEvent(rotationEdit_EventEditSelectAccept);
+
+            fadeDurationEdit = new NumericEdit(mainWidget.findWidget("FadeDurationEdit") as Edit);
+            fadeDurationEdit.ValueChanged += new MyGUIEvent(fadeDurationEdit_ValueChanged);
+            fadeDurationEdit.MinValue = 0.0f;
+            fadeDurationEdit.MaxValue = 100.0f;
+            fadeDurationEdit.AllowFloat = true;
 
             translationButton = mainWidget.findWidget("TranslationButton") as Button;
             toolButtonGroup.addButton(translationButton);
@@ -67,6 +74,7 @@ namespace Medical.GUI
             Vector3 euler = showProp.Rotation.getEuler();
             euler *= 57.2957795f;
             rotationEdit.Caption = euler.ToString();
+            fadeDurationEdit.FloatValue = showProp.FadeDuration;
             simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
             simObjectMover.addMovableObject("Prop", this);
             simObjectMover.setDrawingSurfaceVisible(true);
@@ -98,6 +106,11 @@ namespace Medical.GUI
             euler *= 0.0174532925f;
             Quaternion rotation = new Quaternion(euler.x, euler.y, euler.z);
             showProp.Rotation = rotation;
+        }
+
+        void fadeDurationEdit_ValueChanged(Widget source, EventArgs e)
+        {
+            showProp.FadeDuration = fadeDurationEdit.FloatValue;
         }
 
         void toolButtonGroup_SelectedButtonChanged(object sender, EventArgs e)

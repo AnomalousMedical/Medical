@@ -19,7 +19,7 @@ namespace Medical
         private Vector3 translation;
         private Quaternion rotation;
 
-        private float fadeDuration = 0.3f;
+        private float fadeDuration;
         PropFadeBehavior propFade;
 
         public ShowPropAction()
@@ -27,6 +27,7 @@ namespace Medical
             propType = "Arrow";
             translation = Vector3.Zero;
             rotation = Quaternion.Identity;
+            fadeDuration = 0.3f;
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -125,6 +126,18 @@ namespace Medical
             }
         }
 
+        public float FadeDuration
+        {
+            get
+            {
+                return fadeDuration;
+            }
+            set
+            {
+                fadeDuration = value;
+            }
+        }
+
         private void makeProp()
         {
             simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
@@ -142,6 +155,7 @@ namespace Medical
         private const String PROP_TYPE = "propType";
         private const String TRANSLATION = "translation";
         private const String ROTATION = "rotation";
+        private const String FADE_DURATION = "fadeDuration";
 
         protected ShowPropAction(LoadInfo info)
             :base(info)
@@ -149,6 +163,7 @@ namespace Medical
             propType = info.GetString(PROP_TYPE, "Arrow");
             translation = info.GetVector3(TRANSLATION, Vector3.Zero);
             rotation = info.GetQuaternion(ROTATION, Quaternion.Identity);
+            fadeDuration = info.GetFloat(FADE_DURATION, 0.3f);
         }
 
         public override void getInfo(SaveInfo info)
@@ -157,6 +172,7 @@ namespace Medical
             info.AddValue(PROP_TYPE, propType);
             info.AddValue(TRANSLATION, translation);
             info.AddValue(ROTATION, rotation);
+            info.AddValue(FADE_DURATION, fadeDuration);
         }
 
         #endregion Saveable
