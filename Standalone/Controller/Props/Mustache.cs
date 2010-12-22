@@ -13,9 +13,9 @@ namespace Medical
         {
             GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition("Mustache");
             leftPointingHand.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(Arrow.EntityName);
+            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Mustache.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(Arrow.NodeName);
+            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             leftPointingHand.addElement(nodeDefinition);
             propFactory.addDefinition("Mustache", leftPointingHand);

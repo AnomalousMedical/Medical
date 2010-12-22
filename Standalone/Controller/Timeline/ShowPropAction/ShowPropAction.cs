@@ -19,6 +19,9 @@ namespace Medical
         private Vector3 translation;
         private Quaternion rotation;
 
+        private float fadeDuration = 0.3f;
+        PropFadeBehavior propFade;
+
         public ShowPropAction()
         {
             propType = "Arrow";
@@ -30,6 +33,12 @@ namespace Medical
         {
             finished = false;
             makeProp();
+            propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+            if (propFade != null)
+            {
+                propFade.hide();
+                propFade.fade(1.0f, fadeDuration);
+            }
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -39,7 +48,12 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            finished = timelineTime > StartTime + Duration;
+            float endTime = StartTime + Duration;
+            if (propFade != null && timelineTime > endTime - fadeDuration)
+            {
+                propFade.fade(0.0f, fadeDuration);
+            }
+            finished = timelineTime > endTime;
         }
 
         public override void editing()
@@ -119,6 +133,7 @@ namespace Medical
         {
             simObject.destroy();
             simObject = null;
+            propFade = null;
         }
 
         #region Saveable

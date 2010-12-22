@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using Engine;
 
 namespace Medical
 {
@@ -13,20 +14,26 @@ namespace Medical
         {
             GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition("PointingHandLeft");
             leftPointingHand.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(Arrow.EntityName);
+            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "PointerLeftHand.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(Arrow.NodeName);
+            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             leftPointingHand.addElement(nodeDefinition);
+            PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
+            BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
+            leftPointingHand.addElement(propFadeBehaviorDef);
             propFactory.addDefinition("PointingHandLeft", leftPointingHand);
 
             GenericSimObjectDefinition rightPointingHand = new GenericSimObjectDefinition("PointingHandRight");
             rightPointingHand.Enabled = true;
-            entityDefinition = new EntityDefinition(Arrow.EntityName);
+            entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "PointerRightHand.mesh";
-            nodeDefinition = new SceneNodeDefinition(Arrow.NodeName);
+            nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             rightPointingHand.addElement(nodeDefinition);
+            propFadeBehavior = new PropFadeBehavior();
+            propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
+            rightPointingHand.addElement(propFadeBehaviorDef);
             propFactory.addDefinition("PointingHandRight", rightPointingHand);
         }
     }

@@ -10,6 +10,10 @@ namespace Medical
 {
     class PropFactory
     {
+        public const String NodeName = "Node";
+        public const String EntityName = "Entity";
+        public const String FadeBehaviorName = "FadeBehavior";
+
         private Dictionary<String, SimObjectDefinition> prototypes = new Dictionary<String, SimObjectDefinition>();
         private SimSubScene subScene;
         private SimScene scene;

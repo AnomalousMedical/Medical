@@ -13,9 +13,6 @@ namespace Medical
 {
     class Arrow : Interface
     {
-        public const String NodeName = "Node";
-        public const String EntityName = "Entity";
-
         private Entity entity;
         private SubEntity subEntity;
         private Color color = Color.Red;
@@ -24,9 +21,9 @@ namespace Medical
         {
             GenericSimObjectDefinition arrowSimObject = new GenericSimObjectDefinition("ArrowPrototype");
             arrowSimObject.Enabled = true;
-            EntityDefinition entityDefinition = new EntityDefinition(Arrow.EntityName);
+            EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Arrow.mesh";
-            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(Arrow.NodeName);
+            SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             arrowSimObject.addElement(nodeDefinition);
             Arrow arrowBehavior = new Arrow();
@@ -44,15 +41,15 @@ namespace Medical
         {
             base.constructed();
 
-            SceneNodeElement sceneNode = Owner.getElement(NodeName) as SceneNodeElement;
+            SceneNodeElement sceneNode = Owner.getElement(PropFactory.NodeName) as SceneNodeElement;
             if (sceneNode == null)
             {
-                blacklist("Could not find SceneNode {0} in Arrow SimObject", NodeName);
+                blacklist("Could not find SceneNode {0} in Arrow SimObject", PropFactory.NodeName);
             }
-            entity = sceneNode.getNodeObject(EntityName) as Entity;
+            entity = sceneNode.getNodeObject(PropFactory.EntityName) as Entity;
             if (entity == null)
             {
-                blacklist("Could not find Entity {0} in Arrow SimObject", EntityName);
+                blacklist("Could not find Entity {0} in Arrow SimObject", PropFactory.EntityName);
             }
             subEntity = entity.getSubEntity(0);
             if (subEntity == null)

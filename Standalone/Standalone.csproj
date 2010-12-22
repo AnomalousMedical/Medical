@@ -109,6 +109,7 @@
     <Compile Include="Controller\Props\Arrow.cs" />
     <Compile Include="Controller\Props\Mustache.cs" />
     <Compile Include="Controller\Props\PointingHand.cs" />
+    <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
     <Compile Include="Controller\Props\Ruler.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
