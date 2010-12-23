@@ -11,14 +11,14 @@ namespace Medical
     {
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition("Mustache");
-            leftPointingHand.Enabled = true;
+            GenericSimObjectDefinition mustache = new GenericSimObjectDefinition("Mustache");
+            mustache.Enabled = true;
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
             entityDefinition.MeshName = "Mustache.mesh";
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
-            leftPointingHand.addElement(nodeDefinition);
-            propFactory.addDefinition("Mustache", leftPointingHand);
+            mustache.addElement(nodeDefinition);
+            propFactory.addDefinition("Mustache", mustache);
         }
     }
 }

@@ -179,6 +179,7 @@ namespace Standalone
             Arrow.createPropDefinition(propFactory);
             Ruler.createPropDefinition(propFactory);
             PointingHand.createPropDefinition(propFactory);
+            Doppler.createPropDefinition(propFactory);
             //Mustache.createPropDefinition(propFactory);
 
             //Timeline

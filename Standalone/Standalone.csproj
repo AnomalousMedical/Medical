@@ -107,6 +107,7 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\Props\Arrow.cs" />
+    <Compile Include="Controller\Props\Doppler.cs" />
     <Compile Include="Controller\Props\Mustache.cs" />
     <Compile Include="Controller\Props\PointingHand.cs" />
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
