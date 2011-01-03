@@ -553,6 +553,11 @@ namespace Standalone
                 cameraFile += "/DopplerCameras.cam";
                 layersFile += "/DopplerLayers.lay";
             }
+
+            //temp, load different layers file
+            layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFileDirectory + "/StandaloneLayers.lay";
+            //end temp
+
             layerController.loadLayerStateSet(layersFile);
             //Load camera file, merge baseline cameras if the cameras changed
             if (navigationController.loadNavigationSetIfDifferent(cameraFile))

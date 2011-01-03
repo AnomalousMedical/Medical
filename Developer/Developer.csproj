@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C44C0096-044F-4B60-A742-4AC121964774}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -100,13 +100,11 @@
   <ItemGroup>
     <Compile Include="Controller\DeveloperController.cs" />
     <Compile Include="GUI\DebugVisualizer\DebugVisualizer.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\DebugVisualizer\DebugVisualizer.designer.cs">
       <DependentUpon>DebugVisualizer.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.Designer.cs">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
@@ -115,19 +113,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.Designer.cs">
       <DependentUpon>FossaPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.Designer.cs">
       <DependentUpon>NavigationEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.Designer.cs">
       <DependentUpon>NavigationMenuEditor.cs</DependentUpon>
@@ -139,19 +134,16 @@
       <DependentUpon>PicturePreviewPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.Designer.cs">
       <DependentUpon>PresetLayerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.Designer.cs">
       <DependentUpon>BonePresetSaveWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StateDistortionEditor\StateDistortionEditor.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StateDistortionEditor\StateDistortionEditor.Designer.cs">
       <DependentUpon>StateDistortionEditor.cs</DependentUpon>
@@ -160,6 +152,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\DebugVisualizer\DebugVisualizer.resx">
       <DependentUpon>DebugVisualizer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\DiscPresetEditor\DiscPresetEditor.resx">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
@@ -191,6 +184,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StateDistortionEditor\StateDistortionEditor.resx">
       <DependentUpon>StateDistortionEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

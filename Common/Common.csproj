@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7185582B-5482-4148-82B0-263477681B01}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -195,7 +195,6 @@
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\Config\Options.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Config\Options.Designer.cs">
       <DependentUpon>Options.cs</DependentUpon>
@@ -214,7 +213,6 @@
     </Compile>
     <Compile Include="GUI\Loading\ProgressDialog.cs" />
     <Compile Include="GUI\MedicalForm.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Navigation\NavigationOverlay.cs" />
     <Compile Include="GUI\Navigation\NavigationButton.cs">
@@ -381,7 +379,6 @@
       <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\States\OpenPatientDialog.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\States\OpenPatientDialog.Designer.cs">
       <DependentUpon>OpenPatientDialog.cs</DependentUpon>
@@ -389,7 +386,6 @@
     <Compile Include="GUI\States\PatientBindingSource.cs">
     </Compile>
     <Compile Include="GUI\States\SavePatientDialog.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\States\SavePatientDialog.Designer.cs">
       <DependentUpon>SavePatientDialog.cs</DependentUpon>
@@ -581,9 +577,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\BoneManipulator\HeightComboSlider.resx">
       <DependentUpon>HeightComboSlider.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\BoneManipulator\HeightControl.resx">
       <DependentUpon>HeightControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Config\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
@@ -591,9 +589,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Grid\GridPropertiesControl.resx">
       <DependentUpon>GridPropertiesControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Notes\StateNotesPanel.resx">
       <DependentUpon>StateNotesPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\ScenePicker\ScenePicker.resx">
       <DependentUpon>ScenePicker.cs</DependentUpon>
@@ -605,21 +605,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DisclaimerPanel.resx">
       <DependentUpon>DisclaimerPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscSpace\DiscSpaceControl.resx">
       <DependentUpon>DiscSpaceControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\DiscSpace\DiscSpacePanel.resx">
       <DependentUpon>DiscSpacePanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Doppler\DopplerControl.resx">
       <DependentUpon>DopplerControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Doppler\DopplerPanel.resx">
       <DependentUpon>DopplerPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\FileBrowserPickerPanel.resx">
       <DependentUpon>FileBrowserPickerPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\LeftCondylarDegenrationPanel.resx">
       <DependentUpon>LeftCondylarDegenrationPanel.cs</DependentUpon>
@@ -631,6 +637,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\FossaPanel.resx">
       <DependentUpon>FossaPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\NotesPanel.resx">
       <DependentUpon>NotesPanel.cs</DependentUpon>
@@ -638,6 +645,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\ProfileDistortionPanel.resx">
       <DependentUpon>ProfileDistortionPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\RightCondylarDegenerationPanel.resx">
       <DependentUpon>RightCondylarDegenerationPanel.cs</DependentUpon>
@@ -657,9 +665,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Teeth\TeethHeightAdaptationPanel.resx">
       <DependentUpon>TeethHeightAdaptationPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Teeth\TeethMovementPanel.resx">
       <DependentUpon>TeethMovementPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\StatePicker\Teeth\TopTeethRemovalPanel.resx">
       <DependentUpon>TopTeethRemovalPanel.cs</DependentUpon>
