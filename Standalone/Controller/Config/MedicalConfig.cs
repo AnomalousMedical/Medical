@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using Engine;
 using Engine.Resources;
+using Engine.Platform;
+using Logging;
 
 namespace Medical
 {
@@ -216,6 +218,32 @@ namespace Medical
             {
                 transparencyChangeMultiplier = value;
                 program.setValue("TransparencyChangeMultiplier", value);
+            }
+        }
+
+        public static MouseButtonCode CameraMouseButton
+        {
+            get
+            {
+#if MAC_OSX
+                MouseButtonCode buttonCode = MouseButtonCode.MB_BUTTON0;
+#else
+                MouseButtonCode buttonCode = MouseButtonCode.MB_BUTTON1;
+#endif
+                String mouseButton = program.getValue("CameraMouseButton", buttonCode.ToString());
+                try
+                {
+                    buttonCode = (MouseButtonCode)Enum.Parse(typeof(MouseButtonCode), mouseButton);
+                }
+                catch (Exception e)
+                {
+                    Log.Warning("Could not parse the mouse button code {0}. Using default.", mouseButton);
+                }
+                return buttonCode;
+            }
+            set
+            {
+                program.setValue("CameraMouseButton", value.ToString());
             }
         }
     }

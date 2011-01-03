@@ -100,11 +100,13 @@
   <ItemGroup>
     <Compile Include="Controller\DeveloperController.cs" />
     <Compile Include="GUI\DebugVisualizer\DebugVisualizer.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\DebugVisualizer\DebugVisualizer.designer.cs">
       <DependentUpon>DebugVisualizer.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\DiscPresetEditor\DiscPresetEditor.Designer.cs">
       <DependentUpon>DiscPresetEditor.cs</DependentUpon>
@@ -113,16 +115,19 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\FossaPresetEditor\FossaPresetEditor.Designer.cs">
       <DependentUpon>FossaPresetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationEditor.Designer.cs">
       <DependentUpon>NavigationEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\NavigationEditor\NavigationMenuEditor.Designer.cs">
       <DependentUpon>NavigationMenuEditor.cs</DependentUpon>
@@ -134,16 +139,19 @@
       <DependentUpon>PicturePreviewPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\PresetLayerEditor\PresetLayerEditor.Designer.cs">
       <DependentUpon>PresetLayerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\SavePresetState\BonePresetSaveWindow.Designer.cs">
       <DependentUpon>BonePresetSaveWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\StateDistortionEditor\StateDistortionEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\StateDistortionEditor\StateDistortionEditor.Designer.cs">
       <DependentUpon>StateDistortionEditor.cs</DependentUpon>

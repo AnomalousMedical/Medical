@@ -25,19 +25,24 @@ namespace Medical
         private readonly Vector3 LOOK_AT_BOUND_MAX = new Vector3(15.0f, 15.0f, 15.0f);
         private readonly Vector3 LOOK_AT_BOUND_MIN = new Vector3(-15.0f, -20.0f, -15.0f);
 
+        private static MouseButtonCode currentMouseButton = MedicalConfig.CameraMouseButton;
+        private static MessageEvent rotateCamera;
+        private static MessageEvent panCamera;
+        private static MessageEvent zoomCamera;
+
         static OrbitCameraController()
         {
-            MessageEvent rotateCamera = new MessageEvent(CameraEvents.RotateCamera);
-            rotateCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            rotateCamera = new MessageEvent(CameraEvents.RotateCamera);
+            rotateCamera.addButton(currentMouseButton);
             DefaultEvents.registerDefaultEvent(rotateCamera);
 
-            MessageEvent panCamera = new MessageEvent(CameraEvents.PanCamera);
-            panCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            panCamera = new MessageEvent(CameraEvents.PanCamera);
+            panCamera.addButton(currentMouseButton);
             panCamera.addButton(KeyboardButtonCode.KC_LCONTROL);
             DefaultEvents.registerDefaultEvent(panCamera);
 
-            MessageEvent zoomCamera = new MessageEvent(CameraEvents.ZoomCamera);
-            zoomCamera.addButton(MouseButtonCode.MB_BUTTON1);
+            zoomCamera = new MessageEvent(CameraEvents.ZoomCamera);
+            zoomCamera.addButton(currentMouseButton);
             zoomCamera.addButton(KeyboardButtonCode.KC_LMENU);
             DefaultEvents.registerDefaultEvent(zoomCamera);
 
@@ -48,6 +53,19 @@ namespace Medical
             MessageEvent lockY = new MessageEvent(CameraEvents.LockY);
             lockY.addButton(KeyboardButtonCode.KC_X);
             DefaultEvents.registerDefaultEvent(lockY);
+        }
+
+        public static void changeMouseButton(MouseButtonCode newMouseButton)
+        {
+            rotateCamera.removeButton(currentMouseButton);
+            panCamera.removeButton(currentMouseButton);
+            zoomCamera.removeButton(currentMouseButton);
+
+            currentMouseButton = newMouseButton;
+
+            rotateCamera.addButton(currentMouseButton);
+            panCamera.addButton(currentMouseButton);
+            zoomCamera.addButton(currentMouseButton);
         }
 
         private const float HALF_PI = (float)Math.PI / 2.0f - 0.001f;

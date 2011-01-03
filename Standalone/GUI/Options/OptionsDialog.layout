@@ -1,37 +1,37 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="63 113 230 270" layer="Modal">
+    <Widget type="Window" skin="WindowCX" position="63 113 230 312" layer="Modal">
         <Property key="Widget_Caption" value="Options"/>
-        <Property key="Window_MinSize" value="230 270"/>
-        <Property key="Window_MaxSize" value="230 270"/>
-        <Widget type="StaticText" skin="StaticText" position="6 86 76 15">
+        <Property key="Window_MinSize" value="230 312"/>
+        <Property key="Window_MaxSize" value="230 312"/>
+        <Widget type="StaticText" skin="StaticText" position="6 126 76 15">
             <Property key="Widget_Caption" value="Anti Aliasing"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="8 100 214 23" name="AACombo">
+        <Widget type="ComboBox" skin="ComboBox" position="8 140 214 23" name="AACombo">
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="6 188 107 15" name="VSyncCheck">
+        <Widget type="Button" skin="CheckBox" position="6 228 107 15" name="VSyncCheck">
             <Property key="Widget_Caption" value="Vertical Sync"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="6 172 111 15" name="FullscreenCheck">
+        <Widget type="Button" skin="CheckBox" position="6 212 111 15" name="FullscreenCheck">
             <Property key="Widget_Caption" value="Fullscreen"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="6 128 70 15">
+        <Widget type="StaticText" skin="StaticText" position="6 168 70 15">
             <Property key="Widget_Caption" value="Resolution"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="8 142 214 23" name="ResolutionCombo">
+        <Widget type="ComboBox" skin="ComboBox" position="8 182 214 23" name="ResolutionCombo">
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 67 105 15">
+        <Widget type="StaticText" skin="StaticText" position="4 107 105 15">
             <Property key="Widget_Caption" value="Graphics Options"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="6 204 114 15" name="ShowStatsCheck">
+        <Widget type="Button" skin="CheckBox" position="6 244 114 15" name="ShowStatsCheck">
             <Property key="Widget_Caption" value="Show Statistics"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="25 224 88 25" name="ApplyButton">
+        <Widget type="Button" skin="Button" position="25 265 88 25" align="Left Bottom" name="ApplyButton">
             <Property key="Widget_Caption" value="Apply"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="116 224 88 25" name="CancelButton">
+        <Widget type="Button" skin="Button" position="116 265 88 25" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 4 105 15">
@@ -46,7 +46,14 @@
             <Property key="ComboBox_AddItem" value="Normal"/>
             <Property key="ComboBox_AddItem" value="Slow"/>
         </Widget>
-        <Widget type="Widget" skin="Separator1" position="1 63 229 1"/>
-        <Widget type="Widget" skin="Separator1" position="1 220 229 1"/>
+        <Widget type="Widget" skin="Separator1" position="1 103 229 1"/>
+        <Widget type="Widget" skin="Separator1" position="1 261 229 1"/>
+        <Widget type="StaticText" skin="StaticText" position="6 62 155 15">
+            <Property key="Widget_Caption" value="Camera Mouse Button"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="8 76 214 23" name="CameraButtonCombo">
+            <Property key="ComboBox_AddItem" value="Left"/>
+            <Property key="ComboBox_AddItem" value="Right"/>
+        </Widget>
     </Widget>
 </MyGUI>

@@ -7,6 +7,7 @@ using OgreWrapper;
 using OgrePlugin;
 using Logging;
 using System.Text.RegularExpressions;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -18,6 +19,7 @@ namespace Medical.GUI
 
         private ComboBox aaCombo;
         private ComboBox resolutionCombo;
+        private ComboBox cameraButtonCombo;
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
@@ -34,6 +36,7 @@ namespace Medical.GUI
 
             aaCombo = window.findWidget("AACombo") as ComboBox;
             resolutionCombo = window.findWidget("ResolutionCombo") as ComboBox;
+            cameraButtonCombo = window.findWidget("CameraButtonCombo") as ComboBox;
 
             RenderSystem rs = Root.getSingleton().getRenderSystem();
             if (rs.hasConfigOption("FSAA"))
@@ -98,6 +101,9 @@ namespace Medical.GUI
                 cameraSpeedCombo.SelectedIndex = 0;
             }
 
+            MouseButtonCode cameraButtonCode = MedicalConfig.CameraMouseButton;
+            cameraButtonCombo.SelectedIndex = (uint)cameraButtonCode;
+
             //Graphics Options
             aaCombo.SelectedIndex = aaCombo.findItemIndexWith(OgreConfig.FSAA);
             fullscreenCheck.Checked = MedicalConfig.EngineConfig.Fullscreen;
@@ -157,6 +163,9 @@ namespace Medical.GUI
                     break;
             }
             MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
+            MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
+            MedicalConfig.CameraMouseButton = cameraButtonCode;
+            OrbitCameraController.changeMouseButton(cameraButtonCode);
 
             bool videoOptionsChanged = false;
 
