@@ -10,8 +10,8 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Prop", 128 / 255f, 0 / 255f, 255 / 255f, GUIType = typeof(ShowPropProperties))]
-    class ShowPropAction : TimelineAction
+    [TimelineActionProperties("Show Prop")]
+    public class ShowPropAction : TimelineAction
     {
         private bool finished;
         private SimObjectBase simObject;

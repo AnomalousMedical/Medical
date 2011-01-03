@@ -16,9 +16,9 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    delegate void TimeTickEvent(float currentTime);
+    public delegate void TimeTickEvent(float currentTime);
 
-    class TimelineController : UpdateListener
+    public class TimelineController : UpdateListener
     {
         private const String INDEX_FILE_NAME = "index.tix";
 
@@ -213,7 +213,7 @@ namespace Medical
             }
         }
 
-        internal void createProject(string projectName)
+        public void createProject(string projectName)
         {
             using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
             {

@@ -7,7 +7,7 @@ namespace Medical
 {
     public delegate void ContinuePromptCallback();
 
-    abstract class ContinuePromptProvider
+    public abstract class ContinuePromptProvider
     {
         private ContinuePromptCallback callback;
 

@@ -6,12 +6,12 @@ using Engine.Platform;
 
 namespace Medical
 {
-    delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
-    delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
-    delegate void MedicalStateEvent(MedicalStateController controller);
-    delegate void MedicalStateStatusUpdate(MedicalState state);
+    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
+    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
+    public delegate void MedicalStateEvent(MedicalStateController controller);
+    public delegate void MedicalStateStatusUpdate(MedicalState state);
 
-    class MedicalStateController : IDisposable
+    public class MedicalStateController : IDisposable
     {
         private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
 

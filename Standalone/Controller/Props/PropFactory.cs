@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical
 {
-    class PropFactory
+    public class PropFactory
     {
         public const String NodeName = "Node";
         public const String EntityName = "Entity";

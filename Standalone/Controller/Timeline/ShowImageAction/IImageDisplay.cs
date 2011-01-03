@@ -10,7 +10,7 @@ namespace Medical
     /// <summary>
     /// This interface abstracts how the timelines display images.
     /// </summary>
-    interface IImageDisplay : IDisposable
+    public interface IImageDisplay : IDisposable
     {
         /// <summary>
         /// Set the image for this IImageDisplay.

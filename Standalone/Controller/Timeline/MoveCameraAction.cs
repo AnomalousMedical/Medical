@@ -9,8 +9,8 @@ using Medical.Controller;
 
 namespace Medical
 {
-    [TimelineActionProperties("Move Camera", 192 / 255f, 80 / 255f, 77 / 255f, GUIType=typeof(Medical.GUI.MoveCameraProperties))]
-    class MoveCameraAction : TimelineAction
+    [TimelineActionProperties("Move Camera")]
+    public class MoveCameraAction : TimelineAction
     {
         private float lastTime;
 

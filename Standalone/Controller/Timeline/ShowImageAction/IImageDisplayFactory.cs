@@ -8,7 +8,7 @@ namespace Medical
     /// <summary>
     /// This class produces IImageDisplays as needed for the Timeline.
     /// </summary>
-    interface IImageDisplayFactory
+    public interface IImageDisplayFactory
     {
         IImageDisplay createImageDisplay();
     }

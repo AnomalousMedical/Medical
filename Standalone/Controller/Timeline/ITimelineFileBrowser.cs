@@ -7,7 +7,7 @@ namespace Medical
 {
     public delegate void FileChosenCallback(String filename);
 
-    interface ITimelineFileBrowser
+    public interface ITimelineFileBrowser
     {
         void promptForFile(String filterString, FileChosenCallback callback);
     }

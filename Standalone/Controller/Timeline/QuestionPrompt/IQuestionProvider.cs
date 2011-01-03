@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Medical
 {
-    delegate void PromptAnswerSelected(PromptAnswer answer);
+    public delegate void PromptAnswerSelected(PromptAnswer answer);
 
-    interface IQuestionProvider
+    public interface IQuestionProvider
     {
         void addQuestion(PromptQuestion question);
 

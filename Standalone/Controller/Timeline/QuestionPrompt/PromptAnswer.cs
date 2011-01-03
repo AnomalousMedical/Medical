@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class PromptAnswer : Saveable
+    public class PromptAnswer : Saveable
     {
         public PromptAnswer()
         {

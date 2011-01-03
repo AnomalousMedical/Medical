@@ -8,8 +8,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Play Sound", 0 / 255f, 0 / 255f, 0 / 255f, GUIType=typeof(Medical.GUI.PlaySoundProperties))]
-    class PlaySoundAction : TimelineAction
+    public class PlaySoundAction : TimelineAction
     {
         private bool finished = false;
         private Source source;

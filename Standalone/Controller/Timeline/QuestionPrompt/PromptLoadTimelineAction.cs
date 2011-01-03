@@ -7,7 +7,7 @@ using Logging;
 
 namespace Medical
 {
-    class PromptLoadTimelineAction : PromptAnswerAction
+    public class PromptLoadTimelineAction : PromptAnswerAction
     {
         public PromptLoadTimelineAction()
         {

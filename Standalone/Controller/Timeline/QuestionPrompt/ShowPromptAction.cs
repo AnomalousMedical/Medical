@@ -7,7 +7,7 @@ using Logging;
 
 namespace Medical
 {
-    class ShowPromptAction : TimelineInstantAction
+    public class ShowPromptAction : TimelineInstantAction
     {
         private List<PromptQuestion> questions = new List<PromptQuestion>();
 

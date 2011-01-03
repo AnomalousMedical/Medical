@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    interface PromptAnswerAction : Saveable
+    public interface PromptAnswerAction : Saveable
     {
         void execute(TimelineController timelineController);
     }

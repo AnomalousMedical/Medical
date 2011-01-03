@@ -23,9 +23,9 @@ namespace Medical.GUI
         private TimelineView timelineView;
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
-        private Dictionary<String, TimelineActionProperties> properties = new Dictionary<string, TimelineActionProperties>();
         private TimelineAction copySourceAction;
         private CopySaver copySaver = new CopySaver();
+        private TimelineActionFactory actionFactory;
 
         //Menus
         private ShowMenuButton fileMenuButton;
@@ -147,23 +147,14 @@ namespace Medical.GUI
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 
             //Add tracks to timeline.
-            object[] args = { propertiesScrollView };
-            foreach (TimelineActionProperties actionProp in TimelineActionFactory.ActionProperties)
+            actionFactory = new TimelineActionFactory(propertiesScrollView);
+            foreach (TimelineActionFactoryData actionProp in actionFactory.ActionProperties)
             {
                 timelineView.addTrack(actionProp.TypeName, actionProp.Color);
-                properties.Add(actionProp.TypeName, actionProp);
 
-                if (actionProp.GUIType != null)
+                if (actionProp.Panel != null)
                 {
-                    try
-                    {
-                        TimelineDataPanel propPanel = (TimelineDataPanel)Activator.CreateInstance(actionProp.GUIType, args);
-                        dataProperties.addPanel(actionProp.TypeName, propPanel);
-                    }
-                    catch (Exception)
-                    {
-                        throw new Exception(String.Format("Could not create the GUI for {0}. Make sure it extends ActionPropertiesPanel and has a constructor that takes a Widget."));
-                    }
+                    dataProperties.addPanel(actionProp.TypeName, actionProp.Panel);
                 }
             }
 
@@ -174,6 +165,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            actionFactory.Dispose();
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
             timelineController.FileBrowser = null;
@@ -256,7 +248,7 @@ namespace Medical.GUI
 
         void actionFilter_AddTrackItem(string name)
         {
-            TimelineAction action = TimelineActionFactory.createAction(properties[name]);
+            TimelineAction action = actionFactory.createAction(name);
             action.StartTime = timelineView.MarkerTime;
             currentTimeline.addAction(action);
             action.capture();

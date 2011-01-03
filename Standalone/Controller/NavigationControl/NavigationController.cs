@@ -12,9 +12,9 @@ using MyGUIPlugin;
 
 namespace Medical.Controller
 {
-    delegate void NavigationControllerEvent(NavigationController controller);
+    public delegate void NavigationControllerEvent(NavigationController controller);
 
-    class NavigationController : IDisposable
+    public class NavigationController : IDisposable
     {
         static MessageEvent toggleNavigation;
 

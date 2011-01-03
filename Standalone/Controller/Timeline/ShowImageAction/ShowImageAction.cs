@@ -8,8 +8,8 @@ using Engine;
 
 namespace Medical
 {
-    [TimelineActionProperties("Show Image", 31 / 255f, 73 / 255f, 125 / 255f, GUIType = typeof(Medical.GUI.ShowImageProperties))]
-    class ShowImageAction : TimelineAction
+    [TimelineActionProperties("Show Image")]
+    public class ShowImageAction : TimelineAction
     {
         private bool finished = false;
         private IImageDisplay imageDisplay;

@@ -7,8 +7,8 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Layers", 155 / 255f, 187 / 255f, 89 / 255f, GUIType=typeof(Medical.GUI.LayerChangeProperties))]
-    class LayerChangeAction : TimelineAction
+    [TimelineActionProperties("Change Layers")]
+    public class LayerChangeAction : TimelineAction
     {
         private bool finished = false;
 

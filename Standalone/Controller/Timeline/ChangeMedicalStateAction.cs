@@ -7,8 +7,8 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Change Medical State", 128 / 255f, 0 / 255f, 255 / 255f, GUIType=typeof(Medical.GUI.ChangeMedicalStateProperties))]
-    class ChangeMedicalStateAction : TimelineAction
+    [TimelineActionProperties("Change Medical State")]
+    public class ChangeMedicalStateAction : TimelineAction
     {
         private bool finished = false;
 

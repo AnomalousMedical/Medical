@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    abstract class TimelineInstantAction : Saveable
+    public abstract class TimelineInstantAction : Saveable
     {
         private Timeline timeline;
 

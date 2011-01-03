@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standalone", "Standalone\St
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OSHelper", "OSHelper\OSHelper.vcproj", "{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{18F80BE1-DD03-4F78-AF02-9F61258B6720}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +110,26 @@ Global
 		{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}.Release|Win32.ActiveCfg = Release|Win32
 		{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}.Release|Win32.Build.0 = Release|Win32
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.MacRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.MacRelease|Any CPU.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.MacRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.MacRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.MacRelease|Win32.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{18F80BE1-DD03-4F78-AF02-9F61258B6720}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

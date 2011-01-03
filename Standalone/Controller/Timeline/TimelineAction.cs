@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    abstract class TimelineAction : Saveable
+    public abstract class TimelineAction : Saveable
     {
         private Timeline timeline;
 
@@ -21,7 +21,7 @@ namespace Medical
             this.timeline = timeline;
         }
 
-        internal void _sortAction()
+        public void _sortAction()
         {
             timeline._actionStartChanged(this);
         }

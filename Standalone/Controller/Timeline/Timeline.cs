@@ -7,7 +7,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class TimelineActionEventArgs : EventArgs
+    public class TimelineActionEventArgs : EventArgs
     {
         public TimelineActionEventArgs(TimelineAction action, int index)
         {
@@ -32,7 +32,7 @@ namespace Medical
         public bool IndexChanged { get { return OldIndex != Index; } }
     }
 
-    class Timeline : Saveable
+    public class Timeline : Saveable
     {
         public event EventHandler<TimelineActionEventArgs> ActionAdded;
         public event EventHandler<TimelineActionEventArgs> ActionRemoved;

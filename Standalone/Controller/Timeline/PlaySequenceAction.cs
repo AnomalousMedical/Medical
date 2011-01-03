@@ -8,8 +8,8 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Play Sequence", 31 / 255f, 73 / 255f, 125 / 255f, GUIType=typeof(Medical.GUI.PlaySequenceProperties))]
-    class PlaySequenceAction : TimelineAction
+    [TimelineActionProperties("Play Sequence")]
+    public class PlaySequenceAction : TimelineAction
     {
         private float lastTime;
 

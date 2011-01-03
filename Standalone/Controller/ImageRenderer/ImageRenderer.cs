@@ -22,7 +22,7 @@ namespace Medical
         }
     }
 
-    class ImageRenderer
+    public class ImageRenderer
     {
         private static readonly String TRANSPARENCY_STATE = "ImageRenderer";
 

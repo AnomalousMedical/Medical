@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class TimelineIndexItem : Saveable
+    public class TimelineIndexItem : Saveable
     {
         public TimelineIndexItem(String timelineName)
         {

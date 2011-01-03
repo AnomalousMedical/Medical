@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    class LoadAnotherTimeline : TimelineInstantAction
+    public class LoadAnotherTimeline : TimelineInstantAction
     {
         private bool showContinuePrompt = false;
 

@@ -23,7 +23,7 @@ namespace Standalone
 {
     public delegate void SceneEvent(SimScene scene);
 
-    class StandaloneController : IDisposable
+    public class StandaloneController : IDisposable
     {
         //Events
         public event SceneEvent SceneLoaded;

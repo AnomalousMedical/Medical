@@ -34,7 +34,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
-        private TimelineProperties timelineProperties;
+        //private TimelineProperties timelineProperties;
         private MovementSequenceEditor movementSequenceEditor;
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
@@ -82,8 +82,8 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(layers);
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(stateList);
-            timelineProperties = new TimelineProperties(standaloneController.TimelineController);
-            dialogManager.addManagedDialog(timelineProperties);
+            //timelineProperties = new TimelineProperties(standaloneController.TimelineController);
+            //dialogManager.addManagedDialog(timelineProperties);
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(movementSequenceEditor);
             advancedLayerControl = new AdvancedLayerControl();
@@ -106,7 +106,7 @@ namespace Medical.GUI
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
+            //taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
 
             taskbar.Child = innerBorderLayout;
