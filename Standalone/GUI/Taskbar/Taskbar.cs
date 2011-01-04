@@ -20,7 +20,7 @@ namespace Medical.GUI
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
-        internal Taskbar(PiperJBOGUI piperGUI, AppMenu appMenu, StandaloneController controller)
+        internal Taskbar(AppMenu appMenu, StandaloneController controller)
         {
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 

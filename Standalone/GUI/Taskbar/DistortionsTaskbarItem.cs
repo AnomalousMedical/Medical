@@ -10,10 +10,10 @@ namespace Medical.GUI
     {
         private DistortionsPopup distortionsPopup;
 
-        public DistortionsTaskbarItem(StateWizardController wizardController, PiperJBOGUI piperGUI)
+        public DistortionsTaskbarItem(StateWizardController wizardController, GUIManager guiManager)
             :base("Distortions", "RigidBody")
         {
-            distortionsPopup = new DistortionsPopup(wizardController, piperGUI);
+            distortionsPopup = new DistortionsPopup(wizardController, guiManager);
         }
 
         public override void Dispose()

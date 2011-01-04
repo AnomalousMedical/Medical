@@ -28,7 +28,7 @@ namespace Medical
             timelineProperties.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI)
+        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
             this.standaloneController = standaloneController;
         }

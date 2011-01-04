@@ -14,7 +14,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    public class PiperJBOGUI : IDisposable
+    public class GUIManager : IDisposable
     {
         private static String INTERFACE_NAME = typeof(GUIPlugin).Name;
 
@@ -38,7 +38,7 @@ namespace Medical.GUI
         private List<GUIPlugin> plugins = new List<GUIPlugin>();
         private AppMenu appMenu;
 
-        public PiperJBOGUI(StandaloneController standaloneController)
+        public GUIManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
@@ -114,9 +114,9 @@ namespace Medical.GUI
             Gui gui = Gui.Instance;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
-            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(PiperJBOGUI).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
 
-            typeof(PiperJBOGUI).Assembly.GetManifestResourceNames();
+            typeof(GUIManager).Assembly.GetManifestResourceNames();
 
             gui.load("Imagesets.xml");
 
@@ -142,7 +142,7 @@ namespace Medical.GUI
             }
             
             //Taskbar
-            taskbar = new Taskbar(this, appMenu, standaloneController);
+            taskbar = new Taskbar(appMenu, standaloneController);
             taskbar.SuppressLayout = true;
             foreach (GUIPlugin plugin in plugins)
             {

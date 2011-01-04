@@ -25,7 +25,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
 
         private PiperJBOAppMenu appMenu;
-        private PiperJBOGUI mainGUI;
+        private GUIManager guiManager;
         private PiperJBOWizards wizards;
 
         public PiperJBOGUIPlugin()
@@ -47,12 +47,12 @@ namespace Medical.GUI
             stateList.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI)
+        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
-            this.mainGUI = mainGUI;
+            this.guiManager = guiManager;
             this.standaloneController = standaloneController;
             appMenu = new PiperJBOAppMenu(this, standaloneController);
-            mainGUI.setAppMenu(appMenu);
+            guiManager.setAppMenu(appMenu);
         }
 
         public void createDialogs(DialogManager dialogManager)
@@ -86,7 +86,7 @@ namespace Medical.GUI
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             //Wizards
-            wizards = new PiperJBOWizards(mainGUI.StateWizardPanelController, mainGUI.StateWizardController);
+            wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
         }
 
         public void addToTaskbar(Taskbar taskbar)
@@ -94,7 +94,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DistortionsTaskbarItem(mainGUI.StateWizardController, mainGUI));
+            taskbar.addItem(new DistortionsTaskbarItem(guiManager.StateWizardController, guiManager));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));

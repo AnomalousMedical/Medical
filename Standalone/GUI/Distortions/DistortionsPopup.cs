@@ -13,18 +13,18 @@ namespace Medical.GUI
         private Widget mainWidget;
         private PopupContainer popupContainer;
 
-        private PiperJBOGUI piperGUI;
+        private GUIManager guiManager;
 
         private List<Button> buttons = new List<Button>();
 
-        public DistortionsPopup(StateWizardController stateWizardController, PiperJBOGUI piperGUI)
+        public DistortionsPopup(StateWizardController stateWizardController, GUIManager guiManager)
         {
             layout = LayoutManager.Instance.loadLayout("Medical.GUI.Distortions.DistortionsPopup.layout");
             mainWidget = layout.getWidget(0);
             mainWidget.Visible = false;
             popupContainer = new PopupContainer(mainWidget);
 
-            this.piperGUI = piperGUI;
+            this.guiManager = guiManager;
 
             Widget anatomyDistortionPanel = mainWidget.findWidget("AnatomyDistortionPanel");
             Widget examDistortionPanel = mainWidget.findWidget("ExamDistortionPanel");
@@ -101,7 +101,7 @@ namespace Medical.GUI
         void wizardButton_MouseButtonClick(Widget source, EventArgs e)
         {
             popupContainer.hide();
-            piperGUI.startWizard(source.UserObject as StateWizard);
+            guiManager.startWizard(source.UserObject as StateWizard);
         }
     }
 }

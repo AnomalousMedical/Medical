@@ -67,8 +67,8 @@ namespace Medical
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
                         controller = new StandaloneController();
-                        controller.GUI.addPlugin(new PiperJBOGUIPlugin());
-                        controller.GUI.addPlugin("Editor.dll");
+                        controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
+                        controller.GUIManager.addPlugin("Editor.dll");
                         controller.go();
                         startupSuceeded = true;
                     }

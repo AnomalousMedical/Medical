@@ -179,7 +179,7 @@
     <Compile Include="GUI\Distortions\DistortionsPopup.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
-    <Compile Include="GUI\PiperJBOGUI.cs" />
+    <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\QuickView\NavigationMenu.cs" />
     <Compile Include="GUI\QuickView\NavigationShortcut.cs" />
     <Compile Include="GUI\QuickView\QuickViewPopup.cs" />

@@ -35,15 +35,15 @@ namespace Medical.GUI
         private StateWizard currentWizard;
 
         //UI
-        private PiperJBOGUI basicGUI;
+        private GUIManager guiManager;
         private BorderLayoutContainer screenLayout;
         private CrossFadeLayoutContainer crossFadeContainer;
         private StateWizardButtons stateWizardButtons;
         private WizardIconPanel wizardIconPanel;
 
-        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, PiperJBOGUI basicGUI)
+        public StateWizardController(UpdateTimer mainTimer, TemporaryStateBlender stateBlender, NavigationController navigationController, LayerController layerController, GUIManager guiManager)
         {
-            this.basicGUI = basicGUI;
+            this.guiManager = guiManager;
             this.stateBlender = stateBlender;
             this.navigationController = navigationController;
             this.layerController = layerController;
@@ -83,8 +83,8 @@ namespace Medical.GUI
                 wizardIconPanel.SuppressLayout = false;
                 wizardIconPanel.invalidate();
                 currentWizard.showPanel(currentIndex);
-                basicGUI.changeLeftPanel(screenLayout);
-                basicGUI.changeTopPanel(wizardIconPanel.LayoutContainer);
+                guiManager.changeLeftPanel(screenLayout);
+                guiManager.changeTopPanel(wizardIconPanel.LayoutContainer);
             }
         }
 
@@ -95,8 +95,8 @@ namespace Medical.GUI
                 currentWizard.hidePanel(currentIndex);
                 wizardIconPanel.clearPanels();
                 crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
-                basicGUI.changeLeftPanel(null);
-                basicGUI.resetTopPanel();
+                guiManager.changeLeftPanel(null);
+                guiManager.resetTopPanel();
                 currentWizard = null;
                 CurrentSceneView.setPosition(cameraTranslationBeforeShown, cameraLookAtBeforeShown);
                 layerController.applyLayerState(layerStatusBeforeShown);

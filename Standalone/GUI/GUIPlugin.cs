@@ -8,7 +8,7 @@ namespace Medical.GUI
 {
     public interface GUIPlugin : IDisposable
     {
-        void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI);
+        void initializeGUI(StandaloneController standaloneController, GUIManager guiManager);
 
         void createDialogs(DialogManager dialogManager);
 

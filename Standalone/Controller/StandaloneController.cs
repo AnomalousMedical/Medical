@@ -44,7 +44,7 @@ namespace Medical
         private PropFactory propFactory;
 
         //GUI
-        private PiperJBOGUI basicGUI;
+        private GUIManager guiManager;
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private BackgroundController backgroundController;
@@ -62,7 +62,7 @@ namespace Medical
         public StandaloneController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Articulometrics/Standalone");
-            basicGUI = new PiperJBOGUI(this);
+            guiManager = new GUIManager(this);
 
             //Engine core
             medicalController = new MedicalController();
@@ -76,7 +76,7 @@ namespace Medical
 
         public void Dispose()
         {
-            basicGUI.Dispose();
+            guiManager.Dispose();
             watermark.Dispose();
             measurementGrid.Dispose();
             movementSequenceController.Dispose();
@@ -191,8 +191,8 @@ namespace Medical
             timelineController.SimObjectMover = propMover;
 
             //GUI
-            basicGUI.createGUI();
-            basicGUI.ScreenLayout.Center = mdiLayout;
+            guiManager.createGUI();
+            guiManager.ScreenLayout.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
@@ -261,7 +261,7 @@ namespace Medical
                     changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName, null);
                     medicalStateController.setStates(states);
                     medicalStateController.blend(0.0f);
-                    basicGUI.changeLeftPanel(null);
+                    guiManager.changeLeftPanel(null);
                 }
                 else
                 {
@@ -379,11 +379,11 @@ namespace Medical
             }
         }
 
-        public PiperJBOGUI GUI
+        public GUIManager GUIManager
         {
             get
             {
-                return basicGUI;
+                return guiManager;
             }
         }
 
