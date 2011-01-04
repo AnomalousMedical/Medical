@@ -38,12 +38,10 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
-        private MovementSequenceEditor movementSequenceEditor;
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
         private LayersDialog layers;
         private StateListPopup stateList;
-        private AdvancedLayerControl advancedLayerControl;
 
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
@@ -67,7 +65,6 @@ namespace Medical.GUI
                 plugin.Dispose();
             }
 
-            advancedLayerControl.Dispose();
             notesDialog.Dispose();
             aboutDialog.Dispose();
             chooseSceneDialog.Dispose();
@@ -144,10 +141,6 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(layers);
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(stateList);
-            movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(movementSequenceEditor);
-            advancedLayerControl = new AdvancedLayerControl();
-            dialogManager.addManagedDialog(advancedLayerControl);
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.createDialogs(standaloneController, dialogManager);
@@ -160,7 +153,6 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DialogOpenTaskbarItem(advancedLayerControl, "Advanced Layers", "ManualObject"));
             taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
@@ -170,7 +162,6 @@ namespace Medical.GUI
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.addToTaskbar(taskbar);
@@ -420,7 +411,10 @@ namespace Medical.GUI
         private void standaloneController_SceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
-            advancedLayerControl.sceneUnloading();
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.sceneUnloading(scene);
+            }
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
@@ -428,7 +422,10 @@ namespace Medical.GUI
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
             mandibleMovementDialog.sceneLoaded(scene);
-            advancedLayerControl.sceneLoaded(scene);
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.sceneLoaded(scene);
+            }
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)

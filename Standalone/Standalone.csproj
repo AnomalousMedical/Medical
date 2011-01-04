@@ -131,10 +131,6 @@
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\GUIPlugin.cs" />
-    <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerControlAdvanced.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerEntry.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerSection.cs" />
     <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
@@ -188,9 +184,6 @@
     <Compile Include="GUI\Layers\LayersDialog.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
-    <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
-    <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
-    <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="GUI\PiperJBOGUI.cs" />
@@ -310,9 +303,6 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\LayersAdvanced\AdvancedLayerControl.layout" />
-    <EmbeddedResource Include="GUI\LayersAdvanced\LayerEntry.layout" />
-    <EmbeddedResource Include="GUI\LayersAdvanced\LayerSection.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\AppMenu\AppMenu.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\AboutDialog.layout" />
@@ -324,8 +314,6 @@
     <EmbeddedResource Include="GUI\Distortions\DistortionsPopup.layout" />
     <EmbeddedResource Include="GUI\Layers\LayersDialog.layout" />
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
-    <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
-    <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\QuickView\QuickViewPopup.layout" />

@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    class FlowLayoutContainer : LayoutContainer
+    public class FlowLayoutContainer : LayoutContainer
     {
         public enum LayoutType
         {
