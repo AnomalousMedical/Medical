@@ -24,6 +24,7 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
 
         private PiperJBOAppMenu appMenu;
+        private PiperJBOGUI mainGUI;
 
         public PiperJBOGUIPlugin()
         {
@@ -46,6 +47,7 @@ namespace Medical.GUI
 
         public void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI)
         {
+            this.mainGUI = mainGUI;
             this.standaloneController = standaloneController;
             appMenu = new PiperJBOAppMenu(this, standaloneController);
             mainGUI.setAppMenu(appMenu);
@@ -87,7 +89,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            //taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
+            taskbar.addItem(new DistortionsTaskbarItem(mainGUI.StateWizardController, mainGUI));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));

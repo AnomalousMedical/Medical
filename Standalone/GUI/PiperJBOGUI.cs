@@ -292,6 +292,14 @@ namespace Medical.GUI
             }
         }
 
+        public StateWizardController StateWizardController
+        {
+            get
+            {
+                return stateWizardController;
+            }
+        }
+
         private void animationCompleted(LayoutContainer oldChild)
         {
             if (oldChild != null)

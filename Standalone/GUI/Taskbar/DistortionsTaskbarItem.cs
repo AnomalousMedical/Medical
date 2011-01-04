@@ -16,6 +16,12 @@ namespace Medical.GUI
             distortionsPopup = new DistortionsPopup(wizardController, piperGUI);
         }
 
+        public override void Dispose()
+        {
+            distortionsPopup.Dispose();
+            base.Dispose();
+        }
+
         public override void clicked(Widget source, EventArgs e)
         {
             distortionsPopup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
