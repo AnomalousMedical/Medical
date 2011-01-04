@@ -15,7 +15,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    class PiperJBOGUI : IDisposable
+    public class PiperJBOGUI : IDisposable
     {
         private static String INTERFACE_NAME = typeof(GUIPlugin).Name;
 

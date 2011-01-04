@@ -12,7 +12,7 @@ namespace Medical.GUI
     public delegate void MedicalStateCreated(MedicalState state);
     public delegate void StatePickerFinished();
 
-    class StateWizardController : IDisposable
+    public class StateWizardController : IDisposable
     {
         //Events
         public event MedicalStateCreated StateCreated;

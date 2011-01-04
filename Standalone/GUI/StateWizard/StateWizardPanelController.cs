@@ -33,7 +33,7 @@ namespace Medical.GUI
         DisclaimerPanel,
     }
 
-    class StateWizardPanelController : IDisposable
+    public class StateWizardPanelController : IDisposable
     {
         private delegate StateWizardPanel CreatePanel();
 

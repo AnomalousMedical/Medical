@@ -6,13 +6,13 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    enum WizardType
+    public enum WizardType
     {
         Anatomy,
         Exam
     }
 
-    class StateWizard : IDisposable
+    public class StateWizard : IDisposable
     {
         private List<StateWizardPanel> panels = new List<StateWizardPanel>();
         private bool updatePanel = true;

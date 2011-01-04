@@ -62,6 +62,16 @@ namespace Standalone
         public StandaloneController()
         {
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Articulometrics/Standalone");
+            basicGUI = new PiperJBOGUI(this);
+
+            //Engine core
+            medicalController = new MedicalController();
+            mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
+            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
+            medicalController.initialize(mainWindow.InputWindow, createWindow);
+            mainWindow.setTimer(medicalController.MainTimer);
+
+            cursorManager = new CursorManager(mainWindow);
         }
 
         public void Dispose()
@@ -82,15 +92,6 @@ namespace Standalone
 
         public void go()
         {
-            //Engine core
-            medicalController = new MedicalController();
-            mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
-            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
-            medicalController.initialize(mainWindow.InputWindow, createWindow);
-            mainWindow.setTimer(medicalController.MainTimer);
-
-            cursorManager = new CursorManager(mainWindow);
-
             //Splash screen
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
@@ -190,8 +191,6 @@ namespace Standalone
             timelineController.SimObjectMover = propMover;
 
             //GUI
-            basicGUI = new PiperJBOGUI(this);
-            basicGUI.addPlugin("Editor.dll");
             basicGUI.createGUI();
             basicGUI.ScreenLayout.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
@@ -377,6 +376,14 @@ namespace Standalone
             get
             {
                 return propFactory;
+            }
+        }
+
+        public PiperJBOGUI GUI
+        {
+            get
+            {
+                return basicGUI;
             }
         }
 

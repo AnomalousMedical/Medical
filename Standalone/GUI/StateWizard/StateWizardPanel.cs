@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class StateWizardPanel : IDisposable
+    public class StateWizardPanel : IDisposable
     {
         private Layout layout;
         private MyGUILayoutContainer layoutContainer;

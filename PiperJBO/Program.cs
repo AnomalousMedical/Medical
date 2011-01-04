@@ -66,6 +66,7 @@ namespace Standalone
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
                         controller = new StandaloneController();
+                        controller.GUI.addPlugin("Editor.dll");
                         controller.go();
                         startupSuceeded = true;
                     }
