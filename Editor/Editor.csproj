@@ -151,4 +151,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>subwcrev $(ProjectDir) $(ProjectDir)Properties\AssemblyInfoSource.cs $(ProjectDir)Properties\AssemblyInfo.cs</PreBuildEvent>
+  </PropertyGroup>
 </Project>
