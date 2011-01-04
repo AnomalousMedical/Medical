@@ -78,7 +78,7 @@ namespace Medical.Controller
         /// Load the sequences in the specified directory. Will not make any
         /// changes if the directory is the currently loaded directory.
         /// </summary>
-        public void loadSequenceDirectories(params String[] sequenceDirs)
+        public void loadSequenceDirectories(String baseDir, List<String> sequenceDirs)
         {
             CurrentSequence = null;
             if (currentSequenceSet != null)
@@ -87,8 +87,9 @@ namespace Medical.Controller
             }
             currentSequenceSet = new MovementSequenceSet();
             VirtualFileSystem archive = VirtualFileSystem.Instance;
-            foreach(String sequenceDir in sequenceDirs)
+            foreach(String sequenceDirBase in sequenceDirs)
             {
+                String sequenceDir = baseDir + sequenceDirBase;
                 if(archive.exists(sequenceDir))
                 {
                     foreach (String directory in archive.listDirectories(sequenceDir, false, false))

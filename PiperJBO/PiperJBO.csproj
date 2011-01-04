@@ -93,8 +93,9 @@
     <Compile Include="GUI\Menus\PiperJBOAppMenu.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
+    <Compile Include="PiperJBOController.cs" />
     <Compile Include="PiperJBOGUIPlugin.cs" />
-    <Compile Include="PiperJBOWizards.cs" />
+    <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />

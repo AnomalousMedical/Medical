@@ -18,6 +18,7 @@ using Medical.Controller;
 using System.Drawing;
 using wx.Html.Help;
 using wx.FileSys;
+using System.IO;
 
 namespace Medical
 {
@@ -56,12 +57,21 @@ namespace Medical
         private CursorManager cursorManager;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
+        //Support Files
+        private String camerasFile;
+        private String layersFile;
+        private List<String> movementSequenceDirectories;
+
         //Frame
         private MainWindow mainWindow;
 
-        public StandaloneController()
+        public StandaloneController(String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
         {
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/Anomalous Medical/Articulometrics/Standalone");
+            this.camerasFile = camerasFile;
+            this.layersFile = layersFile;
+            this.movementSequenceDirectories = movementSequenceDirectories;
+
+            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + documentPath);
             guiManager = new GUIManager(this);
 
             //Engine core
@@ -90,7 +100,7 @@ namespace Medical
             mainWindow.Dispose();
         }
 
-        public void go()
+        public void go(ViewportBackground background)
         {
             //Splash screen
             Gui gui = Gui.Instance;
@@ -134,7 +144,8 @@ namespace Medical
             watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
 
             //Background
-            createBackground();
+            this.background = background;
+            backgroundController = new BackgroundController(background, sceneViewController);
 
             //Measurement grid
             measurementGrid = new MeasurementGrid("MeasurementGrid", medicalController, sceneViewController);
@@ -473,99 +484,14 @@ namespace Medical
             }
         }
 
-        /// <summary>
-        /// Create the background for the version that has been loaded.
-        /// </summary>
-        private void createBackground()
-        {
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBOMRIBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBORadiographyBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBODentitionProfileBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBODopplerBackground", 900, 500, 500, 5, 5);
-            }
-            backgroundController = new BackgroundController(background, sceneViewController);
-        }
-
         private void loadExternalFiles(SimulationScene medicalScene)
         {
-            String layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFileDirectory;
-            String cameraFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory;
+            String pathString = "{0}/{1}/{2}";
+            String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, this.layersFile);
+            String cameraFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.CameraFileDirectory, this.camerasFile);
             String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Graphics",
-                    sequenceDirectory + "/MRI",
-                    sequenceDirectory + "/RadiographyCT",
-                    sequenceDirectory + "/Clinical",
-                    sequenceDirectory + "/DentitionProfile",
-                    sequenceDirectory + "/Doppler");
-                cameraFile += "/GraphicsCameras.cam";
-                layersFile += "/GraphicsLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/MRI",
-                    sequenceDirectory + "/RadiographyCT",
-                    sequenceDirectory + "/Clinical",
-                    sequenceDirectory + "/DentitionProfile",
-                    sequenceDirectory + "/Doppler");
-                cameraFile += "/MRICameras.cam";
-                layersFile += "/MRILayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/RadiographyCT",
-                    sequenceDirectory + "/Clinical",
-                    sequenceDirectory + "/DentitionProfile",
-                    sequenceDirectory + "/Doppler");
-                cameraFile += "/RadiographyCameras.cam";
-                layersFile += "/RadiographyLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Clinical",
-                    sequenceDirectory + "/DentitionProfile",
-                    sequenceDirectory + "/Doppler");
-                cameraFile += "/ClinicalCameras.cam";
-                layersFile += "/ClinicalLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/DentitionProfile",
-                    sequenceDirectory + "/Doppler");
-                cameraFile += "/DentitionProfileCameras.cam";
-                layersFile += "/DentitionProfileLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                movementSequenceController.loadSequenceDirectories(sequenceDirectory + "/Doppler");
-                cameraFile += "/DopplerCameras.cam";
-                layersFile += "/DopplerLayers.lay";
-            }
-
-            //temp, load different layers file
-            layersFile = medicalController.CurrentSceneDirectory + "/" + medicalScene.LayersFileDirectory + "/StandaloneLayers.lay";
-            //end temp
+            movementSequenceController.loadSequenceDirectories(sequenceDirectory, this.movementSequenceDirectories);
 
             layerController.loadLayerStateSet(layersFile);
             //Load camera file, merge baseline cameras if the cameras changed
