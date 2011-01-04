@@ -197,7 +197,7 @@ namespace Medical
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
 #if CREATE_MAINWINDOW_MENU
-            mainWindow.MenuBar = basicGUI.createMenuBar();
+            mainWindow.MenuBar = guiManager.createMenuBar();
 #endif
 
             //Create scene view windows
