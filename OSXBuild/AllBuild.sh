@@ -7,11 +7,11 @@ rm -r -f Articulometrics.app
 xcodebuild -project OSHelper/OSHelper.xcodeproj -alltargets
 
 #Do the macpack
-macpack -n Articulometrics -a DotNetAssemblies/Standalone.exe -m cocoa -i Skull.icns
+macpack -n Articulometrics -a DotNetAssemblies/PiperJBO.exe -m cocoa -i Skull.icns
 
 #Copy the .net assemblies
 cp DotNetAssemblies/*.dll Articulometrics.app/Contents/Resources
-cp DotNetAssemblies/Standalone.exe Articulometrics.app/Contents/Resources/Articulometrics.exe
+cp DotNetAssemblies/PiperJBO.exe Articulometrics.app/Contents/Resources/Articulometrics.exe
 
 #Copy the mac native dylibs
 cp ../../Engine/OSXBuild/Release/*.dylib Articulometrics.app/Contents/Resources
