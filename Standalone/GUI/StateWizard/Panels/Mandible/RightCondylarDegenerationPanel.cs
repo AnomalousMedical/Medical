@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class RightCondylarDegenerationPanel : BoneManipulatorPanel
+    public class RightCondylarDegenerationPanel : BoneManipulatorPanel
     {
         private bool allowCameraChange = false;
         private bool showingWear = false;

@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class LeftCondylarGrowthPanel : BoneManipulatorPanel
+    public class LeftCondylarGrowthPanel : BoneManipulatorPanel
     {
         private BoneManipulatorSlider leftRamusHeightSlider;
         private BoneManipulatorSlider leftCondyleHeightSlider;

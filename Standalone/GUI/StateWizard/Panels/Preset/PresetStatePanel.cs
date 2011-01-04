@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class PresetStatePanel : StateWizardPanel
+    public class PresetStatePanel : StateWizardPanel
     {
         private ButtonGridItem defaultItem = null;
         private ButtonGridItem openingItem = null; //the item that was selected when this ui was opened.

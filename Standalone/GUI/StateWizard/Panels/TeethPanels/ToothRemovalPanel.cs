@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ToothRemovalPanel : StateWizardPanel
+    public class ToothRemovalPanel : StateWizardPanel
     {
         private Dictionary<ToothButton, bool> openCheckStatus = new Dictionary<ToothButton, bool>();
         private List<ToothButton> toothButtons = new List<ToothButton>();

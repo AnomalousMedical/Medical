@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class NotesPanel : StateWizardPanel
+    public class NotesPanel : StateWizardPanel
     {
         Edit stateNameTextBox;
         Edit datePicker;

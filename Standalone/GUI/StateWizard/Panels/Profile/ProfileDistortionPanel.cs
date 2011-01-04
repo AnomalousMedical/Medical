@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ProfileDistortionPanel : StateWizardPanel
+    public class ProfileDistortionPanel : StateWizardPanel
     {
         private Button rightSideCamera;
         private Button rightMidCamera;

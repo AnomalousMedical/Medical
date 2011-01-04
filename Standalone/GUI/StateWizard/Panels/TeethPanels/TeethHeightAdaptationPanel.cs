@@ -7,7 +7,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class TeethHeightAdaptationPanel : StateWizardPanel
+    public class TeethHeightAdaptationPanel : StateWizardPanel
     {
         private TeethMovementPanel teethMovementPanel;
         private HeightControl heightControl;

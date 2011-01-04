@@ -11,7 +11,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class DiscSpacePanel : StateWizardPanel
+    public class DiscSpacePanel : StateWizardPanel
     {
         private Vector3 openingStateOffset = Vector3.Zero;
 

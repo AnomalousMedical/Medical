@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class FossaPanel : StateWizardPanel
+    public class FossaPanel : StateWizardPanel
     {
         Fossa fossa;
         private bool allowUpdates = true;

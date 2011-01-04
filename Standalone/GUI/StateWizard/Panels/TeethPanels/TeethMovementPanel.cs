@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class TeethMovementPanel
+    public class TeethMovementPanel
     {
         private static String[] RIGHT_LATERAL_TEETH = 
         {

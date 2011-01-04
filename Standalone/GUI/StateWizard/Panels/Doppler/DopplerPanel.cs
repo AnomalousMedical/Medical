@@ -12,7 +12,7 @@ using Medical.Muscles;
 
 namespace Medical.GUI
 {
-    class DopplerPanel : StateWizardPanel
+    public class DopplerPanel : StateWizardPanel
     {
         private DopplerControl dopplerControl;
 

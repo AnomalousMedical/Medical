@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.GUI
 {
-    class BoneManipulatorPanel : StateWizardPanel
+    public class BoneManipulatorPanel : StateWizardPanel
     {
         private List<BoneManipulatorSlider> openingValues = new List<BoneManipulatorSlider>();
 
