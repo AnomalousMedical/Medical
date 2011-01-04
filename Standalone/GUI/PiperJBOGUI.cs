@@ -10,11 +10,15 @@ using Medical.Controller;
 using Logging;
 using Engine.Platform;
 using Engine;
+using System.Reflection;
+using System.IO;
 
 namespace Medical.GUI
 {
     class PiperJBOGUI : IDisposable
     {
+        private static String INTERFACE_NAME = typeof(GUIPlugin).Name;
+
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
         private LeftPopoutLayoutContainer leftAnimatedContainer;
@@ -34,7 +38,6 @@ namespace Medical.GUI
         private AboutDialog aboutDialog;
         private OptionsDialog options;
         private CloneWindowDialog cloneWindowDialog;
-        //private TimelineProperties timelineProperties;
         private MovementSequenceEditor movementSequenceEditor;
         private NotesDialog notesDialog;
         private MandibleMovementDialog mandibleMovementDialog;
@@ -45,13 +48,72 @@ namespace Medical.GUI
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
+        private List<GUIPlugin> plugins = new List<GUIPlugin>();
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
+        }
 
+        public void Dispose()
+        {
+            //Dialogs
+            dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
+
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.Dispose();
+            }
+
+            advancedLayerControl.Dispose();
+            notesDialog.Dispose();
+            aboutDialog.Dispose();
+            chooseSceneDialog.Dispose();
+            stateWizardController.Dispose();
+            stateWizardPanelController.Dispose();
+
+            //Other
+            questionProvider.Dispose();
+            continuePrompt.Dispose();
+            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
+            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+            taskbar.Dispose();
+        }
+
+        public void addPlugin(String dllName)
+        {
+            Assembly assembly = Assembly.LoadFile(Path.GetFullPath(dllName));
+            Type[] exportedTypes = assembly.GetExportedTypes();
+            Type pluginType = null;
+            foreach (Type type in exportedTypes)
+            {
+                if (type.GetInterface(INTERFACE_NAME) != null)
+                {
+                    pluginType = type;
+                    break;
+                }
+            }
+            if (pluginType != null && !pluginType.IsInterface && !pluginType.IsAbstract)
+            {
+                GUIPlugin plugin = (GUIPlugin)Activator.CreateInstance(pluginType);
+                addPlugin(plugin);
+            }
+            else
+            {
+                Log.Default.sendMessage("Cannot find GUIPlugin in assembly {0}. Please implement the GUIPlugin function in that assembly.", LogLevel.Error, "Plugin", assembly.FullName);
+            }
+        }
+
+        public void addPlugin(GUIPlugin plugin)
+        {
+            OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            plugins.Add(plugin);
+        }
+
+        public void createGUI()
+        {
             Gui gui = Gui.Instance;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
@@ -82,12 +144,14 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(layers);
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(stateList);
-            //timelineProperties = new TimelineProperties(standaloneController.TimelineController);
-            //dialogManager.addManagedDialog(timelineProperties);
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(movementSequenceEditor);
             advancedLayerControl = new AdvancedLayerControl();
             dialogManager.addManagedDialog(advancedLayerControl);
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.createDialogs(standaloneController, dialogManager);
+            }
             
             //Taskbar
             taskbar = new Taskbar(this, standaloneController);
@@ -106,8 +170,11 @@ namespace Medical.GUI
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
             taskbar.addItem(new CloneWindowTaskbarItem(this));
-            //taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.addToTaskbar(taskbar);
+            }
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
@@ -151,25 +218,6 @@ namespace Medical.GUI
 
             questionProvider = new MyGUIQuestionProvider(this);
             standaloneController.TimelineController.QuestionProvider = questionProvider;
-        }
-
-        public void Dispose()
-        {
-            //Dialogs
-            dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
-            advancedLayerControl.Dispose();
-            notesDialog.Dispose();
-            aboutDialog.Dispose();
-            chooseSceneDialog.Dispose();
-            stateWizardController.Dispose();
-            stateWizardPanelController.Dispose();
-
-            //Other
-            questionProvider.Dispose();
-            continuePrompt.Dispose();
-            standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
-            standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
-            taskbar.Dispose();
         }
 
         public void windowChanged(OSWindow newWindow)

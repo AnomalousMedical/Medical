@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class DialogManager
+    public class DialogManager
     {
         private class DialogEntry
         {

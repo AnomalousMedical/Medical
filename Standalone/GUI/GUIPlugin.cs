@@ -6,21 +6,11 @@ using Standalone;
 
 namespace Medical.GUI
 {
-    abstract class GUIPlugin : IDisposable
+    public interface GUIPlugin : IDisposable
     {
-        public GUIPlugin(StandaloneController standaloneController)
-        {
+        void createDialogs(StandaloneController standaloneController, DialogManager dialogManager);
 
-        }
-
-        public virtual void Dispose()
-        {
-
-        }
-
-        public virtual void addToTaskbar(Taskbar taskbar)
-        {
-
-        }
+        void addToTaskbar(Taskbar taskbar);
+        
     }
 }

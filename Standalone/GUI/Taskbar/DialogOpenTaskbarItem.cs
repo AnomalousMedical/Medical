@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class DialogOpenTaskbarItem : TaskbarItem
+    public class DialogOpenTaskbarItem : TaskbarItem
     {
         private Dialog dialog;
 

@@ -73,6 +73,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EditorGUIPlugin.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />

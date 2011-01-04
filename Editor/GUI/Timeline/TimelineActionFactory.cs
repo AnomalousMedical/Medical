@@ -29,7 +29,10 @@ namespace Medical
 
         public void Dispose()
         {
-            Panel.Dispose();
+            if (Panel != null)
+            {
+                Panel.Dispose();
+            }
         }
 
         public Color Color { get; private set; }

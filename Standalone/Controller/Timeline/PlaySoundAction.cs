@@ -8,6 +8,7 @@ using Engine.Saving;
 
 namespace Medical
 {
+    [TimelineActionProperties("Play Sound")]
     public class PlaySoundAction : TimelineAction
     {
         private bool finished = false;

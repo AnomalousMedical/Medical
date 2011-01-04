@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class Taskbar : LayoutContainer, IDisposable
+    public class Taskbar : LayoutContainer, IDisposable
     {
         private Layout myGUIlayout;
         private Widget taskbarWidget;
@@ -21,7 +21,7 @@ namespace Medical.GUI
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
-        public Taskbar(PiperJBOGUI piperGUI, StandaloneController controller)
+        internal Taskbar(PiperJBOGUI piperGUI, StandaloneController controller)
         {
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 

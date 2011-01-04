@@ -191,6 +191,8 @@ namespace Standalone
 
             //GUI
             basicGUI = new PiperJBOGUI(this);
+            basicGUI.addPlugin("Editor.dll");
+            basicGUI.createGUI();
             basicGUI.ScreenLayout.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);

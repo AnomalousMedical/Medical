@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    abstract class TaskbarItem : IDisposable
+    public abstract class TaskbarItem : IDisposable
     {
         protected Button taskbarButton;
 
