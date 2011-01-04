@@ -6,19 +6,41 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class CloneWindowTaskbarItem : TaskbarItem
+    public class CloneWindowTaskbarItem : TaskbarItem
     {
-        private PiperJBOGUI piperGUI;
+        private StandaloneController standaloneController;
+        private CloneWindowDialog cloneWindowDialog;
 
-        public CloneWindowTaskbarItem(PiperJBOGUI piperGUI)
+        public CloneWindowTaskbarItem(StandaloneController standaloneController)
             :base("Clone Window", "CloneWindowLarge")
         {
-            this.piperGUI = piperGUI;
+            this.standaloneController = standaloneController;
+
+            cloneWindowDialog = new CloneWindowDialog();
+            cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
+        }
+
+        public override void Dispose()
+        {
+            cloneWindowDialog.Dispose();
+            base.Dispose();
         }
 
         public override void clicked(Widget source, EventArgs e)
         {
-            piperGUI.toggleCloneWindow();
+            if (standaloneController.SceneViewController.HasCloneWindow)
+            {
+                standaloneController.SceneViewController.destroyCloneWindow();
+            }
+            else
+            {
+                cloneWindowDialog.open(true);
+            }
+        }
+
+        void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
+        {
+            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
         }
     }
 }

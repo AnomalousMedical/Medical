@@ -7,7 +7,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class BackgroundColorTaskbarItem : TaskbarItem
+    public class BackgroundColorTaskbarItem : TaskbarItem
     {
         private ColorMenu colorMenu;
         private SceneViewController sceneViewController;

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Medical.GUI
 {
-    class SavePatientDialog : Dialog
+    public class SavePatientDialog : Dialog
     {
         public event EventHandler SaveFile;
 

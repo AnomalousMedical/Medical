@@ -9,19 +9,16 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class ChooseSceneDialog : Dialog
+    public class ChooseSceneDialog : Dialog
     {
-        private StandaloneController controller;
+        public event EventHandler ChooseScene;
+
         private ButtonGrid sceneFileGrid;
         private ImageAtlas imageAtlas;
-        private PiperJBOGUI piperGUI;
 
-        public ChooseSceneDialog(StandaloneController controller, PiperJBOGUI piperGUI)
+        public ChooseSceneDialog()
             : base("Medical.GUI.AppMenu.Dialogs.ChooseSceneDialog.layout")
         {
-            this.controller = controller;
-            this.piperGUI = piperGUI;
-
             Button openButton = window.findWidget("ChooseScene/Open") as Button;
             Button cancelButton = window.findWidget("ChooseScene/Cancel") as Button;
             sceneFileGrid = new ButtonGrid(window.findWidget("ChooseScene/FileSelect") as ScrollView);
@@ -39,6 +36,18 @@ namespace Medical.GUI
         {
             base.Dispose();
             imageAtlas.Dispose();
+        }
+
+        public String SelectedFile
+        {
+            get
+            {
+                if (sceneFileGrid.SelectedItem != null)
+                {
+                    return sceneFileGrid.SelectedItem.UserObject.ToString();
+                }
+                return null;
+            }
         }
 
         void findSceneFiles()
@@ -91,8 +100,10 @@ namespace Medical.GUI
         {
             if (sceneFileGrid.SelectedItem != null)
             {
-                piperGUI.changeActiveFile(null);
-                controller.openNewScene(sceneFileGrid.SelectedItem.UserObject.ToString());
+                if (ChooseScene != null)
+                {
+                    ChooseScene.Invoke(this, EventArgs.Empty);
+                }
             }
             this.close();
         }

@@ -7,7 +7,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class WindowLayoutTaskbarItem : TaskbarItem
+    public class WindowLayoutTaskbarItem : TaskbarItem
     {
         private PopupMenu windowMenu;
         private StandaloneController standaloneController;

@@ -10,6 +10,8 @@ namespace Medical
 {
     public class EditorGUIPlugin : GUIPlugin
     {
+        private StandaloneController standaloneController;
+
         private TimelineProperties timelineProperties;
         private AdvancedLayerControl advancedLayerControl;
         private MovementSequenceEditor movementSequenceEditor;
@@ -26,7 +28,12 @@ namespace Medical
             timelineProperties.Dispose();
         }
 
-        public void createDialogs(StandaloneController standaloneController, DialogManager dialogManager)
+        public void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI)
+        {
+            this.standaloneController = standaloneController;
+        }
+
+        public void createDialogs(DialogManager dialogManager)
         {
             timelineProperties = new TimelineProperties(standaloneController.TimelineController);
             dialogManager.addManagedDialog(timelineProperties);
@@ -45,9 +52,6 @@ namespace Medical
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
         }
 
-        #region GUIPlugin Members
-
-
         public void sceneLoaded(SimScene scene)
         {
             advancedLayerControl.sceneLoaded(scene);
@@ -58,6 +62,14 @@ namespace Medical
             advancedLayerControl.sceneUnloading();
         }
 
-        #endregion
+        public void setMainInterfaceEnabled(bool enabled)
+        {
+            
+        }
+
+        public void createMenuBar(wx.MenuBar menu)
+        {
+
+        }
     }
 }

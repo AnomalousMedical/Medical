@@ -8,12 +8,18 @@ namespace Medical.GUI
 {
     public interface GUIPlugin : IDisposable
     {
-        void createDialogs(StandaloneController standaloneController, DialogManager dialogManager);
+        void initializeGUI(StandaloneController standaloneController, PiperJBOGUI mainGUI);
+
+        void createDialogs(DialogManager dialogManager);
 
         void addToTaskbar(Taskbar taskbar);
 
         void sceneLoaded(SimScene scene);
 
         void sceneUnloading(SimScene scene);
+
+        void setMainInterfaceEnabled(bool enabled);
+
+        void createMenuBar(wx.MenuBar menu);
     }
 }

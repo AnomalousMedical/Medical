@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    class RenderTaskbarItem : TaskbarItem
+    public class RenderTaskbarItem : TaskbarItem
     {
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;

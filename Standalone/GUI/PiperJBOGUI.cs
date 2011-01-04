@@ -31,21 +31,12 @@ namespace Medical.GUI
 
         //Dialogs
         private DialogManager dialogManager;
-        private ChooseSceneDialog chooseSceneDialog;
-        private SavePatientDialog savePatientDialog;
-        private OpenPatientDialog openPatientDialog;
-        private AboutDialog aboutDialog;
-        private OptionsDialog options;
-        private CloneWindowDialog cloneWindowDialog;
-        private NotesDialog notesDialog;
-        private MandibleMovementDialog mandibleMovementDialog;
-        private LayersDialog layers;
-        private StateListPopup stateList;
-
+        
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
         private List<GUIPlugin> plugins = new List<GUIPlugin>();
+        private AppMenu appMenu;
 
         public PiperJBOGUI(StandaloneController standaloneController)
         {
@@ -64,9 +55,6 @@ namespace Medical.GUI
                 plugin.Dispose();
             }
 
-            notesDialog.Dispose();
-            aboutDialog.Dispose();
-            chooseSceneDialog.Dispose();
             stateWizardController.Dispose();
             stateWizardPanelController.Dispose();
 
@@ -116,6 +104,11 @@ namespace Medical.GUI
             plugins.Add(plugin);
         }
 
+        public void setAppMenu(AppMenu appMenu)
+        {
+            this.appMenu = appMenu;
+        }
+
         public void createGUI()
         {
             Gui gui = Gui.Instance;
@@ -138,37 +131,21 @@ namespace Medical.GUI
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
             innerBorderLayout = new BorderLayoutContainer();
 
-            //Dialogs
-            dialogManager = new DialogManager();
-            notesDialog = new NotesDialog(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(notesDialog);
-            mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(mandibleMovementDialog);
-            layers = new LayersDialog(standaloneController.LayerController);
-            dialogManager.addManagedDialog(layers);
-            stateList = new StateListPopup(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(stateList);
             foreach (GUIPlugin plugin in plugins)
             {
-                plugin.createDialogs(standaloneController, dialogManager);
+                plugin.initializeGUI(standaloneController, this);
+            }
+
+            //Dialogs
+            dialogManager = new DialogManager();
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.createDialogs(dialogManager);
             }
             
             //Taskbar
-            taskbar = new Taskbar(this, standaloneController);
+            taskbar = new Taskbar(this, appMenu, standaloneController);
             taskbar.SuppressLayout = true;
-            //taskbar.addItem(new ShowNavigationTaskbarItem(standaloneController.NavigationController));
-            taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
-            taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DistortionsTaskbarItem(stateWizardController, this));
-            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
-            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
-            taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
-            taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
-            taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
-            taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
-            taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
-            taskbar.addItem(new CloneWindowTaskbarItem(this));
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.addToTaskbar(taskbar);
@@ -188,23 +165,9 @@ namespace Medical.GUI
 
             screenLayoutManager.Root.SuppressLayout = false;
 
-            chooseSceneDialog = new ChooseSceneDialog(standaloneController, this);
-            savePatientDialog = new SavePatientDialog();
-            openPatientDialog = new OpenPatientDialog();
-            openPatientDialog.OpenFile += new EventHandler(openPatientDialog_OpenFile);
-            aboutDialog = new AboutDialog();
-
-            savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
-
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
 
-            options = new OptionsDialog();
-            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
-
             standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
-
-            cloneWindowDialog = new CloneWindowDialog();
-            cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
 
             taskbar.SuppressLayout = false;
             taskbar.layout();
@@ -261,101 +224,37 @@ namespace Medical.GUI
             bottomAnimatedContainer.changePanel(bottomContainer, 0.25f, animationCompleted);
         }
 
-        public void showChooseSceneDialog()
-        {
-            chooseSceneDialog.open(true);
-        }
-
-        public void open()
-        {
-            openPatientDialog.open(true);
-        }
-
-        public void save()
-        {
-            if (standaloneController.MedicalStateController.getNumStates() == 0)
-            {
-                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
-            }
-            else
-            {
-                savePatientDialog.save();
-            }
-        }
-
-        public void saveAs()
-        {
-            if (standaloneController.MedicalStateController.getNumStates() == 0)
-            {
-                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
-            }
-            else
-            {
-                savePatientDialog.saveAs();
-            }
-        }
-
-        public void showAboutDialog()
-        {
-            aboutDialog.open(true);
-        }
-
-        public void showOptions()
-        {
-            options.Visible = true;
-        }
-
-        public void changeActiveFile(PatientDataFile patientData)
-        {
-            if (patientData != null)
-            {
-                MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
-                MedicalConfig.RecentDocuments.addDocument(patientData.BackingFile);
-            }
-            else
-            {
-                MainWindow.Instance.clearWindowTitle();
-            }
-        }
-
-        public void toggleCloneWindow()
-        {
-            if (standaloneController.SceneViewController.HasCloneWindow)
-            {
-                standaloneController.SceneViewController.destroyCloneWindow();
-            }
-            else
-            {
-                cloneWindowDialog.open(true);
-            }
-        }
-
         public void setMainInterfaceEnabled(bool enabled)
         {
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.setMainInterfaceEnabled(enabled);
+            }
             if (enabled)
             {
-                layers.AllowShortcuts = true;
                 taskbar.Visible = true;
                 dialogManager.reopenDialogs();
-                #if CREATE_MAINWINDOW_MENU
-                systemMenu.FileMenuEnabled = true;
-                #endif
             }
             else
             {
-                layers.AllowShortcuts = false;
                 taskbar.Visible = false;
                 dialogManager.temporarilyCloseDialogs();
-                #if CREATE_MAINWINDOW_MENU
-                systemMenu.FileMenuEnabled = false;
-                #endif
             }
         }
 
-        void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
+#if CREATE_MAINWINDOW_MENU
+
+        public wx.MenuBar createMenuBar()
         {
-            standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
+            wx.MenuBar menu = new wx.MenuBar();
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.createMenuBar(menu);
+            }
+            return menu;
         }
+
+#endif
 
         void SceneViewController_ActiveWindowChanged(SceneViewWindow window)
         {
@@ -393,20 +292,6 @@ namespace Medical.GUI
             }
         }
 
-        private void savePatientDialog_SaveFile(object sender, EventArgs e)
-        {
-            PatientDataFile patientData = savePatientDialog.PatientData;
-            changeActiveFile(patientData);
-            standaloneController.saveMedicalState(patientData);
-        }
-
-        private void openPatientDialog_OpenFile(object sender, EventArgs e)
-        {
-            PatientDataFile patientData = openPatientDialog.CurrentFile;
-            changeActiveFile(patientData);
-            standaloneController.openPatientFile(patientData);
-        }
-
         private void animationCompleted(LayoutContainer oldChild)
         {
             if (oldChild != null)
@@ -417,7 +302,6 @@ namespace Medical.GUI
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
-            mandibleMovementDialog.sceneUnloading(scene);
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.sceneUnloading(scene);
@@ -428,16 +312,10 @@ namespace Medical.GUI
         {
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
-            mandibleMovementDialog.sceneLoaded(scene);
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.sceneLoaded(scene);
             }
-        }
-
-        void options_VideoOptionsChanged(object sender, EventArgs e)
-        {
-            standaloneController.recreateMainWindow();
         }
 
         void screenLayoutManager_ScreenSizeChanged(int width, int height)
@@ -445,19 +323,6 @@ namespace Medical.GUI
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
         }
-
-#if CREATE_MAINWINDOW_MENU
-
-        private SystemMenu systemMenu;
-
-        public wx.MenuBar createMenuBar()
-        {
-            wx.MenuBar menu = new wx.MenuBar();
-            systemMenu = new SystemMenu(menu, this, standaloneController);
-            return menu;
-        }
-
-#endif
 
         private void createWizardPanels()
         {

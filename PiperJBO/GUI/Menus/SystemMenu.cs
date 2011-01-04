@@ -22,10 +22,10 @@ namespace Medical.GUI
         private wx.MenuItem saveAs;
         private wx.MenuItem exit;
 
-        private PiperJBOGUI piperGUI;
+        private PiperJBOGUIPlugin piperGUI;
         private StandaloneController standaloneController;
 
-        public SystemMenu(wx.MenuBar menu, PiperJBOGUI piperGUI, StandaloneController standaloneController)
+        public SystemMenu(wx.MenuBar menu, PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController)
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;

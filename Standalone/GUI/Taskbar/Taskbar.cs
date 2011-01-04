@@ -20,16 +20,19 @@ namespace Medical.GUI
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
-        internal Taskbar(PiperJBOGUI piperGUI, StandaloneController controller)
+        internal Taskbar(PiperJBOGUI piperGUI, AppMenu appMenu, StandaloneController controller)
         {
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
             taskbarWidget = myGUIlayout.getWidget(0);
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
-            appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
 
-            appMenu = new AppMenu(piperGUI, controller);
+            if (appMenu != null)
+            {
+                this.appMenu = appMenu;
+                appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+            }
 
             startLocation = new Vector2(appButton.Left, appButton.Bottom + padding);
         }

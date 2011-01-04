@@ -11,7 +11,7 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class OptionsDialog : Dialog
+    public class OptionsDialog : Dialog
     {
         public event EventHandler VideoOptionsChanged;
 

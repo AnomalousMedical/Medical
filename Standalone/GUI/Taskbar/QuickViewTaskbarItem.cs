@@ -7,7 +7,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class QuickViewTaskbarItem : TaskbarItem
+    public class QuickViewTaskbarItem : TaskbarItem
     {
         private QuickViewPopup quickViewPopup;
 

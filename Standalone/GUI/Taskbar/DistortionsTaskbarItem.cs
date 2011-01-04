@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class DistortionsTaskbarItem : TaskbarItem
+    public class DistortionsTaskbarItem : TaskbarItem
     {
         private DistortionsPopup distortionsPopup;
 

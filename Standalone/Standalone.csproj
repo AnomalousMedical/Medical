@@ -170,20 +170,13 @@
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
     <Compile Include="GUI\AppMenu\AppMenu.cs" />
-    <Compile Include="GUI\AppMenu\Dialogs\AboutDialog.cs" />
     <Compile Include="GUI\AppMenu\Dialogs\ChooseSceneDialog.cs" />
     <Compile Include="GUI\AppMenu\Dialogs\OpenPatientDialog.cs" />
     <Compile Include="GUI\AppMenu\Dialogs\SavePatientDialog.cs" />
-    <Compile Include="GUI\AppMenu\SystemMenu.cs" />
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="GUI\DialogManager.cs" />
     <Compile Include="GUI\Distortions\DistortionsPopup.cs" />
-    <Compile Include="GUI\Layers\LayerGUIMenu.cs" />
-    <Compile Include="GUI\Layers\LayerGUISkullMenu.cs" />
-    <Compile Include="GUI\Layers\LayersDialog.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
     <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="GUI\PiperJBOGUI.cs" />
@@ -229,7 +222,6 @@
     <Compile Include="GUI\Taskbar\RenderTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\SequencesTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowNavigationTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\WindowLayoutTaskbarItem.cs" />
@@ -303,16 +295,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
-    <EmbeddedResource Include="GUI\AppMenu\AppMenu.layout" />
-    <EmbeddedResource Include="GUI\AppMenu\Dialogs\AboutDialog.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\OpenPatientDialog.layout" />
     <EmbeddedResource Include="GUI\AppMenu\Dialogs\SavePatientDialog.layout" />
     <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\Distortions\DistortionsPopup.layout" />
-    <EmbeddedResource Include="GUI\Layers\LayersDialog.layout" />
-    <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\QuickView\QuickViewPopup.layout" />

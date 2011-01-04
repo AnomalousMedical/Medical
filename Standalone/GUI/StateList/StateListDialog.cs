@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class StateListPopup : Dialog
+    public class StateListPopup : Dialog
     {
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
         ButtonList stateListBox;

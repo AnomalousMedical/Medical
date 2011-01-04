@@ -8,7 +8,7 @@ using Medical.Muscles;
 
 namespace Medical.GUI
 {
-    class SequencesTaskbarItem : TaskbarItem
+    public class SequencesTaskbarItem : TaskbarItem
     {
         private MovementSequenceController sequenceController;
         private PopupMenu sequenceMenu;
