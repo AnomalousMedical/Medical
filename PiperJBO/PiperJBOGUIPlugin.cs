@@ -27,6 +27,7 @@ namespace Medical.GUI
         private PiperJBOAppMenu appMenu;
         private GUIManager guiManager;
         private PiperJBOWizards wizards;
+        private CloneWindowTaskbarItem cloneWindow;
 
         public PiperJBOGUIPlugin()
         {
@@ -102,7 +103,9 @@ namespace Medical.GUI
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
-            taskbar.addItem(new CloneWindowTaskbarItem(standaloneController));
+
+            cloneWindow = new CloneWindowTaskbarItem(standaloneController);
+            taskbar.addItem(cloneWindow);
         }
 
         public void sceneLoaded(SimScene scene)
@@ -146,7 +149,7 @@ namespace Medical.GUI
 
         internal void toggleCloneWindow()
         {
-            throw new NotImplementedException();
+            cloneWindow.toggleCloneWindow();
         }
 
         public void showChooseSceneDialog()
