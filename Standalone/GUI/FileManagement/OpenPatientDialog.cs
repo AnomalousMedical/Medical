@@ -92,7 +92,7 @@ namespace Medical.GUI
         private bool startNewDirectoryScanOnBackgroundThreadStop = false;
 
         public OpenPatientDialog()
-            : base("Medical.GUI.AppMenu.Dialogs.OpenPatientDialog.layout")
+            : base("Medical.GUI.FileManagement.OpenPatientDialog.layout")
         {
             fileDataGrid = window.findWidget("Open/FileList") as MultiList;
             locationTextBox = window.findWidget("Open/LoadLocation") as Edit;

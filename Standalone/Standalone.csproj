@@ -169,10 +169,10 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
-    <Compile Include="GUI\AppMenu\AppMenu.cs" />
-    <Compile Include="GUI\AppMenu\Dialogs\ChooseSceneDialog.cs" />
-    <Compile Include="GUI\AppMenu\Dialogs\OpenPatientDialog.cs" />
-    <Compile Include="GUI\AppMenu\Dialogs\SavePatientDialog.cs" />
+    <Compile Include="GUI\AppMenu.cs" />
+    <Compile Include="GUI\FileManagement\ChooseSceneDialog.cs" />
+    <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
+    <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="GUI\DialogManager.cs" />
@@ -295,9 +295,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
-    <EmbeddedResource Include="GUI\AppMenu\Dialogs\ChooseSceneDialog.layout" />
-    <EmbeddedResource Include="GUI\AppMenu\Dialogs\OpenPatientDialog.layout" />
-    <EmbeddedResource Include="GUI\AppMenu\Dialogs\SavePatientDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
+    <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
     <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
     <EmbeddedResource Include="GUI\Distortions\DistortionsPopup.layout" />

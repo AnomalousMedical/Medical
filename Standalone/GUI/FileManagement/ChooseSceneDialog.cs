@@ -17,7 +17,7 @@ namespace Medical.GUI
         private ImageAtlas imageAtlas;
 
         public ChooseSceneDialog()
-            : base("Medical.GUI.AppMenu.Dialogs.ChooseSceneDialog.layout")
+            : base("Medical.GUI.FileManagement.ChooseSceneDialog.layout")
         {
             Button openButton = window.findWidget("ChooseScene/Open") as Button;
             Button cancelButton = window.findWidget("ChooseScene/Cancel") as Button;
