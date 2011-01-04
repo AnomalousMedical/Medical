@@ -6,7 +6,7 @@ using Engine.Platform;
 using Medical;
 using MyGUIPlugin;
 
-namespace Standalone
+namespace Medical
 {
     class WindowListener : OSWindowListener
     {

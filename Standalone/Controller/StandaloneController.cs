@@ -19,7 +19,7 @@ using System.Drawing;
 using wx.Html.Help;
 using wx.FileSys;
 
-namespace Standalone
+namespace Medical
 {
     public delegate void SceneEvent(SimScene scene);
 

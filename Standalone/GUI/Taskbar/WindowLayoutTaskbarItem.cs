@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
-using Standalone;
 
 namespace Medical.GUI
 {

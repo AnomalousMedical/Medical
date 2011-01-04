@@ -17,8 +17,9 @@ using OgreWrapper;
 using Medical.Controller;
 using wx;
 using System.Drawing;
+using Medical.GUI;
 
-namespace Standalone
+namespace Medical
 {
     class StandaloneApp : App
     {
@@ -66,6 +67,7 @@ namespace Standalone
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
                         controller = new StandaloneController();
+                        controller.GUI.addPlugin(new PiperJBOGUIPlugin());
                         controller.GUI.addPlugin("Editor.dll");
                         controller.go();
                         startupSuceeded = true;
