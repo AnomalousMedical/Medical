@@ -81,25 +81,33 @@ namespace Medical.GUI
 
         public void addPlugin(String dllName)
         {
-            Assembly assembly = Assembly.LoadFile(Path.GetFullPath(dllName));
-            Type[] exportedTypes = assembly.GetExportedTypes();
-            Type pluginType = null;
-            foreach (Type type in exportedTypes)
+            String fullPath = Path.GetFullPath(dllName);
+            if (File.Exists(fullPath))
             {
-                if (type.GetInterface(INTERFACE_NAME) != null)
+                Assembly assembly = Assembly.LoadFile(fullPath);
+                Type[] exportedTypes = assembly.GetExportedTypes();
+                Type pluginType = null;
+                foreach (Type type in exportedTypes)
                 {
-                    pluginType = type;
-                    break;
+                    if (type.GetInterface(INTERFACE_NAME) != null)
+                    {
+                        pluginType = type;
+                        break;
+                    }
                 }
-            }
-            if (pluginType != null && !pluginType.IsInterface && !pluginType.IsAbstract)
-            {
-                GUIPlugin plugin = (GUIPlugin)Activator.CreateInstance(pluginType);
-                addPlugin(plugin);
+                if (pluginType != null && !pluginType.IsInterface && !pluginType.IsAbstract)
+                {
+                    GUIPlugin plugin = (GUIPlugin)Activator.CreateInstance(pluginType);
+                    addPlugin(plugin);
+                }
+                else
+                {
+                    Log.Error("Cannot find GUIPlugin in assembly {0}. Please implement the GUIPlugin function in that assembly.", assembly.FullName);
+                }
             }
             else
             {
-                Log.Default.sendMessage("Cannot find GUIPlugin in assembly {0}. Please implement the GUIPlugin function in that assembly.", LogLevel.Error, "Plugin", assembly.FullName);
+                Log.Error("Cannot find Assembly {0}.", fullPath);
             }
         }
 
