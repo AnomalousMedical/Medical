@@ -34,7 +34,7 @@ namespace Medical.GUI
             stateNameTextBox.Caption = state.Name;
             datePicker.Caption = state.Notes.ProcedureDate.ToString();
             distortionWizard.Caption = state.Notes.DataSource;
-            notes.Caption = state.Notes.Notes;
+            notes.OnlyText = state.Notes.Notes;
         }
     }
 }
