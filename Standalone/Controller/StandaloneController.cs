@@ -74,6 +74,10 @@ namespace Medical
             MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + documentPath);
             guiManager = new GUIManager(this);
 
+#if MAC_OSX
+            MyGUIInterface.Theme = "core_theme_osx.xml";
+#endif
+
             //Engine core
             medicalController = new MedicalController();
             mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
