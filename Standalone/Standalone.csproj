@@ -113,6 +113,7 @@
     <Compile Include="Controller\Props\PropFadeBehavior.cs" />
     <Compile Include="Controller\Props\PropFactory.cs" />
     <Compile Include="Controller\Props\Ruler.cs" />
+    <Compile Include="Controller\Props\Syringe.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
