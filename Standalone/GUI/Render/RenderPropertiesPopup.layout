@@ -2,6 +2,8 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="166 187 346 86" layer="Overlapped">
         <Property key="Widget_Caption" value="Rendering"/>
+        <Property key="Window_MinSize" value="346 86"/>
+        <Property key="Window_MaxSize" value="346 86"/>
         <Widget type="Button" skin="RibbonButton" position="74 4 66 58" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
             <Property key="Button_ImageResource" value="UtilitiesToolstrip/ImageResolutionIconLarge"/>

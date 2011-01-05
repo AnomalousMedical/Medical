@@ -9,6 +9,8 @@ namespace Medical.GUI
 {
     public class DialogOpenTaskbarItem : TaskbarItem
     {
+        public event EventHandler RightClicked;
+
         private Dialog dialog;
 
         public DialogOpenTaskbarItem(Dialog dialog, String name, String iconName)
@@ -22,6 +24,14 @@ namespace Medical.GUI
         public override void clicked(Widget source, EventArgs e)
         {
             dialog.Visible = !dialog.Visible;
+        }
+
+        public override void rightClicked(Widget source, EventArgs e)
+        {
+            if (RightClicked != null)
+            {
+                RightClicked.Invoke(this, EventArgs.Empty);
+            }
         }
 
         void dialog_Closed(object sender, EventArgs e)

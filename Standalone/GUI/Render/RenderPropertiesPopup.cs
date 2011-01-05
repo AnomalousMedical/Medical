@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Medical.Controller;
+using System.Drawing;
 
 namespace Medical.GUI
 {
-    class RenderPropertiesPopup : Dialog
+    public class RenderPropertiesPopup : Dialog
     {
-        public event EventHandler Render;
-
         private ComboBox aaCombo;
         private NumericEdit width;
         private NumericEdit height;
@@ -25,9 +25,15 @@ namespace Medical.GUI
         private Button twelveMegapixel;
         private Button custom;
 
-        public RenderPropertiesPopup()
+        private SceneViewController sceneViewController;
+        private ImageRenderer imageRenderer;
+
+        public RenderPropertiesPopup(SceneViewController sceneViewController, ImageRenderer imageRenderer)
             :base("Medical.GUI.Render.RenderPropertiesPopup.layout")
         {
+            this.sceneViewController = sceneViewController;
+            this.imageRenderer = imageRenderer;
+
             aaCombo = window.findWidget("RenderingTab/AACombo") as ComboBox;
             aaCombo.SelectedIndex = aaCombo.ItemCount - 1;
 
@@ -65,12 +71,27 @@ namespace Medical.GUI
             resolutionMenuGroup.SelectedButton = custom;
         }
 
+        public void render()
+        {
+            SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;
+            if (drawingWindow != null)
+            {
+                ImageRendererProperties imageProperties = new ImageRendererProperties();
+                imageProperties.Width = Width;
+                imageProperties.Height = Height;
+                imageProperties.UseWindowBackgroundColor = true;
+                imageProperties.AntiAliasingMode = AAValue;
+                Bitmap bitmap = imageRenderer.renderImage(imageProperties);
+                if (bitmap != null)
+                {
+                    ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap);
+                }
+            }
+        }
+
         void renderButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (Render != null)
-            {
-                Render.Invoke(this, EventArgs.Empty);
-            }
+            render();
         }
 
         void sizeButton_MouseButtonClick(Widget source, EventArgs e)

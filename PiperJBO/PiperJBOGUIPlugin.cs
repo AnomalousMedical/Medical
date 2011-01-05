@@ -21,6 +21,7 @@ namespace Medical.GUI
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
+        private RenderPropertiesPopup renderDialog;
 
         private AboutDialog aboutDialog;
 
@@ -28,7 +29,6 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private PiperJBOWizards wizards;
         private CloneWindowTaskbarItem cloneWindow;
-        private RenderTaskbarItem renderTaskbarItem;
 
         public PiperJBOGUIPlugin()
         {
@@ -87,7 +87,8 @@ namespace Medical.GUI
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderTaskbarItem = new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer, dialogManager);
+            renderDialog = new RenderPropertiesPopup(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            dialogManager.addManagedDialog(renderDialog);
 
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
@@ -104,6 +105,9 @@ namespace Medical.GUI
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
+
+            DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
+            renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
 
@@ -225,6 +229,11 @@ namespace Medical.GUI
         {
             changeActiveFile(null);
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
+        }
+
+        void renderTaskbarItem_RightClicked(object sender, EventArgs e)
+        {
+            renderDialog.render();
         }
     }
 }

@@ -220,7 +220,6 @@
     <Compile Include="GUI\Taskbar\DialogOpenTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\DistortionsTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\QuickViewTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\RenderTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\SequencesTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowNavigationTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
