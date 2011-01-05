@@ -9,6 +9,7 @@ namespace Medical.GUI
     class CallbackTaskbarItem : TaskbarItem
     {
         public event EventHandler OnClicked;
+        public event EventHandler OnRightClicked;
 
         public CallbackTaskbarItem(String name, String iconName)
             :base(name, iconName)
@@ -21,6 +22,14 @@ namespace Medical.GUI
             if (OnClicked != null)
             {
                 OnClicked.Invoke(source, e);
+            }
+        }
+
+        public override void rightClicked(Widget source, EventArgs e)
+        {
+            if (OnRightClicked != null)
+            {
+                OnRightClicked.Invoke(source, e);
             }
         }
     }

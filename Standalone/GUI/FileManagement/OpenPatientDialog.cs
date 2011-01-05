@@ -113,7 +113,20 @@ namespace Medical.GUI
             fileDataGrid.ListSelectAccept += new MyGUIEvent(fileDataGrid_ListSelectAccept);
             fileDataGrid.SortOnChanges = false;
             
-            locationTextBox.Caption = MedicalConfig.SaveDirectory;
+            String saveDirectory = MedicalConfig.SaveDirectory;
+            if (!Directory.Exists(saveDirectory))
+            {
+                try
+                {
+                    Directory.CreateDirectory(saveDirectory);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Could not create save file directory at location {0}. Reason {1}", saveDirectory, ex.Message);
+                }
+            }
+            locationTextBox.Caption = saveDirectory;
+
             locationTextBox.EventEditTextChange += new MyGUIEvent(locationTextBox_EventEditTextChange);
 
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
