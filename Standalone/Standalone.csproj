@@ -184,7 +184,7 @@
     <Compile Include="GUI\QuickView\NavigationMenu.cs" />
     <Compile Include="GUI\QuickView\NavigationShortcut.cs" />
     <Compile Include="GUI\QuickView\QuickViewPopup.cs" />
-    <Compile Include="GUI\Render\RenderPropertiesPopup.cs" />
+    <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />
@@ -304,7 +304,7 @@
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\QuickView\QuickViewPopup.layout" />
-    <EmbeddedResource Include="GUI\Render\RenderPropertiesPopup.layout" />
+    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />

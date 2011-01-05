@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    public class RenderPropertiesPopup : Dialog
+    public class RenderPropertiesDialog : Dialog
     {
         private ComboBox aaCombo;
         private NumericEdit width;
@@ -28,8 +28,8 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;
 
-        public RenderPropertiesPopup(SceneViewController sceneViewController, ImageRenderer imageRenderer)
-            :base("Medical.GUI.Render.RenderPropertiesPopup.layout")
+        public RenderPropertiesDialog(SceneViewController sceneViewController, ImageRenderer imageRenderer)
+            :base("Medical.GUI.Render.RenderPropertiesDialog.layout")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;

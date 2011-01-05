@@ -21,7 +21,7 @@ namespace Medical.GUI
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
-        private RenderPropertiesPopup renderDialog;
+        private RenderPropertiesDialog renderDialog;
 
         private AboutDialog aboutDialog;
 
@@ -37,6 +37,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            renderDialog.Dispose();
             options.Dispose();
             chooseSceneDialog.Dispose();
             savePatientDialog.Dispose();
@@ -87,7 +88,7 @@ namespace Medical.GUI
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
-            renderDialog = new RenderPropertiesPopup(standaloneController.SceneViewController, standaloneController.ImageRenderer);
+            renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
 
             //Wizards
