@@ -28,6 +28,7 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private PiperJBOWizards wizards;
         private CloneWindowTaskbarItem cloneWindow;
+        private RenderTaskbarItem renderTaskbarItem;
 
         public PiperJBOGUIPlugin()
         {
@@ -86,6 +87,8 @@ namespace Medical.GUI
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
+            renderTaskbarItem = new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer, dialogManager);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
         }
@@ -101,7 +104,7 @@ namespace Medical.GUI
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
-            taskbar.addItem(new RenderTaskbarItem(standaloneController.SceneViewController, standaloneController.ImageRenderer));
+            taskbar.addItem(renderTaskbarItem);
             taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);

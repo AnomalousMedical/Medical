@@ -6,11 +6,9 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class RenderPropertiesPopup : IDisposable
+    class RenderPropertiesPopup : Dialog
     {
-        private Layout layout;
-        private Widget mainWidget;
-        private PopupContainer popupContainer;
+        public event EventHandler Render;
 
         private ComboBox aaCombo;
         private NumericEdit width;
@@ -28,19 +26,18 @@ namespace Medical.GUI
         private Button custom;
 
         public RenderPropertiesPopup()
+            :base("Medical.GUI.Render.RenderPropertiesPopup.layout")
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.Render.RenderPropertiesPopup.layout");
-            mainWidget = layout.getWidget(0);
-            mainWidget.Visible = false;
-            popupContainer = new PopupContainer(mainWidget);
-
-            aaCombo = mainWidget.findWidget("RenderingTab/AACombo") as ComboBox;
+            aaCombo = window.findWidget("RenderingTab/AACombo") as ComboBox;
             aaCombo.SelectedIndex = aaCombo.ItemCount - 1;
 
-            width = new NumericEdit(mainWidget.findWidget("RenderingTab/WidthEdit") as Edit);
-            height = new NumericEdit(mainWidget.findWidget("RenderingTab/HeightEdit") as Edit);
+            width = new NumericEdit(window.findWidget("RenderingTab/WidthEdit") as Edit);
+            height = new NumericEdit(window.findWidget("RenderingTab/HeightEdit") as Edit);
 
-            Button sizeButton = mainWidget.findWidget("RenderingTab/SizeButton") as Button;
+            Button renderButton = window.findWidget("RenderingTab/Render") as Button;
+            renderButton.MouseButtonClick += new MyGUIEvent(renderButton_MouseButtonClick);
+
+            Button sizeButton = window.findWidget("RenderingTab/SizeButton") as Button;
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
 
             //ResolutionMenu
@@ -55,7 +52,6 @@ namespace Medical.GUI
             tenMegapixel = resolutionMenuWidget.findWidget("10Megapixel") as Button;
             twelveMegapixel = resolutionMenuWidget.findWidget("12Megapixel") as Button;
             custom = resolutionMenuWidget.findWidget("Custom") as Button;
-            popupContainer.addChildPopup(resolutionMenuWidget);
 
             resolutionMenuGroup = new ButtonGroup();
             resolutionMenuGroup.SelectedButtonChanged += new EventHandler(resolutionMenuGroup_SelectedButtonChanged);
@@ -69,14 +65,12 @@ namespace Medical.GUI
             resolutionMenuGroup.SelectedButton = custom;
         }
 
-        public void Dispose()
+        void renderButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            LayoutManager.Instance.unloadLayout(layout);
-        }
-
-        public void show(int left, int top)
-        {
-            popupContainer.show(left, top);
+            if (Render != null)
+            {
+                Render.Invoke(this, EventArgs.Empty);
+            }
         }
 
         void sizeButton_MouseButtonClick(Widget source, EventArgs e)

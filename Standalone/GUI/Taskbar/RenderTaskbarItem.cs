@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
 using System.Drawing;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -14,12 +15,14 @@ namespace Medical.GUI
         private ImageRenderer imageRenderer;
         private RenderPropertiesPopup properties;
 
-        public RenderTaskbarItem(SceneViewController sceneViewController, ImageRenderer imageRenderer)
+        public RenderTaskbarItem(SceneViewController sceneViewController, ImageRenderer imageRenderer, DialogManager dialogManager)
             :base("Render", "RenderIconLarge")
         {
             this.sceneViewController = sceneViewController;
             this.imageRenderer = imageRenderer;
             properties = new RenderPropertiesPopup();
+            properties.Render += new EventHandler(properties_Render);
+            dialogManager.addManagedDialog(properties);
         }
 
         public override void Dispose()
@@ -30,25 +33,22 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
-            render();
+            properties.open(false);
         }
 
         public override void rightClicked(Widget source, EventArgs e)
         {
-            properties.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            render();
         }
 
-        private void render()
+        public void render()
         {
-            //StatusController.SetStatus("Rendering image...");
             SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;
             if (drawingWindow != null)
             {
-                int width = properties.Width;
-                int height = properties.Height;
                 ImageRendererProperties imageProperties = new ImageRendererProperties();
-                imageProperties.Width = width;
-                imageProperties.Height = height;
+                imageProperties.Width = properties.Width;
+                imageProperties.Height = properties.Height;
                 imageProperties.UseWindowBackgroundColor = true;
                 imageProperties.AntiAliasingMode = properties.AAValue;
                 Bitmap bitmap = imageRenderer.renderImage(imageProperties);
@@ -57,7 +57,11 @@ namespace Medical.GUI
                     ImageWindow window = new ImageWindow(MainWindow.Instance, sceneViewController.ActiveWindow.Name, bitmap);
                 }
             }
-            //StatusController.TaskCompleted();
+        }
+
+        void properties_Render(object sender, EventArgs e)
+        {
+            render();
         }
     }
 }

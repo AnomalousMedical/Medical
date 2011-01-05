@@ -1,40 +1,45 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelNoTranspo" position="167 187 276 66" layer="Overlapped">
-        <Widget type="Button" skin="RibbonButton" position="4 4 66 58" name="RenderingTab/SizeButton">
+    <Widget type="Window" skin="WindowCSX" position="166 187 346 86" layer="Overlapped">
+        <Property key="Widget_Caption" value="Rendering"/>
+        <Widget type="Button" skin="RibbonButton" position="74 4 66 58" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
             <Property key="Button_ImageResource" value="UtilitiesToolstrip/ImageResolutionIconLarge"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="73 21 34 15">
+        <Widget type="StaticText" skin="StaticText" position="143 21 34 15">
             <Property key="Widget_Caption" value="Width"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="174 21 42 15">
+        <Widget type="StaticText" skin="StaticText" position="244 21 42 15">
             <Property key="Widget_Caption" value="Height"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="108 20 59 20" name="RenderingTab/WidthEdit">
+        <Widget type="Edit" skin="Edit" position="178 20 59 20" name="RenderingTab/WidthEdit">
             <Property key="Widget_Caption" value="1024"/>
             <UserString key="AllowFloat" value="False"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="MaxValue" value="4096"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="214 20 59 20" name="RenderingTab/HeightEdit">
+        <Widget type="Edit" skin="Edit" position="284 20 59 20" name="RenderingTab/HeightEdit">
             <Property key="Widget_Caption" value="768"/>
             <UserString key="MaxValue" value="4096"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="75 47 75 15">
+        <Widget type="StaticText" skin="StaticText" position="145 47 75 15">
             <Property key="Widget_Caption" value="Anti Aliasing"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="152 43 121 20" name="RenderingTab/AACombo">
+        <Widget type="ComboBox" skin="ComboBox" position="222 43 121 20" name="RenderingTab/AACombo">
             <Property key="ComboBox_AddItem" value="None"/>
             <Property key="ComboBox_AddItem" value="2x"/>
             <Property key="ComboBox_AddItem" value="4x"/>
             <Property key="ComboBox_AddItem" value="8x"/>
             <Property key="Edit_Static" value="true"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="76 6 124 13" align="HCenter Bottom">
+        <Widget type="StaticText" skin="StaticText" position="143 4 124 13" align="Left Top">
             <Property key="Widget_Caption" value="Rendering Properties"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButton" position="4 4 66 58" name="RenderingTab/Render">
+            <Property key="Widget_Caption" value="Render"/>
+            <Property key="Button_ImageResource" value="RenderIconLarge"/>
         </Widget>
     </Widget>
 </MyGUI>
