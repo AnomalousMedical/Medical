@@ -591,8 +591,8 @@ namespace Medical
             }
             else
             {
-                mainWindow.Show();
                 mainWindow.Maximized = true;
+                mainWindow.Show();
             }
         }
 
