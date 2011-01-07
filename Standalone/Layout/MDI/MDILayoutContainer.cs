@@ -243,6 +243,23 @@ namespace Medical.Controller
             }
         }
 
+        public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
+        {
+            foreach (MDIContainerBase child in children)
+            {
+                float left = child.Location.x;
+                float top = child.Location.y;
+                float right = left + child.WorkingSize.Width;
+                float bottom = top + child.WorkingSize.Height;
+                if (mouseX > left && mouseX < right && 
+                    mouseY > top && mouseY < bottom)
+                {
+                    return child.findWindowAtPosition(mouseX, mouseY);
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// LayoutContainer propery
         /// </summary>

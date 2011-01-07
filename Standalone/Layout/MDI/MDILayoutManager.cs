@@ -223,17 +223,60 @@ namespace Medical.Controller
                     if (activeWindow != null)
                     {
                         activeWindow._doSetActive(false);
+                        activeWindow.MouseDragStarted -= activeWindow_MouseDragStarted;
+                        activeWindow.MouseDrag -= activeWindow_MouseDrag;
+                        activeWindow.MouseDragFinished -= activeWindow_MouseDragFinished;
                     }
                     activeWindow = value;
                     if (activeWindow != null)
                     {
                         activeWindow._doSetActive(true);
+                        activeWindow.MouseDragStarted += activeWindow_MouseDragStarted;
+                        activeWindow.MouseDrag += activeWindow_MouseDrag;
+                        activeWindow.MouseDragFinished += activeWindow_MouseDragFinished;
                     }
                     if (ActiveWindowChanged != null)
                     {
                         ActiveWindowChanged.Invoke(this, EventArgs.Empty);
                     }
                 }
+            }
+        }
+
+        private MDIWindow dragSourceWindow;
+        private MDIWindow dragTargetWindow;
+
+        void activeWindow_MouseDragStarted(MDIWindow source, float mouseX, float mouseY)
+        {
+            dragSourceWindow = source;
+            dragTargetWindow = null;
+        }
+
+        void activeWindow_MouseDrag(MDIWindow source, float mouseX, float mouseY)
+        {
+            dragTargetWindow = rootContainer.findWindowAtPosition(mouseX, mouseY);
+            //if (dragTargetWindow != null)
+            //{
+            //    if (source != dragTargetWindow)
+            //    {
+            //        Logging.Log.Debug("TargetWindow is {0} {1}", targetWindow.Location.x, targetWindow.Location.y);
+            //        source._ParentContainer.removeChild(source);
+            //        targetWindow._ParentContainer.addChild(source, targetWindow, WindowAlignment.Right);
+            //    }
+            //    else
+            //    {
+            //        Logging.Log.Debug("Source is target window");
+            //    }
+            //}
+        }
+
+        void activeWindow_MouseDragFinished(MDIWindow source, float mouseX, float mouseY)
+        {
+            if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
+            {
+                dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
+                dragTargetWindow._ParentContainer.addChild(dragSourceWindow, dragTargetWindow, WindowAlignment.Right);
+                rootContainer.layout();
             }
         }
 

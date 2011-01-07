@@ -7,6 +7,8 @@ using Engine;
 
 namespace Medical.Controller
 {
+    public delegate void MDIMouseEvent(MDIWindow source, float mouseX, float mouseY);
+
     /// <summary>
     /// The base class for windows in the MDILayoutManager.
     /// </summary>
@@ -14,6 +16,9 @@ namespace Medical.Controller
     {
         public event EventHandler Closed;
         public event EventHandler ActiveStatusChanged;
+        public event MDIMouseEvent MouseDragStarted;
+        public event MDIMouseEvent MouseDrag;
+        public event MDIMouseEvent MouseDragFinished;
 
         private Layout guiLayout;
         private Widget mainWidget;
@@ -39,7 +44,9 @@ namespace Medical.Controller
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
             if (captionButton != null)
             {
-                captionButton.MouseButtonClick += new MyGUIEvent(captionButton_MouseButtonClick);
+                captionButton.MouseButtonPressed += new MyGUIEvent(captionButton_MouseButtonClick);
+                captionButton.MouseDrag += new MyGUIEvent(captionButton_MouseDrag);
+                captionButton.MouseButtonReleased += new MyGUIEvent(captionButton_MouseButtonReleased);
             }
 
             closeButton = mainWidget.findWidget("CloseButton") as Button;
@@ -107,6 +114,11 @@ namespace Medical.Controller
                 content.Location = new Vector2(Location.x, Location.y);
                 content.layout();
             }
+        }
+
+        public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
+        {
+            return this;
         }
 
         /// <summary>
@@ -262,6 +274,29 @@ namespace Medical.Controller
         void captionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             layoutManager.ActiveWindow = this;
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (MouseDragStarted != null)
+            {
+                MouseDragStarted.Invoke(this, me.Position.x, me.Position.y);
+            }
+        }
+
+        void captionButton_MouseDrag(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (MouseDrag != null)
+            {
+                MouseDrag.Invoke(this, me.Position.x, me.Position.y);
+            }
+        }
+
+        void captionButton_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            MouseEventArgs me = (MouseEventArgs)e;
+            if (MouseDragFinished != null)
+            {
+                MouseDragFinished.Invoke(this, me.Position.x, me.Position.y);
+            }
         }
     }
 }

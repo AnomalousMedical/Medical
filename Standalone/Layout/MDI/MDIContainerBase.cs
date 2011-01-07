@@ -28,5 +28,7 @@ namespace Medical.Controller
         /// Do not touch unless you are MDILayoutManager or MDILayoutContainer.
         /// </summary>
         internal MDILayoutContainer _ParentContainer { get; set; }
+
+        public abstract MDIWindow findWindowAtPosition(float mouseX, float mouseY);
     }
 }
