@@ -18,34 +18,36 @@ namespace Medical.GUI
         public String LayerState { get; set; }
     }
 
-    class NavigationMenu : IDisposable
+    class NavigationMenu : PopupContainer
     {
         public event NavigationShortcutEvent ItemActivated;
 
         private ImageAtlas imageAtlas;
-        private PopupContainer popupMenu;
         private ButtonGrid buttonGrid;
         private ScrollView scrollView;
 
         private MenuImageIndex defaultItem = null;
 
         public NavigationMenu(ImageAtlas imageAtlas)
+            :base(Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", ""))
         {
             this.imageAtlas = imageAtlas;
+
+            scrollView = widget as ScrollView;
+            scrollView.CanvasAlign = Align.Left | Align.Top;
+            scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
+            imageAtlas.Dispose();
             buttonGrid.Dispose();
             Gui.Instance.destroyWidget(scrollView);
+            base.Dispose();
         }
 
         public void createImageGallerySubMenu(NavigationMenuEntry topEntry)
         {
-            scrollView = Gui.Instance.createWidgetT("ScrollView", "CustomScrollView2", 0, 0, 300, 300, Align.Left | Align.Top, "Overlapped", "") as ScrollView;
-            scrollView.CanvasAlign = Align.Left | Align.Top;
-            scrollView.VisibleHScroll = scrollView.VisibleVScroll = false;
-
             buttonGrid = new ButtonGrid(scrollView);
             buttonGrid.ItemWidth = 69;
             buttonGrid.ItemHeight = 51;
@@ -64,12 +66,6 @@ namespace Medical.GUI
             buttonGrid.SuppressLayout = false;
             buttonGrid.layoutAndResize(mostElements);
             scrollView.Visible = false;
-            popupMenu = new PopupContainer(scrollView);
-        }
-
-        public void show(int left, int top)
-        {
-            popupMenu.show(left, top);
         }
 
         int addEntriesAsImages(NavigationMenuEntry currentEntry, ButtonGrid menu)
@@ -119,7 +115,7 @@ namespace Medical.GUI
                 ItemActivated.Invoke(index.EntryName, index.LayerState);
             }
             ButtonGrid grid = item.ButtonGrid;
-            popupMenu.hide();
+            this.hide();
         }
 
         public MenuImageIndex DefaultItem
