@@ -51,6 +51,7 @@ namespace Medical.GUI
             imageProp.TransparentBackground = true;
             imageProp.ShowBackground = false;
             imageProp.ShowWatermark = false;
+            imageProp.ShowUIUpdates = false;
 
             thumbnailProperties.Add(imageProp);
         }

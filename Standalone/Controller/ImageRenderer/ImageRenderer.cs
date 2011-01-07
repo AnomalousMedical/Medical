@@ -60,7 +60,7 @@ namespace Medical
 
         public Bitmap renderImage(ImageRendererProperties properties)
         {
-            if (imageRendererProgress != null)
+            if (imageRendererProgress != null && properties.ShowUIUpdates)
             {
                 imageRendererProgress.Visible = true;
                 imageRendererProgress.update(0, "Rendering Image");
@@ -151,7 +151,7 @@ namespace Medical
                 }
             }
 
-            if (imageRendererProgress != null)
+            if (imageRendererProgress != null && properties.ShowUIUpdates)
             {
                 imageRendererProgress.Visible = false;
             }

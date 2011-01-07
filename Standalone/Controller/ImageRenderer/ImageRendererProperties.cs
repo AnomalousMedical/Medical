@@ -31,6 +31,7 @@ namespace Medical
             OverrideLayers = false;
             LayerState = null;
             ShowBackground = true;
+            ShowUIUpdates = true;
         }
 
         /// <summary>
@@ -160,5 +161,10 @@ namespace Medical
         /// The layer state to use with OverrideLayers.
         /// </summary>
         public String LayerState { get; set; }
+
+        /// <summary>
+        /// Set this to true to enable the ImageRendererProgress and show updates. Set it to false to keep this UI hidden.
+        /// </summary>
+        public bool ShowUIUpdates { get; set; }
     }
 }

@@ -55,7 +55,8 @@ namespace Medical
             imageProperties.LayerState = "MandibleSizeLayers";
             imageProperties.TransparentBackground = true;
             imageProperties.ShowBackground = false;
-            imageProperties.ShowWatermark = false;            
+            imageProperties.ShowWatermark = false;
+            imageProperties.ShowUIUpdates = false;
 
             this.medicalController = medicalController;
         }

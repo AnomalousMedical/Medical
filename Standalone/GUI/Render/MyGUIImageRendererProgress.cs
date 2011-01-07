@@ -29,10 +29,13 @@ namespace Medical.GUI
 
         public void update(uint percentage, String status)
         {
-            rendererProgress.Position = percentage;
-            statusText.Caption = status;
-            Root.getSingleton()._updateAllRenderTargets();
-            WindowFunctions.pumpMessages();
+            if (Visible)
+            {
+                rendererProgress.Position = percentage;
+                statusText.Caption = status;
+                Root.getSingleton()._updateAllRenderTargets();
+                WindowFunctions.pumpMessages();
+            }
         }
 
         public bool Visible
