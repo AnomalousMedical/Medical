@@ -258,10 +258,6 @@ namespace Medical
             //Resize if aa is active
             if (aaMode > 1)
             {
-                //if (transparentBG)
-                //{
-                //    bitmap.MakeTransparent(System.Drawing.Color.FromArgb(bgColor.toARGB()));
-                //}
                 int smallWidth = width / aaMode;
                 int smallHeight = height / aaMode;
                 Bitmap largeImage = bitmap;
@@ -271,7 +267,6 @@ namespace Medical
                     graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
                     graph.CompositingQuality = CompositingQuality.HighQuality;
                     graph.SmoothingMode = SmoothingMode.AntiAlias;
-                    //graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
                     this.renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
                 }
                 largeImage.Dispose();
@@ -303,7 +298,6 @@ namespace Medical
             int finalHeight = height / aaMode;
             int imageStepHorizSmall = finalWidth / gridSize;
             int imageStepVertSmall = finalHeight / gridSize;
-            //Log.Debug("Step {0}, {1}", imageStepHorizSmall, imageStepVertSmall);
 
             float left, right, top, bottom;
             int totalSS = gridSize * gridSize;
@@ -318,7 +312,6 @@ namespace Medical
             Bitmap fullBitmap = new Bitmap(finalWidth, finalHeight, bitmapFormat);
             using (Graphics g = Graphics.FromImage(fullBitmap))
             {
-                //g.Clear(System.Drawing.Color.LimeGreen);
                 using (Bitmap pieceBitmap = new Bitmap(imageStepHoriz, imageStepVert, bitmapFormat))
                 {
                     Bitmap scaledPiecewiseBitmap = null;
@@ -329,9 +322,6 @@ namespace Medical
                         scaledPiecewiseBitmap = new Bitmap(imageStepHorizSmall, imageStepVertSmall, bitmapFormat);
                         scalarRectangle = new Rectangle(0, 0, scaledPiecewiseBitmap.Width, scaledPiecewiseBitmap.Height);
                         scalerGraphics = Graphics.FromImage(scaledPiecewiseBitmap);
-                        //scalerGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
-                        //scalerGraphics.CompositingQuality = CompositingQuality.HighQuality;
-                        //scalerGraphics.SmoothingMode = SmoothingMode.AntiAlias;
                     }
                     for (int i = 0; i < totalSS; ++i)
                     {
@@ -358,20 +348,15 @@ namespace Medical
                         destRect.Y = y * imageStepVertSmall;
                         destRect.Width = imageStepHorizSmall;
                         destRect.Height = imageStepVertSmall;
-                        //destRect, x * imageStepHorizSmall, y * imageStepVertSmall, imageStepHorizSmall, imageStepVertSmall
                         if (scalerGraphics != null) //Meaning AA is turned on.
                         {
-                            //scalerGraphics.Clear(System.Drawing.Color.HotPink);
-                            //scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
                             renderBitmaps(scalerGraphics, scalarRectangle, pieceBitmap, pieceBitmap.Width, pieceBitmap.Height, transparentBG, bgColor);
                             g.DrawImage(scaledPiecewiseBitmap, destRect);
                         }
                         else
                         {
-                            //g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
                             renderBitmaps(g, destRect, pieceBitmap, imageStepHoriz, imageStepVert, transparentBG, bgColor);
                         }
-                        //Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
 
                         if (imageRendererProgress != null)
                         {
