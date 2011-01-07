@@ -24,16 +24,16 @@ namespace Medical.GUI
         private float padding = 3;
         private Size2 itemSize = new Size2(48, 48);
         private LayoutContainer child;
+        private TaskbarAlignment alignment = TaskbarAlignment.Left;
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
         internal Taskbar(AppMenu appMenu, StandaloneController controller)
         {
-            Alignment = TaskbarAlignment.Left;
-
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
             taskbarWidget = myGUIlayout.getWidget(0);
+            taskbarWidget.MouseDrag += new MyGUIEvent(taskbarWidget_MouseDrag);
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
 
@@ -41,6 +41,60 @@ namespace Medical.GUI
             {
                 this.appMenu = appMenu;
                 appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+            }
+        }
+
+        void taskbarWidget_MouseDrag(Widget source, EventArgs e)
+        {
+            MyGUIPlugin.MouseEventArgs me = (MouseEventArgs)e;
+            float x = me.Position.x;
+            float y = me.Position.y;
+            float top = WorkingSize.Height * 0.48f;
+            float bottom = WorkingSize.Height - top;
+            float left = WorkingSize.Width * 0.48f;
+            float right = WorkingSize.Width - left;
+
+            if (y < top)
+            {
+                checkSides(x, TaskbarAlignment.Left, y, TaskbarAlignment.Top, WorkingSize.Width - x, TaskbarAlignment.Right);
+            }
+            else if (y > bottom)
+            {
+                checkSides(x, TaskbarAlignment.Left, WorkingSize.Height - y, TaskbarAlignment.Bottom, WorkingSize.Width - x, TaskbarAlignment.Right);
+            }
+            else if (x < left)
+            {
+                checkSides(x, TaskbarAlignment.Left, WorkingSize.Height - y, TaskbarAlignment.Bottom, y, TaskbarAlignment.Top);
+            }
+            else if (x > right)
+            {
+                checkSides(WorkingSize.Width - x, TaskbarAlignment.Right, WorkingSize.Height - y, TaskbarAlignment.Bottom, y, TaskbarAlignment.Top);
+            }
+        }
+
+        void checkSides(float distance1, TaskbarAlignment alignment1, float distance2, TaskbarAlignment alignment2, float distance3, TaskbarAlignment alignment3)
+        {
+            if (distance1 < distance2)
+            {
+                if (distance3 < distance1)
+                {
+                    Alignment = alignment3;
+                }
+                else
+                {
+                    Alignment = alignment1;
+                }
+            }
+            else
+            {
+                if (distance3 < distance2)
+                {
+                    Alignment = alignment3;
+                }
+                else
+                {
+                    Alignment = alignment2;
+                }
             }
         }
 
@@ -139,7 +193,21 @@ namespace Medical.GUI
             }
         }
 
-        public TaskbarAlignment Alignment { get; set; }
+        public TaskbarAlignment Alignment
+        {
+            get
+            {
+                return alignment;
+            }
+            set
+            {
+                if (alignment != value)
+                {
+                    alignment = value;
+                    layout();
+                }
+            }
+        }
 
         private void layoutTaskbarVertical()
         {
