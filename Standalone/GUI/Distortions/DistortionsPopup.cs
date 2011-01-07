@@ -7,27 +7,19 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class DistortionsPopup : IDisposable
+    public class DistortionsPopup : PopupContainer
     {
-        private Layout layout;
-        private Widget mainWidget;
-        private PopupContainer popupContainer;
-
         private GUIManager guiManager;
 
         private List<Button> buttons = new List<Button>();
 
         public DistortionsPopup(StateWizardController stateWizardController, GUIManager guiManager)
+            :base("Medical.GUI.Distortions.DistortionsPopup.layout")
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.Distortions.DistortionsPopup.layout");
-            mainWidget = layout.getWidget(0);
-            mainWidget.Visible = false;
-            popupContainer = new PopupContainer(mainWidget);
-
             this.guiManager = guiManager;
 
-            Widget anatomyDistortionPanel = mainWidget.findWidget("AnatomyDistortionPanel");
-            Widget examDistortionPanel = mainWidget.findWidget("ExamDistortionPanel");
+            Widget anatomyDistortionPanel = widget.findWidget("AnatomyDistortionPanel");
+            Widget examDistortionPanel = widget.findWidget("ExamDistortionPanel");
 
             int anatomyPosition = 3;
             int examPosition = 3;
@@ -71,7 +63,7 @@ namespace Medical.GUI
             anatomyDistortionPanel.setSize(anatomyPosition, anatomyDistortionPanel.Height);
             examDistortionPanel.setSize(examPosition, examDistortionPanel.Height);
 
-            Size2 size = new Size2(mainWidget.Width, mainWidget.Height);
+            Size2 size = new Size2(widget.Width, widget.Height);
             if (examDistortionPanel.Right > anatomyDistortionPanel.Right)
             {
                 size.Width = examDistortionPanel.Right;
@@ -80,27 +72,22 @@ namespace Medical.GUI
             {
                 size.Width = anatomyDistortionPanel.Right;
             }
-            mainWidget.setSize((int)size.Width, (int)size.Height);
+            widget.setSize((int)size.Width, (int)size.Height);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             foreach (Button button in buttons)
             {
                 Gui.Instance.destroyWidget(button);
             }
             buttons.Clear();
-            LayoutManager.Instance.unloadLayout(layout);
-        }
-
-        public void show(int left, int top)
-        {
-            popupContainer.show(left, top);
+            base.Dispose();
         }
 
         void wizardButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            popupContainer.hide();
+            this.hide();
             guiManager.startWizard(source.UserObject as StateWizard);
         }
     }

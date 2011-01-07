@@ -22,6 +22,7 @@ namespace Medical.GUI
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
+        private DistortionsPopup distortionsPopup;
 
         private AboutDialog aboutDialog;
 
@@ -37,6 +38,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            distortionsPopup.Dispose();
             renderDialog.Dispose();
             options.Dispose();
             chooseSceneDialog.Dispose();
@@ -93,6 +95,9 @@ namespace Medical.GUI
 
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
+
+            //Distortions Popup, must come after wizards
+            distortionsPopup = new DistortionsPopup(guiManager.StateWizardController, guiManager);
         }
 
         public void addToTaskbar(Taskbar taskbar)
@@ -100,7 +105,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DistortionsTaskbarItem(guiManager.StateWizardController, guiManager));
+            taskbar.addItem(new ShowPopupTaskbarItem(distortionsPopup, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
