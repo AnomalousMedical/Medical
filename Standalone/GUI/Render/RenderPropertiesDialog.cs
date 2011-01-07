@@ -72,8 +72,8 @@ namespace Medical.GUI
         void resolutionMenu_ResolutionChanged(object sender, EventArgs e)
         {
             width.Edit.Enabled = height.Edit.Enabled = resolutionMenu.IsCustom;
-            Width = resolutionMenu.Width;
-            Height = resolutionMenu.Height;
+            Width = resolutionMenu.ImageWidth;
+            Height = resolutionMenu.ImageHeight;
         }
 
         public int Width

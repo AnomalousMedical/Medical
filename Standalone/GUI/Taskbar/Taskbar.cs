@@ -24,7 +24,7 @@ namespace Medical.GUI
         private float padding = 3;
         private Size2 itemSize = new Size2(48, 48);
         private LayoutContainer child;
-        private TaskbarAlignment alignment = TaskbarAlignment.Left;
+        private TaskbarAlignment alignment = TaskbarAlignment.Top;
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 

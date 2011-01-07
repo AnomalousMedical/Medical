@@ -68,6 +68,7 @@ namespace Medical.GUI
             continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+            MedicalConfig.TaskbarAlignment = taskbar.Alignment;
             taskbar.Dispose();
         }
 
@@ -148,6 +149,7 @@ namespace Medical.GUI
             
             //Taskbar
             taskbar = new Taskbar(appMenu, standaloneController);
+            taskbar.Alignment = MedicalConfig.TaskbarAlignment;
             taskbar.SuppressLayout = true;
             foreach (GUIPlugin plugin in plugins)
             {

@@ -50,42 +50,42 @@ namespace Medical.GUI
             }
         }
 
-        public int Width { get; set; }
+        public int ImageWidth { get; set; }
 
-        public int Height { get; set; }
+        public int ImageHeight { get; set; }
 
         void resolutionMenuGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
             Button selectedButton = resolutionMenuGroup.SelectedButton;
             if (selectedButton == onePointThreeMegapixel)
             {
-                Width = 1280;
-                Height = 1024;
+                ImageWidth = 1280;
+                ImageHeight = 1024;
             }
             else if (selectedButton == fourMegapixel)
             {
-                Width = 2448;
-                Height = 1632;
+                ImageWidth = 2448;
+                ImageHeight = 1632;
             }
             else if (selectedButton == sixMegapixel)
             {
-                Width = 3000;
-                Height = 2000;
+                ImageWidth = 3000;
+                ImageHeight = 2000;
             }
             else if (selectedButton == eightMegapixel)
             {
-                Width = 3456;
-                Height = 2304;
+                ImageWidth = 3456;
+                ImageHeight = 2304;
             }
             else if (selectedButton == tenMegapixel)
             {
-                Width = 3648;
-                Height = 2736;
+                ImageWidth = 3648;
+                ImageHeight = 2736;
             }
             else if (selectedButton == twelveMegapixel)
             {
-                Width = 4000;
-                Height = 3000;
+                ImageWidth = 4000;
+                ImageHeight = 3000;
             }
             if (ResolutionChanged != null)
             {

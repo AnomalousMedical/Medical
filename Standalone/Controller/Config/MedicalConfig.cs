@@ -7,6 +7,7 @@ using Engine;
 using Engine.Resources;
 using Engine.Platform;
 using Logging;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -17,6 +18,7 @@ namespace Medical
         private static String windowsFile;
         private static String camerasFile;
         private static ConfigSection program;
+        private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
 
         private static ConfigFile internalSettings = null;
         private static ConfigSection resources = null;
@@ -58,6 +60,16 @@ namespace Medical
             }
             cameraTransitionTime = program.getValue("CameraTransitionTime", 0.5f);
             transparencyChangeMultiplier = program.getValue("TransparencyChangeMultiplier", 2.0f);
+
+            String taskbarAlignmentString = program.getValue("TaskbarAlignment", taskbarAlignment.ToString());
+            try
+            {
+                taskbarAlignment = (TaskbarAlignment)Enum.Parse(typeof(TaskbarAlignment), taskbarAlignmentString);
+            }
+            catch (Exception)
+            {
+                Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
+            }
 
 #if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))
@@ -235,7 +247,7 @@ namespace Medical
                 {
                     buttonCode = (MouseButtonCode)Enum.Parse(typeof(MouseButtonCode), mouseButton);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Log.Warning("Could not parse the mouse button code {0}. Using default.", mouseButton);
                 }
@@ -244,6 +256,19 @@ namespace Medical
             set
             {
                 program.setValue("CameraMouseButton", value.ToString());
+            }
+        }
+
+        public static TaskbarAlignment TaskbarAlignment
+        {
+            get
+            {
+                return taskbarAlignment;
+            }
+            set
+            {
+                taskbarAlignment = value;
+                program.setValue("TaskbarAlignment", taskbarAlignment.ToString());
             }
         }
     }
