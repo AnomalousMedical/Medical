@@ -7,13 +7,20 @@ using Engine;
 
 namespace Medical.GUI
 {
+    public enum TaskbarAlignment
+    {
+        Left,
+        Right,
+        Top,
+        Bottom,
+    }
+
     public class Taskbar : LayoutContainer, IDisposable
     {
         private Layout myGUIlayout;
         private Widget taskbarWidget;
         private Button appButton;
         private AppMenu appMenu;
-        private Vector2 startLocation;
         private float padding = 3;
         private Size2 itemSize = new Size2(48, 48);
         private LayoutContainer child;
@@ -22,6 +29,8 @@ namespace Medical.GUI
 
         internal Taskbar(AppMenu appMenu, StandaloneController controller)
         {
+            Alignment = TaskbarAlignment.Left;
+
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
             taskbarWidget = myGUIlayout.getWidget(0);
@@ -33,8 +42,6 @@ namespace Medical.GUI
                 this.appMenu = appMenu;
                 appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
             }
-
-            startLocation = new Vector2(appButton.Left, appButton.Bottom + padding);
         }
 
         public void Dispose()
@@ -71,27 +78,13 @@ namespace Medical.GUI
         {
             if (Visible)
             {
-                Vector2 currentLocation = startLocation;
-
-                foreach (TaskbarItem item in taskbarItems)
+                if (Alignment == TaskbarAlignment.Left || Alignment == TaskbarAlignment.Right)
                 {
-                    if (currentLocation.y + itemSize.Height > WorkingSize.Height)
-                    {
-                        currentLocation.x += itemSize.Width + padding;
-                        currentLocation.y = startLocation.y;
-                    }
-
-                    item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
-                    currentLocation.y += itemSize.Height + padding;
+                    layoutTaskbarVertical();
                 }
-
-                taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width + 3), (int)WorkingSize.Height);
-
-                if (Child != null)
+                else
                 {
-                    Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
-                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
-                    Child.layout();
+                    layoutTaskbarHorizontal();
                 }
             }
             else
@@ -142,6 +135,92 @@ namespace Medical.GUI
                 if(child != null)
                 {
                     child._setParent(this);
+                }
+            }
+        }
+
+        public TaskbarAlignment Alignment { get; set; }
+
+        private void layoutTaskbarVertical()
+        {
+            Vector2 startLocation = new Vector2(appButton.Left, appButton.Bottom + padding);
+            Vector2 currentLocation = startLocation;
+
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                if (currentLocation.y + itemSize.Height > WorkingSize.Height)
+                {
+                    currentLocation.x += itemSize.Width + padding;
+                    currentLocation.y = startLocation.y;
+                }
+
+                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                currentLocation.y += itemSize.Height + padding;
+            }
+
+            if (Alignment == TaskbarAlignment.Left)
+            {
+                taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)(currentLocation.x + itemSize.Width + 3), (int)WorkingSize.Height);
+
+                if (Child != null)
+                {
+                    Child.Location = new Vector2(Location.x + taskbarWidget.Width, Location.y);
+                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                    Child.layout();
+                }
+            }
+            else if (Alignment == TaskbarAlignment.Right)
+            {
+                int width = (int)(currentLocation.x + itemSize.Width + 3);
+                taskbarWidget.setCoord((int)WorkingSize.Width - width, (int)Location.y, width, (int)WorkingSize.Height);
+
+                if (Child != null)
+                {
+                    Child.Location = Location;
+                    Child.WorkingSize = new Size2(WorkingSize.Width - taskbarWidget.Width, WorkingSize.Height);
+                    Child.layout();
+                }
+            }
+        }
+
+        private void layoutTaskbarHorizontal()
+        {
+            Vector2 startLocation = new Vector2(appButton.Right + padding, appButton.Top);
+            Vector2 currentLocation = startLocation;
+
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                if (currentLocation.x + itemSize.Width > WorkingSize.Width)
+                {
+                    currentLocation.y += itemSize.Height + padding;
+                    currentLocation.x = startLocation.x;
+                }
+
+                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                currentLocation.x += itemSize.Width + padding;
+            }
+
+            if (Alignment == TaskbarAlignment.Top)
+            {
+                taskbarWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)(currentLocation.y + itemSize.Height + 3));
+
+                if (Child != null)
+                {
+                    Child.Location = new Vector2(Location.x, Location.y + taskbarWidget.Height);
+                    Child.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
+                    Child.layout();
+                }
+            }
+            else if (Alignment == TaskbarAlignment.Bottom)
+            {
+                int height = (int)(currentLocation.y + itemSize.Height + 3);
+                taskbarWidget.setCoord((int)Location.x, (int)WorkingSize.Height - height, (int)WorkingSize.Width, height);
+
+                if (Child != null)
+                {
+                    Child.Location = Location;
+                    Child.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - taskbarWidget.Height);
+                    Child.layout();
                 }
             }
         }
