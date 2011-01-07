@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -45,33 +46,8 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
-            int left = source.AbsoluteLeft;
-            int top = source.AbsoluteTop + source.Height;
-            int guiWidth = Gui.Instance.getViewWidth();
-            int guiHeight = Gui.Instance.getViewHeight();
-
-            int right = left + windowMenu.Width;
-            int bottom = top + windowMenu.Height;
-
-            if (right > guiWidth)
-            {
-                left -= right - guiWidth;
-                if (left < 0)
-                {
-                    left = 0;
-                }
-            }
-
-            if (bottom > guiHeight)
-            {
-                top -= bottom - guiHeight;
-                if (top < 0)
-                {
-                    top = 0;
-                }
-            }
-
-            windowMenu.setPosition(left, top);
+            IntVector2 position = this.findGoodPosition(windowMenu.Width, windowMenu.Height);
+            windowMenu.setPosition(position.x, position.y);
             LayerManager.Instance.upLayerItem(windowMenu);
             windowMenu.setVisibleSmooth(true);
         }

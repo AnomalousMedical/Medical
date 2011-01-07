@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
 using Medical.Muscles;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -117,7 +118,8 @@ namespace Medical.GUI
             {
                 sequenceMenu.setVisibleSmooth(true);
                 LayerManager.Instance.upLayerItem(sequenceMenu);
-                sequenceMenu.setPosition(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+                IntVector2 position = this.findGoodPosition(sequenceMenu.Width, sequenceMenu.Height);
+                sequenceMenu.setPosition(position.x, position.y);
             }
         }
 
