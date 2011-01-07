@@ -28,6 +28,12 @@ namespace Medical.Controller
 
         public void createSeparator()
         {
+            //Show the previous last separator if avaliable
+            if (separatorWidgets.Count > 0)
+            {
+                separatorWidgets[separatorWidgets.Count - 1].Visible = true;
+            }
+
             Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, 10, 10, Align.Left | Align.Top, "Back", "");
             separatorWidgets.Add(separator);
             separator.MouseDrag += separator_MouseDrag;
@@ -41,6 +47,7 @@ namespace Medical.Controller
             {
                 separator.Pointer = CursorManager.SIZE_VERT;
             }
+            separator.Visible = false;
         }
 
         public void removeSeparator()
@@ -48,6 +55,12 @@ namespace Medical.Controller
             Widget separator = separatorWidgets[separatorWidgets.Count - 1];
             gui.destroyWidget(separator);
             separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
+
+            //Hide the new last separator
+            if (separatorWidgets.Count > 0)
+            {
+                separatorWidgets[separatorWidgets.Count - 1].Visible = false;
+            }
         }
 
         public void setSeparatorCoord(int index, int x, int y, int width, int height)
