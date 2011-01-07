@@ -16,7 +16,7 @@ namespace Medical
     class ImageException : Exception
     {
         public ImageException(String message)
-            :base(message)
+            : base(message)
         {
 
         }
@@ -46,6 +46,8 @@ namespace Medical
         private NavigationController navigationController;
 
         private ImageRendererProgress imageRendererProgress;
+
+        static ImageAttributes IMAGE_ATTRIBUTES = new ImageAttributes();
 
         public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, LayerController layerController, NavigationController navigationController)
         {
@@ -143,12 +145,6 @@ namespace Medical
                     background.setVisible(false);
                 }
 
-                //Transparent background
-                if (properties.TransparentBackground)
-                {
-                    bitmap.MakeTransparent(System.Drawing.Color.FromArgb(backgroundColor.toARGB()));
-                }
-
                 if (ImageRenderCompleted != null)
                 {
                     ImageRenderCompleted.Invoke(this, EventArgs.Empty);
@@ -219,7 +215,7 @@ namespace Medical
                         }
                         else
                         {
-                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera);
+                            bitmap = gridRender(width, height, gridSize, aaMode, showWatermark, renderTexture, camera, transparentBG, backColor);
                         }
 
                         renderTexture.destroyViewport(viewport);
@@ -262,10 +258,10 @@ namespace Medical
             //Resize if aa is active
             if (aaMode > 1)
             {
-                if (transparentBG)
-                {
-                    bitmap.MakeTransparent(System.Drawing.Color.FromArgb(bgColor.toARGB()));
-                }
+                //if (transparentBG)
+                //{
+                //    bitmap.MakeTransparent(System.Drawing.Color.FromArgb(bgColor.toARGB()));
+                //}
                 int smallWidth = width / aaMode;
                 int smallHeight = height / aaMode;
                 Bitmap largeImage = bitmap;
@@ -275,7 +271,8 @@ namespace Medical
                     graph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
                     graph.CompositingQuality = CompositingQuality.HighQuality;
                     graph.SmoothingMode = SmoothingMode.AntiAlias;
-                    graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
+                    //graph.DrawImage(largeImage, new Rectangle(0, 0, smallWidth, smallHeight));
+                    this.renderBitmaps(graph, new Rectangle(0, 0, smallWidth, smallHeight), largeImage, largeImage.Width, largeImage.Height, transparentBG, bgColor);
                 }
                 largeImage.Dispose();
             }
@@ -289,7 +286,7 @@ namespace Medical
             return bitmap;
         }
 
-        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera)
+        private Bitmap gridRender(int width, int height, int gridSize, int aaMode, bool showWatermark, RenderTexture renderTexture, Camera camera, bool transparentBG, Engine.Color bgColor)
         {
             renderTexture.getViewport(0).setOverlaysEnabled(false);
 
@@ -325,7 +322,7 @@ namespace Medical
                 using (Bitmap pieceBitmap = new Bitmap(imageStepHoriz, imageStepVert, bitmapFormat))
                 {
                     Bitmap scaledPiecewiseBitmap = null;
-                    Graphics scalerGraphics = null;
+                    Graphics scalerGraphics = null; //Will remain null if AA is turned off.
                     Rectangle scalarRectangle = new Rectangle();
                     if (aaMode > 1)
                     {
@@ -362,15 +359,17 @@ namespace Medical
                         destRect.Width = imageStepHorizSmall;
                         destRect.Height = imageStepVertSmall;
                         //destRect, x * imageStepHorizSmall, y * imageStepVertSmall, imageStepHorizSmall, imageStepVertSmall
-                        if (scalerGraphics != null)
+                        if (scalerGraphics != null) //Meaning AA is turned on.
                         {
                             //scalerGraphics.Clear(System.Drawing.Color.HotPink);
-                            scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
+                            //scalerGraphics.DrawImage(pieceBitmap, scalarRectangle);
+                            renderBitmaps(scalerGraphics, scalarRectangle, pieceBitmap, pieceBitmap.Width, pieceBitmap.Height, transparentBG, bgColor);
                             g.DrawImage(scaledPiecewiseBitmap, destRect);
                         }
                         else
                         {
-                            g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
+                            //g.DrawImage(pieceBitmap, destRect, 0, 0, imageStepHoriz, imageStepVert, GraphicsUnit.Pixel);
+                            renderBitmaps(g, destRect, pieceBitmap, imageStepHoriz, imageStepVert, transparentBG, bgColor);
                         }
                         //Log.Debug("{0}, {1} - {2}, {3}", x * imageStepHorizSmall, y * imageStepVertSmall, x * imageStepHorizSmall + imageStepHorizSmall, y * imageStepVertSmall + imageStepVertSmall);
 
@@ -398,6 +397,20 @@ namespace Medical
             renderTexture.getViewport(0).setOverlaysEnabled(true);
 
             return fullBitmap;
+        }
+
+        private void renderBitmaps(Graphics destGraphics, Rectangle destRect, Bitmap source, int sourceWidth, int sourceHeight, bool transparentBG, Engine.Color bgColor)
+        {
+            if (transparentBG)
+            {
+                System.Drawing.Color colorKey = System.Drawing.Color.FromArgb(bgColor.toARGB());
+                IMAGE_ATTRIBUTES.SetColorKey(colorKey, colorKey);
+                destGraphics.DrawImage(source, destRect, 0, 0, sourceWidth, sourceHeight, GraphicsUnit.Pixel, IMAGE_ATTRIBUTES, null, IntPtr.Zero);
+            }
+            else
+            {
+                destGraphics.DrawImage(source, destRect);
+            }
         }
 
         public Watermark Watermark
