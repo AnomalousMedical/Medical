@@ -92,12 +92,8 @@ namespace Medical.GUI
         {
             if (currentWizard != null)
             {
-                currentWizard.hidePanel(currentIndex);
-                wizardIconPanel.clearPanels();
-                crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
-                guiManager.changeLeftPanel(null);
+                guiManager.changeLeftPanel(null, wizardCompletelyClosed);
                 guiManager.resetTopPanel();
-                currentWizard = null;
                 CurrentSceneView.setPosition(cameraTranslationBeforeShown, cameraLookAtBeforeShown);
                 layerController.applyLayerState(layerStatusBeforeShown);
                 if (Finished != null)
@@ -105,6 +101,14 @@ namespace Medical.GUI
                     Finished.Invoke();
                 }
             }
+        }
+
+        private void wizardCompletelyClosed()
+        {
+            currentWizard.hidePanel(currentIndex);
+            wizardIconPanel.clearPanels();
+            crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
+            currentWizard = null;
         }
 
         public SceneViewWindow CurrentSceneView { get; set; }

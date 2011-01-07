@@ -14,6 +14,8 @@ using System.IO;
 
 namespace Medical.GUI
 {
+    public delegate void UIAnimationFinishedCallback();
+
     public class GUIManager : IDisposable
     {
         private static String INTERFACE_NAME = typeof(GUIPlugin).Name;
@@ -37,6 +39,9 @@ namespace Medical.GUI
         private MyGUIQuestionProvider questionProvider;
         private List<GUIPlugin> plugins = new List<GUIPlugin>();
         private AppMenu appMenu;
+
+        //Animation callbacks
+        private UIAnimationFinishedCallback leftAnimationFinished;
 
         public GUIManager(StandaloneController standaloneController)
         {
@@ -201,6 +206,16 @@ namespace Medical.GUI
 
         public void changeLeftPanel(LayoutContainer leftContainer)
         {
+            changeLeftPanel(leftContainer, null);
+        }
+
+        public void changeLeftPanel(LayoutContainer leftContainer, UIAnimationFinishedCallback animationFinished)
+        {
+            if (leftAnimationFinished != null)
+            {
+                leftAnimationFinished.Invoke();
+            }
+            leftAnimationFinished = animationFinished;
             if (leftContainer != null)
             {
                 leftContainer.Visible = true;
@@ -208,7 +223,7 @@ namespace Medical.GUI
             }
             if (leftAnimatedContainer.CurrentContainer != leftContainer)
             {
-                leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
+                leftAnimatedContainer.changePanel(leftContainer, 0.25f, leftAnimationCompleted);
             }
         }
 
@@ -312,6 +327,16 @@ namespace Medical.GUI
             {
                 oldChild.Visible = false;
             }
+        }
+
+        private void leftAnimationCompleted(LayoutContainer oldChild)
+        {
+            if (leftAnimationFinished != null)
+            {
+                leftAnimationFinished.Invoke();
+                leftAnimationFinished = null;
+            }
+            animationCompleted(oldChild);
         }
 
         private void standaloneController_SceneUnloading(SimScene scene)
