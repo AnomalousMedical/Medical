@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -49,6 +50,23 @@ namespace Medical.GUI
         internal void setCoord(int x, int y, int width, int height)
         {
             taskbarButton.setCoord(x, y, width, height);
+        }
+
+        protected IntVector2 findGoodPosition(int width, int height)
+        {
+            switch (taskbar.Alignment)
+            {
+                case TaskbarAlignment.Left:
+                    return new IntVector2(taskbarButton.AbsoluteLeft, taskbarButton.AbsoluteTop + taskbarButton.Height);
+                case TaskbarAlignment.Right:
+                    return new IntVector2(taskbarButton.AbsoluteLeft - width + taskbarButton.Width, taskbarButton.AbsoluteTop + taskbarButton.Height);
+                case TaskbarAlignment.Top:
+                    return new IntVector2(taskbarButton.AbsoluteLeft, taskbarButton.AbsoluteTop + taskbarButton.Height);
+                case TaskbarAlignment.Bottom:
+                    return new IntVector2(taskbarButton.AbsoluteLeft, taskbarButton.AbsoluteTop - height);
+                default:
+                    return new IntVector2(taskbarButton.AbsoluteLeft, taskbarButton.AbsoluteTop - height);
+            }
         }
 
         void taskbarButton_MouseButtonReleased(Widget source, EventArgs e)

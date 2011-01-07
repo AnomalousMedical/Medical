@@ -110,6 +110,7 @@ namespace Medical
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
             SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100);
+            splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
 
@@ -621,7 +622,13 @@ namespace Medical
 
         void medicalController_FixedLoopUpdate(Clock time)
         {
-            
+
+        }
+
+        void splashScreen_Hidden(object sender, EventArgs e)
+        {
+            SplashScreen splashScreen = (SplashScreen)sender;
+            splashScreen.Dispose();
         }
     }
 }

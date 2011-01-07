@@ -185,6 +185,7 @@
     <Compile Include="GUI\QuickView\NavigationShortcut.cs" />
     <Compile Include="GUI\QuickView\QuickViewPopup.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
+    <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />

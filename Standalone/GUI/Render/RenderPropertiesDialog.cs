@@ -14,17 +14,7 @@ namespace Medical.GUI
         private NumericEdit width;
         private NumericEdit height;
 
-        private Layout resolutionMenu;
-        private PopupContainer resolutionMenuPopup;
-        private ButtonGroup resolutionMenuGroup;
-        private Button onePointThreeMegapixel;
-        private Button fourMegapixel;
-        private Button sixMegapixel;
-        private Button eightMegapixel;
-        private Button tenMegapixel;
-        private Button twelveMegapixel;
-        private Button custom;
-
+        private ResolutionMenu resolutionMenu;
         private SceneViewController sceneViewController;
         private ImageRenderer imageRenderer;
 
@@ -47,28 +37,8 @@ namespace Medical.GUI
             sizeButton.MouseButtonClick += new MyGUIEvent(sizeButton_MouseButtonClick);
 
             //ResolutionMenu
-            resolutionMenu = LayoutManager.Instance.loadLayout("Medical.GUI.Render.ResolutionMenu.layout");
-            Widget resolutionMenuWidget = resolutionMenu.getWidget(0);
-            resolutionMenuWidget.Visible = false;
-            resolutionMenuPopup = new PopupContainer(resolutionMenuWidget);
-            onePointThreeMegapixel = resolutionMenuWidget.findWidget("1Point3Megapixel") as Button;
-            fourMegapixel = resolutionMenuWidget.findWidget("4Megapixel") as Button;
-            sixMegapixel = resolutionMenuWidget.findWidget("6Megapixel") as Button;
-            eightMegapixel = resolutionMenuWidget.findWidget("8Megapixel") as Button;
-            tenMegapixel = resolutionMenuWidget.findWidget("10Megapixel") as Button;
-            twelveMegapixel = resolutionMenuWidget.findWidget("12Megapixel") as Button;
-            custom = resolutionMenuWidget.findWidget("Custom") as Button;
-
-            resolutionMenuGroup = new ButtonGroup();
-            resolutionMenuGroup.SelectedButtonChanged += new EventHandler(resolutionMenuGroup_SelectedButtonChanged);
-            resolutionMenuGroup.addButton(onePointThreeMegapixel);
-            resolutionMenuGroup.addButton(fourMegapixel);
-            resolutionMenuGroup.addButton(sixMegapixel);
-            resolutionMenuGroup.addButton(eightMegapixel);
-            resolutionMenuGroup.addButton(tenMegapixel);
-            resolutionMenuGroup.addButton(twelveMegapixel);
-            resolutionMenuGroup.addButton(custom);
-            resolutionMenuGroup.SelectedButton = custom;
+            resolutionMenu = new ResolutionMenu();
+            resolutionMenu.ResolutionChanged += new EventHandler(resolutionMenu_ResolutionChanged);
         }
 
         public void render()
@@ -96,43 +66,14 @@ namespace Medical.GUI
 
         void sizeButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            resolutionMenuPopup.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            resolutionMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
         }
 
-        void resolutionMenuGroup_SelectedButtonChanged(object sender, EventArgs e)
+        void resolutionMenu_ResolutionChanged(object sender, EventArgs e)
         {
-            Button selectedButton = resolutionMenuGroup.SelectedButton;
-            width.Edit.Enabled = height.Edit.Enabled = selectedButton == custom;
-            if (selectedButton == onePointThreeMegapixel)
-            {
-                width.IntValue = 1280;
-                height.IntValue = 1024;
-            }
-            else if (selectedButton == fourMegapixel)
-            {
-                width.IntValue = 2448;
-                height.IntValue = 1632;
-            }
-            else if (selectedButton == sixMegapixel)
-            {
-                width.IntValue = 3000;
-                height.IntValue = 2000;
-            }
-            else if (selectedButton == eightMegapixel)
-            {
-                width.IntValue = 3456;
-                height.IntValue = 2304;
-            }
-            else if (selectedButton == tenMegapixel)
-            {
-                width.IntValue = 3648;
-                height.IntValue = 2736;
-            }
-            else if (selectedButton == twelveMegapixel)
-            {
-                width.IntValue = 4000;
-                height.IntValue = 3000;
-            }
+            width.Edit.Enabled = height.Edit.Enabled = resolutionMenu.IsCustom;
+            Width = resolutionMenu.Width;
+            Height = resolutionMenu.Height;
         }
 
         public int Width

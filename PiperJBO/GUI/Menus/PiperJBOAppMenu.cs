@@ -98,7 +98,7 @@ namespace Medical.GUI
         {
             get
             {
-                return popupContainer.Widget.Width;
+                return popupContainer.Width;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Medical.GUI
         {
             get
             {
-                return popupContainer.Widget.Height;
+                return popupContainer.Height;
             }
         }
 
