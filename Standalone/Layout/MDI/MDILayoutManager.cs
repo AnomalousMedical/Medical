@@ -245,6 +245,7 @@ namespace Medical.Controller
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
+        private WindowAlignment finalWindowAlignment = WindowAlignment.Right;
 
         void activeWindow_MouseDragStarted(MDIWindow source, float mouseX, float mouseY)
         {
@@ -255,19 +256,41 @@ namespace Medical.Controller
         void activeWindow_MouseDrag(MDIWindow source, float mouseX, float mouseY)
         {
             dragTargetWindow = rootContainer.findWindowAtPosition(mouseX, mouseY);
-            //if (dragTargetWindow != null)
-            //{
-            //    if (source != dragTargetWindow)
-            //    {
-            //        Logging.Log.Debug("TargetWindow is {0} {1}", targetWindow.Location.x, targetWindow.Location.y);
-            //        source._ParentContainer.removeChild(source);
-            //        targetWindow._ParentContainer.addChild(source, targetWindow, WindowAlignment.Right);
-            //    }
-            //    else
-            //    {
-            //        Logging.Log.Debug("Source is target window");
-            //    }
-            //}
+            if (dragTargetWindow != null)
+            {
+                if (source != dragTargetWindow)
+                {
+                    float top = dragTargetWindow.Location.y;
+                    float bottom = top + dragTargetWindow.WorkingSize.Height;
+                    float left = dragTargetWindow.Location.x;
+                    float right = left + dragTargetWindow.WorkingSize.Width;
+
+                    //Logging.Log.Debug("Goal Rect {0} {1} {2} {3}", left, top, right, bottom);
+                    //Logging.Log.Debug("Mouse {0} {1}", mouseX, mouseY);
+
+                    float topDelta = mouseY - top;
+                    float bottomDelta = bottom - mouseY;
+                    float leftDelta = mouseX - left;
+                    float rightDelta = right - mouseX;
+                    if (topDelta < bottomDelta && topDelta < leftDelta && topDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Top;
+                    }
+                    else if(bottomDelta < topDelta && bottomDelta < leftDelta && bottomDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Bottom;
+                    }
+                    else if (leftDelta < topDelta && leftDelta < bottomDelta && leftDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Left;
+                    }
+                    else if (rightDelta < leftDelta && rightDelta < bottomDelta && rightDelta < topDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Right;
+                    }
+                    //Logging.Log.Debug(finalWindowAlignment.ToString());
+                }
+            }
         }
 
         void activeWindow_MouseDragFinished(MDIWindow source, float mouseX, float mouseY)
@@ -275,7 +298,7 @@ namespace Medical.Controller
             if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
             {
                 dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
-                dragTargetWindow._ParentContainer.addChild(dragSourceWindow, dragTargetWindow, WindowAlignment.Right);
+                dragTargetWindow._ParentContainer.addChild(dragSourceWindow, dragTargetWindow, finalWindowAlignment);
                 rootContainer.layout();
             }
         }
