@@ -404,7 +404,13 @@ namespace Medical
             if (transparentBG)
             {
                 System.Drawing.Color colorKey = System.Drawing.Color.FromArgb(bgColor.toARGB());
+#if MAC_OSX
+                //On the Mac likely due to Cairo working a bit different we need to use a color that has been incremented by one. This makes transparency work.
+                System.Drawing.Color colorKeyPlusOne = System.Drawing.Color.FromArgb(bgColor.toARGB() + 0x00010101);
+                IMAGE_ATTRIBUTES.SetColorKey(colorKey, colorKeyPlusOne);
+#else
                 IMAGE_ATTRIBUTES.SetColorKey(colorKey, colorKey);
+#endif
                 destGraphics.DrawImage(source, destRect, 0, 0, sourceWidth, sourceHeight, GraphicsUnit.Pixel, IMAGE_ATTRIBUTES, null, IntPtr.Zero);
             }
             else
