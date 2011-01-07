@@ -50,7 +50,7 @@ namespace Medical.Controller
             rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
             rootContainer._setParent(this);
             AllowActiveWindowChanges = true;
-            windowTargetWidget = Gui.Instance.createWidgetT("Widget", "Panel", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
+            windowTargetWidget = Gui.Instance.createWidgetT("Widget", "RectBlue", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
             windowTargetWidget.Visible = false;
         }
 
