@@ -9,17 +9,14 @@ using System.Reflection;
 
 namespace Medical.GUI
 {
-    class PiperJBOAppMenu : AppMenu
+    class PiperJBOAppMenu : PopupContainer, AppMenu
     {
-        private Layout layout;
-        private PopupContainer popupContainer;
         private PiperJBOGUIPlugin piperGUI;
         private StandaloneController standaloneController;
 
         private Dictionary<String, Button> recentDocsMap = new Dictionary<string, Button>();
         private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
         private FlowLayoutContainer recentDocumentsLayout;
-        private Widget mainWidget;
 
         private int recentDocsLeft;
         private int recentDocsTop;
@@ -27,22 +24,18 @@ namespace Medical.GUI
         private int recentDocsHeight;
 
         public PiperJBOAppMenu(PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController)
+            :base("Medical.GUI.Menus.PiperJBOAppMenu.layout")
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
 
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.Menus.PiperJBOAppMenu.layout");
-            mainWidget = layout.getWidget(0);
-            mainWidget.Visible = false;
-            popupContainer = new PopupContainer(mainWidget);
-
-            Button changeSceneButton = mainWidget.findWidget("File/ChangeScene") as Button;
-            Button openButton = mainWidget.findWidget("File/Open") as Button;
-            Button saveButton = mainWidget.findWidget("File/Save") as Button;
-            Button saveAsButton = mainWidget.findWidget("File/SaveAs") as Button;
-            Button quitButton = mainWidget.findWidget("File/Quit") as Button;
-            Widget recentDocsHorizDivider = mainWidget.findWidget("RecentDocsHorizDivider");
-            Widget recentDocsVertDivider = mainWidget.findWidget("RecentDocsVertDivider");
+            Button changeSceneButton = widget.findWidget("File/ChangeScene") as Button;
+            Button openButton = widget.findWidget("File/Open") as Button;
+            Button saveButton = widget.findWidget("File/Save") as Button;
+            Button saveAsButton = widget.findWidget("File/SaveAs") as Button;
+            Button quitButton = widget.findWidget("File/Quit") as Button;
+            Widget recentDocsHorizDivider = widget.findWidget("RecentDocsHorizDivider");
+            Widget recentDocsVertDivider = widget.findWidget("RecentDocsVertDivider");
 
             recentDocsLeft = recentDocsHorizDivider.Left + recentDocsHorizDivider.Width + 1;
             recentDocsTop = recentDocsVertDivider.Top + recentDocsVertDivider.Height + 1;
@@ -68,100 +61,74 @@ namespace Medical.GUI
             recentDocumentsLayout.layout();
 
             //Help
-            Button helpButton = mainWidget.findWidget("Help") as Button;
+            Button helpButton = widget.findWidget("Help") as Button;
             helpButton.MouseButtonClick += new MyGUIEvent(helpButton_MouseButtonClick);
 
             //About
-            Button aboutButton = mainWidget.findWidget("About") as Button;
+            Button aboutButton = widget.findWidget("About") as Button;
             aboutButton.MouseButtonClick += new MyGUIEvent(aboutButton_MouseButtonClick);
 
             //Update
-            Button updateButton = mainWidget.findWidget("Updates") as Button;
+            Button updateButton = widget.findWidget("Updates") as Button;
             updateButton.MouseButtonClick += new MyGUIEvent(updateButton_MouseButtonClick);
 
             //Options
-            Button optionsButton = mainWidget.findWidget("Options") as Button;
+            Button optionsButton = widget.findWidget("Options") as Button;
             optionsButton.MouseButtonClick += new MyGUIEvent(optionsButton_MouseButtonClick);
-        }
-
-        public void Dispose()
-        {
-            LayoutManager.Instance.unloadLayout(layout);
-        }
-
-        public void show(int x, int y)
-        {
-            popupContainer.show(x, y);
-        }
-
-        public int Width
-        {
-            get
-            {
-                return popupContainer.Width;
-            }
-        }
-
-        public int Height
-        {
-            get
-            {
-                return popupContainer.Height;
-            }
         }
 
         void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.showChooseSceneDialog();
-            popupContainer.hide();
+            this.hide();
         }
 
         void saveButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.save();
-            popupContainer.hide();
+            this.hide();
         }
 
         void saveAsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.saveAs();
-            popupContainer.hide();
+            this.hide();
         }
 
         void openButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.open();
-            popupContainer.hide();
+            this.hide();
         }
 
         void quitButton_MouseButtonClick(Widget source, EventArgs e)
         {
             standaloneController.shutdown();
-            popupContainer.hide();
+            this.hide();
         }
 
         void optionsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.showOptions();
-            popupContainer.hide();
+            this.hide();
         }
 
         void aboutButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.showAboutDialog();
-            popupContainer.hide();
+            this.hide();
         }
 
         void updateButton_MouseButtonClick(Widget source, EventArgs e)
         {
             UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
-            popupContainer.hide();
+            this.hide();
         }
 
         void helpButton_MouseButtonClick(Widget source, EventArgs e)
         {
             standaloneController.openHelpTopic(0);
-            popupContainer.hide();
+            this.hide();
         }
 
         void recentDocuments_DocumentRemoved(RecentDocuments source, string document)
@@ -196,7 +163,7 @@ namespace Medical.GUI
 
         private void addDocumentToMenu(string document)
         {
-            Button recentDocButton = mainWidget.createWidgetT("Button", "AppMenuItemButton", recentDocsLeft, recentDocsTop, recentDocsWidth, recentDocsHeight, Align.Left | Align.Top, document) as Button;
+            Button recentDocButton = widget.createWidgetT("Button", "AppMenuItemButton", recentDocsLeft, recentDocsTop, recentDocsWidth, recentDocsHeight, Align.Left | Align.Top, document) as Button;
             recentDocButton.Caption = Path.GetFileNameWithoutExtension(document);
             recentDocButton.MouseButtonClick += recentDocButton_MouseButtonClick;
             MyGUILayoutContainer container = new MyGUILayoutContainer(recentDocButton);
@@ -207,7 +174,7 @@ namespace Medical.GUI
 
         void recentDocButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            popupContainer.hide();
+            this.hide();
             PatientDataFile patientData = new PatientDataFile(source.Name);
             if (patientData.loadHeader())
             {
