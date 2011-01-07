@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class QuickViewPopup : IDisposable
+    public class QuickViewPopup : PopupContainer
     {
         private NavigationController navigationController;
         private SceneViewController sceneViewController;
@@ -19,32 +19,21 @@ namespace Medical.GUI
         private ImageAtlas ribbonMenuIcons = new ImageAtlas("NavigationRibbonMenus", new Size2(32, 32), new Size2(512, 512));
         private ImageAtlas gridItemIcons = new ImageAtlas("NavigationGridItemIcons", new Size2(69, 51), new Size2(512, 512));
 
-        private Layout layout;
-        private Widget quickViewPanel;
-        private PopupContainer popupContainer;
-
         public QuickViewPopup(NavigationController navigationController, SceneViewController sceneViewController, LayerController layerController)
+            :base("Medical.GUI.QuickView.QuickViewPopup.layout")
         {
             this.navigationController = navigationController;
             this.sceneViewController = sceneViewController;
             this.layerController = layerController;
             navigationController.NavigationStateSetChanged += new NavigationControllerEvent(navigationController_NavigationStateSetChanged);
 
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.QuickView.QuickViewPopup.layout");
-            quickViewPanel = layout.getWidget(0);
-            popupContainer = new PopupContainer(quickViewPanel);
             flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 5.0f, new Vector2(2, 2));
-            quickViewPanel.Visible = false;
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             clearMenuItems();
-        }
-
-        public void show(int left, int top)
-        {
-            popupContainer.show(left, top);
+            base.Dispose();
         }
 
         private void navigationController_NavigationStateSetChanged(NavigationController controller)
@@ -56,7 +45,7 @@ namespace Medical.GUI
             Button lastButton = null;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
-                Button menuButton = quickViewPanel.createWidgetT("Button", "RibbonSplitButton", 0, 2, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
+                Button menuButton = widget.createWidgetT("Button", "RibbonSplitButton", 0, 2, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
                 menuButton.TextAlign = Align.HCenter | Align.Top;
                 menuButton.Caption = topEntry.Text;
                 int buttonWidth = (int)menuButton.getTextSize().Width + 5;
@@ -66,7 +55,7 @@ namespace Medical.GUI
                 }
                 menuButton.setSize(buttonWidth, menuButtonHeight);
 
-                Button mainButton = quickViewPanel.createWidgetT("Button", "RibbonButton", 0, 2, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
+                Button mainButton = widget.createWidgetT("Button", "RibbonButton", 0, 2, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
                 mainButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(mainButton, topEntry.Thumbnail));
                 mainButton.setSize(menuButton.Width, mainButtonHeight);
 
@@ -87,7 +76,7 @@ namespace Medical.GUI
             flowLayout.SuppressLayout = false;
             flowLayout.invalidate();
 
-            quickViewPanel.setSize(lastButton.Right + 2, quickViewPanel.Height);
+            widget.setSize(lastButton.Right + 2, widget.Height);
         }
 
         private void navShortcut_ShortcutActivated(string navigationState, string layerState)
@@ -97,7 +86,7 @@ namespace Medical.GUI
             {
                 layerController.applyLayerState(layerState);
             }
-            popupContainer.hide();
+            this.hide();
         }
 
         private void clearMenuItems()

@@ -22,7 +22,9 @@ namespace Medical.GUI
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
+
         private DistortionsPopup distortionsPopup;
+        private QuickViewPopup quickViewPopup;
 
         private AboutDialog aboutDialog;
 
@@ -38,6 +40,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            quickViewPopup.Dispose();
             distortionsPopup.Dispose();
             renderDialog.Dispose();
             options.Dispose();
@@ -93,6 +96,8 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
 
+            quickViewPopup = new QuickViewPopup(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
 
@@ -103,7 +108,7 @@ namespace Medical.GUI
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new QuickViewTaskbarItem(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController));
+            taskbar.addItem(new ShowPopupTaskbarItem(quickViewPopup, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new ShowPopupTaskbarItem(distortionsPopup, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));

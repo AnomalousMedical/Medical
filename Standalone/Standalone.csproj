@@ -219,7 +219,6 @@
     <Compile Include="GUI\Taskbar\CallbackTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\CloneWindowTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\DialogOpenTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\QuickViewTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\SequencesTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowNavigationTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowPopupTaskbarItem.cs" />
