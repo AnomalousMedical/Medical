@@ -94,6 +94,22 @@ namespace Medical.GUI
             popupContainer.show(x, y);
         }
 
+        public int Width
+        {
+            get
+            {
+                return popupContainer.Widget.Width;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return popupContainer.Widget.Height;
+            }
+        }
+
         void changeSceneButton_MouseButtonClick(Widget source, EventArgs e)
         {
             piperGUI.showChooseSceneDialog();

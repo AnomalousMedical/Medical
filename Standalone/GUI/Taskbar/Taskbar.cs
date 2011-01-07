@@ -110,12 +110,26 @@ namespace Medical.GUI
         public void addItem(TaskbarItem item)
         {
             taskbarItems.Add(item);
-            item.TaskbarButton = taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button;
+            item._configureForTaskbar(this, taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button);
         }
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
+            switch (alignment)
+            {
+                case TaskbarAlignment.Left:
+                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
+                    break;
+                case TaskbarAlignment.Right:
+                    appMenu.show(appButton.AbsoluteLeft - appMenu.Width + appButton.Width, appButton.AbsoluteTop + appButton.Height);
+                    break;
+                case TaskbarAlignment.Top:
+                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
+                    break;
+                case TaskbarAlignment.Bottom:
+                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop - appMenu.Height);
+                    break;
+            }
         }
 
         public override void bringToFront()
@@ -222,7 +236,7 @@ namespace Medical.GUI
                     currentLocation.y = startLocation.y;
                 }
 
-                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.y += itemSize.Height + padding;
             }
 
@@ -264,7 +278,7 @@ namespace Medical.GUI
                     currentLocation.x = startLocation.x;
                 }
 
-                item.TaskbarButton.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.x += itemSize.Width + padding;
             }
 

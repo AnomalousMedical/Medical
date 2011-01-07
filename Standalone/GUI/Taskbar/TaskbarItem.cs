@@ -9,6 +9,7 @@ namespace Medical.GUI
     public abstract class TaskbarItem : IDisposable
     {
         protected Button taskbarButton;
+        protected Taskbar taskbar;
 
         public TaskbarItem(String name, String iconName)
         {
@@ -32,19 +33,22 @@ namespace Medical.GUI
 
         public String Name { get; private set; }
 
-        internal Button TaskbarButton
+        internal void _configureForTaskbar(Taskbar taskbar, Button taskbarButton)
         {
-            get
+            if (this.taskbarButton != null)
             {
-                return taskbarButton;
+                throw new Exception("This item has already been configured. Only add a TaskbarItem to one taskbar.");
             }
-            set
-            {
-                this.taskbarButton = value;
-                taskbarButton.StaticImage.setItemResource(IconName);
-                taskbarButton.MouseButtonClick += clicked;
-                taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
-            }
+            this.taskbar = taskbar;
+            this.taskbarButton = taskbarButton;
+            taskbarButton.StaticImage.setItemResource(IconName);
+            taskbarButton.MouseButtonClick += clicked;
+            taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
+        }
+
+        internal void setCoord(int x, int y, int width, int height)
+        {
+            taskbarButton.setCoord(x, y, width, height);
         }
 
         void taskbarButton_MouseButtonReleased(Widget source, EventArgs e)

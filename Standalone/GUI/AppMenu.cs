@@ -12,5 +12,9 @@ namespace Medical.GUI
     public interface AppMenu : IDisposable
     {
         void show(int x, int y);
+
+        int Width { get; }
+
+        int Height { get; }
     }
 }
