@@ -215,7 +215,6 @@
     <Compile Include="GUI\StateWizard\StateWizardPanel.cs" />
     <Compile Include="GUI\StateWizard\StateWizardPanelController.cs" />
     <Compile Include="GUI\StateWizard\WizardIconPanel.cs" />
-    <Compile Include="GUI\Taskbar\BackgroundColorTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\CallbackTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\CloneWindowTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\DialogOpenTaskbarItem.cs" />

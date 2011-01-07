@@ -25,6 +25,7 @@ namespace Medical.GUI
 
         private DistortionsPopup distortionsPopup;
         private QuickViewPopup quickViewPopup;
+        private ColorMenu colorMenu;
 
         private AboutDialog aboutDialog;
 
@@ -40,6 +41,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            colorMenu.Dispose();
             quickViewPopup.Dispose();
             distortionsPopup.Dispose();
             renderDialog.Dispose();
@@ -98,6 +100,9 @@ namespace Medical.GUI
 
             quickViewPopup = new QuickViewPopup(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
 
+            colorMenu = new ColorMenu();
+            colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
 
@@ -120,7 +125,7 @@ namespace Medical.GUI
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
-            taskbar.addItem(new BackgroundColorTaskbarItem(standaloneController.SceneViewController));
+            taskbar.addItem(new ShowPopupTaskbarItem(colorMenu, "Background Color", "BackgroundColorIconLarge"));
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
             taskbar.addItem(cloneWindow);
@@ -245,6 +250,11 @@ namespace Medical.GUI
         void renderTaskbarItem_RightClicked(object sender, EventArgs e)
         {
             renderDialog.render();
+        }
+
+        void colorMenu_ColorChanged(object sender, EventArgs e)
+        {
+            standaloneController.SceneViewController.ActiveWindow.BackColor = colorMenu.SelectedColor;
         }
     }
 }

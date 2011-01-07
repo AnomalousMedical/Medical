@@ -8,22 +8,17 @@ using Logging;
 
 namespace Medical.GUI
 {
-    class ColorMenu : IDisposable
+    public class ColorMenu : PopupContainer
     {
         public event EventHandler ColorChanged;
 
-        private Layout layout;
-        private PopupContainer popupContainer;
         private ButtonGrid colorGrid;
         private Color customColor = Color.Black;
 
         public ColorMenu()
+            :base("Medical.GUI.ColorMenu.ColorMenu.layout")
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.ColorMenu.ColorMenu.layout");
-            Widget mainWidget = layout.getWidget(0);
-            mainWidget.Visible = false;
-            popupContainer = new PopupContainer(mainWidget);
-            colorGrid = new ButtonGrid(mainWidget.findWidget("ColorGrid") as ScrollView);
+            colorGrid = new ButtonGrid(widget.findWidget("ColorGrid") as ScrollView);
             for (int i = 0; i < 77; ++i)
             {
                 ButtonGridItem item = colorGrid.addItem("Main", "", "Colors/" + i);
@@ -31,18 +26,8 @@ namespace Medical.GUI
             }
             colorGrid.SelectedValueChanged += new EventHandler(colorGrid_SelectedValueChanged);
 
-            Button moreColorsButton = mainWidget.findWidget("MoreColorsButton") as Button;
+            Button moreColorsButton = widget.findWidget("MoreColorsButton") as Button;
             moreColorsButton.MouseButtonClick += new MyGUIEvent(moreColorsButton_MouseButtonClick);
-        }
-
-        public void Dispose()
-        {
-            LayoutManager.Instance.unloadLayout(layout);
-        }
-
-        public void show(int x, int y)
-        {
-            popupContainer.show(x, y);
         }
 
         public Color SelectedColor
@@ -63,7 +48,7 @@ namespace Medical.GUI
             {
                 ColorChanged.Invoke(this, EventArgs.Empty);
             }
-            popupContainer.hide();
+            this.hide();
         }
 
         void moreColorsButton_MouseButtonClick(Widget source, EventArgs e)
