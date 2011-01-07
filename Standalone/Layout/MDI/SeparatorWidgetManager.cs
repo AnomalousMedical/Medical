@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using MyGUIPlugin;
+using Engine;
+
+namespace Medical.Controller
+{
+    class SeparatorWidgetManager : IDisposable
+    {
+        private List<Widget> separatorWidgets = new List<Widget>();
+        private Gui gui = Gui.Instance;
+        private MDILayoutContainer parentContainer;
+
+        public SeparatorWidgetManager(MDILayoutContainer parentContainer)
+        {
+            this.parentContainer = parentContainer;
+        }
+
+        public void Dispose()
+        {
+            foreach (Widget widget in separatorWidgets)
+            {
+                gui.destroyWidget(widget);
+            }
+        }
+
+        public void createSeparator()
+        {
+            Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, 10, 10, Align.Left | Align.Top, "Back", "");
+            separatorWidgets.Add(separator);
+            separator.MouseDrag += separator_MouseDrag;
+            separator.MouseButtonPressed += separator_MouseButtonPressed;
+            separator.MouseButtonReleased += separator_MouseButtonReleased;
+            if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+            {
+                separator.Pointer = CursorManager.SIZE_HORZ;
+            }
+            else
+            {
+                separator.Pointer = CursorManager.SIZE_VERT;
+            }
+        }
+
+        public void removeSeparator()
+        {
+            Widget separator = separatorWidgets[separatorWidgets.Count - 1];
+            gui.destroyWidget(separator);
+            separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
+        }
+
+        public void setSeparatorCoord(int index, int x, int y, int width, int height)
+        {
+            separatorWidgets[index].setCoord(x, y, width, height);
+        }
+
+        private Vector2 dragStartPosition;
+        private Size2 dragScaleArea;
+        private MDIContainerBase dragLowChild;
+        private float dragLowScaleStart;
+        private MDIContainerBase dragHighChild;
+        private float dragHighScaleStart;
+        private float dragTotalScale;
+
+        void separator_MouseDrag(Widget source, EventArgs e)
+        {
+            if (dragLowChild != null)
+            {
+                MouseEventArgs me = e as MouseEventArgs;
+                Vector2 offset = me.Position - dragStartPosition - parentContainer.Location;
+
+                if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
+                {
+                    dragLowChild.Scale = dragLowScaleStart + offset.x / dragScaleArea.Width * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.x / dragScaleArea.Width * dragTotalScale;
+                }
+                else
+                {
+                    dragLowChild.Scale = dragLowScaleStart + offset.y / dragScaleArea.Height * dragTotalScale;
+                    dragHighChild.Scale = dragHighScaleStart - offset.y / dragScaleArea.Height * dragTotalScale;
+                }
+
+                //Bounds checking
+                if (dragLowChild.Scale < 0)
+                {
+                    dragLowChild.Scale = 0.0f;
+                    dragHighChild.Scale = dragTotalScale;
+                }
+                else if (dragHighChild.Scale < 0)
+                {
+                    dragLowChild.Scale = dragTotalScale;
+                    dragHighChild.Scale = 0.0f;
+                }
+
+                parentContainer.invalidate();
+            }
+        }
+
+        void separator_MouseButtonPressed(Widget source, EventArgs e)
+        {
+            int sepIndex = separatorWidgets.IndexOf(source);
+            //ignore the last separator and do not allow the drag to happen if it is clicked.
+            if (sepIndex != separatorWidgets.Count - 1)
+            {
+                dragStartPosition = ((MouseEventArgs)e).Position - parentContainer.Location;
+                dragLowChild = parentContainer.getChild(sepIndex);
+                dragLowScaleStart = dragLowChild.Scale;
+                dragHighChild = parentContainer.getChild(sepIndex + 1);
+                dragHighScaleStart = dragHighChild.Scale;
+                dragTotalScale = dragLowScaleStart + dragHighScaleStart;
+                dragScaleArea = dragTotalScale / parentContainer.TotalScale * parentContainer.WorkingSize;
+            }
+        }
+
+        void separator_MouseButtonReleased(Widget source, EventArgs e)
+        {
+            dragLowChild = null;
+            dragHighChild = null;
+        }
+    }
+}

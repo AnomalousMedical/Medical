@@ -26,9 +26,9 @@ namespace Medical.Controller
         private int padding;
 
         private List<MDIContainerBase> children = new List<MDIContainerBase>();
+        private SeparatorWidgetManager separatorWidgetManager;
 
         private Gui gui = Gui.Instance;
-        private List<Widget> separatorWidgets = new List<Widget>();
         private float totalScale = 0.0f;
 
         /// <summary>
@@ -40,6 +40,7 @@ namespace Medical.Controller
         {
             this.layoutType = layoutType;
             this.padding = padding;
+            separatorWidgetManager = new SeparatorWidgetManager(this);
         }
 
         /// <summary>
@@ -47,10 +48,7 @@ namespace Medical.Controller
         /// </summary>
         public void Dispose()
         {
-            foreach (Widget widget in separatorWidgets)
-            {
-                gui.destroyWidget(widget);
-            }
+            separatorWidgetManager.Dispose();
         }
 
         /// <summary>
@@ -60,7 +58,7 @@ namespace Medical.Controller
         public void addChild(MDIWindow child)
         {
             setChildProperties(child);
-            createSeparatorWidget();
+            separatorWidgetManager.createSeparator();
             children.Add(child);
             totalScale += child.Scale;
             invalidate();
@@ -154,9 +152,7 @@ namespace Medical.Controller
         {
             if (children.Contains(child))
             {
-                Widget separator = separatorWidgets[separatorWidgets.Count - 1];
-                Gui.Instance.destroyWidget(separator);
-                separatorWidgets.RemoveAt(separatorWidgets.Count - 1);
+                separatorWidgetManager.removeSeparator();
                 children.Remove(child);
                 totalScale -= child.Scale;
                 if (_ParentContainer != null && children.Count == 1)
@@ -169,6 +165,11 @@ namespace Medical.Controller
                     invalidate();
                 }
             }
+        }
+
+        public MDIContainerBase getChild(int index)
+        {
+            return children[index];
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace Medical.Controller
                     child.Location = currentLocation;
                     child.layout();
                     currentLocation.x += actualSize.Width;
-                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)currentLocation.y, padding, (int)actualSize.Height);
+                    separatorWidgetManager.setSeparatorCoord(i++, (int)currentLocation.x, (int)currentLocation.y, padding, (int)actualSize.Height);
                     currentLocation.x += padding;
                 }
             }
@@ -236,7 +237,7 @@ namespace Medical.Controller
                     child.Location = currentLocation;
                     child.layout();
                     currentLocation.y += actualSize.Height;
-                    separatorWidgets[i++].setCoord((int)currentLocation.x, (int)currentLocation.y, (int)actualSize.Width, padding);
+                    separatorWidgetManager.setSeparatorCoord(i++, (int)currentLocation.x, (int)currentLocation.y, (int)actualSize.Width, padding);
                     currentLocation.y += padding;
                 }
             }
@@ -324,6 +325,14 @@ namespace Medical.Controller
             }
         }
 
+        public float TotalScale
+        {
+            get
+            {
+                return totalScale;
+            }
+        }
+
         /// <summary>
         /// This method sets the child up to be a child of this container.
         /// </summary>
@@ -352,7 +361,7 @@ namespace Medical.Controller
                 throw new MDIException("Attempted to add a MDIWindow with a previous window that does not exist in this collection.");
             }
             setChildProperties(child);
-            createSeparatorWidget();
+            separatorWidgetManager.createSeparator();
             if (after)
             {
                 //Increment index and make sure it isnt the end of the list
@@ -403,87 +412,6 @@ namespace Medical.Controller
             swapAndRemove(child, formerParent);
             formerParent.Dispose();
             invalidate();
-        }
-
-        private void createSeparatorWidget()
-        {
-            Widget separator = gui.createWidgetT("Widget", "MDISeparator", 0, 0, padding, padding, Align.Left | Align.Top, "Back", "");
-            separatorWidgets.Add(separator);
-            separator.MouseDrag += separator_MouseDrag;
-            separator.MouseButtonPressed += separator_MouseButtonPressed;
-            separator.MouseButtonReleased += separator_MouseButtonReleased;
-            if (layoutType == LayoutType.Horizontal)
-            {
-                separator.Pointer = CursorManager.SIZE_HORZ;
-            }
-            else
-            {
-                separator.Pointer = CursorManager.SIZE_VERT;
-            }
-        }
-
-        private Vector2 dragStartPosition;
-        private Size2 dragScaleArea;
-        private MDIContainerBase dragLowChild;
-        private float dragLowScaleStart;
-        private MDIContainerBase dragHighChild;
-        private float dragHighScaleStart;
-        private float dragTotalScale;
-
-        void separator_MouseDrag(Widget source, EventArgs e)
-        {
-            if (dragLowChild != null)
-            {
-                MouseEventArgs me = e as MouseEventArgs;
-                Vector2 offset = me.Position - dragStartPosition - Location;
-
-                if (Layout == LayoutType.Horizontal)
-                {
-                    dragLowChild.Scale = dragLowScaleStart + offset.x / dragScaleArea.Width * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.x / dragScaleArea.Width * dragTotalScale;
-                }
-                else
-                {
-                    dragLowChild.Scale = dragLowScaleStart + offset.y / dragScaleArea.Height * dragTotalScale;
-                    dragHighChild.Scale = dragHighScaleStart - offset.y / dragScaleArea.Height * dragTotalScale;
-                }
-
-                //Bounds checking
-                if (dragLowChild.Scale < 0)
-                {
-                    dragLowChild.Scale = 0.0f;
-                    dragHighChild.Scale = dragTotalScale;
-                }
-                else if (dragHighChild.Scale < 0)
-                {
-                    dragLowChild.Scale = dragTotalScale;
-                    dragHighChild.Scale = 0.0f;
-                }
-
-                invalidate();
-            }
-        }
-
-        void separator_MouseButtonPressed(Widget source, EventArgs e)
-        {
-            int sepIndex = separatorWidgets.IndexOf(source);
-            //ignore the last separator and do not allow the drag to happen if it is clicked.
-            if (sepIndex != separatorWidgets.Count - 1)
-            {
-                dragStartPosition = ((MouseEventArgs)e).Position - Location;
-                dragLowChild = children[sepIndex];
-                dragLowScaleStart = dragLowChild.Scale;
-                dragHighChild = children[sepIndex + 1];
-                dragHighScaleStart = dragHighChild.Scale;
-                dragTotalScale = dragLowScaleStart + dragHighScaleStart;
-                dragScaleArea = dragTotalScale / totalScale * WorkingSize;
-            }
-        }
-
-        void separator_MouseButtonReleased(Widget source, EventArgs e)
-        {
-            dragLowChild = null;
-            dragHighChild = null;
         }
     }
 }
