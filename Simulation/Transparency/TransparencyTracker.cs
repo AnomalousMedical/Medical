@@ -38,7 +38,9 @@ namespace Medical
 
         Entity entity;
 
-        MaterialPtr alphaMaterial;
+        [DoNotSave]
+        [DoNotCopy]
+        String finalAlphaMaterialName;
         SubEntity subEntity;
 
         [DoNotSave]
@@ -70,7 +72,7 @@ namespace Medical
             {
                 if (materialManager.resourceExists(alphaMaterialName))
                 {
-                    alphaMaterial = materialManager.getByName(alphaMaterialName);
+                    finalAlphaMaterialName = alphaMaterialName;
                 }
                 else
                 {
@@ -81,14 +83,13 @@ namespace Medical
             {
                 if (materialManager.resourceExists(baseMaterialName + alphaSuffix))
                 {
-                    alphaMaterial = materialManager.getByName(baseMaterialName + alphaSuffix);
+                    finalAlphaMaterialName = baseMaterialName + alphaSuffix;
                 }
                 else
                 {
                     blacklist("Cannot find automatic alpha material {0}.  Please ensure one exists or define a custom alpha behavior.", baseMaterialName + alphaSuffix);
                 }
             }
-            subEntity.setMaterialName(alphaMaterial.Value.getName());
             setAlpha(currentAlpha);
         }
 
@@ -108,7 +109,7 @@ namespace Medical
             }
             else
             {
-                subEntity.setMaterialName(alphaMaterial.Value.getName());
+                subEntity.setMaterialName(finalAlphaMaterialName);
                 switch (RenderGroup)
                 {
                     case RenderGroup.None:

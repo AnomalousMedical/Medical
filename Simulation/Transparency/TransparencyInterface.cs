@@ -45,7 +45,6 @@ namespace Medical
 
         Entity entity;
 
-        MaterialPtr alphaMaterial;
         SubEntity subEntity;
 
         [DoNotSave]
@@ -64,6 +63,10 @@ namespace Medical
         [DoNotCopy]
         [DoNotSave]
         private int activeTransparencyState = 0;
+
+        [DoNotCopy]
+        [DoNotSave]
+        private String finalAlphaMaterialName;
 
         public TransparencyInterface()
         {
@@ -162,7 +165,7 @@ namespace Medical
             {
                 if (materialManager.resourceExists(alphaMaterialName))
                 {
-                    alphaMaterial = materialManager.getByName(alphaMaterialName);
+                    finalAlphaMaterialName = alphaMaterialName;
                 }
                 else
                 {
@@ -173,14 +176,13 @@ namespace Medical
             {
                 if (materialManager.resourceExists(baseMaterialName + alphaSuffix))
                 {
-                    alphaMaterial = materialManager.getByName(baseMaterialName + alphaSuffix);
+                    finalAlphaMaterialName = baseMaterialName + alphaSuffix;
                 }
                 else
                 {
                     blacklist("Cannot find automatic alpha material {0}.  Please ensure one exists or define a custom alpha behavior.", baseMaterialName + alphaSuffix);
                 }
             }
-            subEntity.setMaterialName(alphaMaterial.Value.getName());
             TransparencyController.addTransparencyObject(this);
 
             applyAlphaToMaterial(transparencyStates[activeTransparencyState].WorkingAlpha);
@@ -188,11 +190,7 @@ namespace Medical
 
         protected override void destroy()
         {
-            if (alphaMaterial != null)
-            {
-                alphaMaterial.Dispose();
-                TransparencyController.removeTransparencyObject(this);
-            }
+            TransparencyController.removeTransparencyObject(this);
             if (subInterfaces != null)
             {
                 foreach (TransparencySubInterface subInterface in subInterfaces)
@@ -268,7 +266,7 @@ namespace Medical
             }
             else
             {
-                subEntity.setMaterialName(alphaMaterial.Value.getName());
+                subEntity.setMaterialName(finalAlphaMaterialName);
                 switch (RenderGroup)
                 {
                     case RenderGroup.None:

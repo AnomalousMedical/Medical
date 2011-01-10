@@ -6,6 +6,7 @@ using Engine;
 using Engine.Platform;
 using OgrePlugin;
 using OgreWrapper;
+using Engine.Attributes;
 
 namespace Medical
 {
@@ -21,7 +22,13 @@ namespace Medical
         private Entity entity;
         private SubEntity subEntity;
         private String baseMaterialName;
-        private MaterialPtr alphaMaterial;
+
+        [DoNotSave]
+        [DoNotCopy]
+        private String finalAlphaMaterialName;
+
+        [DoNotSave]
+        [DoNotCopy]
         private Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
         //Transparency controls
@@ -57,7 +64,7 @@ namespace Medical
             String alphaMaterialName = baseMaterialName + alphaSuffix;
             if (materialManager.resourceExists(alphaMaterialName))
             {
-                alphaMaterial = materialManager.getByName(alphaMaterialName);
+                finalAlphaMaterialName = alphaMaterialName;
             }
             else
             {
@@ -67,11 +74,7 @@ namespace Medical
 
         protected override void destroy()
         {
-            if (alphaMaterial != null)
-            {
-                alphaMaterial.Dispose();
-                alphaMaterial = null;
-            }
+            
         }
 
         public void fade(float targetOpacity, float duration)
@@ -131,7 +134,7 @@ namespace Medical
             }
             else
             {
-                subEntity.setMaterialName(alphaMaterial.Value.getName());
+                subEntity.setMaterialName(finalAlphaMaterialName);
                 entity.setRenderQueueGroup((byte)(95 + renderGroupOffset));
             }
         }
