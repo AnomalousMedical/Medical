@@ -113,6 +113,15 @@ namespace Medical
         }
 
         /// <summary>
+        /// Make a copy of the list of all Transparency Interfaces.
+        /// </summary>
+        /// <returns>A copy of the list of all TransparencyInterfaces. These can be modified and will have an effect on the scene.</returns>
+        public static List<TransparencyInterface> getTransparencyList()
+        {
+            return new List<TransparencyInterface>(transparencyInterfaces);
+        }
+
+        /// <summary>
         /// This is the transparency state that will be modified when set alpha
         /// or blend functions are called. This does not mean that the scene is
         /// currently setup with this transparency, however. That must be

@@ -53,25 +53,40 @@ namespace Medical
 
         internal void apply(float multiplier)
         {
+            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
             {
-                entry.apply(multiplier);
+                entry.apply(multiplier, unvisitedInterfaces);
+            }
+            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
+            {
+                unvisited.smoothBlend(0.0f, multiplier);
             }
         }
 
         internal void timedApply(float time)
         {
+            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
             {
-                entry.timedApply(time);
+                entry.timedApply(time, unvisitedInterfaces);
+            }
+            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
+            {
+                unvisited.timedBlend(0.0f, time);
             }
         }
 
         internal void instantlyApply()
         {
+            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
             {
-                entry.instantlyApply();
+                entry.instantlyApply(unvisitedInterfaces);
+            }
+            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
+            {
+                unvisited.CurrentAlpha = 0.0f;
             }
         }
 

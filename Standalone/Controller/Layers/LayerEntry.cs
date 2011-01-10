@@ -19,7 +19,7 @@ namespace Medical
             alphaValue = trans.CurrentAlpha;
         }
 
-        public void apply(float multiplier)
+        public void apply(float multiplier, List<TransparencyInterface> unvisitedInterfaces)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
             if(group != null)
@@ -28,11 +28,12 @@ namespace Medical
                 if (obj != null)
                 {
                     obj.smoothBlend(alphaValue, multiplier);
+                    unvisitedInterfaces.Remove(obj);
                 }
             }
         }
 
-        public void timedApply(float time)
+        public void timedApply(float time, List<TransparencyInterface> unvisitedInterfaces)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
             if (group != null)
@@ -41,11 +42,12 @@ namespace Medical
                 if (obj != null)
                 {
                     obj.timedBlend(alphaValue, time);
+                    unvisitedInterfaces.Remove(obj);
                 }
             }
         }
 
-        public void instantlyApply()
+        public void instantlyApply(List<TransparencyInterface> unvisitedInterfaces)
         {
             TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
             if (group != null)
@@ -54,6 +56,7 @@ namespace Medical
                 if (obj != null)
                 {
                     obj.CurrentAlpha = alphaValue;
+                    unvisitedInterfaces.Remove(obj);
                 }
             }
         }
