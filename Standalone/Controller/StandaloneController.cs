@@ -85,7 +85,7 @@ namespace Medical
             medicalController.initialize(mainWindow.InputWindow, createWindow);
             mainWindow.setTimer(medicalController.MainTimer);
 
-            cursorManager = new CursorManager(mainWindow);
+            cursorManager = new CursorManager(mainWindow.MainDrawControl);
         }
 
         public void Dispose()

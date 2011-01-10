@@ -15,14 +15,24 @@ namespace Medical.GUI
 
         public static MainWindow Instance { get; private set; }
 
+        private Window mainDrawControl = null;
+
         public MainWindow(bool fullscreen)
             :base("Piper's Joint Based Occlusion", wxDefaultPosition, new Size(800, 600))
         {
             Instance = this;
             this.BackgroundColour = Colour.wxBLACK;
 
-            RenderWindow = new WxOSWindow(this);
-            InputWindow = new WxOSWindow(this);
+#if MAC_OSX
+            //OSX needs a panel to change mouse cursors.
+            Panel panel = new Panel(this);
+            mainDrawControl = panel;
+#else
+            mainDrawControl = this;
+#endif
+
+            RenderWindow = new WxOSWindow(mainDrawControl);
+            InputWindow = new WxOSWindow(mainDrawControl);
 
             Center();
         }
@@ -65,5 +75,13 @@ namespace Medical.GUI
         public OSWindow RenderWindow { get; private set; }
 
         public OSWindow InputWindow { get; private set; }
+
+        public Window MainDrawControl
+        {
+            get
+            {
+                return mainDrawControl;
+            }
+        }
     }
 }

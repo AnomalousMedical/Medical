@@ -10,7 +10,7 @@ namespace Medical.Controller
     class CursorManager : IDisposable
     {
         private Dictionary<string, wx.Cursor> cursors = new Dictionary<string, wx.Cursor>();
-        private wx.Frame frame;
+        private wx.Window window;
 
         public const String ARROW = "arrow";
         public const String BEAM = "beam";
@@ -21,9 +21,9 @@ namespace Medical.Controller
         public const String HAND = "hand";
         public const String LINK = "link";
 
-        public CursorManager(wx.Frame frame)
+        public CursorManager(wx.Window window)
         {
-            this.frame = frame;
+            this.window = window;
 
             cursors.Add(ARROW, new wx.Cursor(wx.StockCursor.wxCURSOR_ARROW));
             cursors.Add(BEAM, new wx.Cursor(wx.StockCursor.wxCURSOR_IBEAM));
@@ -51,7 +51,7 @@ namespace Medical.Controller
             wx.Cursor newCursor;
             if (cursors.TryGetValue(pointerName, out newCursor))
             {
-                frame.Cursor = newCursor;
+                window.Cursor = newCursor;
             }
             else
             {
