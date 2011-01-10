@@ -22,7 +22,7 @@ namespace Medical.GUI
 
             int textAreaWidth = right - left;
 
-            answerButton = parent.createWidgetT("Button", "PromptAnswerTextArea", left, top, textAreaWidth, 0, Align.Stretch, "") as Button;
+            answerButton = parent.createWidgetT("Button", "PromptAnswerTextArea", left, top, textAreaWidth, 0, Align.HStretch | Align.Top, "") as Button;
             answerButton.SubWidgetText.setWordWrap(true);
             answerButton.Caption = answer.Text;
             Size2 textSize = answerButton.getTextSize();

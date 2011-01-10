@@ -18,7 +18,7 @@ namespace Medical.GUI
 
             int textAreaWidth = right - left;
 
-            questionText = parent.createWidgetT("StaticText", "PromptQuestionTextArea", left, top, textAreaWidth, 0, Align.Stretch, "") as StaticText;
+            questionText = parent.createWidgetT("StaticText", "PromptQuestionTextArea", left, top, textAreaWidth, 0, Align.HStretch | Align.Top, "") as StaticText;
             questionText.SubWidgetText.setWordWrap(true);
             questionText.Caption = text;
             Size2 textSize = questionText.getTextSize();
