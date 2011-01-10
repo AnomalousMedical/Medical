@@ -23,7 +23,8 @@ namespace Medical
         Spine,
         Nasal,
         TMJ,
-        MouthInterior
+        MouthInterior,
+        Nerves
     }
 
     public class TransparencyInterface : Behavior
@@ -281,6 +282,9 @@ namespace Medical
                         entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
                         break;
                     case RenderGroup.Muscles:
+                        entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
+                        break;
+                    case RenderGroup.Nerves:
                         entity.setRenderQueueGroup((byte)(70 + renderGroupOffset));
                         break;
                     case RenderGroup.Skin:
