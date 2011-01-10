@@ -51,7 +51,7 @@ namespace Medical
         [DoNotSave]
         String baseMaterialName;
         [DoNotSave]
-        Color diffuse;
+        Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
         [DoNotCopy]
         [DoNotSave]
@@ -121,7 +121,7 @@ namespace Medical
         internal void applyTransparencyState(int index)
         {
             float workingAlpha = transparencyStates[index].WorkingAlpha;
-            if (workingAlpha != diffuse.a)
+            if (workingAlpha != alphaQuat.w)
             {
                 applyAlphaToMaterial(workingAlpha);
             }
@@ -181,7 +181,6 @@ namespace Medical
                 }
             }
             subEntity.setMaterialName(alphaMaterial.Value.getName());
-            diffuse = alphaMaterial.Value.getTechnique(0).getPass("Color").getDiffuse();
             TransparencyController.addTransparencyObject(this);
 
             applyAlphaToMaterial(transparencyStates[activeTransparencyState].WorkingAlpha);
@@ -256,8 +255,8 @@ namespace Medical
 
         private void applyAlphaToMaterial(float alpha)
         {
-            diffuse.a = alpha;
-            alphaMaterial.Value.setDiffuse(diffuse);
+            alphaQuat.w = alpha;
+            subEntity.setCustomParameter(0, alphaQuat);
             if (disableOnHidden)
             {
                 subEntity.setVisible(alpha != 0.0f);

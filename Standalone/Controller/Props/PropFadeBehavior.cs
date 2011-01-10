@@ -22,7 +22,7 @@ namespace Medical
         private SubEntity subEntity;
         private String baseMaterialName;
         private MaterialPtr alphaMaterial;
-        private Color diffuse;
+        private Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
         //Transparency controls
         private float workingAlpha = 1.0f;
@@ -63,7 +63,6 @@ namespace Medical
             {
                 blacklist("Cannot find automatic alpha material {0}.  Please ensure one exists or define a custom alpha behavior.", alphaMaterialName);
             }
-            diffuse = alphaMaterial.Value.getTechnique(0).getPass("Color").getDiffuse();
         }
 
         protected override void destroy()
@@ -119,8 +118,8 @@ namespace Medical
         private void applyAlphaToMaterial(float alpha)
         {
             workingAlpha = alpha;
-            diffuse.a = alpha;
-            alphaMaterial.Value.setDiffuse(diffuse);
+            alphaQuat.w = alpha;
+            subEntity.setCustomParameter(0, alphaQuat);
             if (disableOnHidden)
             {
                 subEntity.setVisible(alpha != 0.0f);

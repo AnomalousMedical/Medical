@@ -79,7 +79,7 @@ namespace Medical
                 color = value;
                 if (subEntity != null)
                 {
-                    subEntity.setCustomParameter(0, new Quaternion(value.r, value.g, value.b, value.a));
+                    subEntity.setCustomParameter(1, new Quaternion(value.r, value.g, value.b, value.a));
                 }
             }
         }

@@ -181,7 +181,7 @@ namespace Medical
         {
             set
             {
-                entity.getSubEntity(0).setCustomParameter(0, new Quaternion(value.r, value.g, value.b, value.a));
+                entity.getSubEntity(0).setCustomParameter(1, new Quaternion(value.r, value.g, value.b, value.a));
             }
         }
 

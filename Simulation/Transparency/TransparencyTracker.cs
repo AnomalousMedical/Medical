@@ -44,7 +44,7 @@ namespace Medical
         [DoNotSave]
         String baseMaterialName;
         [DoNotSave]
-        Color diffuse;
+        Quaternion alphaQuat = new Quaternion(1.0f, 1.0f, 1.0f, 1.0f);
 
         protected override void constructed()
         {
@@ -89,15 +89,14 @@ namespace Medical
                 }
             }
             subEntity.setMaterialName(alphaMaterial.Value.getName());
-            diffuse = alphaMaterial.Value.getTechnique(0).getPass("Color").getDiffuse();
             setAlpha(currentAlpha);
         }
 
         internal override void setAlpha(float alpha)
         {
             currentAlpha = alpha;
-            diffuse.a = alpha;
-            alphaMaterial.Value.setDiffuse(diffuse);
+            alphaQuat.w = alpha;
+            subEntity.setCustomParameter(0, alphaQuat);
             if (disableOnHidden)
             {
                 subEntity.setVisible(alpha != 0.0f);
