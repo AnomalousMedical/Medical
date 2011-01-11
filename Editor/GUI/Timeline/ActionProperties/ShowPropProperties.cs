@@ -22,6 +22,8 @@ namespace Medical.GUI
         private Button translationButton;
         private Button rotationButton;
 
+        private PropTimeline propTimeline;
+
         public ShowPropProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
         {
@@ -48,6 +50,17 @@ namespace Medical.GUI
 
             toolButtonGroup.SelectedButton = translationButton;
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
+
+            propTimeline = new PropTimeline();
+
+            Button propTimelineButton = mainWidget.findWidget("PropTimelineButton") as Button;
+            propTimelineButton.MouseButtonClick += new MyGUIEvent(propTimelineButton_MouseButtonClick);
+        }
+
+        public override void Dispose()
+        {
+            propTimeline.Dispose();
+            base.Dispose();
         }
 
         public override void setCurrentData(TimelineData data)
@@ -117,6 +130,11 @@ namespace Medical.GUI
         {
             simObjectMover.ShowMoveTools = toolButtonGroup.SelectedButton == translationButton;
             simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
+        }
+
+        void propTimelineButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            propTimeline.Visible = true;
         }
 
         #region MovableObject Members

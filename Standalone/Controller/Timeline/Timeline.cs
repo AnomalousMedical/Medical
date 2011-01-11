@@ -37,17 +37,13 @@ namespace Medical
         public event EventHandler<TimelineActionEventArgs> ActionAdded;
         public event EventHandler<TimelineActionEventArgs> ActionRemoved;
 
-        private List<TimelineAction> actions = new List<TimelineAction>();
-        private List<TimelineAction> activeActions = new List<TimelineAction>();
         private List<TimelineInstantAction> preActions = new List<TimelineInstantAction>();
         private List<TimelineInstantAction> postActions = new List<TimelineInstantAction>();
-
-        int newActionStartIndex;
-        float currentTime;
+        private ActionSequencer<TimelineAction> sequencer;
 
         public Timeline()
         {
-            
+            sequencer = new ActionSequencer<TimelineAction>();
         }
 
         public void addPreAction(TimelineInstantAction action)
@@ -74,18 +70,17 @@ namespace Medical
         public void addAction(TimelineAction action)
         {
             action._setTimeline(this);
-            actions.Add(action);
-            actions.Sort(sort);
+            sequencer.addAction(action);
             if (ActionAdded != null)
             {
-                ActionAdded.Invoke(this, new TimelineActionEventArgs(action, actions.IndexOf(action)));
+                ActionAdded.Invoke(this, new TimelineActionEventArgs(action, sequencer.indexOf(action)));
             }
         }
 
         public void removeAction(TimelineAction action)
         {
             action._setTimeline(null);
-            actions.Remove(action);
+            sequencer.removeAction(action);
             if (ActionRemoved != null)
             {
                 ActionRemoved.Invoke(this, new TimelineActionEventArgs(action, 0));
@@ -115,8 +110,7 @@ namespace Medical
 
         public void start(bool playPreActions)
         {
-            newActionStartIndex = 0;
-            currentTime = 0.0f;
+            sequencer.start();
             if (playPreActions)
             {
                 foreach (TimelineInstantAction action in preActions)
@@ -128,16 +122,7 @@ namespace Medical
 
         public void stop(bool playPostActions)
         {
-            //Stop any running actions in case this was done during playback
-            if (activeActions.Count != 0)
-            {
-                Clock clock = new Clock();
-                foreach (TimelineAction action in activeActions)
-                {
-                    action.stopped(currentTime, clock);
-                }
-                activeActions.Clear();
-            }
+            sequencer.stop();
             if (playPostActions)
             {
                 foreach (TimelineInstantAction action in postActions)
@@ -149,48 +134,14 @@ namespace Medical
 
         public void update(Clock clock)
         {
-            currentTime += clock.fSeconds;
-
-            //Find new active actions for this time
-            TimelineAction currentAction;
-            for (int i = newActionStartIndex; i < actions.Count; ++i)
-            {
-                currentAction = actions[i];
-                //If the action's start time is less than the current time, add it to the active actions.
-                if (currentAction.StartTime <= currentTime)
-                {
-                    ++newActionStartIndex;
-                    activeActions.Add(currentAction);
-                    currentAction.started(currentTime, clock);
-                }
-                else
-                {
-                    //Since the list is sorted, we know that any actions after this point are not active so we can stop the scan.
-                    break;
-                }
-            }
-
-            //Update the active actions
-            for (int i = 0; i < activeActions.Count; ++i)
-            {
-                currentAction = activeActions[i];
-                currentAction.update(currentTime, clock);
-                if (currentAction.Finished)
-                {
-                    //The action is finished, remove it from the action list.
-                    currentAction.stopped(currentTime, clock);
-                    activeActions.Remove(currentAction);
-                    --i;
-                }
-            }
+            sequencer.update(clock);
         }
 
         public bool Finished
         {
             get
             {
-                //Finished if all new actions have been scanned and the active actions is empty.
-                return newActionStartIndex == actions.Count && activeActions.Count == 0;
+                return sequencer.Finished;
             }
         }
 
@@ -207,7 +158,7 @@ namespace Medical
         {
             get
             {
-                return actions;
+                return sequencer.Actions;
             }
         }
 
@@ -231,18 +182,13 @@ namespace Medical
         {
             get
             {
-                return currentTime;
+                return sequencer.CurrentTime;
             }
         }
 
         internal void _actionStartChanged(TimelineAction action)
         {
-            actions.Sort(sort);
-        }
-
-        private int sort(TimelineAction x, TimelineAction y)
-        {
-            return x.StartTime.CompareTo(y.StartTime);
+            sequencer.sort();
         }
 
         #region Saveable Members
@@ -250,12 +196,25 @@ namespace Medical
         private static readonly String PRE_ACTIONS = "PreActions";
         private static readonly String POST_ACTIONS = "PostActions";
         private static readonly String ACTIONS = "Actions";
+        private static readonly String SEQUENCER = "Sequencer";
 
         protected Timeline(LoadInfo info)
         {
             info.RebuildList<TimelineInstantAction>(PRE_ACTIONS, preActions);
             info.RebuildList<TimelineInstantAction>(POST_ACTIONS, postActions);
-            info.RebuildList<TimelineAction>(ACTIONS, actions);
+
+            sequencer = info.GetValue<ActionSequencer<TimelineAction>>(SEQUENCER, null);
+            if (sequencer == null)
+            {
+                sequencer = new ActionSequencer<TimelineAction>();
+                //Must load old style list.
+                List<TimelineAction> actions = new List<TimelineAction>();
+                info.RebuildList<TimelineAction>(ACTIONS, actions);
+                foreach (TimelineAction action in actions)
+                {
+                    sequencer.addAction(action);
+                }
+            }
 
             foreach (TimelineInstantAction action in preActions)
             {
@@ -267,7 +226,7 @@ namespace Medical
                 action._setTimeline(this);
             }
 
-            foreach (TimelineAction action in actions)
+            foreach (TimelineAction action in sequencer.Actions)
             {
                 action._setTimeline(this);
             }
@@ -277,7 +236,7 @@ namespace Medical
         {
             info.ExtractList<TimelineInstantAction>(PRE_ACTIONS, preActions);
             info.ExtractList<TimelineInstantAction>(POST_ACTIONS, postActions);
-            info.ExtractList<TimelineAction>(ACTIONS, actions);
+            info.AddValue(SEQUENCER, sequencer);
         }
 
         #endregion

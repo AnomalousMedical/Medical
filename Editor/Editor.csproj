@@ -89,6 +89,7 @@
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
+    <Compile Include="GUI\Timeline\ActionProperties\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
@@ -131,6 +132,7 @@
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\MoveCameraProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\PlaySequenceProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\PlaySoundProperties.layout" />
+    <EmbeddedResource Include="GUI\Timeline\ActionProperties\PropTimeline\PropTimeline.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowImageProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowPropProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ChangeSceneEditor.layout" />

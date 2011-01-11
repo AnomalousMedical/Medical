@@ -114,6 +114,7 @@
     <Compile Include="Controller\Props\PropFactory.cs" />
     <Compile Include="Controller\Props\Ruler.cs" />
     <Compile Include="Controller\Props\Syringe.cs" />
+    <Compile Include="Controller\Timeline\ActionSequencer.cs" />
     <Compile Include="Controller\Timeline\ContinuePromptProvider.cs" />
     <Compile Include="Controller\Timeline\PlaySoundAction.cs" />
     <Compile Include="Controller\Timeline\ITimelineFileBrowser.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\ShowPropSubAction.cs" />
     <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
     <Compile Include="Controller\Timeline\TimelineException.cs" />
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
