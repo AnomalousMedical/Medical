@@ -21,6 +21,7 @@ namespace Medical
 
         private float fadeDuration;
         PropFadeBehavior propFade;
+        private ActionSequencer<ShowPropSubAction> sequencer;
 
         public ShowPropAction()
         {
@@ -28,6 +29,7 @@ namespace Medical
             translation = Vector3.Zero;
             rotation = Quaternion.Identity;
             fadeDuration = 0.3f;
+            sequencer = new ActionSequencer<ShowPropSubAction>();
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -40,11 +42,13 @@ namespace Medical
                 propFade.hide();
                 propFade.fade(1.0f, fadeDuration);
             }
+            sequencer.start();
         }
 
         public override void stopped(float timelineTime, Clock clock)
         {
             destroyProp();
+            sequencer.stop();
         }
 
         public override void update(float timelineTime, Clock clock)
@@ -55,6 +59,7 @@ namespace Medical
                 propFade.fade(0.0f, fadeDuration);
                 propFade = null; //Null this out, we are done with it here.
             }
+            sequencer.update(clock);
             finished = timelineTime > endTime;
         }
 
@@ -75,6 +80,11 @@ namespace Medical
             {
                 return finished;
             }
+        }
+
+        internal void _actionStartChanged(ShowPropSubAction showPropSubAction)
+        {
+            sequencer.sort();
         }
 
         public String PropType
@@ -138,6 +148,14 @@ namespace Medical
             }
         }
 
+        internal SimObject PropSimObject
+        {
+            get
+            {
+                return simObject;
+            }
+        }
+
         private void makeProp()
         {
             simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
@@ -156,6 +174,7 @@ namespace Medical
         private const String TRANSLATION = "translation";
         private const String ROTATION = "rotation";
         private const String FADE_DURATION = "fadeDuration";
+        private const String SEQUENCER = "Sequencer";
 
         protected ShowPropAction(LoadInfo info)
             :base(info)
@@ -164,6 +183,11 @@ namespace Medical
             translation = info.GetVector3(TRANSLATION, Vector3.Zero);
             rotation = info.GetQuaternion(ROTATION, Quaternion.Identity);
             fadeDuration = info.GetFloat(FADE_DURATION, 0.3f);
+            sequencer = info.GetValue<ActionSequencer<ShowPropSubAction>>(SEQUENCER, null);
+            if (sequencer == null)
+            {
+                sequencer = new ActionSequencer<ShowPropSubAction>();
+            }
         }
 
         public override void getInfo(SaveInfo info)
@@ -173,6 +197,7 @@ namespace Medical
             info.AddValue(TRANSLATION, translation);
             info.AddValue(ROTATION, rotation);
             info.AddValue(FADE_DURATION, fadeDuration);
+            info.AddValue(SEQUENCER, sequencer);
         }
 
         #endregion Saveable

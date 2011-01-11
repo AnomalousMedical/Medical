@@ -9,6 +9,7 @@ using Engine.Platform;
 using Engine.Editing;
 using OgreWrapper;
 using Engine.Attributes;
+using Logging;
 
 namespace Medical
 {
@@ -26,6 +27,8 @@ namespace Medical
         [DoNotCopy][DoNotSave] private Vector3 plungerBoneStart;
         [DoNotCopy][DoNotSave] private float timeCounter = 0.0f;
 
+        public const String BehaviorName = "Behavior";
+
         public static void createPropDefinition(PropFactory propFactory)
         {
             GenericSimObjectDefinition syringe = new GenericSimObjectDefinition("Syringe");
@@ -38,7 +41,7 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             syringe.addElement(propFadeBehaviorDef);
-            BehaviorDefinition syringeBehavior = new BehaviorDefinition("Behavior", new Syringe());
+            BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
             syringe.addElement(syringeBehavior);
             propFactory.addDefinition("Syringe", syringe);
         }

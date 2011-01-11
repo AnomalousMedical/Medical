@@ -127,6 +127,7 @@
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplay.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\IImageDisplayFactory.cs" />
     <Compile Include="Controller\Timeline\ShowImageAction\ShowImageAction.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\PushPlungerAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ShowPropSubAction.cs" />
     <Compile Include="Controller\Timeline\TimelineActionProperties.cs" />
