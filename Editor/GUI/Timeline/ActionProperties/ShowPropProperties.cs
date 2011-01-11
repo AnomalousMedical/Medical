@@ -91,6 +91,7 @@ namespace Medical.GUI
             simObjectMover.setActivePlanes(MovementAxis.All, MovementPlane.All);
             simObjectMover.addMovableObject("Prop", this);
             simObjectMover.setDrawingSurfaceVisible(true);
+            propTimeline.setPropData(showProp);
         }
 
         public override void editingCompleted()
@@ -98,11 +99,13 @@ namespace Medical.GUI
             showProp = null;
             simObjectMover.removeMovableObject(this);
             simObjectMover.setDrawingSurfaceVisible(false);
+            propTimeline.setPropData(null);
         }
 
         void propTypes_EventComboChangePosition(Widget source, EventArgs e)
         {
             showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
+            propTimeline.setPropData(showProp);
         }
 
         void translationEdit_EventEditSelectAccept(Widget source, EventArgs e)

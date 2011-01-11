@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -12,9 +13,10 @@ namespace Medical.GUI
         private TrackFilter trackFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
+        private ShowPropSubActionFactory actionFactory = new ShowPropSubActionFactory();
 
         public PropTimeline()
-            :base("Medical.GUI.Timeline.ActionProperties.PropTimeline.PropTimeline.layout")
+            :base("Medical.GUI.PropTimeline.PropTimeline.layout")
         {
             //Timeline view
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
@@ -33,21 +35,20 @@ namespace Medical.GUI
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
+        }
 
-            //Add tracks to timeline.
+        public void setPropData(ShowPropAction showProp)
+        {
+            timelineView.clearTracks();
+            if (showProp != null)
+            {
+                actionFactory.addTracksForAction(showProp, timelineView);
+            }
         }
 
         void trackFilter_AddTrackItem(string name)
         {
-            //if (movementSequenceController.CurrentSequence == null)
-            //{
-            //    createNewSequence();
-            //}
-            //MovementSequenceState state = new MovementSequenceState();
-            //state.captureState();
-            //state.StartTime = timelineView.MarkerTime;
-            //movementSequenceController.CurrentSequence.addState(state);
-            //timelineView.addData(new MovementKeyframeData(state, movementSequenceController.CurrentSequence));
+            
         }
     }
 }
