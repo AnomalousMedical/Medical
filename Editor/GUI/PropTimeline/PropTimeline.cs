@@ -14,6 +14,8 @@ namespace Medical.GUI
         private TimelineView timelineView;
         private NumberLine numberLine;
         private ShowPropSubActionFactory actionFactory = new ShowPropSubActionFactory();
+        private ShowPropAction propData;
+        private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
         public PropTimeline()
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
@@ -27,7 +29,7 @@ namespace Medical.GUI
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
-            actionProperties.addPanel("Muscle Position", new MovementKeyframeProperties(timelinePropertiesScrollView));
+            //actionProperties.addPanel("Muscle Position", new MovementKeyframeProperties(timelinePropertiesScrollView));
 
             //Timeline filter
             ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
@@ -40,15 +42,30 @@ namespace Medical.GUI
         public void setPropData(ShowPropAction showProp)
         {
             timelineView.clearTracks();
+            actionDataBindings.Clear();
             if (showProp != null)
             {
                 actionFactory.addTracksForAction(showProp, timelineView);
+                foreach (ShowPropSubAction action in showProp.SubActions)
+                {
+                    addSubActionData(action);
+                }
             }
+            this.propData = showProp;
         }
 
         void trackFilter_AddTrackItem(string name)
         {
-            
+            ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
+            propData.addSubAction(subAction);
+            addSubActionData(subAction);
+        }
+
+        private void addSubActionData(ShowPropSubAction subAction)
+        {
+            PropTimelineData timelineData = new PropTimelineData(subAction);
+            timelineView.addData(timelineData);
+            actionDataBindings.Add(subAction, timelineData);
         }
     }
 }

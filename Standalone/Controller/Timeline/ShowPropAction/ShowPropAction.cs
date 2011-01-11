@@ -74,6 +74,26 @@ namespace Medical
             destroyProp();
         }
 
+        public void addSubAction(ShowPropSubAction subAction)
+        {
+            subAction._setShowProp(this);
+            sequencer.addAction(subAction);
+        }
+
+        public void removeSubAction(ShowPropSubAction subAction)
+        {
+            sequencer.removeAction(subAction);
+            subAction._setShowProp(null);
+        }
+
+        public IEnumerable<ShowPropSubAction> SubActions
+        {
+            get
+            {
+                return sequencer.Actions;
+            }
+        }
+
         public override bool Finished
         {
             get 

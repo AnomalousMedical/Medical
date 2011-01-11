@@ -26,6 +26,11 @@ namespace Medical.GUI
                 track.addTracksToTimeline(timelineView);
             }
         }
+
+        public ShowPropSubAction createSubAction(ShowPropAction showProp, String name)
+        {
+            return trackInfo[showProp.PropType].createSubAction(name);
+        }
     }
 
     class ShowPropSubActionFactoryData : IDisposable
@@ -57,6 +62,18 @@ namespace Medical.GUI
             {
                 timeline.addTrack(data.TypeName, data.Color);
             }
+        }
+
+        public ShowPropSubAction createSubAction(string name)
+        {
+            foreach (TrackData data in trackData)
+            {
+                if (data.TypeName == name)
+                {
+                    return (ShowPropSubAction)Activator.CreateInstance(data.Type);
+                }
+            }
+            return null;
         }
 
         private String getTypeName(Type type)

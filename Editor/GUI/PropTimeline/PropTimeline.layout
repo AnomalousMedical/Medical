@@ -36,6 +36,10 @@
             <Widget type="Button" skin="Button" position="137 2 73 18" name="RemoveAction">
                 <Property key="Widget_Caption" value="Remove"/>
             </Widget>
+            <Widget type="StaticText" skin="StaticText" position="1 44 74 15">
+                <Property key="Widget_Caption" value="Duration"/>
+            </Widget>
+            <Widget type="Edit" skin="Edit" position="76 44 132 18" name="Duration"/>
         </Widget>
     </Widget>
 </MyGUI>

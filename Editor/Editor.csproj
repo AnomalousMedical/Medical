@@ -90,6 +90,7 @@
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
+    <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
