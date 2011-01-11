@@ -7,19 +7,48 @@ using Engine.Saving;
 
 namespace Medical
 {
+    /// <summary>
+    /// The interface for actions in the ActionSequencer.
+    /// </summary>
     interface ActionSequencerAction
     {
+        /// <summary>
+        /// Called when the action is starting up.
+        /// </summary>
+        /// <param name="timelineTime">The current total time for the timeline.</param>
+        /// <param name="clock">The clock for the current tick.</param>
         void started(float timelineTime, Clock clock);
 
+        /// <summary>
+        /// Called when the action is complete.
+        /// </summary>
+        /// <param name="timelineTime">The current total time for the timeline.</param>
+        /// <param name="clock">The clock for the current tick.</param>
         void stopped(float timelineTime, Clock clock);
 
+        /// <summary>
+        /// Called each tick to update the action.
+        /// </summary>
+        /// <param name="timelineTime">The current total time for the timeline.</param>
+        /// <param name="clock">The clock for the current tick.</param>
         void update(float timelineTime, Clock clock);
 
+        /// <summary>
+        /// The start time of the action.
+        /// </summary>
         float StartTime { get; }
 
+        /// <summary>
+        /// True if the action is finished.
+        /// </summary>
         bool Finished { get; }
     }
 
+    /// <summary>
+    /// This class can play a series of time based actions. It will maintain the
+    /// order and do all the processing.
+    /// </summary>
+    /// <typeparam name="T">The type of this ActionSequencer. Must extend ActionSequencerAction.</typeparam>
     class ActionSequencer<T> : Saveable
         where T : ActionSequencerAction
     {
@@ -28,38 +57,65 @@ namespace Medical
         private List<T> actions = new List<T>();
         private List<T> activeActions = new List<T>();
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public ActionSequencer()
         {
 
         }
 
+        /// <summary>
+        /// Add an action to the sequencer.
+        /// </summary>
+        /// <param name="action">The action to add.</param>
         public void addAction(T action)
         {
             actions.Add(action);
             actions.Sort(sort);
         }
 
+        /// <summary>
+        /// Remove an action from the sequencer.
+        /// </summary>
+        /// <param name="action">The action to remove.</param>
         public void removeAction(T action)
         {
             actions.Remove(action);
         }
 
+        /// <summary>
+        /// Sort the actions in the sequencer. This should be called if an
+        /// action's start time has changed.
+        /// </summary>
         public void sort()
         {
             actions.Sort(sort);
         }
 
+        /// <summary>
+        /// Get the index of a particular action.
+        /// </summary>
+        /// <param name="action">The action to get the index of.</param>
+        /// <returns>The index of the action.</returns>
         public int indexOf(T action)
         {
             return actions.IndexOf(action);
         }
 
+        /// <summary>
+        /// Start playback of the sequencer. Must call update as well this will
+        /// not automatically update. Call this before starting updates.
+        /// </summary>
         public void start()
         {
             newActionStartIndex = 0;
             currentTime = 0.0f;
         }
 
+        /// <summary>
+        /// Stop playback of the sequencer. Call this after completing updates.
+        /// </summary>
         public void stop()
         {
             //Stop any running actions in case this was done during playback
@@ -74,6 +130,10 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Update the sequence.
+        /// </summary>
+        /// <param name="clock">A clock with the next time.</param>
         public void update(Clock clock)
         {
             currentTime += clock.fSeconds;
@@ -112,6 +172,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Returns true if the sequence is finished.
+        /// </summary>
         public bool Finished
         {
             get
@@ -121,6 +184,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// An enumerator over all actions in the sequencer.
+        /// </summary>
         public IEnumerable<T> Actions
         {
             get
@@ -129,6 +195,9 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// The current time of the sequencer.
+        /// </summary>
         public float CurrentTime
         {
             get
@@ -137,6 +206,12 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// Helper function to sort actions.
+        /// </summary>
+        /// <param name="x">Action 1.</param>
+        /// <param name="y">Action 2.</param>
+        /// <returns>Negative: x &lt; y, 0: x == y, Positive: y &gt; x</returns>
         private int sort(T x, T y)
         {
             return x.StartTime.CompareTo(y.StartTime);
