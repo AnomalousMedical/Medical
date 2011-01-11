@@ -37,6 +37,9 @@ namespace Medical.GUI
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
+
+            Button removeAction = window.findWidget("RemoveAction") as Button;
+            removeAction.MouseButtonClick += new MyGUIEvent(removeAction_MouseButtonClick);
         }
 
         public void setPropData(ShowPropAction showProp)
@@ -57,6 +60,7 @@ namespace Medical.GUI
         void trackFilter_AddTrackItem(string name)
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
+            subAction.StartTime = timelineView.MarkerTime;
             propData.addSubAction(subAction);
             addSubActionData(subAction);
         }
@@ -66,6 +70,13 @@ namespace Medical.GUI
             PropTimelineData timelineData = new PropTimelineData(subAction);
             timelineView.addData(timelineData);
             actionDataBindings.Add(subAction, timelineData);
+        }
+
+        void removeAction_MouseButtonClick(Widget source, EventArgs e)
+        {
+            PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
+            propData.removeSubAction(propTlData.Action);
+            timelineView.removeData(propTlData);
         }
     }
 }

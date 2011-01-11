@@ -16,6 +16,7 @@ namespace Medical
         public PushPlungerAction()
         {
             PlungePercentage = 1.0f;
+            Duration = 1.0f;
         }
 
         public override void started(float timelineTime, Clock clock)

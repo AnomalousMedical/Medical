@@ -208,6 +208,10 @@ namespace Medical
             {
                 sequencer = new ActionSequencer<ShowPropSubAction>();
             }
+            foreach (ShowPropSubAction action in sequencer.Actions)
+            {
+                action._setShowProp(this);
+            }
         }
 
         public override void getInfo(SaveInfo info)
