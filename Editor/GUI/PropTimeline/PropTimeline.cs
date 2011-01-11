@@ -54,6 +54,11 @@ namespace Medical.GUI
                 {
                     addSubActionData(action);
                 }
+                timelineView.Duration = showProp.Duration;
+            }
+            else
+            {
+                timelineView.Duration = 0.0f;
             }
             this.propData = showProp;
         }
