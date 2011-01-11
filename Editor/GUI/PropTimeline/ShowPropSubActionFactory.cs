@@ -11,19 +11,19 @@ namespace Medical.GUI
     {
         Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
 
-        public ShowPropSubActionFactory()
+        public ShowPropSubActionFactory(Widget parentWidget)
         {
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
-            syringeData.addTrack(typeof(PushPlungerAction), Color.Red, null);
+            syringeData.addTrack(typeof(PushPlungerAction), Color.Red, new PushPlungerProperties(parentWidget));
             trackInfo.Add("Syringe", syringeData);
         }
 
-        public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView)
+        public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)
         {
             ShowPropSubActionFactoryData track;
             if(trackInfo.TryGetValue(showProp.PropType, out track))
             {
-                track.addTracksToTimeline(timelineView);
+                track.addTracksToTimeline(timelineView, actionProperties);
             }
         }
 
@@ -56,11 +56,15 @@ namespace Medical.GUI
             trackData.Add(data);
         }
 
-        public void addTracksToTimeline(TimelineView timeline)
+        public void addTracksToTimeline(TimelineView timeline, TimelineDataProperties actionProperties)
         {
             foreach (TrackData data in trackData)
             {
                 timeline.addTrack(data.TypeName, data.Color);
+                if (data.Panel != null)
+                {
+                    actionProperties.addPanel(data.TypeName, data.Panel);
+                }
             }
         }
 

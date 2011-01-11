@@ -13,7 +13,7 @@ namespace Medical.GUI
         private TrackFilter trackFilter;
         private TimelineView timelineView;
         private NumberLine numberLine;
-        private ShowPropSubActionFactory actionFactory = new ShowPropSubActionFactory();
+        private ShowPropSubActionFactory actionFactory;
         private ShowPropAction propData;
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
 
@@ -29,7 +29,7 @@ namespace Medical.GUI
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
             actionProperties = new TimelineDataProperties(timelinePropertiesScrollView, timelineView);
             actionProperties.Visible = false;
-            //actionProperties.addPanel("Muscle Position", new MovementKeyframeProperties(timelinePropertiesScrollView));
+            actionFactory = new ShowPropSubActionFactory(timelinePropertiesScrollView);
 
             //Timeline filter
             ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
@@ -46,9 +46,10 @@ namespace Medical.GUI
         {
             timelineView.clearTracks();
             actionDataBindings.Clear();
+            actionProperties.clearPanels();
             if (showProp != null)
             {
-                actionFactory.addTracksForAction(showProp, timelineView);
+                actionFactory.addTracksForAction(showProp, timelineView, actionProperties);
                 foreach (ShowPropSubAction action in showProp.SubActions)
                 {
                     addSubActionData(action);
