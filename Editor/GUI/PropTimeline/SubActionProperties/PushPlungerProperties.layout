@@ -4,6 +4,6 @@
         <Widget type="StaticText" skin="StaticText" position="1 1 89 15">
             <Property key="Widget_Caption" value="Plunge Amount"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="92 1 116 18" align="HStretch Top" name="TranslationEdit"/>
+        <Widget type="Edit" skin="Edit" position="92 1 116 18" align="HStretch Top" name="PlungeAmountEdit"/>
     </Widget>
 </MyGUI>
