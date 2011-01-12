@@ -14,7 +14,8 @@ namespace Medical.GUI
         public ShowPropSubActionFactory(Widget parentWidget)
         {
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
-            syringeData.addTrack(typeof(PushPlungerAction), Color.Red, new PushPlungerProperties(parentWidget));
+            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
+            syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new PushPlungerProperties(parentWidget));
             trackInfo.Add("Syringe", syringeData);
         }
 

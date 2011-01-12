@@ -118,6 +118,24 @@ namespace Medical
             }
         }
 
+        public void changePosition(Vector3 translation, Quaternion rotation)
+        {
+            bool transValid = translation.isNumber();
+            bool rotValid = rotation.isNumber();
+            if (transValid && rotValid)
+            {
+                this.updatePosition(ref translation, ref rotation);
+            }
+            else if(transValid)
+            {
+                this.updateTranslation(ref translation);
+            }
+            else if (rotValid)
+            {
+                this.updateRotation(ref rotation);
+            }
+        }
+
         private void applyAlphaToMaterial(float alpha)
         {
             workingAlpha = alpha;
