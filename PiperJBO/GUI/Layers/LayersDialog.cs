@@ -10,6 +10,7 @@ namespace Medical.GUI
     class LayersDialog : Dialog
     {
         private LayerGUIMenu skinMenu;
+        private LayerGUIMenu nervesMenu;
         private LayerGUIMenu musclesMenu;
         private LayerGUISkullMenu skullMenu;
         private LayerGUIMenu mandibleMenu;
@@ -32,6 +33,9 @@ namespace Medical.GUI
             skinMenu = new LayerGUIMenu(window.findWidget("Layers/Skin") as Button, window.findWidget("Layers/SkinMenu") as Button);
             skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
             skinMenu.TransparencyChanged += changeSkinTransparency;
+
+            nervesMenu = new LayerGUIMenu(window.findWidget("Layers/Nerves") as Button, window.findWidget("Layers/NervesMenu") as Button);
+            nervesMenu.TransparencyChanged += changeNerveTransparency;
 
             musclesMenu = new LayerGUIMenu(window.findWidget("Layers/Muscles") as Button, window.findWidget("Layers/MusclesMenu") as Button);
             musclesMenu.createShortcuts(KeyboardButtonCode.KC_F2);
@@ -73,6 +77,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             skinMenu.Dispose();
+            nervesMenu.Dispose();
             musclesMenu.Dispose();
             skullMenu.Dispose();
             mandibleMenu.Dispose();
@@ -87,6 +92,7 @@ namespace Medical.GUI
         public void resetMenus()
         {
             skinMenu.setAlpha(1.0f);
+            nervesMenu.setAlpha(1.0f);
             musclesMenu.setAlpha(1.0f);
             skullMenu.setAlpha(1.0f);
             mandibleMenu.setAlpha(1.0f);
@@ -116,6 +122,12 @@ namespace Medical.GUI
                 skullMenu.setAlpha(skull.CurrentAlpha);
                 TransparencyInterface leftEminence = group.getTransparencyObject("Left Eminence");
                 skullMenu.ShowEminance = leftEminence.CurrentAlpha == skull.CurrentAlpha;
+            }
+            group = TransparencyController.getTransparencyGroup(RenderGroup.Nerves);
+            if (group != null)
+            {
+                TransparencyInterface nerve = group.getTransparencyObject("Left Auriculo Temporal Nerve");
+                nervesMenu.setAlpha(nerve.CurrentAlpha);
             }
             group = TransparencyController.getTransparencyGroup(RenderGroup.TMJ);
             if (group != null)
@@ -178,6 +190,7 @@ namespace Medical.GUI
                 if (skinMenu != null)
                 {
                     skinMenu.AllowShortcuts = value;
+                    nervesMenu.AllowShortcuts = value;
                     musclesMenu.AllowShortcuts = value;
                     skullMenu.AllowShortcuts = value;
                     mandibleMenu.AllowShortcuts = value;
@@ -197,6 +210,15 @@ namespace Medical.GUI
             TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Bones);
             TransparencyInterface hyoid = group.getTransparencyObject("Hyoid");
             hyoid.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
+        }
+
+        void changeNerveTransparency(float alpha)
+        {
+            TransparencyGroup group = TransparencyController.getTransparencyGroup(RenderGroup.Nerves);
+            foreach (TransparencyInterface nerve in group.getTransparencyObjectIter())
+            {
+                nerve.smoothBlend(alpha, MedicalConfig.TransparencyChangeMultiplier);
+            }
         }
 
         private void changeSkullTransparency(float alpha)
