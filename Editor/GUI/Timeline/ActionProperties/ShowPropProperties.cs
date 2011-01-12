@@ -53,6 +53,7 @@ namespace Medical.GUI
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
             propTimeline = new PropTimeline();
+            propTimeline.UpdatePropPreview += new EventHandler(propTimeline_UpdatePropPreview);
 
             Button propTimelineButton = mainWidget.findWidget("PropTimelineButton") as Button;
             propTimelineButton.MouseButtonClick += new MyGUIEvent(propTimelineButton_MouseButtonClick);
@@ -176,6 +177,18 @@ namespace Medical.GUI
         void actionData_DurationChanged(float duration)
         {
             propTimeline.Duration = duration;
+        }
+
+        void propTimeline_UpdatePropPreview(object sender, EventArgs e)
+        {
+            if (propTimeline.UsingTools)
+            {
+                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
+            }
+            else
+            {
+                showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
+            }
         }
 
         #region MovableObject Members

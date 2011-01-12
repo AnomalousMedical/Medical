@@ -9,6 +9,8 @@ namespace Medical.GUI
 {
     class MovePropProperties : TimelineDataPanel
     {
+        public event EventHandler UpdatePropPreview;
+
         private MovePropAction moveProp;
         private Edit translationEdit;
         private Edit rotationEdit;
@@ -27,6 +29,15 @@ namespace Medical.GUI
             moveProp = (MovePropAction)propData.Action;
             translationEdit.OnlyText = moveProp.Translation.ToString();
             rotationEdit.OnlyText = moveProp.Rotation.ToString();
+            fireUpdatePropPreview();
+        }
+
+        public void fireUpdatePropPreview()
+        {
+            if (UpdatePropPreview != null)
+            {
+                UpdatePropPreview.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public Vector3 Translation

@@ -9,6 +9,18 @@ namespace Medical.GUI
 {
     class PropTimeline : Dialog
     {
+        public event EventHandler UpdatePropPreview
+        {
+            add
+            {
+                actionFactory.MoveProperties.UpdatePropPreview += value;
+            }
+            remove
+            {
+                actionFactory.MoveProperties.UpdatePropPreview -= value;
+            }
+        }
+
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
@@ -46,6 +58,7 @@ namespace Medical.GUI
 
         public void setPropData(ShowPropAction showProp)
         {
+            usingTools = false;
             timelineView.clearTracks();
             actionDataBindings.Clear();
             actionProperties.clearPanels();
@@ -138,7 +151,12 @@ namespace Medical.GUI
         {
             if (timelineView.CurrentData != null)
             {
+                bool wasUsingTools = usingTools;
                 usingTools = timelineView.CurrentData.Track == "Move";
+                if (!usingTools && wasUsingTools)
+                {
+                    actionFactory.MoveProperties.fireUpdatePropPreview();
+                }
             }
         }
     }
