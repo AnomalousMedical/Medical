@@ -10,6 +10,7 @@ namespace Medical.GUI
     class ShowPropProperties : TimelineDataPanel, MovableObject
     {
         private ShowPropAction showProp;
+        private TimelineActionData actionData;
         private bool comboUninitialized = true;
         private SimObjectMover simObjectMover;
 
@@ -65,7 +66,17 @@ namespace Medical.GUI
 
         public override void setCurrentData(TimelineData data)
         {
-            showProp = (ShowPropAction)((TimelineActionData)data).Action;
+            if (actionData != null)
+            {
+                actionData.DurationChanged -= actionData_DurationChanged;
+            }
+            actionData = ((TimelineActionData)data);
+            showProp = (ShowPropAction)actionData.Action;
+            if(actionData != null)
+            {
+                actionData.DurationChanged += actionData_DurationChanged;
+            }
+
             if (comboUninitialized)
             {
                 simObjectMover = showProp.TimelineController.SimObjectMover;
@@ -78,6 +89,7 @@ namespace Medical.GUI
                 }
                 comboUninitialized = false;
             }
+
             uint index = propTypes.findItemIndexWith(showProp.PropType);
             if (index != ComboBox.Invalid)
             {
@@ -159,6 +171,11 @@ namespace Medical.GUI
         void propTimelineButton_MouseButtonClick(Widget source, EventArgs e)
         {
             propTimeline.Visible = true;
+        }
+
+        void actionData_DurationChanged(float duration)
+        {
+            propTimeline.Duration = duration;
         }
 
         #region MovableObject Members

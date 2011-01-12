@@ -63,6 +63,18 @@ namespace Medical.GUI
             this.propData = showProp;
         }
 
+        public float Duration
+        {
+            get
+            {
+                return timelineView.Duration;
+            }
+            set
+            {
+                timelineView.Duration = value;
+            }
+        }
+
         void trackFilter_AddTrackItem(string name)
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
