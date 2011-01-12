@@ -7,8 +7,10 @@ using OgrePlugin;
 
 namespace Medical
 {
-    class Mustache
+    public class Mustache
     {
+        public const String DefinitionName = "Mustache";
+
         public static void createPropDefinition(PropFactory propFactory)
         {
             GenericSimObjectDefinition mustache = new GenericSimObjectDefinition("Mustache");
@@ -18,7 +20,7 @@ namespace Medical
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             mustache.addElement(nodeDefinition);
-            propFactory.addDefinition("Mustache", mustache);
+            propFactory.addDefinition(DefinitionName, mustache);
         }
     }
 }

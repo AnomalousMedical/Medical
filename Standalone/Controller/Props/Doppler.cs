@@ -8,8 +8,10 @@ using Engine;
 
 namespace Medical
 {
-    class Doppler
+    public class Doppler
     {
+        public const String DefinitionName = "Doppler";
+
         public static void createPropDefinition(PropFactory propFactory)
         {
             GenericSimObjectDefinition doppler = new GenericSimObjectDefinition("Doppler");
@@ -22,7 +24,7 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             doppler.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition("Doppler", doppler);
+            propFactory.addDefinition(DefinitionName, doppler);
         }
     }
 }

@@ -8,8 +8,10 @@ using Engine;
 
 namespace Medical
 {
-    class Ruler
+    public class Ruler
     {
+        public const String DefinitionName = "Ruler";
+
         public static void createPropDefinition(PropFactory propFactory)
         {
             GenericSimObjectDefinition rulerSimObject = new GenericSimObjectDefinition("RulerPrototype");
@@ -22,7 +24,7 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rulerSimObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition("Ruler", rulerSimObject);
+            propFactory.addDefinition(DefinitionName, rulerSimObject);
         }
     }
 }

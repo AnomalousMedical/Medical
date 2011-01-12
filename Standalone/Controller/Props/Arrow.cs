@@ -11,8 +11,10 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    class Arrow : Interface
+    public class Arrow : Interface
     {
+        public const String DefinitionName = "Arrow";
+
         private Entity entity;
         private SubEntity subEntity;
         private Color color = Color.Red;
@@ -32,7 +34,7 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             arrowSimObject.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition("Arrow", arrowSimObject);
+            propFactory.addDefinition(DefinitionName, arrowSimObject);
         }
 
         public Arrow()

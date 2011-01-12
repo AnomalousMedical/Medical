@@ -16,10 +16,36 @@ namespace Medical.GUI
         {
             movePropProperties = new MovePropProperties(parentWidget);
 
+            //Arrow
+            ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
+            arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(Arrow.DefinitionName, arrowData);
+
+            //Doppler
+            ShowPropSubActionFactoryData dopplerData = new ShowPropSubActionFactoryData();
+            dopplerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(Doppler.DefinitionName, dopplerData);
+
+            //PointingHandLeft
+            ShowPropSubActionFactoryData pointingHandLeftData = new ShowPropSubActionFactoryData();
+            pointingHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(PointingHand.LeftHandName, pointingHandLeftData);
+
+            //PointingHandRight
+            ShowPropSubActionFactoryData pointingRightHandData = new ShowPropSubActionFactoryData();
+            pointingRightHandData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(PointingHand.RightHandName, pointingRightHandData);
+
+            //Ruler
+            ShowPropSubActionFactoryData rulerData = new ShowPropSubActionFactoryData();
+            rulerData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(Ruler.DefinitionName, rulerData);
+
+            //Syringe
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
             syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new PushPlungerProperties(parentWidget));
-            trackInfo.Add("Syringe", syringeData);
+            trackInfo.Add(Syringe.DefinitionName, syringeData);
         }
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)

@@ -13,8 +13,11 @@ using Logging;
 
 namespace Medical
 {
-    class Syringe : Behavior
+    public class Syringe : Behavior
     {
+        public const String BehaviorName = "Behavior";
+        public const String DefinitionName = "Syringe";
+
         [Editable] private String nodeName = PropFactory.NodeName;
         [Editable] private String entityName = PropFactory.EntityName;
         [Editable] private String plungerBoneName = "BonePlunger";
@@ -26,8 +29,6 @@ namespace Medical
         private Bone plungerBone;
         [DoNotCopy][DoNotSave] private Vector3 plungerBoneStart;
         [DoNotCopy][DoNotSave] private float timeCounter = 0.0f;
-
-        public const String BehaviorName = "Behavior";
 
         public static void createPropDefinition(PropFactory propFactory)
         {
@@ -43,7 +44,7 @@ namespace Medical
             syringe.addElement(propFadeBehaviorDef);
             BehaviorDefinition syringeBehavior = new BehaviorDefinition(BehaviorName, new Syringe());
             syringe.addElement(syringeBehavior);
-            propFactory.addDefinition("Syringe", syringe);
+            propFactory.addDefinition(DefinitionName, syringe);
         }
 
         protected override void constructed()

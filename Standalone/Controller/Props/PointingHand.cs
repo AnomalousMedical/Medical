@@ -8,8 +8,11 @@ using Engine;
 
 namespace Medical
 {
-    class PointingHand
+    public class PointingHand
     {
+        public const String LeftHandName = "PointingHandLeft";
+        public const String RightHandName = "PointingHandRight";
+
         public static void createPropDefinition(PropFactory propFactory)
         {
             GenericSimObjectDefinition leftPointingHand = new GenericSimObjectDefinition("PointingHandLeft");
@@ -22,7 +25,7 @@ namespace Medical
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             leftPointingHand.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition("PointingHandLeft", leftPointingHand);
+            propFactory.addDefinition(LeftHandName, leftPointingHand);
 
             GenericSimObjectDefinition rightPointingHand = new GenericSimObjectDefinition("PointingHandRight");
             rightPointingHand.Enabled = true;
@@ -34,7 +37,7 @@ namespace Medical
             propFadeBehavior = new PropFadeBehavior();
             propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             rightPointingHand.addElement(propFadeBehaviorDef);
-            propFactory.addDefinition("PointingHandRight", rightPointingHand);
+            propFactory.addDefinition(RightHandName, rightPointingHand);
         }
     }
 }
