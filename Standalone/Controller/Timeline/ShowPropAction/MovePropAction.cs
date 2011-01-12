@@ -18,6 +18,11 @@ namespace Medical
         private bool finished = false;
         private PropFadeBehavior propBehavior;
 
+        public MovePropAction()
+        {
+            Duration = 1.0f;
+        }
+
         public override void started(float timelineTime, Clock clock)
         {
             startTranslation = this.PropSimObject.Translation;

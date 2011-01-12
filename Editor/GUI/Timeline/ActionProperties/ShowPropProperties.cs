@@ -200,6 +200,7 @@ namespace Medical.GUI
             if (propTimeline.UsingTools)
             {
                 propTimeline.Translation += offset;
+                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
             }
             else
             {
@@ -233,6 +234,7 @@ namespace Medical.GUI
             if (propTimeline.UsingTools)
             {
                 propTimeline.Rotation = newRot;
+                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
             }
             else
             {

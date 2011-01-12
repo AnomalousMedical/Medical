@@ -36,7 +36,6 @@ namespace Medical
         {
             finished = false;
             makeProp();
-            propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
             if (propFade != null)
             {
                 propFade.hide();
@@ -110,6 +109,14 @@ namespace Medical
         internal void _actionStartChanged(ShowPropSubAction showPropSubAction)
         {
             sequencer.sort();
+        }
+
+        public void _movePreviewProp(Vector3 translation, Quaternion rotation)
+        {
+            if (propFade != null)
+            {
+                propFade.changePosition(translation, rotation);
+            }
         }
 
         public String PropType
@@ -192,6 +199,7 @@ namespace Medical
         private void makeProp()
         {
             simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
+            propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
         }
 
         private void destroyProp()
