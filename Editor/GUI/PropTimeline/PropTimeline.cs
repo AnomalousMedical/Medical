@@ -88,9 +88,29 @@ namespace Medical.GUI
             }
         }
 
-        public Vector3 Translation { get; set; }
+        public Vector3 Translation
+        {
+            get
+            {
+                return actionFactory.MoveProperties.Translation;
+            }
+            set
+            {
+                actionFactory.MoveProperties.Translation = value;
+            }
+        }
 
-        public Quaternion Rotation { get; set; }
+        public Quaternion Rotation
+        {
+            get
+            {
+                return actionFactory.MoveProperties.Rotation;
+            }
+            set
+            {
+                actionFactory.MoveProperties.Rotation = value;
+            }
+        }
 
         void trackFilter_AddTrackItem(string name)
         {

@@ -10,11 +10,14 @@ namespace Medical.GUI
     class ShowPropSubActionFactory
     {
         Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
+        private MovePropProperties movePropProperties;
 
         public ShowPropSubActionFactory(Widget parentWidget)
         {
+            movePropProperties = new MovePropProperties(parentWidget);
+
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
-            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null);
+            syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new PushPlungerProperties(parentWidget));
             trackInfo.Add("Syringe", syringeData);
         }
@@ -31,6 +34,14 @@ namespace Medical.GUI
         public ShowPropSubAction createSubAction(ShowPropAction showProp, String name)
         {
             return trackInfo[showProp.PropType].createSubAction(name);
+        }
+
+        public MovePropProperties MoveProperties
+        {
+            get
+            {
+                return movePropProperties;
+            }
         }
     }
 

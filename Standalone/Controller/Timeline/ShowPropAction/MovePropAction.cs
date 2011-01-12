@@ -51,5 +51,29 @@ namespace Medical
         {
             get { return finished; }
         }
+
+        public Vector3 Translation
+        {
+            get
+            {
+                return endTranslation;
+            }
+            set
+            {
+                endTranslation = value;
+            }
+        }
+
+        public Quaternion Rotation
+        {
+            get
+            {
+                return endRotation;
+            }
+            set
+            {
+                endRotation = value;
+            }
+        }
     }
 }
