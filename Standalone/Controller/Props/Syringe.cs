@@ -18,7 +18,7 @@ namespace Medical
         [Editable] private String nodeName = PropFactory.NodeName;
         [Editable] private String entityName = PropFactory.EntityName;
         [Editable] private String plungerBoneName = "BonePlunger";
-        [Editable] private float totalPlungeRange = 4.3f;
+        private const float PLUNGE_RANGE = 5.1f;
 
         [DoNotCopy][DoNotSave] private bool doPlunge = false;
         [DoNotCopy][DoNotSave] private float plungeDuration = 1.0f;
@@ -91,7 +91,7 @@ namespace Medical
                     doPlunge = false;
                 }
                 Vector3 newPos = plungerBoneStart;
-                newPos.y -= (totalPlungeRange * boneInterpolate);
+                newPos.y -= (PLUNGE_RANGE * boneInterpolate);
                 plungerBone.setPosition(newPos);
                 plungerBone.needUpdate(true);
             }
