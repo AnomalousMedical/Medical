@@ -83,6 +83,14 @@ namespace Medical
         {
             actions.Remove(action);
         }
+        
+        /// <summary>
+        /// Clear all actions in this sequencer.
+        /// </summary>
+        public void clearActions()
+        {
+            actions.Clear();
+        }
 
         /// <summary>
         /// Sort the actions in the sequencer. This should be called if an
@@ -203,6 +211,14 @@ namespace Medical
             get
             {
                 return currentTime;
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return actions.Count;
             }
         }
 

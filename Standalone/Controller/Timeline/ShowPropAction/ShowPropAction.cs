@@ -86,6 +86,11 @@ namespace Medical
             subAction._setShowProp(null);
         }
 
+        public void clearSubActions()
+        {
+            sequencer.clearActions();
+        }
+
         public IEnumerable<ShowPropSubAction> SubActions
         {
             get
@@ -165,6 +170,14 @@ namespace Medical
             set
             {
                 fadeDuration = value;
+            }
+        }
+
+        public int SubActionCount
+        {
+            get
+            {
+                return sequencer.Count;
             }
         }
 

@@ -104,8 +104,29 @@ namespace Medical.GUI
 
         void propTypes_EventComboChangePosition(Widget source, EventArgs e)
         {
-            showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
-            propTimeline.setPropData(showProp);
+            if (showProp.SubActionCount == 0)
+            {
+                showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
+                propTimeline.setPropData(showProp);
+            }
+            else
+            {
+                MessageBox.show("Warning changing the prop type for a prop that has subactions will erase all subactions on that prop. Do you wish to continue?", "Erase Actions", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, confirmEraseProps);
+            }
+        }
+
+        void confirmEraseProps(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                showProp.clearSubActions();
+                showProp.PropType = propTypes.getItemNameAt(propTypes.SelectedIndex);
+                propTimeline.setPropData(showProp);
+            }
+            else
+            {
+                propTypes.SelectedIndex = propTypes.findItemIndexWith(showProp.PropType);
+            }
         }
 
         void translationEdit_EventEditSelectAccept(Widget source, EventArgs e)
