@@ -16,6 +16,7 @@ namespace Medical.GUI
         private ShowPropSubActionFactory actionFactory;
         private ShowPropAction propData;
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
+        private bool usingTools = false;
 
         public PropTimeline()
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
@@ -24,6 +25,7 @@ namespace Medical.GUI
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = 5.0f;
+            timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
 
             //Properties
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -75,6 +77,21 @@ namespace Medical.GUI
             }
         }
 
+        /// <summary>
+        /// This will be true if the timeline is needing to use the move tool.
+        /// </summary>
+        public bool UsingTools
+        {
+            get
+            {
+                return usingTools;
+            }
+        }
+
+        public Vector3 Translation { get; set; }
+
+        public Quaternion Rotation { get; set; }
+
         void trackFilter_AddTrackItem(string name)
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
@@ -95,6 +112,14 @@ namespace Medical.GUI
             PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
             propData.removeSubAction(propTlData.Action);
             timelineView.removeData(propTlData);
+        }
+
+        void timelineView_ActiveDataChanged(object sender, EventArgs e)
+        {
+            if (timelineView.CurrentData != null)
+            {
+                usingTools = timelineView.CurrentData.Track == "Move";
+            }
         }
     }
 }

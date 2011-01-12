@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="PanelEmpty" position="0 68 211 42" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="1 1 74 15">
+            <Property key="Widget_Caption" value="Translation"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="76 1 132 18" align="HStretch Top" name="TranslationEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="1 21 74 15">
+            <Property key="Widget_Caption" value="Rotation"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="76 21 132 18" name="RotationEdit"/>
+    </Widget>
+</MyGUI>

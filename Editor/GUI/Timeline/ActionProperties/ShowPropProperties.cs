@@ -182,18 +182,45 @@ namespace Medical.GUI
 
         public Vector3 ToolTranslation
         {
-            get { return showProp.Translation; }
+            get
+            {
+                if (propTimeline.UsingTools)
+                {
+                    return propTimeline.Translation;
+                }
+                else
+                {
+                    return showProp.Translation;
+                }
+            }
         }
 
         public void move(Vector3 offset)
         {
-            showProp.Translation += offset;
-            translationEdit.Caption = showProp.Translation.ToString();
+            if (propTimeline.UsingTools)
+            {
+                propTimeline.Translation += offset;
+            }
+            else
+            {
+                showProp.Translation += offset;
+                translationEdit.Caption = showProp.Translation.ToString();
+            }
         }
 
         public Quaternion ToolRotation
         {
-            get { return showProp.Rotation; }
+            get
+            {
+                if (propTimeline.UsingTools)
+                {
+                    return propTimeline.Rotation;
+                }
+                else
+                {
+                    return showProp.Rotation;
+                }
+            }
         }
 
         public bool ShowTools
@@ -203,10 +230,17 @@ namespace Medical.GUI
 
         public void rotate(ref Quaternion newRot)
         {
-            showProp.Rotation = newRot;
-            Vector3 euler = showProp.Rotation.getEuler();
-            euler *= 57.2957795f;
-            rotationEdit.Caption = euler.ToString();
+            if (propTimeline.UsingTools)
+            {
+                propTimeline.Rotation = newRot;
+            }
+            else
+            {
+                showProp.Rotation = newRot;
+                Vector3 euler = showProp.Rotation.getEuler();
+                euler *= 57.2957795f;
+                rotationEdit.Caption = euler.ToString();
+            }
         }
 
         public void alertToolHighlightStatus(bool highlighted)
