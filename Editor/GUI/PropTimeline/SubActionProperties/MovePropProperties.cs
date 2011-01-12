@@ -19,8 +19,10 @@ namespace Medical.GUI
             : base(parent, "Medical.GUI.PropTimeline.SubActionProperties.MovePropProperties.layout")
         {
             translationEdit = mainWidget.findWidget("TranslationEdit") as Edit;
+            translationEdit.EventEditSelectAccept += new MyGUIEvent(translationEdit_EventEditSelectAccept);
 
             rotationEdit = mainWidget.findWidget("RotationEdit") as Edit;
+            rotationEdit.EventEditSelectAccept += new MyGUIEvent(rotationEdit_EventEditSelectAccept);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -64,6 +66,24 @@ namespace Medical.GUI
                 moveProp.Rotation = value;
                 rotationEdit.OnlyText = moveProp.Rotation.ToString();
             }
+        }
+
+        void translationEdit_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            Vector3 trans = new Vector3();
+            trans.setValue(translationEdit.OnlyText);
+            moveProp.Translation = trans;
+            fireUpdatePropPreview();
+        }
+
+        void rotationEdit_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            Vector3 euler = new Vector3();
+            euler.setValue(rotationEdit.OnlyText);
+            euler *= 0.0174532925f;
+            Quaternion rotation = new Quaternion(euler.x, euler.y, euler.z);
+            moveProp.Rotation = rotation;
+            fireUpdatePropPreview();
         }
     }
 }
