@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Logging;
+using SoundPlugin;
 
 namespace Medical
 {
     public class ShowPromptAction : TimelineInstantAction
     {
         private List<PromptQuestion> questions = new List<PromptQuestion>();
+        private String soundFile = null;
+        private Source source;
 
         public ShowPromptAction()
         {
@@ -25,6 +28,11 @@ namespace Medical
                 questionProvider.addQuestion(question);
             }
             questionProvider.showPrompt(answerSelected);
+            if (soundFile != null)
+            {
+                source = TimelineController.playSound(soundFile);
+                source.PlaybackFinished += new SourceFinishedDelegate(source_PlaybackFinished);
+            }
         }
 
         public void addQuestion(PromptQuestion question)
@@ -45,6 +53,18 @@ namespace Medical
             }
         }
 
+        public String SoundFile
+        {
+            get
+            {
+                return soundFile;
+            }
+            set
+            {
+                soundFile = value;
+            }
+        }
+
         private void answerSelected(PromptAnswer answer)
         {
             if (answer.Action != null)
@@ -55,22 +75,34 @@ namespace Medical
             {
                 Log.Warning("Answer {0} does not have an action. Nothing will be done", answer.Text);
             }
+            if (source != null)
+            {
+                source.stop();
+            }
+        }
+
+        void source_PlaybackFinished(Source source)
+        {
+            this.source = null;
         }
 
         #region Saving
 
         private const String QUESTIONS = "Questions";
+        private const String SOUND = "Sound";
 
         protected ShowPromptAction(LoadInfo info)
             :base(info)
         {
             info.RebuildList<PromptQuestion>(QUESTIONS, questions);
+            soundFile = info.GetString(SOUND, null);
         }
 
         public override void getInfo(SaveInfo info)
         {
             base.getInfo(info);
             info.ExtractList<PromptQuestion>(QUESTIONS, questions);
+            info.AddValue(SOUND, soundFile);
         }
 
         #endregion

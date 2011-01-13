@@ -10,6 +10,7 @@ namespace Medical.GUI
     class QuestionEditor : Dialog
     {
         private Edit questionText;
+        private Edit soundFileEdit;
         private ScrollView answerScroll;
         private int lastWidth;
         private TimelineFileBrowserDialog fileBrowser;
@@ -32,6 +33,11 @@ namespace Medical.GUI
 
             Button addAnswerButton = window.findWidget("AddAnswerButton") as Button;
             addAnswerButton.MouseButtonClick += new MyGUIEvent(addAnswerButton_MouseButtonClick);
+
+            Button browseSoundButton = window.findWidget("SoundBrowser") as Button;
+            browseSoundButton.MouseButtonClick += new MyGUIEvent(browseSoundButton_MouseButtonClick);
+
+            soundFileEdit = window.findWidget("SoundFileEdit") as Edit;
 
             answerScroll = window.findWidget("AnswerScroll") as ScrollView;
             questionText = window.findWidget("QuestionText") as Edit;
@@ -60,6 +66,18 @@ namespace Medical.GUI
             set
             {
                 setData(value);
+            }
+        }
+
+        public String SoundFile
+        {
+            get
+            {
+                return soundFileEdit.Caption;
+            }
+            set
+            {
+                soundFileEdit.Caption = value;
             }
         }
 
@@ -218,6 +236,18 @@ namespace Medical.GUI
             {
                 answerScroll.CanvasSize = new Size2(0, 0);
             }
+        }
+
+        void browseSoundButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            fileBrowser.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            fileBrowser.ensureVisible();
+            fileBrowser.promptForFile("*.ogg", fileChosen);
+        }
+
+        private void fileChosen(String filename)
+        {
+            soundFileEdit.Caption = filename;
         }
     }
 }

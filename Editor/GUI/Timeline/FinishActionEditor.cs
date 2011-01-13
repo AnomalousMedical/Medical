@@ -85,6 +85,7 @@ namespace Medical.GUI
                         questionEditor.Question = question;
                         break;
                     }
+                    questionEditor.SoundFile = showPromptAction.SoundFile;
                     actionGroup.SelectedButton = askQuestionButton;
                     break;
                 }
@@ -127,6 +128,7 @@ namespace Medical.GUI
                     PromptQuestion question = questionEditor.Question;
                     showPrompt.addQuestion(question);
                     currentTimeline.addPostAction(showPrompt);
+                    showPrompt.SoundFile = questionEditor.SoundFile;
                     this.close();
                 }
                 else
