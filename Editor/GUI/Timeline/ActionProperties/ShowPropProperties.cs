@@ -24,8 +24,9 @@ namespace Medical.GUI
         private Button rotationButton;
 
         private PropTimeline propTimeline;
+        private Button propTimelineButton;
 
-        public ShowPropProperties(Widget parentWidget)
+        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
         {
             propTypes = mainWidget.findWidget("PropTypeCombo") as ComboBox;
@@ -52,17 +53,13 @@ namespace Medical.GUI
             toolButtonGroup.SelectedButton = translationButton;
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
-            propTimeline = new PropTimeline();
+            this.propTimeline = propTimeline;
             propTimeline.UpdatePropPreview += new EventHandler(propTimeline_UpdatePropPreview);
+            propTimeline.Shown += new EventHandler(propTimeline_Shown);
+            propTimeline.Closed += new EventHandler(propTimeline_Closed);
 
-            Button propTimelineButton = mainWidget.findWidget("PropTimelineButton") as Button;
+            propTimelineButton = mainWidget.findWidget("PropTimelineButton") as Button;
             propTimelineButton.MouseButtonClick += new MyGUIEvent(propTimelineButton_MouseButtonClick);
-        }
-
-        public override void Dispose()
-        {
-            propTimeline.Dispose();
-            base.Dispose();
         }
 
         public override void setCurrentData(TimelineData data)
@@ -171,7 +168,7 @@ namespace Medical.GUI
 
         void propTimelineButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            propTimeline.Visible = true;
+            propTimeline.Visible = !propTimeline.Visible;
         }
 
         void actionData_DurationChanged(float duration)
@@ -189,6 +186,16 @@ namespace Medical.GUI
             {
                 showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
             }
+        }
+
+        void propTimeline_Closed(object sender, EventArgs e)
+        {
+            propTimelineButton.StateCheck = false;
+        }
+
+        void propTimeline_Shown(object sender, EventArgs e)
+        {
+            propTimelineButton.StateCheck = true;
         }
 
         #region MovableObject Members

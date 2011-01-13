@@ -54,7 +54,7 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController)
+        public TimelineProperties(TimelineController timelineController, EditorGUIPlugin editorGUI)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelineController = timelineController;
@@ -147,7 +147,7 @@ namespace Medical.GUI
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 
             //Add tracks to timeline.
-            actionFactory = new TimelineActionFactory(propertiesScrollView);
+            actionFactory = new TimelineActionFactory(propertiesScrollView, editorGUI);
             foreach (TimelineActionFactoryData actionProp in actionFactory.ActionProperties)
             {
                 timelineView.addTrack(actionProp.TypeName, actionProp.Color);

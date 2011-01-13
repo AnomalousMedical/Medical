@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class PropTimeline : Dialog
+    public class PropTimeline : Dialog
     {
         public event EventHandler UpdatePropPreview
         {

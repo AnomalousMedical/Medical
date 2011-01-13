@@ -12,6 +12,7 @@ namespace Medical
     {
         private StandaloneController standaloneController;
 
+        private PropTimeline propTimeline;
         private TimelineProperties timelineProperties;
         private AdvancedLayerControl advancedLayerControl;
         private MovementSequenceEditor movementSequenceEditor;
@@ -26,6 +27,7 @@ namespace Medical
             movementSequenceEditor.Dispose();
             advancedLayerControl.Dispose();
             timelineProperties.Dispose();
+            propTimeline.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -35,7 +37,10 @@ namespace Medical
 
         public void createDialogs(DialogManager dialogManager)
         {
-            timelineProperties = new TimelineProperties(standaloneController.TimelineController);
+            propTimeline = new PropTimeline();
+            dialogManager.addManagedDialog(propTimeline);
+
+            timelineProperties = new TimelineProperties(standaloneController.TimelineController, this);
             dialogManager.addManagedDialog(timelineProperties);
 
             advancedLayerControl = new AdvancedLayerControl();
@@ -70,6 +75,14 @@ namespace Medical
         public void createMenuBar(wx.MenuBar menu)
         {
 
+        }
+
+        public PropTimeline PropTimeline
+        {
+            get
+            {
+                return propTimeline;
+            }
         }
     }
 }
