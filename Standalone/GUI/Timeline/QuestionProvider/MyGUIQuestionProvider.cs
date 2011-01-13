@@ -57,7 +57,7 @@ namespace Medical.GUI
             widget.Visible = true;
             InputManager.Instance.addWidgetModal(widget);
             layoutContainer.changeDesiredSize(questionScroll.CanvasSize);
-            guiManager.changeBottomPanel(layoutContainer);
+            guiManager.changeLeftPanel(layoutContainer);
         }
 
         public void clear()
@@ -82,7 +82,7 @@ namespace Medical.GUI
             answerSelectedCallback(answer);
             InputManager.Instance.removeWidgetModal(widget);
             widget.Visible = false;
-            guiManager.changeBottomPanel(null);
+            guiManager.changeLeftPanel(null);
             answerSelectedCallback = null;
         }
     }
