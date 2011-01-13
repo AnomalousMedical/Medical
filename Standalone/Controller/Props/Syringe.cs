@@ -29,6 +29,8 @@ namespace Medical
         private Bone plungerBone;
         [DoNotCopy][DoNotSave] private Vector3 plungerBoneStart;
         [DoNotCopy][DoNotSave] private float timeCounter = 0.0f;
+        [DoNotCopy][DoNotSave] private float currentBonePercent = 0.0f;
+        [DoNotCopy][DoNotSave] private float startingBonePercent = 0.0f;
 
         public static void createPropDefinition(PropFactory propFactory)
         {
@@ -91,8 +93,16 @@ namespace Medical
                     boneInterpolate = plungeRangePercent;
                     doPlunge = false;
                 }
+
+                currentBonePercent = startingBonePercent + boneInterpolate;
+                if (currentBonePercent > 1.0f)
+                {
+                    currentBonePercent = 1.0f;
+                    doPlunge = false;
+                }
+
                 Vector3 newPos = plungerBoneStart;
-                newPos.y -= (PLUNGE_RANGE * boneInterpolate);
+                newPos.y -= (PLUNGE_RANGE * currentBonePercent);
                 plungerBone.setPosition(newPos);
                 plungerBone.needUpdate(true);
             }
@@ -100,6 +110,7 @@ namespace Medical
 
         public void plunge(float percent, float duration)
         {
+            startingBonePercent = currentBonePercent;
             plungeRangePercent = percent;
             plungeDuration = duration;
             doPlunge = true;
