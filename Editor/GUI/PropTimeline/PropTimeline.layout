@@ -7,10 +7,6 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="143 1 45 20" align="Left Top" name="PlayButton">
-                <Property key="Widget_Caption" value="Play"/>
-                <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
-            </Widget>
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 39" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
@@ -22,7 +18,7 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="42 0 40 23" name="EditButton">
+            <Widget type="Button" skin="Button" position="2 0 40 23" name="EditButton">
                 <Property key="Widget_Caption" value="Edit"/>
             </Widget>
         </Widget>
