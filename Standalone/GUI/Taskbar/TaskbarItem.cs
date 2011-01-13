@@ -45,6 +45,14 @@ namespace Medical.GUI
             taskbarButton.StaticImage.setItemResource(IconName);
             taskbarButton.MouseButtonClick += clicked;
             taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
+            taskbarButton.NeedToolTip = true;
+            taskbarButton.EventToolTip += new MyGUIEvent(taskbarButton_EventToolTip);
+        }
+
+        void taskbarButton_EventToolTip(Widget source, EventArgs e)
+        {
+            ToolTipEventArgs te = (ToolTipEventArgs)e;
+            TooltipManager.Instance.processTooltip(source, Name, te);
         }
 
         internal void setCoord(int x, int y, int width, int height)
