@@ -22,6 +22,9 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
+            <Widget type="Button" skin="Button" position="42 0 40 23" name="EditButton">
+                <Property key="Widget_Caption" value="Edit"/>
+            </Widget>
         </Widget>
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 71" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>

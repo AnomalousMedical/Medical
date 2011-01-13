@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -80,5 +81,26 @@ namespace Medical
                 endRotation = value;
             }
         }
+
+        #region Saveable Members
+
+        private const String END_TRANSLATION = "endTranslation";
+        private const String END_ROTATION = "endRotation";
+
+        protected MovePropAction(LoadInfo info)
+            :base (info)
+        {
+            endTranslation = info.GetVector3(END_TRANSLATION, endTranslation);
+            endRotation = info.GetQuaternion(END_ROTATION, endRotation);
+        }
+
+        public override void getInfo(SaveInfo info)
+        {
+            base.getInfo(info);
+            info.AddValue(END_TRANSLATION, endTranslation);
+            info.AddValue(END_ROTATION, endRotation);
+        }
+
+        #endregion
     }
 }

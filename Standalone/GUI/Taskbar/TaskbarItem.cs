@@ -51,8 +51,7 @@ namespace Medical.GUI
 
         void taskbarButton_EventToolTip(Widget source, EventArgs e)
         {
-            ToolTipEventArgs te = (ToolTipEventArgs)e;
-            TooltipManager.Instance.processTooltip(source, Name, te);
+            TooltipManager.Instance.processTooltip(source, Name, (ToolTipEventArgs)e);
         }
 
         internal void setCoord(int x, int y, int width, int height)

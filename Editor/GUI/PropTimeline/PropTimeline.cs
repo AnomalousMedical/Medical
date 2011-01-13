@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Saving;
 
 namespace Medical.GUI
 {
@@ -30,6 +31,11 @@ namespace Medical.GUI
         private Dictionary<ShowPropSubAction, PropTimelineData> actionDataBindings = new Dictionary<ShowPropSubAction, PropTimelineData>();
         private bool usingTools = false;
 
+        private ShowMenuButton editMenuButton;
+        private PopupMenu editMenu;
+        private ShowPropSubAction copySourceAction;
+        private CopySaver copySaver = new CopySaver();
+
         public PropTimeline()
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
         {
@@ -49,6 +55,16 @@ namespace Medical.GUI
             ScrollView timelineFilterScrollView = window.findWidget("ActionFilter") as ScrollView;
             trackFilter = new TrackFilter(timelineFilterScrollView, timelineView);
             trackFilter.AddTrackItem += new AddTrackItemCallback(trackFilter_AddTrackItem);
+
+            //Edit button
+            Button editButton = window.findWidget("EditButton") as Button;
+            editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+            editMenu.Visible = false;
+            MenuItem copy = editMenu.addItem("Copy");
+            copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
+            MenuItem paste = editMenu.addItem("Paste");
+            paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
+            editMenuButton = new ShowMenuButton(editButton, editMenu);
 
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
@@ -159,5 +175,31 @@ namespace Medical.GUI
                 }
             }
         }
+
+        #region Edit Menu
+
+        void paste_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (copySourceAction != null)
+            {
+                ShowPropSubAction copiedAction = copySaver.copy<ShowPropSubAction>(copySourceAction);
+                copiedAction.StartTime = timelineView.MarkerTime;
+                propData.addSubAction(copiedAction);
+                addSubActionData(copiedAction);
+                timelineView.CurrentData = actionDataBindings[copiedAction];
+            }
+            editMenu.setVisibleSmooth(false);
+        }
+
+        void copy_MouseButtonClick(Widget source, EventArgs e)
+        {
+            PropTimelineData currentData = (PropTimelineData)timelineView.CurrentData;
+            if (currentData != null)
+            {
+                copySourceAction = copySaver.copy<ShowPropSubAction>(currentData.Action);
+            }
+        }
+
+        #endregion Edit Menu
     }
 }
