@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -161,6 +161,7 @@
     <Compile Include="Teeth\Tooth.cs" />
     <Compile Include="Teeth\Dynamic\ToothEditRenderer.cs" />
     <Compile Include="Teeth\Dynamic\ToothSection.cs" />
+    <Compile Include="Teeth\ToothSelectable.cs" />
     <Compile Include="Teeth\ToothState.cs" />
     <Compile Include="Teeth\Static\TopTooth.cs" />
     <Compile Include="Teeth\Unified\UnifiedBottomTooth.cs" />
@@ -173,6 +174,11 @@
     <Compile Include="Tools\Movement\MoveTool.cs" />
     <Compile Include="Tools\Rotation\RotateTool.cs" />
     <Compile Include="Tools\Rotation\RotationAxis.cs" />
+    <Compile Include="Tools\Selection\SelectableObject.cs" />
+    <Compile Include="Tools\Selection\SelectedObjectCollection.cs" />
+    <Compile Include="Tools\Selection\SelectionChangedArgs.cs" />
+    <Compile Include="Tools\Selection\SelectionController.cs" />
+    <Compile Include="Tools\Selection\SelectionMovableObject.cs" />
     <Compile Include="Tools\SimObjectMover.cs" />
     <Compile Include="Tools\ToolEvents.cs" />
     <Compile Include="Transparency\TransparencyBlock.cs" />
