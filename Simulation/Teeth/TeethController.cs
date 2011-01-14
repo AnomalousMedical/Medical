@@ -10,15 +10,15 @@ namespace Medical
     {
         static Dictionary<String, Tooth> teeth = new Dictionary<string, Tooth>();
         static SimObjectMover teethMover;
-        static SelectionController selectionController;
-        static SelectionMovableObject selectionMovable;
-        static Dictionary<Tooth, ToothSelectable> teethSelectables = new Dictionary<Tooth,ToothSelectable>();
+        //static SelectionController selectionController;
+        //static SelectionMovableObject selectionMovable;
+        //static Dictionary<Tooth, ToothSelectable> teethSelectables = new Dictionary<Tooth,ToothSelectable>();
 
         static TeethController()
         {
             HighlightContacts = false;
-            selectionController = new SelectionController();
-            selectionMovable = new SelectionMovableObject(selectionController);
+            //selectionController = new SelectionController();
+            //selectionMovable = new SelectionMovableObject(selectionController);
         }
 
         public static void addTooth(String name, Tooth tooth)
@@ -27,7 +27,7 @@ namespace Medical
             if (teethMover != null)
             {
                 teethMover.addMovableObject(name, tooth);
-                teethSelectables.Add(tooth, new ToothSelectable(tooth));
+                //teethSelectables.Add(tooth, new ToothSelectable(tooth));
             }
         }
 
@@ -37,8 +37,8 @@ namespace Medical
             {
                 Tooth tooth = teeth[name];
                 teethMover.removeMovableObject(tooth);
-                selectionController.removeSelectedObject(teethSelectables[tooth]);
-                teethSelectables.Remove(tooth);
+                //selectionController.removeSelectedObject(teethSelectables[tooth]);
+                //teethSelectables.Remove(tooth);
             }
             teeth.Remove(name);
         }
@@ -216,15 +216,15 @@ namespace Medical
             }
             set
             {
-                if (teethMover != null)
-                {
-                    teethMover.removeMovableObject(selectionMovable);
-                }
+                //if (teethMover != null)
+                //{
+                //    teethMover.removeMovableObject(selectionMovable);
+                //}
                 teethMover = value;
-                if (teethMover != null)
-                {
-                    teethMover.addMovableObject("_SelectionMovable", selectionMovable);
-                }
+                //if (teethMover != null)
+                //{
+                //    teethMover.addMovableObject("_SelectionMovable", selectionMovable);
+                //}
             }
         }
 
