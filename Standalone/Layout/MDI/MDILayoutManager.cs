@@ -126,7 +126,10 @@ namespace Medical.Controller
         /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
         public void injectMouseDown(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
         {
-            
+            if (!mouseAlreadyHandled && (mouseButton == MouseButtonCode.MB_BUTTON0 || mouseButton == MouseButtonCode.MB_BUTTON1))
+            {
+                ActiveWindow = findWindow(absMouse);
+            }
         }
 
         /// <summary>
@@ -137,19 +140,7 @@ namespace Medical.Controller
         /// <param name="mouseAlreadyHandled">True if some other subsystem already did some mouse input.</param>
         public void injectMouseUp(Vector3 absMouse, MouseButtonCode mouseButton, bool mouseAlreadyHandled)
         {
-            if (!mouseAlreadyHandled && mouseButton == MouseButtonCode.MB_BUTTON0)
-            {
-                foreach (MDIWindow window in windows)
-                {
-                    Vector2 topLeft = window.Location;
-                    Vector2 bottomRight = new Vector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
-                    if (topLeft.x < absMouse.x && topLeft.y < absMouse.y && bottomRight.x > absMouse.x && bottomRight.y > absMouse.y)
-                    {
-                        ActiveWindow = window;
-                        break;
-                    }
-                }
-            }
+            
         }
 
         /// <summary>
@@ -249,6 +240,13 @@ namespace Medical.Controller
             }
         }
 
+        /// <summary>
+        /// True if the ActiveWindow can change, false to block changes. False
+        /// will lock the active window and it will not be able to be changed by
+        /// the user or code.
+        /// </summary>
+        public bool AllowActiveWindowChanges { get; set; }
+
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
         private WindowAlignment finalWindowAlignment = WindowAlignment.Right;
@@ -317,13 +315,6 @@ namespace Medical.Controller
         }
 
         /// <summary>
-        /// True if the ActiveWindow can change, false to block changes. False
-        /// will lock the active window and it will not be able to be changed by
-        /// the user or code.
-        /// </summary>
-        public bool AllowActiveWindowChanges { get; set; }
-
-        /// <summary>
         /// Helper function to intialize windows that are added to the MDILayoutManager.
         /// </summary>
         /// <param name="window">The window to initialize.</param>
@@ -335,6 +326,25 @@ namespace Medical.Controller
             }
             window._setMDILayoutManager(this);
             windows.Add(window);
+        }
+
+        /// <summary>
+        /// Helper function to find a window at the given location.
+        /// </summary>
+        /// <param name="absMouse"></param>
+        /// <returns></returns>
+        private MDIWindow findWindow(Vector3 absMouse)
+        {
+            foreach (MDIWindow window in windows)
+            {
+                Vector2 topLeft = window.Location;
+                Vector2 bottomRight = new Vector2(window.WorkingSize.Width + topLeft.x, window.WorkingSize.Height + topLeft.y);
+                if (topLeft.x < absMouse.x && topLeft.y < absMouse.y && bottomRight.x > absMouse.x && bottomRight.y > absMouse.y)
+                {
+                    return window;
+                }
+            }
+            return null;
         }
     }
 }
