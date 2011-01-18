@@ -1,0 +1,108 @@
+<project name="Mono Recursive Link" default="recursivelink" basedir=".">
+  <description>Modify the mono dependencies for a program to load out of an app bundle. Replace HelloWorld with the name of the app.</description>
+
+
+  <target name="recursivelink">
+    <property name="curfile" value="${arg.programName}.app/Contents/Resources/${arg.programName}"/>
+    <property name="required_lib_prefix" value="/"/>
+    <property name="lib_target" value="${arg.programName}.app/Contents/Frameworks/"/>
+    <property name="lib_rewrite_target" value="@executable_path/../Frameworks/"/>
+    <mkdir dir="${arg.programName}.app/Contents/Frameworks"/>
+    <script language="C#">
+      <code>
+        <![CDATA[
+		 public static string GetOtoolOutput(string lib){
+		 System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo("/usr/bin/otool", "-L "+lib);
+		 psi.RedirectStandardOutput = true;
+		 psi.UseShellExecute = false;
+		 System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
+		 string tool_output = p.StandardOutput.ReadToEnd();
+		 p.WaitForExit();
+		 return tool_output;
+		 }
+		 public static void changeLibID(string newid,string target){
+		 System.Diagnostics.ProcessStartInfo psi = 
+		 new System.Diagnostics.ProcessStartInfo("/usr/bin/install_name_tool", "-id "+newid+" "+target);
+		 psi.UseShellExecute = false;
+		 System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
+		 p.WaitForExit();
+		 }
+		 public static void changeLibRef(string oldlib,string newlib,string target){
+		 System.Diagnostics.ProcessStartInfo psi = 
+		 new System.Diagnostics.ProcessStartInfo("/usr/bin/install_name_tool", "-change "+oldlib+" "+newlib+" "+target);
+		 psi.UseShellExecute = false;
+		 System.Diagnostics.Process p = System.Diagnostics.Process.Start(psi);
+		 p.WaitForExit();
+		 }
+		 public static void IterateLibs(string file,Project project){
+		 System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"(?<path>\/[^\(\:]+)\(");
+		 System.Text.RegularExpressions.MatchCollection matches = reg.Matches(GetOtoolOutput(file));
+		 libs[file] = new Hashtable();
+		 foreach(System.Text.RegularExpressions.Match match in matches){
+		 string path = match.Groups["path"].Value;
+		 path = path.Trim();
+		 if(path.StartsWith(required_lib_prefix) && !excluded_libs.ContainsKey(Path.GetFileName(path))){
+		 ((Hashtable)libs[file])[path] = true;
+		 if(!libs.ContainsKey(path))
+		 IterateLibs(path,project);
+		 }
+		 }
+		 }
+		 public static Hashtable libs;
+		 public static Hashtable excluded_libs;
+		 public static string required_lib_prefix;
+		 public static string lib_target;
+		 public static string lib_rewrite_target;
+		 public static void ScriptMain(Project project) {
+		 
+		 libs = new Hashtable();
+		 excluded_libs = new Hashtable();
+		 
+		 excluded_libs["CoreFoundation"] = true;
+		 excluded_libs["libgcc_s.1.dylib"] = true;
+		 excluded_libs["libSystem.B.dylib"] = true;
+		 //excluded_libs["libiconv.2.dylib"] = true;
+		 
+		 string startfile = project.Properties["curfile"];
+		 required_lib_prefix = project.Properties["required_lib_prefix"];
+		 lib_target = project.Properties["lib_target"];
+		 lib_rewrite_target = project.Properties["lib_rewrite_target"];
+		 IterateLibs(startfile,project);
+		 
+		 
+		 foreach(string s in libs.Keys){
+		 string newpath;
+		 if(s==startfile)
+		 newpath = s;
+		 else {
+		 string fname = Path.GetFileName(s);
+		 newpath = lib_target+fname;
+		 if(!File.Exists(newpath)){
+		 project.Log(Level.Info,"Copying "+s+" to "+newpath);
+		 File.Copy(s,newpath,true);
+		 changeLibID(lib_rewrite_target+fname,newpath);
+		 }
+		 }
+		 }
+		 foreach(string s in libs.Keys){
+		 string newpath;
+		 if(s==startfile)
+		 newpath = s;
+		 else 
+		 newpath = lib_target+Path.GetFileName(s);
+		 Hashtable thash = (Hashtable) libs[s];
+		 foreach(string t in thash.Keys){
+		 changeLibRef(t,lib_rewrite_target+Path.GetFileName(t),newpath);
+		 }
+		 }
+		 
+		 
+		 
+		 //project.Log(Level.Info,GetOtoolOutput(project.Properties["curfile"]));
+		 // Start the child process.
+		 }
+		 ]]>
+      </code>
+    </script>
+  </target>
+</project>
