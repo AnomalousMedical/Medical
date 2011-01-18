@@ -20,7 +20,7 @@ namespace Medical
             }
             else
             {
-                throw new Exception("Can only create PCPlatformPlugin one time.");
+                throw new Exception("Can only create WXPlatformPlugin one time.");
             }
         }
 
@@ -43,7 +43,7 @@ namespace Medical
             }
             else
             {
-                Log.Error("Attempted to delete a SystemTimer that was not a PCSystemTimer in PCPlatformPlugin. Are you mixing platform plugins?");
+                Log.Error("Attempted to delete a SystemTimer that was not a PCSystemTimer in WXPlatformPlugin. Are you mixing platform plugins?");
             }
         }
 
@@ -61,7 +61,7 @@ namespace Medical
             }
             else
             {
-                Log.Error("Attempted to delete a InputHandler that was not a PCInputHandler in PCPlatformPlugin. Are you mixing platform plugins?");
+                Log.Error("Attempted to delete a InputHandler that was not a PCInputHandler in WXPlatformPlugin. Are you mixing platform plugins?");
             }
         }
 
@@ -77,7 +77,7 @@ namespace Medical
 
         public string getName()
         {
-            return "PCPlatform";
+            return "WXPlatform";
         }
 
         public DebugInterface getDebugInterface()
