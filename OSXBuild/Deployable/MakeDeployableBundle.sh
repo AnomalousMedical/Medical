@@ -39,6 +39,7 @@ mkdir "$APP_BUNDLE_NAME"
 cp -r "$BUNDLE_SOURCE_DIR/Contents" "$APP_BUNDLE_NAME"
 cp "$BUILD_DIR/$APP_NAME" "$APP_BUNDLE_NAME/Contents/Resources"
 chmod 755 "$APP_BUNDLE_NAME/Contents/MacOS/PiperJBO"
+rm -rf `find $APP_BUNDLE_NAME -type d -name .svn`
 
 #Fix library paths with nant script
 sudo nant -buildfile:fixmonopaths.build -D:arg.programName="$APP_NAME"
