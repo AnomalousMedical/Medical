@@ -31,6 +31,10 @@ if [ "$COCOASHARP_MODE" -eq "1" ]; then
 	export DYLD_LIBRARY_PATH=$PWD/$APP_PATH/Contents/Resources:$DYLD_LIBRARY_PATH
 fi
 
+#Setup the mono directories
+export MONO_CFG_DIR=.
+export MONO_PATH=../Frameworks/Mono/lib
+
 cd "$APP_PATH/Contents/Resources"
 
 "./$APP_NAME"

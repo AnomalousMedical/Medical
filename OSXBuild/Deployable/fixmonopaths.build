@@ -5,9 +5,9 @@
   <target name="recursivelink">
     <property name="curfile" value="${arg.programName}.app/Contents/Resources/${arg.programName}"/>
     <property name="required_lib_prefix" value="/"/>
-    <property name="lib_target" value="${arg.programName}.app/Contents/Frameworks/"/>
-    <property name="lib_rewrite_target" value="@executable_path/../Frameworks/"/>
-    <mkdir dir="${arg.programName}.app/Contents/Frameworks"/>
+    <property name="lib_target" value="${arg.programName}.app/Contents/Frameworks/Mono/lib/"/>
+    <property name="lib_rewrite_target" value="@executable_path/../Frameworks/Mono/lib/"/>
+    <mkdir dir="${arg.programName}.app/Contents/Frameworks/Mono/lib"/>
     <script language="C#">
       <code>
         <![CDATA[

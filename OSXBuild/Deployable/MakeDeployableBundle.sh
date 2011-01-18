@@ -30,7 +30,7 @@ PATH=$PATH:"/Library/Frameworks/Mono.framework/Versions/Current/bin"
 #Link with mkbundle
 mkdir "$BUILD_DIR"
 cd "$BUILD_DIR"
-mkbundle "$MAIN_EXE" --deps -c -o "$APP_NAME.c" --keeptemp
+mkbundle "$MAIN_EXE" -L "." -c -o "$APP_NAME.c" --keeptemp
 cc -arch i386 -g -o "$APP_NAME" -Wall "$APP_NAME.c" `pkg-config --cflags --libs mono-2` temp.o -framework CoreFoundation
 cd "$START_PATH"
 
@@ -43,6 +43,9 @@ rm -rf `find $APP_BUNDLE_NAME -type d -name .svn`
 
 #Fix library paths with nant script
 sudo nant -buildfile:fixmonopaths.build -D:arg.programName="$APP_NAME"
+
+#Copy mono files as needed
+sudo cp "/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/2.0/mscorlib.dll" "$APP_BUNDLE_NAME/Contents/Frameworks/Mono/lib"
 
 #Finish up
 cd "$START_PATH"
