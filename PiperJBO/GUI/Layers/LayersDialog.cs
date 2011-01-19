@@ -31,45 +31,45 @@ namespace Medical.GUI
             layerController.LayerStateApplied += new LayerControllerEvent(layerStateChanged);
 
             skinMenu = new LayerGUIMenu(window.findWidget("Layers/Skin") as Button, window.findWidget("Layers/SkinMenu") as Button);
-            skinMenu.createShortcuts(KeyboardButtonCode.KC_F1);
+            skinMenu.createShortcuts(KeyboardButtonCode.KC_1);
             skinMenu.TransparencyChanged += changeSkinTransparency;
 
             nervesMenu = new LayerGUIMenu(window.findWidget("Layers/Nerves") as Button, window.findWidget("Layers/NervesMenu") as Button);
-            nervesMenu.createShortcuts(KeyboardButtonCode.KC_F2);
+            nervesMenu.createShortcuts(KeyboardButtonCode.KC_2);
             nervesMenu.TransparencyChanged += changeNerveTransparency;
 
             musclesMenu = new LayerGUIMenu(window.findWidget("Layers/Muscles") as Button, window.findWidget("Layers/MusclesMenu") as Button);
-            musclesMenu.createShortcuts(KeyboardButtonCode.KC_F3);
+            musclesMenu.createShortcuts(KeyboardButtonCode.KC_3);
             musclesMenu.TransparencyChanged += changeMuscleTransparency;
 
             skullMenu = new LayerGUISkullMenu(window.findWidget("Layers/Skull") as Button, window.findWidget("Layers/SkullMenu") as Button);
-            skullMenu.createShortcuts(KeyboardButtonCode.KC_F4);
-            skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_F5);
+            skullMenu.createShortcuts(KeyboardButtonCode.KC_4);
+            skullMenu.createEminanceShortcut(KeyboardButtonCode.KC_5);
             skullMenu.TransparencyChanged += changeSkullTransparency;
             skullMenu.ToggleEminance += toggleShowEminance;
 
             mandibleMenu = new LayerGUIMenu(window.findWidget("Layers/Mandible") as Button, window.findWidget("Layers/MandibleMenu") as Button);
-            mandibleMenu.createShortcuts(KeyboardButtonCode.KC_F6);
+            mandibleMenu.createShortcuts(KeyboardButtonCode.KC_6);
             mandibleMenu.TransparencyChanged += changeMandibleTransparency;
 
             discsMenu = new LayerGUIMenu(window.findWidget("Layers/Discs") as Button, window.findWidget("Layers/DiscsMenu") as Button);
-            discsMenu.createShortcuts(KeyboardButtonCode.KC_F7);
+            discsMenu.createShortcuts(KeyboardButtonCode.KC_7);
             discsMenu.TransparencyChanged += changeDiscTransparency;
 
             spineMenu = new LayerGUIMenu(window.findWidget("Layers/Spine") as Button, window.findWidget("Layers/SpineMenu") as Button);
-            spineMenu.createShortcuts(KeyboardButtonCode.KC_F8);
+            spineMenu.createShortcuts(KeyboardButtonCode.KC_8);
             spineMenu.TransparencyChanged += changeSpineTransparency;
 
             hyoidMenu = new LayerGUIMenu(window.findWidget("Layers/Hyoid") as Button, window.findWidget("Layers/HyoidMenu") as Button);
-            hyoidMenu.createShortcuts(KeyboardButtonCode.KC_F9);
+            hyoidMenu.createShortcuts(KeyboardButtonCode.KC_9);
             hyoidMenu.TransparencyChanged += changeHyoidTransparency;
 
             topTeethMenu = new LayerGUIMenu(window.findWidget("Layers/MaxillaryTeeth") as Button, window.findWidget("Layers/MaxillaryTeethMenu") as Button);
-            topTeethMenu.createShortcuts(KeyboardButtonCode.KC_F10);
+            topTeethMenu.createShortcuts(KeyboardButtonCode.KC_0);
             topTeethMenu.TransparencyChanged += changeTopToothTransparency;
 
             bottomTeethMenu = new LayerGUIMenu(window.findWidget("Layers/MandibularTeeth") as Button, window.findWidget("Layers/MandibularTeethMenu") as Button);
-            bottomTeethMenu.createShortcuts(KeyboardButtonCode.KC_F10);
+            bottomTeethMenu.createShortcuts(KeyboardButtonCode.KC_0);
             bottomTeethMenu.TransparencyChanged += changeBottomToothTransparency;
 
             TransparencyController.ActiveTransparencyStateChanged += new EventHandler(TransparencyController_ActiveTransparencyStateChanged);
