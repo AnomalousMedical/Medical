@@ -22,7 +22,7 @@ DEPENDENCIES_HOME="$DEVELOPMENT_HOME/Dependencies"
 DOT_NET_EXECUTABLES="$MEDICAL_HOME/OSXBuild/DotNetAssemblies"
 MAIN_EXE="$DOT_NET_EXECUTABLES/$APP_NAME.exe"
 
-#Make sure the temp directories are empty by removing them
+#Remove the old bundle
 sudo rm -r "$APP_BUNDLE_NAME"
 
 #Create the app bundle
