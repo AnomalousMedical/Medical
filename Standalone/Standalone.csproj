@@ -147,7 +147,6 @@
     <Compile Include="Controller\MovementSequence\MovementSequenceInfo.cs" />
     <Compile Include="Controller\MovementSequence\MovementSequenceSet.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
-    <Compile Include="Controller\NavigationControl\NavigationLink.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenus.cs" />
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />

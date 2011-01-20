@@ -10,7 +10,6 @@ namespace Medical
     public class NavigationState
     {
         private String name;
-        private List<NavigationLink> adjacentStates = new List<NavigationLink>();
         private Vector3 lookAt;
         private Vector3 translation;
         private bool hidden;
@@ -28,52 +27,6 @@ namespace Medical
             :this(name, lookAt, translation, hidden)
         {
             this.shortcutKey = shortcutKey;
-        }
-
-        public void addAdjacentState(NavigationState adjacent, NavigationButtons button, float radius, Vector3 radiusStartOffset)
-        {
-            if (adjacent != null)
-            {
-                bool allowAdd = true;
-                foreach (NavigationLink link in adjacentStates)
-                {
-                    if (link.Destination == adjacent)
-                    {
-                        allowAdd = false;
-                        break;
-                    }
-                }
-                if (allowAdd)
-                {
-                    adjacentStates.Add(new NavigationLink(adjacent, button, radius, radiusStartOffset));
-                }
-            }
-        }
-
-        public void addTwoWayAdjacentState(NavigationState adjacent, NavigationButtons button, float radius, Vector3 radiusStartOffset)
-        {
-            if (adjacent != null)
-            {
-                addAdjacentState(adjacent, button, radius, radiusStartOffset);
-                adjacent.addAdjacentState(this, NavigationLink.GetOppositeButton(button), radius, Vector3.Zero);
-            }
-        }
-
-        public void removeAdjacentState(NavigationState adjacent)
-        {
-            NavigationLink matchingLink = null;
-            foreach (NavigationLink link in adjacentStates)
-            {
-                if (link.Destination == adjacent)
-                {
-                    matchingLink = link;
-                    break;
-                }
-            }
-            if (matchingLink != null)
-            {
-                adjacentStates.Remove(matchingLink);
-            }
         }
 
         public Vector3 LookAt
@@ -133,14 +86,6 @@ namespace Medical
             set
             {
                 shortcutKey = value;
-            }
-        }
-
-        public IEnumerable<NavigationLink> AdjacentStates
-        {
-            get
-            {
-                return adjacentStates;
             }
         }
     }

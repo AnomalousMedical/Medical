@@ -32,11 +32,6 @@ namespace Medical
         public void removeState(NavigationState state)
         {
             navigationStates.Remove(state.Name);
-            //break all links
-            foreach (NavigationState breakLinkState in navigationStates.Values)
-            {
-                breakLinkState.removeAdjacentState(state);
-            }
         }
 
         public void renameState(NavigationState state, String newName)
@@ -57,15 +52,6 @@ namespace Medical
             foreach (NavigationState sourceState in toMerge.States)
             {
                 addState(new NavigationState(sourceState.Name, sourceState.LookAt, sourceState.Translation, sourceState.Hidden));
-            }
-            //Copy all links
-            foreach (NavigationState sourceState in toMerge.States)
-            {
-                NavigationState copiedState = getState(sourceState.Name);
-                foreach (NavigationLink link in copiedState.AdjacentStates)
-                {
-                    copiedState.addAdjacentState(getState(link.Destination.Name), link.Button, link.VisualRadius, link.RadiusStartOffset);
-                }
             }
         }
 

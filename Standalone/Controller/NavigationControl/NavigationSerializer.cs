@@ -50,19 +50,6 @@ namespace Medical
                 xmlWriter.WriteEndElement();
             }
 
-            foreach (NavigationState state in set.States)
-            {
-                foreach (NavigationLink link in state.AdjacentStates)
-                {
-                    xmlWriter.WriteStartElement(LINK);
-                    xmlWriter.WriteElementString(SOURCE, state.Name);
-                    xmlWriter.WriteElementString(DESTINATION, link.Destination.Name);
-                    xmlWriter.WriteElementString(BUTTON, link.Button.ToString());
-                    xmlWriter.WriteElementString(VISUAL_RADIUS, link.VisualRadius.ToString());
-                    xmlWriter.WriteElementString(RADIUS_START_OFFSET, link.RadiusStartOffset.ToString());
-                    xmlWriter.WriteEndElement();
-                }
-            }
             xmlWriter.WriteStartElement(NAVIGATION_MENU);
             foreach (NavigationMenuEntry entry in set.Menus.ParentEntries)
             {
@@ -120,10 +107,6 @@ namespace Medical
                     {
                         readNavigationState(set, xmlReader);
                     }
-                    else if (xmlReader.Name == LINK)
-                    {
-                        readNavigationLink(set, xmlReader);
-                    }
                     else if (xmlReader.Name == NAVIGATION_MENU)
                     {
                         readNavigationMenu(set, xmlReader);
@@ -170,47 +153,6 @@ namespace Medical
             {
                 NavigationState navState = new NavigationState(name, lookAt, position, hidden, shortcutKey);
                 set.addState(navState);
-            }
-        }
-
-        private static void readNavigationLink(NavigationStateSet set, XmlReader xmlReader)
-        {
-            String source = "";
-            String destination = "";
-            NavigationButtons button = NavigationButtons.Up;
-            float radius = 10.0f;
-            Vector3 radiusStartOffset = Vector3.Zero;
-            while (!isEndElement(xmlReader, LINK) && xmlReader.Read())
-            {
-                if (isValidElement(xmlReader))
-                {
-                    if (xmlReader.Name == DESTINATION)
-                    {
-                        destination = xmlReader.ReadElementContentAsString();
-                    }
-                    else if (xmlReader.Name == SOURCE)
-                    {
-                        source = xmlReader.ReadElementContentAsString();
-                    }
-                    else if (xmlReader.Name == BUTTON)
-                    {
-                        button = (NavigationButtons)Enum.Parse(typeof(NavigationButtons), xmlReader.ReadElementContentAsString());
-                    }
-                    else if (xmlReader.Name == VISUAL_RADIUS)
-                    {
-                        radius = xmlReader.ReadElementContentAsFloat();
-                    }
-                    else if (xmlReader.Name == RADIUS_START_OFFSET)
-                    {
-                        radiusStartOffset = new Vector3(xmlReader.ReadElementContentAsString());
-                    }
-                }
-            }
-            NavigationState sourceState = set.getState(source);
-            NavigationState destState = set.getState(destination);
-            if (sourceState != null && destState != null)
-            {
-                sourceState.addAdjacentState(destState, button, radius, radiusStartOffset);
             }
         }
 
