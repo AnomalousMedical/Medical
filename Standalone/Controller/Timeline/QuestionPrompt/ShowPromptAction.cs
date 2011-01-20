@@ -28,10 +28,13 @@ namespace Medical
                 questionProvider.addQuestion(question);
             }
             questionProvider.showPrompt(answerSelected);
-            if (soundFile != null)
+            if (soundFile != null && soundFile != String.Empty)
             {
                 source = TimelineController.playSound(soundFile);
-                source.PlaybackFinished += new SourceFinishedDelegate(source_PlaybackFinished);
+                if (source != null)
+                {
+                    source.PlaybackFinished += new SourceFinishedDelegate(source_PlaybackFinished);
+                }
             }
         }
 
