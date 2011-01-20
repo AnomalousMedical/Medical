@@ -153,9 +153,6 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
-    <Compile Include="Controller\NavigationControl\Overlay\NavigationButton.cs" />
-    <Compile Include="Controller\NavigationControl\Overlay\NavigationOverlay.cs" />
-    <Compile Include="Controller\NavigationControl\Overlay\OverlayRect.cs" />
     <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
     <Compile Include="Controller\OSHelper\UserPermissions.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
@@ -216,7 +213,6 @@
     <Compile Include="GUI\Taskbar\CloneWindowTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\DialogOpenTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\SequencesTaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\ShowNavigationTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowPopupTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />

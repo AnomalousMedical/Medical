@@ -139,7 +139,7 @@ namespace Medical
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
 
             //Navigation and layers
-            navigationController = new NavigationController(sceneViewController, medicalController.EventManager, medicalController.MainTimer);
+            navigationController = new NavigationController();
             layerController = new LayerController();
 
             //Watermark
@@ -224,9 +224,6 @@ namespace Medical
 
             if (changeScene(MedicalConfig.DefaultScene, splashScreen))
             {
-                //temp hack to show navigation arrows for initial scene
-                navigationController.recalculateClosestNonHiddenStates();
-                //end hack
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
 
@@ -445,7 +442,6 @@ namespace Medical
         private bool changeScene(String file, SplashScreen splashScreen)
         {
             sceneViewController.resetAllCameraPositions();
-            navigationController.recalculateClosestNonHiddenStates();
             //StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
             {

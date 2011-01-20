@@ -16,40 +16,14 @@ namespace Medical.Controller
 
     public class NavigationController : IDisposable
     {
-        static MessageEvent toggleNavigation;
-
-        enum NavigationEvents
-        {
-            ToggleNavigation,
-        }
-
-        static NavigationController()
-        {
-            toggleNavigation = new MessageEvent(NavigationEvents.ToggleNavigation);
-            toggleNavigation.addButton(KeyboardButtonCode.KC_SPACE);
-            DefaultEvents.registerDefaultEvent(toggleNavigation);
-        }
-
         public event NavigationControllerEvent NavigationStateSetChanged;
-        public event NavigationControllerEvent ShowOverlaysChanged;
 
-        private SceneViewController windowController;
-        private EventManager eventManager;
-        private UpdateTimer timer;
-        private Dictionary<SceneViewWindow, NavigationOverlay> overlays = new Dictionary<SceneViewWindow, NavigationOverlay>();
-        private bool showOverlays = false;
         private NavigationStateSet navigationSet;
         private String currentCameraFile;
 
-        public NavigationController(SceneViewController windowController, EventManager eventManager, UpdateTimer timer)
+        public NavigationController()
         {
-            this.eventManager = eventManager;
-            this.timer = timer;
-            this.windowController = windowController;
-            windowController.WindowCreated += windowController_WindowCreated;
-            windowController.WindowDestroyed += windowController_WindowDestroyed;
 
-            toggleNavigation.FirstFrameUpEvent += new MessageEventCallback(toggleNavigation_FirstFrameUpEvent);
         }
 
         public void Dispose()
@@ -139,13 +113,7 @@ namespace Medical.Controller
             if (state != null)
             {
                 window.setPosition(state.Translation, state.LookAt);
-                overlays[window].setNavigationState(state);
             }
-        }
-
-        public NavigationState getNavigationState(SceneViewWindow window)
-        {
-            return overlays[window].getNavigationState();
         }
 
         public NavigationState findClosestNonHiddenState(Vector3 position)
@@ -155,36 +123,6 @@ namespace Medical.Controller
                 return navigationSet.findClosestNonHiddenState(position);
             }
             return null;
-        }
-
-        /// <summary>
-        /// Figure out what the closest state to all cameras is.
-        /// </summary>
-        public void recalculateClosestNonHiddenStates()
-        {
-            if (navigationSet != null)
-            {
-                foreach (SceneViewWindow window in overlays.Keys)
-                {
-                    overlays[window].setNavigationState(findClosestNonHiddenState(window.Translation));
-                }
-            }
-        }
-
-        public EventManager EventManager
-        {
-            get
-            {
-                return eventManager;
-            }
-        }
-
-        public UpdateTimer Timer
-        {
-            get
-            {
-                return timer;
-            }
         }
 
         public String CurrentCameraFile
@@ -213,63 +151,6 @@ namespace Medical.Controller
                     if (NavigationStateSetChanged != null)
                     {
                         NavigationStateSetChanged.Invoke(this);
-                    }
-                }
-            }
-        }
-
-        void windowController_WindowCreated(SceneViewWindow window)
-        {
-            if (window.AllowNavigation)
-            {
-                NavigationOverlay overlay = new NavigationOverlay(window.Name, window, this);
-                overlay.ShowOverlay = showOverlays;
-                NavigationState closestState = findClosestNonHiddenState(window.Translation);
-                if (closestState != null)
-                {
-                    overlay.setNavigationState(closestState);
-                }
-                overlays.Add(window, overlay);
-            }
-        }
-
-        void windowController_WindowDestroyed(SceneViewWindow window)
-        {
-            NavigationOverlay overlay;
-            overlays.TryGetValue(window, out overlay);
-            if (overlay != null)
-            {
-                overlays.Remove(window);
-                overlay.Dispose();
-            }
-        }
-
-        void toggleNavigation_FirstFrameUpEvent()
-        {
-            if (!Gui.Instance.HandledKeyboardButtons)
-            {
-                ShowOverlays = !ShowOverlays;
-            }
-        }
-
-        public bool ShowOverlays
-        {
-            get
-            {
-                return showOverlays;
-            }
-            set
-            {
-                if (showOverlays != value)
-                {
-                    showOverlays = value;
-                    foreach (NavigationOverlay overlay in overlays.Values)
-                    {
-                        overlay.ShowOverlay = showOverlays;
-                    }
-                    if (ShowOverlaysChanged != null)
-                    {
-                        ShowOverlaysChanged.Invoke(this);
                     }
                 }
             }
