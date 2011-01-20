@@ -22,7 +22,8 @@ namespace Medical.GUI
 
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
-        private LeftPopoutLayoutContainer leftAnimatedContainer;
+        private HorizontalPopoutLayoutContainer leftAnimatedContainer;
+        private HorizontalPopoutLayoutContainer rightAnimatedContainer;
         private VerticalPopoutLayoutContainer topAnimatedContainer;
         private VerticalPopoutLayoutContainer bottomAnimatedContainer;
         private StateWizardPanelController stateWizardPanelController;
@@ -162,11 +163,14 @@ namespace Medical.GUI
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
 
-            leftAnimatedContainer = new LeftPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            leftAnimatedContainer = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Left = leftAnimatedContainer;
 
             bottomAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Bottom = bottomAnimatedContainer;
+
+            rightAnimatedContainer = new HorizontalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
+            innerBorderLayout.Right = rightAnimatedContainer;
 
             screenLayoutManager.Root.SuppressLayout = false;
 
@@ -226,6 +230,19 @@ namespace Medical.GUI
             if (leftAnimatedContainer.CurrentContainer != leftContainer)
             {
                 leftAnimatedContainer.changePanel(leftContainer, 0.25f, leftAnimationCompleted);
+            }
+        }
+
+        public void changeRightPanel(LayoutContainer rightContainer)
+        {
+            if (rightContainer != null)
+            {
+                rightContainer.Visible = true;
+                rightContainer.bringToFront();
+            }
+            if (rightAnimatedContainer.CurrentContainer != rightContainer)
+            {
+                rightAnimatedContainer.changePanel(rightContainer, 0.25f, animationCompleted);
             }
         }
 

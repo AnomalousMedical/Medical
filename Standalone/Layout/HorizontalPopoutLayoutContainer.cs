@@ -10,7 +10,7 @@ namespace Medical
 {
     public delegate void AnimationCompletedDelegate(LayoutContainer oldChild);
 
-    public class LeftPopoutLayoutContainer : LayoutContainer, UpdateListener
+    public class HorizontalPopoutLayoutContainer : LayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;
@@ -26,7 +26,7 @@ namespace Medical
         private Size2 sizeDelta;
         private Size2 currentSize;
 
-        public LeftPopoutLayoutContainer(UpdateTimer mainTimer)
+        public HorizontalPopoutLayoutContainer(UpdateTimer mainTimer)
         {
             this.mainTimer = mainTimer;
             mainTimer.addFixedUpdateListener(this);

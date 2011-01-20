@@ -262,7 +262,7 @@
     <Compile Include="Controller\Watermark\Watermark.cs" />
     <Compile Include="Layout\CrossFadeLayoutContainer.cs" />
     <Compile Include="Layout\FlowLayoutContainer.cs" />
-    <Compile Include="Layout\LeftPopoutLayoutContainer.cs" />
+    <Compile Include="Layout\HorizontalPopoutLayoutContainer.cs" />
     <Compile Include="Layout\BorderLayoutContainer.cs" />
     <Compile Include="Layout\MyGUILayoutContainer.cs" />
     <Compile Include="Layout\LayoutContainer.cs" />
