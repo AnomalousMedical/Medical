@@ -16,24 +16,24 @@ namespace Medical
         {
             IntPtr windowPtr = new IntPtr(long.Parse(windowHandle.WindowHandle));
             Log.Info("Activating MultiTouch on window {0}", windowPtr.ToString());
-            WindowFunctions_registerMultiTouchEventHandler(windowPtr);
+            MultiTouch_registerMultiTouchEventHandler(windowPtr);
         }
 
-        public static bool IsAvaliable
+        public static bool IsAvailable
         {
             get
             {
-                return isMultitouchAvaliable();
+                return MultiTouch_isMultitouchAvailable();
             }
         }
 
 #region PInvoke
         [DllImport("OSHelper")]
-        private static extern void WindowFunctions_registerMultiTouchEventHandler(IntPtr hwnd);
+        private static extern void MultiTouch_registerMultiTouchEventHandler(IntPtr hwnd);
 
         [DllImport("OSHelper")]
         [return: MarshalAs(UnmanagedType.I1)]
-        private static extern bool isMultitouchAvaliable();
+        private static extern bool MultiTouch_isMultitouchAvailable();
 
 #endregion
     }

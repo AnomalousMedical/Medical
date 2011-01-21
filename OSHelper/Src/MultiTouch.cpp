@@ -18,14 +18,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return oldWndFunc(hWnd, message, wParam, lParam);
 }
 
-extern "C" _AnomalousExport void WindowFunctions_registerMultiTouchEventHandler(HWND hwnd)
+extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(HWND hwnd)
 {
 	oldWndFunc = (WndFunc)GetWindowLong(hwnd, GWLP_WNDPROC);
 	long wndProcLong = (long)newWndFunc;
 	SetWindowLong(hwnd, GWLP_WNDPROC, wndProcLong);
 }
 
-extern "C" _AnomalousExport bool isMultitouchAvaliable()
+extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 {
 	return false;
 }
@@ -34,12 +34,12 @@ extern "C" _AnomalousExport bool isMultitouchAvaliable()
 
 #ifdef MAC_OSX
 
-extern "C" _AnomalousExport void WindowFunctions_registerMultiTouchEventHandler(void* hwnd)
+extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(void* hwnd)
 {
 	
 }
 
-extern "C" _AnomalousExport bool isMultitouchAvaliable()
+extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 {
 	return false;
 }

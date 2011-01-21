@@ -120,9 +120,13 @@ namespace Medical
             splashScreen.updateStatus(10, "Initializing Core");
 
             //MultiTouch
-            if (MultiTouch.IsAvaliable)
+            if (MultiTouch.IsAvailable)
             {
                 MultiTouch.registerMultiTouchEventHandler(mainWindow.InputWindow);
+            }
+            else
+            {
+                Log.Info("MultiTouch not available");
             }
 
             //Help
