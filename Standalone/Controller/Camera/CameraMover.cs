@@ -82,5 +82,17 @@ namespace Medical
             get;
             set;
         }
+
+        public abstract Vector2 PanVelocity
+        {
+            get;
+            set;
+        }
+
+        public abstract float ZoomVelocity
+        {
+            get;
+            set;
+        }
     }
 }

@@ -251,6 +251,30 @@ namespace Medical.Controller
             }
         }
 
+        public Vector2 PanVelocity
+        {
+            get
+            {
+                return cameraMover.PanVelocity;
+            }
+            set
+            {
+                cameraMover.PanVelocity = value;
+            }
+        }
+
+        public float ZoomVelocity
+        {
+            get
+            {
+                return cameraMover.ZoomVelocity;
+            }
+            set
+            {
+                cameraMover.ZoomVelocity = value;
+            }
+        }
+
         public String CurrentTransparencyState
         {
             get

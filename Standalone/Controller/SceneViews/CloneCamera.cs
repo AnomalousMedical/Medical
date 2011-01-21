@@ -88,5 +88,9 @@ namespace Medical.Controller
         public override float PitchVelocity { get; set; }
 
         public override float YawVelocity { get; set; }
+
+        public override Vector2 PanVelocity { get; set; }
+
+        public override float ZoomVelocity { get; set; }
     }
 }

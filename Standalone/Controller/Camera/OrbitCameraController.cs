@@ -105,8 +105,10 @@ namespace Medical
         Vector3 targetRotatedLeft;
 
         //Velocity move variables
-        private float pitchVelocity = 0;
-        private float yawVelocity = 0;
+        private float pitchVelocity = 0.0f;
+        private float yawVelocity = 0.0f;
+        private Vector2 panVelocity = new Vector2(0.0f, 0.0f);
+        private float zoomVelocity = 0.0f;
 
         private bool allowRotation = true;
         private bool allowZoom = true;
@@ -174,6 +176,19 @@ namespace Medical
                 moveCameraYawPitch();
                 moved = true;
             }
+            if (panVelocity.x != 0.0f || panVelocity.y != 0.0f)
+            {
+                lookAt += rotatedLeft * panVelocity.x;
+                lookAt += rotatedUp * panVelocity.y;
+                moveLookAt();
+                moved = true;
+            }
+            if (zoomVelocity != 0.0f)
+            {
+                orbitDistance += zoomVelocity;
+                moveZoom();
+                moved = true;
+            }
             return moved;
         }
 
@@ -206,46 +221,12 @@ namespace Medical
                     {
                         lookAt += rotatedUp * (mouseCoords.y / (events.Mouse.getMouseAreaHeight() * SCROLL_SCALE) * scaleFactor);
                     }
-                    //Restrict look at position
-                    if (lookAt.x > LOOK_AT_BOUND_MAX.x)
-                    {
-                        lookAt.x = LOOK_AT_BOUND_MAX.x;
-                    }
-                    else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
-                    {
-                        lookAt.x = LOOK_AT_BOUND_MIN.x;
-                    }
-                    if (lookAt.y > LOOK_AT_BOUND_MAX.y)
-                    {
-                        lookAt.y = LOOK_AT_BOUND_MAX.y;
-                    }
-                    else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
-                    {
-                        lookAt.y = LOOK_AT_BOUND_MIN.y;
-                    }
-                    if (lookAt.z > LOOK_AT_BOUND_MAX.z)
-                    {
-                        lookAt.z = LOOK_AT_BOUND_MAX.z;
-                    }
-                    else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
-                    {
-                        lookAt.z = LOOK_AT_BOUND_MIN.z;
-                    }
-
-                    updateTranslation(lookAt + normalDirection * orbitDistance);
+                    moveLookAt();
                 }
                 else if (allowZoom && events[CameraEvents.ZoomCamera].Down)
                 {
                     orbitDistance += mouseCoords.y;
-                    if (orbitDistance < 0.2f)
-                    {
-                        orbitDistance = 0.2f;
-                    }
-                    if (orbitDistance > 500.0f)
-                    {
-                        orbitDistance = 500.0f;
-                    }
-                    updateTranslation(normalDirection * orbitDistance + lookAt);
+                    moveZoom();
                 }
                 else if (allowRotation && events[CameraEvents.RotateCamera].Down)
                 {
@@ -283,6 +264,50 @@ namespace Medical
                     updateTranslation(normalDirection * orbitDistance + lookAt);
                 }
             }
+        }
+
+        private void moveZoom()
+        {
+            if (orbitDistance < 0.2f)
+            {
+                orbitDistance = 0.2f;
+            }
+            if (orbitDistance > 500.0f)
+            {
+                orbitDistance = 500.0f;
+            }
+            updateTranslation(normalDirection * orbitDistance + lookAt);
+        }
+
+        private void moveLookAt()
+        {
+            //Restrict look at position
+            if (lookAt.x > LOOK_AT_BOUND_MAX.x)
+            {
+                lookAt.x = LOOK_AT_BOUND_MAX.x;
+            }
+            else if (lookAt.x < LOOK_AT_BOUND_MIN.x)
+            {
+                lookAt.x = LOOK_AT_BOUND_MIN.x;
+            }
+            if (lookAt.y > LOOK_AT_BOUND_MAX.y)
+            {
+                lookAt.y = LOOK_AT_BOUND_MAX.y;
+            }
+            else if (lookAt.y < LOOK_AT_BOUND_MIN.y)
+            {
+                lookAt.y = LOOK_AT_BOUND_MIN.y;
+            }
+            if (lookAt.z > LOOK_AT_BOUND_MAX.z)
+            {
+                lookAt.z = LOOK_AT_BOUND_MAX.z;
+            }
+            else if (lookAt.z < LOOK_AT_BOUND_MIN.z)
+            {
+                lookAt.z = LOOK_AT_BOUND_MIN.z;
+            }
+
+            updateTranslation(lookAt + normalDirection * orbitDistance);
         }
 
         /// <summary>
@@ -504,6 +529,30 @@ namespace Medical
             set
             {
                 pitchVelocity = value;
+            }
+        }
+
+        public override float ZoomVelocity
+        {
+            get
+            {
+                return zoomVelocity;
+            }
+            set
+            {
+                zoomVelocity = value;
+            }
+        }
+
+        public override Vector2 PanVelocity
+        {
+            get
+            {
+                return panVelocity;
+            }
+            set
+            {
+                panVelocity = value;
             }
         }
     }

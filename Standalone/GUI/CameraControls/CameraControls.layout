@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="97 151 246 162" layer="Back">
-        <Widget type="Button" skin="Button" position="108 58 41 27" name="RotateJoystick"/>
+    <Widget type="Window" skin="WindowCX" position="99 115 373 200" layer="Overlapped">
+        <Property key="Widget_Caption" value="Movement"/>
+        <Widget type="Widget" skin="CustomPanelOnPanel2" position="3 25 150 150">
+            <Widget type="Button" skin="Button" position="54 61 41 27" name="RotateJoystick"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="52 5 51 14">
+            <Property key="Widget_Caption" value="Rotation"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanelOnPanel2" position="159 25 150 150">
+            <Widget type="Button" skin="Button" position="54 61 41 27" name="PanJoystick"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="217 5 26 14">
+            <Property key="Widget_Caption" value="Pan"/>
+        </Widget>
+        <Widget type="Widget" skin="CustomPanelOnPanel2" position="314 25 54 150">
+            <Widget type="Button" skin="Button" position="6 61 41 27" name="ZoomJoystick"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="324 5 36 14">
+            <Property key="Widget_Caption" value="Zoom"/>
+        </Widget>
     </Widget>
 </MyGUI>

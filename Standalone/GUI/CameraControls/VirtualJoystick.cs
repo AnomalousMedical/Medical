@@ -19,16 +19,11 @@ namespace Medical.GUI
         private IntVector2 joystickStartPos;
         private int travelRadius = 50;
         private int travelRadiusSquared;
-        private int deadZoneRadius = 10;
-        private int deadZoneRadiusSquared;
-        private int xLimit = int.MaxValue;
-        private int yLimit = int.MaxValue;
         private Vector2 joystickPosition = new Vector2(0.0f, 0.0f);
 
         public VirtualJoystick(Widget joystickWidget)
         {
             travelRadiusSquared = travelRadius * travelRadius;
-            deadZoneRadiusSquared = deadZoneRadius * deadZoneRadius;
             this.joystickWidget = joystickWidget;
             joystickWidget.MouseButtonPressed += new MyGUIEvent(joystickWidget_MouseButtonPressed);
             joystickWidget.MouseButtonReleased += new MyGUIEvent(joystickWidget_MouseButtonReleased);
