@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010C4D4E12EA382E006ABBAF /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */; };
 		01429295123AA6CF00CFF7D7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01429294123AA6CF00CFF7D7 /* Carbon.framework */; };
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MultiTouch.cpp; path = ../../OSHelper/Src/MultiTouch.cpp; sourceTree = SOURCE_ROOT; };
 		01429294123AA6CF00CFF7D7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
@@ -53,6 +55,7 @@
 		01F0325A1214743E0054F63B /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */,
 				01F03444121EA3D40054F63B /* PerformanceCounter.cpp */,
 				01F0327C1215C0330054F63B /* UserPermissions.cpp */,
 				01F0325B121474620054F63B /* WindowFunctions.cpp */,
@@ -197,6 +200,7 @@
 				01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */,
 				01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */,
 				01F03445121EA3D40054F63B /* PerformanceCounter.cpp in Sources */,
+				010C4D4E12EA382E006ABBAF /* MultiTouch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,6 +25,9 @@ MAIN_EXE="$DOT_NET_EXECUTABLES/$APP_NAME.exe"
 #Remove the old bundle
 sudo rm -r "$APP_BUNDLE_NAME"
 
+#Compile native libs
+xcodebuild -project ../OSHelper/OSHelper.xcodeproj -alltargets
+
 #Create the app bundle
 mkdir "$APP_BUNDLE_NAME"
 cp -r "$BUNDLE_SOURCE_DIR/Contents" "$APP_BUNDLE_NAME"
