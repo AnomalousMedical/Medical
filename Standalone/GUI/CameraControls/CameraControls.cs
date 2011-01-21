@@ -25,10 +25,14 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             rotateJoystick = new VirtualJoystick(window.findWidget("RotateJoystick"));
             rotateJoystick.PositionChanged += new JoystickEvent(rotateJoystick_PositionChanged);
+
             panJoystick = new VirtualJoystick(window.findWidget("PanJoystick"));
             panJoystick.PositionChanged += new JoystickEvent(panJoystick_PositionChanged);
+
             zoomJoystick = new VirtualJoystick(window.findWidget("ZoomJoystick"));
             zoomJoystick.PositionChanged += new JoystickEvent(zoomJoystick_PositionChanged);
+            zoomJoystick.MaxDelta = new IntVector2(0, int.MaxValue);
+
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
         }
 

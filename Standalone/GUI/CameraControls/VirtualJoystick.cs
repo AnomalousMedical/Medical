@@ -20,6 +20,7 @@ namespace Medical.GUI
         private int travelRadius = 50;
         private int travelRadiusSquared;
         private Vector2 joystickPosition = new Vector2(0.0f, 0.0f);
+        private IntVector2 maxDelta = new IntVector2(int.MaxValue, int.MaxValue);
 
         public VirtualJoystick(Widget joystickWidget)
         {
@@ -51,6 +52,18 @@ namespace Medical.GUI
             }
         }
 
+        public IntVector2 MaxDelta
+        {
+            get
+            {
+                return maxDelta;
+            }
+            set
+            {
+                maxDelta = value;
+            }
+        }
+
         private IntVector2 moveJoystick(IntVector2 newPos)
         {
             IntVector2 delta = newPos - joystickStartPos;
@@ -59,6 +72,26 @@ namespace Medical.GUI
                 Vector2 dirVec = delta.normalized();
                 Vector2 maxPos = joystickStartPos + (dirVec * travelRadius);
                 newPos = new IntVector2((int)maxPos.x, (int)maxPos.y);
+            }
+            int direction = 1;
+            if (delta.x < 0.0f)
+            {
+                delta.x *= -1;
+                direction = -1;
+            }
+            if (delta.x > maxDelta.x)
+            {
+                newPos.x = joystickStartPos.x + maxDelta.x * direction;
+            }
+            direction = 1;
+            if (delta.y < 0.0f)
+            {
+                delta.y *= -1;
+                direction = -1;
+            }
+            if (delta.y > maxDelta.y)
+            {
+                newPos.y = joystickStartPos.y + maxDelta.y;
             }
 
             joystickWidget.setPosition(newPos.x, newPos.y);
