@@ -104,6 +104,10 @@ namespace Medical
         Vector3 targetRotatedUp;
         Vector3 targetRotatedLeft;
 
+        //Velocity move variables
+        private float pitchVelocity = 0;
+        private float yawVelocity = 0;
+
         private bool allowRotation = true;
         private bool allowZoom = true;
 
@@ -149,14 +153,31 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else if (!Gui.Instance.HandledMouseButtons && !Gui.Instance.HandledKeyboardButtons)
+                else if (!velocityMove() && !Gui.Instance.HandledMouseButtons && !Gui.Instance.HandledKeyboardButtons)
                 {
-                    manualMove();
+                    mouseMove();
                 }
             }
         }
 
-        private void manualMove()
+        /// <summary>
+        /// This funciton will move stuff based on velocities. This allows joystick control of the camera.
+        /// </summary>
+        /// <returns></returns>
+        private bool velocityMove()
+        {
+            bool moved = false;
+            if (yawVelocity != 0.0f || pitchVelocity != 0.0f)
+            {
+                yaw += yawVelocity;
+                pitch += pitchVelocity;
+                moveCameraYawPitch();
+                moved = true;
+            }
+            return moved;
+        }
+
+        private void mouseMove()
         {
             Vector3 mouseCoords = events.Mouse.getAbsMouse();
             bool activeWindow = motionValidator == null || (motionValidator.allowMotion((int)mouseCoords.x, (int)mouseCoords.y) && motionValidator.isActiveWindow());
@@ -236,25 +257,7 @@ namespace Medical
                     {
                         pitch += mouseCoords.y / 100.0f;
                     }
-                    if (pitch > HALF_PI)
-                    {
-                        pitch = HALF_PI;
-                    }
-                    if (pitch < -HALF_PI)
-                    {
-                        pitch = -HALF_PI;
-                    }
-
-                    Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
-                    Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
-
-                    Quaternion rotation = yawRot * pitchRot;
-                    normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
-                    rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
-                    rotatedLeft = normalDirection.cross(ref rotatedUp);
-
-                    updateTranslation(normalDirection * orbitDistance + lookAt);
-                    camera.LookAt = lookAt;
+                    moveCameraYawPitch();
                 }
             }
             if (activeWindow)
@@ -280,6 +283,32 @@ namespace Medical
                     updateTranslation(normalDirection * orbitDistance + lookAt);
                 }
             }
+        }
+
+        /// <summary>
+        /// Helper funciton to move the camera when the yaw and pitch have changed.
+        /// </summary>
+        private void moveCameraYawPitch()
+        {
+            if (pitch > HALF_PI)
+            {
+                pitch = HALF_PI;
+            }
+            if (pitch < -HALF_PI)
+            {
+                pitch = -HALF_PI;
+            }
+
+            Quaternion yawRot = new Quaternion(Vector3.Up, yaw);
+            Quaternion pitchRot = new Quaternion(Vector3.Left, pitch);
+
+            Quaternion rotation = yawRot * pitchRot;
+            normalDirection = Quaternion.quatRotate(ref rotation, ref Vector3.Backward);
+            rotatedUp = Quaternion.quatRotate(ref rotation, ref Vector3.Up);
+            rotatedLeft = normalDirection.cross(ref rotatedUp);
+
+            updateTranslation(normalDirection * orbitDistance + lookAt);
+            camera.LookAt = lookAt;
         }
 
         /// <summary>
@@ -451,6 +480,30 @@ namespace Medical
             set
             {
                 allowZoom = value;
+            }
+        }
+
+        public override float YawVelocity
+        {
+            get
+            {
+                return yawVelocity;
+            }
+            set
+            {
+                yawVelocity = value;
+            }
+        }
+
+        public override float PitchVelocity
+        {
+            get
+            {
+                return pitchVelocity;
+            }
+            set
+            {
+                pitchVelocity = value;
             }
         }
     }

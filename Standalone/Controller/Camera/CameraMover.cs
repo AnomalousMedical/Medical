@@ -68,5 +68,19 @@ namespace Medical
             get;
             set;
         }
+
+
+
+        public abstract float YawVelocity
+        {
+            get;
+            set;
+        }
+
+        public abstract float PitchVelocity
+        {
+            get;
+            set;
+        }
     }
 }

@@ -84,5 +84,9 @@ namespace Medical.Controller
                 
             }
         }
+
+        public override float PitchVelocity { get; set; }
+
+        public override float YawVelocity { get; set; }
     }
 }

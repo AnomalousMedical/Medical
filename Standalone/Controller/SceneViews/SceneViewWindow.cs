@@ -227,6 +227,30 @@ namespace Medical.Controller
             }
         }
 
+        public float YawVelocity
+        {
+            get
+            {
+                return cameraMover.YawVelocity;
+            }
+            set
+            {
+                cameraMover.YawVelocity = value;
+            }
+        }
+
+        public float PitchVelocity
+        {
+            get
+            {
+                return cameraMover.PitchVelocity;
+            }
+            set
+            {
+                cameraMover.PitchVelocity = value;
+            }
+        }
+
         public String CurrentTransparencyState
         {
             get

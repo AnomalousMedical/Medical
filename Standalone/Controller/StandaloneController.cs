@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define PROFILE_LOAD
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +21,7 @@ using System.Drawing;
 using wx.Html.Help;
 using wx.FileSys;
 using System.IO;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -441,6 +444,12 @@ namespace Medical
         /// <param name="filename"></param>
         private bool changeScene(String file, SplashScreen splashScreen)
         {
+#if PROFILE_LOAD
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+#endif
+
+            bool success = false;
             sceneViewController.resetAllCameraPositions();
             //StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
@@ -477,13 +486,13 @@ namespace Medical
                     }
                 }
                 //StatusController.TaskCompleted();
-                return true;
+                success = true;
             }
-            else
-            {
-                //StatusController.TaskCompleted();
-                return false;
-            }
+#if PROFILE_LOAD
+            sw.Stop();
+            Log.Info("Scene loaded in {0} ms.", sw.ElapsedMilliseconds);
+#endif
+            return success;
         }
 
         private void loadExternalFiles(SimulationScene medicalScene)

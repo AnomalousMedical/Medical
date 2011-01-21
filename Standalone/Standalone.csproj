@@ -76,6 +76,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL">
@@ -129,6 +130,8 @@
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\GUIPlugin.cs" />
+    <Compile Include="GUI\CameraControls\CameraControls.cs" />
+    <Compile Include="GUI\CameraControls\VirtualJoystick.cs" />
     <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
@@ -286,6 +289,7 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\CameraControls\CameraControls.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />

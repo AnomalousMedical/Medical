@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="97 151 246 162" layer="Back">
+        <Widget type="Button" skin="Button" position="108 58 41 27" name="RotateJoystick"/>
+    </Widget>
+</MyGUI>
