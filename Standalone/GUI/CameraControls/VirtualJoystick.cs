@@ -29,12 +29,18 @@ namespace Medical.GUI
             joystickWidget.MouseButtonReleased += new MyGUIEvent(joystickWidget_MouseButtonReleased);
             joystickWidget.MouseDrag += new MyGUIEvent(joystickWidget_MouseDrag);
 
-            joystickStartPos = new IntVector2(joystickWidget.Left, joystickWidget.Top);
-
             joystickParent = joystickWidget.Parent;
             joystickParent.MouseDrag += new MyGUIEvent(joystickParent_MouseDrag);
             joystickParent.MouseButtonReleased += new MyGUIEvent(joystickParent_MouseButtonReleased);
             joystickParent.MouseButtonPressed += new MyGUIEvent(joystickParent_MouseButtonPressed);
+
+            findZeroPosition();
+        }
+
+        public void findZeroPosition()
+        {
+            joystickStartPos = new IntVector2(joystickParent.Width / 2 - joystickWidget.Width / 2,
+                                              joystickParent.Height / 2 - joystickWidget.Height / 2);
         }
 
         public Vector2 Position

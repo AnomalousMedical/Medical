@@ -11,7 +11,7 @@ namespace Medical.GUI
     public class CameraControls : Dialog
     {
         private const float ROTATE_MAX_VELOCITY = 0.0314f;
-        private const float PAN_MAX_VELOCITY = 0.5f;
+        private const float PAN_MAX_VELOCITY = 0.4f;
         private const float ZOOM_MAX_VELOCITY = 2.0f;
 
         private VirtualJoystick rotateJoystick;
@@ -29,6 +29,25 @@ namespace Medical.GUI
             panJoystick.PositionChanged += new JoystickEvent(panJoystick_PositionChanged);
             zoomJoystick = new VirtualJoystick(window.findWidget("ZoomJoystick"));
             zoomJoystick.PositionChanged += new JoystickEvent(zoomJoystick_PositionChanged);
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+        }
+
+        public override void deserialize(ConfigFile configFile)
+        {
+            base.deserialize(configFile);
+            fixJoysticks();
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            fixJoysticks();
+        }
+
+        private void fixJoysticks()
+        {
+            rotateJoystick.findZeroPosition();
+            panJoystick.findZeroPosition();
+            zoomJoystick.findZeroPosition();
         }
 
         void rotateJoystick_PositionChanged(VirtualJoystick joystick)
