@@ -119,6 +119,12 @@ namespace Medical
 
             splashScreen.updateStatus(10, "Initializing Core");
 
+            //MultiTouch
+            if (MultiTouch.IsAvaliable)
+            {
+                MultiTouch.registerMultiTouchEventHandler(mainWindow.InputWindow);
+            }
+
             //Help
             htmlHelpController = new HtmlHelpController();
             wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
