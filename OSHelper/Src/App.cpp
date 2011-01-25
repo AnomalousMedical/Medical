@@ -59,43 +59,8 @@ END_EVENT_TABLE()
 		return TRUE;
 	}
 
-	//void wxNetEntry(HINSTANCE hInstance, HINSTANCE WXUNUSED(hPrevInstance), char * WXUNUSED(pCmdLine), int nCmdShow)
-	//{
-	//  // remember the parameters Windows gave us
-	//	wxSetInstance(hInstance);
-	//	wxApp::m_nCmdShow = nCmdShow;
-
-	//	// parse the command line: we can't use pCmdLine in Unicode build so it is
-	//	// simpler to never use it at all (this also results in a more correct
-	//	// argv[0])
-
-	//	// break the command line in words
-	//	wxArrayString args;
-	//	const wxChar *cmdLine = ::GetCommandLine();
-	//	if ( cmdLine )
-	//	{
-	//		args = wxCmdLineParser::ConvertStringToArgs(cmdLine);
-	//	}
-
-	//	int argc = args.GetCount();
-
-	//	// +1 here for the terminating NULL
-	//	wxChar **argv = new wxChar *[argc + 1];
-	//	for ( int i = 0; i < argc; i++ )
-	//	{
-	//		argv[i] = wxStrdup(args[i]);
-	//	}
-
-	//	// argv[] must be NULL-terminated
-	//	argv[argc] = NULL;
-
-	//	wxEntry(argc, argv);
-	//}
-
 	void App::run(int argc, char* argv[])
 	{
-		//LPWSTR
-		//wxNetEntry((HINSTANCE)thisModule, NULL, (char*)GetCommandLineW(), 0);
 		wxEntry((HINSTANCE)thisModule, NULL, (char*)GetCommandLineW(), 0);
 	}
 

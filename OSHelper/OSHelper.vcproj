@@ -181,6 +181,26 @@
 	</References>
 	<Files>
 		<Filter
+			Name="ImageWindow"
+			>
+			<File
+				RelativePath=".\Src\ImageViewer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\ImageViewer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\ImageWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\ImageWindow.h"
+				>
+			</File>
+		</Filter>
+		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
@@ -277,14 +297,6 @@
 		<Filter
 			Name="GUI"
 			>
-			<File
-				RelativePath=".\Src\ImageWindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\ImageWindow.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Src\MainWindow.cpp"
 				>

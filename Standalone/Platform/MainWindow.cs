@@ -156,9 +156,9 @@ namespace Medical.GUI
             }
         }
 
-        public OSWindow RenderWindow { get; private set; }
+        public WxOSWindow RenderWindow { get; private set; }
 
-        public OSWindow InputWindow { get; private set; }
+        public WxOSWindow InputWindow { get; private set; }
 
         public String Title
         {

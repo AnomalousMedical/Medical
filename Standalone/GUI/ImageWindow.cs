@@ -22,7 +22,7 @@ namespace Medical.GUI
         //private const int RESIZE_ID = 1003;
         
 
-        public ImageWindow(MainWindow parent, String windowTitle, System.Drawing.Bitmap image)
+        public ImageWindow(WxOSWindow parent, String windowTitle, System.Drawing.Bitmap image)
             //:base(parent, windowTitle, wxDefaultPosition, new System.Drawing.Size(640, 480))
         {
             ////Menu
