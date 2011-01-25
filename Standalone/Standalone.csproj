@@ -79,10 +79,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
-    <Reference Include="wx.NET, Version=0.9.0.0, Culture=neutral, PublicKeyToken=c5f483f7e93d2714, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\dependencies\wxDotNet\Bin\wx.NET.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Background\BackgroundController.cs" />
@@ -94,7 +90,6 @@
     <Compile Include="Controller\Config\EngineConfig.cs" />
     <Compile Include="Controller\Config\MedicalConfig.cs" />
     <Compile Include="Controller\Config\RecentDocuments.cs" />
-    <Compile Include="Controller\CursorManager.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
@@ -241,6 +236,14 @@
     <Compile Include="GUI\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />
+    <Compile Include="Platform\App.cs" />
+    <Compile Include="Platform\ColorDialog.cs" />
+    <Compile Include="Platform\DirDialog.cs" />
+    <Compile Include="Platform\Menu.cs" />
+    <Compile Include="Platform\MenuBar.cs" />
+    <Compile Include="Platform\MenuItem.cs" />
+    <Compile Include="Platform\MessageDialog.cs" />
+    <Compile Include="Platform\SystemInfo.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
     <Compile Include="Platform\WxOSWindow.cs" />

@@ -18,8 +18,6 @@ using MyGUIPlugin;
 using Medical.GUI;
 using Medical.Controller;
 using System.Drawing;
-using wx.Html.Help;
-using wx.FileSys;
 using System.IO;
 using System.Diagnostics;
 
@@ -56,8 +54,7 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        private HtmlHelpController htmlHelpController;
-        private CursorManager cursorManager;
+        //private HtmlHelpController htmlHelpController;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
         //Support Files
@@ -83,12 +80,10 @@ namespace Medical
 
             //Engine core
             medicalController = new MedicalController();
-            mainWindow = new MainWindow(MedicalConfig.EngineConfig.Fullscreen);
+            mainWindow = new MainWindow();
             Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
             medicalController.initialize(mainWindow.InputWindow, createWindow);
-            mainWindow.setTimer(medicalController.MainTimer);
-
-            cursorManager = new CursorManager(mainWindow.MainDrawControl);
+            mainWindow.setPointerManager(PointerManager.Instance);
         }
 
         public void Dispose()
@@ -102,7 +97,6 @@ namespace Medical
             layerController.Dispose();
             navigationController.Dispose();
             mdiLayout.Dispose();
-            cursorManager.Dispose();
             medicalController.Dispose();
             mainWindow.Dispose();
         }
@@ -130,9 +124,9 @@ namespace Medical
             }
 
             //Help
-            htmlHelpController = new HtmlHelpController();
-            wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
-            htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
+            //htmlHelpController = new HtmlHelpController();
+            //wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
+            //htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -248,13 +242,18 @@ namespace Medical
 
         public void shutdown()
         {
-            mainWindow.Close(true);
+            mainWindow.close();
             //medicalController.shutdown();
+        }
+
+        public void onIdle()
+        {
+            medicalController.MainTimer.OnIdle();
         }
 
         public void openHelpTopic(int index)
         {
-            htmlHelpController.Display(index);
+            //htmlHelpController.Display(index);
         }
 
         /// <summary>
@@ -602,13 +601,13 @@ namespace Medical
 
             if (MedicalConfig.EngineConfig.Fullscreen)
             {
-                mainWindow.ShowFullScreen(true);
-                mainWindow.SetSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
+                mainWindow.showFullScreen();
+                mainWindow.setSize(MedicalConfig.EngineConfig.HorizontalRes, MedicalConfig.EngineConfig.VerticalRes);
             }
             else
             {
                 mainWindow.Maximized = true;
-                mainWindow.Show();
+                mainWindow.show();
             }
         }
 

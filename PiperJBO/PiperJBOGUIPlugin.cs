@@ -159,7 +159,7 @@ namespace Medical.GUI
         private SystemMenu systemMenu;
 #endif
 
-        public void createMenuBar(wx.MenuBar menu)
+        public void createMenuBar(MenuBar menu)
         {
 #if CREATE_MAINWINDOW_MENU
             systemMenu = new SystemMenu(menu, this, standaloneController);

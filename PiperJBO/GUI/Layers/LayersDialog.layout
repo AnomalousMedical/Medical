@@ -68,7 +68,7 @@
             <Property key="Text_TextAlign" value="HCenter Top"/>
         </Widget>
         <Widget type="Button" skin="RibbonButton" position="44 4 61 38" name="Layers/Nerves">
-            <Property key="Button_ImageResource" value="View/LayersHyoidLarge"/>
+            <Property key="Button_ImageResource" value="NerveLayerIcon"/>
         </Widget>
         <Widget type="Button" skin="RibbonSplitButton" position="44 42 61 30" name="Layers/NervesMenu">
             <Property key="Widget_Caption" value="Nerves"/>

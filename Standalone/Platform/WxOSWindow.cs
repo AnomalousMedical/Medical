@@ -3,38 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
-using wx;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
     public class WxOSWindow : OSWindow
     {
+        private delegate void NativeCallback();
+
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
 
-        private Window wxWindow;
-        private EventListener resizedListener;
+        private IntPtr nativeWindow;
 
-        public WxOSWindow(Window wxWindow)
+        private NativeCallback closedCallback;
+        private NativeCallback sizedCallback;
+
+        internal WxOSWindow(IntPtr nativeWindow)
         {
-            this.wxWindow = wxWindow;
-
-            resizedListener = new EventListener(onResize);
-            wxWindow.EVT_SIZE(resizedListener);
-            wxWindow.EVT_CLOSE(onClosed);
+            this.nativeWindow = nativeWindow;
+            closedCallback = new NativeCallback(onClosed);
+            sizedCallback = new NativeCallback(onResize);
+            WxOSWindow_registerCallbacks(nativeWindow, closedCallback, sizedCallback);
         }
 
-        private void onResize(object sender, Event e)
+        private void onResize()
         {
-            e.Skip();
             foreach (OSWindowListener listener in listeners)
             {
                 listener.resized(this);
             }
         }
 
-        private void onClosed(object sender, Event e)
+        private void onClosed()
         {
-            e.Skip();
             foreach (OSWindowListener listener in listeners)
             {
                 listener.closing(this);
@@ -43,14 +44,6 @@ namespace Medical
             foreach (OSWindowListener listener in listeners)
             {
                 listener.closed(this);
-            }
-        }
-
-        public Window WxWindow
-        {
-            get
-            {
-                return wxWindow;
             }
         }
 
@@ -63,17 +56,17 @@ namespace Medical
 
         public string WindowHandle
         {
-            get { return wxWindow.Handle.ToString(); }
+            get { return WxOSWindow_getHandle(nativeWindow).ToString(); }
         }
 
         public int WindowHeight
         {
-            get { return MedicalConfig.EngineConfig.Fullscreen ? wxWindow.Height : wxWindow.ClientSize.Height; }
+            get { return WxOSWindow_getHeight(nativeWindow); }
         }
 
         public int WindowWidth
         {
-            get { return MedicalConfig.EngineConfig.Fullscreen ? wxWindow.Width : wxWindow.ClientSize.Width; }
+            get { return WxOSWindow_getWidth(nativeWindow); }
         }
 
         public void addListener(OSWindowListener listener)
@@ -85,6 +78,22 @@ namespace Medical
         {
             listeners.Remove(listener);
         }
+
+        #endregion
+
+        #region PInvoke
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr WxOSWindow_getHandle(IntPtr window);
+
+        [DllImport("OSHelper")]
+        private static extern int WxOSWindow_getWidth(IntPtr window);
+
+        [DllImport("OSHelper")]
+        private static extern int WxOSWindow_getHeight(IntPtr window);
+
+        [DllImport("OSHelper")]
+        private static extern void WxOSWindow_registerCallbacks(IntPtr window, NativeCallback closedCallback, NativeCallback sizedCallback);
 
         #endregion
     }

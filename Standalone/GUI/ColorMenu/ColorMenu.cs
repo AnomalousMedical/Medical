@@ -54,21 +54,14 @@ namespace Medical.GUI
         void moreColorsButton_MouseButtonClick(Widget source, EventArgs e)
         {
             Color selectedColor = SelectedColor;
-            using (wx.Colour color = new wx.Colour((byte)(selectedColor.r * 255), (byte)(selectedColor.g * 255), (byte)(selectedColor.b * 255), (byte)(selectedColor.a * 255)))
+            using (ColorDialog colorDialog = new ColorDialog())
             {
-                using (wx.ColourData data = new wx.ColourData(color))
+                colorDialog.Color = selectedColor;
+                if (colorDialog.showModal() == NativeDialogResult.OK)
                 {
-                    using (wx.ColourDialog colorDialog = new wx.ColourDialog(MainWindow.Instance, data))
-                    {
-                        if (colorDialog.ShowModal() == wx.ShowModalResult.OK)
-                        {
-                            wx.Colour chosenColor = colorDialog.ColourData.Colour;
-                            float byteMax = (float)byte.MaxValue;
-                            colorGrid.SelectedItem = null;
-                            customColor = new Color(chosenColor.Red / byteMax, chosenColor.Green / byteMax, chosenColor.Blue / byteMax, chosenColor.Alpha / byteMax);
-                            colorGrid_SelectedValueChanged(this, EventArgs.Empty);
-                        }
-                    }
+                    colorGrid.SelectedItem = null;
+                    customColor = colorDialog.Color;
+                    colorGrid_SelectedValueChanged(this, EventArgs.Empty);
                 }
             }
         }

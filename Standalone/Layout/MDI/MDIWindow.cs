@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Medical.GUI;
 
 namespace Medical.Controller
 {
@@ -47,7 +48,7 @@ namespace Medical.Controller
                 captionButton.MouseButtonPressed += new MyGUIEvent(captionButton_MouseButtonClick);
                 captionButton.MouseDrag += new MyGUIEvent(captionButton_MouseDrag);
                 captionButton.MouseButtonReleased += new MyGUIEvent(captionButton_MouseButtonReleased);
-                captionButton.Pointer = CursorManager.HAND;
+                captionButton.Pointer = MainWindow.HAND;
             }
 
             closeButton = mainWidget.findWidget("CloseButton") as Button;

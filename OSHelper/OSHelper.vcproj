@@ -113,8 +113,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(HASP_HOME);Include"
-				PreprocessorDefinitions="WINDOWS;WIN32;NDEBUG"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib\mswu&quot;;&quot;$(WXWIDGETS_HOME)\include&quot;;&quot;$(WXWIDGETS_HOME)\contrib\include&quot;;&quot;$(HASP_HOME)&quot;;Include"
+				PreprocessorDefinitions="WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;WINVER=0x400;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
@@ -131,10 +131,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhasp_windows_92548.lib kernel32.lib user32.lib Winmm.lib $(NoInherit)"
+				AdditionalDependencies="libhasp_windows_92548.lib winspool.lib winmm.lib kernel32.lib user32.lib gdi32.lib gdiplus.lib shell32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib comctl32.lib rpcrt4.lib wsock32.lib wxbase29u.lib wxbase29u_net.lib wxbase29u_xml.lib wxexpat.lib wxjpeg.lib wxmsw29u_adv.lib wxmsw29u_core.lib wxmsw29u_html.lib wxmsw29u_stc.lib wxmsw29u_xrc.lib wxmsw29u_aui.lib wxpng.lib wxregexu.lib wxtiff.lib wxzlib.lib $(NOINHERIT)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(HASP_HOME)"
+				AdditionalLibraryDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib&quot;;$(HASP_HOME)"
 				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -179,16 +181,120 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+			<File
+				RelativePath=".\app.rc"
+				>
+			</File>
+			<File
+				RelativePath="..\skull.ico"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="MultiTouch"
 			>
 			<File
 				RelativePath=".\Src\MultiTouch.cpp"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="CopyProtection"
+			>
+			<File
+				RelativePath=".\Include\Features.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\UserPermissions.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\UserPermissions.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="wxPlatform"
+			>
+			<File
+				RelativePath=".\Src\App.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\App.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\MessageDialog.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\Src\PerformanceCounter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\PerformanceCounter.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\WxKeyboard.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\WxKeyboard.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\WxMouse.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\WxMouse.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\WxOSWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\WxOSWindow.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="GUI"
+			>
+			<File
+				RelativePath=".\Src\ImageWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\ImageWindow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\MainWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\MainWindow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\WindowFunctions.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="DLL"
+			>
+			<File
+				RelativePath=".\resource.h"
 				>
 			</File>
 			<File
@@ -212,51 +318,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Src\UserPermissions.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Src\WindowFunctions.cpp"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\Include\Features.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\PerformanceCounter.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\UserPermissions.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
-			<File
-				RelativePath=".\app.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\skull.ico"
 				>
 			</File>
 		</Filter>

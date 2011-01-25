@@ -366,9 +366,9 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.DirDialog dirDialog = new wx.DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption))
+            using (DirDialog dirDialog = new DirDialog("Choose the path to load files from.", locationTextBox.Caption))
             {
-                if (dirDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (dirDialog.showModal() == NativeDialogResult.OK)
                 {
                     locationTextBox.Caption = dirDialog.Path;
                     listFiles();

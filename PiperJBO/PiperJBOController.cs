@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using wx;
 using Medical.Controller;
 using Medical.GUI;
 
@@ -15,7 +14,6 @@ namespace Medical
 
         public override bool OnInit()
         {
-            wx.Image.InitAllHandlers();
             return startApplication();
         }
 
@@ -23,17 +21,12 @@ namespace Medical
         {
             controller.Dispose();
             permissions.Dispose();
-            return base.OnExit();
+            return 0;
         }
 
-        public override void Dispose()
+        public override void OnIdle()
         {
-            base.Dispose();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
+            controller.onIdle();
         }
 
         public bool startApplication()
@@ -64,16 +57,16 @@ namespace Medical
                     }
                     else
                     {
-                        wx.MessageDialog.ShowModal("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure", WindowStyles.DIALOG_OK | WindowStyles.ICON_ERROR);
+                        MessageDialog.showErrorDialog("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure");
                     }
                 }
                 else if (result == ConnectionResult.TooManyUsers)
                 {
-                    connectionLoop = wx.MessageDialog.ShowModal("Too many users currently connected. Please shut down the program on another workstation. Would you like to try to connect again?", "Network Dongle Connection Failure", WindowStyles.DIALOG_YES_NO | WindowStyles.ICON_QUESTION) == ShowModalResult.YES;
+                    connectionLoop = MessageDialog.showQuestionDialog("Too many users currently connected. Please shut down the program on another workstation. Would you like to try to connect again?", "Network Dongle Connection Failure") == NativeDialogResult.YES;
                 }
                 else if (result == ConnectionResult.NoDongle)
                 {
-                    connectionLoop = wx.MessageDialog.ShowModal("Please connect your dongle. Would you like to try to connect again?", "Dongle Connection Failure", WindowStyles.DIALOG_YES_NO | WindowStyles.ICON_QUESTION) == ShowModalResult.YES;
+                    connectionLoop = MessageDialog.showQuestionDialog("Please connect your dongle. Would you like to try to connect again?", "Dongle Connection Failure") == NativeDialogResult.YES;
                 }
             }
             return startupSuceeded;

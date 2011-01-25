@@ -14,22 +14,23 @@ namespace Medical.Controller
         public event EventHandler Closed;
 
         private RendererWindow rendererWindow;
-        private wx.Frame frame;
+        //private Frame frame;
         private WxOSWindow osWindow;
 
         public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
             :base(controller, mainTimer, cameraMover, name)
         {
+            throw new NotImplementedException();
             Point location = new Point(-1, -1);
-            wx.Display targetDisplay = wx.Display.GetDisplay(windowInfo.MonitorIndex);
-            location = targetDisplay.Geometry.Location;
-            location.Y = -1;
-            frame = new wx.Frame(Medical.GUI.MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height));
-            osWindow = new WxOSWindow(frame);
+            //wx.Display targetDisplay = wx.Display.GetDisplay(windowInfo.MonitorIndex);
+            //location = targetDisplay.Geometry.Location;
+            //location.Y = -1;
+            //frame = new wx.Frame(Medical.GUI.MainWindow.Instance, "Clone Window", location, new Size(windowInfo.Width, windowInfo.Height));
+            //osWindow = new WxOSWindow(frame);
             this.rendererWindow = OgreInterface.Instance.createRendererWindow(new WindowInfo(osWindow, "CloneWindow"));
             AllowNavigation = false;
-            frame.Show();
-            frame.EVT_CLOSE(onClose);
+            //frame.Show();
+            //frame.EVT_CLOSE(onClose);
 
             transparencyStateName = controller.ActiveWindow.CurrentTransparencyState;
             controller.ActiveWindowChanged += controller_ActiveWindowChanged;
@@ -50,7 +51,8 @@ namespace Medical.Controller
 
         public override void close()
         {
-            frame.Close();   
+            throw new NotImplementedException();
+            //frame.Close();   
         }
 
         public override bool Focused
@@ -73,9 +75,9 @@ namespace Medical.Controller
             }
         }
 
-        private void onClose(object sender, wx.Event e)
+        private void onClose(/*object sender, Event e*/)
         {
-            e.Skip();
+            //e.Skip();
             controller.destroyWindow(this);
             if (Closed != null)
             {

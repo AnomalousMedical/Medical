@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Medical.GUI;
 
 namespace Medical.Controller
 {
@@ -41,11 +42,11 @@ namespace Medical.Controller
             separator.MouseButtonReleased += separator_MouseButtonReleased;
             if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
             {
-                separator.Pointer = CursorManager.SIZE_HORZ;
+                separator.Pointer = MainWindow.SIZE_HORZ;
             }
             else
             {
-                separator.Pointer = CursorManager.SIZE_VERT;
+                separator.Pointer = MainWindow.SIZE_VERT;
             }
             separator.Visible = false;
         }

@@ -15,7 +15,6 @@ using System.IO;
 using Engine.Saving.XMLSaver;
 using OgreWrapper;
 using Medical.Controller;
-using wx;
 using System.Drawing;
 using Medical.GUI;
 
@@ -30,7 +29,7 @@ namespace Medical
             try
             {
                 piperJBO = new PiperJBOController();
-                piperJBO.Run();
+                piperJBO.run();
             }
             catch (Exception e)
             {
@@ -45,7 +44,7 @@ namespace Medical
                     e = e.InnerException;
                     errorMessage += "\n" + e.Message + "\n" + e.StackTrace;
                 }
-                wx.MessageDialog.ShowModal(errorMessage, "Exception", WindowStyles.DIALOG_OK | WindowStyles.ICON_ERROR);
+                MessageDialog.showErrorDialog(errorMessage, "Exception");
             }
         }
     }

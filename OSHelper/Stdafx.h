@@ -18,3 +18,5 @@ typedef unsigned int uint;
 typedef unsigned char byte;
 typedef unsigned short ushort;
 typedef const char* String;
+
+#include <wx/wx.h>

@@ -72,7 +72,7 @@ namespace Medical
             
         }
 
-        public void createMenuBar(wx.MenuBar menu)
+        public void createMenuBar(MenuBar menu)
         {
 
         }

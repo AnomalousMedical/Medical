@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
-using wx;
 
 namespace Medical
 {
     public class WxUpdateTimer : UpdateTimer
     {
-        private EventListener listener;
-
         Int64 deltaTime;
         Int64 totalTime = 0;
         Int64 frameStartTime;
@@ -20,7 +17,7 @@ namespace Medical
         public WxUpdateTimer(SystemTimer systemTimer)
             :base(systemTimer)
         {
-            listener = new EventListener(OnIdle);
+            
         }
 
         public override bool startLoop()
@@ -43,7 +40,7 @@ namespace Medical
             return true;
         }
 
-        public void OnIdle(object sender, Event e)
+        public void OnIdle()
         {
             if (started)
             {
@@ -79,16 +76,6 @@ namespace Medical
                 //    Thread.Sleep((int)((framerateCap - totalFrameTime) / 1000));
                 //    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                 //}
-
-                ((IdleEvent)e).RequestMore();
-            }
-        }
-
-        public EventListener IdleListener
-        {
-            get
-            {
-                return listener;
             }
         }
     }
