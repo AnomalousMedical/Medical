@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "..\Include\App.h"
+#include <wx/filesys.h>
 
 App::App(void)
 {
@@ -14,6 +15,19 @@ void App::registerDelegates(OnInitDelegate onInitCB, OnExitDelegate onExitCB, On
 	this->onInitCB = onInitCB;
 	this->onExitCB = onExitCB;
 	this->onIdleCB = onIdleCB;
+}
+
+bool App::OnInit()
+{
+	wxInitAllImageHandlers();
+	wxFileSystem::AddHandler(&zipHandler);
+	return onInitCB()!=0;
+}
+
+int App::OnExit()
+{
+	wxFileSystem::RemoveHandler(&zipHandler);
+	return onExitCB();
 }
 
 void App::OnIdle(wxIdleEvent& event)

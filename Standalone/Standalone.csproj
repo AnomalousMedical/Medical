@@ -233,6 +233,7 @@
     <Compile Include="Controller\Timeline\TimelineInstantAction.cs" />
     <Compile Include="Controller\UpdateManager.cs" />
     <Compile Include="GUI\ImageViewer.cs" />
+    <Compile Include="Platform\HtmlHelpController.cs" />
     <Compile Include="Platform\MainWindow.cs" />
     <Compile Include="GUI\ImageWindow.cs" />
     <Compile Include="Layout\MDI\SeparatorWidgetManager.cs" />

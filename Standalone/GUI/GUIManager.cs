@@ -276,9 +276,9 @@ namespace Medical.GUI
 
 #if CREATE_MAINWINDOW_MENU
 
-        public wx.MenuBar createMenuBar()
+        public MenuBar createMenuBar()
         {
-            wx.MenuBar menu = new wx.MenuBar();
+            MenuBar menu = new MenuBar();
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.createMenuBar(menu);

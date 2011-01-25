@@ -54,7 +54,7 @@ namespace Medical
         private MDILayoutManager mdiLayout;
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
-        //private HtmlHelpController htmlHelpController;
+        private HtmlHelpController htmlHelpController;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
         //Support Files
@@ -88,6 +88,7 @@ namespace Medical
 
         public void Dispose()
         {
+            htmlHelpController.Dispose();
             guiManager.Dispose();
             watermark.Dispose();
             measurementGrid.Dispose();
@@ -124,9 +125,8 @@ namespace Medical
             }
 
             //Help
-            //htmlHelpController = new HtmlHelpController();
-            //wx.FileSys.FileSystem.AddHandler(new ZipFSHandler());
-            //htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
+            htmlHelpController = new HtmlHelpController();
+            htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -253,7 +253,7 @@ namespace Medical
 
         public void openHelpTopic(int index)
         {
-            //htmlHelpController.Display(index);
+            htmlHelpController.Display(index);
         }
 
         /// <summary>
