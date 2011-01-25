@@ -413,6 +413,14 @@ namespace Medical
             }
         }
 
+        public bool Active
+        {
+            get
+            {
+                return mainWindow.Active;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();

@@ -10,7 +10,7 @@ namespace Medical
     {
         delegate bool OnInitDelegate();
         delegate int OnExitDelegate();
-        delegate void OnIdleDelegate();
+        delegate bool OnIdleDelegate();
 
         OnInitDelegate onInitCB;
         OnExitDelegate onExitCB;
@@ -44,10 +44,7 @@ namespace Medical
 
         public abstract int OnExit();
 
-        public virtual void OnIdle()
-        {
-
-        }
+        public abstract bool OnIdle();
 
         [DllImport("OSHelper")]
         private static extern IntPtr App_create();

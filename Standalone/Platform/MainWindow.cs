@@ -148,6 +148,14 @@ namespace Medical.GUI
             }
         }
 
+        public bool Active
+        {
+            get
+            {
+                return mainWindowPtr != IntPtr.Zero;
+            }
+        }
+
         public OSWindow RenderWindow { get; private set; }
 
         public OSWindow InputWindow { get; private set; }

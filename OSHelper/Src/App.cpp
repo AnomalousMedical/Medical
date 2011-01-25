@@ -18,8 +18,10 @@ void App::registerDelegates(OnInitDelegate onInitCB, OnExitDelegate onExitCB, On
 
 void App::OnIdle(wxIdleEvent& event)
 {
-	onIdleCB();
-	event.RequestMore();
+	if(onIdleCB() != 0)
+	{
+		event.RequestMore();
+	}
 }
 
 BEGIN_EVENT_TABLE(App, wxApp)

@@ -2,7 +2,7 @@
 
 typedef bool (*OnInitDelegate)();
 typedef int (*OnExitDelegate)();
-typedef void (*OnIdleDelegate)();
+typedef bool (*OnIdleDelegate)();
 
 class App : public wxApp
 {
@@ -11,13 +11,13 @@ public:
 
 	virtual ~App(void);
 
-	bool OnInit()
+	virtual bool OnInit()
 	{
 		wxInitAllImageHandlers();
 		return onInitCB()!=0;
 	}
 
-	int OnExit()
+	virtual int OnExit()
 	{
 		return onExitCB();
 	}
