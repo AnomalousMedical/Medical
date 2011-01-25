@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
@@ -15,42 +16,33 @@ namespace Medical
         private Vector3 lastMouse = Vector3.Zero;
         private bool[] buttonDownStatus = new bool[(int)MouseButtonCode.NUM_BUTTONS];
 
+        IntPtr nativeMouse;
+        delegate void MouseButtonDownDelegate(MouseButtonCode id);
+	    delegate void MouseButtonUpDelegate(MouseButtonCode id);
+	    delegate void MouseMoveDelegate(int absX, int absY);
+	    delegate void MouseWheelDelegate(int relZ);
+
+        MouseButtonDownDelegate mouseButtonDownCB;
+        MouseButtonUpDelegate mouseButtonUpCB;
+        MouseMoveDelegate mouseMoveCB;
+        MouseWheelDelegate mouseWheelCB;
+
         public WxMouse(WxOSWindow window)
         {
             this.window = window;
 
-            //window.WxWindow.AddEventListener(Event.wxEVT_LEFT_DOWN, OnMouseLeftDown);
-            //window.WxWindow.AddEventListener(Event.wxEVT_LEFT_UP, OnMouseLeftUp);
-            //window.WxWindow.AddEventListener(Event.wxEVT_LEFT_DCLICK, OnMouseLeftDouble); //WxWidgets will block the double click, but we want to fire off the events anyway
+            mouseButtonDownCB = new MouseButtonDownDelegate(OnMouseDown);
+            mouseButtonUpCB = new MouseButtonUpDelegate(OnMouseUp);
+            mouseMoveCB = new MouseMoveDelegate(OnMouseMotion);
+            mouseWheelCB = new MouseWheelDelegate(OnMouseWheel);
 
-            //window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_DOWN, OnMouseRightDown);
-            //window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_UP, OnMouseRightUp);
-            //window.WxWindow.AddEventListener(Event.wxEVT_RIGHT_DCLICK, OnMouseRightDouble); //WxWidgets will block the double click, but we want to fire off the events anyway
-
-            //window.WxWindow.AddEventListener(Event.wxEVT_MIDDLE_DOWN, OnMouseMiddleDown);
-            //window.WxWindow.AddEventListener(Event.wxEVT_MIDDLE_UP, OnMouseMiddleUp);
-
-            //window.WxWindow.AddEventListener(Event.wxEVT_MOTION, OnMouseMotion);
-
-            //window.WxWindow.AddEventListener(Event.wxEVT_MOUSEWHEEL, OnMouseWheel);
+            nativeMouse = WxMouse_new(window._NativeOSWindow, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
         }
 
         public void Dispose()
         {
-            //window.WxWindow.RemoveListener(OnMouseLeftDown);
-            //window.WxWindow.RemoveListener(OnMouseLeftUp);
-            //window.WxWindow.RemoveListener(OnMouseLeftDouble);
-
-            //window.WxWindow.RemoveListener(OnMouseRightDown);
-            //window.WxWindow.RemoveListener(OnMouseRightUp);
-            //window.WxWindow.RemoveListener(OnMouseRightDouble);
-
-            //window.WxWindow.RemoveListener(OnMouseMiddleDown);
-            //window.WxWindow.RemoveListener(OnMouseMiddleUp);
-
-            //window.WxWindow.RemoveListener(OnMouseMotion);
-
-            //window.WxWindow.RemoveListener(OnMouseWheel);
+            WxMouse_delete(nativeMouse);
+            nativeMouse = IntPtr.Zero;
         }
 
         public override bool buttonDown(MouseButtonCode button)
@@ -92,69 +84,41 @@ namespace Medical
             
         }
 
-        void OnMouseLeftDown(/*object sender, Event evt*/)
+        void OnMouseDown(MouseButtonCode id)
         {
-            buttonDownStatus[0] = true;
-            fireButtonDown(MouseButtonCode.MB_BUTTON0);
+            buttonDownStatus[(int)id] = true;
+            fireButtonDown(id);
         }
 
-        void OnMouseLeftUp(/*object sender, Event evt*/)
+        void OnMouseUp(MouseButtonCode id)
         {
-            buttonDownStatus[0] = false;
-            fireButtonUp(MouseButtonCode.MB_BUTTON0);
+            buttonDownStatus[(int)id] = false;
+            fireButtonUp(id);
         }
 
-        void OnMouseLeftDouble(/*object sender, Event evt*/)
+        void OnMouseMotion(int x, int y)
         {
-            //OnMouseLeftDown(sender, evt);
-            //OnMouseLeftUp(sender, evt);
+            absMouse.x = x;
+            absMouse.y = y;
+
+            fireMoved(MouseButtonCode.NUM_BUTTONS);
         }
 
-        void OnMouseRightDown(/*object sender, Event evt*/)
+        void OnMouseWheel(int z)
         {
-            buttonDownStatus[1] = true;
-            fireButtonDown(MouseButtonCode.MB_BUTTON1);
+            absMouse.z += z;
+
+            fireMoved(MouseButtonCode.NUM_BUTTONS);
         }
 
-        void OnMouseRightUp(/*object sender, Event evt*/)
-        {
-            buttonDownStatus[1] = false;
-            fireButtonUp(MouseButtonCode.MB_BUTTON1);
-        }
+        #region PInvoke
 
-        void OnMouseRightDouble(/*object sender, Event evt*/)
-        {
-            //OnMouseRightDown(sender, evt);
-            //OnMouseRightUp(sender, evt);
-        }
+        [DllImport("OSHelper")]
+        private static extern IntPtr WxMouse_new(IntPtr osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
 
-        void OnMouseMiddleDown(/*object sender, Event evt*/)
-        {
-            buttonDownStatus[2] = true;
-            fireButtonDown(MouseButtonCode.MB_BUTTON2);
-        }
+        [DllImport("OSHelper")]
+        private static extern void WxMouse_delete(IntPtr mouse);
 
-        void OnMouseMiddleUp(/*object sender, Event evt*/)
-        {
-            buttonDownStatus[2] = false;
-            fireButtonUp(MouseButtonCode.MB_BUTTON2);
-        }
-
-        void OnMouseMotion(/*object sender, Event evt*/)
-        {
-            //MouseEvent mevt = ((MouseEvent)evt);
-            //absMouse.x = mevt.X;
-            //absMouse.y = mevt.Y;
-
-            //fireMoved(MouseButtonCode.NUM_BUTTONS);
-        }
-
-        void OnMouseWheel(/*object sender, Event evt*/)
-        {
-            //MouseEvent mevt = ((MouseEvent)evt);
-            //absMouse.z += mevt.WheelRotation;
-
-            //fireMoved(MouseButtonCode.NUM_BUTTONS);
-        }
+        #endregion
     }
 }

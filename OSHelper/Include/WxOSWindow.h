@@ -17,6 +17,11 @@ public:
 
 	void registerCallbacks(NativeCallback closedCallback, NativeCallback sizedCallback);
 
+	wxWindow* getWxWindow()
+	{
+		return window;
+	}
+
 private:
 
 	NativeCallback closedCallback;

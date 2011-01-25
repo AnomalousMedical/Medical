@@ -26,6 +26,22 @@ namespace Medical
             WxOSWindow_registerCallbacks(nativeWindow, closedCallback, sizedCallback);
         }
 
+        /// <summary>
+        /// <para>
+        /// Returns a pointer to the native OSWindow.
+        /// </para>
+        /// <para>
+        /// This should only be called by other platform classes.
+        /// </para>
+        /// </summary>
+        internal IntPtr _NativeOSWindow
+        {
+            get
+            {
+                return nativeWindow;
+            }
+        }
+
         private void onResize()
         {
             foreach (OSWindowListener listener in listeners)
