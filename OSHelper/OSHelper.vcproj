@@ -254,6 +254,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Src\DirDialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\Enums.cpp"
 				>
 			</File>
@@ -279,6 +283,14 @@
 			</File>
 			<File
 				RelativePath=".\Include\NativeOSWindow.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\NativeString.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\NativeString.h"
 				>
 			</File>
 			<File
