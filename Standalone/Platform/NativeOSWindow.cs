@@ -35,9 +35,9 @@ namespace Medical
         {
             this.title = title;
 
-            deleteCB = new DeleteDelegate(onDelete);
-            sizedCB = new SizedDelegate(onResize);
-            closedCB = new ClosedDelegate(onClosed);
+            deleteCB = new DeleteDelegate(delete);
+            sizedCB = new SizedDelegate(resize);
+            closedCB = new ClosedDelegate(closed);
 
             IntPtr parentPtr = IntPtr.Zero;
             if (parent != null)
@@ -52,9 +52,24 @@ namespace Medical
         {
             if (nativeWindow != IntPtr.Zero)
             {
+                disposed();
                 NativeOSWindow_destroy(nativeWindow);
                 nativeWindow = IntPtr.Zero;
             }
+        }
+
+        /// <summary>
+        /// Callback from the native class for deletion. Will alter the behavior of dispose.
+        /// </summary>
+        private void delete()
+        {
+            disposed();
+            nativeWindow = IntPtr.Zero;
+        }
+
+        protected virtual void disposed()
+        {
+
         }
 
         public void showFullScreen()
@@ -157,7 +172,7 @@ namespace Medical
             }
         }
 
-        private void onResize()
+        private void resize()
         {
             foreach (OSWindowListener listener in listeners)
             {
@@ -165,7 +180,7 @@ namespace Medical
             }
         }
 
-        private void onClosed()
+        private void closed()
         {
             foreach (OSWindowListener listener in listeners)
             {
@@ -181,11 +196,6 @@ namespace Medical
             {
                 Closed.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        private void onDelete()
-        {
-            nativeWindow = IntPtr.Zero;
         }
 
         #region PInvoke
