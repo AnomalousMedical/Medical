@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Medical.GUI;
 using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace Medical
 {
@@ -22,7 +23,15 @@ namespace Medical
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         IntPtr nativeWindow;
 
-        public NativeOSWindow(String title, int width, int height)
+        public event EventHandler Closed;
+
+        public NativeOSWindow(String title, Point position, Size size)
+            :this(null, title, position, size)
+        {
+            
+        }
+
+        public NativeOSWindow(NativeOSWindow parent, String title, Point position, Size size)
         {
             this.title = title;
 
@@ -30,7 +39,13 @@ namespace Medical
             sizedCB = new SizedDelegate(onResize);
             closedCB = new ClosedDelegate(onClosed);
 
-            nativeWindow = NativeOSWindow_create(title, width, height, deleteCB, sizedCB, closedCB);
+            IntPtr parentPtr = IntPtr.Zero;
+            if (parent != null)
+            {
+                parentPtr = parent._NativePtr;
+            }
+
+            nativeWindow = NativeOSWindow_create(parentPtr, title, position.X, position.Y, size.Width, size.Height, deleteCB, sizedCB, closedCB);
         }
 
         public void Dispose()
@@ -161,6 +176,11 @@ namespace Medical
             {
                 listener.closed(this);
             }
+
+            if (Closed != null)
+            {
+                Closed.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void onDelete()
@@ -171,7 +191,7 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr NativeOSWindow_create(String caption, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
+        private static extern IntPtr NativeOSWindow_create(IntPtr parent, String caption, int x, int y, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
 
         [DllImport("OSHelper")]
         private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
