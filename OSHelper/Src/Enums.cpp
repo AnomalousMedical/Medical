@@ -15,3 +15,8 @@ NativeDialogResult interpretResults(int resultCode)
 			return CANCEL;
 	}
 }
+
+int convertMenuItemID(CommonMenuItems id)
+{
+	return (int)id;
+}

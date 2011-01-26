@@ -119,3 +119,10 @@ extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* native
 {
 	nativeWindow->getMainControl()->SetCursor(windowCursors[(int)cursor]);
 }
+
+extern "C" _AnomalousExport wxMenuBar* NativeOSWindow_createMenu(NativeOSWindow* nativeWindow)
+{
+	wxMenuBar* menuBar = new wxMenuBar();
+	nativeWindow->SetMenuBar(menuBar);
+	return menuBar;
+}

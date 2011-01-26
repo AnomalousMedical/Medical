@@ -9,3 +9,18 @@ enum NativeDialogResult
 };
 
 NativeDialogResult interpretResults(int resultCode);
+
+enum CommonMenuItems
+{
+    New,
+    Open, 
+    Save,
+    SaveAs,
+    Exit,
+    Preferences,
+    Help,
+    About,
+    AutoAssign = -1
+};
+
+int convertMenuItemID(CommonMenuItems id);

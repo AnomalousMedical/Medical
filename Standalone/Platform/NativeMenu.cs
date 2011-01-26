@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
@@ -20,34 +21,65 @@ namespace Medical
 
     public class NativeMenu
     {
-        public NativeMenuItem Append(CommonMenuItems id, string text, string helpText)
+        IntPtr nativeMenu;
+
+        internal NativeMenu(IntPtr nativeMenu)
         {
-            throw new NotImplementedException();
+            this.nativeMenu = nativeMenu;
         }
 
-        public void AppendSeparator()
+        public NativeMenuItem append(CommonMenuItems id, String text, String helpText)
         {
-            throw new NotImplementedException();
+            return append(id, text, helpText, false);
         }
 
-        public NativeMenuItem Append(CommonMenuItems id, string text, NativeMenu subMenu)
+        public NativeMenuItem append(CommonMenuItems id, String text, String helpText, bool subMenu)
         {
-            throw new NotImplementedException();
+            return new NativeMenuItem(NativeMenu_append(nativeMenu, id, text, helpText, subMenu));
         }
 
-        public void Remove(NativeMenuItem recentDocMenuItem)
+        public void appendSeparator()
         {
-            throw new NotImplementedException();
+            NativeMenu_appendSeparator(nativeMenu);
         }
 
-        public void Insert(int p, NativeMenuItem recentDocMenuItem)
+        public void insert(int index, NativeMenuItem menuItem)
         {
-            throw new NotImplementedException();
+            NativeMenu_insertItem(nativeMenu, index, menuItem._NativePtr);
         }
 
-        public NativeMenuItem Insert(int p, int p_2, string p_3)
+        public NativeMenuItem insert(int index, CommonMenuItems id, String text, String helpText)
         {
-            throw new NotImplementedException();
+            return insert(index, id, text, helpText, false);
         }
+
+        public NativeMenuItem insert(int index, CommonMenuItems id, String text, String helpText, bool subMenu)
+        {
+            return new NativeMenuItem(NativeMenu_insert(nativeMenu, index, id, text, helpText, subMenu));
+        }
+
+        public void remove(NativeMenuItem menuItem)
+        {
+            NativeMenu_remove(nativeMenu, menuItem._NativePtr);
+        }
+
+        #region PInvoke
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeMenu_append(IntPtr menu, CommonMenuItems id, String text, String helpText, bool subMenu);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeMenu_appendSeparator(IntPtr menu);
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeMenu_insert(IntPtr menu, int index, CommonMenuItems id, String text, String helpText, bool subMenu);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeMenu_insertItem(IntPtr menu, int index, IntPtr menuItem);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeMenu_remove(IntPtr menu, IntPtr menuItem);
+
+        #endregion
     }
 }

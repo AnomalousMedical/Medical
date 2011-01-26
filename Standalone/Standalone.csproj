@@ -32,7 +32,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
-    <DefineConstants>TRACE;WINDOWS ALLOW_OVERRIDE</DefineConstants>
+    <DefineConstants>TRACE;WINDOWS ALLOW_OVERRIDE CREATE_MAINWINDOW_MENU</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>

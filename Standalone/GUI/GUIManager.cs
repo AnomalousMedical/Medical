@@ -276,14 +276,12 @@ namespace Medical.GUI
 
 #if CREATE_MAINWINDOW_MENU
 
-        public MenuBar createMenuBar()
+        public void createMenuBar(NativeMenuBar menu)
         {
-            MenuBar menu = new MenuBar();
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.createMenuBar(menu);
             }
-            return menu;
         }
 
 #endif

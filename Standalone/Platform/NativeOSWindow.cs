@@ -19,6 +19,7 @@ namespace Medical
         SizedDelegate sizedCB;
         ClosedDelegate closedCB;
         String title;
+        NativeMenuBar menuBar = null;
 
         private List<OSWindowListener> listeners = new List<OSWindowListener>();
         IntPtr nativeWindow;
@@ -125,6 +126,18 @@ namespace Medical
             get
             {
                 return nativeWindow != IntPtr.Zero;
+            }
+        }
+
+        public NativeMenuBar MenuBar
+        {
+            get
+            {
+                if (menuBar == null)
+                {
+                    menuBar = new NativeMenuBar(NativeOSWindow_createMenu(nativeWindow));
+                }
+                return menuBar;
             }
         }
 
@@ -237,6 +250,9 @@ namespace Medical
 
         [DllImport("OSHelper")]
         private static extern void NativeOSWindow_setCursor(IntPtr nativeWindow, CursorType cursor);
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeOSWindow_createMenu(IntPtr nativeWindow);
 
         #endregion
     }

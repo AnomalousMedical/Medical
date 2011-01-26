@@ -296,6 +296,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Src\NativeMenu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\NativeMenuBar.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\NativeMenuItem.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\NativeOSWindow.cpp"
 				>
 			</File>
