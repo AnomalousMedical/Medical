@@ -312,6 +312,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Src\NativeStringEnumerator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\NativeStringEnumerator.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\PerformanceCounter.cpp"
 				>
 			</File>

@@ -330,7 +330,7 @@ namespace Medical.GUI
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {

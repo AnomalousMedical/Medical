@@ -10,26 +10,20 @@ namespace Medical
     {
         private IntPtr fileDialog;
 
-        public FileOpenDialog(NativeOSWindow parent)
-            : this(parent, "", "", "", "")
-        {
-
-        }
-
         public FileOpenDialog(NativeOSWindow parent, String message)
-            :this(parent, message, "", "", "")
+            :this(parent, message, "", "", "", false)
         {
             
         }
 
-        public FileOpenDialog(NativeOSWindow parent, String message, String defaultDir, String defaultFile, String wildcard)
+        public FileOpenDialog(NativeOSWindow parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple)
         {
             IntPtr parentPtr = IntPtr.Zero;
             if (parent != null)
             {
                 parentPtr = parent._NativePtr;
             }
-            fileDialog = FileOpenDialog_new(parentPtr, message, defaultDir, defaultFile, wildcard);
+            fileDialog = FileOpenDialog_new(parentPtr, message, defaultDir, defaultFile, wildcard, selectMultiple);
         }
 
         public void Dispose()
@@ -41,6 +35,8 @@ namespace Medical
         {
             return FileOpenDialog_showModal(fileDialog);
         }
+
+        public bool SelectMultiple { get; set; }
 
         public String Wildcard
         {
@@ -72,18 +68,25 @@ namespace Medical
             }
         }
 
-        public String[] Paths
+        /// <summary>
+        /// Return an Enumerator over all paths. Call this carefully as it will
+        /// allocate native objects. Either let foreach call dispose or call it
+        /// yourself.
+        /// </summary>
+        public NativeStringEnumerator Paths
         {
             get
             {
-                throw new NotImplementedException();
+                NativeStringEnumerator nse = new NativeStringEnumerator();
+                FileOpenDialog_getPaths(fileDialog, nse._NativePtr);
+                return nse;
             }
         }
 
         #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr FileOpenDialog_new(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard);
+        private static extern IntPtr FileOpenDialog_new(IntPtr parent, String message, String defaultDir, String defaultFile, String wildcard, bool selectMultiple);
 
         [DllImport("OSHelper")]
         private static extern void FileOpenDialog_delete(IntPtr fileDialog);
@@ -102,6 +105,9 @@ namespace Medical
 
         [DllImport("OSHelper")]
         private static extern IntPtr FileOpenDialog_getPath(IntPtr fileDialog);
+
+        [DllImport("OSHelper")]
+        private static extern void FileOpenDialog_getPaths(IntPtr fileDialog, IntPtr nativeStringEnumerator);
 
         #endregion
     }

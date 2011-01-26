@@ -100,7 +100,7 @@ namespace Medical.GUI
 
         void importButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Choose files to import", "", "", "", true))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
