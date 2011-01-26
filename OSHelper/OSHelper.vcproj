@@ -262,6 +262,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Src\NativeOSWindow.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\NativeOSWindow.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\PerformanceCounter.cpp"
 				>
 			</File>
@@ -285,26 +293,10 @@
 				RelativePath=".\Include\WxMouse.h"
 				>
 			</File>
-			<File
-				RelativePath=".\Src\WxOSWindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\WxOSWindow.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="GUI"
 			>
-			<File
-				RelativePath=".\Src\MainWindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\MainWindow.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Src\WindowFunctions.cpp"
 				>

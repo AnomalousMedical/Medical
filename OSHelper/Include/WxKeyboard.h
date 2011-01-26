@@ -150,7 +150,7 @@ enum KeyboardButtonCode
     KC_MEDIASELECT = 237,
 };
 
-class WxOSWindow;
+class NativeOSWindow;
 
 class WxKeyboard
 {
@@ -158,14 +158,14 @@ public:
 	typedef void (*KeyDownDelegate)(KeyboardButtonCode keyCode, uint character);
 	typedef void (*KeyUpDelegate)(KeyboardButtonCode keyCode);
 
-	WxKeyboard(WxOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
+	WxKeyboard(NativeOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB);
 
 	~WxKeyboard(void);
 
 private:
 	KeyDownDelegate keyDownCB;
 	KeyUpDelegate keyUpCB;
-	WxOSWindow* osWindow;
+	NativeOSWindow* osWindow;
 	int downKeyCode;
 
 	void OnKeyDown(wxKeyEvent& kevt);

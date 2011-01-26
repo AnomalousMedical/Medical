@@ -243,10 +243,10 @@
     <Compile Include="Platform\MenuBar.cs" />
     <Compile Include="Platform\MenuItem.cs" />
     <Compile Include="Platform\MessageDialog.cs" />
+    <Compile Include="Platform\NativeOSWindow.cs" />
     <Compile Include="Platform\SystemInfo.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
-    <Compile Include="Platform\WxOSWindow.cs" />
     <Compile Include="Platform\WxPlatformPlugin.cs" />
     <Compile Include="Platform\WxSystemTimer.cs" />
     <Compile Include="Platform\WxUpdateTimer.cs" />

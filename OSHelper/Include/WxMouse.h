@@ -13,7 +13,7 @@ enum MouseButtonCode
     NUM_BUTTONS = 8,
 };
 
-class WxOSWindow;
+class NativeOSWindow;
 
 class WxMouse
 {
@@ -23,7 +23,7 @@ public:
 	typedef void (*MouseMoveDelegate)(int absX, int absY);
 	typedef void (*MouseWheelDelegate)(int relZ);
 
-	WxMouse(WxOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
+	WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB);
 
 	virtual ~WxMouse();
 
@@ -85,5 +85,5 @@ private:
 	MouseButtonUpDelegate mouseButtonUpCB;
 	MouseMoveDelegate mouseMoveCB;
 	MouseWheelDelegate mouseWheelCB;
-	WxOSWindow* osWindow;
+	NativeOSWindow* osWindow;
 };

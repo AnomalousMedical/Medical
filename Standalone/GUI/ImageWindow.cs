@@ -14,7 +14,7 @@ namespace Medical.GUI
     {
         private IntPtr nativeWindow = IntPtr.Zero;
 
-        public ImageWindow(WxOSWindow parent, String windowTitle, System.Drawing.Bitmap image)
+        public ImageWindow(NativeOSWindow parent, String windowTitle, System.Drawing.Bitmap image)
         //:base(parent, windowTitle, wxDefaultPosition, new System.Drawing.Size(640, 480))
         {
             //Bit of voodoo to get image into wxWidgets.
@@ -22,7 +22,7 @@ namespace Medical.GUI
             image.Save(imageFile, ImageFormat.Png);
             image.Dispose();
 
-            nativeWindow = ImageWindow_new(parent._NativeOSWindow, windowTitle, imageFile, MedicalConfig.DocRoot);
+            nativeWindow = ImageWindow_new(parent._NativePtr, windowTitle, imageFile, MedicalConfig.DocRoot);
 
             try
             {

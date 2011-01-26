@@ -1,10 +1,10 @@
 #include "StdAfx.h"
 #include "..\Include\WxKeyboard.h"
-#include "WxOSWindow.h"
+#include "NativeOSWindow.h"
 
 KeyboardButtonCode WxKeyboard::keyConverter[397];
 
-WxKeyboard::WxKeyboard(WxOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB)
+WxKeyboard::WxKeyboard(NativeOSWindow* osWindow, KeyDownDelegate keyDownCB, KeyUpDelegate keyUpCB)
 :osWindow(osWindow),
 keyDownCB(keyDownCB),
 keyUpCB(keyUpCB),
@@ -12,7 +12,7 @@ downKeyCode(0)
 {
 	createConverterTable();
 
-	wxWindow* window = osWindow->getWxWindow();
+	wxWindow* window = osWindow->getMainControl();
 
 	window->Bind(wxEVT_KEY_DOWN, &WxKeyboard::OnKeyDown, this);
 	window->Bind(wxEVT_CHAR, &WxKeyboard::OnChar, this);
@@ -302,7 +302,7 @@ void WxKeyboard::createConverterTable()
 }
 
 //PInvoke
-extern "C" _AnomalousExport WxKeyboard* WxKeyboard_new(WxOSWindow* osWindow, WxKeyboard::KeyDownDelegate keyDownCB, WxKeyboard::KeyUpDelegate keyUpCB)
+extern "C" _AnomalousExport WxKeyboard* WxKeyboard_new(NativeOSWindow* osWindow, WxKeyboard::KeyDownDelegate keyDownCB, WxKeyboard::KeyUpDelegate keyUpCB)
 {
 	return new WxKeyboard(osWindow, keyDownCB, keyUpCB);
 }

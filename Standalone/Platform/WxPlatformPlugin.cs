@@ -49,7 +49,7 @@ namespace Medical
 
         public InputHandler createInputHandler(OSWindow window, bool foreground, bool exclusive, bool noWinKey)
         {
-            return new WxInputHandler((WxOSWindow)window);
+            return new WxInputHandler((NativeOSWindow)window);
         }
 
         public void destroyInputHandler(InputHandler handler)

@@ -1,10 +1,10 @@
 #include "StdAfx.h"
 #include "..\Include\ImageWindow.h"
-#include "WxOSWindow.h"
+#include "NativeOSWindow.h"
 #include "ImageViewer.h"
 
-ImageWindow::ImageWindow(WxOSWindow* parent, String windowTitle, String imageFile, String homeDir)
-:wxFrame(parent->getWxWindow(), -1, wxString::FromAscii(windowTitle)),
+ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
+:wxFrame(parent, -1, wxString::FromAscii(windowTitle)),
 homeDir(wxString::FromAscii(homeDir)),
 saveLocation("")
 {
@@ -120,7 +120,7 @@ void ImageWindow::menuClose(wxEvent& e)
     Close();
 }
 
-extern "C" _AnomalousExport ImageWindow* ImageWindow_new(WxOSWindow* parent, String windowTitle, String imageFile, String homeDir)
+extern "C" _AnomalousExport ImageWindow* ImageWindow_new(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
 {
 	return new ImageWindow(parent, windowTitle, imageFile, homeDir);
 }

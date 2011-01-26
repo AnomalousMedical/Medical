@@ -8,20 +8,20 @@ using System.Runtime.InteropServices;
 
 namespace Medical.GUI
 {
-    public class MainWindow : IDisposable
+    public enum CursorType
     {
-        enum CursorType
-        {
-            Arrow = 0,
-            Beam = 1,
-            SizeLeft = 2,
-            SizeRight = 3,
-            SizeHorz = 4,
-            SizeVert = 5,
-            Hand = 6,
-            Link = 7,
-        }
+        Arrow = 0,
+        Beam = 1,
+        SizeLeft = 2,
+        SizeRight = 3,
+        SizeHorz = 4,
+        SizeVert = 5,
+        Hand = 6,
+        Link = 7,
+    }
 
+    public class MainWindow : NativeOSWindow
+    {
         private static Dictionary<string, CursorType> cursors = new Dictionary<string, CursorType>();
         public const String ARROW = "arrow";
         public const String BEAM = "beam";
@@ -44,42 +44,15 @@ namespace Medical.GUI
             cursors.Add(LINK, CursorType.Link);
         }
 
-        private delegate void DeleteDelegate();
-        private DeleteDelegate deleteCB;
-
         private String windowDefaultText;
-        private String windowTitle = "Piper's Joint Based Occlusion";
+        private static String windowTitle = "Piper's Joint Based Occlusion";
 
         public static MainWindow Instance { get; private set; }
 
-        private IntPtr mainWindowPtr;
-
         public MainWindow()
+            :base(windowTitle, 800, 600)
         {
-            deleteCB = new DeleteDelegate(delete);
-            mainWindowPtr = MainWindow_create(windowTitle, 800, 600, deleteCB);
-
             Instance = this;
-
-            RenderWindow = new WxOSWindow(MainWindow_getOSWindow(mainWindowPtr));
-            InputWindow = RenderWindow;
-        }
-
-        public void Dispose()
-        {
-            if (mainWindowPtr != IntPtr.Zero)
-            {
-                MainWindow_destroy(mainWindowPtr);
-                mainWindowPtr = IntPtr.Zero;
-            }
-        }
-
-        /// <summary>
-        /// This is called by the native side if the window is deleted.
-        /// </summary>
-        private void delete()
-        {
-            mainWindowPtr = IntPtr.Zero;
         }
 
         public void setPointerManager(MyGUIPlugin.PointerManager pointerManager)
@@ -98,11 +71,11 @@ namespace Medical.GUI
                 windowDefaultText = this.Title;
             }
 
-#if WINDOWS
-            Title = String.Format("{0} - {1}", windowDefaultText, subName);
-#elif MAC_OSX
-            Title = subName;
-#endif
+            #if WINDOWS
+                Title = String.Format("{0} - {1}", windowDefaultText, subName);
+            #elif MAC_OSX
+                Title = subName;
+            #endif
         }
 
         /// <summary>
@@ -116,105 +89,9 @@ namespace Medical.GUI
             }
         }
 
-        public void showFullScreen()
-        {
-            MainWindow_showFullScreen(mainWindowPtr);
-        }
-
-        public void setSize(int width, int height)
-        {
-            MainWindow_setSize(mainWindowPtr, width, height);
-        }
-
-        public void show()
-        {
-            MainWindow_show(mainWindowPtr);
-        }
-
-        public void close()
-        {
-            MainWindow_close(mainWindowPtr);
-        }
-
-        public bool Maximized
-        {
-            get
-            {
-                return MainWindow_getMaximized(mainWindowPtr);
-            }
-            set
-            {
-                MainWindow_setMaximized(mainWindowPtr, value);
-            }
-        }
-
-        public bool Active
-        {
-            get
-            {
-                return mainWindowPtr != IntPtr.Zero;
-            }
-        }
-
-        public WxOSWindow RenderWindow { get; private set; }
-
-        public WxOSWindow InputWindow { get; private set; }
-
-        public String Title
-        {
-            get
-            {
-                return windowTitle;
-            }
-            set
-            {
-                windowTitle = value;
-                MainWindow_setTitle(mainWindowPtr, value);
-            }
-        }
-
         void pointerManager_ChangeMousePointer(string pointerName)
         {
-            MainWindow_setCursor(mainWindowPtr, cursors[pointerName]);
+            setCursor(cursors[pointerName]);
         }
-
-#region PInvoke
-
-        [DllImport("OSHelper")]
-        private static extern IntPtr MainWindow_create(String caption, int width, int height, DeleteDelegate deleteCB);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_destroy(IntPtr mainWindow);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_setTitle(IntPtr mainWindow, String title);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_setSize(IntPtr mainWindow, int width, int height);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_showFullScreen(IntPtr mainWindow);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_show(IntPtr mainWindow);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_close(IntPtr mainWindow);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_setMaximized(IntPtr mainWindow, bool maximize);
-
-        [DllImport("OSHelper")]
-        [return: MarshalAs(UnmanagedType.I1)]
-        private static extern bool MainWindow_getMaximized(IntPtr mainWindow);
-
-        [DllImport("OSHelper")]
-        private static extern void MainWindow_setCursor(IntPtr mainWindow, CursorType cursor);
-
-        [DllImport("OSHelper")]
-        private static extern IntPtr MainWindow_getOSWindow(IntPtr mainWindow);
-
-#endregion
-
     }
 }

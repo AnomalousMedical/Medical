@@ -1,0 +1,215 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Engine.Platform;
+using Medical.GUI;
+using System.Runtime.InteropServices;
+
+namespace Medical
+{
+    public class NativeOSWindow : OSWindow, IDisposable
+    {
+        delegate void DeleteDelegate();
+	    delegate void SizedDelegate();
+	    delegate void ClosedDelegate();
+
+        DeleteDelegate deleteCB;
+        SizedDelegate sizedCB;
+        ClosedDelegate closedCB;
+        String title;
+
+        private List<OSWindowListener> listeners = new List<OSWindowListener>();
+        IntPtr nativeWindow;
+
+        public NativeOSWindow(String title, int width, int height)
+        {
+            this.title = title;
+
+            deleteCB = new DeleteDelegate(onDelete);
+            sizedCB = new SizedDelegate(onResize);
+            closedCB = new ClosedDelegate(onClosed);
+
+            nativeWindow = NativeOSWindow_create(title, width, height, deleteCB, sizedCB, closedCB);
+        }
+
+        public void Dispose()
+        {
+            if (nativeWindow != IntPtr.Zero)
+            {
+                NativeOSWindow_destroy(nativeWindow);
+                nativeWindow = IntPtr.Zero;
+            }
+        }
+
+        public void showFullScreen()
+        {
+            NativeOSWindow_showFullScreen(nativeWindow);
+        }
+
+        public void setSize(int width, int height)
+        {
+            NativeOSWindow_setSize(nativeWindow, width, height);
+        }
+
+        public void show()
+        {
+            NativeOSWindow_show(nativeWindow);
+        }
+
+        public void close()
+        {
+            NativeOSWindow_close(nativeWindow);
+        }
+
+        public void setCursor(CursorType cursor)
+        {
+            NativeOSWindow_setCursor(nativeWindow, cursor);
+        }
+
+        public String Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                NativeOSWindow_setTitle(nativeWindow, title);
+            }
+        }
+
+        public bool Maximized
+        {
+            get
+            {
+                return NativeOSWindow_getMaximized(nativeWindow);
+            }
+            set
+            {
+                NativeOSWindow_setMaximized(nativeWindow, value);
+            }
+        }
+
+        public bool Active
+        {
+            get
+            {
+                return nativeWindow != IntPtr.Zero;
+            }
+        }
+
+        #region OSWindow Members
+
+        public bool Focused
+        {
+            get { return true; }
+        }
+
+        public string WindowHandle
+        {
+            get { return NativeOSWindow_getHandle(nativeWindow).ToString(); }
+        }
+
+        public int WindowHeight
+        {
+            get { return NativeOSWindow_getHeight(nativeWindow); }
+        }
+
+        public int WindowWidth
+        {
+            get { return NativeOSWindow_getWidth(nativeWindow); }
+        }
+
+        public void addListener(OSWindowListener listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void removeListener(OSWindowListener listener)
+        {
+            listeners.Remove(listener);
+        }
+
+        #endregion
+
+        internal IntPtr _NativePtr
+        {
+            get
+            {
+                return nativeWindow;
+            }
+        }
+
+        private void onResize()
+        {
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.resized(this);
+            }
+        }
+
+        private void onClosed()
+        {
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.closing(this);
+            }
+
+            foreach (OSWindowListener listener in listeners)
+            {
+                listener.closed(this);
+            }
+        }
+
+        private void onDelete()
+        {
+            nativeWindow = IntPtr.Zero;
+        }
+
+        #region PInvoke
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeOSWindow_create(String caption, int width, int height, DeleteDelegate deleteCB, SizedDelegate sizedCB, ClosedDelegate closedCB);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_destroy(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_setTitle(IntPtr nativeWindow, String title);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_showFullScreen(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_setSize(IntPtr nativeWindow, int width, int height);
+
+        [DllImport("OSHelper")]
+        private static extern int NativeOSWindow_getWidth(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern int NativeOSWindow_getHeight(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeOSWindow_getHandle(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_show(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_close(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_setMaximized(IntPtr nativeWindow, bool maximize);
+
+        [DllImport("OSHelper")]
+        [return: MarshalAs(UnmanagedType.I1)]
+        private static extern bool NativeOSWindow_getMaximized(IntPtr nativeWindow);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeOSWindow_setCursor(IntPtr nativeWindow, CursorType cursor);
+
+        #endregion
+    }
+}

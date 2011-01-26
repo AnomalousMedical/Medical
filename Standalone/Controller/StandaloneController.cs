@@ -81,8 +81,8 @@ namespace Medical
             //Engine core
             medicalController = new MedicalController();
             mainWindow = new MainWindow();
-            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow.RenderWindow, Medical.Controller.WindowIcons.ICON_SKULL);
-            medicalController.initialize(mainWindow.InputWindow, createWindow);
+            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow, Medical.Controller.WindowIcons.ICON_SKULL);
+            medicalController.initialize(mainWindow, createWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
         }
 
@@ -117,7 +117,7 @@ namespace Medical
             //MultiTouch
             if (MultiTouch.IsAvailable)
             {
-                MultiTouch.registerMultiTouchEventHandler(mainWindow.InputWindow);
+                MultiTouch.registerMultiTouchEventHandler(mainWindow);
             }
             else
             {
@@ -603,7 +603,7 @@ namespace Medical
         /// <param name="defaultWindow"></param>
         private void createWindow(out WindowInfo defaultWindow)
         {
-            defaultWindow = new WindowInfo(mainWindow.RenderWindow, "Primary");
+            defaultWindow = new WindowInfo(mainWindow, "Primary");
             defaultWindow.Fullscreen = MedicalConfig.EngineConfig.Fullscreen;
             defaultWindow.MonitorIndex = 0;
 

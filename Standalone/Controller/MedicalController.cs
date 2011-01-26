@@ -211,7 +211,7 @@ namespace Medical
 
         public void recreateInputHandler(OSWindow window)
         {
-            inputHandler = new WxInputHandler(window as WxOSWindow);
+            inputHandler = new WxInputHandler(window as NativeOSWindow);
             eventManager.changeInputHandler(inputHandler);
         }
 

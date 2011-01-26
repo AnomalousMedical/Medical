@@ -15,7 +15,7 @@ namespace Medical.Controller
 
         private RendererWindow rendererWindow;
         //private Frame frame;
-        private WxOSWindow osWindow;
+        private NativeOSWindow osWindow;
 
         public SingleViewCloneWindow(WindowInfo windowInfo, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
             :base(controller, mainTimer, cameraMover, name)

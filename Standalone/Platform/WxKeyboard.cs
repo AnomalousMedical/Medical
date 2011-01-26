@@ -20,20 +20,20 @@ namespace Medical
         public override event KeyEvent KeyPressed;
         public override event KeyEvent KeyReleased;
 
-        private WxOSWindow window;
+        private NativeOSWindow window;
         private bool[] keysDown = new bool[256];
         bool altDown = false;
         bool ctrlDown = false;
         bool shiftDown = false;
 
-        public WxKeyboard(WxOSWindow window)
+        public WxKeyboard(NativeOSWindow window)
         {
             this.window = window;
 
             keyDownCB = new KeyDownDelegate(OnKeyDown);
             keyUpCB = new KeyUpDelegate(OnKeyUp);
 
-            nativeKeyboard = WxKeyboard_new(window._NativeOSWindow, keyDownCB, keyUpCB);
+            nativeKeyboard = WxKeyboard_new(window._NativePtr, keyDownCB, keyUpCB);
         }
 
         public void Dispose()

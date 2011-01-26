@@ -8,12 +8,12 @@ namespace Medical
 {
     public class WxInputHandler : InputHandler, IDisposable
     {
-        WxOSWindow window;
+        NativeOSWindow window;
 
         private WxKeyboard createdKeyboard;
         private WxMouse createdMouse;
 
-        public WxInputHandler(WxOSWindow window)
+        public WxInputHandler(NativeOSWindow window)
         {
             this.window = window;
         }

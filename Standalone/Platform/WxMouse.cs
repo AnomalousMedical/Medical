@@ -10,7 +10,7 @@ namespace Medical
 {
     class WxMouse : Mouse, IDisposable
     {
-        private WxOSWindow window;
+        private NativeOSWindow window;
         private Vector3 absMouse = Vector3.Zero;
         private Vector3 relMouse = Vector3.Zero;
         private Vector3 lastMouse = Vector3.Zero;
@@ -27,7 +27,7 @@ namespace Medical
         MouseMoveDelegate mouseMoveCB;
         MouseWheelDelegate mouseWheelCB;
 
-        public WxMouse(WxOSWindow window)
+        public WxMouse(NativeOSWindow window)
         {
             this.window = window;
 
@@ -36,7 +36,7 @@ namespace Medical
             mouseMoveCB = new MouseMoveDelegate(OnMouseMotion);
             mouseWheelCB = new MouseWheelDelegate(OnMouseWheel);
 
-            nativeMouse = WxMouse_new(window._NativeOSWindow, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
+            nativeMouse = WxMouse_new(window._NativePtr, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
         }
 
         public void Dispose()

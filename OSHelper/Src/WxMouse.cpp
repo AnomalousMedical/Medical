@@ -1,15 +1,15 @@
 #include "StdAfx.h"
 #include "..\Include\WxMouse.h"
-#include "WxOSWindow.h"
+#include "NativeOSWindow.h"
 
-WxMouse::WxMouse(WxOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB)
+WxMouse::WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB)
 :osWindow(osWindow),
 mouseButtonDownCB(mouseButtonDownCB),
 mouseButtonUpCB(mouseButtonUpCB),
 mouseMoveCB(mouseMoveCB),
 mouseWheelCB(mouseWheelCB)
 {
-	wxWindow* window = osWindow->getWxWindow();
+	wxWindow* window = osWindow->getMainControl();
 
 	window->Bind(wxEVT_LEFT_DOWN, &WxMouse::OnMouseLeftDown, this);
 	window->Bind(wxEVT_LEFT_UP, &WxMouse::OnMouseLeftUp, this);
@@ -34,7 +34,7 @@ WxMouse::~WxMouse(void)
 
 
 //PInvoke
-extern "C" _AnomalousExport WxMouse* WxMouse_new(WxOSWindow* osWindow, WxMouse::MouseButtonDownDelegate mouseButtonDownCB, WxMouse::MouseButtonUpDelegate mouseButtonUpCB, WxMouse::MouseMoveDelegate mouseMoveCB, WxMouse::MouseWheelDelegate mouseWheelCB)
+extern "C" _AnomalousExport WxMouse* WxMouse_new(NativeOSWindow* osWindow, WxMouse::MouseButtonDownDelegate mouseButtonDownCB, WxMouse::MouseButtonUpDelegate mouseButtonUpCB, WxMouse::MouseMoveDelegate mouseMoveCB, WxMouse::MouseWheelDelegate mouseWheelCB)
 {
 	return new WxMouse(osWindow, mouseButtonDownCB, mouseButtonUpCB, mouseMoveCB, mouseWheelCB);
 }

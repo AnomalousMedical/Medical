@@ -1,12 +1,12 @@
 #pragma once
 
-class WxOSWindow;
+class NativeOSWindow;
 class ImageViewer;
 
 class ImageWindow : public wxFrame
 {
 public:
-	ImageWindow(WxOSWindow* parent, String windowTitle, String imageFile, String homeDir);
+	ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir);
 
 	~ImageWindow(void);
 
