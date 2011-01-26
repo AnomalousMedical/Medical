@@ -52,14 +52,12 @@ namespace Medical
         {
             if (nativeWindow != IntPtr.Zero)
             {
-                disposed();
                 NativeOSWindow_destroy(nativeWindow);
-                nativeWindow = IntPtr.Zero;
             }
         }
 
         /// <summary>
-        /// Callback from the native class for deletion. Will alter the behavior of dispose.
+        /// Callback from the native class when it is deleted.
         /// </summary>
         private void delete()
         {
