@@ -18,9 +18,9 @@ namespace Medical
         AutoAssign = -1
     }
 
-    public class Menu
+    public class NativeMenu
     {
-        public MenuEntry Append(CommonMenuItems id, string text, string helpText)
+        public NativeMenuItem Append(CommonMenuItems id, string text, string helpText)
         {
             throw new NotImplementedException();
         }
@@ -30,22 +30,22 @@ namespace Medical
             throw new NotImplementedException();
         }
 
-        public MenuEntry Append(CommonMenuItems id, string text, Menu subMenu)
+        public NativeMenuItem Append(CommonMenuItems id, string text, NativeMenu subMenu)
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(MenuEntry recentDocMenuItem)
+        public void Remove(NativeMenuItem recentDocMenuItem)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(int p, MenuEntry recentDocMenuItem)
+        public void Insert(int p, NativeMenuItem recentDocMenuItem)
         {
             throw new NotImplementedException();
         }
 
-        public MenuEntry Insert(int p, int p_2, string p_3)
+        public NativeMenuItem Insert(int p, int p_2, string p_3)
         {
             throw new NotImplementedException();
         }

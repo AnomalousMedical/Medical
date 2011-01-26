@@ -20,6 +20,6 @@ namespace Medical.GUI
 
         void setMainInterfaceEnabled(bool enabled);
 
-        void createMenuBar(MenuBar menu);
+        void createMenuBar(NativeMenuBar menu);
     }
 }

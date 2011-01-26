@@ -241,9 +241,9 @@
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />
     <Compile Include="Platform\DirDialog.cs" />
-    <Compile Include="Platform\Menu.cs" />
-    <Compile Include="Platform\MenuBar.cs" />
-    <Compile Include="Platform\MenuItem.cs" />
+    <Compile Include="Platform\NativeMenu.cs" />
+    <Compile Include="Platform\NativeMenuBar.cs" />
+    <Compile Include="Platform\NativeMenuItem.cs" />
     <Compile Include="Platform\MessageDialog.cs" />
     <Compile Include="Platform\NativeOSWindow.cs" />
     <Compile Include="Platform\NativeString.cs" />

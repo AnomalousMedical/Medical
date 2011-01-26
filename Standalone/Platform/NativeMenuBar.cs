@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Medical
 {
-    public class MenuBar
+    public class NativeMenuBar
     {
-        public void Append(Menu menu, string name)
+        public void Append(NativeMenu menu, string name)
         {
             throw new NotImplementedException();
         }

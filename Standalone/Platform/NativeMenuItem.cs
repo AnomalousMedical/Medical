@@ -5,22 +5,22 @@ using System.Text;
 
 namespace Medical
 {
-    public delegate void MenuEvent(MenuEntry item);
+    public delegate void NativeMenuEvent(NativeMenuItem item);
 
-    public class MenuEntry : IDisposable
+    public class NativeMenuItem : IDisposable
     {
         public void Dispose()
         {
 
         }
 
-        public event MenuEvent Select;
+        public event NativeMenuEvent Select;
 
         public bool Enabled { get; set; }
 
         public int ID { get; set; }
 
-        public Menu SubMenu { get; set; }
+        public NativeMenu SubMenu { get; set; }
 
         public String Help { get; set; }
     }

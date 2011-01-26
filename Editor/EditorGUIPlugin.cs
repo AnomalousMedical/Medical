@@ -72,7 +72,7 @@ namespace Medical
             
         }
 
-        public void createMenuBar(MenuBar menu)
+        public void createMenuBar(NativeMenuBar menu)
         {
 
         }

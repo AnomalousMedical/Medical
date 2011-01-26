@@ -10,35 +10,35 @@ namespace Medical.GUI
     {
         private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
 
-        private MenuEntry recentPatients;
-        private Dictionary<String, MenuEntry> recentDocMenuItems = new Dictionary<string, MenuEntry>();
+        private NativeMenuItem recentPatients;
+        private Dictionary<String, NativeMenuItem> recentDocMenuItems = new Dictionary<string, NativeMenuItem>();
         private Dictionary<int, string> menuIDsToFiles = new Dictionary<int, string>();
 
-        private Menu fileMenu;
-        private MenuEntry changeScene;
-        private MenuEntry open;
-        private MenuEntry save;
-        private MenuEntry saveAs;
-        private MenuEntry exit;
+        private NativeMenu fileMenu;
+        private NativeMenuItem changeScene;
+        private NativeMenuItem open;
+        private NativeMenuItem save;
+        private NativeMenuItem saveAs;
+        private NativeMenuItem exit;
 
         private PiperJBOGUIPlugin piperGUI;
         private StandaloneController standaloneController;
 
-        public SystemMenu(MenuBar menu, PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController)
+        public SystemMenu(NativeMenuBar menu, PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController)
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
 
             //File menu
-            fileMenu = new Menu();
+            fileMenu = new NativeMenu();
 
             changeScene = fileMenu.Append(CommonMenuItems.New, "&New Scene...\tCtrl+N", "Change to a new scene.");
-            changeScene.Select += new MenuEvent(changeScene_Select);
+            changeScene.Select += new NativeMenuEvent(changeScene_Select);
 
             open = fileMenu.Append(CommonMenuItems.Open, "&Open...\tCtrl+O", "Open existing distortions.");
-            open.Select += new MenuEvent(open_Select);
+            open.Select += new NativeMenuEvent(open_Select);
 
-            recentPatients = fileMenu.Append(CommonMenuItems.AutoAssign, "Recent Patients", new Menu());
+            recentPatients = fileMenu.Append(CommonMenuItems.AutoAssign, "Recent Patients", new NativeMenu());
             foreach (String document in recentDocuments)
             {
                 createWindowMenuDocument(document);
@@ -48,57 +48,57 @@ namespace Medical.GUI
             recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
 
             save = fileMenu.Append(CommonMenuItems.Save, "&Save...\tCtrl+S", "Save current distortions.");
-            save.Select += new MenuEvent(save_Select);
+            save.Select += new NativeMenuEvent(save_Select);
 
             saveAs = fileMenu.Append(CommonMenuItems.SaveAs, "Save &As...", "Save current distortions as.");
-            saveAs.Select += new MenuEvent(saveAs_Select);
+            saveAs.Select += new NativeMenuEvent(saveAs_Select);
 
             fileMenu.AppendSeparator();
 
             exit = fileMenu.Append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
-            exit.Select += new MenuEvent(exit_Select);
+            exit.Select += new NativeMenuEvent(exit_Select);
 
             menu.Append(fileMenu, "&File");
 
             //Utilities Menu
-            Menu utilitiesMenu = new Menu();
+            NativeMenu utilitiesMenu = new NativeMenu();
 
-            MenuEntry cloneWindow = utilitiesMenu.Append(CommonMenuItems.AutoAssign, "Clone Window", "Open a window that displays the main window with no controls.");
-            cloneWindow.Select += new MenuEvent(cloneWindow_Select);
+            NativeMenuItem cloneWindow = utilitiesMenu.Append(CommonMenuItems.AutoAssign, "Clone Window", "Open a window that displays the main window with no controls.");
+            cloneWindow.Select += new NativeMenuEvent(cloneWindow_Select);
 
-            MenuEntry preferences = utilitiesMenu.Append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
-            preferences.Select += new MenuEvent(preferences_Select);
+            NativeMenuItem preferences = utilitiesMenu.Append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
+            preferences.Select += new NativeMenuEvent(preferences_Select);
 
             menu.Append(utilitiesMenu, "&Utilities");
 
             //Help Menu
-            Menu helpMenu = new Menu();
+            NativeMenu helpMenu = new NativeMenu();
 
-            MenuEntry help = helpMenu.Append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
-            help.Select += new MenuEvent(help_Select);
+            NativeMenuItem help = helpMenu.Append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
+            help.Select += new NativeMenuEvent(help_Select);
 
-            MenuEntry about = helpMenu.Append(CommonMenuItems.About, "About", "About this program.");
-            about.Select += new MenuEvent(about_Select);
+            NativeMenuItem about = helpMenu.Append(CommonMenuItems.About, "About", "About this program.");
+            about.Select += new NativeMenuEvent(about_Select);
 
             menu.Append(helpMenu, "&Help");
         }
 
-        void cloneWindow_Select(MenuEntry sender)
+        void cloneWindow_Select(NativeMenuItem sender)
         {
             piperGUI.toggleCloneWindow();
         }
 
-        void preferences_Select(MenuEntry sender)
+        void preferences_Select(NativeMenuItem sender)
         {
             piperGUI.showOptions();
         }
 
-        void help_Select(MenuEntry sender)
+        void help_Select(NativeMenuItem sender)
         {
             standaloneController.openHelpTopic(0);
         }
 
-        void about_Select(MenuEntry sender)
+        void about_Select(NativeMenuItem sender)
         {
             piperGUI.showAboutDialog();
         }
@@ -119,32 +119,32 @@ namespace Medical.GUI
             }
         }
 
-        void exit_Select(MenuEntry sender)
+        void exit_Select(NativeMenuItem sender)
         {
             standaloneController.shutdown();
         }
 
-        void saveAs_Select(MenuEntry sender)
+        void saveAs_Select(NativeMenuItem sender)
         {
             piperGUI.saveAs();
         }
 
-        void save_Select(MenuEntry sender)
+        void save_Select(NativeMenuItem sender)
         {
             piperGUI.save();
         }
 
-        void open_Select(MenuEntry sender)
+        void open_Select(NativeMenuItem sender)
         {
             piperGUI.open();
         }
 
-        void changeScene_Select(MenuEntry sender)
+        void changeScene_Select(NativeMenuItem sender)
         {
             piperGUI.showChooseSceneDialog();
         }
 
-        void recentDocMenuItem_Click(MenuEntry sender)
+        void recentDocMenuItem_Click(NativeMenuItem sender)
         {
             String document = menuIDsToFiles[sender.ID];
             PatientDataFile patientData = new PatientDataFile(document);
@@ -161,7 +161,7 @@ namespace Medical.GUI
 
         void recentDocuments_DocumentRemoved(RecentDocuments source, string document)
         {
-            MenuEntry recentDocMenuItem;
+            NativeMenuItem recentDocMenuItem;
             if (recentDocMenuItems.TryGetValue(document, out recentDocMenuItem))
             {
                 recentDocMenuItems.Remove(document);
@@ -173,7 +173,7 @@ namespace Medical.GUI
 
         void recentDocuments_DocumentReaccessed(RecentDocuments source, string document)
         {
-            MenuEntry recentDocMenuItem;
+            NativeMenuItem recentDocMenuItem;
             if (recentDocMenuItems.TryGetValue(document, out recentDocMenuItem))
             {
                 recentPatients.SubMenu.Remove(recentDocMenuItem);
@@ -190,8 +190,8 @@ namespace Medical.GUI
         {
             if (recentPatients != null)
             {
-                MenuEntry recentDocMenuItem = recentPatients.SubMenu.Insert(0, -1, Path.GetFileNameWithoutExtension(document));
-                recentDocMenuItem.Select += new MenuEvent(recentDocMenuItem_Click);
+                NativeMenuItem recentDocMenuItem = recentPatients.SubMenu.Insert(0, -1, Path.GetFileNameWithoutExtension(document));
+                recentDocMenuItem.Select += new NativeMenuEvent(recentDocMenuItem_Click);
                 recentDocMenuItem.Help = document;
                 menuIDsToFiles.Add(recentDocMenuItem.ID, document);
                 recentDocMenuItems.Add(document, recentDocMenuItem);
