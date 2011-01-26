@@ -10,19 +10,26 @@ namespace Medical
 
     public class NativeMenuItem : IDisposable
     {
+        delegate void SelectDelegate();
+
         public event NativeMenuEvent Select;
 
         private IntPtr nativeMenuItem;
         private NativeMenu subMenu = null;
+        private SelectDelegate selectCB;
+        private NativeOSWindow parentWindow;
 
-        internal NativeMenuItem(IntPtr nativeMenuItem)
+        internal NativeMenuItem(NativeOSWindow parentWindow, IntPtr nativeMenuItem)
         {
             this.nativeMenuItem = nativeMenuItem;
+            this.parentWindow = parentWindow;
             IntPtr subMenuPtr = NativeMenuItem_getSubMenu(nativeMenuItem);
             if (subMenuPtr != IntPtr.Zero)
             {
-                subMenu = new NativeMenu(subMenuPtr);
+                subMenu = new NativeMenu(parentWindow, subMenuPtr);
             }
+            selectCB = new SelectDelegate(select);
+            NativeMenuItem_registerSelectCallback(parentWindow._NativePtr, nativeMenuItem, selectCB);
         }
 
         public void Dispose()
@@ -81,7 +88,18 @@ namespace Medical
             }
         }
 
+        private void select()
+        {
+            if (Select != null)
+            {
+                Select.Invoke(this);
+            }
+        }
+
         #region PInvoke
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr NativeMenuItem_registerSelectCallback(IntPtr window, IntPtr item, SelectDelegate selectCB);
 
         [DllImport("OSHelper")]
         private static extern void NativeMenuItem_delete(IntPtr item);

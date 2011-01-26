@@ -1,5 +1,40 @@
 #include "Stdafx.h"
 #include "NativeString.h"
+#include "NativeOSWindow.h"
+
+typedef void (*SelectDelegate)();
+
+struct ManagedFunctor
+{
+public:
+	ManagedFunctor(NativeOSWindow* mainWindow, int id, SelectDelegate selectCB)
+		:selectCB(selectCB),
+		mainWindow(mainWindow),
+		id(id)
+	{
+		mainWindow->Bind(wxEVT_COMMAND_MENU_SELECTED, *this, id, id, NULL);
+	}
+
+	~ManagedFunctor()
+	{
+		mainWindow->Bind(wxEVT_COMMAND_MENU_SELECTED, *this, id, id, NULL);
+	}
+
+	void operator()( wxCommandEvent & )
+    {
+        selectCB();
+    }
+
+private:
+	SelectDelegate selectCB;
+	NativeOSWindow* mainWindow;
+	int id;
+};
+
+extern "C" _AnomalousExport ManagedFunctor* NativeMenuItem_registerSelectCallback(NativeOSWindow* mainWindow, wxMenuItem* item, SelectDelegate selectCB)
+{
+	return new ManagedFunctor(mainWindow, item->GetId(), selectCB);
+}
 
 extern "C" _AnomalousExport void NativeMenuItem_delete(wxMenuItem* item)
 {

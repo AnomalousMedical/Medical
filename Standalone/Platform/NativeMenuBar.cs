@@ -9,15 +9,20 @@ namespace Medical
     public class NativeMenuBar
     {
         IntPtr menuBar;
+        NativeOSWindow parentWindow;
+        private List<NativeMenu> menus = new List<NativeMenu>();
 
-        public NativeMenuBar(IntPtr menuBar)
+        public NativeMenuBar(NativeOSWindow parentWindow, IntPtr menuBar)
         {
             this.menuBar = menuBar;
+            this.parentWindow = parentWindow;
         }
 
         public NativeMenu append(String text)
         {
-            return new NativeMenu(NativeMenuBar_append(menuBar, text));
+            NativeMenu menu = new NativeMenu(parentWindow, NativeMenuBar_append(menuBar, text));
+            menus.Add(menu);
+            return menu;
         }
 
         #region PInvoke

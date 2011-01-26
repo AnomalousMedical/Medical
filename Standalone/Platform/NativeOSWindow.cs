@@ -135,7 +135,7 @@ namespace Medical
             {
                 if (menuBar == null)
                 {
-                    menuBar = new NativeMenuBar(NativeOSWindow_createMenu(nativeWindow));
+                    menuBar = new NativeMenuBar(this, NativeOSWindow_createMenu(nativeWindow));
                 }
                 return menuBar;
             }

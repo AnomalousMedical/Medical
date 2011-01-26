@@ -22,10 +22,13 @@ namespace Medical
     public class NativeMenu
     {
         IntPtr nativeMenu;
+        NativeOSWindow parentWindow;
+        private List<NativeMenuItem> menuItems = new List<NativeMenuItem>();
 
-        internal NativeMenu(IntPtr nativeMenu)
+        internal NativeMenu(NativeOSWindow parentWindow, IntPtr nativeMenu)
         {
             this.nativeMenu = nativeMenu;
+            this.parentWindow = parentWindow;
         }
 
         public NativeMenuItem append(CommonMenuItems id, String text, String helpText)
@@ -35,7 +38,9 @@ namespace Medical
 
         public NativeMenuItem append(CommonMenuItems id, String text, String helpText, bool subMenu)
         {
-            return new NativeMenuItem(NativeMenu_append(nativeMenu, id, text, helpText, subMenu));
+            NativeMenuItem item = new NativeMenuItem(parentWindow, NativeMenu_append(nativeMenu, id, text, helpText, subMenu));
+            menuItems.Add(item);
+            return item;
         }
 
         public void appendSeparator()
@@ -45,6 +50,7 @@ namespace Medical
 
         public void insert(int index, NativeMenuItem menuItem)
         {
+            menuItems.Add(menuItem);
             NativeMenu_insertItem(nativeMenu, index, menuItem._NativePtr);
         }
 
@@ -55,11 +61,14 @@ namespace Medical
 
         public NativeMenuItem insert(int index, CommonMenuItems id, String text, String helpText, bool subMenu)
         {
-            return new NativeMenuItem(NativeMenu_insert(nativeMenu, index, id, text, helpText, subMenu));
+            NativeMenuItem item = new NativeMenuItem(parentWindow, NativeMenu_insert(nativeMenu, index, id, text, helpText, subMenu));
+            menuItems.Add(item);
+            return item;
         }
 
         public void remove(NativeMenuItem menuItem)
         {
+            menuItems.Remove(menuItem);
             NativeMenu_remove(nativeMenu, menuItem._NativePtr);
         }
 
