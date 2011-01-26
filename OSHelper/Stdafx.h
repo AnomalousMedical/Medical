@@ -20,3 +20,23 @@ typedef unsigned short ushort;
 typedef const char* String;
 
 #include <wx/wx.h>
+
+class Color
+{
+public:
+	float r, g, b, a;
+
+	Color(const wxColour wxColor)
+		:r(wxColor.Red() / 255.0f),
+		g(wxColor.Green() / 255.0f),
+		b(wxColor.Blue() / 255.0f),
+		a(wxColor.Alpha() / 255.0f)
+	{
+
+	}
+
+	wxColour toWx() const
+	{
+		return wxColour(r * 255, g * 255, b * 255, a * 255);
+	}
+};

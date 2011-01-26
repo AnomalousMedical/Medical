@@ -250,6 +250,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ColorDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\Enums.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\Enums.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\HtmlHelpController.cpp"
 				>
 			</File>
@@ -278,7 +290,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SystemInfo.cpp"
+				RelativePath=".\Src\SystemInfo.cpp"
 				>
 			</File>
 			<File
