@@ -278,6 +278,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SystemInfo.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Src\WxKeyboard.cpp"
 				>
 			</File>
