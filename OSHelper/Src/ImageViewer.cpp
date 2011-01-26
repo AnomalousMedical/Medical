@@ -34,7 +34,7 @@ void ImageViewer::setBitmap(String path)
 		delete scaledBitmap;
 	}
 
-	masterBitmap = new wxBitmap(path);
+	masterBitmap = new wxBitmap(path, wxBITMAP_TYPE_ANY);
 
 	if (scaleImage)
     {
@@ -120,4 +120,9 @@ void ImageViewer::OnSize(wxEvent& evt)
         scaleMasterImage();
         Refresh();
     }
+}
+
+void ImageViewer::saveFile(String path, wxBitmapType type)
+{
+	masterBitmap->SaveFile(path, type);
 }

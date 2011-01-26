@@ -21,6 +21,8 @@ public:
 
 	void OnSize(wxEvent& evt);
 
+	void saveFile(String path, wxBitmapType type);
+
 private:
 	wxBitmap* masterBitmap;
 	wxBitmap* scaledBitmap;
