@@ -366,7 +366,7 @@ namespace Medical.GUI
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (DirDialog dirDialog = new DirDialog("Choose the path to load files from.", locationTextBox.Caption))
+            using (DirDialog dirDialog = new DirDialog(MainWindow.Instance, "Choose the path to load files from.", locationTextBox.Caption))
             {
                 if (dirDialog.showModal() == NativeDialogResult.OK)
                 {

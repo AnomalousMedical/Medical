@@ -245,11 +245,10 @@ namespace Medical.GUI
 
         void saveSequenceAs_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog saveDialog = new wx.FileDialog(MainWindow.Instance, "Save a sequence."))
+            using (FileSaveDialog saveDialog = new FileSaveDialog(MainWindow.Instance, "Save a sequence."))
             {
-                saveDialog.StyleFlags = wx.WindowStyles.FD_SAVE;
                 saveDialog.Wildcard = "Sequence files (*.seq)|*.seq";
-                if (saveDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (saveDialog.showModal() == NativeDialogResult.OK)
                 {
                     using(XmlTextWriter textWriter = new XmlTextWriter(saveDialog.Path, Encoding.Default))
                     {
@@ -281,11 +280,10 @@ namespace Medical.GUI
 
         void openSequence_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog openDialog = new wx.FileDialog(MainWindow.Instance, "Open a sequence."))
+            using (FileOpenDialog openDialog = new FileOpenDialog(MainWindow.Instance, "Open a sequence."))
             {
-                openDialog.StyleFlags = wx.WindowStyles.FD_OPEN;
                 openDialog.Wildcard = "Sequence files (*.seq)|*.seq";
-                if (openDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (openDialog.showModal() == NativeDialogResult.OK)
                 {
                     using (XmlReader xmlReader = new XmlTextReader(openDialog.Path))
                     {

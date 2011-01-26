@@ -1,10 +1,11 @@
 #include "Stdafx.h"
 #include "Enums.h"
 #include "NativeString.h"
+#include "NativeOSWindow.h"
 
-extern "C" _AnomalousExport wxDirDialog* DirDialog_new(String message, String startPath)
+extern "C" _AnomalousExport wxDirDialog* DirDialog_new(NativeOSWindow* parent, String message, String startPath)
 {
-	return new wxDirDialog(NULL, wxString::FromAscii(message), wxString::FromAscii(startPath));
+	return new wxDirDialog(parent, wxString::FromAscii(message), wxString::FromAscii(startPath));
 }
 
 extern "C" _AnomalousExport void DirDialog_delete(wxDirDialog* dirDialog)

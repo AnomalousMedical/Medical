@@ -100,9 +100,9 @@ namespace Medical.GUI
 
         void importButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog fileDialog = new wx.FileDialog(MainWindow.Instance))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance))
             {
-                if (fileDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
                     foreach (String path in fileDialog.Paths)
                     {
@@ -110,7 +110,7 @@ namespace Medical.GUI
                         String filename = Path.GetFileName(path);
                         if (timelineController.resourceExists(filename))
                         {
-                            copyFile = wx.MessageDialog.ShowModal(MainWindow.Instance, String.Format("The file {0} already exists in the project. Would you like to overwrite?", filename), "Overwrite?", wx.WindowStyles.DIALOG_YES_NO) == wx.ShowModalResult.YES;
+                            copyFile = MessageDialog.showQuestionDialog(MainWindow.Instance, String.Format("The file {0} already exists in the project. Would you like to overwrite?", filename), "Overwrite?") == NativeDialogResult.YES;
                         }
                         if(copyFile)
                         {

@@ -6,13 +6,24 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class DirDialog : IDisposable
+    public class DirDialog : IDisposable
     {
         private IntPtr dirDialog = IntPtr.Zero;
 
         public DirDialog(String message, String startPath)
+            :this(null, message, startPath)
         {
-            dirDialog = DirDialog_new(message, startPath);
+            
+        }
+
+        public DirDialog(NativeOSWindow parent, String message, String startPath)
+        {
+            IntPtr parentPtr = IntPtr.Zero;
+            if(parent != null)
+            {
+                parentPtr = parent._NativePtr;
+            }
+            dirDialog = DirDialog_new(parentPtr, message, startPath);
         }
 
         public void Dispose()
@@ -47,7 +58,7 @@ namespace Medical
         #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr DirDialog_new(String message, String startPath);
+        private static extern IntPtr DirDialog_new(IntPtr parent, String message, String startPath);
 
         [DllImport("OSHelper")]
         private static extern void DirDialog_delete(IntPtr dirDialog);

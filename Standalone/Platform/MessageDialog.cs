@@ -21,18 +21,28 @@ namespace Medical
 
         public static void showErrorDialog(String message, String caption)
         {
-            MessageDialog_showErrorDialog(message, caption);
+            MessageDialog_showErrorDialog(IntPtr.Zero, message, caption);
+        }
+
+        public static void showErrorDialog(NativeOSWindow parent, String message, String caption)
+        {
+            MessageDialog_showErrorDialog(parent._NativePtr, message, caption);
         }
 
         public static NativeDialogResult showQuestionDialog(String message, String caption)
         {
-            return MessageDialog_showQuestionDialog(message, caption);
+            return MessageDialog_showQuestionDialog(IntPtr.Zero, message, caption);
+        }
+
+        public static NativeDialogResult showQuestionDialog(NativeOSWindow parent, String message, String caption)
+        {
+            return MessageDialog_showQuestionDialog(parent._NativePtr, message, caption);
         }
 
         [DllImport("OSHelper")]
-        private static extern void MessageDialog_showErrorDialog(String msg, String cap);
+        private static extern void MessageDialog_showErrorDialog(IntPtr parent, String msg, String cap);
 
         [DllImport("OSHelper")]
-        private static extern NativeDialogResult MessageDialog_showQuestionDialog(String msg, String cap);
+        private static extern NativeDialogResult MessageDialog_showQuestionDialog(IntPtr parent, String msg, String cap);
     }
 }

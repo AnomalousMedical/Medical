@@ -330,9 +330,9 @@ namespace Medical.GUI
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
         {
-            using (wx.FileDialog fileDialog = new wx.FileDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD))
             {
-                if (fileDialog.ShowModal() == wx.ShowModalResult.OK)
+                if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
                     timelineController.ResourceLocation = fileDialog.Path;
                     updateWindowCaption();
