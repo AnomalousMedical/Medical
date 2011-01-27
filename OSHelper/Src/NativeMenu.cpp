@@ -8,7 +8,7 @@ extern "C" _AnomalousExport wxMenuItem* NativeMenu_append(wxMenu* menu, CommonMe
 	{
 		mySubMenu = new wxMenu();
 	}
-	wxMenuItem* menuItem = new wxMenuItem(NULL, convertMenuItemID(id), text, helpText, wxITEM_NORMAL, mySubMenu);
+	wxMenuItem* menuItem = new wxMenuItem(menu, convertMenuItemID(id), wxString::FromAscii(text), wxString::FromAscii(helpText), wxITEM_NORMAL, mySubMenu);
 	menu->Append(menuItem);
 	return menuItem;
 }
@@ -25,7 +25,7 @@ extern "C" _AnomalousExport wxMenuItem* NativeMenu_insert(wxMenu* menu, int inde
 	{
 		mySubMenu = new wxMenu();
 	}
-	wxMenuItem* menuItem = new wxMenuItem(NULL, convertMenuItemID(id), text, helpText, wxITEM_NORMAL, mySubMenu);
+	wxMenuItem* menuItem = new wxMenuItem(menu, convertMenuItemID(id), wxString::FromAscii(text), wxString::FromAscii(helpText), wxITEM_NORMAL, mySubMenu);
 	menu->Insert(index, menuItem);
 	return menuItem;
 }
