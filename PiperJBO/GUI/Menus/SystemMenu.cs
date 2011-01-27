@@ -30,7 +30,7 @@ namespace Medical.GUI
             this.standaloneController = standaloneController;
 
             //File menu
-            fileMenu = menu.append("&File");
+            fileMenu = menu.createMenu("&File");
 
             changeScene = fileMenu.append(CommonMenuItems.New, "&New Scene...\tCtrl+N", "Change to a new scene.");
             changeScene.Select += new NativeMenuEvent(changeScene_Select);
@@ -58,8 +58,10 @@ namespace Medical.GUI
             exit = fileMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
             exit.Select += new NativeMenuEvent(exit_Select);
 
+            menu.append(fileMenu);
+
             //Utilities Menu
-            NativeMenu utilitiesMenu = menu.append("&Utilities");
+            NativeMenu utilitiesMenu = menu.createMenu("&Utilities");
 
             NativeMenuItem cloneWindow = utilitiesMenu.append(CommonMenuItems.AutoAssign, "Clone Window", "Open a window that displays the main window with no controls.");
             cloneWindow.Select += new NativeMenuEvent(cloneWindow_Select);
@@ -67,14 +69,18 @@ namespace Medical.GUI
             NativeMenuItem preferences = utilitiesMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
             preferences.Select += new NativeMenuEvent(preferences_Select);
 
+            menu.append(utilitiesMenu);
+
             //Help Menu
-            NativeMenu helpMenu = menu.append("&Help");
+            NativeMenu helpMenu = menu.createMenu("&Help");
 
             NativeMenuItem help = helpMenu.append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
             help.Select += new NativeMenuEvent(help_Select);
 
             NativeMenuItem about = helpMenu.append(CommonMenuItems.About, "About", "About this program.");
             about.Select += new NativeMenuEvent(about_Select);
+
+            menu.append(helpMenu);
         }
 
         void cloneWindow_Select(NativeMenuItem sender)

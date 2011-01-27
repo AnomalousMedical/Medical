@@ -26,17 +26,24 @@ namespace Medical
             }
         }
 
-        public NativeMenu append(String text)
+        public NativeMenu createMenu(String text)
         {
-            NativeMenu menu = new NativeMenu(parentWindow, NativeMenuBar_append(menuBar, text));
+            return new NativeMenu(parentWindow, NativeMenuBar_createMenu(menuBar, text), text);
+        }
+
+        public void append(NativeMenu menu)
+        {
             menus.Add(menu);
-            return menu;
+            NativeMenuBar_append(menuBar, menu._NativePtr, menu.Text);
         }
 
         #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr NativeMenuBar_append(IntPtr menuBar, String text);
+        private static extern IntPtr NativeMenuBar_createMenu(IntPtr menuBar, String text);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeMenuBar_append(IntPtr menuBar, IntPtr nativeMenu, String text);
 
         #endregion
     }

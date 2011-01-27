@@ -27,7 +27,7 @@ namespace Medical
             IntPtr subMenuPtr = NativeMenuItem_getSubMenu(nativeMenuItem);
             if (subMenuPtr != IntPtr.Zero)
             {
-                subMenu = new NativeMenu(parentWindow, subMenuPtr);
+                subMenu = new NativeMenu(parentWindow, subMenuPtr, "");
             }
             selectCB = new SelectDelegate(select);
             managedFunctor = NativeMenuItem_registerSelectCallback(parentWindow._NativePtr, nativeMenuItem, selectCB);

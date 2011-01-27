@@ -24,11 +24,13 @@ namespace Medical
         IntPtr nativeMenu;
         NativeOSWindow parentWindow;
         private List<NativeMenuItem> menuItems = new List<NativeMenuItem>();
+        private String text;
 
-        internal NativeMenu(NativeOSWindow parentWindow, IntPtr nativeMenu)
+        internal NativeMenu(NativeOSWindow parentWindow, IntPtr nativeMenu, String text)
         {
             this.nativeMenu = nativeMenu;
             this.parentWindow = parentWindow;
+            this.text = text;
         }
 
         internal void Dispose(bool windowDeleted)
@@ -79,6 +81,22 @@ namespace Medical
         {
             menuItems.Remove(menuItem);
             NativeMenu_remove(nativeMenu, menuItem._NativePtr);
+        }
+
+        public String Text
+        {
+            get
+            {
+                return text;
+            }
+        }
+
+        internal IntPtr _NativePtr
+        {
+            get
+            {
+                return nativeMenu;
+            }
         }
 
         #region PInvoke
