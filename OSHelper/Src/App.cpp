@@ -21,6 +21,12 @@ bool App::OnInit()
 {
 	wxInitAllImageHandlers();
 	wxFileSystem::AddHandler(&zipHandler);
+
+#ifdef MAC_OSX
+	wxApp::s_macAboutMenuItemId = wxID_ABOUT;
+	wxApp::s_macPreferencesMenuItemId = wxID_PREFERENCES;
+#endif
+
 	return onInitCB()!=0;
 }
 

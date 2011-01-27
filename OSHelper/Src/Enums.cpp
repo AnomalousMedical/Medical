@@ -18,5 +18,25 @@ NativeDialogResult interpretResults(int resultCode)
 
 int convertMenuItemID(CommonMenuItems id)
 {
-	return (int)id;
+	switch(id)
+	{
+	case New:
+		return wxID_NEW;
+	case Open:
+		return wxID_OPEN;
+	case Save:
+		return wxID_SAVE;
+	case SaveAs:
+		return wxID_SAVEAS;
+	case Exit:
+		return wxID_EXIT;
+	case Preferences:
+		return wxID_PREFERENCES;
+	case Help:
+		return wxID_HELP;
+	case About:
+		return wxID_ABOUT;
+	default:
+		return id;
+	}
 }

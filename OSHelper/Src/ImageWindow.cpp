@@ -4,7 +4,7 @@
 #include "ImageViewer.h"
 
 ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
-:wxFrame(parent, -1, wxString::FromAscii(windowTitle)),
+:wxFrame(parent, -1, wxString::FromAscii(windowTitle), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT),
 homeDir(wxString::FromAscii(homeDir)),
 saveLocation("")
 {
@@ -30,11 +30,6 @@ saveLocation("")
 	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::explore, this, EXPLORE_ID, EXPLORE_ID);
 	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::menuClose, this, CLOSE_ID, CLOSE_ID);
 	this->Bind(wxEVT_COMMAND_MENU_SELECTED, &ImageWindow::resizeImage, this, RESIZE_ID, RESIZE_ID);
-
-    /*EVT_MENU(SAVE_ID, save);
-    EVT_MENU(EXPLORE_ID, explore);
-    EVT_MENU(CLOSE_ID, menuClose);
-    EVT_MENU(RESIZE_ID, resizeImage);*/
 
     //Image Viewer
 	imageViewer = new ImageViewer(this);
