@@ -260,7 +260,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ColorDialog.cpp"
+				RelativePath=".\Src\ColorDialog.cpp"
 				>
 			</File>
 			<File
