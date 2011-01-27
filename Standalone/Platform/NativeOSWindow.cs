@@ -63,6 +63,10 @@ namespace Medical
         private void delete()
         {
             disposed();
+            if (menuBar != null)
+            {
+                menuBar.Dispose(true);
+            }
             nativeWindow = IntPtr.Zero;
         }
 

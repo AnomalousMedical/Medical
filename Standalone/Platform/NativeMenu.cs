@@ -31,6 +31,15 @@ namespace Medical
             this.parentWindow = parentWindow;
         }
 
+        internal void Dispose(bool windowDeleted)
+        {
+            foreach (NativeMenuItem menuItem in menuItems)
+            {
+                menuItem.Dispose(windowDeleted);
+            }
+            menuItems.Clear();
+        }
+
         public NativeMenuItem append(CommonMenuItems id, String text, String helpText)
         {
             return append(id, text, helpText, false);

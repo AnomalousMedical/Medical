@@ -18,6 +18,7 @@ namespace Medical
         private NativeMenu subMenu = null;
         private SelectDelegate selectCB;
         private NativeOSWindow parentWindow;
+        private IntPtr managedFunctor;
 
         internal NativeMenuItem(NativeOSWindow parentWindow, IntPtr nativeMenuItem)
         {
@@ -29,12 +30,25 @@ namespace Medical
                 subMenu = new NativeMenu(parentWindow, subMenuPtr);
             }
             selectCB = new SelectDelegate(select);
-            NativeMenuItem_registerSelectCallback(parentWindow._NativePtr, nativeMenuItem, selectCB);
+            managedFunctor = NativeMenuItem_registerSelectCallback(parentWindow._NativePtr, nativeMenuItem, selectCB);
         }
 
         public void Dispose()
         {
-            NativeMenuItem_delete(nativeMenuItem);
+            Dispose(false);
+        }
+
+        internal void Dispose(bool windowDeleted)
+        {
+            NativeMenuItem_unregisterSelectCallback(managedFunctor);
+            if (!windowDeleted)
+            {
+                if (subMenu != null)
+                {
+                    subMenu.Dispose(windowDeleted);
+                }
+                NativeMenuItem_delete(nativeMenuItem);
+            }
         }
 
         public bool Enabled
@@ -100,6 +114,9 @@ namespace Medical
 
         [DllImport("OSHelper")]
         private static extern IntPtr NativeMenuItem_registerSelectCallback(IntPtr window, IntPtr item, SelectDelegate selectCB);
+
+        [DllImport("OSHelper")]
+        private static extern void NativeMenuItem_unregisterSelectCallback(IntPtr managedFunctor);
 
         [DllImport("OSHelper")]
         private static extern void NativeMenuItem_delete(IntPtr item);

@@ -18,6 +18,14 @@ namespace Medical
             this.parentWindow = parentWindow;
         }
 
+        internal void Dispose(bool windowDeleted)
+        {
+            foreach (NativeMenu menu in menus)
+            {
+                menu.Dispose(windowDeleted);
+            }
+        }
+
         public NativeMenu append(String text)
         {
             NativeMenu menu = new NativeMenu(parentWindow, NativeMenuBar_append(menuBar, text));

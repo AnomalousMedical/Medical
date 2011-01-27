@@ -36,6 +36,11 @@ extern "C" _AnomalousExport ManagedFunctor* NativeMenuItem_registerSelectCallbac
 	return new ManagedFunctor(mainWindow, item->GetId(), selectCB);
 }
 
+extern "C" _AnomalousExport void NativeMenuItem_unregisterSelectCallback(ManagedFunctor* managedFunctor)
+{
+	delete managedFunctor;
+}
+
 extern "C" _AnomalousExport void NativeMenuItem_delete(wxMenuItem* item)
 {
 	delete item;
