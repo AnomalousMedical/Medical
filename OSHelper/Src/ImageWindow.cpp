@@ -73,9 +73,11 @@ void ImageWindow::explore(wxEvent& e)
 	ShellExecuteEx(&ExecuteInfo);
 }
 #elif MAC_OSX   
+#include <stdlib.h>
+
 void ImageWindow::explore(wxEvent& e)
 {
-//Process.Start("open", Path.GetDirectoryName(Path.GetFullPath(this.Title)));
+	system("open " + saveLocation);
 }
 #endif
 
