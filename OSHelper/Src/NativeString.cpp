@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\NativeString.h"
+#include "NativeString.h"
 
 extern "C" _AnomalousExport void NativeString_delete(NativeString* nativeString)
 {

@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\ImageViewer.h"
+#include "ImageViewer.h"
 
 ImageViewer::ImageViewer(wxWindow* parent)
 :wxScrolledWindow(parent),
@@ -84,7 +84,7 @@ void ImageViewer::scaleMasterImage()
     {
         delete scaledBitmap;
     }
-    wxImage& image = masterBitmap->ConvertToImage();
+    wxImage image = masterBitmap->ConvertToImage();
     int clientWidth, clientHeight;
 	GetClientSize(&clientWidth, &clientHeight);
 

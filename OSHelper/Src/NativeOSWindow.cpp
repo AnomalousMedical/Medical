@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\NativeOSWindow.h"
+#include "NativeOSWindow.h"
 
 enum CursorType
 {
@@ -32,14 +32,6 @@ sizedCB(sizedCB),
 closedCB(closedCB)
 {
 	SetBackgroundColour(wxColour(0, 0, 0));
-
-	#if MAC_OSX
-		//OSX needs a panel to change mouse cursors.
-		Panel panel = new Panel(this);
-		mainControl = panel;
-	#else
-		mainControl = this;
-	#endif
 
 	Bind(wxEVT_SIZE, &NativeOSWindow::OnSize, this);
 	Bind(wxEVT_CLOSE_WINDOW, &NativeOSWindow::OnClose, this);
@@ -78,20 +70,20 @@ extern "C" _AnomalousExport void NativeOSWindow_setSize(NativeOSWindow* nativeWi
 extern "C" _AnomalousExport int NativeOSWindow_getWidth(NativeOSWindow* nativeWindow)
 {
     int w, h;
-	nativeWindow->getMainControl()->GetClientSize(&w, &h);
+	nativeWindow->GetClientSize(&w, &h);
 	return w;
 }
 
 extern "C" _AnomalousExport int NativeOSWindow_getHeight(NativeOSWindow* nativeWindow)
 {
     int w, h;
-	nativeWindow->getMainControl()->GetClientSize(&w, &h);
+	nativeWindow->GetClientSize(&w, &h);
 	return h;
 }
 
 extern "C" _AnomalousExport WXWidget NativeOSWindow_getHandle(NativeOSWindow* nativeWindow)
 {
-    return nativeWindow->getMainControl()->GetHandle();
+    return nativeWindow->GetHandle();
 }
 
 
@@ -117,7 +109,7 @@ extern "C" _AnomalousExport bool NativeOSWindow_getMaximized(NativeOSWindow* nat
 
 extern "C" _AnomalousExport void NativeOSWindow_setCursor(NativeOSWindow* nativeWindow, CursorType cursor)
 {
-	nativeWindow->getMainControl()->SetCursor(windowCursors[(int)cursor]);
+	nativeWindow->SetCursor(windowCursors[(int)cursor]);
 }
 
 extern "C" _AnomalousExport wxMenuBar* NativeOSWindow_createMenu(NativeOSWindow* nativeWindow)

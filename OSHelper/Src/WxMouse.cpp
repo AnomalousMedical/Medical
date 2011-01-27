@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\WxMouse.h"
+#include "WxMouse.h"
 #include "NativeOSWindow.h"
 
 WxMouse::WxMouse(NativeOSWindow* osWindow, MouseButtonDownDelegate mouseButtonDownCB, MouseButtonUpDelegate mouseButtonUpCB, MouseMoveDelegate mouseMoveCB, MouseWheelDelegate mouseWheelCB)
@@ -9,7 +9,7 @@ mouseButtonUpCB(mouseButtonUpCB),
 mouseMoveCB(mouseMoveCB),
 mouseWheelCB(mouseWheelCB)
 {
-	wxWindow* window = osWindow->getMainControl();
+	wxWindow* window = osWindow;
 
 	window->Bind(wxEVT_LEFT_DOWN, &WxMouse::OnMouseLeftDown, this);
 	window->Bind(wxEVT_LEFT_UP, &WxMouse::OnMouseLeftUp, this);

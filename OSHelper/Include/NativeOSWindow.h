@@ -11,16 +11,10 @@ public:
 
 	virtual ~NativeOSWindow(void);
 
-	wxWindow* getMainControl()
-	{
-		return mainControl;
-	}
-
 private:
 	DeleteDelegate deleteCB;
 	SizedDelegate sizedCB;
 	ClosedDelegate closedCB;
-	wxWindow* mainControl;
 
 	void OnSize(wxEvent& event)
 	{

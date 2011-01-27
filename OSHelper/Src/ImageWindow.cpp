@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\ImageWindow.h"
+#include "ImageWindow.h"
 #include "NativeOSWindow.h"
 #include "ImageViewer.h"
 

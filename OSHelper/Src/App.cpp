@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\App.h"
+#include "App.h"
 #include <wx/filesys.h>
 
 App::App(void)

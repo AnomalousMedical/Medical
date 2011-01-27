@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\HtmlHelpController.h"
+#include "HtmlHelpController.h"
 
 HtmlHelpController::HtmlHelpController(void)
 {

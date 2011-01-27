@@ -8,7 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		010C4D4E12EA382E006ABBAF /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */; };
-		01429295123AA6CF00CFF7D7 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01429294123AA6CF00CFF7D7 /* Carbon.framework */; };
+		0112025112F1DD54001A5E49 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112025012F1DD54001A5E49 /* AudioToolbox.framework */; };
+		0112025312F1DD7D001A5E49 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112025212F1DD7D001A5E49 /* OpenGL.framework */; };
+		0112025512F1DD7D001A5E49 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112025412F1DD7D001A5E49 /* QuickTime.framework */; };
+		0112029B12F1DDDA001A5E49 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112029A12F1DDDA001A5E49 /* WebKit.framework */; };
+		0112F62212EF6AE8001A5E49 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F61B12EF6AE8001A5E49 /* App.h */; };
+		0112F62312EF6AE8001A5E49 /* ImageWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F61C12EF6AE8001A5E49 /* ImageWindow.h */; };
+		0112F62512EF6AE8001A5E49 /* MessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F61E12EF6AE8001A5E49 /* MessageDialog.h */; };
+		0112F62612EF6AE8001A5E49 /* WxKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F61F12EF6AE8001A5E49 /* WxKeyboard.h */; };
+		0112F62712EF6AE8001A5E49 /* WxMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F62012EF6AE8001A5E49 /* WxMouse.h */; };
+		0112F63012EF6AFC001A5E49 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F62912EF6AFC001A5E49 /* App.cpp */; };
+		0112F63112EF6AFC001A5E49 /* ImageWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F62A12EF6AFC001A5E49 /* ImageWindow.cpp */; };
+		0112F63312EF6AFC001A5E49 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F62C12EF6AFC001A5E49 /* MessageDialog.cpp */; };
+		0112F63412EF6AFC001A5E49 /* WxKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F62D12EF6AFC001A5E49 /* WxKeyboard.cpp */; };
+		0112F63512EF6AFC001A5E49 /* WxMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F62E12EF6AFC001A5E49 /* WxMouse.cpp */; };
+		0112F65F12F1C3C7001A5E49 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65912F1C3C7001A5E49 /* Enums.h */; };
+		0112F66012F1C3C7001A5E49 /* HtmlHelpController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65A12F1C3C7001A5E49 /* HtmlHelpController.h */; };
+		0112F66112F1C3C7001A5E49 /* ImageViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65B12F1C3C7001A5E49 /* ImageViewer.h */; };
+		0112F66212F1C3C7001A5E49 /* NativeOSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65C12F1C3C7001A5E49 /* NativeOSWindow.h */; };
+		0112F66312F1C3C7001A5E49 /* NativeString.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65D12F1C3C7001A5E49 /* NativeString.h */; };
+		0112F66412F1C3C7001A5E49 /* NativeStringEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0112F65E12F1C3C7001A5E49 /* NativeStringEnumerator.h */; };
+		0112F67212F1C3EA001A5E49 /* DirDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66512F1C3EA001A5E49 /* DirDialog.cpp */; };
+		0112F67312F1C3EA001A5E49 /* Enums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66612F1C3EA001A5E49 /* Enums.cpp */; };
+		0112F67412F1C3EA001A5E49 /* FileOpenDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66712F1C3EA001A5E49 /* FileOpenDialog.cpp */; };
+		0112F67512F1C3EA001A5E49 /* FileSaveDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66812F1C3EA001A5E49 /* FileSaveDialog.cpp */; };
+		0112F67612F1C3EA001A5E49 /* HtmlHelpController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66912F1C3EA001A5E49 /* HtmlHelpController.cpp */; };
+		0112F67712F1C3EA001A5E49 /* ImageViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66A12F1C3EA001A5E49 /* ImageViewer.cpp */; };
+		0112F67812F1C3EA001A5E49 /* NativeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66B12F1C3EA001A5E49 /* NativeMenu.cpp */; };
+		0112F67912F1C3EA001A5E49 /* NativeMenuBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66C12F1C3EA001A5E49 /* NativeMenuBar.cpp */; };
+		0112F67A12F1C3EA001A5E49 /* NativeMenuItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66D12F1C3EA001A5E49 /* NativeMenuItem.cpp */; };
+		0112F67B12F1C3EA001A5E49 /* NativeOSWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66E12F1C3EA001A5E49 /* NativeOSWindow.cpp */; };
+		0112F67C12F1C3EA001A5E49 /* NativeString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F66F12F1C3EA001A5E49 /* NativeString.cpp */; };
+		0112F67D12F1C3EA001A5E49 /* NativeStringEnumerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */; };
+		0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */; };
+		0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67F12F1C469001A5E49 /* ColorDialog.cpp */; };
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
 		01F031F4121470420054F63B /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F031F2121470420054F63B /* Stdafx.h */; };
@@ -22,7 +55,40 @@
 
 /* Begin PBXFileReference section */
 		010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MultiTouch.cpp; path = ../../OSHelper/Src/MultiTouch.cpp; sourceTree = SOURCE_ROOT; };
-		01429294123AA6CF00CFF7D7 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		0112025012F1DD54001A5E49 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0112025212F1DD7D001A5E49 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		0112025412F1DD7D001A5E49 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		0112029A12F1DDDA001A5E49 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		0112F61B12EF6AE8001A5E49 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = App.h; path = ../../OSHelper/Include/App.h; sourceTree = SOURCE_ROOT; };
+		0112F61C12EF6AE8001A5E49 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageWindow.h; path = ../../OSHelper/Include/ImageWindow.h; sourceTree = SOURCE_ROOT; };
+		0112F61E12EF6AE8001A5E49 /* MessageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageDialog.h; path = ../../OSHelper/Include/MessageDialog.h; sourceTree = SOURCE_ROOT; };
+		0112F61F12EF6AE8001A5E49 /* WxKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WxKeyboard.h; path = ../../OSHelper/Include/WxKeyboard.h; sourceTree = SOURCE_ROOT; };
+		0112F62012EF6AE8001A5E49 /* WxMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WxMouse.h; path = ../../OSHelper/Include/WxMouse.h; sourceTree = SOURCE_ROOT; };
+		0112F62912EF6AFC001A5E49 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = App.cpp; path = ../../OSHelper/Src/App.cpp; sourceTree = SOURCE_ROOT; };
+		0112F62A12EF6AFC001A5E49 /* ImageWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageWindow.cpp; path = ../../OSHelper/Src/ImageWindow.cpp; sourceTree = SOURCE_ROOT; };
+		0112F62C12EF6AFC001A5E49 /* MessageDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MessageDialog.cpp; path = ../../OSHelper/Src/MessageDialog.cpp; sourceTree = SOURCE_ROOT; };
+		0112F62D12EF6AFC001A5E49 /* WxKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WxKeyboard.cpp; path = ../../OSHelper/Src/WxKeyboard.cpp; sourceTree = SOURCE_ROOT; };
+		0112F62E12EF6AFC001A5E49 /* WxMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WxMouse.cpp; path = ../../OSHelper/Src/WxMouse.cpp; sourceTree = SOURCE_ROOT; };
+		0112F65912F1C3C7001A5E49 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enums.h; path = ../../OSHelper/Include/Enums.h; sourceTree = SOURCE_ROOT; };
+		0112F65A12F1C3C7001A5E49 /* HtmlHelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlHelpController.h; path = ../../OSHelper/Include/HtmlHelpController.h; sourceTree = SOURCE_ROOT; };
+		0112F65B12F1C3C7001A5E49 /* ImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewer.h; path = ../../OSHelper/Include/ImageViewer.h; sourceTree = SOURCE_ROOT; };
+		0112F65C12F1C3C7001A5E49 /* NativeOSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeOSWindow.h; path = ../../OSHelper/Include/NativeOSWindow.h; sourceTree = SOURCE_ROOT; };
+		0112F65D12F1C3C7001A5E49 /* NativeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeString.h; path = ../../OSHelper/Include/NativeString.h; sourceTree = SOURCE_ROOT; };
+		0112F65E12F1C3C7001A5E49 /* NativeStringEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeStringEnumerator.h; path = ../../OSHelper/Include/NativeStringEnumerator.h; sourceTree = SOURCE_ROOT; };
+		0112F66512F1C3EA001A5E49 /* DirDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DirDialog.cpp; path = ../../OSHelper/Src/DirDialog.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66612F1C3EA001A5E49 /* Enums.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Enums.cpp; path = ../../OSHelper/Src/Enums.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66712F1C3EA001A5E49 /* FileOpenDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileOpenDialog.cpp; path = ../../OSHelper/Src/FileOpenDialog.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66812F1C3EA001A5E49 /* FileSaveDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileSaveDialog.cpp; path = ../../OSHelper/Src/FileSaveDialog.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66912F1C3EA001A5E49 /* HtmlHelpController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HtmlHelpController.cpp; path = ../../OSHelper/Src/HtmlHelpController.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66A12F1C3EA001A5E49 /* ImageViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageViewer.cpp; path = ../../OSHelper/Src/ImageViewer.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66B12F1C3EA001A5E49 /* NativeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeMenu.cpp; path = ../../OSHelper/Src/NativeMenu.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66C12F1C3EA001A5E49 /* NativeMenuBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeMenuBar.cpp; path = ../../OSHelper/Src/NativeMenuBar.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66D12F1C3EA001A5E49 /* NativeMenuItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeMenuItem.cpp; path = ../../OSHelper/Src/NativeMenuItem.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66E12F1C3EA001A5E49 /* NativeOSWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeOSWindow.cpp; path = ../../OSHelper/Src/NativeOSWindow.cpp; sourceTree = SOURCE_ROOT; };
+		0112F66F12F1C3EA001A5E49 /* NativeString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeString.cpp; path = ../../OSHelper/Src/NativeString.cpp; sourceTree = SOURCE_ROOT; };
+		0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeStringEnumerator.cpp; path = ../../OSHelper/Src/NativeStringEnumerator.cpp; sourceTree = SOURCE_ROOT; };
+		0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemInfo.cpp; path = ../../OSHelper/Src/SystemInfo.cpp; sourceTree = SOURCE_ROOT; };
+		0112F67F12F1C469001A5E49 /* ColorDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorDialog.cpp; path = ../../OSHelper/Src/ColorDialog.cpp; sourceTree = SOURCE_ROOT; };
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01F031F2121470420054F63B /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../../OSHelper/Stdafx.h; sourceTree = SOURCE_ROOT; };
@@ -32,10 +98,7 @@
 		01F032801215C0480054F63B /* UserPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserPermissions.h; path = ../../OSHelper/Include/UserPermissions.h; sourceTree = SOURCE_ROOT; };
 		01F03442121EA3C70054F63B /* PerformanceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceCounter.h; path = ../../OSHelper/Include/PerformanceCounter.h; sourceTree = SOURCE_ROOT; };
 		01F03444121EA3D40054F63B /* PerformanceCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceCounter.cpp; path = ../../OSHelper/Src/PerformanceCounter.cpp; sourceTree = SOURCE_ROOT; };
-		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* OSHelper_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHelper_Prefix.pch; sourceTree = "<group>"; };
-		D2A6134D07B89F6200DD23D3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		D2AAC0C705546C1D00DB518D /* libOSHelper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libOSHelper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -44,8 +107,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01429295123AA6CF00CFF7D7 /* Carbon.framework in Frameworks */,
 				01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */,
+				0112025112F1DD54001A5E49 /* AudioToolbox.framework in Frameworks */,
+				0112025312F1DD7D001A5E49 /* OpenGL.framework in Frameworks */,
+				0112025512F1DD7D001A5E49 /* QuickTime.framework in Frameworks */,
+				0112029B12F1DDDA001A5E49 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +121,25 @@
 		01F0325A1214743E0054F63B /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				0112F67F12F1C469001A5E49 /* ColorDialog.cpp */,
+				0112F66512F1C3EA001A5E49 /* DirDialog.cpp */,
+				0112F66612F1C3EA001A5E49 /* Enums.cpp */,
+				0112F66712F1C3EA001A5E49 /* FileOpenDialog.cpp */,
+				0112F66812F1C3EA001A5E49 /* FileSaveDialog.cpp */,
+				0112F66912F1C3EA001A5E49 /* HtmlHelpController.cpp */,
+				0112F66A12F1C3EA001A5E49 /* ImageViewer.cpp */,
+				0112F66B12F1C3EA001A5E49 /* NativeMenu.cpp */,
+				0112F66C12F1C3EA001A5E49 /* NativeMenuBar.cpp */,
+				0112F66D12F1C3EA001A5E49 /* NativeMenuItem.cpp */,
+				0112F66E12F1C3EA001A5E49 /* NativeOSWindow.cpp */,
+				0112F66F12F1C3EA001A5E49 /* NativeString.cpp */,
+				0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */,
+				0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */,
+				0112F62912EF6AFC001A5E49 /* App.cpp */,
+				0112F62A12EF6AFC001A5E49 /* ImageWindow.cpp */,
+				0112F62C12EF6AFC001A5E49 /* MessageDialog.cpp */,
+				0112F62D12EF6AFC001A5E49 /* WxKeyboard.cpp */,
+				0112F62E12EF6AFC001A5E49 /* WxMouse.cpp */,
 				010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */,
 				01F03444121EA3D40054F63B /* PerformanceCounter.cpp */,
 				01F0327C1215C0330054F63B /* UserPermissions.cpp */,
@@ -66,6 +151,17 @@
 		01F0327E1215C0360054F63B /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				0112F65912F1C3C7001A5E49 /* Enums.h */,
+				0112F65A12F1C3C7001A5E49 /* HtmlHelpController.h */,
+				0112F65B12F1C3C7001A5E49 /* ImageViewer.h */,
+				0112F65C12F1C3C7001A5E49 /* NativeOSWindow.h */,
+				0112F65D12F1C3C7001A5E49 /* NativeString.h */,
+				0112F65E12F1C3C7001A5E49 /* NativeStringEnumerator.h */,
+				0112F61B12EF6AE8001A5E49 /* App.h */,
+				0112F61C12EF6AE8001A5E49 /* ImageWindow.h */,
+				0112F61E12EF6AE8001A5E49 /* MessageDialog.h */,
+				0112F61F12EF6AE8001A5E49 /* WxKeyboard.h */,
+				0112F62012EF6AE8001A5E49 /* WxMouse.h */,
 				01F03442121EA3C70054F63B /* PerformanceCounter.h */,
 				01F0327F1215C0480054F63B /* Features.h */,
 				01F032801215C0480054F63B /* UserPermissions.h */,
@@ -88,6 +184,10 @@
 				32C88DFF0371C24200C91783 /* Other Sources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
+				0112025012F1DD54001A5E49 /* AudioToolbox.framework */,
+				0112025212F1DD7D001A5E49 /* OpenGL.framework */,
+				0112025412F1DD7D001A5E49 /* QuickTime.framework */,
+				0112029A12F1DDDA001A5E49 /* WebKit.framework */,
 			);
 			name = OSHelper;
 			sourceTree = "<group>";
@@ -116,7 +216,6 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				01429294123AA6CF00CFF7D7 /* Carbon.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -124,9 +223,6 @@
 		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
-				D2A6134D07B89F6200DD23D3 /* CoreData.framework */,
-				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -150,6 +246,17 @@
 				01F032811215C0480054F63B /* Features.h in Headers */,
 				01F032821215C0480054F63B /* UserPermissions.h in Headers */,
 				01F03443121EA3C70054F63B /* PerformanceCounter.h in Headers */,
+				0112F62212EF6AE8001A5E49 /* App.h in Headers */,
+				0112F62312EF6AE8001A5E49 /* ImageWindow.h in Headers */,
+				0112F62512EF6AE8001A5E49 /* MessageDialog.h in Headers */,
+				0112F62612EF6AE8001A5E49 /* WxKeyboard.h in Headers */,
+				0112F62712EF6AE8001A5E49 /* WxMouse.h in Headers */,
+				0112F65F12F1C3C7001A5E49 /* Enums.h in Headers */,
+				0112F66012F1C3C7001A5E49 /* HtmlHelpController.h in Headers */,
+				0112F66112F1C3C7001A5E49 /* ImageViewer.h in Headers */,
+				0112F66212F1C3C7001A5E49 /* NativeOSWindow.h in Headers */,
+				0112F66312F1C3C7001A5E49 /* NativeString.h in Headers */,
+				0112F66412F1C3C7001A5E49 /* NativeStringEnumerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +308,25 @@
 				01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */,
 				01F03445121EA3D40054F63B /* PerformanceCounter.cpp in Sources */,
 				010C4D4E12EA382E006ABBAF /* MultiTouch.cpp in Sources */,
+				0112F63012EF6AFC001A5E49 /* App.cpp in Sources */,
+				0112F63112EF6AFC001A5E49 /* ImageWindow.cpp in Sources */,
+				0112F63312EF6AFC001A5E49 /* MessageDialog.cpp in Sources */,
+				0112F63412EF6AFC001A5E49 /* WxKeyboard.cpp in Sources */,
+				0112F63512EF6AFC001A5E49 /* WxMouse.cpp in Sources */,
+				0112F67212F1C3EA001A5E49 /* DirDialog.cpp in Sources */,
+				0112F67312F1C3EA001A5E49 /* Enums.cpp in Sources */,
+				0112F67412F1C3EA001A5E49 /* FileOpenDialog.cpp in Sources */,
+				0112F67512F1C3EA001A5E49 /* FileSaveDialog.cpp in Sources */,
+				0112F67612F1C3EA001A5E49 /* HtmlHelpController.cpp in Sources */,
+				0112F67712F1C3EA001A5E49 /* ImageViewer.cpp in Sources */,
+				0112F67812F1C3EA001A5E49 /* NativeMenu.cpp in Sources */,
+				0112F67912F1C3EA001A5E49 /* NativeMenuBar.cpp in Sources */,
+				0112F67A12F1C3EA001A5E49 /* NativeMenuItem.cpp in Sources */,
+				0112F67B12F1C3EA001A5E49 /* NativeOSWindow.cpp in Sources */,
+				0112F67C12F1C3EA001A5E49 /* NativeString.cpp in Sources */,
+				0112F67D12F1C3EA001A5E49 /* NativeStringEnumerator.cpp in Sources */,
+				0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */,
+				0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +340,10 @@
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -224,6 +354,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Dependencies/HASP\"",
+					"\"$(SRCROOT)/../../../Dependencies/wxWidgets-Mac/osx-build/lib\"",
 				);
 				PRODUCT_NAME = OSHelper;
 			};
@@ -236,6 +367,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/Frameworks/ApplicationServices.framework/Versions/A/Frameworks\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = OSHelper_Prefix.pch;
@@ -243,6 +378,50 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Dependencies/HASP\"",
+					"\"$(SRCROOT)/../../../Dependencies/wxWidgets-Mac/osx-build/lib\"",
+				);
+				OTHER_CFLAGS = (
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__\n",
+				);
+				OTHER_LDFLAGS = (
+					"-L/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuickTime,
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_xrc-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_html-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_qa-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_adv-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_core-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_xml-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_net-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu-2.9.a",
+					"-framework",
+					WebKit,
+					"-lexpat",
+					"-lwxregexu-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lz",
+					"-lpthread",
+					"-liconv",
 				);
 				PRODUCT_NAME = libOSHelper;
 			};
@@ -266,11 +445,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = /Users/andrewpiper/Development/Dependencies/HASP;
+				HEADER_SEARCH_PATHS = (
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+					/Users/andrewpiper/Development/Dependencies/HASP,
+				);
+				LIBRARY_SEARCH_PATHS = "/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				VALID_ARCHS = i386;

@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "..\Include\WxKeyboard.h"
+#include "WxKeyboard.h"
 #include "NativeOSWindow.h"
 
 KeyboardButtonCode WxKeyboard::keyConverter[397];
@@ -12,7 +12,7 @@ downKeyCode(0)
 {
 	createConverterTable();
 
-	wxWindow* window = osWindow->getMainControl();
+	wxWindow* window = osWindow;
 
 	window->Bind(wxEVT_KEY_DOWN, &WxKeyboard::OnKeyDown, this);
 	window->Bind(wxEVT_CHAR, &WxKeyboard::OnChar, this);
