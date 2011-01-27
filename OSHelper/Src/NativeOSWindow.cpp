@@ -78,20 +78,20 @@ extern "C" _AnomalousExport void NativeOSWindow_setSize(NativeOSWindow* nativeWi
 extern "C" _AnomalousExport int NativeOSWindow_getWidth(NativeOSWindow* nativeWindow)
 {
     int w, h;
-	nativeWindow->GetClientSize(&w, &h);
+	nativeWindow->getMainControl()->GetClientSize(&w, &h);
 	return w;
 }
 
 extern "C" _AnomalousExport int NativeOSWindow_getHeight(NativeOSWindow* nativeWindow)
 {
     int w, h;
-	nativeWindow->GetClientSize(&w, &h);
+	nativeWindow->getMainControl()->GetClientSize(&w, &h);
 	return h;
 }
 
 extern "C" _AnomalousExport WXWidget NativeOSWindow_getHandle(NativeOSWindow* nativeWindow)
 {
-    return nativeWindow->GetHandle();
+    return nativeWindow->getMainControl()->GetHandle();
 }
 
 
