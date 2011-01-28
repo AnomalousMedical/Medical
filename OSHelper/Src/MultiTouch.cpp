@@ -110,14 +110,16 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 
 #ifdef MAC_OSX
 
+#include "OSXMultiTouch.h"
+
 extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(void* hwnd)
 {
-
+	registerWithObjectiveC(hwnd);
 }
 
 extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 {
-	return false;
+	return true;
 }
 
 #endif //MAC_OSX

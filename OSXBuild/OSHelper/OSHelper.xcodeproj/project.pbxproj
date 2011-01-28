@@ -43,6 +43,8 @@
 		0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */; };
 		0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67F12F1C469001A5E49 /* ColorDialog.cpp */; };
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
+		01ADCCB312F222EF00C7ABC7 /* OSXMultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */; };
+		01ADCCB412F222EF00C7ABC7 /* OSXMultiTouch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */; };
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
 		01F031F4121470420054F63B /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F031F2121470420054F63B /* Stdafx.h */; };
 		01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0325B121474620054F63B /* WindowFunctions.cpp */; };
@@ -90,6 +92,8 @@
 		0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemInfo.cpp; path = ../../OSHelper/Src/SystemInfo.cpp; sourceTree = SOURCE_ROOT; };
 		0112F67F12F1C469001A5E49 /* ColorDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorDialog.cpp; path = ../../OSHelper/Src/ColorDialog.cpp; sourceTree = SOURCE_ROOT; };
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
+		01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXMultiTouch.h; sourceTree = "<group>"; };
+		01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXMultiTouch.mm; sourceTree = "<group>"; };
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01F031F2121470420054F63B /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../../OSHelper/Stdafx.h; sourceTree = SOURCE_ROOT; };
 		01F0325B121474620054F63B /* WindowFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunctions.cpp; path = ../../OSHelper/Src/WindowFunctions.cpp; sourceTree = SOURCE_ROOT; };
@@ -144,6 +148,8 @@
 				01F03444121EA3D40054F63B /* PerformanceCounter.cpp */,
 				01F0327C1215C0330054F63B /* UserPermissions.cpp */,
 				01F0325B121474620054F63B /* WindowFunctions.cpp */,
+				01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */,
+				01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */,
 			);
 			name = Src;
 			sourceTree = "<group>";
@@ -257,6 +263,7 @@
 				0112F66212F1C3C7001A5E49 /* NativeOSWindow.h in Headers */,
 				0112F66312F1C3C7001A5E49 /* NativeString.h in Headers */,
 				0112F66412F1C3C7001A5E49 /* NativeStringEnumerator.h in Headers */,
+				01ADCCB312F222EF00C7ABC7 /* OSXMultiTouch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +334,7 @@
 				0112F67D12F1C3EA001A5E49 /* NativeStringEnumerator.cpp in Sources */,
 				0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */,
 				0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */,
+				01ADCCB412F222EF00C7ABC7 /* OSXMultiTouch.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
