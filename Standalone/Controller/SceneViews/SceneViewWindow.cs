@@ -188,6 +188,16 @@ namespace Medical.Controller
             cameraMover.rotate(yawDelta, pitchDelta);
         }
 
+        public void pan(float xDelta, float yDelta)
+        {
+            cameraMover.pan(xDelta, yDelta);
+        }
+
+        public void zoom(float zoomDelta)
+        {
+            cameraMover.zoom(zoomDelta);
+        }
+
         public override bool Visible
         {
             get

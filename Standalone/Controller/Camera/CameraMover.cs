@@ -19,6 +19,16 @@ namespace Medical
 
         }
 
+        public virtual void pan(float xDelta, float yDelta)
+        {
+            
+        }
+
+        public virtual void zoom(float zoomDelta)
+        {
+            
+        }
+
         /// <summary>
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>

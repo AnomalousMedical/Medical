@@ -19,6 +19,7 @@ namespace Medical
             {
                 if (Scroll != null)
                 {
+                    didGesture = true;
                     Scroll.Invoke(fingers[0].DeltaX, fingers[0].DeltaY);
                 }
             }

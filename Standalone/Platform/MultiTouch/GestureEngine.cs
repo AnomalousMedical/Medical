@@ -52,26 +52,38 @@ namespace Medical
 
         void multiTouch_TouchMoved(TouchInfo info)
         {
-            Finger finger = fingers[info.id];
+            Finger finger;
+            if (!fingers.TryGetValue(info.id, out finger))
+            {
+                multiTouch_TouchStarted(info);
+                finger = fingers[info.id];
+            }
             finger.setCurrentPosition(info.normalizedX, info.normalizedY);
             //Log.Debug("GestureEngine Touch moved {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
         }
 
         void multiTouch_TouchEnded(TouchInfo info)
         {
-            Finger finger = fingers[info.id];
-            fingers.Remove(info.id);
-            fingerList.Remove(finger);
-            finger.finished();
+            Finger finger;
+            if (fingers.TryGetValue(info.id, out finger))
+            {
+                fingers.Remove(info.id);
+                fingerList.Remove(finger);
+                finger.finished();
+            }
             //Log.Debug("GestureEngine Touch ended {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
         }
 
         void multiTouch_TouchStarted(TouchInfo info)
         {
-            Finger finger = fingerPool.getPooledObject();
+            Finger finger;
+            if (!fingers.TryGetValue(info.id, out finger))
+            {
+                finger = fingerPool.getPooledObject();
+                fingers.Add(info.id, finger);
+                fingerList.Add(finger);
+            }
             finger.setInfoOutOfPool(info.id, info.normalizedX, info.normalizedY);
-            fingers.Add(info.id, finger);
-            fingerList.Add(finger);
             //Log.Debug("GestureEngine Touch started {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
         }
 
