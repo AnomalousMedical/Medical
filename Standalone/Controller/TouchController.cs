@@ -13,8 +13,8 @@ namespace Medical
         private GestureEngine gestureEngine;
         private UpdateTimer mainTimer;
         private SceneViewController sceneViewController;
-        private OneFingerScrollGesture oneFingerScroll;
-        private TwoFingerScrollGesture twoFingerScroll;
+        private MultiFingerScrollGesture oneFingerScroll;
+        private MultiFingerScrollGesture twoFingerScroll;
         private TwoFingerZoom twoFingerZoom;
 
         public TouchController(OSWindow window, UpdateTimer mainTimer, SceneViewController sceneViewController)
@@ -25,16 +25,16 @@ namespace Medical
             gestureEngine = new GestureEngine(multiTouch);
             mainTimer.addFixedUpdateListener(gestureEngine);
 
-            oneFingerScroll = new OneFingerScrollGesture();
-            oneFingerScroll.Scroll += new OneFingerScrollGesture.ScrollDelegate(oneFingerScroll_Scroll);
+            oneFingerScroll = new MultiFingerScrollGesture(1);
+            oneFingerScroll.Scroll += new MultiFingerScrollGesture.ScrollDelegate(oneFingerScroll_Scroll);
             gestureEngine.addGesture(oneFingerScroll);
 
             twoFingerZoom = new TwoFingerZoom();
             twoFingerZoom.Zoom += new TwoFingerZoom.ZoomDelegate(twoFingerZoom_Zoom);
             gestureEngine.addGesture(twoFingerZoom);
 
-            twoFingerScroll = new TwoFingerScrollGesture();
-            twoFingerScroll.Scroll += new TwoFingerScrollGesture.ScrollDelegate(twoFingerScroll_Scroll);
+            twoFingerScroll = new MultiFingerScrollGesture(2);
+            twoFingerScroll.Scroll += new MultiFingerScrollGesture.ScrollDelegate(twoFingerScroll_Scroll);
             gestureEngine.addGesture(twoFingerScroll);
         }
 
