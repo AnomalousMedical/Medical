@@ -10,8 +10,21 @@
 #import "OSXMultiTouch.h"
 #import <objc/objc-class.h>
 
-#include <iostream>
+#include "MultiTouch.h"
 
+#ifdef __GNUC__
+#include <ext/hash_map>
+#else
+#include <hash_map>
+#endif
+
+namespace std
+{
+	using namespace __gnu_cxx;
+}
+
+std::hash_map<long, MultiTouch*> viewToMultitouch;
+TouchInfo touchInfo;
 
 @implementation NSView (TouchExtension)
 
@@ -21,8 +34,10 @@
 	for(NSTouch *touch in touches)
 	{
 		NSPoint point = touch.normalizedPosition;
-		point.y = 1.0 - point.y;
-		std::cout << "Objective C touch begin " << touch.identity << " x " << point.x << " y " << point.y << std::endl;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		viewToMultitouch[(long)self]->fireTouchStarted(touchInfo);
 	}
 }
 
@@ -32,8 +47,10 @@
 	for(NSTouch *touch in touches)
 	{
 		NSPoint point = touch.normalizedPosition;
-		point.y = 1.0 - point.y;
-		std::cout << "Objective C touch moved " << touch.identity << " x " << point.x << " y " << point.y << std::endl;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		viewToMultitouch[(long)self]->fireTouchMoved(touchInfo);
 	}
 }
 
@@ -43,8 +60,10 @@
 	for(NSTouch *touch in touches)
 	{
 		NSPoint point = touch.normalizedPosition;
-		point.y = 1.0 - point.y;
-		std::cout << "Objective C touch ended " << touch.identity << " x " << point.x << " y " << point.y << std::endl;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		viewToMultitouch[(long)self]->fireTouchEnded(touchInfo);
 	}
 }
 
@@ -54,19 +73,20 @@
 	for(NSTouch *touch in touches)
 	{
 		NSPoint point = touch.normalizedPosition;
-		point.y = 1.0 - point.y;
-		std::cout << "Objective C touch canceled " << touch.identity << " x " << point.x << " y " << point.y << std::endl;
+		touchInfo.normalizedX = point.x;
+		touchInfo.normalizedY = 1.0 - point.y;
+		touchInfo.id = (int)touch.identity;
+		viewToMultitouch[(long)self]->fireTouchEnded(touchInfo);
 	}
 }
 
 @end
 
-void registerWithObjectiveC(void* windowHandle)
+void registerWithObjectiveC(void* windowHandle, MultiTouch* multiTouch)
 {
 	NSView* nsView = (NSView*)windowHandle;
 	[nsView setAcceptsTouchEvents:true];
-	bool touchActivated = [nsView acceptsTouchEvents] != 0;
-	std::cout << "Objective C got " << windowHandle << " if true touch events activated " << touchActivated << std::endl;
+	viewToMultitouch[(long)windowHandle] = multiTouch;
 }
 
 

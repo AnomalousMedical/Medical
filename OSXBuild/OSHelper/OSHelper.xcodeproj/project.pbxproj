@@ -45,6 +45,7 @@
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
 		01ADCCB312F222EF00C7ABC7 /* OSXMultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */; };
 		01ADCCB412F222EF00C7ABC7 /* OSXMultiTouch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */; };
+		01ADCD8812F31E5300C7ABC7 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01ADCD8712F31E5300C7ABC7 /* MultiTouch.h */; };
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
 		01F031F4121470420054F63B /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F031F2121470420054F63B /* Stdafx.h */; };
 		01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0325B121474620054F63B /* WindowFunctions.cpp */; };
@@ -94,6 +95,7 @@
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
 		01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXMultiTouch.h; sourceTree = "<group>"; };
 		01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXMultiTouch.mm; sourceTree = "<group>"; };
+		01ADCD8712F31E5300C7ABC7 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiTouch.h; path = ../../OSHelper/Include/MultiTouch.h; sourceTree = SOURCE_ROOT; };
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01F031F2121470420054F63B /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../../OSHelper/Stdafx.h; sourceTree = SOURCE_ROOT; };
 		01F0325B121474620054F63B /* WindowFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunctions.cpp; path = ../../OSHelper/Src/WindowFunctions.cpp; sourceTree = SOURCE_ROOT; };
@@ -157,6 +159,7 @@
 		01F0327E1215C0360054F63B /* Include */ = {
 			isa = PBXGroup;
 			children = (
+				01ADCD8712F31E5300C7ABC7 /* MultiTouch.h */,
 				0112F65912F1C3C7001A5E49 /* Enums.h */,
 				0112F65A12F1C3C7001A5E49 /* HtmlHelpController.h */,
 				0112F65B12F1C3C7001A5E49 /* ImageViewer.h */,
@@ -264,6 +267,7 @@
 				0112F66312F1C3C7001A5E49 /* NativeString.h in Headers */,
 				0112F66412F1C3C7001A5E49 /* NativeStringEnumerator.h in Headers */,
 				01ADCCB312F222EF00C7ABC7 /* OSXMultiTouch.h in Headers */,
+				01ADCD8812F31E5300C7ABC7 /* MultiTouch.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

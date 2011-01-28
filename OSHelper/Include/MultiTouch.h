@@ -5,6 +5,10 @@
 	typedef HWND WindowType;
 #endif
 
+#ifdef MAC_OSX
+	typedef void* WindowType;
+#endif
+
 class TouchInfo
 {
 public:

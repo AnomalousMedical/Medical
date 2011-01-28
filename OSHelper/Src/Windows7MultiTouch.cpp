@@ -12,7 +12,6 @@
 #include <windows.h>
 #include <windowsx.h>   // included for point conversion
 #include "..\Resource.h"
-#include <iostream>
 #include <hash_map>
 
 UINT cInputs;

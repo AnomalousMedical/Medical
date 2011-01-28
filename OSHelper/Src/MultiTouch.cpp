@@ -38,9 +38,16 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 
 #include "OSXMultiTouch.h"
 
-extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(void* hwnd)
+extern "C" _AnomalousExport MultiTouch* MultiTouch_new(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
 {
-	registerWithObjectiveC(hwnd);
+	MultiTouch* multiTouch = new MultiTouch(window, touchStartedCB, touchEndedCB, touchMovedCB);
+	registerWithObjectiveC(window, multiTouch);
+	return multiTouch;
+}
+
+extern "C" _AnomalousExport void MultiTouch_delete(MultiTouch* multiTouch)
+{
+	delete multiTouch;
 }
 
 extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
@@ -51,11 +58,6 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 #endif //MAC_OSX
 
 #else //Else from MULTITOUCH
-
-extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(void* hwnd)
-{
-
-}
 
 extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 {
