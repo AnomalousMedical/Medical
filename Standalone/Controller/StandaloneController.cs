@@ -64,6 +64,7 @@ namespace Medical
 
         //Frame
         private MainWindow mainWindow;
+        private MultiTouch multiTouch;
 
         public StandaloneController(String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
         {
@@ -88,6 +89,10 @@ namespace Medical
 
         public void Dispose()
         {
+            if (multiTouch != null)
+            {
+                multiTouch.Dispose();
+            }
             htmlHelpController.Dispose();
             guiManager.Dispose();
             watermark.Dispose();
@@ -117,7 +122,7 @@ namespace Medical
             //MultiTouch
             if (MultiTouch.IsAvailable)
             {
-                MultiTouch.registerMultiTouchEventHandler(mainWindow);
+                multiTouch = new MultiTouch(mainWindow);
             }
             else
             {

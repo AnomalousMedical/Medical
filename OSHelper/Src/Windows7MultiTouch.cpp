@@ -1,0 +1,98 @@
+#include "StdAfx.h"
+#include "Windows7MultiTouch.h"
+#include "MultiTouch.h"
+
+//#ifndef WINVER                  // Specifies that the minimum required platform is Windows 7.
+//#define WINVER 0x0601           // Change this to the appropriate value to target other versions of Windows.
+//#endif
+
+#if WINVER > 0x600 //If on windows 7
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <windowsx.h>   // included for point conversion
+#include "..\Resource.h"
+#include <iostream>
+#include <hash_map>
+
+UINT cInputs;
+PTOUCHINPUT pInputs;
+TouchInfo touchInfo;
+stdext::hash_map<HWND, MultiTouch*> windowToTouchMap;
+
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	MultiTouch* multiTouch = windowToTouchMap[hWnd];
+	switch(message)
+	{
+	case WM_TOUCH:
+		cInputs = LOWORD(wParam);
+		pInputs = new TOUCHINPUT[cInputs];
+		if (pInputs)
+		{
+			if (GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs, sizeof(TOUCHINPUT)))
+			{
+				for (int i=0; i < static_cast<INT>(cInputs); i++)
+				{
+					TOUCHINPUT ti = pInputs[i];
+					touchInfo.id = ti.dwID;
+					touchInfo.normalizedX = ti.x;
+					touchInfo.normalizedY = ti.y;
+					if(ti.dwFlags & TOUCHEVENTF_MOVE)
+					{
+						multiTouch->fireTouchMoved(touchInfo);
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_DOWN)
+					{
+						multiTouch->fireTouchStarted(touchInfo);
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_UP)
+					{
+						multiTouch->fireTouchEnded(touchInfo);
+					}
+					//Don't process these, but leave them for reference
+					/*else if(ti.dwFlags & TOUCHEVENTF_INRANGE)
+					{
+						std::cout << "Touched in range " << ti.dwID << std::endl;
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_PRIMARY)
+					{
+						std::cout << "Touched primary " << ti.dwID << std::endl;
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_NOCOALESCE)
+					{
+						std::cout << "Touched nocoalesce " << ti.dwID << std::endl;
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_PEN)
+					{
+						std::cout << "Touched pen " << ti.dwID << std::endl;
+					}
+					else if(ti.dwFlags & TOUCHEVENTF_PALM)
+					{
+						std::cout << "Touched palm " << ti.dwID << std::endl;
+					}*/
+				}
+			}
+			// If you handled the message and don't want anything else done with it, you can close it
+			CloseTouchInputHandle((HTOUCHINPUT)lParam);
+			delete [] pInputs;
+		}else{
+			// Handle the error here 
+		}  
+
+
+		break;
+	}
+
+	return multiTouch->fireOriginalWindowFunc(hWnd, message, wParam, lParam);
+}
+
+void registerWithWindows(HWND hwnd, MultiTouch* multiTouch)
+{
+	windowToTouchMap[hwnd] = multiTouch;
+	RegisterTouchWindow(hwnd, 0);
+	long wndProcLong = (long)WndProc;
+	SetWindowLong(hwnd, GWLP_WNDPROC, wndProcLong);
+}
+
+#endif

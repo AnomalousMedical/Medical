@@ -1,104 +1,30 @@
 #include "stdafx.h"
+#include "MultiTouch.h"
 
-//#define MULTITOUCH
+#ifdef WINDOWS
+#define MULTITOUCH WINVER > 0x600
+#endif
 
-#ifdef MULTITOUCH
+#ifdef MAC_OSX
+#define MULTITOUCH 1
+#endif
+
+#if MULTITOUCH != 0
 
 #ifdef WINDOWS
 
-#ifndef WINVER                  // Specifies that the minimum required platform is Windows 7.
-#define WINVER 0x0601           // Change this to the appropriate value to target other versions of Windows.
-#endif
+#include "Windows7MultiTouch.h"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <windowsx.h>   // included for point conversion
-#include "..\Resource.h"
-#include <iostream>
-
-typedef LRESULT (CALLBACK *WndFunc)(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-WndFunc newWndFunc = WndProc;
-WndFunc oldWndFunc;
-
-int wmId, wmEvent, i, x, y;
-
-UINT cInputs;
-PTOUCHINPUT pInputs;
-POINT ptInput;  
-
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+extern "C" _AnomalousExport MultiTouch* MultiTouch_new(HWND hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
 {
-	switch(message)
-	{
-	case WM_TOUCH:
-		cInputs = LOWORD(wParam);
-		pInputs = new TOUCHINPUT[cInputs];
-		if (pInputs)
-		{
-			if (GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs, sizeof(TOUCHINPUT)))
-			{
-				for (int i=0; i < static_cast<INT>(cInputs); i++)
-				{
-					TOUCHINPUT ti = pInputs[i];
-					if(ti.dwFlags & TOUCHEVENTF_MOVE)
-					{
-						std::cout << "Moved " << ti.dwID << " x " << ti.x << " y " << ti.y << " contactX " << ti.cxContact << " contactY " << ti.cyContact << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_DOWN)
-					{
-						std::cout << "Touched down" << ti.dwID  << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_UP)
-					{
-						std::cout << "Touched up " << ti.dwID << std::endl;
-					}
-					//Don't process these, but leave them for reference
-					/*else if(ti.dwFlags & TOUCHEVENTF_INRANGE)
-					{
-						std::cout << "Touched in range " << ti.dwID << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_PRIMARY)
-					{
-						std::cout << "Touched primary " << ti.dwID << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_NOCOALESCE)
-					{
-						std::cout << "Touched nocoalesce " << ti.dwID << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_PEN)
-					{
-						std::cout << "Touched pen " << ti.dwID << std::endl;
-					}
-					else if(ti.dwFlags & TOUCHEVENTF_PALM)
-					{
-						std::cout << "Touched palm " << ti.dwID << std::endl;
-					}*/
-				}
-			}
-			// If you handled the message and don't want anything else done with it, you can close it
-			CloseTouchInputHandle((HTOUCHINPUT)lParam);
-			delete [] pInputs;
-		}else{
-			// Handle the error here 
-		}  
-
-
-		break;
-	}
-
-	return oldWndFunc(hWnd, message, wParam, lParam);
+	MultiTouch* multiTouch = new MultiTouch(hwnd, touchStartedCB, touchEndedCB, touchMovedCB);
+	registerWithWindows(hwnd, multiTouch);
+	return multiTouch;
 }
 
-extern "C" _AnomalousExport void MultiTouch_registerMultiTouchEventHandler(HWND hwnd)
+extern "C" _AnomalousExport void MultiTouch_delete(MultiTouch* multiTouch)
 {
-	RegisterTouchWindow(hwnd, 0);
-
-	oldWndFunc = (WndFunc)GetWindowLong(hwnd, GWLP_WNDPROC);
-	long wndProcLong = (long)newWndFunc;
-	SetWindowLong(hwnd, GWLP_WNDPROC, wndProcLong);
+	delete multiTouch;
 }
 
 extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()

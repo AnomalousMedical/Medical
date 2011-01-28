@@ -8,15 +8,35 @@ using Logging;
 
 namespace Medical
 {
-    class MultiTouch
+    [StructLayout(LayoutKind.Explicit, Size=12)]
+    struct TouchInfo
     {
-        private MultiTouch() { }
+        [FieldOffset(0)]
+	    float normalizedX;
+        [FieldOffset(4)]
+	    float normalizedY;
+        [FieldOffset(8)]
+	    int id;
+    };
 
-        public static void registerMultiTouchEventHandler(OSWindow windowHandle)
+    class MultiTouch : IDisposable
+    {
+        private IntPtr nativeMultiTouch;
+
+        public MultiTouch(OSWindow windowHandle) 
         {
+            touchStartedCB = new TouchEventDelegate(touchStarted);
+            touchEndedCB = new TouchEventDelegate(touchEnded);
+            touchMovedCB = new TouchEventDelegate(touchMoved);
+
             IntPtr windowPtr = new IntPtr(long.Parse(windowHandle.WindowHandle));
             Log.Info("Activating MultiTouch on window {0}", windowPtr.ToString());
-            MultiTouch_registerMultiTouchEventHandler(windowPtr);
+            nativeMultiTouch = MultiTouch_new(windowPtr, touchStartedCB, touchEndedCB, touchMovedCB);
+        }
+
+        public void Dispose()
+        {
+            MultiTouch_delete(nativeMultiTouch);
         }
 
         public static bool IsAvailable
@@ -27,9 +47,32 @@ namespace Medical
             }
         }
 
+        private void touchStarted(TouchInfo touchInfo)
+        {
+            Log.Debug("Touch started");
+        }
+
+        private void touchEnded(TouchInfo touchInfo)
+        {
+            Log.Debug("Touch ended");
+        }
+
+        private void touchMoved(TouchInfo touchInfo)
+        {
+            Log.Debug("Touch moved");
+        }
+
+        delegate void TouchEventDelegate(TouchInfo touchInfo);
+        TouchEventDelegate touchStartedCB;
+        TouchEventDelegate touchEndedCB;
+        TouchEventDelegate touchMovedCB;
+
 #region PInvoke
         [DllImport("OSHelper")]
-        private static extern void MultiTouch_registerMultiTouchEventHandler(IntPtr hwnd);
+        private static extern IntPtr MultiTouch_new(IntPtr hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB);
+
+        [DllImport("OSHelper")]
+        private static extern void MultiTouch_delete(IntPtr multiTouch);
 
         [DllImport("OSHelper")]
         [return: MarshalAs(UnmanagedType.I1)]

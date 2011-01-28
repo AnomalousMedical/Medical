@@ -231,6 +231,18 @@
 				RelativePath=".\Src\MultiTouch.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Include\MultiTouch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Src\Windows7MultiTouch.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Include\Windows7MultiTouch.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="CopyProtection"
