@@ -12,11 +12,11 @@ namespace Medical
     struct TouchInfo
     {
         [FieldOffset(0)]
-	    float normalizedX;
+	    public float normalizedX;
         [FieldOffset(4)]
-	    float normalizedY;
+        public float normalizedY;
         [FieldOffset(8)]
-	    int id;
+        public int id;
     };
 
     class MultiTouch : IDisposable
@@ -49,17 +49,17 @@ namespace Medical
 
         private void touchStarted(TouchInfo touchInfo)
         {
-            Log.Debug("Touch started");
+            Log.Debug("Touch started {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
         }
 
         private void touchEnded(TouchInfo touchInfo)
         {
-            Log.Debug("Touch ended");
+            Log.Debug("Touch ended {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
         }
 
         private void touchMoved(TouchInfo touchInfo)
         {
-            Log.Debug("Touch moved");
+            Log.Debug("Touch moved {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
         }
 
         delegate void TouchEventDelegate(TouchInfo touchInfo);

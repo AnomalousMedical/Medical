@@ -13,11 +13,13 @@
 #include <windowsx.h>   // included for point conversion
 #include "..\Resource.h"
 #include <hash_map>
+#include <iostream>
 
 UINT cInputs;
 PTOUCHINPUT pInputs;
 TouchInfo touchInfo;
 stdext::hash_map<HWND, MultiTouch*> windowToTouchMap;
+MONITORINFO monitorInfo;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -31,12 +33,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			if (GetTouchInputInfo((HTOUCHINPUT)lParam, cInputs, pInputs, sizeof(TOUCHINPUT)))
 			{
+				HMONITOR monitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+				monitorInfo.cbSize = sizeof(MONITORINFO);
+				GetMonitorInfo(monitor, &monitorInfo);
+				float width = monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left;
+				float height = monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top;
+
 				for (int i=0; i < static_cast<INT>(cInputs); i++)
 				{
 					TOUCHINPUT ti = pInputs[i];
 					touchInfo.id = ti.dwID;
-					touchInfo.normalizedX = ti.x;
-					touchInfo.normalizedY = ti.y;
+					touchInfo.normalizedX = TOUCH_COORD_TO_PIXEL(ti.x) / width;
+					touchInfo.normalizedY = TOUCH_COORD_TO_PIXEL(ti.y) / height;
 					if(ti.dwFlags & TOUCHEVENTF_MOVE)
 					{
 						multiTouch->fireTouchMoved(touchInfo);
