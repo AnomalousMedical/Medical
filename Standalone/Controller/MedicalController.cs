@@ -85,6 +85,7 @@ namespace Medical
 #if ONLY_LOG_ERRORS
             Log.Default.setActiveMessageTypes(LogLevel.Error);
 #endif
+            Log.ImportantInfo("Running from directory {0}", MedicalConfig.ProgramDirectory);
 
             //Config plugins
             MyGUIInterface.LogFile = MedicalConfig.DocRoot + "/MyGUI.log";
