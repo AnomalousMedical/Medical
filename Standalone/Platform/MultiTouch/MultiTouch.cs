@@ -9,7 +9,7 @@ using Logging;
 namespace Medical
 {
     [StructLayout(LayoutKind.Explicit, Size=12)]
-    struct TouchInfo
+    public struct TouchInfo
     {
         [FieldOffset(0)]
 	    public float normalizedX;
@@ -19,9 +19,15 @@ namespace Medical
         public int id;
     };
 
-    class MultiTouch : IDisposable
+    public delegate void TouchEvent(TouchInfo info);
+
+    public class MultiTouch : IDisposable
     {
         private IntPtr nativeMultiTouch;
+
+        public event TouchEvent TouchStarted;
+        public event TouchEvent TouchEnded;
+        public event TouchEvent TouchMoved;
 
         public MultiTouch(OSWindow windowHandle) 
         {
@@ -49,17 +55,26 @@ namespace Medical
 
         private void touchStarted(TouchInfo touchInfo)
         {
-            Log.Debug("Touch started {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
+            if (TouchStarted != null)
+            {
+                TouchStarted.Invoke(touchInfo);
+            }
         }
 
         private void touchEnded(TouchInfo touchInfo)
         {
-            Log.Debug("Touch ended {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
+            if (TouchEnded != null)
+            {
+                TouchEnded.Invoke(touchInfo);
+            }
         }
 
         private void touchMoved(TouchInfo touchInfo)
         {
-            Log.Debug("Touch moved {0} {1} {2}", touchInfo.id, touchInfo.normalizedX, touchInfo.normalizedY);
+            if (TouchMoved != null)
+            {
+                TouchMoved.Invoke(touchInfo);
+            }
         }
 
         delegate void TouchEventDelegate(TouchInfo touchInfo);

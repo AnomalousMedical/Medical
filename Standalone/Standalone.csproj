@@ -95,7 +95,11 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
-    <Compile Include="Controller\OSHelper\MultiTouch.cs" />
+    <Compile Include="Controller\TouchController.cs" />
+    <Compile Include="Platform\MultiTouch\Finger.cs" />
+    <Compile Include="Platform\MultiTouch\Gesture.cs" />
+    <Compile Include="Platform\MultiTouch\GestureEngine.cs" />
+    <Compile Include="Platform\MultiTouch\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow.cs" />
     <Compile Include="Controller\Props\Doppler.cs" />
     <Compile Include="Controller\Props\Mustache.cs" />
@@ -241,6 +245,7 @@
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />
     <Compile Include="Platform\DirDialog.cs" />
+    <Compile Include="Platform\MultiTouch\OneFingerScrollGesture.cs" />
     <Compile Include="Platform\NativeMenu.cs" />
     <Compile Include="Platform\NativeMenuBar.cs" />
     <Compile Include="Platform\NativeMenuItem.cs" />

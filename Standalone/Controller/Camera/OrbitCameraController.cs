@@ -123,6 +123,13 @@ namespace Medical
             computeStartingValues(translation - lookAt, out orbitDistance, out yaw, out pitch, out normalDirection, out rotatedUp, out rotatedLeft);
         }
 
+        public override void rotate(float yawDelta, float pitchDelta)
+        {
+            yaw += yawDelta;
+            pitch += pitchDelta;
+            moveCameraYawPitch();
+        }
+
         public override void sendUpdate(Clock clock)
         {
             if (camera != null)

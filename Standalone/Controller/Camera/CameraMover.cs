@@ -10,6 +10,16 @@ namespace Medical
     public abstract class CameraMover : UpdateListener
     {
         /// <summary>
+        /// Rotate the camera by a certain amount (if supported).
+        /// </summary>
+        /// <param name="yawDelta"></param>
+        /// <param name="pitchDelta"></param>
+        public virtual void rotate(float yawDelta, float pitchDelta)
+        {
+
+        }
+
+        /// <summary>
         /// set the current camera for this controller. This can be set to null to disable the controller.
         /// </summary>
         /// <param name="camera">The camera to use.</param>

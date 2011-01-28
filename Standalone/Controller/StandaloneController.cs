@@ -64,7 +64,9 @@ namespace Medical
 
         //Frame
         private MainWindow mainWindow;
-        private MultiTouch multiTouch;
+
+        //Touch
+        private TouchController touchController;
 
         public StandaloneController(String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
         {
@@ -89,9 +91,9 @@ namespace Medical
 
         public void Dispose()
         {
-            if (multiTouch != null)
+            if (touchController != null)
             {
-                multiTouch.Dispose();
+                touchController.Dispose();
             }
             htmlHelpController.Dispose();
             guiManager.Dispose();
@@ -118,16 +120,6 @@ namespace Medical
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
 
             splashScreen.updateStatus(10, "Initializing Core");
-
-            //MultiTouch
-            if (MultiTouch.IsAvailable)
-            {
-                multiTouch = new MultiTouch(mainWindow);
-            }
-            else
-            {
-                Log.Info("MultiTouch not available");
-            }
 
             //Help
             htmlHelpController = new HtmlHelpController();
@@ -231,6 +223,16 @@ namespace Medical
 
             //Create scene view windows
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
+
+            //MultiTouch
+            if (MultiTouch.IsAvailable)
+            {
+                touchController = new TouchController(mainWindow, medicalController.MainTimer, sceneViewController);
+            }
+            else
+            {
+                Log.Info("MultiTouch not available");
+            }
 
             splashScreen.updateStatus(40, "Loading Scene");
 

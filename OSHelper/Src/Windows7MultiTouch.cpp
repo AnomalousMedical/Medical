@@ -13,7 +13,6 @@
 #include <windowsx.h>   // included for point conversion
 #include "..\Resource.h"
 #include <hash_map>
-#include <iostream>
 
 UINT cInputs;
 PTOUCHINPUT pInputs;

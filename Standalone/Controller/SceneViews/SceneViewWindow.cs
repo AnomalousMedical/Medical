@@ -183,6 +183,11 @@ namespace Medical.Controller
             }
         }
 
+        public void rotate(float yawDelta, float pitchDelta)
+        {
+            cameraMover.rotate(yawDelta, pitchDelta);
+        }
+
         public override bool Visible
         {
             get
