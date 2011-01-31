@@ -22,8 +22,8 @@ namespace Medical
         private const int ROTATE_FINGER_COUNT = 1;
         private const int PAN_FINGER_COUNT = 2;
 #elif MAC_OSX
-        private const int ROTATE_FINGER_COUNT = 3;
-        private const int PAN_FINGER_COUNT = 4;
+        private const int ROTATE_FINGER_COUNT = 2;
+        private const int PAN_FINGER_COUNT = 3;
 #endif
 
         public TouchController(OSWindow window, UpdateTimer mainTimer, SceneViewController sceneViewController)
@@ -38,11 +38,11 @@ namespace Medical
             rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);
             gestureEngine.addGesture(rotateGesture);
 
-#if WINDOWS
+//#if WINDOWS
             zoomGesture = new TwoFingerZoom();
             zoomGesture.Zoom += new TwoFingerZoom.ZoomDelegate(zoomGesture_Zoom);
             gestureEngine.addGesture(zoomGesture);
-#endif
+//#endif
 
             panGesture = new MultiFingerScrollGesture(PAN_FINGER_COUNT);
             panGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(panGesture_Scroll);

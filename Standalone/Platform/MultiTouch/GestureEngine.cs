@@ -12,8 +12,7 @@ namespace Medical
     {
         private List<Gesture> gestures = new List<Gesture>();
         GenericObjectPool<Finger> fingerPool = new GenericObjectPool<Finger>();
-        private Dictionary<int, Finger> fingers = new Dictionary<int, Finger>();//Values coming in for ids are not always 0 based so better to use a dictionary
-        private List<Finger> fingerList = new List<Finger>();
+        private FastIteratorMap<int, Finger> fingers = new FastIteratorMap<int, Finger>();
 
         public GestureEngine(MultiTouch multiTouch)
         {
@@ -39,12 +38,12 @@ namespace Medical
             {
                 foreach (Gesture gesture in gestures)
                 {
-                    if (gesture.processFingers(fingerList))
+                    if (gesture.processFingers(fingers.List))
                     {
                         break;
                     }
                 }
-                foreach (Finger finger in fingerList)
+                foreach (Finger finger in fingers)
                 {
                     finger.captureCurrentPositionAsLast();
                 }
@@ -69,7 +68,6 @@ namespace Medical
             if (fingers.TryGetValue(info.id, out finger))
             {
                 fingers.Remove(info.id);
-                fingerList.Remove(finger);
                 finger.finished();
             }
             //Log.Debug("GestureEngine Touch ended {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
@@ -82,7 +80,6 @@ namespace Medical
             {
                 finger = fingerPool.getPooledObject();
                 fingers.Add(info.id, finger);
-                fingerList.Add(finger);
             }
             finger.setInfoOutOfPool(info.id, info.normalizedX, info.normalizedY);
             //Log.Debug("GestureEngine Touch started {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
@@ -90,7 +87,8 @@ namespace Medical
 
         void multiTouch_AllTouchesCanceled()
         {
-            Log.Debug("All touches canceled");
+            fingers.Clear();
+            //Log.Debug("All touches canceled");
         }
 
         #region UpdateListener Members
