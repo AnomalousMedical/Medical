@@ -19,6 +19,8 @@ namespace Medical.GUI
         {
             this.timelineController = timelineController;
 
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+
             fileList = window.findWidget("FileList") as MultiList;
             fileList.addColumn("File", fileList.Width);
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);
@@ -96,6 +98,11 @@ namespace Medical.GUI
             {
                 MessageBox.show("Please select a file to open.", "Warning", MessageBoxStyle.IconWarning | MessageBoxStyle.Ok);
             }
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            fileList.setColumnWidthAt(0, fileList.Width);
         }
 
         void importButton_MouseButtonClick(Widget source, EventArgs e)
