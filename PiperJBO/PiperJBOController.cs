@@ -27,7 +27,7 @@ namespace Medical
         public override bool OnIdle()
         {
             controller.onIdle();
-            return controller.Active;
+            return true;
         }
 
         public bool startApplication()

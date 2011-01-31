@@ -245,7 +245,6 @@ namespace Medical
 
                 medicalStateController.createNormalStateFromScene();
 
-                Active = true;
                 medicalController.start();
             }
         }
@@ -426,8 +425,6 @@ namespace Medical
                 return guiManager;
             }
         }
-
-        public bool Active { get; set; }
 
         public void recreateMainWindow()
         {
