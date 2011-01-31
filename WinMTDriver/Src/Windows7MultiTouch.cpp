@@ -1,16 +1,8 @@
-#include "StdAfx.h"
-#include "Windows7MultiTouch.h"
-#include "MultiTouch.h"
-
-//#ifndef WINVER                  // Specifies that the minimum required platform is Windows 7.
-//#define WINVER 0x0601           // Change this to the appropriate value to target other versions of Windows.
-//#endif
-
-#if WINVER > 0x600 //If on windows 7
-
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <windowsx.h>   // included for point conversion
+#include "Windows7MultiTouch.h"
+#include "MultiTouch.h"
 #include "..\Resource.h"
 #include <hash_map>
 
@@ -93,12 +85,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return multiTouch->fireOriginalWindowFunc(hWnd, message, wParam, lParam);
 }
 
-void registerWithWindows(HWND hwnd, MultiTouch* multiTouch)
+extern "C" _declspec(dllexport) void registerWithWindows(HWND hwnd, MultiTouch* multiTouch)
 {
 	windowToTouchMap[hwnd] = multiTouch;
 	RegisterTouchWindow(hwnd, 0);
 	long wndProcLong = (long)WndProc;
 	SetWindowLong(hwnd, GWLP_WNDPROC, wndProcLong);
 }
-
-#endif

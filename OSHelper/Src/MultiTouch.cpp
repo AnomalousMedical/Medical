@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "MultiTouch.h"
+#include "MultiTouchImpl.h"
 
 #ifdef WINDOWS
-#define MULTITOUCH WINVER > 0x600
+#define MULTITOUCH 1
 #endif
 
 #ifdef MAC_OSX
@@ -13,11 +14,12 @@
 
 #ifdef WINDOWS
 
-#include "Windows7MultiTouch.h"
+HMODULE mtDriver = NULL;
+WINDOWS_REGISTRATION_FUNC registerWithWindows = NULL;
 
 extern "C" _AnomalousExport MultiTouch* MultiTouch_new(HWND hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
 {
-	MultiTouch* multiTouch = new MultiTouch(hwnd, touchStartedCB, touchEndedCB, touchMovedCB);
+	MultiTouch* multiTouch = new MultiTouchImpl(hwnd, touchStartedCB, touchEndedCB, touchMovedCB);
 	registerWithWindows(hwnd, multiTouch);
 	return multiTouch;
 }
@@ -29,7 +31,24 @@ extern "C" _AnomalousExport void MultiTouch_delete(MultiTouch* multiTouch)
 
 extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 {
-	return true;
+	bool loaded = false;
+	if(mtDriver == NULL)
+	{
+		mtDriver = LoadLibraryEx(L"WinMTDriver.dll", NULL, 0);
+		if(mtDriver != NULL)
+		{
+			registerWithWindows = (WINDOWS_REGISTRATION_FUNC)GetProcAddress(mtDriver, "registerWithWindows");
+			if(registerWithWindows != NULL)
+			{
+				loaded = true;
+			}
+		}
+	}
+	else if(registerWithWindows != NULL)
+	{
+		loaded = true;
+	}
+	return loaded;
 }
 
 #endif //WINDOWS
@@ -40,7 +59,7 @@ extern "C" _AnomalousExport bool MultiTouch_isMultitouchAvailable()
 
 extern "C" _AnomalousExport MultiTouch* MultiTouch_new(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
 {
-	MultiTouch* multiTouch = new MultiTouch(window, touchStartedCB, touchEndedCB, touchMovedCB);
+	MultiTouch* multiTouch = new MultiTouchImpl(window, touchStartedCB, touchEndedCB, touchMovedCB);
 	registerWithObjectiveC(window, multiTouch);
 	return multiTouch;
 }

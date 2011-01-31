@@ -1,8 +1,10 @@
 #pragma once
 
 #ifdef WINDOWS
+	class MultiTouch;
 	typedef LRESULT (CALLBACK *WndFunc)(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam);
 	typedef HWND WindowType;
+	typedef void (*WINDOWS_REGISTRATION_FUNC)(HWND hwnd, MultiTouch* multiTouch);
 #endif
 
 #ifdef MAC_OSX
@@ -17,56 +19,21 @@ public:
 	int id;
 };
 
-typedef void (*TouchEventDelegate)(TouchInfo touchInfo);
-
 class MultiTouch
 {
 public:
-	MultiTouch(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
-		:window(window),
-		touchStartedCB(touchStartedCB),
-		touchEndedCB(touchEndedCB),
-		touchMovedCB(touchMovedCB)
-#ifdef WINDOWS
-		,originalWindowFunction((WndFunc)GetWindowLong(window, GWLP_WNDPROC))
-#endif
-	{
-
-	}
-
 	virtual ~MultiTouch()
 	{
 
 	}
 
-	void fireTouchStarted(const TouchInfo& touchInfo)
-	{
-		touchStartedCB(touchInfo);
-	}
+	virtual void fireTouchStarted(const TouchInfo& touchInfo) = 0;
 
-	void fireTouchEnded(const TouchInfo& touchInfo)
-	{
-		touchEndedCB(touchInfo);
-	}
+	virtual void fireTouchEnded(const TouchInfo& touchInfo) = 0;
 
-	void fireTouchMoved(const TouchInfo& touchInfo)
-	{
-		touchMovedCB(touchInfo);
-	}
+	virtual void fireTouchMoved(const TouchInfo& touchInfo) = 0;
 
 	#ifdef WINDOWS
-		LRESULT fireOriginalWindowFunc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
-		{
-			return originalWindowFunction(hwnd, uMsg, wParam, lParam);
-		}
-	#endif
-
-private:
-	WindowType window;
-	TouchEventDelegate touchStartedCB;
-	TouchEventDelegate touchEndedCB;
-	TouchEventDelegate touchMovedCB;
-	#ifdef WINDOWS
-		WndFunc originalWindowFunction;
+		virtual LRESULT fireOriginalWindowFunc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam) = 0;
 	#endif
 };
