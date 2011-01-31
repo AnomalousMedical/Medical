@@ -12,16 +12,22 @@ namespace Medical
         public delegate void ScrollDelegate(float deltaX, float deltaY);
         public event ScrollDelegate Scroll;
         private int fingerCount;
+        private bool didGesture;
+        private Vector2 momentum = new Vector2();
+        private Vector2 momentumDirection = new Vector2();
+        private Vector2 deceleration = new Vector2();
+        private float decelerationTime;
+        private float minimumMomentum;
 
-        public MultiFingerScrollGesture(int fingerCount)
+        public MultiFingerScrollGesture(int fingerCount, float decelerationTime, float minimumMomentum)
         {
             this.fingerCount = fingerCount;
+            this.decelerationTime = decelerationTime;
+            this.minimumMomentum = minimumMomentum;
         }
 
         public bool processFingers(List<Finger> fingers)
         {
-            bool didGesture = false;
-
             if (fingers.Count == fingerCount)
             {
                 Vector2 primaryFingerVec = new Vector2(fingers[0].DeltaX, fingers[0].DeltaY);
@@ -55,6 +61,27 @@ namespace Medical
                     if (allVectorsSameDirection && Scroll != null)
                     {
                         Scroll.Invoke(longestLengthVec.x, longestLengthVec.y);
+                        momentum = longestLengthVec;
+                        momentumDirection = new Vector2(1.0f, 1.0f);
+                        if (momentum.x < 0.0f)
+                        {
+                            momentum.x = -momentum.x;
+                            momentumDirection.x = -1.0f;
+                        }
+                        if (momentum.y < 0.0f)
+                        {
+                            momentum.y = -momentum.y;
+                            momentumDirection.y = -1.0f;
+                        }
+                        if (momentum.x < minimumMomentum)
+                        {
+                            momentum.x = 0.0f;
+                        }
+                        if (momentum.y < minimumMomentum)
+                        {
+                            momentum.y = 0.0f;
+                        }
+                        deceleration = momentum / decelerationTime;
                     }
                 }
             }
@@ -64,7 +91,28 @@ namespace Medical
 
         public void additionalProcessing(Clock clock)
         {
+            if (!didGesture)
+            {
+                if (momentum.length2() != 0.0f)
+                {
+                    momentum -= deceleration * clock.fSeconds;
+                    if (momentum.x < 0.0f)
+                    {
+                        momentum.x = 0.0f;
+                    }
+                    if (momentum.y <= 0.0f)
+                    {
+                        momentum.y = 0.0f;
+                    }
+                    if(Scroll != null)
+                    {
+                        Vector2 finalMomentum = momentum * momentumDirection;
+                        Scroll.Invoke(finalMomentum.x, finalMomentum.y);
+                    }
+                }
+            }
 
+            didGesture = false;
         }
     }
 }

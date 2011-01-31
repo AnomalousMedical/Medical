@@ -27,15 +27,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				HMONITOR monitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
 				monitorInfo.cbSize = sizeof(MONITORINFO);
 				GetMonitorInfo(monitor, &monitorInfo);
-				float width = monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left;
-				float height = monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top;
+				float width = (monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left) * 100.0f;
+				float height = (monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top) * 100.0f;
 
 				for (int i=0; i < static_cast<INT>(cInputs); i++)
 				{
 					TOUCHINPUT ti = pInputs[i];
 					touchInfo.id = ti.dwID;
-					touchInfo.normalizedX = TOUCH_COORD_TO_PIXEL(ti.x) / width;
-					touchInfo.normalizedY = TOUCH_COORD_TO_PIXEL(ti.y) / height;
+					touchInfo.normalizedX = ti.x / width;
+					touchInfo.normalizedY = ti.y / height;
 					if(ti.dwFlags & TOUCHEVENTF_MOVE)
 					{
 						multiTouch->fireTouchMoved(touchInfo);

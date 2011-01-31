@@ -15,6 +15,17 @@ namespace Medical
         public event ZoomDelegate Zoom;
         public float lastPinchDistance = 0;
         bool didGesture;
+        float momentum = 0.0f;
+        float momentumDirection = 1.0f;
+        float deceleration = 0.0f;
+        float decelerationTime;
+        float minimumMomentum;
+
+        public TwoFingerZoom(float decelerationTime, float minimumMomentum)
+        {
+            this.decelerationTime = decelerationTime;
+            this.minimumMomentum = minimumMomentum;
+        }
 
         public bool processFingers(List<Finger> fingers)
         {
@@ -49,6 +60,21 @@ namespace Medical
 
         public void additionalProcessing(Clock clock)
         {
+            if (!didGesture)
+            {
+                if (momentum > 0.0f)
+                {
+                    momentum -= deceleration * clock.fSeconds;
+                    if (momentum < 0.0f)
+                    {
+                        momentum = 0.0f;
+                    }
+                    if (Zoom != null)
+                    {
+                        Zoom.Invoke(momentum * momentumDirection);
+                    }
+                }
+            }
             didGesture = false;
         }
 
@@ -59,10 +85,19 @@ namespace Medical
             float currentPinchDistance = (finger1Pos - finger2Pos).length2();
 
             Vector2 vectorSum = finger1Vec - finger2Vec;
+            momentumDirection = 1.0f;
             float sumLength = vectorSum.length();
+            momentum = sumLength;
+            if (momentum < minimumMomentum)
+            {
+                momentum = 0.0f;
+            }
+            deceleration = momentum / decelerationTime;
+            
             if (currentPinchDistance > lastPinchDistance)
             {
                 sumLength = -sumLength;
+                momentumDirection = -1.0f;
             }
             didGesture = true;
             lastPinchDistance = currentPinchDistance;

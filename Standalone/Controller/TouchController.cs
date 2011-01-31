@@ -34,17 +34,17 @@ namespace Medical
             gestureEngine = new GestureEngine(multiTouch);
             mainTimer.addFixedUpdateListener(gestureEngine);
 
-            rotateGesture = new MultiFingerScrollGesture(ROTATE_FINGER_COUNT);
+            rotateGesture = new MultiFingerScrollGesture(ROTATE_FINGER_COUNT, 0.5f, 0.01f);
             rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);
             gestureEngine.addGesture(rotateGesture);
 
 //#if WINDOWS
-            zoomGesture = new TwoFingerZoom();
+            zoomGesture = new TwoFingerZoom(1.0f, 0.01f);
             zoomGesture.Zoom += new TwoFingerZoom.ZoomDelegate(zoomGesture_Zoom);
             gestureEngine.addGesture(zoomGesture);
 //#endif
 
-            panGesture = new MultiFingerScrollGesture(PAN_FINGER_COUNT);
+            panGesture = new MultiFingerScrollGesture(PAN_FINGER_COUNT, 0.5f, 0.01f);
             panGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(panGesture_Scroll);
             gestureEngine.addGesture(panGesture);
         }

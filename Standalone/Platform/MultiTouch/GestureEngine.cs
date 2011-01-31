@@ -34,21 +34,18 @@ namespace Medical
 
         public void processGestures(Clock clock)
         {
-            if (fingers.Count > 0)
+            bool notProcessed = true;
+            foreach (Gesture gesture in gestures)
             {
-                bool notProcessed = true;
-                foreach (Gesture gesture in gestures)
+                if (notProcessed && gesture.processFingers(fingers.List))
                 {
-                    if (notProcessed && gesture.processFingers(fingers.List))
-                    {
-                        notProcessed = false;
-                    }
-                    gesture.additionalProcessing(clock);
+                    notProcessed = false;
                 }
-                foreach (Finger finger in fingers)
-                {
-                    finger.captureCurrentPositionAsLast();
-                }
+                gesture.additionalProcessing(clock);
+            }
+            foreach (Finger finger in fingers)
+            {
+                finger.captureCurrentPositionAsLast();
             }
         }
 
