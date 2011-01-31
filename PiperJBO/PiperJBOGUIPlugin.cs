@@ -25,7 +25,7 @@ namespace Medical.GUI
         private CameraControls cameraControlDialog;
 
         private DistortionsPopup distortionsPopup;
-        private QuickViewPopup quickViewPopup;
+        private QuickView quickView;
         private ColorMenu colorMenu;
 
         private AboutDialog aboutDialog;
@@ -44,7 +44,7 @@ namespace Medical.GUI
         {
             cameraControlDialog.Dispose();
             colorMenu.Dispose();
-            quickViewPopup.Dispose();
+            quickView.Dispose();
             distortionsPopup.Dispose();
             renderDialog.Dispose();
             options.Dispose();
@@ -100,7 +100,8 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
 
-            quickViewPopup = new QuickViewPopup(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
+            quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
+            dialogManager.addManagedDialog(quickView);
 
             colorMenu = new ColorMenu();
             colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
@@ -118,7 +119,7 @@ namespace Medical.GUI
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new ShowPopupTaskbarItem(quickViewPopup, "Quick View", "Camera"));
+            taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new ShowPopupTaskbarItem(distortionsPopup, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="168 187 168 93" layer="Overlapped">
+        <Property key="Widget_Caption" value="Quick View"/>
+        <Widget type="StaticText" skin="StaticText" position="51 74 66 14" align="HCenter Top">
+            <Property key="Widget_Caption" value="Quick View"/>
+            <Property key="Text_TextColour" value="FFFFFF"/>
+        </Widget>
+    </Widget>
+</MyGUI>

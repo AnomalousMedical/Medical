@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class QuickViewPopup : PopupContainer
+    public class QuickView : Dialog
     {
         private NavigationController navigationController;
         private SceneViewController sceneViewController;
@@ -19,8 +19,8 @@ namespace Medical.GUI
         private ImageAtlas ribbonMenuIcons = new ImageAtlas("NavigationRibbonMenus", new Size2(32, 32), new Size2(512, 512));
         private ImageAtlas gridItemIcons = new ImageAtlas("NavigationGridItemIcons", new Size2(69, 51), new Size2(512, 512));
 
-        public QuickViewPopup(NavigationController navigationController, SceneViewController sceneViewController, LayerController layerController)
-            :base("Medical.GUI.QuickView.QuickViewPopup.layout")
+        public QuickView(NavigationController navigationController, SceneViewController sceneViewController, LayerController layerController)
+            :base("Medical.GUI.QuickView.QuickView.layout")
         {
             this.navigationController = navigationController;
             this.sceneViewController = sceneViewController;
@@ -45,7 +45,7 @@ namespace Medical.GUI
             Button lastButton = null;
             foreach (NavigationMenuEntry topEntry in navigationController.NavigationSet.Menus.ParentEntries)
             {
-                Button menuButton = widget.createWidgetT("Button", "RibbonSplitButton", 0, 2, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
+                Button menuButton = window.createWidgetT("Button", "RibbonSplitButton", 0, 2, 50, menuButtonHeight, Align.Left | Align.Top, "") as Button;
                 menuButton.TextAlign = Align.HCenter | Align.Top;
                 menuButton.Caption = topEntry.Text;
                 int buttonWidth = (int)menuButton.getTextSize().Width + 5;
@@ -55,7 +55,7 @@ namespace Medical.GUI
                 }
                 menuButton.setSize(buttonWidth, menuButtonHeight);
 
-                Button mainButton = widget.createWidgetT("Button", "RibbonButton", 0, 2, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
+                Button mainButton = window.createWidgetT("Button", "RibbonButton", 0, 2, 50, mainButtonHeight, Align.Left | Align.Top, "") as Button;
                 mainButton.StaticImage.setItemResource(ribbonMenuIcons.addImage(mainButton, topEntry.Thumbnail));
                 mainButton.setSize(menuButton.Width, mainButtonHeight);
 
@@ -76,7 +76,7 @@ namespace Medical.GUI
             flowLayout.SuppressLayout = false;
             flowLayout.invalidate();
 
-            widget.setSize(lastButton.Right + 2, widget.Height);
+            window.setSize(lastButton.Right + 2, window.Height);
         }
 
         private void navShortcut_ShortcutActivated(string navigationState, string layerState)
@@ -86,7 +86,7 @@ namespace Medical.GUI
             {
                 layerController.applyLayerState(layerState);
             }
-            this.hide();
+            //this.hide();
         }
 
         private void clearMenuItems()

@@ -180,7 +180,7 @@
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\QuickView\NavigationMenu.cs" />
     <Compile Include="GUI\QuickView\NavigationShortcut.cs" />
-    <Compile Include="GUI\QuickView\QuickViewPopup.cs" />
+    <Compile Include="GUI\QuickView\QuickView.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
@@ -313,7 +313,7 @@
     <EmbeddedResource Include="GUI\Distortions\DistortionsPopup.layout" />
     <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
-    <EmbeddedResource Include="GUI\QuickView\QuickViewPopup.layout" />
+    <EmbeddedResource Include="GUI\QuickView\QuickView.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
