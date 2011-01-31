@@ -94,6 +94,7 @@ namespace Medical.GUI
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            questionEditor.clear();
             this.close();
         }
 
