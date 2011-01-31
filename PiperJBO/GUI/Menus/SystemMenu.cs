@@ -55,21 +55,23 @@ namespace Medical.GUI
 
             fileMenu.appendSeparator();
 
+            NativeMenuItem preferences = fileMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
+            preferences.Select += new NativeMenuEvent(preferences_Select);
+
             exit = fileMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
             exit.Select += new NativeMenuEvent(exit_Select);
 
             menu.append(fileMenu);
 
+#if ALLOW_CLONE_WINDOWS
             //Utilities Menu
             NativeMenu utilitiesMenu = menu.createMenu("&Utilities");
 
             NativeMenuItem cloneWindow = utilitiesMenu.append(CommonMenuItems.AutoAssign, "Clone Window", "Open a window that displays the main window with no controls.");
             cloneWindow.Select += new NativeMenuEvent(cloneWindow_Select);
 
-            NativeMenuItem preferences = utilitiesMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
-            preferences.Select += new NativeMenuEvent(preferences_Select);
-
             menu.append(utilitiesMenu);
+#endif
 
             //Help Menu
             NativeMenu helpMenu = menu.createMenu("&Help");

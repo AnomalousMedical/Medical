@@ -134,7 +134,10 @@ namespace Medical.GUI
             taskbar.addItem(new ShowPopupTaskbarItem(colorMenu, "Background Color", "BackgroundColorIconLarge"));
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
+
+#if ALLOW_CLONE_WINDOWS
             taskbar.addItem(cloneWindow);
+#endif
         }
 
         public void sceneLoaded(SimScene scene)
