@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelNoTranspo" position="168 187 220 171" layer="Overlapped">
-        <Widget type="Widget" skin="PanelEmpty" position="31 0 159 85" align="HCenter Top" name="AnatomyDistortionPanel">
+    <Widget type="Window" skin="WindowCX" position="168 167 220 191" layer="Overlapped">
+        <Property key="Widget_Caption" value="Distortion Wizards"/>
+        <Widget type="Widget" skin="PanelEmpty" position="30 0 159 85" align="HCenter Top" name="AnatomyDistortionPanel">
             <Widget type="StaticText" skin="StaticText" position="52 71 54 13" align="HCenter Bottom">
                 <Property key="Widget_Caption" value="Anatomy"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="1 85 218 85" align="HCenter Bottom" name="ExamDistortionPanel">
+        <Widget type="Widget" skin="PanelEmpty" position="1 87 218 85" align="HCenter Bottom" name="ExamDistortionPanel">
             <Widget type="StaticText" skin="StaticText" position="91 71 35 13" align="HCenter Bottom">
                 <Property key="Widget_Caption" value="Exam"/>
             </Widget>

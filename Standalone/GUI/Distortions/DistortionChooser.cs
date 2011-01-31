@@ -7,19 +7,19 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class DistortionsPopup : PopupContainer
+    public class DistortionChooser : Dialog
     {
         private GUIManager guiManager;
 
         private List<Button> buttons = new List<Button>();
 
-        public DistortionsPopup(StateWizardController stateWizardController, GUIManager guiManager)
-            :base("Medical.GUI.Distortions.DistortionsPopup.layout")
+        public DistortionChooser(StateWizardController stateWizardController, GUIManager guiManager)
+            : base("Medical.GUI.Distortions.DistortionChooser.layout")
         {
             this.guiManager = guiManager;
 
-            Widget anatomyDistortionPanel = widget.findWidget("AnatomyDistortionPanel");
-            Widget examDistortionPanel = widget.findWidget("ExamDistortionPanel");
+            Widget anatomyDistortionPanel = window.findWidget("AnatomyDistortionPanel");
+            Widget examDistortionPanel = window.findWidget("ExamDistortionPanel");
 
             int anatomyPosition = 3;
             int examPosition = 3;
@@ -63,7 +63,7 @@ namespace Medical.GUI
             anatomyDistortionPanel.setSize(anatomyPosition, anatomyDistortionPanel.Height);
             examDistortionPanel.setSize(examPosition, examDistortionPanel.Height);
 
-            Size2 size = new Size2(widget.Width, widget.Height);
+            Size2 size = new Size2(window.Width, window.Height);
             if (examDistortionPanel.Right > anatomyDistortionPanel.Right)
             {
                 size.Width = examDistortionPanel.Right;
@@ -72,7 +72,8 @@ namespace Medical.GUI
             {
                 size.Width = anatomyDistortionPanel.Right;
             }
-            widget.setSize((int)size.Width, (int)size.Height);
+            window.setSize((int)size.Width, (int)size.Height);
+            DesiredLocation = new Rect(DesiredLocation.Left, DesiredLocation.Top, size.Width, size.Height);
         }
 
         public override void Dispose()
@@ -87,7 +88,7 @@ namespace Medical.GUI
 
         void wizardButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.hide();
+            //this.hide();
             guiManager.startWizard(source.UserObject as StateWizard);
         }
     }
