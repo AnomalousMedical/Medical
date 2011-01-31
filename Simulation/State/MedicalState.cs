@@ -6,6 +6,7 @@ using Engine.Saving;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
+using Logging;
 
 namespace Medical
 {
@@ -170,14 +171,21 @@ namespace Medical
             info.AddValue(FOSSA_STATE, fossaState);
             info.AddValue(NOTES, notes);
             info.AddValue(NAME, Name);
-            if (thumbnail != null)
+            try //This isn't really a fix for why this fails sometimes, but it at least keeps it from crashing the whole program.
             {
-                using (MemoryStream memStream = new MemoryStream())
+                if (thumbnail != null)
                 {
-                    thumbnail.Save(memStream, ImageFormat.Png);
-                    info.AddValue(THUMBNAIL, memStream.GetBuffer());
-                    memStream.Close();
+                    using (MemoryStream memStream = new MemoryStream())
+                    {
+                        thumbnail.Save(memStream, ImageFormat.Png);
+                        info.AddValue(THUMBNAIL, memStream.GetBuffer());
+                        memStream.Close();
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                Log.Error("Error saving image for medical state {0}. Reason\n{1}.", Name, e.Message);
             }
         }
 
