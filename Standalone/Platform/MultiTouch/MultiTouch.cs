@@ -20,6 +20,7 @@ namespace Medical
     };
 
     public delegate void TouchEvent(TouchInfo info);
+    public delegate void TouchCanceledEvent();
 
     public class MultiTouch : IDisposable
     {
@@ -28,16 +29,18 @@ namespace Medical
         public event TouchEvent TouchStarted;
         public event TouchEvent TouchEnded;
         public event TouchEvent TouchMoved;
+        public event TouchCanceledEvent AllTouchesCanceled;
 
         public MultiTouch(OSWindow windowHandle) 
         {
             touchStartedCB = new TouchEventDelegate(touchStarted);
             touchEndedCB = new TouchEventDelegate(touchEnded);
             touchMovedCB = new TouchEventDelegate(touchMoved);
+            touchCanceledCB = new TouchEventCanceledDelegate(allTouchesCanceled);
 
             IntPtr windowPtr = new IntPtr(long.Parse(windowHandle.WindowHandle));
             Log.Info("Activating MultiTouch on window {0}", windowPtr.ToString());
-            nativeMultiTouch = MultiTouch_new(windowPtr, touchStartedCB, touchEndedCB, touchMovedCB);
+            nativeMultiTouch = MultiTouch_new(windowPtr, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
         }
 
         public void Dispose()
@@ -77,14 +80,24 @@ namespace Medical
             }
         }
 
+        private void allTouchesCanceled()
+        {
+            if (AllTouchesCanceled != null)
+            {
+                AllTouchesCanceled.Invoke();
+            }
+        }
+
         delegate void TouchEventDelegate(TouchInfo touchInfo);
         TouchEventDelegate touchStartedCB;
         TouchEventDelegate touchEndedCB;
         TouchEventDelegate touchMovedCB;
+        delegate void TouchEventCanceledDelegate();
+        TouchEventCanceledDelegate touchCanceledCB;
 
 #region PInvoke
         [DllImport("OSHelper")]
-        private static extern IntPtr MultiTouch_new(IntPtr hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB);
+        private static extern IntPtr MultiTouch_new(IntPtr hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB);
 
         [DllImport("OSHelper")]
         private static extern void MultiTouch_delete(IntPtr multiTouch);

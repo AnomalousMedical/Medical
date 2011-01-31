@@ -33,6 +33,8 @@ public:
 
 	virtual void fireTouchMoved(const TouchInfo& touchInfo) = 0;
 
+	virtual void fireAllTouchesCanceled() = 0;
+
 	#ifdef WINDOWS
 		virtual LRESULT fireOriginalWindowFunc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam) = 0;
 	#endif

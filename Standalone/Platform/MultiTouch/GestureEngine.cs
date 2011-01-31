@@ -20,6 +20,7 @@ namespace Medical
             multiTouch.TouchStarted += new TouchEvent(multiTouch_TouchStarted);
             multiTouch.TouchEnded += new TouchEvent(multiTouch_TouchEnded);
             multiTouch.TouchMoved += new TouchEvent(multiTouch_TouchMoved);
+            multiTouch.AllTouchesCanceled += new TouchCanceledEvent(multiTouch_AllTouchesCanceled);
         }
 
         public void addGesture(Gesture gesture)
@@ -85,6 +86,11 @@ namespace Medical
             }
             finger.setInfoOutOfPool(info.id, info.normalizedX, info.normalizedY);
             //Log.Debug("GestureEngine Touch started {0} {1} {2}", info.id, info.normalizedX, info.normalizedY);
+        }
+
+        void multiTouch_AllTouchesCanceled()
+        {
+            Log.Debug("All touches canceled");
         }
 
         #region UpdateListener Members

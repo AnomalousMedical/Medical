@@ -3,15 +3,17 @@
 #include "MultiTouch.h"
 
 typedef void (*TouchEventDelegate)(TouchInfo touchInfo);
+typedef void (*TouchEventCanceledDelegate)();
 
 class MultiTouchImpl : public MultiTouch
 {
 public:
-	MultiTouchImpl(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
+	MultiTouchImpl(WindowType window, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
 		:window(window),
 		touchStartedCB(touchStartedCB),
 		touchEndedCB(touchEndedCB),
-		touchMovedCB(touchMovedCB)
+		touchMovedCB(touchMovedCB),
+		touchCanceledCB(touchCanceledCB)
 #ifdef WINDOWS
 		,originalWindowFunction((WndFunc)GetWindowLong(window, GWLP_WNDPROC))
 #endif
@@ -24,23 +26,28 @@ public:
 
 	}
 
-	void fireTouchStarted(const TouchInfo& touchInfo)
+	virtual void fireTouchStarted(const TouchInfo& touchInfo)
 	{
 		touchStartedCB(touchInfo);
 	}
 
-	void fireTouchEnded(const TouchInfo& touchInfo)
+	virtual void fireTouchEnded(const TouchInfo& touchInfo)
 	{
 		touchEndedCB(touchInfo);
 	}
 
-	void fireTouchMoved(const TouchInfo& touchInfo)
+	virtual void fireTouchMoved(const TouchInfo& touchInfo)
 	{
 		touchMovedCB(touchInfo);
 	}
 
+	virtual void fireAllTouchesCanceled()
+	{
+		touchCanceledCB();
+	}
+
 	#ifdef WINDOWS
-		LRESULT fireOriginalWindowFunc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
+		virtual LRESULT fireOriginalWindowFunc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam)
 		{
 			return originalWindowFunction(hwnd, uMsg, wParam, lParam);
 		}
@@ -51,6 +58,7 @@ private:
 	TouchEventDelegate touchStartedCB;
 	TouchEventDelegate touchEndedCB;
 	TouchEventDelegate touchMovedCB;
+	TouchEventCanceledDelegate touchCanceledCB;
 	#ifdef WINDOWS
 		WndFunc originalWindowFunction;
 	#endif

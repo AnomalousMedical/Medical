@@ -17,9 +17,9 @@
 HMODULE mtDriver = NULL;
 WINDOWS_REGISTRATION_FUNC registerWithWindows = NULL;
 
-extern "C" _AnomalousExport MultiTouch* MultiTouch_new(HWND hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB)
+extern "C" _AnomalousExport MultiTouch* MultiTouch_new(HWND hwnd, TouchEventDelegate touchStartedCB, TouchEventDelegate touchEndedCB, TouchEventDelegate touchMovedCB, TouchEventCanceledDelegate touchCanceledCB)
 {
-	MultiTouch* multiTouch = new MultiTouchImpl(hwnd, touchStartedCB, touchEndedCB, touchMovedCB);
+	MultiTouch* multiTouch = new MultiTouchImpl(hwnd, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
 	registerWithWindows(hwnd, multiTouch);
 	return multiTouch;
 }
