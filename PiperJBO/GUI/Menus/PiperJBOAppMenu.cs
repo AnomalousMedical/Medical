@@ -103,7 +103,7 @@ namespace Medical.GUI
 
         void quitButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.shutdown();
+            standaloneController.closeMainWindow();
             this.hide();
         }
 

@@ -121,7 +121,7 @@ namespace Medical.GUI
 
         void exit_Select(NativeMenuItem sender)
         {
-            standaloneController.shutdown();
+            standaloneController.closeMainWindow();
         }
 
         void saveAs_Select(NativeMenuItem sender)

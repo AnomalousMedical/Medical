@@ -243,14 +243,14 @@ namespace Medical
 
                 medicalStateController.createNormalStateFromScene();
 
+                Active = true;
                 medicalController.start();
             }
         }
 
-        public void shutdown()
+        public void closeMainWindow()
         {
             mainWindow.close();
-            //medicalController.shutdown();
         }
 
         public void onIdle()
@@ -420,13 +420,7 @@ namespace Medical
             }
         }
 
-        public bool Active
-        {
-            get
-            {
-                return mainWindow.Active;
-            }
-        }
+        public bool Active { get; set; }
 
         public void recreateMainWindow()
         {
@@ -458,7 +452,7 @@ namespace Medical
         {
             if (result == MessageBoxStyle.Yes)
             {
-                this.shutdown();
+                this.closeMainWindow();
             }
         }
 

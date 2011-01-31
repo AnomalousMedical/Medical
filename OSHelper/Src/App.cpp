@@ -42,6 +42,10 @@ void App::OnIdle(wxIdleEvent& event)
 	{
 		event.RequestMore();
 	}
+	else
+	{
+		ExitMainLoop();
+	}
 }
 
 BEGIN_EVENT_TABLE(App, wxApp)

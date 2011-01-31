@@ -58,7 +58,8 @@ namespace Medical
         }
 
         /// <summary>
-        /// Callback from the native class when it is deleted.
+        /// Callback from the native class when it is deleted. This WILL be
+        /// called if Dispose deletes the class.
         /// </summary>
         private void delete()
         {
