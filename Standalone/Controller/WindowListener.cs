@@ -34,7 +34,7 @@ namespace Medical
 
         public void closed(OSWindow window)
         {
-            controller.Active = false;
+            controller.shutdown();
         }
 
         public void focusChanged(OSWindow window)

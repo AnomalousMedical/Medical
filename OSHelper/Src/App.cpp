@@ -44,8 +44,13 @@ void App::OnIdle(wxIdleEvent& event)
 	}
 	else
 	{
-		ExitMainLoop();
+		exit();
 	}
+}
+
+void App::exit()
+{
+	ExitMainLoop();
 }
 
 BEGIN_EVENT_TABLE(App, wxApp)
@@ -103,6 +108,11 @@ extern "C" _AnomalousExport void App_registerDelegates(App* app, OnInitDelegate 
 extern "C" _AnomalousExport void App_run(App* app, int argc, char* argv[])
 {
 	app->run(argc, argv);
+}
+
+extern "C" _AnomalousExport void App_exit(App* app)
+{
+	app->exit();
 }
 
 DECLARE_APP(App)

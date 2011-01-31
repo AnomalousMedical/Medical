@@ -62,14 +62,16 @@ namespace Medical
         private String layersFile;
         private List<String> movementSequenceDirectories;
 
-        //Frame
+        //Platform
         private MainWindow mainWindow;
+        private App app;
 
         //Touch
         private TouchController touchController;
 
-        public StandaloneController(String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
+        public StandaloneController(App app, String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
         {
+            this.app = app;
             this.camerasFile = camerasFile;
             this.layersFile = layersFile;
             this.movementSequenceDirectories = movementSequenceDirectories;
@@ -261,6 +263,11 @@ namespace Medical
         public void openHelpTopic(int index)
         {
             htmlHelpController.Display(index);
+        }
+
+        public void shutdown()
+        {
+            app.exit();
         }
 
         /// <summary>

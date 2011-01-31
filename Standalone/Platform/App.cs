@@ -40,6 +40,11 @@ namespace Medical
             App_run(appPtr, args.Length, args);
         }
 
+        public void exit()
+        {
+            App_exit(appPtr);
+        }
+
         public abstract bool OnInit();
 
         public abstract int OnExit();
@@ -57,5 +62,8 @@ namespace Medical
 
         [DllImport("OSHelper")]
         private static extern void App_run(IntPtr app, int argc, String[] argv);
+
+        [DllImport("OSHelper")]
+        private static extern void App_exit(IntPtr app);
     }
 }

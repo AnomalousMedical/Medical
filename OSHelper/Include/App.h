@@ -23,6 +23,8 @@ public:
 
 	void run(int argc, char* argv[]);
 
+	void exit();
+
 private:
 	OnInitDelegate onInitCB;
 	OnExitDelegate onExitCB;

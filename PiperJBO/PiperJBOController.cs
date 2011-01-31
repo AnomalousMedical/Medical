@@ -50,7 +50,7 @@ namespace Medical
                         String cameraFile, layersFile;
                         List<String> sequenceDirectories = new List<string>();
                         determineResourceFiles(out layersFile, out cameraFile, sequenceDirectories);
-                        controller = new StandaloneController("/Anomalous Medical/PiperJBO", cameraFile, layersFile, sequenceDirectories);
+                        controller = new StandaloneController(this, "/Anomalous Medical/PiperJBO", cameraFile, layersFile, sequenceDirectories);
                         controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
                         controller.GUIManager.addPlugin("Editor.dll");
                         controller.go(createBackground());
