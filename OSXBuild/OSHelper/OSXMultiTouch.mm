@@ -69,15 +69,7 @@ TouchInfo touchInfo;
 
 - (void)touchesCancelledWithEvent:(NSEvent *)event
 {
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseCancelled inView:self];
-	for(NSTouch *touch in touches)
-	{
-		NSPoint point = touch.normalizedPosition;
-		touchInfo.normalizedX = point.x;
-		touchInfo.normalizedY = 1.0 - point.y;
-		touchInfo.id = (int)touch.identity;
-		viewToMultitouch[(long)self]->fireTouchEnded(touchInfo);
-	}
+	viewToMultitouch[(long)self]->fireAllTouchesCanceled();
 }
 
 @end
