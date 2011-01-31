@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine;
 using Logging;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -13,11 +14,10 @@ namespace Medical
 
         public event ZoomDelegate Zoom;
         public float lastPinchDistance = 0;
+        bool didGesture;
 
         public bool processFingers(List<Finger> fingers)
         {
-            bool didGesture = false;
-
             if (fingers.Count == 2)
             {
                 Finger finger1 = fingers[0];
@@ -45,6 +45,11 @@ namespace Medical
             }
 
             return didGesture;
+        }
+
+        public void additionalProcessing(Clock clock)
+        {
+            didGesture = false;
         }
 
         private void computeZoom(ref bool didGesture, Finger finger1, Finger finger2, ref Vector2 finger1Vec, ref Vector2 finger2Vec)

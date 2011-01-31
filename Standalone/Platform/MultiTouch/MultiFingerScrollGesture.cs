@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -59,6 +60,11 @@ namespace Medical
             }
 
             return didGesture;
+        }
+
+        public void additionalProcessing(Clock clock)
+        {
+
         }
     }
 }

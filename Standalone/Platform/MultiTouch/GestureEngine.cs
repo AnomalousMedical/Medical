@@ -32,16 +32,18 @@ namespace Medical
             gestures.Remove(gesture);
         }
 
-        public void processGestures()
+        public void processGestures(Clock clock)
         {
             if (fingers.Count > 0)
             {
+                bool notProcessed = true;
                 foreach (Gesture gesture in gestures)
                 {
-                    if (gesture.processFingers(fingers.List))
+                    if (notProcessed && gesture.processFingers(fingers.List))
                     {
-                        break;
+                        notProcessed = false;
                     }
+                    gesture.additionalProcessing(clock);
                 }
                 foreach (Finger finger in fingers)
                 {
@@ -105,7 +107,7 @@ namespace Medical
 
         public void sendUpdate(Clock clock)
         {
-            processGestures();
+            processGestures(clock);
         }
 
         #endregion

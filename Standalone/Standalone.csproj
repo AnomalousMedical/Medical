@@ -246,8 +246,6 @@
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />
     <Compile Include="Platform\DirDialog.cs" />
-    <Compile Include="Platform\MultiTouch\OneFingerScrollGesture.cs" />
-    <Compile Include="Platform\MultiTouch\TwoFingerScrollGesture.cs" />
     <Compile Include="Platform\MultiTouch\TwoFingerZoom.cs" />
     <Compile Include="Platform\NativeMenu.cs" />
     <Compile Include="Platform\NativeMenuBar.cs" />
