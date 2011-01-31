@@ -23,6 +23,7 @@ namespace Medical.GUI
         private CheckButton fullscreenCheck;
         private CheckButton vsyncCheck;
         private CheckButton showStatsCheck;
+        private CheckButton enableMultitouchCheck;
         private static readonly char[] seps = { 'x' };
         private const String resolutionRegex = "[1-9][0-9]* x [1-9][0-9]*";
 
@@ -32,7 +33,8 @@ namespace Medical.GUI
             this.Modal = true;
             this.SmoothShow = true;
 
-            cameraSpeedCombo = window.findWidget("CameraSpeedCombo") as ComboBox; 
+            cameraSpeedCombo = window.findWidget("CameraSpeedCombo") as ComboBox;
+            enableMultitouchCheck = new CheckButton(window.findWidget("EnableMultitouch") as Button);
 
             aaCombo = window.findWidget("AACombo") as ComboBox;
             resolutionCombo = window.findWidget("ResolutionCombo") as ComboBox;
@@ -101,6 +103,8 @@ namespace Medical.GUI
                 cameraSpeedCombo.SelectedIndex = 0;
             }
 
+            enableMultitouchCheck.Checked = MedicalConfig.EnableMultitouch;
+
             MouseButtonCode cameraButtonCode = MedicalConfig.CameraMouseButton;
             cameraButtonCombo.SelectedIndex = (uint)cameraButtonCode;
 
@@ -162,6 +166,7 @@ namespace Medical.GUI
                     MedicalConfig.TransparencyChangeMultiplier = 1.0f;
                     break;
             }
+            MedicalConfig.EnableMultitouch = enableMultitouchCheck.Checked;
             MedicalConfig.EngineConfig.ShowStatistics = showStatsCheck.Checked;
             MouseButtonCode cameraButtonCode = (MouseButtonCode)cameraButtonCombo.SelectedIndex;
             MedicalConfig.CameraMouseButton = cameraButtonCode;

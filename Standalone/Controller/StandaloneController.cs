@@ -227,7 +227,7 @@ namespace Medical
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
 
             //MultiTouch
-            if (MultiTouch.IsAvailable)
+            if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
             {
                 touchController = new TouchController(mainWindow, medicalController.MainTimer, sceneViewController);
             }

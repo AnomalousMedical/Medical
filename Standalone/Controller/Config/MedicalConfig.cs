@@ -128,6 +128,18 @@ namespace Medical
             }
         }
 
+        public static bool EnableMultitouch
+        {
+            get
+            {
+                return program.getValue("EnableMultitouch", true);
+            }
+            set
+            {
+                program.setValue("EnableMultitouch", value);
+            }
+        }
+
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory
         {
