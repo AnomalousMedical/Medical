@@ -37,16 +37,17 @@ namespace Medical.GUI
             questionEdit.Caption = question.Text;
 
             PromptTextArea answerTextArea = null;
+            int answerWidth = answerScroll.Width - 20;
             foreach (PromptAnswer answer in question.Answers)
             {
-                answerTextArea = new PromptAnswerTextArea(this, answer, answerScroll, 0, answerScroll.Width, verticalPosition, light);
+                answerTextArea = new PromptAnswerTextArea(this, answer, answerScroll, 0, answerWidth, verticalPosition, light);
                 textAreas.Add(answerTextArea);
                 verticalPosition = answerTextArea.Bottom;
                 light = !light;
             }
 
             Size2 canvasSize = answerScroll.CanvasSize;
-            answerScroll.CanvasSize = new Size2(answerScroll.Width, verticalPosition);
+            answerScroll.CanvasSize = new Size2(answerWidth, verticalPosition);
         }
 
         public void showPrompt(PromptAnswerSelected answerSelectedCallback)

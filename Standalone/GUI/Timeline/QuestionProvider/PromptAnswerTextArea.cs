@@ -28,7 +28,7 @@ namespace Medical.GUI
                 skin = "PromptAnswerTextArea";
             }
 
-            answerButton = parent.createWidgetT("Button", skin, left, top, textAreaWidth, 0, Align.HStretch | Align.Top, "") as Button;
+            answerButton = parent.createWidgetT("Button", skin, left, top, textAreaWidth, 0, Align.Left | Align.Top, "") as Button;
             answerButton.SubWidgetText.setWordWrap(true);
             answerButton.Caption = answer.Text;
             Size2 textSize = answerButton.getTextSize();

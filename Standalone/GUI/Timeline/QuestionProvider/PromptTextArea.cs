@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     abstract class PromptTextArea : IDisposable
     {
-        protected const int EXTRA_HEIGHT = 5;
+        protected const int EXTRA_HEIGHT = 15;
 
         public abstract void Dispose();
 
