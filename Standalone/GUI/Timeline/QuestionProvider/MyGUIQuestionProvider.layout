@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelOnPanel" position="152 149 298 189" layer="Modal">
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="0 0 298 189" align="Stretch" name="QuestionScroll">
+    <Widget type="Window" skin="Window" position="251 127 506 383" layer="Overlapped">
+        <Widget type="Edit" skin="Edit" position="21 8 465 89" align="HStretch Top" name="Question">
+            <Property key="Edit_Static" value="true"/>
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="Edit_MultiLine" value="true"/>
+            <Property key="Text_TextAlign" value="Left Top"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="26 106 453 249" align="Stretch" name="Answers">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <Property key="ScrollView_CanvasSize" value="298 10"/>
-            <Property key="ScrollView_VisibleHScroll" value="false"/>
         </Widget>
     </Widget>
 </MyGUI>
