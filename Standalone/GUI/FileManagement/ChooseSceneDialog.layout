@@ -4,7 +4,7 @@
         <Property key="Widget_Caption" value="Choose Scene"/>
         <Property key="Window_MinSize" value="563 372"/>
         <Property key="Window_MaxSize" value="563 372"/>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="4 4 555 313" name="ChooseScene/FileSelect">
+        <Widget type="ScrollView" skin="ScrollView" position="4 4 555 313" name="ChooseScene/FileSelect">
             <Property key="ScrollView_CanvasSize" value="539 300"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ShowGroupCaptions" value="False"/>

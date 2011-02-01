@@ -24,7 +24,7 @@
         <Widget type="StaticText" skin="StaticText" position="4 124 116 15">
             <Property key="Widget_Caption" value="Select Thumbnail"/>
         </Widget>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="6 137 339 165" align="HStretch Top" name="Notes/Thumbnails">
+        <Widget type="ScrollView" skin="ScrollView" position="6 137 339 165" align="HStretch Top" name="Notes/Thumbnails">
             <Property key="ScrollView_CanvasSize" value="245 10"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
