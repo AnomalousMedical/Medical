@@ -50,6 +50,8 @@ namespace Medical
             gestureEngine = new GestureEngine(multiTouch);
             mainTimer.addFixedUpdateListener(gestureEngine);
 
+            gestureEngine.addGesture(new GuiGestures());
+
             rotateGesture = new MultiFingerScrollGesture(ROTATE_FINGER_COUNT, ROTATE_DECEL_TIME, ROTATE_MIN_MOMENTUM);
             rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);
             gestureEngine.addGesture(rotateGesture);
@@ -71,40 +73,31 @@ namespace Medical
 
         void rotateGesture_Scroll(float deltaX, float deltaY)
         {
-            if (!Gui.Instance.HandledMouseButtons)
+            SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+            if (sceneView != null)
             {
-                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
-                if (sceneView != null)
-                {
-                    float sensitivity = 10.0f;
-                    sceneView.rotate(-deltaX * sensitivity, deltaY * sensitivity);
-                }
+                float sensitivity = 10.0f;
+                sceneView.rotate(-deltaX * sensitivity, deltaY * sensitivity);
             }
         }
 
         void panGesture_Scroll(float deltaX, float deltaY)
         {
-            if (!Gui.Instance.HandledMouseButtons)
+            SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+            if (sceneView != null)
             {
-                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
-                if (sceneView != null)
-                {
-                    float sensitivity = 50.0f;
-                    sceneView.pan(deltaX * sensitivity, deltaY * sensitivity);
-                }
+                float sensitivity = 50.0f;
+                sceneView.pan(deltaX * sensitivity, deltaY * sensitivity);
             }
         }
 
         void zoomGesture_Zoom(float zoomDelta)
         {
-            if (!Gui.Instance.HandledMouseButtons)
+            SceneViewWindow sceneView = sceneViewController.ActiveWindow;
+            if (sceneView != null)
             {
-                SceneViewWindow sceneView = sceneViewController.ActiveWindow;
-                if (sceneView != null)
-                {
-                    float sensitivity = 200.0f;
-                    sceneView.zoom(zoomDelta * sensitivity);
-                }
+                float sensitivity = 200.0f;
+                sceneView.zoom(zoomDelta * sensitivity);
             }
         }
     }

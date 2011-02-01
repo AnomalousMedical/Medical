@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="87 79 234 104" layer="Overlapped">
+        <Property key="Widget_Caption" value="Sequences"/>
+        <Widget type="Button" skin="RibbonButton" position="9 7 68 75" name="Sequence">
+            <Property key="Widget_Caption" value="Sequence"/>
+            <Property key="Button_ImageResource" value="SequenceToolstrip/Sequence"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButtonSmall" position="83 57 47 25" name="Play">
+            <Property key="Widget_Caption" value="Play"/>
+            <Property key="Button_ImageResource" value="SequenceToolstrip/Play"/>
+            <Property key="Widget_Enabled" value="false"/>
+        </Widget>
+        <Widget type="Button" skin="RibbonButtonSmall" position="134 57 51 25" name="Stop">
+            <Property key="Widget_Caption" value="Stop"/>
+            <Property key="Button_ImageResource" value="SequenceToolstrip/Stop"/>
+            <Property key="Widget_Enabled" value="false"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="83 7 72 14">
+            <Property key="Widget_Caption" value="Now Playing"/>
+        </Widget>
+        <Widget type="Edit" skin="WordWrapSimple" position="83 21 149 30" name="NowPlaying">
+            <Property key="Edit_Static" value="true"/>
+            <Property key="Edit_ReadOnly" value="true"/>
+            <Property key="Edit_MultiLine" value="true"/>
+            <Property key="Widget_Caption" value="None"/>
+        </Widget>
+    </Widget>
+</MyGUI>

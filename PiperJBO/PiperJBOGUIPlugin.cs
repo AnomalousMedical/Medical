@@ -24,6 +24,7 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private CameraControls cameraControlDialog;
         private WindowLayout windowLayout;
+        private SequencePlayer sequencePlayer;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
@@ -42,6 +43,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            sequencePlayer.Dispose();
             windowLayout.Dispose();
             cameraControlDialog.Dispose();
             quickView.Dispose();
@@ -109,6 +111,9 @@ namespace Medical.GUI
             windowLayout = new WindowLayout(standaloneController);
             dialogManager.addManagedDialog(windowLayout);
 
+            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
+            dialogManager.addManagedDialog(sequencePlayer);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
 
@@ -125,16 +130,14 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
-            taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
+            taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
-            //taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
-            //taskbar.addItem(new ShowPopupTaskbarItem(colorMenu, "Background Color", "BackgroundColorIconLarge"));
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
 

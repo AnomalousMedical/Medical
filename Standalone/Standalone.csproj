@@ -96,6 +96,8 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\TouchController.cs" />
+    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
+    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
@@ -221,7 +223,6 @@
     <Compile Include="GUI\Taskbar\ShowPopupTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />
-    <Compile Include="GUI\Taskbar\WindowLayoutTaskbarItem.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplayFactory.cs" />
     <Compile Include="GUI\Timeline\MyGUIContinuePromptProvider.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Platform\App.cs" />
     <Compile Include="Platform\ColorDialog.cs" />
     <Compile Include="Platform\DirDialog.cs" />
+    <Compile Include="Platform\MultiTouch\SingleFingerGUIDrag.cs" />
     <Compile Include="Platform\MultiTouch\TwoFingerZoom.cs" />
     <Compile Include="Platform\NativeMenu.cs" />
     <Compile Include="Platform\NativeMenuBar.cs" />
@@ -318,6 +320,7 @@
     <EmbeddedResource Include="GUI\QuickView\QuickView.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
     <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />
