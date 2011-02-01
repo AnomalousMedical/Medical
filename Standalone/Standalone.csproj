@@ -96,6 +96,8 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\TouchController.cs" />
+    <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
+    <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />
     <Compile Include="Platform\MultiTouch\GestureEngine.cs" />
@@ -339,15 +341,13 @@
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
+    <EmbeddedResource Include="GUI\WindowLayout\WindowLayout.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GUI\WindowLayout\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

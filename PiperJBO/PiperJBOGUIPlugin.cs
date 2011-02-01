@@ -23,10 +23,10 @@ namespace Medical.GUI
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
         private CameraControls cameraControlDialog;
+        private WindowLayout windowLayout;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
-        private ColorMenu colorMenu;
 
         private AboutDialog aboutDialog;
 
@@ -42,8 +42,8 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            windowLayout.Dispose();
             cameraControlDialog.Dispose();
-            colorMenu.Dispose();
             quickView.Dispose();
             distortionChooser.Dispose();
             renderDialog.Dispose();
@@ -103,11 +103,11 @@ namespace Medical.GUI
             quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             dialogManager.addManagedDialog(quickView);
 
-            colorMenu = new ColorMenu();
-            colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
-
             cameraControlDialog = new CameraControls(standaloneController.SceneViewController);
             dialogManager.addManagedDialog(cameraControlDialog);
+
+            windowLayout = new WindowLayout(standaloneController);
+            dialogManager.addManagedDialog(windowLayout);
 
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
@@ -127,13 +127,14 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
             taskbar.addItem(new SequencesTaskbarItem(standaloneController.MovementSequenceController));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
-            taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
+            taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
+            //taskbar.addItem(new WindowLayoutTaskbarItem(standaloneController));
             taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
-            taskbar.addItem(new ShowPopupTaskbarItem(colorMenu, "Background Color", "BackgroundColorIconLarge"));
+            //taskbar.addItem(new ShowPopupTaskbarItem(colorMenu, "Background Color", "BackgroundColorIconLarge"));
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
 
@@ -261,11 +262,6 @@ namespace Medical.GUI
         void renderTaskbarItem_RightClicked(object sender, EventArgs e)
         {
             renderDialog.render();
-        }
-
-        void colorMenu_ColorChanged(object sender, EventArgs e)
-        {
-            standaloneController.SceneViewController.ActiveWindow.BackColor = colorMenu.SelectedColor;
         }
     }
 }
