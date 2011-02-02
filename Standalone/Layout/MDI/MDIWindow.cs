@@ -169,6 +169,7 @@ namespace Medical.Controller
             set
             {
                 closeButton.Visible = value;
+                captionButton.Visible = value;
             }
         }
 
