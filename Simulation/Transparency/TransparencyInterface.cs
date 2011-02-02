@@ -24,7 +24,8 @@ namespace Medical
         Nasal,
         TMJ,
         MouthInterior,
-        Nerves
+        Nerves,
+        ShoulderGirdle,
     }
 
     public class TransparencyInterface : Behavior

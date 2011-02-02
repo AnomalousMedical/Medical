@@ -111,12 +111,12 @@ namespace Medical
             mainWindow.Dispose();
         }
 
-        public void go(ViewportBackground background)
+        public void go(ViewportBackground background, String splashScreenLocation)
         {
             //Splash screen
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
-            SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100);
+            SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, splashScreenLocation);
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();

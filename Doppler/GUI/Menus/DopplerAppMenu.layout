@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="CustomPanelOnPanel" position="190 155 158 305" layer="Overlapped">
+        <Widget type="Button" skin="AppMenuIconButton" position="4 4 151 40" name="Diagnose">
+            <Property key="Button_ImageResource" value="FileToolstrip/Open"/>
+            <Property key="Widget_Caption" value="Diagnose"/>
+        </Widget>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 46 151 40" name="Export">
+            <Property key="Widget_Caption" value="Export"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/Save"/>
+        </Widget>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 262 151 40" name="File/Quit">
+            <Property key="Widget_Caption" value="Exit"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/Exit"/>
+        </Widget>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 134 151 40" name="Help">
+            <Property key="Widget_Caption" value="Help"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/Help"/>
+        </Widget>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 176 151 40" name="About">
+            <Property key="Widget_Caption" value="About"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/About"/>
+        </Widget>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 218 151 40" name="Updates">
+            <Property key="Widget_Caption" value="Check for Updates"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/CheckForUpdates"/>
+        </Widget>
+        <Widget type="Widget" skin="Separator1" position="1 88 155 1"/>
+        <Widget type="Widget" skin="Separator1" position="1 259 155 1"/>
+        <Widget type="Button" skin="AppMenuIconButton" position="4 90 151 40" name="Options">
+            <Property key="Widget_Caption" value="Options"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/Options"/>
+        </Widget>
+        <Widget type="Widget" skin="Separator1" position="1 131 155 1"/>
+    </Widget>
+</MyGUI>

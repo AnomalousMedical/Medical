@@ -24,13 +24,13 @@ namespace Medical.Controller
         /// </summary>
         public event EventHandler Hidden;
 
-        public SplashScreen(OgreWindow ogreWindow, uint progressRange)
+        public SplashScreen(OgreWindow ogreWindow, uint progressRange, String splashScreenLocation)
         {
             this.ogreWindow = ogreWindow;
             SmoothShow = true;
 
             Gui gui = Gui.Instance;
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/SplashScreen", "EngineArchive", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation(splashScreenLocation, "EngineArchive", "MyGUI", true);
             gui.load("SplashScreen.xml");
             layout = LayoutManager.Instance.loadLayout("SplashScreen.layout");
             mainWidget = layout.getWidget(0);

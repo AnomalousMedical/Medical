@@ -53,7 +53,7 @@ namespace Medical
                         controller = new StandaloneController(this, "/Anomalous Medical/PiperJBO", cameraFile, layersFile, sequenceDirectories);
                         controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
                         controller.GUIManager.addPlugin("Editor.dll");
-                        controller.go(createBackground());
+                        controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
                         startupSuceeded = true;
                     }
                     else
