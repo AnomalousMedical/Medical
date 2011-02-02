@@ -90,8 +90,8 @@ namespace Medical
         private void determineResourceFiles(out String layersFile, out String cameraFile, List<String> sequenceDirectories)
         {
             sequenceDirectories.Add("/Doppler");
-            cameraFile = "/DopplerCameras.cam";
-            layersFile = "/DopplerLayers.lay";
+            cameraFile = "/GraphicsCameras.cam";
+            layersFile = "/StandaloneLayers.lay";
         }
 
 #if !ENABLE_HASP_PROTECTION

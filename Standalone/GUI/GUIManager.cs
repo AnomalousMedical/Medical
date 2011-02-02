@@ -188,6 +188,11 @@ namespace Medical.GUI
 
             questionProvider = new MyGUIQuestionProvider(this);
             standaloneController.TimelineController.QuestionProvider = questionProvider;
+
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.finishInitialization();
+            }
         }
 
         public void windowChanged(OSWindow newWindow)

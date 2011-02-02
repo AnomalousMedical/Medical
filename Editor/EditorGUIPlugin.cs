@@ -57,6 +57,11 @@ namespace Medical
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
         }
 
+        public void finishInitialization()
+        {
+
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             advancedLayerControl.sceneLoaded(scene);

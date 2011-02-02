@@ -13,6 +13,7 @@ namespace Medical
         private List<PromptQuestion> questions = new List<PromptQuestion>();
         private String soundFile = null;
         private Source source;
+        private TimelineController timelineControllerAfterDoAction; //This will be stored in doAction because it will go away when the timeline stops
 
         public ShowPromptAction()
         {
@@ -21,6 +22,7 @@ namespace Medical
 
         public override void doAction()
         {
+            timelineControllerAfterDoAction = TimelineController;
             IQuestionProvider questionProvider = TimelineController.QuestionProvider;
             questionProvider.clear();
             foreach (PromptQuestion question in questions)
@@ -72,7 +74,7 @@ namespace Medical
         {
             if (answer.Action != null)
             {
-                answer.Action.execute(TimelineController);
+                answer.Action.execute(timelineControllerAfterDoAction);
             }
             else
             {

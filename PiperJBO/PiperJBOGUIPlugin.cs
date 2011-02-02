@@ -146,6 +146,11 @@ namespace Medical.GUI
 #endif
         }
 
+        public void finishInitialization()
+        {
+            
+        }
+
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);

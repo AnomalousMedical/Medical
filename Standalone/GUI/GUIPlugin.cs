@@ -14,6 +14,8 @@ namespace Medical.GUI
 
         void addToTaskbar(Taskbar taskbar);
 
+        void finishInitialization();
+
         void sceneLoaded(SimScene scene);
 
         void sceneUnloading(SimScene scene);
