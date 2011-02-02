@@ -68,13 +68,13 @@ namespace Medical.GUI
 
         void optionsButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //dopplerGUI.showOptions();
+            dopplerGUI.showOptions();
             this.hide();
         }
 
         void aboutButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //dopplerGUI.showAboutDialog();
+            dopplerGUI.showAboutDialog();
             this.hide();
         }
 

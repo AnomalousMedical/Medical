@@ -13,6 +13,7 @@ namespace Medical
         private GUIManager guiManager;
 
         private DopplerAppMenu appMenu;
+        private OptionsDialog options;
 
         public DopplerGUIPlugin()
         {
@@ -21,7 +22,8 @@ namespace Medical
 
         public void Dispose()
         {
-            
+            appMenu.Dispose();
+            options.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -34,7 +36,8 @@ namespace Medical
 
         public void createDialogs(DialogManager dialogManager)
         {
-            
+            options = new OptionsDialog();
+            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
         }
 
         public void addToTaskbar(Taskbar taskbar)
@@ -60,6 +63,21 @@ namespace Medical
         public void createMenuBar(NativeMenuBar menu)
         {
             
+        }
+
+        public void showOptions()
+        {
+            options.Visible = true;
+        }
+
+        public void showAboutDialog()
+        {
+
+        }
+
+        void options_VideoOptionsChanged(object sender, EventArgs e)
+        {
+            standaloneController.recreateMainWindow();
         }
     }
 }
