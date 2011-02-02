@@ -34,14 +34,43 @@ namespace Medical.Controller
             gui.load("SplashScreen.xml");
             layout = LayoutManager.Instance.loadLayout("SplashScreen.layout");
             mainWidget = layout.getWidget(0);
-            mainWidget.setPosition(0, 0);
-            mainWidget.setSize(gui.getViewWidth(), gui.getViewHeight());
+
+            int imageWidth = 1920;
+            int.TryParse(mainWidget.getUserString("ImageWidth"), out imageWidth);
+            int imageHeight = 1200;
+            int.TryParse(mainWidget.getUserString("ImageHeight"), out imageHeight);
+
+            int viewWidth = gui.getViewWidth();
+            int viewHeight = gui.getViewHeight();
+
+            float heightRatio = (float)viewHeight / (float)imageHeight;
+            int widgetWidth = (int)(imageWidth * heightRatio);
+            int widgetHeight = viewHeight;
+
+            int imageX = (viewWidth - widgetWidth) / 2;
+            int imageY = 0;
+
+            //If the newly scaled image is not wide enough for the screen
+            if (widgetWidth < viewWidth)
+            {
+                float widthRatio = (float)viewWidth / (float)imageWidth;
+                widgetWidth = viewWidth;
+                widgetHeight = (int)(imageHeight * widthRatio);
+                imageX = 0;
+            }
 
             progressBar = mainWidget.findWidget("SplashScreen/ProgressBar") as Progress;
             progressBar.Range = progressRange;
 
             statusText = mainWidget.findWidget("SplashScreen/Status") as StaticText;
             statusText.TextColor = Color.White;
+
+            //Set Sizes
+            mainWidget.setPosition(imageX, imageY);
+            mainWidget.setSize(widgetWidth, widgetHeight);
+
+            Widget widgetPanel = mainWidget.findWidget("WidgetPanel");
+            widgetPanel.setSize(viewWidth, viewHeight);
 
             ogreWindow.OgreRenderWindow.update();
         }
@@ -57,47 +86,6 @@ namespace Medical.Controller
             statusText.Caption = status;
             ogreWindow.OgreRenderWindow.update();
             WindowFunctions.pumpMessages();
-        }
-
-        public void show(int left, int top)
-        {
-            if (!Visible)
-            {
-                LayerManager.Instance.upLayerItem(mainWidget);
-                int guiWidth = Gui.Instance.getViewWidth();
-                int guiHeight = Gui.Instance.getViewHeight();
-
-                int right = left + mainWidget.Width;
-                int bottom = top + mainWidget.Height;
-
-                if (right > guiWidth)
-                {
-                    left -= right - guiWidth;
-                    if (left < 0)
-                    {
-                        left = 0;
-                    }
-                }
-
-                if (bottom > guiHeight)
-                {
-                    top -= bottom - guiHeight;
-                    if (top < 0)
-                    {
-                        top = 0;
-                    }
-                }
-
-                mainWidget.setPosition(left, top);
-                Visible = true;
-                if (SmoothShow)
-                {
-                    mainWidget.Alpha = 0.0f;
-                    smoothShowPosition = 0.0f;
-                    subscribeToUpdate();
-                    runningShowTransition = true;
-                }
-            }
         }
 
         public void hide()
