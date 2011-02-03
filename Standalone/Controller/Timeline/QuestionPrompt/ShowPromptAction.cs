@@ -78,7 +78,8 @@ namespace Medical
             }
             else
             {
-                Log.Warning("Answer {0} does not have an action. Nothing will be done", answer.Text);
+                timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
+                //Log.Warning("Answer {0} does not have an action. Nothing will be done", answer.Text);
             }
             if (source != null)
             {

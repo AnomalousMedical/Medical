@@ -22,6 +22,8 @@ namespace Medical
         private const String INDEX_FILE_NAME = "index.tix";
 
         public event EventHandler ResourceLocationChanged;
+        public event EventHandler PlaybackStarted;
+        public event EventHandler PlaybackStopped;
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
@@ -37,6 +39,7 @@ namespace Medical
         private String resourceLocation = null;
         private ZipFile resourceFile = null;
         private TimelineIndex currentIndex = null;
+        private bool multiTimelinePlaybackInProgress = false;
 
         public TimelineController(StandaloneController standaloneController)
         {
@@ -89,6 +92,14 @@ namespace Medical
                 {
                     TimelinePlaybackStarted.Invoke(this, EventArgs.Empty);
                 }
+                if (!multiTimelinePlaybackInProgress)
+                {
+                    multiTimelinePlaybackInProgress = true;
+                    if (PlaybackStarted != null) //Alert that the multi timeline playback has started.
+                    {
+                        PlaybackStarted.Invoke(this, EventArgs.Empty);
+                    }
+                }
             }
         }
 
@@ -117,6 +128,22 @@ namespace Medical
                 {
                     startPlayback(queuedTimeline, playPostActions);
                     clearQueuedTimeline();
+                }
+            }
+        }
+
+        /// <summary>
+        /// This function will fire the PlaybackStopped event. This should be
+        /// called by any post actions that need to shut down the timeline.
+        /// </summary>
+        public void _fireMultiTimelineStopEvent()
+        {
+            if (multiTimelinePlaybackInProgress)
+            {
+                multiTimelinePlaybackInProgress = false;
+                if (PlaybackStopped != null)
+                {
+                    PlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
             }
         }

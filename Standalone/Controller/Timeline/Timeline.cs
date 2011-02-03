@@ -125,10 +125,21 @@ namespace Medical
             sequencer.stop();
             if (playPostActions)
             {
-                foreach (TimelineInstantAction action in postActions)
+                if (postActions.Count == 0)
                 {
-                    action.doAction();
+                    TimelineController._fireMultiTimelineStopEvent();
                 }
+                else
+                {
+                    foreach (TimelineInstantAction action in postActions)
+                    {
+                        action.doAction();
+                    }
+                }
+            }
+            else
+            {
+                TimelineController._fireMultiTimelineStopEvent();
             }
         }
 
