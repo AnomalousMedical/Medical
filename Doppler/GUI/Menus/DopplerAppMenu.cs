@@ -22,8 +22,11 @@ namespace Medical.GUI
             this.standaloneController = standaloneController;
 
             //Diagnose
-            Button diagnose = widget.findWidget("Diagnose") as Button;
-            diagnose.MouseButtonClick += new MyGUIEvent(diagnose_MouseButtonClick);
+            Button detailedDiagnose = widget.findWidget("DetailedDiagnose") as Button;
+            detailedDiagnose.MouseButtonClick += new MyGUIEvent(detailedDiagnose_MouseButtonClick);
+
+            Button quickDiagnose = widget.findWidget("QuickDiagnose") as Button;
+            quickDiagnose.MouseButtonClick += new MyGUIEvent(quickDiagnose_MouseButtonClick);
 
             //Export
             Button export = widget.findWidget("Export") as Button;
@@ -50,9 +53,15 @@ namespace Medical.GUI
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
         }
 
-        void diagnose_MouseButtonClick(Widget source, EventArgs e)
+        void detailedDiagnose_MouseButtonClick(Widget source, EventArgs e)
         {
             dopplerGUI.runDetailedDiagnosis();
+            this.hide();
+        }
+
+        void quickDiagnose_MouseButtonClick(Widget source, EventArgs e)
+        {
+            dopplerGUI.runQuickDiagnosis();
             this.hide();
         }
 

@@ -88,7 +88,7 @@ namespace Medical
         public void finishInitialization()
         {
             guiManager.setMainInterfaceEnabled(false);
-            intro.Position = new Vector2(Gui.Instance.getViewWidth() / 2 - intro.Width / 2, Gui.Instance.getViewHeight() / 2 - intro.Height / 2);
+            intro.center();
             intro.open(true);
         }
 
