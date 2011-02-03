@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class HtmlHelpController : IDisposable
+    public class HtmlHelpController : IDisposable
     {
         private IntPtr nativePtr;
 

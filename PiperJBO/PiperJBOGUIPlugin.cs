@@ -5,6 +5,7 @@ using System.Text;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
+using OgreWrapper;
 
 namespace Medical.GUI
 {
@@ -67,6 +68,10 @@ namespace Medical.GUI
         {
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
+
+            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
+            Gui.Instance.load("Imagesets.xml");
+
             appMenu = new PiperJBOAppMenu(this, standaloneController);
             guiManager.setAppMenu(appMenu);
         }

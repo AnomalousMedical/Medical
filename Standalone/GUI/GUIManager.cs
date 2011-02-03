@@ -120,12 +120,12 @@ namespace Medical.GUI
         {
             Gui gui = Gui.Instance;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
             OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
 
-            typeof(GUIManager).Assembly.GetManifestResourceNames();
-
-            gui.load("Imagesets.xml");
+            foreach (GUIPlugin plugin in plugins)
+            {
+                plugin.initializeGUI(standaloneController, this);
+            }
 
             stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
             stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
@@ -135,11 +135,6 @@ namespace Medical.GUI
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
             innerBorderLayout = new BorderLayoutContainer();
-
-            foreach (GUIPlugin plugin in plugins)
-            {
-                plugin.initializeGUI(standaloneController, this);
-            }
 
             //Dialogs
             dialogManager = new DialogManager();

@@ -147,6 +147,11 @@ namespace Medical
             }
         }
 
+        public override void addHelpDocuments(HtmlHelpController helpController)
+        {
+            helpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
+        }
+
         public override string WindowTitle
         {
             get 

@@ -91,6 +91,11 @@ namespace Medical
             windowPresetController.addPresetSet(primary);
         }
 
+        public override void addHelpDocuments(HtmlHelpController helpController)
+        {
+
+        }
+
         public override string WindowTitle
         {
             get

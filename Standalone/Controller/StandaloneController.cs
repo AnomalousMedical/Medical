@@ -117,7 +117,7 @@ namespace Medical
 
             //Help
             htmlHelpController = new HtmlHelpController();
-            htmlHelpController.AddBook(MedicalConfig.ProgramDirectory + "/Doc/PiperJBOHelpFile.htb");
+            app.addHelpDocuments(htmlHelpController);
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;

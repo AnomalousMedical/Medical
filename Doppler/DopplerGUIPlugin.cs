@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
+using OgreWrapper;
 
 namespace Medical
 {
@@ -41,6 +42,10 @@ namespace Medical
         {
             this.standaloneController = standaloneController;
             this.guiManager = guiManager;
+
+            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/Doppler/Imagesets", "EngineArchive", "MyGUI", true);
+            Gui.Instance.load("Imagesets.xml");
+
             appMenu = new DopplerAppMenu(this, standaloneController);
             guiManager.setAppMenu(appMenu);
 
