@@ -68,7 +68,7 @@ namespace Medical
         {
             this.app = app;
 
-            MedicalConfig config = new MedicalConfig(String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), app.ProgramFolder);
+            MedicalConfig config = new MedicalConfig(String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), app.ProgramFolder, app.UpdateURL);
             guiManager = new GUIManager(this);
 
 #if MAC_OSX

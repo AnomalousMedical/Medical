@@ -15,6 +15,8 @@ namespace Medical.Controller
 
         public abstract String ProgramFolder { get; }
 
+        public abstract String UpdateURL { get; }
+
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }

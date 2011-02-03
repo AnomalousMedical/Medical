@@ -107,6 +107,14 @@ namespace Medical
             }
         }
 
+        public override String UpdateURL
+        {
+            get
+            {
+                return "http://www.AnomalousMedical.com/Update/PiperDopplerUpdate.xml";
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>

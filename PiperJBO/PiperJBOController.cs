@@ -163,6 +163,14 @@ namespace Medical
             }
         }
 
+        public override String UpdateURL
+        {
+            get
+            {
+                return "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>

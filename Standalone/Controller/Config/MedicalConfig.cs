@@ -29,16 +29,17 @@ namespace Medical
         private static String sceneDirectory;
         private static String archiveNameFormat = "PiperJBO{0}.dat";
 
-        private static String updateURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+        private static String updateURL;
         private static String anomalousFolder;
 
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
-        public MedicalConfig(String anomalousFolder, String programFolder)
+        public MedicalConfig(String anomalousFolder, String programFolder, String updateURL)
         {
             MedicalConfig.anomalousFolder = anomalousFolder;
             MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
+            MedicalConfig.updateURL = updateURL;
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
             recentDocsFile = docRoot + "/docs.ini";
