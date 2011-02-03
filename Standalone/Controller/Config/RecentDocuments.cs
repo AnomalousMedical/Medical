@@ -17,14 +17,22 @@ namespace Medical
         public event RecentDocumentEvent DocumentRemoved;
         public event RecentDocumentEvent DocumentReaccessed;
 
+        private ConfigFile configFile;
         private ConfigSection section;
         private List<String> recentDocumentList = new List<string>();
 
-        public RecentDocuments(ConfigFile configFile)
+        public RecentDocuments(String backingFile)
         {
+            configFile = new ConfigFile(backingFile);
             section = configFile.createOrRetrieveConfigSection("RecentDocuments");
             section.SectionLoaded += new ConfigEvent(section_SectionLoaded);
             section.SectionSaving += new ConfigEvent(section_SectionSaving);
+            configFile.loadConfigFile();
+        }
+
+        public void save()
+        {
+            configFile.writeConfigFile();
         }
 
         void section_SectionSaving(ConfigSection source)

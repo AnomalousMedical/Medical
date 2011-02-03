@@ -15,7 +15,7 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
 
         private Dictionary<String, Button> recentDocsMap = new Dictionary<string, Button>();
-        private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
+        private RecentDocuments recentDocuments;
         private FlowLayoutContainer recentDocumentsLayout;
 
         private int recentDocsLeft;
@@ -28,6 +28,7 @@ namespace Medical.GUI
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
+            this.recentDocuments = piperGUI.RecentDocuments;
 
             Button changeSceneButton = widget.findWidget("File/ChangeScene") as Button;
             Button openButton = widget.findWidget("File/Open") as Button;

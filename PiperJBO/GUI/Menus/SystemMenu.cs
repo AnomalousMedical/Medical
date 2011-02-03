@@ -8,7 +8,7 @@ namespace Medical.GUI
 {
     class SystemMenu
     {
-        private RecentDocuments recentDocuments = MedicalConfig.RecentDocuments;
+        private RecentDocuments recentDocuments;
 
         private NativeMenuItem recentPatients;
         private Dictionary<String, NativeMenuItem> recentDocMenuItems = new Dictionary<string, NativeMenuItem>();
@@ -28,6 +28,7 @@ namespace Medical.GUI
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
+            this.recentDocuments = piperGUI.RecentDocuments;
 
             //File menu
             fileMenu = menu.createMenu("&File");

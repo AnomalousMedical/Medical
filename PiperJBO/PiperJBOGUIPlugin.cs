@@ -35,14 +35,16 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private PiperJBOWizards wizards;
         private CloneWindowTaskbarItem cloneWindow;
+        private RecentDocuments recentDocuments;
 
         public PiperJBOGUIPlugin()
         {
-
+            recentDocuments = new RecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
         public void Dispose()
         {
+            recentDocuments.save();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             cameraControlDialog.Dispose();
@@ -234,11 +236,19 @@ namespace Medical.GUI
             if (patientData != null)
             {
                 MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
-                MedicalConfig.RecentDocuments.addDocument(patientData.BackingFile);
+                recentDocuments.addDocument(patientData.BackingFile);
             }
             else
             {
                 MainWindow.Instance.clearWindowTitle();
+            }
+        }
+
+        public RecentDocuments RecentDocuments
+        {
+            get
+            {
+                return recentDocuments;
             }
         }
 

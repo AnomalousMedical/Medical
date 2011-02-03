@@ -14,12 +14,12 @@ namespace Medical
     public class MedicalConfig
     {
         private static ConfigFile configFile;
-        private static ConfigFile recentDocumentsFile;
         private static String docRoot;
         private static String windowsFile;
         private static String camerasFile;
         private static ConfigSection program;
         private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
+        private static String recentDocsFile;
 
         private static ConfigFile internalSettings = null;
         private static ConfigSection resources = null;
@@ -41,15 +41,13 @@ namespace Medical
             MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
+            recentDocsFile = docRoot + "/docs.ini";
             if (!Directory.Exists(docRoot))
             {
                 Directory.CreateDirectory(docRoot);
             }
             configFile = new ConfigFile(anomalousFolder + "/config.ini");
-            recentDocumentsFile = new ConfigFile(docRoot + "/docs.ini");
-            RecentDocuments = new RecentDocuments(recentDocumentsFile);
             configFile.loadConfigFile();
-            recentDocumentsFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "Scenes";
@@ -193,12 +191,9 @@ namespace Medical
 
         public static EngineConfig EngineConfig { get; private set; }
 
-        public static RecentDocuments RecentDocuments { get; private set; }
-
         public static void save()
         {
             configFile.writeConfigFile();
-            recentDocumentsFile.writeConfigFile();
         }
 
         public static String SceneDirectory
@@ -287,6 +282,14 @@ namespace Medical
             {
                 taskbarAlignment = value;
                 program.setValue("TaskbarAlignment", taskbarAlignment.ToString());
+            }
+        }
+
+        public static String RecentDocsFile
+        {
+            get
+            {
+                return recentDocsFile;
             }
         }
     }
