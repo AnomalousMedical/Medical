@@ -35,9 +35,6 @@ namespace Medical.GUI
             StaticText versionText = window.findWidget("VersionText") as StaticText;
             versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
 
-            StaticText featureLevelText = window.findWidget("FeatureLevelText") as StaticText;
-            featureLevelText.Caption = UserPermissions.Instance.FeatureLevelString;
-
             StaticText anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as StaticText;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);
 

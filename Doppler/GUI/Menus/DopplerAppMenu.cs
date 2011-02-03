@@ -62,6 +62,7 @@ namespace Medical.GUI
 
         void export_MouseButtonClick(Widget source, EventArgs e)
         {
+            dopplerGUI.export();
             this.hide();
         }
 

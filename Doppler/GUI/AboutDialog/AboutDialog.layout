@@ -6,9 +6,6 @@
         <Property key="Window_MaxSize" value="350 436"/>
         <Widget type="StaticImage" skin="StaticImage" position="0 0 350 165">
             <Property key="Image_Resource" value="AboutImage/Image"/>
-            <Widget type="StaticText" skin="StaticText" position="117 81 200 13" name="FeatureLevelText">
-                <Property key="Widget_Caption" value="Feature Level"/>
-            </Widget>
             <Widget type="StaticText" skin="StaticText" position="54 150 250 14">
                 <Property key="Widget_Caption" value="Copyright 2009-2011 Anomalous Medical"/>
             </Widget>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 using Engine.ObjectManagement;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -18,6 +19,7 @@ namespace Medical
         private SavePatientDialog savePatientDialog;
         private QuickView quickView;
         private SequencePlayer sequencePlayer;
+        private AboutDialog aboutDialog;
 
         public DopplerGUIPlugin()
         {
@@ -26,6 +28,7 @@ namespace Medical
 
         public void Dispose()
         {
+            aboutDialog.Dispose();
             appMenu.Dispose();
             options.Dispose();
             stateList.Dispose();
@@ -61,6 +64,9 @@ namespace Medical
 
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(sequencePlayer);
+
+            aboutDialog = new AboutDialog();
+            dialogManager.addManagedDialog(aboutDialog);
         }
 
         public void addToTaskbar(Taskbar taskbar)
@@ -102,7 +108,19 @@ namespace Medical
 
         public void showAboutDialog()
         {
+            aboutDialog.open(true);
+        }
 
+        public void export()
+        {
+            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            {
+                MessageBox.show("No information to save. Please run the diagnosis first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+            }
+            else
+            {
+                savePatientDialog.saveAs();
+            }
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)
