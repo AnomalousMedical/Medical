@@ -52,11 +52,7 @@ namespace Medical.GUI
 
         void diagnose_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.MedicalStateController.clearStates();
-            standaloneController.MedicalStateController.createNormalStateFromScene();
-            standaloneController.TimelineController.ResourceLocation = "S:/export/Timelines/One Minute Doppler.tlp";
-            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
-            standaloneController.TimelineController.startPlayback(tl);
+            dopplerGUI.runDetailedDiagnosis();
             this.hide();
         }
 

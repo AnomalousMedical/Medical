@@ -418,6 +418,14 @@ namespace Medical
             }
         }
 
+        public StandaloneApp App
+        {
+            get
+            {
+                return app;
+            }
+        }
+
         public void recreateMainWindow()
         {
             //sceneViewController.destroyCameras();

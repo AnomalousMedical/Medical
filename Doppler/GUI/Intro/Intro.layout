@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="Window" position="311 138 333 220" layer="Modal">
+        <Property key="Widget_Caption" value="Welcome"/>
+        <Widget type="Button" skin="Button" position="5 40 160 130" name="DetailedButton">
+            <Property key="Widget_Caption" value="Detailed Diagnosis"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="170 40 160 130" name="QuickButton">
+            <Property key="Widget_Caption" value="Quick Diagnosis"/>
+        </Widget>
+        <Widget type="Edit" skin="WordWrapSimple" position="5 4 324 35" name="IntroText">
+            <Property key="Widget_Caption" value="Welcome to $(PROGRAM_NAME). What would you like to do?"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="6 174 324 24" name="SandboxButton">
+            <Property key="Widget_Caption" value="Sandbox Mode"/>
+        </Widget>
+    </Widget>
+</MyGUI>

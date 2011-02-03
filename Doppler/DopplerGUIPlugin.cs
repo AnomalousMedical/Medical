@@ -6,6 +6,7 @@ using Medical.GUI;
 using Engine.ObjectManagement;
 using MyGUIPlugin;
 using OgreWrapper;
+using Engine;
 
 namespace Medical
 {
@@ -21,6 +22,7 @@ namespace Medical
         private QuickView quickView;
         private SequencePlayer sequencePlayer;
         private AboutDialog aboutDialog;
+        private Intro intro;
 
         public DopplerGUIPlugin()
         {
@@ -72,6 +74,8 @@ namespace Medical
 
             aboutDialog = new AboutDialog();
             dialogManager.addManagedDialog(aboutDialog);
+
+            intro = new Intro(standaloneController.App.WindowTitle, this);
         }
 
         public void addToTaskbar(Taskbar taskbar)
@@ -83,7 +87,9 @@ namespace Medical
 
         public void finishInitialization()
         {
-
+            guiManager.setMainInterfaceEnabled(false);
+            intro.Position = new Vector2(Gui.Instance.getViewWidth() / 2 - intro.Width / 2, Gui.Instance.getViewHeight() / 2 - intro.Height / 2);
+            intro.open(true);
         }
 
         public void sceneLoaded(SimScene scene)
@@ -126,6 +132,27 @@ namespace Medical
             {
                 savePatientDialog.saveAs();
             }
+        }
+
+        public void runDetailedDiagnosis()
+        {
+            standaloneController.MedicalStateController.clearStates();
+            standaloneController.MedicalStateController.createNormalStateFromScene();
+            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
+            standaloneController.TimelineController.startPlayback(tl);
+        }
+
+        public void runQuickDiagnosis()
+        {
+            standaloneController.MedicalStateController.clearStates();
+            standaloneController.MedicalStateController.createNormalStateFromScene();
+            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
+            standaloneController.TimelineController.startPlayback(tl);
+        }
+
+        public void startSandboxMode()
+        {
+            guiManager.setMainInterfaceEnabled(true);
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)
