@@ -45,14 +45,15 @@ namespace Medical.GUI
         }
 
         private String windowDefaultText;
-        private static String windowTitle = "Piper's Joint Based Occlusion";
+        private String windowTitle;
 
         public static MainWindow Instance { get; private set; }
 
-        public MainWindow()
+        public MainWindow(String windowTitle)
             :base(windowTitle, new Point(-1, -1), new Size(800, 600))
         {
             Instance = this;
+            this.windowTitle = windowTitle;
         }
 
         public void setPointerManager(MyGUIPlugin.PointerManager pointerManager)

@@ -41,8 +41,8 @@ namespace Medical
             appMenu = new DopplerAppMenu(this, standaloneController);
             guiManager.setAppMenu(appMenu);
 
-            standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
-            standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
+            standaloneController.TimelineController.TimelinePlaybackStarted += new EventHandler(TimelineController_TimelinePlaybackStarted);
+            standaloneController.TimelineController.TimelinePlaybackStopped += new EventHandler(TimelineController_TimelinePlaybackStopped);
         }
 
         public void createDialogs(DialogManager dialogManager)
@@ -117,12 +117,12 @@ namespace Medical
             standaloneController.saveMedicalState(patientData);
         }
 
-        void TimelineController_PlaybackStopped(object sender, EventArgs e)
+        void TimelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             guiManager.setMainInterfaceEnabled(true);
         }
 
-        void TimelineController_PlaybackStarted(object sender, EventArgs e)
+        void TimelineController_TimelinePlaybackStarted(object sender, EventArgs e)
         {
             guiManager.setMainInterfaceEnabled(false);
         }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Medical.Controller;
 using Medical.GUI;
+using Engine;
 
 namespace Medical
 {
-    class DopplerController : App
+    class DopplerController : StandaloneApp
     {
         UserPermissions permissions;
         StandaloneController controller;
@@ -37,7 +38,7 @@ namespace Medical
 #if ENABLE_HASP_PROTECTION
             permissions = new UserPermissions()
 #else
-            permissions = new UserPermissions(getSimulatedVersion());
+            permissions = new UserPermissions(SimulatedVersion.Doppler);
 #endif
             while (connectionLoop)
             {
@@ -80,6 +81,24 @@ namespace Medical
             }
         }
 
+        public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)
+        {
+            windowPresetController.clearPresetSets();
+            SceneViewWindowPresetSet primary = new SceneViewWindowPresetSet("Primary");
+            SceneViewWindowPreset preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            primary.addPreset(preset);
+            primary.Hidden = true;
+            windowPresetController.addPresetSet(primary);
+        }
+
+        public override string WindowTitle
+        {
+            get
+            {
+                return "Dr. Piper's Chair Side Consultation: Doppler";
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>
@@ -94,29 +113,5 @@ namespace Medical
             cameraFile = "/GraphicsCameras.cam";
             layersFile = "/StandaloneLayers.lay";
         }
-
-#if !ENABLE_HASP_PROTECTION
-        private static SimulatedVersion getSimulatedVersion()
-        {
-            String[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 2 && args[1] == "-e")
-            {
-                try
-                {
-                    SimulatedVersion version = (SimulatedVersion)Enum.Parse(typeof(SimulatedVersion), args[2]);
-                    return version;
-                }
-                catch (Exception)
-                {
-                    Console.Error.WriteLine(String.Format("The edition specified \'{0}\' is not valid.", args[2]));
-                    return SimulatedVersion.Graphics;
-                }
-            }
-            else
-            {
-                return SimulatedVersion.Doppler;
-            }
-        }
-#endif
     }
 }

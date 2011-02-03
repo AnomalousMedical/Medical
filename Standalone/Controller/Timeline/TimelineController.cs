@@ -22,8 +22,8 @@ namespace Medical
         private const String INDEX_FILE_NAME = "index.tix";
 
         public event EventHandler ResourceLocationChanged;
-        public event EventHandler PlaybackStarted;
-        public event EventHandler PlaybackStopped;
+        public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
+        public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
 
         private XmlSaver xmlSaver = new XmlSaver();
@@ -85,9 +85,9 @@ namespace Medical
                 activeTimeline.start(playPrePostActions);
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
-                if (PlaybackStarted != null)
+                if (TimelinePlaybackStarted != null)
                 {
-                    PlaybackStarted.Invoke(this, EventArgs.Empty);
+                    TimelinePlaybackStarted.Invoke(this, EventArgs.Empty);
                 }
             }
         }
@@ -101,9 +101,9 @@ namespace Medical
         {
             if (updating)
             {
-                if (PlaybackStopped != null)
+                if (TimelinePlaybackStopped != null)
                 {
-                    PlaybackStopped.Invoke(this, EventArgs.Empty);
+                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
                 activeTimeline.stop(playPostActions);
                 mainTimer.removeFixedUpdateListener(this);

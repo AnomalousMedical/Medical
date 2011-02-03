@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Medical.Controller;
 using Medical.GUI;
+using Engine;
 
 namespace Medical
 {
-    class PiperJBOController : App
+    class PiperJBOController : StandaloneApp
     {
         UserPermissions permissions;
         StandaloneController controller;
@@ -78,6 +79,81 @@ namespace Medical
             if (controller != null)
             {
                 controller.saveCrashLog();
+            }
+        }
+
+        public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)
+        {
+            windowPresetController.clearPresetSets();
+            SceneViewWindowPresetSet primary = new SceneViewWindowPresetSet("Primary");
+            SceneViewWindowPreset preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            primary.addPreset(preset);
+            primary.Hidden = true;
+            windowPresetController.addPresetSet(primary);
+
+            SceneViewWindowPresetSet oneWindow = new SceneViewWindowPresetSet("One Window");
+            //oneWindow.Image = Resources.OneWindowLayout;
+            preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            oneWindow.addPreset(preset);
+            windowPresetController.addPresetSet(oneWindow);
+
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            {
+                SceneViewWindowPresetSet twoWindows = new SceneViewWindowPresetSet("Two Windows");
+                //twoWindows.Image = Resources.TwoWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                twoWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = WindowAlignment.Right;
+                twoWindows.addPreset(preset);
+                windowPresetController.addPresetSet(twoWindows);
+            }
+
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            {
+                SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
+                //threeWindows.Image = Resources.ThreeWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                threeWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = WindowAlignment.Left;
+                threeWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = WindowAlignment.Right;
+                threeWindows.addPreset(preset);
+                windowPresetController.addPresetSet(threeWindows);
+
+                SceneViewWindowPresetSet fourWindows = new SceneViewWindowPresetSet("Four Windows");
+                //fourWindows.Image = Resources.FourWindowLayout;
+                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = WindowAlignment.Right;
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 1";
+                preset.WindowPosition = WindowAlignment.Bottom;
+                fourWindows.addPreset(preset);
+                preset = new SceneViewWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+                preset.ParentWindow = "Camera 2";
+                preset.WindowPosition = WindowAlignment.Bottom;
+                fourWindows.addPreset(preset);
+                windowPresetController.addPresetSet(fourWindows);
+            }
+        }
+
+        public override string WindowTitle
+        {
+            get 
+            {
+                return "Piper's Joint Based Occlusion";
             }
         }
 

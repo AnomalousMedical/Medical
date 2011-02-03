@@ -58,8 +58,8 @@ namespace Medical.GUI
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelineController = timelineController;
-            timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
-            timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
+            timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
+            timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
             timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
 
@@ -510,13 +510,13 @@ namespace Medical.GUI
             }
         }
 
-        void timelineController_PlaybackStopped(object sender, EventArgs e)
+        void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             playButton.Caption = "Play";
             playButton.StaticImage.setItemResource("Timeline/PlayIcon");
         }
 
-        void timelineController_PlaybackStarted(object sender, EventArgs e)
+        void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
         {
             timelineView.CurrentData = null;
             playButton.Caption = "Stop";
