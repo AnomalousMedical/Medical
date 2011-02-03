@@ -14,6 +14,7 @@ namespace Medical
     public class MedicalConfig
     {
         private static ConfigFile configFile;
+        private static ConfigFile recentDocumentsFile;
         private static String docRoot;
         private static String windowsFile;
         private static String camerasFile;
@@ -29,12 +30,14 @@ namespace Medical
         private static String archiveNameFormat = "PiperJBO{0}.dat";
 
         private static String updateURL = "http://www.AnomalousMedical.com/Update/PiperJBOUpdate.xml";
+        private static String anomalousFolder;
 
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
         public MedicalConfig(String anomalousFolder, String programFolder)
         {
+            MedicalConfig.anomalousFolder = anomalousFolder;
             MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
@@ -42,9 +45,11 @@ namespace Medical
             {
                 Directory.CreateDirectory(docRoot);
             }
-            configFile = new ConfigFile(docRoot + "/config.ini");
-            RecentDocuments = new RecentDocuments(configFile);
+            configFile = new ConfigFile(anomalousFolder + "/config.ini");
+            recentDocumentsFile = new ConfigFile(docRoot + "/docs.ini");
+            RecentDocuments = new RecentDocuments(recentDocumentsFile);
             configFile.loadConfigFile();
+            recentDocumentsFile.loadConfigFile();
             EngineConfig = new EngineConfig(configFile);
             program = configFile.createOrRetrieveConfigSection("Program");
             sceneDirectory = "Scenes";
@@ -120,7 +125,7 @@ namespace Medical
         {
             get
             {
-                return program.getValue("SaveDirectory", docRoot + "/Files");
+                return program.getValue("SaveDirectory", anomalousFolder + "/SavedFiles");
             }
             set
             {
@@ -193,6 +198,7 @@ namespace Medical
         public static void save()
         {
             configFile.writeConfigFile();
+            recentDocumentsFile.writeConfigFile();
         }
 
         public static String SceneDirectory
