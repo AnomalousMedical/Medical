@@ -33,9 +33,9 @@ namespace Medical
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
-        public MedicalConfig(String docRoot)
+        public MedicalConfig(String anomalousFolder, String programFolder)
         {
-            MedicalConfig.docRoot = docRoot;
+            MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
             if (!Directory.Exists(docRoot))

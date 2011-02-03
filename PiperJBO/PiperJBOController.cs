@@ -48,10 +48,8 @@ namespace Medical
                     connectionLoop = false;
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
-                        String cameraFile, layersFile;
-                        List<String> sequenceDirectories = new List<string>();
-                        determineResourceFiles(out layersFile, out cameraFile, sequenceDirectories);
-                        controller = new StandaloneController(this, "/Anomalous Medical/PiperJBO", cameraFile, layersFile, sequenceDirectories);
+                        determineResourceFiles();
+                        controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
                         controller.GUIManager.addPlugin("Editor.dll");
                         controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
@@ -157,6 +155,14 @@ namespace Medical
             }
         }
 
+        public override string ProgramFolder
+        {
+            get
+            {
+                return "PiperJBO";
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>
@@ -190,64 +196,64 @@ namespace Medical
             return background;
         }
 
-        private void determineResourceFiles(out String layersFile, out String cameraFile, List<String> sequenceDirectories)
+        private void determineResourceFiles()
         {
-            cameraFile = null;
-            layersFile = null;
+            CamerasFile = null;
+            LayersFile = null;
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
-                sequenceDirectories.Add("/Graphics");
-                sequenceDirectories.Add("/MRI");
-                sequenceDirectories.Add("/RadiographyCT");
-                sequenceDirectories.Add("/Clinical");
-                sequenceDirectories.Add("/DentitionProfile");
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/GraphicsCameras.cam";
-                layersFile = "/GraphicsLayers.lay";
+                this.addMovementSequenceDirectory("/Graphics");
+                this.addMovementSequenceDirectory("/MRI");
+                this.addMovementSequenceDirectory("/RadiographyCT");
+                this.addMovementSequenceDirectory("/Clinical");
+                this.addMovementSequenceDirectory("/DentitionProfile");
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/GraphicsCameras.cam";
+                LayersFile = "/GraphicsLayers.lay";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
             {
-                sequenceDirectories.Add("/MRI");
-                sequenceDirectories.Add("/RadiographyCT");
-                sequenceDirectories.Add("/Clinical");
-                sequenceDirectories.Add("/DentitionProfile");
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/MRICameras.cam";
-                layersFile = "/MRILayers.lay";
+                this.addMovementSequenceDirectory("/MRI");
+                this.addMovementSequenceDirectory("/RadiographyCT");
+                this.addMovementSequenceDirectory("/Clinical");
+                this.addMovementSequenceDirectory("/DentitionProfile");
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/MRICameras.cam";
+                LayersFile = "/MRILayers.lay";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
-                sequenceDirectories.Add("/RadiographyCT");
-                sequenceDirectories.Add("/Clinical");
-                sequenceDirectories.Add("/DentitionProfile");
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/RadiographyCameras.cam";
-                layersFile = "/RadiographyLayers.lay";
+                this.addMovementSequenceDirectory("/RadiographyCT");
+                this.addMovementSequenceDirectory("/Clinical");
+                this.addMovementSequenceDirectory("/DentitionProfile");
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/RadiographyCameras.cam";
+                LayersFile = "/RadiographyLayers.lay";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
             {
-                sequenceDirectories.Add("/Clinical");
-                sequenceDirectories.Add("/DentitionProfile");
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/ClinicalCameras.cam";
-                layersFile = "/ClinicalLayers.lay";
+                this.addMovementSequenceDirectory("/Clinical");
+                this.addMovementSequenceDirectory("/DentitionProfile");
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/ClinicalCameras.cam";
+                LayersFile = "/ClinicalLayers.lay";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
             {
-                sequenceDirectories.Add("/DentitionProfile");
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/DentitionProfileCameras.cam";
-                layersFile = "/DentitionProfileLayers.lay";
+                this.addMovementSequenceDirectory("/DentitionProfile");
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/DentitionProfileCameras.cam";
+                LayersFile = "/DentitionProfileLayers.lay";
             }
             else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
-                sequenceDirectories.Add("/Doppler");
-                cameraFile = "/DopplerCameras.cam";
-                layersFile = "/DopplerLayers.lay";
+                this.addMovementSequenceDirectory("/Doppler");
+                CamerasFile = "/DopplerCameras.cam";
+                LayersFile = "/DopplerLayers.lay";
             }
 
             //temp, load different layers file
-            layersFile = "/StandaloneLayers.lay";
+            LayersFile = "/StandaloneLayers.lay";
             //end temp
         }
 

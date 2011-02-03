@@ -48,10 +48,10 @@ namespace Medical
                     connectionLoop = false;
                     if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
-                        String cameraFile, layersFile;
-                        List<String> sequenceDirectories = new List<string>();
-                        determineResourceFiles(out layersFile, out cameraFile, sequenceDirectories);
-                        controller = new StandaloneController(this, "/Anomalous Medical/PiperDoppler", cameraFile, layersFile, sequenceDirectories);
+                        this.addMovementSequenceDirectory("/Doppler");
+                        CamerasFile = "/GraphicsCameras.cam";
+                        LayersFile = "/StandaloneLayers.lay";
+                        controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new DopplerGUIPlugin());
                         controller.go(createBackground(), "GUI/Doppler/SplashScreen");
                         startupSuceeded = true;
@@ -99,19 +99,20 @@ namespace Medical
             }
         }
 
+        public override string ProgramFolder
+        {
+            get
+            {
+                return "PiperDoppler";
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>
         private ViewportBackground createBackground()
         {
             return new ViewportBackground("SourceBackground", "PiperJBODopplerBackground", 900, 500, 500, 5, 5);
-        }
-
-        private void determineResourceFiles(out String layersFile, out String cameraFile, List<String> sequenceDirectories)
-        {
-            sequenceDirectories.Add("/Doppler");
-            cameraFile = "/GraphicsCameras.cam";
-            layersFile = "/StandaloneLayers.lay";
         }
     }
 }

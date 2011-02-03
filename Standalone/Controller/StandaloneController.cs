@@ -57,11 +57,6 @@ namespace Medical
         private HtmlHelpController htmlHelpController;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
-        //Support Files
-        private String camerasFile;
-        private String layersFile;
-        private List<String> movementSequenceDirectories;
-
         //Platform
         private MainWindow mainWindow;
         private StandaloneApp app;
@@ -69,14 +64,11 @@ namespace Medical
         //Touch
         private TouchController touchController;
 
-        public StandaloneController(StandaloneApp app, String documentPath, String camerasFile, String layersFile, List<String> movementSequenceDirectories)
+        public StandaloneController(StandaloneApp app)
         {
             this.app = app;
-            this.camerasFile = camerasFile;
-            this.layersFile = layersFile;
-            this.movementSequenceDirectories = movementSequenceDirectories;
 
-            MedicalConfig config = new MedicalConfig(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + documentPath);
+            MedicalConfig config = new MedicalConfig(String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), app.ProgramFolder);
             guiManager = new GUIManager(this);
 
 #if MAC_OSX
@@ -520,11 +512,11 @@ namespace Medical
         private void loadExternalFiles(SimulationScene medicalScene)
         {
             String pathString = "{0}/{1}/{2}";
-            String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, this.layersFile);
-            String cameraFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.CameraFileDirectory, this.camerasFile);
+            String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, app.LayersFile);
+            String cameraFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.CameraFileDirectory, app.CamerasFile);
             String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
 
-            movementSequenceController.loadSequenceDirectories(sequenceDirectory, this.movementSequenceDirectories);
+            movementSequenceController.loadSequenceDirectories(sequenceDirectory, app.MovementSequenceDirectories);
 
             layerController.loadLayerStateSet(layersFile);
             //Load camera file, merge baseline cameras if the cameras changed
