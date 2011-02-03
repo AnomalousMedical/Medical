@@ -36,8 +36,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private bool updating = false;
         private bool playPrePostActions = true;
-        private String resourceLocation = null;
-        private ZipFile resourceFile = null;
+        private TimelineResourceProvider resourceProvider = null;
         private TimelineIndex currentIndex = null;
         private bool multiTimelinePlaybackInProgress = false;
 
@@ -65,7 +64,7 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
-            using (XmlTextReader file = new XmlTextReader(resourceFile.openFile(filename)))
+            using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
             {
                 Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
                 timeline.SourceFile = filename;
@@ -179,7 +178,7 @@ namespace Medical
         {
             try
             {
-                Stream soundStream = resourceFile.openFile(soundFile);
+                Stream soundStream = resourceProvider.openFile(soundFile);
                 return SoundPluginInterface.Instance.SoundManager.streamPlayAndForgetSound(soundStream);
             }
             catch (Exception e)
@@ -193,8 +192,10 @@ namespace Medical
         {
             try
             {
-                Stream soundStream = resourceFile.openFile(soundFile);
-                return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
+                using (Stream soundStream = resourceProvider.openFile(soundFile))
+                {
+                    return SoundPluginInterface.Instance.SoundManager.getDuration(soundStream);
+                }
             }
             catch (Exception e)
             {
@@ -208,7 +209,7 @@ namespace Medical
             IImageDisplay imageDisplay = null;
             try
             {
-                using (Stream imageStream = resourceFile.openFile(imageName))
+                using (Stream imageStream = resourceProvider.openFile(imageName))
                 {
                     imageDisplay = ImageDisplayFactory.createImageDisplay();
                     imageDisplay.setImage(imageStream);
@@ -255,14 +256,13 @@ namespace Medical
                     ionicZip.Save();
                 }
             }
-            ResourceLocation = projectName;
+            ResourceProvider = new TimelineZipResources(projectName);
         }
 
         public void saveTimeline(Timeline timeline, String filename)
         {
-            if (resourceFile != null)
+            if (resourceProvider != null)
             {
-                resourceFile.Dispose();
                 try
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
@@ -274,18 +274,7 @@ namespace Medical
                             writer.Flush();
 
                             memoryStream.Seek(0, SeekOrigin.Begin);
-                            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
-                            {
-                                if (ionicZip.ContainsEntry(filename))
-                                {
-                                    ionicZip.UpdateEntry(filename, memoryStream);
-                                }
-                                else
-                                {
-                                    ionicZip.AddEntry(filename, memoryStream);
-                                }
-                                ionicZip.Save();
-                            }
+                            resourceProvider.addStream(filename, memoryStream);
                         }
                     }
                     timeline.SourceFile = filename;
@@ -294,7 +283,6 @@ namespace Medical
                 {
                     Log.Error("Could not save timeline because of {0}.", e.Message);
                 }
-                resourceFile = new ZipFile(resourceLocation);
             }
         }
 
@@ -310,7 +298,7 @@ namespace Medical
                 memStream.Seek(0, SeekOrigin.Begin);
 
                 //Import the stream.
-                importStream(INDEX_FILE_NAME, memStream);
+                resourceProvider.addStream(INDEX_FILE_NAME, memStream);
             }
             currentIndex = index;
         }
@@ -321,23 +309,9 @@ namespace Medical
         /// <param name="pattern"></param>
         public String[] listResourceFiles(String pattern)
         {
-            if (resourceFile != null)
+            if (resourceProvider != null)
             {
-                try
-                {
-                    List<ZipFileInfo> zipFiles = resourceFile.listFiles("/", pattern, false);
-                    String[] ret = new String[zipFiles.Count];
-                    int i = 0;
-                    foreach (ZipFileInfo info in zipFiles)
-                    {
-                        ret[i++] = info.FullName;
-                    }
-                    return ret;
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Could not list files in directory {0}.\nReason: {1}", ResourceLocation, ex.Message);
-                }
+                return resourceProvider.listFiles(pattern);
             }
             return new String[0];
         }
@@ -352,55 +326,17 @@ namespace Medical
             {
                 throw new TimelineException("Do not import Timeline Projects (.tlp) into other Timeline Projects. No changes made.");
             }
-            else if (resourceFile != null)
+            else if (resourceProvider != null)
             {
-                resourceFile.Dispose();
-                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
-                {
-                    if (ionicZip.ContainsEntry(Path.GetFileName(path)))
-                    {
-                        ionicZip.UpdateFile(path, "");
-                    }
-                    else
-                    {
-                        ionicZip.AddFile(path, "");
-                    }
-                    ionicZip.Save();
-                }
-                resourceFile = new ZipFile(resourceLocation);
-            }
-        }
-
-        /// <summary>
-        /// Import a file into the current ResourceLocation.
-        /// </summary>
-        /// <param name="path"></param>
-        public void importStream(String path, Stream stream)
-        {
-            if (resourceFile != null)
-            {
-                resourceFile.Dispose();
-                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(resourceLocation))
-                {
-                    if (ionicZip.ContainsEntry(Path.GetFileName(path)))
-                    {
-                        ionicZip.UpdateEntry(path, stream);
-                    }
-                    else
-                    {
-                        ionicZip.AddEntry(path, stream);
-                    }
-                    ionicZip.Save();
-                }
-                resourceFile = new ZipFile(resourceLocation);
+                resourceProvider.addFile(path);
             }
         }
 
         public bool resourceExists(String filename)
         {
-            if (resourceFile != null)
+            if (resourceProvider != null)
             {
-                return resourceFile.exists(filename);
+                return resourceProvider.exists(filename);
             }
             return false;
         }
@@ -508,39 +444,47 @@ namespace Medical
         public IQuestionProvider QuestionProvider { get; set; }
 
         /// <summary>
-        /// The current directory to read external resources out of.
+        /// Set the resource provider. This will cause the ResourceProvider to
+        /// become owned by the TimelineController. You will not be able to
+        /// recovery it without it being disposed. So as soon as you set this
+        /// property forget about the TimelineResourceProvider you just set.
+        /// 
+        /// You can clear the active provider by setting this to null.
         /// </summary>
-        public String ResourceLocation
+        public TimelineResourceProvider ResourceProvider
         {
             get
             {
-                return resourceLocation;
+                return resourceProvider;
             }
             set
             {
+                if (resourceProvider != null)
+                {
+                    resourceProvider.Dispose();
+                }
+
+                resourceProvider = value;
                 currentIndex = null;
-                if (resourceFile != null)
+                if (resourceProvider != null)
                 {
-                    resourceFile.Dispose();
-                }
-                resourceLocation = value;
-                resourceFile = new ZipFile(resourceLocation);
-                if (resourceFile.exists(INDEX_FILE_NAME))
-                {
-                    using (XmlTextReader file = new XmlTextReader(resourceFile.openFile(INDEX_FILE_NAME)))
+
+                    if (resourceProvider.exists(INDEX_FILE_NAME))
                     {
-                        currentIndex = xmlSaver.restoreObject(file) as TimelineIndex;
+                        using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(INDEX_FILE_NAME)))
+                        {
+                            currentIndex = xmlSaver.restoreObject(file) as TimelineIndex;
+                        }
                     }
-                }
-
-                //Legacy check for indexes. This can probably be removed since no real timelines have been created yet.
-                if (currentIndex == null)
-                {
-                    Log.Warning("Loaded timeline project with no index file. Creating default index.");
-
-                    using (MemoryStream memStream = new MemoryStream())
+                    else
                     {
-                        saveIndex(new TimelineIndex());
+                        //Legacy check for indexes. This can probably be removed since no real timelines have been created yet.
+                        Log.Warning("Loaded timeline project with no index file. Creating default index.");
+
+                        using (MemoryStream memStream = new MemoryStream())
+                        {
+                            saveIndex(new TimelineIndex());
+                        }
                     }
                 }
 

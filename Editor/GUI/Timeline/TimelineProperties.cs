@@ -216,15 +216,15 @@ namespace Medical.GUI
 
         private void updateWindowCaption()
         {
-            if (timelineController.ResourceLocation != null)
+            if (timelineController.ResourceProvider != null)
             {
                 if (currentTimelineFile != null)
                 {
-                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceLocation);
+                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceProvider.BackingLocation);
                 }
                 else
                 {
-                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceLocation);
+                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceProvider.BackingLocation);
                 }
             }
             else
@@ -334,7 +334,7 @@ namespace Medical.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    timelineController.ResourceLocation = fileDialog.Path;
+                    timelineController.ResourceProvider = new TimelineZipResources(fileDialog.Path);
                     updateWindowCaption();
                 }
             }
@@ -416,7 +416,7 @@ namespace Medical.GUI
 
         void timelineController_ResourceLocationChanged(object sender, EventArgs e)
         {
-            setEnabled(timelineController.ResourceLocation != null);
+            setEnabled(timelineController.ResourceProvider != null);
         }
 
         private void setEnabled(bool enabled)
