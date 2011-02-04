@@ -32,12 +32,12 @@ namespace Medical
 
         public void addStream(String filename, MemoryStream memoryStream)
         {
-            throw new ReadOnlyZipException("addStream not supported by this resource provider.");
+            throw new NotImplementedException("addStream not supported by this resource provider.");
         }
 
         public void addFile(String path)
         {
-            throw new ReadOnlyZipException("addFile not supported by this resource provider.");
+            throw new NotImplementedException("addFile not supported by this resource provider.");
         }
 
         public String[] listFiles(String pattern)
@@ -70,15 +70,6 @@ namespace Medical
             get
             {
                 return resourceLocation;
-            }
-        }
-
-        class ReadOnlyZipException : Exception
-        {
-            public ReadOnlyZipException(String message)
-                : base(message)
-            {
-
             }
         }
     }
