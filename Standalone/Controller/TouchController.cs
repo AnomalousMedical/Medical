@@ -50,7 +50,11 @@ namespace Medical
             gestureEngine = new GestureEngine(multiTouch);
             mainTimer.addFixedUpdateListener(gestureEngine);
 
+            #if WINDOWS
             gestureEngine.addGesture(new GuiGestures());
+            #elif MAC_OSX
+            gestureEngine.addGesture(new GUIGestureBlocker());
+            #endif
 
             rotateGesture = new MultiFingerScrollGesture(ROTATE_FINGER_COUNT, ROTATE_DECEL_TIME, ROTATE_MIN_MOMENTUM);
             rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);

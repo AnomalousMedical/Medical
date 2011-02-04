@@ -106,6 +106,7 @@
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />
     <Compile Include="Platform\MultiTouch\GestureEngine.cs" />
+    <Compile Include="Platform\MultiTouch\GUIGestureBlocker.cs" />
     <Compile Include="Platform\MultiTouch\MultiFingerScrollGesture.cs" />
     <Compile Include="Platform\MultiTouch\MultiTouch.cs" />
     <Compile Include="Controller\Props\Arrow.cs" />

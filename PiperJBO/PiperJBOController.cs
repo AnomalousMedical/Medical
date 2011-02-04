@@ -12,6 +12,7 @@ namespace Medical
     {
         UserPermissions permissions;
         StandaloneController controller;
+        bool startupSuceeded = false;
 
         public override bool OnInit()
         {
@@ -27,16 +28,22 @@ namespace Medical
 
         public override bool OnIdle()
         {
-            controller.onIdle();
-            return MainWindow.Instance.Active;
+            if (startupSuceeded)
+            {
+                controller.onIdle();
+                return MainWindow.Instance.Active;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool startApplication()
         {
             bool connectionLoop = true;
-            bool startupSuceeded = false;
 #if ENABLE_HASP_PROTECTION
-            permissions = new UserPermissions()
+            permissions = new UserPermissions();
 #else
             permissions = new UserPermissions(getSimulatedVersion());
 #endif

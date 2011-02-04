@@ -5,11 +5,11 @@ NativeDialogResult interpretResults(int resultCode)
 {
 	switch(resultCode)
 	{
-		case wxID_OK:
+		case wxOK:
 			return OK;
-		case wxID_YES:
+		case wxYES:
 			return YES;
-		case wxID_NO:
+		case wxNO:
 			return NO;
 		default:
 			return CANCEL;

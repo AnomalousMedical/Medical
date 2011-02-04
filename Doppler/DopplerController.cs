@@ -12,31 +12,45 @@ namespace Medical
     {
         UserPermissions permissions;
         StandaloneController controller;
+        bool startupSuceeded = false;
 
         public override bool OnInit()
         {
-            return startApplication();
+            startApplication();
+            return true;
         }
 
         public override int OnExit()
         {
-            controller.Dispose();
-            permissions.Dispose();
+            if (controller != null)
+            {
+                controller.Dispose();
+            }
+            if (permissions != null)
+            {
+                permissions.Dispose();
+            }
             return 0;
         }
 
         public override bool OnIdle()
         {
-            controller.onIdle();
-            return MainWindow.Instance.Active;
+            if (startupSuceeded)
+            {
+                controller.onIdle();
+                return MainWindow.Instance.Active;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool startApplication()
         {
             bool connectionLoop = true;
-            bool startupSuceeded = false;
 #if ENABLE_HASP_PROTECTION
-            permissions = new UserPermissions()
+            permissions = new UserPermissions();
 #else
             permissions = new UserPermissions(SimulatedVersion.Doppler);
 #endif
@@ -54,7 +68,7 @@ namespace Medical
                         controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new DopplerGUIPlugin());
                         controller.go(createBackground(), "GUI/Doppler/SplashScreen");
-                        controller.TimelineController.ResourceProvider = new TimelineZipResources("S:/export/Timelines/One Minute Doppler.tlp");
+                        controller.TimelineController.ResourceProvider = new TimelineZipResources(/*"S:/export/Timelines/*/"One Minute Doppler.tlp");
                         startupSuceeded = true;
                     }
                     else
