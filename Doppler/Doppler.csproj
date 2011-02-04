@@ -74,6 +74,7 @@
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Intro\Intro.cs" />
     <Compile Include="GUI\Menus\DopplerAppMenu.cs" />
+    <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />

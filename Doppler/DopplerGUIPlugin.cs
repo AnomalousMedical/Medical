@@ -23,6 +23,7 @@ namespace Medical
         private SequencePlayer sequencePlayer;
         private AboutDialog aboutDialog;
         private Intro intro;
+        private SystemMenu systemMenu;
 
         public DopplerGUIPlugin()
         {
@@ -109,7 +110,7 @@ namespace Medical
 
         public void createMenuBar(NativeMenuBar menu)
         {
-            
+            systemMenu = new SystemMenu(menu, this, standaloneController);
         }
 
         public void showOptions()

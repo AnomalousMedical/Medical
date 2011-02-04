@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Logging;
 
 namespace Medical
 {
@@ -18,6 +19,11 @@ namespace Medical
         private const int PAN_FINGER_COUNT = 3;
         private const float PAN_DECEL_TIME = 0.5f;
         private const float PAN_MIN_MOMENTUM = 0.01f;
+
+        public MacPlatformConfig()
+        {
+            Log.ImportantInfo("Platform is Mac");
+        }
 
         protected override String formatTitleImpl(String windowText, String subText)
         {
