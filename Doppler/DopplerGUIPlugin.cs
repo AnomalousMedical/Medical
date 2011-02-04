@@ -88,7 +88,7 @@ namespace Medical
 
         public void finishInitialization()
         {
-            guiManager.setMainInterfaceEnabled(false);
+            setInterfaceEnabled(false);
             intro.center();
             intro.open(true);
         }
@@ -111,6 +111,7 @@ namespace Medical
         public void createMenuBar(NativeMenuBar menu)
         {
             systemMenu = new SystemMenu(menu, this, standaloneController);
+            systemMenu.FileMenuEnabled = false;
         }
 
         public void showOptions()
@@ -153,7 +154,7 @@ namespace Medical
 
         public void startSandboxMode()
         {
-            guiManager.setMainInterfaceEnabled(true);
+            setInterfaceEnabled(true);
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)
@@ -171,12 +172,21 @@ namespace Medical
         void TimelineController_PlaybackStopped(object sender, EventArgs e)
         {
             standaloneController.MedicalStateController.createAndAddState("Doppler Results");
-            guiManager.setMainInterfaceEnabled(true);
+            setInterfaceEnabled(true);
         }
 
         void TimelineController_PlaybackStarted(object sender, EventArgs e)
         {
-            guiManager.setMainInterfaceEnabled(false);
+            setInterfaceEnabled(false);
+        }
+
+        void setInterfaceEnabled(bool enable)
+        {
+            guiManager.setMainInterfaceEnabled(enable);
+            if(systemMenu != null)
+            {
+                systemMenu.FileMenuEnabled = enable;
+            }
         }
     }
 }

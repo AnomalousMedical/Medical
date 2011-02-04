@@ -9,6 +9,9 @@ namespace Medical.GUI
     class SystemMenu
     {
         private NativeMenu fileMenu;
+        private NativeMenuItem detailedDiagnose;
+        private NativeMenuItem quickDiagnose;
+        private NativeMenuItem export;
         private NativeMenuItem exit;
 
         private DopplerGUIPlugin guiPlugin;
@@ -21,6 +24,15 @@ namespace Medical.GUI
 
             //File menu
             fileMenu = menu.createMenu("&File");
+
+            detailedDiagnose = fileMenu.append(CommonMenuItems.AutoAssign, "Detailed Diagnose", "Run the detailed diagnosis.");
+            detailedDiagnose.Select += new NativeMenuEvent(detailedDiagnose_Select);
+
+            quickDiagnose = fileMenu.append(CommonMenuItems.AutoAssign, "Quick Diagnose", "Run the quick diagnosis.");
+            quickDiagnose.Select += new NativeMenuEvent(quickDiagnose_Select);
+
+            export = fileMenu.append(CommonMenuItems.AutoAssign, "Export", "Export the results.");
+            export.Select += new NativeMenuEvent(export_Select);
 
             fileMenu.appendSeparator();
 
@@ -44,6 +56,21 @@ namespace Medical.GUI
             menu.append(helpMenu);
         }
 
+        void export_Select(NativeMenuItem item)
+        {
+            guiPlugin.export();
+        }
+
+        void quickDiagnose_Select(NativeMenuItem item)
+        {
+            guiPlugin.runQuickDiagnosis();
+        }
+
+        void detailedDiagnose_Select(NativeMenuItem item)
+        {
+            guiPlugin.runDetailedDiagnosis();
+        }
+
         void preferences_Select(NativeMenuItem sender)
         {
             guiPlugin.showOptions();
@@ -59,20 +86,19 @@ namespace Medical.GUI
             guiPlugin.showAboutDialog();
         }
 
-        //public bool FileMenuEnabled
-        //{
-        //    get
-        //    {
-        //        return changeScene.Enabled;
-        //    }
-        //    set
-        //    {
-        //        changeScene.Enabled = value;
-        //        open.Enabled = value;
-        //        save.Enabled = value;
-        //        saveAs.Enabled = value;
-        //    }
-        //}
+        public bool FileMenuEnabled
+        {
+            get
+            {
+                return detailedDiagnose.Enabled;
+            }
+            set
+            {
+                detailedDiagnose.Enabled = value;
+                quickDiagnose.Enabled = value;
+                export.Enabled = value;
+            }
+        }
 
         void exit_Select(NativeMenuItem sender)
         {
