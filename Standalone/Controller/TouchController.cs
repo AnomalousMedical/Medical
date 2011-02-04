@@ -28,13 +28,13 @@ namespace Medical
 
             gestureEngine.addGesture(PlatformConfig.createGuiGesture());
 
-            rotateGesture = PlatformConfig.createRotateGesture();
-            rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);
-            gestureEngine.addGesture(rotateGesture);
-
             zoomGesture = PlatformConfig.createZoomGesture();
             zoomGesture.Zoom += new TwoFingerZoom.ZoomDelegate(zoomGesture_Zoom);
             gestureEngine.addGesture(zoomGesture);
+
+            rotateGesture = PlatformConfig.createRotateGesture();
+            rotateGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(rotateGesture_Scroll);
+            gestureEngine.addGesture(rotateGesture);
 
             panGesture = PlatformConfig.createPanGesture();
             panGesture.Scroll += new MultiFingerScrollGesture.ScrollDelegate(panGesture_Scroll);
