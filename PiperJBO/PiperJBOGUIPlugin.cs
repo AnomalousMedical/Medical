@@ -37,6 +37,7 @@ namespace Medical.GUI
         private PiperJBOWizards wizards;
         private CloneWindowTaskbarItem cloneWindow;
         private RecentDocuments recentDocuments;
+        private SystemMenu systemMenu;
 
         public PiperJBOGUIPlugin()
         {
@@ -171,20 +172,15 @@ namespace Medical.GUI
         public void setMainInterfaceEnabled(bool enabled)
         {
             layers.AllowShortcuts = enabled;
-#if CREATE_MAINWINDOW_MENU
-            systemMenu.FileMenuEnabled = enabled;
-#endif
+            if (systemMenu != null)
+            {
+                systemMenu.FileMenuEnabled = enabled;
+            }
         }
-
-#if CREATE_MAINWINDOW_MENU
-        private SystemMenu systemMenu;
-#endif
 
         public void createMenuBar(NativeMenuBar menu)
         {
-#if CREATE_MAINWINDOW_MENU
             systemMenu = new SystemMenu(menu, this, standaloneController);
-#endif
         }
 
         public void showOptions()

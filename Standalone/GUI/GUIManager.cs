@@ -274,8 +274,6 @@ namespace Medical.GUI
             }
         }
 
-#if CREATE_MAINWINDOW_MENU
-
         public void createMenuBar(NativeMenuBar menu)
         {
             foreach (GUIPlugin plugin in plugins)
@@ -283,8 +281,6 @@ namespace Medical.GUI
                 plugin.createMenuBar(menu);
             }
         }
-
-#endif
 
         void SceneViewController_ActiveWindowChanged(SceneViewWindow window)
         {
