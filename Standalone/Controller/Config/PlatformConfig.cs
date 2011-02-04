@@ -3,12 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
+    public enum OperatingSystem
+    {
+        Windows,
+        Mac,
+    }
+
     abstract class PlatformConfig
     {
-        private static PlatformConfig currentConfig = new WindowsPlatformConfig();
+        private static PlatformConfig currentConfig;
+
+        static PlatformConfig()
+        {
+            switch (PlatformConfig_getPlatform())
+            {
+                case OperatingSystem.Windows:
+                    currentConfig = new WindowsPlatformConfig();
+                    break;
+                case OperatingSystem.Mac:
+                    currentConfig = new MacPlatformConfig();
+                    break;
+                default:
+                    throw new Exception("Could not find platform configuration.");
+            }
+        }
 
         public static String formatTitle(String windowText, String subText)
         {
@@ -102,5 +124,12 @@ namespace Medical
         }
 
         protected abstract bool CreateMenuImpl { get; }
+
+        #region PInvoke
+
+        [DllImport("OSHelper")]
+        private static extern OperatingSystem PlatformConfig_getPlatform();
+
+        #endregion
     }
 }

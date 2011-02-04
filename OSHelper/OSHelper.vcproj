@@ -408,6 +408,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="OS"
+			>
+			<File
+				RelativePath=".\Src\PlatformConfig.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>
