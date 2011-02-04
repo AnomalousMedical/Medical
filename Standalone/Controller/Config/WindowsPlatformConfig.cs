@@ -86,5 +86,13 @@ namespace Medical
                 return false;
             }
         }
+
+        protected override bool AllowCloneWindowsImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

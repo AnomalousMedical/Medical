@@ -6,7 +6,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    interface Gesture
+    public interface Gesture
     {
         /// <summary>
         /// Process the fingers that are down. Return true if this gesture was

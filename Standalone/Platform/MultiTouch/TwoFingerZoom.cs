@@ -8,7 +8,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    class TwoFingerZoom : Gesture
+    public class TwoFingerZoom : Gesture
     {
         public delegate void ZoomDelegate(float zoomDelta);
 

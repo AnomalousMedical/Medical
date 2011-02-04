@@ -82,9 +82,6 @@ namespace Medical
             logListener = new LogFileListener();
             logListener.openLogFile(MedicalConfig.DocRoot + "/log.log");
             Log.Default.addLogListener(logListener);
-#if ONLY_LOG_ERRORS
-            Log.Default.setActiveMessageTypes(LogLevel.Error);
-#endif
             Log.ImportantInfo("Running from directory {0}", MedicalConfig.ProgramDirectory);
 
             //Config plugins

@@ -8,7 +8,7 @@ using Engine;
 
 namespace Medical
 {
-    class GuiGestures : Gesture
+    public class GuiGestures : Gesture
     {
         private bool didGesture;
         private IntVector2 lastFingerPos;

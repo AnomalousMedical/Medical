@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical
 {
-    class Finger : PooledObject
+    public class Finger : PooledObject
     {
         private int id;
         private float xPos;

@@ -13,7 +13,7 @@ namespace Medical
         Mac,
     }
 
-    abstract class PlatformConfig
+    public abstract class PlatformConfig
     {
         private static PlatformConfig currentConfig;
 
@@ -94,6 +94,14 @@ namespace Medical
             }
         }
 
+        public static bool AllowCloneWindows
+        {
+            get
+            {
+                return currentConfig.AllowCloneWindowsImpl;
+            }
+        }
+
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
@@ -108,22 +116,15 @@ namespace Medical
 
         protected abstract TwoFingerZoom createZoomGestureImpl();
 
-        protected abstract String ThemeFileImpl
-        {
-            get;
-        }
+        protected abstract String ThemeFileImpl { get; }
 
-        protected abstract bool AllowFullscreenImpl
-        {
-            get;
-        }
+        protected abstract bool AllowFullscreenImpl { get; }
 
-        protected abstract MouseButtonCode DefaultCameraMouseButtonImpl
-        {
-            get;
-        }
+        protected abstract MouseButtonCode DefaultCameraMouseButtonImpl { get; }
 
         protected abstract bool CreateMenuImpl { get; }
+
+        protected abstract bool AllowCloneWindowsImpl { get; }
 
         #region PInvoke
 

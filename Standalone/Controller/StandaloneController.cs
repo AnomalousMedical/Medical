@@ -1,6 +1,4 @@
-﻿#define PROFILE_LOAD
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -465,11 +463,6 @@ namespace Medical
         /// <param name="filename"></param>
         private bool changeScene(String file, SplashScreen splashScreen)
         {
-#if PROFILE_LOAD
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-#endif
-
             bool success = false;
             sceneViewController.resetAllCameraPositions();
             //StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
@@ -509,10 +502,6 @@ namespace Medical
                 //StatusController.TaskCompleted();
                 success = true;
             }
-#if PROFILE_LOAD
-            sw.Stop();
-            Log.Info("Scene loaded in {0} ms.", sw.ElapsedMilliseconds);
-#endif
             return success;
         }
 

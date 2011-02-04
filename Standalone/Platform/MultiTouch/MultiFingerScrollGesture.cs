@@ -7,7 +7,7 @@ using Engine.Platform;
 
 namespace Medical
 {
-    class MultiFingerScrollGesture : Gesture
+    public class MultiFingerScrollGesture : Gesture
     {
         public delegate void ScrollDelegate(float deltaX, float deltaY);
         public event ScrollDelegate Scroll;

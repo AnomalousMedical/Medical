@@ -148,10 +148,10 @@ namespace Medical.GUI
             taskbar.addItem(renderTaskbarItem);
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-
-#if ALLOW_CLONE_WINDOWS
-            taskbar.addItem(cloneWindow);
-#endif
+            if (PlatformConfig.AllowCloneWindows)
+            {
+                taskbar.addItem(cloneWindow);
+            }
         }
 
         public void finishInitialization()
