@@ -42,6 +42,7 @@
 		0112F67D12F1C3EA001A5E49 /* NativeStringEnumerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */; };
 		0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */; };
 		0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67F12F1C469001A5E49 /* ColorDialog.cpp */; };
+		014D72C912FCA49C008436AC /* PlatformConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014D72C812FCA49B008436AC /* PlatformConfig.cpp */; };
 		018B92AB12F702F700D9F4D1 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 018B92AA12F702F700D9F4D1 /* MultiTouchImpl.h */; };
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
 		01ADCCB312F222EF00C7ABC7 /* OSXMultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */; };
@@ -93,6 +94,7 @@
 		0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeStringEnumerator.cpp; path = ../../OSHelper/Src/NativeStringEnumerator.cpp; sourceTree = SOURCE_ROOT; };
 		0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemInfo.cpp; path = ../../OSHelper/Src/SystemInfo.cpp; sourceTree = SOURCE_ROOT; };
 		0112F67F12F1C469001A5E49 /* ColorDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorDialog.cpp; path = ../../OSHelper/Src/ColorDialog.cpp; sourceTree = SOURCE_ROOT; };
+		014D72C812FCA49B008436AC /* PlatformConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlatformConfig.cpp; path = ../../OSHelper/Src/PlatformConfig.cpp; sourceTree = SOURCE_ROOT; };
 		018B92AA12F702F700D9F4D1 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiTouchImpl.h; path = ../../OSHelper/Include/MultiTouchImpl.h; sourceTree = SOURCE_ROOT; };
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
 		01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXMultiTouch.h; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		01F0325A1214743E0054F63B /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				014D72C812FCA49B008436AC /* PlatformConfig.cpp */,
 				0112F67F12F1C469001A5E49 /* ColorDialog.cpp */,
 				0112F66512F1C3EA001A5E49 /* DirDialog.cpp */,
 				0112F66612F1C3EA001A5E49 /* Enums.cpp */,
@@ -343,6 +346,7 @@
 				0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */,
 				0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */,
 				01ADCCB412F222EF00C7ABC7 /* OSXMultiTouch.mm in Sources */,
+				014D72C912FCA49C008436AC /* PlatformConfig.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
