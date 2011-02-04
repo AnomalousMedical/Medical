@@ -85,6 +85,7 @@
     <Compile Include="Controller\Camera\SavedCameraDefinition.cs" />
     <Compile Include="Controller\Config\EngineConfig.cs" />
     <Compile Include="Controller\Config\MedicalConfig.cs" />
+    <Compile Include="Controller\Config\PlatformConfig.cs" />
     <Compile Include="Controller\Config\RecentDocuments.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />

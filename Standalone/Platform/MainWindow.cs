@@ -72,11 +72,7 @@ namespace Medical.GUI
                 windowDefaultText = this.Title;
             }
 
-            #if WINDOWS
-                Title = String.Format("{0} - {1}", windowDefaultText, subName);
-            #elif MAC_OSX
-                Title = subName;
-            #endif
+            Title = PlatformConfig.formatTitle(windowDefaultText, subName);
         }
 
         /// <summary>

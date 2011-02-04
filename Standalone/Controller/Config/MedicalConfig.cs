@@ -251,11 +251,8 @@ namespace Medical
         {
             get
             {
-#if MAC_OSX
-                MouseButtonCode buttonCode = MouseButtonCode.MB_BUTTON0;
-#else
-                MouseButtonCode buttonCode = MouseButtonCode.MB_BUTTON1;
-#endif
+                MouseButtonCode buttonCode = PlatformConfig.DefaultCameraMouseButton;
+
                 String mouseButton = program.getValue("CameraMouseButton", buttonCode.ToString());
                 try
                 {

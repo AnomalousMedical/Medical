@@ -57,12 +57,7 @@ namespace Medical
         {
             get
             {
-#if MAC_OSX
-                //Fullscreen does not work on mac, so block it.
-                return false;
-#else
-                return section.getValue("Fullscreen", false);
-#endif
+                return PlatformConfig.AllowFullscreen && section.getValue("Fullscreen", false);
             }
             set
             {

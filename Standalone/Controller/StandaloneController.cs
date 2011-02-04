@@ -71,9 +71,7 @@ namespace Medical
             MedicalConfig config = new MedicalConfig(String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), app.ProgramFolder, app.UpdateURL);
             guiManager = new GUIManager(this);
 
-#if MAC_OSX
-            MyGUIInterface.Theme = "core_theme_osx.xml";
-#endif
+            MyGUIInterface.Theme = PlatformConfig.ThemeFile;
 
             //Engine core
             medicalController = new MedicalController();
