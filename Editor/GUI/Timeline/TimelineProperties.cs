@@ -7,6 +7,8 @@ using System.IO;
 using Engine;
 using Logging;
 using Engine.Saving;
+using Engine.Saving.XMLSaver;
+using System.Xml;
 
 namespace Medical.GUI
 {
@@ -233,6 +235,26 @@ namespace Medical.GUI
             }
         }
 
+        private void createProject(string projectName)
+        {
+            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
+            {
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
+                    xmlWriter.Formatting = Formatting.Indented;
+                    TimelineIndex index = new TimelineIndex();
+                    XmlSaver xmlSaver = new XmlSaver();
+                    xmlSaver.saveObject(index, xmlWriter);
+                    xmlWriter.Flush();
+                    memStream.Seek(0, SeekOrigin.Begin);
+                    ionicZip.AddEntry(TimelineController.INDEX_FILE_NAME, memStream);
+                    ionicZip.Save();
+                }
+            }
+            timelineController.ResourceProvider = new TimelineZipResources(projectName);
+        }
+
         public void createNewTimeline()
         {
             Timeline timeline = new Timeline();
@@ -289,7 +311,7 @@ namespace Medical.GUI
                 {
                     File.Delete(filename);
                 }
-                timelineController.createProject(filename);
+                createProject(filename);
                 updateWindowCaption();
             }
             catch (Exception ex)

@@ -11,6 +11,12 @@ NativeDialogResult interpretResults(int resultCode)
 			return YES;
 		case wxNO:
 			return NO;
+		case wxID_OK:
+			return OK;
+		case wxID_YES:
+			return YES;
+		case wxID_NO:
+			return NO;
 		default:
 			return CANCEL;
 	}

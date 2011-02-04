@@ -68,7 +68,7 @@ namespace Medical
                         controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new DopplerGUIPlugin());
                         controller.go(createBackground(), "GUI/Doppler/SplashScreen");
-                        controller.TimelineController.ResourceProvider = new TimelineZipResources(/*"S:/export/Timelines/*/"One Minute Doppler.tlp");
+                        controller.TimelineController.ResourceProvider = new TimelineReadOnlyZipResources("S:/export/Timelines/One Minute Doppler.tlp");
                         startupSuceeded = true;
                     }
                     else

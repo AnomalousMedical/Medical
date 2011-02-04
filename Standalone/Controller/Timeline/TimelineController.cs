@@ -19,7 +19,7 @@ namespace Medical
 
     public class TimelineController : UpdateListener
     {
-        private const String INDEX_FILE_NAME = "index.tix";
+        public const String INDEX_FILE_NAME = "index.tix";
 
         public event EventHandler ResourceLocationChanged;
         public event EventHandler PlaybackStarted;
@@ -238,25 +238,6 @@ namespace Medical
             {
                 Log.Warning("Tried to show ITimelineFileBrowser, but it is null. Nothing changed.");
             }
-        }
-
-        public void createProject(string projectName)
-        {
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
-            {
-                using (MemoryStream memStream = new MemoryStream())
-                {
-                    XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                    xmlWriter.Formatting = Formatting.Indented;
-                    TimelineIndex index = new TimelineIndex();
-                    xmlSaver.saveObject(index, xmlWriter);
-                    xmlWriter.Flush();
-                    memStream.Seek(0, SeekOrigin.Begin);
-                    ionicZip.AddEntry(INDEX_FILE_NAME, memStream);
-                    ionicZip.Save();
-                }
-            }
-            ResourceProvider = new TimelineZipResources(projectName);
         }
 
         public void saveTimeline(Timeline timeline, String filename)
