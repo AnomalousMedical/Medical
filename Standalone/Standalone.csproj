@@ -95,6 +95,7 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
+    <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineReadOnlyZipResources.cs" />
