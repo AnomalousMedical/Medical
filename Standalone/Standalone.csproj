@@ -77,6 +77,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Engine\KeyGenerator\KeyAlgorithm\KeyChecker.cs">
+      <Link>Controller\OSHelper\KeyChecker.cs</Link>
+    </Compile>
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
     <Compile Include="Controller\Camera\CameraMover.cs" />
@@ -94,12 +97,14 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineReadOnlyZipResources.cs" />
     <Compile Include="Controller\TouchController.cs" />
+    <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
@@ -312,6 +317,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\CameraControls\CameraControls.layout" />
+    <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />

@@ -14,7 +14,7 @@ namespace Medical.GUI
         private Widget developerPanel;
         private Widget openSourcePanel;
 
-        public AboutDialog()
+        public AboutDialog(String serialNumber)
             : base("Medical.GUI.AboutDialog.AboutDialog.layout")
         {
             developerPanel = window.findWidget("DeveloperPanel");
@@ -30,7 +30,7 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             StaticText serialNumberText = window.findWidget("SerialNumberText") as StaticText;
-            serialNumberText.Caption = "Serial Number " + UserPermissions.Instance.Id;
+            serialNumberText.Caption = "Serial Number " + serialNumber;
 
             StaticText versionText = window.findWidget("VersionText") as StaticText;
             versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
