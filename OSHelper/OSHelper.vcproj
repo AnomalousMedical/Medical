@@ -161,6 +161,80 @@
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
+		<Configuration
+			Name="PublicRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			ManagedExtensions="0"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib\mswu&quot;;&quot;$(WXWIDGETS_HOME)\include&quot;;&quot;$(WXWIDGETS_HOME)\contrib\include&quot;;&quot;$(HASP_HOME)&quot;;Include"
+				PreprocessorDefinitions="ENABLE_HASP_PROTECTION;WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="2"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="libhasp_windows_92548.lib winspool.lib winmm.lib kernel32.lib user32.lib gdi32.lib gdiplus.lib shell32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib comctl32.lib rpcrt4.lib wsock32.lib wxbase29u.lib wxbase29u_net.lib wxbase29u_xml.lib wxexpat.lib wxjpeg.lib wxmsw29u_adv.lib wxmsw29u_core.lib wxmsw29u_html.lib wxmsw29u_stc.lib wxmsw29u_xrc.lib wxmsw29u_aui.lib wxpng.lib wxregexu.lib wxtiff.lib wxzlib.lib $(NOINHERIT)"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib&quot;;$(HASP_HOME)"
+				GenerateDebugInformation="true"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 		<AssemblyReference
@@ -396,6 +470,14 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="PublicRelease|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

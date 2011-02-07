@@ -109,6 +109,29 @@
 				CommandLine="copy &quot;$(ENGINE_HOME)\Release\cg.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\cg.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\BulletWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\BulletWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Zip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\Zip.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreCWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\OgreCWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreMain.dll&quot; $(OutDir)\OgreMain.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll&quot; $(OutDir)\Plugin_CgProgramManager.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll&quot; $(OutDir)\RenderSystem_Direct3D9.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\MyGUIWrapper.dll&quot; $(OutDir)\MyGUIWrapper.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\SoundWrapper.dll&quot; $(OutDir)\SoundWrapper.dll&#x0D;&#x0A;"
 			/>
 		</Configuration>
+		<Configuration
+			Name="PublicRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="10"
+			CharacterSet="1"
+			ManagedExtensions="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;$(ENGINE_HOME)\Release\cg.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\cg.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\BulletWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\BulletWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Zip.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\Zip.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreCWrapper.dll&quot; &quot;$(SolutionDir)$(ConfigurationName)\OgreCWrapper.dll&quot;&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\OgreMain.dll&quot; $(OutDir)\OgreMain.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\Plugin_CgProgramManager.dll&quot; $(OutDir)\Plugin_CgProgramManager.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\RenderSystem_Direct3D9.dll&quot; $(OutDir)\RenderSystem_Direct3D9.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\MyGUIWrapper.dll&quot; $(OutDir)\MyGUIWrapper.dll&#x0D;&#x0A;copy &quot;$(ENGINE_HOME)\Release\SoundWrapper.dll&quot; $(OutDir)\SoundWrapper.dll&#x0D;&#x0A;"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
