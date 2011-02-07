@@ -15,13 +15,13 @@
             <Property key="Widget_Caption" value="Height"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="178 20 59 20" name="RenderingTab/WidthEdit">
-            <Property key="Widget_Caption" value="1024"/>
+            <Property key="Widget_Caption" value="1280"/>
             <UserString key="AllowFloat" value="False"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="MaxValue" value="4096"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="284 20 59 20" name="RenderingTab/HeightEdit">
-            <Property key="Widget_Caption" value="768"/>
+            <Property key="Widget_Caption" value="1024"/>
             <UserString key="MaxValue" value="4096"/>
             <UserString key="MinValue" value="1"/>
             <UserString key="AllowFloat" value="False"/>

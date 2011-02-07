@@ -23,7 +23,7 @@ namespace Medical.GUI
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
-        private CameraControls cameraControlDialog;
+        //private CameraControls cameraControlDialog;
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
 
@@ -49,7 +49,7 @@ namespace Medical.GUI
             recentDocuments.save();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
-            cameraControlDialog.Dispose();
+            //cameraControlDialog.Dispose();
             quickView.Dispose();
             distortionChooser.Dispose();
             renderDialog.Dispose();
@@ -113,8 +113,8 @@ namespace Medical.GUI
             quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             dialogManager.addManagedDialog(quickView);
 
-            cameraControlDialog = new CameraControls(standaloneController.SceneViewController);
-            dialogManager.addManagedDialog(cameraControlDialog);
+            //cameraControlDialog = new CameraControls(standaloneController.SceneViewController);
+            //dialogManager.addManagedDialog(cameraControlDialog);
 
             windowLayout = new WindowLayout(standaloneController);
             dialogManager.addManagedDialog(windowLayout);
@@ -141,14 +141,23 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
-            taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
+            //taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
-            DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
-            renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
-            taskbar.addItem(renderTaskbarItem);
+            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_FULL_RENDERING))
+            {
+                DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
+                renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
+                taskbar.addItem(renderTaskbarItem);
+            }
+            else
+            {
+                CallbackTaskbarItem renderTaskbarItem = new CallbackTaskbarItem("Render", "RenderIconLarge");
+                renderTaskbarItem.OnClicked += new EventHandler(renderTaskbarItem_OnClicked);
+                taskbar.addItem(renderTaskbarItem);
+            }
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-            if (PlatformConfig.AllowCloneWindows)
+            if (PlatformConfig.AllowCloneWindows && UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 taskbar.addItem(cloneWindow);
             }
@@ -276,6 +285,11 @@ namespace Medical.GUI
         {
             changeActiveFile(null);
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
+        }
+
+        void renderTaskbarItem_OnClicked(object sender, EventArgs e)
+        {
+            renderDialog.render();
         }
 
         void renderTaskbarItem_RightClicked(object sender, EventArgs e)

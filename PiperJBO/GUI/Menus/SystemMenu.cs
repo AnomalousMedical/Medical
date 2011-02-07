@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -64,7 +65,7 @@ namespace Medical.GUI
 
             menu.append(fileMenu);
 
-            if (PlatformConfig.AllowCloneWindows)
+            if (PlatformConfig.AllowCloneWindows && UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 //Utilities Menu
                 NativeMenu utilitiesMenu = menu.createMenu("&Utilities");

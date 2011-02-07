@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    class CallbackTaskbarItem : TaskbarItem
+    public class CallbackTaskbarItem : TaskbarItem
     {
         public event EventHandler OnClicked;
         public event EventHandler OnRightClicked;
