@@ -32,7 +32,7 @@
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="4 168 343 216" name="OpenSourcePanel">
+        <Widget type="Widget" skin="PanelEmpty" position="5 168 343 216" name="OpenSourcePanel">
             <Property key="Widget_Visible" value="false"/>
             <Widget type="StaticText" skin="StaticText" position="0 4 132 13">
                 <Property key="Widget_Caption" value="Open Source Projects"/>
@@ -49,20 +49,29 @@
             <Widget type="StaticText" skin="StaticText" position="5 52 81 13" name="BulletPhysicsLink">
                 <Property key="Widget_Caption" value="Bullet Physics"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 68 24 13" name="OISLink">
-                <Property key="Widget_Caption" value="OIS"/>
-            </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 84 41 13" name="ZZiplibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 68 41 13" name="ZZiplibLink">
                 <Property key="Widget_Caption" value="Zziplib"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 100 25 13" name="ZlibLink">
+            <Widget type="StaticText" skin="StaticText" position="5 84 25 13" name="ZlibLink">
                 <Property key="Widget_Caption" value="Zlib"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 116 55 13" name="FreetypeLink">
+            <Widget type="StaticText" skin="StaticText" position="5 100 55 13" name="FreetypeLink">
                 <Property key="Widget_Caption" value="Freetype"/>
             </Widget>
-            <Widget type="StaticText" skin="StaticText" position="5 132 63 13" name="FreeimageLink">
+            <Widget type="StaticText" skin="StaticText" position="5 116 63 13" name="FreeimageLink">
                 <Property key="Widget_Caption" value="Freeimage"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 132 48 13" name="OpenALLink">
+                <Property key="Widget_Caption" value="OpenAL"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 148 65 13" name="OggVorbisLink">
+                <Property key="Widget_Caption" value="Ogg Vorbis"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 164 67 13" name="wxWidgetsLink">
+                <Property key="Widget_Caption" value="wxWidgets"/>
+            </Widget>
+            <Widget type="StaticText" skin="StaticText" position="5 180 135 13" name="MonoLink">
+                <Property key="Widget_Caption" value="Mono (Some Versions)"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="Separator3" position="1 162 349 2"/>

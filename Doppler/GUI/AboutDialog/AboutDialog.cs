@@ -47,9 +47,6 @@ namespace Medical.GUI
             StaticText bulletText = window.findWidget("BulletPhysicsLink") as StaticText;
             bulletText.MouseButtonClick += new MyGUIEvent(bulletText_MouseButtonClick);
 
-            StaticText oisText = window.findWidget("OISLink") as StaticText;
-            oisText.MouseButtonClick += new MyGUIEvent(oisText_MouseButtonClick);
-
             StaticText ZZiplibText = window.findWidget("ZZiplibLink") as StaticText;
             ZZiplibText.MouseButtonClick += new MyGUIEvent(ZZiplibText_MouseButtonClick);
 
@@ -61,6 +58,38 @@ namespace Medical.GUI
 
             StaticText freeimageText = window.findWidget("FreeimageLink") as StaticText;
             freeimageText.MouseButtonClick += new MyGUIEvent(freeimageText_MouseButtonClick);
+
+            StaticText openALText = window.findWidget("OpenALLink") as StaticText;
+            openALText.MouseButtonClick += new MyGUIEvent(openALText_MouseButtonClick);
+
+            StaticText oggVorbisText = window.findWidget("OggVorbisLink") as StaticText;
+            oggVorbisText.MouseButtonClick += new MyGUIEvent(oggVorbisText_MouseButtonClick);
+
+            StaticText wxWidgetsText = window.findWidget("wxWidgetsLink") as StaticText;
+            wxWidgetsText.MouseButtonClick += new MyGUIEvent(wxWidgetsText_MouseButtonClick);
+
+            StaticText monoText = window.findWidget("MonoLink") as StaticText;
+            monoText.MouseButtonClick += new MyGUIEvent(monoText_MouseButtonClick);
+        }
+
+        void monoText_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.mono-project.com");
+        }
+
+        void wxWidgetsText_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.wxwidgets.org/");
+        }
+
+        void oggVorbisText_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://www.vorbis.com/");
+        }
+
+        void openALText_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://en.wikipedia.org/wiki/OpenAL");
         }
 
         void freeimageText_MouseButtonClick(Widget source, EventArgs e)

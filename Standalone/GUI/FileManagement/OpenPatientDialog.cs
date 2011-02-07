@@ -147,6 +147,16 @@ namespace Medical.GUI
             deleteButton.MouseButtonClick += new MyGUIEvent(deleteButton_MouseButtonClick);
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
+
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            int fileGridWidth = fileDataGrid.Width - 2;
+            fileDataGrid.setColumnWidthAt(0, fileGridWidth / 3);
+            fileDataGrid.setColumnWidthAt(1, fileGridWidth / 3);
+            fileDataGrid.setColumnWidthAt(2, fileGridWidth / 3);
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
