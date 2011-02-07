@@ -117,7 +117,7 @@ namespace Medical
         {
             get
             {
-                return "Dr. Piper's Chair Side Consultation: Doppler";
+                return "Doppler Diagnostic Module by Dr. Mark Piper";
             }
         }
 
