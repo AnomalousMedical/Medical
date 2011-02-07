@@ -58,7 +58,10 @@ namespace Medical
                         determineResourceFiles();
                         controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
-                        controller.GUIManager.addPlugin("Editor.dll");
+                        if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+                        {
+                            controller.GUIManager.addPlugin("Editor.dll");
+                        }
                         controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
                         startupSuceeded = true;
                     }
@@ -102,21 +105,15 @@ namespace Medical
             oneWindow.addPreset(preset);
             windowPresetController.addPresetSet(oneWindow);
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT) ||
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) ||
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
-            {
-                SceneViewWindowPresetSet twoWindows = new SceneViewWindowPresetSet("Two Windows");
-                //twoWindows.Image = Resources.TwoWindowLayout;
-                preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
-                twoWindows.addPreset(preset);
-                preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
-                preset.ParentWindow = "Camera 1";
-                preset.WindowPosition = WindowAlignment.Right;
-                twoWindows.addPreset(preset);
-                windowPresetController.addPresetSet(twoWindows);
-            }
+            SceneViewWindowPresetSet twoWindows = new SceneViewWindowPresetSet("Two Windows");
+            //twoWindows.Image = Resources.TwoWindowLayout;
+            preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            twoWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = WindowAlignment.Right;
+            twoWindows.addPreset(preset);
+            windowPresetController.addPresetSet(twoWindows);
 
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
@@ -193,25 +190,16 @@ namespace Medical
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOMRIBackground", 900, 500, 500, 5, 5);
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBORadiographyBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) ||
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBODentitionProfileBackground", 900, 500, 500, 5, 5);
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                background = new ViewportBackground("SourceBackground", "PiperJBODopplerBackground", 900, 500, 500, 5, 5);
             }
             return background;
         }
@@ -231,7 +219,8 @@ namespace Medical
                 CamerasFile = "/GraphicsCameras.cam";
                 LayersFile = "/GraphicsLayers.lay";
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI))
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 this.addMovementSequenceDirectory("/MRI");
                 this.addMovementSequenceDirectory("/RadiographyCT");
@@ -241,35 +230,15 @@ namespace Medical
                 CamerasFile = "/MRICameras.cam";
                 LayersFile = "/MRILayers.lay";
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                this.addMovementSequenceDirectory("/RadiographyCT");
-                this.addMovementSequenceDirectory("/Clinical");
-                this.addMovementSequenceDirectory("/DentitionProfile");
-                this.addMovementSequenceDirectory("/Doppler");
-                CamerasFile = "/RadiographyCameras.cam";
-                LayersFile = "/RadiographyLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
+            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) || 
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) || 
+                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
                 this.addMovementSequenceDirectory("/Clinical");
                 this.addMovementSequenceDirectory("/DentitionProfile");
                 this.addMovementSequenceDirectory("/Doppler");
                 CamerasFile = "/ClinicalCameras.cam";
                 LayersFile = "/ClinicalLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                this.addMovementSequenceDirectory("/DentitionProfile");
-                this.addMovementSequenceDirectory("/Doppler");
-                CamerasFile = "/DentitionProfileCameras.cam";
-                LayersFile = "/DentitionProfileLayers.lay";
-            }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                this.addMovementSequenceDirectory("/Doppler");
-                CamerasFile = "/DopplerCameras.cam";
-                LayersFile = "/DopplerLayers.lay";
             }
 
             //temp, load different layers file

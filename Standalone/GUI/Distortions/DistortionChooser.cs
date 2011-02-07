@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class DistortionChooser : Dialog
+    public class DistortionChooser : FixedSizeDialog
     {
         private GUIManager guiManager;
 

@@ -77,25 +77,15 @@ namespace Medical.Controller
             {
                 featureLevelString = "Graphics Edition";
             }
-            else if (allowFeature(Features.PIPER_JBO_VERSION_MRI))
+            else if (allowFeature(Features.PIPER_JBO_VERSION_MRI) || allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
-                featureLevelString = "MRI Edition";
+                featureLevelString = "Imaging Edition";
             }
-            else if (allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
-            {
-                featureLevelString = "Radiography and CT Edition";
-            }
-            else if (allowFeature(Features.PIPER_JBO_VERSION_CLINICAL))
+            else if (allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) || 
+                allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) ||
+                allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
                 featureLevelString = "Clinical Edition";
-            }
-            else if (allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE))
-            {
-                featureLevelString = "Dentition and Profile Edition";
-            }
-            else if (allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
-            {
-                featureLevelString = "Doppler Edition";
             }
         }
 
