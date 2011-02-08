@@ -21,6 +21,10 @@ namespace Medical.GUI
             this.dopplerGUI = dopplerGUI;
             this.standaloneController = standaloneController;
 
+            //New Scene
+            Button newScene = widget.findWidget("NewScene") as Button;
+            newScene.MouseButtonClick += new MyGUIEvent(newScene_MouseButtonClick);
+
             //Diagnose
             Button detailedDiagnose = widget.findWidget("DetailedDiagnose") as Button;
             detailedDiagnose.MouseButtonClick += new MyGUIEvent(detailedDiagnose_MouseButtonClick);
@@ -51,6 +55,12 @@ namespace Medical.GUI
             //Quit
             Button quitButton = widget.findWidget("File/Quit") as Button;
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
+        }
+
+        void newScene_MouseButtonClick(Widget source, EventArgs e)
+        {
+            dopplerGUI.openNewScene();
+            this.hide();
         }
 
         void detailedDiagnose_MouseButtonClick(Widget source, EventArgs e)

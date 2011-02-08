@@ -25,6 +25,7 @@ namespace Medical
         private Intro intro;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
+        private ChooseSceneDialog chooseSceneDialog;
 
         public DopplerGUIPlugin()
         {
@@ -33,6 +34,7 @@ namespace Medical
 
         public void Dispose()
         {
+            chooseSceneDialog.Dispose();
             aboutDialog.Dispose();
             appMenu.Dispose();
             options.Dispose();
@@ -61,6 +63,9 @@ namespace Medical
 
         public void createDialogs(DialogManager dialogManager)
         {
+            chooseSceneDialog = new ChooseSceneDialog();
+            chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
+
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
@@ -141,6 +146,16 @@ namespace Medical
         {
             systemMenu = new SystemMenu(menu, this, standaloneController);
             systemMenu.FileMenuEnabled = false;
+        }
+
+        public void openNewScene()
+        {
+            chooseSceneDialog.open(true);
+        }
+
+        void chooseSceneDialog_ChooseScene(object sender, EventArgs e)
+        {
+            standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
         }
 
         public void showOptions()
