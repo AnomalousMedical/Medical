@@ -26,7 +26,7 @@ MAIN_EXE="$DOT_NET_EXECUTABLES/$APP_NAME.exe"
 sudo rm -r "$APP_BUNDLE_NAME"
 
 #Compile native libs
-xcodebuild -project ../OSHelper/OSHelper.xcodeproj -alltargets
+xcodebuild -project OSHelper/OSHelper.xcodeproj -alltargets
 
 #Create the app bundle
 mkdir "$APP_BUNDLE_NAME"
@@ -62,7 +62,7 @@ cp "$DEPENDENCIES_HOME/Ogre/OSXBuild/Dependencies/Cg.framework/Versions/1.0/Cg" 
 cp -r "$MONO_FRAMEWORK_HOME/Mono.framework" "$APP_BUNDLE_NAME/Contents/Frameworks/Mono.framework"
 
 #Copy override
-cp ../override.ini "$APP_BUNDLE_NAME/Contents/Resources"
+cp override.ini "$APP_BUNDLE_NAME/Contents/Resources"
 
 #Finish up
 cd "$START_PATH"
