@@ -19,6 +19,8 @@ namespace Medical.Controller
 
         public abstract String UpdateURL { get; }
 
+        public abstract WindowIcons Icon { get; }
+
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }

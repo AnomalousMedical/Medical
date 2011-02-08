@@ -74,7 +74,7 @@ namespace Medical
             //Engine core
             medicalController = new MedicalController();
             mainWindow = new MainWindow(app.WindowTitle);
-            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow, Medical.Controller.WindowIcons.ICON_SKULL);
+            Medical.Controller.WindowFunctions.setWindowIcon(mainWindow, app.Icon);
             medicalController.initialize(mainWindow, createWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
         }

@@ -180,6 +180,14 @@ namespace Medical
             }
         }
 
+        public override WindowIcons Icon
+        {
+            get
+            {
+                return WindowIcons.ICON_SKULL;
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>

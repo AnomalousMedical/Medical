@@ -3,6 +3,7 @@
 enum WindowIcons
 {
 	ICON_SKULL,
+	ICON_DOPPLER,
 };
 
 #ifdef WINDOWS
@@ -26,6 +27,11 @@ extern "C" _AnomalousExport int WindowFunctions_changeWindowIcon(HWND hwnd, Wind
 		switch(icon)
 		{
 			case ICON_SKULL:
+				hIcon = LoadIcon(module, MAKEINTRESOURCE(IDI_SKULL));
+				break;
+			case ICON_DOPPLER:
+				hIcon = LoadIcon(module, MAKEINTRESOURCE(IDI_DOPPLER));
+				break;
 			default:
 				hIcon = LoadIcon(module, MAKEINTRESOURCE(IDI_SKULL));
 				break;

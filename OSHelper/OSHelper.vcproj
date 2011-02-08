@@ -294,6 +294,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Doppler.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\skull.ico"
 				>
 			</File>

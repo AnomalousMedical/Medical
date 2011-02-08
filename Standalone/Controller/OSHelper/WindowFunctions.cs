@@ -11,6 +11,7 @@ namespace Medical.Controller
     public enum WindowIcons
     {
         ICON_SKULL,
+        ICON_DOPPLER,
     };
 
     public class WindowFunctions
