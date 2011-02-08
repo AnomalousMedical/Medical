@@ -13,6 +13,8 @@ namespace Medical
         StandaloneController controller;
         bool startupSuceeded = false;
 
+        private static String archiveNameFormat = "Doppler{0}.dat";
+
         public override bool OnInit()
         {
             startApplication();
@@ -107,6 +109,19 @@ namespace Medical
             {
                 return WindowIcons.ICON_DOPPLER;
             }
+        }
+
+        public override String PrimaryArchive
+        {
+            get
+            {
+                return String.Format(archiveNameFormat, "");
+            }
+        }
+
+        public override String getPatchArchiveName(int index)
+        {
+            return String.Format(archiveNameFormat, index);
         }
 
         /// <summary>

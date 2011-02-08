@@ -18,6 +18,7 @@ using System.Drawing;
 using MyGUIPlugin;
 using Medical.GUI;
 using SoundPlugin;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -76,7 +77,7 @@ namespace Medical
         /// <param name="mainForm">The form to use for input, or null to use the primary render window.</param>
         /// <param name="messagePump"></param>
         /// <param name="configureWindow"></param>
-        public void initialize(OSWindow mainForm, ConfigureDefaultWindow configureWindow)
+        public void initialize(StandaloneApp app, OSWindow mainForm, ConfigureDefaultWindow configureWindow)
         {
             //Create the log.
             logListener = new LogFileListener();
@@ -93,16 +94,16 @@ namespace Medical
             //Configure the filesystem
             VirtualFileSystem archive = VirtualFileSystem.Instance;
             //Add primary archive
-            archive.addArchive(MedicalConfig.PrimaryArchive);
+            archive.addArchive(app.PrimaryArchive);
 
             //Add any patch archives
             int i = 0;
-            String patchArchive = MedicalConfig.getPatchArchiveName(i);
+            String patchArchive = app.getPatchArchiveName(i);
             while (File.Exists(patchArchive))
             {
                 archive.addArchive(patchArchive);
                 ++i;
-                patchArchive = MedicalConfig.getPatchArchiveName(i);
+                patchArchive = app.getPatchArchiveName(i);
             }
 
             //Add working archive

@@ -27,7 +27,6 @@ namespace Medical
         private static String programDirectory;
 
         private static String sceneDirectory;
-        private static String archiveNameFormat = "PiperJBO{0}.dat";
 
         private static String updateURL;
         private static String anomalousFolder;
@@ -157,19 +156,6 @@ namespace Medical
             }
         }
 #endif
-
-        public static String PrimaryArchive
-        {
-            get
-            {
-                return String.Format(archiveNameFormat, "");
-            }
-        }
-
-        public static String getPatchArchiveName(int index)
-        {
-            return String.Format(archiveNameFormat, index);
-        }
 
         public static String DefaultScene
         {

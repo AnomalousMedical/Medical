@@ -21,6 +21,10 @@ namespace Medical.Controller
 
         public abstract WindowIcons Icon { get; }
 
+        public abstract String PrimaryArchive { get; }
+
+        public abstract String getPatchArchiveName(int index);
+
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }

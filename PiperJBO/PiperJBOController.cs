@@ -14,6 +14,8 @@ namespace Medical
         StandaloneController controller;
         bool startupSuceeded = false;
 
+        private static String archiveNameFormat = "PiperJBO{0}.dat";
+
         public override bool OnInit()
         {
             return startApplication();
@@ -186,6 +188,19 @@ namespace Medical
             {
                 return WindowIcons.ICON_SKULL;
             }
+        }
+
+        public override String PrimaryArchive
+        {
+            get
+            {
+                return String.Format(archiveNameFormat, "");
+            }
+        }
+
+        public override String getPatchArchiveName(int index)
+        {
+            return String.Format(archiveNameFormat, index);
         }
 
         /// <summary>
