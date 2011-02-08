@@ -48,12 +48,15 @@ namespace Medical
             }
             MovementSequenceSet currentSet = controller.SequenceSet;
 
-            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
+            sequenceMenu = Gui.Instance.createWidgetT("PopupMenu", "LargeIconPopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "SequencesMenu") as PopupMenu;
             sequenceMenu.Visible = false;
 
             foreach (MovementSequenceGroup sequenceGroup in currentSet.Groups)
             {
                 MenuItem groupItem = sequenceMenu.addItem(sequenceGroup.Name, MenuItemType.Popup);
+                groupItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
+                groupItem.StaticImage.setItemGroup("Icons");
+                groupItem.StaticImage.setItemName("Icon");
                 //groupItem.Image = Resources.SequenceIconLarge;
                 MenuCtrl groupItemChild = groupItem.createItemChild();
                 foreach (MovementSequenceInfo sequenceInfo in sequenceGroup.Sequences)
@@ -61,6 +64,9 @@ namespace Medical
                     MenuItem sequenceItem = groupItemChild.addItem(sequenceInfo.Name, MenuItemType.Normal);
                     sequenceItem.MouseButtonClick += sequenceItem_Click;
                     sequenceItem.UserObject = sequenceInfo.FileName;
+                    sequenceItem.StaticImage.setItemResource("SequenceToolstrip/Sequence");
+                    sequenceItem.StaticImage.setItemGroup("Icons");
+                    sequenceItem.StaticImage.setItemName("Icon");
                     //if (sequenceInfo.Thumbnail == null)
                     //{
                     //    sequenceItem.Image = Resources.SequenceIconLarge;
