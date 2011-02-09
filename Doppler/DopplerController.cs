@@ -129,7 +129,7 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
-            return new ViewportBackground("SourceBackground", "PiperJBODopplerBackground", 900, 500, 500, 5, 5);
+            return new ViewportBackground("SourceBackground", "DopplerDiagnosticModuleBackground", 900, 500, 500, 5, 5);
         }
     }
 }
