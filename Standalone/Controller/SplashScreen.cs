@@ -68,8 +68,27 @@ namespace Medical.Controller
             //Set Sizes
             mainWidget.setPosition(imageX, imageY);
             mainWidget.setSize(widgetWidth, widgetHeight);
-
+            
             Widget widgetPanel = mainWidget.findWidget("WidgetPanel");
+            int widgetPanelWidth = widgetPanel.Width;
+            int widgetPanelHeight = widgetPanel.Height;
+            float panelRatio = viewWidth / (float)widgetPanelWidth;
+            float ratio2 = viewHeight / (float)widgetPanelHeight;
+            if (ratio2 < panelRatio)
+            {
+                panelRatio = ratio2;
+            }
+            for (uint i = 0; i < widgetPanel.ChildCount; ++i)
+            {
+                Widget widget = widgetPanel.getChildAt(i);
+                if (widget.isUserString("ResizeKeepAspectRatio"))
+                {
+                    widget.setPosition((int)(widget.Left * panelRatio), (int)(widget.Top * panelRatio));
+                    widget.setSize((int)(widget.Width * panelRatio), (int)(widget.Height * panelRatio));
+                }
+            }
+
+            widgetPanel.setPosition(-imageX, imageY);
             widgetPanel.setSize(viewWidth, viewHeight);
 
             ogreWindow.OgreRenderWindow.update();
