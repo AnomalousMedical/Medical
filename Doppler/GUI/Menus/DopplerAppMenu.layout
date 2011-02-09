@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="CustomPanelOnPanel" position="190 155 158 389" layer="Overlapped">
         <Widget type="Button" skin="AppMenuIconButton" position="4 46 151 40" name="DetailedDiagnose">
-            <Property key="Button_ImageResource" value="FileToolstrip/Open"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/DetailedDiagnosis"/>
             <Property key="Widget_Caption" value="Detailed Diagnose"/>
         </Widget>
         <Widget type="Button" skin="AppMenuIconButton" position="4 130 151 40" name="Export">
@@ -33,7 +33,7 @@
         </Widget>
         <Widget type="Widget" skin="Separator1" position="1 215 155 1"/>
         <Widget type="Button" skin="AppMenuIconButton" position="5 88 151 40" name="QuickDiagnose">
-            <Property key="Button_ImageResource" value="FileToolstrip/Open"/>
+            <Property key="Button_ImageResource" value="FileToolstrip/QuickDiagnosis"/>
             <Property key="Widget_Caption" value="Quick Diagnose"/>
         </Widget>
         <Widget type="Button" skin="AppMenuIconButton" position="4 4 151 40" name="NewScene">
