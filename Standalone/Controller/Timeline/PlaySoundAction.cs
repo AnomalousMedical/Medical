@@ -51,6 +51,7 @@ namespace Medical
             if (timelineTime <= EndTime)
             {
                 started(timelineTime, null);
+                source.PlaybackPosition = timelineTime - StartTime;
             }
         }
 
