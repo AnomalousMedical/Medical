@@ -143,6 +143,11 @@ namespace Medical
             sequencer.update(clock);
         }
 
+        public void skipTo(float time)
+        {
+            sequencer.skipTo(time);
+        }
+
         public bool Finished
         {
             get

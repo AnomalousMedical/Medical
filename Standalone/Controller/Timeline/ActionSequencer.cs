@@ -39,6 +39,11 @@ namespace Medical
         float StartTime { get; }
 
         /// <summary>
+        /// The end time of the action.
+        /// </summary>
+        float EndTime { get; }
+
+        /// <summary>
         /// True if the action is finished.
         /// </summary>
         bool Finished { get; }
@@ -135,6 +140,35 @@ namespace Medical
                     action.stopped(currentTime, clock);
                 }
                 activeActions.Clear();
+            }
+        }
+
+        public void skipTo(float time)
+        {
+            Clock clock = new Clock();
+            newActionStartIndex = 0;
+            currentTime = time;
+
+            //Find new active actions for this time
+            T currentAction;
+            for (int i = newActionStartIndex; i < actions.Count; ++i)
+            {
+                currentAction = actions[i];
+                //If the action's start time is less than the current time and it hasn't finished, add it to the active actions.
+                if (currentAction.StartTime <= currentTime)
+                {
+                    ++newActionStartIndex;
+                    if (currentAction.EndTime >= currentTime)
+                    {
+                        activeActions.Add(currentAction);
+                        currentAction.started(currentTime, clock);
+                    }
+                }
+                else
+                {
+                    //Since the list is sorted, we know that any actions after this point are not active so we can stop the scan.
+                    break;
+                }
             }
         }
 

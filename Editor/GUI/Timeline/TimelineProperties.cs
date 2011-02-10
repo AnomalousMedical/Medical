@@ -528,7 +528,7 @@ namespace Medical.GUI
             }
             else if (currentTimeline != null)
             {
-                timelineController.startPlayback(currentTimeline, testActions.StateCheck);
+                timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, testActions.StateCheck);
             }
         }
 

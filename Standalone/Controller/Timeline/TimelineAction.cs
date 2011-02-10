@@ -51,6 +51,14 @@ namespace Medical
 
         public virtual float Duration { get; set; }
 
+        public float EndTime
+        {
+            get
+            {
+                return StartTime + Duration;
+            }
+        }
+
         public abstract bool Finished { get; }
 
         public String TypeName { get; private set; }

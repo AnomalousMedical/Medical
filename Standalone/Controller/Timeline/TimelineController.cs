@@ -80,12 +80,29 @@ namespace Medical
 
         public void startPlayback(Timeline timeline, bool playPrePostActions)
         {
+            startPlayback(timeline, 0.0f, playPrePostActions);
+        }
+
+        public void startPlayback(Timeline timeline, float startTime)
+        {
+            startPlayback(timeline, startTime, true);
+        }
+
+        public void startPlayback(Timeline timeline, float startTime, bool playPrePostActions)
+        {
             if (!updating)
             {
                 this.playPrePostActions = playPrePostActions;
                 activeTimeline = timeline;
                 activeTimeline.TimelineController = this;
-                activeTimeline.start(playPrePostActions);
+                if (startTime == 0.0f)
+                {
+                    activeTimeline.start(playPrePostActions);
+                }
+                else
+                {
+                    activeTimeline.skipTo(startTime);
+                }
                 mainTimer.addFixedUpdateListener(this);
                 updating = true;
                 if (TimelinePlaybackStarted != null)
