@@ -37,6 +37,9 @@ namespace Medical.GUI
         private ShowMenuButton otherActionsMenuButton;
         private PopupMenu otherActionsMenu;
         private MenuItem testActions;
+        private ShowMenuButton analyzeMenuButton;
+        private PopupMenu analyzeMenu;
+
 
         //Dialogs
         private ChangeSceneEditor changeSceneEditor;
@@ -115,6 +118,14 @@ namespace Medical.GUI
             testActions.StateCheck = false;
             testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
             otherActionsMenuButton = new ShowMenuButton(actionsMenuItem, otherActionsMenu);
+
+            //Analyze Menu
+            MenuItem analyzeMenuItem = menuBar.addItem("Analyze");
+            analyzeMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+            analyzeMenu.Visible = false;
+            MenuItem dumpPostActions = analyzeMenu.addItem("Dump PostActions to Log");
+            dumpPostActions.MouseButtonClick += new MyGUIEvent(dumpPostActions_MouseButtonClick);
+            analyzeMenuButton = new ShowMenuButton(analyzeMenuItem, analyzeMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -189,6 +200,7 @@ namespace Medical.GUI
             Gui.Instance.destroyWidget(fileMenu);
             Gui.Instance.destroyWidget(editMenu);
             Gui.Instance.destroyWidget(otherActionsMenu);
+            Gui.Instance.destroyWidget(analyzeMenu);
             base.Dispose();
         }
 
@@ -337,6 +349,7 @@ namespace Medical.GUI
             newProjectDialog.open(true);
             newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             newProjectDialog.ensureVisible();
+            fileMenu.setVisibleSmooth(false);
         }
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
@@ -362,6 +375,7 @@ namespace Medical.GUI
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
         {
+            fileMenu.setVisibleSmooth(false);
             using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
@@ -464,6 +478,7 @@ namespace Medical.GUI
             timelineView.Enabled = enabled;
             fastForwardButton.Enabled = enabled;
             rewindButton.Enabled = enabled;
+            analyzeMenuButton.Enabled = enabled;
         }
 
         #endregion
@@ -527,6 +542,30 @@ namespace Medical.GUI
             finishActionEditor.open(true);
             finishActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             finishActionEditor.ensureVisible();
+        }
+
+        #endregion
+
+        #region AnalyzeMenu
+
+        void dumpPostActions_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Log.Debug("");
+            Log.Debug("");
+            Log.Debug("Dumping Timeline Post Actions");
+            String[] files = timelineController.listResourceFiles("*.tl");
+            foreach(String file in files)
+            {
+                Log.Debug("-----------------------------------------------------------");
+                Timeline tl = timelineController.openTimeline(file);
+                Log.Debug("Dumping post actions for timeline \"{0}\".", tl.SourceFile);
+                tl.dumpPostActionsToLog();
+                analyzeMenu.setVisibleSmooth(false);
+                Log.Debug("-----------------------------------------------------------");
+                Log.Debug("");
+            }
+            Log.Debug("");
+            Log.Debug("");
         }
 
         #endregion

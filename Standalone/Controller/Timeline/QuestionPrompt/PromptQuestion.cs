@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -28,6 +29,15 @@ namespace Medical
         public void removeAnswer(PromptAnswer answer)
         {
             answers.Remove(answer);
+        }
+
+        internal void dumpToLog()
+        {
+            Log.Debug("|- Question: {0}", Text);
+            foreach (PromptAnswer answer in answers)
+            {
+                answer.dumpToLog();
+            }
         }
 
         public String Text { get; set; }

@@ -22,6 +22,8 @@ namespace Medical
 
         public abstract void doAction();
 
+        public abstract void dumpToLog();
+
         public TimelineController TimelineController
         {
             get

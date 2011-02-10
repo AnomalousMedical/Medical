@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -28,6 +29,11 @@ namespace Medical
             {
                 TimelineController._fireMultiTimelineStopEvent();
             }
+        }
+
+        public override void dumpToLog()
+        {
+            Log.Debug("RepeatPreviousPostActions");
         }
 
         #region Saving

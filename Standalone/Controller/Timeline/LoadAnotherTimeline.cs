@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -44,6 +45,11 @@ namespace Medical
             {
                 TimelineController.queueTimeline(TimelineController.openTimeline(TargetTimeline));
             }
+        }
+
+        public override void dumpToLog()
+        {
+            Log.Debug("LoadAnotherTimeline, Timeline = \"{0}\"", TargetTimeline);
         }
 
         private void changeTimelineButton()

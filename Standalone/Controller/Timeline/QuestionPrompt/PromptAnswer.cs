@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -16,6 +17,20 @@ namespace Medical
         public PromptAnswer(String text)
         {
             this.Text = text;
+        }
+
+        internal void dumpToLog()
+        {
+            Log.Debug("|-- Answer: {0}", Text);
+            if (Action != null)
+            {
+                Action.dumpToLog();
+            }
+            else
+            {
+                Log.Debug("|--- No Action Defined");
+            }
+            Log.Debug("|");
         }
 
         public String Text { get; set; }

@@ -31,6 +31,11 @@ namespace Medical
             }
         }
 
+        public void dumpToLog()
+        {
+            Log.Debug("|--- PromptLoadTimelineAction, Timeline {0}", TargetTimeline);
+        }
+
         public String TargetTimeline { get; set; }
 
         #region Saveable Members

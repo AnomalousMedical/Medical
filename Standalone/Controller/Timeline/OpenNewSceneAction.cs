@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -24,6 +25,11 @@ namespace Medical
         public override void doAction()
         {
             TimelineController.openNewScene(Scene);
+        }
+
+        public override void dumpToLog()
+        {
+            Log.Debug("OpenNewSceneAction, Scene = \"{0}\"", Scene);
         }
 
         public String Scene { get; set; }

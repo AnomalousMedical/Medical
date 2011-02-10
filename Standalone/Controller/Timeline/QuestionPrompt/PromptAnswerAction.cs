@@ -9,5 +9,7 @@ namespace Medical
     public interface PromptAnswerAction : Saveable
     {
         void execute(TimelineController timelineController);
+
+        void dumpToLog();
     }
 }

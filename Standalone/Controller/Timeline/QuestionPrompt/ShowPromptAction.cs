@@ -40,6 +40,15 @@ namespace Medical
             }
         }
 
+        public override void dumpToLog()
+        {
+            Log.Debug("| ShowPromptAction");
+            foreach (PromptQuestion question in questions)
+            {
+                question.dumpToLog();
+            }
+        }
+
         public void addQuestion(PromptQuestion question)
         {
             questions.Add(question);

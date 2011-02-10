@@ -103,6 +103,17 @@ namespace Medical
             return copiedActions;
         }
 
+        /// <summary>
+        /// Dump info about the post actions to the log.
+        /// </summary>
+        public void dumpPostActionsToLog()
+        {
+            foreach (TimelineInstantAction action in postActions)
+            {
+                action.dumpToLog();
+            }
+        }
+
         public void start(bool playPreActions)
         {
             sequencer.start();
