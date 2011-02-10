@@ -46,12 +46,12 @@ namespace Medical
             }
         }
 
-        internal void apply()
+        public void apply()
         {
             apply(MedicalConfig.TransparencyChangeMultiplier);
         }
 
-        internal void apply(float multiplier)
+        public void apply(float multiplier)
         {
             List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
@@ -64,7 +64,7 @@ namespace Medical
             }
         }
 
-        internal void timedApply(float time)
+        public void timedApply(float time)
         {
             List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
@@ -77,12 +77,25 @@ namespace Medical
             }
         }
 
-        internal void instantlyApply()
+        public void instantlyApply()
         {
             List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
             foreach (LayerEntry entry in entries)
             {
                 entry.instantlyApply(unvisitedInterfaces);
+            }
+            foreach (TransparencyInterface unvisited in unvisitedInterfaces)
+            {
+                unvisited.CurrentAlpha = 0.0f;
+            }
+        }
+
+        public void instantlyApplyBlendPercent(float percent)
+        {
+            List<TransparencyInterface> unvisitedInterfaces = TransparencyController.getTransparencyList();
+            foreach (LayerEntry entry in entries)
+            {
+                entry.instantlyApplyBlendPercent(unvisitedInterfaces, percent);
             }
             foreach (TransparencyInterface unvisited in unvisitedInterfaces)
             {

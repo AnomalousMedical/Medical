@@ -44,7 +44,22 @@ namespace Medical
         {
             if (timelineTime <= EndTime)
             {
-                started(timelineTime, null);
+                float currentPosition = timelineTime - StartTime;
+                String currentTransparencyState = TransparencyController.ActiveTransparencyState;
+                TransparencyController.ActiveTransparencyState = TransparencyState;
+                float percent = 1.0f;
+                if (Duration != 0.0f)
+                {
+                    percent = currentPosition / Duration;
+                }
+                LayerState.instantlyApplyBlendPercent(percent);
+                LayerState.timedApply(Duration - currentPosition);
+                TransparencyController.ActiveTransparencyState = currentTransparencyState;
+            }
+            else
+            {
+                LayerState.instantlyApply();
+                finished = true;
             }
         }
 

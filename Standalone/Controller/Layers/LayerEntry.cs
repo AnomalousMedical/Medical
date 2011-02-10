@@ -61,6 +61,20 @@ namespace Medical
             }
         }
 
+        public void instantlyApplyBlendPercent(List<TransparencyInterface> unvisitedInterfaces, float percent)
+        {
+            TransparencyGroup group = TransparencyController.getTransparencyGroup(renderGroup);
+            if (group != null)
+            {
+                TransparencyInterface obj = group.getTransparencyObject(transparencyObject);
+                if (obj != null)
+                {
+                    obj.CurrentAlpha += (alphaValue - obj.CurrentAlpha) * percent;
+                    unvisitedInterfaces.Remove(obj);
+                }
+            }
+        }
+
         public RenderGroup RenderGroup
         {
             get
