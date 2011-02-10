@@ -47,6 +47,8 @@ namespace Medical.GUI
         private TimelineIndexEditor timelineIndexEditor;
 
         private Button playButton;
+        private Button rewindButton;
+        private Button fastForwardButton;
 
         private const int START_COLUMN_WIDTH = 100;
 
@@ -67,8 +69,10 @@ namespace Medical.GUI
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
+            MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
+
             //File Menu
-            Button fileButton = window.findWidget("FileButton") as Button;
+            MenuItem fileMenuItem = menuBar.addItem("File");
             fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             fileMenu.Visible = false;
             MenuItem newProject = fileMenu.addItem("New Project");
@@ -84,20 +88,20 @@ namespace Medical.GUI
             saveTimelineItem.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
             saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
             saveTimelineAsItem.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
-            fileMenuButton = new ShowMenuButton(fileButton, fileMenu);
+            fileMenuButton = new ShowMenuButton(fileMenuItem, fileMenu);
 
             //Edit button
-            Button editButton = window.findWidget("EditButton") as Button;
+            MenuItem editMenuItem = menuBar.addItem("Edit");
             editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             editMenu.Visible = false;
             MenuItem copy = editMenu.addItem("Copy");
             copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
             MenuItem paste = editMenu.addItem("Paste");
             paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
-            editMenuButton = new ShowMenuButton(editButton, editMenu);
+            editMenuButton = new ShowMenuButton(editMenuItem, editMenu);
 
             //Other Actions Menu
-            Button otherActionsButton = window.findWidget("OtherActionsButton") as Button;
+            MenuItem actionsMenuItem = menuBar.addItem("Actions");
             otherActionsMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             otherActionsMenu.Visible = false;
             MenuItem editTimelineIndex = otherActionsMenu.addItem("Edit Timeline Index");
@@ -110,7 +114,7 @@ namespace Medical.GUI
             testActions = otherActionsMenu.addItem("Enable Other Actions");
             testActions.StateCheck = false;
             testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
-            otherActionsMenuButton = new ShowMenuButton(otherActionsButton, otherActionsMenu);
+            otherActionsMenuButton = new ShowMenuButton(actionsMenuItem, otherActionsMenu);
            
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -119,6 +123,12 @@ namespace Medical.GUI
             //Play Button
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
+
+            fastForwardButton = window.findWidget("FastForward") as Button;
+            fastForwardButton.MouseButtonClick += new MyGUIEvent(fastForwardButton_MouseButtonClick);
+
+            rewindButton = window.findWidget("Rewind") as Button;
+            rewindButton.MouseButtonClick += new MyGUIEvent(rewindButton_MouseButtonClick);
 
             //Timeline view
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
@@ -452,6 +462,8 @@ namespace Medical.GUI
             editMenuButton.Enabled = enabled;
             playButton.Enabled = enabled;
             timelineView.Enabled = enabled;
+            fastForwardButton.Enabled = enabled;
+            rewindButton.Enabled = enabled;
         }
 
         #endregion
@@ -477,6 +489,7 @@ namespace Medical.GUI
             {
                 copySourceAction = copySaver.copy<TimelineAction>(currentData.Action);
             }
+            editMenu.setVisibleSmooth(false);
         }
 
         #endregion Edit Menu
@@ -520,6 +533,16 @@ namespace Medical.GUI
 
         #region Playback
 
+        void rewindButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineView.MarkerTime = 0.0f;
+        }
+
+        void fastForwardButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineView.MarkerTime += 10.0f;
+        }
+
         void playButton_MouseButtonClick(Widget source, EventArgs e)
         {
             if (timelineController.Playing)
@@ -536,6 +559,8 @@ namespace Medical.GUI
         {
             playButton.Caption = "Play";
             playButton.StaticImage.setItemResource("Timeline/PlayIcon");
+            rewindButton.Enabled = true;
+            fastForwardButton.Enabled = true;
         }
 
         void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
@@ -543,6 +568,8 @@ namespace Medical.GUI
             timelineView.CurrentData = null;
             playButton.Caption = "Stop";
             playButton.StaticImage.setItemResource("Timeline/StopIcon");
+            rewindButton.Enabled = false;
+            fastForwardButton.Enabled = false;
             if (timelineController.ActiveTimeline != currentTimeline)
             {
                 setCurrentTimeline(timelineController.ActiveTimeline);

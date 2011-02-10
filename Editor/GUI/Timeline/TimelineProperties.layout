@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="204 195 923 328" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="204 195 923 353" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
-        <Widget type="Widget" skin="Panel" position="2 2 676 307" align="Stretch">
+        <Widget type="Widget" skin="Panel" position="2 27 676 307" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 277" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="142 0 47 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="63 0 62 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
@@ -22,17 +22,14 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="1 0 40 23" name="FileButton">
-                <Property key="Widget_Caption" value="File"/>
+            <Widget type="Button" skin="Button" position="0 0 62 23" name="Rewind">
+                <Property key="Widget_Caption" value="&lt;&lt;"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="83 0 58 23" name="OtherActionsButton">
-                <Property key="Widget_Caption" value="Actions"/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="42 0 40 23" name="EditButton">
-                <Property key="Widget_Caption" value="Edit"/>
+            <Widget type="Button" skin="Button" position="126 0 62 23" name="FastForward">
+                <Property key="Widget_Caption" value="&gt;&gt;"/>
             </Widget>
         </Widget>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="680 1 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="680 27 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="1 1 66 16" align="HStretch Top" name="PropertiesText">
@@ -50,5 +47,6 @@
                 <Property key="Widget_Caption" value="Remove"/>
             </Widget>
         </Widget>
+        <Widget type="MenuBar" skin="MenuBar" position="1 1 923 25" align="HStretch Top" name="MenuBar"/>
     </Widget>
 </MyGUI>
