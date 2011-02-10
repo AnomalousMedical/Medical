@@ -32,6 +32,7 @@ namespace Medical
         private Timeline activeTimeline;
         private Timeline editingTimeline;
         private Timeline queuedTimeline;
+        private Timeline previousTimeline = null;
         private UpdateTimer mainTimer;
         private StandaloneController standaloneController;
         private bool updating = false;
@@ -116,6 +117,7 @@ namespace Medical
                     TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
                 activeTimeline.stop(playPostActions);
+                previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
                 if (activeTimeline != editingTimeline)
                 {
@@ -139,6 +141,7 @@ namespace Medical
         {
             if (multiTimelinePlaybackInProgress)
             {
+                previousTimeline = null;
                 multiTimelinePlaybackInProgress = false;
                 if (PlaybackStopped != null)
                 {
@@ -371,6 +374,14 @@ namespace Medical
                 {
                     editingTimeline.TimelineController = this;
                 }
+            }
+        }
+
+        public Timeline PreviousTimeline
+        {
+            get
+            {
+                return previousTimeline;
             }
         }
 

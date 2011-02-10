@@ -14,6 +14,7 @@ namespace Medical.GUI
         private Button doNothingButton;
         private Button loadTimelineButton;
         private Button askQuestionButton;
+        private Button repeatActionButton;
 
         private FinishLoadTimelineEditor loadTimelineEditor;
         private QuestionEditor questionEditor;
@@ -36,6 +37,8 @@ namespace Medical.GUI
             actionGroup.addButton(loadTimelineButton);
             askQuestionButton = window.findWidget("AskQuestionRadio") as Button;
             actionGroup.addButton(askQuestionButton);
+            repeatActionButton = window.findWidget("RepeatAction") as Button;
+            actionGroup.addButton(repeatActionButton);
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
@@ -89,6 +92,10 @@ namespace Medical.GUI
                     actionGroup.SelectedButton = askQuestionButton;
                     break;
                 }
+                if (action is RepeatPreviousPostActions)
+                {
+                    actionGroup.SelectedButton = repeatActionButton;
+                }
             }
         }
 
@@ -137,27 +144,20 @@ namespace Medical.GUI
                     MessageBox.show("There is no question currently defined. Please open the question editor and create one.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
             }
+            else if (actionGroup.SelectedButton == repeatActionButton)
+            {
+                currentTimeline.clearPostActions();
+                currentTimeline.addPostAction(new RepeatPreviousPostActions());
+                this.close();
+            }
 
             questionEditor.clear();
         }
 
         void actionGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
-            if (actionGroup.SelectedButton == doNothingButton)
-            {
-                loadTimelineEditor.Enabled = false;
-                questionEditorButton.Enabled = false;
-            }
-            else if (actionGroup.SelectedButton == loadTimelineButton)
-            {
-                loadTimelineEditor.Enabled = true;
-                questionEditorButton.Enabled = false;
-            }
-            else if (actionGroup.SelectedButton == askQuestionButton)
-            {
-                loadTimelineEditor.Enabled = false;
-                questionEditorButton.Enabled = true;
-            }
+            loadTimelineEditor.Enabled = actionGroup.SelectedButton == loadTimelineButton;
+            questionEditorButton.Enabled = actionGroup.SelectedButton == askQuestionButton;
         }
 
         void questionEditorButton_MouseButtonClick(Widget source, EventArgs e)

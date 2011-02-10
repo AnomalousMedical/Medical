@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCX" position="157 188 262 168" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="157 188 262 186" layer="Overlapped">
         <Property key="Widget_Caption" value="Finish Action"/>
         <Widget type="Button" skin="RadioBox" position="4 4 110 15" name="DoNothingRadio">
             <Property key="Widget_Caption" value="Do Nothing"/>
@@ -20,10 +20,10 @@
         <Widget type="Button" skin="Button" position="208 40 51 22" name="ChooseButton">
             <Property key="Widget_Caption" value="Choose"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="4 126 60 21" align="Left Bottom" name="ApplyButton">
+        <Widget type="Button" skin="Button" position="4 144 60 21" align="Left Bottom" name="ApplyButton">
             <Property key="Widget_Caption" value="Apply"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="66 126 60 21" align="Left Bottom" name="CancelButton">
+        <Widget type="Button" skin="Button" position="66 144 60 21" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="48 40 157 22" name="FileText">
@@ -31,6 +31,9 @@
         </Widget>
         <Widget type="Button" skin="Button" position="25 100 140 21" name="QuestionEditorButton">
             <Property key="Widget_Caption" value="Open Question Editor"/>
+        </Widget>
+        <Widget type="Button" skin="RadioBox" position="4 127 162 15" name="RepeatAction">
+            <Property key="Widget_Caption" value="Repeat Previous Action"/>
         </Widget>
     </Widget>
 </MyGUI>

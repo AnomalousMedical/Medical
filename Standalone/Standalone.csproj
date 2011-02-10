@@ -100,6 +100,7 @@
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
+    <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineReadOnlyZipResources.cs" />

@@ -7,39 +7,17 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class TimelineActionEventArgs : EventArgs
-    {
-        public TimelineActionEventArgs(TimelineAction action, int index)
-        {
-            this.Action = action;
-            this.Index = index;
-            this.OldIndex = index;
-        }
-
-        public TimelineActionEventArgs(TimelineAction action, int oldIndex, int newIndex)
-        {
-            this.Action = action;
-            this.Index = newIndex;
-            this.OldIndex = oldIndex;
-        }
-
-        public TimelineAction Action { get; private set; }
-
-        public int Index { get; set; }
-
-        public int OldIndex { get; set; }
-
-        public bool IndexChanged { get { return OldIndex != Index; } }
-    }
-
     public class Timeline : Saveable
     {
+        private static CopySaver copySaver = new CopySaver();
+
         public event EventHandler<TimelineActionEventArgs> ActionAdded;
         public event EventHandler<TimelineActionEventArgs> ActionRemoved;
 
         private List<TimelineInstantAction> preActions = new List<TimelineInstantAction>();
         private List<TimelineInstantAction> postActions = new List<TimelineInstantAction>();
         private ActionSequencer<TimelineAction> sequencer;
+        private int postActionIndex = -1;
 
         public Timeline()
         {
@@ -95,8 +73,15 @@ namespace Medical
 
         public void removePostAction(TimelineInstantAction action)
         {
+            int index = postActions.IndexOf(action);
+            postActions.RemoveAt(index);
+            //Adjust the iteration index backwards if the element being removed is before or on the index.
+            //This way nothing gets skipped.
+            if (index != -1 && index <= postActionIndex)
+            {
+                --postActionIndex;
+            }
             action._setTimeline(null);
-            postActions.Remove(action);
         }
 
         public void clearPostActions()
@@ -106,6 +91,16 @@ namespace Medical
                 action._setTimeline(null);
             }
             postActions.Clear();
+        }
+
+        public List<TimelineInstantAction> duplicatePostActions()
+        {
+            List<TimelineInstantAction> copiedActions = new List<TimelineInstantAction>();
+            foreach (TimelineInstantAction action in postActions)
+            {
+                copiedActions.Add(copySaver.copy<TimelineInstantAction>(action));
+            }
+            return copiedActions;
         }
 
         public void start(bool playPreActions)
@@ -131,9 +126,9 @@ namespace Medical
                 }
                 else
                 {
-                    foreach (TimelineInstantAction action in postActions)
+                    for (postActionIndex = 0; postActionIndex < postActions.Count; ++postActionIndex)
                     {
-                        action.doAction();
+                        postActions[postActionIndex].doAction();
                     }
                 }
             }
@@ -251,5 +246,30 @@ namespace Medical
         }
 
         #endregion
+    }
+
+    public class TimelineActionEventArgs : EventArgs
+    {
+        public TimelineActionEventArgs(TimelineAction action, int index)
+        {
+            this.Action = action;
+            this.Index = index;
+            this.OldIndex = index;
+        }
+
+        public TimelineActionEventArgs(TimelineAction action, int oldIndex, int newIndex)
+        {
+            this.Action = action;
+            this.Index = newIndex;
+            this.OldIndex = oldIndex;
+        }
+
+        public TimelineAction Action { get; private set; }
+
+        public int Index { get; set; }
+
+        public int OldIndex { get; set; }
+
+        public bool IndexChanged { get { return OldIndex != Index; } }
     }
 }

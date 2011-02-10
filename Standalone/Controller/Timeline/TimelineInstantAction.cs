@@ -30,6 +30,14 @@ namespace Medical
             }
         }
 
+        public Timeline Timeline
+        {
+            get
+            {
+                return timeline;
+            }
+        }
+
         #region Saveable Members
 
         protected TimelineInstantAction(LoadInfo info)
