@@ -32,6 +32,20 @@ namespace Medical
             propBehavior = PropSimObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
         }
 
+        public override void skipTo(float timelineTime)
+        {
+            if (timelineTime <= EndTime)
+            {
+                started(timelineTime, null);
+            }
+            else
+            {
+                propBehavior = PropSimObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+                propBehavior.changePosition(endTranslation, endRotation);
+                finished = true;
+            }
+        }
+
         public override void stopped(float timelineTime, Clock clock)
         {
             

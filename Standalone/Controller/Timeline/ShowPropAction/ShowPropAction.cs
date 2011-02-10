@@ -44,6 +44,16 @@ namespace Medical
             sequencer.start();
         }
 
+        public override void skipTo(float timelineTime)
+        {
+            if (timelineTime <= EndTime)
+            {
+                finished = false;
+                makeProp();
+                sequencer.skipTo(timelineTime - StartTime);
+            }
+        }
+
         public override void stopped(float timelineTime, Clock clock)
         {
             destroyProp();

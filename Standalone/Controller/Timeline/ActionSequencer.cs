@@ -20,6 +20,12 @@ namespace Medical
         void started(float timelineTime, Clock clock);
 
         /// <summary>
+        /// Called when the action is starting up because of a skip.
+        /// </summary>
+        /// <param name="timelineTime"></param>
+        void skipTo(float timelineTime);
+
+        /// <summary>
         /// Called when the action is complete.
         /// </summary>
         /// <param name="timelineTime">The current total time for the timeline.</param>
@@ -145,7 +151,6 @@ namespace Medical
 
         public void skipTo(float time)
         {
-            Clock clock = new Clock();
             newActionStartIndex = 0;
             currentTime = time;
 
@@ -158,10 +163,10 @@ namespace Medical
                 if (currentAction.StartTime <= currentTime)
                 {
                     ++newActionStartIndex;
-                    if (currentAction.EndTime >= currentTime)
+                    currentAction.skipTo(currentTime);
+                    if (!currentAction.Finished)
                     {
                         activeActions.Add(currentAction);
-                        currentAction.started(currentTime, clock);
                     }
                 }
                 else

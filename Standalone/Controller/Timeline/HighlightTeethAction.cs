@@ -34,6 +34,14 @@ namespace Medical
             TeethController.HighlightContacts = true;
         }
 
+        public override void skipTo(float timelineTime)
+        {
+            if (timelineTime <= EndTime)
+            {
+                started(timelineTime, null);
+            }
+        }
+
         public override void stopped(float timelineTime, Clock clock)
         {
             TeethController.HighlightContacts = false;

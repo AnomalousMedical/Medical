@@ -46,6 +46,14 @@ namespace Medical
             }
         }
 
+        public override void skipTo(float timelineTime)
+        {
+            if (timelineTime <= EndTime)
+            {
+                started(timelineTime, null);
+            }
+        }
+
         void source_PlaybackFinished(Source source)
         {
             source.PlaybackFinished -= source_PlaybackFinished;

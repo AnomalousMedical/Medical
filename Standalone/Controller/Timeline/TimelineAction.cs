@@ -36,6 +36,8 @@ namespace Medical
 
         public abstract void started(float timelineTime, Clock clock);
 
+        public abstract void skipTo(float timelineTime);
+
         public abstract void stopped(float timelineTime, Clock clock);
 
         public abstract void update(float timelineTime, Clock clock);
