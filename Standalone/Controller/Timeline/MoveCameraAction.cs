@@ -55,11 +55,17 @@ namespace Medical
                     percent = currentTime / Duration;
                 }
                 window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
-                window.setPosition(Translation, LookAt, Duration - currentTime);
+                float time = Duration - currentTime;
+                if (time == 0.0f)
+                {
+                    time = 0.001f;
+                }
+                window.setPosition(Translation, LookAt, time);
             }
             else
             {
                 window.immediatlySetPosition(Translation, LookAt);
+                window.setPosition(Translation, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
             }
         }
 
