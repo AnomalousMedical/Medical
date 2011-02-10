@@ -41,9 +41,25 @@ namespace Medical
 
         public override void skipTo(float timelineTime)
         {
+            MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
             if (timelineTime <= EndTime)
             {
-                started(timelineTime, null);
+                Vector3 translation = window.Translation;
+                Vector3 lookAt = window.LookAt;
+                Vector3 finalTrans = Translation;
+                Vector3 finalLookAt = LookAt;
+                float percent = 1.0f;
+                float currentTime = timelineTime - StartTime;
+                if (Duration != 0.0f)
+                {
+                    percent = currentTime / Duration;
+                }
+                window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
+                window.setPosition(Translation, LookAt, Duration - currentTime);
+            }
+            else
+            {
+                window.immediatlySetPosition(Translation, LookAt);
             }
         }
 

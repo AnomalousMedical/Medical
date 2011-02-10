@@ -119,6 +119,11 @@ namespace Medical.Controller
             cameraMover.setNewPosition(translation, lookAt, duration);
         }
 
+        public void immediatlySetPosition(Vector3 translation, Vector3 lookAt)
+        {
+            cameraMover.immediatlySetPosition(translation, lookAt);
+        }
+
         public override void setAlpha(float alpha)
         {
 
