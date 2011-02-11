@@ -598,6 +598,7 @@ namespace Medical.GUI
             }
             else if (currentTimeline != null)
             {
+                timelineView.CurrentData = null;
                 timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, testActions.StateCheck);
             }
         }
@@ -612,7 +613,6 @@ namespace Medical.GUI
 
         void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
         {
-            timelineView.CurrentData = null;
             playButton.Caption = "Stop";
             playButton.StaticImage.setItemResource("Timeline/StopIcon");
             rewindButton.Enabled = false;
