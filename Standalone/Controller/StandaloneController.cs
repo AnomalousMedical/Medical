@@ -192,6 +192,7 @@ namespace Medical
             PointingHand.createPropDefinition(propFactory);
             Doppler.createPropDefinition(propFactory);
             Syringe.createPropDefinition(propFactory);
+            JVAProp.createPropDefinition(propFactory);
             //Mustache.createPropDefinition(propFactory);
 
             //Timeline

@@ -98,6 +98,7 @@
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
+    <Compile Include="Controller\Props\JVAProp.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
