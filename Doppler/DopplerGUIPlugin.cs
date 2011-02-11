@@ -26,6 +26,7 @@ namespace Medical
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private ChooseSceneDialog chooseSceneDialog;
+        private PredefinedLayersDialog predefinedLayers;
 
         public DopplerGUIPlugin()
         {
@@ -35,6 +36,7 @@ namespace Medical
         public void Dispose()
         {
             chooseSceneDialog.Dispose();
+            predefinedLayers.Dispose();
             aboutDialog.Dispose();
             appMenu.Dispose();
             options.Dispose();
@@ -84,12 +86,16 @@ namespace Medical
             aboutDialog = new AboutDialog(licenseManager.Key);
             dialogManager.addManagedDialog(aboutDialog);
 
+            predefinedLayers = new PredefinedLayersDialog(standaloneController.LayerController);
+            dialogManager.addManagedDialog(predefinedLayers);
+
             intro = new Intro(standaloneController.App.WindowTitle, this);
         }
 
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
+            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
         }
