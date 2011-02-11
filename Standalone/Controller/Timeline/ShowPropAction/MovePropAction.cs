@@ -64,7 +64,14 @@ namespace Medical
 
         public override void editing()
         {
-            
+
+        }
+
+        public override void reverseSides()
+        {
+            Translation = new Vector3(-Translation.x, Translation.y, Translation.z);
+            //Vector3 euler = Rotation.getEuler();
+            //Rotation = new Quaternion(euler.x, -euler.y, euler.z);
         }
 
         public override bool Finished

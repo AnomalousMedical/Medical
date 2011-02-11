@@ -79,6 +79,12 @@ namespace Medical
             lastTime = timelineTime;
         }
 
+        public override void reverseSides()
+        {
+            Translation = new Vector3(-Translation.x, Translation.y, Translation.z);
+            LookAt = new Vector3(-LookAt.x, LookAt.y, LookAt.z);
+        }
+
         public override bool Finished
         {
             get

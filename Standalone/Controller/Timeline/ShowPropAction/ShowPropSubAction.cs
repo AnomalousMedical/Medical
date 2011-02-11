@@ -50,6 +50,11 @@ namespace Medical
 
         }
 
+        public virtual void reverseSides()
+        {
+            
+        }
+
         public virtual float StartTime { get; set; }
 
         public virtual float Duration { get; set; }

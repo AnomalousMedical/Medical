@@ -55,6 +55,11 @@ namespace Medical
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
         }
 
+        public override void reverseSides()
+        {
+            MovementSequence.reverseSides();
+        }
+
         public override void capture()
         {
             MovementSequence sequence = TimelineController.MovementSequenceController.CurrentSequence;

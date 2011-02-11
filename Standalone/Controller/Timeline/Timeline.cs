@@ -159,6 +159,14 @@ namespace Medical
             sequencer.skipTo(time);
         }
 
+        public void reverseSides()
+        {
+            foreach (TimelineAction action in sequencer.Actions)
+            {
+                action.reverseSides();
+            }
+        }
+
         public bool Finished
         {
             get

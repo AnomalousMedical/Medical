@@ -46,6 +46,11 @@ namespace Medical
 
         public virtual void editingCompleted()
         {
+
+        }
+
+        public virtual void reverseSides()
+        {
             
         }
 

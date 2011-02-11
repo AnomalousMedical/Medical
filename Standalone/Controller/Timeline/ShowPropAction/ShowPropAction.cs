@@ -83,6 +83,17 @@ namespace Medical
             destroyProp();
         }
 
+        public override void reverseSides()
+        {
+            Translation = new Vector3(-Translation.x, Translation.y, Translation.z);
+            //Vector3 euler = Rotation.getEuler();
+            //Rotation = new Quaternion(euler.x, -euler.y, euler.z);
+            foreach (ShowPropSubAction subAction in sequencer.Actions)
+            {
+                subAction.reverseSides();
+            }
+        }
+
         public void addSubAction(ShowPropSubAction subAction)
         {
             subAction._setShowProp(this);
