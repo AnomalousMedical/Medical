@@ -26,6 +26,7 @@ namespace Medical.GUI
         //private CameraControls cameraControlDialog;
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
+        private PredefinedLayersDialog predefinedLayers;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
@@ -47,6 +48,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             recentDocuments.save();
+            predefinedLayers.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             //cameraControlDialog.Dispose();
@@ -85,6 +87,9 @@ namespace Medical.GUI
 
             layers = new LayersDialog(standaloneController.LayerController);
             dialogManager.addManagedDialog(layers);
+
+            predefinedLayers = new PredefinedLayersDialog(standaloneController.LayerController);
+            dialogManager.addManagedDialog(predefinedLayers);
 
             //Common
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
@@ -135,6 +140,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
+            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
