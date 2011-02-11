@@ -175,7 +175,7 @@ namespace Medical
                     updateTranslation(currentNormalDirection * currentOrbit + lookAt);
                     camera.LookAt = lookAt;
                 }
-                else if (!velocityMove() && !Gui.Instance.HandledMouseButtons && !Gui.Instance.HandledKeyboardButtons)
+                else if (!velocityMove() && !Gui.Instance.HandledMouseButtons)
                 {
                     mouseMove();
                 }
