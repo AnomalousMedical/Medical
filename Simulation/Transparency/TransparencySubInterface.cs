@@ -21,7 +21,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        TransparencyInterface parentInterface;
+        protected TransparencyInterface parentInterface;
 
         protected override void link()
         {

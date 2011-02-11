@@ -67,6 +67,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <Compile Include="Tools\ToolEvents.cs" />
     <Compile Include="Transparency\TransparencyBlock.cs" />
     <Compile Include="Transparency\TransparencyController.cs" />
+    <Compile Include="Transparency\TransparencyCuller.cs" />
     <Compile Include="Transparency\TransparencyGroup.cs" />
     <Compile Include="Transparency\TransparencyInterface.cs" />
     <Compile Include="Transparency\TransparencyState.cs" />

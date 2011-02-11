@@ -219,6 +219,27 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// This will override the working alpha for the active transparency state.
+        /// </summary>
+        [DoNotCopy]
+        public float OverrideAlpha
+        {
+            get
+            {
+                return transparencyStates[activeTransparencyState].OverrideAlpha;
+            }
+            set
+            {
+                transparencyStates[activeTransparencyState].OverrideAlpha = value;
+            }
+        }
+
+        public void clearOverrideAlpha()
+        {
+            transparencyStates[activeTransparencyState].clearOverrideAlpha();
+        }
+
         public bool DisableOnHidden
         {
             get
