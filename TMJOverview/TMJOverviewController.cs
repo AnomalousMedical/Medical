@@ -46,8 +46,8 @@ namespace Medical
         public bool startApplication()
         {
             this.addMovementSequenceDirectory("/Overview");
-            CamerasFile = "/GraphicsCameras.cam";
-            LayersFile = "/StandaloneLayers.lay";
+            CamerasFile = "/Cameras.cam";
+            LayersFile = "/Layers.lay";
             controller = new StandaloneController(this);
             controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin());
             controller.go(createBackground(), "GUI/TMJOverview/SplashScreen");
