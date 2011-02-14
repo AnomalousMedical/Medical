@@ -225,9 +225,12 @@ namespace Medical
 
         private void destroyProp()
         {
-            simObject.destroy();
-            simObject = null;
-            propFade = null;
+            if (simObject != null)
+            {
+                simObject.destroy();
+                simObject = null;
+                propFade = null;
+            }
         }
 
         #region Saveable

@@ -12,6 +12,7 @@ namespace Medical.Controller
     {
         ICON_SKULL,
         ICON_DOPPLER,
+        ICON_TMJOVERVIEW,
     };
 
     public class WindowFunctions

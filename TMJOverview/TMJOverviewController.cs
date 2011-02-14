@@ -107,7 +107,7 @@ namespace Medical
         {
             get
             {
-                return WindowIcons.ICON_DOPPLER;
+                return WindowIcons.ICON_TMJOVERVIEW;
             }
         }
 
