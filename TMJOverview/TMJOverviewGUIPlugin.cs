@@ -90,7 +90,7 @@ namespace Medical
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
-            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "ManualObject"));
+            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
         }
 

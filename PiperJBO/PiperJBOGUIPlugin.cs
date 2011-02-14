@@ -140,7 +140,7 @@ namespace Medical.GUI
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "ManualObject"));
+            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
