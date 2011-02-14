@@ -9,9 +9,7 @@ namespace Medical.GUI
     class SystemMenu
     {
         private NativeMenu fileMenu;
-        private NativeMenuItem detailedDiagnose;
-        private NativeMenuItem quickDiagnose;
-        private NativeMenuItem export;
+        private NativeMenuItem tmjOverview;
         private NativeMenuItem exit;
 
         private TMJOverviewGUIPlugin guiPlugin;
@@ -25,14 +23,8 @@ namespace Medical.GUI
             //File menu
             fileMenu = menu.createMenu("&File");
 
-            detailedDiagnose = fileMenu.append(CommonMenuItems.AutoAssign, "Detailed Diagnose", "Run the detailed diagnosis.");
-            detailedDiagnose.Select += new NativeMenuEvent(detailedDiagnose_Select);
-
-            quickDiagnose = fileMenu.append(CommonMenuItems.AutoAssign, "Quick Diagnose", "Run the quick diagnosis.");
-            quickDiagnose.Select += new NativeMenuEvent(quickDiagnose_Select);
-
-            export = fileMenu.append(CommonMenuItems.AutoAssign, "Export", "Export the results.");
-            export.Select += new NativeMenuEvent(export_Select);
+            tmjOverview = fileMenu.append(CommonMenuItems.AutoAssign, "Play TMJ Overview", "Play the TMJ Overview.");
+            tmjOverview.Select += new NativeMenuEvent(tmjOverview_Select);
 
             fileMenu.appendSeparator();
 
@@ -56,19 +48,9 @@ namespace Medical.GUI
             menu.append(helpMenu);
         }
 
-        void export_Select(NativeMenuItem item)
+        void tmjOverview_Select(NativeMenuItem item)
         {
-            guiPlugin.export();
-        }
-
-        void quickDiagnose_Select(NativeMenuItem item)
-        {
-            guiPlugin.runQuickDiagnosis();
-        }
-
-        void detailedDiagnose_Select(NativeMenuItem item)
-        {
-            guiPlugin.runDetailedDiagnosis();
+            guiPlugin.runTMJOverview();
         }
 
         void preferences_Select(NativeMenuItem sender)
@@ -90,13 +72,11 @@ namespace Medical.GUI
         {
             get
             {
-                return detailedDiagnose.Enabled;
+                return tmjOverview.Enabled;
             }
             set
             {
-                detailedDiagnose.Enabled = value;
-                quickDiagnose.Enabled = value;
-                export.Enabled = value;
+                tmjOverview.Enabled = value;
             }
         }
 

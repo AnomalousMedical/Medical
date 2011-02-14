@@ -12,29 +12,18 @@ namespace Medical.GUI
 {
     class DopplerAppMenu : PopupContainer, AppMenu
     {
-        private TMJOverviewGUIPlugin dopplerGUI;
+        private TMJOverviewGUIPlugin guiController;
         private StandaloneController standaloneController;
 
-        public DopplerAppMenu(TMJOverviewGUIPlugin dopplerGUI, StandaloneController standaloneController)
+        public DopplerAppMenu(TMJOverviewGUIPlugin guiController, StandaloneController standaloneController)
             :base("Medical.GUI.Menus.TMJAppMenu.layout")
         {
-            this.dopplerGUI = dopplerGUI;
+            this.guiController = guiController;
             this.standaloneController = standaloneController;
 
-            //New Scene
-            Button newScene = widget.findWidget("NewScene") as Button;
-            newScene.MouseButtonClick += new MyGUIEvent(newScene_MouseButtonClick);
-
             //Diagnose
-            Button detailedDiagnose = widget.findWidget("DetailedDiagnose") as Button;
-            detailedDiagnose.MouseButtonClick += new MyGUIEvent(detailedDiagnose_MouseButtonClick);
-
-            Button quickDiagnose = widget.findWidget("QuickDiagnose") as Button;
-            quickDiagnose.MouseButtonClick += new MyGUIEvent(quickDiagnose_MouseButtonClick);
-
-            //Export
-            Button export = widget.findWidget("Export") as Button;
-            export.MouseButtonClick += new MyGUIEvent(export_MouseButtonClick);
+            Button tmjOverview = widget.findWidget("TMJOverview") as Button;
+            tmjOverview.MouseButtonClick += new MyGUIEvent(tmjOverview_MouseButtonClick);
 
             //Options
             Button optionsButton = widget.findWidget("Options") as Button;
@@ -57,27 +46,9 @@ namespace Medical.GUI
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
         }
 
-        void newScene_MouseButtonClick(Widget source, EventArgs e)
+        void tmjOverview_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.openNewScene();
-            this.hide();
-        }
-
-        void detailedDiagnose_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.runDetailedDiagnosis();
-            this.hide();
-        }
-
-        void quickDiagnose_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.runQuickDiagnosis();
-            this.hide();
-        }
-
-        void export_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.export();
+            guiController.runTMJOverview();
             this.hide();
         }
 
@@ -89,13 +60,13 @@ namespace Medical.GUI
 
         void optionsButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.showOptions();
+            guiController.showOptions();
             this.hide();
         }
 
         void aboutButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.showAboutDialog();
+            guiController.showAboutDialog();
             this.hide();
         }
 

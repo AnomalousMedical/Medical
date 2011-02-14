@@ -51,7 +51,7 @@ namespace Medical
             controller = new StandaloneController(this);
             controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin());
             controller.go(createBackground(), "GUI/TMJOverview/SplashScreen");
-            controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
+            controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/TMJ Overview");
             startupSuceeded = true;
             return startupSuceeded;
         }

@@ -17,13 +17,11 @@ namespace Medical
 
         private DopplerAppMenu appMenu;
         private OptionsDialog options;
-        private SavePatientDialog savePatientDialog;
         private QuickView quickView;
         private SequencePlayer sequencePlayer;
         private AboutDialog aboutDialog;
         private Intro intro;
         private SystemMenu systemMenu;
-        private ChooseSceneDialog chooseSceneDialog;
         private PredefinedLayersDialog predefinedLayers;
 
         public TMJOverviewGUIPlugin()
@@ -33,12 +31,10 @@ namespace Medical
 
         public void Dispose()
         {
-            chooseSceneDialog.Dispose();
             predefinedLayers.Dispose();
             aboutDialog.Dispose();
             appMenu.Dispose();
             options.Dispose();
-            savePatientDialog.Dispose();
             quickView.Dispose();
             sequencePlayer.Dispose();
         }
@@ -60,14 +56,8 @@ namespace Medical
 
         public void createDialogs(DialogManager dialogManager)
         {
-            chooseSceneDialog = new ChooseSceneDialog();
-            chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
-
             options = new OptionsDialog();
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
-
-            savePatientDialog = new SavePatientDialog();
-            savePatientDialog.SaveFile += new EventHandler(savePatientDialog_SaveFile);
 
             quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
             dialogManager.addManagedDialog(quickView);
@@ -119,16 +109,6 @@ namespace Medical
             systemMenu.FileMenuEnabled = false;
         }
 
-        public void openNewScene()
-        {
-            chooseSceneDialog.open(true);
-        }
-
-        void chooseSceneDialog_ChooseScene(object sender, EventArgs e)
-        {
-            standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
-        }
-
         public void showOptions()
         {
             options.Visible = true;
@@ -139,31 +119,11 @@ namespace Medical
             aboutDialog.open(true);
         }
 
-        public void export()
-        {
-            if (standaloneController.MedicalStateController.getNumStates() == 0)
-            {
-                MessageBox.show("No information to save. Please run the diagnosis first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
-            }
-            else
-            {
-                savePatientDialog.saveAs();
-            }
-        }
-
-        public void runDetailedDiagnosis()
+        public void runTMJOverview()
         {
             standaloneController.MedicalStateController.clearStates();
             standaloneController.MedicalStateController.createNormalStateFromScene();
-            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
-            standaloneController.TimelineController.startPlayback(tl);
-        }
-
-        public void runQuickDiagnosis()
-        {
-            standaloneController.MedicalStateController.clearStates();
-            standaloneController.MedicalStateController.createNormalStateFromScene();
-            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
+            Timeline tl = standaloneController.TimelineController.openTimeline("Startup.tl");
             standaloneController.TimelineController.startPlayback(tl);
         }
 
@@ -175,13 +135,6 @@ namespace Medical
         void options_VideoOptionsChanged(object sender, EventArgs e)
         {
             standaloneController.recreateMainWindow();
-        }
-
-        private void savePatientDialog_SaveFile(object sender, EventArgs e)
-        {
-            PatientDataFile patientData = savePatientDialog.PatientData;
-            //changeActiveFile(patientData);
-            standaloneController.saveMedicalState(patientData);
         }
 
         void TimelineController_PlaybackStopped(object sender, EventArgs e)

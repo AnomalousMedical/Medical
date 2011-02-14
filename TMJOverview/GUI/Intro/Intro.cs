@@ -36,13 +36,13 @@ namespace Medical.GUI
 
         void quickButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.runQuickDiagnosis();
+            //dopplerGUI.runQuickDiagnosis();
             this.close();
         }
 
         void detailedButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.runDetailedDiagnosis();
+            dopplerGUI.runTMJOverview();
             this.close();
         }
     }
