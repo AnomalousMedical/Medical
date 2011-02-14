@@ -7,6 +7,7 @@ using Engine;
 using System.IO;
 using System.Reflection;
 using Medical.GUI;
+using System.Diagnostics;
 
 namespace Medical.GUI
 {
@@ -24,6 +25,10 @@ namespace Medical.GUI
             //Diagnose
             Button tmjOverview = widget.findWidget("TMJOverview") as Button;
             tmjOverview.MouseButtonClick += new MyGUIEvent(tmjOverview_MouseButtonClick);
+
+            //Website
+            Button website = widget.findWidget("Website") as Button;
+            website.MouseButtonClick += new MyGUIEvent(website_MouseButtonClick);
 
             //Options
             Button optionsButton = widget.findWidget("Options") as Button;
@@ -44,6 +49,12 @@ namespace Medical.GUI
             //Quit
             Button quitButton = widget.findWidget("File/Quit") as Button;
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
+        }
+
+        void website_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Process.Start("http://www.anomalousmedical.com");
+            this.hide();
         }
 
         void tmjOverview_MouseButtonClick(Widget source, EventArgs e)
