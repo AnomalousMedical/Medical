@@ -216,6 +216,8 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Background", "EngineArchive", "Background", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             ViewportBackground background = null;
             if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {

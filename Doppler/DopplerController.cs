@@ -137,6 +137,8 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/Doppler/Background", "EngineArchive", "Background", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             return new ViewportBackground("SourceBackground", "DopplerDiagnosticModuleBackground", 900, 500, 500, 5, 5);
         }
     }

@@ -128,7 +128,7 @@ namespace Medical
         {
             get
             {
-                return "Scenes/TMJDemo.sim.xml";
+                return "Scenes/TMJOverview.sim.xml";
             }
         }
 
@@ -137,7 +137,9 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
-            return new ViewportBackground("SourceBackground", "DopplerDiagnosticModuleBackground", 900, 500, 500, 5, 5);
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/TMJOverview/Background", "EngineArchive", "Background", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
+            return new ViewportBackground("SourceBackground", "TMJOverviewBackground", 900, 500, 500, 5, 5);
         }
     }
 }
