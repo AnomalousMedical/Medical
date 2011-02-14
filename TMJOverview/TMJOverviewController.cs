@@ -45,7 +45,7 @@ namespace Medical
 
         public bool startApplication()
         {
-            this.addMovementSequenceDirectory("/Doppler");
+            this.addMovementSequenceDirectory("/Overview");
             CamerasFile = "/GraphicsCameras.cam";
             LayersFile = "/StandaloneLayers.lay";
             controller = new StandaloneController(this);
