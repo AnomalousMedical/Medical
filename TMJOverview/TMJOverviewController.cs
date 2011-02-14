@@ -8,12 +8,12 @@ using Engine;
 
 namespace Medical
 {
-    class DopplerController : StandaloneApp
+    class TMJOverviewController : StandaloneApp
     {
         StandaloneController controller;
         bool startupSuceeded = false;
 
-        private static String archiveNameFormat = "Doppler{0}.dat";
+        private static String archiveNameFormat = "TMJOverview{0}.dat";
 
         public override bool OnInit()
         {
@@ -49,8 +49,8 @@ namespace Medical
             CamerasFile = "/GraphicsCameras.cam";
             LayersFile = "/StandaloneLayers.lay";
             controller = new StandaloneController(this);
-            controller.GUIManager.addPlugin(new DopplerGUIPlugin());
-            controller.go(createBackground(), "GUI/Doppler/SplashScreen");
+            controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin());
+            controller.go(createBackground(), "GUI/TMJOverview/SplashScreen");
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
             startupSuceeded = true;
             return startupSuceeded;
@@ -83,7 +83,7 @@ namespace Medical
         {
             get
             {
-                return "Doppler Diagnostic Module by Dr. Mark Piper";
+                return "Anomalous Medical TMJ Overview";
             }
         }
 
@@ -91,7 +91,7 @@ namespace Medical
         {
             get
             {
-                return "PiperDoppler";
+                return "TMJOverview";
             }
         }
 
@@ -99,7 +99,7 @@ namespace Medical
         {
             get
             {
-                return "http://www.AnomalousMedical.com/Update/PiperDopplerUpdate.xml";
+                return "http://www.AnomalousMedical.com/Update/TMJOverviewUpdate.xml";
             }
         }
 
@@ -128,7 +128,7 @@ namespace Medical
         {
             get
             {
-                return MedicalConfig.DefaultScene;
+                return "Scenes/TMJDemo.sim.xml";
             }
         }
 

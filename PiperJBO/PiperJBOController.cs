@@ -203,6 +203,14 @@ namespace Medical
             return String.Format(archiveNameFormat, index);
         }
 
+        public override String DefaultScene
+        {
+            get
+            {
+                return MedicalConfig.DefaultScene;
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>

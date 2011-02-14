@@ -228,7 +228,7 @@ namespace Medical
 
             splashScreen.updateStatus(40, "Loading Scene");
 
-            if (changeScene(MedicalConfig.DefaultScene, splashScreen))
+            if (changeScene(app.DefaultScene, splashScreen))
             {
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
