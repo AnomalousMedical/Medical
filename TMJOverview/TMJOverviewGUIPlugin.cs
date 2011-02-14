@@ -23,7 +23,6 @@ namespace Medical
         private AboutDialog aboutDialog;
         private Intro intro;
         private SystemMenu systemMenu;
-        private LicenseManager licenseManager;
         private ChooseSceneDialog chooseSceneDialog;
         private PredefinedLayersDialog predefinedLayers;
 
@@ -57,8 +56,6 @@ namespace Medical
 
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
-
-            licenseManager = new LicenseManager(standaloneController.App.WindowTitle, MedicalConfig.DocRoot + "/license.ini");
         }
 
         public void createDialogs(DialogManager dialogManager)
@@ -78,7 +75,7 @@ namespace Medical
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(sequencePlayer);
 
-            aboutDialog = new AboutDialog(licenseManager.Key);
+            aboutDialog = new AboutDialog("N/A");
             dialogManager.addManagedDialog(aboutDialog);
 
             predefinedLayers = new PredefinedLayersDialog(standaloneController.LayerController);
@@ -96,33 +93,7 @@ namespace Medical
 
         public void finishInitialization()
         {
-            #if ENABLE_HASP_PROTECTION
-            bool keyValid = licenseManager.KeyValid;
-            if (!keyValid)
-            {
-                licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
-                licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-                setInterfaceEnabled(false);
-                licenseManager.showKeyDialog();
-            }
-            #else
-            bool keyValid = true;
-            #endif
-            if (keyValid)
-            {
-                setInterfaceEnabled(false);
-                intro.center();
-                intro.open(true);
-            }
-        }
-
-        void licenseManager_KeyInvalid(object sender, EventArgs e)
-        {
-            standaloneController.closeMainWindow();
-        }
-
-        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
-        {
+            setInterfaceEnabled(false);
             intro.center();
             intro.open(true);
         }
