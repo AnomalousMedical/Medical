@@ -14,7 +14,7 @@
             <Property key="Widget_Caption" value="Welcome to $(PROGRAM_NAME). What would you like to do?"/>
         </Widget>
         <Widget type="Button" skin="Button" position="6 204 324 24" name="SandboxButton">
-            <Property key="Widget_Caption" value="Sandbox Mode"/>
+            <Property key="Widget_Caption" value="Explore Model"/>
         </Widget>
     </Widget>
 </MyGUI>

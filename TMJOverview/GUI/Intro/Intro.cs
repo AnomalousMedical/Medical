@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using System.Diagnostics;
 
 namespace Medical.GUI
 {
     class Intro : Dialog
     {
         TMJOverviewGUIPlugin dopplerGUI;
+        Widget currentSlide;
 
         public Intro(String programName, TMJOverviewGUIPlugin dopplerGUI)
             :base("Medical.GUI.Intro.Intro.layout")
@@ -18,14 +20,56 @@ namespace Medical.GUI
             Edit introText = window.findWidget("IntroText") as Edit;
             introText.Caption = introText.Caption.Replace("$(PROGRAM_NAME)", programName);
 
-            Button detailedButton = window.findWidget("DetailedButton") as Button;
-            detailedButton.MouseButtonClick += new MyGUIEvent(detailedButton_MouseButtonClick);
+            currentSlide = window.findWidget("StartSlide");
+            if (currentSlide != null)
+            {
+                Button nextButton = currentSlide.findWidget(currentSlide.getUserString("NextButton")) as Button;
+                if (nextButton != null)
+                {
+                    nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+                }
+            }
 
-            Button quickButton = window.findWidget("QuickButton") as Button;
-            quickButton.MouseButtonClick += new MyGUIEvent(quickButton_MouseButtonClick);
+            Button anomalousMedicalLink = window.findWidget("AnomalousMedicalLink") as Button;
+            anomalousMedicalLink.MouseButtonClick += new MyGUIEvent(anomalousMedicalLink_MouseButtonClick);
 
-            Button sandboxButton = window.findWidget("SandboxButton") as Button;
-            sandboxButton.MouseButtonClick += new MyGUIEvent(sandboxButton_MouseButtonClick);
+            Button viewTMJOverview = window.findWidget("TMJOverview") as Button;
+            viewTMJOverview.MouseButtonClick += new MyGUIEvent(viewTMJOverview_MouseButtonClick);
+
+            Button exploreModel = window.findWidget("Explore") as Button;
+            exploreModel.MouseButtonClick += new MyGUIEvent(exploreModel_MouseButtonClick);
+        }
+
+        void exploreModel_MouseButtonClick(Widget source, EventArgs e)
+        {
+            dopplerGUI.startSandboxMode();
+            this.close();
+        }
+
+        void viewTMJOverview_MouseButtonClick(Widget source, EventArgs e)
+        {
+            dopplerGUI.runTMJOverview();
+            this.close();
+        }
+
+        void anomalousMedicalLink_MouseButtonClick(Widget source, EventArgs e)
+        {
+            Process.Start("http://www.anomalousmedical.com");
+        }
+
+        void nextButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            currentSlide.Visible = false;
+            currentSlide = window.findWidget(currentSlide.getUserString("NextSlide"));
+            if (currentSlide != null)
+            {
+                currentSlide.Visible = true;
+                Button nextButton = currentSlide.findWidget(currentSlide.getUserString("NextButton")) as Button;
+                if (nextButton != null)
+                {
+                    nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
+                }
+            }
         }
 
         void sandboxButton_MouseButtonClick(Widget source, EventArgs e)

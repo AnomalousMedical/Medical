@@ -83,7 +83,7 @@ namespace Medical
         {
             get
             {
-                return "Anomalous Medical TMJ Overview";
+                return "Anomalous Medical's TMJ Overview";
             }
         }
 
