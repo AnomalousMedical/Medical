@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="Window" position="251 127 506 383" layer="Overlapped">
+    <Widget type="Window" skin="Window" position="251 127 506 500" layer="Overlapped">
         <Widget type="Widget" skin="CustomPanelWhtNoTranspo" position="18 8 469 89" align="HStretch Top">
             <Widget type="Edit" skin="WordWrapSimple" position_real="0 0 1 1" align="Stretch" name="Question">
                 <Property key="Edit_Static" value="true"/>
@@ -9,7 +9,7 @@
                 <Property key="Text_TextAlign" value="Left Top"/>
             </Widget>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="23 106 460 249" align="Stretch" name="Answers">
+        <Widget type="ScrollView" skin="ScrollView" position="23 106 460 366" align="Stretch" name="Answers">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
     </Widget>
