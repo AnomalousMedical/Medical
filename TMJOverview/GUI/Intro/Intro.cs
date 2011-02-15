@@ -35,15 +35,6 @@ namespace Medical.GUI
 
             Button viewTMJOverview = window.findWidget("TMJOverview") as Button;
             viewTMJOverview.MouseButtonClick += new MyGUIEvent(viewTMJOverview_MouseButtonClick);
-
-            Button exploreModel = window.findWidget("Explore") as Button;
-            exploreModel.MouseButtonClick += new MyGUIEvent(exploreModel_MouseButtonClick);
-        }
-
-        void exploreModel_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.startSandboxMode();
-            this.close();
         }
 
         void viewTMJOverview_MouseButtonClick(Widget source, EventArgs e)
@@ -70,24 +61,6 @@ namespace Medical.GUI
                     nextButton.MouseButtonClick += new MyGUIEvent(nextButton_MouseButtonClick);
                 }
             }
-        }
-
-        void sandboxButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.startSandboxMode();
-            this.close();
-        }
-
-        void quickButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            //dopplerGUI.runQuickDiagnosis();
-            this.close();
-        }
-
-        void detailedButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            dopplerGUI.runTMJOverview();
-            this.close();
         }
     }
 }

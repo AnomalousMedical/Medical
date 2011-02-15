@@ -30,6 +30,8 @@ namespace Medical.Controller
         private SimScene currentScene = null;
         private OgreRenderManager rm;
         private SceneViewWindow activeWindow = null;
+        private bool allowRotation = true;
+        private bool allowZoom = true;
 
         private SingleViewCloneWindow cloneWindow = null;
         private List<MDISceneViewWindow> mdiWindows = new List<MDISceneViewWindow>();
@@ -40,8 +42,6 @@ namespace Medical.Controller
             this.mainTimer = mainTimer;
             this.rendererWindow = rendererWindow;
             this.mdiLayout = mdiLayout;
-            AllowRotation = true;
-            AllowZoom = true;
 
             rm = renderManager;
             mdiLayout.ActiveWindowChanged += new EventHandler(mdiLayout_ActiveWindowChanged);
@@ -226,9 +226,45 @@ namespace Medical.Controller
             }
         }
 
-        public bool AllowRotation { get; set; }
+        public bool AllowRotation
+        {
+            get
+            {
+                return allowRotation;
+            }
+            set
+            {
+                allowRotation = value;
+                foreach (SceneViewWindow window in mdiWindows)
+                {
+                    OrbitCameraController orbitCamera = window.CameraMover as OrbitCameraController;
+                    if (orbitCamera != null)
+                    {
+                        orbitCamera.AllowRotation = value;
+                    }
+                }
+            }
+        }
 
-        public bool AllowZoom { get; set; }
+        public bool AllowZoom
+        {
+            get
+            {
+                return allowZoom;
+            }
+            set
+            {
+                allowZoom = value;
+                foreach (SceneViewWindow window in mdiWindows)
+                {
+                    OrbitCameraController orbitCamera = window.CameraMover as OrbitCameraController;
+                    if (orbitCamera != null)
+                    {
+                        orbitCamera.AllowZoom = value;
+                    }
+                }
+            }
+        }
 
         private void mdiLayout_ActiveWindowChanged(object sender, EventArgs e)
         {

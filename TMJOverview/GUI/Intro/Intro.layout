@@ -72,9 +72,6 @@
             <Widget type="Button" skin="ButtonImageBackgroundText" position="134 281 160 160" name="TMJOverview">
                 <Property key="Widget_Caption" value="View TMJ Overview"/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackgroundText" position="351 281 160 160" name="Explore">
-                <Property key="Widget_Caption" value="Explore Model"/>
-            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

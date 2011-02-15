@@ -28,24 +28,10 @@ namespace Medical.GUI
 
             fileMenu.appendSeparator();
 
-            NativeMenuItem preferences = fileMenu.append(CommonMenuItems.Preferences, "Preferences", "Set program configuration.");
-            preferences.Select += new NativeMenuEvent(preferences_Select);
-
             exit = fileMenu.append(CommonMenuItems.Exit, "&Exit", "Exit the program.");
             exit.Select += new NativeMenuEvent(exit_Select);
 
             menu.append(fileMenu);
-
-            //Help Menu
-            NativeMenu helpMenu = menu.createMenu("&Help");
-
-            NativeMenuItem help = helpMenu.append(CommonMenuItems.Help, "Piper's JBO Help", "Open Piper's JBO user manual.");
-            help.Select += new NativeMenuEvent(help_Select);
-
-            NativeMenuItem about = helpMenu.append(CommonMenuItems.About, "About", "About this program.");
-            about.Select += new NativeMenuEvent(about_Select);
-
-            menu.append(helpMenu);
         }
 
         void tmjOverview_Select(NativeMenuItem item)
@@ -53,19 +39,9 @@ namespace Medical.GUI
             guiPlugin.runTMJOverview();
         }
 
-        void preferences_Select(NativeMenuItem sender)
-        {
-            guiPlugin.showOptions();
-        }
-
         void help_Select(NativeMenuItem sender)
         {
             standaloneController.openHelpTopic(0);
-        }
-
-        void about_Select(NativeMenuItem sender)
-        {
-            guiPlugin.showAboutDialog();
         }
 
         public bool FileMenuEnabled

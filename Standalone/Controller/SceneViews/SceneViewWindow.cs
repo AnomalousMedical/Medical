@@ -376,6 +376,14 @@ namespace Medical.Controller
             set;
         }
 
+        public CameraMover CameraMover
+        {
+            get
+            {
+                return cameraMover;
+            }
+        }
+
         void sceneView_FindVisibleObjects(SceneView sceneView)
         {
             if (FindVisibleObjects != null)

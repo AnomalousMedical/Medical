@@ -15,14 +15,8 @@ namespace Medical
         private StandaloneController standaloneController;
         private GUIManager guiManager;
 
-        private DopplerAppMenu appMenu;
-        private OptionsDialog options;
-        private QuickView quickView;
-        private SequencePlayer sequencePlayer;
-        private AboutDialog aboutDialog;
         private Intro intro;
         private SystemMenu systemMenu;
-        private PredefinedLayersDialog predefinedLayers;
 
         public TMJOverviewGUIPlugin()
         {
@@ -31,12 +25,7 @@ namespace Medical
 
         public void Dispose()
         {
-            predefinedLayers.Dispose();
-            aboutDialog.Dispose();
-            appMenu.Dispose();
-            options.Dispose();
-            quickView.Dispose();
-            sequencePlayer.Dispose();
+            
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -47,38 +36,18 @@ namespace Medical
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/TMJOverview/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
 
-            appMenu = new DopplerAppMenu(this, standaloneController);
-            guiManager.setAppMenu(appMenu);
-
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
         }
 
         public void createDialogs(DialogManager dialogManager)
         {
-            options = new OptionsDialog();
-            options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
-
-            quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
-            dialogManager.addManagedDialog(quickView);
-
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(sequencePlayer);
-
-            aboutDialog = new AboutDialog("N/A");
-            dialogManager.addManagedDialog(aboutDialog);
-
-            predefinedLayers = new PredefinedLayersDialog(standaloneController.LayerController);
-            dialogManager.addManagedDialog(predefinedLayers);
-
             intro = new Intro(standaloneController.App.WindowTitle, this);
         }
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
-            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
+
         }
 
         public void finishInitialization()
@@ -109,27 +78,12 @@ namespace Medical
             systemMenu.FileMenuEnabled = false;
         }
 
-        public void showOptions()
-        {
-            options.Visible = true;
-        }
-
-        public void showAboutDialog()
-        {
-            aboutDialog.open(true);
-        }
-
         public void runTMJOverview()
         {
             standaloneController.MedicalStateController.clearStates();
             standaloneController.MedicalStateController.createNormalStateFromScene();
             Timeline tl = standaloneController.TimelineController.openTimeline("Startup.tl");
             standaloneController.TimelineController.startPlayback(tl);
-        }
-
-        public void startSandboxMode()
-        {
-            setInterfaceEnabled(true);
         }
 
         void options_VideoOptionsChanged(object sender, EventArgs e)
@@ -139,8 +93,7 @@ namespace Medical
 
         void TimelineController_PlaybackStopped(object sender, EventArgs e)
         {
-            standaloneController.MedicalStateController.createAndAddState("Doppler Results");
-            setInterfaceEnabled(true);
+            standaloneController.closeMainWindow();
         }
 
         void TimelineController_PlaybackStarted(object sender, EventArgs e)

@@ -52,6 +52,8 @@ namespace Medical
             controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin());
             controller.go(createBackground(), "GUI/TMJOverview/SplashScreen");
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/TMJ Overview");
+            controller.SceneViewController.AllowRotation = false;
+            controller.SceneViewController.AllowZoom = false;
             startupSuceeded = true;
             return startupSuceeded;
         }

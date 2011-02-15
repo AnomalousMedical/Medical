@@ -71,13 +71,13 @@ namespace Medical.GUI
 
         void optionsButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            guiController.showOptions();
+            //guiController.showOptions();
             this.hide();
         }
 
         void aboutButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            guiController.showAboutDialog();
+            //guiController.showAboutDialog();
             this.hide();
         }
 
