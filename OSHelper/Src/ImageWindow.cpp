@@ -92,16 +92,16 @@ void ImageWindow::save(wxEvent& e)
         wxBitmapType format = wxBITMAP_TYPE_JPEG;
         switch (saveFile.GetFilterIndex())
         {
-            case 1:
+            case 0:
                 format = wxBITMAP_TYPE_JPEG;
                 break;
-            case 2:
+            case 1:
                 format = wxBITMAP_TYPE_PNG;
                 break;
-            case 3:
+            case 2:
                 format = wxBITMAP_TYPE_TIF;
                 break;
-            case 4:
+            case 3:
                 format = wxBITMAP_TYPE_BMP;
                 break;
         }
