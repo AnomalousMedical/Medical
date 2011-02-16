@@ -83,7 +83,7 @@ namespace Medical
         {
             get
             {
-                return "Doppler Diagnostic Module by Dr. Mark Piper";
+                return "Doppler Diagnosis by Dr. Mark Piper";
             }
         }
 
