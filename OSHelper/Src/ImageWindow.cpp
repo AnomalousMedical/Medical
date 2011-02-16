@@ -2,6 +2,7 @@
 #include "ImageWindow.h"
 #include "NativeOSWindow.h"
 #include "ImageViewer.h"
+#include "Enums.h"
 
 ImageWindow::ImageWindow(NativeOSWindow* parent, String windowTitle, String imageFile, String homeDir)
 :wxFrame(parent, -1, wxString::FromAscii(windowTitle), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxFRAME_FLOAT_ON_PARENT),
@@ -85,7 +86,7 @@ void ImageWindow::save(wxEvent& e)
 {
     wxFileDialog saveFile(this, "Choose location to save image.", homeDir, "", "JPEG(*.jpg)|*.jpg;|PNG(*.png)|*.png;|TIFF(*.tiff)|*.tiff;|BMP(*.bmp)|*.bmp;", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     {
-        if (saveFile.ShowModal() == wxCANCEL)
+        if (interpretResults(saveFile.ShowModal()) == CANCEL)
         {
             return;
         }
