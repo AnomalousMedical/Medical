@@ -3,74 +3,82 @@
     <Widget type="Window" skin="Window" position="251 142 700 500" layer="Modal">
         <Property key="Widget_Caption" value="Welcome"/>
         <Widget type="Edit" skin="WordWrapSimple" position="5 4 691 22" align="Stretch" name="IntroText">
-            <Property key="Widget_Caption" value="Welcome to $(PROGRAM_NAME). "/>
+            <Property key="Widget_Caption" value="Welcome and thank you!"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="StartSlide">
-            <Property key="Widget_Visible" value="true"/>
+            <Property key="Widget_Visible" value="false"/>
             <UserString key="NextButton" value="StartNext"/>
             <UserString key="NextSlide" value="AnatomySlide"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="6 9 689 51">
-                <Property key="Widget_Caption" value="Thank you for downloading the TMJ Overview program by Anomalous Medical. This program will provide a quick overview of the TMJ and allow you to view a simplified version of our head anatomy. Please take a moment to learn more about our products and visit our website at www.anomalousmedical.com."/>
+            <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
+                <Property key="Widget_Caption" value="You have installed Anomalous Medical&apos;s TMJ Overview, created and supervised under the professional guidance of Dr. Mark Piper DMD, MD. This module will provide a quick overview of the Temporomandibular joint and the Piper Joint Classification system developed by Dr. Mark Piper. Please take a minute to see some of the features of our other paid programs."/>
             </Widget>
-            <Widget type="Button" skin="Button" position="618 421 64 23" name="StartNext">
+            <Widget type="Button" skin="Button" position="630 425 65 24" name="StartNext">
                 <Property key="Widget_Caption" value="Next"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="125 3 450 450">
+                <Property key="Image_Resource" value="NagPage1"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="AnatomySlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextSlide" value="ViewSlide"/>
             <UserString key="NextButton" value="AnatomyNext"/>
-            <Widget type="Button" skin="Button" position="620 406 68 31" name="AnatomyNext">
+            <Widget type="Button" skin="Button" position="630 425 65 24" name="AnatomyNext">
                 <Property key="Widget_Caption" value="Next"/>
             </Widget>
-            <Widget type="Edit" skin="WordWrapSimple" position="9 10 644 44">
-                <Property key="Widget_Caption" value="  More anatomy. See muscles, nerves and other anatomical structures not present in this program."/>
+            <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
+                <Property key="Widget_Caption" value="This module has limited anatomy. However, our paid programs offer much more including muscles, skin and nerves. These anatomical structures can be hidden to see what is underneath"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="44 190 611 226">
+                <Property key="Image_Resource" value="NagPage2"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="ViewSlide">
-            <Property key="Widget_Visible" value="false"/>
-            <UserString key="NextSlide" value="InfoSlide"/>
-            <UserString key="NextButton" value="ViewNext"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="12 15 670 46">
-                <Property key="Widget_Caption" value="More view options. Change our layering to see the anatomy the way you want instead of just predefined options."/>
-            </Widget>
-            <Widget type="Button" skin="Button" position="590 403 81 34" name="ViewNext">
-                <Property key="Widget_Caption" value="Next"/>
-            </Widget>
-        </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="InfoSlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="GenderSlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextSlide" value="DeformitiesSlide"/>
             <UserString key="NextButton" value="InfoNext"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="10 11 622 56">
-                <Property key="Widget_Caption" value="More information. We offer expert modules that contain information about how to do procedures and other useful information."/>
+            <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
+                <Property key="Widget_Caption" value="Our other modules feature both male and female anatomy."/>
             </Widget>
-            <Widget type="Button" skin="Button" position="597 412 79 26" name="InfoNext">
+            <Widget type="Button" skin="Button" position="630 425 65 24" name="InfoNext">
                 <Property key="Widget_Caption" value="Next"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="25 144 650 278">
+                <Property key="Image_Resource" value="NagPage3"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="DeformitiesSlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextButton" value="DeformitiesNext"/>
             <UserString key="NextSlide" value="FinalSlide"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="21 10 554 68">
-                <Property key="Widget_Caption" value="More Control. Modify the model to show the deformities you are interested in."/>
+            <Widget type="Edit" skin="WordWrapSimple" position="21 8 658 65">
+                <Property key="Widget_Caption" value="This model only allows the simulation of a normal bite. Our other modules allow the model to be changed to visualize exact distortions and their effect on the bite."/>
             </Widget>
-            <Widget type="Button" skin="Button" position="603 407 71 30" name="DeformitiesNext">
+            <Widget type="Button" skin="Button" position="630 425 65 24" name="DeformitiesNext">
                 <Property key="Widget_Caption" value="Next"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="37 170 625 250">
+                <Property key="Image_Resource" value="NagPage4"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="FinalSlide">
-            <Property key="Widget_Visible" value="false"/>
+            <Property key="Widget_Visible" value="true"/>
             <Widget type="Edit" skin="WordWrapSimple" position="19 240 662 44">
-                <Property key="Widget_Caption" value="Thank you for your patience. You can now continue using Anomalous Medical&apos;s TMJ Overview. What would you like to do?"/>
+                <Property key="Widget_Caption" value="Thank you for your patience. You can now continue using Anomalous Medical&apos;s TMJ Overview."/>
             </Widget>
             <Widget type="Edit" skin="WordWrapSimple" position="19 6 661 21">
                 <Property key="Widget_Caption" value="For more information please visit our website by clicking the button below."/>
             </Widget>
-            <Widget type="Button" skin="ButtonImageBackground" position="35 38 623 185" name="AnomalousMedicalLink"/>
-            <Widget type="Button" skin="ButtonImageBackgroundText" position="134 281 160 160" name="TMJOverview">
+            <Widget type="Button" skin="ButtonImageBackground" position="34 38 630 185" name="AnomalousMedicalLink">
+                <Widget type="StaticImage" skin="StaticImage" position="1 7 628 168">
+                    <Property key="Image_Resource" value="AnomalousLogo"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="ButtonImageBackgroundText" position="270 281 160 160" name="TMJOverview">
                 <Property key="Widget_Caption" value="View TMJ Overview"/>
+                <Widget type="StaticImage" skin="StaticImage" position="5 -5 150 150">
+                    <Property key="Image_Resource" value="NagPage1"/>
+                </Widget>
             </Widget>
         </Widget>
     </Widget>
