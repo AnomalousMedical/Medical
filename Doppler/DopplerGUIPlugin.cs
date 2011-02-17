@@ -60,7 +60,7 @@ namespace Medical
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
-            licenseManager = new LicenseManager(standaloneController.App.WindowTitle, MedicalConfig.DocRoot + "/license.ini");
+            licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.ini");
         }
 
         public void createDialogs(DialogManager dialogManager)
