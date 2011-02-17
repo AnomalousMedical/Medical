@@ -6,7 +6,7 @@
             <Property key="Widget_Caption" value="Welcome and thank you!"/>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="StartSlide">
-            <Property key="Widget_Visible" value="false"/>
+            <Property key="Widget_Visible" value="true"/>
             <UserString key="NextButton" value="StartNext"/>
             <UserString key="NextSlide" value="AnatomySlide"/>
             <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
@@ -62,7 +62,7 @@
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="FinalSlide">
-            <Property key="Widget_Visible" value="true"/>
+            <Property key="Widget_Visible" value="false"/>
             <Widget type="Edit" skin="WordWrapSimple" position="19 240 662 44">
                 <Property key="Widget_Caption" value="Thank you for your patience. You can now continue using Anomalous Medical&apos;s TMJ Overview."/>
             </Widget>
