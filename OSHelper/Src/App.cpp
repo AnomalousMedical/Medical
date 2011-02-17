@@ -2,9 +2,14 @@
 #include "App.h"
 #include <wx/filesys.h>
 
+void emptyAssertHandler(const wxString &file, int line, const wxString &func, const wxString &cond, const wxString &msg)
+{
+		//Do Nothing
+}
+
 App::App(void)
 {
-	wxDISABLE_DEBUG_SUPPORT();
+	wxSetAssertHandler(&emptyAssertHandler);
 }
 
 App::~App(void)
