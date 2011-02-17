@@ -4,6 +4,7 @@
 
 App::App(void)
 {
+	wxDISABLE_DEBUG_SUPPORT();
 }
 
 App::~App(void)
