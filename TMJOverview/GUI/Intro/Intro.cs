@@ -9,16 +9,13 @@ namespace Medical.GUI
 {
     class Intro : Dialog
     {
-        TMJOverviewGUIPlugin dopplerGUI;
+        TMJOverviewGUIPlugin tmjOverviewGUI;
         Widget currentSlide;
 
-        public Intro(String programName, TMJOverviewGUIPlugin dopplerGUI)
+        public Intro(String programName, TMJOverviewGUIPlugin tmjOverviewGUI)
             :base("Medical.GUI.Intro.Intro.layout")
         {
-            this.dopplerGUI = dopplerGUI;
-
-            Edit introText = window.findWidget("IntroText") as Edit;
-            introText.Caption = introText.Caption.Replace("$(PROGRAM_NAME)", programName);
+            this.tmjOverviewGUI = tmjOverviewGUI;
 
             currentSlide = window.findWidget("StartSlide");
             if (currentSlide != null)
@@ -39,7 +36,7 @@ namespace Medical.GUI
 
         void viewTMJOverview_MouseButtonClick(Widget source, EventArgs e)
         {
-            dopplerGUI.runTMJOverview();
+            tmjOverviewGUI.runTMJOverview();
             this.close();
         }
 

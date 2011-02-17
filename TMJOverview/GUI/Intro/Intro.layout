@@ -1,15 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="Window" position="251 142 700 500" layer="Modal">
+    <Widget type="Window" skin="Window" position="251 142 700 474" layer="Modal">
         <Property key="Widget_Caption" value="Welcome"/>
-        <Widget type="Edit" skin="WordWrapSimple" position="5 4 691 22" align="Stretch" name="IntroText">
-            <Property key="Widget_Caption" value="Welcome and thank you!"/>
-        </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="StartSlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="StartSlide">
             <Property key="Widget_Visible" value="true"/>
             <UserString key="NextButton" value="StartNext"/>
             <UserString key="NextSlide" value="AnatomySlide"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
+            <Widget type="Edit" skin="WordWrapSimple" position="21 10 658 65">
                 <Property key="Widget_Caption" value="You have installed Anomalous Medical&apos;s TMJ Overview, created and supervised under the professional guidance of Dr. Mark Piper DMD, MD. This module will provide a quick overview of the Temporomandibular joint and the Piper Joint Classification system developed by Dr. Mark Piper. Please take a minute to see some of the features of our other paid programs."/>
             </Widget>
             <Widget type="Button" skin="Button" position="630 425 65 24" name="StartNext">
@@ -19,7 +16,7 @@
                 <Property key="Image_Resource" value="NagPage1"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="AnatomySlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="AnatomySlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextSlide" value="GenderSlide"/>
             <UserString key="NextButton" value="AnatomyNext"/>
@@ -36,11 +33,11 @@
                 <Property key="Image_Resource" value="NagPage2a"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="GenderSlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="GenderSlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextSlide" value="DeformitiesSlide"/>
             <UserString key="NextButton" value="InfoNext"/>
-            <Widget type="Edit" skin="WordWrapSimple" position="21 9 658 65">
+            <Widget type="Edit" skin="WordWrapSimple" position="22 9 658 65">
                 <Property key="Widget_Caption" value="Our other modules feature both male and female anatomy."/>
             </Widget>
             <Widget type="Button" skin="Button" position="630 425 65 24" name="InfoNext">
@@ -48,9 +45,10 @@
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="16 36 667 405">
                 <Property key="Image_Resource" value="NagPage3"/>
+                <Property key="Widget_NeedMouse" value="false"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="DeformitiesSlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="DeformitiesSlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextButton" value="DeformitiesNext"/>
             <UserString key="NextSlide" value="FinalSlide"/>
@@ -64,7 +62,7 @@
                 <Property key="Image_Resource" value="NagPage4"/>
             </Widget>
         </Widget>
-        <Widget type="Widget" skin="PanelEmpty" position="0 27 700 454" name="FinalSlide">
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="FinalSlide">
             <Property key="Widget_Visible" value="false"/>
             <Widget type="Edit" skin="WordWrapSimple" position="19 240 662 44">
                 <Property key="Widget_Caption" value="Thank you for your patience. You can now continue using Anomalous Medical&apos;s TMJ Overview."/>
