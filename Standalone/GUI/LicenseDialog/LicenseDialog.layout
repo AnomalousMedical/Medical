@@ -3,7 +3,7 @@
     <Widget type="Window" skin="Window" position="338 250 479 162" layer="Back">
         <Widget type="Edit" skin="WordWrapSimple" position="3 5 474 51" name="Prompt">
             <Property key="Edit_Static" value="true"/>
-            <Property key="Widget_Caption" value="Please enter your License Key for $(PROGRAM_NAME). Please keep your key in a safe place and do not share it with others. Keys are case sensitive, so it is reccomended you turn on Caps Lock."/>
+            <Property key="Widget_Caption" value="Please enter your License Key for $(PROGRAM_NAME). Please keep your key in a safe place and do not share it with others. Keys are case sensitive, so it is reccomended you turn on Caps Lock. Also be sure to type the dashes."/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="4 59 28 15">
             <Property key="Widget_Caption" value="Key"/>
