@@ -76,7 +76,7 @@ namespace Medical
 
         public override void addHelpDocuments(HtmlHelpController helpController)
         {
-
+            helpController.AddBook("Doc/DopplerDiagnosisManual.htb");
         }
 
         public override string WindowTitle
