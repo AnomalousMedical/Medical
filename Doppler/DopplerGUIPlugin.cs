@@ -198,7 +198,7 @@ namespace Medical
         {
             standaloneController.MedicalStateController.clearStates();
             standaloneController.MedicalStateController.createNormalStateFromScene();
-            Timeline tl = standaloneController.TimelineController.openTimeline("A Startup.tl");
+            Timeline tl = standaloneController.TimelineController.openTimeline("Quick Doppler Start.tl");
             standaloneController.TimelineController.startPlayback(tl);
         }
 
