@@ -51,7 +51,7 @@
         <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="DeformitiesSlide">
             <Property key="Widget_Visible" value="false"/>
             <UserString key="NextButton" value="DeformitiesNext"/>
-            <UserString key="NextSlide" value="FinalSlide"/>
+            <UserString key="NextSlide" value="InClinic"/>
             <Widget type="Edit" skin="WordWrapSimple" position="21 8 658 65">
                 <Property key="Widget_Caption" value="This model only allows the simulation of a normal bite. Our other modules allow the model to be changed to visualize exact distortions and their effect on the bite."/>
             </Widget>
@@ -60,6 +60,20 @@
             </Widget>
             <Widget type="StaticImage" skin="StaticImage" position="37 76 625 335">
                 <Property key="Image_Resource" value="NagPage4"/>
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="InClinic">
+            <Property key="Widget_Visible" value="false"/>
+            <UserString key="NextButton" value="InClinicNext"/>
+            <UserString key="NextSlide" value="FinalSlide"/>
+            <Widget type="Edit" skin="WordWrapSimple" position="21 8 658 65">
+                <Property key="Widget_Caption" value="Set your practice apart by integrating our software into your daily workflow. Patients understand concepts quicker when they see them in our software, which saves you time and increases case acceptance."/>
+            </Widget>
+            <Widget type="Button" skin="Button" position="630 425 65 24" name="InClinicNext">
+                <Property key="Widget_Caption" value="Next"/>
+            </Widget>
+            <Widget type="StaticImage" skin="StaticImage" position="9 64 683 244">
+                <Property key="Image_Resource" value="NagPage5"/>
             </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="0 0 700 454" name="FinalSlide">
