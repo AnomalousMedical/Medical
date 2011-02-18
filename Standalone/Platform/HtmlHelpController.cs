@@ -10,9 +10,14 @@ namespace Medical
     {
         private IntPtr nativePtr;
 
-        public HtmlHelpController()
+        public HtmlHelpController(NativeOSWindow parent)
         {
-            nativePtr = HtmlHelpController_new();
+            IntPtr windowPtr = IntPtr.Zero;
+            if (parent != null)
+            {
+                windowPtr = parent._NativePtr;
+            }
+            nativePtr = HtmlHelpController_new(windowPtr);
         }
 
         public void Dispose()
@@ -34,7 +39,7 @@ namespace Medical
 #region PInvoke
 
         [DllImport("OSHelper")]
-        private static extern IntPtr HtmlHelpController_new();
+        private static extern IntPtr HtmlHelpController_new(IntPtr parentWindow);
 
         [DllImport("OSHelper")]
         private static extern void HtmlHelpController_delete(IntPtr controller);

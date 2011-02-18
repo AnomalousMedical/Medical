@@ -5,7 +5,7 @@
 class HtmlHelpController
 {
 public:
-	HtmlHelpController(void);
+	HtmlHelpController(wxWindow* parentWindow);
 
 	virtual ~HtmlHelpController(void);
 

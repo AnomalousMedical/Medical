@@ -1,7 +1,8 @@
 #include "StdAfx.h"
 #include "HtmlHelpController.h"
 
-HtmlHelpController::HtmlHelpController(void)
+HtmlHelpController::HtmlHelpController(wxWindow* parentWindow)
+:helpController(wxHF_DEFAULT_STYLE, parentWindow)
 {
 }
 
@@ -20,9 +21,9 @@ void HtmlHelpController::Display(int index)
 }
 
 //PInvoke
-extern "C" _AnomalousExport HtmlHelpController* HtmlHelpController_new(void)
+extern "C" _AnomalousExport HtmlHelpController* HtmlHelpController_new(wxWindow* parentWindow)
 {
-	return new HtmlHelpController();
+	return new HtmlHelpController(parentWindow);
 }
 
 extern "C" _AnomalousExport void HtmlHelpController_delete(HtmlHelpController* controller)

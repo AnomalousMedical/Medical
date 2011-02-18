@@ -112,7 +112,7 @@ namespace Medical
             splashScreen.updateStatus(10, "Initializing Core");
 
             //Help
-            htmlHelpController = new HtmlHelpController();
+            htmlHelpController = new HtmlHelpController(mainWindow);
             app.addHelpDocuments(htmlHelpController);
 
             //Setup MyGUI listeners
