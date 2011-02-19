@@ -10,7 +10,7 @@
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="23 106 460 366" align="Stretch" name="Answers">
-            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="ScrollView_CanvasAlign" value="HCenter Top"/>
         </Widget>
     </Widget>
 </MyGUI>

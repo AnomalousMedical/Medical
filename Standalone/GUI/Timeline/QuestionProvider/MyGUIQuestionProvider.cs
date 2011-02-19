@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class MyGUIQuestionProvider : Dialog, IQuestionProvider
+    class MyGUIQuestionProvider : Dialog, IQuestionProvider, OSWindowListener
     {
         private ScrollView answerScroll;
         private Edit questionEdit;
@@ -23,6 +24,8 @@ namespace Medical.GUI
             answerScroll = window.findWidget("Answers") as ScrollView;
             questionEdit = window.findWidget("Question") as Edit;
             questionEdit.Font = "font_DejaVuSans.Large_Question";
+
+            PluginManager.Instance.RendererPlugin.PrimaryWindow.Handle.addListener(this);
         }
 
         public override void Dispose()
@@ -79,5 +82,37 @@ namespace Medical.GUI
             window.setVisibleSmooth(false);
             answerSelectedCallback = null;
         }
+
+        #region OSWindowListener Members
+
+        public void closed(OSWindow window)
+        {
+            
+        }
+
+        public void closing(OSWindow window)
+        {
+            
+        }
+
+        public void focusChanged(OSWindow window)
+        {
+            
+        }
+
+        public void moved(OSWindow window)
+        {
+            
+        }
+
+        public void resized(OSWindow window)
+        {
+            if (Visible)
+            {
+                center();
+            }
+        }
+
+        #endregion
     }
 }
