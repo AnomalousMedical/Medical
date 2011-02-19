@@ -15,7 +15,7 @@ namespace Medical.GUI
     class TimelineProperties : Dialog
     {
         private const String PROJECT_EXTENSION = ".tlp";
-        private const String PROJECT_WILDCARD = "Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix";
+        private const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix)|*.tlp;*.tix|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix";
 
         private Timeline currentTimeline;
         private TimelineController timelineController;
@@ -61,7 +61,7 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController, EditorGUIPlugin editorGUI)
+        public TimelineProperties(TimelineController timelineController, EditorGUIPlugin editorGUI, DialogManager dialogManager)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelineController = timelineController;
@@ -161,13 +161,19 @@ namespace Medical.GUI
 
             //Dialogs
             changeSceneEditor = new ChangeSceneEditor();
+            
             newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
+
             fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
             timelineController.FileBrowser = fileBrowserDialog;
+            dialogManager.addManagedDialog(fileBrowserDialog);
+
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
+
             finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
+
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 

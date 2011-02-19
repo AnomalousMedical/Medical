@@ -46,6 +46,12 @@ namespace Medical.GUI
             this.open(true);
         }
 
+        public override void deserialize(Engine.ConfigFile configFile)
+        {
+            base.deserialize(configFile);
+            window_WindowChangedCoord(window, EventArgs.Empty);
+        }
+
         protected override void onShown(EventArgs args)
         {
             if (callback == null)

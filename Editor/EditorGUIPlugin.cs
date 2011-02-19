@@ -40,7 +40,7 @@ namespace Medical
             propTimeline = new PropTimeline();
             dialogManager.addManagedDialog(propTimeline);
 
-            timelineProperties = new TimelineProperties(standaloneController.TimelineController, this);
+            timelineProperties = new TimelineProperties(standaloneController.TimelineController, this, dialogManager);
             dialogManager.addManagedDialog(timelineProperties);
 
             advancedLayerControl = new AdvancedLayerControl();
