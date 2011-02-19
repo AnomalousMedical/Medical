@@ -6,6 +6,7 @@ using Engine.Platform;
 using Engine;
 using Engine.Saving;
 using Medical.Controller;
+using Logging;
 
 namespace Medical
 {
@@ -36,36 +37,47 @@ namespace Medical
 
         public override void started(float timelineTime, Clock clock)
         {
-            TimelineController.SceneViewController.findWindow(CameraName).setPosition(Translation, LookAt, Duration);
+            MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
+            if (window != null)
+            {
+                window.setPosition(Translation, LookAt, Duration);
+            }
+            else
+            {
+                Log.Warning("Window {0} not found. Could not do MoveCameraAction.", CameraName);
+            }
         }
 
         public override void skipTo(float timelineTime)
         {
             MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
-            if (timelineTime <= EndTime)
+            if (window != null)
             {
-                Vector3 translation = window.Translation;
-                Vector3 lookAt = window.LookAt;
-                Vector3 finalTrans = Translation;
-                Vector3 finalLookAt = LookAt;
-                float percent = 1.0f;
-                float currentTime = timelineTime - StartTime;
-                if (Duration != 0.0f)
+                if (timelineTime <= EndTime)
                 {
-                    percent = currentTime / Duration;
+                    Vector3 translation = window.Translation;
+                    Vector3 lookAt = window.LookAt;
+                    Vector3 finalTrans = Translation;
+                    Vector3 finalLookAt = LookAt;
+                    float percent = 1.0f;
+                    float currentTime = timelineTime - StartTime;
+                    if (Duration != 0.0f)
+                    {
+                        percent = currentTime / Duration;
+                    }
+                    window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
+                    float time = Duration - currentTime;
+                    if (time == 0.0f)
+                    {
+                        time = 0.001f;
+                    }
+                    window.setPosition(Translation, LookAt, time);
                 }
-                window.immediatlySetPosition(translation.lerp(ref finalTrans, ref percent), lookAt.lerp(ref finalLookAt, ref percent));
-                float time = Duration - currentTime;
-                if (time == 0.0f)
+                else
                 {
-                    time = 0.001f;
+                    window.immediatlySetPosition(Translation, LookAt);
+                    window.setPosition(Translation, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
                 }
-                window.setPosition(Translation, LookAt, time);
-            }
-            else
-            {
-                window.immediatlySetPosition(Translation, LookAt);
-                window.setPosition(Translation, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
             }
         }
 

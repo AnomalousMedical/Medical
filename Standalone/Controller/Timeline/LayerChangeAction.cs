@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -33,32 +34,48 @@ namespace Medical
 
         public override void started(float timelineTime, Clock clock)
         {
-            String currentTransparencyState = TransparencyController.ActiveTransparencyState;
-            TransparencyController.ActiveTransparencyState = TransparencyState;
-            LayerState.timedApply(Duration);
-            TransparencyController.ActiveTransparencyState = currentTransparencyState;
-            finished = false;
+            if (TransparencyController.hasTransparencyState(TransparencyState))
+            {
+                String currentTransparencyState = TransparencyController.ActiveTransparencyState;
+                TransparencyController.ActiveTransparencyState = TransparencyState;
+                LayerState.timedApply(Duration);
+                TransparencyController.ActiveTransparencyState = currentTransparencyState;
+                finished = false;
+            }
+            else
+            {
+                Log.Warning("TransparencyState \"{0}\" not found. No chnages made.", TransparencyState);
+                finished = true;
+            }
         }
 
         public override void skipTo(float timelineTime)
         {
-            if (timelineTime <= EndTime)
+            if (TransparencyController.hasTransparencyState(TransparencyState))
             {
-                float currentPosition = timelineTime - StartTime;
-                String currentTransparencyState = TransparencyController.ActiveTransparencyState;
-                TransparencyController.ActiveTransparencyState = TransparencyState;
-                float percent = 1.0f;
-                if (Duration != 0.0f)
+                if (timelineTime <= EndTime)
                 {
-                    percent = currentPosition / Duration;
+                    float currentPosition = timelineTime - StartTime;
+                    String currentTransparencyState = TransparencyController.ActiveTransparencyState;
+                    TransparencyController.ActiveTransparencyState = TransparencyState;
+                    float percent = 1.0f;
+                    if (Duration != 0.0f)
+                    {
+                        percent = currentPosition / Duration;
+                    }
+                    LayerState.instantlyApplyBlendPercent(percent);
+                    LayerState.timedApply(Duration - currentPosition);
+                    TransparencyController.ActiveTransparencyState = currentTransparencyState;
                 }
-                LayerState.instantlyApplyBlendPercent(percent);
-                LayerState.timedApply(Duration - currentPosition);
-                TransparencyController.ActiveTransparencyState = currentTransparencyState;
+                else
+                {
+                    LayerState.instantlyApply();
+                    finished = true;
+                }
             }
             else
             {
-                LayerState.instantlyApply();
+                Log.Warning("TransparencyState \"{0}\" not found. No chnages made.", TransparencyState);
                 finished = true;
             }
         }

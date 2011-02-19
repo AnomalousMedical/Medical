@@ -100,6 +100,11 @@ namespace Medical
             }
         }
 
+        public static bool hasTransparencyState(String name)
+        {
+            return transparencyStateNames.IndexOf(name) != -1;
+        }
+
         public static void applyTransparencyState(String name)
         {
             int stateIndex = transparencyStateNames.IndexOf(name);
