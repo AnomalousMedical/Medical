@@ -15,7 +15,7 @@ namespace Medical.GUI
     class TimelineProperties : Dialog
     {
         private const String PROJECT_EXTENSION = ".tlp";
-        private const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix)|*.tlp;*.tix|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix";
+        private const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
 
         private Timeline currentTimeline;
         private TimelineController timelineController;
@@ -392,6 +392,11 @@ namespace Medical.GUI
                     if (projectPath.EndsWith(".tix"))
                     {
                         timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
+                    }
+                    else if (projectPath.EndsWith(".tl"))
+                    {
+                        timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
+                        openTimelineDialog_OpenFile(projectPath);
                     }
                     else
                     {
