@@ -31,6 +31,8 @@ namespace Medical.GUI
             answerButton = parent.createWidgetT("Button", skin, left, top, textAreaWidth, 0, Align.Left | Align.Top, "") as Button;
             answerButton.SubWidgetText.setWordWrap(true);
             answerButton.Caption = answer.Text;
+            answerButton.Font = "font_DejaVuSans.Large_Question";
+            answerButton.TextAlign = Align.VCenter | Align.Left;
             Size2 textSize = answerButton.getTextSize();
             answerButton.setSize(textAreaWidth, (int)textSize.Height + EXTRA_HEIGHT);
 

@@ -53,6 +53,10 @@ namespace Medical
                 started(timelineTime, null);
                 source.PlaybackPosition = timelineTime - StartTime;
             }
+            else
+            {
+                finished = true;
+            }
         }
 
         void source_PlaybackFinished(Source source)

@@ -22,6 +22,7 @@ namespace Medical.GUI
 
             answerScroll = window.findWidget("Answers") as ScrollView;
             questionEdit = window.findWidget("Question") as Edit;
+            questionEdit.Font = "font_DejaVuSans.Large_Question";
         }
 
         public override void Dispose()
