@@ -10,6 +10,8 @@ namespace Medical.GUI
     class QuestionEditorAnswerRow : Component
     {
         public event EventHandler RemoveRow;
+        public event EventHandler InsertAbove;
+        public event EventHandler InsertBelow;
 
         private const int ROW_SIZE_ADJUST = 8;
 
@@ -28,6 +30,12 @@ namespace Medical.GUI
 
             Button removeButton = widget.findWidget("RemoveButton") as Button;
             removeButton.MouseButtonClick += new MyGUIEvent(removeButton_MouseButtonClick);
+
+            Button insertBelowButton = widget.findWidget("InsertBelow") as Button;
+            insertBelowButton.MouseButtonClick += new MyGUIEvent(insertBelowButton_MouseButtonClick);
+
+            Button insertAboveButton = widget.findWidget("InsertAbove") as Button;
+            insertAboveButton.MouseButtonClick += new MyGUIEvent(insertAboveButton_MouseButtonClick);
 
             Button browseButton = widget.findWidget("BrowseButton") as Button;
             browseButton.MouseButtonClick += new MyGUIEvent(browseButton_MouseButtonClick);
@@ -97,6 +105,22 @@ namespace Medical.GUI
             if (RemoveRow != null)
             {
                 RemoveRow.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        void insertAboveButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (InsertAbove != null)
+            {
+                InsertAbove.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        void insertBelowButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (InsertBelow != null)
+            {
+                InsertBelow.Invoke(this, EventArgs.Empty);
             }
         }
 

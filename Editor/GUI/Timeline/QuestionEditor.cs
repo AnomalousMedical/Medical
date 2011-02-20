@@ -190,7 +190,7 @@ namespace Medical.GUI
             }
         }
 
-        private void addRow(String answerText, String timeline)
+        private QuestionEditorAnswerRow addRow(String answerText, String timeline)
         {
             int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
             bool wasVisible = this.Visible;
@@ -198,12 +198,34 @@ namespace Medical.GUI
             this.Visible = true;
             QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos, fileBrowser);
             row.RemoveRow += new EventHandler(row_RemoveRow);
+            row.InsertAbove += new EventHandler(row_InsertAbove);
+            row.InsertBelow += new EventHandler(row_InsertBelow);
             row.AnswerText = answerText;
             row.Timeline = timeline;
             rows.Add(row);
             this.Visible = wasVisible;
 
             answerScroll.CanvasSize = new Size2(row.Width, row.Bottom);
+
+            return row;
+        }
+
+        void row_InsertBelow(object sender, EventArgs e)
+        {
+            QuestionEditorAnswerRow row = addRow("", "");
+            rows.Remove(row);
+            QuestionEditorAnswerRow relativeTo = sender as QuestionEditorAnswerRow;
+            rows.Insert(rows.IndexOf(relativeTo) + 1, row);
+            closeRowGaps();
+        }
+
+        void row_InsertAbove(object sender, EventArgs e)
+        {
+            QuestionEditorAnswerRow row = addRow("", "");
+            rows.Remove(row);
+            QuestionEditorAnswerRow relativeTo = sender as QuestionEditorAnswerRow;
+            rows.Insert(rows.IndexOf(relativeTo), row);
+            closeRowGaps();
         }
 
         void row_RemoveRow(object sender, EventArgs e)
