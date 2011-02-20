@@ -26,6 +26,7 @@ namespace Medical.GUI
 
             actionManager = new ActionManager(window.findWidget("LastQuery") as StaticText, window.findWidget("BackButton") as Button, window.findWidget("ForwardButton") as Button);
             timelineList = new TimelineList(window.findWidget("TimelineList") as MultiList, actionManager);
+            timelineList.TimelineSelected += new TimelineList.TimelineSelectedDelegate(timelineList_TimelineSelected);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -170,10 +171,15 @@ namespace Medical.GUI
 
         void open_MouseButtonClick(Widget source, EventArgs e)
         {
+            timelineList_TimelineSelected(timelineList.SelectedTimeline);
+        }
+
+        void timelineList_TimelineSelected(string timeline)
+        {
             if (timelineList.HasSelection)
             {
                 allowTimelineChanges = false;
-                timelineProperties.openTimelineFile(timelineList.SelectedTimeline);
+                timelineProperties.openTimelineFile(timeline);
                 allowTimelineChanges = true;
             }
         }
@@ -327,6 +333,8 @@ namespace Medical.GUI
         {
             private MultiList timelineList;
             private ActionManager actionManager;
+            public delegate void TimelineSelectedDelegate(String timeline);
+            public event TimelineSelectedDelegate TimelineSelected;
 
             public TimelineList(MultiList timelineList, ActionManager actionManager)
             {
@@ -335,6 +343,15 @@ namespace Medical.GUI
                 timelineList.addColumn("Timeline", timelineList.Width / 3);
                 timelineList.addColumn("Info", timelineList.Width - timelineList.getColumnWidthAt(0));
                 timelineList.SortOnChanges = false;
+                timelineList.ListSelectAccept += new MyGUIEvent(timelineList_ListSelectAccept);
+            }
+
+            void timelineList_ListSelectAccept(Widget source, EventArgs e)
+            {
+                if (TimelineSelected != null)
+                {
+                    TimelineSelected.Invoke(SelectedTimeline);
+                }
             }
 
             public String SelectedTimeline

@@ -16,6 +16,7 @@ namespace Medical
         private TimelineProperties timelineProperties;
         private AdvancedLayerControl advancedLayerControl;
         private MovementSequenceEditor movementSequenceEditor;
+        private TimelineAnalyzer timelineAnalyzer;
 
         public EditorGUIPlugin()
         {
@@ -24,6 +25,7 @@ namespace Medical
 
         public void Dispose()
         {
+            timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
             advancedLayerControl.Dispose();
             timelineProperties.Dispose();
@@ -43,6 +45,9 @@ namespace Medical
             timelineProperties = new TimelineProperties(standaloneController.TimelineController, this, dialogManager);
             dialogManager.addManagedDialog(timelineProperties);
 
+            timelineAnalyzer = new TimelineAnalyzer(standaloneController.TimelineController, timelineProperties);
+            dialogManager.addManagedDialog(timelineAnalyzer);
+
             advancedLayerControl = new AdvancedLayerControl();
             dialogManager.addManagedDialog(advancedLayerControl);
 
@@ -53,6 +58,7 @@ namespace Medical
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(advancedLayerControl, "Advanced Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
         }
