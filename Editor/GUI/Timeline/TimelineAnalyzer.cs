@@ -57,7 +57,7 @@ namespace Medical.GUI
             actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references");
             actionManager.addAction(timelineController, this.reset, this.resetUndo, "Set by Timeline Editor");
 
-            actionButtonManager.ActiveButton = open;
+            actionButtonManager.ActiveButton = listTargets;
         }
 
         void dumpInfo_MouseButtonClick(Widget source, EventArgs e)
@@ -336,7 +336,7 @@ namespace Medical.GUI
             {
                 get
                 {
-                    return HasLastQueryFile ? history[history.Count - 1].File : null;
+                    return history[historyIndex].File;
                 }
             }
 
