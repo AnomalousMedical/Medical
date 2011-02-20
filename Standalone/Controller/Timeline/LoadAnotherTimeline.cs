@@ -52,6 +52,14 @@ namespace Medical
             Log.Debug("LoadAnotherTimeline, Timeline = \"{0}\"", TargetTimeline);
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            if (info.matchesPattern(TargetTimeline))
+            {
+                info.addMatch(this.GetType(), "");
+            }
+        }
+
         private void changeTimelineButton()
         {
             TimelineController.startPlayback(TimelineController.openTimeline(TargetTimeline));

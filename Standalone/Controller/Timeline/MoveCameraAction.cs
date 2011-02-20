@@ -118,6 +118,11 @@ namespace Medical
             TimelineController.SceneViewController.ActiveWindow.setPosition(Translation, LookAt);
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            
+        }
+
         public Vector3 Translation { get; set; }
 
         public Vector3 LookAt { get; set; }

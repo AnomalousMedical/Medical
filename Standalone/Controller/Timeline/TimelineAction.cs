@@ -44,6 +44,8 @@ namespace Medical
 
         public abstract void editing();
 
+        public abstract void findFileReference(TimelineStaticInfo info);
+
         public virtual void editingCompleted()
         {
 

@@ -40,6 +40,14 @@ namespace Medical
             }
         }
 
+        internal void findFileReference(TimelineStaticInfo info)
+        {
+            foreach (PromptAnswer answer in answers)
+            {
+                answer.findFileReference(info);
+            }
+        }
+
         public String Text { get; set; }
 
         public IEnumerable<PromptAnswer> Answers

@@ -37,6 +37,14 @@ namespace Medical
             Log.Debug("|------- Timeline {0}", TargetTimeline);
         }
 
+        public void findFileReference(TimelineStaticInfo info, String answerText)
+        {
+            if (info.matchesPattern(TargetTimeline))
+            {
+                info.addMatch(this.GetType(), answerText);
+            }
+        }
+
         public String TargetTimeline { get; set; }
 
         #region Saveable Members

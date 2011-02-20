@@ -24,6 +24,8 @@ namespace Medical
 
         public abstract void dumpToLog();
 
+        public abstract void findFileReference(TimelineStaticInfo info);
+
         public TimelineController TimelineController
         {
             get

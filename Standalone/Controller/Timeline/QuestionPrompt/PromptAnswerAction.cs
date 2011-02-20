@@ -11,5 +11,7 @@ namespace Medical
         void execute(TimelineController timelineController);
 
         void dumpToLog();
+
+        void findFileReference(TimelineStaticInfo info, String answerText);
     }
 }

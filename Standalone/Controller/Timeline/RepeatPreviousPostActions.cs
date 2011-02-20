@@ -36,6 +36,11 @@ namespace Medical
             Log.Debug("RepeatPreviousPostActions");
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            
+        }
+
         #region Saving
 
         protected RepeatPreviousPostActions(LoadInfo info)

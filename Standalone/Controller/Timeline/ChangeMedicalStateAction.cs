@@ -59,6 +59,11 @@ namespace Medical
             TimelineController.MedicalStateController.directBlend(State, 1.0f);
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+
+        }
+
         public override bool Finished
         {
             get { return finished; }

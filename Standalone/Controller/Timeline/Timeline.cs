@@ -184,6 +184,24 @@ namespace Medical
 
         public TimelineController TimelineController { get; internal set; }
 
+        public void findFileReference(TimelineStaticInfo info)
+        {
+            foreach (TimelineInstantAction action in PreActions)
+            {
+                action.findFileReference(info);
+            }
+
+            foreach (TimelineAction action in Actions)
+            {
+                action.findFileReference(info);
+            }
+
+            foreach (TimelineInstantAction action in PostActions)
+            {
+                action.findFileReference(info);
+            }
+        }
+
         public IEnumerable<TimelineAction> Actions
         {
             get

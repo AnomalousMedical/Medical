@@ -91,6 +91,14 @@ namespace Medical
             }
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            if (info.matchesPattern(ImageFile))
+            {
+                info.addMatch(this.GetType(), "Image file reference");
+            }
+        }
+
         public override bool Finished
         {
             get

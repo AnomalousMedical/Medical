@@ -33,6 +33,14 @@ namespace Medical
             Log.Debug("|");
         }
 
+        internal void findFileReference(TimelineStaticInfo info)
+        {
+            if (Action != null)
+            {
+                Action.findFileReference(info, Text);
+            }
+        }
+
         public String Text { get; set; }
 
         public PromptAnswerAction Action { get; set; }

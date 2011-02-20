@@ -32,6 +32,14 @@ namespace Medical
             Log.Debug("OpenNewSceneAction, Scene = \"{0}\"", Scene);
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            if (info.matchesPattern(Scene))
+            {
+                info.addMatch(this.GetType(), "");
+            }
+        }
+
         public String Scene { get; set; }
 
         #region Saveable

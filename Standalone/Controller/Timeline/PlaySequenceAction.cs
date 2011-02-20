@@ -55,6 +55,11 @@ namespace Medical
             TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+
+        }
+
         public override void reverseSides()
         {
             MovementSequence.reverseSides();

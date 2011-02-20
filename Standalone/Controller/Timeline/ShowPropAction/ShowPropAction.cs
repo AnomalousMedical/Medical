@@ -83,6 +83,11 @@ namespace Medical
             destroyProp();
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            
+        }
+
         public override void reverseSides()
         {
             Translation = new Vector3(-Translation.x, Translation.y, Translation.z);

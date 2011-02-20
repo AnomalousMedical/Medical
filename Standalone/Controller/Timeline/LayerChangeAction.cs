@@ -104,6 +104,11 @@ namespace Medical
             TransparencyController.ActiveTransparencyState = currentTransparencyState;
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+
+        }
+
         public override bool Finished
         {
             get { return finished; }

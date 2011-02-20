@@ -57,6 +57,11 @@ namespace Medical
             TeethController.HighlightContacts = true;
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            
+        }
+
         public override void editingCompleted()
         {
             TeethController.HighlightContacts = false;

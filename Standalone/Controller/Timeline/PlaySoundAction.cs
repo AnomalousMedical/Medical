@@ -80,7 +80,15 @@ namespace Medical
 
         public override void editing()
         {
-            
+
+        }
+
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            if (info.matchesPattern(SoundFile))
+            {
+                info.addMatch(this.GetType(), "Sound file reference");
+            }
         }
 
         public override bool Finished

@@ -49,6 +49,18 @@ namespace Medical
             }
         }
 
+        public override void findFileReference(TimelineStaticInfo info)
+        {
+            if (info.matchesPattern(SoundFile))
+            {
+                info.addMatch(this.GetType(), "Show Prompt sound file.");
+            }
+            foreach (PromptQuestion question in questions)
+            {
+                question.findFileReference(info);
+            }
+        }
+
         public void addQuestion(PromptQuestion question)
         {
             questions.Add(question);
