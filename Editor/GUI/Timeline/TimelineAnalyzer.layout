@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="273 283 301 248" layer="Back">
+    <Widget type="Window" skin="WindowCSX" position="273 283 301 248" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
         <Widget type="MultiList" skin="MultiList" position="0 48 301 182" align="Stretch" name="TimelineList"/>
         <Widget type="MenuBar" skin="MenuBar" position="0 0 301 24" align="HStretch Top" name="MenuBar"/>
