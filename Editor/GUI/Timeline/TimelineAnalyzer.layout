@@ -1,9 +1,25 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="273 283 301 248" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="154 283 420 248" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
-        <Widget type="MultiList" skin="MultiList" position="0 48 301 182" align="Stretch" name="TimelineList"/>
-        <Widget type="MenuBar" skin="MenuBar" position="0 0 301 24" align="HStretch Top" name="MenuBar"/>
-        <Widget type="StaticText" skin="StaticText" position="0 24 301 24" align="HStretch Top" name="LastQuery"/>
+        <Widget type="MultiList" skin="MultiList" position="126 24 292 203" align="Stretch" name="TimelineList"/>
+        <Widget type="StaticText" skin="StaticText" position="126 0 294 24" align="HStretch Top" name="LastQuery"/>
+        <Widget type="Button" skin="Button" position="5 28 118 22" name="Open">
+            <Property key="Widget_Caption" value="Open in Editor"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 54 118 22" name="Find All References">
+            <Property key="Widget_Caption" value="Find All References"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 80 118 22" name="List All Targets">
+            <Property key="Widget_Caption" value="List All Targets"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 106 118 22" name="Dump Info to Log">
+            <Property key="Widget_Caption" value="Dump Info to Log"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="5 132 118 22" name="Reset to Current">
+            <Property key="Widget_Caption" value="Reset to Current"/>
+        </Widget>
+        <Widget type="Button" skin="ButtonLeft" position="6 4 21 22" name="BackButton"/>
+        <Widget type="Button" skin="ButtonRight" position="32 4 21 22" name="ForwardButton"/>
     </Widget>
 </MyGUI>

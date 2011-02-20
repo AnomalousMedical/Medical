@@ -24,26 +24,24 @@ namespace Medical.GUI
 
             timelineController.EditingTimelineChanged += new SingleArgumentEvent<TimelineController, Timeline>(timelineController_EditingTimelineChanged);
 
-            actionManager = new ActionManager(window.findWidget("LastQuery") as StaticText);
+            actionManager = new ActionManager(window.findWidget("LastQuery") as StaticText, window.findWidget("BackButton") as Button, window.findWidget("ForwardButton") as Button);
             timelineList = new TimelineList(window.findWidget("TimelineList") as MultiList, actionManager);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
-            MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
-            MenuItem analyzeMenu = menuBar.addItem("Analyze", MenuItemType.Popup);
-            MenuCtrl analyzeMenuCtrl = analyzeMenu.createItemChild();
-
-            MenuItem open = analyzeMenuCtrl.addItem("Open");
+            Button open = window.findWidget("Open") as Button;
             open.MouseButtonClick += new MyGUIEvent(open_MouseButtonClick);
-            analyzeMenuCtrl.addItem("", MenuItemType.Separator);
-            MenuItem findReferences = analyzeMenuCtrl.addItem("Find All References");
+
+            Button findReferences = window.findWidget("Find All References") as Button;
             findReferences.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
-            MenuItem listTargets = analyzeMenuCtrl.addItem("List All Targets");
+
+            Button listTargets = window.findWidget("List All Targets") as Button;
             listTargets.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
-            MenuItem dumpInfo = analyzeMenuCtrl.addItem("Dump Info to Log");
+
+            Button dumpInfo = window.findWidget("Dump Info to Log") as Button;
             dumpInfo.MouseButtonClick += new MyGUIEvent(dumpInfo_MouseButtonClick);
-            analyzeMenuCtrl.addItem("", MenuItemType.Separator);
-            MenuItem reset = analyzeMenuCtrl.addItem("Reset to Current");
+
+            Button reset = window.findWidget("Reset to Current") as Button;
             reset.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
 
             //Setup actions
@@ -214,7 +212,7 @@ namespace Medical.GUI
 
             private Dictionary<Object, ActionFunctionInfo> actions = new Dictionary<object, ActionFunctionInfo>();
 
-            public ActionManager(StaticText lastQueryText)
+            public ActionManager(StaticText lastQueryText, Button backButton, Button forwardButton)
             {
                 this.lastQueryText = lastQueryText;
             }
@@ -266,6 +264,7 @@ namespace Medical.GUI
                 this.actionManager = actionManager;
                 timelineList.addColumn("Timeline", timelineList.Width / 3);
                 timelineList.addColumn("Info", timelineList.Width - timelineList.getColumnWidthAt(0));
+                timelineList.SortOnChanges = false;
             }
 
             public String SelectedTimeline
