@@ -51,11 +51,15 @@ namespace Medical.GUI
             Button reset = window.findWidget("Reset to Current") as Button;
             reset.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
 
+            Button listUnreferenced = window.findWidget("ListUnreferenced") as Button;
+            listUnreferenced.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
+
             //Setup actions
-            actionManager.addAction(reset, this.reset, this.resetUndo, "Starting Point Reset");
-            actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets");
-            actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references");
-            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Set by Timeline Editor");
+            actionManager.addAction(reset, this.reset, this.resetUndo, "Loaded from Timeline editor.");
+            actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets. These are the timelines this one links to.");
+            actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references. These timelines point to this one.");
+            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Loaded from Timeline editor.");
+            actionManager.addAction(listUnreferenced, this.listAllUnreferenced, null, "Unrefernced Timelines. These are not linked to any other timeline.");
 
             actionButtonManager.ActiveButton = listTargets;
         }
@@ -96,13 +100,16 @@ namespace Medical.GUI
 
         void listTargetsUndo(String file)
         {
-            doListTargets(file);
+            if (doListTargets(file) == null)
+            {
+                timelineList.removeAllItems();
+            }
         }
 
         String doListTargets(String tlFile)
         {
             String file = null;
-            if (timelineList.HasSelection)
+            if (timelineList.HasSelection && tlFile != null && timelineController.resourceExists(tlFile))
             {
                 TimelineStaticInfo info = new EndsWithStaticInfo(".tl");
 
@@ -134,7 +141,10 @@ namespace Medical.GUI
 
         void FindReferencesUndo(String file)
         {
-            doFindReferences(file);
+            if (doFindReferences(file) == null)
+            {
+                timelineList.removeAllItems();
+            }
         }
 
         String doFindReferences(String tlFile)
@@ -175,7 +185,37 @@ namespace Medical.GUI
             return ret;
         }
 
+        String listAllUnreferenced()
+        {
+            timelineList.removeAllItems();
+            String[] files = timelineController.listResourceFiles("*.tl");
+            foreach (String outerFile in files)
+            {
+                bool noMatches = true;
+                TimelineStaticInfo info = new ExactMatchStaticInfo(outerFile);
+                foreach (String file in files)
+                {
+                    Timeline tl = timelineController.openTimeline(file);
+                    tl.findFileReference(info);
+                    if (info.HasMatches)
+                    {
+                        noMatches = false;
+                        break;
+                    }
+                    info.clearMatches();
+                }
+                if (noMatches)
+                {
+                    timelineList.addItem(outerFile, "Not Referenced");
+                }
+            }
+            
+            return null; //This is a long operation keep it off the undo list
+        }
+
         #endregion
+
+        #region Analyzer Functions
 
         void open_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -236,6 +276,10 @@ namespace Medical.GUI
         {
             timelineList.resizeColumns();
         }
+
+        #endregion
+
+        #region Helper Classes
 
         class ActionManager
         {
@@ -460,5 +504,7 @@ namespace Medical.GUI
                 timelineList.setColumnWidthAt(1, timelineList.Width - width);
             }
         }
+
+        #endregion
     }
 }

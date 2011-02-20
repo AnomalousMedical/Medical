@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="154 283 420 248" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="154 286 420 248" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
         <Widget type="MultiList" skin="MultiList" position="126 24 292 203" align="Stretch" name="TimelineList"/>
-        <Widget type="StaticText" skin="StaticText" position="126 0 294 24" align="HStretch Top" name="LastQuery"/>
+        <Widget type="StaticText" skin="StaticText" position="126 0 294 24" align="HStretch Top" name="LastQuery">
+            <Property key="Text_TextAlign" value="Left VCenter"/>
+        </Widget>
         <Widget type="Button" skin="Button" position="5 28 118 22" name="Open">
             <Property key="Widget_Caption" value="Open in Editor"/>
         </Widget>
@@ -21,5 +23,11 @@
         </Widget>
         <Widget type="Button" skin="ButtonLeft" position="6 4 21 22" name="BackButton"/>
         <Widget type="Button" skin="ButtonRight" position="32 4 21 22" name="ForwardButton"/>
+        <Widget type="Button" skin="Button" position="5 204 118 22" name="ListUnreferenced">
+            <Property key="Widget_Caption" value="List Unreferenced"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="7 188 74 14">
+            <Property key="Widget_Caption" value="This is slow."/>
+        </Widget>
     </Widget>
 </MyGUI>

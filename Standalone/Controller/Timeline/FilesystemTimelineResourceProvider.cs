@@ -51,6 +51,10 @@ namespace Medical
 
         public bool exists(string path)
         {
+            if (!path.StartsWith(parentPath))
+            {
+                path = Path.Combine(parentPath, path);
+            }
             return File.Exists(path);
         }
 
