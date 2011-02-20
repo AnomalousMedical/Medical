@@ -11,16 +11,20 @@ namespace Medical.GUI
     {
         private TimelineController timelineController;
         private MultiList timelineList;
-        //private PopupMenu popupMenu;
+        private TimelineProperties timelineProperties;
+        private bool allowTimelineChanges = true;
+        private StaticText lastQuery;
 
-        public TimelineAnalyzer(TimelineController timelineController)
+        public TimelineAnalyzer(TimelineController timelineController, TimelineProperties timelineProperties)
             :base("Medical.GUI.Timeline.TimelineAnalyzer.layout")
         {
             this.timelineController = timelineController;
+            this.timelineProperties = timelineProperties;
             timelineController.EditingTimelineChanged += new SingleArgumentEvent<TimelineController, Timeline>(timelineController_EditingTimelineChanged);
 
             timelineList = window.findWidget("TimelineList") as MultiList;
-            timelineList.addColumn("Timeline", timelineList.Width);
+            timelineList.addColumn("Timeline", timelineList.Width / 3);
+            timelineList.addColumn("Info", timelineList.Width - timelineList.getColumnWidthAt(0));
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -37,41 +41,110 @@ namespace Medical.GUI
             analyzeMenuCtrl.addItem("", MenuItemType.Separator);
             MenuItem reset = analyzeMenuCtrl.addItem("Reset to Current");
             reset.MouseButtonClick += new MyGUIEvent(reset_MouseButtonClick);
+
+            lastQuery = window.findWidget("LastQuery") as StaticText;
         }
 
         void reset_MouseButtonClick(Widget source, EventArgs e)
         {
             timelineList.removeAllItems();
-            addTimeline(timelineController.EditingTimeline);
+            addTimeline(timelineController.EditingTimeline, "Starting Point");
+            setLastQuery("Starting point reset", timelineController.EditingTimeline.SourceFile);
         }
 
         void open_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            if (timelineList.hasItemSelected())
+            {
+                allowTimelineChanges = false;
+                String file = timelineList.getItemNameAt(timelineList.getIndexSelected());
+                timelineProperties.openTimelineFile(file);
+                allowTimelineChanges = true;
+            }
         }
 
         void listTargets_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            if (timelineList.hasItemSelected())
+            {
+                TimelineStaticInfo info = new EndsWithStaticInfo(".tl");
+
+                Timeline targetListTl = timelineController.EditingTimeline;
+                targetListTl.findFileReference(info);
+                if (info.HasMatches)
+                {
+                    timelineList.removeAllItems();
+                    foreach (TimelineMatchInfo matchInfo in info.Matches)
+                    {
+                        string infoStr = String.Format("{0} : {1}", matchInfo.ActionType.Name, matchInfo.Comment);
+                        String fileName = Path.GetFileName(matchInfo.File);
+                        timelineList.addItem(fileName);
+                        uint newIndex = timelineList.getItemCount() - 1;
+                        timelineList.setSubItemNameAt(1, newIndex, infoStr);
+                    }
+                    setLastQuery("List targets", targetListTl.SourceFile);
+                }
+                else
+                {
+                    MessageBox.show("No targets found.", "No Matches", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                }
+            }
         }
 
         void findReferences_MouseButtonClick(Widget source, EventArgs e)
         {
-            
+            if (timelineList.hasItemSelected())
+            {
+                bool foundNoMatches = true;
+                String tlFile = timelineList.getItemNameAt(timelineList.getIndexSelected());
+                TimelineStaticInfo info = new ExactMatchStaticInfo(tlFile);
+
+                String[] files = timelineController.listResourceFiles("*.tl");
+                foreach (String file in files)
+                {
+                    Timeline tl = timelineController.openTimeline(file);
+                    tl.findFileReference(info);
+                    if (info.HasMatches)
+                    {
+                        if (foundNoMatches)
+                        {
+                            setLastQuery("Find references", tlFile);
+                            timelineList.removeAllItems();
+                            foundNoMatches = false;
+                        }
+                        foreach (TimelineMatchInfo matchInfo in info.Matches)
+                        {
+                            string infoStr = String.Format("{0} : {1}", matchInfo.ActionType.Name, matchInfo.Comment);
+                            addTimeline(tl, infoStr);
+                        }
+                    }
+                    info.clearMatches();
+                }
+
+                if (foundNoMatches)
+                {
+                    MessageBox.show("No references found.", "No Matches", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
+                }
+            }
         }
 
         void timelineController_EditingTimelineChanged(TimelineController source, Timeline arg)
         {
-            timelineList.removeAllItems();
-            addTimeline(arg);
+            if (allowTimelineChanges)
+            {
+                timelineList.removeAllItems();
+                addTimeline(arg, "Starting Point");
+            }
         }
 
-        void addTimeline(Timeline timeline)
+        void addTimeline(Timeline timeline, String info)
         {
             if (timeline != null && timeline.SourceFile != null)
             {
                 String fileName = Path.GetFileName(timeline.SourceFile);
                 timelineList.addItem(fileName);
+                uint newIndex = timelineList.getItemCount() - 1;
+                timelineList.setSubItemNameAt(1, newIndex, info);
             }
         }
 
@@ -83,7 +156,14 @@ namespace Medical.GUI
 
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
-            timelineList.setColumnWidthAt(0, timelineList.Width);
+            int width = timelineList.Width / 3;
+            timelineList.setColumnWidthAt(0, width);
+            timelineList.setColumnWidthAt(1, timelineList.Width - width);
+        }
+
+        void setLastQuery(String query, String tl)
+        {
+            lastQuery.Caption = String.Format("{0} on {1}", query, tl);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Medical
         {
             if (info.matchesPattern(SoundFile))
             {
-                info.addMatch(this.GetType(), "Show Prompt sound file.");
+                info.addMatch(this.GetType(), "Show Prompt sound file.", SoundFile);
             }
             foreach (PromptQuestion question in questions)
             {

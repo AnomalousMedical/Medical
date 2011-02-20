@@ -41,7 +41,7 @@ namespace Medical
         {
             if (info.matchesPattern(TargetTimeline))
             {
-                info.addMatch(this.GetType(), answerText);
+                info.addMatch(this.GetType(), answerText, TargetTimeline);
             }
         }
 

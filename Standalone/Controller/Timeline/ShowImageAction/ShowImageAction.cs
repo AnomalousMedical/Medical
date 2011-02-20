@@ -95,7 +95,7 @@ namespace Medical
         {
             if (info.matchesPattern(ImageFile))
             {
-                info.addMatch(this.GetType(), "Image file reference");
+                info.addMatch(this.GetType(), "Image file reference", ImageFile);
             }
         }
 

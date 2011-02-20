@@ -87,7 +87,7 @@ namespace Medical
         {
             if (info.matchesPattern(SoundFile))
             {
-                info.addMatch(this.GetType(), "Sound file reference");
+                info.addMatch(this.GetType(), "Sound file reference", SoundFile);
             }
         }
 

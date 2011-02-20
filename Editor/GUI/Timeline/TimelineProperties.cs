@@ -180,7 +180,7 @@ namespace Medical.GUI
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 
-            timelineAnalyzer = new TimelineAnalyzer(timelineController);
+            timelineAnalyzer = new TimelineAnalyzer(timelineController, this);
             dialogManager.addManagedDialog(timelineAnalyzer);
 
             //Add tracks to timeline.
@@ -403,7 +403,7 @@ namespace Medical.GUI
                     else if (projectPath.EndsWith(".tl"))
                     {
                         timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-                        openTimelineDialog_OpenFile(projectPath);
+                        openTimelineFile(projectPath);
                     }
                     else
                     {
@@ -464,13 +464,13 @@ namespace Medical.GUI
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            fileBrowserDialog.promptForFile("*.tl", openTimelineDialog_OpenFile);
+            fileBrowserDialog.promptForFile("*.tl", openTimelineFile);
             fileBrowserDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             fileBrowserDialog.ensureVisible();
             fileMenu.setVisibleSmooth(false);
         }
 
-        void openTimelineDialog_OpenFile(String filename)
+        public void openTimelineFile(String filename)
         {
             try
             {

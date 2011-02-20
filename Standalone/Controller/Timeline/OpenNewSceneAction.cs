@@ -36,7 +36,7 @@ namespace Medical
         {
             if (info.matchesPattern(Scene))
             {
-                info.addMatch(this.GetType(), "");
+                info.addMatch(this.GetType(), "", Scene);
             }
         }
 
