@@ -45,10 +45,10 @@ namespace Medical.GUI
             reset.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
 
             //Setup actions
-            actionManager.addAction(reset, this.reset, "Starting Point Reset");
-            actionManager.addAction(listTargets, this.listTargets, "List targets");
-            actionManager.addAction(findReferences, this.findReferences, "Find references");
-            actionManager.addAction(timelineController, this.reset, "Set by Timeline Editor");
+            actionManager.addAction(reset, this.reset, this.resetUndo, "Starting Point Reset");
+            actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets");
+            actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references");
+            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Set by Timeline Editor");
         }
 
         void dumpInfo_MouseButtonClick(Widget source, EventArgs e)
@@ -74,14 +74,29 @@ namespace Medical.GUI
             return timelineController.EditingTimeline.SourceFile;
         }
 
+        void resetUndo(String file)
+        {
+            timelineList.removeAllItems();
+            addTimeline(timelineController.openTimeline(file), "Starting Point");
+        }
+
         String listTargets()
+        {
+            return doListTargets(timelineList.SelectedTimeline);
+        }
+
+        void listTargetsUndo(String file)
+        {
+            doListTargets(file);
+        }
+
+        String doListTargets(String tlFile)
         {
             String file = null;
             if (timelineList.HasSelection)
             {
                 TimelineStaticInfo info = new EndsWithStaticInfo(".tl");
 
-                String tlFile = timelineList.SelectedTimeline;
                 Timeline targetListTl = timelineController.openTimeline(tlFile);
                 targetListTl.findFileReference(info);
                 if (info.HasMatches)
@@ -105,11 +120,20 @@ namespace Medical.GUI
 
         String findReferences()
         {
+            return doFindReferences(timelineList.SelectedTimeline);
+        }
+
+        void FindReferencesUndo(String file)
+        {
+            doFindReferences(file);
+        }
+
+        String doFindReferences(String tlFile)
+        {
             String ret = null;
             if (timelineList.HasSelection)
             {
                 bool foundNoMatches = true;
-                String tlFile = timelineList.SelectedTimeline;
                 TimelineStaticInfo info = new ExactMatchStaticInfo(tlFile);
 
                 String[] files = timelineController.listResourceFiles("*.tl");
@@ -190,36 +214,52 @@ namespace Medical.GUI
         class ActionManager
         {
             private StaticText lastQueryText;
-            private string lastQueryFile = null;
 
             /// <summary>
             /// Action function. Returns the name of the timeline file that was manipulated.
             /// </summary>
             /// <returns>The name </returns>
             public delegate String ActionFunction();
+            public delegate void ActionFunctionUndo(String file);
             private class ActionFunctionInfo
             {
-                public ActionFunctionInfo(ActionFunction function, String actionText)
+                public ActionFunctionInfo(ActionFunction function, ActionFunctionUndo undoFunction, String actionText)
                 {
                     Function = function;
+                    UndoFunction = undoFunction;
                     ActionText = actionText;
+                }
+
+                public ActionFunctionInfo(ActionFunctionUndo undoFunction, String actionText, String file)
+                {
+                    UndoFunction = undoFunction;
+                    ActionText = actionText;
+                    File = file;
                 }
 
                 public String ActionText { get; set; }
 
                 public ActionFunction Function { get; set; }
+
+                public ActionFunctionUndo UndoFunction { get; set; }
+
+                public String File { get; set; }
             }
 
             private Dictionary<Object, ActionFunctionInfo> actions = new Dictionary<object, ActionFunctionInfo>();
+            private List<ActionFunctionInfo> history = new List<ActionFunctionInfo>();
+            private int historyIndex = 0;
 
             public ActionManager(StaticText lastQueryText, Button backButton, Button forwardButton)
             {
                 this.lastQueryText = lastQueryText;
+                backButton.MouseButtonClick += new MyGUIEvent(backButton_MouseButtonClick);
+                forwardButton.MouseButtonClick += new MyGUIEvent(forwardButton_MouseButtonClick);
             }
 
-            public void addAction(Object actionKey, ActionFunction function, String actionInfo)
+            public void addAction(Object actionKey, ActionFunction function, ActionFunctionUndo undoFunction, String actionInfo)
             {
-                actions.Add(actionKey, new ActionFunctionInfo(function, actionInfo));
+                actions.Add(actionKey, new ActionFunctionInfo(function, undoFunction, actionInfo));
             }
 
             public void executeAction(Object actionKey)
@@ -230,9 +270,39 @@ namespace Medical.GUI
                     String returnFile = Path.GetFileName(info.Function());
                     if (returnFile != null)
                     {
-                        lastQueryFile = returnFile;
-                        lastQueryText.Caption = String.Format("{0} :   {1}", lastQueryFile, info.ActionText);
+                        //Chop off any indexes before this point.
+                        int removeIndex = historyIndex + 1;
+                        if(removeIndex < history.Count)
+                        {
+                            history.RemoveRange(removeIndex, history.Count - removeIndex);
+                        }
+
+                        //Add the new action to the history
+                        history.Add(new ActionFunctionInfo(info.UndoFunction, info.ActionText, returnFile));
+                        historyIndex = history.Count - 1;
+
+                        lastQueryText.Caption = String.Format("{0} :   {1}", returnFile, info.ActionText);
                     }
+                }
+            }
+
+            void forwardButton_MouseButtonClick(Widget source, EventArgs e)
+            {
+                if (historyIndex + 1 < history.Count)
+                {
+                    ActionFunctionInfo info = history[++historyIndex];
+                    info.UndoFunction(info.File);
+                    lastQueryText.Caption = String.Format("{0} :   {1}", info.File, info.ActionText);
+                }
+            }
+
+            void backButton_MouseButtonClick(Widget source, EventArgs e)
+            {
+                if (historyIndex - 1 > -1)
+                {
+                    ActionFunctionInfo info = history[--historyIndex];
+                    info.UndoFunction(info.File);
+                    lastQueryText.Caption = String.Format("{0} :   {1}", info.File, info.ActionText);
                 }
             }
 
@@ -240,7 +310,7 @@ namespace Medical.GUI
             {
                 get
                 {
-                    return lastQueryFile;
+                    return HasLastQueryFile ? history[history.Count - 1].File : null;
                 }
             }
 
@@ -248,7 +318,7 @@ namespace Medical.GUI
             {
                 get
                 {
-                    return lastQueryFile != null;
+                    return history.Count > 0;
                 }
             }
         }
