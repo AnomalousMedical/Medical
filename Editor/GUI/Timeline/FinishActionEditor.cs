@@ -25,7 +25,7 @@ namespace Medical.GUI
         private TimelineController timelineController;
         private TimelineFileBrowserDialog fileBrowser;
 
-        public FinishActionEditor(TimelineController timelineController, TimelineFileBrowserDialog fileBrowser)
+        public FinishActionEditor(TimelineController timelineController, TimelineFileBrowserDialog fileBrowser, DialogManager dialogManager)
             :base("Medical.GUI.Timeline.FinishActionEditor.layout")
         {
             this.timelineController = timelineController;
@@ -43,6 +43,7 @@ namespace Medical.GUI
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
             questionEditor = new QuestionEditor(fileBrowser, timelineController);
+            dialogManager.addManagedDialog(questionEditor);
 
             questionEditorButton = window.findWidget("QuestionEditorButton") as Button;
             questionEditorButton.MouseButtonClick += new MyGUIEvent(questionEditorButton_MouseButtonClick);

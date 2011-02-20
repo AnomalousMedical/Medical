@@ -24,7 +24,7 @@ namespace Medical.GUI
             projectName = window.findWidget("ProjectName") as Edit;
             projectName.EventEditSelectAccept += new MyGUIEvent(projectName_EventEditSelectAccept);
             projectLocation = window.findWidget("ProjectLocation") as Edit;
-            projectLocation.Caption = MedicalConfig.DocRoot + "/Timeline Projects";
+            projectLocation.Caption = EditorConfig.TimelineProjectDirectory;
             if (!Directory.Exists(projectLocation.Caption))
             {
                 try

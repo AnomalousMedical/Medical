@@ -172,7 +172,7 @@ namespace Medical.GUI
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
 
-            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog);
+            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, dialogManager);
 
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
