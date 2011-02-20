@@ -15,6 +15,9 @@ namespace Medical.GUI
         private TimelineProperties timelineProperties;
         private bool allowTimelineChanges = true;
         private ActionManager actionManager;
+        private ActionButtonManager actionButtonManager = new ActionButtonManager();
+
+        private Button open;
 
         public TimelineAnalyzer(TimelineController timelineController, TimelineProperties timelineProperties)
             :base("Medical.GUI.Timeline.TimelineAnalyzer.layout")
@@ -30,14 +33,17 @@ namespace Medical.GUI
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
-            Button open = window.findWidget("Open") as Button;
+            open = window.findWidget("Open") as Button;
             open.MouseButtonClick += new MyGUIEvent(open_MouseButtonClick);
+            actionButtonManager.addButton(open);
 
             Button findReferences = window.findWidget("Find All References") as Button;
             findReferences.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
+            actionButtonManager.addButton(findReferences);
 
             Button listTargets = window.findWidget("List All Targets") as Button;
             listTargets.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
+            actionButtonManager.addButton(listTargets);
 
             Button dumpInfo = window.findWidget("Dump Info to Log") as Button;
             dumpInfo.MouseButtonClick += new MyGUIEvent(dumpInfo_MouseButtonClick);
@@ -50,6 +56,8 @@ namespace Medical.GUI
             actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets");
             actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references");
             actionManager.addAction(timelineController, this.reset, this.resetUndo, "Set by Timeline Editor");
+
+            actionButtonManager.ActiveButton = open;
         }
 
         void dumpInfo_MouseButtonClick(Widget source, EventArgs e)
@@ -171,10 +179,22 @@ namespace Medical.GUI
 
         void open_MouseButtonClick(Widget source, EventArgs e)
         {
-            timelineList_TimelineSelected(timelineList.SelectedTimeline);
+            doTimelineOpen(timelineList.SelectedTimeline);
         }
 
         void timelineList_TimelineSelected(string timeline)
+        {
+            if (actionButtonManager.ActiveButton == open)
+            {
+                doTimelineOpen(timeline);
+            }
+            else
+            {
+                actionManager.executeAction(actionButtonManager.ActiveButton);
+            }
+        }
+
+        private void doTimelineOpen(string timeline)
         {
             if (timelineList.HasSelection)
             {
@@ -325,6 +345,50 @@ namespace Medical.GUI
                 get
                 {
                     return history.Count > 0;
+                }
+            }
+        }
+
+        class ActionButtonManager
+        {
+            private Button activeButton = null;
+
+            public ActionButtonManager()
+            {
+
+            }
+
+            public void addButton(Button button)
+            {
+                button.MouseButtonReleased += new MyGUIEvent(button_MouseButtonReleased);
+            }
+
+            void button_MouseButtonReleased(Widget source, EventArgs e)
+            {
+                MouseEventArgs me = (MouseEventArgs)e;
+                if (me.Button == Engine.Platform.MouseButtonCode.MB_BUTTON1)
+                {
+                    ActiveButton = (Button)source;
+                }
+            }
+
+            public Button ActiveButton
+            {
+                get
+                {
+                    return activeButton;
+                }
+                set
+                {
+                    if (activeButton != null)
+                    {
+                        activeButton.StateCheck = false;
+                    }
+                    activeButton = value;
+                    if (activeButton != null)
+                    {
+                        activeButton.StateCheck = true;
+                    }
                 }
             }
         }
