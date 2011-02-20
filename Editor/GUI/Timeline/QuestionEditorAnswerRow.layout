@@ -2,10 +2,10 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="Panel" position="100 100 504 23" align="Default" layer="Back">
         <Widget type="Button" skin="ButtonMinusPlus" position="4 4 22 15" name="RemoveButton"/>
-        <Widget type="Edit" skin="Edit" position="31 1 285 20" align="Stretch" name="AnswerText"/>
+        <Widget type="Edit" skin="Edit" position="31 1 285 20" align="Relative" name="AnswerText"/>
         <Widget type="Button" skin="Button" position="457 1 46 20" align="Right Top" name="BrowseButton">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="320 1 134 20" align="Right Top" name="TimelineText"/>
+        <Widget type="Edit" skin="Edit" position="320 1 134 20" align="Relative" name="TimelineText"/>
     </Widget>
 </MyGUI>

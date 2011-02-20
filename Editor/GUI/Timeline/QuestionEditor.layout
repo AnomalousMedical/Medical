@@ -33,8 +33,8 @@
         <Widget type="StaticText" skin="StaticText" position="4 95 68 13">
             <Property key="Widget_Caption" value="Play Sound"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="72 92 175 18" name="SoundFileEdit"/>
-        <Widget type="Button" skin="Button" position="249 92 78 18" name="SoundBrowser">
+        <Widget type="Edit" skin="Edit" position="72 92 354 18" align="HStretch Top" name="SoundFileEdit"/>
+        <Widget type="Button" skin="Button" position="428 92 78 18" align="Right Top" name="SoundBrowser">
             <Property key="Widget_Caption" value="Browse"/>
         </Widget>
     </Widget>
