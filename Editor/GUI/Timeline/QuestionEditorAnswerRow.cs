@@ -48,11 +48,11 @@ namespace Medical.GUI
         {
             get
             {
-                return answerText.Caption;
+                return answerText.OnlyText;
             }
             set
             {
-                answerText.Caption = value;
+                answerText.OnlyText = value;
             }
         }
 

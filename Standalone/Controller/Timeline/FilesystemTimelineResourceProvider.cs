@@ -44,7 +44,7 @@ namespace Medical
             String[] files = Directory.GetFiles(parentPath, pattern, SearchOption.TopDirectoryOnly);
             for (int i = 0; i < files.Length; ++i)
             {
-                files[i] = files[i].Remove(0, parentPath.Length);
+                files[i] = files[i].Remove(0, parentPath.Length + 1);
             }
             return files;
         }
