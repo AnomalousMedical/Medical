@@ -87,6 +87,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
+    <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\LayerChangeProperties.cs" />
@@ -139,6 +140,7 @@
     <EmbeddedResource Include="GUI\Timeline\QuestionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditorAnswerRow.layout" />
     <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\TimelineAnalyzer.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineIndexEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />

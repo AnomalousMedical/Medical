@@ -27,6 +27,7 @@ namespace Medical
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
+        public event SingleArgumentEvent<TimelineController, Timeline> EditingTimelineChanged;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
@@ -390,6 +391,10 @@ namespace Medical
                 if (editingTimeline != null)
                 {
                     editingTimeline.TimelineController = this;
+                }
+                if (EditingTimelineChanged != null)
+                {
+                    EditingTimelineChanged.Invoke(this, editingTimeline);
                 }
             }
         }

@@ -48,6 +48,7 @@ namespace Medical.GUI
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
+        TimelineAnalyzer timelineAnalyzer;
 
         private Button playButton;
         private Button rewindButton;
@@ -127,6 +128,8 @@ namespace Medical.GUI
             analyzeMenu.Visible = false;
             MenuItem dumpPostActions = analyzeMenu.addItem("Dump PostActions to Log");
             dumpPostActions.MouseButtonClick += new MyGUIEvent(dumpPostActions_MouseButtonClick);
+            MenuItem openAnalyzer = analyzeMenu.addItem("Open Timeline Analyzer");
+            openAnalyzer.MouseButtonClick += new MyGUIEvent(openAnalyzer_MouseButtonClick);
             analyzeMenuButton = new ShowMenuButton(analyzeMenuItem, analyzeMenu);
            
             //Remove action button
@@ -177,6 +180,9 @@ namespace Medical.GUI
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);
 
+            timelineAnalyzer = new TimelineAnalyzer(timelineController);
+            dialogManager.addManagedDialog(timelineAnalyzer);
+
             //Add tracks to timeline.
             actionFactory = new TimelineActionFactory(propertiesScrollView, editorGUI);
             foreach (TimelineActionFactoryData actionProp in actionFactory.ActionProperties)
@@ -196,6 +202,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            timelineAnalyzer.Dispose();
             actionFactory.Dispose();
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
@@ -593,6 +600,11 @@ namespace Medical.GUI
             }
             Log.Debug("");
             Log.Debug("");
+        }
+
+        void openAnalyzer_MouseButtonClick(Widget source, EventArgs e)
+        {
+            timelineAnalyzer.open(false);
         }
 
         #endregion
