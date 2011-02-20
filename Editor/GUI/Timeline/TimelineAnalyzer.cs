@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using System.IO;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -34,10 +35,13 @@ namespace Medical.GUI
 
             MenuItem open = analyzeMenuCtrl.addItem("Open");
             open.MouseButtonClick += new MyGUIEvent(open_MouseButtonClick);
+            analyzeMenuCtrl.addItem("", MenuItemType.Separator);
             MenuItem findReferences = analyzeMenuCtrl.addItem("Find All References");
             findReferences.MouseButtonClick += new MyGUIEvent(findReferences_MouseButtonClick);
             MenuItem listTargets = analyzeMenuCtrl.addItem("List All Targets");
             listTargets.MouseButtonClick += new MyGUIEvent(listTargets_MouseButtonClick);
+            MenuItem dumpInfo = analyzeMenuCtrl.addItem("Dump Info to Log");
+            dumpInfo.MouseButtonClick += new MyGUIEvent(dumpInfo_MouseButtonClick);
             analyzeMenuCtrl.addItem("", MenuItemType.Separator);
             MenuItem reset = analyzeMenuCtrl.addItem("Reset to Current");
             reset.MouseButtonClick += new MyGUIEvent(reset_MouseButtonClick);
@@ -45,11 +49,23 @@ namespace Medical.GUI
             lastQuery = window.findWidget("LastQuery") as StaticText;
         }
 
+        void dumpInfo_MouseButtonClick(Widget source, EventArgs e)
+        {
+            String tlFile = timelineList.getItemNameAt(timelineList.getIndexSelected());
+            Log.Debug("-----------------------------------------------------------");
+            Timeline tl = timelineController.openTimeline(tlFile);
+            Log.Debug("Dumping post actions for timeline \"{0}\".", tl.SourceFile);
+            tl.dumpPostActionsToLog();
+            Log.Debug("-----------------------------------------------------------");
+            Log.Debug("");
+        }
+
         void reset_MouseButtonClick(Widget source, EventArgs e)
         {
             timelineList.removeAllItems();
             addTimeline(timelineController.EditingTimeline, "Starting Point");
             setLastQuery("Starting point reset", timelineController.EditingTimeline.SourceFile);
+
         }
 
         void open_MouseButtonClick(Widget source, EventArgs e)
@@ -69,7 +85,8 @@ namespace Medical.GUI
             {
                 TimelineStaticInfo info = new EndsWithStaticInfo(".tl");
 
-                Timeline targetListTl = timelineController.EditingTimeline;
+                String tlFile = timelineList.getItemNameAt(timelineList.getIndexSelected());
+                Timeline targetListTl = timelineController.openTimeline(tlFile);
                 targetListTl.findFileReference(info);
                 if (info.HasMatches)
                 {
@@ -81,6 +98,7 @@ namespace Medical.GUI
                         timelineList.addItem(fileName);
                         uint newIndex = timelineList.getItemCount() - 1;
                         timelineList.setSubItemNameAt(1, newIndex, infoStr);
+                        checkSelection();
                     }
                     setLastQuery("List targets", targetListTl.SourceFile);
                 }
@@ -134,6 +152,7 @@ namespace Medical.GUI
             {
                 timelineList.removeAllItems();
                 addTimeline(arg, "Starting Point");
+                setLastQuery("Edit timeline changed", arg.SourceFile);
             }
         }
 
@@ -145,6 +164,15 @@ namespace Medical.GUI
                 timelineList.addItem(fileName);
                 uint newIndex = timelineList.getItemCount() - 1;
                 timelineList.setSubItemNameAt(1, newIndex, info);
+                checkSelection();
+            }
+        }
+
+        void checkSelection()
+        {
+            if (!timelineList.hasItemSelected() && timelineList.getItemCount() == 1)
+            {
+                timelineList.setIndexSelected(0);
             }
         }
 
