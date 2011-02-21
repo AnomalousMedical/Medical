@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using Medical.GUI;
+using SoundPlugin;
 
 namespace Medical.Controller
 {
@@ -28,6 +29,8 @@ namespace Medical.Controller
         private bool activeWindow = false;
         private MDILayoutManager layoutManager;
         private Button closeButton;
+        private Widget volumePanel;
+        private VScroll volumeSlider;
 
         /// <summary>
         /// Constructor. Can load custom layout files for the header. These files may contain two buttons for custom behavior:
@@ -41,6 +44,14 @@ namespace Medical.Controller
         {
             guiLayout = LayoutManager.Instance.loadLayout("Medical.Layout.MDI.MDIWindow.layout");
             mainWidget = guiLayout.getWidget(0);
+
+            volumePanel = guiLayout.getWidget(1);
+            volumePanel.Visible = false;
+
+            SoundConfig.MasterVolumeChanged += SoundConfig_MasterVolumeChanged;
+            volumeSlider = volumePanel.findWidget("VolumeSlider") as VScroll;
+            volumeSlider.ScrollChangePosition += new MyGUIEvent(volumeSlider_ScrollChangePosition);
+            SoundConfig_MasterVolumeChanged(null, null);
 
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
             if (captionButton != null)
@@ -64,6 +75,7 @@ namespace Medical.Controller
         public void Dispose()
         {
             LayoutManager.Instance.unloadLayout(guiLayout);
+            SoundConfig.MasterVolumeChanged -= SoundConfig_MasterVolumeChanged;
         }
 
         public Widget findChildWidget(String name)
@@ -110,6 +122,7 @@ namespace Medical.Controller
         public override void layout()
         {
             mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.Height);
+            volumePanel.setCoord((int)(Location.x + WorkingSize.Width - volumePanel.Width), (int)Location.y + mainWidget.Height, volumePanel.Width, volumePanel.Height);
             if (content != null)
             {
                 content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height);
@@ -170,6 +183,7 @@ namespace Medical.Controller
             {
                 closeButton.Visible = value;
                 captionButton.Visible = value;
+                volumePanel.Visible = !value;
             }
         }
 
@@ -300,6 +314,16 @@ namespace Medical.Controller
             {
                 MouseDragFinished.Invoke(this, me.Position.x, me.Position.y);
             }
+        }
+
+        void volumeSlider_ScrollChangePosition(Widget source, EventArgs e)
+        {
+            SoundConfig.MasterVolume = (volumeSlider.ScrollRange - volumeSlider.ScrollPosition) / (float)volumeSlider.ScrollRange;
+        }
+
+        void SoundConfig_MasterVolumeChanged(object sender, EventArgs e)
+        {
+            volumeSlider.ScrollPosition = (uint)(volumeSlider.ScrollRange - volumeSlider.ScrollRange * SoundConfig.MasterVolume);
         }
     }
 }

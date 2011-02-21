@@ -6,4 +6,10 @@
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="332 3 24 20" align="Right Top" name="CloseButton"/>
     </Widget>
+    <Widget type="Widget" skin="PanelEmpty" position="417 137 28 140" layer="Back" name="VolumePanel">
+        <Widget type="VScroll" skin="VSlider" position="0 0 28 140" align="Stretch" name="VolumeSlider">
+            <Property key="Scroll_Range" value="1000"/>
+            <Property key="Scroll_Position" value="0"/>
+        </Widget>
+    </Widget>
 </MyGUI>

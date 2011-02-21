@@ -144,6 +144,8 @@ namespace Medical
 
             //Initialize controllers
             medicalScene = new MedicalSceneController(pluginManager);
+
+            SoundConfig.initialize(MedicalConfig.ConfigFile);
         }
 
         /// <summary>
