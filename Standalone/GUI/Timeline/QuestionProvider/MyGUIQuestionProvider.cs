@@ -50,10 +50,9 @@ namespace Medical.GUI
                 light = !light;
             }
 
-            Size2 canvasSize = answerScroll.CanvasSize;
             answerScroll.CanvasSize = new Size2(answerWidth, verticalPosition);
 
-            int windowHeight = verticalPosition + 42 + answerScroll.Top;
+            int windowHeight = verticalPosition + 47 + answerScroll.Top;
             if(windowHeight > Gui.Instance.getViewHeight() - 100)
             {
                 windowHeight = Gui.Instance.getViewHeight() - 100;
