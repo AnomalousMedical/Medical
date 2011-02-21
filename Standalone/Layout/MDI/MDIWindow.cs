@@ -31,6 +31,7 @@ namespace Medical.Controller
         private Button closeButton;
         private Widget volumePanel;
         private VScroll volumeSlider;
+        private CheckButton volumeSliderButton;
 
         /// <summary>
         /// Constructor. Can load custom layout files for the header. These files may contain two buttons for custom behavior:
@@ -53,6 +54,10 @@ namespace Medical.Controller
             volumeSlider.ScrollChangePosition += new MyGUIEvent(volumeSlider_ScrollChangePosition);
             SoundConfig_MasterVolumeChanged(null, null);
 
+            volumeSliderButton = new CheckButton(volumePanel.findWidget("VolumeSliderButton") as Button);
+            volumeSliderButton.CheckedChanged += new MyGUIEvent(volumeSliderButton_CheckedChanged);
+            volumeSliderButton_CheckedChanged(null, null);
+
             captionButton = mainWidget.findWidget("CaptionButton") as Button;
             if (captionButton != null)
             {
@@ -67,6 +72,11 @@ namespace Medical.Controller
             {
                 closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
             }
+        }
+
+        void volumeSliderButton_CheckedChanged(Widget source, EventArgs e)
+        {
+            volumeSlider.Visible = volumeSliderButton.Checked;
         }
 
         /// <summary>
@@ -122,7 +132,7 @@ namespace Medical.Controller
         public override void layout()
         {
             mainWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, mainWidget.Height);
-            volumePanel.setCoord((int)(Location.x + WorkingSize.Width - volumePanel.Width), (int)Location.y + mainWidget.Height, volumePanel.Width, volumePanel.Height);
+            volumePanel.setCoord((int)(Location.x + WorkingSize.Width - volumePanel.Width), (int)(Location.y + WorkingSize.Height) - volumePanel.Height, volumePanel.Width, volumePanel.Height);
             if (content != null)
             {
                 content.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height);
