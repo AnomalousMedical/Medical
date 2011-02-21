@@ -30,7 +30,7 @@ namespace Medical.Controller
         private MDILayoutManager layoutManager;
         private Button closeButton;
         private Widget volumePanel;
-        private HScroll volumeSlider;
+        private VScroll volumeSlider;
         private CheckButton volumeSliderButton;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Medical.Controller
             volumePanel.Visible = false;
 
             SoundConfig.MasterVolumeChanged += SoundConfig_MasterVolumeChanged;
-            volumeSlider = volumePanel.findWidget("VolumeSlider") as HScroll;
+            volumeSlider = volumePanel.findWidget("VolumeSlider") as VScroll;
             volumeSlider.ScrollChangePosition += new MyGUIEvent(volumeSlider_ScrollChangePosition);
             SoundConfig_MasterVolumeChanged(null, null);
 
@@ -72,11 +72,6 @@ namespace Medical.Controller
             {
                 closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
             }
-        }
-
-        void volumeSliderButton_CheckedChanged(Widget source, EventArgs e)
-        {
-            volumeSlider.Visible = volumeSliderButton.Checked;
         }
 
         /// <summary>
@@ -326,14 +321,31 @@ namespace Medical.Controller
             }
         }
 
+        bool allowVolumeUpdates = true;
+
         void volumeSlider_ScrollChangePosition(Widget source, EventArgs e)
         {
+            allowVolumeUpdates = false;
             SoundConfig.MasterVolume = (volumeSlider.ScrollRange - volumeSlider.ScrollPosition) / (float)volumeSlider.ScrollRange;
+            allowVolumeUpdates = true;
         }
 
         void SoundConfig_MasterVolumeChanged(object sender, EventArgs e)
         {
-            volumeSlider.ScrollPosition = (uint)(volumeSlider.ScrollRange - volumeSlider.ScrollRange * SoundConfig.MasterVolume);
+            if (allowVolumeUpdates)
+            {
+                uint scrollPos = (uint)(volumeSlider.ScrollRange - volumeSlider.ScrollRange * SoundConfig.MasterVolume);
+                if (scrollPos >= volumeSlider.ScrollRange)
+                {
+                    --scrollPos;
+                }
+                volumeSlider.ScrollPosition = scrollPos;
+            }
+        }
+
+        void volumeSliderButton_CheckedChanged(Widget source, EventArgs e)
+        {
+            volumeSlider.Visible = volumeSliderButton.Checked;
         }
     }
 }
