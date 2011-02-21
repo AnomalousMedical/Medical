@@ -7,7 +7,7 @@
         <Widget type="Button" skin="ButtonXBig" position="332 3 24 20" align="Right Top" name="CloseButton"/>
     </Widget>
     <Widget type="Widget" skin="PanelEmpty" position="414 140 29 161" layer="Back" name="VolumePanel">
-        <Widget type="Button" skin="Button" position="3 136 24 24" align="Right Bottom" name="VolumeSliderButton">
+        <Widget type="Button" skin="ButtonSound" position="3 136 24 24" align="Right Bottom" name="VolumeSliderButton">
             <Property key="Widget_Caption" value="V"/>
         </Widget>
         <Widget type="VScroll" skin="VSlider" position_real="0 0 1 0.819876" name="VolumeSlider">
