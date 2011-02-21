@@ -55,10 +55,10 @@ namespace Medical.GUI
             listUnreferenced.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
 
             //Setup actions
-            actionManager.addAction(reset, this.reset, this.resetUndo, "Loaded from Timeline editor.");
+            actionManager.addAction(reset, this.reset, this.resetUndo, "Loaded from Timeline editor. Targets listed.");
             actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets. These are the timelines this one links to.");
             actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references. These timelines point to this one.");
-            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Loaded from Timeline editor.");
+            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Loaded from Timeline editor. Targets listed.");
             actionManager.addAction(listUnreferenced, this.listAllUnreferenced, null, "Unrefernced Timelines. These are not linked to any other timeline.");
 
             actionButtonManager.ActiveButton = listTargets;
@@ -83,30 +83,30 @@ namespace Medical.GUI
         String reset()
         {
             timelineList.removeAllItems();
-            addTimeline(timelineController.EditingTimeline, "Starting Point");
+            doListTargets(timelineController.EditingTimeline.SourceFile, false);
             return timelineController.EditingTimeline.SourceFile;
         }
 
         void resetUndo(String file)
         {
             timelineList.removeAllItems();
-            addTimeline(timelineController.openTimeline(file), "Starting Point");
+            doListTargets(file, false);
         }
 
         String listTargets()
         {
-            return doListTargets(timelineList.SelectedTimeline);
+            return doListTargets(timelineList.SelectedTimeline, true);
         }
 
         void listTargetsUndo(String file)
         {
-            if (doListTargets(file) == null)
+            if (doListTargets(file, true) == null)
             {
                 timelineList.removeAllItems();
             }
         }
 
-        String doListTargets(String tlFile)
+        String doListTargets(String tlFile, bool allowMessage)
         {
             String file = null;
             if (timelineList.HasSelection && tlFile != null && timelineController.resourceExists(tlFile))
@@ -126,7 +126,7 @@ namespace Medical.GUI
                     }
                     file = targetListTl.SourceFile;
                 }
-                else
+                else if(allowMessage)
                 {
                     MessageBox.show("No targets found.", "No Matches", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
                 }

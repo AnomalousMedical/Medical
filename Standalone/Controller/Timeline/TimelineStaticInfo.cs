@@ -90,7 +90,14 @@ namespace Medical
 
         public override bool matchesPattern(String check)
         {
-            return check.EndsWith(searchPattern);
+            if (check != null)
+            {
+                return check.EndsWith(searchPattern);
+            }
+            else
+            {
+                return check == searchPattern;
+            }
         }
     }
 }
