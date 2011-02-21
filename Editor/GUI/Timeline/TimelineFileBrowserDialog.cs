@@ -14,8 +14,8 @@ namespace Medical.GUI
         private FileChosenCallback callback;
         private String filterString;
 
-        public TimelineFileBrowserDialog(TimelineController timelineController)
-            : base("Medical.GUI.Timeline.TimelineFileBrowserDialog.layout")
+        public TimelineFileBrowserDialog(TimelineController timelineController, String persistName)
+            : base("Medical.GUI.Timeline.TimelineFileBrowserDialog.layout", persistName)
         {
             this.timelineController = timelineController;
 
@@ -44,6 +44,18 @@ namespace Medical.GUI
             this.filterString = filterString;
             this.callback = callback;
             this.open(true);
+        }
+
+        /// <summary>
+        /// This method will open the browser non modal and allow files to be selected as much as desired.
+        /// </summary>
+        /// <param name="filterString"></param>
+        /// <param name="callback"></param>
+        public void openForBrowsing(String filterString, FileChosenCallback callback)
+        {
+            this.filterString = filterString;
+            this.callback = callback;
+            this.open(false);
         }
 
         public override void deserialize(Engine.ConfigFile configFile)
@@ -98,7 +110,10 @@ namespace Medical.GUI
             {
                 SelectedFile = fileList.getItemDataAt(selectedIndex).ToString();
                 callback.Invoke(SelectedFile);
-                this.close();
+                if (Modal)
+                {
+                    this.close();
+                }
             }
             else
             {

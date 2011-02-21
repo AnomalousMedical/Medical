@@ -45,6 +45,7 @@ namespace Medical.GUI
         private ChangeSceneEditor changeSceneEditor;
         private NewProjectDialog newProjectDialog;
         private TimelineFileBrowserDialog fileBrowserDialog;
+        private TimelineFileBrowserDialog openTimelineFileBrowserDialog;
         private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
@@ -165,9 +166,12 @@ namespace Medical.GUI
             newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
-            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController);
+            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__Main");
             timelineController.FileBrowser = fileBrowserDialog;
             dialogManager.addManagedDialog(fileBrowserDialog);
+
+            openTimelineFileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__OpenTimeline");
+            dialogManager.addManagedDialog(openTimelineFileBrowserDialog);
 
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
@@ -196,6 +200,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            openTimelineFileBrowserDialog.Dispose();
             actionFactory.Dispose();
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
@@ -457,9 +462,10 @@ namespace Medical.GUI
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
-            fileBrowserDialog.promptForFile("*.tl", openTimelineFile);
-            fileBrowserDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            fileBrowserDialog.ensureVisible();
+            if (!openTimelineFileBrowserDialog.Visible)
+            {
+                openTimelineFileBrowserDialog.openForBrowsing("*.tl", openTimelineFile);
+            }
             fileMenu.setVisibleSmooth(false);
         }
 
