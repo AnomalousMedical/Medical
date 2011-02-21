@@ -30,7 +30,7 @@ namespace Medical.Controller
         private MDILayoutManager layoutManager;
         private Button closeButton;
         private Widget volumePanel;
-        private VScroll volumeSlider;
+        private HScroll volumeSlider;
         private CheckButton volumeSliderButton;
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Medical.Controller
             volumePanel.Visible = false;
 
             SoundConfig.MasterVolumeChanged += SoundConfig_MasterVolumeChanged;
-            volumeSlider = volumePanel.findWidget("VolumeSlider") as VScroll;
+            volumeSlider = volumePanel.findWidget("VolumeSlider") as HScroll;
             volumeSlider.ScrollChangePosition += new MyGUIEvent(volumeSlider_ScrollChangePosition);
             SoundConfig_MasterVolumeChanged(null, null);
 

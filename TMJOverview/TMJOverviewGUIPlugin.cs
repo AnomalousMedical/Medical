@@ -32,12 +32,21 @@ namespace Medical
         {
             this.standaloneController = standaloneController;
             this.guiManager = guiManager;
+            guiManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/TMJOverview/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
 
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
+        }
+
+        void guiManager_ScreenSizeChanged(int width, int height)
+        {
+            if (intro != null && intro.Visible)
+            {
+                intro.center();
+            }
         }
 
         public void createDialogs(DialogManager dialogManager)

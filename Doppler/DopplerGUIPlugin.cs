@@ -50,6 +50,7 @@ namespace Medical
         {
             this.standaloneController = standaloneController;
             this.guiManager = guiManager;
+            guiManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/Doppler/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
@@ -236,6 +237,14 @@ namespace Medical
             if(systemMenu != null)
             {
                 systemMenu.FileMenuEnabled = enable;
+            }
+        }
+
+        void guiManager_ScreenSizeChanged(int width, int height)
+        {
+            if (intro != null && intro.Visible)
+            {
+                intro.center();
             }
         }
     }

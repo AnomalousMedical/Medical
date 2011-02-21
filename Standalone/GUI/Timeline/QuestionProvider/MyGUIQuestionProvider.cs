@@ -8,24 +8,38 @@ using Engine.Platform;
 
 namespace Medical.GUI
 {
-    class MyGUIQuestionProvider : Dialog, IQuestionProvider, OSWindowListener
+    class MyGUIQuestionProvider : Dialog, IQuestionProvider
     {
         private ScrollView answerScroll;
         private Edit questionEdit;
         private List<PromptTextArea> textAreas = new List<PromptTextArea>();
         private PromptAnswerSelected answerSelectedCallback;
         private GUIManager guiManager;
+        private int verticalPosition = 0;
 
         public MyGUIQuestionProvider(GUIManager guiManager)
             :base("Medical.GUI.Timeline.QuestionProvider.MyGUIQuestionProvider.layout")
         {
             this.guiManager = guiManager;
+            guiManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
 
             answerScroll = window.findWidget("Answers") as ScrollView;
             questionEdit = window.findWidget("Question") as Edit;
             questionEdit.Font = "font_DejaVuSans.Large_Question";
+        }
 
-            PluginManager.Instance.RendererPlugin.PrimaryWindow.Handle.addListener(this);
+        void guiManager_ScreenSizeChanged(int width, int height)
+        {
+            if (Visible)
+            {
+                int windowHeight = verticalPosition + 47 + answerScroll.Top;
+                if (windowHeight > height - 100)
+                {
+                    windowHeight = height - 100;
+                }
+                window.setSize(window.Width, windowHeight);
+                window.setPosition((width - window.Width) / 2, (height - window.Height) / 2);
+            }
         }
 
         public override void Dispose()
@@ -37,7 +51,7 @@ namespace Medical.GUI
         public void addQuestion(PromptQuestion question)
         {
             bool light = true;
-            int verticalPosition = 0;
+            verticalPosition = 0;
             questionEdit.Caption = question.Text;
 
             PromptTextArea answerTextArea = null;
@@ -88,37 +102,5 @@ namespace Medical.GUI
             window.setVisibleSmooth(false);
             answerSelectedCallback = null;
         }
-
-        #region OSWindowListener Members
-
-        public void closed(OSWindow window)
-        {
-            
-        }
-
-        public void closing(OSWindow window)
-        {
-            
-        }
-
-        public void focusChanged(OSWindow window)
-        {
-            
-        }
-
-        public void moved(OSWindow window)
-        {
-            
-        }
-
-        public void resized(OSWindow window)
-        {
-            if (Visible)
-            {
-                center();
-            }
-        }
-
-        #endregion
     }
 }

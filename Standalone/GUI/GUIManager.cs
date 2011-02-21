@@ -122,6 +122,10 @@ namespace Medical.GUI
 
             OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
 
+            screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
+            screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
+            
+
             foreach (GUIPlugin plugin in plugins)
             {
                 plugin.initializeGUI(standaloneController, this);
@@ -132,8 +136,6 @@ namespace Medical.GUI
             stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
-            screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
-            screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
             innerBorderLayout = new BorderLayoutContainer();
 
             //Dialogs
@@ -374,6 +376,18 @@ namespace Medical.GUI
         {
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
+        }
+
+        public event ScreenSizeChanged ScreenSizeChanged
+        {
+            add
+            {
+                screenLayoutManager.ScreenSizeChanged += value;
+            }
+            remove
+            {
+                screenLayoutManager.ScreenSizeChanged -= value;
+            }
         }
     }
 }
