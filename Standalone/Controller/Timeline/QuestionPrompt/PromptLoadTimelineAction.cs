@@ -34,7 +34,7 @@ namespace Medical
         public void dumpToLog()
         {
             Log.Debug("|--- PromptLoadTimelineAction");
-            Log.Debug("|------- Timeline {0}", TargetTimeline);
+            Log.Debug("|------- {0}", TargetTimeline);
         }
 
         public void findFileReference(TimelineStaticInfo info, String answerText)

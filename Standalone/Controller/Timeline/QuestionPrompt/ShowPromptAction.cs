@@ -42,7 +42,14 @@ namespace Medical
 
         public override void dumpToLog()
         {
-            Log.Debug("| ShowPromptAction");
+            if (SoundFile != null)
+            {
+                Log.Debug("| ShowPromptAction - Sound File \"{0}\"", SoundFile);
+            }
+            else
+            {
+                Log.Debug("| ShowPromptAction");
+            }
             foreach (PromptQuestion question in questions)
             {
                 question.dumpToLog();

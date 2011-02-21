@@ -80,10 +80,6 @@ namespace Medical
             if (index != -1 && index <= postActionIndex)
             {
                 --postActionIndex;
-                if (postActionIndex < 0)
-                {
-                    postActionIndex = 0;
-                }
             }
             action._setTimeline(null);
         }
