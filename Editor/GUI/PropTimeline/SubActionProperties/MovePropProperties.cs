@@ -30,7 +30,7 @@ namespace Medical.GUI
             PropTimelineData propData = (PropTimelineData)data;
             moveProp = (MovePropAction)propData.Action;
             translationEdit.OnlyText = moveProp.Translation.ToString();
-            rotationEdit.OnlyText = moveProp.Rotation.ToString();
+            rotationEdit.OnlyText = moveProp.Rotation.getEuler().ToString();
             fireUpdatePropPreview();
         }
 
@@ -64,7 +64,7 @@ namespace Medical.GUI
             set
             {
                 moveProp.Rotation = value;
-                rotationEdit.OnlyText = moveProp.Rotation.ToString();
+                rotationEdit.OnlyText = moveProp.Rotation.getEuler().ToString();
             }
         }
 

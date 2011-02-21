@@ -68,7 +68,8 @@ namespace Medical.GUI
 
         void menuShortcut_FirstFrameUpEvent()
         {
-            if (AllowShortcuts)
+
+            if (AllowShortcuts && !Gui.Instance.HandledKeyboardButtons)
             {
                 mainButton_MouseButtonClick(null, null);
             }

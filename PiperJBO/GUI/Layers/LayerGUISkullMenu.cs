@@ -36,7 +36,7 @@ namespace Medical.GUI
 
         void eminanceShortcut_FirstFrameUpEvent()
         {
-            if (AllowShortcuts)
+            if (AllowShortcuts && !Gui.Instance.HandledKeyboardButtons)
             {
                 ShowEminance = !ShowEminance;
             }
