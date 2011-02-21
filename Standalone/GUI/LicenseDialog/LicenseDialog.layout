@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="Window" position="338 250 479 162" layer="Back">
-        <Widget type="Edit" skin="WordWrapSimple" position="3 5 474 51" name="Prompt">
+    <Widget type="Window" skin="Window" position="338 237 479 175" layer="Back">
+        <Widget type="Edit" skin="WordWrapSimple" position="3 5 474 61" name="Prompt">
             <Property key="Edit_Static" value="true"/>
             <Property key="Widget_Caption" value="Please enter your License Key for $(PROGRAM_NAME). Please keep your key in a safe place and do not share it with others. Keys are case sensitive, so it is reccomended you turn on Caps Lock. Also be sure to type the dashes."/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="4 59 28 15">
+        <Widget type="StaticText" skin="StaticText" position="4 69 28 15">
             <Property key="Widget_Caption" value="Key"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="6 78 467 22" name="KeyText"/>
-        <Widget type="Button" skin="Button" position="6 114 82 25" name="ValidateButton">
+        <Widget type="Edit" skin="Edit" position="6 88 467 22" name="KeyText"/>
+        <Widget type="Button" skin="Button" position="6 124 82 25" name="ValidateButton">
             <Property key="Widget_Caption" value="Validate"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="92 114 82 25" name="CancelButton">
+        <Widget type="Button" skin="Button" position="92 124 82 25" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>
         </Widget>
     </Widget>
