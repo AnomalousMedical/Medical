@@ -52,6 +52,10 @@ namespace Medical
                 makeProp();
                 sequencer.skipTo(timelineTime - StartTime);
             }
+            else
+            {
+                finished = true;
+            }
         }
 
         public override void stopped(float timelineTime, Clock clock)

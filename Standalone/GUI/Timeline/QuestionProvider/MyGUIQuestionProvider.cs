@@ -52,6 +52,13 @@ namespace Medical.GUI
 
             Size2 canvasSize = answerScroll.CanvasSize;
             answerScroll.CanvasSize = new Size2(answerWidth, verticalPosition);
+
+            int windowHeight = verticalPosition + 42 + answerScroll.Top;
+            if(windowHeight > Gui.Instance.getViewHeight() - 100)
+            {
+                windowHeight = Gui.Instance.getViewHeight() - 100;
+            }
+            window.setSize(window.Width, windowHeight);
         }
 
         public void showPrompt(PromptAnswerSelected answerSelectedCallback)
