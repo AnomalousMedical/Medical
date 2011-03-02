@@ -193,7 +193,7 @@ namespace Medical
             Doppler.createPropDefinition(propFactory);
             Syringe.createPropDefinition(propFactory);
             JVAProp.createPropDefinition(propFactory);
-            //Mustache.createPropDefinition(propFactory);
+            Mustache.createPropDefinition(propFactory);
 
             //Timeline
             timelineController = new TimelineController(this);

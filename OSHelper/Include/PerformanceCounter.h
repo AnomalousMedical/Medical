@@ -9,7 +9,8 @@
 
 #ifdef MAC_OSX
 #include <sys/time.h>
-#define Int64 __int64_t
+#include <stdint.h>
+#define Int64 int64_t
 #endif
 
 /// <summary>

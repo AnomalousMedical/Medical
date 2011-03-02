@@ -57,7 +57,7 @@ bool PerformanceCounter::initialize()
 #endif
 
 #ifdef MAC_OSX
-	gettimeofday(&start, NULL);
+	gettimeofday(&start, NULL);	
 	return true;
 #endif
 }
@@ -97,7 +97,8 @@ Int64 PerformanceCounter::getCurrentTime()
 #ifdef MAC_OSX
 	struct timeval now;
 	gettimeofday(&now, NULL);
-	return (now.tv_sec - start.tv_sec)*1000000+(now.tv_usec - start.tv_usec);
+	Int64 intNow = (Int64)(now.tv_sec - start.tv_sec)*1000000LL+(Int64)(now.tv_usec - start.tv_usec);
+	return intNow;
 #endif
 }
 

@@ -7,6 +7,6 @@
 # Copyright 2011 Anomalous Software. All rights reserved.
 
 APP_ORIGINAL_NAME="Doppler"
-APP_FINAL_NAME="Doppler Diagnostic Module"
+APP_FINAL_NAME="Doppler Diagnosis"
 
 sh ../MakeDeployableBundle.sh "$APP_ORIGINAL_NAME" "$APP_FINAL_NAME"
