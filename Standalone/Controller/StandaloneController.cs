@@ -68,6 +68,7 @@ namespace Medical
 
             MedicalConfig config = new MedicalConfig(String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)), app.ProgramFolder, app.UpdateURL);
             guiManager = new GUIManager(this);
+            ProductTracker.SetInstalledLocation(app.ProductID, MedicalConfig.ProgramDirectory);
 
             MyGUIInterface.Theme = PlatformConfig.ThemeFile;
 

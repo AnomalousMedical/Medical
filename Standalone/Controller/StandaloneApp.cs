@@ -27,6 +27,8 @@ namespace Medical.Controller
 
         public abstract String DefaultScene { get; }
 
+        public abstract int ProductID { get; }
+
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }

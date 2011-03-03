@@ -134,6 +134,14 @@ namespace Medical
             }
         }
 
+        public override int ProductID
+        {
+            get
+            {
+                return 2;
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>
