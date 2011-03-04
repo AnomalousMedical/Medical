@@ -87,6 +87,7 @@
     <Compile Include="Controller\Camera\SavedCameraController.cs" />
     <Compile Include="Controller\Camera\SavedCameraDefinition.cs" />
     <Compile Include="Controller\Config\EngineConfig.cs" />
+    <Compile Include="Controller\Config\FolderFinder.cs" />
     <Compile Include="Controller\Config\MacPlatformConfig.cs" />
     <Compile Include="Controller\Config\MedicalConfig.cs" />
     <Compile Include="Controller\Config\PlatformConfig.cs" />

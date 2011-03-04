@@ -11,7 +11,7 @@ namespace Medical
     /// </summary>
     class ProductTracker
     {
-        private static String productsFile = String.Format("{0}/Anomalous Medical/installedProducts.ini", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        private static String productsFile = String.Format("{0}/installedProducts.ini", FolderFinder.AnomalousMedicalRoot);
 
         private ProductTracker()
         {
