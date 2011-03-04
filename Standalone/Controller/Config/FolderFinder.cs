@@ -13,6 +13,7 @@ namespace Medical
     {
         private static String root = String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
         private static String download = Path.Combine(root, "Download");
+        private static String installLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Anomalous Medical");
 
         private FolderFinder()
         {
@@ -32,6 +33,30 @@ namespace Medical
             get
             {
                 return download;
+            }
+        }
+
+        public static String InstallLocation
+        {
+            get
+            {
+                return installLocation;
+            }
+        }
+
+        public static String ExecutableFolder
+        {
+            get
+            {
+                String[] args = Environment.GetCommandLineArgs();
+                if (args.Length > 0)
+                {
+                    return Path.GetDirectoryName(args[0]);
+                }
+                else
+                {
+                    return Path.GetFullPath(".");
+                }
             }
         }
     }
