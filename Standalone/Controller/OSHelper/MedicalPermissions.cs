@@ -51,19 +51,19 @@ namespace Medical.Controller
     }
 #endif
 
-    public class UserPermissions : IDisposable
+    public class MedicalPermissions : IDisposable
     {
-        public static UserPermissions Instance { get; private set; }
+        public static MedicalPermissions Instance { get; private set; }
 
         private IntPtr userPermissions;
         private String featureLevelString;
 
 #if !ENABLE_HASP_PROTECTION
-        public UserPermissions(SimulatedVersion simVersion)
+        public MedicalPermissions(SimulatedVersion simVersion)
         {
             userPermissions = UserPermissions_create(simVersion);
 #else
-        public UserPermissions()
+        public MedicalPermissions()
         {
             userPermissions = UserPermissions_create();
 #endif

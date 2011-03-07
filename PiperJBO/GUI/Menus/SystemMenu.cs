@@ -65,7 +65,7 @@ namespace Medical.GUI
 
             menu.append(fileMenu);
 
-            if (PlatformConfig.AllowCloneWindows && UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
+            if (PlatformConfig.AllowCloneWindows && MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 //Utilities Menu
                 NativeMenu utilitiesMenu = menu.createMenu("&Utilities");

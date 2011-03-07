@@ -21,30 +21,17 @@ namespace Medical
         public event EventHandler KeyInvalid;
 
         private LicenseDialog licenseDialog;
-        private String programName;
-        private String keyFile;
-        private String key;
+
+        private UserPermissions userPermissions;
 
         public LicenseManager(String programName, String keyFile)
         {
-            this.programName = programName;
-            this.keyFile = keyFile;
-
-            KeyValid = false;
-            key = "";
-            if (File.Exists(keyFile))
-            {
-                using (StreamReader stream = new StreamReader(File.OpenRead(keyFile)))
-                {
-                    key = stream.ReadLine();
-                    KeyValid = KeyChecker.checkValid(programName, key);
-                }
-            }
+            userPermissions = new UserPermissions(keyFile, programName, getMachineId);
         }
 
         public void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(programName);
+            licenseDialog = new LicenseDialog(userPermissions.ProgramName);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.center();
@@ -55,8 +42,13 @@ namespace Medical
         {
             get
             {
-                return key;
+                return userPermissions.ProductKey;
             }
+        }
+
+        private String getMachineId()
+        {
+            return "OfflineTest";
         }
 
         void licenseDialog_KeyInvalid(object sender, EventArgs e)
@@ -70,18 +62,24 @@ namespace Medical
 
         void licenseDialog_KeyEnteredSucessfully(object sender, EventArgs e)
         {
-            key = licenseDialog.Key;
-            using (StreamWriter fileStream = new StreamWriter(new FileStream(keyFile, FileMode.Create)))
-            {
-                fileStream.WriteLine(key);
-            }
-            licenseDialog.Dispose();
-            if (KeyEnteredSucessfully != null)
-            {
-                KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
-            }
+            //key = licenseDialog.Key;
+            //using (StreamWriter fileStream = new StreamWriter(new FileStream(keyFile, FileMode.Create)))
+            //{
+            //    fileStream.WriteLine(key);
+            //}
+            //licenseDialog.Dispose();
+            //if (KeyEnteredSucessfully != null)
+            //{
+            //    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+            //}
         }
 
-        public bool KeyValid { get; private set; }
+        public bool KeyValid
+        {
+            get
+            {
+                return userPermissions.Valid;
+            }
+        }
     }
 }

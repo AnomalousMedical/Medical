@@ -149,7 +149,7 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
             //taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_FULL_RENDERING))
+            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_FULL_RENDERING))
             {
                 DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
                 renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
@@ -163,7 +163,7 @@ namespace Medical.GUI
             }
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-            if (PlatformConfig.AllowCloneWindows && UserPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
+            if (PlatformConfig.AllowCloneWindows && MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 taskbar.addItem(cloneWindow);
             }

@@ -77,8 +77,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Engine\KeyGenerator\KeyAlgorithm\KeyChecker.cs">
+    <Compile Include="..\..\DRM\DRMClient\License\AnomalousLicense.cs">
+      <Link>Controller\OSHelper\AnomalousLicense.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DRM\DRMClient\ProductKey\KeyChecker.cs">
       <Link>Controller\OSHelper\KeyChecker.cs</Link>
+    </Compile>
+    <Compile Include="..\..\DRM\DRMClient\UserPermissions.cs">
+      <Link>Controller\OSHelper\UserPermissions.cs</Link>
     </Compile>
     <Compile Include="Controller\Background\BackgroundController.cs" />
     <Compile Include="Controller\Background\ViewportBackground.cs" />
@@ -179,7 +185,7 @@
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
-    <Compile Include="Controller\OSHelper\UserPermissions.cs" />
+    <Compile Include="Controller\OSHelper\MedicalPermissions.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
     <Compile Include="Controller\SceneViews\SingleViewCloneWindow.cs" />

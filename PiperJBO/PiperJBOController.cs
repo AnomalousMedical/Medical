@@ -10,7 +10,7 @@ namespace Medical
 {
     class PiperJBOController : StandaloneApp
     {
-        UserPermissions permissions;
+        MedicalPermissions permissions;
         StandaloneController controller;
         bool startupSuceeded = false;
 
@@ -45,22 +45,22 @@ namespace Medical
         {
             bool connectionLoop = true;
 #if ENABLE_HASP_PROTECTION
-            permissions = new UserPermissions();
+            permissions = new MedicalPermissions();
 #else
-            permissions = new UserPermissions(getSimulatedVersion());
+            permissions = new MedicalPermissions(getSimulatedVersion());
 #endif
             while (connectionLoop)
             {
-                ConnectionResult result = UserPermissions.Instance.checkConnection();
+                ConnectionResult result = MedicalPermissions.Instance.checkConnection();
                 if (result == ConnectionResult.Ok)
                 {
                     connectionLoop = false;
-                    if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
+                    if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
                     {
                         determineResourceFiles();
                         controller = new StandaloneController(this);
                         controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
-                        if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+                        if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
                         {
                             controller.GUIManager.addPlugin("Editor.dll");
                         }
@@ -117,7 +117,7 @@ namespace Medical
             twoWindows.addPreset(preset);
             windowPresetController.addPresetSet(twoWindows);
 
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
                 //threeWindows.Image = Resources.ThreeWindowLayout;
@@ -227,18 +227,18 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Background", "EngineArchive", "Background", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             ViewportBackground background = null;
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOMRIBackground", 900, 500, 500, 5, 5);
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) ||
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) ||
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
             }
@@ -249,7 +249,7 @@ namespace Medical
         {
             CamerasFile = null;
             LayersFile = null;
-            if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 this.addMovementSequenceDirectory("/Graphics");
                 this.addMovementSequenceDirectory("/MRI");
@@ -260,8 +260,8 @@ namespace Medical
                 CamerasFile = "/GraphicsCameras.cam";
                 LayersFile = "/GraphicsLayers.lay";
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 this.addMovementSequenceDirectory("/MRI");
                 this.addMovementSequenceDirectory("/RadiographyCT");
@@ -271,9 +271,9 @@ namespace Medical
                 CamerasFile = "/MRICameras.cam";
                 LayersFile = "/MRILayers.lay";
             }
-            else if (UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) || 
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) || 
-                UserPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) || 
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) || 
+                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
             {
                 this.addMovementSequenceDirectory("/Clinical");
                 this.addMovementSequenceDirectory("/DentitionProfile");
