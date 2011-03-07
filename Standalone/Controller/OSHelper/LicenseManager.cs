@@ -38,6 +38,11 @@ namespace Medical
             licenseDialog.open(true);
         }
 
+        public bool allowFeature(int featureCode)
+        {
+            return userPermissions.allowFeature(featureCode);
+        }
+
         public String Key
         {
             get
@@ -46,9 +51,20 @@ namespace Medical
             }
         }
 
-        private String getMachineId()
+        public bool KeyValid
         {
-            return "OfflineTest";
+            get
+            {
+                return userPermissions.Valid;
+            }
+        }
+
+        public String FeatureLevelString
+        {
+            get
+            {
+                return userPermissions.FeatureLevelString;
+            }
         }
 
         void licenseDialog_KeyInvalid(object sender, EventArgs e)
@@ -74,12 +90,9 @@ namespace Medical
             //}
         }
 
-        public bool KeyValid
+        private String getMachineId()
         {
-            get
-            {
-                return userPermissions.Valid;
-            }
+            return "OfflineTest";
         }
     }
 }

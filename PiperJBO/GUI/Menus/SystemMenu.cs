@@ -25,7 +25,7 @@ namespace Medical.GUI
         private PiperJBOGUIPlugin piperGUI;
         private StandaloneController standaloneController;
 
-        public SystemMenu(NativeMenuBar menu, PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController)
+        public SystemMenu(NativeMenuBar menu, PiperJBOGUIPlugin piperGUI, StandaloneController standaloneController, LicenseManager licenseManager)
         {
             this.piperGUI = piperGUI;
             this.standaloneController = standaloneController;
@@ -65,7 +65,7 @@ namespace Medical.GUI
 
             menu.append(fileMenu);
 
-            if (PlatformConfig.AllowCloneWindows && MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
+            if (PlatformConfig.AllowCloneWindows && licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 //Utilities Menu
                 NativeMenu utilitiesMenu = menu.createMenu("&Utilities");

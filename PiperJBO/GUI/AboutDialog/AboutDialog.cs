@@ -14,7 +14,7 @@ namespace Medical.GUI
         private Widget developerPanel;
         private Widget openSourcePanel;
 
-        public AboutDialog()
+        public AboutDialog(LicenseManager licenseManager)
             : base("Medical.GUI.AboutDialog.AboutDialog.layout")
         {
             developerPanel = window.findWidget("DeveloperPanel");
@@ -30,13 +30,13 @@ namespace Medical.GUI
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
 
             StaticText serialNumberText = window.findWidget("SerialNumberText") as StaticText;
-            serialNumberText.Caption = "Serial Number " + MedicalPermissions.Instance.Id;
+            serialNumberText.Caption = "Serial Number " + licenseManager.Key;
 
             StaticText versionText = window.findWidget("VersionText") as StaticText;
             versionText.Caption = "Version " + Assembly.GetAssembly(typeof(AboutDialog)).GetName().Version;
 
             StaticText featureLevelText = window.findWidget("FeatureLevelText") as StaticText;
-            featureLevelText.Caption = MedicalPermissions.Instance.FeatureLevelString;
+            featureLevelText.Caption = licenseManager.FeatureLevelString;
 
             StaticText anomalousMedicalText = window.findWidget("AnomalousMedicalLink") as StaticText;
             anomalousMedicalText.MouseButtonClick += new MyGUIEvent(anomalousMedicalText_MouseButtonClick);

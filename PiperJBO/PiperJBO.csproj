@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{69050C1B-2CF1-418F-AE95-717322AB1EA3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -66,10 +66,12 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
     <Compile Include="GUI\Layers\LayerGUIMenu.cs" />
     <Compile Include="GUI\Layers\LayerGUISkullMenu.cs" />

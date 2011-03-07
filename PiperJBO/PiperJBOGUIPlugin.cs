@@ -39,9 +39,11 @@ namespace Medical.GUI
         private CloneWindowTaskbarItem cloneWindow;
         private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
+        private LicenseManager licenseManager;
 
-        public PiperJBOGUIPlugin()
+        public PiperJBOGUIPlugin(LicenseManager licenseManager)
         {
+            this.licenseManager = licenseManager;
             recentDocuments = new RecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
@@ -98,7 +100,7 @@ namespace Medical.GUI
             stateList = new StateListPopup(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(stateList);
 
-            aboutDialog = new AboutDialog();
+            aboutDialog = new AboutDialog(licenseManager);
 
             chooseSceneDialog = new ChooseSceneDialog();
             chooseSceneDialog.ChooseScene += new EventHandler(chooseSceneDialog_ChooseScene);
@@ -128,7 +130,7 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(sequencePlayer);
 
             //Wizards
-            wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController);
+            wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController, licenseManager);
 
             //Distortions Popup, must come after wizards
             distortionChooser = new DistortionChooser(guiManager.StateWizardController, guiManager);
@@ -149,7 +151,7 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
             //taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
-            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_FULL_RENDERING))
+            if (licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_FULL_RENDERING))
             {
                 DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
                 renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
@@ -163,7 +165,7 @@ namespace Medical.GUI
             }
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-            if (PlatformConfig.AllowCloneWindows && MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
+            if (PlatformConfig.AllowCloneWindows && licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
             {
                 taskbar.addItem(cloneWindow);
             }
@@ -171,7 +173,18 @@ namespace Medical.GUI
 
         public void finishInitialization()
         {
-            
+#if ENABLE_HASP_PROTECTION
+            bool keyValid = licenseManager.KeyValid;
+            if (!keyValid)
+            {
+                licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
+                licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
+                setInterfaceEnabled(false);
+                licenseManager.showKeyDialog();
+            }
+#else
+            bool keyValid = true;
+#endif
         }
 
         public void sceneLoaded(SimScene scene)
@@ -195,7 +208,7 @@ namespace Medical.GUI
 
         public void createMenuBar(NativeMenuBar menu)
         {
-            systemMenu = new SystemMenu(menu, this, standaloneController);
+            systemMenu = new SystemMenu(menu, this, standaloneController, licenseManager);
         }
 
         public void showOptions()

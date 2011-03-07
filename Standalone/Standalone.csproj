@@ -185,7 +185,6 @@
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Controller\OSHelper\WindowFunctions.cs" />
-    <Compile Include="Controller\OSHelper\MedicalPermissions.cs" />
     <Compile Include="Controller\SceneViews\CloneCamera.cs" />
     <Compile Include="Controller\SceneViews\MDISceneViewWindow.cs" />
     <Compile Include="Controller\SceneViews\SingleViewCloneWindow.cs" />

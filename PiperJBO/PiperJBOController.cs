@@ -5,12 +5,13 @@ using System.Text;
 using Medical.Controller;
 using Medical.GUI;
 using Engine;
+using System.IO;
 
 namespace Medical
 {
     class PiperJBOController : StandaloneApp
     {
-        MedicalPermissions permissions;
+        LicenseManager licenseManager;
         StandaloneController controller;
         bool startupSuceeded = false;
 
@@ -24,7 +25,6 @@ namespace Medical
         public override int OnExit()
         {
             controller.Dispose();
-            permissions.Dispose();
             return 0;
         }
 
@@ -43,44 +43,16 @@ namespace Medical
 
         public bool startApplication()
         {
-            bool connectionLoop = true;
-#if ENABLE_HASP_PROTECTION
-            permissions = new MedicalPermissions();
-#else
-            permissions = new MedicalPermissions(getSimulatedVersion());
-#endif
-            while (connectionLoop)
+            controller = new StandaloneController(this);
+            licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
+            determineResourceFiles();
+            controller.GUIManager.addPlugin(new PiperJBOGUIPlugin(licenseManager));
+            if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
-                ConnectionResult result = MedicalPermissions.Instance.checkConnection();
-                if (result == ConnectionResult.Ok)
-                {
-                    connectionLoop = false;
-                    if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_MODULE))
-                    {
-                        determineResourceFiles();
-                        controller = new StandaloneController(this);
-                        controller.GUIManager.addPlugin(new PiperJBOGUIPlugin());
-                        if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
-                        {
-                            controller.GUIManager.addPlugin("Editor.dll");
-                        }
-                        controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
-                        startupSuceeded = true;
-                    }
-                    else
-                    {
-                        MessageDialog.showErrorDialog("Your dongle does not allow the use of Piper's Joint Based Occlusion.", "Dongle Connection Failure");
-                    }
-                }
-                else if (result == ConnectionResult.TooManyUsers)
-                {
-                    connectionLoop = MessageDialog.showQuestionDialog("Too many users currently connected. Please shut down the program on another workstation. Would you like to try to connect again?", "Network Dongle Connection Failure") == NativeDialogResult.YES;
-                }
-                else if (result == ConnectionResult.NoDongle)
-                {
-                    connectionLoop = MessageDialog.showQuestionDialog("Please connect your dongle. Would you like to try to connect again?", "Dongle Connection Failure") == NativeDialogResult.YES;
-                }
+                controller.GUIManager.addPlugin("Editor.dll");
             }
+            controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
+            startupSuceeded = true;
             return startupSuceeded;
         }
 
@@ -117,7 +89,7 @@ namespace Medical
             twoWindows.addPreset(preset);
             windowPresetController.addPresetSet(twoWindows);
 
-            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
                 //threeWindows.Image = Resources.ThreeWindowLayout;
@@ -227,18 +199,16 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Background", "EngineArchive", "Background", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             ViewportBackground background = null;
-            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
             }
-            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            else if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_MRI) ||
+                licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOMRIBackground", 900, 500, 500, 5, 5);
             }
-            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) ||
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) ||
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            else
             {
                 background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
             }
@@ -249,7 +219,7 @@ namespace Medical
         {
             CamerasFile = null;
             LayersFile = null;
-            if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_GRAPHICS))
+            if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
                 this.addMovementSequenceDirectory("/Graphics");
                 this.addMovementSequenceDirectory("/MRI");
@@ -260,8 +230,8 @@ namespace Medical
                 CamerasFile = "/GraphicsCameras.cam";
                 LayersFile = "/GraphicsLayers.lay";
             }
-            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_MRI) || 
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
+            else if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_MRI) ||
+                licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_RADIOGRAPHY_CT))
             {
                 this.addMovementSequenceDirectory("/MRI");
                 this.addMovementSequenceDirectory("/RadiographyCT");
@@ -271,9 +241,7 @@ namespace Medical
                 CamerasFile = "/MRICameras.cam";
                 LayersFile = "/MRILayers.lay";
             }
-            else if (MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_CLINICAL) || 
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DENTITION_PROFILE) || 
-                MedicalPermissions.Instance.allowFeature(Features.PIPER_JBO_VERSION_DOPPLER))
+            else
             {
                 this.addMovementSequenceDirectory("/Clinical");
                 this.addMovementSequenceDirectory("/DentitionProfile");
@@ -286,29 +254,5 @@ namespace Medical
             LayersFile = "/StandaloneLayers.lay";
             //end temp
         }
-
-#if !ENABLE_HASP_PROTECTION
-        private static SimulatedVersion getSimulatedVersion()
-        {
-            String[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 2 && args[1] == "-e")
-            {
-                try
-                {
-                    SimulatedVersion version = (SimulatedVersion)Enum.Parse(typeof(SimulatedVersion), args[2]);
-                    return version;
-                }
-                catch (Exception)
-                {
-                    Console.Error.WriteLine(String.Format("The edition specified \'{0}\' is not valid.", args[2]));
-                    return SimulatedVersion.Graphics;
-                }
-            }
-            else
-            {
-                return SimulatedVersion.Graphics;
-            }
-        }
-#endif
     }
 }
