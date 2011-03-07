@@ -103,7 +103,6 @@ namespace Medical
 
         public void finishInitialization()
         {
-            #if ENABLE_HASP_PROTECTION
             bool keyValid = licenseManager.KeyValid;
             if (!keyValid)
             {
@@ -112,10 +111,7 @@ namespace Medical
                 setInterfaceEnabled(false);
                 licenseManager.showKeyDialog();
             }
-            #else
-            bool keyValid = true;
-            #endif
-            if (keyValid)
+            else
             {
                 setInterfaceEnabled(false);
                 intro.center();

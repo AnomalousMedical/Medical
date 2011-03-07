@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Engine;
 using Medical.GUI;
+using System.Runtime.InteropServices;
 
 namespace Medical
 {
@@ -92,7 +93,10 @@ namespace Medical
 
         private String getMachineId()
         {
-            return "OfflineTest";
+            return Marshal.PtrToStringAnsi(LicenseManager_getMachineID());
         }
+
+        [DllImport("OSHelper")]
+        private static extern IntPtr LicenseManager_getMachineID();
     }
 }

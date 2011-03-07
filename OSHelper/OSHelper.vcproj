@@ -131,9 +131,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libhasp_windows_92548.lib winspool.lib winmm.lib kernel32.lib user32.lib gdi32.lib gdiplus.lib shell32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib comctl32.lib rpcrt4.lib wsock32.lib wxbase29u.lib wxbase29u_net.lib wxbase29u_xml.lib wxexpat.lib wxjpeg.lib wxmsw29u_adv.lib wxmsw29u_core.lib wxmsw29u_html.lib wxmsw29u_stc.lib wxmsw29u_xrc.lib wxmsw29u_aui.lib wxpng.lib wxregexu.lib wxtiff.lib wxzlib.lib $(NOINHERIT)"
+				AdditionalDependencies="winspool.lib winmm.lib kernel32.lib user32.lib gdi32.lib gdiplus.lib shell32.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib comctl32.lib rpcrt4.lib wsock32.lib wxbase29u.lib wxbase29u_net.lib wxbase29u_xml.lib wxexpat.lib wxjpeg.lib wxmsw29u_adv.lib wxmsw29u_core.lib wxmsw29u_html.lib wxmsw29u_stc.lib wxmsw29u_xrc.lib wxmsw29u_aui.lib wxpng.lib wxregexu.lib wxtiff.lib wxzlib.lib $(NOINHERIT)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib&quot;;$(HASP_HOME)"
+				AdditionalLibraryDirectories="&quot;$(WXWIDGETS_HOME)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -322,15 +322,7 @@
 			Name="CopyProtection"
 			>
 			<File
-				RelativePath=".\Include\Features.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Src\UserPermissions.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Include\UserPermissions.h"
+				RelativePath=".\Src\LicenseManager.cpp"
 				>
 			</File>
 		</Filter>
