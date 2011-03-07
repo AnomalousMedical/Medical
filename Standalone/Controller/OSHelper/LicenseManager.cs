@@ -21,12 +21,15 @@ namespace Medical
         /// </summary>
         public event EventHandler KeyInvalid;
 
+        private delegate void MachineIDCallback(IntPtr value);
+        private MachineIDCallback idCallback;
+        private String machineID = null;
         private LicenseDialog licenseDialog;
-
         private UserPermissions userPermissions;
 
         public LicenseManager(String programName, String keyFile)
         {
+            idCallback = new MachineIDCallback(getMachineIdCallback);
             userPermissions = new UserPermissions(keyFile, programName, getMachineId);
         }
 
@@ -93,10 +96,20 @@ namespace Medical
 
         private String getMachineId()
         {
-            return Marshal.PtrToStringAnsi(LicenseManager_getMachineID());
+            if (machineID == null)
+            {
+                LicenseManager_getMachineID(idCallback);
+                Logging.Log.Debug("------------------MACHINE ID IS \'{0}\'", machineID);
+            }
+            return machineID;
+        }
+
+        private void getMachineIdCallback(IntPtr value)
+        {
+            machineID = Marshal.PtrToStringAnsi(value);
         }
 
         [DllImport("OSHelper")]
-        private static extern IntPtr LicenseManager_getMachineID();
+        private static extern void LicenseManager_getMachineID(MachineIDCallback callback);
     }
 }
