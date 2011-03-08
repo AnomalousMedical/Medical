@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using System.Threading;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -24,6 +26,8 @@ namespace Medical.GUI
         private string programName;
         private String machineID;
         private int productID;
+        private Button activateButton;
+        private Button cancelButton;
 
         public LicenseDialog(String programName, String machineID, int productID)
             :base("Medical.GUI.LicenseDialog.LicenseDialog.layout")
@@ -38,10 +42,10 @@ namespace Medical.GUI
             userEdit = window.findWidget("UserText") as Edit;
             passwordEdit = window.findWidget("PasswordText") as Edit;
 
-            Button activateButton = window.findWidget("ActivateButton") as Button;
+            activateButton = window.findWidget("ActivateButton") as Button;
             activateButton.MouseButtonClick += new MyGUIEvent(activateButton_MouseButtonClick);
 
-            Button cancelButton = window.findWidget("CancelButton") as Button;
+            cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
         }
 
@@ -49,8 +53,24 @@ namespace Medical.GUI
 
         void activateButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            activateButton.Enabled = false;
+            cancelButton.Enabled = false;
+            ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense));            
+        }
+
+        void getLicense(Object ignored)
+        {
             AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
             License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID, productID);
+            ThreadManager.invoke(new Callback(licenseCaptured), null);
+        }
+
+        private delegate void Callback();
+
+        void licenseCaptured()
+        {
+            activateButton.Enabled = true;
+            cancelButton.Enabled = true;
             if (License != null)
             {
                 this.close();
