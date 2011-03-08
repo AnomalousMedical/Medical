@@ -143,6 +143,14 @@ namespace Medical
             }
         }
 
+        public static String LicenseServerURL
+        {
+            get
+            {
+                return "http://192.168.2.89:8888/MainSite/DRM/LicenseServer.aspx";
+            }
+        }
+
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory
         {

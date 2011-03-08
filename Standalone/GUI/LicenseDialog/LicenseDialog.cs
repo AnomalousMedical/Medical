@@ -19,37 +19,39 @@ namespace Medical.GUI
         /// </summary>
         public event EventHandler KeyInvalid;
 
-        private Edit keyEdit;
+        private Edit userEdit;
+        private Edit passwordEdit;
         private string programName;
+        private String machineID;
+        private int productID;
 
-        public LicenseDialog(String programName)
+        public LicenseDialog(String programName, String machineID, int productID)
             :base("Medical.GUI.LicenseDialog.LicenseDialog.layout")
         {
             this.programName = programName;
+            this.machineID = machineID;
+            this.productID = productID;
 
             Widget prompt = window.findWidget("Prompt");
             prompt.Caption = prompt.Caption.Replace("$(PROGRAM_NAME)", programName);
 
-            keyEdit = window.findWidget("KeyText") as Edit;
+            userEdit = window.findWidget("UserText") as Edit;
+            passwordEdit = window.findWidget("PasswordText") as Edit;
 
-            Button validateButton = window.findWidget("ValidateButton") as Button;
-            validateButton.MouseButtonClick += new MyGUIEvent(validateButton_MouseButtonClick);
+            Button activateButton = window.findWidget("ActivateButton") as Button;
+            activateButton.MouseButtonClick += new MyGUIEvent(activateButton_MouseButtonClick);
 
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
         }
 
-        public String Key
-        {
-            get
-            {
-                return keyEdit.OnlyText;
-            }
-        }
+        public byte[] License { get; private set; }
 
-        void validateButton_MouseButtonClick(Widget source, EventArgs e)
+        void activateButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (KeyChecker.checkValid(programName, keyEdit.OnlyText))
+            AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
+            License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID, productID);
+            if (License != null)
             {
                 this.close();
                 if (KeyEnteredSucessfully != null)
@@ -59,7 +61,7 @@ namespace Medical.GUI
             }
             else
             {
-                MessageBox.show("The key you entered is invalid.", "Invalid Key", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                MessageBox.show("Could not get license file. Please try again later.", "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
 

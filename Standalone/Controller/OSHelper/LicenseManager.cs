@@ -26,16 +26,20 @@ namespace Medical
         private String machineID = null;
         private LicenseDialog licenseDialog;
         private UserPermissions userPermissions;
+        private String keyFile;
+        private String programName;
 
         public LicenseManager(String programName, String keyFile)
         {
+            this.keyFile = keyFile;
+            this.programName = programName;
             idCallback = new MachineIDCallback(getMachineIdCallback);
             userPermissions = new UserPermissions(keyFile, programName, getMachineId);
         }
 
-        public void showKeyDialog()
+        public void showKeyDialog(int productID)
         {
-            licenseDialog = new LicenseDialog(userPermissions.ProgramName);
+            licenseDialog = new LicenseDialog(userPermissions.ProgramName, getMachineId(), productID);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.center();
@@ -82,16 +86,16 @@ namespace Medical
 
         void licenseDialog_KeyEnteredSucessfully(object sender, EventArgs e)
         {
-            //key = licenseDialog.Key;
-            //using (StreamWriter fileStream = new StreamWriter(new FileStream(keyFile, FileMode.Create)))
-            //{
-            //    fileStream.WriteLine(key);
-            //}
-            //licenseDialog.Dispose();
-            //if (KeyEnteredSucessfully != null)
-            //{
-            //    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
-            //}
+            using (Stream fileStream = new FileStream(keyFile, FileMode.Create))
+            {
+                fileStream.Write(licenseDialog.License, 0, licenseDialog.License.Length);
+            }
+            userPermissions = new UserPermissions(keyFile, programName, getMachineId);
+            licenseDialog.Dispose();
+            if (KeyEnteredSucessfully != null)
+            {
+                KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private String getMachineId()

@@ -49,7 +49,7 @@ namespace Medical
             CamerasFile = "/GraphicsCameras.cam";
             LayersFile = "/StandaloneLayers.lay";
             controller = new StandaloneController(this);
-            controller.GUIManager.addPlugin(new DopplerGUIPlugin());
+            controller.GUIManager.addPlugin(new DopplerGUIPlugin(this));
             controller.go(createBackground(), "GUI/Doppler/SplashScreen");
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
             startupSuceeded = true;

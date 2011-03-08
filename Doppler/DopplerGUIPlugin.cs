@@ -12,6 +12,7 @@ namespace Medical
 {
     class DopplerGUIPlugin : GUIPlugin
     {
+        private DopplerController dopplerController;
         private StandaloneController standaloneController;
         private GUIManager guiManager;
 
@@ -28,9 +29,9 @@ namespace Medical
         private ChooseSceneDialog chooseSceneDialog;
         private PredefinedLayersDialog predefinedLayers;
 
-        public DopplerGUIPlugin()
+        public DopplerGUIPlugin(DopplerController dopplerController)
         {
-            
+            this.dopplerController = dopplerController;
         }
 
         public void Dispose()
@@ -109,7 +110,7 @@ namespace Medical
                 licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
                 licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
                 setInterfaceEnabled(false);
-                licenseManager.showKeyDialog();
+                licenseManager.showKeyDialog(dopplerController.ProductID);
             }
             else
             {
