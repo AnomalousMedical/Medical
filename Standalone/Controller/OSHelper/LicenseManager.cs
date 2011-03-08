@@ -103,7 +103,6 @@ namespace Medical
             if (machineID == null)
             {
                 LicenseManager_getMachineID(idCallback);
-                Logging.Log.Debug("------------------MACHINE ID IS \'{0}\'", machineID);
             }
             return machineID;
         }
