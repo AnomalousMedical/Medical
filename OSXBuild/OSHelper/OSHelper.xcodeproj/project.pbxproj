@@ -42,6 +42,7 @@
 		0112F67D12F1C3EA001A5E49 /* NativeStringEnumerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */; };
 		0112F67E12F1C3EA001A5E49 /* SystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */; };
 		0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0112F67F12F1C469001A5E49 /* ColorDialog.cpp */; };
+		014216E41325892900EC9013 /* LicenseManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014216E31325892900EC9013 /* LicenseManager.cpp */; };
 		014D72C912FCA49C008436AC /* PlatformConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 014D72C812FCA49B008436AC /* PlatformConfig.cpp */; };
 		018B92AB12F702F700D9F4D1 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 018B92AA12F702F700D9F4D1 /* MultiTouchImpl.h */; };
 		01A53D0D124A627B00FD4208 /* libhasp_darwin_92548.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */; };
@@ -51,9 +52,6 @@
 		01F031F3121470420054F63B /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F031F1121470420054F63B /* Stdafx.cpp */; };
 		01F031F4121470420054F63B /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F031F2121470420054F63B /* Stdafx.h */; };
 		01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0325B121474620054F63B /* WindowFunctions.cpp */; };
-		01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F0327C1215C0330054F63B /* UserPermissions.cpp */; };
-		01F032811215C0480054F63B /* Features.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F0327F1215C0480054F63B /* Features.h */; };
-		01F032821215C0480054F63B /* UserPermissions.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F032801215C0480054F63B /* UserPermissions.h */; };
 		01F03443121EA3C70054F63B /* PerformanceCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 01F03442121EA3C70054F63B /* PerformanceCounter.h */; };
 		01F03445121EA3D40054F63B /* PerformanceCounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01F03444121EA3D40054F63B /* PerformanceCounter.cpp */; };
 /* End PBXBuildFile section */
@@ -94,6 +92,7 @@
 		0112F67012F1C3EA001A5E49 /* NativeStringEnumerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NativeStringEnumerator.cpp; path = ../../OSHelper/Src/NativeStringEnumerator.cpp; sourceTree = SOURCE_ROOT; };
 		0112F67112F1C3EA001A5E49 /* SystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SystemInfo.cpp; path = ../../OSHelper/Src/SystemInfo.cpp; sourceTree = SOURCE_ROOT; };
 		0112F67F12F1C469001A5E49 /* ColorDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorDialog.cpp; path = ../../OSHelper/Src/ColorDialog.cpp; sourceTree = SOURCE_ROOT; };
+		014216E31325892900EC9013 /* LicenseManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LicenseManager.cpp; path = ../../OSHelper/Src/LicenseManager.cpp; sourceTree = SOURCE_ROOT; };
 		014D72C812FCA49B008436AC /* PlatformConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PlatformConfig.cpp; path = ../../OSHelper/Src/PlatformConfig.cpp; sourceTree = SOURCE_ROOT; };
 		018B92AA12F702F700D9F4D1 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultiTouchImpl.h; path = ../../OSHelper/Include/MultiTouchImpl.h; sourceTree = SOURCE_ROOT; };
 		01A53D0C124A627B00FD4208 /* libhasp_darwin_92548.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhasp_darwin_92548.a; path = ../../../Dependencies/HASP/libhasp_darwin_92548.a; sourceTree = SOURCE_ROOT; };
@@ -103,9 +102,6 @@
 		01F031F1121470420054F63B /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../../OSHelper/Stdafx.cpp; sourceTree = SOURCE_ROOT; };
 		01F031F2121470420054F63B /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../../OSHelper/Stdafx.h; sourceTree = SOURCE_ROOT; };
 		01F0325B121474620054F63B /* WindowFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WindowFunctions.cpp; path = ../../OSHelper/Src/WindowFunctions.cpp; sourceTree = SOURCE_ROOT; };
-		01F0327C1215C0330054F63B /* UserPermissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserPermissions.cpp; path = ../../OSHelper/Src/UserPermissions.cpp; sourceTree = SOURCE_ROOT; };
-		01F0327F1215C0480054F63B /* Features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Features.h; path = ../../OSHelper/Include/Features.h; sourceTree = SOURCE_ROOT; };
-		01F032801215C0480054F63B /* UserPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserPermissions.h; path = ../../OSHelper/Include/UserPermissions.h; sourceTree = SOURCE_ROOT; };
 		01F03442121EA3C70054F63B /* PerformanceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceCounter.h; path = ../../OSHelper/Include/PerformanceCounter.h; sourceTree = SOURCE_ROOT; };
 		01F03444121EA3D40054F63B /* PerformanceCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceCounter.cpp; path = ../../OSHelper/Src/PerformanceCounter.cpp; sourceTree = SOURCE_ROOT; };
 		32DBCF5E0370ADEE00C91783 /* OSHelper_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSHelper_Prefix.pch; sourceTree = "<group>"; };
@@ -131,6 +127,7 @@
 		01F0325A1214743E0054F63B /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				014216E31325892900EC9013 /* LicenseManager.cpp */,
 				014D72C812FCA49B008436AC /* PlatformConfig.cpp */,
 				0112F67F12F1C469001A5E49 /* ColorDialog.cpp */,
 				0112F66512F1C3EA001A5E49 /* DirDialog.cpp */,
@@ -153,7 +150,6 @@
 				0112F62E12EF6AFC001A5E49 /* WxMouse.cpp */,
 				010C4D4D12EA382E006ABBAF /* MultiTouch.cpp */,
 				01F03444121EA3D40054F63B /* PerformanceCounter.cpp */,
-				01F0327C1215C0330054F63B /* UserPermissions.cpp */,
 				01F0325B121474620054F63B /* WindowFunctions.cpp */,
 				01ADCCB112F222EF00C7ABC7 /* OSXMultiTouch.h */,
 				01ADCCB212F222EF00C7ABC7 /* OSXMultiTouch.mm */,
@@ -178,8 +174,6 @@
 				0112F61F12EF6AE8001A5E49 /* WxKeyboard.h */,
 				0112F62012EF6AE8001A5E49 /* WxMouse.h */,
 				01F03442121EA3C70054F63B /* PerformanceCounter.h */,
-				01F0327F1215C0480054F63B /* Features.h */,
-				01F032801215C0480054F63B /* UserPermissions.h */,
 			);
 			name = Include;
 			sourceTree = "<group>";
@@ -258,8 +252,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				01F031F4121470420054F63B /* Stdafx.h in Headers */,
-				01F032811215C0480054F63B /* Features.h in Headers */,
-				01F032821215C0480054F63B /* UserPermissions.h in Headers */,
 				01F03443121EA3C70054F63B /* PerformanceCounter.h in Headers */,
 				0112F62212EF6AE8001A5E49 /* App.h in Headers */,
 				0112F62312EF6AE8001A5E49 /* ImageWindow.h in Headers */,
@@ -323,7 +315,6 @@
 			files = (
 				01F031F3121470420054F63B /* Stdafx.cpp in Sources */,
 				01F0325C121474620054F63B /* WindowFunctions.cpp in Sources */,
-				01F0327D1215C0330054F63B /* UserPermissions.cpp in Sources */,
 				01F03445121EA3D40054F63B /* PerformanceCounter.cpp in Sources */,
 				010C4D4E12EA382E006ABBAF /* MultiTouch.cpp in Sources */,
 				0112F63012EF6AFC001A5E49 /* App.cpp in Sources */,
@@ -347,6 +338,7 @@
 				0112F68012F1C469001A5E49 /* ColorDialog.cpp in Sources */,
 				01ADCCB412F222EF00C7ABC7 /* OSXMultiTouch.mm in Sources */,
 				014D72C912FCA49C008436AC /* PlatformConfig.cpp in Sources */,
+				014216E41325892900EC9013 /* LicenseManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

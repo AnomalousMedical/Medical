@@ -16,9 +16,23 @@ extern "C" _AnomalousExport void LicenseManager_getMachineID(MachineIDCallback c
 
 #elif MAC_OSX
 
+#include <IOKit/IOKitLib.h>
+
+void get_platform_uuid(char * buf, int bufSize) 
+{
+    io_registry_entry_t ioRegistryRoot = IORegistryEntryFromPath(kIOMasterPortDefault, "IOService:/");
+    CFStringRef uuidCf = (CFStringRef) IORegistryEntryCreateCFProperty(ioRegistryRoot, CFSTR(kIOPlatformUUIDKey), kCFAllocatorDefault, 0);
+    IOObjectRelease(ioRegistryRoot);
+    CFStringGetCString(uuidCf, buf, bufSize, kCFStringEncodingMacRoman);
+    CFRelease(uuidCf);    
+}
+
+
 extern "C" _AnomalousExport void LicenseManager_getMachineID(MachineIDCallback callback)
 {
-	return "OfflineTest1";
+	char* platUUID = new char[256];
+	get_platform_uuid(platUUID, 256);
+	callback(platUUID);
 }
 
 #endif
