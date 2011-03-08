@@ -74,6 +74,8 @@ namespace Medical
                 Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
             }
 
+            LicenseServerURL = "http://www.anomalousmedical.com/DRM/LicenseServer.aspx";
+
 #if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))
             {
@@ -83,6 +85,7 @@ namespace Medical
 
                 ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
+                LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
             }
 #endif
         }
@@ -143,13 +146,7 @@ namespace Medical
             }
         }
 
-        public static String LicenseServerURL
-        {
-            get
-            {
-                return "http://192.168.2.89:8888/MainSite/DRM/LicenseServer.aspx";
-            }
-        }
+        public static String LicenseServerURL { get; private set; }
 
 #if ALLOW_OVERRIDE
         public static String WorkingResourceDirectory

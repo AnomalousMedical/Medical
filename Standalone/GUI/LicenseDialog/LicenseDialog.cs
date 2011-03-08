@@ -60,29 +60,48 @@ namespace Medical.GUI
 
         void getLicense(Object ignored)
         {
-            AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
-            License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID, productID);
-            ThreadManager.invoke(new Callback(licenseCaptured), null);
+            try
+            {
+                AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
+                License = licenseServer.createLicenseFile(userEdit.OnlyText, passwordEdit.OnlyText, machineID, productID);
+                if (License != null)
+                {
+                    ThreadManager.invoke(new Callback(licenseCaptured), null);
+                }
+                else
+                {
+                    ThreadManager.invoke(new Callback(licenseLoginFail), null);
+                }
+            }
+            catch (Exception)
+            {
+                ThreadManager.invoke(new Callback(licenseServerFail), null);
+            }
         }
 
         private delegate void Callback();
 
         void licenseCaptured()
         {
+            this.close();
+            if (KeyEnteredSucessfully != null)
+            {
+                KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        void licenseLoginFail()
+        {
             activateButton.Enabled = true;
             cancelButton.Enabled = true;
-            if (License != null)
-            {
-                this.close();
-                if (KeyEnteredSucessfully != null)
-                {
-                    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
-                }
-            }
-            else
-            {
-                MessageBox.show("Could not get license file. Please try again later.", "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
+            MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+        }
+
+        void licenseServerFail()
+        {
+            activateButton.Enabled = true;
+            cancelButton.Enabled = true;
+            MessageBox.show("Could not connect to license server. Please try again later.", "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
