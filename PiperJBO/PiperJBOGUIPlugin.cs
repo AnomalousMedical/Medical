@@ -40,10 +40,12 @@ namespace Medical.GUI
         private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
+        private PiperJBOController piperJBOController;
 
-        public PiperJBOGUIPlugin(LicenseManager licenseManager)
+        public PiperJBOGUIPlugin(LicenseManager licenseManager, PiperJBOController piperJBOController)
         {
             this.licenseManager = licenseManager;
+            this.piperJBOController = piperJBOController;
             recentDocuments = new RecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
@@ -173,18 +175,28 @@ namespace Medical.GUI
 
         public void finishInitialization()
         {
-#if ENABLE_HASP_PROTECTION
             bool keyValid = licenseManager.KeyValid;
             if (!keyValid)
             {
                 licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
                 licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-                setInterfaceEnabled(false);
-                licenseManager.showKeyDialog();
+                licenseManager.showKeyDialog(piperJBOController.ProductID);
             }
-#else
-            bool keyValid = true;
-#endif
+        }
+
+        void licenseManager_KeyInvalid(object sender, EventArgs e)
+        {
+            standaloneController.closeMainWindow();
+        }
+
+        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
+        {
+            MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
+        }
+
+        void restartMessageClosed(MessageBoxStyle result)
+        {
+            standaloneController.closeMainWindow();
         }
 
         public void sceneLoaded(SimScene scene)
