@@ -73,13 +73,18 @@ namespace Medical.GUI
                     ThreadManager.invoke(new Callback(licenseLoginFail), null);
                 }
             }
+            catch (AnomalousLicenseServerException alse)
+            {
+                ThreadManager.invoke(new CallbackString(licenseServerFail), alse.Message);
+            }
             catch (Exception)
             {
-                ThreadManager.invoke(new Callback(licenseServerFail), null);
+                ThreadManager.invoke(new CallbackString(licenseServerFail), "Could not connect to license server. Please try again later.");
             }
         }
 
         private delegate void Callback();
+        private delegate void CallbackString(String message);
 
         void licenseCaptured()
         {
@@ -97,11 +102,11 @@ namespace Medical.GUI
             MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
         }
 
-        void licenseServerFail()
+        void licenseServerFail(String message)
         {
             activateButton.Enabled = true;
             cancelButton.Enabled = true;
-            MessageBox.show("Could not connect to license server. Please try again later.", "Server Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+            MessageBox.show(message, "License Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)

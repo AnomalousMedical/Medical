@@ -28,6 +28,7 @@ namespace Medical
         private UserPermissions userPermissions;
         private String keyFile;
         private String programName;
+        private int productID;
 
         public LicenseManager(String programName, String keyFile)
         {
@@ -39,6 +40,7 @@ namespace Medical
 
         public void showKeyDialog(int productID)
         {
+            this.productID = productID;
             licenseDialog = new LicenseDialog(userPermissions.ProgramName, getMachineId(), productID);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
@@ -92,9 +94,16 @@ namespace Medical
             }
             userPermissions = new UserPermissions(keyFile, programName, getMachineId);
             licenseDialog.Dispose();
-            if (KeyEnteredSucessfully != null)
+            if (userPermissions.Valid)
             {
-                KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+                if (KeyEnteredSucessfully != null)
+                {
+                    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
+                }
+            }
+            else
+            {
+                showKeyDialog(productID);
             }
         }
 

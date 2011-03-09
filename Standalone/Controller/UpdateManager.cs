@@ -4,67 +4,87 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using MyGUIPlugin;
+using System.Net;
+using System.IO;
 
 namespace Medical
 {
     public class UpdateManager
     {
+        private UpdateManager() { }
+
         private static string downloadURL = "";
 
-        public static void checkForUpdates(Version currentVersion)
+        public static void checkForUpdates(Version currentVersion, int productId)
         {
-            Version newVersion = null;
-            XmlTextReader reader = null;
             try
             {
-                string xmlURL = MedicalConfig.UpdateURL;
-                reader = new XmlTextReader(xmlURL);
-                reader.MoveToContent();
-                string elementName = "";
-                if ((reader.NodeType == XmlNodeType.Element) && (reader.Name == "update"))
+                HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateURL));
+                request.Timeout = 15000;
+                request.Method = "POST";
+                String postData = String.Format("productID={0}", productId);
+                byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
+                request.ContentType = "application/x-www-form-urlencoded";
+
+                request.ContentLength = byteArray.Length;
+                using (Stream dataStream = request.GetRequestStream())
                 {
-                    while (reader.Read())
+                    dataStream.Write(byteArray, 0, byteArray.Length);
+                }
+
+                // Get the response.
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.OK)
+                {
+                    using (XmlTextReader reader = new XmlTextReader(response.GetResponseStream()))
                     {
-                        if (reader.NodeType == XmlNodeType.Element)
-                        {
-                            elementName = reader.Name;
-                        }
-                        else
-                        {
-                            if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
-                            {
-                                switch (elementName)
-                                {
-                                    case "version":
-                                        newVersion = new Version(reader.Value);
-                                        break;
-                                    case "url":
-                                        downloadURL = reader.Value;
-                                        break;
-                                }
-                            }
-                        }
+                        updateLogic(currentVersion, reader);
                     }
-                }
-                if (currentVersion < newVersion)
-                {
-                    MessageBox.show(String.Format("A new version {0} is avaliable for download. Would you like to download it now?", newVersion.ToString()), "Update", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, updateMessageClosed);
-                }
-                else
-                {
-                    MessageBox.show("Your current version is up to date.", "Update", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
                 }
             }
             catch (Exception)
             {
                 MessageBox.show("Could not find update information, please try again later.", "Cannot find update", MessageBoxStyle.Ok | MessageBoxStyle.IconWarning);
             }
-            finally
+        }
+
+        private static void updateLogic(Version currentVersion, XmlTextReader reader)
+        {
+            Version newVersion = new Version("1.0.0.0");
+            reader.MoveToContent();
+            string elementName = "";
+            if ((reader.NodeType == XmlNodeType.Element) && (reader.Name == "update"))
             {
-                if (reader != null)
+                while (reader.Read())
                 {
-                    reader.Close();
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        elementName = reader.Name;
+                    }
+                    else
+                    {
+                        if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
+                        {
+                            switch (elementName)
+                            {
+                                case "version":
+                                    newVersion = new Version(reader.Value);
+                                    break;
+                                case "url":
+                                    downloadURL = reader.Value;
+                                    break;
+                            }
+                        }
+                    }
                 }
+            }
+            if (currentVersion < newVersion)
+            {
+                MessageBox.show(String.Format("A new version {0} is avaliable for download. Would you like to download it now?", newVersion.ToString()), "Update", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, updateMessageClosed);
+            }
+            else
+            {
+                MessageBox.show("Your current version is up to date.", "Update", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
             }
         }
 

@@ -97,14 +97,6 @@ namespace Medical
             }
         }
 
-        public override String UpdateURL
-        {
-            get
-            {
-                return "http://www.AnomalousMedical.com/Update/TMJOverviewUpdate.xml";
-            }
-        }
-
         public override WindowIcons Icon
         {
             get

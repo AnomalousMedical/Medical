@@ -26,6 +26,7 @@ namespace Medical
         MouthInterior,
         Nerves,
         ShoulderGirdle,
+        Airway,
     }
 
     public class TransparencyInterface : Behavior

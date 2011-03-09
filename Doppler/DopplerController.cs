@@ -95,14 +95,6 @@ namespace Medical
             }
         }
 
-        public override String UpdateURL
-        {
-            get
-            {
-                return "http://www.AnomalousMedical.com/Update/PiperDopplerUpdate.xml";
-            }
-        }
-
         public override WindowIcons Icon
         {
             get

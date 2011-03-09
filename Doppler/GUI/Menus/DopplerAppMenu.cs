@@ -101,7 +101,7 @@ namespace Medical.GUI
 
         void updateButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version);
+            UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version, standaloneController.App.ProductID);
             this.hide();
         }
 

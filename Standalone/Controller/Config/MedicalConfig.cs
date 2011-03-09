@@ -34,11 +34,11 @@ namespace Medical
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
-        public MedicalConfig(String anomalousFolder, String programFolder, String updateURL)
+        public MedicalConfig(String anomalousFolder, String programFolder)
         {
             MedicalConfig.anomalousFolder = anomalousFolder;
             MedicalConfig.docRoot = Path.Combine(anomalousFolder, programFolder);
-            MedicalConfig.updateURL = updateURL;
+            MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
             recentDocsFile = docRoot + "/docs.ini";
