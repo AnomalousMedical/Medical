@@ -138,7 +138,7 @@ namespace Medical
         {
             get
             {
-                return 2;
+                return 3;
             }
         }
 
