@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -110,6 +110,7 @@
     <Compile Include="Measurement\MeasurementController.cs" />
     <Compile Include="Measurement\MeasurementDrawer.cs" />
     <Compile Include="Measurement\SimObjectFollower.cs" />
+    <Compile Include="Animation\SimObjectFollowerWithRotation.cs" />
     <Compile Include="MouthInterior\BottomLipSection.cs" />
     <Compile Include="MouthInterior\LipController.cs" />
     <Compile Include="MouthInterior\LipSection.cs" />
