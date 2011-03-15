@@ -25,7 +25,10 @@ extern "C" _AnomalousExport void LicenseManager_getMachineID(MachineIDCallback c
 				RPC_WSTR uuidStr;
 				UuidToString(&uuid, &uuidStr);
 				int size = 0;
-				for(size = 0; uuidStr[size] != 0; ++size);
+				for(size = 0; uuidStr[size] != 0 && size < 255; ++size)
+				{
+					buf[size] = uuidStr[size];
+				}
 				size = (size + 1) * sizeof(LPBYTE);
 				RegSetValueEx(hKey, L"MachineGuid", 0, REG_SZ, (LPBYTE)uuidStr, size);
 				RpcStringFree(&uuidStr);
