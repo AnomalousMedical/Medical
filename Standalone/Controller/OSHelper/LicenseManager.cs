@@ -77,6 +77,14 @@ namespace Medical
             }
         }
 
+        public String LicenseeName
+        {
+            get
+            {
+                return userPermissions.LicenseeName;
+            }
+        }
+
         void licenseDialog_KeyInvalid(object sender, EventArgs e)
         {
             licenseDialog.Dispose();
