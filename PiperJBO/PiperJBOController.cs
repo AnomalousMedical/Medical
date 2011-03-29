@@ -45,6 +45,7 @@ namespace Medical
         {
             controller = new StandaloneController(this);
             licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
+            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
             controller.GUIManager.addPlugin(new PiperJBOGUIPlugin(licenseManager, this));
             if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))

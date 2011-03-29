@@ -74,7 +74,7 @@ namespace Medical
                 Log.Warning("Could not parse the taskbar alignment {0}. Using default.", taskbarAlignmentString);
             }
 
-            LicenseServerURL = "http://www.anomalousmedical.com/DRM/LicenseServer.aspx";
+            LicenseServerURL = "https://www.anomalousmedical.com/DRM/LicenseServer.aspx";
 
 #if ALLOW_OVERRIDE
             if (File.Exists(programDirectory + "/override.ini"))

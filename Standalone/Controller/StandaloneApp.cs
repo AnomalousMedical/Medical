@@ -7,6 +7,11 @@ namespace Medical.Controller
 {
     public abstract class StandaloneApp : App
     {
+        public StandaloneApp()
+        {
+            WatermarkText = null;
+        }
+
         private List<String> movementSequenceDirectories = new List<string>();
 
         public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
@@ -30,6 +35,8 @@ namespace Medical.Controller
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }
+
+        public String WatermarkText { get; protected set; }
 
         public List<String> MovementSequenceDirectories
         {

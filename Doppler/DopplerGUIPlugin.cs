@@ -25,12 +25,13 @@ namespace Medical
         private AboutDialog aboutDialog;
         private Intro intro;
         private SystemMenu systemMenu;
-        private LicenseManager licenseManager;
         private ChooseSceneDialog chooseSceneDialog;
         private PredefinedLayersDialog predefinedLayers;
+        private LicenseManager licenseManager;
 
-        public DopplerGUIPlugin(DopplerController dopplerController)
+        public DopplerGUIPlugin(DopplerController dopplerController, LicenseManager licenseManager)
         {
+            this.licenseManager = licenseManager;
             this.dopplerController = dopplerController;
         }
 
@@ -61,8 +62,6 @@ namespace Medical
 
             standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
             standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
-
-            licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.lic");
         }
 
         public void createDialogs(DialogManager dialogManager)

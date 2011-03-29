@@ -12,6 +12,7 @@ namespace Medical
     {
         StandaloneController controller;
         bool startupSuceeded = false;
+        private LicenseManager licenseManager;
 
         private static String archiveNameFormat = "Doppler{0}.dat";
 
@@ -49,7 +50,9 @@ namespace Medical
             CamerasFile = "/GraphicsCameras.cam";
             LayersFile = "/StandaloneLayers.lay";
             controller = new StandaloneController(this);
-            controller.GUIManager.addPlugin(new DopplerGUIPlugin(this));
+            licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.lic");
+            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
+            controller.GUIManager.addPlugin(new DopplerGUIPlugin(this, licenseManager));
             controller.go(createBackground(), "GUI/Doppler/SplashScreen");
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
             startupSuceeded = true;

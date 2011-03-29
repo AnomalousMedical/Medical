@@ -9,6 +9,7 @@ namespace Medical
     public class SideLogoWatermark : Watermark
     {
         private PanelOverlayElement panel;
+        private TextAreaOverlayElement textOverlay = null;
         private Overlay overlay;
         private String name;
         float markWidth = 100;
@@ -43,6 +44,11 @@ namespace Medical
         {
             if (panel != null)
             {
+                if (textOverlay != null)
+                {
+                    panel.removeChild(textOverlay.getName());
+                    OverlayManager.getInstance().destroyOverlayElement(textOverlay);
+                }
                 overlay.remove2d(panel);
                 OverlayManager.getInstance().destroyOverlayElement(panel);
                 OverlayManager.getInstance().destroy(overlay);
@@ -72,6 +78,18 @@ namespace Medical
                     }
                 }
             }
+        }
+
+        public void addText(String text)
+        {
+            textOverlay = OverlayManager.getInstance().createOverlayElement(TextAreaOverlayElement.TypeName, name + "TextArea__") as TextAreaOverlayElement;
+            panel.addChild(textOverlay);
+            textOverlay.setFontName("StatsFont");
+            textOverlay.setVerticalAlignment(GuiVerticalAlignment.GVA_TOP);
+            textOverlay.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
+            textOverlay.setCharHeight(15.0f);
+            textOverlay.setPosition(textOverlay.getLeft(), -15);
+            textOverlay.setCaption(text);
         }
     }
 }
