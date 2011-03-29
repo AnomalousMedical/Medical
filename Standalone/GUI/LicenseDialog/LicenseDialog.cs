@@ -47,6 +47,9 @@ namespace Medical.GUI
 
             cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            StaticText connectionLabel = window.findWidget("ConnectionLabel") as StaticText;
+            connectionLabel.Caption = MedicalConfig.LicenseServerURL;
         }
 
         public byte[] License { get; private set; }
