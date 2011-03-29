@@ -28,5 +28,8 @@
             <Property key="Widget_Caption" value="Connecting to:"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="5 155 468 14" align="HStretch Top" name="ConnectionLabel"/>
+        <Widget type="Button" skin="Button" position="368 175 105 25" name="ForgotPassword">
+            <Property key="Widget_Caption" value="Forgot Password"/>
+        </Widget>
     </Widget>
 </MyGUI>

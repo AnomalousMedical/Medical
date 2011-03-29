@@ -50,6 +50,9 @@ namespace Medical.GUI
 
             StaticText connectionLabel = window.findWidget("ConnectionLabel") as StaticText;
             connectionLabel.Caption = MedicalConfig.LicenseServerURL;
+
+            Button forgotPassword = window.findWidget("ForgotPassword") as Button;
+            forgotPassword.MouseButtonClick += new MyGUIEvent(forgotPassword_MouseButtonClick);
         }
 
         public byte[] License { get; private set; }
@@ -58,7 +61,12 @@ namespace Medical.GUI
         {
             activateButton.Enabled = false;
             cancelButton.Enabled = false;
-            ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense));            
+            ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense));
+        }
+
+        void forgotPassword_MouseButtonClick(Widget source, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.anomalousmedical.com/RecoverPassword.aspx");
         }
 
         void getLicense(Object ignored)
