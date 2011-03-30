@@ -69,6 +69,17 @@ namespace Medical
             }
         }
 
+        /// <summary>
+        /// If a license is invalid because it is expired this will be true.
+        /// </summary>
+        public bool IsExpired
+        {
+            get
+            {
+                return userPermissions.IsExpired;
+            }
+        }
+
         public String FeatureLevelString
         {
             get

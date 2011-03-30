@@ -6,6 +6,7 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using Medical.Controller;
 using OgreWrapper;
+using System.Diagnostics;
 
 namespace Medical.GUI
 {
@@ -178,10 +179,31 @@ namespace Medical.GUI
             bool keyValid = licenseManager.KeyValid;
             if (!keyValid)
             {
-                licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
-                licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-                licenseManager.showKeyDialog(piperJBOController.ProductID);
+                if (licenseManager.IsExpired)
+                {
+                    MessageBox.show("Your trial has expired. Would you like to go to AnomalousMedical.com and upgrade?", "Trial Expired", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, goToWebsiteCallback);
+                }
+                else
+                {
+                    startKeyDialog();
+                }
             }
+        }
+
+        private void goToWebsiteCallback(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                Process.Start("http://www.anomalousmedical.com");
+            }
+            startKeyDialog();
+        }
+
+        private void startKeyDialog()
+        {
+            licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
+            licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
+            licenseManager.showKeyDialog(piperJBOController.ProductID);
         }
 
         void licenseManager_KeyInvalid(object sender, EventArgs e)
