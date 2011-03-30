@@ -17,10 +17,11 @@ namespace Medical
 
         private Intro intro;
         private SystemMenu systemMenu;
+        private LicenseManager licenseManager;
 
-        public TMJOverviewGUIPlugin()
+        public TMJOverviewGUIPlugin(LicenseManager licenseManager)
         {
-            
+            this.licenseManager = licenseManager;
         }
 
         public void Dispose()
@@ -60,6 +61,29 @@ namespace Medical
         }
 
         public void finishInitialization()
+        {
+            bool keyValid = licenseManager.KeyValid;
+            if (!keyValid)
+            {
+                licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
+                licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
+                setInterfaceEnabled(false);
+                licenseManager.showKeyDialog(standaloneController.App.ProductID);
+            }
+            else
+            {
+                setInterfaceEnabled(false);
+                intro.center();
+                intro.open(true);
+            }
+        }
+
+        void licenseManager_KeyInvalid(object sender, EventArgs e)
+        {
+            standaloneController.closeMainWindow();
+        }
+
+        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
         {
             setInterfaceEnabled(false);
             intro.center();

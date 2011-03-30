@@ -49,7 +49,9 @@ namespace Medical
             CamerasFile = "/Cameras.cam";
             LayersFile = "/Layers.lay";
             controller = new StandaloneController(this);
-            controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin());
+            LicenseManager licenseManager = new LicenseManager("Anomalous Medical's TMJ Overview", MedicalConfig.DocRoot + "/license.lic");
+            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
+            controller.GUIManager.addPlugin(new TMJOverviewGUIPlugin(licenseManager));
             controller.go(createBackground(), "GUI/TMJOverview/SplashScreen");
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/TMJ Overview");
             controller.SceneViewController.AllowRotation = false;
