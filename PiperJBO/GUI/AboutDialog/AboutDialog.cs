@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using System.Reflection;
 using System.Diagnostics;
+using System.IO;
 
 namespace Medical.GUI
 {
@@ -28,6 +29,9 @@ namespace Medical.GUI
 
             Button closeButton = window.findWidget("CloseButton") as Button;
             closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
+
+            Button revokeLicense = window.findWidget("RevokeLicenseButton") as Button;
+            revokeLicense.MouseButtonClick += new MyGUIEvent(revokeLicense_MouseButtonClick);
 
             StaticText serialNumberText = window.findWidget("SerialNumberText") as StaticText;
             serialNumberText.Caption = "Serial Number " + licenseManager.Key;
@@ -73,6 +77,27 @@ namespace Medical.GUI
 
             StaticText monoText = window.findWidget("MonoLink") as StaticText;
             monoText.MouseButtonClick += new MyGUIEvent(monoText_MouseButtonClick);
+        }
+
+        void revokeLicense_MouseButtonClick(Widget source, EventArgs e)
+        {
+            MessageBox.show("Revoking your license will force you to relicense when you open the program back up.\nThis should only be done if you upgraded and need to relicense your copy as a new edition.", "Confirm License Removal", MessageBoxStyle.IconWarning | MessageBoxStyle.Yes | MessageBoxStyle.No, revokeQuestionCallback);
+        }
+
+        void revokeQuestionCallback(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                String file = Path.Combine(MedicalConfig.DocRoot, "license.lic");
+                try
+                {
+                    File.Delete(file);
+                }
+                catch (Exception)
+                {
+                    MessageBox.show(String.Format("There was an error deleting the file \"{0}.\" Please delete it manually."), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+                }
+            }
         }
 
         void monoText_MouseButtonClick(Widget source, EventArgs e)
