@@ -11,9 +11,8 @@ namespace Medical
     /// </summary>
     class FolderFinder
     {
-        private static String root = String.Format("{0}/Anomalous Medical", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        private static String root = String.Format("{0}/Anomalous Medical", PlatformConfig.DocumentsFolder);
         private static String download = Path.Combine(root, "Download");
-        private static String installLocation = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Anomalous Medical");
 
         private FolderFinder()
         {
@@ -33,14 +32,6 @@ namespace Medical
             get
             {
                 return download;
-            }
-        }
-
-        public static String InstallLocation
-        {
-            get
-            {
-                return installLocation;
             }
         }
 

@@ -7,6 +7,7 @@ using Logging;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.IO;
 
 namespace Medical
 {
@@ -97,6 +98,14 @@ namespace Medical
             get
             {
                 return false;
+            }
+        }
+
+        protected override String DocumentsFolderImpl
+        {
+            get
+            {
+                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library");
             }
         }
 

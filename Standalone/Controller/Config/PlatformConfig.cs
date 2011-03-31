@@ -102,6 +102,14 @@ namespace Medical
             }
         }
 
+        public static String DocumentsFolder
+        {
+            get
+            {
+                return currentConfig.DocumentsFolderImpl;
+            }
+        }
+
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
@@ -125,6 +133,8 @@ namespace Medical
         protected abstract bool CreateMenuImpl { get; }
 
         protected abstract bool AllowCloneWindowsImpl { get; }
+
+        protected abstract String DocumentsFolderImpl { get; }
 
         #region PInvoke
 

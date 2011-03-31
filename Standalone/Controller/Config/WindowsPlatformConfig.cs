@@ -94,5 +94,13 @@ namespace Medical
                 return true;
             }
         }
+
+        protected override String DocumentsFolderImpl
+        {
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            }
+        }
     }
 }
