@@ -88,9 +88,9 @@ namespace Medical.GUI
             {
                 ThreadManager.invoke(new CallbackString(licenseServerFail), alse.Message);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                ThreadManager.invoke(new CallbackString(licenseServerFail), "Could not connect to license server. Please try again later.");
+                ThreadManager.invoke(new CallbackString(licenseServerFail), "Could not connect to license server. Please try again later.\nReason is {0}", e.Message);
             }
         }
 
