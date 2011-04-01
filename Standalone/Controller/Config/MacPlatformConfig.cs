@@ -105,7 +105,7 @@ namespace Medical
         {
             get
             {
-                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library");
+                return Path.Combine(Environment.GetEnvironmentVariable("HOME"), "Library/Application Support");
             }
         }
 
