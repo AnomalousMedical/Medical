@@ -184,6 +184,14 @@ namespace Medical
             }
         }
 
+        public override bool IsTrial
+        {
+            get
+            {
+                return licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_TRIAL);
+            }
+        }
+
         /// <summary>
         /// Create the background for the version that has been loaded.
         /// </summary>

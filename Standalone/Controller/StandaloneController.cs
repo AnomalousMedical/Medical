@@ -145,6 +145,10 @@ namespace Medical
             {
                 ((SideLogoWatermark)watermark).addText(app.WatermarkText);
             }
+            if (app.IsTrial)
+            {
+                ((SideLogoWatermark)watermark).addRepeatingOverlayElement("AnomalousMedicalTrial", 724, 365, 40, 8000, 8000);
+            }
 
             //Background
             this.background = background;

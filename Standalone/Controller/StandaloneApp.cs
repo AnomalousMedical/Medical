@@ -32,6 +32,14 @@ namespace Medical.Controller
 
         public abstract int ProductID { get; }
 
+        public virtual bool IsTrial
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public String CamerasFile { get; protected set; }
 
         public String LayersFile { get; protected set; }

@@ -10,6 +10,7 @@ namespace Medical
     {
         private PanelOverlayElement panel;
         private TextAreaOverlayElement textOverlay = null;
+        private PanelOverlayElement repeaterPanel = null;
         private Overlay overlay;
         private String name;
         float markWidth = 100;
@@ -48,6 +49,11 @@ namespace Medical
                 {
                     panel.removeChild(textOverlay.getName());
                     OverlayManager.getInstance().destroyOverlayElement(textOverlay);
+                }
+                if (repeaterPanel != null)
+                {
+                    overlay.remove2d(repeaterPanel);
+                    OverlayManager.getInstance().destroyOverlayElement(repeaterPanel);
                 }
                 overlay.remove2d(panel);
                 OverlayManager.getInstance().destroyOverlayElement(panel);
@@ -90,6 +96,26 @@ namespace Medical
             textOverlay.setCharHeight(15.0f);
             textOverlay.setPosition(textOverlay.getLeft(), -15);
             textOverlay.setCaption(text);
+        }
+
+        public void addRepeatingOverlayElement(String materialName, float imageWidth, float imageHeight, float repeat, float overlaySizeX, float overlaySizeY)
+        {
+            float aspectRatio = imageHeight / imageWidth;
+            float imageRepeatWidth = overlaySizeX / repeat;
+            float imageRepeatHeight = imageRepeatWidth * aspectRatio;
+            imageRepeatWidth = overlaySizeX / imageRepeatWidth;
+            imageRepeatHeight = overlaySizeY / imageRepeatHeight;
+
+            repeaterPanel = OverlayManager.getInstance().createOverlayElement(PanelOverlayElement.TypeName, name + "_WatermarkRepeaterPanel") as PanelOverlayElement;
+            repeaterPanel.setUV(0, 0, imageRepeatWidth, imageRepeatHeight);
+            //panel.setVerticalAlignment(GuiVerticalAlignment.GVA_BOTTOM);
+            repeaterPanel.setMetricsMode(GuiMetricsMode.GMM_PIXELS);
+            repeaterPanel.setMaterialName(materialName);
+            overlay.remove2d(panel);
+            overlay.add2d(repeaterPanel);
+            overlay.add2d(panel);
+            repeaterPanel.setDimensions(overlaySizeX, overlaySizeY);
+            repeaterPanel.setPosition(0, 0);
         }
     }
 }

@@ -154,17 +154,20 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
             //taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
-            if (licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_FULL_RENDERING))
+            if (!licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_TRIAL))
             {
-                DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
-                renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
-                taskbar.addItem(renderTaskbarItem);
-            }
-            else
-            {
-                CallbackTaskbarItem renderTaskbarItem = new CallbackTaskbarItem("Render", "RenderIconLarge");
-                renderTaskbarItem.OnClicked += new EventHandler(renderTaskbarItem_OnClicked);
-                taskbar.addItem(renderTaskbarItem);
+                if (licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_FULL_RENDERING))
+                {
+                    DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
+                    renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
+                    taskbar.addItem(renderTaskbarItem);
+                }
+                else
+                {
+                    CallbackTaskbarItem renderTaskbarItem = new CallbackTaskbarItem("Render", "RenderIconLarge");
+                    renderTaskbarItem.OnClicked += new EventHandler(renderTaskbarItem_OnClicked);
+                    taskbar.addItem(renderTaskbarItem);
+                }
             }
 
             cloneWindow = new CloneWindowTaskbarItem(standaloneController);
