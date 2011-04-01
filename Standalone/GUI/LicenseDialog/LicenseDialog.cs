@@ -40,7 +40,9 @@ namespace Medical.GUI
             prompt.Caption = prompt.Caption.Replace("$(PROGRAM_NAME)", programName);
 
             userEdit = window.findWidget("UserText") as Edit;
+            userEdit.KeyButtonReleased += new MyGUIEvent(userEdit_KeyButtonReleased);
             passwordEdit = window.findWidget("PasswordText") as Edit;
+            passwordEdit.KeyButtonReleased += new MyGUIEvent(passwordEdit_KeyButtonReleased);
 
             activateButton = window.findWidget("ActivateButton") as Button;
             activateButton.MouseButtonClick += new MyGUIEvent(activateButton_MouseButtonClick);
@@ -53,6 +55,34 @@ namespace Medical.GUI
 
             Button forgotPassword = window.findWidget("ForgotPassword") as Button;
             forgotPassword.MouseButtonClick += new MyGUIEvent(forgotPassword_MouseButtonClick);
+        }
+
+        void passwordEdit_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            switch(ke.Key)
+            {
+                case Engine.Platform.KeyboardButtonCode.KC_TAB:
+                    InputManager.Instance.setKeyFocusWidget(userEdit);
+                    break;
+                case Engine.Platform.KeyboardButtonCode.KC_RETURN:
+                    activateButton_MouseButtonClick(source, e);
+                    break;
+            }
+        }
+
+        void userEdit_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            switch (ke.Key)
+            {
+                case Engine.Platform.KeyboardButtonCode.KC_TAB:
+                    InputManager.Instance.setKeyFocusWidget(passwordEdit);
+                    break;
+                case Engine.Platform.KeyboardButtonCode.KC_RETURN:
+                    activateButton_MouseButtonClick(source, e);
+                    break;
+            }
         }
 
         public byte[] License { get; private set; }
