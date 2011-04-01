@@ -66,7 +66,10 @@ namespace Medical.GUI
                     InputManager.Instance.setKeyFocusWidget(userEdit);
                     break;
                 case Engine.Platform.KeyboardButtonCode.KC_RETURN:
-                    activateButton_MouseButtonClick(source, e);
+                    if (activateButton.Enabled)
+                    {
+                        activateButton_MouseButtonClick(source, e);
+                    }
                     break;
             }
         }
@@ -80,7 +83,10 @@ namespace Medical.GUI
                     InputManager.Instance.setKeyFocusWidget(passwordEdit);
                     break;
                 case Engine.Platform.KeyboardButtonCode.KC_RETURN:
-                    activateButton_MouseButtonClick(source, e);
+                    if (activateButton.Enabled)
+                    {
+                        activateButton_MouseButtonClick(source, e);
+                    }
                     break;
             }
         }
