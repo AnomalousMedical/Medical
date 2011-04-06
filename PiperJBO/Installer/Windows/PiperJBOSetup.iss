@@ -54,6 +54,7 @@ Source: "S:\Medical\PublicRelease\SoundWrapper.dll"; DestDir: "{app}"; Flags: ig
 Source: "S:\Medical\PublicRelease\Standalone.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "S:\Medical\PublicRelease\WinMTDriver.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "S:\Medical\PublicRelease\Zip.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "S:\Medical\PublicRelease\PiperJBO.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "S:\dependencies\InstallerDependencies\Windows\dotnetfx35setup.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
@@ -103,8 +104,17 @@ var
 	version: cardinal;
 begin
 	RegQueryDWordValue(HKLM, 'Software\Microsoft\NET Framework Setup\NDP\v3.5', 'SP', version);
-	if version < 1 then
-	   Exec(ExpandConstant('{tmp}\dotnetfx35setup.exe'), '/q /norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
+	if version < 1 then 
+	begin
+    if MsgBox('You need to install the Microsoft .Net Framework 3.5 SP1.'#13#10'If you are connected to the internet you can do this now.'#13#10'Would you like to continue?', mbConfirmation, MB_YESNO) = IDYES then
+      begin
+        Exec(ExpandConstant('{tmp}\dotnetfx35setup.exe'), '/norestart', '', SW_SHOW, ewWaitUntilTerminated, resultCode);
+      end
+    else
+      begin
+        MsgBox('You must install the Microsoft .Net Framework 3.5 for this program to work.'#13#10'Please visit www.anomalousmedical.com for more info.', mbInformation, MB_OK)
+      end;
+   end;
 //	   if resultCode=3010 then
 	   //Restart required
 end;
