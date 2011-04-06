@@ -55,6 +55,7 @@ Source: "S:\Medical\PublicRelease\Standalone.dll"; DestDir: "{app}"; Flags: igno
 Source: "S:\Medical\PublicRelease\WinMTDriver.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "S:\Medical\PublicRelease\Zip.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "S:\Medical\PublicRelease\PiperJBO.dat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "S:\Medical\PublicRelease\Doc\PiperJBOManual.htb"; DestDir: "{app}\Doc"; Flags: ignoreversion
 Source: "S:\dependencies\InstallerDependencies\Windows\dotnetfx35setup.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\oalinst.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
 Source: "S:\dependencies\InstallerDependencies\Windows\vcredist_x86.exe"; DestDir: "{tmp}"; Flags: ignoreversion deleteafterinstall
