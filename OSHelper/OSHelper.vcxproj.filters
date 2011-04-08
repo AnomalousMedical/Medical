@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ImageWindow">
+      <UniqueIdentifier>{e3e4a6bd-965a-4fa7-9f9f-55a208503d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="MultiTouch">
+      <UniqueIdentifier>{761a8e5d-565a-48e1-ae1a-bc1889485541}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CopyProtection">
+      <UniqueIdentifier>{b3472219-2460-46b8-aede-17da66400bcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="wxPlatform">
+      <UniqueIdentifier>{8ffc9668-249c-47af-8ffb-48d2be777205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{c51a27b9-e84a-41ec-b9a3-76cc14edeca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLL">
+      <UniqueIdentifier>{704cddde-bc93-4733-af8f-b9a6c72aa8eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OS">
+      <UniqueIdentifier>{fc86476d-b5fd-4ade-b864-933212189fe9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\ImageViewer.cpp">
+      <Filter>ImageWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ImageWindow.cpp">
+      <Filter>ImageWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MultiTouch.cpp">
+      <Filter>MultiTouch</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\LicenseManager.cpp">
+      <Filter>CopyProtection</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\App.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ColorDialog.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DirDialog.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Enums.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FileOpenDialog.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\FileSaveDialog.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\HtmlHelpController.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MessageDialog.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeMenu.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeMenuBar.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeMenuItem.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeOSWindow.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeString.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\NativeStringEnumerator.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PerformanceCounter.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\SystemInfo.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\WxKeyboard.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\WxMouse.cpp">
+      <Filter>wxPlatform</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\WindowFunctions.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PlatformConfig.cpp">
+      <Filter>OS</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\ImageViewer.h">
+      <Filter>ImageWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ImageWindow.h">
+      <Filter>ImageWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MultiTouch.h">
+      <Filter>MultiTouch</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\MultiTouchImpl.h">
+      <Filter>MultiTouch</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\App.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Enums.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\HtmlHelpController.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeOSWindow.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeString.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NativeStringEnumerator.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PerformanceCounter.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\WxKeyboard.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\WxMouse.h">
+      <Filter>wxPlatform</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>DLL</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>DLL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Doppler.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\skull.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

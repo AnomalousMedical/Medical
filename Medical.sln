@@ -1,26 +1,23 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulation", "Simulation\Simulation.csproj", "{B05D69F8-6463-4276-8077-D7F3F0C02A9E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostBuild", "PostBuild\PostBuild.vcproj", "{009DCF58-25A2-4187-BA2E-C05FFFC863D6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B05D69F8-6463-4276-8077-D7F3F0C02A9E} = {B05D69F8-6463-4276-8077-D7F3F0C02A9E}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostBuild", "PostBuild\PostBuild.vcxproj", "{009DCF58-25A2-4187-BA2E-C05FFFC863D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standalone", "Standalone\Standalone.csproj", "{E217C194-A14F-41DE-A838-C401E60ADF15}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OSHelper", "OSHelper\OSHelper.vcproj", "{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OSHelper", "OSHelper\OSHelper.vcxproj", "{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{18F80BE1-DD03-4F78-AF02-9F61258B6720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiperJBO", "PiperJBO\PiperJBO.csproj", "{69050C1B-2CF1-418F-AE95-717322AB1EA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinMTDriver", "WinMTDriver\WinMTDriver.vcproj", "{74016E0D-C14D-448E-9AAF-FE8669EF50B1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinMTDriver", "WinMTDriver\WinMTDriver.vcxproj", "{74016E0D-C14D-448E-9AAF-FE8669EF50B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Doppler", "Doppler\Doppler.csproj", "{CD73D5DA-C3B1-45E5-BB88-9748A8EC9CC9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostBuildMac", "PostBuildMac\PostBuildMac.vcproj", "{A3634779-8277-4DA0-8E46-A48EA33BB536}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PostBuildMac", "PostBuildMac\PostBuildMac.vcxproj", "{A3634779-8277-4DA0-8E46-A48EA33BB536}"
 	ProjectSection(ProjectDependencies) = postProject
 		{74016E0D-C14D-448E-9AAF-FE8669EF50B1} = {74016E0D-C14D-448E-9AAF-FE8669EF50B1}
 		{69050C1B-2CF1-418F-AE95-717322AB1EA3} = {69050C1B-2CF1-418F-AE95-717322AB1EA3}

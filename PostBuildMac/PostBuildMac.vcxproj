@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PublicRelease|Win32">
+      <Configuration>PublicRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A3634779-8277-4DA0-8E46-A48EA33BB536}</ProjectGuid>
+    <RootNamespace>PostBuildMac</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Release\BulletPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\Engine.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\Editor.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\DotNetZip.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\MyGUIPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\OgrePlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\ShapeLoader.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\Simulation.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\SoundPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\Standalone.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\PiperJBO.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\Doppler.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)Release\TMJOverview.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)PublicRelease\BulletPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\Engine.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\Editor.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\DotNetZip.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\MyGUIPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\OgrePlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\ShapeLoader.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\Simulation.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\SoundPlugin.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\Standalone.dll" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\PiperJBO.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\Doppler.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"
+xcopy "$(SolutionDir)PublicRelease\TMJOverview.exe" /D /Y /S /I /C "$(OSX_BUILD_HOME)\DotNetAssemblies"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

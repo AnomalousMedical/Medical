@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="PublicRelease|Win32">
+      <Configuration>PublicRelease</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5DEF45C8-1C64-4A56-840B-B6F5A02346B7}</ProjectGuid>
+    <RootNamespace>OSHelper</RootNamespace>
+    <Keyword>ManagedCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>false</CLRSupport>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <CLRSupport>true</CLRSupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AssemblyDebug>true</AssemblyDebug>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(WXWIDGETS_HOME)\lib\vc_lib\mswu;$(WXWIDGETS_HOME)\include;$(WXWIDGETS_HOME)\contrib\include;$(HASP_HOME);Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>winspool.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;gdiplus.lib;shell32.lib;comdlg32.lib;advapi32.lib;ole32.lib;oleaut32.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;wxbase29u.lib;wxbase29u_net.lib;wxbase29u_xml.lib;wxexpat.lib;wxjpeg.lib;wxmsw29u_adv.lib;wxmsw29u_core.lib;wxmsw29u_html.lib;wxmsw29u_stc.lib;wxmsw29u_xrc.lib;wxmsw29u_aui.lib;wxpng.lib;wxregexu.lib;wxtiff.lib;wxzlib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(WXWIDGETS_HOME)\lib\vc_lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(WXWIDGETS_HOME)\lib\vc_lib\mswu;$(WXWIDGETS_HOME)\include;$(WXWIDGETS_HOME)\contrib\include;$(HASP_HOME);Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ENABLE_HASP_PROTECTION;WINDOWS;WIN32;NDEBUG;_WINDOWS;_USRDLL;WXC_EXPORTS;_MT;wxUSE_GUI=1;WXWIN_COMPATIBILITY_2_6;WXNET_DISPLAY;WXNET_STYLEDTEXTCTRL;_UNICODE;WINVER=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libhasp_windows_92548.lib;winspool.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;gdiplus.lib;shell32.lib;comdlg32.lib;advapi32.lib;ole32.lib;oleaut32.lib;comctl32.lib;rpcrt4.lib;wsock32.lib;wxbase29u.lib;wxbase29u_net.lib;wxbase29u_xml.lib;wxexpat.lib;wxjpeg.lib;wxmsw29u_adv.lib;wxmsw29u_core.lib;wxmsw29u_html.lib;wxmsw29u_stc.lib;wxmsw29u_xrc.lib;wxmsw29u_aui.lib;wxpng.lib;wxregexu.lib;wxtiff.lib;wxzlib.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(WXWIDGETS_HOME)\lib\vc_lib;$(HASP_HOME);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Data">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Xml">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\ImageViewer.cpp" />
+    <ClCompile Include="Src\ImageWindow.cpp" />
+    <ClCompile Include="Src\MultiTouch.cpp" />
+    <ClCompile Include="Src\LicenseManager.cpp" />
+    <ClCompile Include="Src\App.cpp" />
+    <ClCompile Include="Src\ColorDialog.cpp" />
+    <ClCompile Include="Src\DirDialog.cpp" />
+    <ClCompile Include="Src\Enums.cpp" />
+    <ClCompile Include="Src\FileOpenDialog.cpp" />
+    <ClCompile Include="Src\FileSaveDialog.cpp" />
+    <ClCompile Include="Src\HtmlHelpController.cpp" />
+    <ClCompile Include="Src\MessageDialog.cpp" />
+    <ClCompile Include="Src\NativeMenu.cpp" />
+    <ClCompile Include="Src\NativeMenuBar.cpp" />
+    <ClCompile Include="Src\NativeMenuItem.cpp" />
+    <ClCompile Include="Src\NativeOSWindow.cpp" />
+    <ClCompile Include="Src\NativeString.cpp" />
+    <ClCompile Include="Src\NativeStringEnumerator.cpp" />
+    <ClCompile Include="Src\PerformanceCounter.cpp" />
+    <ClCompile Include="Src\SystemInfo.cpp" />
+    <ClCompile Include="Src\WxKeyboard.cpp" />
+    <ClCompile Include="Src\WxMouse.cpp" />
+    <ClCompile Include="Src\WindowFunctions.cpp" />
+    <ClCompile Include="Stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='PublicRelease|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Src\PlatformConfig.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\ImageViewer.h" />
+    <ClInclude Include="Include\ImageWindow.h" />
+    <ClInclude Include="Include\MultiTouch.h" />
+    <ClInclude Include="Include\MultiTouchImpl.h" />
+    <ClInclude Include="Include\App.h" />
+    <ClInclude Include="Include\Enums.h" />
+    <ClInclude Include="Include\HtmlHelpController.h" />
+    <ClInclude Include="Include\NativeOSWindow.h" />
+    <ClInclude Include="Include\NativeString.h" />
+    <ClInclude Include="Include\NativeStringEnumerator.h" />
+    <ClInclude Include="Include\PerformanceCounter.h" />
+    <ClInclude Include="Include\WxKeyboard.h" />
+    <ClInclude Include="Include\WxMouse.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Doppler.ico" />
+    <None Include="..\skull.ico" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
