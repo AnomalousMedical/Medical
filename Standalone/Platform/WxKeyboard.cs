@@ -9,7 +9,9 @@ namespace Medical
 {
     class WxKeyboard : Engine.Platform.Keyboard, IDisposable
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyDownDelegate(KeyboardButtonCode keyCode, uint character);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void KeyUpDelegate(KeyboardButtonCode keyCode);
 
         private KeyDownDelegate keyDownCB;

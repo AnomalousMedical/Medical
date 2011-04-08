@@ -17,9 +17,13 @@ namespace Medical
         private bool[] buttonDownStatus = new bool[(int)MouseButtonCode.NUM_BUTTONS];
 
         IntPtr nativeMouse;
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         delegate void MouseButtonDownDelegate(MouseButtonCode id);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void MouseButtonUpDelegate(MouseButtonCode id);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void MouseMoveDelegate(int absX, int absY);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	    delegate void MouseWheelDelegate(int relZ);
 
         MouseButtonDownDelegate mouseButtonDownCB;
