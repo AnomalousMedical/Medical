@@ -55,7 +55,9 @@
   
   <!-- These items will go in the Contents\Frameworks folder. -->
   <ItemGroup>
-	<FrameworksFiles Include="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/Mono.framework/**/*" />
+	<!-- Mono -->
+	<FrameworksFiles Include="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/**/*"
+					 Exclude="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/fixmonopaths.build;/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/MakeFramework.sh"/>
   </ItemGroup>
   
   <!-- Build task to actually create the bundle -->
