@@ -1,0 +1,496 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01C7D2571357723E0027AC32 /* App.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22C1357723E0027AC32 /* App.h */; };
+		01C7D2581357723E0027AC32 /* Enums.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22D1357723E0027AC32 /* Enums.h */; };
+		01C7D2591357723E0027AC32 /* HtmlHelpController.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22E1357723E0027AC32 /* HtmlHelpController.h */; };
+		01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D22F1357723E0027AC32 /* ImageViewer.h */; };
+		01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2301357723E0027AC32 /* ImageWindow.h */; };
+		01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2311357723E0027AC32 /* MessageDialog.h */; };
+		01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2321357723E0027AC32 /* MultiTouch.h */; };
+		01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2331357723E0027AC32 /* MultiTouchImpl.h */; };
+		01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2341357723E0027AC32 /* NativeOSWindow.h */; };
+		01C7D2601357723E0027AC32 /* NativeString.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2351357723E0027AC32 /* NativeString.h */; };
+		01C7D2611357723E0027AC32 /* NativeStringEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2361357723E0027AC32 /* NativeStringEnumerator.h */; };
+		01C7D2621357723E0027AC32 /* OSXMultiTouch.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2371357723E0027AC32 /* OSXMultiTouch.h */; };
+		01C7D2631357723E0027AC32 /* PerformanceCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2381357723E0027AC32 /* PerformanceCounter.h */; };
+		01C7D2641357723E0027AC32 /* WxKeyboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2391357723E0027AC32 /* WxKeyboard.h */; };
+		01C7D2651357723E0027AC32 /* WxMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D23A1357723E0027AC32 /* WxMouse.h */; };
+		01C7D2661357723E0027AC32 /* App.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23C1357723E0027AC32 /* App.cpp */; };
+		01C7D2671357723E0027AC32 /* ColorDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23D1357723E0027AC32 /* ColorDialog.cpp */; };
+		01C7D2681357723E0027AC32 /* DirDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23E1357723E0027AC32 /* DirDialog.cpp */; };
+		01C7D2691357723E0027AC32 /* Enums.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D23F1357723E0027AC32 /* Enums.cpp */; };
+		01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */; };
+		01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */; };
+		01C7D26C1357723E0027AC32 /* HtmlHelpController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */; };
+		01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2431357723E0027AC32 /* ImageViewer.cpp */; };
+		01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2441357723E0027AC32 /* ImageWindow.cpp */; };
+		01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2451357723E0027AC32 /* LicenseManager.cpp */; };
+		01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2461357723E0027AC32 /* MessageDialog.cpp */; };
+		01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2471357723E0027AC32 /* MultiTouch.cpp */; };
+		01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2481357723E0027AC32 /* NativeMenu.cpp */; };
+		01C7D2731357723E0027AC32 /* NativeMenuBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2491357723E0027AC32 /* NativeMenuBar.cpp */; };
+		01C7D2741357723E0027AC32 /* NativeMenuItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24A1357723E0027AC32 /* NativeMenuItem.cpp */; };
+		01C7D2751357723E0027AC32 /* NativeOSWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */; };
+		01C7D2761357723E0027AC32 /* NativeString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24C1357723E0027AC32 /* NativeString.cpp */; };
+		01C7D2771357723E0027AC32 /* NativeStringEnumerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24D1357723E0027AC32 /* NativeStringEnumerator.cpp */; };
+		01C7D2781357723E0027AC32 /* OSXMultiTouch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24E1357723E0027AC32 /* OSXMultiTouch.mm */; };
+		01C7D2791357723E0027AC32 /* PerformanceCounter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */; };
+		01C7D27A1357723E0027AC32 /* PlatformConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2501357723E0027AC32 /* PlatformConfig.cpp */; };
+		01C7D27B1357723E0027AC32 /* SystemInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2511357723E0027AC32 /* SystemInfo.cpp */; };
+		01C7D27C1357723E0027AC32 /* WindowFunctions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2521357723E0027AC32 /* WindowFunctions.cpp */; };
+		01C7D27D1357723E0027AC32 /* WxKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2531357723E0027AC32 /* WxKeyboard.cpp */; };
+		01C7D27E1357723E0027AC32 /* WxMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2541357723E0027AC32 /* WxMouse.cpp */; };
+		01C7D27F1357723E0027AC32 /* Stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 01C7D2551357723E0027AC32 /* Stdafx.cpp */; };
+		01C7D2801357723E0027AC32 /* Stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C7D2561357723E0027AC32 /* Stdafx.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		01C7D22C1357723E0027AC32 /* App.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = App.h; sourceTree = "<group>"; };
+		01C7D22D1357723E0027AC32 /* Enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Enums.h; sourceTree = "<group>"; };
+		01C7D22E1357723E0027AC32 /* HtmlHelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HtmlHelpController.h; sourceTree = "<group>"; };
+		01C7D22F1357723E0027AC32 /* ImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewer.h; sourceTree = "<group>"; };
+		01C7D2301357723E0027AC32 /* ImageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageWindow.h; sourceTree = "<group>"; };
+		01C7D2311357723E0027AC32 /* MessageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageDialog.h; sourceTree = "<group>"; };
+		01C7D2321357723E0027AC32 /* MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouch.h; sourceTree = "<group>"; };
+		01C7D2331357723E0027AC32 /* MultiTouchImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchImpl.h; sourceTree = "<group>"; };
+		01C7D2341357723E0027AC32 /* NativeOSWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeOSWindow.h; sourceTree = "<group>"; };
+		01C7D2351357723E0027AC32 /* NativeString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeString.h; sourceTree = "<group>"; };
+		01C7D2361357723E0027AC32 /* NativeStringEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeStringEnumerator.h; sourceTree = "<group>"; };
+		01C7D2371357723E0027AC32 /* OSXMultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSXMultiTouch.h; sourceTree = "<group>"; };
+		01C7D2381357723E0027AC32 /* PerformanceCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceCounter.h; sourceTree = "<group>"; };
+		01C7D2391357723E0027AC32 /* WxKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WxKeyboard.h; sourceTree = "<group>"; };
+		01C7D23A1357723E0027AC32 /* WxMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WxMouse.h; sourceTree = "<group>"; };
+		01C7D23C1357723E0027AC32 /* App.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = App.cpp; sourceTree = "<group>"; };
+		01C7D23D1357723E0027AC32 /* ColorDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ColorDialog.cpp; sourceTree = "<group>"; };
+		01C7D23E1357723E0027AC32 /* DirDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DirDialog.cpp; sourceTree = "<group>"; };
+		01C7D23F1357723E0027AC32 /* Enums.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Enums.cpp; sourceTree = "<group>"; };
+		01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileOpenDialog.cpp; sourceTree = "<group>"; };
+		01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSaveDialog.cpp; sourceTree = "<group>"; };
+		01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HtmlHelpController.cpp; sourceTree = "<group>"; };
+		01C7D2431357723E0027AC32 /* ImageViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageViewer.cpp; sourceTree = "<group>"; };
+		01C7D2441357723E0027AC32 /* ImageWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageWindow.cpp; sourceTree = "<group>"; };
+		01C7D2451357723E0027AC32 /* LicenseManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LicenseManager.cpp; sourceTree = "<group>"; };
+		01C7D2461357723E0027AC32 /* MessageDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MessageDialog.cpp; sourceTree = "<group>"; };
+		01C7D2471357723E0027AC32 /* MultiTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MultiTouch.cpp; sourceTree = "<group>"; };
+		01C7D2481357723E0027AC32 /* NativeMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMenu.cpp; sourceTree = "<group>"; };
+		01C7D2491357723E0027AC32 /* NativeMenuBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMenuBar.cpp; sourceTree = "<group>"; };
+		01C7D24A1357723E0027AC32 /* NativeMenuItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeMenuItem.cpp; sourceTree = "<group>"; };
+		01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeOSWindow.cpp; sourceTree = "<group>"; };
+		01C7D24C1357723E0027AC32 /* NativeString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeString.cpp; sourceTree = "<group>"; };
+		01C7D24D1357723E0027AC32 /* NativeStringEnumerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeStringEnumerator.cpp; sourceTree = "<group>"; };
+		01C7D24E1357723E0027AC32 /* OSXMultiTouch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OSXMultiTouch.mm; sourceTree = "<group>"; };
+		01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceCounter.cpp; sourceTree = "<group>"; };
+		01C7D2501357723E0027AC32 /* PlatformConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlatformConfig.cpp; sourceTree = "<group>"; };
+		01C7D2511357723E0027AC32 /* SystemInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemInfo.cpp; sourceTree = "<group>"; };
+		01C7D2521357723E0027AC32 /* WindowFunctions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowFunctions.cpp; sourceTree = "<group>"; };
+		01C7D2531357723E0027AC32 /* WxKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WxKeyboard.cpp; sourceTree = "<group>"; };
+		01C7D2541357723E0027AC32 /* WxMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WxMouse.cpp; sourceTree = "<group>"; };
+		01C7D2551357723E0027AC32 /* Stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stdafx.cpp; path = ../Stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		01C7D2561357723E0027AC32 /* Stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stdafx.h; path = ../Stdafx.h; sourceTree = SOURCE_ROOT; };
+		5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = OSHelperProj.xcconfig; sourceTree = "<group>"; };
+		5073E0C709E734A800EC74B6 /* OSHelperTarget.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; path = OSHelperTarget.xcconfig; sourceTree = "<group>"; };
+		D2AAC09D05546B4700DB518D /* libOSHelper.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libOSHelper.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2AAC09B05546B4700DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01C7D22B1357723E0027AC32 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				01C7D22C1357723E0027AC32 /* App.h */,
+				01C7D22D1357723E0027AC32 /* Enums.h */,
+				01C7D22E1357723E0027AC32 /* HtmlHelpController.h */,
+				01C7D22F1357723E0027AC32 /* ImageViewer.h */,
+				01C7D2301357723E0027AC32 /* ImageWindow.h */,
+				01C7D2311357723E0027AC32 /* MessageDialog.h */,
+				01C7D2321357723E0027AC32 /* MultiTouch.h */,
+				01C7D2331357723E0027AC32 /* MultiTouchImpl.h */,
+				01C7D2341357723E0027AC32 /* NativeOSWindow.h */,
+				01C7D2351357723E0027AC32 /* NativeString.h */,
+				01C7D2361357723E0027AC32 /* NativeStringEnumerator.h */,
+				01C7D2371357723E0027AC32 /* OSXMultiTouch.h */,
+				01C7D2381357723E0027AC32 /* PerformanceCounter.h */,
+				01C7D2391357723E0027AC32 /* WxKeyboard.h */,
+				01C7D23A1357723E0027AC32 /* WxMouse.h */,
+			);
+			name = Include;
+			path = ../Include;
+			sourceTree = SOURCE_ROOT;
+		};
+		01C7D23B1357723E0027AC32 /* Src */ = {
+			isa = PBXGroup;
+			children = (
+				01C7D23C1357723E0027AC32 /* App.cpp */,
+				01C7D23D1357723E0027AC32 /* ColorDialog.cpp */,
+				01C7D23E1357723E0027AC32 /* DirDialog.cpp */,
+				01C7D23F1357723E0027AC32 /* Enums.cpp */,
+				01C7D2401357723E0027AC32 /* FileOpenDialog.cpp */,
+				01C7D2411357723E0027AC32 /* FileSaveDialog.cpp */,
+				01C7D2421357723E0027AC32 /* HtmlHelpController.cpp */,
+				01C7D2431357723E0027AC32 /* ImageViewer.cpp */,
+				01C7D2441357723E0027AC32 /* ImageWindow.cpp */,
+				01C7D2451357723E0027AC32 /* LicenseManager.cpp */,
+				01C7D2461357723E0027AC32 /* MessageDialog.cpp */,
+				01C7D2471357723E0027AC32 /* MultiTouch.cpp */,
+				01C7D2481357723E0027AC32 /* NativeMenu.cpp */,
+				01C7D2491357723E0027AC32 /* NativeMenuBar.cpp */,
+				01C7D24A1357723E0027AC32 /* NativeMenuItem.cpp */,
+				01C7D24B1357723E0027AC32 /* NativeOSWindow.cpp */,
+				01C7D24C1357723E0027AC32 /* NativeString.cpp */,
+				01C7D24D1357723E0027AC32 /* NativeStringEnumerator.cpp */,
+				01C7D24E1357723E0027AC32 /* OSXMultiTouch.mm */,
+				01C7D24F1357723E0027AC32 /* PerformanceCounter.cpp */,
+				01C7D2501357723E0027AC32 /* PlatformConfig.cpp */,
+				01C7D2511357723E0027AC32 /* SystemInfo.cpp */,
+				01C7D2521357723E0027AC32 /* WindowFunctions.cpp */,
+				01C7D2531357723E0027AC32 /* WxKeyboard.cpp */,
+				01C7D2541357723E0027AC32 /* WxMouse.cpp */,
+			);
+			name = Src;
+			path = ../Src;
+			sourceTree = SOURCE_ROOT;
+		};
+		034768DDFF38A45A11DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC09D05546B4700DB518D /* libOSHelper.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* OSHelper */ = {
+			isa = PBXGroup;
+			children = (
+				01C7D22B1357723E0027AC32 /* Include */,
+				01C7D23B1357723E0027AC32 /* Src */,
+				01C7D2551357723E0027AC32 /* Stdafx.cpp */,
+				01C7D2561357723E0027AC32 /* Stdafx.h */,
+				5073E0CA09E734BC00EC74B6 /* Configuration Files */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DDFF38A45A11DB9C8B /* Products */,
+			);
+			name = OSHelper;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		5073E0CA09E734BC00EC74B6 /* Configuration Files */ = {
+			isa = PBXGroup;
+			children = (
+				5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */,
+				5073E0C709E734A800EC74B6 /* OSHelperTarget.xcconfig */,
+			);
+			name = "Configuration Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC09905546B4700DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C7D2571357723E0027AC32 /* App.h in Headers */,
+				01C7D2581357723E0027AC32 /* Enums.h in Headers */,
+				01C7D2591357723E0027AC32 /* HtmlHelpController.h in Headers */,
+				01C7D25A1357723E0027AC32 /* ImageViewer.h in Headers */,
+				01C7D25B1357723E0027AC32 /* ImageWindow.h in Headers */,
+				01C7D25C1357723E0027AC32 /* MessageDialog.h in Headers */,
+				01C7D25D1357723E0027AC32 /* MultiTouch.h in Headers */,
+				01C7D25E1357723E0027AC32 /* MultiTouchImpl.h in Headers */,
+				01C7D25F1357723E0027AC32 /* NativeOSWindow.h in Headers */,
+				01C7D2601357723E0027AC32 /* NativeString.h in Headers */,
+				01C7D2611357723E0027AC32 /* NativeStringEnumerator.h in Headers */,
+				01C7D2621357723E0027AC32 /* OSXMultiTouch.h in Headers */,
+				01C7D2631357723E0027AC32 /* PerformanceCounter.h in Headers */,
+				01C7D2641357723E0027AC32 /* WxKeyboard.h in Headers */,
+				01C7D2651357723E0027AC32 /* WxMouse.h in Headers */,
+				01C7D2801357723E0027AC32 /* Stdafx.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D2AAC09C05546B4700DB518D /* OSHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB916008733D950010E9CD /* Build configuration list for PBXNativeTarget "OSHelper" */;
+			buildPhases = (
+				D2AAC09905546B4700DB518D /* Headers */,
+				D2AAC09B05546B4700DB518D /* Frameworks */,
+				D2AAC09A05546B4700DB518D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OSHelper;
+			productName = libOSHelper;
+			productReference = D2AAC09D05546B4700DB518D /* libOSHelper.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB916408733D950010E9CD /* Build configuration list for PBXProject "OSHelper" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* OSHelper */;
+			productRefGroup = 034768DDFF38A45A11DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC09C05546B4700DB518D /* OSHelper */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2AAC09A05546B4700DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C7D2661357723E0027AC32 /* App.cpp in Sources */,
+				01C7D2671357723E0027AC32 /* ColorDialog.cpp in Sources */,
+				01C7D2681357723E0027AC32 /* DirDialog.cpp in Sources */,
+				01C7D2691357723E0027AC32 /* Enums.cpp in Sources */,
+				01C7D26A1357723E0027AC32 /* FileOpenDialog.cpp in Sources */,
+				01C7D26B1357723E0027AC32 /* FileSaveDialog.cpp in Sources */,
+				01C7D26C1357723E0027AC32 /* HtmlHelpController.cpp in Sources */,
+				01C7D26D1357723E0027AC32 /* ImageViewer.cpp in Sources */,
+				01C7D26E1357723E0027AC32 /* ImageWindow.cpp in Sources */,
+				01C7D26F1357723E0027AC32 /* LicenseManager.cpp in Sources */,
+				01C7D2701357723E0027AC32 /* MessageDialog.cpp in Sources */,
+				01C7D2711357723E0027AC32 /* MultiTouch.cpp in Sources */,
+				01C7D2721357723E0027AC32 /* NativeMenu.cpp in Sources */,
+				01C7D2731357723E0027AC32 /* NativeMenuBar.cpp in Sources */,
+				01C7D2741357723E0027AC32 /* NativeMenuItem.cpp in Sources */,
+				01C7D2751357723E0027AC32 /* NativeOSWindow.cpp in Sources */,
+				01C7D2761357723E0027AC32 /* NativeString.cpp in Sources */,
+				01C7D2771357723E0027AC32 /* NativeStringEnumerator.cpp in Sources */,
+				01C7D2781357723E0027AC32 /* OSXMultiTouch.mm in Sources */,
+				01C7D2791357723E0027AC32 /* PerformanceCounter.cpp in Sources */,
+				01C7D27A1357723E0027AC32 /* PlatformConfig.cpp in Sources */,
+				01C7D27B1357723E0027AC32 /* SystemInfo.cpp in Sources */,
+				01C7D27C1357723E0027AC32 /* WindowFunctions.cpp in Sources */,
+				01C7D27D1357723E0027AC32 /* WxKeyboard.cpp in Sources */,
+				01C7D27E1357723E0027AC32 /* WxMouse.cpp in Sources */,
+				01C7D27F1357723E0027AC32 /* Stdafx.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB916108733D950010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5073E0C709E734A800EC74B6 /* OSHelperTarget.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../Stdafx.h;
+				OTHER_CFLAGS = (
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__\n",
+				);
+				OTHER_LDFLAGS = (
+					"-L/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuickTime,
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_xrc-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_html-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_qa-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_adv-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_core-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_xml-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_net-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu-2.9.a",
+					"-framework",
+					WebKit,
+					"-lexpat",
+					"-lwxregexu-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lz",
+					"-lpthread",
+					"-liconv",
+				);
+			};
+			name = Debug;
+		};
+		1DEB916208733D950010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5073E0C709E734A800EC74B6 /* OSHelperTarget.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = ../Stdafx.h;
+				OTHER_CFLAGS = (
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"-I/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+					"-D_FILE_OFFSET_BITS=64",
+					"-D__WXMAC__",
+					"-D__WXOSX__",
+					"-D__WXOSX_COCOA__\n",
+				);
+				OTHER_LDFLAGS = (
+					"-L/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib",
+					"-framework",
+					IOKit,
+					"-framework",
+					Carbon,
+					"-framework",
+					Cocoa,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					System,
+					"-framework",
+					OpenGL,
+					"-framework",
+					QuickTime,
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_xrc-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_html-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_qa-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_adv-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_osx_cocoau_core-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_xml-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu_net-2.9.a",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/libwx_baseu-2.9.a",
+					"-framework",
+					WebKit,
+					"-lexpat",
+					"-lwxregexu-2.9",
+					"-lwxtiff-2.9",
+					"-lwxjpeg-2.9",
+					"-lwxpng-2.9",
+					"-lz",
+					"-lpthread",
+					"-liconv",
+				);
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		1DEB916508733D950010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = ../Stdafx.h;
+				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Debug;
+		};
+		1DEB916608733D950010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5073E0C609E734A800EC74B6 /* OSHelperProj.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREFIX_HEADER = ../Stdafx.h;
+				GCC_PREPROCESSOR_DEFINITIONS = MAC_OSX;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/osx-build/lib/wx/include/osx_cocoa-unicode-static-2.9",
+					"/Users/andrewpiper/Development/Dependencies/wxWidgets-Mac/include",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB916008733D950010E9CD /* Build configuration list for PBXNativeTarget "OSHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB916108733D950010E9CD /* Debug */,
+				1DEB916208733D950010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB916408733D950010E9CD /* Build configuration list for PBXProject "OSHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB916508733D950010E9CD /* Debug */,
+				1DEB916608733D950010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
