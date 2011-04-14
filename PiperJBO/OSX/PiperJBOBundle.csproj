@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8592C64-2FB3-422B-A7B0-F0C62E728221}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>BulletWrapper</RootNamespace>
+    <AssemblyName>BulletWrapper</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <!-- Create the App Bundle -->
+  <!-- General Information -->
+  <PropertyGroup>
+    <AppBundleName>Pipers Joint Based Occlusion.app</AppBundleName>
+	<AppBundleOutDir>../../$(Configuration)</AppBundleOutDir>
+  </PropertyGroup>
+  
+  <!-- These items will go in the Contents folder. -->
+  <ItemGroup>
+	<ContentsFiles Include="BundleSource/Contents/Info.plist" />
+  </ItemGroup>
+  
+  <!-- These items will go in the Contents\Resources folder. -->
+  <ItemGroup>
+	<ResourceFiles Include="BundleSource/Contents/Resources/PiperJBO.exe.config" />
+	<ResourceFiles Include="BundleSource/Contents/Resources/Skull.icns" />
+    <ResourceFiles Include="..\..\Release\BulletPlugin.dll" />
+  </ItemGroup>
+  
+  <!-- These items will go in the Contents\MacOS folder-->
+  <ItemGroup>
+	<MacOSFiles Include="BundleSource/Contents/MacOS/PiperJBO" />
+  </ItemGroup>
+  
+  <!-- These items will go in the Contents\Frameworks folder. -->
+  <ItemGroup>
+	<FrameworksFiles Include="/Users/andrewpiper/Development/Dependencies/Mono/OSXBuild/Mono.framework/**/*" />
+  </ItemGroup>
+  
+  <!-- Build task to actually create the bundle -->
+  <Target Name="Build">
+    <!-- Create bundle -->
+	<Copy SourceFiles="@(ContentsFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents" />
+    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Resources" />
+	<Copy SourceFiles="@(MacOSFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/MacOS" />
+	<Copy SourceFiles="@(FrameworksFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/%(RecursiveDir)" />
+  </Target>
+  
+  <!-- Clean Task, Deletes the app bundle. -->
+  <Target Name="Clean">
+	<RemoveDir
+		Directories="$(AppBundleOutDir)/$(AppBundleName)"
+	/>
+  </Target>
+</Project>
