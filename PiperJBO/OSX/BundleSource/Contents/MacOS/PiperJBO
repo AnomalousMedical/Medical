@@ -33,11 +33,9 @@ fi
 
 #Setup the mono directories
 export MONO_CFG_DIR=../Frameworks/Mono.Framework/cfg
-export MONO_PATH=../Frameworks/Mono.Framework/lib
+export MONO_PATH="$APP_PATH/Contents/Frameworks/Mono.framework/lib"
 
 #Run the program
 cd "$APP_PATH/Contents/Resources"
-
-export MONO_PATH="$APP_PATH/Contents/Frameworks/Mono.framework/lib"
 
 "$APP_PATH/Contents/Frameworks/Mono.framework/bin/mono" "./$APP_NAME.exe"
