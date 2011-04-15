@@ -38,4 +38,6 @@ export MONO_PATH=../Frameworks/Mono.Framework/lib
 #Run the program
 cd "$APP_PATH/Contents/Resources"
 
+export MONO_PATH="$APP_PATH/Contents/Frameworks/Mono.framework/lib"
+
 "$APP_PATH/Contents/Frameworks/Mono.framework/bin/mono" "./$APP_NAME.exe"
