@@ -77,7 +77,7 @@
   
   <!-- Override.ini -->
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-	<ResourceFiles Include="..\..\OSXBuild\override.ini" />
+	<ResourceFiles Include="..\..\Release\override.ini" />
   </ItemGroup>
   
   <!-- Common frameworks, items and target. -->
