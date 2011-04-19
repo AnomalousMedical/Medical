@@ -23,7 +23,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D8592C64-2FB3-422B-A7B0-F0C62E728221}</ProjectGuid>
+    <ProjectGuid>{D8592C59-2FB3-422B-A7B0-F0C62E728221}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>BulletWrapper</RootNamespace>
     <AssemblyName>BulletWrapper</AssemblyName>
