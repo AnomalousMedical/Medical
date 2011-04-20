@@ -7,6 +7,7 @@ using Engine.Saving.XMLSaver;
 using System.Xml;
 using Engine.Resources;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -37,7 +38,14 @@ namespace Medical
 
         public void applyLayerState(String name)
         {
-            applyLayerState(currentLayers.getState(name));
+            if (currentLayers != null)
+            {
+                applyLayerState(currentLayers.getState(name));
+            }
+            else
+            {
+                Log.Warning("Could not change layer state to {0} because no predefined layers are loaded.", name);
+            }
         }
 
         public void applyLayerState(LayerState state)
@@ -51,7 +59,14 @@ namespace Medical
 
         public void instantlyApplyLayerState(String name, bool reportChanges)
         {
-            instantlyApplyLayerState(currentLayers.getState(name), reportChanges);
+            if (currentLayers != null)
+            {
+                instantlyApplyLayerState(currentLayers.getState(name), reportChanges);
+            }
+            else
+            {
+                Log.Warning("Could not change layer state to {0} because no predefined layers are loaded.", name);
+            }
         }
 
         public void instantlyApplyLayerState(LayerState state, bool reportChanges)

@@ -95,15 +95,22 @@ namespace Medical
                     {
                         if (navigationController != null)
                         {
-                            NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
-                            if (state != null)
+                            if (navigationController.NavigationSet != null)
                             {
-                                cameraPosition = state.Translation;
-                                cameraLookAt = state.LookAt;
+                                NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
+                                if (state != null)
+                                {
+                                    cameraPosition = state.Translation;
+                                    cameraLookAt = state.LookAt;
+                                }
+                                else
+                                {
+                                    Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
+                                }
                             }
                             else
                             {
-                                Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
+                                Log.Error("Could not render image from navigation state \"{0}\" because there is no navigation set loaded.", properties.NavigationStateName);
                             }
                         }
                     }
