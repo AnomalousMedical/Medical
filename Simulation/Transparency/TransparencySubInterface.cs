@@ -16,7 +16,6 @@ namespace Medical
     /// </summary>
     public abstract class TransparencySubInterface : Interface
     {
-        [Editable] RenderGroup parentGroup;
         [Editable] String parentInterfaceName;
 
         [DoNotCopy]
@@ -25,15 +24,10 @@ namespace Medical
 
         protected override void link()
         {
-            TransparencyGroup group = TransparencyController.getTransparencyGroup(parentGroup);
-            if (group == null)
-            {
-                blacklist("Cannot find parent group {0}.", parentGroup);
-            }
-            parentInterface = group.getTransparencyObject(parentInterfaceName);
+            parentInterface = TransparencyController.getTransparencyObject(parentInterfaceName);
             if (parentInterface == null)
             {
-                blacklist("Cannot find parent interface {0} in group {1}.", parentInterfaceName, parentGroup);
+                blacklist("Cannot find parent interface \"{0}\".", parentInterfaceName);
             }
             parentInterface.addSubInterface(this);
         }

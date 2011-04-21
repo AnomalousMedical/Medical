@@ -58,6 +58,19 @@ namespace Medical
             return ret;
         }
 
+        public static TransparencyInterface getTransparencyObject(String name)
+        {
+            //Slow search, need to replace this with something better later.
+            foreach (TransparencyInterface transInter in transparencyInterfaces)
+            {
+                if (transInter.ObjectName == name)
+                {
+                    return transInter;
+                }
+            }
+            return null;
+        }
+
         public static IEnumerable<TransparencyGroup> getGroupIter()
         {
             return groups.Values;
