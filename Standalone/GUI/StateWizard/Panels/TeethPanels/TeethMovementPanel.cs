@@ -129,8 +129,8 @@ namespace Medical.GUI
                 MuscleBehavior movingMuscle = MuscleController.getMuscle("MovingMuscleDynamic");
                 MovingMuscleTarget movingMuscleTarget = MuscleController.MovingTarget;
 
-                leftCP.setLocation(leftCP.getNeutralLocation());
-                rightCP.setLocation(rightCP.getNeutralLocation());
+                leftCP.setLocation(leftCP.NeutralLocation);
+                rightCP.setLocation(rightCP.NeutralLocation);
                 movingMuscle.changeForce(1.0f);
                 movingMuscleTarget.Offset = Vector3.Zero;
 

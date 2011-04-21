@@ -47,6 +47,9 @@ namespace Medical
         float neutralLocation;
 
         [Editable]
+        float posteriorShiftMaxLocation;
+
+        [Editable]
         float location;
 
         SimObject boneObject;
@@ -196,11 +199,6 @@ namespace Medical
             }
         }
 
-        public float getNeutralLocation()
-        {
-            return neutralLocation;
-        }
-
         public Vector3 MandibleBonePosition
         {
             get
@@ -238,6 +236,22 @@ namespace Medical
             get
             {
                 return location;
+            }
+        }
+
+        public float NeutralLocation
+        {
+            get
+            {
+                return neutralLocation;
+            }
+        }
+
+        public float PosteriorShiftMaxLocation
+        {
+            get
+            {
+                return posteriorShiftMaxLocation;
             }
         }
 

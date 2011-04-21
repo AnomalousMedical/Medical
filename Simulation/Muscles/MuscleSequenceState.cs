@@ -101,8 +101,8 @@ namespace Medical
             {
                 ControlPointBehavior leftCP = ControlPointController.getControlPoint("LeftCP");
                 ControlPointBehavior rightCP = ControlPointController.getControlPoint("RightCP");
-                leftCP.moveToLocation(leftCP.getNeutralLocation(), controlPointMoveSpeed);
-                rightCP.moveToLocation(rightCP.getNeutralLocation(), controlPointMoveSpeed);
+                leftCP.moveToLocation(leftCP.NeutralLocation, controlPointMoveSpeed);
+                rightCP.moveToLocation(rightCP.NeutralLocation, controlPointMoveSpeed);
             }
             else if (controlPointModification == ControlPointModification.Stop)
             {

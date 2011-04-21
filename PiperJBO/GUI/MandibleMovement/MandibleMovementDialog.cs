@@ -118,13 +118,13 @@ namespace Medical.GUI
             if (Enabled)
             {
                 //setup ui
-                float leftNeutral = leftCP.getNeutralLocation();
+                float leftNeutral = leftCP.NeutralLocation;
                 synchronizeLeftCP(leftCP, leftNeutral);
-                leftForwardBack.Minimum = leftNeutral;
+                leftForwardBack.Minimum = leftCP.PosteriorShiftMaxLocation;
                 leftForwardBack.SequentialChange = (leftForwardBack.Maximum - leftForwardBack.Minimum) / 10.0f;
-                float rightNeutral = rightCP.getNeutralLocation();
+                float rightNeutral = rightCP.NeutralLocation;
                 synchronizeRightCP(rightCP, rightNeutral);
-                rightForwardBack.Minimum = rightNeutral;
+                rightForwardBack.Minimum = rightCP.PosteriorShiftMaxLocation;
                 rightForwardBack.SequentialChange = (rightForwardBack.Maximum - rightForwardBack.Minimum) / 10.0f;
                 bothForwardBack.Value = rightForwardBack.Value;
                 bothForwardBack.Minimum = rightForwardBack.Minimum < leftForwardBack.Minimum ? rightForwardBack.Minimum : leftForwardBack.Minimum;
@@ -178,8 +178,8 @@ namespace Medical.GUI
             movingMusclePosition = movingMuscleTarget.Offset;
             restoreEnabled = true;
 
-            synchronizeLeftCP(resetButton, leftCP.getNeutralLocation());
-            synchronizeRightCP(resetButton, rightCP.getNeutralLocation());
+            synchronizeLeftCP(resetButton, leftCP.NeutralLocation);
+            synchronizeRightCP(resetButton, rightCP.NeutralLocation);
             bothForwardBack.Value = rightForwardBack.Value;
             synchronizeMovingMuscleOffset(resetButton, Vector3.Zero);
             restoreButton.Enabled = true;
