@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -13,7 +14,7 @@ namespace Medical
 
         static NaturalSort<RenderGroup> sorter = new NaturalSort<RenderGroup>();
         static SortedList<RenderGroup, TransparencyGroup> groups = new SortedList<RenderGroup, TransparencyGroup>(sorter);
-        static List<TransparencyInterface> transparencyInterfaces = new List<TransparencyInterface>();
+        static FastIteratorMap<String, TransparencyInterface> transparencyInterfaces = new FastIteratorMap<String, TransparencyInterface>();
         static List<String> transparencyStateNames = new List<string>();
 
         static TransparencyController()
@@ -34,7 +35,7 @@ namespace Medical
                 alphaObject.createTransparencyState();
             }
             alphaObject.ActiveTransparencyState = TransparencyStateIndex;
-            transparencyInterfaces.Add(alphaObject);
+            transparencyInterfaces.Add(alphaObject.ObjectName, alphaObject);
         }
 
         internal static void removeTransparencyObject(TransparencyInterface alphaObject)
@@ -47,7 +48,7 @@ namespace Medical
                 {
                     groups.Remove(alphaObject.RenderGroup);
                 }
-                transparencyInterfaces.Remove(alphaObject);
+                transparencyInterfaces.Remove(alphaObject.ObjectName);
             }
         }
 
@@ -60,15 +61,9 @@ namespace Medical
 
         public static TransparencyInterface getTransparencyObject(String name)
         {
-            //Slow search, need to replace this with something better later.
-            foreach (TransparencyInterface transInter in transparencyInterfaces)
-            {
-                if (transInter.ObjectName == name)
-                {
-                    return transInter;
-                }
-            }
-            return null;
+            TransparencyInterface transInter = null;
+            transparencyInterfaces.TryGetValue(name, out transInter);
+            return transInter;
         }
 
         public static IEnumerable<TransparencyGroup> getGroupIter()
