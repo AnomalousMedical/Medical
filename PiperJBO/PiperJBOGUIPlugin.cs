@@ -28,6 +28,7 @@ namespace Medical.GUI
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
         private PredefinedLayersDialog predefinedLayers;
+        private AnatomyFinder anatomyFinder;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
@@ -70,6 +71,7 @@ namespace Medical.GUI
             layers.Dispose();
             notesDialog.Dispose();
             stateList.Dispose();
+            anatomyFinder.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -132,6 +134,9 @@ namespace Medical.GUI
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(sequencePlayer);
 
+            anatomyFinder = new AnatomyFinder();
+            dialogManager.addManagedDialog(anatomyFinder);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController, licenseManager);
 
@@ -143,6 +148,7 @@ namespace Medical.GUI
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new ShowToothContactsTaskbarItem());
+            taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "Notes"));
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
@@ -227,11 +233,13 @@ namespace Medical.GUI
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
+            anatomyFinder.sceneLoaded();
         }
 
         public void sceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
+            anatomyFinder.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

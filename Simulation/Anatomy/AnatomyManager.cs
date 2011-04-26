@@ -20,5 +20,13 @@ namespace Medical
         {
             anatomyList.Remove(anatomy);
         }
+
+        public static IEnumerable<AnatomyIdentifier> AnatomyList
+        {
+            get
+            {
+                return anatomyList;
+            }
+        }
     }
 }

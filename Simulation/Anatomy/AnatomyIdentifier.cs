@@ -9,7 +9,7 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    public partial class AnatomyIdentifier : Interface
+    public partial class AnatomyIdentifier : Interface, Anatomy
     {
         [Editable]
         private String anatomicalName;
@@ -35,7 +35,14 @@ namespace Medical
             }
         }
 
-        public IEnumerable<AnatomyTag> Tags { get; set; }
+        [DoNotCopy]
+        public IEnumerable<AnatomyTag> Tags
+        {
+            get
+            {
+                return tags;
+            }
+        }
 
         public void addTag(AnatomyTag tag)
         {
