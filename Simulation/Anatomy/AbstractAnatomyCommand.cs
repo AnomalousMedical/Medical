@@ -42,6 +42,8 @@ namespace Medical
         [DoNotCopy]
         public abstract bool BooleanValue { get; set; }
 
+        public abstract String UIText { get; }
+
         public virtual void execute()
         {
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -12,20 +13,52 @@ namespace Medical.GUI
         private const float SCROLL_MAX_RANGE_MIN = SCROLL_MAX - 50;//The minimum postion of a scroll bar to count as the max value.
 
         private HScroll slider;
+        private StaticText caption;
 
         public CommandHScroll(AnatomyCommand command, Widget parentWidget)
         {
+            command.NumericValueChanged += new AnatomyNumericValueChanged(command_NumericValueChanged);
+
+            caption = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
+            caption.Caption = command.UIText;
+
             slider = (HScroll)parentWidget.createWidgetT("HScroll", "HSlider", 0, 0, parentWidget.Width - SIDE_PADDING, 20, Align.Default, "");
             slider.ScrollChangePosition += new MyGUIEvent(slider_ScrollChangePosition);
             slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;
             slider.ScrollPosition = getSliderValueFromCommand(command);
-            LayoutContainer = new MyGUILayoutContainer(slider);
         }
 
         public override void Dispose()
         {
+            Gui.Instance.destroyWidget(caption);
             Gui.Instance.destroyWidget(slider);
+        }
+
+        public override void layout()
+        {
+            caption.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, caption.Height);
+            slider.setCoord((int)Location.x, (int)Location.y + caption.Height, (int)WorkingSize.Width, slider.Height);
+        }
+
+        public override Size2 DesiredSize
+        {
+            get
+            {
+                return new Size2(caption.Width, caption.Height + slider.Height);
+            }
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return slider.Visible;
+            }
+            set
+            {
+                slider.Visible = value;
+            }
         }
 
         void slider_ScrollChangePosition(Widget source, EventArgs e)
@@ -46,6 +79,11 @@ namespace Medical.GUI
             float range = command.NumericValueMax - command.NumericValueMin;
             float normalizedCommandValue = (command.NumericValue - command.NumericValueMin) / range;
             return (uint)(normalizedCommandValue * SCROLL_MAX) - 1;
+        }
+
+        void command_NumericValueChanged(AnatomyCommand command, float value)
+        {
+            slider.ScrollPosition = getSliderValueFromCommand(command);
         }
     }
 }

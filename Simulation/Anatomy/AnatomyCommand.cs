@@ -75,6 +75,11 @@ namespace Medical
         bool BooleanValue { get; set; }
 
         /// <summary>
+        /// The text to display on the user interface.
+        /// </summary>
+        String UIText { get; }
+
+        /// <summary>
         /// Called to execute something. Used when the UI type is Button.
         /// </summary>
         void execute();

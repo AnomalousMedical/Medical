@@ -11,7 +11,7 @@ namespace Medical.GUI
     {
         private Anatomy anatomy;
         private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
-        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 0.0f));
+        private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 5.0f));
 
         public AnatomyContextWindow()
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -51,7 +51,7 @@ namespace Medical.GUI
                     }
                     if (commandUI != null)
                     {
-                        layoutContainer.addChild(commandUI.LayoutContainer);
+                        layoutContainer.addChild(commandUI);
                         dynamicWidgets.Add(commandUI);
                     }
                 }

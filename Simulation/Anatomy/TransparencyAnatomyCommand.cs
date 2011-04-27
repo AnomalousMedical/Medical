@@ -75,6 +75,14 @@ namespace Medical
             }
         }
 
+        public override string UIText
+        {
+            get
+            {
+                return "Transparency";
+            }
+        }
+
         #region Saveable
 
         private const String TRANSPARENCY_INTERFACE_NAME = "TransparencyInterfaceName";
