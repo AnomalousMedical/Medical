@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anatomy\AbstractAnatomyCommand.cs" />
+    <Compile Include="Anatomy\AbstractNumericAnatomyCommand.cs" />
     <Compile Include="Anatomy\Anatomy.cs" />
     <Compile Include="Anatomy\AnatomyCommand.cs" />
     <Compile Include="Anatomy\AnatomyCommandBrowser.cs" />

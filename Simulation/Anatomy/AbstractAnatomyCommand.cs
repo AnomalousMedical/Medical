@@ -24,75 +24,23 @@ namespace Medical
             memberScanner.Filter = new EditableAttributeFilter();
         }
 
-        public AbstractAnatomyCommand(AnatomyCommandUIType uiType)
-            :this(uiType, float.MinValue, float.MaxValue)
-        {
-            
-        }
-
-        public AbstractAnatomyCommand(AnatomyCommandUIType uiType, float minValue, float maxValue)
-            :base()
-        {
-            this.UIType = uiType;
-            NumericValueMin = minValue;
-            NumericValueMax = maxValue;
-        }
-
         public event AnatomyNumericValueChanged NumericValueChanged;
 
         public event AnatomyBooleanValueChanged BooleanValueChanged;
 
         public abstract void link(SimObject owner);
 
-        public AnatomyCommandUIType UIType { get; private set; }
-
-        private float numericValue = 0.0f;
+        public abstract AnatomyCommandUIType UIType { get; }
 
         [DoNotCopy]
-        public virtual float NumericValue
-        {
-            get
-            {
-                return numericValue;
-            }
-            set
-            {
-                if (numericValue != value)
-                {
-                    numericValue = value;
-                    if (NumericValueChanged != null)
-                    {
-                        NumericValueChanged.Invoke(this, value);
-                    }
-                }
-            }
-        }
+        public abstract float NumericValue { get; set; }
 
-        public float NumericValueMin { get; set; }
+        public abstract float NumericValueMin { get; }
 
-        public float NumericValueMax { get; set; }
-
-        private bool booleanValue = false;
+        public abstract float NumericValueMax { get; }
 
         [DoNotCopy]
-        public virtual bool BooleanValue
-        {
-            get
-            {
-                return booleanValue;
-            }
-            set
-            {
-                if (booleanValue != value)
-                {
-                    booleanValue = value;
-                    if (BooleanValueChanged != null)
-                    {
-                        BooleanValueChanged.Invoke(this, value);
-                    }
-                }
-            }
-        }
+        public abstract bool BooleanValue { get; set; }
 
         public virtual void execute()
         {
@@ -108,5 +56,21 @@ namespace Medical
         public bool Valid { get; set; }
 
         public abstract void getInfo(SaveInfo info);
+
+        protected void fireNumericValueChanged(float value)
+        {
+            if (NumericValueChanged != null)
+            {
+                NumericValueChanged.Invoke(this, value);
+            }
+        }
+
+        protected void fireBooleanValueChanged(bool value)
+        {
+            if (BooleanValueChanged != null)
+            {
+                BooleanValueChanged.Invoke(this, value);
+            }
+        }
     }
 }

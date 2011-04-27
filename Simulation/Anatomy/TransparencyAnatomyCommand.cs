@@ -11,7 +11,7 @@ using Logging;
 
 namespace Medical
 {
-    class TransparencyAnatomyCommand : AbstractAnatomyCommand
+    class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand
     {
         [Editable]
         private String transparencyInterfaceName = "Alpha";
@@ -20,7 +20,6 @@ namespace Medical
         private TransparencyInterface transparencyInterface;
 
         public TransparencyAnatomyCommand()
-            :base(AnatomyCommandUIType.Sliding, 0.0f, 1.0f)
         {
 
         }
@@ -40,12 +39,39 @@ namespace Medical
         {
             get
             {
-                return base.NumericValue;
+                return transparencyInterface.CurrentAlpha;
             }
             set
             {
-                base.NumericValue = value;
-                transparencyInterface.CurrentAlpha = value;
+                if (transparencyInterface.CurrentAlpha != value)
+                {
+                    transparencyInterface.CurrentAlpha = value;
+                    
+                }
+            }
+        }
+
+        public override float NumericValueMin
+        {
+            get
+            {
+                return 0.0f;
+            }
+        }
+
+        public override float NumericValueMax
+        {
+            get
+            {
+                return 1.0f;
+            }
+        }
+
+        public override AnatomyCommandUIType UIType
+        {
+            get
+            {
+                return AnatomyCommandUIType.Sliding;
             }
         }
 
@@ -59,7 +85,6 @@ namespace Medical
         }
 
         protected TransparencyAnatomyCommand(LoadInfo info)
-            : base(AnatomyCommandUIType.Sliding, 0.0f, 1.0f)
         {
             transparencyInterfaceName = info.GetString(TRANSPARENCY_INTERFACE_NAME);
         }

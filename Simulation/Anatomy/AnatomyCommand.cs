@@ -62,12 +62,12 @@ namespace Medical
         /// <summary>
         /// The minimum numeric value for this command. Used when the UI type is Sliding.
         /// </summary>
-        float NumericValueMin { get; set; }
+        float NumericValueMin { get; }
 
         /// <summary>
         /// The maximum numeric value for this command. Used when the UI type is Sliding.
         /// </summary>
-        float NumericValueMax { get; set; }
+        float NumericValueMax { get; }
 
         /// <summary>
         /// Get/Set the boolean value of this command. Used when the UI type is Toggle.
