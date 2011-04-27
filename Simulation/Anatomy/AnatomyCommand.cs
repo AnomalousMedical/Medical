@@ -10,9 +10,9 @@ namespace Medical
 {
     public enum AnatomyCommandUIType
     {
-        Sliding, //Will present a UI where numbers are changed with a slider. Uses the NumericValue property.
-        Button, //Will present a UI with a push button that executes an action. Calls the execute function.
-        Toggle, //Will present a UI that turns on and off. Calls the BooleanValue property.
+        Numeric, //Will present a UI where numbers are changed with a slider. Uses the NumericValue property.
+        Executable, //Will present a UI with a push button that executes an action. Calls the execute function.
+        Boolean, //Will present a UI that turns on and off. Calls the BooleanValue property.
     }
 
     /// <summary>
@@ -84,7 +84,30 @@ namespace Medical
         /// </summary>
         void execute();
 
+        /// <summary>
+        /// If this is true the command is good and can be used.
+        /// </summary>
         bool Valid { get; }
+
+        /// <summary>
+        /// Create a command suitable for a tag group view of this command. This
+        /// can return null to not support grouping commands. This method is
+        /// called the first time a new type of command is encountered. If the
+        /// command this function is being called on needs to add itself it
+        /// should do this.
+        /// </summary>
+        /// <returns>An AnatomyCommand that can be used for a tag group.</returns>
+        AnatomyCommand createTagGroupCommand();
+
+        /// <summary>
+        /// Process this command and possibly add it to the given
+        /// tagGroupCommand in the manner that is appropriate. The value passed
+        /// in will be whatever the subclass returns from createTagGroupCommand.
+        /// This method will be called every time except the first time a
+        /// certain command type is encountered.
+        /// </summary>
+        /// <param name="tagGroupCommand">Tha AnatomyCommand created by the subclass's createTagGroupCommand function.</param>
+        void addToTagGroupCommand(AnatomyCommand tagGroupCommand);
 
         /// <summary>
         /// Create an EditInterface for this command.

@@ -85,6 +85,7 @@
     <Compile Include="Anatomy\AnatomyIdentifier.cs" />
     <Compile Include="Anatomy\AnatomyManager.cs" />
     <Compile Include="Anatomy\AnatomyTag.cs" />
+    <Compile Include="Anatomy\CompoundAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />

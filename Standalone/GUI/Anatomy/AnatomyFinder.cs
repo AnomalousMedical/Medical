@@ -10,6 +10,7 @@ namespace Medical.GUI
     {
         private MultiList anatomyList;
         private AnatomyContextWindowManager anatomyWindowManager = new AnatomyContextWindowManager();
+        private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
 
         public AnatomyFinder()
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -33,9 +34,15 @@ namespace Medical.GUI
 
         public void sceneLoaded()
         {
+            anatomyTagManager.clear();
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
                 anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                anatomyTagManager.addAnatomyIdentifier(anatomy);
+            }
+            foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
+            {
+                anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
             }
         }
 

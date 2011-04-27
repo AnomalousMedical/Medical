@@ -121,6 +121,8 @@
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTagGroup.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTagManager.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />

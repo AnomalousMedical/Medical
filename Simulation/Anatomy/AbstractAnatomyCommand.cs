@@ -57,6 +57,10 @@ namespace Medical
 
         public bool Valid { get; set; }
 
+        public abstract AnatomyCommand createTagGroupCommand();
+
+        public abstract void addToTagGroupCommand(AnatomyCommand tagGroupCommand);
+
         public abstract void getInfo(SaveInfo info);
 
         protected void fireNumericValueChanged(float value)

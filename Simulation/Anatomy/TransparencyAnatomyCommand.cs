@@ -71,7 +71,7 @@ namespace Medical
         {
             get
             {
-                return AnatomyCommandUIType.Sliding;
+                return AnatomyCommandUIType.Numeric;
             }
         }
 
@@ -81,6 +81,18 @@ namespace Medical
             {
                 return "Transparency";
             }
+        }
+
+        public override AnatomyCommand createTagGroupCommand()
+        {
+            CompoundAnatomyCommand compoundCommand = new CompoundAnatomyCommand(UIType, UIText);
+            compoundCommand.addSubCommand(this);
+            return compoundCommand;
+        }
+
+        public override void addToTagGroupCommand(AnatomyCommand tagGroupCommand)
+        {
+            ((CompoundAnatomyCommand)tagGroupCommand).addSubCommand(this);
         }
 
         #region Saveable

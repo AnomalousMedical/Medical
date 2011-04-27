@@ -38,21 +38,24 @@ namespace Medical.GUI
                 window.Caption = anatomy.AnatomicalName;
                 foreach (AnatomyCommand command in anatomy.Commands)
                 {
-                    CommandUIElement commandUI = null;
-                    switch (command.UIType)
+                    if (command.Valid)
                     {
-                        case AnatomyCommandUIType.Sliding:
-                            commandUI = new CommandHScroll(command, window);
-                            break;
-                        case AnatomyCommandUIType.Button:
-                            break;
-                        case AnatomyCommandUIType.Toggle:
-                            break;
-                    }
-                    if (commandUI != null)
-                    {
-                        layoutContainer.addChild(commandUI);
-                        dynamicWidgets.Add(commandUI);
+                        CommandUIElement commandUI = null;
+                        switch (command.UIType)
+                        {
+                            case AnatomyCommandUIType.Numeric:
+                                commandUI = new CommandHScroll(command, window);
+                                break;
+                            case AnatomyCommandUIType.Executable:
+                                break;
+                            case AnatomyCommandUIType.Boolean:
+                                break;
+                        }
+                        if (commandUI != null)
+                        {
+                            layoutContainer.addChild(commandUI);
+                            dynamicWidgets.Add(commandUI);
+                        }
                     }
                 }
                 layoutContainer.SuppressLayout = false;
