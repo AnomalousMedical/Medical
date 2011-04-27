@@ -77,11 +77,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anatomy\AbstractAnatomyCommand.cs" />
     <Compile Include="Anatomy\Anatomy.cs" />
     <Compile Include="Anatomy\AnatomyCommand.cs" />
+    <Compile Include="Anatomy\AnatomyCommandBrowser.cs" />
     <Compile Include="Anatomy\AnatomyIdentifier.cs" />
     <Compile Include="Anatomy\AnatomyManager.cs" />
     <Compile Include="Anatomy\AnatomyTag.cs" />
+    <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />
     <Compile Include="Animation\AnimationManipulatorStateEntry.cs" />

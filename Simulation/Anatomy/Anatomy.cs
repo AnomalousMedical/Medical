@@ -14,5 +14,10 @@ namespace Medical
         /// The name of this anatomical structure.
         /// </summary>
         String AnatomicalName { get; }
+
+        /// <summary>
+        /// The list of UI commands for this anatomical structure.
+        /// </summary>
+        IEnumerable<AnatomyCommand> Commands { get; }
     }
 }
