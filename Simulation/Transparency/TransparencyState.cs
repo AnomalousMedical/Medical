@@ -73,6 +73,7 @@ namespace Medical
             set
             {
                 workingAlpha = value;
+                changingOpacity = false;
             }
         }
 

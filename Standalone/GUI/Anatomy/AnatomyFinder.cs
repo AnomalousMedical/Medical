@@ -22,21 +22,10 @@ namespace Medical.GUI
             anatomyList = (MultiList)window.findWidget("AnatomyList");
             anatomyList.addColumn("Anatomy", anatomyList.Width);
             anatomyList.ListChangePosition += new MyGUIEvent(anatomyList_ListChangePosition);
+            anatomyList.ListSelectAccept += new MyGUIEvent(anatomyList_ListSelectAccept);
 
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
-        }
-
-        void anatomyList_ListChangePosition(Widget source, EventArgs e)
-        {
-            if (anatomyList.hasItemSelected())
-            {
-                anatomyWindowManager.showWindow((Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected()));
-            }
-            else
-            {
-                anatomyWindowManager.closeUnpinnedWindow();
-            }
         }
 
         public void sceneLoaded()
@@ -78,6 +67,34 @@ namespace Medical.GUI
                 foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
                 {
                     anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                }
+            }
+        }
+
+        void anatomyList_ListChangePosition(Widget source, EventArgs e)
+        {
+            if (anatomyList.hasItemSelected())
+            {
+                anatomyWindowManager.showWindow((Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected()));
+            }
+            else
+            {
+                anatomyWindowManager.closeUnpinnedWindow();
+            }
+        }
+
+        void anatomyList_ListSelectAccept(Widget source, EventArgs e)
+        {
+            if (anatomyList.hasItemSelected())
+            {
+                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
+                Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
+                foreach (AnatomyCommand command in selectedAnatomy.Commands)
+                {
+                    if (command.UIText == "Transparency")
+                    {
+                        command.NumericValue = 1.0f;
+                    }
                 }
             }
         }

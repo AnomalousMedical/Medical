@@ -71,6 +71,14 @@ namespace Medical
             return groups.Values;
         }
 
+        public static void smoothSetAllAlphas(float alpha, float changeMultiplier)
+        {
+            foreach (TransparencyInterface transInterface in transparencyInterfaces)
+            {
+                transInterface.smoothBlend(alpha, changeMultiplier);
+            }
+        }
+
         public static void createTransparencyState(String name)
         {
             if (!transparencyStateNames.Contains(name))
