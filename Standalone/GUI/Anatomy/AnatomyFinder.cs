@@ -64,8 +64,9 @@ namespace Medical.GUI
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
         {
+            String searchTerm = searchBox.Caption;
             anatomyList.removeAllItems();
-            if (searchBox.Caption.Length == 0)
+            if (searchTerm.Length == 0)
             {
                 foreach (AnatomyTagGroup tagGroup in topLevelGroups)
                 {
@@ -74,7 +75,7 @@ namespace Medical.GUI
             }
             else
             {
-                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchBox.Caption, 35))
+                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
                 {
                     anatomyList.addItem(anatomy.AnatomicalName, anatomy);
                 }

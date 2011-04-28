@@ -26,10 +26,11 @@ namespace Medical.GUI
 
         public List<Anatomy> findMatchingAnatomy(String text, int searchLimit)
         {
+            text = text.ToLowerInvariant();
             List<Anatomy> results = new List<Anatomy>(searchLimit);
             foreach (Anatomy anatomy in anatomySearchList)
             {
-                if (anatomy.AnatomicalName.Contains(text))
+                if (anatomy.AnatomicalName.ToLowerInvariant().Contains(text))
                 {
                     results.Add(anatomy);
                     if (results.Count == searchLimit)
