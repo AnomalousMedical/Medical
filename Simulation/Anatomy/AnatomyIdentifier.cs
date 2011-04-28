@@ -86,6 +86,14 @@ namespace Medical
             }
         }
 
+        public Vector3 Center
+        {
+            get
+            {
+                return Owner.Translation;
+            }
+        }
+
         public void addCommand(AnatomyCommand command)
         {
             commands.Add(command);

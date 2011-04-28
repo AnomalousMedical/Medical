@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -19,5 +20,10 @@ namespace Medical
         /// The list of UI commands for this anatomical structure.
         /// </summary>
         IEnumerable<AnatomyCommand> Commands { get; }
+
+        /// <summary>
+        /// The location of the center of this anatomy.
+        /// </summary>
+        Vector3 Center { get; }
     }
 }

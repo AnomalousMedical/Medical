@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MyGUIPlugin;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -16,9 +17,13 @@ namespace Medical.GUI
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
         private List<AnatomyTagGroup> topLevelGroups = new List<AnatomyTagGroup>();
 
-        public AnatomyFinder()
+        private SceneViewController sceneViewController;
+
+        public AnatomyFinder(SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
+            this.sceneViewController = sceneViewController;
+
             anatomyList = (MultiList)window.findWidget("AnatomyList");
             anatomyList.addColumn("Anatomy", anatomyList.Width);
             anatomyList.ListChangePosition += new MyGUIEvent(anatomyList_ListChangePosition);
@@ -96,6 +101,8 @@ namespace Medical.GUI
                         command.NumericValue = 1.0f;
                     }
                 }
+                SceneViewWindow window = sceneViewController.ActiveWindow;
+                window.setPosition(window.Translation, selectedAnatomy.Center, MedicalConfig.CameraTransitionTime);
             }
         }
     }

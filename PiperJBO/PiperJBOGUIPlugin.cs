@@ -134,7 +134,7 @@ namespace Medical.GUI
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(sequencePlayer);
 
-            anatomyFinder = new AnatomyFinder();
+            anatomyFinder = new AnatomyFinder(standaloneController.SceneViewController);
             dialogManager.addManagedDialog(anatomyFinder);
 
             //Wizards
