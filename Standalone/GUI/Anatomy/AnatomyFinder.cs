@@ -9,8 +9,12 @@ namespace Medical.GUI
     public class AnatomyFinder : Dialog
     {
         private MultiList anatomyList;
+        private Edit searchBox;
+
         private AnatomyContextWindowManager anatomyWindowManager = new AnatomyContextWindowManager();
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
+        private AnatomySearchList anatomySearchList = new AnatomySearchList();
+        private List<AnatomyTagGroup> topLevelGroups = new List<AnatomyTagGroup>();
 
         public AnatomyFinder()
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -18,6 +22,9 @@ namespace Medical.GUI
             anatomyList = (MultiList)window.findWidget("AnatomyList");
             anatomyList.addColumn("Anatomy", anatomyList.Width);
             anatomyList.ListChangePosition += new MyGUIEvent(anatomyList_ListChangePosition);
+
+            searchBox = (Edit)window.findWidget("SearchBox");
+            searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
         }
 
         void anatomyList_ListChangePosition(Widget source, EventArgs e)
@@ -35,20 +42,43 @@ namespace Medical.GUI
         public void sceneLoaded()
         {
             anatomyTagManager.clear();
+            anatomySearchList.clear();
+            topLevelGroups.Clear();
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
-                anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                anatomySearchList.addAnatomy(anatomy);
                 anatomyTagManager.addAnatomyIdentifier(anatomy);
             }
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
                 anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
+                topLevelGroups.Add(tagGroup);
+                anatomySearchList.addAnatomy(tagGroup);
             }
         }
 
         public void sceneUnloading()
         {
             anatomyList.removeAllItems();
+        }
+
+        void searchBox_EventEditTextChange(Widget source, EventArgs e)
+        {
+            anatomyList.removeAllItems();
+            if (searchBox.Caption.Length == 0)
+            {
+                foreach (AnatomyTagGroup tagGroup in topLevelGroups)
+                {
+                    anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
+                }
+            }
+            else
+            {
+                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchBox.Caption, 35))
+                {
+                    anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                }
+            }
         }
     }
 }
