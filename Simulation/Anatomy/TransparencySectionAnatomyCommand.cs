@@ -40,6 +40,12 @@ namespace Medical
 
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            transparencyAnatomyCommand.NumericValueChanged -= transparencyAnatomyCommand_NumericValueChanged;
+        }
+
         public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
             SimObject targetSimObject = owner.getOtherSimObject(targetSimObjectName);
@@ -67,7 +73,7 @@ namespace Medical
                 errorMessage = String.Format("Can not have a TransparencySectionAnatomyCommand on AnatomyIdentifier {0} because it has no TransparencyAnatomyCommand.", parentAnatomy.AnatomicalName);
                 return false;
             }
-            transparencyAnatomyCommand.NumericValueChanged += new AnatomyNumericValueChanged(transparencyAnatomyCommand_NumericValueChanged);
+            transparencyAnatomyCommand.NumericValueChanged += transparencyAnatomyCommand_NumericValueChanged;
             return true;
         }
 
