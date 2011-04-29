@@ -25,8 +25,12 @@ namespace Medical
         }
 
         public event AnatomyNumericValueChanged NumericValueChanged;
-
         public event AnatomyBooleanValueChanged BooleanValueChanged;
+
+        public virtual void Dispose()
+        {
+
+        }
 
         public abstract bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
 

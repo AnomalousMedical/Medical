@@ -26,7 +26,7 @@ namespace Medical
 
         protected override void constructed()
         {
-            AnatomyManager.addAnatomy(this);
+            
         }
 
         protected override void link()
@@ -39,11 +39,16 @@ namespace Medical
                     blacklist("SimObject {0} AnatomyIdentifier {1} failed to link command {2}. Reason: {3}", Owner.Name, AnatomicalName, command.UIText, errorMessage);
                 }
             }
+            AnatomyManager.addAnatomy(this);
         }
 
         protected override void destroy()
         {
             AnatomyManager.removeAnatomy(this);
+            foreach (AnatomyCommand command in commands)
+            {
+                command.Dispose();
+            }
         }
 
         public String AnatomicalName

@@ -35,9 +35,6 @@ namespace Medical.GUI
 
         public void sceneLoaded()
         {
-            anatomyTagManager.clear();
-            anatomySearchList.clear();
-            topLevelGroups.Clear();
             foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
             {
                 anatomySearchList.addAnatomy(anatomy);
@@ -54,6 +51,9 @@ namespace Medical.GUI
         public void sceneUnloading()
         {
             anatomyList.removeAllItems();
+            anatomyTagManager.clear();
+            anatomySearchList.clear();
+            topLevelGroups.Clear();
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)

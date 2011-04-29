@@ -30,6 +30,10 @@ namespace Medical.GUI
 
         public void clear()
         {
+            foreach (AnatomyTagGroup tagGroup in anatomyTagGroups.Values)
+            {
+                tagGroup.Dispose();
+            }
             anatomyTagGroups.Clear();
         }
 

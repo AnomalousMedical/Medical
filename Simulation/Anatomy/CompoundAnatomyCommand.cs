@@ -28,6 +28,16 @@ namespace Medical
             UIText = uiText;
         }
 
+        public void Dispose()
+        {
+            foreach (AnatomyCommand command in subCommands)
+            {
+                command.NumericValueChanged -= command_NumericValueChanged;
+                command.BooleanValueChanged -= command_BooleanValueChanged;
+            }
+            subCommands.Clear();
+        }
+
         public bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
             return false;
@@ -38,7 +48,7 @@ namespace Medical
             switch (command.UIType)
             {
                 case AnatomyCommandUIType.Numeric:
-                    command.NumericValueChanged += new AnatomyNumericValueChanged(command_NumericValueChanged);
+                    command.NumericValueChanged += command_NumericValueChanged;
                     if (subCommands.Count == 0)
                     {
                         NumericValueMin = command.NumericValueMin;
@@ -46,7 +56,7 @@ namespace Medical
                     }
                     break;
                 case AnatomyCommandUIType.Boolean:
-                    command.BooleanValueChanged += new AnatomyBooleanValueChanged(command_BooleanValueChanged);
+                    command.BooleanValueChanged += command_BooleanValueChanged;
                     break;
             }
             

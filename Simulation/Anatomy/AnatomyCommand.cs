@@ -29,7 +29,7 @@ namespace Medical
     /// to change it in some way. They do this by presenting a UI with one of
     /// the AnatomyCommandUITypes and then respond to the input from these UIs.
     /// </summary>
-    public interface AnatomyCommand : Saveable
+    public interface AnatomyCommand : Saveable, IDisposable
     {
         /// <summary>
         /// Called when the Numeric value changes.

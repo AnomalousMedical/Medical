@@ -6,7 +6,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class AnatomyTagGroup : Anatomy
+    class AnatomyTagGroup : Anatomy, IDisposable
     {
         private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
         private List<Anatomy> groupAnatomy = new List<Anatomy>();
@@ -14,6 +14,14 @@ namespace Medical.GUI
         public AnatomyTagGroup(String anatomicalName)
         {
             this.AnatomicalName = anatomicalName;
+        }
+
+        public void Dispose()
+        {
+            foreach (AnatomyCommand command in groupCommands)
+            {
+                command.Dispose();
+            }
         }
 
         public void addAnatomy(Anatomy anatomy)
