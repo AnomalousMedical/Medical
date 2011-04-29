@@ -19,6 +19,10 @@ namespace Medical.GUI
 
         private SceneViewController sceneViewController;
 
+        private ButtonGroup showModeGroup = new ButtonGroup();
+        private Button focusButton;
+        private Button toggleButton;
+
         public AnatomyFinder(SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -31,6 +35,12 @@ namespace Medical.GUI
 
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
+
+            focusButton = (Button)window.findWidget("FocusButton");
+            showModeGroup.addButton(focusButton);
+            toggleButton = (Button)window.findWidget("ToggleButton");
+            showModeGroup.addButton(toggleButton);
+            showModeGroup.SelectedButton = toggleButton;
         }
 
         public void sceneLoaded()
@@ -92,17 +102,44 @@ namespace Medical.GUI
         {
             if (anatomyList.hasItemSelected())
             {
-                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
-                foreach (AnatomyCommand command in selectedAnatomy.Commands)
+                if (showModeGroup.SelectedButton == focusButton)
                 {
-                    if (command.UIText == "Transparency")
+                    TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
+                    Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
+                    foreach (AnatomyCommand command in selectedAnatomy.Commands)
                     {
-                        command.NumericValue = 1.0f;
+                        if (command.UIText == TransparencyAnatomyCommand.UI_TEXT)
+                        {
+                            command.NumericValue = 1.0f;
+                            break;
+                        }
+                    }
+                    SceneViewWindow window = sceneViewController.ActiveWindow;
+                    window.setPosition(window.Translation, selectedAnatomy.Center, MedicalConfig.CameraTransitionTime);
+                }
+                else
+                {
+                    Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
+                    foreach (AnatomyCommand command in selectedAnatomy.Commands)
+                    {
+                        if (command.UIText == TransparencyAnatomyCommand.UI_TEXT)
+                        {
+                            if (command.NumericValue == 1.0f)
+                            {
+                                command.NumericValue = 0.7f;
+                            }
+                            else if (command.NumericValue == 0.0f)
+                            {
+                                command.NumericValue = 1.0f;
+                            }
+                            else
+                            {
+                                command.NumericValue = 0.0f;
+                            }
+                            break;
+                        }
                     }
                 }
-                SceneViewWindow window = sceneViewController.ActiveWindow;
-                window.setPosition(window.Translation, selectedAnatomy.Center, MedicalConfig.CameraTransitionTime);
             }
         }
     }
