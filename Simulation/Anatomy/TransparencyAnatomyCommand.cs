@@ -11,8 +11,10 @@ using Logging;
 
 namespace Medical
 {
-    class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand
+    public class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand
     {
+        public const String UI_TEXT = "Transparency";
+
         [Editable]
         private String transparencyInterfaceName = "Alpha";
 
@@ -24,14 +26,15 @@ namespace Medical
 
         }
 
-        public override void link(SimObject owner)
+        public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
             transparencyInterface = owner.getElement(transparencyInterfaceName) as TransparencyInterface;
-            Valid = transparencyInterface != null;
-            if (!Valid)
+            if (transparencyInterface == null)
             {
-                Log.Error("Could not find TransparencyInterface named {0} in SimObject {1}.", transparencyInterfaceName, owner.Name);
+                errorMessage = String.Format("Could not find TransparencyInterface named {0}", transparencyInterfaceName);
+                return false;
             }
+            return true;
         }
 
         [DoNotCopy]
@@ -46,7 +49,7 @@ namespace Medical
                 if (transparencyInterface.CurrentAlpha != value)
                 {
                     transparencyInterface.CurrentAlpha = value;
-                    
+                    fireNumericValueChanged(value);
                 }
             }
         }
@@ -79,7 +82,7 @@ namespace Medical
         {
             get
             {
-                return "Transparency";
+                return UI_TEXT;
             }
         }
 

@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anatomy\AbstractAnatomyCommand.cs" />
+    <Compile Include="Anatomy\AbstractBooleanAnatomyCommand.cs" />
     <Compile Include="Anatomy\AbstractNumericAnatomyCommand.cs" />
     <Compile Include="Anatomy\Anatomy.cs" />
     <Compile Include="Anatomy\AnatomyCommand.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Anatomy\AnatomyTag.cs" />
     <Compile Include="Anatomy\CompoundAnatomyCommand.cs" />
     <Compile Include="Anatomy\TransparencyAnatomyCommand.cs" />
+    <Compile Include="Anatomy\TransparencySectionAnatomyCommand.cs" />
     <Compile Include="Animation\AnimationManipulator.cs" />
     <Compile Include="Animation\AnimationManipulatorState.cs" />
     <Compile Include="Animation\AnimationManipulatorStateEntry.cs" />

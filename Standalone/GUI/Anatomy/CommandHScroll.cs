@@ -14,10 +14,12 @@ namespace Medical.GUI
 
         private HScroll slider;
         private StaticText caption;
+        private AnatomyCommand command;
 
         public CommandHScroll(AnatomyCommand command, Widget parentWidget)
         {
-            command.NumericValueChanged += new AnatomyNumericValueChanged(command_NumericValueChanged);
+            this.command = command;
+            command.NumericValueChanged += command_NumericValueChanged;
 
             caption = (StaticText)parentWidget.createWidgetT("StaticText", "StaticText", 0, 0, parentWidget.Width - SIDE_PADDING, 15, Align.Default, "");
             caption.Caption = command.UIText;
@@ -31,6 +33,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            command.NumericValueChanged -= command_NumericValueChanged;
             Gui.Instance.destroyWidget(caption);
             Gui.Instance.destroyWidget(slider);
         }

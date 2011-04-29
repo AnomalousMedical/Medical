@@ -8,22 +8,35 @@ namespace Medical.GUI
 {
     public class AnatomyContextWindowManager
     {
-        private AnatomyContextWindow anatomyWindow = new AnatomyContextWindow();
+        private AnatomyContextWindow currentAnatomyWindow;
 
         public AnatomyContextWindowManager()
         {
-            anatomyWindow.SmoothShow = true;
+            
         }
 
         public void showWindow(Anatomy anatomy)
         {
-            anatomyWindow.Visible = true;
-            anatomyWindow.Anatomy = anatomy;
+            if (currentAnatomyWindow == null)
+            {
+                currentAnatomyWindow = new AnatomyContextWindow(this);
+                currentAnatomyWindow.SmoothShow = true;
+            }
+            currentAnatomyWindow.Visible = true;
+            currentAnatomyWindow.Anatomy = anatomy;
         }
 
         public void closeUnpinnedWindow()
         {
-            anatomyWindow.Visible = false;
+            if (currentAnatomyWindow != null)
+            {
+                currentAnatomyWindow.Visible = false;
+            }
+        }
+
+        internal void alertWindowPinned()
+        {
+            currentAnatomyWindow = null;
         }
     }
 }

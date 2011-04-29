@@ -31,9 +31,13 @@ namespace Medical
 
         protected override void link()
         {
+            String errorMessage = null;
             foreach (AnatomyCommand command in commands)
             {
-                command.link(Owner);
+                if (!command.link(Owner, this, ref errorMessage))
+                {
+                    blacklist("SimObject {0} AnatomyIdentifier {1} failed to link command {2}. Reason: {3}", Owner.Name, AnatomicalName, command.UIText, errorMessage);
+                }
             }
         }
 

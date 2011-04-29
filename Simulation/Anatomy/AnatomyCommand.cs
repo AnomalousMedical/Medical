@@ -44,10 +44,11 @@ namespace Medical
         /// <summary>
         /// This method will be called during the AnatomyIdentifier's link
         /// phase. At this point it is valid to find any dependent objects
-        /// through owner.
+        /// through owner. If there is an error return false and set a message
+        /// in errorMessage. This will cause the AnatomyIdentifier linking this
+        /// object to be blacklisted.
         /// </summary>
-        /// <param name="owner"></param>
-        void link(SimObject owner);
+        bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
 
         /// <summary>
         /// Get the type of command UI that should be created for this command.
@@ -83,11 +84,6 @@ namespace Medical
         /// Called to execute something. Used when the UI type is Button.
         /// </summary>
         void execute();
-
-        /// <summary>
-        /// If this is true the command is good and can be used.
-        /// </summary>
-        bool Valid { get; }
 
         /// <summary>
         /// Create a command suitable for a tag group view of this command. This

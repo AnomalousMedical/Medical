@@ -6,10 +6,10 @@ using Engine.Attributes;
 
 namespace Medical
 {
-    public abstract class AbstractNumericAnatomyCommand : AbstractAnatomyCommand
+    public abstract class AbstractBooleanAnatomyCommand : AbstractAnatomyCommand
     {
         [DoNotCopy]
-        public override bool BooleanValue
+        public override float NumericValue
         {
             get
             {
@@ -19,6 +19,16 @@ namespace Medical
             {
                 throw new NotSupportedException();
             }
+        }
+
+        public override float NumericValueMin
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public override float NumericValueMax
+        {
+            get { throw new NotSupportedException(); }
         }
 
         public override void execute()

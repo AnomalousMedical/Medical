@@ -17,8 +17,9 @@ namespace Medical
     {
         private List<AnatomyCommand> subCommands = new List<AnatomyCommand>();
 
-        public event AnatomyNumericValueChanged NumericValueChanged;
+        private bool valueChanging = false;
 
+        public event AnatomyNumericValueChanged NumericValueChanged;
         public event AnatomyBooleanValueChanged BooleanValueChanged;
 
         public CompoundAnatomyCommand(AnatomyCommandUIType uiType, String uiText)
@@ -27,18 +28,28 @@ namespace Medical
             UIText = uiText;
         }
 
-        public void link(SimObject owner)
+        public bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
-            
+            return false;
         }
 
         public void addSubCommand(AnatomyCommand command)
         {
-            if (subCommands.Count == 0 && command.UIType == AnatomyCommandUIType.Numeric)
+            switch (command.UIType)
             {
-                NumericValueMin = command.NumericValueMin;
-                NumericValueMax = command.NumericValueMax;
+                case AnatomyCommandUIType.Numeric:
+                    command.NumericValueChanged += new AnatomyNumericValueChanged(command_NumericValueChanged);
+                    if (subCommands.Count == 0)
+                    {
+                        NumericValueMin = command.NumericValueMin;
+                        NumericValueMax = command.NumericValueMax;
+                    }
+                    break;
+                case AnatomyCommandUIType.Boolean:
+                    command.BooleanValueChanged += new AnatomyBooleanValueChanged(command_BooleanValueChanged);
+                    break;
             }
+            
             subCommands.Add(command);
         }
 
@@ -59,9 +70,18 @@ namespace Medical
             }
             set
             {
-                foreach (AnatomyCommand command in subCommands)
+                if (value != NumericValue)
                 {
-                    command.NumericValue = value;
+                    valueChanging = true;
+                    foreach (AnatomyCommand command in subCommands)
+                    {
+                        command.NumericValue = value;
+                    }
+                    valueChanging = false;
+                    if (NumericValueChanged != null)
+                    {
+                        NumericValueChanged.Invoke(this, value);
+                    }
                 }
             }
         }
@@ -85,9 +105,18 @@ namespace Medical
             }
             set
             {
-                foreach (AnatomyCommand command in subCommands)
+                if (value != BooleanValue)
                 {
-                    command.BooleanValue = value;
+                    valueChanging = true;
+                    foreach (AnatomyCommand command in subCommands)
+                    {
+                        command.BooleanValue = value;
+                    }
+                    valueChanging = false;
+                    if (BooleanValueChanged != null)
+                    {
+                        BooleanValueChanged.Invoke(this, value);
+                    }
                 }
             }
         }
@@ -102,11 +131,19 @@ namespace Medical
             }
         }
 
-        public bool Valid
+        void command_BooleanValueChanged(AnatomyCommand command, bool value)
         {
-            get
+            if (!valueChanging && BooleanValueChanged != null)
             {
-                return subCommands.Count > 0;
+                BooleanValueChanged.Invoke(this, value);
+            }
+        }
+
+        void command_NumericValueChanged(AnatomyCommand command, float value)
+        {
+            if (!valueChanging && NumericValueChanged != null)
+            {
+                NumericValueChanged.Invoke(this, value);
             }
         }
 

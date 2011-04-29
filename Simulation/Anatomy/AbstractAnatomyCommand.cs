@@ -28,7 +28,7 @@ namespace Medical
 
         public event AnatomyBooleanValueChanged BooleanValueChanged;
 
-        public abstract void link(SimObject owner);
+        public abstract bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage);
 
         public abstract AnatomyCommandUIType UIType { get; }
 
@@ -44,18 +44,13 @@ namespace Medical
 
         public abstract String UIText { get; }
 
-        public virtual void execute()
-        {
-
-        }
+        public abstract void execute();
         
         public EditInterface createEditInterface()
         {
 		    EditInterface editInterface = ReflectedEditInterface.createEditInterface(this, memberScanner, GetType().Name, null);
 	        return editInterface;
         }
-
-        public bool Valid { get; set; }
 
         public abstract AnatomyCommand createTagGroupCommand();
 
