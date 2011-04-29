@@ -42,10 +42,14 @@ namespace Medical
 
         public void smoothBlend(float alpha, float changeMultiplier)
         {
-            transparencyInterface.smoothBlend(alpha, changeMultiplier);
-            if (SmoothBlendApplied != null)
+            if (alpha != transparencyInterface.CurrentAlpha)
             {
-                SmoothBlendApplied.Invoke(alpha, changeMultiplier);
+                transparencyInterface.smoothBlend(alpha, changeMultiplier);
+                if (SmoothBlendApplied != null)
+                {
+                    SmoothBlendApplied.Invoke(alpha, changeMultiplier);
+                }
+                fireNumericValueChanged(alpha);
             }
         }
 
