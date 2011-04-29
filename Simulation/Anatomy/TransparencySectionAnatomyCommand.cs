@@ -33,7 +33,7 @@ namespace Medical
 
         [DoNotCopy]
         [DoNotSave]
-        AnatomyCommand transparencyAnatomyCommand = null;
+        TransparencyAnatomyCommand transparencyAnatomyCommand = null;
 
         public TransparencySectionAnatomyCommand()
         {
@@ -44,6 +44,7 @@ namespace Medical
         {
             base.Dispose();
             transparencyAnatomyCommand.NumericValueChanged -= transparencyAnatomyCommand_NumericValueChanged;
+            transparencyAnatomyCommand.SmoothBlendApplied -= transparencyAnatomyCommand_SmoothBlendApplied;
         }
 
         public override bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
@@ -64,7 +65,7 @@ namespace Medical
             {
                 if (command.UIText == TransparencyAnatomyCommand.UI_TEXT)
                 {
-                    transparencyAnatomyCommand = command;
+                    transparencyAnatomyCommand = (TransparencyAnatomyCommand)command;
                     break;
                 }
             }
@@ -74,6 +75,7 @@ namespace Medical
                 return false;
             }
             transparencyAnatomyCommand.NumericValueChanged += transparencyAnatomyCommand_NumericValueChanged;
+            transparencyAnatomyCommand.SmoothBlendApplied += transparencyAnatomyCommand_SmoothBlendApplied;
             return true;
         }
 
@@ -133,6 +135,18 @@ namespace Medical
             else
             {
                 transparencyInterface.CurrentAlpha = 0.0f;
+            }
+        }
+
+        void transparencyAnatomyCommand_SmoothBlendApplied(float alpha, float transparencyChangeMultiplier)
+        {
+            if (trackingTransparency)
+            {
+                transparencyInterface.smoothBlend(alpha, transparencyChangeMultiplier);
+            }
+            else
+            {
+                transparencyInterface.smoothBlend(0.0f, transparencyChangeMultiplier);
             }
         }
 

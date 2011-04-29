@@ -15,6 +15,9 @@ namespace Medical
     {
         internal const String UI_TEXT = "Transparency";
 
+        internal delegate void TransparencyAnatomySmoothBlendDelegate(float alpha, float transparencyChangeMultiplier);
+        internal event TransparencyAnatomySmoothBlendDelegate SmoothBlendApplied;
+
         [Editable]
         private String transparencyInterfaceName = "Alpha";
 
@@ -40,6 +43,10 @@ namespace Medical
         public void smoothBlend(float alpha, float changeMultiplier)
         {
             transparencyInterface.smoothBlend(alpha, changeMultiplier);
+            if (SmoothBlendApplied != null)
+            {
+                SmoothBlendApplied.Invoke(alpha, changeMultiplier);
+            }
         }
 
         [DoNotCopy]
