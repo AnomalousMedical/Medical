@@ -40,6 +40,7 @@ namespace Medical
 
         public bool link(SimObject owner, AnatomyIdentifier parentAnatomy, ref String errorMessage)
         {
+            errorMessage = "Cannot link CompoundAnatomyCommands";
             return false;
         }
 

@@ -11,9 +11,9 @@ using Logging;
 
 namespace Medical
 {
-    public class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand
+    public class TransparencyAnatomyCommand : AbstractNumericAnatomyCommand, TransparencyChanger
     {
-        public const String UI_TEXT = "Transparency";
+        internal const String UI_TEXT = "Transparency";
 
         [Editable]
         private String transparencyInterfaceName = "Alpha";
@@ -35,6 +35,11 @@ namespace Medical
                 return false;
             }
             return true;
+        }
+
+        public void smoothBlend(float alpha, float changeMultiplier)
+        {
+            transparencyInterface.smoothBlend(alpha, changeMultiplier);
         }
 
         [DoNotCopy]
@@ -88,14 +93,14 @@ namespace Medical
 
         public override AnatomyCommand createTagGroupCommand()
         {
-            CompoundAnatomyCommand compoundCommand = new CompoundAnatomyCommand(UIType, UIText);
+            CompoundTransparencyAnatomyCommand compoundCommand = new CompoundTransparencyAnatomyCommand();
             compoundCommand.addSubCommand(this);
             return compoundCommand;
         }
 
         public override void addToTagGroupCommand(AnatomyCommand tagGroupCommand)
         {
-            ((CompoundAnatomyCommand)tagGroupCommand).addSubCommand(this);
+            ((CompoundTransparencyAnatomyCommand)tagGroupCommand).addSubCommand(this);
         }
 
         #region Saveable

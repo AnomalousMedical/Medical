@@ -108,9 +108,9 @@ namespace Medical.GUI
                     Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
                     foreach (AnatomyCommand command in selectedAnatomy.Commands)
                     {
-                        if (command.UIText == TransparencyAnatomyCommand.UI_TEXT)
+                        if (command is TransparencyChanger)
                         {
-                            command.NumericValue = 1.0f;
+                            ((TransparencyChanger)command).smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                             break;
                         }
                     }
@@ -122,19 +122,19 @@ namespace Medical.GUI
                     Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
                     foreach (AnatomyCommand command in selectedAnatomy.Commands)
                     {
-                        if (command.UIText == TransparencyAnatomyCommand.UI_TEXT)
+                        if (command is TransparencyChanger)
                         {
                             if (command.NumericValue == 1.0f)
                             {
-                                command.NumericValue = 0.7f;
+                                ((TransparencyChanger)command).smoothBlend(0.7f, MedicalConfig.TransparencyChangeMultiplier);
                             }
                             else if (command.NumericValue == 0.0f)
                             {
-                                command.NumericValue = 1.0f;
+                                ((TransparencyChanger)command).smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                             }
                             else
                             {
-                                command.NumericValue = 0.0f;
+                                ((TransparencyChanger)command).smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                             }
                             break;
                         }
