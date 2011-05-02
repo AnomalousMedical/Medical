@@ -4,11 +4,27 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
+using Engine.Platform;
+using Engine;
 
 namespace Medical.GUI
 {
+    enum AnatomyFinderEvents
+    {
+        PickAnatomy
+    }
+
     public class AnatomyFinder : Dialog
     {
+        private static MessageEvent pickAnatomy;
+
+        static AnatomyFinder()
+        {
+            pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
+            pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
+            DefaultEvents.registerDefaultEvent(pickAnatomy);
+        }
+
         private MultiList anatomyList;
         private Edit searchBox;
 
@@ -41,6 +57,8 @@ namespace Medical.GUI
             toggleButton = (Button)window.findWidget("ToggleButton");
             showModeGroup.addButton(toggleButton);
             showModeGroup.SelectedButton = toggleButton;
+
+            pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
         }
 
         public void sceneLoaded()
@@ -95,6 +113,42 @@ namespace Medical.GUI
             else
             {
                 anatomyWindowManager.closeUnpinnedWindow();
+            }
+        }
+
+        void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (!Gui.Instance.HandledMouseButtons)
+            {
+                anatomyList.removeAllItems();
+
+                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+                sw.Start();
+
+                Vector3 absMouse = eventManager.Mouse.getAbsMouse();
+                absMouse.x /= eventManager.Mouse.getMouseAreaWidth();
+                absMouse.y /= eventManager.Mouse.getMouseAreaHeight();
+                Ray3 cameraRay = sceneViewController.ActiveWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
+                List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
+                HashSet<String> anatomyTags = new HashSet<String>();
+                foreach (AnatomyIdentifier anatomy in matches)
+                {
+                    anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                    foreach (AnatomyTag tag in anatomy.Tags)
+                    {
+                        anatomyTags.Add(tag.Tag);
+                    }
+                }
+                foreach (AnatomyTagGroup tagGroup in topLevelGroups)
+                {
+                    if (anatomyTags.Contains(tagGroup.AnatomicalName))
+                    {
+                        anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
+                    }
+                }
+                sw.Stop();
+
+                Logging.Log.Debug("Picking took {0} ms", sw.ElapsedMilliseconds);
             }
         }
 

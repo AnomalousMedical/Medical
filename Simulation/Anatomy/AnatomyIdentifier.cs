@@ -121,6 +121,21 @@ namespace Medical
             }
         }
 
+        internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
+        {
+            OgrePlugin.SceneNodeElement nodeElement = Owner.getElement("Node") as OgrePlugin.SceneNodeElement;
+            if (nodeElement == null)
+            {
+                return false;
+            }
+            OgreWrapper.Entity entity = nodeElement.getNodeObject("Entity") as OgreWrapper.Entity;
+            if (entity == null)
+            {
+                return false;
+            }
+            return entity.raycastPolygonLevel(ray, ref distanceOnRay);
+        }
+
         protected override void customSave(SaveInfo info)
         {
             base.customSave(info);

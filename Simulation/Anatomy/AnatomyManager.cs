@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -27,6 +28,21 @@ namespace Medical
             {
                 return anatomyList;
             }
+        }
+
+        public static List<AnatomyIdentifier> findAnatomy(Ray3 ray)
+        {
+            float distance = 0.0f;
+            List<AnatomyIdentifier> matches = new List<AnatomyIdentifier>();
+            foreach (AnatomyIdentifier anatomy in anatomyList)
+            {
+                if (anatomy.checkCollision(ray, ref distance))
+                {
+                    matches.Add(anatomy);
+                    Logging.Log.Debug("Match distance {0} {1}", anatomy.AnatomicalName, distance);
+                }
+            }
+            return matches;
         }
     }
 }

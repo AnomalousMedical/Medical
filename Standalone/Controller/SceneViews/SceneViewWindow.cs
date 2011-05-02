@@ -180,6 +180,15 @@ namespace Medical.Controller
             return screenPos;
         }
 
+        public Ray3 getCameraToViewportRay(float x, float y)
+        {
+            if (sceneView != null)
+            {
+                return sceneView.getCameraToViewportRay(x, y);
+            }
+            return new Ray3();
+        }
+
         public void showSceneStats(bool show)
         {
             if (sceneView != null)
