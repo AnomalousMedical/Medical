@@ -34,7 +34,7 @@ namespace Medical.GUI
             eminanceShortcut.FirstFrameUpEvent += new MessageEventCallback(eminanceShortcut_FirstFrameUpEvent);
         }
 
-        void eminanceShortcut_FirstFrameUpEvent()
+        void eminanceShortcut_FirstFrameUpEvent(EventManager eventManager)
         {
             if (AllowShortcuts && !Gui.Instance.HandledKeyboardButtons)
             {

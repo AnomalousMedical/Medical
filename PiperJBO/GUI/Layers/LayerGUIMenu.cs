@@ -66,7 +66,7 @@ namespace Medical.GUI
             menuShortcut.FirstFrameUpEvent += new MessageEventCallback(menuShortcut_FirstFrameUpEvent);
         }
 
-        void menuShortcut_FirstFrameUpEvent()
+        void menuShortcut_FirstFrameUpEvent(EventManager eventManager)
         {
 
             if (AllowShortcuts && !Gui.Instance.HandledKeyboardButtons)
