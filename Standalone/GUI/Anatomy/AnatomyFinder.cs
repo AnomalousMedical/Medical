@@ -59,6 +59,9 @@ namespace Medical.GUI
             showModeGroup.SelectedButton = toggleButton;
 
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
+
+            Button clearButton = window.findWidget("ClearButton") as Button;
+            clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
         }
 
         public void sceneLoaded()
@@ -86,6 +89,11 @@ namespace Medical.GUI
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
         {
+            updateSearch();
+        }
+
+        private void updateSearch()
+        {
             String searchTerm = searchBox.Caption;
             anatomyList.removeAllItems();
             if (searchTerm.Length == 0)
@@ -104,7 +112,7 @@ namespace Medical.GUI
             }
         }
 
-        void anatomyList_ListChangePosition(Widget source, EventArgs e)
+        private void changeSelectedAnatomy()
         {
             if (anatomyList.hasItemSelected())
             {
@@ -114,6 +122,11 @@ namespace Medical.GUI
             {
                 anatomyWindowManager.closeUnpinnedWindow();
             }
+        }
+
+        void anatomyList_ListChangePosition(Widget source, EventArgs e)
+        {
+            changeSelectedAnatomy();
         }
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
@@ -146,10 +159,22 @@ namespace Medical.GUI
                         anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
                     }
                 }
-                sw.Stop();
+                searchBox.Caption = "Clicked";
+                if (matches.Count > 0)
+                {
+                    anatomyList.setIndexSelected(0);
+                    changeSelectedAnatomy();
+                }
 
+                sw.Stop();
                 Logging.Log.Debug("Picking took {0} ms", sw.ElapsedMilliseconds);
             }
+        }
+
+        void clearButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            searchBox.Caption = "";
+            updateSearch();
         }
 
         void anatomyList_ListSelectAccept(Widget source, EventArgs e)

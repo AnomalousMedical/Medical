@@ -30,19 +30,60 @@ namespace Medical
             }
         }
 
+        class SortedAnatomyClickResults : IComparer<AnatomyIdentifier>
+        {
+            private List<AnatomyIdentifier> matchList = new List<AnatomyIdentifier>();
+            private Dictionary<AnatomyIdentifier, float> distanceMap = new Dictionary<AnatomyIdentifier, float>();
+
+            public void add(AnatomyIdentifier anatomy, float distance)
+            {
+                matchList.Add(anatomy);
+                distanceMap.Add(anatomy, distance);
+            }
+
+            public void sort()
+            {
+                matchList.Sort(this);
+            }
+
+            public List<AnatomyIdentifier> Matches
+            {
+                get
+                {
+                    return matchList;
+                }
+            }
+
+            public int Compare(AnatomyIdentifier x, AnatomyIdentifier y)
+            {
+                float xDist = distanceMap[x];
+                float yDist = distanceMap[y];
+                if (xDist < yDist)
+                {
+                    return -1;
+                }
+                else if (xDist > yDist)
+                {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+
         public static List<AnatomyIdentifier> findAnatomy(Ray3 ray)
         {
             float distance = 0.0f;
-            List<AnatomyIdentifier> matches = new List<AnatomyIdentifier>();
+            SortedAnatomyClickResults results = new SortedAnatomyClickResults();
             foreach (AnatomyIdentifier anatomy in anatomyList)
             {
                 if (anatomy.checkCollision(ray, ref distance))
                 {
-                    matches.Add(anatomy);
+                    results.add(anatomy, distance);
                     Logging.Log.Debug("Match distance {0} {1}", anatomy.AnatomicalName, distance);
                 }
             }
-            return matches;
+            results.sort();
+            return results.Matches;
         }
     }
 }

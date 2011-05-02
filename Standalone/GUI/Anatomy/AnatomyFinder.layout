@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="117 187 258 381" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="107 189 258 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Anatomy Finder"/>
-        <Widget type="Edit" skin="Edit" position="5 5 249 23" align="HStretch Top" name="SearchBox"/>
+        <Widget type="Edit" skin="Edit" position="5 5 200 23" align="HStretch Top" name="SearchBox"/>
         <Widget type="MultiList" skin="MultiList" position="7 32 246 303" align="Stretch" name="AnatomyList"/>
         <Widget type="Button" skin="Button" position="7 338 69 20" align="Left Bottom" name="FocusButton">
             <Property key="Widget_Caption" value="Focus"/>
         </Widget>
         <Widget type="Button" skin="Button" position="78 338 69 20" align="Left Bottom" name="ToggleButton">
             <Property key="Widget_Caption" value="Toggle"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="207 7 44 20" align="Right Top" name="ClearButton">
+            <Property key="Widget_Caption" value="Clear"/>
         </Widget>
     </Widget>
 </MyGUI>
