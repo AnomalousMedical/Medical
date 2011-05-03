@@ -15,7 +15,7 @@ namespace Medical.GUI
             
         }
 
-        public void showWindow(Anatomy anatomy)
+        public AnatomyContextWindow showWindow(Anatomy anatomy)
         {
             if (currentAnatomyWindow == null)
             {
@@ -24,6 +24,7 @@ namespace Medical.GUI
             }
             currentAnatomyWindow.Visible = true;
             currentAnatomyWindow.Anatomy = anatomy;
+            return currentAnatomyWindow;
         }
 
         public void closeUnpinnedWindow()

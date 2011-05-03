@@ -112,15 +112,16 @@ namespace Medical.GUI
             }
         }
 
-        private void changeSelectedAnatomy()
+        private AnatomyContextWindow changeSelectedAnatomy()
         {
             if (anatomyList.hasItemSelected())
             {
-                anatomyWindowManager.showWindow((Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected()));
+                return anatomyWindowManager.showWindow((Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected()));
             }
             else
             {
                 anatomyWindowManager.closeUnpinnedWindow();
+                return null;
             }
         }
 
@@ -166,7 +167,12 @@ namespace Medical.GUI
                 if (matches.Count > 0)
                 {
                     anatomyList.setIndexSelected(0);
-                    changeSelectedAnatomy();
+                }
+                AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy();
+                if (activeAnatomyWindow != null)
+                {
+                    activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
+                    activeAnatomyWindow.ensureVisible();
                 }
 
                 sw.Stop();
