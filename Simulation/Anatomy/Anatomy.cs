@@ -25,5 +25,10 @@ namespace Medical
         /// The location of the center of this anatomy.
         /// </summary>
         Vector3 Center { get; }
+
+        /// <summary>
+        /// The class that changes transparency for this Anatomy.
+        /// </summary>
+        TransparencyChanger TransparencyChanger { get; }
     }
 }

@@ -71,5 +71,20 @@ namespace Medical.GUI
                 return locationSum / locationCount;
             }
         }
+
+        public TransparencyChanger TransparencyChanger
+        {
+            get
+            {
+                foreach (AnatomyCommand command in Commands)
+                {
+                    if (command is TransparencyChanger)
+                    {
+                        return (TransparencyChanger)command;
+                    }
+                }
+                return null;
+            }
+        }
     }
 }

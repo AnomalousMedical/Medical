@@ -21,6 +21,9 @@ namespace Medical.GUI
 
             Button pinButton = (Button)window.findWidget("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
+
+            Button focusButton = (Button)window.findWidget("FocusButton");
+            focusButton.MouseButtonClick += new MyGUIEvent(focusButton_MouseButtonClick);
         }
 
         public Anatomy Anatomy
@@ -78,6 +81,13 @@ namespace Medical.GUI
                 windowManager.alertWindowPinned();
                 pinButton.StateCheck = true;
             }
+        }
+
+        void focusButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
+            anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
+            windowManager.moveActiveSceneView(anatomy.Center);
         }
 
         void AnatomyContextWindow_Closed(object sender, EventArgs e)

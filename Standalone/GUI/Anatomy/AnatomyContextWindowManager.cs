@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
     public class AnatomyContextWindowManager
     {
         private AnatomyContextWindow currentAnatomyWindow;
+        private SceneViewController sceneViewController;
 
-        public AnatomyContextWindowManager()
+        public AnatomyContextWindowManager(SceneViewController sceneViewController)
         {
-            
+            this.sceneViewController = sceneViewController;
         }
 
         public AnatomyContextWindow showWindow(Anatomy anatomy)
@@ -38,6 +40,12 @@ namespace Medical.GUI
         internal void alertWindowPinned()
         {
             currentAnatomyWindow = null;
+        }
+
+        internal void moveActiveSceneView(Vector3 lookAt)
+        {
+            SceneViewWindow window = sceneViewController.ActiveWindow;
+            window.setPosition(window.Translation, lookAt, MedicalConfig.CameraTransitionTime);
         }
     }
 }

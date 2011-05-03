@@ -28,7 +28,7 @@ namespace Medical.GUI
         private MultiList anatomyList;
         private Edit searchBox;
 
-        private AnatomyContextWindowManager anatomyWindowManager = new AnatomyContextWindowManager();
+        private AnatomyContextWindowManager anatomyWindowManager;
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
         private List<AnatomyTagGroup> topLevelGroups = new List<AnatomyTagGroup>();
@@ -43,6 +43,7 @@ namespace Medical.GUI
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
             this.sceneViewController = sceneViewController;
+            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
 
             anatomyList = (MultiList)window.findWidget("AnatomyList");
             anatomyList.addColumn("Anatomy", anatomyList.Width);
@@ -194,38 +195,25 @@ namespace Medical.GUI
                 {
                     TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                     Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
-                    foreach (AnatomyCommand command in selectedAnatomy.Commands)
-                    {
-                        if (command is TransparencyChanger)
-                        {
-                            ((TransparencyChanger)command).smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                            break;
-                        }
-                    }
+                    selectedAnatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                     SceneViewWindow window = sceneViewController.ActiveWindow;
                     window.setPosition(window.Translation, selectedAnatomy.Center, MedicalConfig.CameraTransitionTime);
                 }
                 else
                 {
                     Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
-                    foreach (AnatomyCommand command in selectedAnatomy.Commands)
+                    TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
+                    if (transparencyChanger.CurrentAlpha == 1.0f)
                     {
-                        if (command is TransparencyChanger)
-                        {
-                            if (command.NumericValue == 1.0f)
-                            {
-                                ((TransparencyChanger)command).smoothBlend(0.7f, MedicalConfig.TransparencyChangeMultiplier);
-                            }
-                            else if (command.NumericValue == 0.0f)
-                            {
-                                ((TransparencyChanger)command).smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                            }
-                            else
-                            {
-                                ((TransparencyChanger)command).smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                            }
-                            break;
-                        }
+                        transparencyChanger.smoothBlend(0.7f, MedicalConfig.TransparencyChangeMultiplier);
+                    }
+                    else if (transparencyChanger.CurrentAlpha == 0.0f)
+                    {
+                        transparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
+                    }
+                    else
+                    {
+                        transparencyChanger.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                     }
                 }
             }
