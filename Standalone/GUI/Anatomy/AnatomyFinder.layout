@@ -8,7 +8,7 @@
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
         <Widget type="Button" skin="Button" position="7 339 74 20" align="Left Bottom" name="UnhideAll">
-            <Property key="Widget_Caption" value="Unhide All"/>
+            <Property key="Widget_Caption" value="Show All"/>
         </Widget>
     </Widget>
 </MyGUI>
