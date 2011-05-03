@@ -29,6 +29,7 @@ namespace Medical.GUI
             }
             currentAnatomyWindow.Visible = true;
             currentAnatomyWindow.Anatomy = anatomy;
+            beforeFocusLayerState = null;
             return currentAnatomyWindow;
         }
 
