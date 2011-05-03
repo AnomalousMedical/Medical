@@ -29,6 +29,7 @@ namespace Medical.GUI
             slider.UserObject = command;
             slider.ScrollRange = (int)SCROLL_MAX;
             slider.ScrollPosition = getSliderValueFromCommand(command);
+            slider.ScrollIncrement = 1000;
         }
 
         public override void Dispose()
