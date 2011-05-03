@@ -143,7 +143,7 @@ namespace Medical.GUI
                 Vector2 windowLoc = activeWindow.Location;
                 Size2 windowSize = activeWindow.WorkingSize;
                 absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
-                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Width;
+                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
                 Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
                 List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
                 HashSet<String> anatomyTags = new HashSet<String>();

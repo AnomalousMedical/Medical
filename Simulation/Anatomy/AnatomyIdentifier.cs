@@ -108,7 +108,8 @@ namespace Medical
         }
 
         /// <summary>
-        /// This is the TransparencyChanger for this anatomy. It can be null if no TransparencyChanger is assigned.
+        /// This is the TransparencyChanger for this anatomy. It can be null if
+        /// no TransparencyChanger is assigned.
         /// </summary>
         [DoNotCopy]
         public TransparencyChanger TransparencyChanger { get; internal set; }
