@@ -37,6 +37,7 @@ namespace Medical
                 errorMessage = String.Format("Could not find TransparencyInterface named {0}", transparencyInterfaceName);
                 return false;
             }
+            parentAnatomy.TransparencyChanger = this;
             return true;
         }
 
@@ -50,6 +51,14 @@ namespace Medical
                     SmoothBlendApplied.Invoke(alpha, changeMultiplier);
                 }
                 fireNumericValueChanged(alpha);
+            }
+        }
+
+        public float CurrentAlpha
+        {
+            get
+            {
+                return NumericValue;
             }
         }
 

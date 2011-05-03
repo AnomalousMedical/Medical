@@ -41,6 +41,14 @@ namespace Medical
             }
         }
 
+        public float CurrentAlpha
+        {
+            get
+            {
+                return NumericValue;
+            }
+        }
+
         public void addSubCommand(TransparencyAnatomyCommand command)
         {
             command.NumericValueChanged += command_NumericValueChanged;

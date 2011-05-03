@@ -24,6 +24,10 @@ namespace Medical
         [DoNotSave]
         private AnatomyIdentifierEditInterface anatomyIdentifierEditInterface;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private TransparencyChanger transparencyChanger = null;
+
         protected override void constructed()
         {
             
@@ -102,6 +106,12 @@ namespace Medical
                 return Owner.Translation;
             }
         }
+
+        /// <summary>
+        /// This is the TransparencyChanger for this anatomy. It can be null if no TransparencyChanger is assigned.
+        /// </summary>
+        [DoNotCopy]
+        public TransparencyChanger TransparencyChanger { get; internal set; }
 
         public void addCommand(AnatomyCommand command)
         {

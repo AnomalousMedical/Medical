@@ -76,7 +76,7 @@ namespace Medical
             SortedAnatomyClickResults results = new SortedAnatomyClickResults();
             foreach (AnatomyIdentifier anatomy in anatomyList)
             {
-                if (anatomy.checkCollision(ray, ref distance))
+                if (anatomy.TransparencyChanger.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distance))
                 {
                     results.add(anatomy, distance);
                     Logging.Log.Debug("Match distance {0} {1}", anatomy.AnatomicalName, distance);

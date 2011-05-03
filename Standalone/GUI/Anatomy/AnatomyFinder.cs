@@ -139,9 +139,12 @@ namespace Medical.GUI
                 sw.Start();
 
                 Vector3 absMouse = eventManager.Mouse.getAbsMouse();
-                absMouse.x /= eventManager.Mouse.getMouseAreaWidth();
-                absMouse.y /= eventManager.Mouse.getMouseAreaHeight();
-                Ray3 cameraRay = sceneViewController.ActiveWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
+                SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
+                Vector2 windowLoc = activeWindow.Location;
+                Size2 windowSize = activeWindow.WorkingSize;
+                absMouse.x = (absMouse.x - windowLoc.x) / windowSize.Width;
+                absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Width;
+                Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
                 List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
                 HashSet<String> anatomyTags = new HashSet<String>();
                 foreach (AnatomyIdentifier anatomy in matches)
