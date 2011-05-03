@@ -13,7 +13,6 @@ namespace Medical.GUI
         private Anatomy anatomy;
         private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
         private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 18.0f));
-        private LayerState beforeFocusLayerState = null;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -66,11 +65,6 @@ namespace Medical.GUI
                 }
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.layout();
-                if (beforeFocusLayerState != null)
-                {
-                    beforeFocusLayerState.Dispose();
-                    beforeFocusLayerState = null;
-                }
             }
         }
 
@@ -91,20 +85,7 @@ namespace Medical.GUI
 
         void focusButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (beforeFocusLayerState == null)
-            {
-                beforeFocusLayerState = new LayerState("");
-                beforeFocusLayerState.captureState();
-                TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                windowManager.moveActiveSceneView(anatomy.Center);
-            }
-            else
-            {
-                beforeFocusLayerState.apply();
-                beforeFocusLayerState.Dispose();
-                beforeFocusLayerState = null;
-            }
+            windowManager.focusOnAnatomy(this);
         }
 
         void AnatomyContextWindow_Closed(object sender, EventArgs e)

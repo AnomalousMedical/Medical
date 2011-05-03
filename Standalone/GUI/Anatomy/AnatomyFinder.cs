@@ -35,10 +35,6 @@ namespace Medical.GUI
 
         private SceneViewController sceneViewController;
 
-        private ButtonGroup showModeGroup = new ButtonGroup();
-        private Button focusButton;
-        private Button toggleButton;
-
         public AnatomyFinder(SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -53,16 +49,15 @@ namespace Medical.GUI
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
 
-            focusButton = (Button)window.findWidget("FocusButton");
-            showModeGroup.addButton(focusButton);
-            toggleButton = (Button)window.findWidget("ToggleButton");
-            showModeGroup.addButton(toggleButton);
-            showModeGroup.SelectedButton = toggleButton;
+            
 
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
 
             Button clearButton = window.findWidget("ClearButton") as Button;
             clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
+
+            Button unhideAll = window.findWidget("UnhideAll") as Button;
+            unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
         }
 
         public void sceneLoaded()
@@ -187,34 +182,28 @@ namespace Medical.GUI
             updateSearch();
         }
 
+        void unhideAll_MouseButtonClick(Widget source, EventArgs e)
+        {
+            TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.TransparencyChangeMultiplier);
+        }
+
         void anatomyList_ListSelectAccept(Widget source, EventArgs e)
         {
             if (anatomyList.hasItemSelected())
             {
-                if (showModeGroup.SelectedButton == focusButton)
+                Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
+                TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
+                if (transparencyChanger.CurrentAlpha == 1.0f)
                 {
-                    TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                    Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
-                    selectedAnatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                    SceneViewWindow window = sceneViewController.ActiveWindow;
-                    window.setPosition(window.Translation, selectedAnatomy.Center, MedicalConfig.CameraTransitionTime);
+                    transparencyChanger.smoothBlend(0.7f, MedicalConfig.TransparencyChangeMultiplier);
+                }
+                else if (transparencyChanger.CurrentAlpha == 0.0f)
+                {
+                    transparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                 }
                 else
                 {
-                    Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
-                    TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
-                    if (transparencyChanger.CurrentAlpha == 1.0f)
-                    {
-                        transparencyChanger.smoothBlend(0.7f, MedicalConfig.TransparencyChangeMultiplier);
-                    }
-                    else if (transparencyChanger.CurrentAlpha == 0.0f)
-                    {
-                        transparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                    }
-                    else
-                    {
-                        transparencyChanger.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
-                    }
+                    transparencyChanger.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 }
             }
         }
