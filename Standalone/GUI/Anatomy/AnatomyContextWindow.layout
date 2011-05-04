@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="95 162 177 114" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="95 162 184 114" layer="Overlapped">
         <Widget type="Button" skin="Button" position="3 3 72 13" name="PinButton">
             <Property key="Widget_Caption" value="Keep Open"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="76 3 46 13" name="FocusButton">
-            <Property key="Widget_Caption" value="Focus"/>
+        <Widget type="Button" skin="Button" position="76 3 48 13" name="CenterButton">
+            <Property key="Widget_Caption" value="Center"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="126 3 54 13" name="HighlightButton">
+            <Property key="Widget_Caption" value="Highlight"/>
         </Widget>
     </Widget>
 </MyGUI>

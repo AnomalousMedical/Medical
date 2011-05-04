@@ -22,8 +22,11 @@ namespace Medical.GUI
             Button pinButton = (Button)window.findWidget("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
 
-            Button focusButton = (Button)window.findWidget("FocusButton");
-            focusButton.MouseButtonClick += new MyGUIEvent(focusButton_MouseButtonClick);
+            Button centerButton = (Button)window.findWidget("CenterButton");
+            centerButton.MouseButtonClick += new MyGUIEvent(centerButton_MouseButtonClick);
+
+            Button highlightButton = (Button)window.findWidget("HighlightButton");
+            highlightButton.MouseButtonClick += new MyGUIEvent(highlightButton_MouseButtonClick);
         }
 
         public Anatomy Anatomy
@@ -83,9 +86,14 @@ namespace Medical.GUI
             }
         }
 
-        void focusButton_MouseButtonClick(Widget source, EventArgs e)
+        void centerButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            windowManager.focusOnAnatomy(this);
+            windowManager.centerAnatomy(this);
+        }
+
+        void highlightButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            windowManager.highlightAnatomy(this);
         }
 
         void AnatomyContextWindow_Closed(object sender, EventArgs e)

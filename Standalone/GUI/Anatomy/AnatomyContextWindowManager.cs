@@ -13,7 +13,7 @@ namespace Medical.GUI
         private SceneViewController sceneViewController;
 
         private LayerState beforeFocusLayerState = null;
-        private AnatomyContextWindow lastFocusRequestWindow = null;
+        private AnatomyContextWindow lastHighlightRequestWindow = null;
 
         public AnatomyContextWindowManager(SceneViewController sceneViewController)
         {
@@ -46,14 +46,20 @@ namespace Medical.GUI
             currentAnatomyWindow = null;
         }
 
-        internal void focusOnAnatomy(AnatomyContextWindow requestingWindow)
+        internal void centerAnatomy(AnatomyContextWindow requestingWindow)
         {
-            if (requestingWindow == lastFocusRequestWindow && beforeFocusLayerState != null)
+            SceneViewWindow window = sceneViewController.ActiveWindow;
+            window.setPosition(window.Translation, requestingWindow.Anatomy.Center, MedicalConfig.CameraTransitionTime);
+        }
+
+        internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
+        {
+            if (requestingWindow == lastHighlightRequestWindow && beforeFocusLayerState != null)
             {
                 beforeFocusLayerState.apply();
                 beforeFocusLayerState.Dispose();
                 beforeFocusLayerState = null;
-                lastFocusRequestWindow = null;
+                lastHighlightRequestWindow = null;
             }
             else
             {
@@ -65,9 +71,7 @@ namespace Medical.GUI
 
                 TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
-                SceneViewWindow window = sceneViewController.ActiveWindow;
-                window.setPosition(window.Translation, requestingWindow.Anatomy.Center, MedicalConfig.CameraTransitionTime);
-                lastFocusRequestWindow = requestingWindow;
+                lastHighlightRequestWindow = requestingWindow;
             }
         }
     }
