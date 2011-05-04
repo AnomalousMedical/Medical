@@ -14,6 +14,9 @@ namespace Medical
         [Editable]
         private String anatomicalName;
 
+        [Editable]
+        private bool allowGroupSelection = true;
+
         [DoNotSave]
         private List<AnatomyTag> tags = new List<AnatomyTag>();
 
@@ -108,11 +111,33 @@ namespace Medical
         }
 
         /// <summary>
+        /// Override the ability to select as a group. This is useful for stuff
+        /// that is itself a top level object that isn't part of a group.
+        /// </summary>
+        public bool AllowGroupSelection
+        {
+            get
+            {
+                return allowGroupSelection;
+            }
+        }
+
+        /// <summary>
         /// This is the TransparencyChanger for this anatomy. It can be null if
         /// no TransparencyChanger is assigned.
         /// </summary>
         [DoNotCopy]
-        public TransparencyChanger TransparencyChanger { get; internal set; }
+        public TransparencyChanger TransparencyChanger
+        {
+            get
+            {
+                return transparencyChanger;
+            }
+            internal set
+            {
+                this.transparencyChanger = value;
+            }
+        }
 
         public void addCommand(AnatomyCommand command)
         {

@@ -172,7 +172,7 @@ namespace Medical.GUI
                 if (matches.Count > 0)
                 {
                     uint selectedIndex = 0;
-                    if (pickingModeGroup.SelectedButton == groupButton)
+                    if (pickingModeGroup.SelectedButton == groupButton && matches[0].AllowGroupSelection)
                     {
                         AnatomyTag mainTag = matches[0].Tags.First();
                         if (mainTag != null)
