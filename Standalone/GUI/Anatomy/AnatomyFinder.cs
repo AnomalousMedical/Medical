@@ -132,7 +132,18 @@ namespace Medical.GUI
 
         void anatomyList_ListChangePosition(Widget source, EventArgs e)
         {
-            changeSelectedAnatomy();
+            AnatomyContextWindow contextWindow = changeSelectedAnatomy();
+            if (contextWindow != null)
+            {
+                float x = window.Right;
+                float y = window.Top;
+                if (x + contextWindow.Width > Gui.Instance.getViewWidth())
+                {
+                    x = window.Left - contextWindow.Width;
+                }
+                contextWindow.Position = new Vector2(x, y);
+                contextWindow.ensureVisible();
+            }
         }
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
@@ -168,9 +179,9 @@ namespace Medical.GUI
                         anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
                     }
                 }
-                searchBox.Caption = "Clicked";
                 if (matches.Count > 0)
                 {
+                    searchBox.Caption = "Clicked";
                     uint selectedIndex = 0;
                     if (pickingModeGroup.SelectedButton == groupButton && matches[0].AllowGroupSelection)
                     {
@@ -181,6 +192,11 @@ namespace Medical.GUI
                         }
                     }
                     anatomyList.setIndexSelected(selectedIndex);
+                }
+                else
+                {
+                    searchBox.Caption = "";
+                    updateSearch();
                 }
                 AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy();
                 if (activeAnatomyWindow != null)
