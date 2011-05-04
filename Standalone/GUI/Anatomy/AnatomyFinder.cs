@@ -35,6 +35,10 @@ namespace Medical.GUI
 
         private SceneViewController sceneViewController;
 
+        private Button groupButton;
+        private Button individualButton;
+        private ButtonGroup pickingModeGroup;
+
         public AnatomyFinder(SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -49,8 +53,6 @@ namespace Medical.GUI
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
 
-            
-
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
 
             Button clearButton = window.findWidget("ClearButton") as Button;
@@ -58,6 +60,13 @@ namespace Medical.GUI
 
             Button unhideAll = window.findWidget("UnhideAll") as Button;
             unhideAll.MouseButtonClick += new MyGUIEvent(unhideAll_MouseButtonClick);
+
+            pickingModeGroup = new ButtonGroup();
+            groupButton = (Button)window.findWidget("GroupButton");
+            pickingModeGroup.addButton(groupButton);
+            individualButton = (Button)window.findWidget("IndividualButton");
+            pickingModeGroup.addButton(individualButton);
+            pickingModeGroup.SelectedButton = groupButton;
         }
 
         public void sceneLoaded()
@@ -162,7 +171,16 @@ namespace Medical.GUI
                 searchBox.Caption = "Clicked";
                 if (matches.Count > 0)
                 {
-                    anatomyList.setIndexSelected(0);
+                    uint selectedIndex = 0;
+                    if (pickingModeGroup.SelectedButton == groupButton)
+                    {
+                        AnatomyTag mainTag = matches[0].Tags.First();
+                        if (mainTag != null)
+                        {
+                            anatomyList.findSubItemWith(0, mainTag.Tag, out selectedIndex);
+                        }
+                    }
+                    anatomyList.setIndexSelected(selectedIndex);
                 }
                 AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy();
                 if (activeAnatomyWindow != null)
