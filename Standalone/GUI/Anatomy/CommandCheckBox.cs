@@ -46,7 +46,7 @@ namespace Medical.GUI
 
         public override Engine.Size2 DesiredSize
         {
-            get { return new Size2(checkButton.Width, checkButton.Height); }
+            get { return new Size2(checkButton.getTextRegion().left + checkButton.getTextSize().Width, checkButton.Height); }
         }
 
         public override bool Visible
