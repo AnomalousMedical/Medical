@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="95 162 184 114" layer="Overlapped">
+    <Widget type="Window" skin="WindowCX" position="95 162 184 114" layer="Overlapped">
         <Widget type="Button" skin="Button" position="3 3 72 13" name="PinButton">
             <Property key="Widget_Caption" value="Keep Open"/>
         </Widget>

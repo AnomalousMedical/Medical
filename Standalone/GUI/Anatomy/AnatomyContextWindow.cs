@@ -14,6 +14,8 @@ namespace Medical.GUI
         private List<CommandUIElement> dynamicWidgets = new List<CommandUIElement>();
         private FlowLayoutContainer layoutContainer = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 5.0f, new Vector2(CommandUIElement.SIDE_PADDING / 2, 18.0f));
 
+        private Size2 windowExtraSize;
+
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
         {
@@ -27,6 +29,8 @@ namespace Medical.GUI
 
             Button highlightButton = (Button)window.findWidget("HighlightButton");
             highlightButton.MouseButtonClick += new MyGUIEvent(highlightButton_MouseButtonClick);
+
+            windowExtraSize = new Size2(window.Width - window.ClientCoord.width, window.Height - window.ClientCoord.height);
         }
 
         public Anatomy Anatomy
@@ -68,6 +72,9 @@ namespace Medical.GUI
                 }
                 layoutContainer.SuppressLayout = false;
                 layoutContainer.layout();
+
+                Size2 desiredSize = layoutContainer.DesiredSize;
+                window.setSize((int)(desiredSize.Width + windowExtraSize.Width + CommandUIElement.SIDE_PADDING), (int)(desiredSize.Height + windowExtraSize.Height));
             }
         }
 
