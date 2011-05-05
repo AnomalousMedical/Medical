@@ -11,18 +11,24 @@ namespace Medical.GUI
 {
     enum AnatomyFinderEvents
     {
-        PickAnatomy
+        PickAnatomy,
+        ChangeSelectionMode,
     }
 
     public class AnatomyFinder : Dialog
     {
         private static MessageEvent pickAnatomy;
+        private static MessageEvent changeSelectionMode;
 
         static AnatomyFinder()
         {
             pickAnatomy = new MessageEvent(AnatomyFinderEvents.PickAnatomy);
             pickAnatomy.addButton(MouseButtonCode.MB_BUTTON0);
             DefaultEvents.registerDefaultEvent(pickAnatomy);
+
+            changeSelectionMode = new MessageEvent(AnatomyFinderEvents.ChangeSelectionMode);
+            changeSelectionMode.addButton(KeyboardButtonCode.KC_TAB);
+            DefaultEvents.registerDefaultEvent(changeSelectionMode);
         }
 
         private MultiList anatomyList;
@@ -53,6 +59,7 @@ namespace Medical.GUI
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
 
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
+            changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
 
             Button clearButton = window.findWidget("ClearButton") as Button;
             clearButton.MouseButtonClick += new MyGUIEvent(clearButton_MouseButtonClick);
@@ -204,6 +211,21 @@ namespace Medical.GUI
 
                 sw.Stop();
                 Logging.Log.Debug("Picking took {0} ms", sw.ElapsedMilliseconds);
+            }
+        }
+
+        void changeSelectionMode_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (!Gui.Instance.HandledKeyboardButtons)
+            {
+                if (pickingModeGroup.SelectedButton == groupButton)
+                {
+                    pickingModeGroup.SelectedButton = individualButton;
+                }
+                else
+                {
+                    pickingModeGroup.SelectedButton = groupButton;
+                }
             }
         }
 
