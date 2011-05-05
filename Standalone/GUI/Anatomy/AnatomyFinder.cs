@@ -31,7 +31,6 @@ namespace Medical.GUI
         private AnatomyContextWindowManager anatomyWindowManager;
         private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
         private AnatomySearchList anatomySearchList = new AnatomySearchList();
-        private List<AnatomyTagGroup> topLevelGroups = new List<AnatomyTagGroup>();
 
         private SceneViewController sceneViewController;
 
@@ -79,7 +78,6 @@ namespace Medical.GUI
             foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
             {
                 anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
-                topLevelGroups.Add(tagGroup);
                 anatomySearchList.addAnatomy(tagGroup);
             }
         }
@@ -89,7 +87,6 @@ namespace Medical.GUI
             anatomyList.removeAllItems();
             anatomyTagManager.clear();
             anatomySearchList.clear();
-            topLevelGroups.Clear();
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -103,7 +100,7 @@ namespace Medical.GUI
             anatomyList.removeAllItems();
             if (searchTerm.Length == 0)
             {
-                foreach (AnatomyTagGroup tagGroup in topLevelGroups)
+                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
                 {
                     anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
                 }
@@ -172,7 +169,7 @@ namespace Medical.GUI
                         anatomyTags.Add(tag.Tag);
                     }
                 }
-                foreach (AnatomyTagGroup tagGroup in topLevelGroups)
+                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
                 {
                     if (anatomyTags.Contains(tagGroup.AnatomicalName))
                     {
