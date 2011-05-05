@@ -6,6 +6,8 @@ using Engine;
 using Engine.Editing;
 using Engine.Saving;
 using Engine.Attributes;
+using OgreWrapper;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -16,6 +18,12 @@ namespace Medical
 
         [Editable]
         private bool allowGroupSelection = true;
+
+        [Editable]
+        private String nodeName = "Node";
+
+        [Editable]
+        private String entityName = "Entity";
 
         [DoNotSave]
         private List<AnatomyTag> tags = new List<AnatomyTag>();
@@ -31,6 +39,10 @@ namespace Medical
         [DoNotSave]
         private TransparencyChanger transparencyChanger = null;
 
+        [DoNotCopy]
+        [DoNotSave]
+        private Entity entity;
+
         protected override void constructed()
         {
             
@@ -45,6 +57,16 @@ namespace Medical
                 {
                     blacklist("SimObject {0} AnatomyIdentifier {1} failed to link command {2}. Reason: {3}", Owner.Name, AnatomicalName, command.UIText, errorMessage);
                 }
+            }
+            SceneNodeElement nodeElement = Owner.getElement(nodeName) as SceneNodeElement;
+            if (nodeElement == null)
+            {
+                blacklist("SimObject {0} AnatomyIdentifier {1} cannot find node named {2}", Owner.Name, AnatomicalName, nodeName);
+            }
+            entity = nodeElement.getNodeObject(entityName) as Entity;
+            if (entity == null)
+            {
+                blacklist("SimObject {0} AnatomyIdentifier {1} Node {2} cannot find entity named {3}", Owner.Name, AnatomicalName, nodeName, entityName);
             }
             AnatomyManager.addAnatomy(this);
         }
@@ -159,16 +181,6 @@ namespace Medical
 
         internal bool checkCollision(Ray3 ray, ref float distanceOnRay)
         {
-            OgrePlugin.SceneNodeElement nodeElement = Owner.getElement("Node") as OgrePlugin.SceneNodeElement;
-            if (nodeElement == null)
-            {
-                return false;
-            }
-            OgreWrapper.Entity entity = nodeElement.getNodeObject("Entity") as OgreWrapper.Entity;
-            if (entity == null)
-            {
-                return false;
-            }
             return entity.raycastPolygonLevel(ray, ref distanceOnRay);
         }
 
