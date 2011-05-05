@@ -51,19 +51,8 @@ namespace Medical.GUI
             AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
             Vector3 center = boundingBox.Center;
-            Vector3 translation = center;
-
-            float nearPlane = window.Camera.getNearClipDistance();
-            float theta = window.Camera.getFOVy() * 0.0174532925f;
-            float aspectRatio = window.Camera.getAspectRatio();
-            if (aspectRatio < 1.0f)
-            {
-                theta *= aspectRatio;
-            }
-
-            translation.z += boundingBox.DiagonalDistance / (float)Math.Tan(theta) + nearPlane;
-
-            window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
+            
+            window.setPosition(window.Translation, center, MedicalConfig.CameraTransitionTime);
         }
 
         internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
@@ -86,7 +75,23 @@ namespace Medical.GUI
                 TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                 lastHighlightRequestWindow = requestingWindow;
-                centerAnatomy(requestingWindow);
+
+                AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
+                SceneViewWindow window = sceneViewController.ActiveWindow;
+                Vector3 center = boundingBox.Center;
+                Vector3 translation = center;
+
+                float nearPlane = window.Camera.getNearClipDistance();
+                float theta = window.Camera.getFOVy() * 0.0174532925f;
+                float aspectRatio = window.Camera.getAspectRatio();
+                if (aspectRatio < 1.0f)
+                {
+                    theta *= aspectRatio;
+                }
+
+                translation.z += boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+
+                window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
             }
         }
     }
