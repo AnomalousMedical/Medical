@@ -49,7 +49,20 @@ namespace Medical.GUI
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)
         {
             SceneViewWindow window = sceneViewController.ActiveWindow;
-            window.setPosition(window.Translation, requestingWindow.Anatomy.Center, MedicalConfig.CameraTransitionTime);
+            Vector3 center = requestingWindow.Anatomy.Center;
+            Vector3 translation = center;
+
+            float nearPlane = window.Camera.getNearClipDistance();
+            float theta = window.Camera.getFOVy() * 0.0174532925f;
+            float aspectRatio = window.Camera.getAspectRatio();
+            if (aspectRatio < 1.0f)
+            {
+                theta *= aspectRatio;
+            }
+
+            translation.z += requestingWindow.Anatomy.BoundingRadius / (float)Math.Tan(theta) - nearPlane;
+
+            window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
         }
 
         internal void highlightAnatomy(AnatomyContextWindow requestingWindow)
@@ -72,6 +85,7 @@ namespace Medical.GUI
                 TransparencyController.smoothSetAllAlphas(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 requestingWindow.Anatomy.TransparencyChanger.smoothBlend(1.0f, MedicalConfig.TransparencyChangeMultiplier);
                 lastHighlightRequestWindow = requestingWindow;
+                centerAnatomy(requestingWindow);
             }
         }
     }

@@ -72,6 +72,26 @@ namespace Medical.GUI
             }
         }
 
+        public float BoundingRadius
+        {
+            get
+            {
+                float radiusSq = 0.0f;
+                Vector3 thisCenter = Center;
+                foreach (Anatomy anatomy in groupAnatomy)
+                {
+                    float centerSq = (anatomy.Center - thisCenter).length2();
+                    float radius = anatomy.BoundingRadius;
+                    centerSq += radius * radius;
+                    if (centerSq > radiusSq)
+                    {
+                        radiusSq = centerSq;
+                    }
+                }
+                return (float)Math.Sqrt(radiusSq);
+            }
+        }
+
         public TransparencyChanger TransparencyChanger
         {
             get

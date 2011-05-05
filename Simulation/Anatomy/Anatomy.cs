@@ -27,6 +27,11 @@ namespace Medical
         Vector3 Center { get; }
 
         /// <summary>
+        /// The bounding radius of this object.
+        /// </summary>
+        float BoundingRadius { get; }
+
+        /// <summary>
         /// The class that changes transparency for this Anatomy.
         /// </summary>
         TransparencyChanger TransparencyChanger { get; }

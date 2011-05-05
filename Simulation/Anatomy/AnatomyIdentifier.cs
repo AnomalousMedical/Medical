@@ -132,6 +132,14 @@ namespace Medical
             }
         }
 
+        public float BoundingRadius
+        {
+            get
+            {
+                return entity.getBoundingRadius();
+            }
+        }
+
         /// <summary>
         /// Override the ability to select as a group. This is useful for stuff
         /// that is itself a top level object that isn't part of a group.
