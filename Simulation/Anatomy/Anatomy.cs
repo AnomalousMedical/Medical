@@ -22,14 +22,9 @@ namespace Medical
         IEnumerable<AnatomyCommand> Commands { get; }
 
         /// <summary>
-        /// The location of the center of this anatomy.
+        /// Get an AxisAlignedBox bounding volume.
         /// </summary>
-        Vector3 Center { get; }
-
-        /// <summary>
-        /// The bounding radius of this object.
-        /// </summary>
-        float BoundingRadius { get; }
+        AxisAlignedBox WorldBoundingBox { get; }
 
         /// <summary>
         /// The class that changes transparency for this Anatomy.

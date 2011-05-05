@@ -124,19 +124,11 @@ namespace Medical
             }
         }
 
-        public Vector3 Center
+        public AxisAlignedBox WorldBoundingBox
         {
             get
             {
-                return Owner.Translation;
-            }
-        }
-
-        public float BoundingRadius
-        {
-            get
-            {
-                return entity.getBoundingRadius();
+                return entity.getWorldBoundingBox();
             }
         }
 

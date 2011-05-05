@@ -57,38 +57,16 @@ namespace Medical.GUI
             }
         }
 
-        public Vector3 Center
+        public AxisAlignedBox WorldBoundingBox
         {
             get
             {
-                Vector3 locationSum = Vector3.Zero;
-                int locationCount = 0;
+                AxisAlignedBox box = new AxisAlignedBox();
                 foreach (Anatomy anatomy in groupAnatomy)
                 {
-                    locationSum += anatomy.Center;
-                    ++locationCount;
+                    box.merge(anatomy.WorldBoundingBox);
                 }
-                return locationSum / locationCount;
-            }
-        }
-
-        public float BoundingRadius
-        {
-            get
-            {
-                float radiusSq = 0.0f;
-                Vector3 thisCenter = Center;
-                foreach (Anatomy anatomy in groupAnatomy)
-                {
-                    float centerSq = (anatomy.Center - thisCenter).length2();
-                    float radius = anatomy.BoundingRadius;
-                    centerSq += radius * radius;
-                    if (centerSq > radiusSq)
-                    {
-                        radiusSq = centerSq;
-                    }
-                }
-                return (float)Math.Sqrt(radiusSq);
+                return box;
             }
         }
 

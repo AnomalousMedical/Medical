@@ -48,8 +48,9 @@ namespace Medical.GUI
 
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)
         {
+            AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
             SceneViewWindow window = sceneViewController.ActiveWindow;
-            Vector3 center = requestingWindow.Anatomy.Center;
+            Vector3 center = boundingBox.Center;
             Vector3 translation = center;
 
             float nearPlane = window.Camera.getNearClipDistance();
@@ -60,7 +61,7 @@ namespace Medical.GUI
                 theta *= aspectRatio;
             }
 
-            translation.z += requestingWindow.Anatomy.BoundingRadius / (float)Math.Tan(theta) - nearPlane;
+            translation.z += boundingBox.DiagonalDistance / (float)Math.Tan(theta) + nearPlane;
 
             window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
         }
