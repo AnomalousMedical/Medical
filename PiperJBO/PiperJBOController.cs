@@ -16,6 +16,7 @@ namespace Medical
         StandaloneController controller;
         bool startupSuceeded = false;
         AnatomyController anatomyController = new AnatomyController();
+        BookmarksController bookmarksController;
 
         private static String archiveNameFormat = "PiperJBO{0}.dat";
 
@@ -49,6 +50,7 @@ namespace Medical
             licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
+            bookmarksController = new BookmarksController(controller);
             controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
             controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
             controller.GUIManager.addPlugin(new PiperJBOGUIPlugin(licenseManager, this));
@@ -211,6 +213,14 @@ namespace Medical
             get
             {
                 return anatomyController;
+            }
+        }
+
+        public BookmarksController BookmarksController
+        {
+            get
+            {
+                return bookmarksController;
             }
         }
 

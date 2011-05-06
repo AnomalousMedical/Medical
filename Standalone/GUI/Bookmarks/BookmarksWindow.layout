@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 116 194 171" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="131 116 220 347" layer="Overlapped">
         <Property key="Widget_Caption" value="Bookmarks"/>
+        <Widget type="MultiList" skin="MultiList" position="4 4 214 292" align="Stretch" name="BookmarksList"/>
+        <Widget type="Button" skin="Button" position="6 302 57 20" align="Left Bottom" name="AddButton">
+            <Property key="Widget_Caption" value="Add"/>
+        </Widget>
     </Widget>
 </MyGUI>

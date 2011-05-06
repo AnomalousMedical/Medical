@@ -139,7 +139,7 @@ namespace Medical.GUI
             anatomyFinder = new AnatomyFinder(piperJBOController.AnatomyController, standaloneController.SceneViewController);
             dialogManager.addManagedDialog(anatomyFinder);
 
-            favoritesWindow = new BookmarksWindow();
+            favoritesWindow = new BookmarksWindow(piperJBOController.BookmarksController);
             dialogManager.addManagedDialog(favoritesWindow);
 
             //Wizards
