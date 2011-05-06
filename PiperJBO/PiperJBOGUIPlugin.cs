@@ -29,6 +29,7 @@ namespace Medical.GUI
         private SequencePlayer sequencePlayer;
         private PredefinedLayersDialog predefinedLayers;
         private AnatomyFinder anatomyFinder;
+        private BookmarksWindow favoritesWindow;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
@@ -72,6 +73,7 @@ namespace Medical.GUI
             notesDialog.Dispose();
             stateList.Dispose();
             anatomyFinder.Dispose();
+            favoritesWindow.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -137,6 +139,9 @@ namespace Medical.GUI
             anatomyFinder = new AnatomyFinder(standaloneController.SceneViewController);
             dialogManager.addManagedDialog(anatomyFinder);
 
+            favoritesWindow = new BookmarksWindow();
+            dialogManager.addManagedDialog(favoritesWindow);
+
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController, licenseManager);
 
@@ -149,6 +154,7 @@ namespace Medical.GUI
         {
             taskbar.addItem(new ShowToothContactsTaskbarItem());
             taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "Notes"));
+            taskbar.addItem(new DialogOpenTaskbarItem(favoritesWindow, "Bookmarks", "SequenceIconLarge"));
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));

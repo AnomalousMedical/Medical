@@ -101,6 +101,8 @@
     <Compile Include="Controller\Config\PlatformConfig.cs" />
     <Compile Include="Controller\Config\RecentDocuments.cs" />
     <Compile Include="Controller\Config\WindowsPlatformConfig.cs" />
+    <Compile Include="Controller\Bookmarks\Bookmark.cs" />
+    <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\GenericEvents.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksWindow.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\PredefinedLayers\PredefinedLayersDialog.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
@@ -342,6 +345,7 @@
     <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\CameraControls\CameraControls.layout" />
+    <EmbeddedResource Include="GUI\Bookmarks\BookmarksWindow.layout" />
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\PredefinedLayers\PredefinedLayersDialog.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />

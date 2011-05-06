@@ -6,6 +6,7 @@ using Medical.Controller;
 using Medical.GUI;
 using Engine;
 using System.IO;
+using Engine.ObjectManagement;
 
 namespace Medical
 {
@@ -63,6 +64,22 @@ namespace Medical
             {
                 controller.saveCrashLog();
             }
+        }
+
+        public override void registerStandaloneController(StandaloneController standaloneController)
+        {
+            standaloneController.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
+            standaloneController.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
+        }
+
+        void standaloneController_SceneUnloading(SimScene scene)
+        {
+            
+        }
+
+        void standaloneController_SceneLoaded(SimScene scene)
+        {
+            
         }
 
         public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)
