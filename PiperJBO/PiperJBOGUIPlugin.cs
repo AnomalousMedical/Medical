@@ -153,8 +153,8 @@ namespace Medical.GUI
         public void addToTaskbar(Taskbar taskbar)
         {
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "Notes"));
-            taskbar.addItem(new DialogOpenTaskbarItem(favoritesWindow, "Bookmarks", "SequenceIconLarge"));
+            taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(favoritesWindow, "Bookmarks", "FavoritesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
             taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
             taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
