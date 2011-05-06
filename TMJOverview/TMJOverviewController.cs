@@ -68,11 +68,6 @@ namespace Medical
             }
         }
 
-        public override void registerStandaloneController(StandaloneController standaloneController)
-        {
-
-        }
-
         public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)
         {
             windowPresetController.clearPresetSets();

@@ -14,8 +14,6 @@ namespace Medical.Controller
 
         private List<String> movementSequenceDirectories = new List<string>();
 
-        public abstract void registerStandaloneController(StandaloneController standaloneController);
-
         public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
 
         public abstract void addHelpDocuments(HtmlHelpController helpController);

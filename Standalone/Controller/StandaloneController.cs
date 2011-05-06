@@ -65,7 +65,6 @@ namespace Medical
         public StandaloneController(StandaloneApp app)
         {
             this.app = app;
-            app.registerStandaloneController(this);
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalRoot, app.ProgramFolder);
             guiManager = new GUIManager(this);

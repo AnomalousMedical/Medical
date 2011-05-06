@@ -49,6 +49,8 @@ namespace Medical
             licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
+            controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
+            controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
             controller.GUIManager.addPlugin(new PiperJBOGUIPlugin(licenseManager, this));
             if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
@@ -65,12 +67,6 @@ namespace Medical
             {
                 controller.saveCrashLog();
             }
-        }
-
-        public override void registerStandaloneController(StandaloneController standaloneController)
-        {
-            standaloneController.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
-            standaloneController.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
         }
 
         void standaloneController_SceneUnloading(SimScene scene)
