@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical.GUI
+namespace Medical
 {
-    class AnatomyTagManager
+    public class AnatomyTagManager
     {
         private Dictionary<String, AnatomyTagGroup> anatomyTagGroups = new Dictionary<string, AnatomyTagGroup>();
 

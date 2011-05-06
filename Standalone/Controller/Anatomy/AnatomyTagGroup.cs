@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Engine;
 
-namespace Medical.GUI
+namespace Medical
 {
-    class AnatomyTagGroup : Anatomy, IDisposable
+    public class AnatomyTagGroup : Anatomy, IDisposable
     {
         private List<AnatomyCommand> groupCommands = new List<AnatomyCommand>();
         private List<Anatomy> groupAnatomy = new List<Anatomy>();

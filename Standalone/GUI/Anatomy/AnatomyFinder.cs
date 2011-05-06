@@ -35,8 +35,6 @@ namespace Medical.GUI
         private Edit searchBox;
 
         private AnatomyContextWindowManager anatomyWindowManager;
-        private AnatomyTagManager anatomyTagManager = new AnatomyTagManager();
-        private AnatomySearchList anatomySearchList = new AnatomySearchList();
 
         private SceneViewController sceneViewController;
 
@@ -44,9 +42,13 @@ namespace Medical.GUI
         private Button individualButton;
         private ButtonGroup pickingModeGroup;
 
-        public AnatomyFinder(SceneViewController sceneViewController)
+        private AnatomyController anatomyController;
+
+        public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
+            this.anatomyController = anatomyController;
+            anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
 
@@ -75,25 +77,9 @@ namespace Medical.GUI
             pickingModeGroup.SelectedButton = groupButton;
         }
 
-        public void sceneLoaded()
+        void anatomyController_AnatomyChanged(object sender, EventArgs e)
         {
-            foreach (AnatomyIdentifier anatomy in AnatomyManager.AnatomyList)
-            {
-                anatomySearchList.addAnatomy(anatomy);
-                anatomyTagManager.addAnatomyIdentifier(anatomy);
-            }
-            foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
-            {
-                anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
-                anatomySearchList.addAnatomy(tagGroup);
-            }
-        }
-
-        public void sceneUnloading()
-        {
-            anatomyList.removeAllItems();
-            anatomyTagManager.clear();
-            anatomySearchList.clear();
+            updateSearch();
         }
 
         void searchBox_EventEditTextChange(Widget source, EventArgs e)
@@ -107,14 +93,14 @@ namespace Medical.GUI
             anatomyList.removeAllItems();
             if (searchTerm.Length == 0)
             {
-                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
+                foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                 {
                     anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
                 }
             }
             else
             {
-                foreach (Anatomy anatomy in anatomySearchList.findMatchingAnatomy(searchTerm, 35))
+                foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35))
                 {
                     anatomyList.addItem(anatomy.AnatomicalName, anatomy);
                 }
@@ -176,7 +162,7 @@ namespace Medical.GUI
                         anatomyTags.Add(tag.Tag);
                     }
                 }
-                foreach (AnatomyTagGroup tagGroup in anatomyTagManager.Groups)
+                foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                 {
                     if (anatomyTags.Contains(tagGroup.AnatomicalName))
                     {

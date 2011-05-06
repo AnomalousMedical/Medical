@@ -136,7 +136,7 @@ namespace Medical.GUI
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(sequencePlayer);
 
-            anatomyFinder = new AnatomyFinder(standaloneController.SceneViewController);
+            anatomyFinder = new AnatomyFinder(piperJBOController.AnatomyController, standaloneController.SceneViewController);
             dialogManager.addManagedDialog(anatomyFinder);
 
             favoritesWindow = new BookmarksWindow();
@@ -239,13 +239,11 @@ namespace Medical.GUI
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
-            anatomyFinder.sceneLoaded();
         }
 
         public void sceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
-            anatomyFinder.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

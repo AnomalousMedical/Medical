@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical.GUI
+namespace Medical
 {
-    class AnatomySearchList
+    public class AnatomySearchList
     {
         private List<Anatomy> anatomySearchList = new List<Anatomy>();
 

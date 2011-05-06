@@ -15,6 +15,7 @@ namespace Medical
         LicenseManager licenseManager;
         StandaloneController controller;
         bool startupSuceeded = false;
+        AnatomyController anatomyController = new AnatomyController();
 
         private static String archiveNameFormat = "PiperJBO{0}.dat";
 
@@ -74,12 +75,12 @@ namespace Medical
 
         void standaloneController_SceneUnloading(SimScene scene)
         {
-            
+            anatomyController.sceneUnloading();
         }
 
         void standaloneController_SceneLoaded(SimScene scene)
         {
-            
+            anatomyController.sceneLoaded();
         }
 
         public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)
@@ -206,6 +207,14 @@ namespace Medical
             get
             {
                 return licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_TRIAL);
+            }
+        }
+
+        public AnatomyController AnatomyController
+        {
+            get
+            {
+                return anatomyController;
             }
         }
 
