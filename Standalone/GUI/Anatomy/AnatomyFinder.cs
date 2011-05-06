@@ -75,6 +75,13 @@ namespace Medical.GUI
             individualButton = (Button)window.findWidget("IndividualButton");
             pickingModeGroup.addButton(individualButton);
             pickingModeGroup.SelectedButton = groupButton;
+
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            anatomyList.setColumnWidthAt(0, anatomyList.Width);
         }
 
         void anatomyController_AnatomyChanged(object sender, EventArgs e)
