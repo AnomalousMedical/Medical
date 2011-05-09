@@ -29,7 +29,7 @@ namespace Medical.GUI
         private SequencePlayer sequencePlayer;
         private PredefinedLayersDialog predefinedLayers;
         private AnatomyFinder anatomyFinder;
-        private BookmarksWindow favoritesWindow;
+        private BookmarksGUI bookmarks;
 
         private DistortionChooser distortionChooser;
         private QuickView quickView;
@@ -73,7 +73,7 @@ namespace Medical.GUI
             notesDialog.Dispose();
             stateList.Dispose();
             anatomyFinder.Dispose();
-            favoritesWindow.Dispose();
+            bookmarks.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -139,8 +139,7 @@ namespace Medical.GUI
             anatomyFinder = new AnatomyFinder(piperJBOController.AnatomyController, standaloneController.SceneViewController);
             dialogManager.addManagedDialog(anatomyFinder);
 
-            favoritesWindow = new BookmarksWindow(piperJBOController.BookmarksController);
-            dialogManager.addManagedDialog(favoritesWindow);
+            bookmarks = new BookmarksGUI(piperJBOController.BookmarksController);
 
             //Wizards
             wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController, licenseManager);
@@ -152,12 +151,12 @@ namespace Medical.GUI
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            taskbar.addItem(new ShowToothContactsTaskbarItem());
+            taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(favoritesWindow, "Bookmarks", "FavoritesIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
-            taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
+            taskbar.addItem(new ShowToothContactsTaskbarItem());
+            //taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
+            //taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
+            //taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));

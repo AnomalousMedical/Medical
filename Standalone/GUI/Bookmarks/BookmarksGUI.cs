@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    public class BookmarksWindow : Dialog
+    public class BookmarksGUI : PopupContainer
     {
         BookmarksController bookmarksController;
 
@@ -17,18 +17,18 @@ namespace Medical.GUI
         ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(50, 50), new Size2(512, 512));
         Edit bookmarkName;
 
-        public BookmarksWindow(BookmarksController bookmarksController)
-            : base("Medical.GUI.Bookmarks.BookmarksWindow.layout")
+        public BookmarksGUI(BookmarksController bookmarksController)
+            : base("Medical.GUI.Bookmarks.BookmarksGUI.layout")
         {
             this.bookmarksController = bookmarksController;
 
-            bookmarksList = new ButtonList((ScrollView)window.findWidget("BookmarksList"));
+            bookmarksList = new ButtonList((ScrollView)widget.findWidget("BookmarksList"));
             bookmarksList.SelectedValueChanged += new EventHandler(bookmarksList_SelectedValueChanged);
 
-            Button addButton = (Button)window.findWidget("AddButton");
+            Button addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
-            bookmarkName = (Edit)window.findWidget("BookmarkName");
+            bookmarkName = (Edit)widget.findWidget("BookmarkName");
         }
 
         void bookmarksList_SelectedValueChanged(object sender, EventArgs e)
@@ -36,6 +36,7 @@ namespace Medical.GUI
             ButtonListItem listItem = bookmarksList.SelectedItem;
             Bookmark bookmark = (Bookmark)listItem.UserObject;
             bookmarksController.applyBookmark(bookmark);
+            //this.hide();
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
@@ -48,12 +49,6 @@ namespace Medical.GUI
             }
             ButtonListItem item = bookmarksList.addItem(bookmark.Name, imageKey);
             item.UserObject = bookmark;
-        }
-
-        void bookmarksList_ListSelectAccept(Widget source, EventArgs e)
-        {
-            //Bookmark bookmark = (Bookmark)bookmarksList.getItemDataAt(bookmarksList.getIndexSelected());
-            //bookmarksController.applyBookmark(bookmark);
         }
     }
 }

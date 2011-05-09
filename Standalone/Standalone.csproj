@@ -130,7 +130,7 @@
     <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksWindow.cs" />
+    <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\PredefinedLayers\PredefinedLayersDialog.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
@@ -346,7 +346,9 @@
     <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\CameraControls\CameraControls.layout" />
-    <EmbeddedResource Include="GUI\Bookmarks\BookmarksWindow.layout" />
+    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\PredefinedLayers\PredefinedLayersDialog.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
