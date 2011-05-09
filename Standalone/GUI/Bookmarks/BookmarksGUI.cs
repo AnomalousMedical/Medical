@@ -23,6 +23,7 @@ namespace Medical.GUI
             : base("Medical.GUI.Bookmarks.BookmarksGUI.layout")
         {
             this.bookmarksController = bookmarksController;
+            bookmarksController.BookmarkAdded += new BookmarkDelegate(bookmarksController_BookmarkAdded);
 
             ScrollView bookmarksListScroll = (ScrollView)widget.findWidget("BookmarksList");
             bookmarksList = new ButtonGrid(bookmarksListScroll);
@@ -38,9 +39,13 @@ namespace Medical.GUI
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Bookmark bookmark = bookmarksController.createBookmark(bookmarkName.Caption);
+            bookmarksController.createBookmark(bookmarkName.Caption);
+        }
+
+        void bookmarksController_BookmarkAdded(Bookmark bookmark)
+        {
             String imageKey;
-            using(Bitmap thumbnail = bookmarksController.createThumbnail(bookmark))
+            using (Bitmap thumbnail = bookmarksController.createThumbnail(bookmark))
             {
                 imageKey = imageAtlas.addImage(bookmark, thumbnail);
             }

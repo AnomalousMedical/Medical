@@ -17,6 +17,7 @@ namespace Medical
         private static String docRoot;
         private static String windowsFile;
         private static String camerasFile;
+        private static String bookmarksFolder;
         private static ConfigSection program;
         private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
         private static String recentDocsFile;
@@ -41,6 +42,7 @@ namespace Medical
             MedicalConfig.updateURL = "http://www.AnomalousMedical.com/DRM/UpdateChecker.aspx";
             windowsFile = docRoot + "/windows.ini";
             camerasFile = docRoot + "/cameras.ini";
+            bookmarksFolder = docRoot + "/Bookmarks";
             recentDocsFile = docRoot + "/docs.ini";
             if (!Directory.Exists(docRoot))
             {
@@ -119,6 +121,14 @@ namespace Medical
             get
             {
                 return camerasFile;
+            }
+        }
+
+        public static String BookmarksFolder
+        {
+            get
+            {
+                return bookmarksFolder;
             }
         }
 

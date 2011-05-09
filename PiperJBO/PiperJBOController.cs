@@ -59,6 +59,7 @@ namespace Medical
                 controller.GUIManager.addPlugin("Editor.dll");
             }
             controller.go(createBackground(), "GUI/PiperJBO/SplashScreen");
+            bookmarksController.loadSavedBookmarks();
             startupSuceeded = true;
             return startupSuceeded;
         }
