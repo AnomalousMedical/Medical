@@ -10,6 +10,7 @@
             <Property key="ScrollView_CanvasSize" value="209 10"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
+            <UserString key="ItemWidth" value="209"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="3 2 158 20" align="HStretch Top" name="BookmarkName">
             <Property key="Widget_Caption" value="Bookmark"/>

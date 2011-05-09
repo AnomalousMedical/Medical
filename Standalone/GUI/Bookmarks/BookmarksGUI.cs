@@ -13,7 +13,7 @@ namespace Medical.GUI
     {
         BookmarksController bookmarksController;
 
-        ButtonList bookmarksList;
+        ButtonGrid bookmarksList;
         ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(50, 50), new Size2(512, 512));
         Edit bookmarkName;
 
@@ -22,21 +22,12 @@ namespace Medical.GUI
         {
             this.bookmarksController = bookmarksController;
 
-            bookmarksList = new ButtonList((ScrollView)widget.findWidget("BookmarksList"));
-            bookmarksList.SelectedValueChanged += new EventHandler(bookmarksList_SelectedValueChanged);
+            bookmarksList = new ButtonGrid((ScrollView)widget.findWidget("BookmarksList"));
 
             Button addButton = (Button)widget.findWidget("AddButton");
             addButton.MouseButtonClick += new MyGUIEvent(addButton_MouseButtonClick);
 
             bookmarkName = (Edit)widget.findWidget("BookmarkName");
-        }
-
-        void bookmarksList_SelectedValueChanged(object sender, EventArgs e)
-        {
-            ButtonListItem listItem = bookmarksList.SelectedItem;
-            Bookmark bookmark = (Bookmark)listItem.UserObject;
-            bookmarksController.applyBookmark(bookmark);
-            //this.hide();
         }
 
         void addButton_MouseButtonClick(Widget source, EventArgs e)
@@ -47,8 +38,17 @@ namespace Medical.GUI
             {
                 imageKey = imageAtlas.addImage(bookmark, thumbnail);
             }
-            ButtonListItem item = bookmarksList.addItem(bookmark.Name, imageKey);
+            ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name, imageKey);
+            item.ItemClicked += new EventHandler(item_ItemClicked);
             item.UserObject = bookmark;
+        }
+
+        void item_ItemClicked(object sender, EventArgs e)
+        {
+            ButtonGridItem listItem = (ButtonGridItem)sender;
+            Bookmark bookmark = (Bookmark)listItem.UserObject;
+            bookmarksController.applyBookmark(bookmark);
+            //this.hide();
         }
     }
 }
