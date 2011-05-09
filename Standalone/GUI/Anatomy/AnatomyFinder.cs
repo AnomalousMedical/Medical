@@ -149,9 +149,6 @@ namespace Medical.GUI
             {
                 anatomyList.removeAllItems();
 
-                System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-                sw.Start();
-
                 Vector3 absMouse = eventManager.Mouse.getAbsMouse();
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 Vector2 windowLoc = activeWindow.Location;
@@ -201,9 +198,6 @@ namespace Medical.GUI
                     activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
                     activeAnatomyWindow.ensureVisible();
                 }
-
-                sw.Stop();
-                Logging.Log.Debug("Picking took {0} ms", sw.ElapsedMilliseconds);
             }
         }
 

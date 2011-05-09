@@ -79,7 +79,6 @@ namespace Medical
                 if (anatomy.TransparencyChanger.CurrentAlpha > 0.0f && anatomy.checkCollision(ray, ref distance))
                 {
                     results.add(anatomy, distance);
-                    Logging.Log.Debug("Match distance {0} {1}", anatomy.AnatomicalName, distance);
                 }
             }
             results.sort();
