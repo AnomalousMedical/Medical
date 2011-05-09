@@ -104,7 +104,7 @@ namespace Medical.Controller
             Thread backgroundLoaderThread = new Thread(delegate()
                 {
                     ensureBookmarksFolderExists();
-                    String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder);
+                    String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder, "*.bmk");
                     foreach (String file in bookmarkFiles)
                     {
                         Bookmark bookmark;
@@ -112,7 +112,10 @@ namespace Medical.Controller
                         {
                             bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
                         }
-                        ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
+                        if (bookmark != null)
+                        {
+                            ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
+                        }
                         if (cancelBackgroundLoading)
                         {
                             return;
