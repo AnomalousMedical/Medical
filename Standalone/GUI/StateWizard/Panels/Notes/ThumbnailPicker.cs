@@ -47,7 +47,7 @@ namespace Medical.GUI
             imageProp.UseNavigationStatePosition = true;
             imageProp.NavigationStateName = navigationState;
             imageProp.OverrideLayers = true;
-            imageProp.LayerState = layerState;
+            imageProp.LayerStateName = layerState;
             imageProp.TransparentBackground = true;
             imageProp.ShowBackground = false;
             imageProp.ShowWatermark = false;

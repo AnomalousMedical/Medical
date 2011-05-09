@@ -52,7 +52,7 @@ namespace Medical
             imageProperties.UseNavigationStatePosition = true;
             imageProperties.NavigationStateName = "Midline Anterior";
             imageProperties.OverrideLayers = true;
-            imageProperties.LayerState = "MandibleSizeLayers";
+            imageProperties.LayerStateName = "MandibleSizeLayers";
             imageProperties.TransparentBackground = true;
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;

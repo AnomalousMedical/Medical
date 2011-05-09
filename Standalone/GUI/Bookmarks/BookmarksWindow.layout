@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="131 116 220 347" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="133 116 218 347" layer="Overlapped">
         <Property key="Widget_Caption" value="Bookmarks"/>
-        <Widget type="MultiList" skin="MultiList" position="4 4 214 292" align="Stretch" name="BookmarksList"/>
-        <Widget type="Button" skin="Button" position="6 302 57 20" align="Left Bottom" name="AddButton">
+        <Widget type="Button" skin="Button" position="157 302 57 20" align="Left Bottom" name="AddButton">
             <Property key="Widget_Caption" value="Add"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="4 4 211 293" align="Stretch" name="BookmarksList">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="ScrollView_CanvasSize" value="209 10"/>
+            <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
+            <UserString key="ItemHeight" value="50"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="8 303 146 19" align="Left Bottom" name="BookmarkName">
+            <Property key="Widget_Caption" value="Bookmark"/>
         </Widget>
     </Widget>
 </MyGUI>

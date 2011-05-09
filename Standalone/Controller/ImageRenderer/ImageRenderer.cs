@@ -132,7 +132,14 @@ namespace Medical
                 if (properties.OverrideLayers && layerController != null)
                 {
                     TransparencyController.ActiveTransparencyState = TRANSPARENCY_STATE;
-                    layerController.instantlyApplyLayerState(properties.LayerState, false);
+                    if (properties.LayerState != null)
+                    {
+                        layerController.instantlyApplyLayerState(properties.LayerState, false);
+                    }
+                    else
+                    {
+                        layerController.instantlyApplyLayerState(properties.LayerStateName, false);
+                    }
                 }
 
                 TransparencyController.applyTransparencyState(TransparencyController.ActiveTransparencyState);

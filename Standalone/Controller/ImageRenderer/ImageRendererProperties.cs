@@ -160,7 +160,14 @@ namespace Medical
         /// <summary>
         /// The layer state to use with OverrideLayers.
         /// </summary>
-        public String LayerState { get; set; }
+        public LayerState LayerState { get; set; }
+
+        /// <summary>
+        /// If you do not have a LayerState to use directly you can specify a
+        /// name here that can be used instead. Will only work if LayerState is
+        /// null.
+        /// </summary>
+        public String LayerStateName { get; set; }
 
         /// <summary>
         /// Set this to true to enable the ImageRendererProgress and show updates. Set it to false to keep this UI hidden.
