@@ -97,6 +97,9 @@ namespace Medical
             mdiLayout.Dispose();
             medicalController.Dispose();
             mainWindow.Dispose();
+
+            //Stop any waiting background threads last.
+            ThreadManager.cancelAll();
         }
 
         public void go(ViewportBackground background, String splashScreenLocation)

@@ -30,6 +30,12 @@ namespace Medical.Controller
             threadEvent.WaitOne();
         }
 
+        public void cancel()
+        {
+            threadEvent.Set();
+            Finished = true;
+        }
+
         public bool Finished { get; set; }
     }
 
@@ -75,6 +81,22 @@ namespace Medical.Controller
                 foreach (TargetEntry target in targets)
                 {
                     target.invoke();
+                }
+                targets.Clear();
+            }
+        }
+
+        /// <summary>
+        /// This will cancel all targets and return control back to any waiting
+        /// threads. Should be called only on shutdown.
+        /// </summary>
+        public static void cancelAll()
+        {
+            lock (targets)
+            {
+                foreach (TargetEntry target in targets)
+                {
+                    target.cancel();
                 }
                 targets.Clear();
             }

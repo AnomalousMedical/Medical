@@ -7,12 +7,13 @@ using System.Drawing;
 using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;
+using System.Threading;
 
 namespace Medical.Controller
 {
     public delegate void BookmarkDelegate(Bookmark bookmark);
 
-    public class BookmarksController
+    public class BookmarksController : IDisposable
     {
         public event BookmarkDelegate BookmarkAdded;
 
@@ -20,10 +21,20 @@ namespace Medical.Controller
         private static XmlSaver xmlSaver = new XmlSaver();
 
         private StandaloneController standaloneController;
+        private BookmarkDelegate mainThreadCallback;
+
+        private bool cancelBackgroundLoading = false;
 
         public BookmarksController(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
+            mainThreadCallback = fireBookmarkAdded;
+        }
+
+        public void Dispose()
+        {
+            //Ensure any background threads are no longer running.
+            cancelBackgroundLoading = true;
         }
 
         public Bookmark createBookmark(String name)
@@ -90,19 +101,33 @@ namespace Medical.Controller
 
         public void loadSavedBookmarks()
         {
-            ensureBookmarksFolderExists();
-            String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder);
-            foreach (String file in bookmarkFiles)
+            Thread backgroundLoaderThread = new Thread(delegate()
+                {
+                    ensureBookmarksFolderExists();
+                    String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder);
+                    foreach (String file in bookmarkFiles)
+                    {
+                        Bookmark bookmark;
+                        using (XmlTextReader xmlReader = new XmlTextReader(file))
+                        {
+                            bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
+                        }
+                        ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
+                        if (cancelBackgroundLoading)
+                        {
+                            return;
+                        }
+                    }
+                });
+            backgroundLoaderThread.Start();
+        }
+
+        private void fireBookmarkAdded(Bookmark bookmark)
+        {
+
+            if (BookmarkAdded != null)
             {
-                Bookmark bookmark;
-                using (XmlTextReader xmlReader = new XmlTextReader(file))
-                {
-                    bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
-                }
-                if (BookmarkAdded != null)
-                {
-                    BookmarkAdded.Invoke(bookmark);
-                }
+                BookmarkAdded.Invoke(bookmark);
             }
         }
 

@@ -37,6 +37,12 @@ namespace Medical.GUI
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
         }
 
+        public override void Dispose()
+        {
+            imageAtlas.Dispose();
+            base.Dispose();
+        }
+
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
             bookmarksController.createBookmark(bookmarkName.Caption);
