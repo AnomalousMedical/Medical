@@ -8,6 +8,7 @@
         <Widget type="ScrollView" skin="ScrollView" position="3 25 217 428" align="Stretch" name="BookmarksList">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="209 10"/>
+            <Property key="ScrollView_VisibleHScroll" value="false"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="209"/>
