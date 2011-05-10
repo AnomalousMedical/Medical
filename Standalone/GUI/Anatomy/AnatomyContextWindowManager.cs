@@ -79,7 +79,6 @@ namespace Medical.GUI
                 AxisAlignedBox boundingBox = requestingWindow.Anatomy.WorldBoundingBox;
                 SceneViewWindow window = sceneViewController.ActiveWindow;
                 Vector3 center = boundingBox.Center;
-                Vector3 translation = center;
 
                 float nearPlane = window.Camera.getNearClipDistance();
                 float theta = window.Camera.getFOVy() * 0.0174532925f;
@@ -89,7 +88,9 @@ namespace Medical.GUI
                     theta *= aspectRatio;
                 }
 
-                translation.z += boundingBox.DiagonalDistance / (float)Math.Tan(theta);
+                Vector3 translation = center;
+                Vector3 direction = (window.Translation - window.LookAt).normalized();
+                translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
                 window.setPosition(translation, center, MedicalConfig.CameraTransitionTime);
             }
