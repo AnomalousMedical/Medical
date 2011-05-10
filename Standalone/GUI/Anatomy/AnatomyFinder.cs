@@ -215,7 +215,7 @@ namespace Medical.GUI
             if (contextWindow != null)
             {
                 float x = window.Right;
-                float y = window.Top;
+                float y = anatomyList.SelectedItem.AbsoluteTop;
                 if (x + contextWindow.Width > Gui.Instance.getViewWidth())
                 {
                     x = window.Left - contextWindow.Width;
