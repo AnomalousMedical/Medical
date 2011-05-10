@@ -52,7 +52,7 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
 
-            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"));
+            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
 

@@ -100,8 +100,6 @@ namespace Medical
     /// </summary>
     public class NaturalSort<T> : Comparer<T>
     {
-        
-
         /// <summary>
         /// Compare s1 to s2. Returns output that will work for the Comparer methods on collections.
         /// </summary>
