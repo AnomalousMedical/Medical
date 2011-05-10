@@ -31,7 +31,7 @@ namespace Medical.GUI
             DefaultEvents.registerDefaultEvent(changeSelectionMode);
         }
 
-        private MultiList anatomyList;
+        private ButtonGrid anatomyList;
         private Edit searchBox;
 
         private AnatomyContextWindowManager anatomyWindowManager;
@@ -52,10 +52,9 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
 
-            anatomyList = (MultiList)window.findWidget("AnatomyList");
-            anatomyList.addColumn("Anatomy", anatomyList.Width);
-            anatomyList.ListChangePosition += new MyGUIEvent(anatomyList_ListChangePosition);
-            anatomyList.ListSelectAccept += new MyGUIEvent(anatomyList_ListSelectAccept);
+            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"));
+            anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
+            anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
 
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
@@ -75,13 +74,6 @@ namespace Medical.GUI
             individualButton = (Button)window.findWidget("IndividualButton");
             pickingModeGroup.addButton(individualButton);
             pickingModeGroup.SelectedButton = groupButton;
-
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
-        }
-
-        void window_WindowChangedCoord(Widget source, EventArgs e)
-        {
-            anatomyList.setColumnWidthAt(0, anatomyList.Width);
         }
 
         void anatomyController_AnatomyChanged(object sender, EventArgs e)
@@ -97,28 +89,29 @@ namespace Medical.GUI
         private void updateSearch()
         {
             String searchTerm = searchBox.Caption;
-            anatomyList.removeAllItems();
+            anatomyList.clear();
             if (searchTerm.Length == 0)
             {
                 foreach (AnatomyTagGroup tagGroup in anatomyController.TagManager.Groups)
                 {
-                    anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
+                    addAnatomyToList(tagGroup);
                 }
             }
             else
             {
                 foreach (Anatomy anatomy in anatomyController.SearchList.findMatchingAnatomy(searchTerm, 35))
                 {
-                    anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                    addAnatomyToList(anatomy);
                 }
             }
         }
 
         private AnatomyContextWindow changeSelectedAnatomy()
         {
-            if (anatomyList.hasItemSelected())
+            ButtonGridItem selectedItem = anatomyList.SelectedItem;
+            if (selectedItem != null)
             {
-                return anatomyWindowManager.showWindow((Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected()));
+                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject);
             }
             else
             {
@@ -127,27 +120,11 @@ namespace Medical.GUI
             }
         }
 
-        void anatomyList_ListChangePosition(Widget source, EventArgs e)
-        {
-            AnatomyContextWindow contextWindow = changeSelectedAnatomy();
-            if (contextWindow != null)
-            {
-                float x = window.Right;
-                float y = window.Top;
-                if (x + contextWindow.Width > Gui.Instance.getViewWidth())
-                {
-                    x = window.Left - contextWindow.Width;
-                }
-                contextWindow.Position = new Vector2(x, y);
-                contextWindow.ensureVisible();
-            }
-        }
-
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
             if (!Gui.Instance.HandledMouseButtons)
             {
-                anatomyList.removeAllItems();
+                anatomyList.clear();
 
                 Vector3 absMouse = eventManager.Mouse.getAbsMouse();
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
@@ -157,10 +134,16 @@ namespace Medical.GUI
                 absMouse.y = (absMouse.y - windowLoc.y) / windowSize.Height;
                 Ray3 cameraRay = activeWindow.getCameraToViewportRay(absMouse.x, absMouse.y);
                 List<AnatomyIdentifier> matches = AnatomyManager.findAnatomy(cameraRay);
+                
                 HashSet<String> anatomyTags = new HashSet<String>();
+                ButtonGridItem itemToSelect = null;
                 foreach (AnatomyIdentifier anatomy in matches)
                 {
-                    anatomyList.addItem(anatomy.AnatomicalName, anatomy);
+                    ButtonGridItem newItem = addAnatomyToList(anatomy);
+                    if (itemToSelect == null)
+                    {
+                        itemToSelect = newItem;
+                    }
                     foreach (AnatomyTag tag in anatomy.Tags)
                     {
                         anatomyTags.Add(tag.Tag);
@@ -170,22 +153,21 @@ namespace Medical.GUI
                 {
                     if (anatomyTags.Contains(tagGroup.AnatomicalName))
                     {
-                        anatomyList.addItem(tagGroup.AnatomicalName, tagGroup);
+                        addAnatomyToList(tagGroup);
                     }
                 }
                 if (matches.Count > 0)
                 {
                     searchBox.Caption = "Clicked";
-                    uint selectedIndex = 0;
                     if (pickingModeGroup.SelectedButton == groupButton && matches[0].AllowGroupSelection)
                     {
                         AnatomyTag mainTag = matches[0].Tags.First();
                         if (mainTag != null)
                         {
-                            anatomyList.findSubItemWith(0, mainTag.Tag, out selectedIndex);
+                            itemToSelect = anatomyList.findItemByCaption(mainTag.Tag);
                         }
                     }
-                    anatomyList.setIndexSelected(selectedIndex);
+                    anatomyList.SelectedItem = itemToSelect;
                 }
                 else
                 {
@@ -227,11 +209,28 @@ namespace Medical.GUI
             TransparencyController.smoothSetAllAlphas(1.0f, MedicalConfig.TransparencyChangeMultiplier);
         }
 
-        void anatomyList_ListSelectAccept(Widget source, EventArgs e)
+        void anatomyList_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (anatomyList.hasItemSelected())
+            AnatomyContextWindow contextWindow = changeSelectedAnatomy();
+            if (contextWindow != null)
             {
-                Anatomy selectedAnatomy = (Anatomy)anatomyList.getItemDataAt(anatomyList.getIndexSelected());
+                float x = window.Right;
+                float y = window.Top;
+                if (x + contextWindow.Width > Gui.Instance.getViewWidth())
+                {
+                    x = window.Left - contextWindow.Width;
+                }
+                contextWindow.Position = new Vector2(x, y);
+                contextWindow.ensureVisible();
+            }
+        }
+
+        void anatomyList_ItemActivated(object sender, EventArgs e)
+        {
+            ButtonGridItem selectedItem = anatomyList.SelectedItem;
+            if (selectedItem != null)
+            {
+                Anatomy selectedAnatomy = (Anatomy)selectedItem.UserObject;
                 TransparencyChanger transparencyChanger = selectedAnatomy.TransparencyChanger;
                 if (transparencyChanger.CurrentAlpha == 1.0f)
                 {
@@ -246,6 +245,13 @@ namespace Medical.GUI
                     transparencyChanger.smoothBlend(0.0f, MedicalConfig.TransparencyChangeMultiplier);
                 }
             }
+        }
+
+        private ButtonGridItem addAnatomyToList(Anatomy anatomy)
+        {
+            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName);
+            anatomyItem.UserObject = anatomy;
+            return anatomyItem;
         }
     }
 }

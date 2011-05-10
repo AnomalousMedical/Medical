@@ -3,7 +3,6 @@
     <Widget type="Window" skin="WindowCSX" position="107 189 258 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Anatomy Finder"/>
         <Widget type="Edit" skin="Edit" position="5 5 200 23" align="HStretch Top" name="SearchBox"/>
-        <Widget type="MultiList" skin="MultiList" position="7 32 246 303" align="Stretch" name="AnatomyList"/>
         <Widget type="Button" skin="Button" position="207 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
@@ -15,6 +14,14 @@
         </Widget>
         <Widget type="Button" skin="Button" position="161 339 74 20" align="Left Bottom" name="IndividualButton">
             <Property key="Widget_Caption" value="Individual"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="7 32 246 303" align="Stretch" name="AnatomyList">
+            <Property key="ScrollView_CanvasSize" value="238 10"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
+            <UserString key="ItemHeight" value="50"/>
+            <UserString key="ItemWidth" value="238"/>
+            <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
     </Widget>
 </MyGUI>
