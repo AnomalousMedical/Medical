@@ -33,6 +33,7 @@ namespace Medical.Controller
             sceneViewController.WindowCreated += new SceneViewWindowEvent(sceneViewController_WindowCreated);
             sceneViewController.WindowDestroyed += new SceneViewWindowEvent(sceneViewController_WindowDestroyed);
             textWatermark = new TextWatermark("MeasurementAmount", "Grid Spacing: 0 mm", 15.0f, GuiVerticalAlignment.GVA_TOP);
+            textWatermark.Visible = false;
         }
 
         public void Dispose()
