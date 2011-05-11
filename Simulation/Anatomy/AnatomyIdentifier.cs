@@ -25,6 +25,9 @@ namespace Medical
         [Editable]
         private String entityName = "Entity";
 
+        [Editable]
+        private Vector3 previewCameraDirection = Vector3.Backward;
+
         [DoNotSave]
         private List<AnatomyTag> tags = new List<AnatomyTag>();
 
@@ -158,6 +161,19 @@ namespace Medical
             internal set
             {
                 this.transparencyChanger = value;
+            }
+        }
+
+        [DoNotCopy]
+        public Vector3 PreviewCameraDirection
+        {
+            get
+            {
+                return previewCameraDirection;
+            }
+            set
+            {
+                previewCameraDirection = value;
             }
         }
 

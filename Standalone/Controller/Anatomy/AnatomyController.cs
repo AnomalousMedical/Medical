@@ -101,7 +101,7 @@ namespace Medical
                 }
 
                 Vector3 translation = center;
-                Vector3 direction = Vector3.Backward;// (window.Translation - window.LookAt).normalized();
+                Vector3 direction = anatomy.PreviewCameraDirection;
                 translation += direction * boundingBox.DiagonalDistance / (float)Math.Tan(theta);
 
                 String currentState = TransparencyController.ActiveTransparencyState;

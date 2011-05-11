@@ -84,5 +84,13 @@ namespace Medical
                 return null;
             }
         }
+
+        public Vector3 PreviewCameraDirection
+        {
+            get
+            {
+                return Vector3.Backward;
+            }
+        }
     }
 }

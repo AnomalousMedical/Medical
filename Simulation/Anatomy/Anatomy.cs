@@ -30,5 +30,10 @@ namespace Medical
         /// The class that changes transparency for this Anatomy.
         /// </summary>
         TransparencyChanger TransparencyChanger { get; }
+
+        /// <summary>
+        /// The direction to move the camera when generating a preview for this anatomy.
+        /// </summary>
+        Vector3 PreviewCameraDirection { get; }
     }
 }
