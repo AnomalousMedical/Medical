@@ -7,6 +7,7 @@ using Medical.GUI;
 using Engine;
 using System.IO;
 using Engine.ObjectManagement;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -17,6 +18,7 @@ namespace Medical
         bool startupSuceeded = false;
         AnatomyController anatomyController;
         BookmarksController bookmarksController;
+        private SplashScreen splashScreen;
 
         private static String archiveNameFormat = "PiperJBO{0}.dat";
 
@@ -49,14 +51,16 @@ namespace Medical
         {
             //Core
             controller = new StandaloneController(this);
-            controller.createSplashScreen("GUI/PiperJBO/SplashScreen");
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/PiperJBO/SplashScreen");
+            splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
+
             licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
-            controller.updateSplashScreen(10, "Initializing Core");
+            splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
             anatomyController = new AnatomyController(controller.ImageRenderer);
 
             //GUI
-            controller.updateSplashScreen(20, "Creating GUI");
+            splashScreen.updateStatus(20, "Creating GUI");
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
             bookmarksController = new BookmarksController(controller);
@@ -69,16 +73,12 @@ namespace Medical
             }
             controller.createGUI();
 
-            //Scene Load and go
-            controller.updateSplashScreen(40, "Loading Scene");
+            //Scene Load
+            splashScreen.updateStatus(40, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
-            controller.go();
-
-            controller.updateSplashScreen(100, "");
-            controller.closeSplashScreen();
-
-            bookmarksController.loadSavedBookmarks();
+            splashScreen.updateStatus(100, "");
+            splashScreen.hide();
 
             return startupSuceeded;
         }
@@ -266,6 +266,13 @@ namespace Medical
                 background = new ViewportBackground("SourceBackground", "PiperJBOClinicalBackground", 900, 500, 500, 5, 5);
             }
             return background;
+        }
+
+        void splashScreen_Hidden(object sender, EventArgs e)
+        {
+            splashScreen.Dispose();
+            splashScreen = null;
+            bookmarksController.loadSavedBookmarks();
         }
 
         private void determineResourceFiles()

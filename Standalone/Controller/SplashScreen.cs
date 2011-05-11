@@ -9,7 +9,7 @@ using Engine;
 
 namespace Medical.Controller
 {
-    class SplashScreen : IDisposable
+    public class SplashScreen : IDisposable
     {
         Layout layout;
         Widget mainWidget;

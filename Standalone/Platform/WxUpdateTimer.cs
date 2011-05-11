@@ -77,6 +77,10 @@ namespace Medical
                 //    totalFrameTime = systemTimer.getCurrentTime() - frameStartTime;
                 //}
             }
+            else
+            {
+                startLoop();
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using Medical.Controller;
 using Medical.GUI;
 using Engine;
+using OgrePlugin;
 
 namespace Medical
 {
@@ -13,6 +14,7 @@ namespace Medical
         StandaloneController controller;
         bool startupSuceeded = false;
         private LicenseManager licenseManager;
+        private SplashScreen splashScreen;
 
         private static String archiveNameFormat = "Doppler{0}.dat";
 
@@ -48,13 +50,14 @@ namespace Medical
         {
             //Core
             controller = new StandaloneController(this);
-            controller.createSplashScreen("GUI/Doppler/SplashScreen");
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/Doppler/SplashScreen");
+            splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
             licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.lic");
-            controller.updateSplashScreen(10, "Initializing Core");
+            splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
 
             //GUI
-            controller.updateSplashScreen(20, "Creating GUI");
+            splashScreen.updateStatus(20, "Creating GUI");
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             this.addMovementSequenceDirectory("/Doppler");
             CamerasFile = "/GraphicsCameras.cam";
@@ -63,13 +66,11 @@ namespace Medical
             controller.createGUI();
 
             //Scene load and go
-            controller.updateSplashScreen(40, "Loading Scene");
+            splashScreen.updateStatus(40, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
-            controller.go();
-
-            controller.updateSplashScreen(100, "");
-            controller.closeSplashScreen();            
+            splashScreen.updateStatus(100, "");
+            splashScreen.hide();            
             
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
             
@@ -160,6 +161,12 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/Doppler/Background", "EngineArchive", "Background", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             return new ViewportBackground("SourceBackground", "DopplerDiagnosticModuleBackground", 900, 500, 500, 5, 5);
+        }
+
+        void splashScreen_Hidden(object sender, EventArgs e)
+        {
+            splashScreen.Dispose();
+            splashScreen = null;
         }
     }
 }

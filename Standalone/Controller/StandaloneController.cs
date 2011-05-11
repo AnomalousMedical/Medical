@@ -55,9 +55,6 @@ namespace Medical
         private HtmlHelpController htmlHelpController;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
-        //Splash Screen
-        private SplashScreen splashScreen;
-
         //Platform
         private MainWindow mainWindow;
         private StandaloneApp app;
@@ -80,6 +77,9 @@ namespace Medical
             Medical.Controller.WindowFunctions.setWindowIcon(mainWindow, app.Icon);
             medicalController.initialize(app, mainWindow, createWindow);
             mainWindow.setPointerManager(PointerManager.Instance);
+
+            Gui gui = Gui.Instance;
+            gui.setVisiblePointer(false);
         }
 
         public void Dispose()
@@ -103,27 +103,6 @@ namespace Medical
 
             //Stop any waiting background threads last.
             ThreadManager.cancelAll();
-        }
-
-        public void createSplashScreen(String splashScreenLocation)
-        {
-            //Splash screen
-            Gui gui = Gui.Instance;
-            gui.setVisiblePointer(false);
-            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, splashScreenLocation);
-            splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
-
-            OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
-        }
-
-        public void updateSplashScreen(uint position, String text)
-        {
-            splashScreen.updateStatus(position, text);
-        }
-
-        public void closeSplashScreen()
-        {
-            splashScreen.hide();
         }
 
         public void initializeControllers(ViewportBackground background)
@@ -253,11 +232,6 @@ namespace Medical
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
         }
 
-        public void go()
-        {
-            medicalController.start();
-        }
-
         public void closeMainWindow()
         {
             mainWindow.close();
@@ -285,7 +259,7 @@ namespace Medical
         public bool openNewScene(String filename)
         {
             medicalStateController.clearStates();
-            bool success = changeScene(filename, splashScreen);
+            bool success = changeScene(filename);
             medicalStateController.createNormalStateFromScene();
             return success;
         }
@@ -307,7 +281,7 @@ namespace Medical
                 SavedMedicalStates states = dataFile.SavedStates;
                 if (states != null)
                 {
-                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName, null);
+                    changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     medicalStateController.setStates(states);
                     medicalStateController.blend(0.0f);
                     guiManager.changeLeftPanel(null);
@@ -482,7 +456,7 @@ namespace Medical
         /// Change the scene to the specified filename.
         /// </summary>
         /// <param name="filename"></param>
-        private bool changeScene(String file, SplashScreen splashScreen)
+        private bool changeScene(String file)
         {
             bool success = false;
             sceneViewController.resetAllCameraPositions();
@@ -499,10 +473,6 @@ namespace Medical
             backgroundController.sceneUnloading();
             if (medicalController.openScene(file))
             {
-                if (splashScreen != null)
-                {
-                    splashScreen.updateStatus(75, "Loading Scene Properties");
-                }
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
                 if (defaultScene != null)
                 {
@@ -590,12 +560,6 @@ namespace Medical
         void medicalController_FixedLoopUpdate(Clock time)
         {
 
-        }
-
-        void splashScreen_Hidden(object sender, EventArgs e)
-        {
-            splashScreen.Dispose();
-            splashScreen = null;
         }
     }
 }
