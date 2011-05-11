@@ -63,7 +63,7 @@ namespace Medical
 
             //Scene load and go
             controller.updateSplashScreen(40, "Loading Scene");
-            controller.openNewScene(DefaultScene);
+            startupSuceeded = controller.openNewScene(DefaultScene);
 
             controller.go();
 
@@ -73,7 +73,7 @@ namespace Medical
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/TMJ Overview");
             controller.SceneViewController.AllowRotation = false;
             controller.SceneViewController.AllowZoom = false;
-            startupSuceeded = true;
+            
             return startupSuceeded;
         }
 

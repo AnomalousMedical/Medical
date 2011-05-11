@@ -31,7 +31,6 @@ namespace Medical.GUI
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
-        //private CameraControls cameraControlDialog;
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
         private AnatomyFinder anatomyFinder;
@@ -109,9 +108,6 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
 
-            //cameraControlDialog = new CameraControls(standaloneController.SceneViewController);
-            //dialogManager.addManagedDialog(cameraControlDialog);
-
             windowLayout = new WindowLayout(standaloneController);
             dialogManager.addManagedDialog(windowLayout);
 
@@ -142,7 +138,6 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
-            //taskbar.addItem(new DialogOpenTaskbarItem(cameraControlDialog, "Camera Controls", "Camera"));
 
             if (!licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_TRIAL))
             {

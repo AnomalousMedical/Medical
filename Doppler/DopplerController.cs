@@ -64,7 +64,7 @@ namespace Medical
 
             //Scene load and go
             controller.updateSplashScreen(40, "Loading Scene");
-            controller.openNewScene(DefaultScene);
+            startupSuceeded = controller.openNewScene(DefaultScene);
 
             controller.go();
 
@@ -72,7 +72,7 @@ namespace Medical
             controller.closeSplashScreen();            
             
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
-            startupSuceeded = true;
+            
             return startupSuceeded;
         }
 

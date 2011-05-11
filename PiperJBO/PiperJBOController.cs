@@ -71,7 +71,7 @@ namespace Medical
 
             //Scene Load and go
             controller.updateSplashScreen(40, "Loading Scene");
-            controller.openNewScene(DefaultScene);
+            startupSuceeded = controller.openNewScene(DefaultScene);
 
             controller.go();
 
@@ -79,7 +79,7 @@ namespace Medical
             controller.closeSplashScreen();
 
             bookmarksController.loadSavedBookmarks();
-            startupSuceeded = true;
+
             return startupSuceeded;
         }
 

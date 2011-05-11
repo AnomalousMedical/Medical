@@ -255,12 +255,7 @@ namespace Medical
 
         public void go()
         {
-            //if (changeScene(app.DefaultScene, splashScreen))
-            //{
-                //medicalStateController.createNormalStateFromScene();
-
-                medicalController.start();
-            //}
+            medicalController.start();
         }
 
         public void closeMainWindow()
@@ -287,11 +282,12 @@ namespace Medical
         /// Opens a scene as a "new" scene by opening the given file and clearing the states.
         /// </summary>
         /// <param name="filename"></param>
-        public void openNewScene(String filename)
+        public bool openNewScene(String filename)
         {
             medicalStateController.clearStates();
-            changeScene(filename, splashScreen);
+            bool success = changeScene(filename, splashScreen);
             medicalStateController.createNormalStateFromScene();
+            return success;
         }
 
         public void saveMedicalState(PatientDataFile patientData)
@@ -490,7 +486,6 @@ namespace Medical
         {
             bool success = false;
             sceneViewController.resetAllCameraPositions();
-            //StatusController.SetStatus(String.Format("Opening scene {0}...", VirtualFileSystem.GetFileName(file)));
             if (movementSequenceController.Playing)
             {
                 movementSequenceController.stopPlayback();
@@ -524,7 +519,6 @@ namespace Medical
                         SceneLoaded.Invoke(medicalController.CurrentScene);
                     }
                 }
-                //StatusController.TaskCompleted();
                 success = true;
             }
             return success;
