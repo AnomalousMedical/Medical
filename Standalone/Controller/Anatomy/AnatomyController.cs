@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Medical
 {
-    public class AnatomyController
+    public class AnatomyController : IDisposable
     {
         private const string TRANSPARENCY_STATE = "AnatomyFinder";
         private ImageRendererProperties imageProperties;
@@ -39,6 +39,11 @@ namespace Medical
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;
             imageProperties.ShowUIUpdates = false;
+        }
+
+        public void Dispose()
+        {
+            imageAtlas.Dispose();
         }
 
         public void sceneLoaded()

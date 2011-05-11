@@ -14,7 +14,6 @@ namespace Medical.GUI
         BookmarksController bookmarksController;
 
         ButtonGrid bookmarksList;
-        ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(50, 50), new Size2(512, 512));
         Edit bookmarkName;
 
         IntSize2 widgetSmallSize;
@@ -37,12 +36,6 @@ namespace Medical.GUI
             widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height);
         }
 
-        public override void Dispose()
-        {
-            imageAtlas.Dispose();
-            base.Dispose();
-        }
-
         void addButton_MouseButtonClick(Widget source, EventArgs e)
         {
             bookmarksController.createBookmark(bookmarkName.Caption);
@@ -50,11 +43,7 @@ namespace Medical.GUI
 
         void bookmarksController_BookmarkAdded(Bookmark bookmark)
         {
-            String imageKey;
-            using (Bitmap thumbnail = bookmarksController.createThumbnail(bookmark))
-            {
-                imageKey = imageAtlas.addImage(bookmark, thumbnail);
-            }
+            String imageKey = bookmarksController.createThumbnail(bookmark);
             ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name, imageKey);
             item.ItemClicked += new EventHandler(item_ItemClicked);
             item.UserObject = bookmark;

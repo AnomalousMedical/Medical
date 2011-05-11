@@ -29,6 +29,7 @@ namespace Medical
 
         public override int OnExit()
         {
+            anatomyController.Dispose();
             bookmarksController.Dispose();
             controller.Dispose();
             return 0;

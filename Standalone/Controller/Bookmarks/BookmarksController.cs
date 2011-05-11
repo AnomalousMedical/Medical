@@ -8,6 +8,7 @@ using Engine.Saving.XMLSaver;
 using System.Xml;
 using System.IO;
 using System.Threading;
+using MyGUIPlugin;
 
 namespace Medical.Controller
 {
@@ -15,10 +16,12 @@ namespace Medical.Controller
 
     public class BookmarksController : IDisposable
     {
+        private static XmlSaver xmlSaver = new XmlSaver();
+
         public event BookmarkDelegate BookmarkAdded;
 
-        ImageRendererProperties imageProperties;
-        private static XmlSaver xmlSaver = new XmlSaver();
+        private ImageRendererProperties imageProperties;
+        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(50, 50), new Size2(512, 512));
 
         private StandaloneController standaloneController;
         private BookmarkDelegate mainThreadCallback;
@@ -49,6 +52,7 @@ namespace Medical.Controller
         {
             //Ensure any background threads are no longer running.
             cancelBackgroundLoading = true;
+            imageAtlas.Dispose();
         }
 
         public Bookmark createBookmark(String name)
@@ -90,15 +94,25 @@ namespace Medical.Controller
             bookmark.Layers.apply(MedicalConfig.TransparencyChangeMultiplier);
         }
 
-        public Bitmap createThumbnail(Bookmark bookmark)
+        public String createThumbnail(Bookmark bookmark)
         {
-            ImageRenderer imageRenderer = standaloneController.ImageRenderer;
-            
-            imageProperties.CameraLookAt = bookmark.CameraLookAt;
-            imageProperties.CameraPosition = bookmark.CameraTranslation;
-            imageProperties.LayerState = bookmark.Layers;
+            if (imageAtlas.containsImage(bookmark))
+            {
+                return imageAtlas.getImageId(bookmark);
+            }
+            else
+            {
+                ImageRenderer imageRenderer = standaloneController.ImageRenderer;
 
-            return imageRenderer.renderImage(imageProperties);
+                imageProperties.CameraLookAt = bookmark.CameraLookAt;
+                imageProperties.CameraPosition = bookmark.CameraTranslation;
+                imageProperties.LayerState = bookmark.Layers;
+
+                using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
+                {
+                    return imageAtlas.addImage(bookmark, thumb);
+                }
+            }
         }
 
         public void loadSavedBookmarks()
