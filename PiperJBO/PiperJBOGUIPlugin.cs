@@ -13,10 +13,17 @@ namespace Medical.GUI
     class PiperJBOGUIPlugin : GUIPlugin
     {
         private StandaloneController standaloneController;
+        private GUIManager guiManager;
+        private PiperJBOAppMenu appMenu;
+        private PiperJBOWizards wizards;
+        private CloneWindowTaskbarItem cloneWindow;
+        private RecentDocuments recentDocuments;
+        private SystemMenu systemMenu;
+        private LicenseManager licenseManager;
+        private PiperJBOController piperJBOController;
 
+        //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
-        private LayersDialog layers;
-
         private NotesDialog notesDialog;
         private StateListPopup stateList;
         private ChooseSceneDialog chooseSceneDialog;
@@ -27,23 +34,10 @@ namespace Medical.GUI
         //private CameraControls cameraControlDialog;
         private WindowLayout windowLayout;
         private SequencePlayer sequencePlayer;
-        private PredefinedLayersDialog predefinedLayers;
         private AnatomyFinder anatomyFinder;
         private BookmarksGUI bookmarks;
-
         private DistortionChooser distortionChooser;
-        private QuickView quickView;
-
         private AboutDialog aboutDialog;
-
-        private PiperJBOAppMenu appMenu;
-        private GUIManager guiManager;
-        private PiperJBOWizards wizards;
-        private CloneWindowTaskbarItem cloneWindow;
-        private RecentDocuments recentDocuments;
-        private SystemMenu systemMenu;
-        private LicenseManager licenseManager;
-        private PiperJBOController piperJBOController;
 
         public PiperJBOGUIPlugin(LicenseManager licenseManager, PiperJBOController piperJBOController)
         {
@@ -55,11 +49,9 @@ namespace Medical.GUI
         public void Dispose()
         {
             recentDocuments.save();
-            predefinedLayers.Dispose();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             //cameraControlDialog.Dispose();
-            quickView.Dispose();
             distortionChooser.Dispose();
             renderDialog.Dispose();
             options.Dispose();
@@ -69,7 +61,6 @@ namespace Medical.GUI
             appMenu.Dispose();
             aboutDialog.Dispose();
             mandibleMovementDialog.Dispose();
-            layers.Dispose();
             notesDialog.Dispose();
             stateList.Dispose();
             anatomyFinder.Dispose();
@@ -94,12 +85,6 @@ namespace Medical.GUI
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(mandibleMovementDialog);
 
-            layers = new LayersDialog(standaloneController.LayerController);
-            dialogManager.addManagedDialog(layers);
-
-            predefinedLayers = new PredefinedLayersDialog(standaloneController.LayerController);
-            dialogManager.addManagedDialog(predefinedLayers);
-
             //Common
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
             dialogManager.addManagedDialog(notesDialog);
@@ -123,9 +108,6 @@ namespace Medical.GUI
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
-
-            quickView = new QuickView(standaloneController.NavigationController, standaloneController.SceneViewController, standaloneController.LayerController);
-            dialogManager.addManagedDialog(quickView);
 
             //cameraControlDialog = new CameraControls(standaloneController.SceneViewController);
             //dialogManager.addManagedDialog(cameraControlDialog);
@@ -154,9 +136,6 @@ namespace Medical.GUI
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            //taskbar.addItem(new DialogOpenTaskbarItem(quickView, "Quick View", "Camera"));
-            //taskbar.addItem(new DialogOpenTaskbarItem(layers, "Custom Layers", "ManualObject"));
-            //taskbar.addItem(new DialogOpenTaskbarItem(predefinedLayers, "Predefined Layers", "PreDefinedLayersIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
             taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
             taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
@@ -247,7 +226,6 @@ namespace Medical.GUI
 
         public void setMainInterfaceEnabled(bool enabled)
         {
-            layers.AllowShortcuts = enabled;
             if (systemMenu != null)
             {
                 systemMenu.FileMenuEnabled = enabled;
