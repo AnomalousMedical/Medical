@@ -48,7 +48,7 @@ namespace Medical.GUI
             item.ItemClicked += new EventHandler(item_ItemClicked);
             item.UserObject = bookmark;
 
-            widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height + (int)bookmarksList.CanvasSize.Height + 9);
+            widget.setSize(widgetSmallSize.Width, widgetSmallSize.Height + bookmarksList.TotalHeight + 9);
             if (widget.Height + widget.Top > Gui.Instance.getViewHeight())
             {
                 widget.setSize(widgetSmallSize.Width, Gui.Instance.getViewHeight() - widget.Top);

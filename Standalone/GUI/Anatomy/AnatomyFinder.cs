@@ -44,6 +44,7 @@ namespace Medical.GUI
         private ButtonGroup pickingModeGroup;
 
         private AnatomyController anatomyController;
+        private int lastWidth = -1;
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -75,6 +76,32 @@ namespace Medical.GUI
             individualButton = (Button)window.findWidget("IndividualButton");
             pickingModeGroup.addButton(individualButton);
             pickingModeGroup.SelectedButton = groupButton;
+
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+        }
+
+        public override void deserialize(ConfigFile configFile)
+        {
+            base.deserialize(configFile);
+            fixListItemWidth();
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            fixListItemWidth();
+        }
+
+        private void fixListItemWidth()
+        {
+            int width = anatomyList.Width - 25;
+            if (lastWidth != width)
+            {
+                anatomyList.SuppressLayout = true;
+                anatomyList.ItemWidth = width;
+                anatomyList.SuppressLayout = false;
+                anatomyList.resizeAndLayout(width);
+                lastWidth = width;
+            }
         }
 
         void anatomyController_AnatomyChanged(object sender, EventArgs e)
