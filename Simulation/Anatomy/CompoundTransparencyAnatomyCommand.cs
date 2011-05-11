@@ -47,6 +47,13 @@ namespace Medical
             {
                 return NumericValue;
             }
+            set
+            {
+                foreach (TransparencyAnatomyCommand command in subCommands)
+                {
+                    command.NumericValue = value;
+                }
+            }
         }
 
         public void addSubCommand(TransparencyAnatomyCommand command)

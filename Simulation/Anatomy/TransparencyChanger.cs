@@ -9,6 +9,6 @@ namespace Medical
     {
         void smoothBlend(float alpha, float changeMultiplier);
 
-        float CurrentAlpha { get; }
+        float CurrentAlpha { get; set; }
     }
 }

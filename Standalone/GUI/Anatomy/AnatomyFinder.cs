@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Engine.Platform;
 using Engine;
+using System.Drawing;
 
 namespace Medical.GUI
 {
@@ -256,7 +257,10 @@ namespace Medical.GUI
 
         private ButtonGridItem addAnatomyToList(Anatomy anatomy)
         {
-            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName);
+            String imageName = anatomyController.getThumbnail(anatomy, sceneViewController.ActiveWindow.Camera.getFOVy() * 0.0174532925f);
+
+            //Add item
+            ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, imageName);
             anatomyItem.UserObject = anatomy;
             return anatomyItem;
         }

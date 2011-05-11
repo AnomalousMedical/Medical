@@ -71,6 +71,14 @@ namespace Medical
             return groups.Values;
         }
 
+        public static void setAllAlphas(float alpha)
+        {
+            foreach (TransparencyInterface transInterface in transparencyInterfaces)
+            {
+                transInterface.CurrentAlpha = alpha;
+            }
+        }
+
         public static void smoothSetAllAlphas(float alpha, float changeMultiplier)
         {
             foreach (TransparencyInterface transInterface in transparencyInterfaces)

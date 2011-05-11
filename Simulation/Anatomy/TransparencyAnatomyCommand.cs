@@ -54,11 +54,16 @@ namespace Medical
             }
         }
 
+        [DoNotCopy]
         public float CurrentAlpha
         {
             get
             {
                 return NumericValue;
+            }
+            set
+            {
+                NumericValue = value;
             }
         }
 
