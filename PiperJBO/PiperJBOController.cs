@@ -52,6 +52,9 @@ namespace Medical
         {
             //Core
             controller = new StandaloneController(this);
+            controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
+            controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
+            controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/PiperJBO/SplashScreen");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
@@ -65,8 +68,6 @@ namespace Medical
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
             bookmarksController = new BookmarksController(controller);
-            controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
-            controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
             controller.GUIManager.addPlugin(new PiperJBOGUIPlugin(licenseManager, this));
             if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
             {
@@ -100,6 +101,14 @@ namespace Medical
         void standaloneController_SceneLoaded(SimScene scene)
         {
             anatomyController.sceneLoaded();
+        }
+
+        void controller_BeforeSceneLoadProperties(SimScene scene)
+        {
+            if (splashScreen != null)
+            {
+                splashScreen.updateStatus(75, "Loading Scene Properties");
+            }
         }
 
         public override void createWindowPresets(SceneViewWindowPresetController windowPresetController)

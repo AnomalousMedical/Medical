@@ -28,6 +28,7 @@ namespace Medical
         //Events
         public event SceneEvent SceneLoaded;
         public event SceneEvent SceneUnloading;
+        public event SceneEvent BeforeSceneLoadProperties;
 
         //Controller
         private MedicalController medicalController;
@@ -474,6 +475,10 @@ namespace Medical
             if (medicalController.openScene(file))
             {
                 SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+                if (BeforeSceneLoadProperties != null)
+                {
+                    BeforeSceneLoadProperties.Invoke(medicalController.CurrentScene);
+                }
                 if (defaultScene != null)
                 {
                     OgreSceneManager ogreScene = defaultScene.getSimElementManager<OgreSceneManager>();
@@ -483,7 +488,7 @@ namespace Medical
                     sceneViewController.createCameras(medicalController.CurrentScene);
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
 
-                    loadExternalFiles(medicalScene);
+                    loadSceneProperties(medicalScene);
                     if (SceneLoaded != null)
                     {
                         SceneLoaded.Invoke(medicalController.CurrentScene);
@@ -494,7 +499,7 @@ namespace Medical
             return success;
         }
 
-        private void loadExternalFiles(SimulationScene medicalScene)
+        private void loadSceneProperties(SimulationScene medicalScene)
         {
             String pathString = "{0}/{1}/{2}";
             String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, app.LayersFile);

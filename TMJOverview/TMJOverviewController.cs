@@ -49,6 +49,7 @@ namespace Medical
         {
             //Core
             controller = new StandaloneController(this);
+            controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/TMJOverview/SplashScreen");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
             LicenseManager licenseManager = new LicenseManager("Anomalous Medical's TMJ Overview", MedicalConfig.DocRoot + "/license.lic");
@@ -168,6 +169,14 @@ namespace Medical
         {
             splashScreen.Dispose();
             splashScreen = null;
+        }
+
+        void controller_BeforeSceneLoadProperties(Engine.ObjectManagement.SimScene scene)
+        {
+            if (splashScreen != null)
+            {
+                splashScreen.updateStatus(75, "Loading Scene Properties");
+            }
         }
     }
 }
