@@ -89,6 +89,7 @@ namespace Medical.GUI
         private void updateSearch()
         {
             String searchTerm = searchBox.Caption;
+            anatomyList.SuppressLayout = true;
             anatomyList.clear();
             if (searchTerm.Length == 0)
             {
@@ -104,6 +105,8 @@ namespace Medical.GUI
                     addAnatomyToList(anatomy);
                 }
             }
+            anatomyList.SuppressLayout = false;
+            anatomyList.layout();
         }
 
         private AnatomyContextWindow changeSelectedAnatomy()
@@ -124,6 +127,7 @@ namespace Medical.GUI
         {
             if (!Gui.Instance.HandledMouseButtons)
             {
+                anatomyList.SuppressLayout = true;
                 anatomyList.clear();
 
                 Vector3 absMouse = eventManager.Mouse.getAbsMouse();
@@ -180,6 +184,9 @@ namespace Medical.GUI
                     activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
                     activeAnatomyWindow.ensureVisible();
                 }
+
+                anatomyList.SuppressLayout = false;
+                anatomyList.layout();
             }
         }
 
