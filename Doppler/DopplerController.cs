@@ -46,14 +46,31 @@ namespace Medical
 
         public bool startApplication()
         {
+            //Core
+            controller = new StandaloneController(this);
+            controller.createSplashScreen("GUI/Doppler/SplashScreen");
+            licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.lic");
+            controller.updateSplashScreen(10, "Initializing Core");
+            controller.initializeControllers(createBackground());
+
+            //GUI
+            controller.updateSplashScreen(20, "Creating GUI");
+            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             this.addMovementSequenceDirectory("/Doppler");
             CamerasFile = "/GraphicsCameras.cam";
             LayersFile = "/StandaloneLayers.lay";
-            controller = new StandaloneController(this);
-            licenseManager = new LicenseManager("Doppler Diagnosis with Dr. Mark Piper", MedicalConfig.DocRoot + "/license.lic");
-            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             controller.GUIManager.addPlugin(new DopplerGUIPlugin(this, licenseManager));
-            controller.go(createBackground(), "GUI/Doppler/SplashScreen");
+            controller.createGUI();
+
+            //Scene load and go
+            controller.updateSplashScreen(40, "Loading Scene");
+            controller.openNewScene(DefaultScene);
+
+            controller.go();
+
+            controller.updateSplashScreen(100, "");
+            controller.closeSplashScreen();            
+            
             controller.TimelineController.ResourceProvider = new TimelineVirtualFSResourceProvider("Timelines/One Minute Doppler");
             startupSuceeded = true;
             return startupSuceeded;

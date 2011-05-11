@@ -55,6 +55,9 @@ namespace Medical
         private HtmlHelpController htmlHelpController;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
+        //Splash Screen
+        private SplashScreen splashScreen;
+
         //Platform
         private MainWindow mainWindow;
         private StandaloneApp app;
@@ -102,18 +105,29 @@ namespace Medical
             ThreadManager.cancelAll();
         }
 
-        public void go(ViewportBackground background, String splashScreenLocation)
+        public void createSplashScreen(String splashScreenLocation)
         {
             //Splash screen
             Gui gui = Gui.Instance;
             gui.setVisiblePointer(false);
-            SplashScreen splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, splashScreenLocation);
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, splashScreenLocation);
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             OgreInterface.Instance.OgrePrimaryWindow.OgreRenderWindow.windowMovedOrResized();
+        }
 
-            splashScreen.updateStatus(10, "Initializing Core");
+        public void updateSplashScreen(uint position, String text)
+        {
+            splashScreen.updateStatus(position, text);
+        }
 
+        public void closeSplashScreen()
+        {
+            splashScreen.hide();
+        }
+
+        public void initializeControllers(ViewportBackground background)
+        {
             //Help
             htmlHelpController = new HtmlHelpController(mainWindow);
             app.addHelpDocuments(htmlHelpController);
@@ -168,7 +182,7 @@ namespace Medical
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += measurementGrid.ScreenshotRenderCompleted;
-            
+
             //Medical states
             medicalStateController = new MedicalStateController(imageRenderer, medicalController);
             tempStateBlender = new TemporaryStateBlender(medicalController.MainTimer, medicalStateController);
@@ -184,11 +198,6 @@ namespace Medical
             medicalController.FixedLoopUpdate += teethMover.update;
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
-
-            splashScreen.updateStatus(20, "Creating GUI");
-
-            windowPresetController = new SceneViewWindowPresetController();
-            app.createWindowPresets(windowPresetController);
 
             //Prop Mover
             propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
@@ -213,20 +222,6 @@ namespace Medical
             timelineController.ImageDisplayFactory = imageDisplayFactory;
             timelineController.SimObjectMover = propMover;
 
-            //GUI
-            guiManager.createGUI();
-            guiManager.ScreenLayout.Center = mdiLayout;
-            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
-            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
-
-            if(PlatformConfig.CreateMenu)
-            {
-                guiManager.createMenuBar(mainWindow.MenuBar);
-            }
-
-            //Create scene view windows
-            sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
-
             //MultiTouch
             if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
             {
@@ -236,18 +231,36 @@ namespace Medical
             {
                 Log.Info("MultiTouch not available");
             }
+        }
 
-            splashScreen.updateStatus(40, "Loading Scene");
+        public void createGUI()
+        {
+            windowPresetController = new SceneViewWindowPresetController();
+            app.createWindowPresets(windowPresetController);
 
-            if (changeScene(app.DefaultScene, splashScreen))
+            //GUI
+            guiManager.createGUI();
+            guiManager.ScreenLayout.Center = mdiLayout;
+            medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
+            medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
+
+            if (PlatformConfig.CreateMenu)
             {
-                splashScreen.updateStatus(100, "");
-                splashScreen.hide();
+                guiManager.createMenuBar(mainWindow.MenuBar);
+            }
 
-                medicalStateController.createNormalStateFromScene();
+            //Create scene view windows
+            sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
+        }
+
+        public void go()
+        {
+            //if (changeScene(app.DefaultScene, splashScreen))
+            //{
+                //medicalStateController.createNormalStateFromScene();
 
                 medicalController.start();
-            }
+            //}
         }
 
         public void closeMainWindow()
@@ -277,7 +290,7 @@ namespace Medical
         public void openNewScene(String filename)
         {
             medicalStateController.clearStates();
-            changeScene(filename, null);
+            changeScene(filename, splashScreen);
             medicalStateController.createNormalStateFromScene();
         }
 
@@ -587,8 +600,8 @@ namespace Medical
 
         void splashScreen_Hidden(object sender, EventArgs e)
         {
-            SplashScreen splashScreen = (SplashScreen)sender;
             splashScreen.Dispose();
+            splashScreen = null;
         }
     }
 }

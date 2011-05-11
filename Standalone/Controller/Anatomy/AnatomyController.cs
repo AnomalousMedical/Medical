@@ -21,8 +21,9 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private ImageAtlas imageAtlas = new ImageAtlas("AntomyThumbnails", new Size2(50, 50), new Size2(512, 512));
 
-        public AnatomyController()
+        public AnatomyController(ImageRenderer imageRenderer)
         {
+            this.imageRenderer = imageRenderer;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
@@ -63,11 +64,6 @@ namespace Medical
             {
                 return anatomySearchList;
             }
-        }
-
-        public void setImageRenderer(ImageRenderer imageRenderer)
-        {
-            this.imageRenderer = imageRenderer;
         }
 
         public String getThumbnail(Anatomy anatomy, float theta)
