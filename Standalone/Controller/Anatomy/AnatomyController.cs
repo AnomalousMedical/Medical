@@ -12,6 +12,7 @@ namespace Medical
     public class AnatomyController
     {
         private const string TRANSPARENCY_STATE = "AnatomyFinder";
+        private ImageRendererProperties imageProperties;
 
         public event EventHandler AnatomyChanged;
 
@@ -25,6 +26,19 @@ namespace Medical
         {
             this.imageRenderer = imageRenderer;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
+
+            imageProperties = new ImageRendererProperties();
+            imageProperties.Width = 50;
+            imageProperties.Height = 50;
+            imageProperties.UseWindowBackgroundColor = false;
+            imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
+            imageProperties.AntiAliasingMode = 2;
+            imageProperties.TransparentBackground = true;
+            imageProperties.UseActiveViewportLocation = false;
+            imageProperties.UseCustomPosition = true;
+            imageProperties.ShowBackground = false;
+            imageProperties.ShowWatermark = false;
+            imageProperties.ShowUIUpdates = false;
         }
 
         public void sceneLoaded()
@@ -48,6 +62,7 @@ namespace Medical
         {
             anatomyTagManager.clear();
             anatomySearchList.clear();
+            imageAtlas.clear();
         }
 
         public AnatomyTagManager TagManager
@@ -68,20 +83,13 @@ namespace Medical
 
         public String getThumbnail(Anatomy anatomy, float theta)
         {
-            if (imageRenderer == null)
-            {
-                return "";
-            }
             if (!imageAtlas.containsImage(anatomy.AnatomicalName))
             {
                 //Generate thumbnail
                 AxisAlignedBox boundingBox = anatomy.WorldBoundingBox;
-                //SceneViewWindow window = sceneViewController.ActiveWindow;
                 Vector3 center = boundingBox.Center;
 
-                //float nearPlane = window.Camera.getNearClipDistance();
-                //float theta = window.Camera.getFOVy() * 0.0174532925f;
-                float aspectRatio = 1.0f;// window.Camera.getAspectRatio();
+                float aspectRatio = (float)imageProperties.Width / imageProperties.Height;
                 if (aspectRatio < 1.0f)
                 {
                     theta *= aspectRatio;
@@ -97,20 +105,8 @@ namespace Medical
                 TransparencyController.setAllAlphas(0.0f);
                 anatomy.TransparencyChanger.CurrentAlpha = 1.0f;
 
-                ImageRendererProperties imageProperties = new ImageRendererProperties();
-                imageProperties.Width = 50;
-                imageProperties.Height = 50;
-                imageProperties.UseWindowBackgroundColor = false;
-                imageProperties.CustomBackgroundColor = Engine.Color.White;
-                imageProperties.AntiAliasingMode = 2;
-                imageProperties.TransparentBackground = true;
-                imageProperties.UseActiveViewportLocation = false;
-                imageProperties.UseCustomPosition = true;
                 imageProperties.CameraLookAt = center;
                 imageProperties.CameraPosition = translation;
-                imageProperties.ShowBackground = false;
-                imageProperties.ShowWatermark = false;
-                imageProperties.ShowUIUpdates = false;
 
                 String imageName;
                 using (Bitmap thumb = imageRenderer.renderImage(imageProperties))

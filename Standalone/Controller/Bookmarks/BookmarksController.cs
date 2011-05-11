@@ -17,7 +17,7 @@ namespace Medical.Controller
     {
         public event BookmarkDelegate BookmarkAdded;
 
-        private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
+        ImageRendererProperties imageProperties;
         private static XmlSaver xmlSaver = new XmlSaver();
 
         private StandaloneController standaloneController;
@@ -29,6 +29,20 @@ namespace Medical.Controller
         {
             this.standaloneController = standaloneController;
             mainThreadCallback = fireBookmarkAdded;
+
+            imageProperties = new ImageRendererProperties();
+            imageProperties.Width = 50;
+            imageProperties.Height = 50;
+            imageProperties.UseWindowBackgroundColor = false;
+            imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
+            imageProperties.AntiAliasingMode = 2;
+            imageProperties.TransparentBackground = true;
+            imageProperties.UseActiveViewportLocation = false;
+            imageProperties.UseCustomPosition = true;
+            imageProperties.OverrideLayers = true;
+            imageProperties.ShowBackground = false;
+            imageProperties.ShowWatermark = false;
+            imageProperties.ShowUIUpdates = false;
         }
 
         public void Dispose()
@@ -79,22 +93,10 @@ namespace Medical.Controller
         public Bitmap createThumbnail(Bookmark bookmark)
         {
             ImageRenderer imageRenderer = standaloneController.ImageRenderer;
-            ImageRendererProperties imageProperties = new ImageRendererProperties();
-            imageProperties.Width = 50;
-            imageProperties.Height = 50;
-            imageProperties.UseWindowBackgroundColor = false;
-            imageProperties.CustomBackgroundColor = BACK_COLOR;
-            imageProperties.AntiAliasingMode = 2;
-            imageProperties.TransparentBackground = true;
-            imageProperties.UseActiveViewportLocation = false;
-            imageProperties.UseCustomPosition = true;
+            
             imageProperties.CameraLookAt = bookmark.CameraLookAt;
             imageProperties.CameraPosition = bookmark.CameraTranslation;
-            imageProperties.OverrideLayers = true;
             imageProperties.LayerState = bookmark.Layers;
-            imageProperties.ShowBackground = false;
-            imageProperties.ShowWatermark = false;
-            imageProperties.ShowUIUpdates = false;
 
             return imageRenderer.renderImage(imageProperties);
         }
