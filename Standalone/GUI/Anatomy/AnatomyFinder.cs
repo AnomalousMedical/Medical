@@ -45,6 +45,7 @@ namespace Medical.GUI
 
         private AnatomyController anatomyController;
         private int lastWidth = -1;
+        private int lastHeight = -1;
 
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
@@ -54,7 +55,7 @@ namespace Medical.GUI
             this.sceneViewController = sceneViewController;
             anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
 
-            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridItemNaturalSort());
+            anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
             anatomyList.SelectedValueChanged += new EventHandler(anatomyList_SelectedValueChanged);
 
@@ -93,14 +94,12 @@ namespace Medical.GUI
 
         private void fixListItemWidth()
         {
-            int width = anatomyList.Width - 25;
-            if (lastWidth != width)
+            //Layout only if size changes
+            if (window.Width != lastWidth || window.Height != lastHeight)
             {
-                anatomyList.SuppressLayout = true;
-                anatomyList.ItemWidth = width;
-                anatomyList.SuppressLayout = false;
-                anatomyList.resizeAndLayout(width);
-                lastWidth = width;
+                lastWidth = window.Width;
+                lastHeight = window.Height;
+                anatomyList.layout();
             }
         }
 
