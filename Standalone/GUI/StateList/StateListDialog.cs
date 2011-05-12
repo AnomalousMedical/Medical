@@ -10,8 +10,8 @@ namespace Medical.GUI
     public class StateListPopup : Dialog
     {
         private ImageAtlas imageAtlas = new ImageAtlas("StateListAtlas", new Size2(100.0f, 100.0f), new Size2(512.0f, 512.0f));
-        ButtonList stateListBox;
-        private Dictionary<MedicalState, ButtonListItem> entries = new Dictionary<MedicalState, ButtonListItem>();
+        ButtonGrid stateListBox;
+        private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
         private bool ignoreIndexChanges = false;
 
         private MedicalStateController stateController;
@@ -19,7 +19,7 @@ namespace Medical.GUI
         public StateListPopup(MedicalStateController stateController)
             :base("Medical.GUI.StateList.StateListDialog.layout")
         {
-            stateListBox = new ButtonList(window.findWidget("StateList/ScrollView") as ScrollView);
+            stateListBox = new ButtonGrid(window.findWidget("StateList/ScrollView") as ScrollView, new ButtonGridListLayout());
             stateListBox.SelectedValueChanged += new EventHandler(stateListBox_SelectedValueChanged);
 
             Button deleteButton = window.findWidget("StateList/DeleteButton") as Button;
@@ -52,23 +52,24 @@ namespace Medical.GUI
 
         void stateListBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (stateListBox.SelectedIndex != -1)
+            if (stateListBox.SelectedItem != null)
             {
-                stateController.directBlend(stateListBox.SelectedIndex, 1.0f);
+                stateController.directBlend((MedicalState)stateListBox.SelectedItem.UserObject, 1.0f);
             }
         }
 
-        void stateController_StateAdded(MedicalStateController controller, MedicalState state, int index)
+        void stateController_StateAdded(MedicalStateController controller, MedicalState state)
         {
             String imageId = imageAtlas.addImage(state, state.Thumbnail);
-            ButtonListItem entry = stateListBox.addItem(state.Name, imageId);
+            ButtonGridItem entry = stateListBox.addItem("", state.Name, imageId);
+            entry.UserObject = state;
             entries.Add(state, entry);
             stateListBox.SelectedItem = entries[state];
         }
 
-        void stateController_StateRemoved(MedicalStateController controller, MedicalState state, int index)
+        void stateController_StateRemoved(MedicalStateController controller, MedicalState state)
         {
-            ButtonListItem entry = entries[state];
+            ButtonGridItem entry = entries[state];
             stateListBox.removeItem(entry);
             entries.Remove(state);
             imageAtlas.removeImage(state);
@@ -76,7 +77,7 @@ namespace Medical.GUI
 
         void stateController_StateUpdated(MedicalState state)
         {
-            ButtonListItem entry = entries[state];
+            ButtonGridItem entry = entries[state];
             entry.Caption = state.Name;
             imageAtlas.replaceImage(state, state.Thumbnail);
         }
@@ -91,7 +92,7 @@ namespace Medical.GUI
         {
             if (!ignoreIndexChanges)
             {
-                ButtonListItem stateItem;
+                ButtonGridItem stateItem;
                 entries.TryGetValue(state, out stateItem);
                 stateListBox.SelectedItem = stateItem;
             }
@@ -111,7 +112,7 @@ namespace Medical.GUI
         {
             if (stateListBox.SelectedItem != null)
             {
-                stateController.destroyState(stateListBox.SelectedIndex);
+                stateController.destroyState((MedicalState)stateListBox.SelectedItem.UserObject);
             }
         }
     }

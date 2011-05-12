@@ -6,8 +6,8 @@ using Engine.Platform;
 
 namespace Medical
 {
-    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state, int index);
-    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state, int index);
+    public delegate void MedicalStateAdded(MedicalStateController controller, MedicalState state);
+    public delegate void MedicalStateRemoved(MedicalStateController controller, MedicalState state);
     public delegate void MedicalStateEvent(MedicalStateController controller);
     public delegate void MedicalStateStatusUpdate(MedicalState state);
 
@@ -73,13 +73,6 @@ namespace Medical
             return state;
         }
 
-        public MedicalState createAndInsertState(int index, string name)
-        {
-            MedicalState state = createState(name);
-            insertState(index, state);
-            return state;
-        }
-
         public MedicalState createState(String name)
         {
             MedicalState state = new MedicalState(name);
@@ -95,7 +88,7 @@ namespace Medical
                 states.Add(normalState);
                 if (StateAdded != null)
                 {
-                    StateAdded.Invoke(this, normalState, states.Count - 1);
+                    StateAdded.Invoke(this, normalState);
                 }
                 normalState = null;//Normal state added, does not need to be added again so null it.
             }
@@ -106,47 +99,19 @@ namespace Medical
             }
             if (StateAdded != null)
             {
-                StateAdded.Invoke(this, state, states.Count - 1);
+                StateAdded.Invoke(this, state);
             }
-        }
-
-        public void insertState(int index, MedicalState state)
-        {
-            if (index < states.Count)
-            {
-                states.Insert(index, state);
-            }
-            else
-            {
-                states.Add(state);
-                index = states.Count - 1;
-            }
-            if (StateAdded != null)
-            {
-                StateAdded.Invoke(this, state, index);
-            }
-        }
-
-        public MedicalState getState(int index)
-        {
-            return states[index];
         }
 
         public void destroyState(MedicalState state)
         {
             stopBlending();
-            int index = states.IndexOf(state);
-            states.RemoveAt(index);
+            states.Remove(state);
             if (StateRemoved != null)
             {
-                StateRemoved.Invoke(this, state, index);
+                StateRemoved.Invoke(this, state);
             }
             state.Dispose();
-        }
-
-        public void destroyState(int index)
-        {
-            destroyState(states[index]);
         }
 
         public void clearStates()
@@ -227,11 +192,6 @@ namespace Medical
             {
                 addState(state);
             }
-        }
-
-        public void directBlend(int endIndex, float speed)
-        {
-            directBlend(states[endIndex], speed);
         }
 
         public void directBlend(MedicalState state, float speed)
