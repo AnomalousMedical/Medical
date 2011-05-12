@@ -13,6 +13,8 @@ namespace Medical.GUI
         ButtonGrid stateListBox;
         private Dictionary<MedicalState, ButtonGridItem> entries = new Dictionary<MedicalState, ButtonGridItem>();
         private bool ignoreIndexChanges = false;
+        private int lastWidth = -1;
+        private int lastHeight = -1;
 
         private MedicalStateController stateController;
 
@@ -33,6 +35,8 @@ namespace Medical.GUI
             stateController.BlendingStarted += stateController_BlendingStarted;
             stateController.BlendingStopped += stateController_BlendingStopped;
             stateController.StateUpdated += stateController_StateUpdated;
+
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
         }
 
         public override void Dispose()
@@ -48,6 +52,28 @@ namespace Medical.GUI
             stateController.StateUpdated -= stateController_StateUpdated;
 
             base.Dispose();
+        }
+
+        public override void deserialize(ConfigFile configFile)
+        {
+            base.deserialize(configFile);
+            fixListItemWidth();
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            fixListItemWidth();
+        }
+
+        private void fixListItemWidth()
+        {
+            //Layout only if size changes
+            if (window.Width != lastWidth || window.Height != lastHeight)
+            {
+                lastWidth = window.Width;
+                lastHeight = window.Height;
+                stateListBox.layout();
+            }
         }
 
         void stateListBox_SelectedValueChanged(object sender, EventArgs e)
