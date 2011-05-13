@@ -53,7 +53,7 @@ namespace Medical.GUI
             this.anatomyController = anatomyController;
             anatomyController.AnatomyChanged += new EventHandler(anatomyController_AnatomyChanged);
             this.sceneViewController = sceneViewController;
-            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController);
+            anatomyWindowManager = new AnatomyContextWindowManager(sceneViewController, anatomyController);
 
             anatomyList = new ButtonGrid((ScrollView)window.findWidget("AnatomyList"), new ButtonGridListLayout(), new ButtonGridItemNaturalSort());
             anatomyList.ItemActivated += new EventHandler(anatomyList_ItemActivated);
@@ -136,12 +136,12 @@ namespace Medical.GUI
             anatomyList.layout();
         }
 
-        private AnatomyContextWindow changeSelectedAnatomy()
+        private AnatomyContextWindow changeSelectedAnatomy(int left, int top)
         {
             ButtonGridItem selectedItem = anatomyList.SelectedItem;
             if (selectedItem != null)
             {
-                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject);
+                return anatomyWindowManager.showWindow((Anatomy)selectedItem.UserObject, left, top);
             }
             else
             {
@@ -205,11 +205,11 @@ namespace Medical.GUI
                     searchBox.Caption = "";
                     updateSearch();
                 }
-                AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy();
+                AnatomyContextWindow activeAnatomyWindow = changeSelectedAnatomy((int)eventManager.Mouse.getAbsMouse().x, (int)eventManager.Mouse.getAbsMouse().y);
                 if (activeAnatomyWindow != null)
                 {
-                    activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
-                    activeAnatomyWindow.ensureVisible();
+                    //activeAnatomyWindow.Position = new Vector2(eventManager.Mouse.getAbsMouse().x, eventManager.Mouse.getAbsMouse().y);
+                    //activeAnatomyWindow.ensureVisible();
                 }
 
                 anatomyList.SuppressLayout = false;
@@ -245,17 +245,17 @@ namespace Medical.GUI
 
         void anatomyList_SelectedValueChanged(object sender, EventArgs e)
         {
-            AnatomyContextWindow contextWindow = changeSelectedAnatomy();
+            AnatomyContextWindow contextWindow = changeSelectedAnatomy(window.Right, anatomyList.SelectedItem.AbsoluteTop);
             if (contextWindow != null)
             {
-                float x = window.Right;
-                float y = anatomyList.SelectedItem.AbsoluteTop;
-                if (x + contextWindow.Width > Gui.Instance.getViewWidth())
-                {
-                    x = window.Left - contextWindow.Width;
-                }
-                contextWindow.Position = new Vector2(x, y);
-                contextWindow.ensureVisible();
+                //float x = window.Right;
+                //float y = anatomyList.SelectedItem.AbsoluteTop;
+                //if (x + contextWindow.Width > Gui.Instance.getViewWidth())
+                //{
+                //    x = window.Left - contextWindow.Width;
+                //}
+                //contextWindow.Position = new Vector2(x, y);
+                //contextWindow.ensureVisible();
             }
         }
 

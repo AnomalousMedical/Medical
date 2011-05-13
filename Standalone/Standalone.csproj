@@ -127,6 +127,7 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
     <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
     <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
     <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
@@ -344,7 +345,9 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
+    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\CameraControls\CameraControls.layout" />
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout">

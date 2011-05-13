@@ -14,20 +14,22 @@ namespace Medical.GUI
 
         private LayerState beforeFocusLayerState = null;
         private AnatomyContextWindow lastHighlightRequestWindow = null;
+        private AnatomyController anatomyController;
 
-        public AnatomyContextWindowManager(SceneViewController sceneViewController)
+        public AnatomyContextWindowManager(SceneViewController sceneViewController, AnatomyController anatomyController)
         {
             this.sceneViewController = sceneViewController;
+            this.anatomyController = anatomyController;
         }
 
-        public AnatomyContextWindow showWindow(Anatomy anatomy)
+        public AnatomyContextWindow showWindow(Anatomy anatomy, int left, int top)
         {
             if (currentAnatomyWindow == null)
             {
                 currentAnatomyWindow = new AnatomyContextWindow(this);
                 currentAnatomyWindow.SmoothShow = true;
             }
-            currentAnatomyWindow.Visible = true;
+            currentAnatomyWindow.show(left, top);
             currentAnatomyWindow.Anatomy = anatomy;
             beforeFocusLayerState = null;
             return currentAnatomyWindow;
@@ -37,13 +39,19 @@ namespace Medical.GUI
         {
             if (currentAnatomyWindow != null)
             {
-                currentAnatomyWindow.Visible = false;
+                currentAnatomyWindow.hide();
             }
         }
 
         internal void alertWindowPinned()
         {
             currentAnatomyWindow = null;
+        }
+
+        internal String getThumbnail(Anatomy anatomy)
+        {
+            float fovy = sceneViewController.ActiveWindow.Camera.getFOVy() * 0.0174532925f;
+            return anatomyController.getThumbnail(anatomy, fovy);
         }
 
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)
