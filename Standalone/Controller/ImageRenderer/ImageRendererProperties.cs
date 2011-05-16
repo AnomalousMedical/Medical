@@ -23,11 +23,8 @@ namespace Medical
             UseWindowBackgroundColor = true;
             CustomBackgroundColor = Color.Black;
             UseActiveViewportLocation = true;
-            UseCustomPosition = false;
             CameraPosition = Vector3.Zero;
             CameraLookAt = Vector3.Zero;
-            UseNavigationStatePosition = false;
-            NavigationStateName = null;
             OverrideLayers = false;
             LayerState = null;
             ShowBackground = true;
@@ -121,26 +118,6 @@ namespace Medical
         /// must be set to false if one of those is going to be used.
         /// </summary>
         public bool UseActiveViewportLocation { get; set; }
-
-        /// <summary>
-        /// Use a navigation state as the position to render from. This will
-        /// only get used if UseActiveViewportLocation is false. This will
-        /// override UseCustomPosition so make sure this is false if that is set
-        /// to true.
-        /// </summary>
-        public bool UseNavigationStatePosition { get; set; }
-
-        /// <summary>
-        /// The name of the navigation state to render from. Used by
-        /// UseNavigationStatePosition.
-        /// </summary>
-        public String NavigationStateName { get; set; }
-
-        /// <summary>
-        /// Use the position defined by CameraPosition and CameraLookAt as the
-        /// position to render from.
-        /// </summary>
-        public bool UseCustomPosition { get; set; }
 
         /// <summary>
         /// The positon of the camera for UseCustomPosition.

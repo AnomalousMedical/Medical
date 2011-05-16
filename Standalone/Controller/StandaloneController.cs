@@ -33,7 +33,6 @@ namespace Medical
         //Controller
         private MedicalController medicalController;
         private WindowListener windowListener;
-        private NavigationController navigationController;
         private LayerController layerController;
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
@@ -43,6 +42,7 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
+        private NavigationController navigationController;
 
         //GUI
         private GUIManager guiManager;
@@ -156,7 +156,7 @@ namespace Medical
             SceneLoaded += measurementGrid.sceneLoaded;
 
             //Image Renderer
-            imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController, navigationController);
+            imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController);
             imageRenderer.Watermark = watermark;
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;

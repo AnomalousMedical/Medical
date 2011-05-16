@@ -41,7 +41,6 @@ namespace Medical.Controller
             imageProperties.AntiAliasingMode = 2;
             imageProperties.TransparentBackground = true;
             imageProperties.UseActiveViewportLocation = false;
-            imageProperties.UseCustomPosition = true;
             imageProperties.OverrideLayers = true;
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;

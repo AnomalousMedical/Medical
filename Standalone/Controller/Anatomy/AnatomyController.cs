@@ -35,7 +35,6 @@ namespace Medical
             imageProperties.AntiAliasingMode = 2;
             imageProperties.TransparentBackground = true;
             imageProperties.UseActiveViewportLocation = false;
-            imageProperties.UseCustomPosition = true;
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;
             imageProperties.ShowUIUpdates = false;

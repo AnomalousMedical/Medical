@@ -43,18 +43,16 @@ namespace Medical
         private Watermark watermark;
         private ViewportBackground background;
         private LayerController layerController;
-        private NavigationController navigationController;
 
         private ImageRendererProgress imageRendererProgress;
 
         static ImageAttributes IMAGE_ATTRIBUTES = new ImageAttributes();
 
-        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, LayerController layerController, NavigationController navigationController)
+        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, LayerController layerController)
         {
             this.controller = controller;
             this.sceneViewController = sceneViewController;
             this.layerController = layerController;
-            this.navigationController = navigationController;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
@@ -91,34 +89,8 @@ namespace Medical
                 Vector3 cameraLookAt = sceneWindow.LookAt;
                 if (!properties.UseActiveViewportLocation)
                 {
-                    if (properties.UseNavigationStatePosition)
-                    {
-                        if (navigationController != null)
-                        {
-                            if (navigationController.NavigationSet != null)
-                            {
-                                NavigationState state = navigationController.NavigationSet.getState(properties.NavigationStateName);
-                                if (state != null)
-                                {
-                                    cameraPosition = state.Translation;
-                                    cameraLookAt = state.LookAt;
-                                }
-                                else
-                                {
-                                    Log.Error("Could not render image from navigation state \"{0}\" because it could not be found.", properties.NavigationStateName);
-                                }
-                            }
-                            else
-                            {
-                                Log.Error("Could not render image from navigation state \"{0}\" because there is no navigation set loaded.", properties.NavigationStateName);
-                            }
-                        }
-                    }
-                    else if (properties.UseCustomPosition)
-                    {
-                        cameraPosition = properties.CameraPosition;
-                        cameraLookAt = properties.CameraLookAt;
-                    }
+                    cameraPosition = properties.CameraPosition;
+                    cameraLookAt = properties.CameraLookAt;
                 }
 
                 //Background Activation

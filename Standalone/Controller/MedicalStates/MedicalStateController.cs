@@ -49,8 +49,6 @@ namespace Medical
             imageProperties.CustomBackgroundColor = BACK_COLOR;
             imageProperties.AntiAliasingMode = 2;
             imageProperties.UseActiveViewportLocation = false;
-            imageProperties.UseNavigationStatePosition = true;
-            imageProperties.NavigationStateName = "Midline Anterior";
             imageProperties.OverrideLayers = true;
             imageProperties.LayerStateName = "MandibleSizeLayers";
             imageProperties.TransparentBackground = true;
