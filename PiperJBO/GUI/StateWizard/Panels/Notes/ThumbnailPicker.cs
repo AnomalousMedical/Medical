@@ -87,10 +87,6 @@ namespace Medical.GUI
                 {
                     return currentImages[selectedItem];
                 }
-                //if (SelectedIndex > 0 && SelectedIndex < currentImages.Count)
-                //{
-                //    return imageRenderer.renderImage(thumbnailProperties[SelectedIndex]);
-                //}
                 return null;
             }
         }
