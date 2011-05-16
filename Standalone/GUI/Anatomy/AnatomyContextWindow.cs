@@ -24,6 +24,7 @@ namespace Medical.GUI
 
         private PopupMenu navMenu;
         private ShowMenuButton menuButton;
+        private Button pinButton;
 
         public AnatomyContextWindow(AnatomyContextWindowManager windowManager)
             :base("Medical.GUI.Anatomy.AnatomyContextWindow.layout")
@@ -34,7 +35,7 @@ namespace Medical.GUI
             widget.MouseDrag += new MyGUIEvent(widget_MouseDrag);
             widget.MouseButtonPressed += new MyGUIEvent(widget_MouseButtonPressed);
 
-            Button pinButton = (Button)widget.findWidget("PinButton");
+            pinButton = (Button)widget.findWidget("PinButton");
             pinButton.MouseButtonClick += new MyGUIEvent(pinButton_MouseButtonClick);
 
             navMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
@@ -122,18 +123,22 @@ namespace Medical.GUI
             }
         }
 
+        public void pinOpen()
+        {
+            windowManager.alertWindowPinned();
+            pinButton.StateCheck = true;
+            this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
+        }
+
         void pinButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            Button pinButton = (Button)source;
             if (pinButton.StateCheck)
             {
                 this.hide();
             }
             else
             {
-                windowManager.alertWindowPinned();
-                pinButton.StateCheck = true;
-                this.Hidden += new EventHandler(AnatomyContextWindow_Hidden);
+                pinOpen();
             }
         }
 

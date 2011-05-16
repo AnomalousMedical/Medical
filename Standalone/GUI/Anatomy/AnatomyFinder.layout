@@ -1,27 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="107 189 258 381" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="107 189 268 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Anatomy Finder"/>
-        <Widget type="Edit" skin="Edit" position="5 5 200 23" align="HStretch Top" name="SearchBox"/>
-        <Widget type="Button" skin="Button" position="207 7 44 20" align="Right Top" name="ClearButton">
+        <Widget type="Edit" skin="Edit" position="5 5 210 23" align="HStretch Top" name="SearchBox"/>
+        <Widget type="Button" skin="Button" position="217 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="7 339 74 20" align="Left Bottom" name="UnhideAll">
-            <Property key="Widget_Caption" value="Show All"/>
+        <Widget type="Button" skin="Button" position="7 339 68 20" align="Left Bottom" name="UnhideAll">
+            <Property key="Widget_Caption" value="Unhide All"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="84 339 74 20" align="Left Bottom" name="GroupButton">
+        <Widget type="Button" skin="Button" position="144 339 51 20" align="Left Bottom" name="GroupButton">
             <Property key="Widget_Caption" value="Group"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="161 339 74 20" align="Left Bottom" name="IndividualButton">
+        <Widget type="Button" skin="Button" position="197 339 66 20" align="Left Bottom" name="IndividualButton">
             <Property key="Widget_Caption" value="Individual"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollView" position="7 32 246 303" align="Stretch" name="AnatomyList">
+        <Widget type="ScrollView" skin="ScrollView" position="7 32 256 303" align="Stretch" name="AnatomyList">
             <Property key="ScrollView_CanvasSize" value="238 10"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="77 339 66 20" align="Left Bottom" name="OpenAll">
+            <Property key="Widget_Caption" value="Open All"/>
         </Widget>
     </Widget>
 </MyGUI>
