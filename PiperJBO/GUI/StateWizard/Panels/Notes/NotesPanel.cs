@@ -69,7 +69,7 @@ namespace Medical.GUI
         protected override void onPanelOpening()
         {
             distortionWizard.Caption = controller.CurrentWizardName;
-            thumbnailPicker.updateThumbnails();
+            thumbnailPicker.updateThumbnails(controller.NavigationController, controller.LayerController);
         }
     }
 }

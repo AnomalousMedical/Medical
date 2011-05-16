@@ -5,15 +5,14 @@ using System.Text;
 using System.Drawing;
 using MyGUIPlugin;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
     class ThumbnailPicker
     {
-        private static Engine.Color BACK_COLOR = new Engine.Color(.94f, .94f, .94f);
-
         private ImageAtlas thumbnailImages;
-        private List<ImageRendererProperties> thumbnailProperties = new List<ImageRendererProperties>();
+        private List<ThumbnailInfo> thumbnailProperties = new List<ThumbnailInfo>();
         private Dictionary<ButtonGridItem, Bitmap> currentImages = new Dictionary<ButtonGridItem, Bitmap>();
         private ImageRenderer imageRenderer;
         private ButtonGrid imageGrid;
@@ -37,29 +36,13 @@ namespace Medical.GUI
         /// <param name="layerState">The layer state of the thumbnail.</param>
         public void addThumbnail(String navigationState, String layerState)
         {
-            ImageRendererProperties imageProp = new ImageRendererProperties();
-            imageProp.Width = (int)thumbnailImages.ImageSize.Width;
-            imageProp.Height = (int)thumbnailImages.ImageSize.Height;
-            imageProp.UseWindowBackgroundColor = false;
-            imageProp.CustomBackgroundColor = BACK_COLOR;
-            imageProp.AntiAliasingMode = 2;
-            imageProp.UseActiveViewportLocation = false;
-            //imageProp.UseNavigationStatePosition = true;
-            //imageProp.NavigationStateName = navigationState;
-            imageProp.OverrideLayers = true;
-            //imageProp.LayerStateName = layerState;
-            imageProp.TransparentBackground = true;
-            imageProp.ShowBackground = false;
-            imageProp.ShowWatermark = false;
-            imageProp.ShowUIUpdates = false;
-
-            thumbnailProperties.Add(imageProp);
+            thumbnailProperties.Add(new ThumbnailInfo(layerState, navigationState, (int)thumbnailImages.ImageSize.Width, (int)thumbnailImages.ImageSize.Height));
         }
 
         /// <summary>
         /// Update all thumbnails in the picker.
         /// </summary>
-        public void updateThumbnails()
+        public void updateThumbnails(NavigationController navController, LayerController layerController)
         {
             if (imageRenderer != null)
             {
@@ -70,9 +53,9 @@ namespace Medical.GUI
                 thumbnailImages.clear();
                 currentImages.Clear();
                 imageGrid.clear();
-                foreach (ImageRendererProperties imageProperties in thumbnailProperties)
+                foreach (ThumbnailInfo imageProperties in thumbnailProperties)
                 {
-                    Bitmap thumb = imageRenderer.renderImage(imageProperties);
+                    Bitmap thumb = imageRenderer.renderImage(imageProperties.configureProperties(navController, layerController));
                     String imageId = thumbnailImages.addImage(thumb, thumb);
                     ButtonGridItem item = imageGrid.addItem("Main", "", imageId);
                     currentImages.Add(item, thumb);

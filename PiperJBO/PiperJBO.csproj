@@ -101,6 +101,7 @@
     <Compile Include="GUI\StateWizard\Panels\Mandible\RightCondylarDegenerationPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\RightCondylarGrowthPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Notes\NotesPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Notes\ThumbnailInfo.cs" />
     <Compile Include="GUI\StateWizard\Panels\Notes\ThumbnailPicker.cs" />
     <Compile Include="GUI\StateWizard\Panels\Preset\PresetStatePanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Profile\HeightComboSlider.cs" />

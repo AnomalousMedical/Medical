@@ -109,6 +109,22 @@ namespace Medical.GUI
             }
         }
 
+        public NavigationController NavigationController
+        {
+            get
+            {
+                return navigationController;
+            }
+        }
+
+        public LayerController LayerController
+        {
+            get
+            {
+                return layerController;
+            }
+        }
+
         public String CurrentWizardName { get; set; }
 
         internal void setNavigationState(string name)
