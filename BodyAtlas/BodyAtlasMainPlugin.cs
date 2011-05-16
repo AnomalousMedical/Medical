@@ -10,10 +10,10 @@ using System.Diagnostics;
 
 namespace Medical.GUI
 {
-    class BodyAtlasGUIPlugin : GUIPlugin
+    class BodyAtlasMainPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
-        private GUIManager guiManager;
+        private AtlasPluginManager atlasPluginManager;
         private BodyAtlasAppMenu appMenu;
         private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
@@ -28,7 +28,7 @@ namespace Medical.GUI
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
 
-        public BodyAtlasGUIPlugin(LicenseManager licenseManager, BodyAtlasController bodyAtlasController)
+        public BodyAtlasMainPlugin(LicenseManager licenseManager, BodyAtlasController bodyAtlasController)
         {
             this.licenseManager = licenseManager;
             this.bodyAtlasController = bodyAtlasController;
@@ -47,16 +47,16 @@ namespace Medical.GUI
             aboutDialog.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
         {
-            this.guiManager = guiManager;
+            this.atlasPluginManager = atlasPluginManager;
             this.standaloneController = standaloneController;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
-            guiManager.setAppMenu(appMenu);
+            atlasPluginManager.setAppMenu(appMenu);
         }
 
         public void createDialogs(DialogManager dialogManager)

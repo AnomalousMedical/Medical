@@ -16,9 +16,9 @@ namespace Medical.GUI
 {
     public delegate void UIAnimationFinishedCallback();
 
-    public class GUIManager : IDisposable
+    public class AtlasPluginManager : IDisposable
     {
-        private static String INTERFACE_NAME = typeof(GUIPlugin).Name;
+        private static String INTERFACE_NAME = typeof(AtlasPlugin).Name;
 
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
@@ -36,13 +36,13 @@ namespace Medical.GUI
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
-        private List<GUIPlugin> plugins = new List<GUIPlugin>();
+        private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
         private AppMenu appMenu;
 
         //Animation callbacks
         private UIAnimationFinishedCallback leftAnimationFinished;
 
-        public GUIManager(StandaloneController standaloneController)
+        public AtlasPluginManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
@@ -54,7 +54,7 @@ namespace Medical.GUI
             //Dialogs
             dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
 
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.Dispose();
             }
@@ -86,7 +86,7 @@ namespace Medical.GUI
                 }
                 if (pluginType != null && !pluginType.IsInterface && !pluginType.IsAbstract)
                 {
-                    GUIPlugin plugin = (GUIPlugin)Activator.CreateInstance(pluginType);
+                    AtlasPlugin plugin = (AtlasPlugin)Activator.CreateInstance(pluginType);
                     addPlugin(plugin);
                 }
                 else
@@ -100,7 +100,7 @@ namespace Medical.GUI
             }
         }
 
-        public void addPlugin(GUIPlugin plugin)
+        public void addPlugin(AtlasPlugin plugin)
         {
             OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
             plugins.Add(plugin);
@@ -115,13 +115,13 @@ namespace Medical.GUI
         {
             Gui gui = Gui.Instance;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(GUIManager).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation(typeof(AtlasPluginManager).AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
 
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
             
 
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.initializeGUI(standaloneController, this);
             }
@@ -130,7 +130,7 @@ namespace Medical.GUI
 
             //Dialogs
             dialogManager = new DialogManager();
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.createDialogs(dialogManager);
             }
@@ -139,7 +139,7 @@ namespace Medical.GUI
             taskbar = new Taskbar(appMenu, standaloneController);
             taskbar.Alignment = MedicalConfig.TaskbarAlignment;
             taskbar.SuppressLayout = true;
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.addToTaskbar(taskbar);
             }
@@ -174,7 +174,7 @@ namespace Medical.GUI
             questionProvider = new MyGUIQuestionProvider(this);
             standaloneController.TimelineController.QuestionProvider = questionProvider;
 
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.finishInitialization();
             }
@@ -248,7 +248,7 @@ namespace Medical.GUI
 
         public void setMainInterfaceEnabled(bool enabled)
         {
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.setMainInterfaceEnabled(enabled);
             }
@@ -266,7 +266,7 @@ namespace Medical.GUI
 
         public void createMenuBar(NativeMenuBar menu)
         {
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.createMenuBar(menu);
             }
@@ -300,7 +300,7 @@ namespace Medical.GUI
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.sceneUnloading(scene);
             }
@@ -309,7 +309,7 @@ namespace Medical.GUI
         private void standaloneController_SceneLoaded(SimScene scene)
         {
             this.changeLeftPanel(null);
-            foreach (GUIPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.sceneLoaded(scene);
             }

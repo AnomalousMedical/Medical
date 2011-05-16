@@ -62,7 +62,7 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController, EditorGUIPlugin editorGUI, DialogManager dialogManager)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorGUI, DialogManager dialogManager)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelineController = timelineController;

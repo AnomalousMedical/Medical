@@ -8,7 +8,7 @@ using Engine.ObjectManagement;
 
 namespace Medical
 {
-    public class EditorGUIPlugin : GUIPlugin
+    public class EditorPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
 
@@ -18,7 +18,7 @@ namespace Medical
         private MovementSequenceEditor movementSequenceEditor;
         private TimelineAnalyzer timelineAnalyzer;
 
-        public EditorGUIPlugin()
+        public EditorPlugin()
         {
             Log.Info("Editor GUI Loaded");
         }
@@ -32,7 +32,7 @@ namespace Medical
             propTimeline.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
         {
             this.standaloneController = standaloneController;
         }

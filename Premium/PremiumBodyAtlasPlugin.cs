@@ -10,10 +10,10 @@ using System.Diagnostics;
 
 namespace Medical.GUI
 {
-    public class PremiumBodyAtlasGUIPlugin : GUIPlugin
+    public class PremiumBodyAtlasPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
-        private GUIManager guiManager;
+        private AtlasPluginManager atlasPluginManager;
         private RecentDocuments recentDocuments;
         private LicenseManager licenseManager;
 
@@ -30,7 +30,7 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private BookmarksController bookmarksController;
 
-        public PremiumBodyAtlasGUIPlugin(LicenseManager licenseManager, AnatomyController anatomyController, BookmarksController bookmarksController)
+        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, AnatomyController anatomyController, BookmarksController bookmarksController)
         {
             this.licenseManager = licenseManager;
             this.anatomyController = anatomyController;
@@ -50,9 +50,9 @@ namespace Medical.GUI
             bookmarks.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
         {
-            this.guiManager = guiManager;
+            this.atlasPluginManager = atlasPluginManager;
             this.standaloneController = standaloneController;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);

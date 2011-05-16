@@ -48,7 +48,7 @@ namespace Medical
     {
         private Dictionary<String, TimelineActionFactoryData> actions = new Dictionary<String, TimelineActionFactoryData>();
 
-        public TimelineActionFactory(Widget parentWidget, EditorGUIPlugin editorGUI)
+        public TimelineActionFactory(Widget parentWidget, EditorPlugin editorGUI)
         {
             addType(new TimelineActionFactoryData(typeof(ChangeMedicalStateAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ChangeMedicalStateProperties(parentWidget)));
             addType(new TimelineActionFactoryData(typeof(HighlightTeethAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), null));

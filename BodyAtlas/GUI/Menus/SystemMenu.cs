@@ -22,10 +22,10 @@ namespace Medical.GUI
         private NativeMenuItem saveAs;
         private NativeMenuItem exit;
 
-        private BodyAtlasGUIPlugin bodyAtlasGUI;
+        private BodyAtlasMainPlugin bodyAtlasGUI;
         private StandaloneController standaloneController;
 
-        public SystemMenu(NativeMenuBar menu, BodyAtlasGUIPlugin piperGUI, StandaloneController standaloneController, LicenseManager licenseManager)
+        public SystemMenu(NativeMenuBar menu, BodyAtlasMainPlugin piperGUI, StandaloneController standaloneController, LicenseManager licenseManager)
         {
             this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;

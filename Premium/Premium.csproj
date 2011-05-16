@@ -75,7 +75,7 @@
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
-    <Compile Include="PremiumBodyAtlasGUIPlugin.cs" />
+    <Compile Include="PremiumBodyAtlasPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

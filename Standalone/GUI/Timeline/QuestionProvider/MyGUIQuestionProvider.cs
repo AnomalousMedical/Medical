@@ -14,14 +14,14 @@ namespace Medical.GUI
         private Edit questionEdit;
         private List<PromptTextArea> textAreas = new List<PromptTextArea>();
         private PromptAnswerSelected answerSelectedCallback;
-        private GUIManager guiManager;
+        private AtlasPluginManager atlasPluginManager;
         private int verticalPosition = 0;
 
-        public MyGUIQuestionProvider(GUIManager guiManager)
+        public MyGUIQuestionProvider(AtlasPluginManager atlasPluginManager)
             :base("Medical.GUI.Timeline.QuestionProvider.MyGUIQuestionProvider.layout")
         {
-            this.guiManager = guiManager;
-            guiManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
+            this.atlasPluginManager = atlasPluginManager;
+            atlasPluginManager.ScreenSizeChanged += new ScreenSizeChanged(guiManager_ScreenSizeChanged);
 
             answerScroll = window.findWidget("Answers") as ScrollView;
             questionEdit = window.findWidget("Question") as Edit;

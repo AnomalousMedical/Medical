@@ -11,7 +11,7 @@ namespace Medical.GUI
 {
     class BodyAtlasAppMenu : PopupContainer, AppMenu
     {
-        private BodyAtlasGUIPlugin bodyAtlasGUI;
+        private BodyAtlasMainPlugin bodyAtlasGUI;
         private StandaloneController standaloneController;
 
         private Dictionary<String, Button> recentDocsMap = new Dictionary<string, Button>();
@@ -23,7 +23,7 @@ namespace Medical.GUI
         private int recentDocsWidth;
         private int recentDocsHeight;
 
-        public BodyAtlasAppMenu(BodyAtlasGUIPlugin piperGUI, StandaloneController standaloneController)
+        public BodyAtlasAppMenu(BodyAtlasMainPlugin piperGUI, StandaloneController standaloneController)
             :base("Medical.GUI.Menus.BodyAtlasAppMenu.layout")
         {
             this.bodyAtlasGUI = piperGUI;

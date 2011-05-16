@@ -68,10 +68,10 @@ namespace Medical
             WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
             determineResourceFiles();
             bookmarksController = new BookmarksController(controller);
-            controller.GUIManager.addPlugin(new BodyAtlasGUIPlugin(licenseManager, this));
+            controller.GUIManager.addPlugin(new BodyAtlasMainPlugin(licenseManager, this));
             if (true)//premium
             {
-                controller.GUIManager.addPlugin(new PremiumBodyAtlasGUIPlugin(licenseManager, anatomyController, bookmarksController));
+                controller.GUIManager.addPlugin(new PremiumBodyAtlasPlugin(licenseManager, anatomyController, bookmarksController));
             }
             else
             {

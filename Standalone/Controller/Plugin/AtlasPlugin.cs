@@ -6,9 +6,9 @@ using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
-    public interface GUIPlugin : IDisposable
+    public interface AtlasPlugin : IDisposable
     {
-        void initializeGUI(StandaloneController standaloneController, GUIManager guiManager);
+        void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager);
 
         void createDialogs(DialogManager dialogManager);
 
