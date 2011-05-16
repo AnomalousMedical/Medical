@@ -508,11 +508,17 @@ namespace Medical
 
             movementSequenceController.loadSequenceDirectories(sequenceDirectory, app.MovementSequenceDirectories);
 
-            layerController.loadLayerStateSet(layersFile);
-            //Load camera file, merge baseline cameras if the cameras changed
-            if (navigationController.loadNavigationSetIfDifferent(cameraFile))
+            if (app.LayersFile != null)
             {
-                navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
+                layerController.loadLayerStateSet(layersFile);
+            }
+            if (app.CamerasFile != null)
+            {
+                //Load camera file, merge baseline cameras if the cameras changed
+                if (navigationController.loadNavigationSetIfDifferent(cameraFile))
+                {
+                    navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
+                }
             }
         }
 
