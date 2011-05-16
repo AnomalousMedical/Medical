@@ -42,7 +42,6 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
-        private NavigationController navigationController;
 
         //GUI
         private GUIManager guiManager;
@@ -99,7 +98,6 @@ namespace Medical
             movementSequenceController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
-            navigationController.Dispose();
             mdiLayout.Dispose();
             medicalController.Dispose();
             mainWindow.Dispose();
@@ -132,7 +130,6 @@ namespace Medical
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
 
             //Navigation and layers
-            navigationController = new NavigationController();
             layerController = new LayerController();
 
             //Watermark
@@ -330,14 +327,6 @@ namespace Medical
             }
         }
 
-        public NavigationController NavigationController
-        {
-            get
-            {
-                return navigationController;
-            }
-        }
-
         public SceneViewController SceneViewController
         {
             get
@@ -518,7 +507,6 @@ namespace Medical
         {
             String pathString = "{0}/{1}/{2}";
             String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, app.LayersFile);
-            String cameraFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.CameraFileDirectory, app.CamerasFile);
             String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
 
             movementSequenceController.loadSequenceDirectories(sequenceDirectory, app.MovementSequenceDirectories);
@@ -526,14 +514,6 @@ namespace Medical
             if (app.LayersFile != null)
             {
                 layerController.loadLayerStateSet(layersFile);
-            }
-            if (app.CamerasFile != null)
-            {
-                //Load camera file, merge baseline cameras if the cameras changed
-                if (navigationController.loadNavigationSetIfDifferent(cameraFile))
-                {
-                    navigationController.mergeNavigationSet(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
-                }
             }
         }
 

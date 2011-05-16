@@ -79,6 +79,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\NavigationControl\NavigationController.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationMenus.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationState.cs" />
+    <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="Features.cs" />
     <Compile Include="GUI\Distortions\DistortionChooser.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpaceControl.cs" />
@@ -168,6 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="skull.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\Layers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
