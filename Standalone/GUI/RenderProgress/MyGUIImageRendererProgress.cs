@@ -18,7 +18,7 @@ namespace Medical.GUI
 
         public MyGUIImageRendererProgress()
         {
-            layout = LayoutManager.Instance.loadLayout("Medical.GUI.Render.MyGUIImageRendererProgress.layout");
+            layout = LayoutManager.Instance.loadLayout("Medical.GUI.RenderProgress.MyGUIImageRendererProgress.layout");
             mainWidget = layout.getWidget(0);
 
             rendererProgress = mainWidget.findWidget("RenderingProgress") as Progress;

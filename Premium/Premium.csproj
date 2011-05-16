@@ -70,6 +70,10 @@
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
+    <Compile Include="GUI\Notes\NotesDialog.cs" />
+    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
+    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
+    <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
     <Compile Include="PremiumBodyAtlasGUIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +94,9 @@
     <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
     <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
+    <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
+    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
+    <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

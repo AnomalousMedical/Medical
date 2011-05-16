@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical.GUI
 {
-    class ImageWindow : IDisposable// : Frame
+    public class ImageWindow : IDisposable// : Frame
     {
         private IntPtr nativeWindow = IntPtr.Zero;
 

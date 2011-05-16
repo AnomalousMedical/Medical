@@ -125,8 +125,7 @@
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
-    <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
-    <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
+    <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
@@ -165,7 +164,6 @@
     <Compile Include="Controller\Timeline\TimelineIndex.cs" />
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="GUI\GUIPlugin.cs" />
-    <Compile Include="GUI\Render\MyGUIImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
     <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
@@ -204,15 +202,8 @@
     <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />
     <Compile Include="GUI\ColorMenu\ColorMenu.cs" />
     <Compile Include="GUI\DialogManager.cs" />
-    <Compile Include="GUI\Notes\NotesDialog.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="GUI\GUIManager.cs" />
-    <Compile Include="GUI\QuickView\NavigationMenu.cs" />
-    <Compile Include="GUI\QuickView\NavigationShortcut.cs" />
-    <Compile Include="GUI\QuickView\QuickView.cs" />
-    <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
-    <Compile Include="GUI\Render\ResolutionMenu.cs" />
-    <Compile Include="GUI\StateList\StateListDialog.cs" />
     <Compile Include="GUI\Taskbar\CallbackTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\DialogOpenTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\SequencesTaskbarItem.cs" />
@@ -303,18 +294,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\SavePatientDialog.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\ColorMenu.layout" />
-    <EmbeddedResource Include="GUI\Notes\NotesDialog.layout" />
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
-    <EmbeddedResource Include="GUI\QuickView\QuickView.layout" />
-    <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
-    <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
-    <EmbeddedResource Include="GUI\SequencePlayer\SequencePlayer.layout" />
-    <EmbeddedResource Include="GUI\StateList\StateListDialog.layout" />
+    <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
