@@ -68,7 +68,6 @@ namespace Medical.GUI
             if (requestingWindow == lastHighlightRequestWindow && beforeFocusLayerState != null)
             {
                 beforeFocusLayerState.apply();
-                beforeFocusLayerState.Dispose();
                 beforeFocusLayerState = null;
                 lastHighlightRequestWindow = null;
             }

@@ -134,7 +134,6 @@
     <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
     <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
-    <Compile Include="GUI\PredefinedLayers\PredefinedLayersDialog.cs" />
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
@@ -325,7 +324,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
-    <EmbeddedResource Include="GUI\PredefinedLayers\PredefinedLayersDialog.layout" />
     <EmbeddedResource Include="GUI\Render\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />

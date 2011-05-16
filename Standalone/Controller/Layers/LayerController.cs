@@ -13,7 +13,7 @@ namespace Medical
 {
     public delegate void LayerControllerEvent(LayerController controller);
 
-    public class LayerController : IDisposable
+    public class LayerController
     {
         public event LayerControllerEvent LayerStateSetChanged;
         public event LayerControllerEvent LayerStateApplied;
@@ -26,14 +26,6 @@ namespace Medical
         public LayerController()
         {
 
-        }
-
-        public void Dispose()
-        {
-            if(currentLayers != null)
-            {
-                currentLayers.Dispose();
-            }
         }
 
         public void applyLayerState(String name)
@@ -115,18 +107,16 @@ namespace Medical
                 VirtualFileSystem archive = VirtualFileSystem.Instance;
                 using (XmlTextReader xmlReader = new XmlTextReader(archive.openStream(filename, FileMode.Open, FileAccess.Read)))
                 {
-                    using (LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet)
+                    LayerStateSet states = xmlSaver.restoreObject(xmlReader) as LayerStateSet;
+                    if (states == null)
                     {
-                        if (states == null)
+                        throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
+                    }
+                    foreach (LayerState state in states.LayerStates)
+                    {
+                        if (!currentLayers.hasState(state.Name))
                         {
-                            throw new Exception(String.Format("Could not load a LayerStateSet out of the file {0}.", filename));
-                        }
-                        foreach (LayerState state in states.LayerStates)
-                        {
-                            if (!currentLayers.hasState(state.Name))
-                            {
-                                currentLayers.addState(state);
-                            }
+                            currentLayers.addState(state);
                         }
                     }
                     if (LayerStateSetChanged != null)
@@ -145,10 +135,6 @@ namespace Medical
             }
             set
             {
-                if (currentLayers != null)
-                {
-                    currentLayers.Dispose();
-                }
                 currentLayers = value;
                 if (LayerStateSetChanged != null)
                 {

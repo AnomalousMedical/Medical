@@ -37,12 +37,9 @@ namespace Medical.GUI
             predefinedLayerGallery.clear();
             foreach (LayerState state in controller.CurrentLayers.LayerStates)
             {
-                if (!state.Hidden && state.Thumbnail != null)
-                {
-                    String imageKey = predefinedImageAtlas.addImage(state, state.Thumbnail);
-                    ButtonGridItem item = predefinedLayerGallery.addItem("Main", state.Name, imageKey);
-                    item.UserObject = state.Name;
-                }
+                //String imageKey = predefinedImageAtlas.addImage(state, state.Thumbnail);
+                ButtonGridItem item = predefinedLayerGallery.addItem("Main", state.Name);
+                item.UserObject = state.Name;
             }
         }
 

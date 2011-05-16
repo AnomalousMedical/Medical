@@ -6,7 +6,7 @@ using Engine.Saving;
 
 namespace Medical
 {
-    public class LayerStateSet : Saveable, IDisposable
+    public class LayerStateSet : Saveable
     {
         private List<LayerState> stateOrder = new List<LayerState>(); //A list to maintain state order
         private Dictionary<String, LayerState> stateLookup = new Dictionary<string, LayerState>(); //A dictionary for fast lookup.
@@ -14,16 +14,6 @@ namespace Medical
         public LayerStateSet()
         {
 
-        }
-
-        public void Dispose()
-        {
-            foreach (LayerState state in stateOrder)
-            {
-                state.Dispose();
-            }
-            stateOrder.Clear();
-            stateLookup.Clear();
         }
 
         public void addState(LayerState state)

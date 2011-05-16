@@ -96,7 +96,6 @@ namespace Medical
             movementSequenceController.Dispose();
             medicalStateController.Dispose();
             sceneViewController.Dispose();
-            layerController.Dispose();
             navigationController.Dispose();
             mdiLayout.Dispose();
             medicalController.Dispose();
