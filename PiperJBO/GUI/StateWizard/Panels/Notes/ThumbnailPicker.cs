@@ -44,8 +44,8 @@ namespace Medical.GUI
             imageProp.CustomBackgroundColor = BACK_COLOR;
             imageProp.AntiAliasingMode = 2;
             imageProp.UseActiveViewportLocation = false;
-            imageProp.UseNavigationStatePosition = true;
-            imageProp.NavigationStateName = navigationState;
+            //imageProp.UseNavigationStatePosition = true;
+            //imageProp.NavigationStateName = navigationState;
             imageProp.OverrideLayers = true;
             imageProp.LayerStateName = layerState;
             imageProp.TransparentBackground = true;
