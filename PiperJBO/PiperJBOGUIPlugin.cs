@@ -55,8 +55,7 @@ namespace Medical.GUI
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
-            Gui.Instance.load("Imagesets.xml");
+            //Gui.Instance.load("Imagesets.xml");
         }
 
         public void createDialogs(DialogManager dialogManager)
