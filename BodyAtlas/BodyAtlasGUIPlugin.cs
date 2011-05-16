@@ -67,7 +67,7 @@ namespace Medical.GUI
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
+            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
@@ -76,7 +76,7 @@ namespace Medical.GUI
 
         public void createDialogs(DialogManager dialogManager)
         {
-            //PiperJBO
+            //BodyAtlas
             //mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
             //dialogManager.addManagedDialog(mandibleMovementDialog);
 

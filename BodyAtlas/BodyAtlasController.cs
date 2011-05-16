@@ -55,7 +55,7 @@ namespace Medical
             controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
             controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
-            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/PiperJBO/SplashScreen");
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/BodyAtlas/SplashScreen");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
@@ -259,9 +259,9 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Background", "EngineArchive", "Background", false);
+            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Background", "EngineArchive", "Background", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
-            ViewportBackground background = new ViewportBackground("SourceBackground", "PiperJBOGraphicsBackground", 900, 500, 500, 5, 5);
+            ViewportBackground background = new ViewportBackground("SourceBackground", "BodyAtlasBackground", 900, 500, 500, 5, 5);
             return background;
         }
 
