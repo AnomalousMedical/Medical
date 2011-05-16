@@ -48,9 +48,8 @@ namespace Medical
             imageProperties.UseWindowBackgroundColor = false;
             imageProperties.CustomBackgroundColor = BACK_COLOR;
             imageProperties.AntiAliasingMode = 2;
-            imageProperties.UseActiveViewportLocation = false;
-            imageProperties.OverrideLayers = true;
-            //imageProperties.LayerStateName = "MandibleSizeLayers";
+            imageProperties.UseActiveViewportLocation = true;
+            imageProperties.OverrideLayers = false;
             imageProperties.TransparentBackground = true;
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;
