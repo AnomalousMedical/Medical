@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Features.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
+    <Compile Include="GUI\Distortions\DistortionChooser.cs" />
     <Compile Include="GUI\Layers\LayerGUIMenu.cs" />
     <Compile Include="GUI\Layers\LayerGUISkullMenu.cs" />
     <Compile Include="GUI\Layers\LayersDialog.cs" />
@@ -85,6 +86,34 @@
     <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
     <Compile Include="GUI\Menus\PiperJBOAppMenu.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
+    <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpaceControl.cs" />
+    <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerControl.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Fossa\FossaPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\BoneManipulatorPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\BoneManipulatorSlider.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\LeftCondylarDegenerationPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\LeftCondylarGrowthPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\RightCondylarDegenerationPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Mandible\RightCondylarGrowthPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Notes\NotesPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Notes\ThumbnailPicker.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Preset\PresetStatePanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Profile\HeightComboSlider.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Profile\HeightControl.cs" />
+    <Compile Include="GUI\StateWizard\Panels\Profile\ProfileDistortionPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\TeethPanels\TeethAdaptationPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\TeethPanels\TeethHeightAdaptationPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\TeethPanels\TeethMovementPanel.cs" />
+    <Compile Include="GUI\StateWizard\Panels\TeethPanels\ToothButton.cs" />
+    <Compile Include="GUI\StateWizard\Panels\TeethPanels\ToothRemovalPanel.cs" />
+    <Compile Include="GUI\StateWizard\StateWizard.cs" />
+    <Compile Include="GUI\StateWizard\StateWizardButtons.cs" />
+    <Compile Include="GUI\StateWizard\StateWizardController.cs" />
+    <Compile Include="GUI\StateWizard\StateWizardPanel.cs" />
+    <Compile Include="GUI\StateWizard\StateWizardPanelController.cs" />
+    <Compile Include="GUI\StateWizard\WizardIconPanel.cs" />
     <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
     <Compile Include="PiperJBOController.cs" />
     <Compile Include="PiperJBOGUIPlugin.cs" />
@@ -92,9 +121,29 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
+    <EmbeddedResource Include="GUI\Distortions\DistortionChooser.layout" />
     <EmbeddedResource Include="GUI\Layers\LayersDialog.layout" />
     <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
     <EmbeddedResource Include="GUI\Menus\PiperJBOAppMenu.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Fossa\FossaPanelLeft.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Fossa\FossaPanelRight.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\GridControlTemplate.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Mandible\LeftCondylarDegenerationPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Mandible\LeftCondylarGrowthPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Mandible\RightCondylarDegenerationPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Mandible\RightCondylarGrowthPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Notes\NotesPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Preset\PresetStatePanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\Profile\ProfileDistortionPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\TeethPanels\TeethAdaptationPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\TeethPanels\TeethHeightAdaptationPanel.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\TeethPanels\ToothRemovalPanelBottom.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\Panels\TeethPanels\ToothRemovalPanelTop.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\StateWizardButtons.layout" />
+    <EmbeddedResource Include="GUI\StateWizard\WizardIconPanel.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

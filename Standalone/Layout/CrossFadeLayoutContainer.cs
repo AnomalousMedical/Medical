@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class CrossFadeLayoutContainer : LayoutContainer, UpdateListener
+    public class CrossFadeLayoutContainer : LayoutContainer, UpdateListener
     {
         private UpdateTimer mainTimer;
         private LayoutContainer childContainer;

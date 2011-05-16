@@ -7,13 +7,13 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public class DistortionChooser : FixedSizeDialog
+    class DistortionChooser : FixedSizeDialog
     {
-        private GUIManager guiManager;
+        private PiperJBOGUIPlugin guiManager;
 
         private List<Button> buttons = new List<Button>();
 
-        public DistortionChooser(StateWizardController stateWizardController, GUIManager guiManager)
+        public DistortionChooser(StateWizardController stateWizardController, PiperJBOGUIPlugin guiManager)
             : base("Medical.GUI.Distortions.DistortionChooser.layout")
         {
             this.guiManager = guiManager;

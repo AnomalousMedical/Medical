@@ -8,7 +8,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class GridPropertiesControl
+    public class GridPropertiesControl
     {
         private MeasurementGrid grid;
         private Vector3 origin = Vector3.Zero;

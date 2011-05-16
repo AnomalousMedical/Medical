@@ -38,6 +38,10 @@ namespace Medical.GUI
         private DistortionChooser distortionChooser;
         private AboutDialog aboutDialog;
 
+        //Wizards
+        private StateWizardPanelController stateWizardPanelController;
+        private StateWizardController stateWizardController;
+
         public PiperJBOGUIPlugin(LicenseManager licenseManager, PiperJBOController piperJBOController)
         {
             this.licenseManager = licenseManager;
@@ -64,12 +68,22 @@ namespace Medical.GUI
             stateList.Dispose();
             anatomyFinder.Dispose();
             bookmarks.Dispose();
+
+            stateWizardController.Dispose();
+            stateWizardPanelController.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
+
+            stateWizardPanelController = new StateWizardPanelController(Gui.Instance, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
+            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, guiManager);
+            stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
+            stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
+
+            standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/PiperJBO/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
@@ -120,10 +134,10 @@ namespace Medical.GUI
             bookmarks = new BookmarksGUI(piperJBOController.BookmarksController);
 
             //Wizards
-            wizards = new PiperJBOWizards(guiManager.StateWizardPanelController, guiManager.StateWizardController, licenseManager);
+            wizards = new PiperJBOWizards(StateWizardPanelController, StateWizardController, licenseManager);
 
             //Distortions Popup, must come after wizards
-            distortionChooser = new DistortionChooser(guiManager.StateWizardController, guiManager);
+            distortionChooser = new DistortionChooser(StateWizardController, this);
             dialogManager.addManagedDialog(distortionChooser);
         }
 
@@ -211,6 +225,7 @@ namespace Medical.GUI
 
         public void sceneLoaded(SimScene scene)
         {
+            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             mandibleMovementDialog.sceneLoaded(scene);
         }
 
@@ -294,11 +309,55 @@ namespace Medical.GUI
             }
         }
 
+        #region StateWizard Callbacks
+
+        public void startWizard(StateWizard wizard)
+        {
+            stateWizardPanelController.CurrentWizardName = wizard.Name;
+            stateWizardController.startWizard(wizard);
+            standaloneController.MovementSequenceController.stopPlayback();
+            guiManager.setMainInterfaceEnabled(false);
+        }
+
+        void stateWizardController_Finished()
+        {
+            guiManager.setMainInterfaceEnabled(true);
+        }
+
+        void stateWizardController_StateCreated(MedicalState state)
+        {
+            standaloneController.MedicalStateController.addState(state);
+        }
+
+        #endregion StateWizard Callbacks
+
+        void SceneViewController_ActiveWindowChanged(SceneViewWindow window)
+        {
+            stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
+            stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
+        }
+
         public RecentDocuments RecentDocuments
         {
             get
             {
                 return recentDocuments;
+            }
+        }
+
+        public StateWizardController StateWizardController
+        {
+            get
+            {
+                return stateWizardController;
+            }
+        }
+
+        public StateWizardPanelController StateWizardPanelController
+        {
+            get
+            {
+                return stateWizardPanelController;
             }
         }
 

@@ -26,8 +26,6 @@ namespace Medical.GUI
         private HorizontalPopoutLayoutContainer rightAnimatedContainer;
         private VerticalPopoutLayoutContainer topAnimatedContainer;
         private VerticalPopoutLayoutContainer bottomAnimatedContainer;
-        private StateWizardPanelController stateWizardPanelController;
-        private StateWizardController stateWizardController;
 
         private Taskbar taskbar;
         private BorderLayoutContainer innerBorderLayout;
@@ -60,9 +58,6 @@ namespace Medical.GUI
             {
                 plugin.Dispose();
             }
-
-            stateWizardController.Dispose();
-            stateWizardPanelController.Dispose();
 
             //Other
             questionProvider.Dispose();
@@ -131,11 +126,6 @@ namespace Medical.GUI
                 plugin.initializeGUI(standaloneController, this);
             }
 
-            stateWizardPanelController = new StateWizardPanelController(gui, standaloneController.MedicalController, standaloneController.MedicalStateController, standaloneController.NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
-            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, standaloneController.NavigationController, standaloneController.LayerController, this);
-            stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
-            stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
-
             innerBorderLayout = new BorderLayoutContainer();
 
             //Dialogs
@@ -170,8 +160,6 @@ namespace Medical.GUI
             innerBorderLayout.Right = rightAnimatedContainer;
 
             screenLayoutManager.Root.SuppressLayout = false;
-
-            standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
 
             standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
 
@@ -284,55 +272,11 @@ namespace Medical.GUI
             }
         }
 
-        void SceneViewController_ActiveWindowChanged(SceneViewWindow window)
-        {
-            stateWizardController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
-            stateWizardPanelController.CurrentSceneView = standaloneController.SceneViewController.ActiveWindow;
-        }
-
-        #region StateWizard Callbacks
-
-        public void startWizard(StateWizard wizard)
-        {
-            stateWizardPanelController.CurrentWizardName = wizard.Name;
-            stateWizardController.startWizard(wizard);
-            standaloneController.MovementSequenceController.stopPlayback();
-            setMainInterfaceEnabled(false);
-        }
-
-        void stateWizardController_Finished()
-        {
-            setMainInterfaceEnabled(true);
-        }
-
-        void stateWizardController_StateCreated(MedicalState state)
-        {
-            standaloneController.MedicalStateController.addState(state);
-        }
-
-        #endregion StateWizard Callbacks
-
         public BorderLayoutContainer ScreenLayout
         {
             get
             {
                 return innerBorderLayout;
-            }
-        }
-
-        public StateWizardController StateWizardController
-        {
-            get
-            {
-                return stateWizardController;
-            }
-        }
-
-        public StateWizardPanelController StateWizardPanelController
-        {
-            get
-            {
-                return stateWizardPanelController;
             }
         }
 
@@ -364,7 +308,6 @@ namespace Medical.GUI
 
         private void standaloneController_SceneLoaded(SimScene scene)
         {
-            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
             this.changeLeftPanel(null);
             foreach (GUIPlugin plugin in plugins)
             {
