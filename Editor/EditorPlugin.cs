@@ -32,7 +32,7 @@ namespace Medical
             propTimeline.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
+        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
             this.standaloneController = standaloneController;
         }

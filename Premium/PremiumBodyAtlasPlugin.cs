@@ -13,7 +13,7 @@ namespace Medical.GUI
     public class PremiumBodyAtlasPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
-        private AtlasPluginManager atlasPluginManager;
+        private GUIManager guiManager;
         private RecentDocuments recentDocuments;
         private LicenseManager licenseManager;
 
@@ -50,9 +50,9 @@ namespace Medical.GUI
             bookmarks.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
+        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
-            this.atlasPluginManager = atlasPluginManager;
+            this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);

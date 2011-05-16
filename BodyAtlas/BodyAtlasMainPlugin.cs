@@ -13,7 +13,7 @@ namespace Medical.GUI
     class BodyAtlasMainPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
-        private AtlasPluginManager atlasPluginManager;
+        private GUIManager guiManager;
         private BodyAtlasAppMenu appMenu;
         private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
@@ -47,16 +47,16 @@ namespace Medical.GUI
             aboutDialog.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager)
+        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
-            this.atlasPluginManager = atlasPluginManager;
+            this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
             OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
             Gui.Instance.load("Imagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
-            atlasPluginManager.setAppMenu(appMenu);
+            guiManager.setAppMenu(appMenu);
         }
 
         public void createDialogs(DialogManager dialogManager)

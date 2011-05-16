@@ -125,6 +125,7 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />

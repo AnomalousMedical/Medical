@@ -45,7 +45,7 @@ namespace Medical
         private NavigationController navigationController;
 
         //GUI
-        private AtlasPluginManager atlasPluginManager;
+        private GUIManager guiManager;
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private BackgroundController backgroundController;
@@ -59,6 +59,7 @@ namespace Medical
         //Platform
         private MainWindow mainWindow;
         private StandaloneApp app;
+        private AtlasPluginManager atlasPluginManager;
 
         //Touch
         private TouchController touchController;
@@ -69,6 +70,7 @@ namespace Medical
 
             MedicalConfig config = new MedicalConfig(FolderFinder.AnomalousMedicalRoot, app.ProgramFolder);
             atlasPluginManager = new AtlasPluginManager(this);
+            guiManager = new GUIManager(this);
 
             MyGUIInterface.Theme = PlatformConfig.ThemeFile;
 
@@ -91,6 +93,7 @@ namespace Medical
             }
             htmlHelpController.Dispose();
             atlasPluginManager.Dispose();
+            guiManager.Dispose();
             watermark.Dispose();
             measurementGrid.Dispose();
             movementSequenceController.Dispose();
@@ -218,14 +221,14 @@ namespace Medical
             app.createWindowPresets(windowPresetController);
 
             //GUI
-            atlasPluginManager.createGUI();
-            atlasPluginManager.ScreenLayout.Center = mdiLayout;
+            guiManager.createGUI();
+            guiManager.ScreenLayout.Center = mdiLayout;
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
             if (PlatformConfig.CreateMenu)
             {
-                atlasPluginManager.createMenuBar(mainWindow.MenuBar);
+                guiManager.createMenuBar(mainWindow.MenuBar);
             }
 
             //Create scene view windows
@@ -284,7 +287,7 @@ namespace Medical
                     changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
                     medicalStateController.setStates(states);
                     medicalStateController.blend(0.0f);
-                    atlasPluginManager.changeLeftPanel(null);
+                    guiManager.changeLeftPanel(null);
                 }
                 else
                 {
@@ -407,6 +410,14 @@ namespace Medical
             get
             {
                 return atlasPluginManager;
+            }
+        }
+
+        public GUIManager GUIManager
+        {
+            get
+            {
+                return guiManager;
             }
         }
 

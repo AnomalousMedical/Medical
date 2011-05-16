@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
+using Medical.GUI;
 
-namespace Medical.GUI
+namespace Medical
 {
     public interface AtlasPlugin : IDisposable
     {
-        void initializeGUI(StandaloneController standaloneController, AtlasPluginManager atlasPluginManager);
+        void initializeGUI(StandaloneController standaloneController, GUIManager guiManager);
 
         void createDialogs(DialogManager dialogManager);
 
