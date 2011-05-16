@@ -167,10 +167,8 @@
     <Compile Include="Controller\Timeline\TimelineIndexItem.cs" />
     <Compile Include="Controller\Plugin\AtlasPlugin.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProperties.cs" />
-    <Compile Include="Controller\Layers\LayerController.cs" />
     <Compile Include="Controller\Layers\LayerEntry.cs" />
     <Compile Include="Controller\Layers\LayerState.cs" />
-    <Compile Include="Controller\Layers\LayerStateSet.cs" />
     <Compile Include="Controller\Grid\MeasurementGrid.cs" />
     <Compile Include="Controller\MedicalController.cs" />
     <Compile Include="Controller\MedicalSceneController.cs" />

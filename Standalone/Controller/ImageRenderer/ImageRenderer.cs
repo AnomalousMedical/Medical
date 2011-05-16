@@ -42,17 +42,15 @@ namespace Medical
         private SceneViewController sceneViewController;
         private Watermark watermark;
         private ViewportBackground background;
-        private LayerController layerController;
 
         private ImageRendererProgress imageRendererProgress;
 
         static ImageAttributes IMAGE_ATTRIBUTES = new ImageAttributes();
 
-        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController, LayerController layerController)
+        public ImageRenderer(MedicalController controller, SceneViewController sceneViewController)
         {
             this.controller = controller;
             this.sceneViewController = sceneViewController;
-            this.layerController = layerController;
             TransparencyController.createTransparencyState(TRANSPARENCY_STATE);
         }
 
@@ -101,16 +99,16 @@ namespace Medical
 
                 //Layer override
                 String activeTransparencyState = TransparencyController.ActiveTransparencyState;
-                if (properties.OverrideLayers && layerController != null)
+                if (properties.OverrideLayers)
                 {
                     TransparencyController.ActiveTransparencyState = TRANSPARENCY_STATE;
                     if (properties.LayerState != null)
                     {
-                        layerController.instantlyApplyLayerState(properties.LayerState, false);
+                        properties.LayerState.instantlyApply();
                     }
                     else
                     {
-                        layerController.instantlyApplyLayerState(properties.LayerStateName, false);
+                        Log.Warning("ImageRenderer was told to override layers but no layer state was provided.");
                     }
                 }
 
@@ -120,7 +118,7 @@ namespace Medical
                 bitmap = createRender(width, height, properties.NumGridTiles, properties.AntiAliasingMode, properties.ShowWatermark, properties.TransparentBackground, backgroundColor, sceneWindow.Camera, cameraPosition, cameraLookAt);
 
                 //Turn off layer override
-                if (properties.OverrideLayers && layerController != null)
+                if (properties.OverrideLayers)
                 {
                     TransparencyController.ActiveTransparencyState = activeTransparencyState;
                 }

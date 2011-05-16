@@ -40,10 +40,6 @@ namespace Medical.Controller
             }
         }
 
-        public String CamerasFile { get; protected set; }
-
-        public String LayersFile { get; protected set; }
-
         public String WatermarkText { get; protected set; }
 
         public LicenseManager LicenseManager { get; protected set; }

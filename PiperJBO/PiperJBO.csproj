@@ -79,6 +79,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Layers\LayerController.cs" />
+    <Compile Include="Controller\Layers\LayerStateSet.cs" />
     <Compile Include="Controller\NavigationControl\NavigationController.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenuEntry.cs" />
     <Compile Include="Controller\NavigationControl\NavigationMenus.cs" />
@@ -175,9 +177,7 @@
   <ItemGroup>
     <Content Include="skull.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\Layers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

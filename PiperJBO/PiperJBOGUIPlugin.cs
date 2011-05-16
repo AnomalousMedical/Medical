@@ -17,6 +17,7 @@ namespace Medical.GUI
         private PiperJBOWizards wizards;
         private LicenseManager licenseManager;
         private NavigationController navigationController;
+        private LayerController layerController;
 
         //Dialogs
         private DistortionChooser distortionChooser;
@@ -28,7 +29,8 @@ namespace Medical.GUI
         public PiperJBOGUIPlugin(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
-            navigationController = new NavigationController();
+            navigationController = new NavigationController(); 
+            layerController = new LayerController();
         }
 
         public void Dispose()
@@ -46,8 +48,8 @@ namespace Medical.GUI
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
-            stateWizardPanelController = new StateWizardPanelController(Gui.Instance, standaloneController.MedicalController, standaloneController.MedicalStateController, NavigationController, standaloneController.LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
-            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, NavigationController, standaloneController.LayerController, guiManager);
+            stateWizardPanelController = new StateWizardPanelController(Gui.Instance, standaloneController.MedicalController, standaloneController.MedicalStateController, NavigationController, LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
+            stateWizardController = new StateWizardController(standaloneController.MedicalController.MainTimer, standaloneController.TemporaryStateBlender, NavigationController, LayerController, guiManager);
             stateWizardController.StateCreated += new MedicalStateCreated(stateWizardController_StateCreated);
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
@@ -88,16 +90,13 @@ namespace Medical.GUI
             MedicalController medicalController = standaloneController.MedicalController;
             SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
             SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+            StandaloneApp app = standaloneController.App;
 
-            String cameraFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.CameraFileDirectory, standaloneController.App.CamerasFile);
-            //if (standaloneController.App.CamerasFile != null)
-            //{
-            //    //Load camera file, merge baseline cameras if the cameras changed
-            //    if (navigationController.loadNavigationSetIfDifferent(cameraFile))
-            //    {
-                    navigationController.loadNavigationSetIfDifferent(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
-            //    }
-            //}
+            navigationController.loadNavigationSetIfDifferent(medicalController.CurrentSceneDirectory + "/" + medicalScene.CameraFileDirectory + "/RequiredCameras.cam");
+
+            String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, "StandaloneLayers.lay");
+            layerController.loadLayerStateSet(layersFile);
+
             stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
         }
 
@@ -165,6 +164,14 @@ namespace Medical.GUI
             get
             {
                 return navigationController;
+            }
+        }
+
+        public LayerController LayerController
+        {
+            get
+            {
+                return layerController;
             }
         }
     }

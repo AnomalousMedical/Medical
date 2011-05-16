@@ -50,7 +50,7 @@ namespace Medical
             imageProperties.AntiAliasingMode = 2;
             imageProperties.UseActiveViewportLocation = false;
             imageProperties.OverrideLayers = true;
-            imageProperties.LayerStateName = "MandibleSizeLayers";
+            //imageProperties.LayerStateName = "MandibleSizeLayers";
             imageProperties.TransparentBackground = true;
             imageProperties.ShowBackground = false;
             imageProperties.ShowWatermark = false;

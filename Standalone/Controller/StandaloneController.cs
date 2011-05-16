@@ -33,7 +33,6 @@ namespace Medical
         //Controller
         private MedicalController medicalController;
         private WindowListener windowListener;
-        private LayerController layerController;
         private MedicalStateController medicalStateController;
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
@@ -129,9 +128,6 @@ namespace Medical
             MyGUIInterface myGui = MyGUIInterface.Instance;
             sceneViewController = new SceneViewController(mdiLayout, medicalController.EventManager, medicalController.MainTimer, medicalController.PluginManager.RendererPlugin.PrimaryWindow, myGui.OgrePlatform.getRenderManager());
 
-            //Navigation and layers
-            layerController = new LayerController();
-
             //Watermark
             OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("/Watermark", "EngineArchive", "Watermark", false);
             OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
@@ -156,7 +152,7 @@ namespace Medical
             SceneLoaded += measurementGrid.sceneLoaded;
 
             //Image Renderer
-            imageRenderer = new ImageRenderer(medicalController, sceneViewController, layerController);
+            imageRenderer = new ImageRenderer(medicalController, sceneViewController);
             imageRenderer.Watermark = watermark;
             imageRenderer.Background = background;
             imageRenderer.ImageRenderStarted += measurementGrid.ScreenshotRenderStarted;
@@ -316,14 +312,6 @@ namespace Medical
             get
             {
                 return tempStateBlender;
-            }
-        }
-
-        public LayerController LayerController
-        {
-            get
-            {
-                return layerController;
             }
         }
 
@@ -505,16 +493,9 @@ namespace Medical
 
         private void loadSceneProperties(SimulationScene medicalScene)
         {
-            String pathString = "{0}/{1}/{2}";
-            String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, app.LayersFile);
             String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
 
             movementSequenceController.loadSequenceDirectories(sequenceDirectory, app.MovementSequenceDirectories);
-
-            if (app.LayersFile != null)
-            {
-                layerController.loadLayerStateSet(layersFile);
-            }
         }
 
         /// <summary>
