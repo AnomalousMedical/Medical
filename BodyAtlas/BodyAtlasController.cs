@@ -145,40 +145,37 @@ namespace Medical
             twoWindows.addPreset(preset);
             windowPresetController.addPresetSet(twoWindows);
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
-            //{
-            //    SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
-            //    //threeWindows.Image = Resources.ThreeWindowLayout;
-            //    preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    threeWindows.addPreset(preset);
-            //    preset = new SceneViewWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    preset.ParentWindow = "Camera 1";
-            //    preset.WindowPosition = WindowAlignment.Left;
-            //    threeWindows.addPreset(preset);
-            //    preset = new SceneViewWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    preset.ParentWindow = "Camera 1";
-            //    preset.WindowPosition = WindowAlignment.Right;
-            //    threeWindows.addPreset(preset);
-            //    windowPresetController.addPresetSet(threeWindows);
+            SceneViewWindowPresetSet threeWindows = new SceneViewWindowPresetSet("Three Windows");
+            //threeWindows.Image = Resources.ThreeWindowLayout;
+            preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            threeWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 2", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = WindowAlignment.Left;
+            threeWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 3", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = WindowAlignment.Right;
+            threeWindows.addPreset(preset);
+            windowPresetController.addPresetSet(threeWindows);
 
-            //    SceneViewWindowPresetSet fourWindows = new SceneViewWindowPresetSet("Four Windows");
-            //    //fourWindows.Image = Resources.FourWindowLayout;
-            //    preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    fourWindows.addPreset(preset);
-            //    preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    preset.ParentWindow = "Camera 1";
-            //    preset.WindowPosition = WindowAlignment.Right;
-            //    fourWindows.addPreset(preset);
-            //    preset = new SceneViewWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    preset.ParentWindow = "Camera 1";
-            //    preset.WindowPosition = WindowAlignment.Bottom;
-            //    fourWindows.addPreset(preset);
-            //    preset = new SceneViewWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
-            //    preset.ParentWindow = "Camera 2";
-            //    preset.WindowPosition = WindowAlignment.Bottom;
-            //    fourWindows.addPreset(preset);
-            //    windowPresetController.addPresetSet(fourWindows);
-            //}
+            SceneViewWindowPresetSet fourWindows = new SceneViewWindowPresetSet("Four Windows");
+            //fourWindows.Image = Resources.FourWindowLayout;
+            preset = new SceneViewWindowPreset("Camera 1", new Vector3(0.0f, -5.0f, 170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            fourWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 2", new Vector3(0.0f, -5.0f, -170.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = WindowAlignment.Right;
+            fourWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 3", new Vector3(-170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 1";
+            preset.WindowPosition = WindowAlignment.Bottom;
+            fourWindows.addPreset(preset);
+            preset = new SceneViewWindowPreset("Camera 4", new Vector3(170.0f, -5.0f, 0.0f), new Vector3(0.0f, -5.0f, 0.0f));
+            preset.ParentWindow = "Camera 2";
+            preset.WindowPosition = WindowAlignment.Bottom;
+            fourWindows.addPreset(preset);
+            windowPresetController.addPresetSet(fourWindows);
         }
 
         public override void addHelpDocuments(HtmlHelpController helpController)
@@ -281,11 +278,6 @@ namespace Medical
             this.addMovementSequenceDirectory("/Clinical");
             this.addMovementSequenceDirectory("/DentitionProfile");
             this.addMovementSequenceDirectory("/Doppler");
-            //CamerasFile = "/GraphicsCameras.cam";
-
-            //temp, load different layers file
-            //LayersFile = "/StandaloneLayers.lay";
-            //end temp
         }
     }
 }
