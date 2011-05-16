@@ -266,6 +266,7 @@ namespace Medical
         {
             splashScreen.Dispose();
             splashScreen = null;
+            controller.sceneRevealed();
             bookmarksController.loadSavedBookmarks();
         }
 

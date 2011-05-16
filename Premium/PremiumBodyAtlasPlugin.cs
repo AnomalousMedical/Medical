@@ -14,7 +14,6 @@ namespace Medical.GUI
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
-        private RecentDocuments recentDocuments;
         private LicenseManager licenseManager;
 
         //Dialogs
@@ -35,12 +34,10 @@ namespace Medical.GUI
             this.licenseManager = licenseManager;
             this.anatomyController = anatomyController;
             this.bookmarksController = bookmarksController;
-            recentDocuments = new RecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
         public void Dispose()
         {
-            recentDocuments.save();
             sequencePlayer.Dispose();
             windowLayout.Dispose();
             mandibleMovementDialog.Dispose();
@@ -124,6 +121,11 @@ namespace Medical.GUI
         public void createMenuBar(NativeMenuBar menu)
         {
             
+        }
+
+        public void sceneRevealed()
+        {
+
         }
     }
 }

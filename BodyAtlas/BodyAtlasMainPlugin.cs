@@ -156,6 +156,11 @@ namespace Medical.GUI
             systemMenu = new SystemMenu(menu, this, standaloneController, licenseManager);
         }
 
+        public void sceneRevealed()
+        {
+
+        }
+
         public void showOptions()
         {
             options.Visible = true;

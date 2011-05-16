@@ -114,6 +114,14 @@ namespace Medical
                 plugin.createMenuBar(menu);
             }
         }
+
+        internal void sceneRevealed()
+        {
+            foreach (AtlasPlugin plugin in plugins)
+            {
+                plugin.sceneRevealed();
+            }
+        }
         
         private void standaloneController_SceneUnloading(SimScene scene)
         {

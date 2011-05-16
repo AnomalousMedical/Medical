@@ -95,5 +95,10 @@ namespace Medical
                 return propTimeline;
             }
         }
+
+        public void sceneRevealed()
+        {
+
+        }
     }
 }

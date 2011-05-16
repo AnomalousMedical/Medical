@@ -301,6 +301,11 @@ namespace Medical
             }
         }
 
+        public void sceneRevealed()
+        {
+            atlasPluginManager.sceneRevealed();
+        }
+
         public MedicalController MedicalController
         {
             get
