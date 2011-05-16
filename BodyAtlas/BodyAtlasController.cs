@@ -15,7 +15,6 @@ namespace Medical
     {
         StandaloneController controller;
         bool startupSuceeded = false;
-        AnatomyController anatomyController;
         private SplashScreen splashScreen;
 
         private static String archiveNameFormat = "BodyAtlas{0}.dat";
@@ -27,7 +26,6 @@ namespace Medical
 
         public override int OnExit()
         {
-            anatomyController.Dispose();
             controller.Dispose();
             return 0;
         }
@@ -49,8 +47,6 @@ namespace Medical
         {
             //Core
             controller = new StandaloneController(this);
-            controller.SceneLoaded += new SceneEvent(standaloneController_SceneLoaded);
-            controller.SceneUnloading += new SceneEvent(standaloneController_SceneUnloading);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/BodyAtlas/SplashScreen");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
@@ -58,7 +54,6 @@ namespace Medical
             LicenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
-            anatomyController = new AnatomyController(controller.ImageRenderer);
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
@@ -67,7 +62,7 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
             if (true)//premium
             {
-                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, controller, anatomyController));
+                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, controller));
             }
             else
             {
@@ -96,16 +91,6 @@ namespace Medical
             {
                 controller.saveCrashLog();
             }
-        }
-
-        void standaloneController_SceneUnloading(SimScene scene)
-        {
-            anatomyController.sceneUnloading();
-        }
-
-        void standaloneController_SceneLoaded(SimScene scene)
-        {
-            anatomyController.sceneLoaded();
         }
 
         void controller_BeforeSceneLoadProperties(SimScene scene)
@@ -237,14 +222,6 @@ namespace Medical
             get
             {
                 return false;
-            }
-        }
-
-        public AnatomyController AnatomyController
-        {
-            get
-            {
-                return anatomyController;
             }
         }
 

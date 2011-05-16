@@ -29,10 +29,10 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private BookmarksController bookmarksController;
 
-        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, StandaloneController standaloneController, AnatomyController anatomyController)
+        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, StandaloneController standaloneController)
         {
             this.licenseManager = licenseManager;
-            this.anatomyController = anatomyController;
+            anatomyController = new AnatomyController(standaloneController.ImageRenderer);
             bookmarksController = new BookmarksController(standaloneController);
         }
 
@@ -46,6 +46,7 @@ namespace Medical.GUI
             anatomyFinder.Dispose();
             bookmarks.Dispose();
             bookmarksController.Dispose();
+            anatomyController.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -107,11 +108,13 @@ namespace Medical.GUI
         public void sceneLoaded(SimScene scene)
         {
             mandibleMovementDialog.sceneLoaded(scene);
+            anatomyController.sceneLoaded();
         }
 
         public void sceneUnloading(SimScene scene)
         {
             mandibleMovementDialog.sceneUnloading(scene);
+            anatomyController.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)
