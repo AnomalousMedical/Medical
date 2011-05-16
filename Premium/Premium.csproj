@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
     <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
     <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />

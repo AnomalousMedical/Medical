@@ -7,8 +7,9 @@ using MyGUIPlugin;
 using Medical.Controller;
 using OgreWrapper;
 using System.Diagnostics;
+using Medical.GUI;
 
-namespace Medical.GUI
+namespace Medical
 {
     public class PremiumBodyAtlasPlugin : AtlasPlugin
     {
@@ -29,9 +30,9 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private BookmarksController bookmarksController;
 
-        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, StandaloneController standaloneController)
+        public PremiumBodyAtlasPlugin(StandaloneController standaloneController)
         {
-            this.licenseManager = licenseManager;
+            this.licenseManager = standaloneController.App.LicenseManager;
             anatomyController = new AnatomyController(standaloneController.ImageRenderer);
             bookmarksController = new BookmarksController(standaloneController);
         }
@@ -92,12 +93,6 @@ namespace Medical.GUI
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
-
-            //cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-            //if (PlatformConfig.AllowCloneWindows && licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
-            //{
-            //    taskbar.addItem(cloneWindow);
-            //}
         }
 
         public void finishInitialization()

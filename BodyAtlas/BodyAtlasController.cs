@@ -62,7 +62,7 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
             if (true)//premium
             {
-                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, controller));
+                controller.AtlasPluginManager.addPlugin("Premium.dll");
             }
             else
             {
