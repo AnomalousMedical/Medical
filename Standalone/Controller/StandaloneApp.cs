@@ -46,6 +46,8 @@ namespace Medical.Controller
 
         public String WatermarkText { get; protected set; }
 
+        public LicenseManager LicenseManager { get; protected set; }
+
         public List<String> MovementSequenceDirectories
         {
             get

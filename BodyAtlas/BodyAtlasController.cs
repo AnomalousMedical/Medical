@@ -13,7 +13,6 @@ namespace Medical
 {
     class BodyAtlasController : StandaloneApp
     {
-        LicenseManager licenseManager;
         StandaloneController controller;
         bool startupSuceeded = false;
         AnatomyController anatomyController;
@@ -58,20 +57,20 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/BodyAtlas/SplashScreen");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            licenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
+            LicenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
             anatomyController = new AnatomyController(controller.ImageRenderer);
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
-            WatermarkText = String.Format("Licensed to: {0}", licenseManager.LicenseeName);
+            WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             determineResourceFiles();
             bookmarksController = new BookmarksController(controller);
-            controller.GUIManager.addPlugin(new BodyAtlasMainPlugin(licenseManager, this));
+            controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
             if (true)//premium
             {
-                controller.GUIManager.addPlugin(new PremiumBodyAtlasPlugin(licenseManager, anatomyController, bookmarksController));
+                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, anatomyController, bookmarksController));
             }
             else
             {
@@ -80,7 +79,7 @@ namespace Medical
             }
             if (true)//editor
             {
-                controller.GUIManager.addPlugin("Editor.dll");
+                controller.AtlasPluginManager.addPlugin("Editor.dll");
             }
             controller.createGUI();
 

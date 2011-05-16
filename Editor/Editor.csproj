@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Controller\EditorConfig.cs" />
     <Compile Include="Controller\TimelineZipResources.cs" />
+    <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />
     <Compile Include="GUI\LayersAdvanced\LayerControlAdvanced.cs" />

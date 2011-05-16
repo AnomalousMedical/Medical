@@ -18,8 +18,6 @@ namespace Medical.GUI
 
     public class AtlasPluginManager : IDisposable
     {
-        private static String INTERFACE_NAME = typeof(AtlasPlugin).Name;
-
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
         private HorizontalPopoutLayoutContainer leftAnimatedContainer;
@@ -74,24 +72,15 @@ namespace Medical.GUI
             if (File.Exists(fullPath))
             {
                 Assembly assembly = Assembly.LoadFile(fullPath);
-                Type[] exportedTypes = assembly.GetExportedTypes();
-                Type pluginType = null;
-                foreach (Type type in exportedTypes)
+                object[] attributes = assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                if (attributes.Length > 0)
                 {
-                    if (type.GetInterface(INTERFACE_NAME) != null)
-                    {
-                        pluginType = type;
-                        break;
-                    }
-                }
-                if (pluginType != null && !pluginType.IsInterface && !pluginType.IsAbstract)
-                {
-                    AtlasPlugin plugin = (AtlasPlugin)Activator.CreateInstance(pluginType);
-                    addPlugin(plugin);
+                    AtlasPluginEntryPointAttribute entryPointAttribute = (AtlasPluginEntryPointAttribute)attributes[0];
+                    entryPointAttribute.createPlugin(standaloneController);
                 }
                 else
                 {
-                    Log.Error("Cannot find GUIPlugin in assembly {0}. Please implement the GUIPlugin function in that assembly.", assembly.FullName);
+                    Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly {0}. Please add this property to the assembly.", assembly.FullName);
                 }
             }
             else

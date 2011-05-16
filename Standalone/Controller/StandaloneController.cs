@@ -402,7 +402,7 @@ namespace Medical
             }
         }
 
-        public AtlasPluginManager GUIManager
+        public AtlasPluginManager AtlasPluginManager
         {
             get
             {
