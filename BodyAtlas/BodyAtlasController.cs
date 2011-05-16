@@ -69,10 +69,19 @@ namespace Medical
             determineResourceFiles();
             bookmarksController = new BookmarksController(controller);
             controller.GUIManager.addPlugin(new BodyAtlasGUIPlugin(licenseManager, this));
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_VERSION_GRAPHICS))
-            //{
+            if (true)//premium
+            {
+                controller.GUIManager.addPlugin(new PremiumBodyAtlasGUIPlugin(licenseManager, anatomyController, bookmarksController));
+            }
+            else
+            {
+                controller.SceneViewController.AllowRotation = false;
+                controller.SceneViewController.AllowZoom = false;
+            }
+            if (true)//editor
+            {
                 controller.GUIManager.addPlugin("Editor.dll");
-            //}
+            }
             controller.createGUI();
 
             //Scene Load
@@ -243,14 +252,6 @@ namespace Medical
             get
             {
                 return anatomyController;
-            }
-        }
-
-        public BookmarksController BookmarksController
-        {
-            get
-            {
-                return bookmarksController;
             }
         }
 

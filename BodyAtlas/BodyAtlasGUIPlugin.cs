@@ -15,25 +15,17 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private BodyAtlasAppMenu appMenu;
-        private CloneWindowTaskbarItem cloneWindow;
         private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private BodyAtlasController bodyAtlasController;
 
         //Dialogs
-        //private MandibleMovementDialog mandibleMovementDialog;
-        private NotesDialog notesDialog;
-        private StateListPopup stateList;
         private ChooseSceneDialog chooseSceneDialog;
         private SavePatientDialog savePatientDialog;
         private OpenPatientDialog openPatientDialog;
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
-        private WindowLayout windowLayout;
-        private SequencePlayer sequencePlayer;
-        private AnatomyFinder anatomyFinder;
-        private BookmarksGUI bookmarks;
         private AboutDialog aboutDialog;
 
         public BodyAtlasGUIPlugin(LicenseManager licenseManager, BodyAtlasController bodyAtlasController)
@@ -46,8 +38,6 @@ namespace Medical.GUI
         public void Dispose()
         {
             recentDocuments.save();
-            sequencePlayer.Dispose();
-            windowLayout.Dispose();
             renderDialog.Dispose();
             options.Dispose();
             chooseSceneDialog.Dispose();
@@ -55,11 +45,6 @@ namespace Medical.GUI
             openPatientDialog.Dispose();
             appMenu.Dispose();
             aboutDialog.Dispose();
-            //mandibleMovementDialog.Dispose();
-            notesDialog.Dispose();
-            stateList.Dispose();
-            anatomyFinder.Dispose();
-            bookmarks.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -76,17 +61,6 @@ namespace Medical.GUI
 
         public void createDialogs(DialogManager dialogManager)
         {
-            //BodyAtlas
-            //mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
-            //dialogManager.addManagedDialog(mandibleMovementDialog);
-
-            //Common
-            notesDialog = new NotesDialog(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(notesDialog);
-
-            stateList = new StateListPopup(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(stateList);
-
             aboutDialog = new AboutDialog(licenseManager);
 
             chooseSceneDialog = new ChooseSceneDialog();
@@ -103,39 +77,13 @@ namespace Medical.GUI
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             dialogManager.addManagedDialog(renderDialog);
-
-            windowLayout = new WindowLayout(standaloneController);
-            dialogManager.addManagedDialog(windowLayout);
-
-            sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(sequencePlayer);
-
-            anatomyFinder = new AnatomyFinder(bodyAtlasController.AnatomyController, standaloneController.SceneViewController);
-            dialogManager.addManagedDialog(anatomyFinder);
-
-            bookmarks = new BookmarksGUI(bodyAtlasController.BookmarksController);
         }
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
-            //taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
-            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
-            taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
-            //taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
-
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
-
-            //cloneWindow = new CloneWindowTaskbarItem(standaloneController);
-            //if (PlatformConfig.AllowCloneWindows && licenseManager.allowFeature((int)Features.PIPER_JBO_FEATURE_CLONE_WINDOW))
-            //{
-            //    taskbar.addItem(cloneWindow);
-            //}
         }
 
         public void finishInitialization()
@@ -187,12 +135,12 @@ namespace Medical.GUI
 
         public void sceneLoaded(SimScene scene)
         {
-            //mandibleMovementDialog.sceneLoaded(scene);
+            
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            //mandibleMovementDialog.sceneUnloading(scene);
+            
         }
 
         public void setMainInterfaceEnabled(bool enabled)
@@ -216,11 +164,6 @@ namespace Medical.GUI
         public void showAboutDialog()
         {
             aboutDialog.open(true);
-        }
-
-        internal void toggleCloneWindow()
-        {
-            cloneWindow.toggleCloneWindow();
         }
 
         public void showChooseSceneDialog()

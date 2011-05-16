@@ -22,12 +22,12 @@ namespace Medical.GUI
         private NativeMenuItem saveAs;
         private NativeMenuItem exit;
 
-        private BodyAtlasGUIPlugin piperGUI;
+        private BodyAtlasGUIPlugin bodyAtlasGUI;
         private StandaloneController standaloneController;
 
         public SystemMenu(NativeMenuBar menu, BodyAtlasGUIPlugin piperGUI, StandaloneController standaloneController, LicenseManager licenseManager)
         {
-            this.piperGUI = piperGUI;
+            this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;
             this.recentDocuments = piperGUI.RecentDocuments;
 
@@ -88,14 +88,9 @@ namespace Medical.GUI
             menu.append(helpMenu);
         }
 
-        void cloneWindow_Select(NativeMenuItem sender)
-        {
-            piperGUI.toggleCloneWindow();
-        }
-
         void preferences_Select(NativeMenuItem sender)
         {
-            piperGUI.showOptions();
+            bodyAtlasGUI.showOptions();
         }
 
         void help_Select(NativeMenuItem sender)
@@ -105,7 +100,7 @@ namespace Medical.GUI
 
         void about_Select(NativeMenuItem sender)
         {
-            piperGUI.showAboutDialog();
+            bodyAtlasGUI.showAboutDialog();
         }
 
         public bool FileMenuEnabled
@@ -131,22 +126,22 @@ namespace Medical.GUI
 
         void saveAs_Select(NativeMenuItem sender)
         {
-            piperGUI.saveAs();
+            bodyAtlasGUI.saveAs();
         }
 
         void save_Select(NativeMenuItem sender)
         {
-            piperGUI.save();
+            bodyAtlasGUI.save();
         }
 
         void open_Select(NativeMenuItem sender)
         {
-            piperGUI.open();
+            bodyAtlasGUI.open();
         }
 
         void changeScene_Select(NativeMenuItem sender)
         {
-            piperGUI.showChooseSceneDialog();
+            bodyAtlasGUI.showChooseSceneDialog();
         }
 
         void recentDocMenuItem_Click(NativeMenuItem sender)
@@ -155,7 +150,7 @@ namespace Medical.GUI
             PatientDataFile patientData = new PatientDataFile(document);
             if (patientData.loadHeader())
             {
-                piperGUI.changeActiveFile(patientData);
+                bodyAtlasGUI.changeActiveFile(patientData);
                 standaloneController.openPatientFile(patientData);
             }
             else

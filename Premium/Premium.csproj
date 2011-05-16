@@ -2,21 +2,19 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{968E46AE-301D-4938-BC27-2DFC60F20ED7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Medical</RootNamespace>
-    <AssemblyName>BodyAtlas</AssemblyName>
+    <AssemblyName>Premium</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,8 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\Release\</OutputPath>
@@ -58,46 +55,17 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyAtlasController.cs" />
-    <Compile Include="BodyAtlasGUIPlugin.cs" />
-    <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
-    <Compile Include="GUI\Menus\BodyAtlasAppMenu.cs" />
-    <Compile Include="GUI\Menus\SystemMenu.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
+    <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
+    <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
+    <Compile Include="PremiumBodyAtlasGUIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
-    <EmbeddedResource Include="GUI\Menus\BodyAtlasAppMenu.layout" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Premium\Premium.csproj">
-      <Project>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</Project>
-      <Name>Premium</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
       <Name>Simulation</Name>
@@ -106,6 +74,9 @@
       <Project>{E217C194-A14F-41DE-A838-C401E60ADF15}</Project>
       <Name>Standalone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

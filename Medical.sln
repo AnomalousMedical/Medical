@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyAtlas", "BodyAtlas\Body
 		{B05D69F8-6463-4276-8077-D7F3F0C02A9E} = {B05D69F8-6463-4276-8077-D7F3F0C02A9E}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premium", "Premium\Premium.csproj", "{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -226,6 +228,24 @@ Global
 		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|Win32.ActiveCfg = Release|x86
 		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|x86.ActiveCfg = Release|x86
 		{968E46AE-301D-4938-BC27-2DFC60F20ED7}.Release|x86.Build.0 = Release|x86
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
