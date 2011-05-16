@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyAtlas", "BodyAtlas\Body
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premium", "Premium\Premium.csproj", "{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lecture", "Lecture\Lecture.csproj", "{3C599E05-33A9-47D1-84A6-B1CB05CE7466}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,6 +208,24 @@ Global
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|Win32.ActiveCfg = Release|Any CPU
 		{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|Any CPU.Build.0 = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|Win32.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.PublicRelease|x86.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|Win32.ActiveCfg = Release|Any CPU
+		{3C599E05-33A9-47D1-84A6-B1CB05CE7466}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

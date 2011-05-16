@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Medical
 {
-    class SystemInfo
+    public class SystemInfo
     {
         private SystemInfo() { }
 

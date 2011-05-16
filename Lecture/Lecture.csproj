@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}</ProjectGuid>
+    <ProjectGuid>{3C599E05-33A9-47D1-84A6-B1CB05CE7466}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Medical</RootNamespace>
-    <AssemblyName>Premium</AssemblyName>
+    <AssemblyName>Lecture</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -55,26 +55,13 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\Anatomy\AnatomyContextWindow.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyContextWindowManager.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyFinder.cs" />
-    <Compile Include="GUI\Anatomy\AnatomyTransparencySlider.cs" />
-    <Compile Include="GUI\Anatomy\ButtonGridItemNaturalSort.cs" />
-    <Compile Include="GUI\Anatomy\CommandCheckBox.cs" />
-    <Compile Include="GUI\Anatomy\CommandHScroll.cs" />
-    <Compile Include="GUI\Anatomy\CommandUIElement.cs" />
-    <Compile Include="GUI\Bookmarks\BookmarksGUI.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleControlSlider.cs" />
-    <Compile Include="GUI\MandibleMovement\MandibleMovementDialog.cs" />
-    <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
-    <Compile Include="PremiumBodyAtlasGUIPlugin.cs" />
+    <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
+    <Compile Include="GUI\Taskbar\CloneWindowTaskbarItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">
       <Project>{B05D69F8-6463-4276-8077-D7F3F0C02A9E}</Project>
@@ -86,10 +73,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyContextWindow.layout" />
-    <EmbeddedResource Include="GUI\Anatomy\AnatomyFinder.layout" />
-    <EmbeddedResource Include="GUI\Bookmarks\BookmarksGUI.layout" />
-    <EmbeddedResource Include="GUI\MandibleMovement\MandibleMovementDialog.layout" />
+    <EmbeddedResource Include="GUI\CloneWindow\CloneWindowDialog.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

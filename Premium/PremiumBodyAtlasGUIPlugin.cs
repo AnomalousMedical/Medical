@@ -14,7 +14,6 @@ namespace Medical.GUI
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
-        private CloneWindowTaskbarItem cloneWindow;
         private RecentDocuments recentDocuments;
         private LicenseManager licenseManager;
 
