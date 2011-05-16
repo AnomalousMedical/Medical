@@ -29,11 +29,11 @@ namespace Medical.GUI
         private AnatomyController anatomyController;
         private BookmarksController bookmarksController;
 
-        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, AnatomyController anatomyController, BookmarksController bookmarksController)
+        public PremiumBodyAtlasPlugin(LicenseManager licenseManager, StandaloneController standaloneController, AnatomyController anatomyController)
         {
             this.licenseManager = licenseManager;
             this.anatomyController = anatomyController;
-            this.bookmarksController = bookmarksController;
+            bookmarksController = new BookmarksController(standaloneController);
         }
 
         public void Dispose()
@@ -45,6 +45,7 @@ namespace Medical.GUI
             stateList.Dispose();
             anatomyFinder.Dispose();
             bookmarks.Dispose();
+            bookmarksController.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
@@ -125,7 +126,7 @@ namespace Medical.GUI
 
         public void sceneRevealed()
         {
-
+            bookmarksController.loadSavedBookmarks();
         }
     }
 }

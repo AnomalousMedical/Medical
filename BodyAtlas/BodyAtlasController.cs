@@ -16,7 +16,6 @@ namespace Medical
         StandaloneController controller;
         bool startupSuceeded = false;
         AnatomyController anatomyController;
-        BookmarksController bookmarksController;
         private SplashScreen splashScreen;
 
         private static String archiveNameFormat = "BodyAtlas{0}.dat";
@@ -29,7 +28,6 @@ namespace Medical
         public override int OnExit()
         {
             anatomyController.Dispose();
-            bookmarksController.Dispose();
             controller.Dispose();
             return 0;
         }
@@ -66,11 +64,10 @@ namespace Medical
             splashScreen.updateStatus(20, "Creating GUI");
             WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             determineResourceFiles();
-            bookmarksController = new BookmarksController(controller);
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
             if (true)//premium
             {
-                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, anatomyController, bookmarksController));
+                controller.AtlasPluginManager.addPlugin(new PremiumBodyAtlasPlugin(LicenseManager, controller, anatomyController));
             }
             else
             {
@@ -267,7 +264,6 @@ namespace Medical
             splashScreen.Dispose();
             splashScreen = null;
             controller.sceneRevealed();
-            bookmarksController.loadSavedBookmarks();
         }
 
         private void determineResourceFiles()
