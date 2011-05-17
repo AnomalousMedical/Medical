@@ -54,12 +54,12 @@ namespace Medical
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             LicenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
+            WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
-            WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             determineResourceFiles();
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
             if (true)//PiperJBO
