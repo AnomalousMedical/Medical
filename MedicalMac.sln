@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Premium", "Premium\Premium.csproj", "{1F96D2F8-95A5-44B0-9631-3E0AC0669D7B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BodyAtlasBundle", "BodyAtlas\OSX\BodyAtlasBundle.csproj", "{D8592C64-2FB3-422B-A7B0-F0C62E728221}"
+	ProjectSection(ProjectDependencies) = postProject
+		{968E46AE-301D-4938-BC27-2DFC60F20ED7} = {968E46AE-301D-4938-BC27-2DFC60F20ED7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
