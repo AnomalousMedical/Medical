@@ -101,7 +101,7 @@
 	<!-- Mono -->
 	<Copy SourceFiles="@(MonoFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Mono.framework/%(RecursiveDir)" />
 	<!-- Ogre -->
-	<Copy SourceFiles="@(OgreFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework/Versions/1.7.2" />
+	<Copy SourceFiles="@(OgreFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Ogre.framework/Versions/1.7.3" />
 	<!-- Cg -->
 	<Copy SourceFiles="@(CgFrameworkFiles)" DestinationFolder="$(AppBundleOutDir)/$(AppBundleName)/Contents/Frameworks/Cg.framework/%(RecursiveDir)" />
   </Target>
