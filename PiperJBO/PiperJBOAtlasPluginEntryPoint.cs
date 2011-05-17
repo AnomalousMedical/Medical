@@ -12,7 +12,7 @@ namespace Medical
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            standaloneController.AtlasPluginManager.addPlugin(new PiperJBOGUIPlugin(standaloneController.App.LicenseManager));
+            standaloneController.AtlasPluginManager.addPlugin(new PiperJBOAtlasPlugin(standaloneController.App.LicenseManager));
         }
     }
 }

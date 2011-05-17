@@ -1,0 +1,837 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth01">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="29 28">
+      <Index name="normal">
+        <Frame point="0 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="384 96"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="384 96"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="384 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth02">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="37 33">
+      <Index name="normal">
+        <Frame point="320 128"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="320 128"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="320 128"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="320 128"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="256 128"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="256 128"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="256 128"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth03">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="37 39">
+      <Index name="normal">
+        <Frame point="192 128"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="192 128"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="192 128"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="192 128"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="128 128"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="128 128"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="128 128"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth04">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="31 27">
+      <Index name="normal">
+        <Frame point="320 96"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="320 96"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="320 96"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="320 96"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="288 96"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="288 96"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="288 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth05">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="32 28">
+      <Index name="normal">
+        <Frame point="256 96"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="256 96"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="256 96"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="256 96"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="224 96"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="224 96"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="224 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth06">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="28 30">
+      <Index name="normal">
+        <Frame point="192 96"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="192 96"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="192 96"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="192 96"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="160 96"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="160 96"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="160 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth07">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="24 26">
+      <Index name="normal">
+        <Frame point="128 96"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="128 96"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="128 96"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="128 96"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 480"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 480"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 480"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth08">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="31 30">
+      <Index name="normal">
+        <Frame point="64 480"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 480"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 480"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 480"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 448"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 448"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 448"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth09">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="31 30">
+      <Index name="normal">
+        <Frame point="64 448"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 448"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 448"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 448"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 416"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 416"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 416"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth10">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="24 26">
+      <Index name="normal">
+        <Frame point="64 416"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 416"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 416"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 416"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 384"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 384"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 384"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth11">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="28 30">
+      <Index name="normal">
+        <Frame point="64 384"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 384"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 384"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 384"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 352"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 352"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 352"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth12">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="32 28">
+      <Index name="normal">
+        <Frame point="64 352"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 352"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 352"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 352"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="480 64"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="480 64"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="480 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth13">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="32 26">
+      <Index name="normal">
+        <Frame point="448 64"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="448 64"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="448 64"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="448 64"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="480 32"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="480 32"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="480 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth14">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="38 39">
+      <Index name="normal">
+        <Frame point="64 288"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 288"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 288"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 288"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="64 224"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="64 224"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="64 224"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth15">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="37 33">
+      <Index name="normal">
+        <Frame point="64 160"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 160"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 160"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 160"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="64 96"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="64 96"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="64 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth16">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="29 28">
+      <Index name="normal">
+        <Frame point="448 32"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="448 32"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="448 32"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="448 32"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="32 480"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="32 480"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="32 480"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth17">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="34 36">
+      <Index name="normal">
+        <Frame point="384 32"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="384 32"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="384 32"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="384 32"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="320 32"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="320 32"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="320 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth18">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="34 34">
+      <Index name="normal">
+        <Frame point="256 32"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="256 32"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="256 32"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="256 32"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="192 32"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="192 32"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="192 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth19">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="36 37">
+      <Index name="normal">
+        <Frame point="128 32"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="128 32"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="128 32"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="128 32"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="64 32"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="64 32"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth20">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="26 24">
+      <Index name="normal">
+        <Frame point="0 480"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 480"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 480"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 480"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="32 448"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="32 448"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="32 448"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth21">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="23 24">
+      <Index name="normal">
+        <Frame point="0 448"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 448"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 448"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 448"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="32 416"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="32 416"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="32 416"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth22">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="22 25">
+      <Index name="normal">
+        <Frame point="0 416"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 416"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 416"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 416"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="480 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="480 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="480 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth23">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="20 25">
+      <Index name="normal">
+        <Frame point="448 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="448 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="448 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="448 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="416 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="416 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="416 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth24">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="19 23">
+      <Index name="normal">
+        <Frame point="384 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="384 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="384 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="384 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="352 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="352 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="352 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth25">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="19 23">
+      <Index name="normal">
+        <Frame point="320 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="320 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="320 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="320 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="288 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="288 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="288 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth26">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="20 25">
+      <Index name="normal">
+        <Frame point="256 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="256 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="256 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="256 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="224 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="224 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="224 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth27">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="22 25">
+      <Index name="normal">
+        <Frame point="192 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="192 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="192 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="192 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="160 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="160 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="160 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth28">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="23 24">
+      <Index name="normal">
+        <Frame point="128 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="128 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="128 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="128 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="96 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="96 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth29">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="25 24">
+      <Index name="normal">
+        <Frame point="64 0"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="64 0"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="64 0"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="64 0"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="32 0"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="32 0"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth30">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="36 37">
+      <Index name="normal">
+        <Frame point="0 352"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 352"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 352"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 352"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="0 288"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="0 288"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="0 288"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth31">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="34 34">
+      <Index name="normal">
+        <Frame point="0 224"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 224"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 224"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 224"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="0 160"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="0 160"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="0 160"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="TeethButtons/Tooth32">
+    <Group name="Icons" texture="Medical.Resources.TeethButtons.png" size="34 36">
+      <Index name="normal">
+        <Frame point="0 96"/>
+      </Index>
+      <Index name="disabled">
+        <Frame point="0 96"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="0 96"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="0 96"/>
+      </Index>
+      <Index name="normal_checked">
+        <Frame point="0 32"/>
+      </Index>
+      <Index name="highlighted_checked">
+        <Frame point="0 32"/>
+      </Index>
+      <Index name="pushed_checked">
+        <Frame point="0 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>

@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Medical.GUI
 {
-    class PiperJBOGUIPlugin : AtlasPlugin
+    class PiperJBOAtlasPlugin : AtlasPlugin
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
@@ -26,7 +26,7 @@ namespace Medical.GUI
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
 
-        public PiperJBOGUIPlugin(LicenseManager licenseManager)
+        public PiperJBOAtlasPlugin(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
             navigationController = new NavigationController(); 
@@ -45,6 +45,8 @@ namespace Medical.GUI
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
+            Gui.Instance.load("Medical.Resources.PiperJBOImagesets.xml");
+
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
@@ -70,7 +72,7 @@ namespace Medical.GUI
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "RigidBody"));
+            taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
         }
 
         public void finishInitialization()

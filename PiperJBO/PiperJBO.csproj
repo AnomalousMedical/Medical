@@ -118,7 +118,7 @@
     <Compile Include="GUI\StateWizard\StateWizardPanel.cs" />
     <Compile Include="GUI\StateWizard\StateWizardPanelController.cs" />
     <Compile Include="GUI\StateWizard\WizardIconPanel.cs" />
-    <Compile Include="PiperJBOGUIPlugin.cs" />
+    <Compile Include="PiperJBOAtlasPlugin.cs" />
     <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +176,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\PiperJBOImagesets.xml" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons.png" />
+    <EmbeddedResource Include="Resources\DistortionPanelIcons.xml" />
+    <EmbeddedResource Include="Resources\DistortionsToolstrip.png" />
+    <EmbeddedResource Include="Resources\DistortionsToolstrip.xml" />
+    <EmbeddedResource Include="Resources\DegenerationImages.png" />
+    <EmbeddedResource Include="Resources\DegenerationImages.xml" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages.png" />
+    <EmbeddedResource Include="Resources\DopplerPanelImages.xml" />
+    <EmbeddedResource Include="Resources\FossaImages.png" />
+    <EmbeddedResource Include="Resources\FossaImages.xml" />
+    <EmbeddedResource Include="Resources\GrowthImages.png" />
+    <EmbeddedResource Include="Resources\GrowthImages.xml" />
+    <EmbeddedResource Include="Resources\ProfileIcons.png" />
+    <EmbeddedResource Include="Resources\ProfileIcons.xml" />
+    <EmbeddedResource Include="Resources\TeethButtons.png" />
+    <EmbeddedResource Include="Resources\TeethButtons.xml" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons.png" />
+    <EmbeddedResource Include="Resources\TeethMovementIcons.xml" />
+    <EmbeddedResource Include="Resources\PiperJBOIcons.xml" />
+    <EmbeddedResource Include="Resources\PiperJBOIcons.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup />

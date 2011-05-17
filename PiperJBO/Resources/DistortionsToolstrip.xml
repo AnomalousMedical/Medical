@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/Doppler">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/Dentition">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/Cephalometric">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/Mandible">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/DiscSpace">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/DiscClockFace">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="160 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/CephalometricAndDentition">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="192 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/ClinicalAndDoppler">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="224 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/ClinicalAndRadiography">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="256 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="DistortionsToolstrip/ClinicalAndMRI">
+    <Group name="Icons" texture="Medical.Resources.DistortionsToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="288 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>

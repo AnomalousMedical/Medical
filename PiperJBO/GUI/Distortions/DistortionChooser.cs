@@ -9,11 +9,11 @@ namespace Medical.GUI
 {
     class DistortionChooser : FixedSizeDialog
     {
-        private PiperJBOGUIPlugin guiManager;
+        private PiperJBOAtlasPlugin guiManager;
 
         private List<Button> buttons = new List<Button>();
 
-        public DistortionChooser(StateWizardController stateWizardController, PiperJBOGUIPlugin guiManager)
+        public DistortionChooser(StateWizardController stateWizardController, PiperJBOAtlasPlugin guiManager)
             : base("Medical.GUI.Distortions.DistortionChooser.layout")
         {
             this.guiManager = guiManager;

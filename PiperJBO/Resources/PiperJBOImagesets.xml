@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="List">
+  <List file="Medical.Resources.DegenerationImages.xml"/>
+  <List file="Medical.Resources.DistortionPanelIcons.xml"/>
+  <List file="Medical.Resources.DistortionsToolstrip.xml"/>
+  <List file="Medical.Resources.DopplerPanelImages.xml"/>
+  <List file="Medical.Resources.FossaImages.xml"/>
+  <List file="Medical.Resources.GrowthImages.xml"/>
+  <List file="Medical.Resources.ProfileIcons.xml"/>
+  <List file="Medical.Resources.TeethButtons.xml"/>
+  <List file="Medical.Resources.TeethMovementIcons.xml"/>
+  <List file="Medical.Resources.PiperJBOIcons.xml"/>
+</MyGUI>
