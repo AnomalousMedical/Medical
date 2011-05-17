@@ -282,6 +282,8 @@
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\AnomalousMedical.png" />
+    <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
+    <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />
     <Content Include="skull.ico" />
   </ItemGroup>

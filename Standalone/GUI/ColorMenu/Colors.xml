@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<MyGUI type="Resource" version="1.1">
+
+  <!-- *********************************** Row 1 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/0">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/1">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/2">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/3">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/4">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/5">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/6">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/7">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/8">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  
+  <Resource type="ResourceImageSet" name="Colors/9">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/10">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 2 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/11">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/12">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/13">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/14">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/15">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/16">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/17">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/18">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/19">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 11"/>
+      </Index>
+    </Group>
+  </Resource>
+  
+  <Resource type="ResourceImageSet" name="Colors/20">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/21">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 11"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 3 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/22">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/23">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/24">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/25">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/26">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/27">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/28">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/29">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/30">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/31">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/32">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 22"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 4 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/33">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/34">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/35">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/36">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/37">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/38">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/39">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/40">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/41">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/42">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/43">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 33"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 5 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/44">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/45">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/46">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/47">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/48">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/49">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/50">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/51">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/52">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/53">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/54">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 44"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 6 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/55">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/56">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/57">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/58">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/59">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/60">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/61">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/62">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/63">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/64">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/65">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 55"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <!-- *********************************** Row 7 **************************************-->
+  <Resource type="ResourceImageSet" name="Colors/66">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="0 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/67">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="11 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/68">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="22 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/69">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="33 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/70">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="44 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/71">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="55 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/72">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="66 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/73">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="77 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/74">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="88 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/75">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="99 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Colors/76">
+    <Group name="Icons" texture="Medical.GUI.ColorMenu.Colors.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="110 66"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>

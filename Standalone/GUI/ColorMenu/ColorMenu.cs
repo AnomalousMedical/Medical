@@ -30,6 +30,11 @@ namespace Medical.GUI
             moreColorsButton.MouseButtonClick += new MyGUIEvent(moreColorsButton_MouseButtonClick);
         }
 
+        protected override void loadResources()
+        {
+            Gui.Instance.load("Medical.GUI.ColorMenu.Colors.xml");
+        }
+
         public Color SelectedColor
         {
             get
