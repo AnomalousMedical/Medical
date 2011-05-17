@@ -6,7 +6,7 @@
         <Property key="Window_MaxSize" value="346 86"/>
         <Widget type="Button" skin="RibbonButton" position="74 4 66 58" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
-            <Property key="Button_ImageResource" value="UtilitiesToolstrip/ImageResolutionIconLarge"/>
+            <Property key="Button_ImageResource" value="ImageResolutionIcon"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="143 21 34 15">
             <Property key="Widget_Caption" value="Width"/>
@@ -41,7 +41,7 @@
         </Widget>
         <Widget type="Button" skin="RibbonButton" position="4 4 66 58" name="RenderingTab/Render">
             <Property key="Widget_Caption" value="Render"/>
-            <Property key="Button_ImageResource" value="RenderIconLarge"/>
+            <Property key="Button_ImageResource" value="RenderIcon"/>
         </Widget>
     </Widget>
 </MyGUI>

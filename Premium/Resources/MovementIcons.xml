@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="SequenceToolstrip/Sequence">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SequenceToolstrip/Play">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="16 16">
+      <Index name="Icon">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="SequenceToolstrip/Stop">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="16 16">
+      <Index name="Icon">
+        <Frame point="32 16"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipHorizontalBothBack">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="48 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipHorizontalBothForward">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="80 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipLeftHorizontalBack">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipLeftHorizontalForward">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipRightHorizontalBack">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipRightHorizontalForward">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipVerticalClosed">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipVerticalOpen">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipForceUp">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 65"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/ManipForceDown">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="65 65"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/Restore">
+    <Group name="States" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="disabled">
+        <Frame point="65 96"/>
+      </Index>
+      <Index name="normal">
+        <Frame point="32 32"/>
+      </Index>
+      <Index name="highlighted">
+        <Frame point="32 32"/>
+      </Index>
+      <Index name="pushed">
+        <Frame point="32 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Movement/Reset">
+    <Group name="Icons" texture="Medical.Resources.MovementIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

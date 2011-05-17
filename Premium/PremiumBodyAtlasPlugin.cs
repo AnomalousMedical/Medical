@@ -52,6 +52,8 @@ namespace Medical
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
+            Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
+
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
         }
@@ -85,11 +87,11 @@ namespace Medical
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "Joint"));
-            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "Notes"));
-            taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIconLarge"));
+            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "StatesIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "NotesIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIconLarge"));
+            taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIcon"));
         }
 
         public void finishInitialization()

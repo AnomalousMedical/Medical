@@ -9,7 +9,7 @@ namespace Medical.GUI
     class ShowToothContactsTaskbarItem : TaskbarItem
     {
         public ShowToothContactsTaskbarItem()
-            :base("Show Occlusal Contacts", "TeethCollisionIconLarge")
+            :base("Show Occlusal Contacts", "ShowTeethContactsIcon")
         {
 
         }

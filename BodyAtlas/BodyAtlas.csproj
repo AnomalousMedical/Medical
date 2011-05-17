@@ -111,6 +111,8 @@
     <EmbeddedResource Include="Resources\FileToolstrip.xml" />
     <EmbeddedResource Include="Resources\AppButton.png" />
     <EmbeddedResource Include="Resources\AppButton.xml" />
+    <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
+    <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

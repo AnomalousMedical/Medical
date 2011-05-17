@@ -52,8 +52,6 @@ namespace Medical.GUI
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
-            //OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
-            //Gui.Instance.load("Imagesets.xml");
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
@@ -82,7 +80,7 @@ namespace Medical.GUI
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIconLarge");
+            DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
         }

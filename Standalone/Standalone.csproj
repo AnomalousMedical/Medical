@@ -128,8 +128,6 @@
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
-    <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
-    <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />
     <Compile Include="Platform\MultiTouch\GestureEngine.cs" />
@@ -298,7 +296,6 @@
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
-    <EmbeddedResource Include="GUI\WindowLayout\WindowLayout.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

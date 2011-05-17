@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MyGUI type="List">
+  <List file="Medical.Resources.PremiumToolbar.xml"/>
+  <List file="Medical.Resources.MovementIcons.xml"/>
+</MyGUI>
