@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Medical.GUI;
 
+[assembly: Medical.PiperJBOAtlasPluginEntryPoint()]
+
 namespace Medical
 {
     class PiperJBOAtlasPluginEntryPoint : AtlasPluginEntryPointAttribute

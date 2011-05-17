@@ -241,6 +241,7 @@
     <Compile Include="Platform\SystemInfo.cs" />
     <Compile Include="Platform\WxKeyboard.cs" />
     <Compile Include="Platform\WxMouse.cs" />
+    <Compile Include="Platform\WxPlatformEntryPoint.cs" />
     <Compile Include="Platform\WxPlatformPlugin.cs" />
     <Compile Include="Platform\WxSystemTimer.cs" />
     <Compile Include="Platform\WxUpdateTimer.cs" />

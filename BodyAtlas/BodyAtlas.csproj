@@ -104,6 +104,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\AboutImage.png" />
+    <EmbeddedResource Include="Resources\AboutImage.xml" />
+    <EmbeddedResource Include="Resources\BodyAtlasImagesets.xml" />
+    <EmbeddedResource Include="Resources\FileToolstrip.png" />
+    <EmbeddedResource Include="Resources\FileToolstrip.xml" />
+    <EmbeddedResource Include="Resources\AppButton.png" />
+    <EmbeddedResource Include="Resources\AppButton.xml" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>

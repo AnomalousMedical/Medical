@@ -146,6 +146,7 @@
     <Compile Include="Muscles\MuscleSequenceState.cs" />
     <Compile Include="Plugin\PredefinedCamera.cs" />
     <Compile Include="Plugin\SimulationPlugin.cs" />
+    <Compile Include="Plugin\SimulationPluginEntryPoint.cs" />
     <Compile Include="Plugin\SimulationScene.cs" />
     <Compile Include="Plugin\SimulationSceneDefinition.cs" />
     <Compile Include="Plugin\SimulationSceneFactory.cs" />

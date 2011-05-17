@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[assembly: Medical.PremiumAtlasPluginEntryPoint()]
+
 namespace Medical
 {
     class PremiumAtlasPluginEntryPoint : AtlasPluginEntryPointAttribute

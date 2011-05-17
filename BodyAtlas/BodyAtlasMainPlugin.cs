@@ -52,8 +52,9 @@ namespace Medical.GUI
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
 
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
-            Gui.Instance.load("Imagesets.xml");
+            //OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
+            //Gui.Instance.load("Imagesets.xml");
+            Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
             guiManager.setAppMenu(appMenu);

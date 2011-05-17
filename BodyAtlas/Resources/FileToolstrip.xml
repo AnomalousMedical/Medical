@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/About">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/ChangeScene">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/CheckForUpdates">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/Exit">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="96 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/Help">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/Open">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 64"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/Options">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="0 96"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/Save">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="32 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="FileToolstrip/SaveAs">
+    <Group name="Icons" texture="Medical.Resources.FileToolstrip.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="64 32"/>
+      </Index>
+    </Group>
+  </Resource>
+
+</MyGUI>
+

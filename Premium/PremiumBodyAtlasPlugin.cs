@@ -54,9 +54,6 @@ namespace Medical
         {
             this.guiManager = guiManager;
             this.standaloneController = standaloneController;
-
-            OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Imagesets", "EngineArchive", "MyGUI", true);
-            Gui.Instance.load("Imagesets.xml");
         }
 
         public void createDialogs(DialogManager dialogManager)

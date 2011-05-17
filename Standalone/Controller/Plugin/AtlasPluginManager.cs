@@ -44,11 +44,13 @@ namespace Medical
             if (File.Exists(fullPath))
             {
                 Assembly assembly = Assembly.LoadFile(fullPath);
-                object[] attributes = assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
                 if (attributes.Length > 0)
                 {
-                    AtlasPluginEntryPointAttribute entryPointAttribute = (AtlasPluginEntryPointAttribute)attributes[0];
-                    entryPointAttribute.createPlugin(standaloneController);
+                    foreach(AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                    {
+                        entryPointAttribute.createPlugin(standaloneController);
+                    }
                 }
                 else
                 {
