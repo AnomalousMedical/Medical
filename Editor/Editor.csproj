@@ -80,10 +80,6 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\LayersAdvanced\AdvancedLayerControl.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerControlAdvanced.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerEntry.cs" />
-    <Compile Include="GUI\LayersAdvanced\LayerSection.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
@@ -125,9 +121,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\LayersAdvanced\AdvancedLayerControl.layout" />
-    <EmbeddedResource Include="GUI\LayersAdvanced\LayerEntry.layout" />
-    <EmbeddedResource Include="GUI\LayersAdvanced\LayerSection.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />
@@ -150,6 +143,11 @@
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineIndexEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\EditorIcons.xml" />
+    <EmbeddedResource Include="Resources\EditorImagesets.xml" />
+    <EmbeddedResource Include="Resources\EditorIcons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

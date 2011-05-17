@@ -5,6 +5,7 @@ using System.Text;
 using Medical.GUI;
 using Logging;
 using Engine.ObjectManagement;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -14,7 +15,6 @@ namespace Medical
 
         private PropTimeline propTimeline;
         private TimelineProperties timelineProperties;
-        private AdvancedLayerControl advancedLayerControl;
         private MovementSequenceEditor movementSequenceEditor;
         private TimelineAnalyzer timelineAnalyzer;
 
@@ -27,13 +27,14 @@ namespace Medical
         {
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
-            advancedLayerControl.Dispose();
             timelineProperties.Dispose();
             propTimeline.Dispose();
         }
 
         public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
         {
+            Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
+
             this.standaloneController = standaloneController;
         }
 
@@ -48,19 +49,15 @@ namespace Medical
             timelineAnalyzer = new TimelineAnalyzer(standaloneController.TimelineController, timelineProperties);
             dialogManager.addManagedDialog(timelineAnalyzer);
 
-            advancedLayerControl = new AdvancedLayerControl();
-            dialogManager.addManagedDialog(advancedLayerControl);
-
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             dialogManager.addManagedDialog(movementSequenceEditor);
         }
 
         public void addToTaskbar(Taskbar taskbar)
         {
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(advancedLayerControl, "Advanced Layers", "ManualObject"));
-            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "View/LayersMuscleLarge"));
+            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineEditorIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
+            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
         }
 
         public void finishInitialization()
@@ -70,12 +67,12 @@ namespace Medical
 
         public void sceneLoaded(SimScene scene)
         {
-            advancedLayerControl.sceneLoaded(scene);
+            
         }
 
         public void sceneUnloading(SimScene scene)
         {
-            advancedLayerControl.sceneUnloading();
+            
         }
 
         public void setMainInterfaceEnabled(bool enabled)
