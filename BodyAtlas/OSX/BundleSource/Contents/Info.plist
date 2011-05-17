@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>Piper JBO</string>
+	<string>Anomalous Body Atlas</string>
 	<key>CFBundleExecutable</key>
-	<string>PiperJBO</string>
+	<string>BodyAtlas</string>
 	<key>CFBundleIconFile</key>
 	<string>Skull.icns</string>
 </dict>
