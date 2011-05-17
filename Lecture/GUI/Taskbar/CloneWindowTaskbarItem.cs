@@ -12,7 +12,7 @@ namespace Medical.GUI
         private CloneWindowDialog cloneWindowDialog;
 
         public CloneWindowTaskbarItem(StandaloneController standaloneController)
-            :base("Clone Window", "CloneWindowLarge")
+            : base("Clone Window", "CloneWindowIcon")
         {
             this.standaloneController = standaloneController;
 

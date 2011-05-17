@@ -75,6 +75,10 @@ namespace Medical
                 controller.SceneViewController.AllowRotation = false;
                 controller.SceneViewController.AllowZoom = false;
             }
+            if (true)//Lecture
+            {
+                controller.AtlasPluginManager.addPlugin("Lecture.dll");
+            }
             if (true)//editor
             {
                 controller.AtlasPluginManager.addPlugin("Editor.dll");
