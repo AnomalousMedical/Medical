@@ -8,6 +8,7 @@ using Engine;
 using System.IO;
 using Engine.ObjectManagement;
 using OgrePlugin;
+using OgreWrapper;
 
 namespace Medical
 {
@@ -48,7 +49,8 @@ namespace Medical
             //Core
             controller = new StandaloneController(this);
             controller.BeforeSceneLoadProperties += new SceneEvent(controller_BeforeSceneLoadProperties);
-            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "GUI/BodyAtlas/SplashScreen");
+            OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
+            splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
             LicenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
@@ -60,6 +62,10 @@ namespace Medical
             WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             determineResourceFiles();
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
+            if (true)//PiperJBO
+            {
+                controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
+            }
             if (true)//premium
             {
                 controller.AtlasPluginManager.addPlugin("Premium.dll");
@@ -68,10 +74,6 @@ namespace Medical
             {
                 controller.SceneViewController.AllowRotation = false;
                 controller.SceneViewController.AllowZoom = false;
-            }
-            if (true)//PiperJBO
-            {
-                controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
             }
             if (true)//editor
             {
@@ -234,7 +236,7 @@ namespace Medical
         /// </summary>
         private ViewportBackground createBackground()
         {
-            OgreWrapper.OgreResourceGroupManager.getInstance().addResourceLocation("GUI/BodyAtlas/Background", "EngineArchive", "Background", false);
+            OgreResourceGroupManager.getInstance().addResourceLocation(this.GetType().AssemblyQualifiedName, "EmbeddedResource", "Background", true);
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             ViewportBackground background = new ViewportBackground("SourceBackground", "BodyAtlasBackground", 900, 500, 500, 5, 5);
             return background;

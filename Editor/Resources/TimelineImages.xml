@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="Timeline/PlayIcon">
+    <Group name="Icons" texture="Medical.Resources.TimelineImages.png" size="11 11">
+      <Index name="Icon">
+        <Frame point="1 1"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="Timeline/StopIcon">
+    <Group name="Icons" texture="Medical.Resources.TimelineImages.png" size="12 12">
+      <Index name="Icon">
+        <Frame point="14 1"/>
+      </Index>
+    </Group>
+  </Resource>
+</MyGUI>
+

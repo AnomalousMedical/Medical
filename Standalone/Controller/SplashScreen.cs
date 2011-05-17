@@ -24,15 +24,14 @@ namespace Medical.Controller
         /// </summary>
         public event EventHandler Hidden;
 
-        public SplashScreen(OgreWindow ogreWindow, uint progressRange, String splashScreenLocation)
+        public SplashScreen(OgreWindow ogreWindow, uint progressRange, String splashScreenLayoutFile, String splashScreenResourceFile)
         {
             this.ogreWindow = ogreWindow;
             SmoothShow = true;
 
             Gui gui = Gui.Instance;
-            OgreResourceGroupManager.getInstance().addResourceLocation(splashScreenLocation, "EngineArchive", "MyGUI", true);
-            gui.load("SplashScreen.xml");
-            layout = LayoutManager.Instance.loadLayout("SplashScreen.layout");
+            gui.load(splashScreenResourceFile);
+            layout = LayoutManager.Instance.loadLayout(splashScreenLayoutFile);
             mainWidget = layout.getWidget(0);
 
             int imageWidth = 1920;

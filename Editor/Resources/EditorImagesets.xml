@@ -2,4 +2,5 @@
 
 <MyGUI type="List">
   <List file="Medical.Resources.EditorIcons.xml"/>
+  <List file="Medical.Resources.TimelineImages.xml"/>
 </MyGUI>

@@ -91,6 +91,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.layout" />
     <None Include="app.config" />
     <None Include="Properties\BodyAtlas.manifest" />
     <None Include="Properties\Settings.settings">
@@ -102,6 +103,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\Background\Background.material" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AboutImage.png" />
@@ -113,6 +115,12 @@
     <EmbeddedResource Include="Resources\AppButton.xml" />
     <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
     <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
+    <EmbeddedResource Include="Resources\Background\BodyAtlasBackground.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\AnomalousLogo.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.png" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />
+    <EmbeddedResource Include="Resources\SplashScreen\SplashText.png" />
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -125,6 +133,7 @@
       <Name>Standalone</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
