@@ -126,7 +126,7 @@ namespace Medical.GUI
             }
             catch (Exception e)
             {
-                ThreadManager.invoke(new CallbackString(licenseServerFail), "Could not connect to license server. Please try again later.\nReason is {0}", e.Message);
+                ThreadManager.invoke(new CallbackString(licenseServerFail), String.Format("Could not connect to license server. Please try again later.\nReason is {0}", e.Message));
             }
         }
 

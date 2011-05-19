@@ -53,7 +53,7 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            LicenseManager = new LicenseManager("Piper's Joint Based Occlusion", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
+            LicenseManager = new LicenseManager("Anomalous Body Atlas", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
             WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
