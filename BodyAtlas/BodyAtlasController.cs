@@ -69,10 +69,11 @@ namespace Medical
             splashScreen.updateStatus(40, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
+            splashScreen.updateStatus(85, "Loading Plugins");
+            finishInitialization();
+
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
-
-            finishInitialization();
 
             return startupSuceeded;
         }
@@ -282,6 +283,7 @@ namespace Medical
             }
             else
             {
+                controller.GUIManager.setMainInterfaceEnabled(false);
                 startKeyDialog();
             }
         }
@@ -300,6 +302,7 @@ namespace Medical
 
         void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
         {
+            controller.GUIManager.setMainInterfaceEnabled(true);
             addPlugins();
             controller.GUIManager.createGUIPlugins();
             //MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
