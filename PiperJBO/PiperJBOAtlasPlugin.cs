@@ -56,6 +56,7 @@ namespace Medical.GUI
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
+            SceneViewController_ActiveWindowChanged(standaloneController.SceneViewController.ActiveWindow);
 
             //Create Dialogs
             //Wizards
