@@ -16,6 +16,7 @@ namespace Medical
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private LicenseManager licenseManager;
+        private List<String> movementSequenceDirectories = new List<string>();
 
         //Dialogs
         private MandibleMovementDialog mandibleMovementDialog;
@@ -35,6 +36,14 @@ namespace Medical
             this.licenseManager = standaloneController.App.LicenseManager;
             anatomyController = new AnatomyController(standaloneController.ImageRenderer);
             bookmarksController = new BookmarksController(standaloneController);
+
+            //This is temporary cruft from the old system.
+            movementSequenceDirectories.Add("/Graphics");
+            movementSequenceDirectories.Add("/MRI");
+            movementSequenceDirectories.Add("/RadiographyCT");
+            movementSequenceDirectories.Add("/Clinical");
+            movementSequenceDirectories.Add("/DentitionProfile");
+            movementSequenceDirectories.Add("/Doppler");
         }
 
         public void Dispose()
@@ -103,6 +112,15 @@ namespace Medical
         {
             mandibleMovementDialog.sceneLoaded(scene);
             anatomyController.sceneLoaded();
+
+            //Load sequences
+            MedicalController medicalController = standaloneController.MedicalController;
+            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+            StandaloneApp app = standaloneController.App;
+
+            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
+            standaloneController.MovementSequenceController.loadSequenceDirectories(sequenceDirectory, movementSequenceDirectories);
         }
 
         public void sceneUnloading(SimScene scene)

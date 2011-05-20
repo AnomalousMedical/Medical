@@ -480,7 +480,6 @@ namespace Medical
                     sceneViewController.createCameras(medicalController.CurrentScene);
                     SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
 
-                    loadSceneProperties(medicalScene);
                     if (SceneLoaded != null)
                     {
                         SceneLoaded.Invoke(medicalController.CurrentScene);
@@ -489,13 +488,6 @@ namespace Medical
                 success = true;
             }
             return success;
-        }
-
-        private void loadSceneProperties(SimulationScene medicalScene)
-        {
-            String sequenceDirectory = medicalController.CurrentSceneDirectory + "/" + medicalScene.SequenceDirectory;
-
-            movementSequenceController.loadSequenceDirectories(sequenceDirectory, app.MovementSequenceDirectories);
         }
 
         /// <summary>

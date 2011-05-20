@@ -56,8 +56,6 @@ namespace Medical.GUI
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
-
-            //Gui.Instance.load("Imagesets.xml");
         }
 
         public void createDialogs(DialogManager dialogManager)

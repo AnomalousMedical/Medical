@@ -12,8 +12,6 @@ namespace Medical.Controller
             WatermarkText = null;
         }
 
-        private List<String> movementSequenceDirectories = new List<string>();
-
         public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
 
         public abstract void addHelpDocuments(HtmlHelpController helpController);
@@ -43,18 +41,5 @@ namespace Medical.Controller
         public String WatermarkText { get; protected set; }
 
         public LicenseManager LicenseManager { get; protected set; }
-
-        public List<String> MovementSequenceDirectories
-        {
-            get
-            {
-                return movementSequenceDirectories;
-            }
-        }
-
-        protected void addMovementSequenceDirectory(String directory)
-        {
-            movementSequenceDirectories.Add(directory);
-        }
     }
 }

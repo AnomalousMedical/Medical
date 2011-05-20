@@ -62,7 +62,6 @@ namespace Medical
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
-            determineResourceFiles();
             controller.createGUI();
 
             //Scene Load
@@ -234,16 +233,6 @@ namespace Medical
             splashScreen.Dispose();
             splashScreen = null;
             controller.sceneRevealed();
-        }
-
-        private void determineResourceFiles()
-        {
-            this.addMovementSequenceDirectory("/Graphics");
-            this.addMovementSequenceDirectory("/MRI");
-            this.addMovementSequenceDirectory("/RadiographyCT");
-            this.addMovementSequenceDirectory("/Clinical");
-            this.addMovementSequenceDirectory("/DentitionProfile");
-            this.addMovementSequenceDirectory("/Doppler");
         }
 
         private void addPlugins()
