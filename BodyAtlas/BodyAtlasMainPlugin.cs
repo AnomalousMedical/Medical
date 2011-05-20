@@ -47,18 +47,16 @@ namespace Medical.GUI
             aboutDialog.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initialize(StandaloneController standaloneController)
         {
-            this.guiManager = guiManager;
+            this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
-        }
 
-        public void createDialogs(DialogManager dialogManager)
-        {
+            //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
 
             chooseSceneDialog = new ChooseSceneDialog();
@@ -74,21 +72,15 @@ namespace Medical.GUI
             options.VideoOptionsChanged += new EventHandler(options_VideoOptionsChanged);
 
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
-            dialogManager.addManagedDialog(renderDialog);
-        }
+            guiManager.addManagedDialog(renderDialog);
 
-        public void addToTaskbar(Taskbar taskbar)
-        {
+            //Taskbar
+            Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppMenu(appMenu, "AppButton/Image");
 
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
-        }
-
-        public void finishInitialization()
-        {
-            
         }
 
         public void sceneLoaded(SimScene scene)

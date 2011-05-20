@@ -31,38 +31,31 @@ namespace Medical
             propTimeline.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initialize(StandaloneController standaloneController)
         {
+            GUIManager guiManager = standaloneController.GUIManager;
             Gui.Instance.load("Medical.Resources.EditorImagesets.xml");
 
             this.standaloneController = standaloneController;
-        }
 
-        public void createDialogs(DialogManager dialogManager)
-        {
+            //Dialogs
             propTimeline = new PropTimeline();
-            dialogManager.addManagedDialog(propTimeline);
+            guiManager.addManagedDialog(propTimeline);
 
-            timelineProperties = new TimelineProperties(standaloneController.TimelineController, this, dialogManager);
-            dialogManager.addManagedDialog(timelineProperties);
+            timelineProperties = new TimelineProperties(standaloneController.TimelineController, this, guiManager);
+            guiManager.addManagedDialog(timelineProperties);
 
             timelineAnalyzer = new TimelineAnalyzer(standaloneController.TimelineController, timelineProperties);
-            dialogManager.addManagedDialog(timelineAnalyzer);
+            guiManager.addManagedDialog(timelineAnalyzer);
 
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(movementSequenceEditor);
-        }
+            guiManager.addManagedDialog(movementSequenceEditor);
 
-        public void addToTaskbar(Taskbar taskbar)
-        {
+            //Taskbar
+            Taskbar taskbar = guiManager.Taskbar;
             taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineEditorIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
-        }
-
-        public void finishInitialization()
-        {
-
         }
 
         public void sceneLoaded(SimScene scene)

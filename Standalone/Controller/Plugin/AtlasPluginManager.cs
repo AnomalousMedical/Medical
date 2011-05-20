@@ -74,10 +74,7 @@ namespace Medical
         {
             foreach (AtlasPlugin plugin in plugins)
             {
-                plugin.initializeGUI(standaloneController, guiManager);
-                plugin.createDialogs(dialogManager);
-                plugin.addToTaskbar(taskbar);
-                plugin.finishInitialization();
+                plugin.initialize(standaloneController);
                 if (currentScene != null)
                 {
                     plugin.sceneLoaded(currentScene);

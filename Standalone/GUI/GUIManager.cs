@@ -198,11 +198,24 @@ namespace Medical.GUI
             standaloneController.AtlasPluginManager.createMenus(menu);
         }
 
+        public void addManagedDialog(Dialog dialog)
+        {
+            dialogManager.addManagedDialog(dialog);
+        }
+
         public BorderLayoutContainer ScreenLayout
         {
             get
             {
                 return innerBorderLayout;
+            }
+        }
+
+        public Taskbar Taskbar
+        {
+            get
+            {
+                return taskbar;
             }
         }
 

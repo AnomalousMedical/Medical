@@ -23,26 +23,17 @@ namespace Medical
             cloneWindowDialog.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initialize(StandaloneController standaloneController)
         {
             Gui.Instance.load("Medical.Resources.LectureIcons.xml");
 
             this.standaloneController = standaloneController;
-        }
 
-        public void createDialogs(DialogManager dialogManager)
-        {
+            //Create dialogs
             cloneWindowDialog = new CloneWindowDialog();
-        }
 
-        public void addToTaskbar(Taskbar taskbar)
-        {
-            taskbar.addItem(new CloneWindowTaskbarItem(standaloneController));
-        }
-
-        public void finishInitialization()
-        {
-            
+            //Taskbar
+            standaloneController.GUIManager.Taskbar.addItem(new CloneWindowTaskbarItem(standaloneController));
         }
 
         public void sceneLoaded(SimScene scene)

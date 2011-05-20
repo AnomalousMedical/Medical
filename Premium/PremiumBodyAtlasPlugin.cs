@@ -59,40 +59,37 @@ namespace Medical
             anatomyController.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initialize(StandaloneController standaloneController)
         {
             Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
 
-            this.guiManager = guiManager;
+            this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
-        }
 
-        public void createDialogs(DialogManager dialogManager)
-        {
+            //Dialogs
             //BodyAtlas
             mandibleMovementDialog = new MandibleMovementDialog(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(mandibleMovementDialog);
+            guiManager.addManagedDialog(mandibleMovementDialog);
 
             notesDialog = new NotesDialog(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(notesDialog);
+            guiManager.addManagedDialog(notesDialog);
 
             stateList = new StateListPopup(standaloneController.MedicalStateController);
-            dialogManager.addManagedDialog(stateList);
+            guiManager.addManagedDialog(stateList);
 
             windowLayout = new WindowLayout(standaloneController);
-            dialogManager.addManagedDialog(windowLayout);
+            guiManager.addManagedDialog(windowLayout);
 
             sequencePlayer = new SequencePlayer(standaloneController.MovementSequenceController);
-            dialogManager.addManagedDialog(sequencePlayer);
+            guiManager.addManagedDialog(sequencePlayer);
 
             anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
-            dialogManager.addManagedDialog(anatomyFinder);
+            guiManager.addManagedDialog(anatomyFinder);
 
             bookmarks = new BookmarksGUI(bookmarksController);
-        }
 
-        public void addToTaskbar(Taskbar taskbar)
-        {
+            //Taskbar
+            Taskbar taskbar = guiManager.Taskbar;
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
@@ -101,11 +98,6 @@ namespace Medical
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIcon"));
-        }
-
-        public void finishInitialization()
-        {
-            
         }
 
         public void sceneLoaded(SimScene scene)

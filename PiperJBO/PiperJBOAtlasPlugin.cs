@@ -43,11 +43,11 @@ namespace Medical.GUI
             navigationController.Dispose();
         }
 
-        public void initializeGUI(StandaloneController standaloneController, GUIManager guiManager)
+        public void initialize(StandaloneController standaloneController)
         {
             Gui.Instance.load("Medical.Resources.PiperJBOImagesets.xml");
 
-            this.guiManager = guiManager;
+            this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
 
             stateWizardPanelController = new StateWizardPanelController(Gui.Instance, standaloneController.MedicalController, standaloneController.MedicalStateController, NavigationController, LayerController, standaloneController.SceneViewController, standaloneController.TemporaryStateBlender, standaloneController.MovementSequenceController, standaloneController.ImageRenderer, standaloneController.MeasurementGrid);
@@ -56,21 +56,17 @@ namespace Medical.GUI
             stateWizardController.Finished += new StatePickerFinished(stateWizardController_Finished);
 
             standaloneController.SceneViewController.ActiveWindowChanged += new SceneViewWindowEvent(SceneViewController_ActiveWindowChanged);
-        }
 
-        public void createDialogs(DialogManager dialogManager)
-        {
+            //Create Dialogs
             //Wizards
             wizards = new PiperJBOWizards(StateWizardPanelController, StateWizardController, licenseManager);
 
             //Distortions Popup, must come after wizards
             distortionChooser = new DistortionChooser(StateWizardController, this);
-            dialogManager.addManagedDialog(distortionChooser);
-        }
+            guiManager.addManagedDialog(distortionChooser);
 
-        public void addToTaskbar(Taskbar taskbar)
-        {
-            taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
+            //Taskbar
+            guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
         }
 
         public void finishInitialization()

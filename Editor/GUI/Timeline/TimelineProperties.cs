@@ -62,7 +62,7 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorGUI, DialogManager dialogManager)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorGUI, GUIManager guiManager)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelineController = timelineController;
@@ -168,15 +168,15 @@ namespace Medical.GUI
 
             fileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__Main");
             timelineController.FileBrowser = fileBrowserDialog;
-            dialogManager.addManagedDialog(fileBrowserDialog);
+            guiManager.addManagedDialog(fileBrowserDialog);
 
             openTimelineFileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__OpenTimeline");
-            dialogManager.addManagedDialog(openTimelineFileBrowserDialog);
+            guiManager.addManagedDialog(openTimelineFileBrowserDialog);
 
             saveTimelineDialog = new SaveTimelineDialog();
             saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
 
-            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, dialogManager);
+            finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, guiManager);
 
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
             timelineIndexEditor.SaveIndexData += new EventHandler(timelineIndexEditor_SaveIndexData);

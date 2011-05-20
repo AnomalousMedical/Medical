@@ -9,13 +9,7 @@ namespace Medical
 {
     public interface AtlasPlugin : IDisposable
     {
-        void initializeGUI(StandaloneController standaloneController, GUIManager guiManager);
-
-        void createDialogs(DialogManager dialogManager);
-
-        void addToTaskbar(Taskbar taskbar);
-
-        void finishInitialization();
+        void initialize(StandaloneController standaloneController);
 
         void sceneLoaded(SimScene scene);
 
