@@ -104,14 +104,6 @@ namespace Medical.GUI
             standaloneController.TimelineController.QuestionProvider = questionProvider;
         }
 
-        public void createGUIPlugins()
-        {
-            taskbar.SuppressLayout = true;
-            standaloneController.AtlasPluginManager.initialzePlugins(this, dialogManager, taskbar);
-            taskbar.SuppressLayout = false;
-            taskbar.layout();
-        }
-
         public void windowChanged(OSWindow newWindow)
         {
             screenLayoutManager.changeOSWindow(newWindow);

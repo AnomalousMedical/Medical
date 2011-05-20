@@ -260,7 +260,7 @@ namespace Medical
             if (LicenseManager.KeyValid)
             {
                 addPlugins();
-                controller.GUIManager.createGUIPlugins();
+                controller.initializePlugins();
             }
             else
             {
@@ -285,8 +285,7 @@ namespace Medical
         {
             controller.GUIManager.setMainInterfaceEnabled(true);
             addPlugins();
-            controller.GUIManager.createGUIPlugins();
-            //MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
+            controller.initializePlugins();
         }
 
         #endregion

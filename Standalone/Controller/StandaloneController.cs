@@ -224,6 +224,15 @@ namespace Medical
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
         }
 
+        public void initializePlugins()
+        {
+            Taskbar taskbar = GUIManager.Taskbar;
+            taskbar.SuppressLayout = true;
+            atlasPluginManager.initialzePlugins();
+            taskbar.SuppressLayout = false;
+            taskbar.layout();
+        }
+
         public void closeMainWindow()
         {
             mainWindow.close();

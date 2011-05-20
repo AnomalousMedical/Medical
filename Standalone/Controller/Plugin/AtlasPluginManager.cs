@@ -70,7 +70,7 @@ namespace Medical
             plugins.Add(plugin);
         }
 
-        internal void initialzePlugins(GUIManager guiManager, DialogManager dialogManager, Taskbar taskbar)
+        internal void initialzePlugins()
         {
             foreach (AtlasPlugin plugin in plugins)
             {
