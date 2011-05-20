@@ -9,6 +9,8 @@ using System.IO;
 using Engine.ObjectManagement;
 using OgrePlugin;
 using OgreWrapper;
+using MyGUIPlugin;
+using System.Diagnostics;
 
 namespace Medical
 {
@@ -91,6 +93,8 @@ namespace Medical
 
             splashScreen.updateStatus(100, "");
             splashScreen.hide();
+
+            finishInitialization();
 
             return startupSuceeded;
         }
@@ -262,5 +266,51 @@ namespace Medical
             this.addMovementSequenceDirectory("/DentitionProfile");
             this.addMovementSequenceDirectory("/Doppler");
         }
+
+        #region License
+
+        public void finishInitialization()
+        {
+            bool keyValid = LicenseManager.KeyValid;
+            if (!keyValid)
+            {
+                if (LicenseManager.IsExpired)
+                {
+                    MessageBox.show("Your trial has expired. Would you like to go to AnomalousMedical.com and upgrade?", "Trial Expired", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, goToWebsiteCallback);
+                }
+                else
+                {
+                    startKeyDialog();
+                }
+            }
+        }
+
+        private void goToWebsiteCallback(MessageBoxStyle result)
+        {
+            if (result == MessageBoxStyle.Yes)
+            {
+                Process.Start("http://www.anomalousmedical.com");
+            }
+            startKeyDialog();
+        }
+
+        private void startKeyDialog()
+        {
+            LicenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
+            LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
+            LicenseManager.showKeyDialog(ProductID);
+        }
+
+        void licenseManager_KeyInvalid(object sender, EventArgs e)
+        {
+            controller.closeMainWindow();
+        }
+
+        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
+        {
+            //MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
+        }
+
+        #endregion
     }
 }

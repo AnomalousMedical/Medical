@@ -87,49 +87,7 @@ namespace Medical.GUI
 
         public void finishInitialization()
         {
-            bool keyValid = licenseManager.KeyValid;
-            if (!keyValid)
-            {
-                if (licenseManager.IsExpired)
-                {
-                    MessageBox.show("Your trial has expired. Would you like to go to AnomalousMedical.com and upgrade?", "Trial Expired", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, goToWebsiteCallback);
-                }
-                else
-                {
-                    startKeyDialog();
-                }
-            }
-        }
-
-        private void goToWebsiteCallback(MessageBoxStyle result)
-        {
-            if (result == MessageBoxStyle.Yes)
-            {
-                Process.Start("http://www.anomalousmedical.com");
-            }
-            startKeyDialog();
-        }
-
-        private void startKeyDialog()
-        {
-            licenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
-            licenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-            licenseManager.showKeyDialog(bodyAtlasController.ProductID);
-        }
-
-        void licenseManager_KeyInvalid(object sender, EventArgs e)
-        {
-            standaloneController.closeMainWindow();
-        }
-
-        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
-        {
-            MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
-        }
-
-        void restartMessageClosed(MessageBoxStyle result)
-        {
-            standaloneController.closeMainWindow();
+            
         }
 
         public void sceneLoaded(SimScene scene)
