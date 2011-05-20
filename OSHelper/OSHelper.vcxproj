@@ -138,6 +138,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\CredentialsManager.cpp" />
     <ClCompile Include="Src\ImageViewer.cpp" />
     <ClCompile Include="Src\ImageWindow.cpp" />
     <ClCompile Include="Src\MultiTouch.cpp" />

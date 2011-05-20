@@ -110,6 +110,7 @@
     <Compile Include="Controller\Grid\GridPropertiesControl.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRendererProgress.cs" />
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
+    <Compile Include="Controller\OSHelper\CredentialsManager.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
     <Compile Include="Controller\Props\JVAProp.cs" />

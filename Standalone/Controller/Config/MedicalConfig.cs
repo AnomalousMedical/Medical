@@ -17,6 +17,7 @@ namespace Medical
         private static String docRoot;
         private static String windowsFile;
         private static String camerasFile;
+        private static String credentialsFile;
         private static String bookmarksFolder;
         private static ConfigSection program;
         private static TaskbarAlignment taskbarAlignment = TaskbarAlignment.Top;
@@ -44,6 +45,7 @@ namespace Medical
             camerasFile = docRoot + "/cameras.ini";
             bookmarksFolder = docRoot + "/Bookmarks";
             recentDocsFile = docRoot + "/docs.ini";
+            credentialsFile = docRoot + "/credentials.dat";
             if (!Directory.Exists(docRoot))
             {
                 Directory.CreateDirectory(docRoot);
@@ -97,6 +99,14 @@ namespace Medical
             get
             {
                 return docRoot;
+            }
+        }
+
+        public static String CredentialsFile
+        {
+            get
+            {
+                return credentialsFile;
             }
         }
 
