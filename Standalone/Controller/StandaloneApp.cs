@@ -30,14 +30,6 @@ namespace Medical.Controller
 
         public abstract int ProductID { get; }
 
-        public virtual bool IsTrial
-        {
-            get
-            {
-                return false;
-            }
-        }
-
         public String WatermarkText { get; protected set; }
 
         public LicenseManager LicenseManager { get; protected set; }

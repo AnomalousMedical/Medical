@@ -65,7 +65,7 @@ namespace Medical
             controller.createGUI();
 
             //Scene Load
-            splashScreen.updateStatus(40, "Loading Scene");
+            splashScreen.updateStatus(30, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
             splashScreen.updateStatus(85, "Loading Plugins");
@@ -206,14 +206,6 @@ namespace Medical
             get
             {
                 return 1;
-            }
-        }
-
-        public override bool IsTrial
-        {
-            get
-            {
-                return false;
             }
         }
 
