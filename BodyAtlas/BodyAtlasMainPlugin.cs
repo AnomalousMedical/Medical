@@ -55,7 +55,6 @@ namespace Medical.GUI
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
             appMenu = new BodyAtlasAppMenu(this, standaloneController);
-            guiManager.setAppMenu(appMenu);
         }
 
         public void createDialogs(DialogManager dialogManager)
@@ -80,6 +79,8 @@ namespace Medical.GUI
 
         public void addToTaskbar(Taskbar taskbar)
         {
+            taskbar.setAppMenu(appMenu, "AppButton/Image");
+
             DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);

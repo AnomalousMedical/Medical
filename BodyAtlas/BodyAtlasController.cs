@@ -63,28 +63,6 @@ namespace Medical
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
             determineResourceFiles();
-            controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
-            if (true)//PiperJBO
-            {
-                controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
-            }
-            if (true)//premium
-            {
-                controller.AtlasPluginManager.addPlugin("Premium.dll");
-            }
-            else
-            {
-                controller.SceneViewController.AllowRotation = false;
-                controller.SceneViewController.AllowZoom = false;
-            }
-            if (true)//Lecture
-            {
-                controller.AtlasPluginManager.addPlugin("Lecture.dll");
-            }
-            if (true)//editor
-            {
-                controller.AtlasPluginManager.addPlugin("Editor.dll");
-            }
             controller.createGUI();
 
             //Scene Load
@@ -267,31 +245,45 @@ namespace Medical
             this.addMovementSequenceDirectory("/Doppler");
         }
 
+        private void addPlugins()
+        {
+            controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
+            if (true)//PiperJBO
+            {
+                controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
+            }
+            if (true)//premium
+            {
+                controller.AtlasPluginManager.addPlugin("Premium.dll");
+            }
+            else
+            {
+                controller.SceneViewController.AllowRotation = false;
+                controller.SceneViewController.AllowZoom = false;
+            }
+            if (true)//Lecture
+            {
+                controller.AtlasPluginManager.addPlugin("Lecture.dll");
+            }
+            if (true)//editor
+            {
+                controller.AtlasPluginManager.addPlugin("Editor.dll");
+            }
+        }
+
         #region License
 
         public void finishInitialization()
         {
-            bool keyValid = LicenseManager.KeyValid;
-            if (!keyValid)
+            if (LicenseManager.KeyValid)
             {
-                if (LicenseManager.IsExpired)
-                {
-                    MessageBox.show("Your trial has expired. Would you like to go to AnomalousMedical.com and upgrade?", "Trial Expired", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, goToWebsiteCallback);
-                }
-                else
-                {
-                    startKeyDialog();
-                }
+                addPlugins();
+                controller.GUIManager.createGUIPlugins();
             }
-        }
-
-        private void goToWebsiteCallback(MessageBoxStyle result)
-        {
-            if (result == MessageBoxStyle.Yes)
+            else
             {
-                Process.Start("http://www.anomalousmedical.com");
+                startKeyDialog();
             }
-            startKeyDialog();
         }
 
         private void startKeyDialog()
@@ -308,6 +300,8 @@ namespace Medical
 
         void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
         {
+            addPlugins();
+            controller.GUIManager.createGUIPlugins();
             //MessageBox.show("Please restart to apply your license changes.", "Restart required", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo, restartMessageClosed);
         }
 

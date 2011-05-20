@@ -28,7 +28,7 @@ namespace Medical.GUI
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
-        internal Taskbar(AppMenu appMenu, StandaloneController controller)
+        internal Taskbar(StandaloneController controller)
         {
             myGUIlayout = LayoutManager.Instance.loadLayout("Medical.GUI.Taskbar.Taskbar.layout");
 
@@ -36,12 +36,6 @@ namespace Medical.GUI
             taskbarWidget.MouseDrag += new MyGUIEvent(taskbarWidget_MouseDrag);
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
-
-            if (appMenu != null)
-            {
-                this.appMenu = appMenu;
-                appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
-            }
         }
 
         void taskbarWidget_MouseDrag(Widget source, EventArgs e)
@@ -105,6 +99,16 @@ namespace Medical.GUI
                 item.Dispose();
             }
             LayoutManager.Instance.unloadLayout(myGUIlayout);
+        }
+
+        public void setAppMenu(AppMenu appMenu, String appIcon)
+        {
+            if (appMenu != null)
+            {
+                this.appMenu = appMenu;
+                appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+                appButton.StaticImage.setItemResource(appIcon);
+            }
         }
 
         public void addItem(TaskbarItem item)

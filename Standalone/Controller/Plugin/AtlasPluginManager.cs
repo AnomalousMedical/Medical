@@ -19,6 +19,7 @@ namespace Medical
     {
         private StandaloneController standaloneController;
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
+        private SimScene currentScene;
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
@@ -69,35 +70,18 @@ namespace Medical
             plugins.Add(plugin);
         }
 
-        internal void initializeGUI(GUIManager guiManager)
+        internal void initialzePlugins(GUIManager guiManager, DialogManager dialogManager, Taskbar taskbar)
         {
             foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.initializeGUI(standaloneController, guiManager);
-            }
-        }
-
-        internal void createDialogs(DialogManager dialogManager)
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
                 plugin.createDialogs(dialogManager);
-            }
-        }
-
-        internal void addToTaskbar(Taskbar taskbar)
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
                 plugin.addToTaskbar(taskbar);
-            }
-        }
-
-        internal void finishInitialization()
-        {
-            foreach (AtlasPlugin plugin in plugins)
-            {
                 plugin.finishInitialization();
+                if (currentScene != null)
+                {
+                    plugin.sceneLoaded(currentScene);
+                }
             }
         }
 
@@ -131,10 +115,12 @@ namespace Medical
             {
                 plugin.sceneUnloading(scene);
             }
+            currentScene = null;
         }
 
         private void standaloneController_SceneLoaded(SimScene scene)
         {
+            currentScene = scene;
             foreach (AtlasPlugin plugin in plugins)
             {
                 plugin.sceneLoaded(scene);

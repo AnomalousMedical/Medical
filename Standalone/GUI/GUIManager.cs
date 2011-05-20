@@ -29,7 +29,6 @@ namespace Medical.GUI
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
-        private AppMenu appMenu;
 
         //Animation callbacks
         private UIAnimationFinishedCallback leftAnimationFinished;
@@ -55,11 +54,6 @@ namespace Medical.GUI
             taskbar.Dispose();
         }
 
-        public void setAppMenu(AppMenu appMenu)
-        {
-            this.appMenu = appMenu;
-        }
-
         public void createGUI()
         {
             Gui gui = Gui.Instance;
@@ -69,19 +63,15 @@ namespace Medical.GUI
             screenLayoutManager = new ScreenLayoutManager(standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle);
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
-            standaloneController.AtlasPluginManager.initializeGUI(this);
-
             innerBorderLayout = new BorderLayoutContainer();
 
             //Dialogs
             dialogManager = new DialogManager();
-            standaloneController.AtlasPluginManager.createDialogs(dialogManager);
 
             //Taskbar
-            taskbar = new Taskbar(appMenu, standaloneController);
+            taskbar = new Taskbar(standaloneController);
             taskbar.Alignment = MedicalConfig.TaskbarAlignment;
             taskbar.SuppressLayout = true;
-            standaloneController.AtlasPluginManager.addToTaskbar(taskbar);
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
@@ -112,8 +102,14 @@ namespace Medical.GUI
 
             questionProvider = new MyGUIQuestionProvider(this);
             standaloneController.TimelineController.QuestionProvider = questionProvider;
+        }
 
-            standaloneController.AtlasPluginManager.finishInitialization();
+        public void createGUIPlugins()
+        {
+            taskbar.SuppressLayout = true;
+            standaloneController.AtlasPluginManager.initialzePlugins(this, dialogManager, taskbar);
+            taskbar.SuppressLayout = false;
+            taskbar.layout();
         }
 
         public void windowChanged(OSWindow newWindow)
