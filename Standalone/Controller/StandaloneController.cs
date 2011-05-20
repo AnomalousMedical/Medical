@@ -231,6 +231,7 @@ namespace Medical
             atlasPluginManager.initialzePlugins();
             taskbar.SuppressLayout = false;
             taskbar.layout();
+            guiManager.loadDialogPositions();
         }
 
         public void closeMainWindow()

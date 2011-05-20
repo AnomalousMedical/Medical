@@ -95,8 +95,6 @@ namespace Medical.GUI
             taskbar.SuppressLayout = false;
             taskbar.layout();
 
-            dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
-
             continuePrompt = new MyGUIContinuePromptProvider();
             standaloneController.TimelineController.ContinuePrompt = continuePrompt;
 
@@ -209,6 +207,11 @@ namespace Medical.GUI
             {
                 return taskbar;
             }
+        }
+
+        internal void loadDialogPositions()
+        {
+            dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
         }
 
         private void animationCompleted(LayoutContainer oldChild)
