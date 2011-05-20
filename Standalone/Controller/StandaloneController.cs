@@ -215,11 +215,6 @@ namespace Medical
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
-            if (PlatformConfig.CreateMenu)
-            {
-                guiManager.createMenuBar(mainWindow.MenuBar);
-            }
-
             //Create scene view windows
             sceneViewController.createFromPresets(windowPresetController.getPresetSet("Primary"));
         }
@@ -232,6 +227,11 @@ namespace Medical
             taskbar.SuppressLayout = false;
             taskbar.layout();
             guiManager.loadDialogPositions();
+
+            if (PlatformConfig.CreateMenu)
+            {
+                guiManager.createMenuBar(mainWindow.MenuBar);
+            }
         }
 
         public void closeMainWindow()
