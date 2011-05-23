@@ -87,7 +87,6 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
-    <Compile Include="Features.cs" />
     <Compile Include="GUI\Distortions\DistortionChooser.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />

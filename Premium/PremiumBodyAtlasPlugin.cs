@@ -61,6 +61,9 @@ namespace Medical
 
         public void initialize(StandaloneController standaloneController)
         {
+            standaloneController.SceneViewController.AllowRotation = true;
+            standaloneController.SceneViewController.AllowZoom = true;
+
             Gui.Instance.load("Medical.Resources.PremiumImagesets.xml");
 
             this.guiManager = standaloneController.GUIManager;

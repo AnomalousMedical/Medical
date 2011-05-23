@@ -63,6 +63,8 @@ namespace Medical
 
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
+            controller.SceneViewController.AllowRotation = false;
+            controller.SceneViewController.AllowZoom = false;
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
@@ -231,27 +233,10 @@ namespace Medical
         private void addPlugins()
         {
             controller.AtlasPluginManager.addPlugin(new BodyAtlasMainPlugin(LicenseManager, this));
-            if (true)//PiperJBO
-            {
-                controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
-            }
-            if (true)//premium
-            {
-                controller.AtlasPluginManager.addPlugin("Premium.dll");
-            }
-            else
-            {
-                controller.SceneViewController.AllowRotation = false;
-                controller.SceneViewController.AllowZoom = false;
-            }
-            if (true)//Lecture
-            {
-                controller.AtlasPluginManager.addPlugin("Lecture.dll");
-            }
-            if (true)//editor
-            {
-                controller.AtlasPluginManager.addPlugin("Editor.dll");
-            }
+            controller.AtlasPluginManager.addPlugin("PiperJBO.dll");
+            controller.AtlasPluginManager.addPlugin("Premium.dll");
+            controller.AtlasPluginManager.addPlugin("Lecture.dll");
+            controller.AtlasPluginManager.addPlugin("Editor.dll");
         }
 
         #region License

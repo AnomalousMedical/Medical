@@ -7,11 +7,19 @@ using System.Text;
 
 namespace Medical
 {
+    enum FeatureCodes
+    {
+        EditorPlugin = 2
+    }
+
     class EditorAtlasPluginEntryPoint : AtlasPluginEntryPointAttribute
     {
         public override void createPlugin(StandaloneController standaloneController)
         {
-            standaloneController.AtlasPluginManager.addPlugin(new EditorPlugin());
+            if (standaloneController.App.LicenseManager.allowFeature((int)FeatureCodes.EditorPlugin))
+            {
+                standaloneController.AtlasPluginManager.addPlugin(new EditorPlugin());
+            }
         }
     }
 }

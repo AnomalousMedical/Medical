@@ -272,7 +272,7 @@ namespace Medical
         private void createWizards()
         {
             //Create single distortion wizards
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_DOPPLER))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
             {
                 //Doppler
                 StateWizard dopplerWizard = new StateWizard("Doppler", stateWizardController, WizardType.Exam);
@@ -285,7 +285,7 @@ namespace Medical
                 stateWizardController.addWizard(dopplerWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_DENTITION))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
             {
                 //Teeth
                 StateWizard teethWizard = new StateWizard("Dentition", stateWizardController, WizardType.Anatomy);
@@ -299,7 +299,7 @@ namespace Medical
                 stateWizardController.addWizard(teethWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_CEPHALOMETRIC))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
             {
                 //Profile
                 StateWizard profileWizard = new StateWizard("Cephalometric", stateWizardController, WizardType.Anatomy);
@@ -313,7 +313,7 @@ namespace Medical
 
 
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_MANDIBLE))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
             {
                 //Bone
                 StateWizard boneWizard = new StateWizard("Mandible", stateWizardController, WizardType.Anatomy);
@@ -328,7 +328,7 @@ namespace Medical
                 stateWizardController.addWizard(boneWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_DISC_SPACE))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
             {
                 //Disc
                 StateWizard discWizard = new StateWizard("Disc Space", stateWizardController, WizardType.Exam);
@@ -341,7 +341,7 @@ namespace Medical
                 stateWizardController.addWizard(discWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_DISC_CLOCK))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
             {
                 //Disc
                 StateWizard discClockWizard = new StateWizard("Disc Clock Face", stateWizardController, WizardType.Anatomy);
@@ -357,7 +357,7 @@ namespace Medical
 
             //Create combination distortion wizards
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_CEPHALOMETRIC_DENTITION))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
             {
                 //Profile + Teeth
                 StateWizard profileTeethWizard = new StateWizard("Cephalometric and Dentition", stateWizardController, WizardType.Exam);
@@ -373,7 +373,7 @@ namespace Medical
                 stateWizardController.addWizard(profileTeethWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_CLINICAL_DOPPLER))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
             {
                 //Clinical
                 StateWizard clinicalWizard = new StateWizard("Clinical and Doppler", stateWizardController, WizardType.Exam);
@@ -391,7 +391,7 @@ namespace Medical
                 stateWizardController.addWizard(clinicalWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_RADIOGRAPHY))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
             {
                 //CT/Radiography Wizard
                 StateWizard ctWizard = new StateWizard("Clinical and Radiography", stateWizardController, WizardType.Exam);
@@ -413,7 +413,7 @@ namespace Medical
                 stateWizardController.addWizard(ctWizard);
             }
 
-            //if (licenseManager.allowFeature((int)Features.PIPER_JBO_WIZARD_MRI))
+            if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
             {
                 //MRI Wizard
                 StateWizard mriWizard = new StateWizard("Clinical and MRI", stateWizardController, WizardType.Exam);
