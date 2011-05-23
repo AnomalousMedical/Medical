@@ -10,7 +10,7 @@
         </Widget>
         <Widget type="Edit" skin="Edit" position="6 72 467 22" name="UserText"/>
         <Widget type="Button" skin="Button" position="6 199 82 25" align="Left Bottom" name="ActivateButton">
-            <Property key="Widget_Caption" value="Activate"/>
+            <Property key="Widget_Caption" value="Log In"/>
         </Widget>
         <Widget type="Button" skin="Button" position="92 199 82 25" align="Left Bottom" name="CancelButton">
             <Property key="Widget_Caption" value="Cancel"/>

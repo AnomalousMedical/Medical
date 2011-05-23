@@ -40,6 +40,7 @@ namespace Medical
         private CallbackDelegate showKeyDialogCallback;
 
         private AnomalousLicense license;
+        private String keyDialogMessage;
 
         public LicenseManager(String programName, String keyFile, int productID)
         {
@@ -49,6 +50,7 @@ namespace Medical
             idCallback = new MachineIDCallback(getMachineIdCallback);
             keyValidCallback = new CallbackDelegate(fireKeyValid);
             showKeyDialogCallback = new CallbackDelegate(showKeyDialog);
+            getMachineId();
         }
 
         public void getKey()
@@ -63,13 +65,44 @@ namespace Medical
                         {
                             try
                             {
+                                //Load old license
                                 byte[] fileContents = new byte[stream.Length];
                                 stream.Read(fileContents, 0, fileContents.Length);
                                 license = new AnomalousLicense(fileContents);
                             }
                             catch (Exception)
                             {
-
+                                keyDialogMessage = "Local license corrupted. Please sign in again.";
+                            }
+                        }
+                        //Validate credentials by getting the license from the server again
+                        if (license != null)
+                        {
+                            try
+                            {
+                                AnomalousLicenseServer licenseServer = new AnomalousLicenseServer(MedicalConfig.LicenseServerURL);
+                                byte[] licenseBytes = licenseServer.createLicenseFile(license.User, license.Pass, machineID, productID);
+                                if (licenseBytes != null)
+                                {
+                                    storeLicenseFile(licenseBytes);
+                                    license = new AnomalousLicense(licenseBytes);
+                                }
+                                else
+                                {
+                                    //Null the license. Something was not valid from the server.
+                                    keyDialogMessage = "License has expired. Please log in again.";
+                                    license = null;
+                                }
+                            }
+                            catch (AnomalousLicenseServerException alse)
+                            {
+                                //Null the license. Something was not valid from the server.
+                                keyDialogMessage = String.Format("License has expired. Reason {0}. Please log in again.", alse.Message);
+                                license = null;
+                            }
+                            catch (Exception)
+                            {
+                                //Do Nothing, allow license that was loaded to be used.
                             }
                         }
                     }
@@ -170,16 +203,21 @@ namespace Medical
 
         void licenseDialog_KeyEnteredSucessfully(object sender, EventArgs e)
         {
+            storeLicenseFile(licenseDialog.License);
+            license = new AnomalousLicense(licenseDialog.License);
+            licenseDialog.Dispose();
+            fireKeyValid();
+        }
+
+        private void storeLicenseFile(byte[] license)
+        {
             if (MedicalConfig.StoreCredentials)
             {
                 using (Stream fileStream = new FileStream(keyFile, FileMode.Create))
                 {
-                    fileStream.Write(licenseDialog.License, 0, licenseDialog.License.Length);
+                    fileStream.Write(license, 0, license.Length);
                 }
             }
-            license = new AnomalousLicense(licenseDialog.License);
-            licenseDialog.Dispose();
-            fireKeyValid();
         }
 
         private void fireKeyValid()
