@@ -30,7 +30,7 @@ namespace Medical.GUI
         private Button cancelButton;
         private CheckButton rememberPasswordButton;
 
-        public LicenseDialog(String programName, String machineID, int productID)
+        public LicenseDialog(String programName, String machineID, int productID, String message)
             :base("Medical.GUI.LicenseDialog.LicenseDialog.layout")
         {
             this.programName = programName;
@@ -38,7 +38,14 @@ namespace Medical.GUI
             this.productID = productID;
 
             Widget prompt = window.findWidget("Prompt");
-            prompt.Caption = prompt.Caption.Replace("$(PROGRAM_NAME)", programName);
+            if (message != null)
+            {
+                prompt.Caption = message;
+            }
+            else
+            {
+                prompt.Caption = prompt.Caption.Replace("$(PROGRAM_NAME)", programName);
+            }
 
             userEdit = window.findWidget("UserText") as Edit;
             userEdit.KeyButtonReleased += new MyGUIEvent(userEdit_KeyButtonReleased);

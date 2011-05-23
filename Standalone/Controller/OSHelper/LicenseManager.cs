@@ -40,7 +40,7 @@ namespace Medical
         private CallbackDelegate showKeyDialogCallback;
 
         private AnomalousLicense license;
-        private String keyDialogMessage;
+        private String keyDialogMessage = null;
 
         public LicenseManager(String programName, String keyFile, int productID)
         {
@@ -72,6 +72,7 @@ namespace Medical
                             }
                             catch (Exception)
                             {
+                                license = null;
                                 keyDialogMessage = "Local license corrupted. Please sign in again.";
                             }
                         }
@@ -92,6 +93,16 @@ namespace Medical
                                     //Null the license. Something was not valid from the server.
                                     keyDialogMessage = "License has expired. Please log in again.";
                                     license = null;
+
+                                    //Delete the old license
+                                    try
+                                    {
+                                        File.Delete(keyFile);
+                                    }
+                                    catch (Exception)
+                                    {
+
+                                    }
                                 }
                             }
                             catch (AnomalousLicenseServerException alse)
@@ -99,6 +110,16 @@ namespace Medical
                                 //Null the license. Something was not valid from the server.
                                 keyDialogMessage = String.Format("License has expired. Reason {0}. Please log in again.", alse.Message);
                                 license = null;
+
+                                //Delete the old license
+                                try
+                                {
+                                    File.Delete(keyFile);
+                                }
+                                catch (Exception)
+                                {
+
+                                }
                             }
                             catch (Exception)
                             {
@@ -181,7 +202,7 @@ namespace Medical
 
         private void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(programName, getMachineId(), productID);
+            licenseDialog = new LicenseDialog(programName, getMachineId(), productID, keyDialogMessage);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.center();
