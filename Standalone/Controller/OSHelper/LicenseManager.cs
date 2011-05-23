@@ -6,6 +6,8 @@ using System.IO;
 using Engine;
 using Medical.GUI;
 using System.Runtime.InteropServices;
+using System.Threading;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -14,14 +16,20 @@ namespace Medical
         /// <summary>
         /// This event will fire if the key is entered in the dialog sucessfully.
         /// </summary>
-        public event EventHandler KeyEnteredSucessfully;
+        public event EventHandler KeyValid;
         
         /// <summary>
         /// This event will fire if the key could not be entered.
         /// </summary>
         public event EventHandler KeyInvalid;
 
+        /// <summary>
+        /// This will be fired when the key dialog is shown.
+        /// </summary>
+        public event EventHandler KeyDialogShown;
+
         private delegate void MachineIDCallback(IntPtr value);
+        private delegate void CallbackDelegate();
         private MachineIDCallback idCallback;
         private String machineID = null;
         private LicenseDialog licenseDialog;
@@ -29,23 +37,35 @@ namespace Medical
         private String keyFile;
         private String programName;
         private int productID;
+        private CallbackDelegate keyValidCallback;
+        private CallbackDelegate showKeyDialogCallback;
 
-        public LicenseManager(String programName, String keyFile)
+        public LicenseManager(String programName, String keyFile, int productID)
         {
             this.keyFile = keyFile;
             this.programName = programName;
+            this.productID = productID;
             idCallback = new MachineIDCallback(getMachineIdCallback);
-            userPermissions = new UserPermissions(keyFile, programName, getMachineId);
+            keyValidCallback = new CallbackDelegate(fireKeyValid);
+            showKeyDialogCallback = new CallbackDelegate(showKeyDialog);
         }
 
-        public void showKeyDialog(int productID)
+        public void getKey()
         {
-            this.productID = productID;
-            licenseDialog = new LicenseDialog(userPermissions.ProgramName, getMachineId(), productID);
-            licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
-            licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
-            licenseDialog.center();
-            licenseDialog.open(true);
+            Thread t = new Thread(delegate()
+            {
+                userPermissions = new UserPermissions(keyFile, programName, getMachineId);
+                //Temp
+                if (userPermissions.Valid)
+                {
+                    ThreadManager.invoke(keyValidCallback);
+                }
+                else
+                {
+                    ThreadManager.invoke(showKeyDialogCallback);
+                }
+            });
+            t.Start();
         }
 
         public bool allowFeature(int featureCode)
@@ -58,14 +78,6 @@ namespace Medical
             get
             {
                 return userPermissions.ProductKey;
-            }
-        }
-
-        public bool KeyValid
-        {
-            get
-            {
-                return userPermissions.Valid;
             }
         }
 
@@ -96,6 +108,19 @@ namespace Medical
             }
         }
 
+        private void showKeyDialog()
+        {
+            licenseDialog = new LicenseDialog(userPermissions.ProgramName, getMachineId(), productID);
+            licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
+            licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
+            licenseDialog.center();
+            licenseDialog.open(true);
+            if (KeyDialogShown != null)
+            {
+                KeyDialogShown.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         void licenseDialog_KeyInvalid(object sender, EventArgs e)
         {
             licenseDialog.Dispose();
@@ -115,14 +140,19 @@ namespace Medical
             licenseDialog.Dispose();
             if (userPermissions.Valid)
             {
-                if (KeyEnteredSucessfully != null)
-                {
-                    KeyEnteredSucessfully.Invoke(this, EventArgs.Empty);
-                }
+                fireKeyValid();
             }
             else
             {
-                showKeyDialog(productID);
+                showKeyDialog();
+            }
+        }
+
+        private void fireKeyValid()
+        {
+            if (KeyValid != null)
+            {
+                KeyValid.Invoke(this, EventArgs.Empty);
             }
         }
 

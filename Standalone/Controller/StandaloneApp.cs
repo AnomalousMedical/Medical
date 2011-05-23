@@ -9,7 +9,7 @@ namespace Medical.Controller
     {
         public StandaloneApp()
         {
-            WatermarkText = null;
+            
         }
 
         public abstract void createWindowPresets(SceneViewWindowPresetController windowPresetController);
@@ -29,8 +29,6 @@ namespace Medical.Controller
         public abstract String DefaultScene { get; }
 
         public abstract int ProductID { get; }
-
-        public String WatermarkText { get; protected set; }
 
         public LicenseManager LicenseManager { get; protected set; }
     }

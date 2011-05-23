@@ -133,10 +133,6 @@ namespace Medical
             OgreWrapper.OgreResourceGroupManager.getInstance().createResourceGroup("__InternalMedical");
             OgreWrapper.OgreResourceGroupManager.getInstance().initializeAllResourceGroups();
             watermark = new SideLogoWatermark("AnomalousMedicalWatermark", "AnomalousMedical", 150, 44, 4, 4);
-            if (app.WatermarkText != null)
-            {
-                ((SideLogoWatermark)watermark).addText(app.WatermarkText);
-            }
 
             //Background
             this.background = background;
@@ -303,6 +299,11 @@ namespace Medical
         public void sceneRevealed()
         {
             atlasPluginManager.sceneRevealed();
+        }
+
+        public void setWatermarkText(String text)
+        {
+            ((SideLogoWatermark)watermark).addText(text);
         }
 
         public MedicalController MedicalController

@@ -55,24 +55,25 @@ namespace Medical
             splashScreen = new SplashScreen(OgreInterface.Instance.OgrePrimaryWindow, 100, "Medical.Resources.SplashScreen.SplashScreen.layout", "Medical.Resources.SplashScreen.SplashScreen.xml");
             splashScreen.Hidden += new EventHandler(splashScreen_Hidden);
 
-            LicenseManager = new LicenseManager("Anomalous Body Atlas", Path.Combine(MedicalConfig.DocRoot, "license.lic"));
-            WatermarkText = String.Format("Licensed to: {0}", LicenseManager.LicenseeName);
+            LicenseManager = new LicenseManager("Anomalous Body Atlas", Path.Combine(MedicalConfig.DocRoot, "license.lic"), ProductID);
+            LicenseManager.KeyValid += new EventHandler(licenseManager_KeyValid);
+            LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
+            LicenseManager.KeyDialogShown += new EventHandler(LicenseManager_KeyDialogShown);
+            LicenseManager.getKey();
+
             splashScreen.updateStatus(10, "Initializing Core");
             controller.initializeControllers(createBackground());
 
             //GUI
             splashScreen.updateStatus(20, "Creating GUI");
             controller.createGUI();
+            controller.GUIManager.setMainInterfaceEnabled(false);
 
             //Scene Load
             splashScreen.updateStatus(30, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
-            splashScreen.updateStatus(85, "Loading Plugins");
-            finishInitialization();
-
-            splashScreen.updateStatus(100, "");
-            splashScreen.hide();
+            splashScreen.updateStatus(80, "Waiting for License");
 
             return startupSuceeded;
         }
@@ -255,37 +256,34 @@ namespace Medical
 
         #region License
 
-        public void finishInitialization()
-        {
-            if (LicenseManager.KeyValid)
-            {
-                addPlugins();
-                controller.initializePlugins();
-            }
-            else
-            {
-                controller.GUIManager.setMainInterfaceEnabled(false);
-                startKeyDialog();
-            }
-        }
-
-        private void startKeyDialog()
-        {
-            LicenseManager.KeyEnteredSucessfully += new EventHandler(licenseManager_KeyEnteredSucessfully);
-            LicenseManager.KeyInvalid += new EventHandler(licenseManager_KeyInvalid);
-            LicenseManager.showKeyDialog(ProductID);
-        }
-
         void licenseManager_KeyInvalid(object sender, EventArgs e)
         {
             controller.closeMainWindow();
         }
 
-        void licenseManager_KeyEnteredSucessfully(object sender, EventArgs e)
+        void licenseManager_KeyValid(object sender, EventArgs e)
         {
+            if (splashScreen != null && splashScreen.Visible)
+            {
+                splashScreen.updateStatus(85, "Loading Plugins");
+            }
+
             controller.GUIManager.setMainInterfaceEnabled(true);
+            controller.setWatermarkText(String.Format("Licensed to: {0}", LicenseManager.LicenseeName));
             addPlugins();
             controller.initializePlugins();
+
+            if (splashScreen != null && splashScreen.Visible)
+            {
+                splashScreen.updateStatus(100, "");
+                splashScreen.hide();
+            }
+        }
+
+        void LicenseManager_KeyDialogShown(object sender, EventArgs e)
+        {
+            splashScreen.updateStatus(100, "");
+            splashScreen.hide();
         }
 
         #endregion
