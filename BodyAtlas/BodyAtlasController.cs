@@ -73,7 +73,7 @@ namespace Medical
             splashScreen.updateStatus(30, "Loading Scene");
             startupSuceeded = controller.openNewScene(DefaultScene);
 
-            splashScreen.updateStatus(80, "Waiting for License");
+            splashScreen.updateStatus(70, "Waiting for License");
 
             return startupSuceeded;
         }
@@ -90,7 +90,7 @@ namespace Medical
         {
             if (splashScreen != null)
             {
-                splashScreen.updateStatus(75, "Loading Scene Properties");
+                splashScreen.updateStatus(60, "Loading Scene Properties");
             }
         }
 

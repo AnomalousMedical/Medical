@@ -28,6 +28,7 @@ namespace Medical.GUI
         private int productID;
         private Button activateButton;
         private Button cancelButton;
+        private CheckButton rememberPasswordButton;
 
         public LicenseDialog(String programName, String machineID, int productID)
             :base("Medical.GUI.LicenseDialog.LicenseDialog.layout")
@@ -49,6 +50,9 @@ namespace Medical.GUI
 
             cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            rememberPasswordButton = new CheckButton(window.findWidget("RememberPassword") as Button);
+            rememberPasswordButton.Checked = MedicalConfig.StoreCredentials;
 
             StaticText connectionLabel = window.findWidget("ConnectionLabel") as StaticText;
             connectionLabel.Caption = MedicalConfig.LicenseServerURL;
@@ -95,6 +99,7 @@ namespace Medical.GUI
 
         void activateButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            MedicalConfig.StoreCredentials = rememberPasswordButton.Checked;
             activateButton.Enabled = false;
             cancelButton.Enabled = false;
             ThreadPool.QueueUserWorkItem(new WaitCallback(getLicense));

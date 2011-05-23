@@ -166,6 +166,18 @@ namespace Medical
             }
         }
 
+        public static bool StoreCredentials
+        {
+            get
+            {
+                return program.getValue("StoreCredentials", false);
+            }
+            set
+            {
+                program.setValue("StoreCredentials", value);
+            }
+        }
+
         public static String LicenseServerURL { get; private set; }
 
 #if ALLOW_OVERRIDE

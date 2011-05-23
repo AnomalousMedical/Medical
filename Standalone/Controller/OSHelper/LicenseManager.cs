@@ -33,12 +33,13 @@ namespace Medical
         private MachineIDCallback idCallback;
         private String machineID = null;
         private LicenseDialog licenseDialog;
-        private UserPermissions userPermissions;
         private String keyFile;
         private String programName;
         private int productID;
         private CallbackDelegate keyValidCallback;
         private CallbackDelegate showKeyDialogCallback;
+
+        private AnomalousLicense license;
 
         public LicenseManager(String programName, String keyFile, int productID)
         {
@@ -54,9 +55,38 @@ namespace Medical
         {
             Thread t = new Thread(delegate()
             {
-                userPermissions = new UserPermissions(keyFile, programName, getMachineId);
-                //Temp
-                if (userPermissions.Valid)
+                if (File.Exists(keyFile))
+                {
+                    if (MedicalConfig.StoreCredentials)
+                    {
+                        using (Stream stream = File.OpenRead(keyFile))
+                        {
+                            try
+                            {
+                                byte[] fileContents = new byte[stream.Length];
+                                stream.Read(fileContents, 0, fileContents.Length);
+                                license = new AnomalousLicense(fileContents);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            File.Delete(keyFile);
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+                    }
+                }
+                //Check validity
+                if (Valid)
                 {
                     ThreadManager.invoke(keyValidCallback);
                 }
@@ -70,14 +100,14 @@ namespace Medical
 
         public bool allowFeature(int featureCode)
         {
-            return userPermissions.allowFeature(featureCode);
+            return license != null ? license.supportsFeature(featureCode) : false;
         }
 
         public String Key
         {
             get
             {
-                return userPermissions.ProductKey;
+                return license != null ? license.ProductKey : "None";
             }
         }
 
@@ -88,7 +118,15 @@ namespace Medical
         {
             get
             {
-                return userPermissions.IsExpired;
+                return license != null ? license.IsExpired : false;
+            }
+        }
+
+        public bool Valid
+        {
+            get
+            {
+                return license != null && !license.IsExpired && license.MachineID == getMachineId() && KeyChecker.checkValid(programName, license.ProductKey);
             }
         }
 
@@ -96,7 +134,7 @@ namespace Medical
         {
             get
             {
-                return userPermissions.FeatureLevelString;
+                return license != null ? license.FeatureLevel : "";
             }
         }
 
@@ -104,13 +142,13 @@ namespace Medical
         {
             get
             {
-                return userPermissions.LicenseeName;
+                return license != null ? license.LicenseeName : "Invalid";
             }
         }
 
         private void showKeyDialog()
         {
-            licenseDialog = new LicenseDialog(userPermissions.ProgramName, getMachineId(), productID);
+            licenseDialog = new LicenseDialog(programName, getMachineId(), productID);
             licenseDialog.KeyEnteredSucessfully += new EventHandler(licenseDialog_KeyEnteredSucessfully);
             licenseDialog.KeyInvalid += new EventHandler(licenseDialog_KeyInvalid);
             licenseDialog.center();
@@ -132,20 +170,16 @@ namespace Medical
 
         void licenseDialog_KeyEnteredSucessfully(object sender, EventArgs e)
         {
-            using (Stream fileStream = new FileStream(keyFile, FileMode.Create))
+            if (MedicalConfig.StoreCredentials)
             {
-                fileStream.Write(licenseDialog.License, 0, licenseDialog.License.Length);
+                using (Stream fileStream = new FileStream(keyFile, FileMode.Create))
+                {
+                    fileStream.Write(licenseDialog.License, 0, licenseDialog.License.Length);
+                }
             }
-            userPermissions = new UserPermissions(keyFile, programName, getMachineId);
+            license = new AnomalousLicense(licenseDialog.License);
             licenseDialog.Dispose();
-            if (userPermissions.Valid)
-            {
-                fireKeyValid();
-            }
-            else
-            {
-                showKeyDialog();
-            }
+            fireKeyValid();
         }
 
         private void fireKeyValid()
