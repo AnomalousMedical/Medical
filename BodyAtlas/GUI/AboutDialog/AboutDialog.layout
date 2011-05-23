@@ -34,9 +34,6 @@
             <Widget type="Button" skin="Button" position="255 183 88 28" name="DeveloperMoreButton">
                 <Property key="Widget_Caption" value="More"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="4 183 107 28" name="RevokeLicenseButton">
-                <Property key="Widget_Caption" value="Revoke License"/>
-            </Widget>
         </Widget>
         <Widget type="Widget" skin="PanelEmpty" position="5 168 343 216" name="OpenSourcePanel">
             <Property key="Widget_Visible" value="false"/>

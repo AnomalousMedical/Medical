@@ -95,14 +95,7 @@ namespace Medical
                                     license = null;
 
                                     //Delete the old license
-                                    try
-                                    {
-                                        File.Delete(keyFile);
-                                    }
-                                    catch (Exception)
-                                    {
-
-                                    }
+                                    deleteLicense();
                                 }
                             }
                             catch (AnomalousLicenseServerException alse)
@@ -112,14 +105,7 @@ namespace Medical
                                 license = null;
 
                                 //Delete the old license
-                                try
-                                {
-                                    File.Delete(keyFile);
-                                }
-                                catch (Exception)
-                                {
-
-                                }
+                                deleteLicense();
                             }
                             catch (Exception)
                             {
@@ -129,14 +115,7 @@ namespace Medical
                     }
                     else
                     {
-                        try
-                        {
-                            File.Delete(keyFile);
-                        }
-                        catch (Exception)
-                        {
-
-                        }
+                        deleteLicense();
                     }
                 }
                 //Check validity
@@ -155,6 +134,18 @@ namespace Medical
         public bool allowFeature(int featureCode)
         {
             return license != null ? license.supportsFeature(featureCode) : false;
+        }
+
+        public void deleteLicense()
+        {
+            try
+            {
+                File.Delete(keyFile);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public String Key

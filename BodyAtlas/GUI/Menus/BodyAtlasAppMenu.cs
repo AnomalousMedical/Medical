@@ -34,6 +34,7 @@ namespace Medical.GUI
             Button openButton = widget.findWidget("File/Open") as Button;
             Button saveButton = widget.findWidget("File/Save") as Button;
             Button saveAsButton = widget.findWidget("File/SaveAs") as Button;
+            Button logoutButton = widget.findWidget("LogOut") as Button;
             Button quitButton = widget.findWidget("File/Quit") as Button;
             Widget recentDocsHorizDivider = widget.findWidget("RecentDocsHorizDivider");
             Widget recentDocsVertDivider = widget.findWidget("RecentDocsVertDivider");
@@ -47,6 +48,7 @@ namespace Medical.GUI
             openButton.MouseButtonClick += new MyGUIEvent(openButton_MouseButtonClick);
             saveButton.MouseButtonClick += new MyGUIEvent(saveButton_MouseButtonClick);
             saveAsButton.MouseButtonClick += new MyGUIEvent(saveAsButton_MouseButtonClick);
+            logoutButton.MouseButtonClick += new MyGUIEvent(logoutButton_MouseButtonClick);
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
 
             recentDocumentsLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(recentDocsLeft, recentDocsTop));
@@ -99,6 +101,13 @@ namespace Medical.GUI
         void openButton_MouseButtonClick(Widget source, EventArgs e)
         {
             bodyAtlasGUI.open();
+            this.hide();
+        }
+
+        void logoutButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            standaloneController.App.LicenseManager.deleteLicense();
+            standaloneController.closeMainWindow();
             this.hide();
         }
 
