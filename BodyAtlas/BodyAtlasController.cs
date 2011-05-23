@@ -278,6 +278,8 @@ namespace Medical
                 splashScreen.updateStatus(100, "");
                 splashScreen.hide();
             }
+
+            controller.MedicalController.MainTimer.resetLastTime();
         }
 
         void LicenseManager_KeyDialogShown(object sender, EventArgs e)
