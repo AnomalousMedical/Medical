@@ -106,8 +106,15 @@ namespace Medical.GUI
 
         void logoutButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.App.LicenseManager.deleteLicense();
-            standaloneController.closeMainWindow();
+            MessageBox.show("Logging out will delete your local license file. This will require you to log in the next time you use this program.\nYou will also not be able to use the software in offline mode until you log back in and save your password.", "Log Out", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, 
+                delegate(MessageBoxStyle result)
+                {
+                    if (result == MessageBoxStyle.Yes)
+                    {
+                        standaloneController.App.LicenseManager.deleteLicense();
+                        standaloneController.closeMainWindow();
+                    }
+                });
             this.hide();
         }
 
