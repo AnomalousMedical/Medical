@@ -19,6 +19,7 @@ namespace Medical
     {
         private StandaloneController standaloneController;
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
+        private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private SimScene currentScene;
 
         public AtlasPluginManager(StandaloneController standaloneController)
@@ -67,19 +68,21 @@ namespace Medical
         public void addPlugin(AtlasPlugin plugin)
         {
             OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
-            plugins.Add(plugin);
+            uninitializedPlugins.Add(plugin);
         }
 
         internal void initialzePlugins()
         {
-            foreach (AtlasPlugin plugin in plugins)
+            foreach (AtlasPlugin plugin in uninitializedPlugins)
             {
                 plugin.initialize(standaloneController);
                 if (currentScene != null)
                 {
                     plugin.sceneLoaded(currentScene);
                 }
+                plugins.Add(plugin);
             }
+            uninitializedPlugins.Clear();
         }
 
         internal void setMainInterfaceEnabled(bool enabled)
