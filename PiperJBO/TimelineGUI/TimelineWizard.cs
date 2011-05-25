@@ -14,8 +14,10 @@ namespace Medical.GUI
         private TimelineGUIButtons timelineGUIButtons;
 
         //State
-        private ShowTimelineGUIAction showGUIAction;
+        private TimelineWizardPanel currentPanel;
+        private TimelineWizardPanel lastPanel;
         private GUIManager guiManager;
+        private bool wizardInterfaceShown = false;
 
         public TimelineWizard(UpdateTimer mainTimer, GUIManager guiManager)
         {
@@ -26,6 +28,8 @@ namespace Medical.GUI
             screenLayout.Top = timelineGUIButtons.LayoutContainer;
             crossFadeContainer = new CrossFadeLayoutContainer(mainTimer);
             screenLayout.Center = crossFadeContainer;
+
+            timelineGUIButtons.setPreviousButtonActive(false);
         }
 
         public void Dispose()
@@ -35,41 +39,64 @@ namespace Medical.GUI
 
         public void show(TimelineWizardPanel panel)
         {
-            showGUIAction = panel.ShowGUIAction;
-            crossFadeContainer.changePanel(panel.Container, 0.25f, null);
-            guiManager.changeLeftPanel(screenLayout);
+            lastPanel = currentPanel;
+            currentPanel = panel;
+            if (!wizardInterfaceShown)
+            {
+                guiManager.changeLeftPanel(screenLayout);
+                wizardInterfaceShown = true;
+            }
+            crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
+            timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
         }
 
         public void hide()
         {
-            crossFadeContainer.changePanel(null, 0.25f, null);
+            lastPanel = currentPanel;
+            currentPanel = null;
+            crossFadeContainer.changePanel(null, 0.25f, animationCompleted);
             guiManager.changeLeftPanel(null);
-            showGUIAction = null;
+            wizardInterfaceShown = false;
         }
 
         public void finish()
         {
-            
+            if (currentPanel != null)
+            {
+                currentPanel.ShowGUIAction.stopTimelines();
+                hide();
+            }
         }
 
         public void next()
         {
-            if (showGUIAction != null)
+            if (currentPanel != null)
             {
-                showGUIAction.showNextTimeline();
-                hide();
-                //LIFECYCLE, NEED TO DELETE OLD PANEL
+                currentPanel.ShowGUIAction.showNextTimeline();
             }
         }
 
         public void previous()
         {
-            
+            //Does nothing right now
         }
 
         public void cancel()
         {
-            
+            if (currentPanel != null)
+            {
+                currentPanel.ShowGUIAction.stopTimelines();
+                hide();
+            }
+        }
+
+        private void animationCompleted(LayoutContainer oldChild)
+        {
+            if (lastPanel != null)
+            {
+                lastPanel.Dispose();
+                lastPanel = null;
+            }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Medical
         /// </summary>
         public void showNextTimeline()
         {
-            if (NextTimeline != null && NextTimeline != String.Empty)
+            if (HasNextTimeline)
             {
                 TimelineController.startPlayback(TimelineController.openTimeline(NextTimeline));
             }
@@ -33,6 +33,16 @@ namespace Medical
             {
                 TimelineController._fireMultiTimelineStopEvent();
             }
+        }
+
+        public void stopTimelines()
+        {
+            TimelineController._fireMultiTimelineStopEvent();
+        }
+
+        public void playSpecificTimeline(String timelineName)
+        {
+            TimelineController.startPlayback(TimelineController.openTimeline(timelineName));
         }
 
         public override void doAction()
@@ -65,6 +75,14 @@ namespace Medical
         public String NextTimeline { get; set; }
 
         public String GUIName { get; set; }
+
+        public bool HasNextTimeline
+        {
+            get
+            {
+                return NextTimeline != null && NextTimeline != String.Empty;
+            }
+        }
 
         #region Saving
 
