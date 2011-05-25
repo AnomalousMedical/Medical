@@ -5,6 +5,13 @@ using System.Text;
 
 namespace Medical.GUI
 {
+    /// <summary>
+    /// A single panel in a TimelineWizard.
+    /// 
+    /// It must be shown with the TimelineWizard show function or it will not be
+    /// disposed properly. That class handles the memory management and has more
+    /// info in its description.
+    /// </summary>
     public abstract class TimelineWizardPanel : MyGUITimelineGUI
     {
         private TimelineWizard timelineWizard;

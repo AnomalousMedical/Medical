@@ -28,7 +28,12 @@ namespace Medical
         void show(GUIManager guiManager);
 
         /// <summary>
-        /// Remove the GUI from the screen.
+        /// Remove the GUI from the screen. This will only be called if the
+        /// timeline being played needs to be canceled on the TimelineController
+        /// level. This will only happen if the TimelineController itself is
+        /// asked to stop playing timelines while this gui is active. It will
+        /// not happen in normal operation, but clients still need to have a way
+        /// that they can shut themselves down through this function.
         /// </summary>
         /// <param name="guiManager">The GUIManager the GUI is a part of.</param>
         void hide(GUIManager guiManager);
