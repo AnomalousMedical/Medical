@@ -68,6 +68,9 @@ namespace Medical.GUI
 
             //Taskbar
             guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
+
+            //Timeline GUIs
+            standaloneController.TimelineController.GUIFactory.addPrototype(new TestTimelineGUIPrototype());
         }
 
         public void finishInitialization()
@@ -93,7 +96,7 @@ namespace Medical.GUI
             String layersFile = String.Format(pathString, medicalController.CurrentSceneDirectory, medicalScene.LayersFileDirectory, "StandaloneLayers.lay");
             layerController.loadLayerStateSet(layersFile);
 
-            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, scene.getDefaultSubScene().getSimElementManager<SimulationScene>());
+            stateWizardPanelController.sceneChanged(standaloneController.MedicalController, medicalScene);
         }
 
         public void sceneUnloading(SimScene scene)

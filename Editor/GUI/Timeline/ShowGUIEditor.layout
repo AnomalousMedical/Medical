@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="182 151 266 128" layer="Overlapped">
+        <Property key="Widget_Caption" value="Timeline GUI Editor"/>
+        <Widget type="StaticText" skin="StaticText" position="5 6 36 14">
+            <Property key="Widget_Caption" value="GUI"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="6 21 255 21" align="HStretch Top" name="GUIChoiceCombo"/>
+        <Widget type="StaticText" skin="StaticText" position="7 47 108 14">
+            <Property key="Widget_Caption" value="Next Timeline"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="6 63 225 19" align="HStretch Top" name="NextTimelineEdit"/>
+        <Widget type="Button" skin="Button" position="233 65 29 15" align="Right Top" name="BrowseTimelineButton">
+            <Property key="Widget_Caption" value="..."/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="6 86 63 20" align="Left Bottom" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="72 86 63 20" align="Left Bottom" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+    </Widget>
+</MyGUI>

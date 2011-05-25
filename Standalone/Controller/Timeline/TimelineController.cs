@@ -12,6 +12,7 @@ using Logging;
 using SoundPlugin;
 using ZipAccess;
 using MyGUIPlugin;
+using Medical.GUI;
 
 namespace Medical
 {
@@ -46,6 +47,7 @@ namespace Medical
         {
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
+            GUIFactory = new TimelineGUIFactory();
         }
 
         public Timeline ActiveTimeline
@@ -420,6 +422,16 @@ namespace Medical
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
 
         public SimObjectMover SimObjectMover { get; set; }
+
+        public TimelineGUIFactory GUIFactory { get; private set; }
+
+        public GUIManager GUIManager
+        {
+            get
+            {
+                return standaloneController.GUIManager;
+            }
+        }
 
         public SceneViewController SceneViewController
         {

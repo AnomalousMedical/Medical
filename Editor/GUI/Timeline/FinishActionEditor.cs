@@ -15,10 +15,13 @@ namespace Medical.GUI
         private Button loadTimelineButton;
         private Button askQuestionButton;
         private Button repeatActionButton;
+        private Button showGUIButton;
 
         private FinishLoadTimelineEditor loadTimelineEditor;
         private QuestionEditor questionEditor;
         private Button questionEditorButton;
+        private Button guiEditorButton;
+        private ShowGUIEditor guiEditor;
 
         private Timeline currentTimeline;
 
@@ -39,15 +42,24 @@ namespace Medical.GUI
             actionGroup.addButton(askQuestionButton);
             repeatActionButton = window.findWidget("RepeatAction") as Button;
             actionGroup.addButton(repeatActionButton);
+            showGUIButton = window.findWidget("ShowGUIRadio") as Button;
+            actionGroup.addButton(showGUIButton);
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
             questionEditor = new QuestionEditor(fileBrowser, timelineController);
             guiManager.addManagedDialog(questionEditor);
 
+            guiEditor = new ShowGUIEditor(fileBrowser, timelineController);
+            guiManager.addManagedDialog(guiEditor);
+
             questionEditorButton = window.findWidget("QuestionEditorButton") as Button;
             questionEditorButton.MouseButtonClick += new MyGUIEvent(questionEditorButton_MouseButtonClick);
             questionEditorButton.Enabled = false;
+
+            guiEditorButton = window.findWidget("GUIEditorButton") as Button;
+            guiEditorButton.MouseButtonClick += new MyGUIEvent(guiEditorButton_MouseButtonClick);
+            guiEditorButton.Enabled = false;
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
@@ -97,12 +109,18 @@ namespace Medical.GUI
                 {
                     actionGroup.SelectedButton = repeatActionButton;
                 }
+                if (action is ShowTimelineGUIAction)
+                {
+                    actionGroup.SelectedButton = showGUIButton;
+                    guiEditor.setProperties((ShowTimelineGUIAction)action);
+                }
             }
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             questionEditor.clear();
+            guiEditor.clear();
             this.close();
         }
 
@@ -151,19 +169,32 @@ namespace Medical.GUI
                 currentTimeline.addPostAction(new RepeatPreviousPostActions());
                 this.close();
             }
+            else if (actionGroup.SelectedButton == showGUIButton)
+            {
+                currentTimeline.clearPostActions();
+                currentTimeline.addPostAction(guiEditor.createAction());
+                this.close();
+            }
 
             questionEditor.clear();
+            guiEditor.clear();
         }
 
         void actionGroup_SelectedButtonChanged(object sender, EventArgs e)
         {
             loadTimelineEditor.Enabled = actionGroup.SelectedButton == loadTimelineButton;
             questionEditorButton.Enabled = actionGroup.SelectedButton == askQuestionButton;
+            guiEditorButton.Enabled = actionGroup.SelectedButton == showGUIButton;
         }
 
         void questionEditorButton_MouseButtonClick(Widget source, EventArgs e)
         {
             questionEditor.open(true);
+        }
+
+        void guiEditorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            guiEditor.open(true);
         }
     }
 }

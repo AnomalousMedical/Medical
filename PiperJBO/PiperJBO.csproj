@@ -121,6 +121,7 @@
     <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimelineGUI\TestTimelineGUI.cs" />
     <EmbeddedResource Include="GUI\Distortions\DistortionChooser.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />
@@ -151,6 +152,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="TimelineGUI\TestTimelineGUI.layout" />
     <None Include="Properties\PiperJBO.manifest">
       <SubType>Designer</SubType>
     </None>
