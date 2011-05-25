@@ -114,6 +114,8 @@
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUIPrototype.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\MyGUITimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\ShowTimelineGUIAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUI.cs" />

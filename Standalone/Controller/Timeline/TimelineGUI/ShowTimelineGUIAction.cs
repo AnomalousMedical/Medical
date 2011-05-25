@@ -37,7 +37,7 @@ namespace Medical
 
         public override void doAction()
         {
-            gui = TimelineController.GUIFactory.createGUI(GUIName);
+            gui = TimelineController.GUIFactory.getGUI(GUIName);
             if (gui != null)
             {
                 gui.initialize(this);

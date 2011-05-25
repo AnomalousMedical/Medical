@@ -7,19 +7,6 @@ using MyGUIPlugin;
 
 namespace Medical
 {
-    class TestTimelineGUIPrototype : TimelineGUIFactoryPrototype
-    {
-        public TimelineGUI createGUI()
-        {
-            return new TestTimelineGUI();
-        }
-
-        public string Name
-        {
-            get { return "PiperJBO.TestTimelineGUI"; }
-        }
-    }
-
     public class TestTimelineGUI : Dialog, TimelineGUI
     {
         private ShowTimelineGUIAction showGUIAction;

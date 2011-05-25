@@ -70,7 +70,8 @@ namespace Medical.GUI
             guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
 
             //Timeline GUIs
-            standaloneController.TimelineController.GUIFactory.addPrototype(new TestTimelineGUIPrototype());
+            standaloneController.TimelineController.GUIFactory.addPrototype(new GenericTimelineGUIFactoryPrototype<TestTimelineGUI>("PiperJBO.TestTimelineGUI"));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new GenericTimelineGUIFactoryPrototype<RemoveTopTeethGUI>("PiperJBO.RemoveTopTeethGUI"));
         }
 
         public void finishInitialization()

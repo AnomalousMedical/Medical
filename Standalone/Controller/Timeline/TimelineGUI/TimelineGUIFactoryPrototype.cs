@@ -6,15 +6,17 @@ using System.Text;
 namespace Medical
 {
     /// <summary>
-    /// This is a prototype in the TimelineGUIFactory. It will create the gui.
+    /// This is a prototype in the TimelineGUIFactory.
     /// </summary>
     public interface TimelineGUIFactoryPrototype
     {
         /// <summary>
-        /// Create the gui for this entry.
+        /// Get the gui for this entry. This may or may not be created at this
+        /// time. The timeline system does not care about when the GUIs are
+        /// created/destroyed. That is up to client code.
         /// </summary>
         /// <returns>The gui for this entry.</returns>
-        TimelineGUI createGUI();
+        TimelineGUI getGUI();
 
         /// <summary>
         /// The name of this prototype. Should make a resonable effort to make
