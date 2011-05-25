@@ -15,6 +15,9 @@ namespace Medical.GUI
         private Edit nextTimelineEdit;
         private ComboBox guiCombo;
 
+        private String nextTimeline;
+        private String guiName;
+
         public ShowGUIEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
             : base("Medical.GUI.Timeline.ShowGUIEditor.layout")
         {
@@ -36,28 +39,21 @@ namespace Medical.GUI
 
         public void setProperties(ShowTimelineGUIAction action)
         {
-            nextTimelineEdit.Caption = action.NextTimeline;
-            uint index = guiCombo.findItemIndexWith(action.GUIName);
-            if (index != uint.MaxValue)
-            {
-                guiCombo.SelectedIndex = index;
-            }
-            else
-            {
-                guiCombo.addItem(action.GUIName);
-                guiCombo.SelectedIndex = guiCombo.ItemCount - 1;
-            }
+            nextTimeline = action.NextTimeline;
+            guiName = action.GUIName;
         }
 
         public void clear()
         {
-            nextTimelineEdit.Caption = "";
+            nextTimeline = null;
+            guiName = null;
         }
 
         public ShowTimelineGUIAction createAction()
         {
             ShowTimelineGUIAction action = new ShowTimelineGUIAction();
-            action.GUIName = guiCombo.SelectedItemName;
+            action.GUIName = guiName;
+            action.NextTimeline = nextTimeline;
             return action;
         }
 
@@ -69,6 +65,7 @@ namespace Medical.GUI
             {
                 guiCombo.addItem(prototype);
             }
+            displayStoredValues();
         }
 
         void browseTimelineButton_MouseButtonClick(Widget source, EventArgs e)
@@ -83,12 +80,42 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            storeGUIValues();
             this.close();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.close();
+        }
+
+        void storeGUIValues()
+        {
+            nextTimeline = nextTimelineEdit.Caption;
+            guiName = guiCombo.SelectedItemName;
+        }
+
+        void displayStoredValues()
+        {
+            nextTimelineEdit.Caption = nextTimeline;
+
+            if (guiName != null)
+            {
+                uint index = guiCombo.findItemIndexWith(guiName);
+                if (index != uint.MaxValue)
+                {
+                    guiCombo.SelectedIndex = index;
+                }
+                else
+                {
+                    guiCombo.addItem(guiName);
+                    guiCombo.SelectedIndex = guiCombo.ItemCount - 1;
+                }
+            }
+            else
+            {
+                guiCombo.clearIndexSelected();
+            }
         }
     }
 }
