@@ -27,7 +27,7 @@ namespace Medical
         {
             if (NextTimeline != null && NextTimeline != String.Empty)
             {
-                TimelineController.queueTimeline(TimelineController.openTimeline(NextTimeline));
+                TimelineController.startPlayback(TimelineController.openTimeline(NextTimeline));
             }
             else
             {

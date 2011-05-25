@@ -19,7 +19,7 @@ namespace Medical
         /// Set up the GUI.
         /// </summary>
         /// <param name="timelineController">The ShowTimelineGUIAction</param>
-        void initialize(ShowTimelineGUIAction showTimelineAction);
+        void initialize(ShowTimelineGUIAction showGUIAction);
 
         /// <summary>
         /// Show the GUI on the screen.

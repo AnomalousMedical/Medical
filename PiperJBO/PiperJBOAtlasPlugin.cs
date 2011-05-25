@@ -26,6 +26,9 @@ namespace Medical.GUI
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
 
+        //Timeline Wizard
+        private TimelineWizard timelineWizard;
+
         public PiperJBOAtlasPlugin(LicenseManager licenseManager)
         {
             this.licenseManager = licenseManager;
@@ -41,6 +44,8 @@ namespace Medical.GUI
             stateWizardPanelController.Dispose();
 
             navigationController.Dispose();
+
+            timelineWizard.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -70,8 +75,9 @@ namespace Medical.GUI
             guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
 
             //Timeline GUIs
-            standaloneController.TimelineController.GUIFactory.addPrototype(new GenericTimelineGUIFactoryPrototype<TestTimelineGUI>("PiperJBO.TestTimelineGUI"));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new GenericTimelineGUIFactoryPrototype<RemoveTopTeethGUI>("PiperJBO.RemoveTopTeethGUI"));
+            timelineWizard = new TimelineWizard(standaloneController.MedicalController.MainTimer, standaloneController.GUIManager);
+            standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveTopTeethGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveBottomTeethGUIPrototype(timelineWizard));
         }
 
         public void finishInitialization()

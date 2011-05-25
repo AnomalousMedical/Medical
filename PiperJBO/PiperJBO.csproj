@@ -121,8 +121,12 @@
     <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimelineGUI\RemoveTopTeethGUI.cs" />
-    <Compile Include="TimelineGUI\TestTimelineGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\TimelineGUIButtons.cs" />
+    <Compile Include="TimelineGUI\TimelineWizard.cs" />
+    <Compile Include="TimelineGUI\TimelineWizardPanel.cs" />
     <EmbeddedResource Include="GUI\Distortions\DistortionChooser.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />
@@ -153,8 +157,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TimelineGUI\TestTimelineGUI.layout" />
-    <EmbeddedResource Include="TimelineGUI\RemoveTopTeethGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\TimelineGUIButtons.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />
     <None Include="Properties\PiperJBO.manifest">
       <SubType>Designer</SubType>
     </None>

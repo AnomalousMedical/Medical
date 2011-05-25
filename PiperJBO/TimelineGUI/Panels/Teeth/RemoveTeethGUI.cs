@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Medical.GUI;
 using MyGUIPlugin;
 
-namespace Medical
+namespace Medical.GUI
 {
-    class RemoveTopTeethGUI : MyGUITimelineGUI
+    class RemoveTeethGUI : TimelineWizardPanel
     {
         private List<ToothButton> toothButtons = new List<ToothButton>();
 
-        public RemoveTopTeethGUI()
-            :base("Medical.TimelineGUI.RemoveTopTeethGUI.layout")
+        public RemoveTeethGUI(String layoutFile, TimelineWizard wizard)
+            : base(layoutFile, wizard)
         {
             Widget toothPanel = widget.findWidget("ToothPanel");
             uint numChildren = toothPanel.ChildCount;
@@ -32,25 +31,10 @@ namespace Medical
         {
             ToothButton button = (ToothButton)sender;
             Tooth tooth = TeethController.getTooth(button.ToothName);
-            if(tooth != null)
+            if (tooth != null)
             {
                 tooth.Extracted = button.Extracted;
             }
-        }
-
-        public override void initialize(ShowTimelineGUIAction showTimelineAction)
-        {
-            
-        }
-
-        public override void show(GUIManager guiManager)
-        {
-            guiManager.changeLeftPanel(layoutContainer);
-        }
-
-        public override void hide(GUIManager guiManager)
-        {
-            guiManager.changeLeftPanel(null);
         }
     }
 }
