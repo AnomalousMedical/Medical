@@ -36,6 +36,7 @@ namespace Medical.GUI
         private bool wizardInterfaceShown = false;
         private StandaloneController standaloneController;
         private XmlSaver xmlSaver = new XmlSaver();
+        private Stack<String> previousTimelines = new Stack<string>();
 
         //Startup options
         Vector3 cameraPosition;
@@ -108,6 +109,7 @@ namespace Medical.GUI
             }
             crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
             timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
+            timelineGUIButtons.setPreviousButtonActive(previousTimelines.Count > 0);
         }
 
         /// <summary>
@@ -128,6 +130,7 @@ namespace Medical.GUI
             crossFadeContainer.changePanel(null, 0.25f, animationCompleted);
             guiManager.changeLeftPanel(null);
             wizardInterfaceShown = false;
+            previousTimelines.Clear();
         }
 
         /// <summary>
@@ -156,6 +159,11 @@ namespace Medical.GUI
         {
             if (currentPanel != null)
             {
+                String sourceFile = currentPanel.ShowGUIAction.Timeline.SourceFile;
+                if (sourceFile != null && !previousTimelines.Contains(sourceFile))
+                {
+                    previousTimelines.Push(sourceFile);
+                }
                 currentPanel.ShowGUIAction.showNextTimeline();
             }
         }
@@ -166,6 +174,10 @@ namespace Medical.GUI
         public void previous()
         {
             //Does nothing right now
+            if (previousTimelines.Count > 0)
+            {
+                currentPanel.ShowGUIAction.playSpecificTimeline(previousTimelines.Pop());
+            }
         }
 
         /// <summary>
