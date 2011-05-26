@@ -47,7 +47,7 @@ namespace Medical
         {
             this.mainTimer = standaloneController.MedicalController.MainTimer;
             this.standaloneController = standaloneController;
-            GUIFactory = new TimelineGUIFactory();
+            GUIFactory = standaloneController.TimelineGUIFactory;
         }
 
         public Timeline ActiveTimeline

@@ -37,7 +37,6 @@ namespace Medical
         private TemporaryStateBlender tempStateBlender;
         private MovementSequenceController movementSequenceController;
         private SimObjectMover teethMover;
-        private SimObjectMover propMover;
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
@@ -52,7 +51,6 @@ namespace Medical
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
         private HtmlHelpController htmlHelpController;
-        private MyGUIImageDisplayFactory imageDisplayFactory;
 
         //Platform
         private MainWindow mainWindow;
@@ -166,12 +164,6 @@ namespace Medical
             imageRenderer.ImageRenderStarted += TeethController.ScreenshotRenderStarted;
             imageRenderer.ImageRenderCompleted += TeethController.ScreenshotRenderCompleted;
 
-            //Prop Mover
-            propMover = new SimObjectMover("Props", medicalController.PluginManager, medicalController.EventManager);
-            this.SceneLoaded += propMover.sceneLoaded;
-            this.SceneUnloading += propMover.sceneUnloading;
-            medicalController.FixedLoopUpdate += propMover.update;
-
             //Props
             propFactory = new PropFactory(this);
             Arrow.createPropDefinition(propFactory);
@@ -183,11 +175,8 @@ namespace Medical
             Mustache.createPropDefinition(propFactory);
 
             //Timeline
+            TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
-            imageDisplayFactory = new MyGUIImageDisplayFactory();
-            MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
-            timelineController.ImageDisplayFactory = imageDisplayFactory;
-            timelineController.SimObjectMover = propMover;
 
             //MultiTouch
             if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
@@ -208,6 +197,7 @@ namespace Medical
             //GUI
             guiManager.createGUI();
             guiManager.ScreenLayout.Center = mdiLayout;
+            guiManager.giveGUIsToTimelineController(timelineController);
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);
 
@@ -378,14 +368,6 @@ namespace Medical
             }
         }
 
-        public TimelineController TimelineController
-        {
-            get
-            {
-                return timelineController;
-            }
-        }
-
         public PropFactory PropFactory
         {
             get
@@ -417,6 +399,8 @@ namespace Medical
                 return app;
             }
         }
+
+        public TimelineGUIFactory TimelineGUIFactory { get; private set; }
 
         public void recreateMainWindow()
         {

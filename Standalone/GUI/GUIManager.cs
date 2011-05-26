@@ -29,6 +29,7 @@ namespace Medical.GUI
         //Other GUI Elements
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
+        private MyGUIImageDisplayFactory imageDisplayFactory;
 
         //Animation callbacks
         private UIAnimationFinishedCallback leftAnimationFinished;
@@ -96,10 +97,17 @@ namespace Medical.GUI
             taskbar.layout();
 
             continuePrompt = new MyGUIContinuePromptProvider();
-            standaloneController.TimelineController.ContinuePrompt = continuePrompt;
-
             questionProvider = new MyGUIQuestionProvider(this);
-            standaloneController.TimelineController.QuestionProvider = questionProvider;
+
+            imageDisplayFactory = new MyGUIImageDisplayFactory();
+            standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
+        }
+
+        public void giveGUIsToTimelineController(TimelineController timelineController)
+        {
+            timelineController.ContinuePrompt = continuePrompt;
+            timelineController.QuestionProvider = questionProvider;
+            timelineController.ImageDisplayFactory = imageDisplayFactory;
         }
 
         public void windowChanged(OSWindow newWindow)

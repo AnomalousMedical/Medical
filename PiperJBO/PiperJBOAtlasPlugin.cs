@@ -76,25 +76,25 @@ namespace Medical.GUI
 
             //Timeline GUIs
             timelineWizard = new TimelineWizard(standaloneController);
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveTopTeethGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveBottomTeethGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new DisclaimerGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RightDiscSpaceGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDiscSpaceGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDopplerGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RightDopplerGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new FossaGUILeftPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new FossaGUIRightPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftCondylarDegenerationGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RightCondylarDegenerationGUIPrototype(timelineWizard)); 
-            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftCondylarGrowthGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RightCondylarGrowthGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDiscClockFaceGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new RightDiscClockFaceGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new ProfileDistortionGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new TeethAdaptationGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new TeethHeightAdaptationGUIPrototype(timelineWizard));
-            standaloneController.TimelineController.GUIFactory.addPrototype(new NotesGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RemoveTopTeethGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RemoveBottomTeethGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new DisclaimerGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightDiscSpaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftDiscSpaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftDopplerGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightDopplerGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new FossaGUILeftPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new FossaGUIRightPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftCondylarDegenerationGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightCondylarDegenerationGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftCondylarGrowthGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightCondylarGrowthGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new LeftDiscClockFaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new RightDiscClockFaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new ProfileDistortionGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new TeethAdaptationGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new TeethHeightAdaptationGUIPrototype(timelineWizard));
+            standaloneController.TimelineGUIFactory.addPrototype(new NotesGUIPrototype(timelineWizard));
         }
 
         public void finishInitialization()
