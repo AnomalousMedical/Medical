@@ -75,7 +75,7 @@ namespace Medical.GUI
             guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
 
             //Timeline GUIs
-            timelineWizard = new TimelineWizard(standaloneController.MedicalController.MainTimer, standaloneController.GUIManager);
+            timelineWizard = new TimelineWizard(standaloneController);
             standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveTopTeethGUIPrototype(timelineWizard));
             standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveBottomTeethGUIPrototype(timelineWizard));
         }

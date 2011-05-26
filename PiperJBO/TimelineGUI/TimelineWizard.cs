@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Platform;
+using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -30,15 +32,24 @@ namespace Medical.GUI
         private TimelineWizardPanel lastPanel;
         private GUIManager guiManager;
         private bool wizardInterfaceShown = false;
+        private StandaloneController standaloneController;
 
-        public TimelineWizard(UpdateTimer mainTimer, GUIManager guiManager)
+        //Startup options
+        Vector3 cameraPosition;
+        Vector3 cameraLookAt;
+        LayerState layers;
+        TemporaryStateBlender stateBlender;
+
+        public TimelineWizard(StandaloneController standaloneController)
         {
-            this.guiManager = guiManager;
+            this.guiManager = standaloneController.GUIManager;
+            this.standaloneController = standaloneController;
+            this.stateBlender = standaloneController.TemporaryStateBlender;
 
             screenLayout = new BorderLayoutContainer();
             timelineGUIButtons = new TimelineGUIButtons(this);
             screenLayout.Top = timelineGUIButtons.LayoutContainer;
-            crossFadeContainer = new CrossFadeLayoutContainer(mainTimer);
+            crossFadeContainer = new CrossFadeLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayout.Center = crossFadeContainer;
 
             timelineGUIButtons.setPreviousButtonActive(false);
@@ -63,6 +74,16 @@ namespace Medical.GUI
             {
                 guiManager.changeLeftPanel(screenLayout);
                 wizardInterfaceShown = true;
+                //Store scene settings
+                SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
+                if (window != null)
+                {
+                    cameraPosition = window.Translation;
+                    cameraLookAt = window.LookAt;
+                }
+                layers = new LayerState("");
+                layers.captureState();
+                stateBlender.recordUndoState();
             }
             crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
             timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
@@ -91,6 +112,12 @@ namespace Medical.GUI
             {
                 currentPanel.ShowGUIAction.stopTimelines();
                 hide();
+                restoreCameraAndLayers();
+
+                //Create state
+                stateBlender.forceFinishBlend();
+                MedicalState createdState = stateBlender.createBaselineState();
+                standaloneController.MedicalStateController.addState(createdState);
             }
         }
 
@@ -122,6 +149,8 @@ namespace Medical.GUI
             {
                 currentPanel.ShowGUIAction.stopTimelines();
                 hide();
+                restoreCameraAndLayers();
+                stateBlender.blendToUndo();
             }
         }
 
@@ -135,6 +164,16 @@ namespace Medical.GUI
             {
                 lastPanel.Dispose();
                 lastPanel = null;
+            }
+        }
+
+        private void restoreCameraAndLayers()
+        {
+            SceneViewWindow window = standaloneController.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(cameraPosition, cameraLookAt);
+                layers.apply();
             }
         }
     }
