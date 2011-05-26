@@ -92,7 +92,6 @@
     <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Fossa\FossaPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\BoneManipulatorPanel.cs" />
-    <Compile Include="GUI\StateWizard\Panels\Mandible\BoneManipulatorSlider.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\LeftCondylarDegenerationPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\LeftCondylarGrowthPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\RightCondylarDegenerationPanel.cs" />
@@ -131,6 +130,16 @@
     <Compile Include="TimelineGUI\Panels\Fossa\FossaGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Fossa\FossaGUILeftPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Fossa\FossaGUIRightPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\BoneManipulatorSlider.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
@@ -172,6 +181,10 @@
     <EmbeddedResource Include="TimelineGUI\Panels\Doppler\DopplerGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUILeft.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUIRight.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\LeftCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\TimelineGUIButtons.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />
