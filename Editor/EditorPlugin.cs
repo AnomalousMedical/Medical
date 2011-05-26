@@ -47,7 +47,6 @@ namespace Medical
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
-            editorTimelineController.SimObjectMover = propMover;
 
             //Dialogs
             propTimeline = new PropTimeline();
@@ -94,6 +93,14 @@ namespace Medical
             get
             {
                 return propTimeline;
+            }
+        }
+
+        public SimObjectMover SimObjectMover
+        {
+            get
+            {
+                return propMover;
             }
         }
 

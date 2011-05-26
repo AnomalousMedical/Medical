@@ -26,9 +26,11 @@ namespace Medical.GUI
         private PropTimeline propTimeline;
         private Button propTimelineButton;
 
-        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline)
+        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, SimObjectMover simObjectMover)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
         {
+            this.simObjectMover = simObjectMover;
+
             propTypes = mainWidget.findWidget("PropTypeCombo") as ComboBox;
             propTypes.EventComboChangePosition += new MyGUIEvent(propTypes_EventComboChangePosition);
 
@@ -77,7 +79,6 @@ namespace Medical.GUI
 
             if (comboUninitialized)
             {
-                simObjectMover = showProp.TimelineController.SimObjectMover;
                 simObjectMover.ShowMoveTools = true;
                 simObjectMover.ToolSize = 3.0f;
                 PropFactory propFactory = showProp.TimelineController.PropFactory;

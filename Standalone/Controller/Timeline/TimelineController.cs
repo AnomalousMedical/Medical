@@ -421,8 +421,6 @@ namespace Medical
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
 
-        public SimObjectMover SimObjectMover { get; set; }
-
         public TimelineGUIFactory GUIFactory { get; private set; }
 
         public GUIManager GUIManager

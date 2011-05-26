@@ -57,7 +57,7 @@ namespace Medical
             addType(new TimelineActionFactoryData(typeof(PlaySequenceAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), new PlaySequenceProperties(parentWidget)));
             addType(new TimelineActionFactoryData(typeof(ShowImageAction), new Color(31 / 255f, 73 / 255f, 125 / 255f), new ShowImageProperties(parentWidget)));
             addType(new TimelineActionFactoryData(typeof(PlaySoundAction), new Color(0 / 255f, 0 / 255f, 0 / 255f), new PlaySoundProperties(parentWidget)));
-            addType(new TimelineActionFactoryData(typeof(ShowPropAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ShowPropProperties(parentWidget, editorGUI.PropTimeline)));
+            addType(new TimelineActionFactoryData(typeof(ShowPropAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new ShowPropProperties(parentWidget, editorGUI.PropTimeline, editorGUI.SimObjectMover)));
         }
 
         public void Dispose()
