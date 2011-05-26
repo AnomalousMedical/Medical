@@ -83,6 +83,7 @@ namespace Medical
 
         public void Dispose()
         {
+            DocumentController.saveRecentDocuments();
             if (touchController != null)
             {
                 touchController.Dispose();
@@ -108,6 +109,9 @@ namespace Medical
             //Help
             htmlHelpController = new HtmlHelpController(mainWindow);
             app.addHelpDocuments(htmlHelpController);
+
+            //Documents
+            DocumentController = new DocumentController(MedicalConfig.RecentDocsFile);
 
             //Setup MyGUI listeners
             MyGUIInterface myGUI = MyGUIInterface.Instance;
@@ -401,6 +405,8 @@ namespace Medical
         }
 
         public TimelineGUIFactory TimelineGUIFactory { get; private set; }
+
+        public DocumentController DocumentController { get; private set; }
 
         public void recreateMainWindow()
         {

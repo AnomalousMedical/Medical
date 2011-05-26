@@ -15,7 +15,6 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
         private GUIManager guiManager;
         private BodyAtlasAppMenu appMenu;
-        private RecentDocuments recentDocuments;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private BodyAtlasController bodyAtlasController;
@@ -32,12 +31,10 @@ namespace Medical.GUI
         {
             this.licenseManager = licenseManager;
             this.bodyAtlasController = bodyAtlasController;
-            recentDocuments = new RecentDocuments(MedicalConfig.RecentDocsFile);
         }
 
         public void Dispose()
         {
-            recentDocuments.save();
             renderDialog.Dispose();
             options.Dispose();
             chooseSceneDialog.Dispose();
@@ -51,6 +48,7 @@ namespace Medical.GUI
         {
             this.guiManager = standaloneController.GUIManager;
             this.standaloneController = standaloneController;
+            standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
 
@@ -160,19 +158,11 @@ namespace Medical.GUI
             if (patientData != null)
             {
                 MainWindow.Instance.updateWindowTitle(String.Format("{0} {1}", patientData.FirstName, patientData.LastName));
-                recentDocuments.addDocument(patientData.BackingFile);
+                standaloneController.DocumentController.addToRecentDocuments(patientData.BackingFile);
             }
             else
             {
                 MainWindow.Instance.clearWindowTitle();
-            }
-        }
-
-        public RecentDocuments RecentDocuments
-        {
-            get
-            {
-                return recentDocuments;
             }
         }
 

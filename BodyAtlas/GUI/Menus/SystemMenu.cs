@@ -9,7 +9,7 @@ namespace Medical.GUI
 {
     class SystemMenu
     {
-        private RecentDocuments recentDocuments;
+        private DocumentController documentController;
 
         private NativeMenuItem recentPatients;
         private Dictionary<String, NativeMenuItem> recentDocMenuItems = new Dictionary<string, NativeMenuItem>();
@@ -29,7 +29,7 @@ namespace Medical.GUI
         {
             this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;
-            this.recentDocuments = piperGUI.RecentDocuments;
+            this.documentController = standaloneController.DocumentController;
 
             //File menu
             fileMenu = menu.createMenu("&File");
@@ -41,13 +41,13 @@ namespace Medical.GUI
             open.Select += new NativeMenuEvent(open_Select);
 
             recentPatients = fileMenu.append(CommonMenuItems.AutoAssign, "Recent Patients", "", true);
-            foreach (String document in recentDocuments)
+            foreach (String document in documentController.RecentDocuments)
             {
                 createWindowMenuDocument(document);
             }
-            recentDocuments.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
-            recentDocuments.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
-            recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
+            documentController.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
+            documentController.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
+            documentController.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
 
             save = fileMenu.append(CommonMenuItems.Save, "&Save...\tCtrl+S", "Save current distortions.");
             save.Select += new NativeMenuEvent(save_Select);
@@ -147,16 +147,7 @@ namespace Medical.GUI
         void recentDocMenuItem_Click(NativeMenuItem sender)
         {
             String document = menuIDsToFiles[sender.ID];
-            PatientDataFile patientData = new PatientDataFile(document);
-            if (patientData.loadHeader())
-            {
-                bodyAtlasGUI.changeActiveFile(patientData);
-                standaloneController.openPatientFile(patientData);
-            }
-            else
-            {
-                MyGUIPlugin.MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MyGUIPlugin.MessageBoxStyle.Ok | MyGUIPlugin.MessageBoxStyle.IconError);
-            }
+            documentController.openFile(document);
         }
 
         void recentDocuments_DocumentRemoved(RecentDocuments source, string document)

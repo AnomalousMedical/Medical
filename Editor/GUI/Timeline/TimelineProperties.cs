@@ -40,6 +40,9 @@ namespace Medical.GUI
         private ShowMenuButton analyzeMenuButton;
         private PopupMenu analyzeMenu;
 
+        //Documents
+        private DocumentController documentController;
+        private TimelineDocumentHandler documentHandler;
 
         //Dialogs
         private StartActionEditor startActionEditor;
@@ -62,9 +65,13 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
+            this.documentController = documentController;
+            documentHandler = new TimelineDocumentHandler(this);
+            documentController.addDocumentHandler(documentHandler);
+
             this.timelineController = timelineController;
             timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
@@ -200,6 +207,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            documentController.removeDocumentHandler(documentHandler);
             openTimelineFileBrowserDialog.Dispose();
             actionFactory.Dispose();
             finishActionEditor.Dispose();
@@ -348,6 +356,7 @@ namespace Medical.GUI
                 }
                 createProject(filename);
                 updateWindowCaption();
+                documentController.addToRecentDocuments(filename);
             }
             catch (Exception ex)
             {
@@ -370,19 +379,19 @@ namespace Medical.GUI
             String newProjectName = newProjectDialog.FullProjectName;
             if (File.Exists(newProjectName))
             {
-                MessageBox.show(String.Format("A project named {0} already exists. Would you like to overwrite it?", newProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteNewProject);
+                MessageBox.show(String.Format("A project named {0} already exists. Would you like to overwrite it?", newProjectName), "Overwrite?", 
+                    MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
+                    delegate(MessageBoxStyle result)
+                    {
+                        if (result == MessageBoxStyle.Yes)
+                        {
+                            createNewProject(newProjectDialog.FullProjectName, true);
+                        }
+                    });
             }
             else
             {
                 createNewProject(newProjectName, false);
-            }
-        }
-
-        void overwriteNewProject(MessageBoxStyle result)
-        {
-            if (result == MessageBoxStyle.Yes)
-            {
-                createNewProject(newProjectDialog.FullProjectName, true);
             }
         }
 
@@ -393,23 +402,28 @@ namespace Medical.GUI
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {
-                    String projectPath = fileDialog.Path;
-                    if (projectPath.EndsWith(".tix"))
-                    {
-                        timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-                    }
-                    else if (projectPath.EndsWith(".tl"))
-                    {
-                        timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-                        openTimelineFile(projectPath);
-                    }
-                    else
-                    {
-                        timelineController.ResourceProvider = new TimelineZipResources(fileDialog.Path);
-                    }
-                    updateWindowCaption();
+                    openProject(fileDialog.Path);
+                    documentController.addToRecentDocuments(fileDialog.Path);
                 }
             }
+        }
+
+        public void openProject(String projectPath)
+        {
+            if (projectPath.EndsWith(".tix"))
+            {
+                timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
+            }
+            else if (projectPath.EndsWith(".tl"))
+            {
+                timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
+                openTimelineFile(projectPath);
+            }
+            else
+            {
+                timelineController.ResourceProvider = new TimelineZipResources(projectPath);
+            }
+            updateWindowCaption();
         }
 
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)

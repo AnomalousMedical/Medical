@@ -15,7 +15,7 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
 
         private Dictionary<String, Button> recentDocsMap = new Dictionary<string, Button>();
-        private RecentDocuments recentDocuments;
+        private DocumentController documentController;
         private FlowLayoutContainer recentDocumentsLayout;
 
         private int recentDocsLeft;
@@ -28,7 +28,7 @@ namespace Medical.GUI
         {
             this.bodyAtlasGUI = piperGUI;
             this.standaloneController = standaloneController;
-            this.recentDocuments = piperGUI.RecentDocuments;
+            this.documentController = standaloneController.DocumentController;
 
             Button changeSceneButton = widget.findWidget("File/ChangeScene") as Button;
             Button openButton = widget.findWidget("File/Open") as Button;
@@ -52,11 +52,11 @@ namespace Medical.GUI
             quitButton.MouseButtonClick += new MyGUIEvent(quitButton_MouseButtonClick);
 
             recentDocumentsLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Vertical, 0.0f, new Vector2(recentDocsLeft, recentDocsTop));
-            recentDocuments.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
-            recentDocuments.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
-            recentDocuments.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
+            documentController.DocumentAdded += new RecentDocumentEvent(recentDocuments_DocumentAdded);
+            documentController.DocumentReaccessed += new RecentDocumentEvent(recentDocuments_DocumentReaccessed);
+            documentController.DocumentRemoved += new RecentDocumentEvent(recentDocuments_DocumentRemoved);
             recentDocumentsLayout.SuppressLayout = true;
-            foreach (String document in recentDocuments)
+            foreach (String document in documentController.RecentDocuments)
             {
                 addDocumentToMenu(document);
             }
@@ -192,16 +192,7 @@ namespace Medical.GUI
         void recentDocButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.hide();
-            PatientDataFile patientData = new PatientDataFile(source.Name);
-            if (patientData.loadHeader())
-            {
-                bodyAtlasGUI.changeActiveFile(patientData);
-                standaloneController.openPatientFile(patientData);
-            }
-            else
-            {
-                MessageBox.show(String.Format("Error loading file {0}.", patientData.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
+            documentController.openFile(source.Name);
         }
     }
 }
