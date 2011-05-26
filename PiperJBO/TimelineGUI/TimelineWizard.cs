@@ -182,6 +182,14 @@ namespace Medical.GUI
             }
         }
 
+        public TemporaryStateBlender StateBlender
+        {
+            get
+            {
+                return stateBlender;
+            }
+        }
+
         /// <summary>
         /// Callback that destroys old panels when they are not being animated anymore.
         /// </summary>
