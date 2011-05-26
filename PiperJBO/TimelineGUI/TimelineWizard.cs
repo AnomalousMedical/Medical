@@ -54,12 +54,15 @@ namespace Medical.GUI
             screenLayout.Top = timelineGUIButtons.LayoutContainer;
             crossFadeContainer = new CrossFadeLayoutContainer(standaloneController.MedicalController.MainTimer);
             screenLayout.Center = crossFadeContainer;
+            Notes = new NotesGUI(this, standaloneController.ImageRenderer);
+            Notes.Visible = false;
 
             timelineGUIButtons.setPreviousButtonActive(false);
         }
 
         public void Dispose()
         {
+            Notes.Dispose();
             timelineGUIButtons.Dispose();
         }
 
@@ -101,6 +104,7 @@ namespace Medical.GUI
                 layers = new LayerState("");
                 layers.captureState();
                 stateBlender.recordUndoState();
+                Notes.setToDefault();
             }
             crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
             timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
@@ -140,6 +144,7 @@ namespace Medical.GUI
                 //Create state
                 stateBlender.forceFinishBlend();
                 MedicalState createdState = stateBlender.createBaselineState();
+                Notes.applyToState(createdState);
                 standaloneController.MedicalStateController.addState(createdState);
             }
         }
@@ -201,6 +206,8 @@ namespace Medical.GUI
             }
         }
 
+        public NotesGUI Notes { get; private set; }
+
         /// <summary>
         /// Callback that destroys old panels when they are not being animated anymore.
         /// </summary>
@@ -209,7 +216,14 @@ namespace Medical.GUI
         {
             if (lastPanel != null)
             {
-                lastPanel.Dispose();
+                if (lastPanel == Notes)
+                {
+                    Notes.Visible = false;
+                }
+                else
+                {
+                    lastPanel.Dispose();
+                }
                 lastPanel = null;
             }
         }

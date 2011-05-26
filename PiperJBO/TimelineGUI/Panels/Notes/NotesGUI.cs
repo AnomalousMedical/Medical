@@ -69,5 +69,17 @@ namespace Medical.GUI
             state.Name = stateNameTextBox.Caption;
             state.Thumbnail = thumbnailPicker.SelectedThumbnail;
         }
+
+        public bool Visible
+        {
+            get
+            {
+                return widget.Visible;
+            }
+            set
+            {
+                widget.Visible = value;
+            }
+        }
     }
 }

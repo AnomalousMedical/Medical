@@ -10,17 +10,16 @@ namespace Medical.GUI
     class NotesGUIPrototype : TimelineGUIFactoryPrototype
     {
         private TimelineWizard wizard;
-        private ImageRenderer imageRenderer;
 
-        public NotesGUIPrototype(TimelineWizard wizard, ImageRenderer imageRenderer)
+        public NotesGUIPrototype(TimelineWizard wizard)
         {
             this.wizard = wizard;
-            this.imageRenderer = imageRenderer;
         }
 
         public TimelineGUI getGUI()
         {
-            return new NotesGUI(wizard, imageRenderer);
+            wizard.Notes.Visible = true;
+            return wizard.Notes;
         }
 
         public string Name
