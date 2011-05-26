@@ -138,6 +138,10 @@
     <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\NotesGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\NotesGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerInfo.cs" />
+    <Compile Include="TimelineGUI\Panels\Notes\ThumbnailPickerGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Preset\LeftDiscClockFaceGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Preset\PresetStateGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Preset\RightDiscClockFaceGUIPrototype.cs" />
@@ -195,6 +199,7 @@
     <EmbeddedResource Include="TimelineGUI\Panels\Mandible\LeftCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarDegenerationGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Notes\NotesGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Preset\PresetStateGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Profile\ProfileDistortionGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.layout" />
