@@ -22,13 +22,11 @@ namespace Medical.GUI
 
         private DiscSpaceControl discSpaceControl;
         private CheckButton showDiscCheckBox;
-        private TimelineWizard wizard;
 
         public DiscSpaceGUI(String subDirectory, TimelineWizard wizard)
             : base("Medical.TimelineGUI.Panels.DiscSpace.DiscSpaceGUI.layout", wizard)
         {
             this.subDirectory = subDirectory;
-            this.wizard = wizard;
 
             discSpaceControl = new DiscSpaceControl(widget);
             discSpaceControl.CurrentStageChanged += new EventHandler(discSpaceControl1_CurrentStageChanged);
@@ -101,7 +99,7 @@ namespace Medical.GUI
                     using (XmlTextReader textReader = new XmlTextReader(stream))
                     {
                         presetState = xmlSaver.restoreObject(textReader) as PresetState;
-                        wizard.applyPresetState(presetState);
+                        timelineWizard.applyPresetState(presetState);
                     }
                 }
             }

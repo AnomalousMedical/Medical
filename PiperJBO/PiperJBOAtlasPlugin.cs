@@ -81,6 +81,10 @@ namespace Medical.GUI
             standaloneController.TimelineController.GUIFactory.addPrototype(new DisclaimerGUIPrototype(timelineWizard));
             standaloneController.TimelineController.GUIFactory.addPrototype(new RightDiscSpaceGUIPrototype(timelineWizard));
             standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDiscSpaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDopplerGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new RightDopplerGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new FossaGUILeftPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new FossaGUIRightPrototype(timelineWizard));
         }
 
         public void finishInitialization()

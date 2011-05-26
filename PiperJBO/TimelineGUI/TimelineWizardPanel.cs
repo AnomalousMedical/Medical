@@ -14,7 +14,7 @@ namespace Medical.GUI
     /// </summary>
     public class TimelineWizardPanel : MyGUITimelineGUI
     {
-        private TimelineWizard timelineWizard;
+        protected TimelineWizard timelineWizard;
 
         public TimelineWizardPanel(String layoutFile, TimelineWizard timelineWizard)
             :base(layoutFile)

@@ -89,7 +89,6 @@
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
     <Compile Include="GUI\Distortions\DistortionChooser.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />
-    <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerControl.cs" />
     <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Fossa\FossaPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Mandible\BoneManipulatorPanel.cs" />
@@ -125,6 +124,13 @@
     <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\LeftDiscSpaceGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\RightDiscSpaceGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Doppler\DopplerControl.cs" />
+    <Compile Include="TimelineGUI\Panels\Doppler\DopplerGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Doppler\LeftDopplerGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Doppler\RightDopplerGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUILeftPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Fossa\FossaGUIRightPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
@@ -163,6 +169,9 @@
     </Compile>
     <EmbeddedResource Include="TimelineGUI\Panels\Disclaimer\DisclaimerGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Doppler\DopplerGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUILeft.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Fossa\FossaGUIRight.layout" />
     <EmbeddedResource Include="TimelineGUI\TimelineGUIButtons.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />
