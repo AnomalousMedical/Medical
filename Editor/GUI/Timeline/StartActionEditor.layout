@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="256 391 257 133" layer="Overlapped">
+        <Property key="Widget_Caption" value="Start Action Editor"/>
+        <Widget type="Button" skin="CheckBox" position="4 5 115 16" name="ChangeSceneCheck">
+            <Property key="Widget_Caption" value="Change Scene"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="28 23 221 20" align="HStretch Top" name="SceneCombo"/>
+        <Widget type="Button" skin="CheckBox" position="4 47 89 16" name="ShowGUICheck">
+            <Property key="Widget_Caption" value="Show GUI"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="28 64 145 20" name="OpenGUIEditorButton">
+            <Property key="Widget_Caption" value="Open GUI Editor"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="4 90 71 22" align="Left Bottom" name="ApplyButton">
+            <Property key="Widget_Caption" value="Apply"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="78 90 71 22" align="Left Bottom" name="CancelButton">
+            <Property key="Widget_Caption" value="Cancel"/>
+        </Widget>
+    </Widget>
+</MyGUI>

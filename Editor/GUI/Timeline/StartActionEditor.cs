@@ -7,32 +7,45 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ChangeSceneEditor : Dialog
+    class StartActionEditor : Dialog
     {
         private ComboBox sceneCombo;
-        private CheckButton openSceneCheck;
+        private CheckButton changeSceneCheck;
+        private CheckButton showGuiCheck;
+        private Button openGUIEditorButton;
         private OpenNewSceneAction newSceneAction;
+        private ShowTimelineGUIAction showGUIAction;
         private Timeline currentTimeline;
 
-        public ChangeSceneEditor()
-            : base("Medical.GUI.Timeline.ChangeSceneEditor.layout")
+        private ShowGUIEditor showGUIEditor;
+
+        public StartActionEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
+            :base("Medical.GUI.Timeline.StartActionEditor.layout")
         {
-            openSceneCheck = new CheckButton(window.findWidget("OpenSceneCheck") as Button);
+            changeSceneCheck = new CheckButton(window.findWidget("ChangeSceneCheck") as Button);
+            changeSceneCheck.CheckedChanged += new MyGUIEvent(changeSceneCheck_CheckedChanged);
             sceneCombo = window.findWidget("SceneCombo") as ComboBox;
             findSceneFiles();
+
+            showGuiCheck = new CheckButton(window.findWidget("ShowGUICheck") as Button);
+            showGuiCheck.CheckedChanged += new MyGUIEvent(showGuiCheck_CheckedChanged);
+            openGUIEditorButton = window.findWidget("OpenGUIEditorButton") as Button;
+            openGUIEditorButton.MouseButtonClick += new MyGUIEvent(openGUIEditorButton_MouseButtonClick);
 
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
             Button applyButton = window.findWidget("ApplyButton") as Button;
             applyButton.MouseButtonClick += new MyGUIEvent(applyButton_MouseButtonClick);
+
+            showGUIEditor = new ShowGUIEditor(fileBrowser, timelineController);
         }
 
         protected override void onShown(EventArgs args)
         {
             if (newSceneAction == null)
             {
-                openSceneCheck.Checked = false;
+                changeSceneCheck.Checked = false;
                 if (sceneCombo.ItemCount > 0)
                 {
                     sceneCombo.SelectedIndex = 0;
@@ -40,7 +53,7 @@ namespace Medical.GUI
             }
             else
             {
-                openSceneCheck.Checked = true;
+                changeSceneCheck.Checked = true;
                 String fileName = VirtualFileSystem.GetFileName(newSceneAction.Scene);
                 String baseName = fileName.Substring(0, fileName.IndexOf('.'));
                 uint index = sceneCombo.findItemIndexWith(baseName);
@@ -53,12 +66,20 @@ namespace Medical.GUI
                     MessageBox.show(String.Format("Could not find the scene {0} specified by this timeline.", newSceneAction.Scene), "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
             }
+            sceneCombo.Enabled = changeSceneCheck.Checked;
+
+            openGUIEditorButton.Enabled = showGuiCheck.Checked = showGUIAction != null;
+            if (showGUIAction != null)
+            {
+                showGUIEditor.setProperties(showGUIAction);
+            }
+            
             base.onShown(args);
         }
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (openSceneCheck.Checked)
+            if (changeSceneCheck.Checked)
             {
                 if (newSceneAction == null)
                 {
@@ -67,20 +88,37 @@ namespace Medical.GUI
                 }
                 newSceneAction.Scene = sceneCombo.getItemDataAt(sceneCombo.SelectedIndex).ToString();
             }
-            else
+            else if (newSceneAction != null)
             {
-                if (newSceneAction != null)
-                {
-                    currentTimeline.removePreAction(newSceneAction);
-                    newSceneAction = null;
-                }
+                currentTimeline.removePreAction(newSceneAction);
+                newSceneAction = null;
             }
+
+            //Show GUI
+            if (showGUIAction != null)
+            {
+                //Always remove the old action
+                currentTimeline.removePreAction(showGUIAction);
+                showGUIAction = null;
+            }
+
+            if (showGuiCheck.Checked)
+            {
+                //Add the action back in if appropriate
+                showGUIAction = showGUIEditor.createAction();
+                currentTimeline.addPreAction(showGUIAction);
+            }
+
             this.close();
+
+            showGUIEditor.clear();
         }
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
             this.close();
+
+            showGUIEditor.clear();
         }
 
         void findSceneFiles()
@@ -108,16 +146,36 @@ namespace Medical.GUI
             }
             set
             {
+                newSceneAction = null;
+                showGUIAction = null;
                 currentTimeline = value;
                 foreach (TimelineInstantAction instantAction in currentTimeline.PreActions)
                 {
-                    newSceneAction = instantAction as OpenNewSceneAction;
-                    if (newSceneAction != null)
+                    if (newSceneAction == null)
                     {
-                        break;
+                        newSceneAction = instantAction as OpenNewSceneAction;
+                    }
+                    if (showGUIAction == null)
+                    {
+                        showGUIAction = instantAction as ShowTimelineGUIAction;
                     }
                 }
             }
+        }
+
+        void changeSceneCheck_CheckedChanged(Widget source, EventArgs e)
+        {
+            sceneCombo.Enabled = changeSceneCheck.Checked;
+        }
+
+        void showGuiCheck_CheckedChanged(Widget source, EventArgs e)
+        {
+            openGUIEditorButton.Enabled = showGuiCheck.Checked;
+        }
+
+        void openGUIEditorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            showGUIEditor.open(true);
         }
     }
 }

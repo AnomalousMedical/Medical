@@ -42,7 +42,7 @@ namespace Medical.GUI
 
 
         //Dialogs
-        private ChangeSceneEditor changeSceneEditor;
+        private StartActionEditor startActionEditor;
         private NewProjectDialog newProjectDialog;
         private TimelineFileBrowserDialog fileBrowserDialog;
         private TimelineFileBrowserDialog openTimelineFileBrowserDialog;
@@ -110,8 +110,8 @@ namespace Medical.GUI
             otherActionsMenu.Visible = false;
             MenuItem editTimelineIndex = otherActionsMenu.addItem("Edit Timeline Index");
             editTimelineIndex.MouseButtonClick += new MyGUIEvent(editTimelineIndex_MouseButtonClick);
-            MenuItem changeScene = otherActionsMenu.addItem("Change Scene");
-            changeScene.MouseButtonClick += new MyGUIEvent(changeScene_MouseButtonClick);
+            MenuItem startAction = otherActionsMenu.addItem("Start Action");
+            startAction.MouseButtonClick += new MyGUIEvent(startAction_MouseButtonClick);
             MenuItem finishAction = otherActionsMenu.addItem("Finish Action");
             finishAction.MouseButtonClick += new MyGUIEvent(finishAction_MouseButtonClick);
             MenuItem reverseSidesAction = otherActionsMenu.addItem("Reverse Sides");
@@ -161,14 +161,14 @@ namespace Medical.GUI
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Dialogs
-            changeSceneEditor = new ChangeSceneEditor();
-            
-            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
-            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
-
             fileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__Main");
             timelineController.FileBrowser = fileBrowserDialog;
             guiManager.addManagedDialog(fileBrowserDialog);
+
+            startActionEditor = new StartActionEditor(fileBrowserDialog, timelineController);
+            
+            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
+            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
             openTimelineFileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__OpenTimeline");
             guiManager.addManagedDialog(openTimelineFileBrowserDialog);
@@ -205,9 +205,9 @@ namespace Medical.GUI
             finishActionEditor.Dispose();
             newProjectDialog.Dispose();
             timelineController.FileBrowser = null;
-            fileBrowserDialog.Dispose();
             saveTimelineDialog.Dispose();
-            changeSceneEditor.Dispose();
+            startActionEditor.Dispose();
+            fileBrowserDialog.Dispose();
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(fileMenu);
@@ -241,7 +241,7 @@ namespace Medical.GUI
             }
             currentTimeline.ActionAdded += currentTimeline_ActionAdded;
             currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
-            changeSceneEditor.CurrentTimeline = currentTimeline;
+            startActionEditor.CurrentTimeline = currentTimeline;
             finishActionEditor.CurrentTimeline = currentTimeline;
         }
 
@@ -557,11 +557,11 @@ namespace Medical.GUI
             testActions.StateCheck = !testActions.StateCheck;
         }
 
-        void changeScene_MouseButtonClick(Widget source, EventArgs e)
+        void startAction_MouseButtonClick(Widget source, EventArgs e)
         {
-            changeSceneEditor.open(true);
-            changeSceneEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            changeSceneEditor.ensureVisible();
+            startActionEditor.open(true);
+            startActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            startActionEditor.ensureVisible();
         }
 
         void reverseSidesAction_MouseButtonClick(Widget source, EventArgs e)
