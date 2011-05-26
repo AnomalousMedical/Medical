@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine;
 using Medical.Controller;
+using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
@@ -68,8 +69,17 @@ namespace Medical.GUI
         /// <param name="panel">The panel to show.</param>
         public void show(TimelineWizardPanel panel)
         {
+            //Swap panels
             lastPanel = currentPanel;
             currentPanel = panel;
+
+            //Set panel scene properties
+            MedicalController medicalController = standaloneController.MedicalController;
+            SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
+            SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
+            currentPanel.setSceneProperties(medicalController, medicalScene);
+
+            //Show panel
             if (!wizardInterfaceShown) //If this is false no interfaces have been shown yet for this wizard.
             {
                 guiManager.changeLeftPanel(screenLayout);
@@ -152,6 +162,14 @@ namespace Medical.GUI
                 restoreCameraAndLayers();
                 stateBlender.blendToUndo();
             }
+        }
+
+        public void applyPresetState(PresetState presetState)
+        {
+            MedicalState createdState;
+            createdState = stateBlender.createBaselineState();
+            presetState.applyToState(createdState);
+            stateBlender.startTemporaryBlend(createdState);
         }
 
         /// <summary>

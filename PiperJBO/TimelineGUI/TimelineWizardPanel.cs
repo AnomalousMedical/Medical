@@ -12,7 +12,7 @@ namespace Medical.GUI
     /// disposed properly. That class handles the memory management and has more
     /// info in its description.
     /// </summary>
-    public abstract class TimelineWizardPanel : MyGUITimelineGUI
+    public class TimelineWizardPanel : MyGUITimelineGUI
     {
         private TimelineWizard timelineWizard;
 
@@ -35,6 +35,11 @@ namespace Medical.GUI
         public override void hide(GUIManager guiManager)
         {
             timelineWizard.hide();
+        }
+
+        public virtual void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        {
+
         }
 
         public ShowTimelineGUIAction ShowGUIAction { get; set; }

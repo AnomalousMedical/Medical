@@ -78,6 +78,9 @@ namespace Medical.GUI
             timelineWizard = new TimelineWizard(standaloneController);
             standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveTopTeethGUIPrototype(timelineWizard));
             standaloneController.TimelineController.GUIFactory.addPrototype(new RemoveBottomTeethGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new DisclaimerGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new RightDiscSpaceGUIPrototype(timelineWizard));
+            standaloneController.TimelineController.GUIFactory.addPrototype(new LeftDiscSpaceGUIPrototype(timelineWizard));
         }
 
         public void finishInitialization()
