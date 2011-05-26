@@ -24,7 +24,7 @@ namespace Medical.GUI
             openingValues.Add(slider);
         }
 
-        public override void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             foreach (BoneManipulatorSlider slider in openingValues)
             {

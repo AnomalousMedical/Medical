@@ -110,7 +110,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             String presetDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
             if (currentPresetDirectory != presetDirectory)

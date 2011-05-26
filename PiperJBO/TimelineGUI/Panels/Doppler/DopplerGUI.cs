@@ -47,7 +47,7 @@ namespace Medical.GUI
             bothJointsCameraButton.MouseButtonClick += new MyGUIEvent(bothJointsCameraButton_MouseButtonClick);
         }
 
-        public override void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             //String newSequenceDir = medicalController.CurrentSceneDirectory + '/' + simScene.SequenceDirectory;
             //if (currentSequenceDirectory != newSequenceDir)

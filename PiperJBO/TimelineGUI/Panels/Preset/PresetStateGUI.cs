@@ -51,7 +51,7 @@ namespace Medical.GUI
             }
         }
 
-        public override void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             String rootDirectory = medicalController.CurrentSceneDirectory + '/' + simScene.PresetDirectory;
             if (rootDirectory != lastRootDirectory)

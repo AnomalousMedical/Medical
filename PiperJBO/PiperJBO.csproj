@@ -148,6 +148,11 @@
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTeethGUI.cs" />
     <Compile Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUIPrototype.cs" />
+    <Compile Include="TimelineGUI\Panels\Teeth\TeethMovementGUI.cs" />
     <Compile Include="TimelineGUI\TimelineGUIButtons.cs" />
     <Compile Include="TimelineGUI\TimelineWizard.cs" />
     <Compile Include="TimelineGUI\TimelineWizardPanel.cs" />
@@ -192,6 +197,8 @@
     <EmbeddedResource Include="TimelineGUI\Panels\Mandible\RightCondylarGrowthGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Preset\PresetStateGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Profile\ProfileDistortionGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethAdaptationGUI.layout" />
+    <EmbeddedResource Include="TimelineGUI\Panels\Teeth\TeethHeightAdaptationGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\TimelineGUIButtons.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveTopTeethGUI.layout" />
     <EmbeddedResource Include="TimelineGUI\Panels\Teeth\RemoveBottomTeethGUI.layout" />

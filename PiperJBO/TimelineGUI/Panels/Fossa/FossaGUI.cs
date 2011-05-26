@@ -32,7 +32,7 @@ namespace Medical.GUI
             makeNormalButton.MouseButtonClick += new MyGUIEvent(makeNormalButton_MouseButtonClick);
         }
 
-        public override void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public override void opening(MedicalController medicalController, SimulationScene simScene)
         {
             fossa = FossaController.get(fossaName);
             if (fossa != null)

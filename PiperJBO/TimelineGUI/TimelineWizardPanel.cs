@@ -37,7 +37,12 @@ namespace Medical.GUI
             timelineWizard.hide();
         }
 
-        public virtual void setSceneProperties(MedicalController medicalController, SimulationScene simScene)
+        public virtual void opening(MedicalController medicalController, SimulationScene simScene)
+        {
+
+        }
+
+        public virtual void closing()
         {
 
         }

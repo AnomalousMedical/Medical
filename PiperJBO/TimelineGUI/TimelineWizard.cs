@@ -75,11 +75,16 @@ namespace Medical.GUI
             lastPanel = currentPanel;
             currentPanel = panel;
 
+            if (lastPanel != null)
+            {
+                lastPanel.closing();
+            }
+
             //Set panel scene properties
             MedicalController medicalController = standaloneController.MedicalController;
             SimSubScene defaultScene = medicalController.CurrentScene.getDefaultSubScene();
             SimulationScene medicalScene = defaultScene.getSimElementManager<SimulationScene>();
-            currentPanel.setSceneProperties(medicalController, medicalScene);
+            currentPanel.opening(medicalController, medicalScene);
 
             //Show panel
             if (!wizardInterfaceShown) //If this is false no interfaces have been shown yet for this wizard.
@@ -110,6 +115,12 @@ namespace Medical.GUI
         {
             lastPanel = currentPanel;
             currentPanel = null;
+
+            if (lastPanel != null)
+            {
+                lastPanel.closing();
+            }
+
             crossFadeContainer.changePanel(null, 0.25f, animationCompleted);
             guiManager.changeLeftPanel(null);
             wizardInterfaceShown = false;
