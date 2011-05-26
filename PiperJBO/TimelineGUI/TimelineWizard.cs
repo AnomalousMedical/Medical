@@ -6,6 +6,7 @@ using Engine.Platform;
 using Engine;
 using Medical.Controller;
 using Engine.ObjectManagement;
+using Engine.Saving.XMLSaver;
 
 namespace Medical.GUI
 {
@@ -34,6 +35,7 @@ namespace Medical.GUI
         private GUIManager guiManager;
         private bool wizardInterfaceShown = false;
         private StandaloneController standaloneController;
+        private XmlSaver xmlSaver = new XmlSaver();
 
         //Startup options
         Vector3 cameraPosition;
@@ -170,6 +172,14 @@ namespace Medical.GUI
             createdState = stateBlender.createBaselineState();
             presetState.applyToState(createdState);
             stateBlender.startTemporaryBlend(createdState);
+        }
+
+        public XmlSaver Saver
+        {
+            get
+            {
+                return xmlSaver;
+            }
         }
 
         /// <summary>
