@@ -155,7 +155,7 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
-            if (!Gui.Instance.HandledMouseButtons)
+            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny())
             {
                 anatomyList.SuppressLayout = true;
                 anatomyList.clear();
