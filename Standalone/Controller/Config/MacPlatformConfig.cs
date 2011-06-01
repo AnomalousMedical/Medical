@@ -113,5 +113,13 @@ namespace Medical
         {
             return true;
         }
+
+        protected override bool CloseMainWindowOnShutdownImpl
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

@@ -112,7 +112,7 @@ namespace Medical.GUI
                     if (result == MessageBoxStyle.Yes)
                     {
                         standaloneController.App.LicenseManager.deleteLicense();
-                        standaloneController.shutdown();
+                        standaloneController.exit();
                     }
                 });
             this.hide();
@@ -120,7 +120,7 @@ namespace Medical.GUI
 
         void quitButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            standaloneController.shutdown();
+            standaloneController.exit();
             this.hide();
         }
 

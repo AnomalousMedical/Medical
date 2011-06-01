@@ -234,8 +234,12 @@ namespace Medical
             htmlHelpController.Display(index);
         }
 
-        public void shutdown()
+        public void exit()
         {
+            if (true)//windows
+            {
+                mainWindow.close();
+            }
             app.exit();
         }
 
@@ -433,7 +437,7 @@ namespace Medical
         {
             if (result == MessageBoxStyle.Yes)
             {
-                this.shutdown();
+                this.exit();
             }
         }
 

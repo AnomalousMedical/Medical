@@ -102,5 +102,13 @@ namespace Medical
                 return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             }
         }
+
+        protected override bool CloseMainWindowOnShutdownImpl
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

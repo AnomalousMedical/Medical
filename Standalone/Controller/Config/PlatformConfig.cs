@@ -110,6 +110,14 @@ namespace Medical
             }
         }
 
+        public static bool CloseMainWindowOnShutdown
+        {
+            get
+            {
+                return currentConfig.CloseMainWindowOnShutdownImpl;
+            }
+        }
+
 
         //Subclass
         protected abstract String formatTitleImpl(String windowText, String subText);
@@ -135,6 +143,8 @@ namespace Medical
         protected abstract bool AllowCloneWindowsImpl { get; }
 
         protected abstract String DocumentsFolderImpl { get; }
+
+        protected abstract bool CloseMainWindowOnShutdownImpl { get; }
 
         #region PInvoke
 
