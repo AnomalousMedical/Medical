@@ -236,7 +236,7 @@ namespace Medical
 
         public void exit()
         {
-            if (true)//windows
+            if (PlatformConfig.CloseMainWindowOnShutdown)
             {
                 mainWindow.close();
             }
