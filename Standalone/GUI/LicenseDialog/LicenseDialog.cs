@@ -158,6 +158,7 @@ namespace Medical.GUI
         {
             activateButton.Enabled = true;
             cancelButton.Enabled = true;
+            passwordEdit.Caption = "";
             MessageBox.show("Could not get license file. Username or password is invalid.", "Login Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
         }
 
