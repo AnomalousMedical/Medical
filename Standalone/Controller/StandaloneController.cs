@@ -224,11 +224,6 @@ namespace Medical
             }
         }
 
-        public void closeMainWindow()
-        {
-            mainWindow.close();
-        }
-
         public void onIdle()
         {
             medicalController.MainTimer.OnIdle();
@@ -438,7 +433,7 @@ namespace Medical
         {
             if (result == MessageBoxStyle.Yes)
             {
-                this.closeMainWindow();
+                this.shutdown();
             }
         }
 

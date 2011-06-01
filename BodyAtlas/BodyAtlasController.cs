@@ -243,7 +243,7 @@ namespace Medical
 
         void licenseManager_KeyInvalid(object sender, EventArgs e)
         {
-            controller.closeMainWindow();
+            controller.shutdown();
         }
 
         void licenseManager_KeyValid(object sender, EventArgs e)
