@@ -580,8 +580,14 @@ namespace Medical.GUI
 
         void reverseSidesAction_MouseButtonClick(Widget source, EventArgs e)
         {
-            MessageBox.show("Reversing sides will attempt to help you make a timeline that works on the opposite side.\nIt can only reverse things on the x-axis meaning it will reverse stuff left to right.\n\nThe only things that can be reversed are:\n* Camera translation and look at.\n* Prop translation (rotations need to be fixed manually).\n* Movement sequence keyframes.", "Reverse", MessageBoxStyle.Ok | MessageBoxStyle.IconInfo);
-            timelineController.EditingTimeline.reverseSides();
+            MessageBox.show("Reversing sides will attempt to help you make a timeline that works on the opposite side.\nIt can only reverse things on the x-axis meaning it will reverse stuff left to right.\n\nThe only things that can be reversed are:\n* Camera translation and look at.\n* Prop translation (rotations need to be fixed manually).\n* Movement sequence keyframes.\nContinue?", "Reverse", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
+            {
+                if (result == MessageBoxStyle.Yes)
+                {
+                    timelineController.EditingTimeline.reverseSides();
+                }
+            });
+            
         }
 
         void finishAction_MouseButtonClick(Widget source, EventArgs e)
