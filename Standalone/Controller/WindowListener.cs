@@ -34,7 +34,7 @@ namespace Medical
 
         public void closed(OSWindow window)
         {
-            //controller.shutdown();
+            controller.exit();
         }
 
         public void focusChanged(OSWindow window)

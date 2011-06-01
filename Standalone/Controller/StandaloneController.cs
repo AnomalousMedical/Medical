@@ -56,6 +56,7 @@ namespace Medical
         private MainWindow mainWindow;
         private StandaloneApp app;
         private AtlasPluginManager atlasPluginManager;
+		private bool shuttingDown = false;
 
         //Touch
         private TouchController touchController;
@@ -236,11 +237,15 @@ namespace Medical
 
         public void exit()
         {
-            if (PlatformConfig.CloseMainWindowOnShutdown)
-            {
-                mainWindow.close();
-            }
-            app.exit();
+			if(!shuttingDown)
+			{
+				shuttingDown = true;
+	            if (PlatformConfig.CloseMainWindowOnShutdown)
+	            {
+	                mainWindow.close();
+	            }
+            	app.exit();
+			}
         }
 
         /// <summary>
