@@ -12,7 +12,7 @@ namespace Medical.GUI
     {
         private TimelineFileBrowserDialog fileBrowser;
         private TimelineController timelineController;
-        private ShowGUIPropertiesTable propertiesTable;
+        private PropertiesTable propertiesTable;
 
         private Edit nextTimelineEdit;
         private ComboBox guiCombo;
@@ -41,7 +41,7 @@ namespace Medical.GUI
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
-            propertiesTable = new ShowGUIPropertiesTable(new Table(window.findWidget("PropertiesTable")));
+            propertiesTable = new PropertiesTable(new Table(window.findWidget("PropertiesTable")));
         }
 
         public void setProperties(ShowTimelineGUIAction action)

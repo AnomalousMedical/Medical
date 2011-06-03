@@ -90,7 +90,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Timeline\ShowGUIEditor.cs" />
-    <Compile Include="GUI\Timeline\ShowGUIPropertiesTable.cs" />
+    <Compile Include="GUI\Editor\PropertiesTable.cs" />
     <Compile Include="GUI\Timeline\StartActionEditor.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />

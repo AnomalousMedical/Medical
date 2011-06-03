@@ -7,14 +7,17 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class ShowGUIPropertiesTable
+    /// <summary>
+    /// This will create a MyGUI Table that interfaces with an EditInterface.
+    /// </summary>
+    class PropertiesTable
     {
         private Table propertiesTable;
         private EditablePropertyInfo currentPropInfo;
         private Dictionary<TableRow, EditableProperty> rowProperties = new Dictionary<TableRow, EditableProperty>();
         private bool allowValidation = true;
 
-        public ShowGUIPropertiesTable(Table propertiesTable)
+        public PropertiesTable(Table propertiesTable)
         {
             this.propertiesTable = propertiesTable;
             propertiesTable.CellValidating += new EventHandler<TableCellValidationEventArgs>(propertiesTable_CellValidating);
