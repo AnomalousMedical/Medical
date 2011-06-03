@@ -110,14 +110,7 @@ namespace Medical.GUI
         {
             nextTimeline = nextTimelineEdit.Caption;
             guiName = guiCombo.SelectedItemName;
-            if (displayedGUIData != null)
-            {
-                storeGUIData = displayedGUIData.createCopy();
-            }
-            else
-            {
-                storeGUIData = null;
-            }
+            storeGUIData = displayedGUIData != null ? displayedGUIData.createCopy() : null;
         }
 
         void displayStoredValues()
@@ -142,14 +135,7 @@ namespace Medical.GUI
                 guiCombo.clearIndexSelected();
             }
 
-            if (storeGUIData != null)
-            {
-                displayedGUIData = storeGUIData.createCopy();
-            }
-            else
-            {
-                displayedGUIData = null;
-            }
+            displayedGUIData = storeGUIData != null ? storeGUIData.createCopy() : null;
             showGUIDataOnTable();
         }
 

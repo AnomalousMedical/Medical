@@ -5,12 +5,16 @@ using System.Text;
 using Engine.Editing;
 using Engine;
 using Engine.Saving;
+using Engine.Attributes;
 
 namespace Medical
 {
     public abstract class AbstractTimelineGUIData : TimelineGUIData
     {
+        [DoNotSave]
         private EditInterface editInterface;
+
+        [DoNotSave]
         private static CopySaver copySaver = new CopySaver();
 
         public AbstractTimelineGUIData()
