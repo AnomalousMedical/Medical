@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
@@ -11,6 +12,7 @@ namespace Medical.GUI
     {
         private TimelineFileBrowserDialog fileBrowser;
         private TimelineController timelineController;
+        private ShowGUIPropertiesTable propertiesTable;
 
         private Edit nextTimelineEdit;
         private ComboBox guiCombo;
@@ -35,18 +37,22 @@ namespace Medical.GUI
 
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            propertiesTable = new ShowGUIPropertiesTable(new Table(window.findWidget("PropertiesTable")));
         }
 
         public void setProperties(ShowTimelineGUIAction action)
         {
             nextTimeline = action.NextTimeline;
             guiName = action.GUIName;
+            propertiesTable.setEditInterface(action.getEditInterface());
         }
 
         public void clear()
         {
             nextTimeline = null;
             guiName = null;
+            propertiesTable.clear();
         }
 
         public ShowTimelineGUIAction createAction()

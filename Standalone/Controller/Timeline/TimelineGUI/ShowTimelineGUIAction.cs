@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Logging;
 using Engine.Saving;
+using Engine.Editing;
+using Engine;
 
 namespace Medical
 {
@@ -12,6 +14,12 @@ namespace Medical
     /// </summary>
     public class ShowTimelineGUIAction : TimelineInstantAction
     {
+        [Editable]
+        String testString = "TestStringValue";
+
+        [Editable]
+        int testInt = 111;
+
         TimelineGUI gui;
 
         public ShowTimelineGUIAction()
@@ -70,6 +78,11 @@ namespace Medical
             {
                 info.addMatch(this.GetType(), "Next Timeline for GUI " + GUIName, NextTimeline);
             }
+        }
+
+        public EditInterface getEditInterface()
+        {
+            return ReflectedEditInterface.createEditInterface(this, BehaviorEditMemberScanner.Scanner, "ShowGUI", null);
         }
 
         public String NextTimeline { get; set; }
