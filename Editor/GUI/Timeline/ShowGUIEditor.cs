@@ -149,11 +149,11 @@ namespace Medical.GUI
         {
             if (displayedGUIData != null)
             {
-                propertiesTable.setEditInterface(displayedGUIData.getEditInterface());
+                propertiesTable.EditInterface = displayedGUIData.getEditInterface();
             }
             else
             {
-                propertiesTable.setEditInterface(null);
+                propertiesTable.EditInterface = null;
             }
         }
     }

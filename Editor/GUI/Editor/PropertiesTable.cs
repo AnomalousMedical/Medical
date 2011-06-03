@@ -7,13 +7,18 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
+    public delegate void EditablePropertyValueChanged(EditableProperty var);
+
     /// <summary>
     /// This will create a MyGUI Table that interfaces with an EditInterface.
     /// </summary>
     class PropertiesTable
     {
+        public event EditablePropertyValueChanged EditablePropertyValueChanged;
+
         private Table propertiesTable;
         private EditablePropertyInfo currentPropInfo;
+        private EditInterface currentEditInterface = null;
         private Dictionary<TableRow, EditableProperty> rowProperties = new Dictionary<TableRow, EditableProperty>();
         private bool allowValidation = true;
 
@@ -31,34 +36,63 @@ namespace Medical.GUI
             propertiesTable.Rows.clear();
         }
 
-        public void setEditInterface(EditInterface editInterface)
+        public EditInterface EditInterface
         {
-            clear();
-            if (editInterface != null)
+            get
             {
-                currentPropInfo = editInterface.getPropertyInfo();
-                if (currentPropInfo != null)
-                {
-                    foreach (EditablePropertyColumn column in currentPropInfo.getColumns())
-                    {
-                        TableColumn dgvColumn = new TableColumn(column.Header);
-                        dgvColumn.ReadOnly = column.ReadOnly;
-                        propertiesTable.Columns.add(dgvColumn);
-                    }
-                }
-                if (editInterface.hasEditableProperties())
-                {
-                    foreach (EditableProperty editProp in editInterface.getEditableProperties())
-                    {
-                        addProperty(editProp);
-                    }
-                }
-                propertiesTable.layout();
+                return currentEditInterface;
             }
-            else
+            set
             {
-                currentPropInfo = null;
+                allowValidation = false;
+                if (currentEditInterface != null)
+                {
+                    currentEditInterface.OnPropertyAdded -= new PropertyAdded(currentEditInterface_OnPropertyAdded);
+                    currentEditInterface.OnPropertyRemoved -= new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
+                }
+                clear();
+                if (value != null)
+                {
+                    currentEditInterface = value;
+                    currentEditInterface.OnPropertyAdded += new PropertyAdded(currentEditInterface_OnPropertyAdded);
+                    currentEditInterface.OnPropertyRemoved += new PropertyRemoved(currentEditInterface_OnPropertyRemoved);
+
+                    currentPropInfo = value.getPropertyInfo();
+                    if (currentPropInfo != null)
+                    {
+                        foreach (EditablePropertyColumn column in currentPropInfo.getColumns())
+                        {
+                            TableColumn dgvColumn = new TableColumn(column.Header);
+                            dgvColumn.ReadOnly = column.ReadOnly;
+                            propertiesTable.Columns.add(dgvColumn);
+                        }
+                    }
+                    if (value.hasEditableProperties())
+                    {
+                        foreach (EditableProperty editProp in value.getEditableProperties())
+                        {
+                            addProperty(editProp);
+                        }
+                    }
+                    propertiesTable.layout();
+                }
+                else
+                {
+                    currentPropInfo = null;
+                    currentEditInterface = null;
+                }
+                allowValidation = true;
             }
+        }
+
+        void currentEditInterface_OnPropertyRemoved(EditableProperty property)
+        {
+            removeProperty(property);
+        }
+
+        void currentEditInterface_OnPropertyAdded(EditableProperty property)
+        {
+            addProperty(property);
         }
 
         void propertiesTable_CellValueChanged(object sender, EventArgs e)
@@ -71,10 +105,10 @@ namespace Medical.GUI
                 int columnIndex = cell.ColumnIndex;
                 var.setValueStr(columnIndex, cell.Value.ToString());
                 //changesMade = true;
-                //if (EditablePropertyValueChanged != null)
-                //{
-                //    EditablePropertyValueChanged.Invoke(var);
-                //}
+                if (EditablePropertyValueChanged != null)
+                {
+                    EditablePropertyValueChanged.Invoke(var);
+                }
                 updateData();
             }
         }
@@ -120,6 +154,19 @@ namespace Medical.GUI
 
             propertiesTable.Rows.add(newRow);
             rowProperties.Add(newRow, property);
+        }
+
+        private void removeProperty(EditableProperty property)
+        {
+            foreach (TableRow row in propertiesTable.Rows)
+            {
+                if (rowProperties[row] == property)
+                {
+                    propertiesTable.Rows.remove(row);
+                    rowProperties.Remove(row);
+                    break;
+                }
+            }
         }
 
         private TableCell createCell(Type propType)
