@@ -19,6 +19,11 @@ namespace Medical.GUI
             return new PresetStateGUI("RightDisc", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.RightDiscClockFaceGUI"; }

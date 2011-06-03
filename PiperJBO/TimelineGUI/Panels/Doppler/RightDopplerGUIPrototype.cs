@@ -19,6 +19,11 @@ namespace Medical.GUI
             return new DopplerGUI("RightDoppler", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return new DopplerGUIData();
+        }
+
         public string Name
         {
             get { return "PiperJBO.RightDopplerGUI"; }

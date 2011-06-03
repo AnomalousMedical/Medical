@@ -123,6 +123,7 @@
     <Compile Include="TimelineGUI\Panels\DiscSpace\RightDiscSpaceGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Doppler\DopplerControl.cs" />
     <Compile Include="TimelineGUI\Panels\Doppler\DopplerGUI.cs" />
+    <Compile Include="TimelineGUI\Panels\Doppler\DopplerGUIData.cs" />
     <Compile Include="TimelineGUI\Panels\Doppler\LeftDopplerGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Doppler\RightDopplerGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\Fossa\FossaGUI.cs" />

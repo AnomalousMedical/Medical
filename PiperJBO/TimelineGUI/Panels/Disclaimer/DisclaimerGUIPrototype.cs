@@ -19,6 +19,11 @@ namespace Medical.GUI
             return new TimelineWizardPanel("Medical.TimelineGUI.Panels.Disclaimer.DisclaimerGUI.layout", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.DisclaimerGUI"; }

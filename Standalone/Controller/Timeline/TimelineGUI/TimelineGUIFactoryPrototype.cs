@@ -19,6 +19,12 @@ namespace Medical
         TimelineGUI getGUI();
 
         /// <summary>
+        /// Get the TimelineGUIData for this entry.
+        /// </summary>
+        /// <returns></returns>
+        TimelineGUIData getGUIData();
+
+        /// <summary>
         /// The name of this prototype. Should make a resonable effort to make
         /// this unique. Namespace it to the plugin you are writing.
         /// </summary>

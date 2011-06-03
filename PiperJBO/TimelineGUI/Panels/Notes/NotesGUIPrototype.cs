@@ -22,6 +22,11 @@ namespace Medical.GUI
             return wizard.Notes;
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.NotesGUI"; }

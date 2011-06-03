@@ -19,6 +19,11 @@ namespace Medical.GUI
             return new FossaGUI("RightFossa", "Medical.TimelineGUI.Panels.Fossa.FossaGUIRight.layout", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.FossaGUIRight"; }

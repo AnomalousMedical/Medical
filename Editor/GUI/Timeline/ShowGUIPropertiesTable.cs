@@ -30,6 +30,7 @@ namespace Medical.GUI
 
         public void setEditInterface(EditInterface editInterface)
         {
+            clear();
             if (editInterface != null)
             {
                 currentPropInfo = editInterface.getPropertyInfo();

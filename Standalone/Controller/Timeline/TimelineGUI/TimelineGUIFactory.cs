@@ -47,6 +47,17 @@ namespace Medical
             return null;
         }
 
+        public TimelineGUIData getGUIData(String name)
+        {
+            TimelineGUIFactoryPrototype prototype = null;
+            if (prototypes.TryGetValue(name, out prototype))
+            {
+                return prototype.getGUIData();
+            }
+            Log.Error("Could not find TimelineGUI prototype {0}. Did not create TimelineGUIData.", name);
+            return null;
+        }
+
         /// <summary>
         /// A list of all prototypes.
         /// </summary>

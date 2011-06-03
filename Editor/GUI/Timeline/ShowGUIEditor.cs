@@ -19,6 +19,8 @@ namespace Medical.GUI
 
         private String nextTimeline;
         private String guiName;
+        private TimelineGUIData storeGUIData;
+        private TimelineGUIData displayedGUIData;
 
         public ShowGUIEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
             : base("Medical.GUI.Timeline.ShowGUIEditor.layout")
@@ -28,6 +30,7 @@ namespace Medical.GUI
 
             nextTimelineEdit = window.findWidget("NextTimelineEdit") as Edit;
             guiCombo = window.findWidget("GUIChoiceCombo") as ComboBox;
+            guiCombo.EventComboChangePosition += new MyGUIEvent(guiCombo_EventComboChangePosition);
 
             Button browseTimelineButton = window.findWidget("BrowseTimelineButton") as Button;
             browseTimelineButton.MouseButtonClick += new MyGUIEvent(browseTimelineButton_MouseButtonClick);
@@ -45,13 +48,20 @@ namespace Medical.GUI
         {
             nextTimeline = action.NextTimeline;
             guiName = action.GUIName;
-            propertiesTable.setEditInterface(action.getEditInterface());
+
+            //Create a copy of the GUIData to use for editing.
+            storeGUIData = action.GUIData;
+            if (storeGUIData != null)
+            {
+                storeGUIData = storeGUIData.createCopy();
+            }
         }
 
         public void clear()
         {
             nextTimeline = null;
             guiName = null;
+            storeGUIData = null;
             propertiesTable.clear();
         }
 
@@ -60,6 +70,7 @@ namespace Medical.GUI
             ShowTimelineGUIAction action = new ShowTimelineGUIAction();
             action.GUIName = guiName;
             action.NextTimeline = nextTimeline;
+            action.GUIData = storeGUIData != null ? storeGUIData.createCopy() : null;
             return action;
         }
 
@@ -99,6 +110,14 @@ namespace Medical.GUI
         {
             nextTimeline = nextTimelineEdit.Caption;
             guiName = guiCombo.SelectedItemName;
+            if (displayedGUIData != null)
+            {
+                storeGUIData = displayedGUIData.createCopy();
+            }
+            else
+            {
+                storeGUIData = null;
+            }
         }
 
         void displayStoredValues()
@@ -121,6 +140,34 @@ namespace Medical.GUI
             else
             {
                 guiCombo.clearIndexSelected();
+            }
+
+            if (storeGUIData != null)
+            {
+                displayedGUIData = storeGUIData.createCopy();
+            }
+            else
+            {
+                displayedGUIData = null;
+            }
+            showGUIDataOnTable();
+        }
+
+        void guiCombo_EventComboChangePosition(Widget source, EventArgs e)
+        {
+            displayedGUIData = timelineController.GUIFactory.getGUIData(guiCombo.SelectedItemName);
+            showGUIDataOnTable();
+        }
+
+        private void showGUIDataOnTable()
+        {
+            if (displayedGUIData != null)
+            {
+                propertiesTable.setEditInterface(displayedGUIData.getEditInterface());
+            }
+            else
+            {
+                propertiesTable.setEditInterface(null);
             }
         }
     }

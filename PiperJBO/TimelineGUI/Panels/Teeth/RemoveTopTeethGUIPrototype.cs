@@ -21,10 +21,15 @@ namespace Medical.GUI
             return new RemoveTeethGUI("Medical.TimelineGUI.Panels.Teeth.RemoveTopTeethGUI.layout", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.RemoveTopTeethGUI"; }
         }
 
-}
+    }
 }

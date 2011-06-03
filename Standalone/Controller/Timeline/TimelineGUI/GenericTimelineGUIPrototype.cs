@@ -5,8 +5,9 @@ using System.Text;
 
 namespace Medical
 {
-    public class GenericTimelineGUIFactoryPrototype<PrototypeType> : TimelineGUIFactoryPrototype
-        where PrototypeType : TimelineGUI, new()
+    public class GenericTimelineGUIFactoryPrototype<GUIType, GUIDataType> : TimelineGUIFactoryPrototype
+        where GUIType : TimelineGUI, new()
+        where GUIDataType : TimelineGUIData, new()
     {
         public GenericTimelineGUIFactoryPrototype(String name)
         {
@@ -15,7 +16,12 @@ namespace Medical
 
         public TimelineGUI getGUI()
         {
-            return new PrototypeType();
+            return new GUIType();
+        }
+
+        public TimelineGUIData getGUIData()
+        {
+            return new GUIDataType();
         }
 
         public string Name { get; private set; }

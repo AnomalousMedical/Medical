@@ -19,6 +19,11 @@ namespace Medical.GUI
             return new DiscSpaceGUI("RightDiscSpace", wizard);
         }
 
+        public TimelineGUIData getGUIData()
+        {
+            return null;
+        }
+
         public string Name
         {
             get { return "PiperJBO.RightDiscSpaceGUI"; }

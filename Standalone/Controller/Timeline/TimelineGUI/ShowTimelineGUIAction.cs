@@ -14,12 +14,6 @@ namespace Medical
     /// </summary>
     public class ShowTimelineGUIAction : TimelineInstantAction
     {
-        [Editable]
-        String testString = "TestStringValue";
-
-        [Editable]
-        int testInt = 111;
-
         TimelineGUI gui;
 
         public ShowTimelineGUIAction()
@@ -80,14 +74,11 @@ namespace Medical
             }
         }
 
-        public EditInterface getEditInterface()
-        {
-            return ReflectedEditInterface.createEditInterface(this, BehaviorEditMemberScanner.Scanner, "ShowGUI", null);
-        }
-
         public String NextTimeline { get; set; }
 
         public String GUIName { get; set; }
+
+        public TimelineGUIData GUIData { get; set; }
 
         public bool HasNextTimeline
         {
@@ -104,6 +95,7 @@ namespace Medical
         {
             NextTimeline = info.GetString("NextTimeline", null);
             GUIName = info.GetString("GUIName", null);
+            GUIData = info.GetValue<TimelineGUIData>("GUIData", null);
         }
 
         public override void getInfo(SaveInfo info)
@@ -111,6 +103,7 @@ namespace Medical
             base.getInfo(info);
             info.AddValue("NextTimeline", NextTimeline);
             info.AddValue("GUIName", GUIName);
+            info.AddValue("GUIData", GUIData);
         }
 
         #endregion
