@@ -13,6 +13,9 @@ namespace Medical.GUI
         private TimelineFileBrowserDialog fileBrowser;
         private TimelineController timelineController;
         private PropertiesTable propertiesTable;
+        private Table propertiesTableTable;
+        private ScrollView propertiesScrollView;
+        private int lastWidth = -1;
 
         private Edit nextTimelineEdit;
         private ComboBox guiCombo;
@@ -28,6 +31,8 @@ namespace Medical.GUI
             this.fileBrowser = fileBrowser;
             this.timelineController = timelineController;
 
+            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+
             nextTimelineEdit = window.findWidget("NextTimelineEdit") as Edit;
             guiCombo = window.findWidget("GUIChoiceCombo") as ComboBox;
             guiCombo.EventComboChangePosition += new MyGUIEvent(guiCombo_EventComboChangePosition);
@@ -41,7 +46,9 @@ namespace Medical.GUI
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
 
-            propertiesTable = new PropertiesTable(new Table(window.findWidget("PropertiesTable")));
+            propertiesScrollView = (ScrollView)window.findWidget("PropertiesTable");
+            propertiesTableTable = new ResizingTable(propertiesScrollView);
+            propertiesTable = new PropertiesTable(propertiesTableTable);
         }
 
         public void setProperties(ShowTimelineGUIAction action)
@@ -155,6 +162,20 @@ namespace Medical.GUI
             {
                 propertiesTable.EditInterface = null;
             }
+        }
+
+        void window_WindowChangedCoord(Widget source, EventArgs e)
+        {
+            if (propertiesScrollView.Width != lastWidth)
+            {
+                lastWidth = propertiesScrollView.Width;
+                layoutTable();
+            }
+        }
+
+        void layoutTable()
+        {
+            propertiesTableTable.layout();
         }
     }
 }
