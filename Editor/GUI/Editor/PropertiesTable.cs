@@ -12,7 +12,7 @@ namespace Medical.GUI
     /// <summary>
     /// This will create a MyGUI Table that interfaces with an EditInterface.
     /// </summary>
-    class PropertiesTable
+    sealed class PropertiesTable
     {
         public event EditablePropertyValueChanged EditablePropertyValueChanged;
 
@@ -21,6 +21,7 @@ namespace Medical.GUI
         private EditInterface currentEditInterface = null;
         private Dictionary<TableRow, EditableProperty> rowProperties = new Dictionary<TableRow, EditableProperty>();
         private bool allowValidation = true;
+        private List<ICustomCellProvider> customCells = new List<ICustomCellProvider>();
 
         public PropertiesTable(Table propertiesTable)
         {
@@ -85,6 +86,16 @@ namespace Medical.GUI
             }
         }
 
+        public void addCustomCellProvider(ICustomCellProvider customCellProvider)
+        {
+            customCells.Add(customCellProvider);
+        }
+
+        public void removeCustomCellProvider(ICustomCellProvider customCellProvider)
+        {
+            customCells.Remove(customCellProvider);
+        }
+
         void currentEditInterface_OnPropertyRemoved(EditableProperty property)
         {
             removeProperty(property);
@@ -147,7 +158,7 @@ namespace Medical.GUI
 
             for (int i = 0; i < currentPropInfo.getNumColumns(); i++)
             {
-                TableCell newCell = createCell(property.getPropertyType(i));
+                TableCell newCell = createCell(property.getPropertyType(i), property);
                 newCell.Value = property.getValue(i);
                 newRow.Cells.add(newCell);
             }
@@ -169,8 +180,16 @@ namespace Medical.GUI
             }
         }
 
-        private TableCell createCell(Type propType)
+        private TableCell createCell(Type propType, EditableProperty property)
         {
+            foreach (ICustomCellProvider customCellProvider in customCells)
+            {
+                TableCell cell = customCellProvider.createCell(propType, property);
+                if (cell != null)
+                {
+                    return cell;
+                }
+            }
             //if (propType.IsEnum)
             //{
             //    if (propType.GetCustomAttributes(typeof(SingleEnumAttribute), true).Length > 0)

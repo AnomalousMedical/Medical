@@ -218,6 +218,14 @@ namespace Medical.GUI
             }
         }
 
+        public SceneViewController SceneViewController
+        {
+            get
+            {
+                return standaloneController.SceneViewController;
+            }
+        }
+
         public NotesGUI Notes { get; private set; }
 
         /// <summary>

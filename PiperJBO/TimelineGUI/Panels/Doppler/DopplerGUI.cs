@@ -9,6 +9,7 @@ using System.Xml;
 using Logging;
 using MyGUIPlugin;
 using Medical.Muscles;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -154,20 +155,43 @@ namespace Medical.GUI
 
         void bothJointsCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState("WizardBothTMJSuperior");
-            //this.setLayerState("JointMenuLayers");
+            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(dopplerData.BothJointsCameraPosition, dopplerData.BothJointsCameraLookAt);
+            }
+            applyLayers(dopplerData.JointMenuLayers);
         }
 
         void superiorJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState(superiorJointCameraName);
-            //this.setLayerState("JointMenuLayers");
+            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(dopplerData.SuperiorJointCameraPosition, dopplerData.SuperiorJointCameraLookAt);
+            }
+            applyLayers(dopplerData.JointMenuLayers);
         }
 
         void lateralJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            //this.setNavigationState(lateralJointCameraName);
-            //this.setLayerState("DiscLayers");
+            DopplerGUIData dopplerData = (DopplerGUIData)ShowGUIAction.GUIData;
+            SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
+            if (window != null)
+            {
+                window.setPosition(dopplerData.LateralJointCameraPosition, dopplerData.LateralJointCameraLookAt);
+            }
+            applyLayers(dopplerData.DiscLayers);
+        }
+
+        void applyLayers(LayerState layers)
+        {
+            if (layers != null)
+            {
+                layers.apply();
+            }
         }
     }
 }

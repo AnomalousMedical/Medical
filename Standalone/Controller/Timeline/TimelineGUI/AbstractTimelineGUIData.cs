@@ -6,10 +6,11 @@ using Engine.Editing;
 using Engine;
 using Engine.Saving;
 using Engine.Attributes;
+using Engine.Reflection;
 
 namespace Medical
 {
-    public abstract class AbstractTimelineGUIData : TimelineGUIData
+    public abstract class AbstractTimelineGUIData : TimelineGUIData, ReflectedEditablePropertyProvider
     {
         [DoNotSave]
         private EditInterface editInterface;
@@ -26,9 +27,25 @@ namespace Medical
         {
             if (editInterface == null)
             {
-                editInterface = ReflectedEditInterface.createEditInterface(this, BehaviorEditMemberScanner.Scanner, Name, null);
+                editInterface = ReflectedEditInterface.createEditInterface(this, TimelineGUIEditMemberScanner.Scanner, Name, null, this);
+                customizeEditInterface(editInterface);
             }
             return editInterface;
+        }
+
+        public virtual void customizeEditInterface(EditInterface editInterface)
+        {
+
+        }
+
+        public bool addProperties(MemberWrapper memberWrapper, Object instance, EditInterface editInterface)
+        {
+            if (memberWrapper.getWrappedType() == typeof(LayerState))
+            {
+                editInterface.addEditableProperty(new LayerStateEditableProperty(instance, memberWrapper));
+                return true;
+            }
+            return false;
         }
 
         public TimelineGUIData createCopy()

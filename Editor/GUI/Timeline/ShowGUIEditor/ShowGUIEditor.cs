@@ -26,7 +26,7 @@ namespace Medical.GUI
         private TimelineGUIData displayedGUIData;
 
         public ShowGUIEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
-            : base("Medical.GUI.Timeline.ShowGUIEditor.layout")
+            : base("Medical.GUI.Timeline.ShowGUIEditor.ShowGUIEditor.layout")
         {
             this.fileBrowser = fileBrowser;
             this.timelineController = timelineController;
@@ -49,6 +49,7 @@ namespace Medical.GUI
             propertiesScrollView = (ScrollView)window.findWidget("PropertiesTable");
             propertiesTableTable = new ResizingTable(propertiesScrollView);
             propertiesTable = new PropertiesTable(propertiesTableTable);
+            propertiesTable.addCustomCellProvider(LayerStateTableCellProvider.Instance);
         }
 
         public void setProperties(ShowTimelineGUIAction action)

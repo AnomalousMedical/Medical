@@ -81,6 +81,7 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\Editor\ICustomCellProvider.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
@@ -89,7 +90,9 @@
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
-    <Compile Include="GUI\Timeline\ShowGUIEditor.cs" />
+    <Compile Include="GUI\Timeline\ShowGUIEditor\LayerStateTableCell.cs" />
+    <Compile Include="GUI\Timeline\ShowGUIEditor\LayerStateTableCellProvider.cs" />
+    <Compile Include="GUI\Timeline\ShowGUIEditor\ShowGUIEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable.cs" />
     <Compile Include="GUI\Timeline\StartActionEditor.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
@@ -141,7 +144,7 @@
     <EmbeddedResource Include="GUI\Timeline\QuestionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditorAnswerRow.layout" />
     <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />
-    <EmbeddedResource Include="GUI\Timeline\ShowGUIEditor.layout" />
+    <EmbeddedResource Include="GUI\Timeline\ShowGUIEditor\ShowGUIEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\StartActionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineAnalyzer.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />

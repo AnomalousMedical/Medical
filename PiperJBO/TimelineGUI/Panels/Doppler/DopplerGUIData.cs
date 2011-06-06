@@ -33,6 +33,12 @@ namespace Medical.GUI
         [Editable]
         public Vector3 BothJointsCameraLookAt { get; set; }
 
+        [Editable]
+        public LayerState JointMenuLayers { get; set; }
+
+        [Editable]
+        public LayerState DiscLayers { get; set; }
+
         public override string Name
         {
             get { return "DopplerGUIData"; }
