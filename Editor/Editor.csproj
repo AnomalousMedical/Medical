@@ -81,6 +81,9 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
     <Compile Include="GUI\Editor\ICustomCellProvider.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
