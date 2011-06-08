@@ -659,33 +659,27 @@ namespace Medical
 
         private void addSectionCallback(EditUICallback callback, EditInterfaceCommand command)
         {
-            String name;
-            bool accept = callback.getInputString("Enter a name for the section.", out name, validateSectionCreate);
-            if (accept)
+            callback.getInputString("Enter a name for the section.", delegate(String input, ref String errorPrompt)
             {
-                UnifiedToothSection section = new UnifiedToothSection(name);
-                toothSections.Add(section);
-                onToothSectionAdded(section);
-            }
-        }
-
-        private bool validateSectionCreate(String input, out String errorPrompt)
-        {
-            if (input == null || input == "")
-            {
-                errorPrompt = "Please enter a non empty name.";
-                return false;
-            }
-            foreach (UnifiedToothSection section in toothSections)
-            {
-                if (section.Name == input)
+                if (input == null || input == "")
                 {
-                    errorPrompt = "That name is already in use. Please provide another.";
+                    errorPrompt = "Please enter a non empty name.";
                     return false;
                 }
-            }
-            errorPrompt = "";
-            return true;
+                foreach (UnifiedToothSection section in toothSections)
+                {
+                    if (section.Name == input)
+                    {
+                        errorPrompt = "That name is already in use. Please provide another.";
+                        return false;
+                    }
+                }
+
+                UnifiedToothSection toothSection = new UnifiedToothSection(input);
+                toothSections.Add(toothSection);
+                onToothSectionAdded(toothSection);
+                return true;
+            });
         }
 
         private void removeSectionCallback(EditUICallback callback, EditInterfaceCommand command)

@@ -261,13 +261,16 @@ namespace Medical
             {
                 anatomyCommandBrowser = new AnatomyCommandBrowser();
             }
-            Object objResult;
-            bool result = callback.showBrowser(anatomyCommandBrowser, out objResult);
-            Type commandType = objResult as Type;
-            if (result && commandType != null)
+            callback.showBrowser(anatomyCommandBrowser, delegate(Object result, ref String errorMessage)
             {
-                anatomyIdentifier.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
-            }
+                Type commandType = result as Type;
+                if (commandType != null)
+                {
+                    anatomyIdentifier.addCommand((AnatomyCommand)Activator.CreateInstance(commandType));
+                    return true;
+                }
+                return false;
+            });
         }
 
         private void destroyCommand(EditUICallback callback, EditInterfaceCommand caller)
