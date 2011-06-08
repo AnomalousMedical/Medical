@@ -27,7 +27,8 @@ namespace Medical.GUI
         private ScrollView propertiesScrollView;
         private PropertiesTable propertiesTable;
         private Tree objectTree;
-        private EditInterfaceTreeView editInterfaceTree;        
+        private EditInterfaceTreeView editInterfaceTree;
+        private MedicalUICallback uiCallback;
 
         public ShowGUIEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
             : base("Medical.GUI.Timeline.ShowGUIEditor.ShowGUIEditor.layout")
@@ -54,14 +55,15 @@ namespace Medical.GUI
             propertiesTableTable = new ResizingTable(propertiesScrollView);
             propertiesTable = new PropertiesTable(propertiesTableTable);
             propertiesTable.addCustomCellProvider(LayerStateTableCellProvider.Instance);
-
+            uiCallback = new MedicalUICallback();
             objectTree = new Tree(window.findWidget("TreeScroll") as ScrollView);
-            editInterfaceTree = new EditInterfaceTreeView(objectTree, null);
-            objectEditor = new ObjectEditor(editInterfaceTree, propertiesTable);
+            editInterfaceTree = new EditInterfaceTreeView(objectTree, uiCallback);
+            objectEditor = new ObjectEditor(editInterfaceTree, propertiesTable, uiCallback);
         }
 
         public override void Dispose()
         {
+            objectEditor.Dispose();
             propertiesTable.Dispose();
             editInterfaceTree.Dispose();
             base.Dispose();

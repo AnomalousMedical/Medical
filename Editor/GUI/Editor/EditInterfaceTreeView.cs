@@ -89,6 +89,7 @@ namespace Medical.GUI
                 {
                     parentNode = new EditInterfaceTreeNode(mainEditInterface, this);
                     tree.Nodes.add(parentNode);
+                    tree.SelectedNode = parentNode;
                 }
                 tree.layout();
             }
@@ -100,6 +101,7 @@ namespace Medical.GUI
             {
                 EditInterfaceAdded.Invoke(new EditInterfaceViewEvent(editInterfaceTreeNode.EditInterface));
             }
+            tree.layout();
         }
 
         public void nodeRemoved(EditInterfaceTreeNode editInterfaceTreeNode)
@@ -108,6 +110,7 @@ namespace Medical.GUI
             {
                 EditInterfaceRemoved.Invoke(new EditInterfaceViewEvent(editInterfaceTreeNode.EditInterface));
             }
+            tree.layout();
         }
 
         void tree_NodeMouseClick(object sender, TreeEventArgs e)

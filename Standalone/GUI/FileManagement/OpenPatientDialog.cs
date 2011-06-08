@@ -185,7 +185,7 @@ namespace Medical.GUI
             cancelPostAction = CancelPostAction.None;
         }
 
-        protected override void onClosing(CancelEventArgs e)
+        protected override void onClosing(DialogCancelEventArgs e)
         {
             base.onClosing(e);
             if (fileListWorker.IsBusy && !bgThreadKnowsAboutCancel)

@@ -19,7 +19,11 @@ namespace Medical.GUI
         {
             editInterface.addCommand(new EditInterfaceCommand("Test", delegate(EditUICallback callback, EditInterfaceCommand caller)
             {
-                
+                callback.getInputString("Type something here", delegate(String input, ref String errorMessage)
+                {
+                    callback.getSelectedEditInterface().addSubInterface(ReflectedEditInterface.createEditInterface(input, null));
+                    return true;
+                });
             }));
         }
 
