@@ -14,6 +14,7 @@ namespace Medical.GUI
         private EditInterfaceTreeView editInterfaceTreeView;
 
         public EditInterfaceTreeNode(EditInterface editInterface, EditInterfaceTreeView editInterfaceTreeView)
+            :base(editInterface.getName())
         {
             this.editInterfaceTreeView = editInterfaceTreeView;
 

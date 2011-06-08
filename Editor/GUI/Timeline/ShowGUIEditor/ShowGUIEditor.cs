@@ -12,9 +12,6 @@ namespace Medical.GUI
     {
         private TimelineFileBrowserDialog fileBrowser;
         private TimelineController timelineController;
-        private PropertiesTable propertiesTable;
-        private Table propertiesTableTable;
-        private ScrollView propertiesScrollView;
         private int lastWidth = -1;
 
         private Edit nextTimelineEdit;
@@ -24,6 +21,13 @@ namespace Medical.GUI
         private String guiName;
         private TimelineGUIData storeGUIData;
         private TimelineGUIData displayedGUIData;
+
+        private ObjectEditor objectEditor;
+        private Table propertiesTableTable;
+        private ScrollView propertiesScrollView;
+        private PropertiesTable propertiesTable;
+        private Tree objectTree;
+        private EditInterfaceTreeView editInterfaceTree;        
 
         public ShowGUIEditor(TimelineFileBrowserDialog fileBrowser, TimelineController timelineController)
             : base("Medical.GUI.Timeline.ShowGUIEditor.ShowGUIEditor.layout")
@@ -50,6 +54,17 @@ namespace Medical.GUI
             propertiesTableTable = new ResizingTable(propertiesScrollView);
             propertiesTable = new PropertiesTable(propertiesTableTable);
             propertiesTable.addCustomCellProvider(LayerStateTableCellProvider.Instance);
+
+            objectTree = new Tree(window.findWidget("TreeScroll") as ScrollView);
+            editInterfaceTree = new EditInterfaceTreeView(objectTree, null);
+            objectEditor = new ObjectEditor(editInterfaceTree, propertiesTable);
+        }
+
+        public override void Dispose()
+        {
+            propertiesTable.Dispose();
+            editInterfaceTree.Dispose();
+            base.Dispose();
         }
 
         public void setProperties(ShowTimelineGUIAction action)
@@ -70,7 +85,7 @@ namespace Medical.GUI
             nextTimeline = null;
             guiName = null;
             storeGUIData = null;
-            propertiesTable.clear();
+            objectEditor.clear();
         }
 
         public ShowTimelineGUIAction createAction()
@@ -157,11 +172,11 @@ namespace Medical.GUI
         {
             if (displayedGUIData != null)
             {
-                propertiesTable.EditInterface = displayedGUIData.getEditInterface();
+                objectEditor.EditInterface = displayedGUIData.getEditInterface();
             }
             else
             {
-                propertiesTable.EditInterface = null;
+                objectEditor.EditInterface = null;
             }
         }
 

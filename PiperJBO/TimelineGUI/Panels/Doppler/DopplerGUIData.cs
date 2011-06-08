@@ -15,6 +15,14 @@ namespace Medical.GUI
 
         }
 
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            editInterface.addCommand(new EditInterfaceCommand("Test", delegate(EditUICallback callback, EditInterfaceCommand caller)
+            {
+                
+            }));
+        }
+
         [Editable]
         public Vector3 LateralJointCameraPosition { get; set; }
 

@@ -573,7 +573,7 @@ namespace Medical.GUI
 
         void startAction_MouseButtonClick(Widget source, EventArgs e)
         {
-            startActionEditor.open(true);
+            startActionEditor.open(false);
             startActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             startActionEditor.ensureVisible();
         }

@@ -175,7 +175,7 @@ namespace Medical.GUI
 
         void openGUIEditorButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            showGUIEditor.open(true);
+            showGUIEditor.open(false);
         }
     }
 }

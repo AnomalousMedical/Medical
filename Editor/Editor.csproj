@@ -85,6 +85,7 @@
     <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
     <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
     <Compile Include="GUI\Editor\ICustomCellProvider.cs" />
+    <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />

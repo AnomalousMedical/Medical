@@ -33,7 +33,7 @@ namespace Medical
             return editInterface;
         }
 
-        public virtual void customizeEditInterface(EditInterface editInterface)
+        protected virtual void customizeEditInterface(EditInterface editInterface)
         {
 
         }

@@ -51,7 +51,6 @@ namespace Medical.GUI
         private EditInterface mainEditInterface;
         private EditInterfaceTreeNode parentNode;
 
-        private PopupMenu menu;
         private EditInterface currentMenuInterface;
         private EditUICallback editUICallback;
 
@@ -64,14 +63,11 @@ namespace Medical.GUI
             tree.NodeMouseReleased += new EventHandler<TreeMouseEventArgs>(tree_NodeMouseReleased);
             tree.NodeMouseDoubleClick += new EventHandler<TreeEventArgs>(tree_NodeMouseDoubleClick);
             tree.NodeMouseClick += new EventHandler<TreeEventArgs>(tree_NodeMouseClick);
-
-            menu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
-            menu.Visible = false;
         }
 
         public void Dispose()
         {
-            Gui.Instance.destroyWidget(menu);
+            
         }
 
         public EditInterface EditInterface
@@ -94,6 +90,7 @@ namespace Medical.GUI
                     parentNode = new EditInterfaceTreeNode(mainEditInterface, this);
                     tree.Nodes.add(parentNode);
                 }
+                tree.layout();
             }
         }
 
@@ -133,29 +130,38 @@ namespace Medical.GUI
 
         void tree_NodeMouseReleased(object sender, TreeMouseEventArgs e)
         {
-            if (e.Button == MouseButtonCode.MB_BUTTON0)
+            if (e.Button == MouseButtonCode.MB_BUTTON1)
             {
-                menu.removeAllItems();
                 EditInterfaceTreeNode node = e.Node as EditInterfaceTreeNode;
                 tree.SelectedNode = e.Node;
                 currentMenuInterface = node.EditInterface;
                 if (currentMenuInterface.hasCommands())
                 {
+                    PopupMenu menu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
+                    menu.ItemAccept += new MyGUIEvent(menu_ItemAccept);
+                    menu.Closed += new MyGUIEvent(menu_Closed);
+                    menu.Visible = false;
                     foreach (EditInterfaceCommand command in currentMenuInterface.getCommands())
                     {
                         MenuItem item = menu.addItem(command.Name);
-                        item.MouseButtonClick += new MyGUIEvent(menuItem_MouseButtonClick);
                         item.UserObject = command;
                     }
+                    LayerManager.Instance.upLayerItem(menu);
                     menu.setPosition(e.MousePosition.x, e.MousePosition.y);
                     menu.setVisibleSmooth(true);
                 }
             }
         }
 
-        void menuItem_MouseButtonClick(Widget source, EventArgs e)
+        void menu_Closed(Widget source, EventArgs e)
         {
-            ((EditInterfaceCommand)source.UserObject).execute(editUICallback);
+            Gui.Instance.destroyWidget(source);
+        }
+
+        void menu_ItemAccept(Widget source, EventArgs e)
+        {
+            MenuCtrlAcceptEventArgs ae = (MenuCtrlAcceptEventArgs)e;
+            ((EditInterfaceCommand)ae.Item.UserObject).execute(editUICallback);
         }
 
         void tree_BeforeSelect(object sender, TreeCancelEventArgs e)

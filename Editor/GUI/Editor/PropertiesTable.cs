@@ -12,7 +12,7 @@ namespace Medical.GUI
     /// <summary>
     /// This will create a MyGUI Table that interfaces with an EditInterface.
     /// </summary>
-    sealed class PropertiesTable
+    public sealed class PropertiesTable : IDisposable
     {
         public event EditablePropertyValueChanged EditablePropertyValueChanged;
 
@@ -28,6 +28,11 @@ namespace Medical.GUI
             this.propertiesTable = propertiesTable;
             propertiesTable.CellValidating += new EventHandler<TableCellValidationEventArgs>(propertiesTable_CellValidating);
             propertiesTable.CellValueChanged += new EventHandler(propertiesTable_CellValueChanged);
+        }
+
+        public void Dispose()
+        {
+            clear();
         }
 
         public void clear()
