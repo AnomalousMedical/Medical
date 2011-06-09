@@ -138,6 +138,7 @@
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\LicenseDialog\LicenseDialog.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
+    <Compile Include="Layout\MDI\MDIBorderContainer.cs" />
     <Compile Include="Layout\MDI\MDIDocumentWindow.cs" />
     <Compile Include="Platform\MultiTouch\Finger.cs" />
     <Compile Include="Platform\MultiTouch\Gesture.cs" />

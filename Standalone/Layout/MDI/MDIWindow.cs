@@ -25,6 +25,12 @@ namespace Medical.Controller
         protected MDILayoutManager layoutManager;
         private bool activeWindow = false;
 
+        public MDIWindow()
+        {
+            CurrentDockLocation = DockLocation.Center;
+            AllowedDockLocations = DockLocation.All;
+        }
+
         public virtual void Dispose()
         {
 
@@ -73,6 +79,10 @@ namespace Medical.Controller
                 }
             }
         }
+
+        public DockLocation CurrentDockLocation { get; set; }
+
+        public DockLocation AllowedDockLocations { get; set; }
 
         protected void fireClosed()
         {

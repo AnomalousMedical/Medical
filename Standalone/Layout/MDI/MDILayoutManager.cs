@@ -16,7 +16,18 @@ namespace Medical.Controller
         Left,
         Right,
         Top,
-        Bottom,
+        Bottom
+    }
+
+    public enum DockLocation
+    {
+        Left = 1 << 0,
+        Right = 1 << 1,
+        Top = 1 << 2,
+        Bottom = 1 << 3,
+        Center = 1 << 4,
+        Floating = 1 << 5,
+        All = Left | Top | Right | Bottom | Center | Floating
     }
 
     /// <summary>
@@ -27,7 +38,7 @@ namespace Medical.Controller
         public event EventHandler ActiveWindowChanged;
 
         private List<MDIWindow> windows = new List<MDIWindow>();
-        private MDILayoutContainer rootContainer;
+        private MDIBorderContainer rootContainer;
         private MDIWindow activeWindow = null;
 
         private Widget windowTargetWidget;
@@ -47,7 +58,7 @@ namespace Medical.Controller
         /// <param name="padding">The amount of padding between elements.</param>
         public MDILayoutManager(int padding)
         {
-            rootContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
+            rootContainer = new MDIBorderContainer(padding);
             rootContainer._setParent(this);
             AllowActiveWindowChanges = true;
             windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
