@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine;
+using MyGUIPlugin;
 
 namespace Medical.Controller
 {
@@ -20,10 +21,19 @@ namespace Medical.Controller
         private MDILayoutContainer bottom;
         private MDILayoutContainer center;
 
+        private MDIWindow dragSourceWindow;
+        private MDIWindow dragTargetWindow;
+        private WindowAlignment finalWindowAlignment = WindowAlignment.Right;
+
         private bool visible = true;
+
+        private Widget windowTargetWidget;
 
         public MDIBorderContainer(int padding)
         {
+            windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
+            windowTargetWidget.Visible = false;
+
             left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding);
             left._setParent(this);
 
@@ -47,6 +57,70 @@ namespace Medical.Controller
             top.Dispose();
             bottom.Dispose();
             center.Dispose();
+            Gui.Instance.destroyWidget(windowTargetWidget);
+        }
+
+        public void windowDragStarted(MDIWindow source, float mouseX, float mouseY)
+        {
+            dragSourceWindow = source;
+            dragTargetWindow = null;
+        }
+
+        public void windowDragged(MDIWindow source, float mouseX, float mouseY)
+        {
+            dragTargetWindow = findWindowAtPosition(mouseX, mouseY);
+            if (dragTargetWindow != null)
+            {
+                if (source != dragTargetWindow)
+                {
+                    float top = dragTargetWindow.Location.y;
+                    float bottom = top + dragTargetWindow.WorkingSize.Height;
+                    float left = dragTargetWindow.Location.x;
+                    float right = left + dragTargetWindow.WorkingSize.Width;
+
+                    float topDelta = mouseY - top;
+                    float bottomDelta = bottom - mouseY;
+                    float leftDelta = mouseX - left;
+                    float rightDelta = right - mouseX;
+                    if (topDelta < bottomDelta && topDelta < leftDelta && topDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Top;
+                        windowTargetWidget.setCoord((int)left, (int)top, (int)dragTargetWindow.WorkingSize.Width, (int)(dragTargetWindow.WorkingSize.Height * 0.5f));
+                    }
+                    else if (bottomDelta < topDelta && bottomDelta < leftDelta && bottomDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Bottom;
+                        windowTargetWidget.setCoord((int)left, (int)(top + dragTargetWindow.WorkingSize.Height * 0.5f), (int)dragTargetWindow.WorkingSize.Width, (int)(dragTargetWindow.WorkingSize.Height * 0.5f));
+                    }
+                    else if (leftDelta < topDelta && leftDelta < bottomDelta && leftDelta < rightDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Left;
+                        windowTargetWidget.setCoord((int)left, (int)top, (int)(dragTargetWindow.WorkingSize.Width * 0.5f), (int)dragTargetWindow.WorkingSize.Height);
+                    }
+                    else if (rightDelta < leftDelta && rightDelta < bottomDelta && rightDelta < topDelta)
+                    {
+                        finalWindowAlignment = WindowAlignment.Right;
+                        windowTargetWidget.setCoord((int)(left + dragTargetWindow.WorkingSize.Width * 0.5f), (int)top, (int)(dragTargetWindow.WorkingSize.Width * 0.5f), (int)dragTargetWindow.WorkingSize.Height);
+                    }
+
+                    windowTargetWidget.Visible = true;
+                }
+                else
+                {
+                    windowTargetWidget.Visible = false;
+                }
+            }
+        }
+
+        public void windowDragEnded(MDIWindow source, float mouseX, float mouseY)
+        {
+            windowTargetWidget.Visible = false;
+            if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
+            {
+                dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
+                dragTargetWindow._ParentContainer.addChild(dragSourceWindow, dragTargetWindow, finalWindowAlignment);
+                this.layout();
+            }
         }
 
         public void addChild(MDIWindow child)
@@ -67,6 +141,28 @@ namespace Medical.Controller
                     break;
                 case DockLocation.Center:
                     center.addChild(child);
+                    break;
+            }
+        }
+
+        public void removeChild(MDIWindow child)
+        {
+            switch (child.CurrentDockLocation)
+            {
+                case DockLocation.Left:
+                    left.removeChild(child);
+                    break;
+                case DockLocation.Right:
+                    right.removeChild(child);
+                    break;
+                case DockLocation.Top:
+                    top.removeChild(child);
+                    break;
+                case DockLocation.Bottom:
+                    bottom.removeChild(child);
+                    break;
+                case DockLocation.Center:
+                    center.removeChild(child);
                     break;
             }
         }
