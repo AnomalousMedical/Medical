@@ -11,7 +11,7 @@ namespace Medical.Controller
 {
     public class MDISceneViewWindow : SceneViewWindow
     {
-        private MDIWindow mdiWindow;
+        private MDIDocumentWindow mdiWindow;
         private OgreRenderManager rm;
 
         public MDISceneViewWindow(OgreRenderManager rm, SceneViewController controller, UpdateTimer mainTimer, CameraMover cameraMover, String name)
@@ -20,7 +20,7 @@ namespace Medical.Controller
             this.rm = rm;
 
             //MDI Window
-            mdiWindow = new MDIWindow(Name);
+            mdiWindow = new MDIDocumentWindow(Name);
             mdiWindow.SuppressLayout = true;
             mdiWindow.Content = this;
             mdiWindow.SuppressLayout = false;
