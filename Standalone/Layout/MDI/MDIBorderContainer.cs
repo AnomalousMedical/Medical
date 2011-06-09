@@ -24,7 +24,7 @@ namespace Medical.Controller
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
-        private MDILayoutContainer dragTargetContainer;
+        private MDIChildContainerBase dragTargetContainer;
         private WindowAlignment finalWindowAlignment = WindowAlignment.Right;
 
         private bool visible = true;
@@ -130,6 +130,7 @@ namespace Medical.Controller
             checkContainerWidget(rightContainerWidget, right, DockLocation.Right, mouseX, mouseY) ||
             checkContainerWidget(topContainerWidget, top, DockLocation.Top, mouseX, mouseY) ||
             checkContainerWidget(bottomContainerWidget, bottom, DockLocation.Bottom, mouseX, mouseY) ||
+            processFloating(source, mouseX, mouseY) || 
             processCenter(source, mouseX, mouseY))
             {
 
@@ -150,6 +151,17 @@ namespace Medical.Controller
                     dragTargetWindow = null;
                     return true;
                 }
+            }
+            return false;
+        }
+
+        private bool processFloating(MDIWindow source, float mouseX, float mouseY)
+        {
+            if ((source.AllowedDockLocations & DockLocation.Floating) != 0)
+            {
+                dragTargetContainer = floating;
+                dragTargetWindow = null;
+                return true;
             }
             return false;
         }
@@ -249,7 +261,7 @@ namespace Medical.Controller
                     center.addChild(child);
                     break;
                 case DockLocation.Floating:
-                    floating.addWindow(child);
+                    floating.addChild(child);
                     break;
             }
         }
@@ -274,7 +286,7 @@ namespace Medical.Controller
                     center.removeChild(child);
                     break;
                 case DockLocation.Floating:
-                    floating.removeWindow(child);
+                    floating.removeChild(child);
                     break;
             }
         }

@@ -33,7 +33,7 @@ namespace Medical.GUI
         {
             MouseEventArgs me = (MouseEventArgs)e;
             IntVector2 mousePosition = new IntVector2(me.Position.x, me.Position.y);
-            //dialog.Position = new Vector2(mousePosition.x - captionMouseOffset.x, mousePosition.y - captionMouseOffset.y);
+            dialog.Position = new Vector2(mousePosition.x - captionMouseOffset.x, mousePosition.y - captionMouseOffset.y);
             fireMouseDrag((MouseEventArgs)e);
         }
 

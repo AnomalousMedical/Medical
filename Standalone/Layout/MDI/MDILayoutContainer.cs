@@ -57,7 +57,7 @@ namespace Medical.Controller
         /// Add a child in a simple way by just appending it to the end of the child list.
         /// </summary>
         /// <param name="child">The child to add.</param>
-        public void addChild(MDIWindow child)
+        public override void addChild(MDIWindow child)
         {
             setChildProperties(child);
             separatorWidgetManager.createSeparator();

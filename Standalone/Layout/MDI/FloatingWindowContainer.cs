@@ -15,7 +15,7 @@ namespace Medical.Controller
 
         }
 
-        public void addWindow(MDIWindow window)
+        public override void addChild(MDIWindow window)
         {
             window.SuppressLayout = true;
             window.CurrentDockLocation = DockLocation.Floating;
@@ -23,17 +23,6 @@ namespace Medical.Controller
             window._ParentContainer = this;
             window.SuppressLayout = false;
             windows.Add(window);
-        }
-
-        public void removeWindow(MDIWindow window)
-        {
-            int index = windows.IndexOf(window);
-            if (index != -1)
-            {
-                windows.RemoveAt(index);
-                window._setParent(null);
-                window._ParentContainer = null;
-            }
         }
 
         public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
@@ -87,12 +76,18 @@ namespace Medical.Controller
 
         public override void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
-            addWindow(window);
+            addChild(window);
         }
 
         public override void removeChild(MDIWindow window)
         {
-            removeWindow(window);
+            int index = windows.IndexOf(window);
+            if (index != -1)
+            {
+                windows.RemoveAt(index);
+                window._setParent(null);
+                window._ParentContainer = null;
+            }
         }
 
         /* This class has to subclass MDIChildContainerBase so it can have stuff added and removed, 
