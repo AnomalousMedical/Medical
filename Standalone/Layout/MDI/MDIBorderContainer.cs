@@ -37,19 +37,19 @@ namespace Medical.Controller
 
         public MDIBorderContainer(int padding)
         {
-            windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
+            windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Info", "");
             windowTargetWidget.Visible = false;
 
-            leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             leftContainerWidget.Visible = false;
 
-            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             rightContainerWidget.Visible = false;
 
-            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             topContainerWidget.Visible = false;
 
-            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             bottomContainerWidget.Visible = false;
 
             left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left);
@@ -157,6 +157,42 @@ namespace Medical.Controller
 
         private bool processFloating(MDIWindow source, float mouseX, float mouseY)
         {
+            MDIWindow window = left.findWindowAtPosition(mouseX, mouseY);
+            if (window != null)
+            {
+                dragTargetContainer = null;
+                dragTargetWindow = window;
+                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                return true;
+            }
+
+            window = right.findWindowAtPosition(mouseX, mouseY);
+            if (window != null)
+            {
+                dragTargetContainer = null;
+                dragTargetWindow = window;
+                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                return true;
+            }
+
+            window = top.findWindowAtPosition(mouseX, mouseY);
+            if (window != null)
+            {
+                dragTargetContainer = null;
+                dragTargetWindow = window;
+                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                return true;
+            }
+
+            window = bottom.findWindowAtPosition(mouseX, mouseY);
+            if (window != null)
+            {
+                dragTargetContainer = null;
+                dragTargetWindow = window;
+                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                return true;
+            }
+            
             if ((source.AllowedDockLocations & DockLocation.Floating) != 0)
             {
                 dragTargetContainer = floating;
@@ -174,15 +210,21 @@ namespace Medical.Controller
                 dragTargetWindow = null;
                 return false;
             }
-            dragTargetWindow = findWindowAtPosition(mouseX, mouseY);
-            if (dragTargetWindow != null)
+            dragTargetWindow = center.findWindowAtPosition(mouseX, mouseY);// findWindowAtPosition(mouseX, mouseY);
+            findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+            return true;
+        }
+
+        private void findWindowLanding(MDIWindow source, MDIWindow target, float mouseX, float mouseY)
+        {
+            if (target != null)
             {
-                if (source != dragTargetWindow)
+                if (source != target)
                 {
-                    float top = dragTargetWindow.Location.y;
-                    float bottom = top + dragTargetWindow.WorkingSize.Height;
-                    float left = dragTargetWindow.Location.x;
-                    float right = left + dragTargetWindow.WorkingSize.Width;
+                    float top = target.Location.y;
+                    float bottom = top + target.WorkingSize.Height;
+                    float left = target.Location.x;
+                    float right = left + target.WorkingSize.Width;
 
                     float topDelta = mouseY - top;
                     float bottomDelta = bottom - mouseY;
@@ -191,22 +233,22 @@ namespace Medical.Controller
                     if (topDelta < bottomDelta && topDelta < leftDelta && topDelta < rightDelta)
                     {
                         finalWindowAlignment = WindowAlignment.Top;
-                        windowTargetWidget.setCoord((int)left, (int)top, (int)dragTargetWindow.WorkingSize.Width, (int)(dragTargetWindow.WorkingSize.Height * 0.5f));
+                        windowTargetWidget.setCoord((int)left, (int)top, (int)target.WorkingSize.Width, (int)(target.WorkingSize.Height * 0.5f));
                     }
                     else if (bottomDelta < topDelta && bottomDelta < leftDelta && bottomDelta < rightDelta)
                     {
                         finalWindowAlignment = WindowAlignment.Bottom;
-                        windowTargetWidget.setCoord((int)left, (int)(top + dragTargetWindow.WorkingSize.Height * 0.5f), (int)dragTargetWindow.WorkingSize.Width, (int)(dragTargetWindow.WorkingSize.Height * 0.5f));
+                        windowTargetWidget.setCoord((int)left, (int)(top + target.WorkingSize.Height * 0.5f), (int)target.WorkingSize.Width, (int)(target.WorkingSize.Height * 0.5f));
                     }
                     else if (leftDelta < topDelta && leftDelta < bottomDelta && leftDelta < rightDelta)
                     {
                         finalWindowAlignment = WindowAlignment.Left;
-                        windowTargetWidget.setCoord((int)left, (int)top, (int)(dragTargetWindow.WorkingSize.Width * 0.5f), (int)dragTargetWindow.WorkingSize.Height);
+                        windowTargetWidget.setCoord((int)left, (int)top, (int)(target.WorkingSize.Width * 0.5f), (int)target.WorkingSize.Height);
                     }
                     else if (rightDelta < leftDelta && rightDelta < bottomDelta && rightDelta < topDelta)
                     {
                         finalWindowAlignment = WindowAlignment.Right;
-                        windowTargetWidget.setCoord((int)(left + dragTargetWindow.WorkingSize.Width * 0.5f), (int)top, (int)(dragTargetWindow.WorkingSize.Width * 0.5f), (int)dragTargetWindow.WorkingSize.Height);
+                        windowTargetWidget.setCoord((int)(left + target.WorkingSize.Width * 0.5f), (int)top, (int)(target.WorkingSize.Width * 0.5f), (int)target.WorkingSize.Height);
                     }
 
                     windowTargetWidget.Visible = true;
@@ -216,7 +258,6 @@ namespace Medical.Controller
                     windowTargetWidget.Visible = false;
                 }
             }
-            return true;
         }
 
         public void windowDragEnded(MDIWindow source, float mouseX, float mouseY)
