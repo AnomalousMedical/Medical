@@ -200,8 +200,7 @@ namespace Medical
             app.createWindowPresets(windowPresetController);
 
             //GUI
-            guiManager.createGUI();
-            guiManager.ScreenLayout.Center = mdiLayout;
+            guiManager.createGUI(mdiLayout);
             guiManager.giveGUIsToTimelineController(timelineController);
             medicalController.FixedLoopUpdate += new LoopUpdate(medicalController_FixedLoopUpdate);
             medicalController.FullSpeedLoopUpdate += new LoopUpdate(medicalController_FullSpeedLoopUpdate);

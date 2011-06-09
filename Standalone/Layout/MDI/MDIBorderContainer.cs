@@ -20,6 +20,7 @@ namespace Medical.Controller
         private MDILayoutContainer top;
         private MDILayoutContainer bottom;
         private MDILayoutContainer center;
+        private FloatingWindowContainer floating;
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
@@ -65,6 +66,9 @@ namespace Medical.Controller
             
             center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
             center._setParent(this);
+
+            floating = new FloatingWindowContainer();
+            floating._setParent(this);
         }
 
         public void Dispose()
@@ -153,6 +157,11 @@ namespace Medical.Controller
         private bool processCenter(MDIWindow source, float mouseX, float mouseY)
         {
             dragTargetContainer = null;
+            if((source.AllowedDockLocations & DockLocation.Center) == 0)
+            {
+                dragTargetWindow = null;
+                return false;
+            }
             dragTargetWindow = findWindowAtPosition(mouseX, mouseY);
             if (dragTargetWindow != null)
             {
@@ -239,6 +248,9 @@ namespace Medical.Controller
                 case DockLocation.Center:
                     center.addChild(child);
                     break;
+                case DockLocation.Floating:
+                    floating.addWindow(child);
+                    break;
             }
         }
 
@@ -260,6 +272,9 @@ namespace Medical.Controller
                     break;
                 case DockLocation.Center:
                     center.removeChild(child);
+                    break;
+                case DockLocation.Floating:
+                    floating.removeWindow(child);
                     break;
             }
         }

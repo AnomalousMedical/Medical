@@ -6,6 +6,7 @@ using Engine.ObjectManagement;
 using MyGUIPlugin;
 using OgreWrapper;
 using Engine.Platform;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -55,7 +56,7 @@ namespace Medical.GUI
             taskbar.Dispose();
         }
 
-        public void createGUI()
+        public void createGUI(MDILayoutManager mdiManager)
         {
             Gui gui = Gui.Instance;
 
@@ -65,9 +66,10 @@ namespace Medical.GUI
             screenLayoutManager.ScreenSizeChanged += new ScreenSizeChanged(screenLayoutManager_ScreenSizeChanged);
 
             innerBorderLayout = new BorderLayoutContainer();
+            innerBorderLayout.Center = mdiManager;
 
             //Dialogs
-            dialogManager = new DialogManager();
+            dialogManager = new DialogManager(mdiManager);
 
             //Taskbar
             taskbar = new Taskbar(standaloneController);
@@ -199,14 +201,6 @@ namespace Medical.GUI
         public void addManagedDialog(Dialog dialog)
         {
             dialogManager.addManagedDialog(dialog);
-        }
-
-        public BorderLayoutContainer ScreenLayout
-        {
-            get
-            {
-                return innerBorderLayout;
-            }
         }
 
         public Taskbar Taskbar

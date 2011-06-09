@@ -12,7 +12,7 @@ namespace Medical.Controller
     /// This class acts as a container inside of a MDI Layout. It will make the
     /// windows nest and do what they need to do to layout logically.
     /// </summary>
-    public class MDILayoutContainer : MDIContainerBase, IDisposable
+    public class MDILayoutContainer : MDIChildContainerBase, IDisposable
     {
         public enum LayoutType
         {
@@ -74,9 +74,8 @@ namespace Medical.Controller
         /// <param name="child">The child to add.</param>
         /// <param name="previous">The window to add the child relative to.</param>
         /// <param name="alignment">The alignment of child to previous.</param>
-        public void addChild(MDIWindow child, MDIWindow previous, WindowAlignment alignment)
+        public override void addChild(MDIWindow child, MDIWindow previous, WindowAlignment alignment)
         {
-            child.CurrentDockLocation = dockLocation;
             switch (alignment)
             {
                 case WindowAlignment.Left:
@@ -89,7 +88,7 @@ namespace Medical.Controller
                     {
                         //The child needs a new subcontainer created.
                         MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, dockLocation);
-                        MDILayoutContainer parentContainer = previous._ParentContainer;
+                        MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
                         newContainer.addChild(previous);
@@ -105,7 +104,7 @@ namespace Medical.Controller
                     {
                         //The child needs a new subcontainer created.
                         MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, dockLocation);
-                        MDILayoutContainer parentContainer = previous._ParentContainer;
+                        MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);
                         newContainer.addChild(child);
@@ -121,7 +120,7 @@ namespace Medical.Controller
                     {
                         //The child needs a new subcontainer created.
                         MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, dockLocation);
-                        MDILayoutContainer parentContainer = previous._ParentContainer;
+                        MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
                         newContainer.addChild(previous);
@@ -137,7 +136,7 @@ namespace Medical.Controller
                     {
                         //The child needs a new subcontainer created.
                         MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, dockLocation);
-                        MDILayoutContainer parentContainer = previous._ParentContainer;
+                        MDIChildContainerBase parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);
                         newContainer.addChild(child);
@@ -151,7 +150,7 @@ namespace Medical.Controller
         /// up any nested containers as required.
         /// </summary>
         /// <param name="child">The child window to remove.</param>
-        public void removeChild(MDIWindow child)
+        public override void removeChild(MDIWindow child)
         {
             if (children.Contains(child))
             {
@@ -337,7 +336,7 @@ namespace Medical.Controller
         /// <summary>
         /// The LayoutType of this container.
         /// </summary>
-        public LayoutType Layout
+        internal override LayoutType Layout
         {
             get
             {
@@ -360,6 +359,7 @@ namespace Medical.Controller
         private void setChildProperties(MDIContainerBase child)
         {
             child.SuppressLayout = true;
+            child.CurrentDockLocation = dockLocation;
             child.Visible = visible;
             child.setAlpha(alpha);
             child._setParent(this);
@@ -373,7 +373,7 @@ namespace Medical.Controller
         /// <param name="child">The child window to add.</param>
         /// <param name="previous">The window to add child relative to.</param>
         /// <param name="after">True to add child after previous. False to add child before previous.</param>
-        private void insertChild(MDIWindow child, MDIWindow previous, bool after)
+        internal override void insertChild(MDIWindow child, MDIWindow previous, bool after)
         {
             int index = children.IndexOf(previous);
             if (index == -1)
@@ -407,7 +407,7 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="newChild">The child to add.</param>
         /// <param name="oldChild">The child to replace.</param>
-        private void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
+        internal override void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
         {
             int index = children.IndexOf(oldChild);
             if (index == -1)
@@ -427,7 +427,7 @@ namespace Medical.Controller
         /// </summary>
         /// <param name="child">The child to promote.</param>
         /// <param name="formerParent">The former parent of child that will be replaced.</param>
-        private void promoteChild(MDIContainerBase child, MDILayoutContainer formerParent)
+        internal override void promoteChild(MDIContainerBase child, MDILayoutContainer formerParent)
         {
             swapAndRemove(child, formerParent);
             formerParent.Dispose();

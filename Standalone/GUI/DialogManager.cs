@@ -4,60 +4,26 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
     public class DialogManager
     {
-        private class DialogEntry
-        {
-            private Dialog dialog;
-
-            public DialogEntry(Dialog dialog)
-            {
-                this.dialog = dialog;
-                Visible = dialog.Visible;
-            }
-
-            public void tempClose()
-            {
-                Visible = dialog.Visible;
-                dialog.Visible = false;
-            }
-
-            public void restoreState()
-            {
-                dialog.Visible = Visible;
-            }
-
-            public void serialize(ConfigFile file)
-            {
-                dialog.serialize(file);
-            }
-
-            public void deserialize(ConfigFile file)
-            {
-                dialog.deserialize(file);
-            }
-
-            public void ensureVisible()
-            {
-                dialog.ensureVisible();
-            }
-
-            public bool Visible { get; set; }
-        }
-
         private List<DialogEntry> dialogs = new List<DialogEntry>();
+        private MDILayoutManager mdiLayoutManager;
 
-        public DialogManager()
+        public DialogManager(MDILayoutManager mdiLayoutManager)
         {
-            
+            this.mdiLayoutManager = mdiLayoutManager;
         }
 
         public void addManagedDialog(Dialog dialog)
         {
-            dialogs.Add(new DialogEntry(dialog));
+            DialogEntry entry = new DialogEntry(dialog, mdiLayoutManager);
+            entry.CurrentDockLocation = DockLocation.Floating;
+            entry.AllowedDockLocations = DockLocation.All;
+            dialogs.Add(entry);
         }
 
         public void saveDialogLayout(String file)
