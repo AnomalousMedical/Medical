@@ -23,16 +23,33 @@ namespace Medical.Controller
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
+        private MDILayoutContainer dragTargetContainer;
         private WindowAlignment finalWindowAlignment = WindowAlignment.Right;
 
         private bool visible = true;
 
         private Widget windowTargetWidget;
+        private Widget leftContainerWidget;
+        private Widget rightContainerWidget;
+        private Widget topContainerWidget;
+        private Widget bottomContainerWidget;
 
         public MDIBorderContainer(int padding)
         {
             windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Overlapped", "");
             windowTargetWidget.Visible = false;
+
+            leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            leftContainerWidget.Visible = false;
+
+            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            rightContainerWidget.Visible = false;
+
+            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            topContainerWidget.Visible = false;
+
+            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
+            bottomContainerWidget.Visible = false;
 
             left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding);
             left._setParent(this);
@@ -58,16 +75,85 @@ namespace Medical.Controller
             bottom.Dispose();
             center.Dispose();
             Gui.Instance.destroyWidget(windowTargetWidget);
+            Gui.Instance.destroyWidget(leftContainerWidget);
+            Gui.Instance.destroyWidget(rightContainerWidget);
+            Gui.Instance.destroyWidget(topContainerWidget);
+            Gui.Instance.destroyWidget(bottomContainerWidget);
         }
 
         public void windowDragStarted(MDIWindow source, float mouseX, float mouseY)
         {
             dragSourceWindow = source;
             dragTargetWindow = null;
+            dragTargetContainer = null;
+
+            if ((source.AllowedDockLocations & DockLocation.Left) != 0)
+            {
+                int x = (int)(left.DesiredSize.Width / 2 + Location.x);
+                int y = (int)WorkingSize.Height / 2;
+                leftContainerWidget.setPosition(x, y);
+                leftContainerWidget.Visible = true;
+            }
+
+            if ((source.AllowedDockLocations & DockLocation.Right) != 0)
+            {
+                int x = (int)(right.DesiredSize.Width / 2 + right.Location.x - rightContainerWidget.Width);
+                int y = (int)WorkingSize.Height / 2;
+                rightContainerWidget.setPosition(x, y);
+                rightContainerWidget.Visible = true;
+            }
+
+            if ((source.AllowedDockLocations & DockLocation.Top) != 0)
+            {
+                int x = (int)WorkingSize.Width / 2;
+                int y = (int)(top.DesiredSize.Height / 2 + Location.y);
+                topContainerWidget.setPosition(x, y);
+                topContainerWidget.Visible = true;
+            }
+
+            if ((source.AllowedDockLocations & DockLocation.Bottom) != 0)
+            {
+                int x = (int)WorkingSize.Width / 2;
+                int y = (int)(bottom.DesiredSize.Width / 2 + bottom.Location.y - bottomContainerWidget.Width);
+                bottomContainerWidget.setPosition(x, y);
+                bottomContainerWidget.Visible = true;
+            }
+        }
+
+        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, float x, float y)
+        {
+            float left = widget.AbsoluteLeft;
+            float top = widget.AbsoluteTop;
+            float right = left + widget.Width;
+            float bottom = top + widget.Height;
+            if (x > left && x < right && y > top && y < bottom)
+            {
+                Logging.Log.Debug("In container true stopping search");
+                dragTargetContainer = targetContainer;
+                dragTargetWindow = null;
+                return true;
+            }
+            Logging.Log.Debug("In container false continuing search");
+            return false;
         }
 
         public void windowDragged(MDIWindow source, float mouseX, float mouseY)
         {
+            Logging.Log.Debug("---------------Window Dragged------------------");
+            if (checkContainerWidget(leftContainerWidget, left, mouseX, mouseY) ||
+            checkContainerWidget(rightContainerWidget, right, mouseX, mouseY) ||
+            checkContainerWidget(topContainerWidget, top, mouseX, mouseY) ||
+            checkContainerWidget(bottomContainerWidget, bottom, mouseX, mouseY) ||
+            processDocuments(source, mouseX, mouseY))
+            {
+
+            }
+        }
+
+        private bool processDocuments(MDIWindow source, float mouseX, float mouseY)
+        {
+            Logging.Log.Debug("Processing document");
+            dragTargetContainer = null;
             dragTargetWindow = findWindowAtPosition(mouseX, mouseY);
             if (dragTargetWindow != null)
             {
@@ -110,12 +196,23 @@ namespace Medical.Controller
                     windowTargetWidget.Visible = false;
                 }
             }
+            return true;
         }
 
         public void windowDragEnded(MDIWindow source, float mouseX, float mouseY)
         {
             windowTargetWidget.Visible = false;
-            if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
+            leftContainerWidget.Visible = false;
+            rightContainerWidget.Visible = false;
+            topContainerWidget.Visible = false;
+            bottomContainerWidget.Visible = false;
+
+            if (dragTargetContainer != null)
+            {
+                dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
+                dragTargetContainer.addChild(dragSourceWindow);
+            }
+            else if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
             {
                 dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
                 dragTargetWindow._ParentContainer.addChild(dragSourceWindow, dragTargetWindow, finalWindowAlignment);
