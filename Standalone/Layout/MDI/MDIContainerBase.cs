@@ -30,5 +30,7 @@ namespace Medical.Controller
         internal MDILayoutContainer _ParentContainer { get; set; }
 
         public abstract MDIWindow findWindowAtPosition(float mouseX, float mouseY);
+
+        public DockLocation CurrentDockLocation { get; internal set; }
     }
 }

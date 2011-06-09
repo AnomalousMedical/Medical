@@ -30,14 +30,16 @@ namespace Medical.Controller
 
         private Gui gui = Gui.Instance;
         private float totalScale = 0.0f;
+        private DockLocation dockLocation;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="layoutType">The alignment of the container.</param>
         /// <param name="padding">The amount of padding between elements.</param>
-        public MDILayoutContainer(LayoutType layoutType, int padding)
+        public MDILayoutContainer(LayoutType layoutType, int padding, DockLocation dockLocation)
         {
+            this.dockLocation = dockLocation;
             this.layoutType = layoutType;
             this.padding = padding;
             separatorWidgetManager = new SeparatorWidgetManager(this);
@@ -74,6 +76,7 @@ namespace Medical.Controller
         /// <param name="alignment">The alignment of child to previous.</param>
         public void addChild(MDIWindow child, MDIWindow previous, WindowAlignment alignment)
         {
+            child.CurrentDockLocation = dockLocation;
             switch (alignment)
             {
                 case WindowAlignment.Left:
@@ -85,7 +88,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, dockLocation);
                         MDILayoutContainer parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
@@ -101,7 +104,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, Padding, dockLocation);
                         MDILayoutContainer parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);
@@ -117,7 +120,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, dockLocation);
                         MDILayoutContainer parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(child);
@@ -133,7 +136,7 @@ namespace Medical.Controller
                     else
                     {
                         //The child needs a new subcontainer created.
-                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding);
+                        MDILayoutContainer newContainer = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, Padding, dockLocation);
                         MDILayoutContainer parentContainer = previous._ParentContainer;
                         parentContainer.swapAndRemove(newContainer, previous);
                         newContainer.addChild(previous);

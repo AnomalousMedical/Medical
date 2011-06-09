@@ -80,8 +80,6 @@ namespace Medical.Controller
             }
         }
 
-        public DockLocation CurrentDockLocation { get; set; }
-
         public DockLocation AllowedDockLocations { get; set; }
 
         protected void fireClosed()

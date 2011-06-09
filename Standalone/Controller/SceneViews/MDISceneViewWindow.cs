@@ -21,6 +21,7 @@ namespace Medical.Controller
 
             //MDI Window
             mdiWindow = new MDIDocumentWindow(Name);
+            mdiWindow.AllowedDockLocations = DockLocation.Center;
             mdiWindow.SuppressLayout = true;
             mdiWindow.Content = this;
             mdiWindow.SuppressLayout = false;

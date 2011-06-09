@@ -51,19 +51,19 @@ namespace Medical.Controller
             bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Overlapped", "");
             bottomContainerWidget.Visible = false;
 
-            left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding);
+            left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left);
             left._setParent(this);
 
-            right = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding);
+            right = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Right);
             right._setParent(this);
             
-            top = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
+            top = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Top);
             top._setParent(this);
             
-            bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
+            bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Bottom);
             bottom._setParent(this);
             
-            center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding);
+            center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
             center._setParent(this);
         }
 
@@ -120,39 +120,38 @@ namespace Medical.Controller
             }
         }
 
-        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, float x, float y)
+        public void windowDragged(MDIWindow source, float mouseX, float mouseY)
         {
-            float left = widget.AbsoluteLeft;
-            float top = widget.AbsoluteTop;
-            float right = left + widget.Width;
-            float bottom = top + widget.Height;
-            if (x > left && x < right && y > top && y < bottom)
+            if (checkContainerWidget(leftContainerWidget, left, DockLocation.Left, mouseX, mouseY) ||
+            checkContainerWidget(rightContainerWidget, right, DockLocation.Right, mouseX, mouseY) ||
+            checkContainerWidget(topContainerWidget, top, DockLocation.Top, mouseX, mouseY) ||
+            checkContainerWidget(bottomContainerWidget, bottom, DockLocation.Bottom, mouseX, mouseY) ||
+            processCenter(source, mouseX, mouseY))
             {
-                Logging.Log.Debug("In container true stopping search");
-                dragTargetContainer = targetContainer;
-                dragTargetWindow = null;
-                return true;
+
             }
-            Logging.Log.Debug("In container false continuing search");
+        }
+
+        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, DockLocation dockLocation, float x, float y)
+        {
+            if (widget.Visible)
+            {
+                float left = widget.AbsoluteLeft;
+                float top = widget.AbsoluteTop;
+                float right = left + widget.Width;
+                float bottom = top + widget.Height;
+                if (x > left && x < right && y > top && y < bottom)
+                {
+                    dragTargetContainer = targetContainer;
+                    dragTargetWindow = null;
+                    return true;
+                }
+            }
             return false;
         }
 
-        public void windowDragged(MDIWindow source, float mouseX, float mouseY)
+        private bool processCenter(MDIWindow source, float mouseX, float mouseY)
         {
-            Logging.Log.Debug("---------------Window Dragged------------------");
-            if (checkContainerWidget(leftContainerWidget, left, mouseX, mouseY) ||
-            checkContainerWidget(rightContainerWidget, right, mouseX, mouseY) ||
-            checkContainerWidget(topContainerWidget, top, mouseX, mouseY) ||
-            checkContainerWidget(bottomContainerWidget, bottom, mouseX, mouseY) ||
-            processDocuments(source, mouseX, mouseY))
-            {
-
-            }
-        }
-
-        private bool processDocuments(MDIWindow source, float mouseX, float mouseY)
-        {
-            Logging.Log.Debug("Processing document");
             dragTargetContainer = null;
             dragTargetWindow = findWindowAtPosition(mouseX, mouseY);
             if (dragTargetWindow != null)
@@ -211,6 +210,7 @@ namespace Medical.Controller
             {
                 dragSourceWindow._ParentContainer.removeChild(dragSourceWindow);
                 dragTargetContainer.addChild(dragSourceWindow);
+                this.layout();
             }
             else if (dragTargetWindow != dragSourceWindow && dragTargetWindow != null)
             {
