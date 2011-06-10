@@ -26,8 +26,6 @@ namespace Medical.GUI
         public void addManagedDialog(MDIDialog dialog)
         {
             dialog.MDIManager = mdiLayoutManager;
-            dialog.CurrentDockLocation = DockLocation.Floating;
-            dialog.AllowedDockLocations = DockLocation.All;
             dialogs.Add(new MDIDialogEntry(dialog));
         }
 

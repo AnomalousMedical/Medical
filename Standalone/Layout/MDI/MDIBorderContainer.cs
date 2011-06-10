@@ -36,6 +36,7 @@ namespace Medical.Controller
         private Widget bottomContainerWidget;
 
         public MDIBorderContainer(int padding)
+            :base(DockLocation.None)
         {
             windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Info", "");
             windowTargetWidget.Visible = false;

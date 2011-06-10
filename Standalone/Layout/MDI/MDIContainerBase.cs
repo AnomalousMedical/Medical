@@ -12,8 +12,9 @@ namespace Medical.Controller
     {
         private DockLocation currentDockLocation;
 
-        protected MDIContainerBase()
+        public MDIContainerBase(DockLocation currentLocation)
         {
+            currentDockLocation = currentLocation;
             Scale = 100.0f;
         }
 

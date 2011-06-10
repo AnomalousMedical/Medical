@@ -18,6 +18,10 @@ namespace Medical.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
         private IntVector2 captionMouseOffset;
+        private Size2 undockedMinSize;
+        private Size2 undockedMaxSize;
+        private static Size2 DOCKED_MIN_SIZE = new Size2();
+        private static Size2 DOCKED_MAX_SIZE = new Size2(float.MaxValue, float.MaxValue);
 
         /// <summary>
         /// Called after the dialog opens.
@@ -46,6 +50,7 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="layoutFile">The layout file of the dialog.</param>
         public MDIDialog(String layoutFile, String persistName)
+            :base(DockLocation.Floating)
         {
             this.persistName = persistName;
             dialogLayout = LayoutManager.Instance.loadLayout(layoutFile);
@@ -289,9 +294,17 @@ namespace Medical.GUI
             if (newLocation == DockLocation.Floating)
             {
                 float normalizedMouseWidthOffset = (float)captionMouseOffset.x / window.CaptionWidget.Width;
+                //window.MinSize = undockedMinSize;
+                //window.MaxSize = undockedMaxSize;
                 window.setSize((int)desiredLocation.Width, (int)desiredLocation.Height);
                 captionMouseOffset.x = (int)(normalizedMouseWidthOffset * window.CaptionWidget.Width);
                 IgnorePositionChanges = false;
+            }
+            else
+            {
+                //updateUndockedMinMaxSize();
+                //window.MinSize = DOCKED_MIN_SIZE;
+                //window.MaxSize = DOCKED_MAX_SIZE;
             }
         }
 
@@ -325,6 +338,12 @@ namespace Medical.GUI
             {
                 MDIManager.closeWindow(this);
             }
+        }
+
+        protected void updateUndockedMinMaxSize()
+        {
+            undockedMinSize = window.MinSize;
+            undockedMaxSize = window.MaxSize;
         }
 
         void window_WindowButtonPressed(Widget source, EventArgs e)

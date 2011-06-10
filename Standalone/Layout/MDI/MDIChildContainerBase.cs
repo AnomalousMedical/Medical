@@ -10,6 +10,12 @@ namespace Medical.Controller
     /// </summary>
     public abstract class MDIChildContainerBase : MDIContainerBase
     {
+        public MDIChildContainerBase(DockLocation currentLocation)
+            :base(currentLocation)
+        {
+
+        }
+
         public abstract void addChild(MDIWindow window);
 
         public abstract void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment);

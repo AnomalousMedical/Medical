@@ -27,7 +27,8 @@ namespace Medical.Controller
         Bottom = 1 << 3,
         Center = 1 << 4,
         Floating = 1 << 5,
-        All = Left | Top | Right | Bottom | Center | Floating
+        All = Left | Top | Right | Bottom | Center | Floating,
+        None = 1 << 6
     }
 
     /// <summary>

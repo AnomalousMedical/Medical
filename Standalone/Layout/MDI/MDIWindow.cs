@@ -23,9 +23,9 @@ namespace Medical.Controller
         protected MDILayoutManager layoutManager;
         private bool activeWindow = false;
 
-        public MDIWindow()
+        public MDIWindow(DockLocation currentLocation)
+            :base(currentLocation)
         {
-            CurrentDockLocation = DockLocation.Center;
             AllowedDockLocations = DockLocation.All;
         }
 

@@ -11,6 +11,7 @@ namespace Medical.Controller
         private List<MDIWindow> windows = new List<MDIWindow>();
 
         public FloatingWindowContainer()
+            :base(DockLocation.Floating)
         {
 
         }

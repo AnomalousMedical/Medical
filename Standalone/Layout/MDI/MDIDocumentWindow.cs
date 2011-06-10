@@ -32,6 +32,7 @@ namespace Medical.Controller
         /// <param name="layoutFile"></param>
         /// <param name="caption"></param>
         public MDIDocumentWindow(String caption)
+            :base(DockLocation.Center)
         {
             guiLayout = LayoutManager.Instance.loadLayout("Medical.Layout.MDI.MDIWindow.layout");
             mainWidget = guiLayout.getWidget(0);
