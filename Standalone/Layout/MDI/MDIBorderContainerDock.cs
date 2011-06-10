@@ -190,7 +190,7 @@ namespace Medical.Controller
         {
             if (!layoutContainer.HasChildren)
             {
-                size = child.DesiredSize;
+                size = child.DesiredSize + new Size2(separatorSecondSize, separatorSecondSize);
             }
         }
     }
