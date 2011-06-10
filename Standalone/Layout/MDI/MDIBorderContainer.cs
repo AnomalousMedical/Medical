@@ -62,7 +62,7 @@ namespace Medical.Controller
             top = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Top);
             top._setParent(this);
             
-            bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Bottom);
+            bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Bottom);
             bottom._setParent(this);
             
             center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
