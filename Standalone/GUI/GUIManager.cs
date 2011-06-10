@@ -203,6 +203,11 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(dialog);
         }
 
+        public void addManagedDialog(MDIDialog dialog)
+        {
+            dialogManager.addManagedDialog(dialog);
+        }
+
         public Taskbar Taskbar
         {
             get

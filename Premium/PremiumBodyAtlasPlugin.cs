@@ -94,10 +94,10 @@ namespace Medical
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
             taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new DialogOpenTaskbarItem(stateList, "States", "StatesIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(notesDialog, "Notes", "NotesIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(stateList, "States", "StatesIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(notesDialog, "Notes", "NotesIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIcon"));

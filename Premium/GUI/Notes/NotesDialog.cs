@@ -6,7 +6,7 @@ using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    public class NotesDialog : Dialog
+    public class NotesDialog : MDIDialog
     {
         private MedicalStateController stateController;
 

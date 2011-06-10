@@ -16,7 +16,7 @@ namespace Medical.GUI
         ChangeSelectionMode,
     }
 
-    public class AnatomyFinder : Dialog
+    public class AnatomyFinder : MDIDialog
     {
         private static MessageEvent pickAnatomy;
         private static MessageEvent changeSelectionMode;
