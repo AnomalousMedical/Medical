@@ -12,13 +12,13 @@
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="38 4 92 15" align="HRelative VRelative" name="Movement/ExcursionRightText">
-            <Property key="Widget_Caption" value="Excursion Right"/>
+            <Property key="Widget_Caption" value="Excursion Left"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="37 54 106 16" align="HRelative VRelative" name="Movement/ExcursionLeftSlider">
             <Property key="Scroll_Range" value="1000"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="38 40 90 15" align="HRelative VRelative" name="Movement/ExcursionLeftText">
-            <Property key="Widget_Caption" value="Excursion Left"/>
+        <Widget type="StaticText" skin="StaticText" position="38 40 100 15" align="HRelative VRelative" name="Movement/ExcursionLeftText">
+            <Property key="Widget_Caption" value="Excursion Right"/>
         </Widget>
         <Widget type="HScroll" skin="HSlider" position="37 90 106 16" align="HRelative VRelative" name="Movement/ProtrusionSlider">
             <Property key="Scroll_Range" value="1000"/>
