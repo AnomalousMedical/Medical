@@ -207,6 +207,7 @@ namespace Medical.Controller
             
             if ((source.AllowedDockLocations & DockLocation.Floating) != 0)
             {
+                windowTargetWidget.Visible = false;
                 dragTargetContainer = floating;
                 dragTargetWindow = null;
                 return true;
@@ -222,7 +223,7 @@ namespace Medical.Controller
                 dragTargetWindow = null;
                 return false;
             }
-            dragTargetWindow = center.findWindowAtPosition(mouseX, mouseY);// findWindowAtPosition(mouseX, mouseY);
+            dragTargetWindow = center.findWindowAtPosition(mouseX, mouseY);
             findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
             return true;
         }
