@@ -281,6 +281,19 @@ namespace Medical.GUI
             }
         }
 
+        protected override void onDockLocationChanged(DockLocation oldLocation, DockLocation newLocation)
+        {
+            if (oldLocation == DockLocation.Floating)
+            {
+                IgnorePositionChanges = true;
+            }
+            else if (newLocation == DockLocation.Floating)
+            {
+                window.setSize((int)desiredLocation.Width, (int)desiredLocation.Height);
+                IgnorePositionChanges = false;
+            }
+        }
+
         protected virtual void onShown(EventArgs args)
         {
             if (Shown != null)

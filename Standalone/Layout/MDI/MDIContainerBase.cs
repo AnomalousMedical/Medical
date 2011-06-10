@@ -10,6 +10,8 @@ namespace Medical.Controller
     /// </summary>
     public abstract class MDIContainerBase : LayoutContainer
     {
+        private DockLocation currentDockLocation;
+
         protected MDIContainerBase()
         {
             Scale = 100.0f;
@@ -31,6 +33,26 @@ namespace Medical.Controller
 
         public abstract MDIWindow findWindowAtPosition(float mouseX, float mouseY);
 
-        public DockLocation CurrentDockLocation { get; internal set; }
+        public DockLocation CurrentDockLocation
+        {
+            get
+            {
+                return currentDockLocation;
+            }
+            internal set
+            {
+                if (currentDockLocation != value)
+                {
+                    DockLocation oldLocaiton = currentDockLocation;
+                    currentDockLocation = value;
+                    onDockLocationChanged(oldLocaiton, currentDockLocation);
+                }
+            }
+        }
+
+        protected virtual void onDockLocationChanged(DockLocation oldLocation, DockLocation newLocation)
+        {
+
+        }
     }
 }

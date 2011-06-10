@@ -11,6 +11,9 @@ namespace Medical.Controller
 {
     public class MDIDocumentWindow : MDIWindow
     {
+        public event EventHandler Closed;
+        public event EventHandler ActiveStatusChanged;
+        
         private Layout guiLayout;
         private Widget mainWidget;
         private LayoutContainer content;
@@ -123,6 +126,10 @@ namespace Medical.Controller
         protected override void activeStatusChanged(bool active)
         {
             captionButton.StateCheck = Active;
+            if (ActiveStatusChanged != null)
+            {
+                ActiveStatusChanged.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
@@ -227,6 +234,14 @@ namespace Medical.Controller
                     captionButton.Caption = value;
                     captionButton.setSize((int)captionButton.getTextSize().Width + 50, captionButton.Height);
                 }
+            }
+        }
+
+        protected void fireClosed()
+        {
+            if (Closed != null)
+            {
+                Closed.Invoke(this, EventArgs.Empty);
             }
         }
 

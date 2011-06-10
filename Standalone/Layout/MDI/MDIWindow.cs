@@ -9,18 +9,16 @@ using SoundPlugin;
 
 namespace Medical.Controller
 {
-    public delegate void MDIMouseEvent(MDIWindow source, float mouseX, float mouseY);
+    internal delegate void MDIMouseEvent(MDIWindow source, float mouseX, float mouseY);
 
     /// <summary>
     /// The base class for windows in the MDILayoutManager.
     /// </summary>
     public abstract class MDIWindow : MDIContainerBase, IDisposable
     {
-        public event EventHandler Closed;
-        public event EventHandler ActiveStatusChanged;
-        public event MDIMouseEvent MouseDragStarted;
-        public event MDIMouseEvent MouseDrag;
-        public event MDIMouseEvent MouseDragFinished;
+        internal event MDIMouseEvent MouseDragStarted;
+        internal event MDIMouseEvent MouseDrag;
+        internal event MDIMouseEvent MouseDragFinished;
 
         protected MDILayoutManager layoutManager;
         private bool activeWindow = false;
@@ -53,10 +51,6 @@ namespace Medical.Controller
         {
             activeWindow = active;
             activeStatusChanged(active);
-            if (ActiveStatusChanged != null)
-            {
-                ActiveStatusChanged.Invoke(this, EventArgs.Empty);
-            }
         }
 
         protected abstract void activeStatusChanged(bool active);
@@ -81,14 +75,6 @@ namespace Medical.Controller
         }
 
         public DockLocation AllowedDockLocations { get; set; }
-
-        protected void fireClosed()
-        {
-            if (Closed != null)
-            {
-                Closed.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         protected void fireMouseDragStarted(MouseEventArgs me)
         {

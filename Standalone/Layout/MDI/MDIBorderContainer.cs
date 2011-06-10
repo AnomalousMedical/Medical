@@ -126,6 +126,18 @@ namespace Medical.Controller
 
         public void windowDragged(MDIWindow source, float mouseX, float mouseY)
         {
+            //If we are currently docked and are allowed to float, start floating immediatly on movement.
+            if (((source.AllowedDockLocations & DockLocation.Floating) != 0) &&
+                (source.CurrentDockLocation == DockLocation.Left ||
+                source.CurrentDockLocation == DockLocation.Right ||
+                source.CurrentDockLocation == DockLocation.Top ||
+                source.CurrentDockLocation == DockLocation.Bottom))
+            {
+                source._ParentContainer.removeChild(source);
+                floating.addChild(source);
+                this.layout();
+            }
+
             if (checkContainerWidget(leftContainerWidget, left, DockLocation.Left, mouseX, mouseY) ||
             checkContainerWidget(rightContainerWidget, right, DockLocation.Right, mouseX, mouseY) ||
             checkContainerWidget(topContainerWidget, top, DockLocation.Top, mouseX, mouseY) ||
