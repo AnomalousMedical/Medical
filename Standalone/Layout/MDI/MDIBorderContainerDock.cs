@@ -12,13 +12,15 @@ namespace Medical.Controller
     {
         private MDILayoutContainer layoutContainer;
         private Widget separator;
+        private int separatorSecondSize = 5;
+        private Size2 size = new Size2();
 
         public MDIBorderContainerDock(MDILayoutContainer layoutContainer)
             :base(layoutContainer.CurrentDockLocation)
         {
             this.layoutContainer = layoutContainer;
             layoutContainer._setParent(this);
-            separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, 10, 10, Align.Left | Align.Top, "Back", "");
+            separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, separatorSecondSize, separatorSecondSize, Align.Left | Align.Top, "Back", "");
             separator.MouseDrag += separator_MouseDrag;
             separator.MouseButtonPressed += separator_MouseButtonPressed;
             separator.MouseButtonReleased += separator_MouseButtonReleased;
@@ -37,7 +39,7 @@ namespace Medical.Controller
                     separator.Pointer = MainWindow.SIZE_VERT;
                     break;
             }
-            separator.Visible = false;
+            //separator.Visible = false;
         }
 
         public void Dispose()
@@ -51,12 +53,34 @@ namespace Medical.Controller
             switch(CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    //separator.setPosition(layoutContainer.
-                    //separator.setSize(10, layoutContainer.WorkingSize.Height);
+                    separator.setPosition((int)(Location.x + WorkingSize.Width - separatorSecondSize), (int)Location.y);
+                    separator.setSize(separatorSecondSize, (int)WorkingSize.Height);
+                    layoutContainer.Location = Location;
+                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    break;
+                case DockLocation.Right:
+                    separator.setPosition((int)Location.x, (int)Location.y);
+                    separator.setSize(separatorSecondSize, (int)WorkingSize.Height);
+                    layoutContainer.Location = new Vector2(Location.x + separatorSecondSize, Location.y);
+                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width - separatorSecondSize, WorkingSize.Height);
+                    break;
+                case DockLocation.Top:
+                    separator.setPosition((int)Location.x, (int)(Location.y + WorkingSize.Height - separatorSecondSize));
+                    separator.setSize((int)WorkingSize.Width, separatorSecondSize);
+                    layoutContainer.Location = Location;
+                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    break;
+                case DockLocation.Bottom:
+                    separator.setPosition((int)Location.x, (int)(Location.y));
+                    separator.setSize((int)WorkingSize.Width, separatorSecondSize);
+                    layoutContainer.Location = new Vector2(Location.x, Location.y + separatorSecondSize);
+                    layoutContainer.WorkingSize = new Size2(WorkingSize.Width, WorkingSize.Height - separatorSecondSize);
+                    break;
+                default:
+                    layoutContainer.Location = Location;
+                    layoutContainer.WorkingSize = WorkingSize;
                     break;
             }
-            layoutContainer.Location = Location;
-            layoutContainer.WorkingSize = WorkingSize;
             layoutContainer.layout();
         }
 
@@ -64,7 +88,7 @@ namespace Medical.Controller
         {
             get
             {
-                return layoutContainer.ChildCount > 0 ? new Size2(300, 300) : new Size2();
+                return layoutContainer.HasChildren ? size : new Size2();
             }
         }
 
@@ -97,11 +121,19 @@ namespace Medical.Controller
 
         public override void addChild(MDIWindow window)
         {
+            if (!layoutContainer.HasChildren)
+            {
+                size = window.DesiredSize;
+            }
             layoutContainer.addChild(window);
         }
 
         public override void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
+            if (!layoutContainer.HasChildren)
+            {
+                size = window.DesiredSize;
+            }
             layoutContainer.addChild(window, previous, alignment);
         }
 
@@ -135,6 +167,30 @@ namespace Medical.Controller
 
         void separator_MouseDrag(Widget source, EventArgs e)
         {
+            MouseEventArgs me = (MouseEventArgs)e;
+            switch (CurrentDockLocation)
+            {
+                case DockLocation.Left:
+                    separator.setPosition(me.Position.x, separator.Top);
+                    size = new Size2(separator.Left, 10);
+                    invalidate();
+                    break;
+                case DockLocation.Right:
+                    separator.setPosition(me.Position.x, separator.Top);
+                    size = new Size2(TopmostWorkingSize.Width - separator.Left, 10);
+                    invalidate();
+                    break;
+                case DockLocation.Top:
+                    separator.setPosition(separator.Left, me.Position.y);
+                    size = new Size2(10, separator.Top);
+                    invalidate();
+                    break;
+                case DockLocation.Bottom:
+                    separator.setPosition(separator.Left, me.Position.y);
+                    size = new Size2(10, TopmostWorkingSize.Height - separator.Top);
+                    invalidate();
+                    break;
+            }
             //if (dragLowChild != null)
             //{
             //    MouseEventArgs me = e as MouseEventArgs;
@@ -169,18 +225,7 @@ namespace Medical.Controller
 
         void separator_MouseButtonPressed(Widget source, EventArgs e)
         {
-            //int sepIndex = separatorWidgets.IndexOf(source);
-            ////ignore the last separator and do not allow the drag to happen if it is clicked.
-            //if (sepIndex != separatorWidgets.Count - 1)
-            //{
-            //    dragStartPosition = ((MouseEventArgs)e).Position - parentContainer.Location;
-            //    dragLowChild = parentContainer.getChild(sepIndex);
-            //    dragLowScaleStart = dragLowChild.Scale;
-            //    dragHighChild = parentContainer.getChild(sepIndex + 1);
-            //    dragHighScaleStart = dragHighChild.Scale;
-            //    dragTotalScale = dragLowScaleStart + dragHighScaleStart;
-            //    dragScaleArea = dragTotalScale / parentContainer.TotalScale * parentContainer.WorkingSize;
-            //}
+
         }
 
         void separator_MouseButtonReleased(Widget source, EventArgs e)

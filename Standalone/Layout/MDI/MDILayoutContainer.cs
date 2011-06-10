@@ -351,11 +351,11 @@ namespace Medical.Controller
             }
         }
 
-        public int ChildCount
+        public bool HasChildren
         {
             get
             {
-                return children.Count;
+                return children.Count > 0;
             }
         }
 
