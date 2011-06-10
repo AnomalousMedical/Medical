@@ -223,10 +223,7 @@ namespace Medical.GUI
             String location = section.getValue("Location", desiredLocation.ToString());
             desiredLocation.fromString(location);
 
-            if (CurrentDockLocation == DockLocation.Floating)
-            {
-                window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
-            }
+            window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
         }
 
         protected void loadDockProperties(ConfigSection section)

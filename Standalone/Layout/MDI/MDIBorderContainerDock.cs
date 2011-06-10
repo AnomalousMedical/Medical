@@ -22,8 +22,6 @@ namespace Medical.Controller
             layoutContainer._setParent(this);
             separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, separatorSecondSize, separatorSecondSize, Align.Left | Align.Top, "Back", "");
             separator.MouseDrag += separator_MouseDrag;
-            separator.MouseButtonPressed += separator_MouseButtonPressed;
-            separator.MouseButtonReleased += separator_MouseButtonReleased;
             switch(CurrentDockLocation)
             {
                 case DockLocation.Left:
@@ -121,19 +119,13 @@ namespace Medical.Controller
 
         public override void addChild(MDIWindow window)
         {
-            if (!layoutContainer.HasChildren)
-            {
-                size = window.DesiredSize;
-            }
+            setFirstWindowSize(window);
             layoutContainer.addChild(window);
         }
 
         public override void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
         {
-            if (!layoutContainer.HasChildren)
-            {
-                size = window.DesiredSize;
-            }
+            setFirstWindowSize(window);
             layoutContainer.addChild(window, previous, alignment);
         }
 
@@ -152,10 +144,7 @@ namespace Medical.Controller
 
         internal override void insertChild(MDIWindow child, MDIWindow previous, bool after)
         {
-            if (!layoutContainer.HasChildren)
-            {
-                size = child.DesiredSize;
-            }
+            setFirstWindowSize(child);
             layoutContainer.insertChild(child, previous, after);
         }
 
@@ -195,47 +184,14 @@ namespace Medical.Controller
                     invalidate();
                     break;
             }
-            //if (dragLowChild != null)
-            //{
-            //    MouseEventArgs me = e as MouseEventArgs;
-            //    Vector2 offset = me.Position - dragStartPosition - parentContainer.Location;
-
-            //    if (parentContainer.Layout == MDILayoutContainer.LayoutType.Horizontal)
-            //    {
-            //        dragLowChild.Scale = dragLowScaleStart + offset.x / dragScaleArea.Width * dragTotalScale;
-            //        dragHighChild.Scale = dragHighScaleStart - offset.x / dragScaleArea.Width * dragTotalScale;
-            //    }
-            //    else
-            //    {
-            //        dragLowChild.Scale = dragLowScaleStart + offset.y / dragScaleArea.Height * dragTotalScale;
-            //        dragHighChild.Scale = dragHighScaleStart - offset.y / dragScaleArea.Height * dragTotalScale;
-            //    }
-
-            //    //Bounds checking
-            //    if (dragLowChild.Scale < 0)
-            //    {
-            //        dragLowChild.Scale = 0.0f;
-            //        dragHighChild.Scale = dragTotalScale;
-            //    }
-            //    else if (dragHighChild.Scale < 0)
-            //    {
-            //        dragLowChild.Scale = dragTotalScale;
-            //        dragHighChild.Scale = 0.0f;
-            //    }
-
-            //    parentContainer.invalidate();
-            //}
         }
 
-        void separator_MouseButtonPressed(Widget source, EventArgs e)
+        private void setFirstWindowSize(MDIWindow child)
         {
-
-        }
-
-        void separator_MouseButtonReleased(Widget source, EventArgs e)
-        {
-            //dragLowChild = null;
-            //dragHighChild = null;
+            if (!layoutContainer.HasChildren)
+            {
+                size = child.DesiredSize;
+            }
         }
     }
 }

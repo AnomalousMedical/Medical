@@ -24,10 +24,7 @@ namespace Medical.GUI
             desiredLocation.fromString(location);
             DesiredLocation = desiredLocation;
 
-            if (CurrentDockLocation == DockLocation.Floating)
-            {
-                window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, window.Width, window.Height);
-            }
+            window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, window.Width, window.Height);
         }
     }
 }
