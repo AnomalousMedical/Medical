@@ -134,36 +134,39 @@ namespace Medical.GUI
         /// </summary>
         public void ensureVisible()
         {
-            //Adjust the position if needed
-            int left = (int)desiredLocation.Left;
-            int top = (int)desiredLocation.Top;
-            int right = (int)(left + desiredLocation.Width);
-            int bottom = (int)(top + desiredLocation.Height);
-
-            int guiWidth = Gui.Instance.getViewWidth();
-            int guiHeight = Gui.Instance.getViewHeight();
-
-            if (right > guiWidth)
+            if (CurrentDockLocation == DockLocation.Floating)
             {
-                left -= right - guiWidth;
-                if (left < 0)
-                {
-                    left = 0;
-                }
-            }
+                //Adjust the position if needed
+                int left = (int)desiredLocation.Left;
+                int top = (int)desiredLocation.Top;
+                int right = (int)(left + desiredLocation.Width);
+                int bottom = (int)(top + desiredLocation.Height);
 
-            if (bottom > guiHeight)
-            {
-                top -= bottom - guiHeight;
-                if (top < 0)
-                {
-                    top = 0;
-                }
-            }
+                int guiWidth = Gui.Instance.getViewWidth();
+                int guiHeight = Gui.Instance.getViewHeight();
 
-            IgnorePositionChanges = true;
-            window.setPosition(left, top);
-            IgnorePositionChanges = false;
+                if (right > guiWidth)
+                {
+                    left -= right - guiWidth;
+                    if (left < 0)
+                    {
+                        left = 0;
+                    }
+                }
+
+                if (bottom > guiHeight)
+                {
+                    top -= bottom - guiHeight;
+                    if (top < 0)
+                    {
+                        top = 0;
+                    }
+                }
+
+                IgnorePositionChanges = true;
+                window.setPosition(left, top);
+                IgnorePositionChanges = false;
+            }
         }
 
         public virtual void serialize(ConfigFile configFile)
@@ -283,13 +286,11 @@ namespace Medical.GUI
 
         protected override void onDockLocationChanged(DockLocation oldLocation, DockLocation newLocation)
         {
-            if (oldLocation == DockLocation.Floating)
+            if (newLocation == DockLocation.Floating)
             {
-                IgnorePositionChanges = true;
-            }
-            else if (newLocation == DockLocation.Floating)
-            {
+                float normalizedMouseWidthOffset = (float)captionMouseOffset.x / window.CaptionWidget.Width;
                 window.setSize((int)desiredLocation.Width, (int)desiredLocation.Height);
+                captionMouseOffset.x = (int)(normalizedMouseWidthOffset * window.CaptionWidget.Width);
                 IgnorePositionChanges = false;
             }
         }
@@ -344,7 +345,7 @@ namespace Medical.GUI
 
         private void updateDesiredLocation()
         {
-            if (!IgnorePositionChanges)
+            if (CurrentDockLocation == DockLocation.Floating && !IgnorePositionChanges)
             {
                 desiredLocation.Left = window.Left;
                 desiredLocation.Top = window.Top;
@@ -398,6 +399,7 @@ namespace Medical.GUI
         void window_MouseButtonReleased(Widget source, EventArgs e)
         {
             fireMouseDragFinished((MouseEventArgs)e);
+            updateDesiredLocation();
         }
 
         void window_MouseButtonPressed(Widget source, EventArgs e)

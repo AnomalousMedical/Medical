@@ -138,10 +138,10 @@ namespace Medical.Controller
                 this.layout();
             }
 
-            if (checkContainerWidget(leftContainerWidget, left, DockLocation.Left, mouseX, mouseY) ||
-            checkContainerWidget(rightContainerWidget, right, DockLocation.Right, mouseX, mouseY) ||
-            checkContainerWidget(topContainerWidget, top, DockLocation.Top, mouseX, mouseY) ||
-            checkContainerWidget(bottomContainerWidget, bottom, DockLocation.Bottom, mouseX, mouseY) ||
+            if (checkContainerWidget(leftContainerWidget, left, source, DockLocation.Left, mouseX, mouseY) ||
+            checkContainerWidget(rightContainerWidget, right, source, DockLocation.Right, mouseX, mouseY) ||
+            checkContainerWidget(topContainerWidget, top, source, DockLocation.Top, mouseX, mouseY) ||
+            checkContainerWidget(bottomContainerWidget, bottom, source, DockLocation.Bottom, mouseX, mouseY) ||
             processFloating(source, mouseX, mouseY) || 
             processCenter(source, mouseX, mouseY))
             {
@@ -149,7 +149,7 @@ namespace Medical.Controller
             }
         }
 
-        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, DockLocation dockLocation, float x, float y)
+        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, MDIWindow window, DockLocation dockLocation, float x, float y)
         {
             if (widget.Visible)
             {
@@ -161,6 +161,26 @@ namespace Medical.Controller
                 {
                     dragTargetContainer = targetContainer;
                     dragTargetWindow = null;
+
+                    windowTargetWidget.Visible = true;
+                    switch (dockLocation)
+                    {
+                        case DockLocation.Left:
+                            windowTargetWidget.setCoord((int)Location.x, (int)Location.y, (int)window.DesiredSize.Width, (int)WorkingSize.Height);
+                            break;
+                        case DockLocation.Right:
+                            float width = window.DesiredSize.Width;
+                            windowTargetWidget.setCoord((int)(WorkingSize.Width - width), (int)Location.y, (int)width, (int)WorkingSize.Height);
+                            break;
+                        case DockLocation.Top:
+                            windowTargetWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)window.DesiredSize.Height);
+                            break;
+                        case DockLocation.Bottom:
+                            float height = window.DesiredSize.Height;
+                            windowTargetWidget.setCoord((int)Location.x, (int)(WorkingSize.Height - height), (int)WorkingSize.Width, (int)height);
+                            break;
+                    }
+
                     return true;
                 }
             }
