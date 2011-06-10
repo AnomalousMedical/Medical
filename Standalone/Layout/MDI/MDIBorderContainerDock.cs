@@ -8,19 +8,21 @@ using Engine;
 
 namespace Medical.Controller
 {
-    class MDIBorderContainerSeparator : IDisposable
+    class MDIBorderContainerDock : MDIChildContainerBase, IDisposable
     {
         private MDILayoutContainer layoutContainer;
         private Widget separator;
 
-        public MDIBorderContainerSeparator(MDILayoutContainer layoutContainer)
+        public MDIBorderContainerDock(MDILayoutContainer layoutContainer)
+            :base(layoutContainer.CurrentDockLocation)
         {
             this.layoutContainer = layoutContainer;
+            layoutContainer._setParent(this);
             separator = Gui.Instance.createWidgetT("Widget", "MDISeparator", 0, 0, 10, 10, Align.Left | Align.Top, "Back", "");
             separator.MouseDrag += separator_MouseDrag;
             separator.MouseButtonPressed += separator_MouseButtonPressed;
             separator.MouseButtonReleased += separator_MouseButtonReleased;
-            switch(layoutContainer.CurrentDockLocation)
+            switch(CurrentDockLocation)
             {
                 case DockLocation.Left:
                     separator.Pointer = MainWindow.SIZE_HORZ;
@@ -41,26 +43,94 @@ namespace Medical.Controller
         public void Dispose()
         {
             Gui.Instance.destroyWidget(separator);
+            layoutContainer.Dispose();
         }
 
-        public bool Visible
+        public override void layout()
         {
-            get
+            switch(CurrentDockLocation)
             {
-                return separator.Visible;
+                case DockLocation.Left:
+                    //separator.setPosition(layoutContainer.
+                    //separator.setSize(10, layoutContainer.WorkingSize.Height);
+                    break;
             }
-            set
-            {
-                separator.Visible = value;
-            }
+            layoutContainer.Location = Location;
+            layoutContainer.WorkingSize = WorkingSize;
+            layoutContainer.layout();
         }
 
-        public Size2 ContainerSize
+        public override Size2 DesiredSize
         {
             get
             {
                 return layoutContainer.ChildCount > 0 ? new Size2(300, 300) : new Size2();
             }
+        }
+
+        public override bool Visible
+        {
+            get
+            {
+                return layoutContainer.Visible;
+            }
+            set
+            {
+                layoutContainer.Visible = value;
+            }
+        }
+
+        public override MDIWindow findWindowAtPosition(float mouseX, float mouseY)
+        {
+            return layoutContainer.findWindowAtPosition(mouseX, mouseY);
+        }
+
+        public override void bringToFront()
+        {
+            layoutContainer.bringToFront();
+        }
+
+        public override void setAlpha(float alpha)
+        {
+            layoutContainer.setAlpha(alpha);
+        }
+
+        public override void addChild(MDIWindow window)
+        {
+            layoutContainer.addChild(window);
+        }
+
+        public override void addChild(MDIWindow window, MDIWindow previous, WindowAlignment alignment)
+        {
+            layoutContainer.addChild(window, previous, alignment);
+        }
+
+        public override void removeChild(MDIWindow window)
+        {
+            layoutContainer.removeChild(window);
+        }
+
+        internal override MDILayoutContainer.LayoutType Layout
+        {
+            get
+            {
+                return layoutContainer.Layout;
+            }
+        }
+
+        internal override void insertChild(MDIWindow child, MDIWindow previous, bool after)
+        {
+            layoutContainer.insertChild(child, previous, after);
+        }
+
+        internal override void swapAndRemove(MDIContainerBase newChild, MDIContainerBase oldChild)
+        {
+            layoutContainer.swapAndRemove(newChild, oldChild);
+        }
+
+        internal override void promoteChild(MDIContainerBase mdiContainerBase, MDILayoutContainer mdiLayoutContainer)
+        {
+            layoutContainer.promoteChild(mdiContainerBase, mdiLayoutContainer);
         }
 
         void separator_MouseDrag(Widget source, EventArgs e)

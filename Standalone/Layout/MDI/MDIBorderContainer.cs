@@ -15,17 +15,12 @@ namespace Medical.Controller
     /// </summary>
     public class MDIBorderContainer : MDIContainerBase, IDisposable
     {
-        private MDILayoutContainer left;
-        private MDILayoutContainer right;
-        private MDILayoutContainer top;
-        private MDILayoutContainer bottom;
+        private MDIBorderContainerDock left;
+        private MDIBorderContainerDock right;
+        private MDIBorderContainerDock top;
+        private MDIBorderContainerDock bottom;
         private MDILayoutContainer center;
         private FloatingWindowContainer floating;
-
-        private MDIBorderContainerSeparator leftSeparator;
-        private MDIBorderContainerSeparator rightSeparator;
-        private MDIBorderContainerSeparator topSeparator;
-        private MDIBorderContainerSeparator bottomSeparator;
 
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
@@ -46,27 +41,23 @@ namespace Medical.Controller
             windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Info", "");
             windowTargetWidget.Visible = false;
 
-            left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left);
+            left = new MDIBorderContainerDock(new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left));
             left._setParent(this);
-            leftSeparator = new MDIBorderContainerSeparator(left);
             leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             leftContainerWidget.Visible = false;
 
-            right = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Right);
+            right = new MDIBorderContainerDock(new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Right));
             right._setParent(this);
-            rightSeparator = new MDIBorderContainerSeparator(right);
             rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             rightContainerWidget.Visible = false;
             
-            top = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Top);
+            top = new MDIBorderContainerDock(new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Top));
             top._setParent(this);
-            topSeparator = new MDIBorderContainerSeparator(top);
             topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             topContainerWidget.Visible = false;
             
-            bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Bottom);
+            bottom = new MDIBorderContainerDock(new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Bottom));
             bottom._setParent(this);
-            bottomSeparator = new MDIBorderContainerSeparator(bottom);
             bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             bottomContainerWidget.Visible = false;
 
@@ -156,7 +147,7 @@ namespace Medical.Controller
             }
         }
 
-        private bool checkContainerWidget(Widget widget, MDILayoutContainer targetContainer, MDIWindow window, DockLocation dockLocation, float x, float y)
+        private bool checkContainerWidget(Widget widget, MDIChildContainerBase targetContainer, MDIWindow window, DockLocation dockLocation, float x, float y)
         {
             if (widget.Visible)
             {
@@ -415,7 +406,7 @@ namespace Medical.Controller
             return null;
         }
 
-        private MDIWindow findWindowPositionImpl(float mouseX, float mouseY, MDILayoutContainer container)
+        private MDIWindow findWindowPositionImpl(float mouseX, float mouseY, MDIContainerBase container)
         {
             float left = container.Location.x;
             float top = container.Location.y;
@@ -440,10 +431,10 @@ namespace Medical.Controller
 
         public override void layout()
         {
-            Size2 leftDesired = leftSeparator.ContainerSize;
-            Size2 rightDesired = rightSeparator.ContainerSize;
-            Size2 topDesired = topSeparator.ContainerSize;
-            Size2 bottomDesired = bottomSeparator.ContainerSize;
+            Size2 leftDesired = left.DesiredSize;
+            Size2 rightDesired = right.DesiredSize;
+            Size2 topDesired = top.DesiredSize;
+            Size2 bottomDesired = bottom.DesiredSize;
 
             //Determine center region size.
             Size2 centerSize = new Size2(WorkingSize.Width - leftDesired.Width - rightDesired.Width, WorkingSize.Height - topDesired.Height - bottomDesired.Height);
