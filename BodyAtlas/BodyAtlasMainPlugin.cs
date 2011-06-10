@@ -76,7 +76,7 @@ namespace Medical.GUI
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppMenu(appMenu, "AppButton/Image");
 
-            DialogOpenTaskbarItem renderTaskbarItem = new DialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
+            MDIDialogOpenTaskbarItem renderTaskbarItem = new MDIDialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
         }

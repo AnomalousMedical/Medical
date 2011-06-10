@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace Medical.GUI
 {
-    class TimelineProperties : Dialog
+    class TimelineProperties : MDIDialog
     {
         private const String PROJECT_EXTENSION = ".tlp";
         private const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";

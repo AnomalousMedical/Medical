@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.GUI
 {
-    class TimelineAnalyzer : Dialog
+    class TimelineAnalyzer : MDIDialog
     {
         private TimelineController timelineController;
         private TimelineList timelineList;

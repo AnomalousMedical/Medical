@@ -10,7 +10,7 @@ using Engine.ObjectManagement;
 
 namespace Medical.GUI
 {
-    class MandibleMovementDialog : Dialog
+    class MandibleMovementDialog : MDIDialog
     {
         private ControlPointBehavior leftCP;
         private ControlPointBehavior rightCP;

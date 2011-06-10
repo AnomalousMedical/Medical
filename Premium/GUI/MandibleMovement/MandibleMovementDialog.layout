@@ -3,6 +3,8 @@
     <Widget type="Window" skin="WindowCSX" position="131 108 178 273" layer="Overlapped">
         <Property key="Widget_Caption" value="Mandible Movement"/>
         <Property key="Window_MinSize" value="178 273"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="StaticText" skin="StaticText" position="38 112 91 15" align="HRelative VRelative" name="Movement/HingeOpenText">
             <Property key="Widget_Caption" value="Hinge Opening"/>
         </Widget>

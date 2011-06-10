@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace Medical.GUI
 {
-    public class RenderPropertiesDialog : Dialog
+    public class RenderPropertiesDialog : MDIDialog
     {
         private ComboBox aaCombo;
         private NumericEdit width;

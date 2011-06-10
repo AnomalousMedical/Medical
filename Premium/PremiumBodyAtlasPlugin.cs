@@ -99,7 +99,7 @@ namespace Medical
             taskbar.addItem(new MDIDialogOpenTaskbarItem(stateList, "States", "StatesIcon"));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(notesDialog, "Notes", "NotesIcon"));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
             taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIcon"));
         }
 

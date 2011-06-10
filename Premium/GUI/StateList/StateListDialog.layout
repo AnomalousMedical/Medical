@@ -3,6 +3,8 @@
     <Widget type="Window" skin="WindowCSX" position="153 245 244 485" align="Default" layer="Overlapped" name="StateList/StatePicker">
         <Property key="Widget_Visible" value="true"/>
         <Property key="Widget_Caption" value="States"/>
+        <UserString key="CurrentDockLocation" value="Right"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="ScrollView" skin="ScrollView" position="4 27 236 437" align="Stretch" name="StateList/ScrollView">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="209 10"/>

@@ -2,6 +2,8 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="154 286 420 248" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline Analyzer"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="MultiList" skin="MultiList" position="126 24 292 203" align="Stretch" name="TimelineList"/>
         <Widget type="StaticText" skin="StaticText" position="126 0 294 24" align="HStretch Top" name="LastQuery">
             <Property key="Text_TextAlign" value="Left VCenter"/>

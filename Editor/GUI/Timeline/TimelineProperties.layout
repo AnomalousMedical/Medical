@@ -2,6 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="204 195 923 353" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
+        <UserString key="CurrentDockLocation" value="Bottom"/>
         <Widget type="Widget" skin="Panel" position="2 27 676 307" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 277" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>

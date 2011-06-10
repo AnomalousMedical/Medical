@@ -4,6 +4,8 @@
         <Property key="Widget_Caption" value="Rendering"/>
         <Property key="Window_MinSize" value="346 86"/>
         <Property key="Window_MaxSize" value="346 86"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="RibbonButton" position="74 4 66 58" name="RenderingTab/SizeButton">
             <Property key="Widget_Caption" value="Size"/>
             <Property key="Button_ImageResource" value="ImageResolutionIcon"/>

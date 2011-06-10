@@ -2,6 +2,8 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="204 195 923 91" layer="Overlapped">
         <Property key="Widget_Caption" value="Prop Editor"/>
+        <UserString key="CurrentDockLocation" value="Bottom"/>
+        <UserString key="AllowedDockLocations" value="Top | Bottom | Floating"/>
         <Widget type="Widget" skin="Panel" position="2 3 676 69" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 39" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>

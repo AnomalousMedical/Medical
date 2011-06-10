@@ -63,9 +63,9 @@ namespace Medical
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineEditorIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineEditorIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
         }
 
         public void sceneLoaded(SimScene scene)

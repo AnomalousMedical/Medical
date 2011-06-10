@@ -11,7 +11,7 @@ using System.Xml;
 
 namespace Medical.GUI
 {
-    class MovementSequenceEditor : Dialog
+    class MovementSequenceEditor : MDIDialog
     {
         private PopupMenu fileMenu;
         private TimelineDataProperties actionProperties;

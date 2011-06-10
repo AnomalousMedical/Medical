@@ -3,6 +3,8 @@
     <Widget type="Window" skin="WindowCSX" position="60 80 223 400" layer="Overlapped">
         <Property key="Widget_Visible" value="true"/>
         <Property key="Widget_Caption" value="Notes"/>
+        <UserString key="CurrentDockLocation" value="Right"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="StaticText" skin="StaticText" position="4 4 109 15">
             <Property key="Widget_Caption" value="Distortion Name"/>
         </Widget>

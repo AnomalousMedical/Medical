@@ -8,7 +8,7 @@ using Engine.Saving;
 
 namespace Medical.GUI
 {
-    public class PropTimeline : Dialog
+    public class PropTimeline : MDIDialog
     {
         public event EventHandler UpdatePropPreview
         {

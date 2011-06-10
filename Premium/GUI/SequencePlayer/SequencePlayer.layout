@@ -2,6 +2,8 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCX" position="87 79 234 104" layer="Overlapped">
         <Property key="Widget_Caption" value="Sequences"/>
+        <UserString key="CurrentDockLocation" value="Floating"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Top | Bottom | Floating"/>
         <Widget type="Button" skin="RibbonButton" position="9 7 68 75" name="Sequence">
             <Property key="Widget_Caption" value="Sequence"/>
             <Property key="Button_ImageResource" value="SequenceToolstrip/Sequence"/>
