@@ -21,7 +21,7 @@ namespace Medical.GUI
         private Size2 undockedMinSize;
         private Size2 undockedMaxSize;
         private static Size2 DOCKED_MIN_SIZE = new Size2();
-        private static Size2 DOCKED_MAX_SIZE = new Size2(float.MaxValue, float.MaxValue);
+        private static Size2 DOCKED_MAX_SIZE = new Size2(3000, 3000);
 
         /// <summary>
         /// Called after the dialog opens.
@@ -66,6 +66,8 @@ namespace Medical.GUI
             window.CaptionWidget.MouseButtonPressed += new MyGUIEvent(window_MouseButtonPressed);
             window.CaptionWidget.MouseButtonReleased += new MyGUIEvent(window_MouseButtonReleased);
             window.CaptionWidget.MouseDrag += new MyGUIEvent(window_MouseDrag); //Wont have to override this in mygui 3.2 as it has all multicast delegates
+
+            updateUndockedMinMaxSize();
         }
 
         /// <summary>
@@ -294,17 +296,17 @@ namespace Medical.GUI
             if (newLocation == DockLocation.Floating)
             {
                 float normalizedMouseWidthOffset = (float)captionMouseOffset.x / window.CaptionWidget.Width;
-                //window.MinSize = undockedMinSize;
-                //window.MaxSize = undockedMaxSize;
+                window.MinSize = undockedMinSize;
+                window.MaxSize = undockedMaxSize;
                 window.setSize((int)desiredLocation.Width, (int)desiredLocation.Height);
                 captionMouseOffset.x = (int)(normalizedMouseWidthOffset * window.CaptionWidget.Width);
                 IgnorePositionChanges = false;
             }
             else
             {
-                //updateUndockedMinMaxSize();
-                //window.MinSize = DOCKED_MIN_SIZE;
-                //window.MaxSize = DOCKED_MAX_SIZE;
+                updateUndockedMinMaxSize();
+                window.MinSize = DOCKED_MIN_SIZE;
+                window.MaxSize = DOCKED_MAX_SIZE;
             }
         }
 

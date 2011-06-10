@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 using Medical.Controller;
+using Medical.GUI;
 
 namespace Medical
 {
-    public class SequencePlayer : FixedSizeDialog
+    public class SequencePlayer : FixedSizeMDIDialog
     {
         private MovementSequenceController sequenceController;
         private SequenceMenu sequenceMenu;
