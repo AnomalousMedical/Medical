@@ -23,6 +23,7 @@ namespace Medical.GUI
         private Size2 undockedMaxSize;
         private static Size2 DOCKED_MIN_SIZE = new Size2();
         private static Size2 DOCKED_MAX_SIZE = new Size2(3000, 3000);
+        private String originalLayer;
 
         /// <summary>
         /// Called after the dialog opens.
@@ -56,6 +57,7 @@ namespace Medical.GUI
             this.persistName = persistName;
             dialogLayout = LayoutManager.Instance.loadLayout(layoutFile);
             window = dialogLayout.getWidget(0) as Window;
+            originalLayer = window.getLayerName();
             window.Visible = false;
             window.WindowButtonPressed += new MyGUIEvent(window_WindowButtonPressed);
             SmoothShow = true;
@@ -343,12 +345,18 @@ namespace Medical.GUI
                 window.setSize((int)desiredLocation.Width, (int)desiredLocation.Height);
                 captionMouseOffset.x = (int)(normalizedMouseWidthOffset * window.CaptionWidget.Width);
                 IgnorePositionChanges = false;
+
+                LayerManager.Instance.detachFromLayer(window);
+                LayerManager.Instance.attachToLayerNode(originalLayer, window);
             }
             else
             {
                 updateUndockedMinMaxSize();
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
+
+                LayerManager.Instance.detachFromLayer(window);
+                LayerManager.Instance.attachToLayerNode("Back", window);
             }
         }
 
