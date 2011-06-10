@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Engine;
 using Medical.Controller;
 using MyGUIPlugin;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -180,14 +181,34 @@ namespace Medical.GUI
         {
             ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
             section.setValue("Location", desiredLocation.ToString());
+            section.setValue("DockLocation", CurrentDockLocation.ToString());
+            section.setValue("Scale", Scale);
         }
 
         public virtual void deserialize(ConfigFile configFile)
         {
             ConfigSection section = configFile.createOrRetrieveConfigSection(persistName);
+            loadDockProperties(section);
             String location = section.getValue("Location", desiredLocation.ToString());
             desiredLocation.fromString(location);
-            window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
+
+            if (CurrentDockLocation == DockLocation.Floating)
+            {
+                window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
+            }
+        }
+
+        protected void loadDockProperties(ConfigSection section)
+        {
+            try
+            {
+                CurrentDockLocation = (DockLocation)Enum.Parse(typeof(DockLocation), section.getValue("DockLocation", CurrentDockLocation.ToString()));
+            }
+            catch (Exception)
+            {
+                Log.Warning("Could not load DockLocation for {0}, using default instead.", persistName);
+            }
+            Scale = section.getValue("Scale", Scale);
         }
 
         public void center()
