@@ -152,6 +152,10 @@ namespace Medical.Controller
 
         internal override void insertChild(MDIWindow child, MDIWindow previous, bool after)
         {
+            if (!layoutContainer.HasChildren)
+            {
+                size = child.DesiredSize;
+            }
             layoutContainer.insertChild(child, previous, after);
         }
 
