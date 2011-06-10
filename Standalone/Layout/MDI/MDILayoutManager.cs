@@ -21,6 +21,7 @@ namespace Medical.Controller
 
     public enum DockLocation
     {
+        None = 0,
         Left = 1 << 0,
         Right = 1 << 1,
         Top = 1 << 2,
@@ -28,7 +29,6 @@ namespace Medical.Controller
         Center = 1 << 4,
         Floating = 1 << 5,
         All = Left | Top | Right | Bottom | Center | Floating,
-        None = 1 << 6
     }
 
     /// <summary>

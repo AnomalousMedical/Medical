@@ -2,6 +2,8 @@
 <MyGUI type="Layout">
     <Widget type="Window" skin="WindowCSX" position="107 189 268 381" layer="Overlapped">
         <Property key="Widget_Caption" value="Anatomy Finder"/>
+        <UserString key="CurrentDockLocation" value="Left"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
         <Widget type="Edit" skin="Edit" position="5 5 210 23" align="HStretch Top" name="SearchBox"/>
         <Widget type="Button" skin="Button" position="217 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>

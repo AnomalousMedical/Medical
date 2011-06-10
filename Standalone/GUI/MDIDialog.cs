@@ -68,6 +68,37 @@ namespace Medical.GUI
             window.CaptionWidget.MouseButtonReleased += new MyGUIEvent(window_MouseButtonReleased);
             window.CaptionWidget.MouseDrag += new MyGUIEvent(window_MouseDrag); //Wont have to override this in mygui 3.2 as it has all multicast delegates
 
+            String currentDockLocProp = window.getUserString("CurrentDockLocation");
+            if (!String.IsNullOrEmpty(currentDockLocProp))
+            {
+                try
+                {
+                    CurrentDockLocation = (DockLocation)Enum.Parse(typeof(DockLocation), currentDockLocProp, true);
+                }
+                catch (Exception)
+                {
+                    Log.Warning("Could not parse CurrentDockLocation for {0}, using default instead.", persistName);
+                }
+            }
+
+            String allowedDockLocProp = window.getUserString("AllowedDockLocations");
+            if (!String.IsNullOrEmpty(allowedDockLocProp))
+            {
+                AllowedDockLocations = DockLocation.None;
+                String[] allowedLocationsSplit = allowedDockLocProp.Split('|');
+                foreach (String location in allowedLocationsSplit)
+                {
+                    try
+                    {
+                        AllowedDockLocations |= (DockLocation)Enum.Parse(typeof(DockLocation), location.Trim(), true);
+                    }
+                    catch (Exception)
+                    {
+                        Log.Warning("Could not parse AllowedDockLocations {0} for window {1}. Ignoring location.", location, persistName);
+                    }
+                }
+            }
+
             updateUndockedMinMaxSize();
         }
 
@@ -209,13 +240,6 @@ namespace Medical.GUI
                 Log.Warning("Could not load DockLocation for {0}, using default instead.", persistName);
             }
             Scale = section.getValue("Scale", Scale);
-        }
-
-        public void center()
-        {
-            desiredLocation.Left = Gui.Instance.getViewWidth() / 2 - window.Width / 2;
-            desiredLocation.Top = Gui.Instance.getViewHeight() / 2 - window.Height / 2;
-            window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
         }
 
         /// <summary>

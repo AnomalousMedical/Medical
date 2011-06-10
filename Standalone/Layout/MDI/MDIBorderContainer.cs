@@ -190,40 +190,52 @@ namespace Medical.Controller
 
         private bool processFloating(MDIWindow source, float mouseX, float mouseY)
         {
-            MDIWindow window = left.findWindowAtPosition(mouseX, mouseY);
-            if (window != null)
+            if ((source.AllowedDockLocations & DockLocation.Left) != 0)
             {
-                dragTargetContainer = null;
-                dragTargetWindow = window;
-                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
-                return true;
+                MDIWindow window = left.findWindowAtPosition(mouseX, mouseY);
+                if (window != null)
+                {
+                    dragTargetContainer = null;
+                    dragTargetWindow = window;
+                    findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                    return true;
+                }
             }
 
-            window = right.findWindowAtPosition(mouseX, mouseY);
-            if (window != null)
+            if ((source.AllowedDockLocations & DockLocation.Right) != 0)
             {
-                dragTargetContainer = null;
-                dragTargetWindow = window;
-                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
-                return true;
+                MDIWindow window = right.findWindowAtPosition(mouseX, mouseY);
+                if (window != null)
+                {
+                    dragTargetContainer = null;
+                    dragTargetWindow = window;
+                    findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                    return true;
+                }
             }
 
-            window = top.findWindowAtPosition(mouseX, mouseY);
-            if (window != null)
+            if ((source.AllowedDockLocations & DockLocation.Top) != 0)
             {
-                dragTargetContainer = null;
-                dragTargetWindow = window;
-                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
-                return true;
+                MDIWindow window = top.findWindowAtPosition(mouseX, mouseY);
+                if (window != null)
+                {
+                    dragTargetContainer = null;
+                    dragTargetWindow = window;
+                    findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                    return true;
+                }
             }
 
-            window = bottom.findWindowAtPosition(mouseX, mouseY);
-            if (window != null)
+            if ((source.AllowedDockLocations & DockLocation.Bottom) != 0)
             {
-                dragTargetContainer = null;
-                dragTargetWindow = window;
-                findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
-                return true;
+                MDIWindow window = bottom.findWindowAtPosition(mouseX, mouseY);
+                if (window != null)
+                {
+                    dragTargetContainer = null;
+                    dragTargetWindow = window;
+                    findWindowLanding(source, dragTargetWindow, mouseX, mouseY);
+                    return true;
+                }
             }
             
             if ((source.AllowedDockLocations & DockLocation.Floating) != 0)
