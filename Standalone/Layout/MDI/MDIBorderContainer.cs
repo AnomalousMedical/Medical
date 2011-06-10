@@ -22,6 +22,11 @@ namespace Medical.Controller
         private MDILayoutContainer center;
         private FloatingWindowContainer floating;
 
+        private MDIBorderContainerSeparator leftSeparator;
+        private MDIBorderContainerSeparator rightSeparator;
+        private MDIBorderContainerSeparator topSeparator;
+        private MDIBorderContainerSeparator bottomSeparator;
+
         private MDIWindow dragSourceWindow;
         private MDIWindow dragTargetWindow;
         private MDIChildContainerBase dragTargetContainer;
@@ -41,29 +46,30 @@ namespace Medical.Controller
             windowTargetWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 10, 10, Align.Left | Align.Top, "Info", "");
             windowTargetWidget.Visible = false;
 
+            left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left);
+            left._setParent(this);
+            leftSeparator = new MDIBorderContainerSeparator(left);
             leftContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
             leftContainerWidget.Visible = false;
 
-            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
-            rightContainerWidget.Visible = false;
-
-            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
-            topContainerWidget.Visible = false;
-
-            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
-            bottomContainerWidget.Visible = false;
-
-            left = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Left);
-            left._setParent(this);
-
             right = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Right);
             right._setParent(this);
+            rightSeparator = new MDIBorderContainerSeparator(right);
+            rightContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            rightContainerWidget.Visible = false;
             
             top = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Top);
             top._setParent(this);
+            topSeparator = new MDIBorderContainerSeparator(top);
+            topContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            topContainerWidget.Visible = false;
             
             bottom = new MDILayoutContainer(MDILayoutContainer.LayoutType.Vertical, padding, DockLocation.Bottom);
             bottom._setParent(this);
+            bottomSeparator = new MDIBorderContainerSeparator(bottom);
+            bottomContainerWidget = Gui.Instance.createWidgetT("Widget", "MDILocationPreview", 0, 0, 25, 25, Align.Left | Align.Top, "Info", "");
+            bottomContainerWidget.Visible = false;
+
             
             center = new MDILayoutContainer(MDILayoutContainer.LayoutType.Horizontal, padding, DockLocation.Center);
             center._setParent(this);
@@ -434,10 +440,10 @@ namespace Medical.Controller
 
         public override void layout()
         {
-            Size2 leftDesired = left != null ? left.DesiredSize : new Size2();
-            Size2 rightDesired = right != null ? right.DesiredSize : new Size2();
-            Size2 topDesired = top != null ? top.DesiredSize : new Size2();
-            Size2 bottomDesired = bottom != null ? bottom.DesiredSize : new Size2();
+            Size2 leftDesired = leftSeparator.ContainerSize;
+            Size2 rightDesired = rightSeparator.ContainerSize;
+            Size2 topDesired = topSeparator.ContainerSize;
+            Size2 bottomDesired = bottomSeparator.ContainerSize;
 
             //Determine center region size.
             Size2 centerSize = new Size2(WorkingSize.Width - leftDesired.Width - rightDesired.Width, WorkingSize.Height - topDesired.Height - bottomDesired.Height);

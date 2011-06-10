@@ -143,7 +143,8 @@
     <Compile Include="GUI\MDIDialogEntry.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\Taskbar\MDIDialogOpenTaskbarItem.cs" />
-    <Compile Include="Layout\MDI\FixedSizeMDIDialog.cs" />
+    <Compile Include="Layout\MDI\MDIBorderContainerSeparator.cs" />
+    <Compile Include="GUI\FixedSizeMDIDialog.cs" />
     <Compile Include="Layout\MDI\FloatingWindowContainer.cs" />
     <Compile Include="Layout\MDI\MDIBorderContainer.cs" />
     <Compile Include="Layout\MDI\MDIChildContainerBase.cs" />

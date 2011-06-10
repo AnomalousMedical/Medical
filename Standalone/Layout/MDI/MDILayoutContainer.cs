@@ -351,6 +351,14 @@ namespace Medical.Controller
             }
         }
 
+        public int ChildCount
+        {
+            get
+            {
+                return children.Count;
+            }
+        }
+
         /// <summary>
         /// This method sets the child up to be a child of this container.
         /// </summary>
