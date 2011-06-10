@@ -170,14 +170,14 @@ namespace Medical.Controller
                             break;
                         case DockLocation.Right:
                             float width = window.DesiredSize.Width;
-                            windowTargetWidget.setCoord((int)(WorkingSize.Width - width), (int)Location.y, (int)width, (int)WorkingSize.Height);
+                            windowTargetWidget.setCoord((int)(WorkingSize.Width - width + Location.x), (int)Location.y, (int)width, (int)WorkingSize.Height);
                             break;
                         case DockLocation.Top:
                             windowTargetWidget.setCoord((int)Location.x, (int)Location.y, (int)WorkingSize.Width, (int)window.DesiredSize.Height);
                             break;
                         case DockLocation.Bottom:
                             float height = window.DesiredSize.Height;
-                            windowTargetWidget.setCoord((int)Location.x, (int)(WorkingSize.Height - height), (int)WorkingSize.Width, (int)height);
+                            windowTargetWidget.setCoord((int)Location.x, (int)(WorkingSize.Height - height + Location.y), (int)WorkingSize.Width, (int)height);
                             break;
                     }
 
