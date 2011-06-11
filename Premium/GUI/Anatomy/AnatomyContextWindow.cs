@@ -59,6 +59,12 @@ namespace Medical.GUI
             windowStartSize = new IntSize2(widget.Width, widget.Height);
         }
 
+        public override void Dispose()
+        {
+            transparencySlider.Dispose();
+            base.Dispose();
+        }
+
         public Anatomy Anatomy
         {
             get
