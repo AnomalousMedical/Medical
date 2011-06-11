@@ -355,6 +355,8 @@ namespace Medical.GUI
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
 
+                //window.changeWidgetSkin("Window");
+
                 LayerManager.Instance.detachFromLayer(window);
                 LayerManager.Instance.attachToLayerNode("Back", window);
             }
@@ -386,9 +388,16 @@ namespace Medical.GUI
             {
                 Closed.Invoke(this, args);
             }
-            if (MDIManager != null)
+            try
             {
-                MDIManager.closeWindow(this);
+                if (MDIManager != null)
+                {
+                    MDIManager.closeWindow(this);
+                }
+            }
+            catch (MDIException e)
+            {
+                Log.Warning(e.Message);
             }
         }
 
