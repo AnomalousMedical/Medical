@@ -58,7 +58,7 @@ namespace Medical.GUI
             recentDocumentsLayout.SuppressLayout = true;
             foreach (String document in documentController.RecentDocuments)
             {
-                addDocumentToMenu(document);
+                addDocumentToMenu(document, false);
             }
             recentDocumentsLayout.SuppressLayout = false;
             recentDocumentsLayout.layout();
@@ -175,17 +175,29 @@ namespace Medical.GUI
 
         void recentDocuments_DocumentAdded(RecentDocuments source, string document)
         {
-            addDocumentToMenu(document);
+            addDocumentToMenu(document, true);
         }
 
-        private void addDocumentToMenu(string document)
+        /// <summary>
+        /// Add a document to the menu
+        /// </summary>
+        /// <param name="document">The doc to add</param>
+        /// <param name="putStart">True to insert at the start false to put at the end</param>
+        private void addDocumentToMenu(string document, bool putStart)
         {
             Button recentDocButton = widget.createWidgetT("Button", "AppMenuItemButton", recentDocsLeft, recentDocsTop, recentDocsWidth, recentDocsHeight, Align.Left | Align.Top, document) as Button;
             recentDocButton.Caption = Path.GetFileNameWithoutExtension(document);
             recentDocButton.MouseButtonClick += recentDocButton_MouseButtonClick;
             MyGUILayoutContainer container = new MyGUILayoutContainer(recentDocButton);
             recentDocButton.UserObject = container;
-            recentDocumentsLayout.insertChild(container, 0);
+            if (putStart)
+            {
+                recentDocumentsLayout.insertChild(container, 0);
+            }
+            else
+            {
+                recentDocumentsLayout.addChild(container);
+            }
             recentDocsMap.Add(document, recentDocButton);
         }
 
