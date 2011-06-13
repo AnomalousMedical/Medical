@@ -12,14 +12,14 @@ namespace Medical.GUI
     {
         private TimelineController timelineController;
         private TimelineList timelineList;
-        private TimelineProperties timelineProperties;
+        private TimelinePropertiesController timelineProperties;
         private bool allowTimelineChanges = true;
         private ActionManager actionManager;
         private ActionButtonManager actionButtonManager = new ActionButtonManager();
 
-        private Button open;
+        private Button openButton;
 
-        public TimelineAnalyzer(TimelineController timelineController, TimelineProperties timelineProperties)
+        public TimelineAnalyzer(TimelineController timelineController, TimelinePropertiesController timelineProperties)
             :base("Medical.GUI.Timeline.TimelineAnalyzer.layout")
         {
             this.timelineController = timelineController;
@@ -33,9 +33,9 @@ namespace Medical.GUI
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
-            open = window.findWidget("Open") as Button;
-            open.MouseButtonClick += new MyGUIEvent(open_MouseButtonClick);
-            actionButtonManager.addButton(open);
+            openButton = window.findWidget("Open") as Button;
+            openButton.MouseButtonClick += new MyGUIEvent(open_MouseButtonClick);
+            actionButtonManager.addButton(openButton);
 
             Button findReferences = window.findWidget("Find All References") as Button;
             findReferences.MouseButtonClick += new MyGUIEvent(actionMenuItemClick);
@@ -224,7 +224,7 @@ namespace Medical.GUI
 
         void timelineList_TimelineSelected(string timeline)
         {
-            if (actionButtonManager.ActiveButton == open)
+            if (actionButtonManager.ActiveButton == openButton)
             {
                 doTimelineOpen(timeline);
             }

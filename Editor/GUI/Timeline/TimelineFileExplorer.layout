@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="228 118 210 347" layer="Overlapped">
+        <UserString key="CurrentDockLocation" value="Left"/>
+        <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+        <Widget type="MenuBar" skin="MenuBar" position="1 0 210 26" align="HStretch Top" name="MenuBar"/>
+        <Widget type="MultiList" skin="MultiList" position="9 31 195 286" align="Stretch" name="FileList"/>
+    </Widget>
+</MyGUI>

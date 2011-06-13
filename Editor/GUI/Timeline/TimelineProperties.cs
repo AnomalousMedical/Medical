@@ -14,8 +14,8 @@ namespace Medical.GUI
 {
     class TimelineProperties : MDIDialog
     {
-        private const String PROJECT_EXTENSION = ".tlp";
-        private const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
+        public const String PROJECT_EXTENSION = ".tlp";
+        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
 
         private Timeline currentTimeline;
         private TimelineController timelineController;
@@ -37,20 +37,16 @@ namespace Medical.GUI
         private PopupMenu editMenu;
         private ShowMenuButton otherActionsMenuButton;
         private PopupMenu otherActionsMenu;
-        private MenuItem testActions;
         private ShowMenuButton analyzeMenuButton;
         private PopupMenu analyzeMenu;
 
         //Documents
         private DocumentController documentController;
-        private TimelineDocumentHandler documentHandler;
 
         //Dialogs
         private StartActionEditor startActionEditor;
-        private NewProjectDialog newProjectDialog;
         private TimelineFileBrowserDialog fileBrowserDialog;
         private TimelineFileBrowserDialog openTimelineFileBrowserDialog;
-        private SaveTimelineDialog saveTimelineDialog;
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
 
@@ -61,18 +57,10 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        //File Menu
-        MenuItem newTimelineItem;
-        MenuItem openTimelineItem;
-        MenuItem saveTimelineItem;
-        MenuItem saveTimelineAsItem;
-
         public TimelineProperties(TimelineController timelineController, TimelineController playFullTimelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.documentController = documentController;
-            documentHandler = new TimelineDocumentHandler(this);
-            documentController.addDocumentHandler(documentHandler);
 
             this.timelineController = timelineController;
             timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
@@ -90,19 +78,6 @@ namespace Medical.GUI
             MenuItem fileMenuItem = menuBar.addItem("File");
             fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             fileMenu.Visible = false;
-            MenuItem newProject = fileMenu.addItem("New Project");
-            newProject.MouseButtonClick += new MyGUIEvent(newProject_MouseButtonClick);
-            MenuItem openProject = fileMenu.addItem("Open Project");
-            openProject.MouseButtonClick += new MyGUIEvent(openProject_MouseButtonClick);
-            fileMenu.addItem("", MenuItemType.Separator);
-            newTimelineItem = fileMenu.addItem("New Timeline");
-            newTimelineItem.MouseButtonClick += new MyGUIEvent(newTimeline_MouseButtonClick);
-            openTimelineItem = fileMenu.addItem("Open Timeline");
-            openTimelineItem.MouseButtonClick += new MyGUIEvent(openTimeline_MouseButtonClick);
-            saveTimelineItem = fileMenu.addItem("Save Timeline");
-            saveTimelineItem.MouseButtonClick += new MyGUIEvent(saveTimeline_MouseButtonClick);
-            saveTimelineAsItem = fileMenu.addItem("Save Timeline As");
-            saveTimelineAsItem.MouseButtonClick += new MyGUIEvent(saveTimelineAs_MouseButtonClick);
             fileMenuButton = new ShowMenuButton(fileMenuItem, fileMenu);
 
             //Edit button
@@ -127,10 +102,6 @@ namespace Medical.GUI
             finishAction.MouseButtonClick += new MyGUIEvent(finishAction_MouseButtonClick);
             MenuItem reverseSidesAction = otherActionsMenu.addItem("Reverse Sides");
             reverseSidesAction.MouseButtonClick += new MyGUIEvent(reverseSidesAction_MouseButtonClick);
-            otherActionsMenu.addItem("", MenuItemType.Separator);
-            testActions = otherActionsMenu.addItem("Enable Other Actions");
-            testActions.StateCheck = false;
-            testActions.MouseButtonClick += new MyGUIEvent(testActions_MouseButtonClick);
             otherActionsMenuButton = new ShowMenuButton(actionsMenuItem, otherActionsMenu);
 
             //Analyze Menu
@@ -180,15 +151,9 @@ namespace Medical.GUI
             guiManager.addManagedDialog(fileBrowserDialog);
 
             startActionEditor = new StartActionEditor(fileBrowserDialog, timelineController);
-            
-            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
-            newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
             openTimelineFileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__OpenTimeline");
             guiManager.addManagedDialog(openTimelineFileBrowserDialog);
-
-            saveTimelineDialog = new SaveTimelineDialog();
-            saveTimelineDialog.SaveFile += new EventHandler(saveTimelineDialog_SaveFile);
 
             finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, guiManager);
 
@@ -208,19 +173,14 @@ namespace Medical.GUI
             }
 
             setEnabled(false);
-
-            createNewTimeline();
         }
 
         public override void Dispose()
         {
-            documentController.removeDocumentHandler(documentHandler);
             openTimelineFileBrowserDialog.Dispose();
             actionFactory.Dispose();
             finishActionEditor.Dispose();
-            newProjectDialog.Dispose();
             timelineController.FileBrowser = null;
-            saveTimelineDialog.Dispose();
             startActionEditor.Dispose();
             fileBrowserDialog.Dispose();
             actionFilter.Dispose();
@@ -285,32 +245,6 @@ namespace Medical.GUI
             }
         }
 
-        private void createProject(string projectName)
-        {
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
-            {
-                using (MemoryStream memStream = new MemoryStream())
-                {
-                    XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                    xmlWriter.Formatting = Formatting.Indented;
-                    TimelineIndex index = new TimelineIndex();
-                    XmlSaver xmlSaver = new XmlSaver();
-                    xmlSaver.saveObject(index, xmlWriter);
-                    xmlWriter.Flush();
-                    memStream.Seek(0, SeekOrigin.Begin);
-                    ionicZip.AddEntry(TimelineController.INDEX_FILE_NAME, memStream);
-                    ionicZip.Save();
-                }
-            }
-            timelineController.ResourceProvider = new TimelineZipResources(projectName);
-        }
-
-        public void createNewTimeline()
-        {
-            Timeline timeline = new Timeline();
-            setCurrentTimeline(timeline);
-        }
-
         #region Action Management
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
@@ -349,187 +283,19 @@ namespace Medical.GUI
 
         #region File Menu
 
-        /// <summary>
-        /// Create a new project. You can optionally delete the old project.
-        /// </summary>
-        /// <param name="filename">The file name of the new project.</param>
-        /// <param name="deleteOld">True to delete any existing project first.</param>
-        void createNewProject(String filename, bool deleteOld)
-        {
-            try
-            {
-                if (deleteOld)
-                {
-                    File.Delete(filename);
-                }
-                createProject(filename);
-                updateWindowCaption();
-                documentController.addToRecentDocuments(filename);
-            }
-            catch (Exception ex)
-            {
-                String errorMessage = String.Format("Error creating new project {0}.", ex.Message);
-                Log.Error(errorMessage);
-                MessageBox.show(errorMessage, "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
-            }
-        }
-
-        void newProject_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            newProjectDialog.open(true);
-            newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            newProjectDialog.ensureVisible();
-            fileMenu.setVisibleSmooth(false);
-        }
-
-        void newProjectDialog_ProjectCreated(object sender, EventArgs e)
-        {
-            String newProjectName = newProjectDialog.FullProjectName;
-            if (File.Exists(newProjectName))
-            {
-                MessageBox.show(String.Format("A project named {0} already exists. Would you like to overwrite it?", newProjectName), "Overwrite?", 
-                    MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
-                    delegate(MessageBoxStyle result)
-                    {
-                        if (result == MessageBoxStyle.Yes)
-                        {
-                            createNewProject(newProjectDialog.FullProjectName, true);
-                        }
-                    });
-            }
-            else
-            {
-                createNewProject(newProjectName, false);
-            }
-        }
-
-        void openProject_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            fileMenu.setVisibleSmooth(false);
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD, false))
-            {
-                if (fileDialog.showModal() == NativeDialogResult.OK)
-                {
-                    openProject(fileDialog.Path);
-                    documentController.addToRecentDocuments(fileDialog.Path);
-                }
-            }
-        }
-
-        public void openProject(String projectPath)
-        {
-            if (projectPath.EndsWith(".tix"))
-            {
-                timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-            }
-            else if (projectPath.EndsWith(".tl"))
-            {
-                timelineController.ResourceProvider = new FilesystemTimelineResourceProvider(Path.GetDirectoryName(projectPath));
-                openTimelineFile(projectPath);
-            }
-            else
-            {
-                timelineController.ResourceProvider = new TimelineZipResources(projectPath);
-            }
-            updateWindowCaption();
-        }
-
-        void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            saveTimelineDialog.open(true);
-            saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            saveTimelineDialog.ensureVisible();
-            fileMenu.setVisibleSmooth(false);
-        }
-
-        void saveTimeline(Timeline timeline, String filename)
-        {
-            timelineController.saveTimeline(timeline, filename);
-            changeTimelineFile(filename);
-        }
-
-        void saveTimelineDialog_SaveFile(object sender, EventArgs e)
-        {
-            String filename = saveTimelineDialog.Filename;
-            if (timelineController.resourceExists(filename))
-            {
-                MessageBox.show(String.Format("The file {0} already exists. Would you like to overwrite it?", filename), "Overwrite?", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, overwriteTimelineResult);
-            }
-            else
-            {
-                saveTimeline(currentTimeline, filename);
-            }
-        }
-
-        void overwriteTimelineResult(MessageBoxStyle result)
-        {
-            if (result == MessageBoxStyle.Yes)
-            {
-                saveTimeline(currentTimeline, saveTimelineDialog.Filename);
-            }
-        }
-
-        void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            if (currentTimelineFile != null)
-            {
-                timelineController.saveTimeline(currentTimeline, currentTimelineFile);
-                fileMenu.setVisibleSmooth(false);
-            }
-            else
-            {
-                saveTimelineAs_MouseButtonClick(source, e);
-            }
-        }
-
-        void openTimeline_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            if (!openTimelineFileBrowserDialog.Visible)
-            {
-                openTimelineFileBrowserDialog.openForBrowsing("*.tl", openTimelineFile);
-            }
-            fileMenu.setVisibleSmooth(false);
-        }
-
-        public void openTimelineFile(String filename)
-        {
-            try
-            {
-                setCurrentTimeline(timelineController.openTimeline(filename));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.show(String.Format("Error loading timeline {0}.\n{1}", filename, ex.Message), "Load Timeline Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-            }
-        }
-
-        void newTimeline_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            createNewTimeline();
-            fileMenu.setVisibleSmooth(false);
-        }
-
         void timelineController_ResourceLocationChanged(object sender, EventArgs e)
         {
             setEnabled(timelineController.ResourceProvider != null);
+            updateWindowCaption();
         }
 
         private void setEnabled(bool enabled)
         {
-            newTimelineItem.Enabled = enabled;
-            openTimelineItem.Enabled = enabled;
-            saveTimelineItem.Enabled = enabled;
-            saveTimelineAsItem.Enabled = enabled;
             actionFilter.Enabled = enabled;
             otherActionsMenuButton.Enabled = enabled;
             editMenuButton.Enabled = enabled;
             playButton.Enabled = enabled;
+            playFullButton.Enabled = enabled;
             timelineView.Enabled = enabled;
             fastForwardButton.Enabled = enabled;
             rewindButton.Enabled = enabled;
@@ -581,12 +347,6 @@ namespace Medical.GUI
         {
             TimelineIndex index = timelineIndexEditor.createIndex();
             timelineController.saveIndex(index);
-        }
-
-        void testActions_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            testActions.StateCheck = !testActions.StateCheck;
         }
 
         void startAction_MouseButtonClick(Widget source, EventArgs e)
@@ -668,7 +428,7 @@ namespace Medical.GUI
             else if (currentTimeline != null)
             {
                 timelineView.CurrentData = null;
-                timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, testActions.StateCheck);
+                timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, false);
             }
         }
 

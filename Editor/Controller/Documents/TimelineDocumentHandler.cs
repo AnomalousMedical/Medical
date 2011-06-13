@@ -8,11 +8,11 @@ namespace Medical
 {
     class TimelineDocumentHandler : DocumentHandler
     {
-        private TimelineProperties timelineProperties;
+        private TimelinePropertiesController timelinePropertiesController;
 
-        public TimelineDocumentHandler(TimelineProperties timelineProperties)
+        public TimelineDocumentHandler(TimelinePropertiesController timelinePropertiesController)
         {
-            this.timelineProperties = timelineProperties;
+            this.timelinePropertiesController = timelinePropertiesController;
         }
 
         public bool canReadFile(string filename)
@@ -22,7 +22,7 @@ namespace Medical
 
         public bool processFile(string filename)
         {
-            timelineProperties.openProject(filename);
+            timelinePropertiesController.openProject(filename);
             return true;
         }
     }

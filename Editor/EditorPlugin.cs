@@ -14,9 +14,9 @@ namespace Medical
         private StandaloneController standaloneController;
 
         private PropTimeline propTimeline;
-        private TimelineProperties timelineProperties;
         private MovementSequenceEditor movementSequenceEditor;
         private TimelineAnalyzer timelineAnalyzer;
+        private TimelinePropertiesController timelinePropertiesController;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -28,9 +28,9 @@ namespace Medical
 
         public void Dispose()
         {
+            timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
-            timelineProperties.Dispose();
             propTimeline.Dispose();
         }
 
@@ -52,10 +52,9 @@ namespace Medical
             propTimeline = new PropTimeline();
             guiManager.addManagedDialog(propTimeline);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, standaloneController.TimelineController, this, guiManager, standaloneController.DocumentController);
-            guiManager.addManagedDialog(timelineProperties);
+            timelinePropertiesController = new TimelinePropertiesController(standaloneController, this);
 
-            timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelineProperties);
+            timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
             guiManager.addManagedDialog(timelineAnalyzer);
 
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
@@ -63,7 +62,7 @@ namespace Medical
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineProperties, "Timeline", "TimelineEditorIcon"));
+            taskbar.addItem(new TimelineEditorTaskbarItem(timelinePropertiesController.TimelineProperties, timelinePropertiesController.TimelineObjectEditor, timelinePropertiesController.TimelineFileExplorer));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
         }
@@ -101,6 +100,14 @@ namespace Medical
             get
             {
                 return propMover;
+            }
+        }
+
+        public TimelineController TimelineController
+        {
+            get
+            {
+                return editorTimelineController;
             }
         }
 

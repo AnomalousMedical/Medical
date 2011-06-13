@@ -95,6 +95,7 @@
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
+    <Compile Include="GUI\Taskbar\TimelineEditorTaskbarItem.cs" />
     <Compile Include="GUI\Timeline\ShowGUIEditor\LayerStateTableCell.cs" />
     <Compile Include="GUI\Timeline\ShowGUIEditor\LayerStateTableCellProvider.cs" />
     <Compile Include="GUI\Timeline\ShowGUIEditor\ShowGUIEditor.cs" />
@@ -102,6 +103,9 @@
     <Compile Include="GUI\Timeline\StartActionEditor.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
+    <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
+    <Compile Include="GUI\Timeline\TimelineObjectEditor.cs" />
+    <Compile Include="GUI\Timeline\TimelinePropertiesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\LayerChangeProperties.cs" />
@@ -152,8 +156,14 @@
     <EmbeddedResource Include="GUI\Timeline\ShowGUIEditor\ShowGUIEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\StartActionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineAnalyzer.layout" />
+    <EmbeddedResource Include="GUI\Timeline\TimelineFileExplorer.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineIndexEditor.layout" />
+    <EmbeddedResource Include="GUI\Timeline\TimelineObjectEditor.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />
   </ItemGroup>
   <ItemGroup>

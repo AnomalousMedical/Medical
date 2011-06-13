@@ -3,6 +3,7 @@
     <Widget type="Window" skin="WindowCSX" position="204 195 923 353" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
+        <UserString key="AllowedDockLocations" value="Bottom | Top | Floating"/>
         <Widget type="Widget" skin="Panel" position="2 27 676 307" align="Stretch">
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 277" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
@@ -29,8 +30,9 @@
             <Widget type="Button" skin="Button" position="158 0 30 23" name="FastForward">
                 <Property key="Widget_Caption" value="&gt;&gt;"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="30 0 62 23" name="PlayFull">
+            <Widget type="Button" skin="Button" position="30 0 62 23" name="PlayFull">
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
+                <Property key="Widget_Caption" value="Preview"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 27 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
