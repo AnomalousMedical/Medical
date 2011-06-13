@@ -8,13 +8,13 @@
         <Widget type="Button" skin="Button" position="217 7 44 20" align="Right Top" name="ClearButton">
             <Property key="Widget_Caption" value="Clear"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="7 339 68 20" align="Left Bottom" name="UnhideAll">
+        <Widget type="Button" skin="Button" position="7 339 61 20" align="Left Bottom" name="UnhideAll">
             <Property key="Widget_Caption" value="Unhide All"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="144 339 51 20" align="Left Bottom" name="GroupButton">
+        <Widget type="Button" skin="Button" position="124 339 42 20" align="Left Bottom" name="GroupButton">
             <Property key="Widget_Caption" value="Group"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="197 339 66 20" align="Left Bottom" name="IndividualButton">
+        <Widget type="Button" skin="Button" position="167 339 59 20" align="Left Bottom" name="IndividualButton">
             <Property key="Widget_Caption" value="Individual"/>
         </Widget>
         <Widget type="ScrollView" skin="ScrollView" position="7 32 256 303" align="Stretch" name="AnatomyList">
@@ -25,8 +25,11 @@
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>
         </Widget>
-        <Widget type="Button" skin="Button" position="77 339 66 20" align="Left Bottom" name="OpenAll">
+        <Widget type="Button" skin="Button" position="69 339 54 20" align="Left Bottom" name="OpenAll">
             <Property key="Widget_Caption" value="Open All"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="226 339 37 20" align="Left Bottom" name="NoneButton">
+            <Property key="Widget_Caption" value="None"/>
         </Widget>
     </Widget>
 </MyGUI>

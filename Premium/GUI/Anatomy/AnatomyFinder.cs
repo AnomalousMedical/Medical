@@ -41,6 +41,7 @@ namespace Medical.GUI
 
         private Button groupButton;
         private Button individualButton;
+        private Button noneButton;
         private ButtonGroup pickingModeGroup;
 
         private AnatomyController anatomyController;
@@ -79,6 +80,8 @@ namespace Medical.GUI
             pickingModeGroup.addButton(groupButton);
             individualButton = (Button)window.findWidget("IndividualButton");
             pickingModeGroup.addButton(individualButton);
+            noneButton = (Button)window.findWidget("NoneButton");
+            pickingModeGroup.addButton(noneButton);
             pickingModeGroup.SelectedButton = groupButton;
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -155,7 +158,7 @@ namespace Medical.GUI
 
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
-            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny())
+            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && pickingModeGroup.SelectedButton != noneButton)
             {
                 anatomyList.SuppressLayout = true;
                 anatomyList.clear();
@@ -227,6 +230,10 @@ namespace Medical.GUI
                 if (pickingModeGroup.SelectedButton == groupButton)
                 {
                     pickingModeGroup.SelectedButton = individualButton;
+                }
+                else if (pickingModeGroup.SelectedButton == individualButton)
+                {
+                    pickingModeGroup.SelectedButton = noneButton;
                 }
                 else
                 {
