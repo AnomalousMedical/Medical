@@ -39,7 +39,6 @@ namespace Medical.GUI
         //Dialogs
         private StartActionEditor startActionEditor;
         private TimelineFileBrowserDialog fileBrowserDialog;
-        private TimelineFileBrowserDialog openTimelineFileBrowserDialog;
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
 
@@ -135,9 +134,6 @@ namespace Medical.GUI
 
             startActionEditor = new StartActionEditor(fileBrowserDialog, timelineController);
 
-            openTimelineFileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__OpenTimeline");
-            guiManager.addManagedDialog(openTimelineFileBrowserDialog);
-
             finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, guiManager);
 
             timelineIndexEditor = new TimelineIndexEditor(fileBrowserDialog);
@@ -160,7 +156,6 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
-            openTimelineFileBrowserDialog.Dispose();
             actionFactory.Dispose();
             finishActionEditor.Dispose();
             timelineController.FileBrowser = null;
