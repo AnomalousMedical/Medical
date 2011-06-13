@@ -52,7 +52,7 @@ namespace Medical
             propTimeline = new PropTimeline();
             guiManager.addManagedDialog(propTimeline);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, this, guiManager, standaloneController.DocumentController);
+            timelineProperties = new TimelineProperties(editorTimelineController, standaloneController.TimelineController, this, guiManager, standaloneController.DocumentController);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelineProperties);

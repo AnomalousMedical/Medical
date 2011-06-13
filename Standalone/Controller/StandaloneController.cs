@@ -407,6 +407,14 @@ namespace Medical
             }
         }
 
+        public TimelineController TimelineController
+        {
+            get
+            {
+                return timelineController;
+            }
+        }
+
         public TimelineGUIFactory TimelineGUIFactory { get; private set; }
 
         public DocumentController DocumentController { get; private set; }

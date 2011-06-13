@@ -19,5 +19,7 @@ namespace Medical
         bool exists(String path);
 
         String BackingLocation { get; }
+
+        TimelineResourceProvider clone();
     }
 }

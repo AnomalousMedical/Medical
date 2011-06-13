@@ -65,6 +65,11 @@ namespace Medical
             return zipFile.exists(path);
         }
 
+        public TimelineResourceProvider clone()
+        {
+            return new TimelineReadOnlyZipResources(resourceLocation);
+        }
+
         public String BackingLocation
         {
             get

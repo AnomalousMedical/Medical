@@ -8,7 +8,7 @@
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
-            <Widget type="Button" skin="ImageButton" position="63 0 62 23" align="Left Top" name="PlayButton">
+            <Widget type="Button" skin="ImageButton" position="94 0 62 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
@@ -23,11 +23,14 @@
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="0 0 62 23" name="Rewind">
+            <Widget type="Button" skin="Button" position="0 0 28 23" name="Rewind">
                 <Property key="Widget_Caption" value="&lt;&lt;"/>
             </Widget>
-            <Widget type="Button" skin="Button" position="126 0 62 23" name="FastForward">
+            <Widget type="Button" skin="Button" position="158 0 30 23" name="FastForward">
                 <Property key="Widget_Caption" value="&gt;&gt;"/>
+            </Widget>
+            <Widget type="Button" skin="ImageButton" position="30 0 62 23" name="PlayFull">
+                <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
         </Widget>
         <Widget type="ScrollView" skin="CustomScrollView2" position="680 27 237 308" align="Right VStretch" name="ActionPropertiesScrollView">

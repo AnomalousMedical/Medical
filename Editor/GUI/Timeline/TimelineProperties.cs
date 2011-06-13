@@ -19,6 +19,7 @@ namespace Medical.GUI
 
         private Timeline currentTimeline;
         private TimelineController timelineController;
+        private TimelineController playFullTimelineController;
         private String currentTimelineFile;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
@@ -54,6 +55,7 @@ namespace Medical.GUI
         private TimelineIndexEditor timelineIndexEditor;
 
         private Button playButton;
+        private Button playFullButton;
         private Button rewindButton;
         private Button fastForwardButton;
 
@@ -65,7 +67,7 @@ namespace Medical.GUI
         MenuItem saveTimelineItem;
         MenuItem saveTimelineAsItem;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController)
+        public TimelineProperties(TimelineController timelineController, TimelineController playFullTimelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.documentController = documentController;
@@ -77,6 +79,8 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
             timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
+
+            this.playFullTimelineController = playFullTimelineController;
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -144,6 +148,9 @@ namespace Medical.GUI
             //Play Button
             playButton = window.findWidget("PlayButton") as Button;
             playButton.MouseButtonClick += new MyGUIEvent(playButton_MouseButtonClick);
+
+            playFullButton = window.findWidget("PlayFull") as Button;
+            playFullButton.MouseButtonClick += new MyGUIEvent(playFullButton_MouseButtonClick);
 
             fastForwardButton = window.findWidget("FastForward") as Button;
             fastForwardButton.MouseButtonClick += new MyGUIEvent(fastForwardButton_MouseButtonClick);
@@ -662,6 +669,16 @@ namespace Medical.GUI
             {
                 timelineView.CurrentData = null;
                 timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, testActions.StateCheck);
+            }
+        }
+
+        void playFullButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (currentTimeline != null)
+            {
+                timelineView.CurrentData = null;
+                playFullTimelineController.ResourceProvider = timelineController.ResourceProvider.clone();
+                playFullTimelineController.startPlayback(currentTimeline, true);
             }
         }
 

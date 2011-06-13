@@ -48,6 +48,11 @@ namespace Medical
             return virtualFileSystem.exists(Path.Combine(parentDirectory, path));
         }
 
+        public TimelineResourceProvider clone()
+        {
+            return new TimelineVirtualFSResourceProvider(parentDirectory);
+        }
+
         public string BackingLocation
         {
             get

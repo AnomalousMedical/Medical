@@ -58,6 +58,11 @@ namespace Medical
             return File.Exists(path);
         }
 
+        public TimelineResourceProvider clone()
+        {
+            return new FilesystemTimelineResourceProvider(parentPath);
+        }
+
         public string BackingLocation
         {
             get
