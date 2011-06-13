@@ -34,7 +34,7 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, standaloneController.DocumentController, this);
+            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineObjectEditor = new TimelineObjectEditor();

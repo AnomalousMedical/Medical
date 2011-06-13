@@ -17,7 +17,6 @@ namespace Medical.GUI
         public const String PROJECT_EXTENSION = ".tlp";
         public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
 
-        private Timeline currentTimeline;
         private TimelineController timelineController;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
@@ -37,9 +36,6 @@ namespace Medical.GUI
         private ShowMenuButton analyzeMenuButton;
         private PopupMenu analyzeMenu;
 
-        //Documents
-        private DocumentController documentController;
-
         //Dialogs
         private StartActionEditor startActionEditor;
         private TimelineFileBrowserDialog fileBrowserDialog;
@@ -54,10 +50,9 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController, TimelinePropertiesController timelinePropertiesController)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
-            this.documentController = documentController;
             this.timelinePropertiesController = timelinePropertiesController;
 
             this.timelineController = timelineController;
@@ -65,8 +60,6 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
             timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
-
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
 
@@ -181,21 +174,15 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
-        {
-            
-        }
-
         public void setCurrentTimeline(Timeline timeline)
         {
-            currentTimeline = timeline;
             timelineView.removeAllData();
-            foreach (TimelineAction action in currentTimeline.Actions)
+            foreach (TimelineAction action in timeline.Actions)
             {
                 addActionToTimeline(action);
             }
-            startActionEditor.CurrentTimeline = currentTimeline;
-            finishActionEditor.CurrentTimeline = currentTimeline;
+            startActionEditor.CurrentTimeline = timeline;
+            finishActionEditor.CurrentTimeline = timeline;
             updateWindowCaption();
         }
 
@@ -211,19 +198,17 @@ namespace Medical.GUI
             }
         }
 
-        #region Action Management
-
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();
-            currentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
+            timelinePropertiesController.CurrentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
         }
 
         void actionFilter_AddTrackItem(string name)
         {
             TimelineAction action = actionFactory.createAction(name);
             action.StartTime = timelineView.MarkerTime;
-            currentTimeline.addAction(action);
+            timelinePropertiesController.CurrentTimeline.addAction(action);
             action.capture();
             timelineView.CurrentData = actionDataBindings[action];
         }
@@ -258,111 +243,6 @@ namespace Medical.GUI
             rewindButton.Enabled = enabled;
             analyzeMenuButton.Enabled = enabled;
         }
-
-        #endregion
-
-        #region Edit Menu
-
-        void paste_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            if (copySourceAction != null)
-            {
-                TimelineAction copiedAction = copySaver.copy<TimelineAction>(copySourceAction);
-                copiedAction.StartTime = timelineView.MarkerTime;
-                currentTimeline.addAction(copiedAction);
-                timelineView.CurrentData = actionDataBindings[copiedAction];
-            }
-            editMenu.setVisibleSmooth(false);
-        }
-
-        void copy_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
-            if (currentData != null)
-            {
-                copySourceAction = copySaver.copy<TimelineAction>(currentData.Action);
-            }
-            editMenu.setVisibleSmooth(false);
-        }
-
-        #endregion Edit Menu
-
-        #region Other Actions Menu
-
-        void editTimelineIndex_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            timelineIndexEditor.setData(timelineController.CurrentTimelineIndex);
-            timelineIndexEditor.open(true);
-            timelineIndexEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            timelineIndexEditor.ensureVisible();
-        }
-
-        void timelineIndexEditor_SaveIndexData(object sender, EventArgs e)
-        {
-            TimelineIndex index = timelineIndexEditor.createIndex();
-            timelineController.saveIndex(index);
-        }
-
-        void startAction_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            startActionEditor.open(false);
-            startActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            startActionEditor.ensureVisible();
-        }
-
-        void reverseSidesAction_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            MessageBox.show("Reversing sides will attempt to help you make a timeline that works on the opposite side.\nIt can only reverse things on the x-axis meaning it will reverse stuff left to right.\n\nThe only things that can be reversed are:\n* Camera translation and look at.\n* Prop translation (rotations need to be fixed manually).\n* Movement sequence keyframes.\nContinue?", "Reverse", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
-            {
-                if (result == MessageBoxStyle.Yes)
-                {
-                    timelineController.EditingTimeline.reverseSides();
-                }
-            });
-            
-        }
-
-        void finishAction_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            finishActionEditor.open(true);
-            finishActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
-            finishActionEditor.ensureVisible();
-        }
-
-        #endregion
-
-        #region AnalyzeMenu
-
-        void dumpPostActions_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            Log.Debug("");
-            Log.Debug("");
-            Log.Debug("Dumping Timeline Post Actions");
-            String[] files = timelineController.listResourceFiles("*.tl");
-            foreach(String file in files)
-            {
-                Log.Debug("-----------------------------------------------------------");
-                Timeline tl = timelineController.openTimeline(file);
-                Log.Debug("Dumping post actions for timeline \"{0}\".", tl.SourceFile);
-                tl.dumpPostActionsToLog();
-                analyzeMenu.setVisibleSmooth(false);
-                Log.Debug("-----------------------------------------------------------");
-                Log.Debug("");
-            }
-            Log.Debug("");
-            Log.Debug("");
-        }
-
-        #endregion
-
-        #region Playback
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -408,8 +288,6 @@ namespace Medical.GUI
             timelineView.MarkerTime = currentTime;
         }
 
-        #endregion
-
         private void stopTimelineIfPlaying()
         {
             if (timelineController.Playing)
@@ -417,5 +295,98 @@ namespace Medical.GUI
                 timelineController.stopPlayback(false);
             }
         }
+
+        #region More stuff to remove
+
+        void paste_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            if (copySourceAction != null)
+            {
+                TimelineAction copiedAction = copySaver.copy<TimelineAction>(copySourceAction);
+                copiedAction.StartTime = timelineView.MarkerTime;
+                timelinePropertiesController.CurrentTimeline.addAction(copiedAction);
+                timelineView.CurrentData = actionDataBindings[copiedAction];
+            }
+            editMenu.setVisibleSmooth(false);
+        }
+
+        void copy_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
+            if (currentData != null)
+            {
+                copySourceAction = copySaver.copy<TimelineAction>(currentData.Action);
+            }
+            editMenu.setVisibleSmooth(false);
+        }
+
+        void editTimelineIndex_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            timelineIndexEditor.setData(timelineController.CurrentTimelineIndex);
+            timelineIndexEditor.open(true);
+            timelineIndexEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            timelineIndexEditor.ensureVisible();
+        }
+
+        void timelineIndexEditor_SaveIndexData(object sender, EventArgs e)
+        {
+            TimelineIndex index = timelineIndexEditor.createIndex();
+            timelineController.saveIndex(index);
+        }
+
+        void startAction_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            startActionEditor.open(false);
+            startActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            startActionEditor.ensureVisible();
+        }
+
+        void reverseSidesAction_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            MessageBox.show("Reversing sides will attempt to help you make a timeline that works on the opposite side.\nIt can only reverse things on the x-axis meaning it will reverse stuff left to right.\n\nThe only things that can be reversed are:\n* Camera translation and look at.\n* Prop translation (rotations need to be fixed manually).\n* Movement sequence keyframes.\nContinue?", "Reverse", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
+            {
+                if (result == MessageBoxStyle.Yes)
+                {
+                    timelineController.EditingTimeline.reverseSides();
+                }
+            });
+            
+        }
+
+        void finishAction_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            finishActionEditor.open(true);
+            finishActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
+            finishActionEditor.ensureVisible();
+        }
+
+        void dumpPostActions_MouseButtonClick(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            Log.Debug("");
+            Log.Debug("");
+            Log.Debug("Dumping Timeline Post Actions");
+            String[] files = timelineController.listResourceFiles("*.tl");
+            foreach(String file in files)
+            {
+                Log.Debug("-----------------------------------------------------------");
+                Timeline tl = timelineController.openTimeline(file);
+                Log.Debug("Dumping post actions for timeline \"{0}\".", tl.SourceFile);
+                tl.dumpPostActionsToLog();
+                analyzeMenu.setVisibleSmooth(false);
+                Log.Debug("-----------------------------------------------------------");
+                Log.Debug("");
+            }
+            Log.Debug("");
+            Log.Debug("");
+        }
+
+        #endregion
     }
 }
