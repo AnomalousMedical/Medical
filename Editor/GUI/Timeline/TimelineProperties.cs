@@ -19,7 +19,6 @@ namespace Medical.GUI
 
         private Timeline currentTimeline;
         private TimelineController timelineController;
-        private TimelineController playFullTimelineController;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
         private TimelineView timelineView;
@@ -55,7 +54,7 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        public TimelineProperties(TimelineController timelineController, TimelineController playFullTimelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController, TimelinePropertiesController timelinePropertiesController)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController, TimelinePropertiesController timelinePropertiesController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.documentController = documentController;
@@ -66,8 +65,6 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
             timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
-
-            this.playFullTimelineController = playFullTimelineController;
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
@@ -381,25 +378,12 @@ namespace Medical.GUI
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (timelineController.Playing)
-            {
-                timelineController.stopPlayback(false);
-            }
-            else if (currentTimeline != null)
-            {
-                timelineView.CurrentData = null;
-                timelineController.startPlayback(currentTimeline, timelineView.MarkerTime, false);
-            }
+            timelinePropertiesController.playPreview(timelineView.MarkerTime);
         }
 
         void playFullButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (currentTimeline != null)
-            {
-                timelineView.CurrentData = null;
-                playFullTimelineController.ResourceProvider = timelineController.ResourceProvider.clone();
-                playFullTimelineController.startPlayback(currentTimeline, true);
-            }
+            timelinePropertiesController.playFull();
         }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
@@ -416,10 +400,7 @@ namespace Medical.GUI
             playButton.StaticImage.setItemResource("Timeline/StopIcon");
             rewindButton.Enabled = false;
             fastForwardButton.Enabled = false;
-            if (timelineController.ActiveTimeline != currentTimeline)
-            {
-                setCurrentTimeline(timelineController.ActiveTimeline);
-            }
+            timelineView.CurrentData = null;
         }
 
         void timelineController_TimeTicked(float currentTime)

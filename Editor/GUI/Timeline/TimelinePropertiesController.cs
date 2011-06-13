@@ -17,6 +17,7 @@ namespace Medical.GUI
         private TimelineFileExplorer timelineFileExplorer;
 
         private TimelineController editorTimelineController;
+        private TimelineController mainTimelineController;
         private TimelineDocumentHandler documentHandler;
         private DocumentController documentController;
 
@@ -24,6 +25,7 @@ namespace Medical.GUI
 
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
+            mainTimelineController = standaloneController.TimelineController;
 
             GUIManager guiManager = standaloneController.GUIManager;
             editorTimelineController = editorPlugin.TimelineController;
@@ -32,7 +34,7 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, standaloneController.TimelineController, editorPlugin, guiManager, standaloneController.DocumentController, this);
+            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, standaloneController.DocumentController, this);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineObjectEditor = new TimelineObjectEditor();
@@ -118,6 +120,27 @@ namespace Medical.GUI
             CurrentTimeline = new Timeline();
         }
 
+        public void playPreview(float startTime)
+        {
+            if (editorTimelineController.Playing)
+            {
+                editorTimelineController.stopPlayback(false);
+            }
+            else if (currentTimeline != null)
+            {
+                editorTimelineController.startPlayback(currentTimeline, startTime, false);
+            }
+        }
+
+        public void playFull()
+        {
+            if (currentTimeline != null)
+            {
+                mainTimelineController.ResourceProvider = editorTimelineController.ResourceProvider.clone();
+                mainTimelineController.startPlayback(currentTimeline, true);
+            }
+        }
+
         public Timeline CurrentTimeline
         {
             get
@@ -143,16 +166,6 @@ namespace Medical.GUI
                     }
                 }
             }
-        }
-
-        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
-        {
-            timelineProperties.removeActionFromTimeline(e.Action);
-        }
-
-        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
-        {
-            timelineProperties.addActionToTimeline(e.Action);
         }
 
         public String CurrentTimelineFile
@@ -211,6 +224,16 @@ namespace Medical.GUI
         {
             timelineFileExplorer.updateWindowCaption();
             timelineProperties.updateWindowCaption();
+        }
+
+        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
+        {
+            timelineProperties.removeActionFromTimeline(e.Action);
+        }
+
+        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
+        {
+            timelineProperties.addActionToTimeline(e.Action);
         }
     }
 }
