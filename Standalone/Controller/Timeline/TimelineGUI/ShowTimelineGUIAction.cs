@@ -50,6 +50,7 @@ namespace Medical
 
         public override void doAction()
         {
+            Timeline.AutoFireMultiTimelineStopped = false;
             gui = TimelineController.GUIFactory.getGUI(GUIName);
             if (gui != null)
             {
