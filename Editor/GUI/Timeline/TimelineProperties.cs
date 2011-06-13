@@ -308,6 +308,7 @@ namespace Medical.GUI
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             currentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
         }
 
@@ -368,6 +369,7 @@ namespace Medical.GUI
 
         void newProject_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             newProjectDialog.open(true);
             newProjectDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             newProjectDialog.ensureVisible();
@@ -397,6 +399,7 @@ namespace Medical.GUI
 
         void openProject_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             fileMenu.setVisibleSmooth(false);
             using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD, false))
             {
@@ -428,6 +431,7 @@ namespace Medical.GUI
 
         void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             saveTimelineDialog.open(true);
             saveTimelineDialog.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             saveTimelineDialog.ensureVisible();
@@ -463,6 +467,7 @@ namespace Medical.GUI
 
         void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             if (currentTimelineFile != null)
             {
                 timelineController.saveTimeline(currentTimeline, currentTimelineFile);
@@ -476,6 +481,7 @@ namespace Medical.GUI
 
         void openTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             if (!openTimelineFileBrowserDialog.Visible)
             {
                 openTimelineFileBrowserDialog.openForBrowsing("*.tl", openTimelineFile);
@@ -497,6 +503,7 @@ namespace Medical.GUI
 
         void newTimeline_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             createNewTimeline();
             fileMenu.setVisibleSmooth(false);
         }
@@ -528,6 +535,7 @@ namespace Medical.GUI
 
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             if (copySourceAction != null)
             {
                 TimelineAction copiedAction = copySaver.copy<TimelineAction>(copySourceAction);
@@ -540,6 +548,7 @@ namespace Medical.GUI
 
         void copy_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
             if (currentData != null)
             {
@@ -554,6 +563,7 @@ namespace Medical.GUI
 
         void editTimelineIndex_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             timelineIndexEditor.setData(timelineController.CurrentTimelineIndex);
             timelineIndexEditor.open(true);
             timelineIndexEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
@@ -568,11 +578,13 @@ namespace Medical.GUI
 
         void testActions_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             testActions.StateCheck = !testActions.StateCheck;
         }
 
         void startAction_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             startActionEditor.open(false);
             startActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             startActionEditor.ensureVisible();
@@ -580,6 +592,7 @@ namespace Medical.GUI
 
         void reverseSidesAction_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             MessageBox.show("Reversing sides will attempt to help you make a timeline that works on the opposite side.\nIt can only reverse things on the x-axis meaning it will reverse stuff left to right.\n\nThe only things that can be reversed are:\n* Camera translation and look at.\n* Prop translation (rotations need to be fixed manually).\n* Movement sequence keyframes.\nContinue?", "Reverse", MessageBoxStyle.Yes | MessageBoxStyle.No | MessageBoxStyle.IconQuest, delegate(MessageBoxStyle result)
             {
                 if (result == MessageBoxStyle.Yes)
@@ -592,6 +605,7 @@ namespace Medical.GUI
 
         void finishAction_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             finishActionEditor.open(true);
             finishActionEditor.Position = new Vector2(source.AbsoluteLeft, source.AbsoluteTop);
             finishActionEditor.ensureVisible();
@@ -603,6 +617,7 @@ namespace Medical.GUI
 
         void dumpPostActions_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             Log.Debug("");
             Log.Debug("");
             Log.Debug("Dumping Timeline Post Actions");
@@ -627,11 +642,13 @@ namespace Medical.GUI
 
         void rewindButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             timelineView.MarkerTime = 0.0f;
         }
 
         void fastForwardButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             timelineView.MarkerTime += 10.0f;
         }
 
@@ -674,5 +691,13 @@ namespace Medical.GUI
         }
 
         #endregion
+
+        private void stopTimelineIfPlaying()
+        {
+            if (timelineController.Playing)
+            {
+                timelineController.stopPlayback(false);
+            }
+        }
     }
 }
