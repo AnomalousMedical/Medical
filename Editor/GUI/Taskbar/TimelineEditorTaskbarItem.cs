@@ -22,7 +22,7 @@ namespace Medical.GUI
 
         public override void clicked(Widget source, EventArgs e)
         {
-            timelineFileExplorer.Visible = timelineObjectEditor.Visible = timelineProperties.Visible = !timelineProperties.Visible;
+            this.taskbarButton.StateCheck = timelineFileExplorer.Visible = timelineObjectEditor.Visible = timelineProperties.Visible = !timelineProperties.Visible;
         }
     }
 }

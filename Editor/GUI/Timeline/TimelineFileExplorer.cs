@@ -33,8 +33,6 @@ namespace Medical.GUI
         private TimelineController timelineController;
         private DocumentController documentController;
         private TimelinePropertiesController timelinePropertiesController;
-        private Timeline currentTimeline;
-        private String currentTimelineFile;
 
         public TimelineFileExplorer(TimelineController timelineController, DocumentController documentController, TimelinePropertiesController timelinePropertiesController)
             : base("Medical.GUI.Timeline.TimelineFileExplorer.layout")
@@ -87,12 +85,6 @@ namespace Medical.GUI
             base.Dispose();
         }
 
-        public void setCurrentTimeline(Timeline timeline)
-        {
-            this.currentTimeline = timeline;
-            this.currentTimelineFile = timeline.SourceFile;
-        }
-
         public bool AllMenusEnabled
         {
             get
@@ -125,6 +117,14 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == newTimelineItem)
             {
                 newTimelineClicked(source, e);
+            }
+            else if (menuEventArgs.Item == saveTimelineItem)
+            {
+                saveTimelineClicked(source, e);
+            }
+            else if (menuEventArgs.Item == saveTimelineAsItem)
+            {
+                saveTimelineAsClicked(source, e);
             }
         }
 
@@ -176,7 +176,20 @@ namespace Medical.GUI
             timelinePropertiesController.createNewTimeline();
         }
 
-        void saveTimelineAs_MouseButtonClick(Widget source, EventArgs e)
+        void saveTimelineClicked(Widget source, EventArgs e)
+        {
+            stopTimelineIfPlaying();
+            if (timelinePropertiesController.CurrentTimelineFile != null)
+            {
+                timelineController.saveTimeline(timelinePropertiesController.CurrentTimeline, timelinePropertiesController.CurrentTimelineFile);
+            }
+            else
+            {
+                saveTimelineAsClicked(source, e);
+            }
+        }
+
+        void saveTimelineAsClicked(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();
             saveTimelineDialog.open(true);
@@ -193,26 +206,15 @@ namespace Medical.GUI
                 {
                     if (result == MessageBoxStyle.Yes)
                     {
-                        timelinePropertiesController.saveTimeline(currentTimeline, saveTimelineDialog.Filename);
+                        timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, saveTimelineDialog.Filename);
+                        updateFileList();
                     }
                 });
             }
             else
             {
-                timelinePropertiesController.saveTimeline(currentTimeline, filename);
-            }
-        }
-
-        void saveTimeline_MouseButtonClick(Widget source, EventArgs e)
-        {
-            stopTimelineIfPlaying();
-            if (currentTimelineFile != null)
-            {
-                timelineController.saveTimeline(currentTimeline, currentTimelineFile);
-            }
-            else
-            {
-                saveTimelineAs_MouseButtonClick(source, e);
+                timelinePropertiesController.saveTimeline(timelinePropertiesController.CurrentTimeline, filename);
+                updateFileList();
             }
         }
 
@@ -239,6 +241,7 @@ namespace Medical.GUI
         {
             AllMenusEnabled = timelineController.ResourceProvider != null;
             updateFileList();
+            updateWindowCaption();
         }
 
         void fileList_ListSelectAccept(Widget source, EventArgs e)
@@ -262,6 +265,18 @@ namespace Medical.GUI
             {
                 String fileName = Path.GetFileName(file);
                 fileList.addItem(fileName, fileName);
+            }
+        }
+
+        public void updateWindowCaption()
+        {
+            if (timelineController.ResourceProvider != null)
+            {
+                window.Caption = String.Format("Timeline - {0}", timelineController.ResourceProvider.BackingLocation);
+            }
+            else
+            {
+                window.Caption = "Timeline";
             }
         }
 

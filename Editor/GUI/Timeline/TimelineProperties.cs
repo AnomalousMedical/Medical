@@ -20,7 +20,6 @@ namespace Medical.GUI
         private Timeline currentTimeline;
         private TimelineController timelineController;
         private TimelineController playFullTimelineController;
-        private String currentTimelineFile;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
         private TimelineView timelineView;
@@ -29,10 +28,9 @@ namespace Medical.GUI
         private TimelineAction copySourceAction;
         private CopySaver copySaver = new CopySaver();
         private TimelineActionFactory actionFactory;
+        private TimelinePropertiesController timelinePropertiesController;
 
         //Menus
-        private ShowMenuButton fileMenuButton;
-        private PopupMenu fileMenu;
         private ShowMenuButton editMenuButton;
         private PopupMenu editMenu;
         private ShowMenuButton otherActionsMenuButton;
@@ -57,10 +55,11 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        public TimelineProperties(TimelineController timelineController, TimelineController playFullTimelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController)
+        public TimelineProperties(TimelineController timelineController, TimelineController playFullTimelineController, EditorPlugin editorPlugin, GUIManager guiManager, DocumentController documentController, TimelinePropertiesController timelinePropertiesController)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.documentController = documentController;
+            this.timelinePropertiesController = timelinePropertiesController;
 
             this.timelineController = timelineController;
             timelineController.TimelinePlaybackStarted += new EventHandler(timelineController_TimelinePlaybackStarted);
@@ -73,12 +72,6 @@ namespace Medical.GUI
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
-
-            //File Menu
-            MenuItem fileMenuItem = menuBar.addItem("File");
-            fileMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
-            fileMenu.Visible = false;
-            fileMenuButton = new ShowMenuButton(fileMenuItem, fileMenu);
 
             //Edit button
             MenuItem editMenuItem = menuBar.addItem("Edit");
@@ -185,7 +178,6 @@ namespace Medical.GUI
             fileBrowserDialog.Dispose();
             actionFilter.Dispose();
             timelineView.Dispose();
-            Gui.Instance.destroyWidget(fileMenu);
             Gui.Instance.destroyWidget(editMenu);
             Gui.Instance.destroyWidget(otherActionsMenu);
             Gui.Instance.destroyWidget(analyzeMenu);
@@ -199,45 +191,22 @@ namespace Medical.GUI
 
         public void setCurrentTimeline(Timeline timeline)
         {
-            String filename = timeline.SourceFile;
-
-            timelineController.EditingTimeline = timeline;
-            if (currentTimeline != null)
-            {
-                currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
-                currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
-            }
-            changeTimelineFile(filename);
             currentTimeline = timeline;
             timelineView.removeAllData();
             foreach (TimelineAction action in currentTimeline.Actions)
             {
                 addActionToTimeline(action);
             }
-            currentTimeline.ActionAdded += currentTimeline_ActionAdded;
-            currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
             startActionEditor.CurrentTimeline = currentTimeline;
             finishActionEditor.CurrentTimeline = currentTimeline;
-        }
-
-        private void changeTimelineFile(String filename)
-        {
-            currentTimelineFile = filename;
             updateWindowCaption();
         }
 
-        private void updateWindowCaption()
+        public void updateWindowCaption()
         {
-            if (timelineController.ResourceProvider != null)
+            if (timelineController.ResourceProvider != null && timelinePropertiesController.CurrentTimelineFile != null)
             {
-                if (currentTimelineFile != null)
-                {
-                    window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceProvider.BackingLocation);
-                }
-                else
-                {
-                    window.Caption = String.Format("Timeline - {0}", timelineController.ResourceProvider.BackingLocation);
-                }
+                window.Caption = String.Format("Timeline - {0}", Path.GetFileName(timelinePropertiesController.CurrentTimelineFile));
             }
             else
             {
@@ -262,26 +231,17 @@ namespace Medical.GUI
             timelineView.CurrentData = actionDataBindings[action];
         }
 
-        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
-        {
-            addActionToTimeline(e.Action);
-        }
-
-        private void addActionToTimeline(TimelineAction action)
+        public void addActionToTimeline(TimelineAction action)
         {
             TimelineActionData data = new TimelineActionData(action);
             actionDataBindings.Add(action, data);
             timelineView.addData(data);
         }
 
-        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
+        public void removeActionFromTimeline(TimelineAction action)
         {
-            timelineView.removeData(actionDataBindings[e.Action]);
+            timelineView.removeData(actionDataBindings[action]);
         }
-
-        #endregion
-
-        #region File Menu
 
         void timelineController_ResourceLocationChanged(object sender, EventArgs e)
         {

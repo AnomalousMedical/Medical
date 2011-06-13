@@ -20,8 +20,11 @@ namespace Medical.GUI
         private TimelineDocumentHandler documentHandler;
         private DocumentController documentController;
 
+        private Timeline currentTimeline;
+
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
+
             GUIManager guiManager = standaloneController.GUIManager;
             editorTimelineController = editorPlugin.TimelineController;
 
@@ -29,7 +32,7 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, standaloneController.TimelineController, editorPlugin, guiManager, standaloneController.DocumentController);
+            timelineProperties = new TimelineProperties(editorTimelineController, standaloneController.TimelineController, editorPlugin, guiManager, standaloneController.DocumentController, this);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineObjectEditor = new TimelineObjectEditor();
@@ -37,6 +40,8 @@ namespace Medical.GUI
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
             guiManager.addManagedDialog(timelineFileExplorer);
+
+            createNewTimeline();
         }
 
         public void Dispose()
@@ -94,8 +99,7 @@ namespace Medical.GUI
         {
             try
             {
-                Timeline timeline = editorTimelineController.openTimeline(filename);
-                setCurrentTimeline(timeline);
+                CurrentTimeline = editorTimelineController.openTimeline(filename);
             }
             catch (Exception ex)
             {
@@ -106,13 +110,57 @@ namespace Medical.GUI
         public void saveTimeline(Timeline timeline, String filename)
         {
             editorTimelineController.saveTimeline(timeline, filename);
-            //changeTimelineFile(filename);
+            updateWindowCaption();
         }
 
         public void createNewTimeline()
         {
-            Timeline timeline = new Timeline();
-            setCurrentTimeline(timeline);
+            CurrentTimeline = new Timeline();
+        }
+
+        public Timeline CurrentTimeline
+        {
+            get
+            {
+                return currentTimeline;
+            }
+            set
+            {
+                if (currentTimeline != value)
+                {
+                    if (currentTimeline != null)
+                    {
+                        currentTimeline.ActionAdded -= currentTimeline_ActionAdded;
+                        currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
+                    }
+                    currentTimeline = value;
+                    editorTimelineController.EditingTimeline = currentTimeline;
+                    timelineProperties.setCurrentTimeline(currentTimeline);
+                    if (currentTimeline != null)
+                    {
+                        currentTimeline.ActionAdded += currentTimeline_ActionAdded;
+                        currentTimeline.ActionRemoved += currentTimeline_ActionRemoved;
+                    }
+                }
+            }
+        }
+
+        void currentTimeline_ActionRemoved(object sender, TimelineActionEventArgs e)
+        {
+            timelineProperties.removeActionFromTimeline(e.Action);
+        }
+
+        void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
+        {
+            timelineProperties.addActionToTimeline(e.Action);
+        }
+
+        public String CurrentTimelineFile
+        {
+            get
+            {
+                return currentTimeline != null ? currentTimeline.SourceFile : null;
+            }
         }
 
         public TimelineProperties TimelineProperties
@@ -139,12 +187,6 @@ namespace Medical.GUI
             }
         }
 
-        private void setCurrentTimeline(Timeline timeline)
-        {
-            timelineProperties.setCurrentTimeline(timeline);
-            timelineFileExplorer.setCurrentTimeline(timeline);
-        }
-
         private void createProject(string projectName)
         {
             using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
@@ -167,21 +209,8 @@ namespace Medical.GUI
 
         private void updateWindowCaption()
         {
-            //if (timelineController.ResourceProvider != null)
-            //{
-            //    if (currentTimelineFile != null)
-            //    {
-            //        window.Caption = String.Format("Timeline - {0} - {1}", Path.GetFileName(currentTimelineFile), timelineController.ResourceProvider.BackingLocation);
-            //    }
-            //    else
-            //    {
-            //        window.Caption = String.Format("Timeline - {0}", timelineController.ResourceProvider.BackingLocation);
-            //    }
-            //}
-            //else
-            //{
-            //    window.Caption = "Timeline";
-            //}
+            timelineFileExplorer.updateWindowCaption();
+            timelineProperties.updateWindowCaption();
         }
     }
 }
