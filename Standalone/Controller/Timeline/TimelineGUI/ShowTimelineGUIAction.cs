@@ -15,6 +15,7 @@ namespace Medical
     public class ShowTimelineGUIAction : TimelineInstantAction
     {
         TimelineGUI gui;
+        private TimelineController timelineControllerAfterDoAction; //This will be stored in doAction because it will go away when the timeline stops
 
         public ShowTimelineGUIAction()
         {
@@ -29,22 +30,22 @@ namespace Medical
         {
             if (HasNextTimeline)
             {
-                TimelineController.startPlayback(TimelineController.openTimeline(NextTimeline));
+                timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(NextTimeline));
             }
             else
             {
-                TimelineController._fireMultiTimelineStopEvent();
+                timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
             }
         }
 
         public void stopTimelines()
         {
-            TimelineController._fireMultiTimelineStopEvent();
+            timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
         }
 
         public void playSpecificTimeline(String timelineName)
         {
-            TimelineController.startPlayback(TimelineController.openTimeline(timelineName));
+            timelineControllerAfterDoAction.startPlayback(TimelineController.openTimeline(timelineName));
         }
 
         public override void doAction()
@@ -52,6 +53,7 @@ namespace Medical
             gui = TimelineController.GUIFactory.getGUI(GUIName);
             if (gui != null)
             {
+                timelineControllerAfterDoAction = TimelineController;
                 gui.initialize(this);
                 gui.show(TimelineController.GUIManager);
             }

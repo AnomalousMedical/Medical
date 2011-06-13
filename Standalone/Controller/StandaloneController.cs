@@ -182,6 +182,8 @@ namespace Medical
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
+            timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
+            timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
 
             //MultiTouch
             if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
@@ -547,6 +549,16 @@ namespace Medical
         void medicalController_FixedLoopUpdate(Clock time)
         {
 
+        }
+
+        void timelineController_PlaybackStopped(object sender, EventArgs e)
+        {
+            guiManager.setMainInterfaceEnabled(true);
+        }
+
+        void timelineController_PlaybackStarted(object sender, EventArgs e)
+        {
+            guiManager.setMainInterfaceEnabled(false);
         }
     }
 }
