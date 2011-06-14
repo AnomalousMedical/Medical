@@ -10,6 +10,9 @@ namespace Medical.GUI
 {
     class TimelineFileExplorer : MDIDialog
     {
+        public const String PROJECT_EXTENSION = ".tlp";
+        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
+
         //File Menu
         MenuItem newProject;
         MenuItem openProject;
@@ -71,7 +74,7 @@ namespace Medical.GUI
             fileList.ListSelectAccept += new MyGUIEvent(fileList_ListSelectAccept);
 
             //Dialogs
-            newProjectDialog = new NewProjectDialog(TimelineProperties.PROJECT_EXTENSION);
+            newProjectDialog = new NewProjectDialog(PROJECT_EXTENSION);
             newProjectDialog.ProjectCreated += new EventHandler(newProjectDialog_ProjectCreated);
 
             saveTimelineDialog = new SaveTimelineDialog();
@@ -160,7 +163,7 @@ namespace Medical.GUI
         void openProjectClicked(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();
-            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", TimelineProperties.PROJECT_WILDCARD, false))
+            using (FileOpenDialog fileDialog = new FileOpenDialog(MainWindow.Instance, "Open a timeline.", newProjectDialog.ProjectLocation, "", PROJECT_WILDCARD, false))
             {
                 if (fileDialog.showModal() == NativeDialogResult.OK)
                 {

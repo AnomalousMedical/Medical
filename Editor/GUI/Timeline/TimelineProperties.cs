@@ -14,9 +14,6 @@ namespace Medical.GUI
 {
     class TimelineProperties : MDIDialog
     {
-        public const String PROJECT_EXTENSION = ".tlp";
-        public const String PROJECT_WILDCARD = "All Timeline Types (*.tlp, *.tix, *.tl)|*.tlp;*.tix;*.tl|Timeline Projects (*.tlp)|*.tlp|Timeline Indexes (*.tix)|*.tix|Timelines(*.tl)|*.tl";
-
         private TimelineController timelineController;
         private TimelineDataProperties dataProperties;
         private TrackFilter actionFilter;
