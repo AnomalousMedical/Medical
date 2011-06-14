@@ -74,6 +74,7 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Add Pre Action", addAction));
 
                 actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);
+                actionManager.addCommand(new EditInterfaceCommand("Remove", removeAction));
 
                 foreach (TimelineInstantAction action in timeline.PreActions)
                 {
@@ -102,6 +103,12 @@ namespace Medical
                 timeline.addPreAction(action);
                 return true;
             });
+        }
+
+        private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            EditInterface editInterface = callback.getSelectedEditInterface();
+            timeline.removePreAction(actionManager.resolveSourceObject(editInterface));
         }
     }
 
@@ -132,6 +139,7 @@ namespace Medical
                 editInterface.addCommand(new EditInterfaceCommand("Add Post Action", addAction));
 
                 actionManager = new EditInterfaceManager<TimelineInstantAction>(editInterface);
+                actionManager.addCommand(new EditInterfaceCommand("Remove", removeAction));
 
                 foreach (TimelineInstantAction action in timeline.PostActions)
                 {
@@ -160,6 +168,12 @@ namespace Medical
                 timeline.addPostAction(action);
                 return true;
             });
+        }
+
+        private void removeAction(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            EditInterface editInterface = callback.getSelectedEditInterface();
+            timeline.removePostAction(actionManager.resolveSourceObject(editInterface));
         }
     }
 }
