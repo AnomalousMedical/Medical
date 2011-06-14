@@ -35,6 +35,8 @@ namespace Medical
                 editInterface = ReflectedEditInterface.createEditInterface("Timeline", null);
                 editInterface.addSubInterface(preActionEdit.getEditInterface());
                 editInterface.addSubInterface(postActionEdit.getEditInterface());
+
+                editInterface.addCommand(new EditInterfaceCommand("Reverse Sides", reverseSides));
             }
             return editInterface;
         }
@@ -53,6 +55,11 @@ namespace Medical
             {
                 return postActionEdit;
             }
+        }
+
+        private void reverseSides(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            timeline.reverseSides();
         }
     }
 
