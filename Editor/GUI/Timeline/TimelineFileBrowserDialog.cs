@@ -46,18 +46,6 @@ namespace Medical.GUI
             this.open(true);
         }
 
-        /// <summary>
-        /// This method will open the browser non modal and allow files to be selected as much as desired.
-        /// </summary>
-        /// <param name="filterString"></param>
-        /// <param name="callback"></param>
-        public void openForBrowsing(String filterString, FileChosenCallback callback)
-        {
-            this.filterString = filterString;
-            this.callback = callback;
-            this.open(false);
-        }
-
         public override void deserialize(Engine.ConfigFile configFile)
         {
             base.deserialize(configFile);
