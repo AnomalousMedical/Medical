@@ -224,7 +224,15 @@ namespace Medical.GUI
 
         void editMenu_ItemAccept(Widget source, EventArgs e)
         {
-            
+            MenuCtrlAcceptEventArgs menuEventArgs = (MenuCtrlAcceptEventArgs)e;
+            if (menuEventArgs.Item == copy)
+            {
+                timelinePropertiesController.copy();
+            }
+            else if (menuEventArgs.Item == paste)
+            {
+                timelinePropertiesController.paste();
+            }
         }
 
         #endregion

@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="204 195 923 353" layer="Overlapped">
+    <Widget type="Window" skin="WindowCSX" position="204 297 923 251" layer="Overlapped">
         <Property key="Widget_Caption" value="Timeline"/>
         <UserString key="CurrentDockLocation" value="Bottom"/>
         <UserString key="AllowedDockLocations" value="Bottom | Top | Floating"/>
-        <Widget type="Widget" skin="Panel" position="2 27 676 307" align="Stretch">
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 277" align="Stretch" name="ActionView">
+        <Widget type="Widget" skin="Panel" position="2 0 676 232" align="Stretch">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 202" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
             </Widget>
@@ -13,7 +13,7 @@
                 <Property key="Widget_Caption" value="Play"/>
                 <Property key="Button_ImageResource" value="Timeline/PlayIcon"/>
             </Widget>
-            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 277" align="Left VStretch" name="ActionFilter">
+            <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 25 187 202" align="Left VStretch" name="ActionFilter">
                 <Property key="ScrollView_CanvasSize" value="179 200"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
@@ -35,7 +35,7 @@
                 <Property key="Widget_Caption" value="Preview"/>
             </Widget>
         </Widget>
-        <Widget type="ScrollView" skin="CustomScrollView2" position="680 27 237 308" align="Right VStretch" name="ActionPropertiesScrollView">
+        <Widget type="ScrollView" skin="CustomScrollView2" position="680 0 237 232" align="Right VStretch" name="ActionPropertiesScrollView">
             <Property key="ScrollView_CanvasSize" value="214 314"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Widget type="StaticText" skin="StaticText" position="1 1 66 16" align="HStretch Top" name="PropertiesText">
@@ -53,6 +53,5 @@
                 <Property key="Widget_Caption" value="Remove"/>
             </Widget>
         </Widget>
-        <Widget type="MenuBar" skin="MenuBar" position="1 1 923 25" align="HStretch Top" name="MenuBar"/>
     </Widget>
 </MyGUI>

@@ -173,6 +173,16 @@ namespace Medical.GUI
             }
         }
 
+        public void copy()
+        {
+            timelineProperties.copy();
+        }
+
+        public void paste()
+        {
+            timelineProperties.paste();
+        }
+
         public Timeline CurrentTimeline
         {
             get
