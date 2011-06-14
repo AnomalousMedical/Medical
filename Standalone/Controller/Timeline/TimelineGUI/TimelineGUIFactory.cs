@@ -23,7 +23,19 @@ namespace Medical
         public void addPrototype(TimelineGUIFactoryPrototype prototype)
         {
             prototypes.Add(prototype.Name, prototype);
-            guiBrowser.addNode(prototype.Name, SEPS, new BrowserNode(prototype.Name, prototype.Name));
+            String name = prototype.Name;
+            String path = name;
+            int dotIndex = name.LastIndexOf('.');
+            if (dotIndex != -1 && dotIndex + 1 < name.Length)
+            {
+                name = name.Substring(dotIndex + 1);
+                path = path.Substring(0, dotIndex);
+            }
+            else
+            {
+                path = "";
+            }
+            guiBrowser.addNode(path, SEPS, new BrowserNode(name, prototype.Name));
         }
 
         /// <summary>

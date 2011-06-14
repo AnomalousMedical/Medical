@@ -102,6 +102,7 @@ namespace Medical
                 editInterface.addSubInterface(guiData.getEditInterface());
             }
             editInterface.addCommand(new EditInterfaceCommand("Change GUI Type", changeGUIType));
+            editInterface.addEditableProperty(new ShowTimelineGUIActionGUINameProperty(this));
         }
 
         private void changeGUIType(EditUICallback callback, EditInterfaceCommand caller)
@@ -137,5 +138,46 @@ namespace Medical
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// This class shows the name of the chosen UI on the edit sheet as read only.
+    /// </summary>
+    class ShowTimelineGUIActionGUINameProperty : EditableProperty
+    {
+        private ShowTimelineGUIAction action;
+
+        public ShowTimelineGUIActionGUINameProperty(ShowTimelineGUIAction action)
+        {
+            this.action = action;
+        }
+
+        public bool canParseString(int column, string value, out string errorMessage)
+        {
+            errorMessage = "";
+            return true;
+        }
+
+        public Type getPropertyType(int column)
+        {
+            return typeof(String);
+        }
+
+        public string getValue(int column)
+        {
+            switch (column)
+            {
+                case 0:
+                    return "GUIName";
+                case 1:
+                    return action.GUIName;
+            }
+            return null;
+        }
+
+        public void setValueStr(int column, string value)
+        {
+            
+        }
     }
 }
