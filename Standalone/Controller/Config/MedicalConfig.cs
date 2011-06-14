@@ -36,6 +36,8 @@ namespace Medical
         private static float cameraTransitionTime;
         private static float transparencyChangeMultiplier;
 
+        private static PluginConfig pluginConfig = new PluginConfig();
+
         public MedicalConfig(String anomalousFolder, String programFolder)
         {
             MedicalConfig.anomalousFolder = anomalousFolder;
@@ -90,6 +92,8 @@ namespace Medical
                 ConfigSection updates = internalSettings.createOrRetrieveConfigSection("Updates");
                 updateURL = updates.getValue("UpdateURL", updateURL);
                 LicenseServerURL = updates.getValue("LicenseServerURL", LicenseServerURL);
+
+                pluginConfig.readPlugins(internalSettings);
             }
 #endif
         }
@@ -311,6 +315,14 @@ namespace Medical
             get
             {
                 return recentDocsFile;
+            }
+        }
+
+        public static PluginConfig PluginConfig
+        {
+            get
+            {
+                return pluginConfig;
             }
         }
     }

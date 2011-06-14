@@ -237,6 +237,10 @@ namespace Medical
             controller.AtlasPluginManager.addPlugin("Premium.dll");
             controller.AtlasPluginManager.addPlugin("Lecture.dll");
             controller.AtlasPluginManager.addPlugin("Editor.dll");
+            foreach (String plugin in MedicalConfig.PluginConfig.AdditionalPlugins)
+            {
+                controller.AtlasPluginManager.addPlugin(plugin);
+            }
         }
 
         #region License

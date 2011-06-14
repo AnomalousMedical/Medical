@@ -97,6 +97,7 @@
     <Compile Include="Controller\Config\MacPlatformConfig.cs" />
     <Compile Include="Controller\Config\MedicalConfig.cs" />
     <Compile Include="Controller\Config\PlatformConfig.cs" />
+    <Compile Include="Controller\Config\PluginConfig.cs" />
     <Compile Include="Controller\Documents\DocumentController.cs" />
     <Compile Include="Controller\Documents\DocumentHandler.cs" />
     <Compile Include="Controller\Documents\RecentDocuments.cs" />
