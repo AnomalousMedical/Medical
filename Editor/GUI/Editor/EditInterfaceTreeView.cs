@@ -91,12 +91,13 @@ namespace Medical.GUI
                     tree.Nodes.add(parentNode);
                     tree.SelectedNode = parentNode;
                 }
-                tree.layout();
+                tree.expandAll();
             }
         }
 
         public void nodeAdded(EditInterfaceTreeNode editInterfaceTreeNode)
         {
+            editInterfaceTreeNode.Expanded = true;
             if (EditInterfaceAdded != null)
             {
                 EditInterfaceAdded.Invoke(new EditInterfaceViewEvent(editInterfaceTreeNode.EditInterface));

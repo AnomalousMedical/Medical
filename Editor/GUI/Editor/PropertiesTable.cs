@@ -119,7 +119,7 @@ namespace Medical.GUI
             {
                 int rowIndex = cell.RowIndex;
                 int columnIndex = cell.ColumnIndex;
-                var.setValueStr(columnIndex, cell.Value.ToString());
+                var.setValueStr(columnIndex, cell.Value != null ? cell.Value.ToString() : null);
                 //changesMade = true;
                 if (EditablePropertyValueChanged != null)
                 {
