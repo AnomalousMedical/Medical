@@ -8,21 +8,17 @@ namespace Medical.GUI
 {
     class TimelineEditorTaskbarItem : TaskbarItem
     {
-        private TimelineProperties timelineProperties;
-        private TimelineObjectEditor timelineObjectEditor;
-        private TimelineFileExplorer timelineFileExplorer;
+        private TimelinePropertiesController timelinePropertiesController;
 
-        public TimelineEditorTaskbarItem(TimelineProperties timelineProperties, TimelineObjectEditor timelineObjectEditor, TimelineFileExplorer timelineFileExplorer)
+        public TimelineEditorTaskbarItem(TimelinePropertiesController timelinePropertiesController)
             :base("Timeline", "TimelineEditorIcon")
         {
-            this.timelineProperties = timelineProperties;
-            this.timelineObjectEditor = timelineObjectEditor;
-            this.timelineFileExplorer = timelineFileExplorer;
+            this.timelinePropertiesController = timelinePropertiesController;
         }
 
         public override void clicked(Widget source, EventArgs e)
         {
-            this.taskbarButton.StateCheck = timelineFileExplorer.Visible = timelineObjectEditor.Visible = timelineProperties.Visible = !timelineProperties.Visible;
+            this.taskbarButton.StateCheck = timelinePropertiesController.Visible = !timelinePropertiesController.Visible;
         }
     }
 }

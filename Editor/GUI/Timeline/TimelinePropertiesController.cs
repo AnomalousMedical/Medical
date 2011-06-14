@@ -13,8 +13,11 @@ namespace Medical.GUI
     class TimelinePropertiesController : IDisposable
     {
         private TimelineProperties timelineProperties;
-        private TimelineObjectEditor timelineObjectEditor;
+        private TimelineObjectProperties timelineObjectProperties;
         private TimelineFileExplorer timelineFileExplorer;
+        private TimelineObjectExplorer timelineObjectExplorer;
+        private MedicalUICallback medicalUICallback;
+        private ObjectEditor timelineObjectEditor;
 
         private TimelineController editorTimelineController;
         private TimelineController mainTimelineController;
@@ -22,6 +25,8 @@ namespace Medical.GUI
         private DocumentController documentController;
 
         private Timeline currentTimeline;
+
+        private bool visible = false;
 
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
@@ -37,11 +42,18 @@ namespace Medical.GUI
             timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this);
             guiManager.addManagedDialog(timelineProperties);
 
-            timelineObjectEditor = new TimelineObjectEditor();
-            guiManager.addManagedDialog(timelineObjectEditor);
+            timelineObjectProperties = new TimelineObjectProperties();
+            guiManager.addManagedDialog(timelineObjectProperties);
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
             guiManager.addManagedDialog(timelineFileExplorer);
+
+            medicalUICallback = new MedicalUICallback();
+
+            timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
+            guiManager.addManagedDialog(timelineObjectExplorer);
+
+            timelineObjectEditor = new ObjectEditor(timelineObjectExplorer.EditInterfaceTree, timelineObjectProperties.PropertiesTable, medicalUICallback);
 
             createNewTimeline();
         }
@@ -49,9 +61,10 @@ namespace Medical.GUI
         public void Dispose()
         {
             documentController.removeDocumentHandler(documentHandler);
-            timelineObjectEditor.Dispose();
+            timelineObjectProperties.Dispose();
             timelineFileExplorer.Dispose();
             timelineProperties.Dispose();
+            timelineObjectExplorer.Dispose();
         }
 
         /// <summary>
@@ -176,27 +189,22 @@ namespace Medical.GUI
             }
         }
 
-        public TimelineProperties TimelineProperties
+        public bool Visible
         {
             get
             {
-                return timelineProperties;
+                return visible;
             }
-        }
-
-        public TimelineObjectEditor TimelineObjectEditor
-        {
-            get
+            set
             {
-                return timelineObjectEditor;
-            }
-        }
-
-        public TimelineFileExplorer TimelineFileExplorer
-        {
-            get
-            {
-                return timelineFileExplorer;
+                if (visible != value)
+                {
+                    visible = value;
+                    timelineProperties.Visible = value;
+                    timelineFileExplorer.Visible = value;
+                    timelineObjectExplorer.Visible = value;
+                    timelineObjectProperties.Visible = value;
+                }
             }
         }
 

@@ -104,7 +104,8 @@
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
-    <Compile Include="GUI\Timeline\TimelineObjectEditor.cs" />
+    <Compile Include="GUI\Timeline\TimelineObjectProperties.cs" />
+    <Compile Include="GUI\Timeline\TimelineObjectExplorer.cs" />
     <Compile Include="GUI\Timeline\TimelinePropertiesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.cs" />
@@ -161,7 +162,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\TimelineFileBrowserDialog.layout" />
     <EmbeddedResource Include="GUI\Timeline\TimelineIndexEditor.layout" />
-    <EmbeddedResource Include="GUI\Timeline\TimelineObjectEditor.layout">
+    <EmbeddedResource Include="GUI\Timeline\TimelineObjectProperties.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Timeline\TimelineObjectExplorer.layout">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\TimelineProperties.layout" />

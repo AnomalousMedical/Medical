@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+  <Widget type="Window" skin="WindowCSX" position="230 118 210 347" layer="Overlapped">
+    <Property key="Widget_Caption" value="Timeline Explorer"/>
+    <UserString key="CurrentDockLocation" value="Right"/>
+    <UserString key="AllowedDockLocations" value="Left | Right | Floating"/>
+    <Widget type="ScrollView" skin="ScrollView" position="7 3 196 320" name="ScrollView">
+      <Property key="ScrollView_CanvasSize" value="196 320"/>
+      <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+    </Widget>
+  </Widget>
+</MyGUI>
