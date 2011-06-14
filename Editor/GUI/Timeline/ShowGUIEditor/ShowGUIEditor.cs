@@ -71,7 +71,7 @@ namespace Medical.GUI
 
         public void setProperties(ShowTimelineGUIAction action)
         {
-            nextTimeline = action.NextTimeline;
+            //nextTimeline = action.NextTimeline;
             guiName = action.GUIName;
 
             //Create a copy of the GUIData to use for editing.
@@ -94,7 +94,7 @@ namespace Medical.GUI
         {
             ShowTimelineGUIAction action = new ShowTimelineGUIAction();
             action.GUIName = guiName;
-            action.NextTimeline = nextTimeline;
+            //action.NextTimeline = nextTimeline;
             action.GUIData = storeGUIData != null ? storeGUIData.createCopy() : null;
             return action;
         }

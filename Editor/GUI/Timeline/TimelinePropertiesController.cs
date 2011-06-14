@@ -7,6 +7,7 @@ using System.Xml;
 using Engine.Saving.XMLSaver;
 using MyGUIPlugin;
 using Logging;
+using Engine.Editing;
 
 namespace Medical.GUI
 {
@@ -17,6 +18,7 @@ namespace Medical.GUI
         private TimelineFileExplorer timelineFileExplorer;
         private TimelineObjectExplorer timelineObjectExplorer;
         private MedicalUICallback medicalUICallback;
+        private TimelineUICallbackExtensions uiCallbackExtensions;
         private ObjectEditor timelineObjectEditor;
         private BrowserWindow browserWindow;
 
@@ -50,6 +52,7 @@ namespace Medical.GUI
             guiManager.addManagedDialog(browserWindow);
 
             medicalUICallback = new MedicalUICallback(browserWindow);
+            uiCallbackExtensions = new TimelineUICallbackExtensions(medicalUICallback, editorTimelineController, browserWindow);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             guiManager.addManagedDialog(timelineObjectExplorer);

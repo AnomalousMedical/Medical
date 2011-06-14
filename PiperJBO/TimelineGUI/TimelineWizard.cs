@@ -108,7 +108,7 @@ namespace Medical.GUI
                 Notes.setToDefault();
             }
             crossFadeContainer.changePanel(panel.Container, 0.25f, animationCompleted);
-            timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
+            //timelineGUIButtons.setNextButtonActive(panel.ShowGUIAction.HasNextTimeline);
             timelineGUIButtons.setPreviousButtonActive(previousTimelines.Count > 0);
         }
 
@@ -164,7 +164,7 @@ namespace Medical.GUI
                 {
                     previousTimelines.Push(sourceFile);
                 }
-                currentPanel.ShowGUIAction.showNextTimeline();
+                //currentPanel.ShowGUIAction.showNextTimeline();
             }
         }
 

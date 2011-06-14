@@ -26,7 +26,8 @@ namespace Medical
 
         /// <summary>
         /// The name of this prototype. Should make a resonable effort to make
-        /// this unique. Namespace it to the plugin you are writing.
+        /// this unique. Namespace it to the plugin you are writing. You can use
+        /// . to specify a break in the name.
         /// </summary>
         String Name { get; }
     }

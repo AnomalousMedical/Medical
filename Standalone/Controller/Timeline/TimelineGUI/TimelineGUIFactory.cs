@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -12,6 +13,8 @@ namespace Medical
     public class TimelineGUIFactory
     {
         private Dictionary<String, TimelineGUIFactoryPrototype> prototypes = new Dictionary<String, TimelineGUIFactoryPrototype>();
+        private Browser guiBrowser = new Browser("GUI Prototpyes");
+        private static String[] SEPS = { "." };
 
         /// <summary>
         /// Add a prototype that can be used with a given name.
@@ -20,6 +23,7 @@ namespace Medical
         public void addPrototype(TimelineGUIFactoryPrototype prototype)
         {
             prototypes.Add(prototype.Name, prototype);
+            guiBrowser.addNode(prototype.Name, SEPS, new BrowserNode(prototype.Name, prototype.Name));
         }
 
         /// <summary>
@@ -66,6 +70,17 @@ namespace Medical
             get
             {
                 return prototypes.Keys;
+            }
+        }
+
+        /// <summary>
+        /// A displayable browser of gui prototypes.
+        /// </summary>
+        public Browser GUIBrowser
+        {
+            get
+            {
+                return guiBrowser;
             }
         }
     }

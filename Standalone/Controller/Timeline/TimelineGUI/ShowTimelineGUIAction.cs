@@ -16,26 +16,13 @@ namespace Medical
     {
         TimelineGUI gui;
         private TimelineController timelineControllerAfterDoAction; //This will be stored in doAction because it will go away when the timeline stops
+        private String guiName;
+        private TimelineGUIData guiData;
+        private EditInterface editInterface;
 
         public ShowTimelineGUIAction()
         {
 
-        }
-
-        /// <summary>
-        /// Show the timeline specified by NextTimeline. If nothing is specified
-        /// by this the timeline will shut down.
-        /// </summary>
-        public void showNextTimeline()
-        {
-            if (HasNextTimeline)
-            {
-                timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(NextTimeline));
-            }
-            else
-            {
-                timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
-            }
         }
 
         public void stopTimelines()
@@ -66,29 +53,71 @@ namespace Medical
 
         public override void dumpToLog()
         {
-            Log.Debug("ShowTimelineGUIAction GUI: '{0}' Next Timeline '{1}'", GUIName, NextTimeline);
+            Log.Debug("ShowTimelineGUIAction GUI: '{0}'", GUIName);
         }
 
         public override void findFileReference(TimelineStaticInfo info)
         {
-            if (info.matchesPattern(NextTimeline))
-            {
-                info.addMatch(this.GetType(), "Next Timeline for GUI " + GUIName, NextTimeline);
-            }
+            
         }
 
-        public String NextTimeline { get; set; }
-
-        public String GUIName { get; set; }
-
-        public TimelineGUIData GUIData { get; set; }
-
-        public bool HasNextTimeline
+        public String GUIName
         {
             get
             {
-                return NextTimeline != null && NextTimeline != String.Empty;
+                return guiName;
             }
+            set
+            {
+                guiName = value;
+            }
+        }
+
+        public TimelineGUIData GUIData
+        {
+            get
+            {
+                return guiData;
+            }
+            set
+            {
+                if (editInterface != null && guiData != null)
+                {
+                    editInterface.removeSubInterface(guiData.getEditInterface());
+                }
+                guiData = value;
+                if (editInterface != null && guiData != null)
+                {
+                    editInterface.addSubInterface(guiData.getEditInterface());
+                }
+            }
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            this.editInterface = editInterface;
+            base.customizeEditInterface(editInterface);
+            if (guiData != null)
+            {
+                editInterface.addSubInterface(guiData.getEditInterface());
+            }
+            editInterface.addCommand(new EditInterfaceCommand("Change GUI Type", changeGUIType));
+        }
+
+        private void changeGUIType(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.runCustomQuery(TimelineCustomQueries.ChangeGUIType, delegate(Object result, ref String errorMessage)
+            {
+                GUIName = result.ToString();
+                callback.runCustomQuery(TimelineCustomQueries.GetGUIData, setGUIData, guiName);
+                return true;
+            });
+        }
+
+        private bool setGUIData(Object guiData, ref String errorMessage)
+        {
+            GUIData = (TimelineGUIData)guiData;
+            return true;
         }
 
         #region Saving
@@ -96,17 +125,15 @@ namespace Medical
         protected ShowTimelineGUIAction(LoadInfo info)
             : base(info)
         {
-            NextTimeline = info.GetString("NextTimeline", null);
-            GUIName = info.GetString("GUIName", null);
-            GUIData = info.GetValue<TimelineGUIData>("GUIData", null);
+            guiName = info.GetString("GUIName", null);
+            guiData = info.GetValue<TimelineGUIData>("GUIData", null);
         }
 
         public override void getInfo(SaveInfo info)
         {
             base.getInfo(info);
-            info.AddValue("NextTimeline", NextTimeline);
-            info.AddValue("GUIName", GUIName);
-            info.AddValue("GUIData", GUIData);
+            info.AddValue("GUIName", guiName);
+            info.AddValue("GUIData", guiData);
         }
 
         #endregion
