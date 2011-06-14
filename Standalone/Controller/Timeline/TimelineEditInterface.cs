@@ -10,6 +10,7 @@ namespace Medical
     {
         ChangeGUIType,
         GetGUIData,
+        OpenQuestionEditor,
     }
 
     class TimelineEditInterface

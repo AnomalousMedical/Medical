@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Logging;
 using SoundPlugin;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -96,6 +97,22 @@ namespace Medical
             {
                 soundFile = value;
             }
+        }
+
+        protected override void customizeEditInterface(EditInterface editInterface)
+        {
+            base.customizeEditInterface(editInterface);
+            editInterface.addCommand(new EditInterfaceCommand("Edit Questions", showQuestionEditor));
+        }
+
+        private void showQuestionEditor(EditUICallback callback, EditInterfaceCommand caller)
+        {
+            callback.runCustomQuery(TimelineCustomQueries.OpenQuestionEditor, delegate(Object result, ref String message)
+            {
+                questions.Clear();
+                addQuestion((PromptQuestion)result);
+                return true;
+            }, this);
         }
 
         private void answerSelected(PromptAnswer answer)

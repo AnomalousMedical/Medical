@@ -46,6 +46,12 @@ namespace Medical.GUI
             lastWidth = window.Width;
         }
 
+        protected override void onShown(EventArgs args)
+        {
+            base.onShown(args);
+            Ok = false;
+        }
+
         public void clear()
         {
             currentSourceQuestion = null;
@@ -80,6 +86,8 @@ namespace Medical.GUI
                 soundFileEdit.Caption = value;
             }
         }
+
+        public bool Ok { get; private set; }
 
         private void setData(PromptQuestion question)
         {
@@ -160,6 +168,7 @@ namespace Medical.GUI
 
         void applyButton_MouseButtonClick(Widget source, EventArgs e)
         {
+            Ok = true;
             PromptQuestion newQuestion = createQuestion();
             if (newQuestion != null)
             {
@@ -193,9 +202,6 @@ namespace Medical.GUI
         private QuestionEditorAnswerRow addRow(String answerText, String timeline)
         {
             int yPos = rows.Count > 0 ? rows[rows.Count - 1].Bottom : 0;
-            bool wasVisible = this.Visible;
-
-            this.Visible = true;
             QuestionEditorAnswerRow row = new QuestionEditorAnswerRow(answerScroll, yPos, fileBrowser);
             row.RemoveRow += new EventHandler(row_RemoveRow);
             row.InsertAbove += new EventHandler(row_InsertAbove);
@@ -203,7 +209,6 @@ namespace Medical.GUI
             row.AnswerText = answerText;
             row.Timeline = timeline;
             rows.Add(row);
-            this.Visible = wasVisible;
 
             answerScroll.CanvasSize = new Size2(row.Width, row.Bottom);
 

@@ -21,6 +21,8 @@ namespace Medical.GUI
         private TimelineUICallbackExtensions uiCallbackExtensions;
         private ObjectEditor timelineObjectEditor;
         private BrowserWindow browserWindow;
+        private QuestionEditor questionEditor;
+        private TimelineFileBrowserDialog fileBrowserDialog;
 
         private TimelineController editorTimelineController;
         private TimelineController mainTimelineController;
@@ -42,7 +44,11 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this);
+            fileBrowserDialog = new TimelineFileBrowserDialog(editorTimelineController, "TimelineFileBrowserDialog__Main");
+            editorTimelineController.FileBrowser = fileBrowserDialog;
+            guiManager.addManagedDialog(fileBrowserDialog);
+
+            timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this, fileBrowserDialog);
             guiManager.addManagedDialog(timelineProperties);
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
@@ -51,8 +57,11 @@ namespace Medical.GUI
             browserWindow = new BrowserWindow();
             guiManager.addManagedDialog(browserWindow);
 
+            questionEditor = new QuestionEditor(fileBrowserDialog, editorTimelineController);
+            guiManager.addManagedDialog(questionEditor);
+
             medicalUICallback = new MedicalUICallback(browserWindow);
-            uiCallbackExtensions = new TimelineUICallbackExtensions(medicalUICallback, editorTimelineController, browserWindow);
+            uiCallbackExtensions = new TimelineUICallbackExtensions(medicalUICallback, editorTimelineController, browserWindow, questionEditor);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             guiManager.addManagedDialog(timelineObjectExplorer);
@@ -72,7 +81,9 @@ namespace Medical.GUI
             timelineFileExplorer.Dispose();
             timelineProperties.Dispose();
             timelineObjectExplorer.Dispose();
+            questionEditor.Dispose();
             browserWindow.Dispose();
+            fileBrowserDialog.Dispose();
         }
 
         /// <summary>

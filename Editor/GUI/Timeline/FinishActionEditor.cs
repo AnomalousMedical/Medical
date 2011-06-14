@@ -18,7 +18,6 @@ namespace Medical.GUI
         private Button showGUIButton;
 
         private FinishLoadTimelineEditor loadTimelineEditor;
-        private QuestionEditor questionEditor;
         private Button questionEditorButton;
         private Button guiEditorButton;
         private ShowGUIEditor guiEditor;
@@ -47,8 +46,6 @@ namespace Medical.GUI
             actionGroup.SelectedButtonChanged += new EventHandler(actionGroup_SelectedButtonChanged);
 
             loadTimelineEditor = new FinishLoadTimelineEditor(window, fileBrowser);
-            questionEditor = new QuestionEditor(fileBrowser, timelineController);
-            guiManager.addManagedDialog(questionEditor);
 
             guiEditor = new ShowGUIEditor(fileBrowser, timelineController);
             guiManager.addManagedDialog(guiEditor);
@@ -95,15 +92,15 @@ namespace Medical.GUI
                 }
                 if (action is ShowPromptAction)
                 {
-                    ShowPromptAction showPromptAction = action as ShowPromptAction;
-                    foreach(PromptQuestion question in showPromptAction.Questions)
-                    {
-                        questionEditor.Question = question;
-                        break;
-                    }
-                    questionEditor.SoundFile = showPromptAction.SoundFile;
-                    actionGroup.SelectedButton = askQuestionButton;
-                    break;
+                    //ShowPromptAction showPromptAction = action as ShowPromptAction;
+                    //foreach(PromptQuestion question in showPromptAction.Questions)
+                    //{
+                    //    questionEditor.Question = question;
+                    //    break;
+                    //}
+                    //questionEditor.SoundFile = showPromptAction.SoundFile;
+                    //actionGroup.SelectedButton = askQuestionButton;
+                    //break;
                 }
                 if (action is RepeatPreviousPostActions)
                 {
@@ -119,7 +116,6 @@ namespace Medical.GUI
 
         void cancelButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            questionEditor.clear();
             guiEditor.clear();
             this.close();
         }
@@ -147,21 +143,21 @@ namespace Medical.GUI
             }
             else if (actionGroup.SelectedButton == askQuestionButton)
             {
-                if (questionEditor.Question != null)
-                {
-                    currentTimeline.clearPostActions();
+                //if (questionEditor.Question != null)
+                //{
+                //    currentTimeline.clearPostActions();
 
-                    ShowPromptAction showPrompt = new ShowPromptAction();
-                    PromptQuestion question = questionEditor.Question;
-                    showPrompt.addQuestion(question);
-                    currentTimeline.addPostAction(showPrompt);
-                    showPrompt.SoundFile = questionEditor.SoundFile;
-                    this.close();
-                }
-                else
-                {
-                    MessageBox.show("There is no question currently defined. Please open the question editor and create one.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
-                }
+                //    ShowPromptAction showPrompt = new ShowPromptAction();
+                //    PromptQuestion question = questionEditor.Question;
+                //    showPrompt.addQuestion(question);
+                //    currentTimeline.addPostAction(showPrompt);
+                //    showPrompt.SoundFile = questionEditor.SoundFile;
+                //    this.close();
+                //}
+                //else
+                //{
+                //    MessageBox.show("There is no question currently defined. Please open the question editor and create one.", "Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
+                //}
             }
             else if (actionGroup.SelectedButton == repeatActionButton)
             {
@@ -176,7 +172,7 @@ namespace Medical.GUI
                 this.close();
             }
 
-            questionEditor.clear();
+            //questionEditor.clear();
             guiEditor.clear();
         }
 
@@ -189,7 +185,7 @@ namespace Medical.GUI
 
         void questionEditorButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            questionEditor.open(true);
+            //questionEditor.open(true);
         }
 
         void guiEditorButton_MouseButtonClick(Widget source, EventArgs e)

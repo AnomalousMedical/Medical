@@ -38,7 +38,6 @@ namespace Medical.GUI
 
         //Dialogs
         private StartActionEditor startActionEditor;
-        private TimelineFileBrowserDialog fileBrowserDialog;
         private FinishActionEditor finishActionEditor;
         private TimelineIndexEditor timelineIndexEditor;
 
@@ -49,7 +48,7 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
-        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController)
+        public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
             this.timelinePropertiesController = timelinePropertiesController;
@@ -128,10 +127,6 @@ namespace Medical.GUI
             numberLine = new NumberLine(window.findWidget("NumberLine") as ScrollView, timelineView);
 
             //Dialogs
-            fileBrowserDialog = new TimelineFileBrowserDialog(timelineController, "TimelineFileBrowserDialog__Main");
-            timelineController.FileBrowser = fileBrowserDialog;
-            guiManager.addManagedDialog(fileBrowserDialog);
-
             startActionEditor = new StartActionEditor(fileBrowserDialog, timelineController);
 
             finishActionEditor = new FinishActionEditor(timelineController, fileBrowserDialog, guiManager);
@@ -160,7 +155,6 @@ namespace Medical.GUI
             finishActionEditor.Dispose();
             timelineController.FileBrowser = null;
             startActionEditor.Dispose();
-            fileBrowserDialog.Dispose();
             actionFilter.Dispose();
             timelineView.Dispose();
             Gui.Instance.destroyWidget(editMenu);
