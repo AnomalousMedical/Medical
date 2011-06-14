@@ -27,6 +27,30 @@ namespace Medical
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
+
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+        }
+
+        Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            String assemblyName = args.Name;
+            foreach (AtlasPlugin plugin in plugins)
+            {
+                Assembly assembly = plugin.GetType().Assembly;
+                if (assembly.FullName == assemblyName)
+                {
+                    return assembly;
+                }
+            }
+            foreach (AtlasPlugin plugin in uninitializedPlugins)
+            {
+                Assembly assembly = plugin.GetType().Assembly;
+                if (assembly.FullName == assemblyName)
+                {
+                    return assembly;
+                }
+            }
+            return null;
         }
 
         public void Dispose()
@@ -67,8 +91,8 @@ namespace Medical
 
         public void addPlugin(AtlasPlugin plugin)
         {
-            OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
             uninitializedPlugins.Add(plugin);
+            OgreResourceGroupManager.getInstance().addResourceLocation(plugin.GetType().AssemblyQualifiedName, "EmbeddedResource", "MyGUI", true);
         }
 
         internal void initialzePlugins()
