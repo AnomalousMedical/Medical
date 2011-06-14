@@ -55,7 +55,7 @@ namespace Medical.GUI
             propertiesTableTable = new ResizingTable(propertiesScrollView);
             propertiesTable = new PropertiesTable(propertiesTableTable);
             propertiesTable.addCustomCellProvider(LayerStateTableCellProvider.Instance);
-            uiCallback = new MedicalUICallback();
+            uiCallback = new MedicalUICallback(null);
             objectTree = new Tree(window.findWidget("TreeScroll") as ScrollView);
             editInterfaceTree = new EditInterfaceTreeView(objectTree, uiCallback);
             objectEditor = new ObjectEditor(editInterfaceTree, propertiesTable, uiCallback);

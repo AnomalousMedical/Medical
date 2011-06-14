@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -21,8 +22,10 @@ namespace Medical
             this.TargetTimeline = targetTimeline;
         }
 
+        [Editable]
         public String TargetTimeline { get; set; }
 
+        [Editable]
         public bool ShowContinuePrompt
         {
             get

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
     public abstract class TimelineInstantAction : Saveable
     {
         private Timeline timeline;
+        private EditInterface editInterface;
 
         protected TimelineInstantAction()
         {
@@ -25,6 +27,21 @@ namespace Medical
         public abstract void dumpToLog();
 
         public abstract void findFileReference(TimelineStaticInfo info);
+
+        public EditInterface getEditInterface()
+        {
+            if (editInterface == null)
+            {
+                editInterface = ReflectedEditInterface.createEditInterface(this, ReflectedEditInterface.DefaultScanner, GetType().Name, null);
+                customizeEditInterface(editInterface);
+            }
+            return editInterface;
+        }
+
+        protected virtual void customizeEditInterface(EditInterface editInterface)
+        {
+
+        }
 
         public TimelineController TimelineController
         {

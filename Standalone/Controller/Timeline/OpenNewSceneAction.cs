@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine.Saving;
 using Logging;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -40,6 +41,7 @@ namespace Medical
             }
         }
 
+        [Editable]
         public String Scene { get; set; }
 
         #region Saveable

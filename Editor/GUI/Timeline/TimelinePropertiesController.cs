@@ -18,6 +18,7 @@ namespace Medical.GUI
         private TimelineObjectExplorer timelineObjectExplorer;
         private MedicalUICallback medicalUICallback;
         private ObjectEditor timelineObjectEditor;
+        private BrowserWindow browserWindow;
 
         private TimelineController editorTimelineController;
         private TimelineController mainTimelineController;
@@ -42,16 +43,19 @@ namespace Medical.GUI
             timelineProperties = new TimelineProperties(editorTimelineController, editorPlugin, guiManager, this);
             guiManager.addManagedDialog(timelineProperties);
 
-            timelineObjectProperties = new TimelineObjectProperties();
-            guiManager.addManagedDialog(timelineObjectProperties);
-
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
             guiManager.addManagedDialog(timelineFileExplorer);
 
-            medicalUICallback = new MedicalUICallback();
+            browserWindow = new BrowserWindow();
+            guiManager.addManagedDialog(browserWindow);
+
+            medicalUICallback = new MedicalUICallback(browserWindow);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             guiManager.addManagedDialog(timelineObjectExplorer);
+
+            timelineObjectProperties = new TimelineObjectProperties();
+            guiManager.addManagedDialog(timelineObjectProperties);
 
             timelineObjectEditor = new ObjectEditor(timelineObjectExplorer.EditInterfaceTree, timelineObjectProperties.PropertiesTable, medicalUICallback);
 
@@ -65,6 +69,7 @@ namespace Medical.GUI
             timelineFileExplorer.Dispose();
             timelineProperties.Dispose();
             timelineObjectExplorer.Dispose();
+            browserWindow.Dispose();
         }
 
         /// <summary>
@@ -172,6 +177,7 @@ namespace Medical.GUI
                     currentTimeline = value;
                     editorTimelineController.EditingTimeline = currentTimeline;
                     timelineProperties.setCurrentTimeline(currentTimeline);
+                    timelineObjectEditor.EditInterface = currentTimeline.getEditInterface();
                     if (currentTimeline != null)
                     {
                         currentTimeline.ActionAdded += currentTimeline_ActionAdded;

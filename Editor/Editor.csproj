@@ -81,6 +81,7 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
+    <Compile Include="GUI\Editor\BrowserWindow.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />
     <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
     <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
@@ -137,6 +138,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />

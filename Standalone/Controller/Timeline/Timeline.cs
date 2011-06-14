@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Platform;
 using Engine.Saving;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -20,19 +21,38 @@ namespace Medical
         private int postActionIndex = -1;
         private bool autoFireMultitimelineStopped = true; //True to fire the multi timeline stopped event if there are no post actions.
 
+        private TimelineEditInterface timelineEditInterface;
+
         public Timeline()
         {
             sequencer = new ActionSequencer<TimelineAction>();
+        }
+
+        public EditInterface getEditInterface()
+        {
+            if (timelineEditInterface == null)
+            {
+                timelineEditInterface = new TimelineEditInterface(this);
+            }
+            return timelineEditInterface.getEditInterface();
         }
 
         public void addPreAction(TimelineInstantAction action)
         {
             action._setTimeline(this);
             preActions.Add(action);
+            if (timelineEditInterface != null)
+            {
+                timelineEditInterface.PreActionsEdit.preActionAdded(action);
+            }
         }
 
         public void removePreAction(TimelineInstantAction action)
         {
+            if (timelineEditInterface != null)
+            {
+                timelineEditInterface.PreActionsEdit.preActionRemoved(action);
+            }
             action._setTimeline(null);
             preActions.Remove(action);
         }
@@ -41,6 +61,10 @@ namespace Medical
         {
             foreach (TimelineInstantAction action in preActions)
             {
+                if (timelineEditInterface != null)
+                {
+                    timelineEditInterface.PreActionsEdit.preActionRemoved(action);
+                }
                 action._setTimeline(null);
             }
             preActions.Clear();
@@ -70,10 +94,18 @@ namespace Medical
         {
             action._setTimeline(this);
             postActions.Add(action);
+            if (timelineEditInterface != null)
+            {
+                timelineEditInterface.PostActionsEdit.postActionAdded(action);
+            }
         }
 
         public void removePostAction(TimelineInstantAction action)
         {
+            if (timelineEditInterface != null)
+            {
+                timelineEditInterface.PostActionsEdit.postActionRemoved(action);
+            }
             int index = postActions.IndexOf(action);
             postActions.RemoveAt(index);
             //Adjust the iteration index backwards if the element being removed is before or on the index.
@@ -89,6 +121,10 @@ namespace Medical
         {
             foreach (TimelineInstantAction action in postActions)
             {
+                if (timelineEditInterface != null)
+                {
+                    timelineEditInterface.PostActionsEdit.postActionRemoved(action);
+                }
                 action._setTimeline(null);
             }
             postActions.Clear();
