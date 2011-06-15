@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Medical;
 using Engine.ObjectManagement;
+using ExamExample.GUI;
 
 namespace ExamExample
 {
@@ -26,7 +27,8 @@ namespace ExamExample
 
         public void initialize(StandaloneController standaloneController)
         {
-            
+            //Add the ExampleGUIPrototype to the TimelineGUIFactory.
+            standaloneController.TimelineGUIFactory.addPrototype(new ExampleGUIPrototype());
         }
 
         public void sceneLoaded(SimScene scene)

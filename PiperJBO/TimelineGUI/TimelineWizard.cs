@@ -176,7 +176,7 @@ namespace Medical.GUI
             //Does nothing right now
             if (previousTimelines.Count > 0)
             {
-                currentPanel.ShowGUIAction.playSpecificTimeline(previousTimelines.Pop());
+                currentPanel.ShowGUIAction.playTimeline(previousTimelines.Pop());
             }
         }
 

@@ -30,9 +30,16 @@ namespace Medical
             timelineControllerAfterDoAction._fireMultiTimelineStopEvent();
         }
 
-        public void playSpecificTimeline(String timelineName)
+        public void playTimeline(String timelineName)
         {
-            timelineControllerAfterDoAction.startPlayback(TimelineController.openTimeline(timelineName));
+            this.playTimeline(timelineName, true);
+        }
+
+        public void playTimeline(String timelineName, bool allowPlaybackStop)
+        {
+            Timeline timeline = timelineControllerAfterDoAction.openTimeline(timelineName);
+            timeline.AutoFireMultiTimelineStopped = allowPlaybackStop;
+            timelineControllerAfterDoAction.startPlayback(timeline);
         }
 
         public override void doAction()

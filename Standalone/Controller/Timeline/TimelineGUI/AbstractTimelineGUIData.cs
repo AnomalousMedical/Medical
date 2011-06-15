@@ -53,7 +53,13 @@ namespace Medical
             return copySaver.copy<AbstractTimelineGUIData>(this);
         }
 
-        public abstract String Name { get; }
+        public virtual String Name
+        {
+            get
+            {
+                return GetType().Name;
+            }
+        }
 
         protected AbstractTimelineGUIData(LoadInfo info)
         {

@@ -231,12 +231,12 @@ namespace Medical.GUI
 
         private void leftAnimationCompleted(LayoutContainer oldChild)
         {
+            animationCompleted(oldChild);
             if (leftAnimationFinished != null)
             {
                 leftAnimationFinished.Invoke();
                 leftAnimationFinished = null;
             }
-            animationCompleted(oldChild);
         }
 
         private void standaloneController_SceneUnloading(SimScene scene)

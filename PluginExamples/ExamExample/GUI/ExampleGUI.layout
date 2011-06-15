@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="186 81 174 220" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="17 28 132 24">
+            <Property key="Widget_Caption" value="Hello World"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="27 65 100 21" name="Close">
+            <Property key="Widget_Caption" value="Close"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="31 98 115 23" name="PlaySomething">
+            <Property key="Widget_Caption" value="Play Something"/>
+        </Widget>
+    </Widget>
+</MyGUI>

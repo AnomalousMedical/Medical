@@ -55,7 +55,14 @@
   <ItemGroup>
     <Compile Include="ExamExampleAtlasPlugin.cs" />
     <Compile Include="ExamExampleAtlasPluginEntryPoint.cs" />
+    <Compile Include="GUI\ExampleGUI.cs" />
+    <Compile Include="GUI\ExampleGUIData.cs" />
+    <Compile Include="GUI\ExampleGUIPrototype.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\ExampleGUI.layout" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
