@@ -12,7 +12,11 @@ namespace Medical.GUI
     {
         public DopplerGUIData()
         {
-
+            LateralJointCamera = new CameraPosition();
+            SuperiorJointCamera = new CameraPosition();
+            BothJointsCamera = new CameraPosition();
+            NormalLayers = new EditableLayerState("JointMenu");
+            LateralJointLayers = new EditableLayerState("DiscLayers");
         }
 
         protected override void customizeEditInterface(EditInterface editInterface)
@@ -28,28 +32,19 @@ namespace Medical.GUI
         }
 
         [Editable]
-        public Vector3 LateralJointCameraPosition { get; set; }
+        public CameraPosition LateralJointCamera { get; set; }
 
         [Editable]
-        public Vector3 LateralJointCameraLookAt { get; set; }
+        public CameraPosition SuperiorJointCamera { get; set; }
 
         [Editable]
-        public Vector3 SuperiorJointCameraPosition { get; set; }
+        public CameraPosition BothJointsCamera { get; set; }
 
         [Editable]
-        public Vector3 SuperiorJointCameraLookAt { get; set; }
+        public EditableLayerState NormalLayers { get; set; }
 
         [Editable]
-        public Vector3 BothJointsCameraPosition { get; set; }
-
-        [Editable]
-        public Vector3 BothJointsCameraLookAt { get; set; }
-
-        [Editable]
-        public LayerState JointMenuLayers { get; set; }
-
-        [Editable]
-        public LayerState DiscLayers { get; set; }
+        public EditableLayerState LateralJointLayers { get; set; }
 
         public override string Name
         {

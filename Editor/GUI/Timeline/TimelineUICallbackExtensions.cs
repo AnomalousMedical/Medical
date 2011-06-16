@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.Editing;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -12,20 +13,34 @@ namespace Medical.GUI
         private TimelineController editorTimelineController;
         private BrowserWindow browserWindow;
         private QuestionEditor questionEditor;
+        private StandaloneController standaloneController;
 
         private SendResult<Object> changeGUITypeCallback;
         private SendResult<Object> showQuestionEditorCallback;
 
-        public TimelineUICallbackExtensions(MedicalUICallback medicalUICallback, TimelineController editorTimelineController, BrowserWindow browserWindow, QuestionEditor questionEditor)
+        public TimelineUICallbackExtensions(StandaloneController standaloneController, MedicalUICallback medicalUICallback, TimelineController editorTimelineController, BrowserWindow browserWindow, QuestionEditor questionEditor)
         {
             this.medicalUICallback = medicalUICallback;
             this.editorTimelineController = editorTimelineController;
             this.browserWindow = browserWindow;
             this.questionEditor = questionEditor;
+            this.standaloneController = standaloneController;
 
-            medicalUICallback.addCustomQuery(TimelineCustomQueries.ChangeGUIType, changeGUIType);
-            medicalUICallback.addCustomQuery(TimelineCustomQueries.GetGUIData, getGUIData);
-            medicalUICallback.addCustomQuery(TimelineCustomQueries.OpenQuestionEditor, openQuestionEditor);
+            medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.ChangeGUIType, changeGUIType);
+            medicalUICallback.addCustomQuery(ShowTimelineGUIAction.CustomEditQueries.GetGUIData, getGUIData);
+            medicalUICallback.addCustomQuery(ShowPromptAction.CustomEditQueries.OpenQuestionEditor, openQuestionEditor);
+            medicalUICallback.addCustomQuery(CameraPosition.CustomEditQueries.CaptureCameraPosition, captureCameraPosition);
+        }
+
+        private void captureCameraPosition(SendResult<Object> resultCallback, params Object[] args)
+        {
+            CameraPosition camPos = (CameraPosition)args[0];
+            SceneViewWindow activeWindow = standaloneController.SceneViewController.ActiveWindow;
+            if (activeWindow != null)
+            {
+                camPos.Translation = activeWindow.Translation;
+                camPos.LookAt = activeWindow.LookAt;
+            }
         }
 
         private void openQuestionEditor(SendResult<Object> resultCallback, params Object[] args)

@@ -6,13 +6,6 @@ using Engine.Editing;
 
 namespace Medical
 {
-    public enum TimelineCustomQueries
-    {
-        ChangeGUIType,
-        GetGUIData,
-        OpenQuestionEditor,
-    }
-
     class TimelineEditInterface
     {
         private Timeline timeline;

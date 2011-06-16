@@ -99,6 +99,11 @@ namespace Medical
             }
         }
 
+        public enum CustomEditQueries
+        {
+            OpenQuestionEditor,
+        }
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             base.customizeEditInterface(editInterface);
@@ -107,7 +112,7 @@ namespace Medical
 
         private void showQuestionEditor(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.runCustomQuery(TimelineCustomQueries.OpenQuestionEditor, delegate(Object result, ref String message)
+            callback.runCustomQuery(CustomEditQueries.OpenQuestionEditor, delegate(Object result, ref String message)
             {
                 questions.Clear();
                 addQuestion((PromptQuestion)result);

@@ -14,8 +14,8 @@ namespace Medical.GUI
         private FileChosenCallback callback;
         private String filterString;
 
-        public TimelineFileBrowserDialog(TimelineController timelineController, String persistName)
-            : base("Medical.GUI.Timeline.TimelineFileBrowserDialog.layout", persistName)
+        public TimelineFileBrowserDialog(TimelineController timelineController)
+            : base("Medical.GUI.Timeline.TimelineFileBrowserDialog.layout")
         {
             this.timelineController = timelineController;
 

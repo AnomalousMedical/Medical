@@ -100,6 +100,12 @@ namespace Medical
             }
         }
 
+        public enum CustomEditQueries
+        {
+            ChangeGUIType,
+            GetGUIData,
+        }
+
         protected override void customizeEditInterface(EditInterface editInterface)
         {
             this.editInterface = editInterface;
@@ -114,10 +120,10 @@ namespace Medical
 
         private void changeGUIType(EditUICallback callback, EditInterfaceCommand caller)
         {
-            callback.runCustomQuery(TimelineCustomQueries.ChangeGUIType, delegate(Object result, ref String errorMessage)
+            callback.runCustomQuery(CustomEditQueries.ChangeGUIType, delegate(Object result, ref String errorMessage)
             {
                 GUIName = result.ToString();
-                callback.runCustomQuery(TimelineCustomQueries.GetGUIData, setGUIData, guiName);
+                callback.runCustomQuery(CustomEditQueries.GetGUIData, setGUIData, guiName);
                 return true;
             });
         }

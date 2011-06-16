@@ -159,9 +159,9 @@ namespace Medical.GUI
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(dopplerData.BothJointsCameraPosition, dopplerData.BothJointsCameraLookAt);
+                window.setPosition(dopplerData.BothJointsCamera);
             }
-            applyLayers(dopplerData.JointMenuLayers);
+            applyLayers(dopplerData.NormalLayers);
         }
 
         void superiorJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
@@ -170,9 +170,9 @@ namespace Medical.GUI
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(dopplerData.SuperiorJointCameraPosition, dopplerData.SuperiorJointCameraLookAt);
+                window.setPosition(dopplerData.SuperiorJointCamera);
             }
-            applyLayers(dopplerData.JointMenuLayers);
+            applyLayers(dopplerData.NormalLayers);
         }
 
         void lateralJointCameraButton_MouseButtonClick(Widget source, EventArgs e)
@@ -181,9 +181,9 @@ namespace Medical.GUI
             SceneViewWindow window = timelineWizard.SceneViewController.ActiveWindow;
             if (window != null)
             {
-                window.setPosition(dopplerData.LateralJointCameraPosition, dopplerData.LateralJointCameraLookAt);
+                window.setPosition(dopplerData.LateralJointCamera);
             }
-            applyLayers(dopplerData.DiscLayers);
+            applyLayers(dopplerData.LateralJointLayers);
         }
 
         void applyLayers(LayerState layers)

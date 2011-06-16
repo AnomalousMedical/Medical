@@ -45,7 +45,7 @@ namespace Medical.GUI
             documentHandler = new TimelineDocumentHandler(this);
             documentController.addDocumentHandler(documentHandler);
 
-            fileBrowserDialog = new TimelineFileBrowserDialog(editorTimelineController, "TimelineFileBrowserDialog__Main");
+            fileBrowserDialog = new TimelineFileBrowserDialog(editorTimelineController);
             editorTimelineController.FileBrowser = fileBrowserDialog;
             guiManager.addManagedDialog(fileBrowserDialog);
 
@@ -62,7 +62,7 @@ namespace Medical.GUI
             guiManager.addManagedDialog(questionEditor);
 
             medicalUICallback = new MedicalUICallback(browserWindow);
-            uiCallbackExtensions = new TimelineUICallbackExtensions(medicalUICallback, editorTimelineController, browserWindow, questionEditor);
+            uiCallbackExtensions = new TimelineUICallbackExtensions(standaloneController, medicalUICallback, editorTimelineController, browserWindow, questionEditor);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
             timelineObjectExplorer.Enabled = false;
