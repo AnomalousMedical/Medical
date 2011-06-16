@@ -35,6 +35,18 @@ namespace Medical.GUI
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return tree.Enabled;
+            }
+            set
+            {
+                tree.Enabled = value;
+            }
+        }
+
         void TimelineObjectExplorer_Resized(object sender, EventArgs e)
         {
             tree.layout();

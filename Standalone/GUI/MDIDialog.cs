@@ -434,6 +434,10 @@ namespace Medical.GUI
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
             updateDesiredLocation();
+            if (CurrentDockLocation != DockLocation.Floating && CurrentDockLocation != DockLocation.None)
+            {
+                invalidate();
+            }
         }
 
         private void updateDesiredLocation()

@@ -39,6 +39,7 @@ namespace Medical.GUI
 
             GUIManager guiManager = standaloneController.GUIManager;
             editorTimelineController = editorPlugin.TimelineController;
+            editorTimelineController.ResourceLocationChanged += new EventHandler(editorTimelineController_ResourceLocationChanged);
 
             this.documentController = standaloneController.DocumentController;
             documentHandler = new TimelineDocumentHandler(this);
@@ -64,6 +65,7 @@ namespace Medical.GUI
             uiCallbackExtensions = new TimelineUICallbackExtensions(medicalUICallback, editorTimelineController, browserWindow, questionEditor);
 
             timelineObjectExplorer = new TimelineObjectExplorer(medicalUICallback);
+            timelineObjectExplorer.Enabled = false;
             guiManager.addManagedDialog(timelineObjectExplorer);
 
             timelineObjectProperties = new TimelineObjectProperties();
@@ -296,6 +298,11 @@ namespace Medical.GUI
         void currentTimeline_ActionAdded(object sender, TimelineActionEventArgs e)
         {
             timelineProperties.addActionToTimeline(e.Action);
+        }
+
+        void editorTimelineController_ResourceLocationChanged(object sender, EventArgs e)
+        {
+            timelineObjectExplorer.Enabled = timelineObjectProperties.Enabled = editorTimelineController.ResourceProvider != null;
         }
     }
 }

@@ -35,6 +35,18 @@ namespace Medical.GUI
             }
         }
 
+        public bool Enabled
+        {
+            get
+            {
+                return table.Enabled;
+            }
+            set
+            {
+                table.Enabled = value;
+            }
+        }
+
         void TimelineObjectProperties_Resized(object sender, EventArgs e)
         {
             table.layout();
