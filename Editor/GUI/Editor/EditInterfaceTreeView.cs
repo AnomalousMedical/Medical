@@ -152,6 +152,7 @@ namespace Medical.GUI
                     }
                     LayerManager.Instance.upLayerItem(menu);
                     menu.setPosition(e.MousePosition.x, e.MousePosition.y);
+                    menu.ensureVisible();
                     menu.setVisibleSmooth(true);
                 }
             }
