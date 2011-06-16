@@ -140,6 +140,7 @@ namespace Medical.GUI
 
         private void createProject()
         {
+            EditorConfig.TimelineProjectDirectory = projectLocation.Caption;
             try
             {
                 if (ProjectCreated != null)
