@@ -84,16 +84,11 @@ namespace Medical.GUI
             pickingModeGroup.addButton(noneButton);
             pickingModeGroup.SelectedButton = groupButton;
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
-        }
-
-        public override void deserialize(ConfigFile configFile)
-        {
-            base.deserialize(configFile);
+            this.Resized += new EventHandler(AnatomyFinder_Resized);
             fixListItemWidth();
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        void AnatomyFinder_Resized(object sender, EventArgs e)
         {
             fixListItemWidth();
         }

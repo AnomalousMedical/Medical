@@ -24,6 +24,7 @@ namespace Medical.GUI
         private static Size2 DOCKED_MIN_SIZE = new Size2();
         private static Size2 DOCKED_MAX_SIZE = new Size2(3000, 3000);
         private String originalLayer;
+        protected Size2 dockedSize;
 
         /// <summary>
         /// Called after the dialog opens.
@@ -39,6 +40,11 @@ namespace Medical.GUI
         /// Called when the dialog is closed.
         /// </summary>
         public event EventHandler Closed;
+
+        /// <summary>
+        /// Called when the dialog is resized.
+        /// </summary>
+        public event EventHandler Resized;
 
         public MDIDialog(String layoutFile)
             : this(layoutFile, "")
@@ -63,6 +69,7 @@ namespace Medical.GUI
             SmoothShow = true;
             IgnorePositionChanges = false;
             desiredLocation = new Rect(window.Left, window.Top, window.Width, window.Height);
+            dockedSize = new Size2(window.Width, window.Height);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
 
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
@@ -216,6 +223,7 @@ namespace Medical.GUI
             section.setValue("Location", desiredLocation.ToString());
             section.setValue("DockLocation", CurrentDockLocation.ToString());
             section.setValue("Scale", Scale);
+            section.setValue("DockedSize", dockedSize.ToString());
         }
 
         public virtual void deserialize(ConfigFile configFile)
@@ -224,8 +232,18 @@ namespace Medical.GUI
             loadDockProperties(section);
             String location = section.getValue("Location", desiredLocation.ToString());
             desiredLocation.fromString(location);
+            String dockedSizeStr = section.getValue("DockedSize", dockedSize.ToString());
+            dockedSize.fromString(dockedSizeStr);
 
-            window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
+            if (CurrentDockLocation == DockLocation.Floating)
+            {
+                window.setCoord((int)desiredLocation.Left, (int)desiredLocation.Top, (int)desiredLocation.Width, (int)desiredLocation.Height);
+                updateDesiredLocation();
+            }
+            else
+            {
+                Size = (IntSize2)dockedSize;
+            }
         }
 
         protected void loadDockProperties(ConfigSection section)
@@ -354,6 +372,7 @@ namespace Medical.GUI
                 updateUndockedMinMaxSize();
                 window.MinSize = DOCKED_MIN_SIZE;
                 window.MaxSize = DOCKED_MAX_SIZE;
+                Size = (IntSize2)dockedSize;
 
                 //window.changeWidgetSkin("Window");
 
@@ -415,12 +434,6 @@ namespace Medical.GUI
         void window_WindowChangedCoord(Widget source, EventArgs e)
         {
             updateDesiredLocation();
-            if (Visible && window.Width != lastWidth || window.Height != lastHeight)
-            {
-                lastWidth = window.Width;
-                lastHeight = window.Height;
-                invalidate();
-            }
         }
 
         private void updateDesiredLocation()
@@ -431,6 +444,19 @@ namespace Medical.GUI
                 desiredLocation.Top = window.Top;
                 desiredLocation.Width = window.Width;
                 desiredLocation.Height = window.Height;
+            }
+            if (window.Width != lastWidth || window.Height != lastHeight)
+            {
+                lastWidth = window.Width;
+                lastHeight = window.Height;
+                if (Resized != null)
+                {
+                    Resized.Invoke(this, EventArgs.Empty);
+                }
+                if (CurrentDockLocation != DockLocation.Floating && CurrentDockLocation != DockLocation.None)
+                {
+                    dockedSize = new Size2(lastWidth, lastHeight);
+                }
             }
         }
 

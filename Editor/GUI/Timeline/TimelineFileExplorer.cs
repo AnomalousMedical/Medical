@@ -45,7 +45,7 @@ namespace Medical.GUI
             this.documentController = documentController;
             this.timelinePropertiesController = timelinePropertiesController;
 
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
+            this.Resized += new EventHandler(TimelineFileExplorer_Resized);
             MenuBar menuBar = window.findWidget("MenuBar") as MenuBar;
 
             //File Menu
@@ -291,7 +291,7 @@ namespace Medical.GUI
             }
         }
 
-        void window_WindowChangedCoord(Widget source, EventArgs e)
+        void TimelineFileExplorer_Resized(object sender, EventArgs e)
         {
             fileList.setColumnWidthAt(0, fileList.Width);
         }

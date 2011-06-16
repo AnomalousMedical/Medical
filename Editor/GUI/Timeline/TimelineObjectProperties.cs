@@ -16,6 +16,8 @@ namespace Medical.GUI
         {
             table = new ResizingTable(window.findWidget("ScrollView") as ScrollView);
             propertiesTable = new PropertiesTable(table);
+
+            this.Resized += new EventHandler(TimelineObjectProperties_Resized);
         }
 
         public override void Dispose()
@@ -31,6 +33,11 @@ namespace Medical.GUI
             {
                 return propertiesTable;
             }
+        }
+
+        void TimelineObjectProperties_Resized(object sender, EventArgs e)
+        {
+            table.layout();
         }
     }
 }

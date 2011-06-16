@@ -16,6 +16,8 @@ namespace Medical.GUI
         {
             tree = new Tree((ScrollView)window.findWidget("ScrollView"));
             editTreeView = new EditInterfaceTreeView(tree, medicalUICallback);
+
+            this.Resized += new EventHandler(TimelineObjectExplorer_Resized);
         }
 
         public override void Dispose()
@@ -31,6 +33,11 @@ namespace Medical.GUI
             {
                 return editTreeView;
             }
+        }
+
+        void TimelineObjectExplorer_Resized(object sender, EventArgs e)
+        {
+            tree.layout();
         }
     }
 }
