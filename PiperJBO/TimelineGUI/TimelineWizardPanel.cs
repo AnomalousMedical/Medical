@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Logging;
 
 namespace Medical.GUI
 {
@@ -25,6 +26,15 @@ namespace Medical.GUI
         public override void initialize(ShowTimelineGUIAction showGUIAction)
         {
             this.ShowGUIAction = showGUIAction;
+            TimelineWizardPanelData panelData = ShowGUIAction.GUIData as TimelineWizardPanelData;
+            if (panelData != null)
+            {
+                NextTimeline = panelData.NextTimeline;
+            }
+            else
+            {
+                Log.Warning("Could not find TimelineWizardPanelData or subclass in panel {0}.", showGUIAction.GUIName);
+            }
         }
 
         public override void show(GUIManager guiManager)
@@ -56,5 +66,7 @@ namespace Medical.GUI
                 return layoutContainer;
             }
         }
+
+        public String NextTimeline { get; private set; }
     }
 }

@@ -161,6 +161,7 @@
     <Compile Include="TimelineGUI\TimelineGUIButtons.cs" />
     <Compile Include="TimelineGUI\TimelineWizard.cs" />
     <Compile Include="TimelineGUI\TimelineWizardPanel.cs" />
+    <Compile Include="TimelineGUI\TimelineWizardPanelData.cs" />
     <EmbeddedResource Include="GUI\Distortions\DistortionChooser.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />

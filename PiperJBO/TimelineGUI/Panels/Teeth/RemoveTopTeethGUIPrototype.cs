@@ -23,7 +23,7 @@ namespace Medical.GUI
 
         public TimelineGUIData getGUIData()
         {
-            return null;
+            return new TimelineWizardPanelData();
         }
 
         public string Name

@@ -554,6 +554,7 @@ namespace Medical
         void timelineController_PlaybackStopped(object sender, EventArgs e)
         {
             guiManager.setMainInterfaceEnabled(true);
+            timelineController.ResourceProvider = null;
         }
 
         void timelineController_PlaybackStarted(object sender, EventArgs e)

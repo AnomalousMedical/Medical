@@ -8,7 +8,7 @@ using Engine.Editing;
 
 namespace Medical.GUI
 {
-    class DopplerGUIData : AbstractTimelineGUIData
+    class DopplerGUIData : TimelineWizardPanelData
     {
         public DopplerGUIData()
         {
