@@ -91,7 +91,7 @@ namespace Medical.GUI
         /// </summary>
         /// <param name="filename">The file name of the new project.</param>
         /// <param name="deleteOld">True to delete any existing project first.</param>
-        public void createNewProject(String filename, bool deleteOld)
+        public void createNewProject(String filename, bool deleteOld, bool asFolder)
         {
             try
             {
@@ -99,9 +99,12 @@ namespace Medical.GUI
                 {
                     File.Delete(filename);
                 }
-                createProject(filename);
+                createProject(filename, asFolder);
                 updateWindowCaption();
-                documentController.addToRecentDocuments(filename);
+                if (!asFolder)
+                {
+                    documentController.addToRecentDocuments(filename);
+                }
             }
             catch (Exception ex)
             {
@@ -238,24 +241,41 @@ namespace Medical.GUI
             }
         }
 
-        private void createProject(string projectName)
+        private void createProject(string projectName, bool asFolder)
         {
-            using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
+            if (asFolder)
             {
-                using (MemoryStream memStream = new MemoryStream())
+                if (!Directory.Exists(projectName))
                 {
-                    XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
-                    xmlWriter.Formatting = Formatting.Indented;
+                    Directory.CreateDirectory(projectName);
+                }
+                using (XmlTextWriter fileStream = new XmlTextWriter(new FileStream(Path.Combine(projectName, TimelineController.INDEX_FILE_NAME), FileMode.Create), Encoding.Default))
+                {
                     TimelineIndex index = new TimelineIndex();
                     XmlSaver xmlSaver = new XmlSaver();
-                    xmlSaver.saveObject(index, xmlWriter);
-                    xmlWriter.Flush();
-                    memStream.Seek(0, SeekOrigin.Begin);
-                    ionicZip.AddEntry(TimelineController.INDEX_FILE_NAME, memStream);
-                    ionicZip.Save();
+                    xmlSaver.saveObject(index, fileStream);
                 }
+                editorTimelineController.ResourceProvider = new FilesystemTimelineResourceProvider(projectName);
             }
-            editorTimelineController.ResourceProvider = new TimelineZipResources(projectName);
+            else
+            {
+                using (Ionic.Zip.ZipFile ionicZip = new Ionic.Zip.ZipFile(projectName))
+                {
+                    using (MemoryStream memStream = new MemoryStream())
+                    {
+                        XmlTextWriter xmlWriter = new XmlTextWriter(memStream, Encoding.Default);
+                        xmlWriter.Formatting = Formatting.Indented;
+                        TimelineIndex index = new TimelineIndex();
+                        XmlSaver xmlSaver = new XmlSaver();
+                        xmlSaver.saveObject(index, xmlWriter);
+                        xmlWriter.Flush();
+                        memStream.Seek(0, SeekOrigin.Begin);
+                        ionicZip.AddEntry(TimelineController.INDEX_FILE_NAME, memStream);
+                        ionicZip.Save();
+                    }
+                }
+                editorTimelineController.ResourceProvider = new TimelineZipResources(projectName);
+            }
         }
 
         private void updateWindowCaption()

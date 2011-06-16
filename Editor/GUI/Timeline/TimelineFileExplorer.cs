@@ -141,23 +141,7 @@ namespace Medical.GUI
 
         void newProjectDialog_ProjectCreated(object sender, EventArgs e)
         {
-            String newProjectName = newProjectDialog.FullProjectName;
-            if (File.Exists(newProjectName))
-            {
-                MessageBox.show(String.Format("A project named {0} already exists. Would you like to overwrite it?", newProjectName), "Overwrite?",
-                    MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
-                    delegate(MessageBoxStyle result)
-                    {
-                        if (result == MessageBoxStyle.Yes)
-                        {
-                            timelinePropertiesController.createNewProject(newProjectDialog.FullProjectName, true);
-                        }
-                    });
-            }
-            else
-            {
-                timelinePropertiesController.createNewProject(newProjectName, false);
-            }
+            timelinePropertiesController.createNewProject(newProjectDialog.FullProjectName, false, newProjectDialog.CreateFolder);
         }
 
         void openProjectClicked(Widget source, EventArgs e)

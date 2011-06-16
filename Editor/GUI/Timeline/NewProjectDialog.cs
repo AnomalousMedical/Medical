@@ -16,6 +16,10 @@ namespace Medical.GUI
         private Edit projectLocation;
         private String extension;
 
+        private ButtonGroup createAsGroup = new ButtonGroup();
+        private Button singleFileButton;
+        private Button folderButton;
+
         public NewProjectDialog(String extension)
             :base("Medical.GUI.Timeline.NewProjectDialog.layout")
         {
@@ -43,6 +47,13 @@ namespace Medical.GUI
             createButton.MouseButtonClick += new MyGUIEvent(createButton_MouseButtonClick);
             Button cancelButton = window.findWidget("CancelButton") as Button;
             cancelButton.MouseButtonClick += new MyGUIEvent(cancelButton_MouseButtonClick);
+
+            singleFileButton = window.findWidget("SingleFile") as Button;
+            createAsGroup.addButton(singleFileButton);
+
+            folderButton = window.findWidget("Folder") as Button;
+            createAsGroup.addButton(folderButton);
+            createAsGroup.SelectedButton = singleFileButton;
         }
 
         public String ProjectLocation
@@ -62,11 +73,19 @@ namespace Medical.GUI
             get
             {
                 String projName = projectName.Caption;
-                if (!projName.EndsWith(extension))
+                if (!CreateFolder && !projName.EndsWith(extension))
                 {
                     projName += extension;
                 }
                 return Path.Combine(projectLocation.Caption, projName);
+            }
+        }
+
+        public bool CreateFolder
+        {
+            get
+            {
+                return createAsGroup.SelectedButton == folderButton;
             }
         }
 
@@ -100,7 +119,11 @@ namespace Medical.GUI
         {
             if (Directory.Exists(projectLocation.Caption))
             {
-                if (Directory.Exists(FullProjectName))
+                if (CreateFolder && Directory.Exists(FullProjectName))
+                {
+                    MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", FullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteCallback);
+                }
+                else if (!CreateFolder && File.Exists(FullProjectName))
                 {
                     MessageBox.show(String.Format("The project {0} already exists. Would you like to delete it and create a new one?", FullProjectName), "Overwrite?", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No, overwriteCallback);
                 }
@@ -137,7 +160,14 @@ namespace Medical.GUI
             {
                 try
                 {
-                    Directory.Delete(FullProjectName);
+                    if (CreateFolder)
+                    {
+                        Directory.Delete(FullProjectName);
+                    }
+                    else
+                    {
+                        File.Delete(FullProjectName);
+                    }
                     createProject();
                 }
                 catch (Exception ex)

@@ -215,10 +215,10 @@ namespace Medical.GUI
             //        return cell;
             //    }
             //}
-            //if (propType == typeof(bool))
-            //{
-            //    return new DataGridViewCheckBoxCell();
-            //}
+            if (propType == typeof(bool))
+            {
+                return new CheckTableCell();
+            }
             return new EditTableCell();
         }
 
