@@ -101,7 +101,11 @@ namespace Medical.GUI
                 }
                 createProject(filename, asFolder);
                 updateWindowCaption();
-                if (!asFolder)
+                if (asFolder)
+                {
+                    documentController.addToRecentDocuments(Path.Combine(filename, TimelineController.INDEX_FILE_NAME));
+                }
+                else
                 {
                     documentController.addToRecentDocuments(filename);
                 }

@@ -162,7 +162,7 @@ namespace Medical.GUI
                 {
                     if (CreateFolder)
                     {
-                        Directory.Delete(FullProjectName);
+                        Directory.Delete(FullProjectName, true);
                     }
                     else
                     {
