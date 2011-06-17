@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Logging;
 using Engine.Editing;
+using System.Reflection;
 
 namespace Medical
 {
@@ -15,6 +16,18 @@ namespace Medical
         private Dictionary<String, TimelineGUIFactoryPrototype> prototypes = new Dictionary<String, TimelineGUIFactoryPrototype>();
         private Browser guiBrowser = new Browser("GUI Prototpyes");
         private static String[] SEPS = { "." };
+        private static Type PrototypeType = typeof(TimelineGUIFactoryPrototype);
+
+        public void findPrototypes(Assembly assembly)
+        {
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (PrototypeType.IsAssignableFrom(type))
+                {
+                    addPrototype((TimelineGUIFactoryPrototype)Activator.CreateInstance(type));
+                }
+            }
+        }
 
         /// <summary>
         /// Add a prototype that can be used with a given name.

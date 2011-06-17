@@ -120,6 +120,7 @@
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\AbstractTimelineGUIData.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUIPrototype.cs" />
     <Compile Include="Controller\SceneViews\CameraPosition.cs" />
     <Compile Include="Controller\Layers\EditableLayerState.cs" />

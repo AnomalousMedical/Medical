@@ -46,6 +46,10 @@ namespace Medical
             else
             {
                 Log.Warning("ShowGUIAction playback: Error loading timeline '{0}'", timelineName);
+                if (allowPlaybackStop) //Stop timeline playback if this was allowed to stop
+                {
+                    stopTimelines();
+                }
             }
         }
 
