@@ -69,8 +69,6 @@ namespace Medical
 
         public void addPlugin(String dllName)
         {
-            Log.Debug("Working directory {0}", Directory.GetCurrentDirectory());
-
             String fullPath = Path.GetFullPath(dllName);
             if (!File.Exists(fullPath))
             {
