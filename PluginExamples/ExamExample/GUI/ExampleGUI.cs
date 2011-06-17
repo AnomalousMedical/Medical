@@ -88,6 +88,7 @@ namespace ExamExample.GUI
             //control will remain with this gui and nothing will show back up from the main UI.
             //Pass false to keep running this gui.
             //Pass true to allow the main interface to come back. You should also close this gui if you do that.
+            close();
             showTimelineAction.playTimeline(guiData.SecondTimeline, false);
         }
 

@@ -38,8 +38,15 @@ namespace Medical
         public void playTimeline(String timelineName, bool allowPlaybackStop)
         {
             Timeline timeline = timelineControllerAfterDoAction.openTimeline(timelineName);
-            timeline.AutoFireMultiTimelineStopped = allowPlaybackStop;
-            timelineControllerAfterDoAction.startPlayback(timeline);
+            if (timeline != null)
+            {
+                timeline.AutoFireMultiTimelineStopped = allowPlaybackStop;
+                timelineControllerAfterDoAction.startPlayback(timeline);
+            }
+            else
+            {
+                Log.Warning("ShowGUIAction playback: Error loading timeline '{0}'", timelineName);
+            }
         }
 
         public override void doAction()

@@ -139,11 +139,6 @@ namespace Medical.GUI
 
         public void changeLeftPanel(LayoutContainer leftContainer, UIAnimationFinishedCallback animationFinished)
         {
-            if (leftAnimationFinished != null)
-            {
-                leftAnimationFinished.Invoke();
-            }
-            leftAnimationFinished = animationFinished;
             if (leftContainer != null)
             {
                 leftContainer.Visible = true;
@@ -153,6 +148,7 @@ namespace Medical.GUI
             {
                 leftAnimatedContainer.changePanel(leftContainer, 0.25f, leftAnimationCompleted);
             }
+            leftAnimationFinished = animationFinished;//Store new one
         }
 
         public void changeRightPanel(LayoutContainer rightContainer)

@@ -68,12 +68,16 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
-            using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
+            if (!String.IsNullOrEmpty(filename))
             {
-                Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
-                timeline.SourceFile = filename;
-                return timeline;
+                using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
+                {
+                    Timeline timeline = xmlSaver.restoreObject(file) as Timeline;
+                    timeline.SourceFile = filename;
+                    return timeline;
+                }
             }
+            return null;
         }
 
         public void startPlayback(Timeline timeline)
