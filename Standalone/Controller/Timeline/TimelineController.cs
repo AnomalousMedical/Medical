@@ -68,7 +68,7 @@ namespace Medical
 
         public Timeline openTimeline(String filename)
         {
-            if (!String.IsNullOrEmpty(filename))
+            if (!String.IsNullOrEmpty(filename) && resourceProvider.exists(filename))
             {
                 using (XmlTextReader file = new XmlTextReader(resourceProvider.openFile(filename)))
                 {

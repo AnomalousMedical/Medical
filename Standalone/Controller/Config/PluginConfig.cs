@@ -17,6 +17,17 @@ namespace Medical
 
         public void readPlugins(ConfigFile configFile)
         {
+            String[] args = Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length; ++i)
+            {
+                if (args[i] == "-plugin")
+                {
+                    if (++i < args.Length)
+                    {
+                        additionalPlugins.Add(args[i]);
+                    }
+                }
+            }
             ConfigSection section = configFile.createOrRetrieveConfigSection("Plugins");
             ConfigIterator iter = new ConfigIterator(section, "Plugin");
             while (iter.hasNext())

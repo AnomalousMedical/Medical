@@ -21,12 +21,15 @@ namespace Medical
         private List<AtlasPlugin> plugins = new List<AtlasPlugin>();
         private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private SimScene currentScene;
+        private String additionalSearchPath;
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
             standaloneController.SceneLoaded += standaloneController_SceneLoaded;
             standaloneController.SceneUnloading += standaloneController_SceneUnloading;
+
+            additionalSearchPath = MedicalConfig.ProgramDirectory;
 
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
         }
@@ -66,7 +69,14 @@ namespace Medical
 
         public void addPlugin(String dllName)
         {
+            Log.Debug("Working directory {0}", Directory.GetCurrentDirectory());
+
             String fullPath = Path.GetFullPath(dllName);
+            if (!File.Exists(fullPath))
+            {
+                fullPath = Path.Combine(additionalSearchPath, dllName);
+            }
+
             if (File.Exists(fullPath))
             {
                 Assembly assembly = Assembly.LoadFile(fullPath);
@@ -85,7 +95,7 @@ namespace Medical
             }
             else
             {
-                Log.Error("Cannot find Assembly {0}.", fullPath);
+                Log.Error("Cannot load Assembly {0} from {0} or {1}.", dllName, fullPath, Path.GetFullPath(dllName));
             }
         }
 
