@@ -66,6 +66,7 @@ namespace Medical.GUI
             //Timeline view
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
+            timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
             ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -154,14 +155,6 @@ namespace Medical.GUI
             set
             {
                 timelineView.MarkerTime = value;
-            }
-        }
-
-        public bool KeyFocusWidget
-        {
-            get
-            {
-                return InputManager.Instance.getKeyFocusWidget() == window;
             }
         }
 
@@ -272,10 +265,23 @@ namespace Medical.GUI
         void window_KeyButtonReleased(Widget source, EventArgs e)
         {
             KeyEventArgs ke = (KeyEventArgs)e;
-            switch (ke.Key)
+            processFormKeys(ke);
+        }
+
+        void timelineView_KeyReleased(object sender, KeyEventArgs e)
+        {
+            processFormKeys(e);
+        }
+
+        void processFormKeys(KeyEventArgs e)
+        {
+            switch (e.Key)
             {
                 case KeyboardButtonCode.KC_DELETE:
                     deleteCurrentAction();
+                    break;
+                case KeyboardButtonCode.KC_SPACE:
+                    timelinePropertiesController.playPreview(timelineView.MarkerTime);
                     break;
             }
         }

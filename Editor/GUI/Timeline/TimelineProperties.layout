@@ -8,7 +8,6 @@
             <Widget type="ScrollView" skin="ScrollViewEmpty" position="189 25 485 202" align="Stretch" name="ActionView">
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
                 <Property key="ScrollView_CanvasSize" value="0 100"/>
-                <Property key="Widget_NeedKey" value="false"/>
             </Widget>
             <Widget type="Button" skin="ImageButton" position="94 0 62 23" align="Left Top" name="PlayButton">
                 <Property key="Widget_Caption" value="Play"/>
