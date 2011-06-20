@@ -23,6 +23,7 @@
                 <Property key="ScrollView_VisibleVScroll" value="false"/>
                 <Property key="ScrollView_VisibleHScroll" value="false"/>
                 <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+                <Property key="Widget_NeedKey" value="false"/>
             </Widget>
             <Widget type="Button" skin="Button" position="0 0 28 23" name="Rewind">
                 <Property key="Widget_Caption" value="&lt;&lt;"/>
