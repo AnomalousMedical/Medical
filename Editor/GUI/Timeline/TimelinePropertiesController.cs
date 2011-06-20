@@ -325,7 +325,7 @@ namespace Medical.GUI
 
         void save_FirstFrameUpEvent(EventManager eventManager)
         {
-            if (timelineFileExplorer.Visible && !Gui.Instance.HandledKeyboardButtons)
+            if (timelineFileExplorer.Visible)
             {
                 timelineFileExplorer.save();
             }
