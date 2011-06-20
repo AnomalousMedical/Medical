@@ -9,6 +9,7 @@ using Logging;
 using Engine.Saving;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -42,6 +43,8 @@ namespace Medical.GUI
             timelineController.TimelinePlaybackStopped += new EventHandler(timelineController_TimelinePlaybackStopped);
             timelineController.TimeTicked += new TimeTickEvent(timelineController_TimeTicked);
             timelineController.ResourceLocationChanged += new EventHandler(timelineController_ResourceLocationChanged);
+
+            window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
 
             //Remove action button
             Button removeActionButton = window.findWidget("RemoveAction") as Button;
@@ -164,8 +167,7 @@ namespace Medical.GUI
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            stopTimelineIfPlaying();
-            timelinePropertiesController.CurrentTimeline.removeAction(((TimelineActionData)timelineView.CurrentData).Action);
+            deleteCurrentAction();
         }
 
         void actionFilter_AddTrackItem(string name)
@@ -254,6 +256,27 @@ namespace Medical.GUI
             if (timelineController.Playing)
             {
                 timelineController.stopPlayback(false);
+            }
+        }
+
+        private void deleteCurrentAction()
+        {
+            TimelineActionData data = (TimelineActionData)timelineView.CurrentData;
+            if (data != null)
+            {
+                stopTimelineIfPlaying();
+                timelinePropertiesController.CurrentTimeline.removeAction(data.Action);
+            }
+        }
+
+        void window_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            KeyEventArgs ke = (KeyEventArgs)e;
+            switch (ke.Key)
+            {
+                case KeyboardButtonCode.KC_DELETE:
+                    deleteCurrentAction();
+                    break;
             }
         }
     }
