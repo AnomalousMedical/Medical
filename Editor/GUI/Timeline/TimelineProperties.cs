@@ -154,6 +154,14 @@ namespace Medical.GUI
             }
         }
 
+        public bool KeyFocusWidget
+        {
+            get
+            {
+                return InputManager.Instance.getKeyFocusWidget() == window;
+            }
+        }
+
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();

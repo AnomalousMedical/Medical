@@ -17,15 +17,22 @@ namespace Medical.GUI
         enum InputEvents
         {
             PlayPauseToggle,
+            Save,
         }
 
         private static MessageEvent playPauseToggle;
+        private static MessageEvent save;
 
         static TimelinePropertiesController()
         {
             playPauseToggle = new MessageEvent(InputEvents.PlayPauseToggle);
             playPauseToggle.addButton(KeyboardButtonCode.KC_SPACE);
             DefaultEvents.registerDefaultEvent(playPauseToggle);
+
+            save = new MessageEvent(InputEvents.Save);
+            save.addButton(KeyboardButtonCode.KC_LCONTROL);
+            save.addButton(KeyboardButtonCode.KC_S);
+            DefaultEvents.registerDefaultEvent(save);
         }
 
         private TimelineProperties timelineProperties;
@@ -91,6 +98,7 @@ namespace Medical.GUI
             createNewTimeline();
 
             playPauseToggle.FirstFrameUpEvent += new MessageEventCallback(playPauseToggle_FirstFrameUpEvent);
+            save.FirstFrameUpEvent += new MessageEventCallback(save_FirstFrameUpEvent);
         }
 
         public void Dispose()
@@ -324,9 +332,17 @@ namespace Medical.GUI
 
         void playPauseToggle_FirstFrameUpEvent(EventManager eventManager)
         {
-            if (timelineProperties.Visible)
+            if (timelineProperties.Visible && (!Gui.Instance.HandledKeyboardButtons || timelineProperties.KeyFocusWidget))
             {
                 playPreview(timelineProperties.MarkerTime);
+            }
+        }
+
+        void save_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (timelineFileExplorer.Visible && !Gui.Instance.HandledKeyboardButtons)
+            {
+                timelineFileExplorer.save();
             }
         }
     }

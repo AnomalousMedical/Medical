@@ -88,6 +88,11 @@ namespace Medical.GUI
             base.Dispose();
         }
 
+        public void save()
+        {
+            saveTimelineClicked(window, EventArgs.Empty);
+        }
+
         public bool AllMenusEnabled
         {
             get
@@ -241,6 +246,7 @@ namespace Medical.GUI
 
         void fileList_ListSelectAccept(Widget source, EventArgs e)
         {
+            stopTimelineIfPlaying();
             uint selectedIndex = fileList.getIndexSelected();
             if (selectedIndex != uint.MaxValue)
             {
