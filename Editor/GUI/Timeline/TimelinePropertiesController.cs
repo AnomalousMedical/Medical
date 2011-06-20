@@ -8,11 +8,26 @@ using Engine.Saving.XMLSaver;
 using MyGUIPlugin;
 using Logging;
 using Engine.Editing;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
     class TimelinePropertiesController : IDisposable
     {
+        enum InputEvents
+        {
+            PlayPauseToggle,
+        }
+
+        private static MessageEvent playPauseToggle;
+
+        static TimelinePropertiesController()
+        {
+            playPauseToggle = new MessageEvent(InputEvents.PlayPauseToggle);
+            playPauseToggle.addButton(KeyboardButtonCode.KC_SPACE);
+            DefaultEvents.registerDefaultEvent(playPauseToggle);
+        }
+
         private TimelineProperties timelineProperties;
         private TimelineObjectProperties timelineObjectProperties;
         private TimelineFileExplorer timelineFileExplorer;
@@ -74,6 +89,8 @@ namespace Medical.GUI
             timelineObjectEditor = new ObjectEditor(timelineObjectExplorer.EditInterfaceTree, timelineObjectProperties.PropertiesTable, medicalUICallback);
 
             createNewTimeline();
+
+            playPauseToggle.FirstFrameUpEvent += new MessageEventCallback(playPauseToggle_FirstFrameUpEvent);
         }
 
         public void Dispose()
@@ -303,6 +320,14 @@ namespace Medical.GUI
         void editorTimelineController_ResourceLocationChanged(object sender, EventArgs e)
         {
             timelineObjectExplorer.Enabled = timelineObjectProperties.Enabled = editorTimelineController.ResourceProvider != null;
+        }
+
+        void playPauseToggle_FirstFrameUpEvent(EventManager eventManager)
+        {
+            if (timelineProperties.Visible)
+            {
+                playPreview(timelineProperties.MarkerTime);
+            }
         }
     }
 }

@@ -142,6 +142,18 @@ namespace Medical.GUI
             }
         }
 
+        public float MarkerTime
+        {
+            get
+            {
+                return timelineView.MarkerTime;
+            }
+            set
+            {
+                timelineView.MarkerTime = value;
+            }
+        }
+
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
             stopTimelineIfPlaying();
