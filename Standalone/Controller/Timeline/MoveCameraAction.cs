@@ -115,7 +115,14 @@ namespace Medical
 
         public override void editing()
         {
-            TimelineController.SceneViewController.ActiveWindow.setPosition(Translation, LookAt);
+            if (TimelineController != null)
+            {
+                SceneViewWindow window = TimelineController.SceneViewController.ActiveWindow;
+                if (window != null)
+                {
+                    window.setPosition(Translation, LookAt);
+                }
+            }
         }
 
         public override void findFileReference(TimelineStaticInfo info)
