@@ -214,12 +214,12 @@ namespace Medical.GUI
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            timelinePropertiesController.playPreview(timelineView.MarkerTime);
+            timelinePropertiesController.togglePlayPreview(timelineView.MarkerTime);
         }
 
         void playFullButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            timelinePropertiesController.playFull();
+            timelinePropertiesController.togglePlayFull();
         }
 
         void timelineController_TimelinePlaybackStopped(object sender, EventArgs e)
@@ -281,7 +281,7 @@ namespace Medical.GUI
                     deleteCurrentAction();
                     break;
                 case KeyboardButtonCode.KC_SPACE:
-                    timelinePropertiesController.playPreview(timelineView.MarkerTime);
+                    timelinePropertiesController.togglePlayPreview(timelineView.MarkerTime);
                     break;
             }
         }

@@ -179,7 +179,7 @@ namespace Medical.GUI
             CurrentTimeline = new Timeline();
         }
 
-        public void playPreview(float startTime)
+        public void togglePlayPreview(float startTime)
         {
             if (editorTimelineController.Playing)
             {
@@ -191,7 +191,7 @@ namespace Medical.GUI
             }
         }
 
-        public void playFull()
+        public void togglePlayFull()
         {
             if (currentTimeline != null)
             {
