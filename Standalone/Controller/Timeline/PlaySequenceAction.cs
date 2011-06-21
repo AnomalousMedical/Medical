@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Medical.Muscles;
 using Engine.Saving;
+using Logging;
 
 namespace Medical
 {
@@ -12,6 +13,7 @@ namespace Medical
     public class PlaySequenceAction : TimelineAction
     {
         private float lastTime;
+        private static CopySaver copySaver = new CopySaver();
 
         public PlaySequenceAction()
             :this(null, 0.0f, 1.0f)
@@ -52,7 +54,14 @@ namespace Medical
 
         public override void editing()
         {
-            TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
+            if (TimelineController != null)
+            {
+                TimelineController.MovementSequenceController.CurrentSequence = MovementSequence;
+            }
+            else
+            {
+                Log.Warning("TimelineController was null when trying to edit PlaySequenceAction.");
+            }
         }
 
         public override void findFileReference(TimelineStaticInfo info)
@@ -70,7 +79,7 @@ namespace Medical
             MovementSequence sequence = TimelineController.MovementSequenceController.CurrentSequence;
             if (sequence != null)
             {
-                MovementSequence = sequence;
+                MovementSequence = copySaver.copy<MovementSequence>(sequence);
             }
             else
             {
