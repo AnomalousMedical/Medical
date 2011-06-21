@@ -11,6 +11,7 @@ namespace Medical
     public class LoadAnotherTimeline : TimelineInstantAction
     {
         private bool showContinuePrompt = false;
+        private TimelineController timelineControllerAfterDoAction;
 
         public LoadAnotherTimeline()
         {
@@ -42,6 +43,7 @@ namespace Medical
         {
             if (showContinuePrompt)
             {
+                timelineControllerAfterDoAction = TimelineController;
                 TimelineController.showContinuePrompt(changeTimelineButton);
             }
             else
@@ -65,7 +67,7 @@ namespace Medical
 
         private void changeTimelineButton()
         {
-            TimelineController.startPlayback(TimelineController.openTimeline(TargetTimeline));
+            timelineControllerAfterDoAction.startPlayback(timelineControllerAfterDoAction.openTimeline(TargetTimeline));
         }
 
 #region Saving
