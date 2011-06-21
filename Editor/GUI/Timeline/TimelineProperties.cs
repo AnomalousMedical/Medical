@@ -146,6 +146,11 @@ namespace Medical.GUI
             }
         }
 
+        public void stopEditing()
+        {
+            timelineView.CurrentData = null;
+        }
+
         public float MarkerTime
         {
             get

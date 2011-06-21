@@ -187,6 +187,7 @@ namespace Medical.GUI
             }
             else if (currentTimeline != null)
             {
+                timelineProperties.stopEditing();
                 editorTimelineController.startPlayback(currentTimeline, startTime, false);
             }
         }
@@ -195,6 +196,7 @@ namespace Medical.GUI
         {
             if (currentTimeline != null)
             {
+                timelineProperties.stopEditing();
                 mainTimelineController.ResourceProvider = editorTimelineController.ResourceProvider.clone();
                 mainTimelineController.startPlayback(currentTimeline, true);
             }
