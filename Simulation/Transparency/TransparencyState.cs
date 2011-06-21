@@ -95,7 +95,8 @@ namespace Medical
         }
 
         /// <summary>
-        /// Get the value that this state wants the alpha to be.
+        /// Get the value that this state wants the alpha to be. This might be
+        /// overwritten by overrideAlpha.
         /// </summary>
         internal float WorkingAlpha
         {
@@ -105,6 +106,17 @@ namespace Medical
                 {
                     return overrideAlpha;
                 }
+                return workingAlpha;
+            }
+        }
+
+        /// <summary>
+        /// Get the WorkingAlpha value without worrying about the alpha override.
+        /// </summary>
+        internal float WorkingAlphaOnly
+        {
+            get
+            {
                 return workingAlpha;
             }
         }

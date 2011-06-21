@@ -83,7 +83,7 @@ namespace Medical
 
         public void timedBlend(float targetOpacity, float time)
         {
-            float currentAlpha = transparencyStates[activeTransparencyState].WorkingAlpha;
+            float currentAlpha = transparencyStates[activeTransparencyState].WorkingAlphaOnly;
             float delta = Math.Abs(targetOpacity - currentAlpha);
             if (delta != 0.0f)
             {
