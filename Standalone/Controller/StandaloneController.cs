@@ -40,6 +40,7 @@ namespace Medical
         private ImageRenderer imageRenderer;
         private TimelineController timelineController;
         private PropFactory propFactory;
+        private ExamController examController;
 
         //GUI
         private GUIManager guiManager;
@@ -185,6 +186,9 @@ namespace Medical
             timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
 
+            //Exams
+            examController = new ExamController();
+
             //MultiTouch
             if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
             {
@@ -261,21 +265,22 @@ namespace Medical
             return success;
         }
 
-        public void saveMedicalState(PatientDataFile patientData)
+        public void saveMedicalState(PatientDataFile dataFile)
         {
             if (medicalStateController.getNumStates() == 0)
             {
                 medicalStateController.createNormalStateFromScene();
             }
-            patientData.SavedStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
-            patientData.save();
+            dataFile.PatientData.MedicalStates = medicalStateController.getSavedState(medicalController.CurrentSceneFile);
+            examController.addExamsToData(dataFile.PatientData);
+            dataFile.save();
         }
 
         public void openPatientFile(PatientDataFile dataFile)
         {
             if (dataFile.loadData())
             {
-                SavedMedicalStates states = dataFile.SavedStates;
+                SavedMedicalStates states = dataFile.PatientData.MedicalStates;
                 if (states != null)
                 {
                     changeScene(MedicalConfig.SceneDirectory + "/" + states.SceneName);
@@ -287,7 +292,7 @@ namespace Medical
                 {
                     MessageBox.show(String.Format("Error loading file {0}.\nCould not read state information.", dataFile.BackingFile), "Load Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
                 }
-                dataFile.closeData();
+                examController.setExamsFromData(dataFile.PatientData);
             }
             else
             {
@@ -414,6 +419,14 @@ namespace Medical
             get
             {
                 return timelineController;
+            }
+        }
+
+        public ExamController ExamController
+        {
+            get
+            {
+                return examController;
             }
         }
 

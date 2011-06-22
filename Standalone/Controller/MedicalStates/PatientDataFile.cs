@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using Engine.Saving.XMLSaver;
+using Engine.Saving;
 
 namespace Medical
 {
@@ -17,7 +18,7 @@ namespace Medical
     /// </summary>
     public class PatientDataFile
     {
-        private SavedMedicalStates savedStates;
+        private PatientData patientData = new PatientData();
         private XmlSaver xmlSaver = new XmlSaver();
         private long headerSize = -1;
 
@@ -58,7 +59,7 @@ namespace Medical
                             using (XmlTextWriter dataWriter = new XmlTextWriter(fileStream, Encoding.Default))
                             {
                                 dataWriter.Formatting = Formatting.Indented;
-                                xmlSaver.saveObject(savedStates, dataWriter);
+                                xmlSaver.saveObject(patientData, dataWriter);
                             }
                         }
                     }
@@ -135,7 +136,14 @@ namespace Medical
                         fs.Seek(headerSize, SeekOrigin.Begin);
                         using (XmlTextReader textReader = new XmlTextReader(fs))
                         {
-                            savedStates = xmlSaver.restoreObject(textReader) as SavedMedicalStates;
+                            Object restoredObject = xmlSaver.restoreObject(textReader);
+                            patientData = restoredObject as PatientData;
+                            //Backward compatability with SavedMedicalStates based files.
+                            if (patientData == null)
+                            {
+                                patientData = new PatientData();
+                                patientData.MedicalStates = restoredObject as SavedMedicalStates;
+                            }
                         }
                     }
                 }
@@ -145,11 +153,6 @@ namespace Medical
                 loaded = false;
             }
             return loaded;
-        }
-
-        public void closeData()
-        {
-            savedStates = null;
         }
 
         public String BackingFile { get; set; }
@@ -176,15 +179,11 @@ namespace Medical
 
         public DateTime DateModified { get; set; }
 
-        public SavedMedicalStates SavedStates
+        public PatientData PatientData
         {
             get
             {
-                return savedStates;
-            }
-            set
-            {
-                savedStates = value;
+                return patientData;
             }
         }
 

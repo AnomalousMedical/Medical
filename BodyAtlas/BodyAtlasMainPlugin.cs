@@ -131,9 +131,9 @@ namespace Medical.GUI
 
         public void save()
         {
-            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            if (standaloneController.MedicalStateController.getNumStates() == 0 && standaloneController.ExamController.Count == 0)
             {
-                MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
+                MessageBox.show("No information to save. Please create some states or perform an exam.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
             }
             else
             {
@@ -143,7 +143,7 @@ namespace Medical.GUI
 
         public void saveAs()
         {
-            if (standaloneController.MedicalStateController.getNumStates() == 0)
+            if (standaloneController.MedicalStateController.getNumStates() == 0 && standaloneController.ExamController.Count == 0)
             {
                 MessageBox.show("No information to save. Please create some states using the wizards first.", "Nothing to save.", MessageBoxStyle.IconInfo | MessageBoxStyle.Ok);
             }
