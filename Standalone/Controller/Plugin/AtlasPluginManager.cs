@@ -22,6 +22,7 @@ namespace Medical
         private List<AtlasPlugin> uninitializedPlugins = new List<AtlasPlugin>();
         private SimScene currentScene;
         private String additionalSearchPath;
+        private HashSet<String> loadedPluginDlls = new HashSet<string>();
 
         public AtlasPluginManager(StandaloneController standaloneController)
         {
@@ -77,18 +78,26 @@ namespace Medical
 
             if (File.Exists(fullPath))
             {
-                Assembly assembly = Assembly.LoadFile(fullPath);
-                AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
-                if (attributes.Length > 0)
+                if (!loadedPluginDlls.Contains(fullPath))
                 {
-                    foreach(AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                    loadedPluginDlls.Add(fullPath);
+                    Assembly assembly = Assembly.LoadFile(fullPath);
+                    AtlasPluginEntryPointAttribute[] attributes = (AtlasPluginEntryPointAttribute[])assembly.GetCustomAttributes(typeof(AtlasPluginEntryPointAttribute), true);
+                    if (attributes.Length > 0)
                     {
-                        entryPointAttribute.createPlugin(standaloneController);
+                        foreach (AtlasPluginEntryPointAttribute entryPointAttribute in attributes)
+                        {
+                            entryPointAttribute.createPlugin(standaloneController);
+                        }
+                    }
+                    else
+                    {
+                        Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly {0}. Please add this property to the assembly.", assembly.FullName);
                     }
                 }
                 else
                 {
-                    Log.Error("Cannot find AtlasPluginEntryPointAttribute in assembly {0}. Please add this property to the assembly.", assembly.FullName);
+                    Log.Error("Cannot load Assembly {0} from {1} because it is already loaded.", dllName, fullPath);
                 }
             }
             else
