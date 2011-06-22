@@ -172,8 +172,11 @@ namespace Medical
             }
             else
             {
-                directStartState.blend(percent, directEndState);
-                blendLocation = percent;
+                if (directStartState != null)
+                {
+                    directStartState.blend(percent, directEndState);
+                    blendLocation = percent;
+                }
             }
         }
 

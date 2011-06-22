@@ -26,6 +26,7 @@ namespace Medical.GUI
         private OptionsDialog options;
         private RenderPropertiesDialog renderDialog;
         private AboutDialog aboutDialog;
+        private ExamViewer examViewer;
 
         public BodyAtlasMainPlugin(LicenseManager licenseManager, BodyAtlasController bodyAtlasController)
         {
@@ -72,6 +73,9 @@ namespace Medical.GUI
             renderDialog = new RenderPropertiesDialog(standaloneController.SceneViewController, standaloneController.ImageRenderer);
             guiManager.addManagedDialog(renderDialog);
 
+            examViewer = new ExamViewer(standaloneController.ExamController);
+            guiManager.addManagedDialog(examViewer);
+
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppMenu(appMenu, "AppButton/Image");
@@ -79,6 +83,8 @@ namespace Medical.GUI
             MDIDialogOpenTaskbarItem renderTaskbarItem = new MDIDialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
             renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
             taskbar.addItem(renderTaskbarItem);
+
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(examViewer, "Exam Viewer", "ExamIcon"));
         }
 
         public void sceneLoaded(SimScene scene)

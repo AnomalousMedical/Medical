@@ -144,6 +144,7 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="GUI\ExamViewer\ExamViewer.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\DialogEntry.cs" />
@@ -318,6 +319,7 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\ExamViewer\ExamViewer.layout" />
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />

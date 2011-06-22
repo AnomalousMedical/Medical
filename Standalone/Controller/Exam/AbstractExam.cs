@@ -21,6 +21,9 @@ namespace Medical
     public class AbstractExam<ExamType> : Exam
         where ExamType : Exam, new()
     {
+
+        #region Static
+
         static ExamType currentExam;
 
         /// <summary>
@@ -36,16 +39,6 @@ namespace Medical
                 }
                 return currentExam;
             }
-        }
-
-        /// <summary>
-        /// Constructor, takes a pretty name for the exam.
-        /// </summary>
-        /// <param name="prettyName">The name of the exam.</param>
-        public AbstractExam(String prettyName)
-        {
-            date = DateTime.Now;
-            this.prettyName = prettyName;
         }
 
         /// <summary>
@@ -65,11 +58,28 @@ namespace Medical
             currentExam = default(ExamType);
         }
 
+        #endregion Static
+
         [DoNotSave]
         private DateTime date;
 
         [DoNotSave]
         private String prettyName;
+
+        /// <summary>
+        /// Constructor, takes a pretty name for the exam.
+        /// </summary>
+        /// <param name="prettyName">The name of the exam.</param>
+        public AbstractExam(String prettyName)
+        {
+            date = DateTime.Now;
+            this.prettyName = prettyName;
+        }
+
+        public virtual void showBreakdownGUI()
+        {
+
+        }
 
         public DateTime Date
         {

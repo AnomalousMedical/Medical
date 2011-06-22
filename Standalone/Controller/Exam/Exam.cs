@@ -13,8 +13,19 @@ namespace Medical
     /// </summary>
     public interface Exam : Saveable
     {
+        /// <summary>
+        /// This method will make the exam show a gui that shows a breakdown of the exam.
+        /// </summary>
+        void showBreakdownGUI();
+
+        /// <summary>
+        /// The Date an exam was taken.
+        /// </summary>
         DateTime Date { get; }
 
+        /// <summary>
+        /// The pretty name of the exam for display on the UI.
+        /// </summary>
         String PrettyName { get; }
     }
 }

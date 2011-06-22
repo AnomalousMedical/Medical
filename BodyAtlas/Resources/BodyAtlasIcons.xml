@@ -17,5 +17,13 @@
     </Group>
   </Resource>
 
+  <Resource type="ResourceImageSet" name="ExamIcon">
+    <Group name="Icons" texture="Medical.Resources.BodyAtlasIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
 </MyGUI>
 

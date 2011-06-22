@@ -10,7 +10,13 @@ namespace Medical
     /// </summary>
     public class ExamController
     {
+        public delegate void ExamControllerEvent(ExamController examController, Exam exam);
+
         private static ExamController instance;
+
+        public event ExamControllerEvent ExamAdded;
+        public event ExamControllerEvent ExamRemoved;
+        public event ExamControllerEvent ExamsCleared;
 
         internal static ExamController Instance
         {
@@ -37,16 +43,32 @@ namespace Medical
         public void addExam(Exam exam)
         {
             exams.Add(exam);
+            if (ExamAdded != null)
+            {
+                ExamAdded.Invoke(this, exam);
+            }
         }
 
         public void removeExam(Exam exam)
         {
-            exams.Remove(exam);
+            int index = exams.IndexOf(exam);
+            if (index >= 0)
+            {
+                exams.RemoveAt(index);
+                if (ExamRemoved != null)
+                {
+                    ExamRemoved.Invoke(this, exam);
+                }
+            }
         }
 
         public void clear()
         {
             exams.Clear();
+            if (ExamsCleared != null)
+            {
+                ExamsCleared.Invoke(this, null);
+            }
         }
 
         public void addExamsToData(PatientData patientData)
@@ -71,6 +93,14 @@ namespace Medical
             get
             {
                 return exams.Count;
+            }
+        }
+
+        public IEnumerable<Exam> Exams
+        {
+            get
+            {
+                return exams;
             }
         }
     }
