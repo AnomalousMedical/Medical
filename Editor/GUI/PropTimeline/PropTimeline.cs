@@ -133,6 +133,20 @@ namespace Medical.GUI
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
             subAction.StartTime = timelineView.MarkerTime;
+            if (subAction is MovePropAction)
+            {
+                MovePropAction moveProp = (MovePropAction)subAction;
+                if (usingTools)
+                {
+                    moveProp.Translation = Translation;
+                    moveProp.Rotation = Rotation;
+                }
+                else
+                {
+                    moveProp.Translation = propData.Translation;
+                    moveProp.Rotation = propData.Rotation;
+                }
+            }
             propData.addSubAction(subAction);
             addSubActionData(subAction);
         }

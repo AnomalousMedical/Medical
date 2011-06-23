@@ -82,7 +82,10 @@ namespace Medical
 
         protected void movePreviewProp(Vector3 translation, Quaternion rotation)
         {
-            showProp._movePreviewProp(translation, rotation);
+            if (showProp != null)
+            {
+                showProp._movePreviewProp(translation, rotation);
+            }
         }
 
         private void discoverProperties()
