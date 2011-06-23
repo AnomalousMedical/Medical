@@ -14,6 +14,7 @@ namespace Medical
     public class Arrow : Interface
     {
         public const String DefinitionName = "Arrow";
+        public const string ArrowBehaviorName = "Behavior";
 
         private Entity entity;
         private SubEntity subEntity;
@@ -29,7 +30,7 @@ namespace Medical
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             arrowSimObject.addElement(nodeDefinition);
             Arrow arrowBehavior = new Arrow();
-            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition("Behavior", arrowBehavior);
+            BehaviorDefinition arrowBehaviorDef = new BehaviorDefinition(ArrowBehaviorName, arrowBehavior);
             arrowSimObject.addElement(arrowBehaviorDef);
             PropFadeBehavior propFadeBehavior = new PropFadeBehavior();
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);

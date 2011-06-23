@@ -172,6 +172,15 @@ namespace Medical.GUI
                 if (!usingTools && wasUsingTools)
                 {
                     actionFactory.MoveProperties.fireUpdatePropPreview();
+
+                    //if (UsingTools)
+                    //{
+                    //    propData._movePreviewProp(Translation, Rotation);
+                    //}
+                    //else
+                    //{
+                    //    propData._movePreviewProp(Translation, Rotation);
+                    //}
                 }
             }
         }

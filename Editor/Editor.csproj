@@ -94,6 +94,7 @@
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
+    <Compile Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Taskbar\TimelineEditorTaskbarItem.cs" />
@@ -135,6 +136,7 @@
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
+    <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />

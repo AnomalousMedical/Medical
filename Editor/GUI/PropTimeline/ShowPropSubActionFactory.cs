@@ -7,18 +7,23 @@ using Engine;
 
 namespace Medical.GUI
 {
-    class ShowPropSubActionFactory
+    class ShowPropSubActionFactory : IDisposable
     {
         Dictionary<String, ShowPropSubActionFactoryData> trackInfo = new Dictionary<string, ShowPropSubActionFactoryData>();
         private MovePropProperties movePropProperties;
+        private EditInterfaceProperties editInterfaceProperties;
+        private PushPlungerProperties pushPlungerProperties;
 
         public ShowPropSubActionFactory(Widget parentWidget)
         {
             movePropProperties = new MovePropProperties(parentWidget);
+            editInterfaceProperties = new EditInterfaceProperties(parentWidget);
+            pushPlungerProperties = new PushPlungerProperties(parentWidget);
 
             //Arrow
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
             arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            arrowData.addTrack(typeof(ChangeArrowColorAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(Arrow.DefinitionName, arrowData);
 
             //Doppler
@@ -44,8 +49,15 @@ namespace Medical.GUI
             //Syringe
             ShowPropSubActionFactoryData syringeData = new ShowPropSubActionFactoryData();
             syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
-            syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), new PushPlungerProperties(parentWidget));
+            syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), pushPlungerProperties);
             trackInfo.Add(Syringe.DefinitionName, syringeData);
+        }
+
+        public void Dispose()
+        {
+            movePropProperties.Dispose();
+            editInterfaceProperties.Dispose();
+            pushPlungerProperties.Dispose();
         }
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)
