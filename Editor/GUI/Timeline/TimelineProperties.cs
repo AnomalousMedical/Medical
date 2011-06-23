@@ -67,6 +67,7 @@ namespace Medical.GUI
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
+            timelineView.ActiveDataChanging += new EventHandler<CancelEventArgs>(timelineView_ActiveDataChanging);
 
             //Properties
             ScrollView propertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -289,6 +290,11 @@ namespace Medical.GUI
                     timelinePropertiesController.togglePlayPreview(timelineView.MarkerTime);
                     break;
             }
+        }
+
+        void timelineView_ActiveDataChanging(object sender, CancelEventArgs e)
+        {
+            e.Cancel = timelineController.Playing;
         }
     }
 }
