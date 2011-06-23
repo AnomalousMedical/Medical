@@ -62,6 +62,10 @@ namespace Medical.GUI
 
         public void setPropData(ShowPropAction showProp)
         {
+            if (propData != null)
+            {
+                propData.Updated -= propData_Updated;
+            }
             usingTools = false;
             timelineView.clearTracks();
             actionDataBindings.Clear();
@@ -80,6 +84,10 @@ namespace Medical.GUI
                 timelineView.Duration = 0.0f;
             }
             this.propData = showProp;
+            if (propData != null)
+            {
+                propData.Updated += propData_Updated;
+            }
         }
 
         public float Duration
@@ -129,12 +137,20 @@ namespace Medical.GUI
             }
         }
 
+        void propData_Updated(float time)
+        {
+            timelineView.MarkerTime = time;
+        }
+
         void trackFilter_AddTrackItem(string name)
         {
             ShowPropSubAction subAction = actionFactory.createSubAction(propData, name);
             subAction.StartTime = timelineView.MarkerTime;
             if (subAction is MovePropAction)
             {
+                //This is a bit hacky, but if the action is a MovePropAction grab the 
+                //current location and set that for the move position. 
+                //This makes editing easier.
                 MovePropAction moveProp = (MovePropAction)subAction;
                 if (usingTools)
                 {

@@ -109,7 +109,7 @@ namespace Medical.GUI
             showProp = null;
             simObjectMover.removeMovableObject(this);
             simObjectMover.setDrawingSurfaceVisible(false);
-            propTimeline.setPropData(null);
+            //propTimeline.setPropData(null);
         }
 
         void propTypes_EventComboChangePosition(Widget source, EventArgs e)

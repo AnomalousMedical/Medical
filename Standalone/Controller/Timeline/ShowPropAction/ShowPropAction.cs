@@ -13,6 +13,10 @@ namespace Medical
     [TimelineActionProperties("Show Prop")]
     public class ShowPropAction : TimelineAction
     {
+        public delegate void UpdatedDelegate(float time);
+
+        public event UpdatedDelegate Updated;
+
         private bool finished;
         private SimObjectBase simObject;
         private String propType;
@@ -73,6 +77,10 @@ namespace Medical
                 propFade = null; //Null this out, we are done with it here.
             }
             sequencer.update(clock);
+            if (Updated != null)
+            {
+                Updated.Invoke(timelineTime - StartTime);
+            }
             finished = timelineTime > endTime;
         }
 
