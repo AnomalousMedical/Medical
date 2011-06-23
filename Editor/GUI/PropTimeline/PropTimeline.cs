@@ -10,18 +10,6 @@ namespace Medical.GUI
 {
     public class PropTimeline : MDIDialog
     {
-        public event EventHandler UpdatePropPreview
-        {
-            add
-            {
-                actionFactory.MoveProperties.UpdatePropPreview += value;
-            }
-            remove
-            {
-                actionFactory.MoveProperties.UpdatePropPreview -= value;
-            }
-        }
-
         private TimelineDataProperties actionProperties;
         private TrackFilter trackFilter;
         private TimelineView timelineView;
@@ -171,16 +159,7 @@ namespace Medical.GUI
                 usingTools = timelineView.CurrentData.Track == "Move";
                 if (!usingTools && wasUsingTools)
                 {
-                    actionFactory.MoveProperties.fireUpdatePropPreview();
-
-                    //if (UsingTools)
-                    //{
-                    //    propData._movePreviewProp(Translation, Rotation);
-                    //}
-                    //else
-                    //{
-                    //    propData._movePreviewProp(Translation, Rotation);
-                    //}
+                    propData._movePreviewProp(propData.Translation, propData.Rotation);
                 }
             }
         }

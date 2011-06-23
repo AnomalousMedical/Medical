@@ -64,7 +64,7 @@ namespace Medical
 
         public override void editing()
         {
-
+            movePreviewProp(Translation, Rotation);
         }
 
         public override void reverseSides()
@@ -88,6 +88,7 @@ namespace Medical
             set
             {
                 endTranslation = value;
+                movePreviewProp(Translation, Rotation);
             }
         }
 
@@ -100,6 +101,7 @@ namespace Medical
             set
             {
                 endRotation = value;
+                movePreviewProp(Translation, Rotation);
             }
         }
 

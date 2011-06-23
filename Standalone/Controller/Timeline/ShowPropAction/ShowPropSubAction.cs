@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Engine.Platform;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical
 {
@@ -77,6 +78,11 @@ namespace Medical
             {
                 return showProp.PropSimObject;
             }
+        }
+
+        protected void movePreviewProp(Vector3 translation, Quaternion rotation)
+        {
+            showProp._movePreviewProp(translation, rotation);
         }
 
         private void discoverProperties()

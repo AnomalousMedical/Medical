@@ -56,7 +56,6 @@ namespace Medical.GUI
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
             this.propTimeline = propTimeline;
-            propTimeline.UpdatePropPreview += new EventHandler(propTimeline_UpdatePropPreview);
             propTimeline.Shown += new EventHandler(propTimeline_Shown);
             propTimeline.Closed += new EventHandler(propTimeline_Closed);
 
@@ -175,18 +174,6 @@ namespace Medical.GUI
         void actionData_DurationChanged(float duration)
         {
             propTimeline.Duration = duration;
-        }
-
-        void propTimeline_UpdatePropPreview(object sender, EventArgs e)
-        {
-            if (propTimeline.UsingTools)
-            {
-                showProp._movePreviewProp(propTimeline.Translation, propTimeline.Rotation);
-            }
-            else
-            {
-                showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
-            }
         }
 
         void propTimeline_Closed(object sender, EventArgs e)

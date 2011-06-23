@@ -9,8 +9,6 @@ namespace Medical.GUI
 {
     class MovePropProperties : TimelineDataPanel
     {
-        public event EventHandler UpdatePropPreview;
-
         private MovePropAction moveProp;
         private Edit translationEdit;
         private Edit rotationEdit;
@@ -31,15 +29,6 @@ namespace Medical.GUI
             moveProp = (MovePropAction)propData.Action;
             translationEdit.OnlyText = moveProp.Translation.ToString();
             rotationEdit.OnlyText = moveProp.Rotation.getEuler().ToString();
-            fireUpdatePropPreview();
-        }
-
-        public void fireUpdatePropPreview()
-        {
-            if (UpdatePropPreview != null)
-            {
-                UpdatePropPreview.Invoke(this, EventArgs.Empty);
-            }
         }
 
         public Vector3 Translation
@@ -73,7 +62,6 @@ namespace Medical.GUI
             Vector3 trans = new Vector3();
             trans.setValue(translationEdit.OnlyText);
             moveProp.Translation = trans;
-            fireUpdatePropPreview();
         }
 
         void rotationEdit_EventEditSelectAccept(Widget source, EventArgs e)
@@ -83,7 +71,6 @@ namespace Medical.GUI
             euler *= 0.0174532925f;
             Quaternion rotation = new Quaternion(euler.x, euler.y, euler.z);
             moveProp.Rotation = rotation;
-            fireUpdatePropPreview();
         }
     }
 }
