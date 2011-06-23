@@ -123,6 +123,7 @@
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ChangeArrowColorAction.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\ChangeArrowShapeAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\EditableShowPropSubAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\AbstractTimelineGUIData.cs" />

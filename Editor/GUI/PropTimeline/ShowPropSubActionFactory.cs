@@ -24,6 +24,7 @@ namespace Medical.GUI
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
             arrowData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             arrowData.addTrack(typeof(ChangeArrowColorAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
+            arrowData.addTrack(typeof(ChangeArrowShapeAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(Arrow.DefinitionName, arrowData);
 
             //Doppler
