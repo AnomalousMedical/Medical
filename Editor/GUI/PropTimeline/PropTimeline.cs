@@ -5,6 +5,7 @@ using System.Text;
 using MyGUIPlugin;
 using Engine;
 using Engine.Saving;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -27,11 +28,14 @@ namespace Medical.GUI
         public PropTimeline()
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
         {
+            window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+
             //Timeline view
             ScrollView timelineViewScrollView = window.findWidget("ActionView") as ScrollView;
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.Duration = 5.0f;
             timelineView.ActiveDataChanged += new EventHandler(timelineView_ActiveDataChanged);
+            timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -176,6 +180,11 @@ namespace Medical.GUI
 
         void removeAction_MouseButtonClick(Widget source, EventArgs e)
         {
+            removeCurrentData();
+        }
+
+        private void removeCurrentData()
+        {
             PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
             propData.removeSubAction(propTlData.Action);
             timelineView.removeData(propTlData);
@@ -191,6 +200,26 @@ namespace Medical.GUI
                 {
                     propData._movePreviewProp(propData.Translation, propData.Rotation);
                 }
+            }
+        }
+
+        void window_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            processKeys((KeyEventArgs)e);
+        }
+
+        void timelineView_KeyReleased(object sender, KeyEventArgs e)
+        {
+            processKeys(e);
+        }
+
+        private void processKeys(KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case KeyboardButtonCode.KC_DELETE:
+                    removeCurrentData();
+                    break;
             }
         }
 
