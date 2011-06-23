@@ -13,6 +13,7 @@ namespace Medical
     public class ChangeArrowColorAction : EditableShowPropSubAction
     {
         private Arrow arrow;
+        private Color arrowColor;
 
         public ChangeArrowColorAction()
         {
@@ -43,7 +44,16 @@ namespace Medical
 
         public override void editing()
         {
-            
+            if (PropSimObject != null)
+            {
+                arrow = PropSimObject.getElement(Arrow.ArrowBehaviorName) as Arrow;
+                arrow.Color = ArrowColor;
+            }
+        }
+
+        public override void editingCompleted()
+        {
+            arrow = null;
         }
 
         public override bool Finished
@@ -55,7 +65,21 @@ namespace Medical
         }
 
         [Editable]
-        public Color ArrowColor { get; set; }
+        public Color ArrowColor
+        {
+            get
+            {
+                return arrowColor;
+            }
+            set
+            {
+                arrowColor = value;
+                if (arrow != null)
+                {
+                    arrow.Color = value;
+                }
+            }
+        }
 
         #region Saveable Members
 

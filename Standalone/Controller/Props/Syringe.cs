@@ -110,11 +110,33 @@ namespace Medical
 
         public void plunge(float percent, float duration)
         {
+            if (duration <= 0.0f)
+            {
+                duration = 0.001f;
+            }
             startingBonePercent = currentBonePercent;
             plungeRangePercent = percent;
             plungeDuration = duration;
             doPlunge = true;
             timeCounter = 0.0f;
+        }
+
+        public void setPlungePosition(float percent)
+        {
+            doPlunge = false;
+            if (percent < 0.0f)
+            {
+                percent = 0.0f;
+            }
+            else if (percent > 1.0f)
+            {
+                percent = 1.0f;
+            }
+            currentBonePercent = percent;
+            Vector3 newPos = plungerBoneStart;
+            newPos.y -= (PLUNGE_RANGE * percent);
+            plungerBone.setPosition(newPos);
+            plungerBone.needUpdate(true);
         }
     }
 }

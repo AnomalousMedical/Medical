@@ -12,10 +12,10 @@ namespace Medical
     public class PushPlungerAction : ShowPropSubAction
     {
         private Syringe syringe;
+        private float plungePercentage = 1.0f;
 
         public PushPlungerAction()
         {
-            PlungePercentage = 1.0f;
             Duration = 1.0f;
         }
 
@@ -52,7 +52,19 @@ namespace Medical
 
         public override void editing()
         {
+            if (PropSimObject != null)
+            {
+                syringe = PropSimObject.getElement(Syringe.BehaviorName) as Syringe;
+                if (syringe != null)
+                {
+                    syringe.plunge(PlungePercentage, 0);
+                }
+            }
+        }
 
+        public override void editingCompleted()
+        {
+            syringe = null;
         }
 
         public override bool Finished
@@ -60,7 +72,21 @@ namespace Medical
             get { return true; }
         }
 
-        public float PlungePercentage { get; set; }
+        public float PlungePercentage
+        {
+            get
+            {
+                return plungePercentage;
+            }
+            set
+            {
+                plungePercentage = value;
+                if (syringe != null)
+                {
+                    syringe.setPlungePosition(value);
+                }
+            }
+        }
 
         #region Saveable
 
