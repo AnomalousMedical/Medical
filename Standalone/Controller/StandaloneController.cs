@@ -179,6 +179,7 @@ namespace Medical
             Syringe.createPropDefinition(propFactory);
             JVAProp.createPropDefinition(propFactory);
             Mustache.createPropDefinition(propFactory);
+            CircularHighlight.createPropDefinition(propFactory);
 
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();

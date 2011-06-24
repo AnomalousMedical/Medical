@@ -52,6 +52,12 @@ namespace Medical.GUI
             syringeData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             syringeData.addTrack(typeof(PushPlungerAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), pushPlungerProperties);
             trackInfo.Add(Syringe.DefinitionName, syringeData);
+
+            //Circular Highlight
+            ShowPropSubActionFactoryData circularHighlightData = new ShowPropSubActionFactoryData();
+            circularHighlightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            circularHighlightData.addTrack(typeof(ChangeCircularHighlightSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
+            trackInfo.Add(CircularHighlight.DefinitionName, circularHighlightData);
         }
 
         public void Dispose()
