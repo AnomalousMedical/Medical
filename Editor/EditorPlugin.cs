@@ -65,6 +65,7 @@ namespace Medical
             taskbar.addItem(new TimelineEditorTaskbarItem(timelinePropertiesController));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
             taskbar.addItem(new MDIDialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
+            taskbar.addItem(new MDIDialogOpenTaskbarItem(propTimeline, "Prop Timeline Editor", "PropEditorIcon"));
         }
 
         public void sceneLoaded(SimScene scene)
