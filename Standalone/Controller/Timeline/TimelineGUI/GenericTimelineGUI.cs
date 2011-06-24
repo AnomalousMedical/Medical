@@ -32,13 +32,19 @@ namespace Medical
             guiData = (TimelineGUIDataType)showTimelineAction.GUIData;
         }
 
-        public override void show(GUIManager guiManager)
+        public override sealed void show(GUIManager guiManager)
         {
             this.guiManager = guiManager;
             guiManager.changeLeftPanel(layoutContainer);
+            onShown();
         }
 
-        public override void hide(GUIManager guiManager)
+        protected virtual void onShown()
+        {
+
+        }
+
+        public override sealed void hide(GUIManager guiManager)
         {
             close();
         }
