@@ -81,13 +81,6 @@
     <Compile Include="Controller\TimelineZipResources.cs" />
     <Compile Include="EditorAtlasPluginEntryPoint.cs" />
     <Compile Include="EditorPlugin.cs" />
-    <Compile Include="GUI\Editor\BrowserWindow.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
-    <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
-    <Compile Include="GUI\Editor\ICustomCellProvider.cs" />
-    <Compile Include="GUI\Editor\MedicalUICallback.cs" />
-    <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
@@ -98,7 +91,6 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Taskbar\TimelineEditorTaskbarItem.cs" />
-    <Compile Include="GUI\Editor\PropertiesTable.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
@@ -133,7 +125,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementKeyframeProperties.layout" />
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.layout" />

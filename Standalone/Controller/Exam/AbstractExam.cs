@@ -5,6 +5,9 @@ using System.Text;
 using Engine.Attributes;
 using Engine.Saving;
 using Engine;
+using Medical.GUI;
+using Engine.Editing;
+using Engine.Reflection;
 
 namespace Medical
 {
@@ -66,6 +69,9 @@ namespace Medical
         [DoNotSave]
         private String prettyName;
 
+        [DoNotCopy]
+        private EditInterface editInterface;
+
         /// <summary>
         /// Constructor, takes a pretty name for the exam.
         /// </summary>
@@ -78,9 +84,11 @@ namespace Medical
 
         public virtual void showBreakdownGUI()
         {
-
+            GenericExamOverview viewer = new GenericExamOverview(this);
+            viewer.open(false);
         }
 
+        [Hidden]
         public DateTime Date
         {
             get
@@ -89,11 +97,25 @@ namespace Medical
             }
         }
 
+        [Hidden]
         public String PrettyName
         {
             get
             {
                 return prettyName;
+            }
+        }
+
+        [Hidden]
+        public virtual EditInterface EditInterface
+        {
+            get
+            {
+                if (editInterface == null)
+                {
+                    editInterface = ReflectedEditInterface.createEditInterface(this, AbstractExamMemberScanner.MemberScanner, prettyName, null);
+                }
+                return editInterface;
             }
         }
 

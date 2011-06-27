@@ -105,8 +105,10 @@
     <Compile Include="Controller\Bookmarks\Bookmark.cs" />
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
+    <Compile Include="Controller\Exam\AbstractExamMemberScanner.cs" />
     <Compile Include="Controller\Exam\Exam.cs" />
     <Compile Include="Controller\Exam\ExamController.cs" />
+    <Compile Include="Controller\Exam\HiddenAttribute.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
     <Compile Include="Controller\GenericEvents.cs" />
@@ -149,7 +151,16 @@
     <Compile Include="Controller\Anatomy\AnatomySearchList.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagGroup.cs" />
     <Compile Include="Controller\Anatomy\AnatomyTagManager.cs" />
+    <Compile Include="GUI\Editor\BrowserWindow.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceTreeNode.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceTreeView.cs" />
+    <Compile Include="GUI\Editor\EditInterfaceViewEvent.cs" />
+    <Compile Include="GUI\Editor\ICustomCellProvider.cs" />
+    <Compile Include="GUI\Editor\MedicalUICallback.cs" />
+    <Compile Include="GUI\Editor\ObjectEditor.cs" />
+    <Compile Include="GUI\Editor\PropertiesTable.cs" />
     <Compile Include="GUI\ExamViewer\ExamViewer.cs" />
+    <Compile Include="GUI\ExamViewer\GenericExamOverview.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\DialogEntry.cs" />
@@ -324,7 +335,9 @@
     <Content Include="skull.ico" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\ExamViewer.layout" />
+    <EmbeddedResource Include="GUI\ExamViewer\GenericExamOverview.layout" />
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />

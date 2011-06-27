@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Saving;
 using Engine;
 using Engine.Attributes;
+using Engine.Editing;
 
 namespace Medical
 {
@@ -27,5 +28,10 @@ namespace Medical
         /// The pretty name of the exam for display on the UI.
         /// </summary>
         String PrettyName { get; }
+
+        /// <summary>
+        /// An EditInterface for the exam.
+        /// </summary>
+        EditInterface EditInterface { get; }
     }
 }
