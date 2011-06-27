@@ -59,21 +59,19 @@ namespace Medical
             {
                 blacklist("Cannot find 'ManualObject' in node {0}.", PropFactory.NodeName);
             }
-            //Initialize the manual object so it can be easily updated.
-            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_LIST);
-            manualObject.estimateVertexCount((uint)(numSections * 2));
-            manualObject.position(ref Vector3.Zero);
-            manualObject.position(ref Vector3.Zero);
-            manualObject.end();
             createEllipse();
         }
 
         public void createEllipse()
         {
             manualObject.clear();
-            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_LIST);
+            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_STRIP);
+            uint vertexCount = (uint)(numSections * 2);
+            uint indexCount = vertexCount + 2;
+            manualObject.estimateVertexCount(vertexCount);
+            manualObject.estimateIndexCount(indexCount);
             float increment = 6.28f / numSections;
-            for (int i = 0; i <= numSections; ++i)
+            for (uint i = 0; i < numSections; ++i)
             {
                 float t = i * increment;
                 Vector2 ellipsePosition = innerEllipse.getPoint(t);
@@ -82,22 +80,13 @@ namespace Medical
                 ellipsePosition = outerEllipse.getPoint(t);
                 manualObject.position(new Vector3(ellipsePosition.x, ellipsePosition.y, 0));
                 manualObject.color(color.r, color.g, color.b, color.a);
+
+                manualObject.index(i * 2);
+                manualObject.index(i * 2 + 1);
             }
-            for (uint i = 0; i < numSections * 2; ++i)
-            {
-                if (i % 2 == 0)
-                {
-                    manualObject.index(i);
-                    manualObject.index(i + 1);
-                    manualObject.index(i + 2);
-                }
-                else
-                {
-                    manualObject.index(i + 2);
-                    manualObject.index(i + 1);
-                    manualObject.index(i);
-                }
-            }
+            //Close the ellipse
+            manualObject.index(0);
+            manualObject.index(1);
             manualObject.end();
         }
 
