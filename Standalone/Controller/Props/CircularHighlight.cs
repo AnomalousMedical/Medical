@@ -36,6 +36,7 @@ namespace Medical
         private ManualObject manualObject;
         private int numSections = 36;
         private Color color = Color.Red;
+        private float thickness = 0.2f;
 
         public CircularHighlight()
         {
@@ -59,8 +60,8 @@ namespace Medical
                 blacklist("Cannot find 'ManualObject' in node {0}.", PropFactory.NodeName);
             }
             //Initialize the manual object so it can be easily updated.
-            manualObject.begin("colorvertex", OperationType.OT_LINE_STRIP);
-            manualObject.estimateVertexCount(128);
+            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_LIST);
+            manualObject.estimateVertexCount((uint)(numSections * 2));
             manualObject.position(ref Vector3.Zero);
             manualObject.position(ref Vector3.Zero);
             manualObject.end();
@@ -70,12 +71,32 @@ namespace Medical
         public void createEllipse()
         {
             manualObject.clear();
-            manualObject.begin("colorvertex", OperationType.OT_LINE_STRIP);
-            for (float i = 0; i <= 6.28; i += (6.28f / numSections))
+            manualObject.begin("colorvertex", OperationType.OT_TRIANGLE_LIST);
+            float increment = 6.28f / numSections;
+            for (int i = 0; i <= numSections; ++i)
             {
-                Vector2 ellipsePosition = innerEllipse.getPoint(i);
+                float t = i * increment;
+                Vector2 ellipsePosition = innerEllipse.getPoint(t);
                 manualObject.position(new Vector3(ellipsePosition.x, ellipsePosition.y, 0));
                 manualObject.color(color.r, color.g, color.b, color.a);
+                ellipsePosition = outerEllipse.getPoint(t);
+                manualObject.position(new Vector3(ellipsePosition.x, ellipsePosition.y, 0));
+                manualObject.color(color.r, color.g, color.b, color.a);
+            }
+            for (uint i = 0; i < numSections * 2; ++i)
+            {
+                if (i % 2 == 0)
+                {
+                    manualObject.index(i);
+                    manualObject.index(i + 1);
+                    manualObject.index(i + 2);
+                }
+                else
+                {
+                    manualObject.index(i + 2);
+                    manualObject.index(i + 1);
+                    manualObject.index(i);
+                }
             }
             manualObject.end();
         }
@@ -89,6 +110,7 @@ namespace Medical
             set
             {
                 innerEllipse.Theta = value;
+                outerEllipse.Theta = value;
             }
         }
 
@@ -101,6 +123,7 @@ namespace Medical
             set
             {
                 innerEllipse.MajorAxis = value;
+                outerEllipse.MajorAxis = value + thickness;
             }
         }
 
@@ -113,6 +136,7 @@ namespace Medical
             set
             {
                 innerEllipse.MinorAxis = value;
+                outerEllipse.MinorAxis = value + thickness;
             }
         }
 
@@ -125,6 +149,20 @@ namespace Medical
             set
             {
                 color = value;
+            }
+        }
+
+        public float Thickness
+        {
+            get
+            {
+                return thickness;
+            }
+            set
+            {
+                thickness = value;
+                outerEllipse.MajorAxis = innerEllipse.MajorAxis + thickness;
+                outerEllipse.MinorAxis = innerEllipse.MinorAxis + thickness;
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Medical
         private float majorAxis;
         private Degree theta;
         private Color color;
+        private float thickness;
 
         private CircularHighlight highlight;
 
@@ -25,6 +26,7 @@ namespace Medical
             majorAxis = 1.0f;
             theta = 0;
             color = Color.Red;
+            thickness = 0.2f;
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -34,6 +36,7 @@ namespace Medical
             highlight.MinorAxis = minorAxis;
             highlight.Theta = theta;
             highlight.Color = color;
+            highlight.Thickness = thickness;
             highlight.createEllipse();
         }
 
@@ -44,6 +47,7 @@ namespace Medical
             highlight.MinorAxis = minorAxis;
             highlight.Theta = theta;
             highlight.Color = color;
+            highlight.Thickness = thickness;
             highlight.createEllipse();
         }
 
@@ -66,6 +70,7 @@ namespace Medical
                 highlight.MinorAxis = minorAxis;
                 highlight.Theta = theta;
                 highlight.Color = color;
+                highlight.Thickness = thickness;
                 highlight.createEllipse();
             }
         }
@@ -155,6 +160,24 @@ namespace Medical
             }
         }
 
+        [Editable]
+        public float Thickness
+        {
+            get
+            {
+                return thickness;
+            }
+            set
+            {
+                thickness = value;
+                if (highlight != null)
+                {
+                    highlight.Thickness = value;
+                    highlight.createEllipse();
+                }
+            }
+        }
+
         #region Saveable Members
 
         protected ChangeCircularHighlightSettings(LoadInfo info)
@@ -164,6 +187,7 @@ namespace Medical
             majorAxis = info.GetFloat("majorAxis");
             theta = info.GetFloat("theta");
             color = info.GetColor("color");
+            thickness = info.GetFloat("thickness", 0.2f);
         }
 
         public override void getInfo(SaveInfo info)
@@ -173,6 +197,7 @@ namespace Medical
             info.AddValue("majorAxis", majorAxis);
             info.AddValue("theta", (float)theta);
             info.AddValue("color", color);
+            info.AddValue("thickness", thickness);
         }
 
         #endregion
