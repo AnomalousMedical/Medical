@@ -26,6 +26,12 @@ namespace Medical
 
         }
 
+        //public override void Dispose()
+        //{
+        //    Logging.Log.Debug("GenericTimelineGUI {0} destroyed.", GetType().Name);
+        //    base.Dispose();
+        //}
+
         public override void initialize(ShowTimelineGUIAction showTimelineAction)
         {
             this.showTimelineAction = showTimelineAction;
@@ -72,7 +78,7 @@ namespace Medical
         private void close()
         {
             //Here we change the left panel back to null and have an anoymous delegate that calls Dispose when the animation is completed.
-            guiManager.changeLeftPanel(null, delegate()
+            guiManager.changeLeftPanel(null, delegate(LayoutContainer oldChild)
             {
                 //The lifecycle is to create a new gui in the prototype so it must be disposed here when we are done with it.
                 Dispose();

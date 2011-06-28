@@ -83,8 +83,8 @@ namespace Medical.GUI
                 wizardIconPanel.SuppressLayout = false;
                 wizardIconPanel.invalidate();
                 currentWizard.showPanel(currentIndex);
-                guiManager.changeLeftPanel(screenLayout);
-                guiManager.changeTopPanel(wizardIconPanel.LayoutContainer);
+                guiManager.changeLeftPanel(screenLayout, panelClosed);
+                guiManager.changeTopPanel(wizardIconPanel.LayoutContainer, panelClosed);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Medical.GUI
             if (currentWizard != null)
             {
                 guiManager.changeLeftPanel(null, wizardCompletelyClosed);
-                guiManager.resetTopPanel();
+                guiManager.resetTopPanel(panelClosed);
                 CurrentSceneView.setPosition(cameraTranslationBeforeShown, cameraLookAtBeforeShown);
                 layerController.applyLayerState(layerStatusBeforeShown);
                 if (Finished != null)
@@ -103,12 +103,24 @@ namespace Medical.GUI
             }
         }
 
-        private void wizardCompletelyClosed()
+        private void wizardCompletelyClosed(LayoutContainer oldChild)
         {
+            if (oldChild != null)
+            {
+                oldChild.Visible = false;
+            }
             currentWizard.hidePanel(currentIndex);
             wizardIconPanel.clearPanels();
-            crossFadeContainer.changePanel(null, 0.0f, animationCompleted);
+            crossFadeContainer.changePanel(null, 0.0f, panelClosed);
             currentWizard = null;
+        }
+
+        private void panelClosed(LayoutContainer oldChild)
+        {
+            if (oldChild != null)
+            {
+                oldChild.Visible = false;
+            }
         }
 
         public SceneViewWindow CurrentSceneView { get; set; }
@@ -131,7 +143,7 @@ namespace Medical.GUI
             stateWizardButtons.setNextButtonActive(currentIndex != maxIndex - 1);
             panel.LayoutContainer.Visible = true;
             panel.LayoutContainer.bringToFront();
-            crossFadeContainer.changePanel(panel.LayoutContainer, 0.25f, animationCompleted);
+            crossFadeContainer.changePanel(panel.LayoutContainer, 0.25f, panelClosed);
             wizardIconPanel.indexChanged(currentIndex);
         }
 
@@ -205,14 +217,6 @@ namespace Medical.GUI
                 StateCreated.Invoke(createdState);
             }
             closeWizard();
-        }
-
-        private void animationCompleted(LayoutContainer oldChild)
-        {
-            if (oldChild != null)
-            {
-                oldChild.Visible = false;
-            }
         }
 
         /// <summary>

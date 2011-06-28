@@ -10,8 +10,6 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    public delegate void UIAnimationFinishedCallback();
-
     public class GUIManager : IDisposable
     {
         private ScreenLayoutManager screenLayoutManager;
@@ -31,9 +29,6 @@ namespace Medical.GUI
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
-
-        //Animation callbacks
-        private UIAnimationFinishedCallback leftAnimationFinished;
 
         public GUIManager(StandaloneController standaloneController)
         {
@@ -117,7 +112,7 @@ namespace Medical.GUI
             screenLayoutManager.changeOSWindow(newWindow);
         }
 
-        public void changeTopPanel(LayoutContainer topContainer)
+        public void changeTopPanel(LayoutContainer topContainer, AnimationCompletedDelegate animationCompleted)
         {
             if (topContainer != null)
             {
@@ -127,9 +122,9 @@ namespace Medical.GUI
             topAnimatedContainer.changePanel(topContainer, 0.25f, animationCompleted);
         }
 
-        public void resetTopPanel()
+        public void resetTopPanel(AnimationCompletedDelegate animationCompleted)
         {
-            changeTopPanel(null);
+            changeTopPanel(null, animationCompleted);
         }
 
         public void changeLeftPanel(LayoutContainer leftContainer)
@@ -137,7 +132,7 @@ namespace Medical.GUI
             changeLeftPanel(leftContainer, null);
         }
 
-        public void changeLeftPanel(LayoutContainer leftContainer, UIAnimationFinishedCallback animationFinished)
+        public void changeLeftPanel(LayoutContainer leftContainer, AnimationCompletedDelegate animationCompleted)
         {
             if (leftContainer != null)
             {
@@ -146,12 +141,11 @@ namespace Medical.GUI
             }
             if (leftAnimatedContainer.CurrentContainer != leftContainer)
             {
-                leftAnimatedContainer.changePanel(leftContainer, 0.25f, leftAnimationCompleted);
+                leftAnimatedContainer.changePanel(leftContainer, 0.25f, animationCompleted);
             }
-            leftAnimationFinished = animationFinished;//Store new one
         }
 
-        public void changeRightPanel(LayoutContainer rightContainer)
+        public void changeRightPanel(LayoutContainer rightContainer, AnimationCompletedDelegate animationCompleted)
         {
             if (rightContainer != null)
             {
@@ -164,7 +158,7 @@ namespace Medical.GUI
             }
         }
 
-        public void changeBottomPanel(LayoutContainer bottomContainer)
+        public void changeBottomPanel(LayoutContainer bottomContainer, AnimationCompletedDelegate animationCompleted)
         {
             if (bottomContainer != null)
             {
@@ -217,23 +211,23 @@ namespace Medical.GUI
             dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
         }
 
-        private void animationCompleted(LayoutContainer oldChild)
-        {
-            if (oldChild != null)
-            {
-                oldChild.Visible = false;
-            }
-        }
+        //private void animationCompleted(LayoutContainer oldChild)
+        //{
+        //    if (oldChild != null)
+        //    {
+        //        oldChild.Visible = false;
+        //    }
+        //}
 
-        private void leftAnimationCompleted(LayoutContainer oldChild)
-        {
-            animationCompleted(oldChild);
-            if (leftAnimationFinished != null)
-            {
-                leftAnimationFinished.Invoke();
-                leftAnimationFinished = null;
-            }
-        }
+        //private void leftAnimationCompleted(LayoutContainer oldChild)
+        //{
+        //    animationCompleted(oldChild);
+        //    foreach (UIAnimationFinishedCallback animFinished in leftAnimationFinishedCBQueue)
+        //    {
+        //        animFinished.Invoke();
+        //    }
+        //    leftAnimationFinishedCBQueue.Clear();
+        //}
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
