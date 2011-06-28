@@ -48,7 +48,9 @@ namespace Medical
             }
             else
             {
-                TimelineController.queueTimeline(TimelineController.openTimeline(TargetTimeline));
+                Timeline timeline = TimelineController.openTimeline(TargetTimeline);
+                timeline.AutoFireMultiTimelineStopped = Timeline.AutoFireMultiTimelineStopped;
+                TimelineController.queueTimeline(timeline);
             }
         }
 

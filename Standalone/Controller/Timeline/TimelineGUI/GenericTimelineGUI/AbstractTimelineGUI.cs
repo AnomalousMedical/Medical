@@ -16,12 +16,6 @@ namespace Medical
 
         }
 
-        public override void Dispose()
-        {
-            Logging.Log.Debug("AbstractTimelineGUI {0} destroyed.", GetType().Name);
-            base.Dispose();
-        }
-
         public override void initialize(ShowTimelineGUIAction showTimelineAction)
         {
             this.showTimelineAction = showTimelineAction;
