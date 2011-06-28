@@ -51,6 +51,12 @@ namespace Medical
             
         }
 
+        /// <summary>
+        /// This class will not actually commit its interface changes until the
+        /// next frame tick. This way all requests can be bundled up and
+        /// processed at once.
+        /// </summary>
+        /// <param name="clock"></param>
         public void sendUpdate(Clock clock)
         {
             AbstractTimelineGUI gui;
