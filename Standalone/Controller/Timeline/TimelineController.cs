@@ -141,6 +141,10 @@ namespace Medical
                     TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
                 activeTimeline.stop(playPostActions);
+                if (!playPostActions)
+                {
+                    _fireMultiTimelineStopEvent();
+                }
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
                 if (activeTimeline != editingTimeline)
@@ -154,6 +158,38 @@ namespace Medical
                     startPlayback(queuedTimeline, playPostActions);
                     clearQueuedTimeline();
                 }
+            }
+        }
+
+        /// <summary>
+        /// This will stop the current timeline, without playing post actions
+        /// and start the new timeline optionally playing pre and post actions
+        /// on the new timeline.
+        /// </summary>
+        /// <param name="timeline">The new timeline to play.</param>
+        /// <param name="playNewTimelinePrePostAction">True to play pre and post actions.</param>
+        public void stopAndStartPlayback(Timeline timeline, bool playNewTimelinePrePostAction)
+        {
+            if (updating)
+            {
+                if (TimelinePlaybackStopped != null)
+                {
+                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
+                }
+                activeTimeline.stop(false);
+                previousTimeline = activeTimeline;
+                mainTimer.removeFixedUpdateListener(this);
+                if (activeTimeline != editingTimeline)
+                {
+                    activeTimeline.TimelineController = null;
+                }
+                activeTimeline = null;
+                updating = false;
+            }
+            if (timeline != null)
+            {
+                startPlayback(timeline, playNewTimelinePrePostAction);
+                clearQueuedTimeline();
             }
         }
 

@@ -183,10 +183,6 @@ namespace Medical
                     }
                 }
             }
-            else
-            {
-                TimelineController._fireMultiTimelineStopEvent();
-            }
         }
 
         public void update(Clock clock)

@@ -47,8 +47,7 @@ namespace Medical
                 timeline.AutoFireMultiTimelineStopped = allowPlaybackStop;
                 if (timelineControllerAfterDoAction.Playing)
                 {
-                    timelineControllerAfterDoAction.queueTimeline(timeline);
-                    timelineControllerAfterDoAction.stopPlayback();
+                    timelineControllerAfterDoAction.stopAndStartPlayback(timeline, true);
                 }
                 else
                 {
