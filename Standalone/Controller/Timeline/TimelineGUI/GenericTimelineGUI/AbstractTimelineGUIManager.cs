@@ -11,7 +11,6 @@ namespace Medical
     {
         public static AbstractTimelineGUIManager Instance { get; private set; }
 
-        private CrossFadeLayoutContainer leftFadeContainer;
         private GUIManager guiManager;
         private List<AbstractTimelineGUI> requestList = new List<AbstractTimelineGUI>();
         private UpdateTimer updateTimer;
@@ -24,7 +23,6 @@ namespace Medical
                 throw new Exception("Only create one instance of the GenericTimelineGUIManager.");
             }
             Instance = this;
-            leftFadeContainer = new CrossFadeLayoutContainer(updateTimer);
             this.guiManager = guiManager;
             this.updateTimer = updateTimer;
         }
