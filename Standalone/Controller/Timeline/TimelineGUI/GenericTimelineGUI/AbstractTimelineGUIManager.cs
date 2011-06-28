@@ -55,11 +55,27 @@ namespace Medical
 
         public void sendUpdate(Clock clock)
         {
-            foreach (AbstractTimelineGUI gui in requestList)
+            AbstractTimelineGUI gui;
+            LayoutContainer nextContainer;
+            AbstractTimelineGUI currentGui;
+            for (int i = 0; i < requestList.Count; ++i)
             {
+                gui = requestList[i];
                 if (gui._RequestClosed)
                 {
-                    guiManager.changeLeftPanel(null, gui._animationCallback);
+                    //Read ahead and find any other guis that want to be open.
+                    nextContainer = null;
+                    for (int j = i; j < requestList.Count && nextContainer == null; ++j)
+                    {
+                        currentGui = requestList[j];
+                        if (!currentGui._RequestClosed)
+                        {
+                            //Found another gui that wants to be open. Store it and open it, also remove it from the request list.
+                            nextContainer = currentGui.Container;
+                            requestList.Remove(currentGui);
+                        }
+                    }
+                    guiManager.changeLeftPanel(nextContainer, gui._animationCallback);
                 }
                 else
                 {
