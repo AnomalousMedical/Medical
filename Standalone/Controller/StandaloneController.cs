@@ -52,6 +52,7 @@ namespace Medical
         private MeasurementGrid measurementGrid;
         private SceneViewWindowPresetController windowPresetController;
         private HtmlHelpController htmlHelpController;
+        private AbstractTimelineGUIManager abstractTimelineGUIManager;
 
         //Platform
         private MainWindow mainWindow;
@@ -186,6 +187,8 @@ namespace Medical
             timelineController = new TimelineController(this);
             timelineController.PlaybackStarted += new EventHandler(timelineController_PlaybackStarted);
             timelineController.PlaybackStopped += new EventHandler(timelineController_PlaybackStopped);
+
+            abstractTimelineGUIManager = new AbstractTimelineGUIManager(medicalController.MainTimer, guiManager);
 
             //Exams
             examController = new ExamController();
