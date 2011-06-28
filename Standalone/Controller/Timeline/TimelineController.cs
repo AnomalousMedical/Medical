@@ -28,11 +28,9 @@ namespace Medical
         public event EventHandler TimelinePlaybackStarted; //Fired whenever an individual timeline starts playing.
         public event EventHandler TimelinePlaybackStopped; //Fired whenever an individual timeline stops playing.
         public event TimeTickEvent TimeTicked; //Called on every update of the TimelineController
-        public event SingleArgumentEvent<TimelineController, Timeline> EditingTimelineChanged;
 
         private XmlSaver xmlSaver = new XmlSaver();
         private Timeline activeTimeline;
-        private Timeline editingTimeline;
         private Timeline queuedTimeline;
         private Timeline previousTimeline = null;
         private UpdateTimer mainTimer;
@@ -147,10 +145,7 @@ namespace Medical
                 }
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
-                if (activeTimeline != editingTimeline)
-                {
-                    activeTimeline.TimelineController = null;
-                }
+                activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;
                 if (queuedTimeline != null)
@@ -179,10 +174,7 @@ namespace Medical
                 activeTimeline.stop(false);
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
-                if (activeTimeline != editingTimeline)
-                {
-                    activeTimeline.TimelineController = null;
-                }
+                activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;
             }
@@ -191,6 +183,11 @@ namespace Medical
                 startPlayback(timeline, playNewTimelinePrePostAction);
                 clearQueuedTimeline();
             }
+        }
+
+        public void setAsTimelineController(Timeline timeline)
+        {
+            timeline.TimelineController = this;
         }
 
         /// <summary>
@@ -411,35 +408,6 @@ namespace Medical
         }
 
         #endregion
-
-        /// <summary>
-        /// Set a timeline as the current editing target. This will give the
-        /// timeline access to the controller and will keep the controller from
-        /// being nulled out if the timeline is played.
-        /// </summary>
-        public Timeline EditingTimeline
-        {
-            get
-            {
-                return editingTimeline;
-            }
-            set
-            {
-                if (editingTimeline != null)
-                {
-                    editingTimeline.TimelineController = null;
-                }
-                editingTimeline = value;
-                if (editingTimeline != null)
-                {
-                    editingTimeline.TimelineController = this;
-                }
-                if (EditingTimelineChanged != null)
-                {
-                    EditingTimelineChanged.Invoke(this, editingTimeline);
-                }
-            }
-        }
 
         public Timeline PreviousTimeline
         {

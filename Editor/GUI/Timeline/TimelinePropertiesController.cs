@@ -39,6 +39,7 @@ namespace Medical.GUI
         private BrowserWindow browserWindow;
         private QuestionEditor questionEditor;
         private TimelineFileBrowserDialog fileBrowserDialog;
+        public event SingleArgumentEvent<TimelinePropertiesController, Timeline> CurrentTimelineChanged;
 
         private TimelineController editorTimelineController;
         private TimelineController mainTimelineController;
@@ -52,10 +53,12 @@ namespace Medical.GUI
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
             mainTimelineController = standaloneController.TimelineController;
+            mainTimelineController.TimelinePlaybackStopped += new EventHandler(mainTimelineController_TimelinePlaybackStopped);
 
             GUIManager guiManager = standaloneController.GUIManager;
             editorTimelineController = editorPlugin.TimelineController;
             editorTimelineController.ResourceLocationChanged += new EventHandler(editorTimelineController_ResourceLocationChanged);
+            editorTimelineController.TimelinePlaybackStopped += new EventHandler(editorTimelineController_TimelinePlaybackStopped);
 
             this.documentController = standaloneController.DocumentController;
             documentHandler = new TimelineDocumentHandler(this);
@@ -228,7 +231,11 @@ namespace Medical.GUI
                         currentTimeline.ActionRemoved -= currentTimeline_ActionRemoved;
                     }
                     currentTimeline = value;
-                    editorTimelineController.EditingTimeline = currentTimeline;
+                    editorTimelineController.setAsTimelineController(currentTimeline);
+                    if (CurrentTimelineChanged != null)
+                    {
+                        CurrentTimelineChanged.Invoke(this, currentTimeline);
+                    }
                     timelineProperties.setCurrentTimeline(currentTimeline);
                     timelineObjectEditor.EditInterface = currentTimeline.getEditInterface();
                     if (currentTimeline != null)
@@ -331,6 +338,21 @@ namespace Medical.GUI
             {
                 timelineFileExplorer.save();
             }
+        }
+
+        void resetCurrentTimelineController()
+        {
+            editorTimelineController.setAsTimelineController(currentTimeline);
+        }
+
+        void mainTimelineController_TimelinePlaybackStopped(object sender, EventArgs e)
+        {
+            resetCurrentTimelineController();
+        }
+
+        void editorTimelineController_TimelinePlaybackStopped(object sender, EventArgs e)
+        {
+            resetCurrentTimelineController();
         }
     }
 }

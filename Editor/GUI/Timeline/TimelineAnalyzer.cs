@@ -25,7 +25,7 @@ namespace Medical.GUI
             this.timelineController = timelineController;
             this.timelineProperties = timelineProperties;
 
-            timelineController.EditingTimelineChanged += new SingleArgumentEvent<TimelineController, Timeline>(timelineController_EditingTimelineChanged);
+            timelineProperties.CurrentTimelineChanged +=new SingleArgumentEvent<TimelinePropertiesController,Timeline>(timelineProperties_CurrentTimelineChanged);
 
             actionManager = new ActionManager(window.findWidget("LastQuery") as StaticText, window.findWidget("BackButton") as Button, window.findWidget("ForwardButton") as Button);
             timelineList = new TimelineList(window.findWidget("TimelineList") as MultiList, actionManager);
@@ -58,7 +58,7 @@ namespace Medical.GUI
             actionManager.addAction(reset, this.reset, this.resetUndo, "Loaded from Timeline editor. Targets listed.");
             actionManager.addAction(listTargets, this.listTargets, this.listTargetsUndo, "List targets. These are the timelines this one links to.");
             actionManager.addAction(findReferences, this.findReferences, this.FindReferencesUndo, "Find references. These timelines point to this one.");
-            actionManager.addAction(timelineController, this.reset, this.resetUndo, "Loaded from Timeline editor. Targets listed.");
+            actionManager.addAction(timelineProperties, this.reset, this.resetUndo, "Loaded from Timeline editor. Targets listed.");
             actionManager.addAction(listUnreferenced, this.listAllUnreferenced, null, "Unrefernced Timelines. These are not linked to any other timeline.");
 
             actionButtonManager.ActiveButton = listTargets;
@@ -83,8 +83,8 @@ namespace Medical.GUI
         String reset()
         {
             timelineList.removeAllItems();
-            doListTargets(timelineController.EditingTimeline.SourceFile, false);
-            return timelineController.EditingTimeline.SourceFile;
+            doListTargets(timelineProperties.CurrentTimeline.SourceFile, false);
+            return timelineProperties.CurrentTimeline.SourceFile;
         }
 
         void resetUndo(String file)
@@ -249,7 +249,7 @@ namespace Medical.GUI
             actionManager.executeAction(source);
         }
 
-        void timelineController_EditingTimelineChanged(TimelineController source, Timeline arg)
+        void timelineProperties_CurrentTimelineChanged(TimelinePropertiesController source, Timeline arg)
         {
             if (allowTimelineChanges)
             {
