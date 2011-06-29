@@ -76,6 +76,7 @@ namespace Medical
         /// </summary>
         private void close()
         {
+            widget.Enabled = false;
             AbstractTimelineGUIManager.Instance.requestClose(this);
         }
     }
