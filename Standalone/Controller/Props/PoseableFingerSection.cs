@@ -10,8 +10,8 @@ namespace Medical
     class PoseableFingerSection
     {
         private Bone bone;
-        private Radian yaw = 0.0f;
         private Radian pitch = 0.0f;
+        private Radian yaw = 0.0f;
         private Quaternion startRotation;
 
         public PoseableFingerSection(Skeleton skeleton, String boneName)
@@ -23,19 +23,6 @@ namespace Medical
             }
             bone.setManuallyControlled(true);
             startRotation = bone.getOrientation();
-        }
-
-        public Radian Yaw
-        {
-            get
-            {
-                return yaw;
-            }
-            set
-            {
-                yaw = value;
-                updateBone();
-            }
         }
 
         public Radian Pitch
@@ -51,10 +38,23 @@ namespace Medical
             }
         }
 
+        public Radian Yaw
+        {
+            get
+            {
+                return yaw;
+            }
+            set
+            {
+                yaw = value;
+                updateBone();
+            }
+        }
+
         public void updateBone()
         {
-            //This does not use the right order.
-            Quaternion rotation = new Quaternion(0, pitch, yaw);
+            //This does not use the right order, pitch and roll are reversed, but this makes sense for the fingers
+            Quaternion rotation = new Quaternion(yaw, 0, pitch);
             bone.setOrientation(startRotation * rotation);
             bone.needUpdate(true);
         }
