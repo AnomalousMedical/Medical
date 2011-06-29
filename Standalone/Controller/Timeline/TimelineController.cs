@@ -139,15 +139,17 @@ namespace Medical
                 {
                     _fireMultiTimelineStopEvent();
                 }
-                if (TimelinePlaybackStopped != null)
-                {
-                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
-                }
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
                 activeTimeline.TimelineController = null;
                 activeTimeline = null;
                 updating = false;
+
+                if (TimelinePlaybackStopped != null)
+                {
+                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
+                }
+
                 if (queuedTimeline != null)
                 {
                     startPlayback(queuedTimeline, playPostActions);
