@@ -9,7 +9,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class PoseableHand : Behavior
+    class PoseableHand : Interface
     {
         public const String DefinitionName = "PoseableHand";
         public const String PoseableHandBehavior = "PoseableHandBehavior";
@@ -43,7 +43,7 @@ namespace Medical
         //Bones
         private Bone wrist;
         private Bone palm;
-        private PoseableFinger thumb;
+        private PoseableThumb thumb;
         private PoseableFinger index;
         private PoseableFinger middle;
         private PoseableFinger ring;
@@ -85,43 +85,51 @@ namespace Medical
                 blacklist("Could not find bpalm in PoseableHand");
             }
             palm.setManuallyControlled(true);
-            thumb = new PoseableFinger(skeleton, "bthumbBase", "bthumb02", "bthumb01");
+            thumb = new PoseableThumb(skeleton, "bthumbBase", "bthumb02", "bthumb01");
             index = new PoseableFinger(skeleton, "bIndexknuckle", "bIndex03", "bIndex02", "bIndex01");
             middle = new PoseableFinger(skeleton, "bMiddleknuckle", "bMiddle03", "bMiddle02", "bMiddle01");
             ring = new PoseableFinger(skeleton, "bringknuckle", "bring03", "bring02", "bring01");
             pinky = new PoseableFinger(skeleton, "bpinkyknuckle", "bpinky03", "bpinky02", "bpinky01");
         }
 
-        public override void update(Engine.Platform.Clock clock, Engine.Platform.EventManager eventManager)
+        private PoseableThumb Thumb
         {
-            //thumb.Metacarpal.Yaw += (Degree)(10 * clock.fSeconds);
-            //index.Metacarpal.Yaw += (Degree)(10 * clock.fSeconds);
-            //middle.Metacarpal.Yaw += (Degree)(10 * clock.fSeconds);
-            //ring.Metacarpal.Yaw += (Degree)(10 * clock.fSeconds);
-            //pinky.Metacarpal.Yaw += (Degree)(10 * clock.fSeconds);
+            get
+            {
+                return thumb;
+            }
+        }
 
-            //thumb.ProximalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //index.ProximalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //middle.ProximalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //ring.ProximalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //pinky.ProximalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
+        private PoseableFinger Index
+        {
+            get
+            {
+                return index;
+            }
+        }
 
-            //index.MiddlePhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //middle.MiddlePhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //ring.MiddlePhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            //pinky.MiddlePhalanges.Yaw += (Degree)(10 * clock.fSeconds);
+        private PoseableFinger Middle
+        {
+            get
+            {
+                return middle;
+            }
+        }
 
-            thumb.DistalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            index.DistalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            middle.DistalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            ring.DistalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
-            pinky.DistalPhalanges.Yaw += (Degree)(10 * clock.fSeconds);
+        private PoseableFinger Ring
+        {
+            get
+            {
+                return ring;
+            }
+        }
 
-            //thumb.DistalPhalanges.Pitch += (Degree)(10 * clock.fSeconds);
-            //index.DistalPhalanges.Pitch += (Degree)(10 * clock.fSeconds);
-            //middle.DistalPhalanges.Pitch += (Degree)(10 * clock.fSeconds);
-            //ring.DistalPhalanges.Pitch += (Degree)(10 * clock.fSeconds);
-            //pinky.DistalPhalanges.Pitch += (Degree)(10 * clock.fSeconds);
+        private PoseableFinger Pinky
+        {
+            get
+            {
+                return pinky;
+            }
         }
     }
 }

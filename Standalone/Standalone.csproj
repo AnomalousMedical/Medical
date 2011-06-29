@@ -125,6 +125,7 @@
     <Compile Include="Controller\Props\JVAProp.cs" />
     <Compile Include="Controller\Props\PoseableFingerSection.cs" />
     <Compile Include="Controller\Props\PoseableHand.cs" />
+    <Compile Include="Controller\Props\PoseableThumb.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\Timeline\FilesystemTimelineResourceProvider.cs" />
     <Compile Include="Controller\Timeline\RepeatPreviousPostActions.cs" />
