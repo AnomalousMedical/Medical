@@ -134,14 +134,14 @@ namespace Medical
         {
             if (updating)
             {
-                if (TimelinePlaybackStopped != null)
-                {
-                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
-                }
                 activeTimeline.stop(playPostActions);
                 if (!playPostActions)
                 {
                     _fireMultiTimelineStopEvent();
+                }
+                if (TimelinePlaybackStopped != null)
+                {
+                    TimelinePlaybackStopped.Invoke(this, EventArgs.Empty);
                 }
                 previousTimeline = activeTimeline;
                 mainTimer.removeFixedUpdateListener(this);
