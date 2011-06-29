@@ -181,6 +181,7 @@ namespace Medical
             JVAProp.createPropDefinition(propFactory);
             Mustache.createPropDefinition(propFactory);
             CircularHighlight.createPropDefinition(propFactory);
+            PoseableHand.createPropDefinition(propFactory);
 
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();
