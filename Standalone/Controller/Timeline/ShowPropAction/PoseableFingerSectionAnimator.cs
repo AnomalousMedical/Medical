@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.Saving;
 using Engine;
+using Engine.Platform;
 
 namespace Medical
 {
@@ -29,6 +30,11 @@ namespace Medical
         {
             startYaw = FingerSection.Yaw;
             startPitch = FingerSection.Pitch;
+        }
+
+        public void blend(float percent)
+        {
+            FingerSection.setOrientation(NumberFunctions.lerp(startYaw, yaw, percent), NumberFunctions.lerp(startPitch, pitch, percent));
         }
 
         public PoseableFingerSection FingerSection { get; set; }

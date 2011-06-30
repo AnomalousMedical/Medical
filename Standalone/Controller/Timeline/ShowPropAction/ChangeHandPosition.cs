@@ -13,8 +13,8 @@ namespace Medical
     [TimelineActionProperties("Hand Position")]
     public class ChangeHandPosition : EditableShowPropSubAction
     {
-        [DoNotSave]
         private PoseableHand hand;
+        private bool finished = false;
 
         public ChangeHandPosition()
         {
@@ -33,6 +33,7 @@ namespace Medical
         public override void skipTo(float timelineTime)
         {
             findHandBehavior();
+            //blend(timelineTime);
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -42,7 +43,8 @@ namespace Medical
 
         public override void update(float timelineTime, Clock clock)
         {
-            
+            blend(timelineTime);
+            finished = timelineTime > EndTime;
         }
 
         public override void editing()
@@ -58,18 +60,28 @@ namespace Medical
         private void findHandBehavior()
         {
             hand = (PoseableHand)PropSimObject.getElement(PoseableHand.PoseableHandBehavior);
+            
             Thumb.setFinger(hand.Thumb);
+            Thumb.getStartingValues();
+            
             Index.setFinger(hand.Index);
+            Index.getStartingValues();
+            
             Middle.setFinger(hand.Middle);
+            Middle.getStartingValues();
+            
             Ring.setFinger(hand.Ring);
+            Ring.getStartingValues();
+
             Pinky.setFinger(hand.Pinky);
+            Pinky.getStartingValues();
         }
 
         public override bool Finished
         {
-            get 
+            get
             {
-                return true;
+                return finished;
             }
         }
 
@@ -82,6 +94,21 @@ namespace Medical
         public PoseableFingerAnimator Ring { get; set; }
 
         public PoseableFingerAnimator Pinky { get; set; }
+
+        private void blend(float timelineTime)
+        {
+            float percentage = (timelineTime - StartTime) / Duration;
+            if (percentage > 1.0f)
+            {
+                percentage = 1.0f;
+            }
+
+            Thumb.blend(percentage);
+            Index.blend(percentage);
+            Middle.blend(percentage);
+            Ring.blend(percentage);
+            Pinky.blend(percentage);
+        }
 
         #region Saveable Members
 
@@ -104,6 +131,7 @@ namespace Medical
             info.AddValue("Middle", Middle);
             info.AddValue("Ring", Ring);
             info.AddValue("Pinky", Pinky);
+            info.AddValue("Duration", Duration);
         }
 
         #endregion

@@ -37,6 +37,22 @@ namespace Medical
             distalAnimator.apply();
         }
 
+        public void getStartingValues()
+        {
+            metacarpalAnimator.getStartingValues();
+            proximalAnimator.getStartingValues();
+            intermediateAnimator.getStartingValues();
+            distalAnimator.getStartingValues();
+        }
+
+        public void blend(float percent)
+        {
+            metacarpalAnimator.blend(percent);
+            proximalAnimator.blend(percent);
+            intermediateAnimator.blend(percent);
+            distalAnimator.blend(percent);
+        }
+
         public PoseableFingerSectionAnimator MetacarpalAnimator
         {
             get
