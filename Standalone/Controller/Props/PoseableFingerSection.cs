@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical
 {
-    class PoseableFingerSection
+    public class PoseableFingerSection
     {
         private Bone bone;
         private Radian pitch = 0.0f;
@@ -51,7 +51,14 @@ namespace Medical
             }
         }
 
-        public void updateBone()
+        public void setOrientation(float yaw, float pitch)
+        {
+            this.yaw = yaw;
+            this.pitch = pitch;
+            updateBone();
+        }
+
+        private void updateBone()
         {
             //This does not use the right order, pitch and roll are reversed, but this makes sense for the fingers
             Quaternion rotation = new Quaternion(yaw, 0, pitch);

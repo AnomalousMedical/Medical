@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MyGUI type="Resource" version="1.1">
+
+  <Resource type="ResourceImageSet" name="RightHandOutline">
+    <Group name="Icons" texture="Medical.Resources.RightHandOutline.png" size="211 330">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+
+  <Resource type="ResourceImageSet" name="LeftHandOutline">
+    <Group name="Icons" texture="Medical.Resources.LeftHandOutline.png" size="211 330">
+      <Index name="Icon">
+        <Frame point="0 0"/>
+      </Index>
+    </Group>
+  </Resource>
+  
+</MyGUI>
+

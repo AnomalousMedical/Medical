@@ -9,19 +9,26 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class PoseableHand : Interface
+    public class PoseableHand : Interface
     {
-        public const String DefinitionName = "PoseableHand";
+        public const String LeftDefinitionName = "PoseableHandLeft";
+        public const String RightDefinitionName = "PoseableHandRight";
         public const String PoseableHandBehavior = "PoseableHandBehavior";
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            GenericSimObjectDefinition hand = new GenericSimObjectDefinition(DefinitionName);
+            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh");
+            createHand(propFactory, RightDefinitionName, "HandPoseable.mesh");
+        }
+
+        private static void createHand(PropFactory propFactory, String definitionName, String meshName)
+        {
+            GenericSimObjectDefinition hand = new GenericSimObjectDefinition(definitionName);
             hand.Enabled = true;
 
             EntityDefinition entityDefinition = new EntityDefinition(PropFactory.EntityName);
-            entityDefinition.MeshName = "HandPoseable.mesh";
-            
+            entityDefinition.MeshName = meshName;
+
             SceneNodeDefinition nodeDefinition = new SceneNodeDefinition(PropFactory.NodeName);
             nodeDefinition.addMovableObjectDefinition(entityDefinition);
             hand.addElement(nodeDefinition);
@@ -34,7 +41,7 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             hand.addElement(propFadeBehaviorDef);
 
-            propFactory.addDefinition(DefinitionName, hand);
+            propFactory.addDefinition(definitionName, hand);
         }
 
         private Entity entity;
@@ -92,7 +99,7 @@ namespace Medical
             pinky = new PoseableFinger(skeleton, "bpinkyknuckle", "bpinky03", "bpinky02", "bpinky01");
         }
 
-        private PoseableThumb Thumb
+        public PoseableThumb Thumb
         {
             get
             {
@@ -100,7 +107,7 @@ namespace Medical
             }
         }
 
-        private PoseableFinger Index
+        public PoseableFinger Index
         {
             get
             {
@@ -108,7 +115,7 @@ namespace Medical
             }
         }
 
-        private PoseableFinger Middle
+        public PoseableFinger Middle
         {
             get
             {
@@ -116,7 +123,7 @@ namespace Medical
             }
         }
 
-        private PoseableFinger Ring
+        public PoseableFinger Ring
         {
             get
             {
@@ -124,7 +131,7 @@ namespace Medical
             }
         }
 
-        private PoseableFinger Pinky
+        public PoseableFinger Pinky
         {
             get
             {

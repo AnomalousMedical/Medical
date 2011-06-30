@@ -13,12 +13,14 @@ namespace Medical.GUI
         private MovePropProperties movePropProperties;
         private EditInterfaceProperties editInterfaceProperties;
         private PushPlungerProperties pushPlungerProperties;
+        private PoseableHandProperties leftPoseableHandProperties;
 
         public ShowPropSubActionFactory(Widget parentWidget)
         {
             movePropProperties = new MovePropProperties(parentWidget);
             editInterfaceProperties = new EditInterfaceProperties(parentWidget);
             pushPlungerProperties = new PushPlungerProperties(parentWidget);
+            leftPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout");
 
             //Arrow
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
@@ -58,6 +60,18 @@ namespace Medical.GUI
             circularHighlightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             circularHighlightData.addTrack(typeof(ChangeCircularHighlightSettings), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(CircularHighlight.DefinitionName, circularHighlightData);
+
+            //Poseable Hand Left
+            ShowPropSubActionFactoryData poseableHandLeftData = new ShowPropSubActionFactoryData();
+            poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), leftPoseableHandProperties);
+            trackInfo.Add(PoseableHand.LeftDefinitionName, poseableHandLeftData);
+
+            //Poseable Hand Right
+            ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
+            poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
+            trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
         }
 
         public void Dispose()
@@ -65,6 +79,7 @@ namespace Medical.GUI
             movePropProperties.Dispose();
             editInterfaceProperties.Dispose();
             pushPlungerProperties.Dispose();
+            leftPoseableHandProperties.Dispose();
         }
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)

@@ -237,7 +237,10 @@ namespace Medical
         private void makeProp()
         {
             simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
-            propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+            if (simObject != null)
+            {
+                propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+            }
         }
 
         private void destroyProp()

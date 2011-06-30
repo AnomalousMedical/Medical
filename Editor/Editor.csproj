@@ -89,6 +89,8 @@
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.cs" />
+    <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
+    <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
     <Compile Include="GUI\Taskbar\TimelineEditorTaskbarItem.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
@@ -129,6 +131,7 @@
     <EmbeddedResource Include="GUI\MovementSequence\MovementSequenceEditor.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\MovePropProperties.layout" />
+    <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PoseableLeftHandProperties.layout" />
     <EmbeddedResource Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ChangeMedicalStateProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\LayerChangeProperties.layout" />
@@ -163,6 +166,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\TimelineImages.png" />
     <EmbeddedResource Include="Resources\TimelineImages.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\LeftHandOutline.png" />
+    <EmbeddedResource Include="Resources\RightHandOutline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HandImages.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,13 +7,13 @@ using Engine;
 
 namespace Medical
 {
-    class PoseableFinger
+    public class PoseableFinger
     {
-        public PoseableFinger(Skeleton skeleton, String metacarpalName, String proximalName, String middleName, String distalName)
+        public PoseableFinger(Skeleton skeleton, String metacarpalName, String proximalName, String intermediateName, String distalName)
         {
             Metacarpal = new PoseableFingerSection(skeleton, metacarpalName);
             ProximalPhalanges = new PoseableFingerSection(skeleton, proximalName);
-            MiddlePhalanges = new PoseableFingerSection(skeleton, middleName);
+            IntermediatePhalanges = new PoseableFingerSection(skeleton, intermediateName);
             DistalPhalanges = new PoseableFingerSection(skeleton, distalName);
         }
 
@@ -21,7 +21,7 @@ namespace Medical
 
         public PoseableFingerSection ProximalPhalanges { get; private set; }
 
-        public PoseableFingerSection MiddlePhalanges { get; private set; }
+        public PoseableFingerSection IntermediatePhalanges { get; private set; }
 
         public PoseableFingerSection DistalPhalanges { get; private set; }
     }

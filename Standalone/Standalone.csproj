@@ -132,7 +132,11 @@
     <Compile Include="Controller\Timeline\ShowPropAction\ChangeArrowColorAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ChangeArrowShapeAction.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\ChangeCircularHighlightSettings.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\ChangeHandPosition.cs" />
     <Compile Include="Controller\Timeline\ShowPropAction\EditableShowPropSubAction.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\PoseableFingerAnimator.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\PoseableFingerSectionAnimator.cs" />
+    <Compile Include="Controller\Timeline\ShowPropAction\PoseableThumbAnimator.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUIData.cs" />

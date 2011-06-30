@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
 using Engine;
+using Logging;
 
 namespace Medical
 {
@@ -47,6 +48,14 @@ namespace Medical
                     scene.buildScene();
                     return instance;
                 }
+                else
+                {
+                    Log.Error("Could not create prop {0}. The definition cannot be found.", propName);
+                }
+            }
+            else
+            {
+                Log.Error("Could not create prop {0}. The subscene is null.", propName);
             }
             return null;
         }

@@ -6,7 +6,7 @@ using OgreWrapper;
 
 namespace Medical
 {
-    class PoseableThumb
+    public class PoseableThumb
     {
         public PoseableThumb(Skeleton skeleton, String metacarpalName, String proximalName, String distalName)
         {
