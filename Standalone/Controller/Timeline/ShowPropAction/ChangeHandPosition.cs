@@ -130,7 +130,6 @@ namespace Medical
             info.AddValue("Middle", Middle);
             info.AddValue("Ring", Ring);
             info.AddValue("Pinky", Pinky);
-            info.AddValue("Duration", Duration);
         }
 
         #endregion
