@@ -33,7 +33,6 @@ namespace Medical
         public override void skipTo(float timelineTime)
         {
             findHandBehavior();
-            //blend(timelineTime);
         }
 
         public override void stopped(float timelineTime, Clock clock)
