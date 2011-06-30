@@ -12,6 +12,9 @@ namespace Medical
         private Radian yaw;
         private Radian pitch;
 
+        private Radian startYaw;
+        private Radian startPitch;
+
         public PoseableFingerSectionAnimator()
         {
             
@@ -20,6 +23,12 @@ namespace Medical
         public void apply()
         {
             FingerSection.setOrientation(yaw, pitch);
+        }
+
+        public void getStartingValues()
+        {
+            startYaw = FingerSection.Yaw;
+            startPitch = FingerSection.Pitch;
         }
 
         public PoseableFingerSection FingerSection { get; set; }

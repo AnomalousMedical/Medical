@@ -182,6 +182,10 @@ namespace Medical
             Mustache.createPropDefinition(propFactory);
             CircularHighlight.createPropDefinition(propFactory);
             PoseableHand.createPropDefinition(propFactory);
+            BiteStick.createPropDefinition(propFactory);
+            RangeOfMotionScale.createPropDefinition(propFactory);
+            Pen.createPropDefinition(propFactory);
+            Caliper.createPropDefinition(propFactory);
 
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();

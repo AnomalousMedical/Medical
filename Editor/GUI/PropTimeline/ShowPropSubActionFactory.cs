@@ -14,6 +14,7 @@ namespace Medical.GUI
         private EditInterfaceProperties editInterfaceProperties;
         private PushPlungerProperties pushPlungerProperties;
         private PoseableHandProperties leftPoseableHandProperties;
+        private PoseableHandProperties rightPoseableHandProperties;
 
         public ShowPropSubActionFactory(Widget parentWidget)
         {
@@ -21,6 +22,7 @@ namespace Medical.GUI
             editInterfaceProperties = new EditInterfaceProperties(parentWidget);
             pushPlungerProperties = new PushPlungerProperties(parentWidget);
             leftPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableLeftHandProperties.layout");
+            rightPoseableHandProperties = new PoseableHandProperties(parentWidget, "Medical.GUI.PropTimeline.SubActionProperties.PoseableRightHandProperties.layout");
 
             //Arrow
             ShowPropSubActionFactoryData arrowData = new ShowPropSubActionFactoryData();
@@ -70,8 +72,28 @@ namespace Medical.GUI
             //Poseable Hand Right
             ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
             poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
-            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
+            poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), rightPoseableHandProperties);
             trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
+
+            //Bite Stick
+            ShowPropSubActionFactoryData biteStickData = new ShowPropSubActionFactoryData();
+            biteStickData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(BiteStick.DefinitionName, biteStickData);
+
+            //Range of MotionScale
+            ShowPropSubActionFactoryData rangeOfMotionScale = new ShowPropSubActionFactoryData();
+            rangeOfMotionScale.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(RangeOfMotionScale.DefinitionName, rangeOfMotionScale);
+
+            //Pen
+            ShowPropSubActionFactoryData penData = new ShowPropSubActionFactoryData();
+            penData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(Pen.DefinitionName, penData);
+
+            //Caliper
+            ShowPropSubActionFactoryData caliperData = new ShowPropSubActionFactoryData();
+            caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            trackInfo.Add(Caliper.DefinitionName, caliperData);
         }
 
         public void Dispose()
@@ -80,6 +102,7 @@ namespace Medical.GUI
             editInterfaceProperties.Dispose();
             pushPlungerProperties.Dispose();
             leftPoseableHandProperties.Dispose();
+            rightPoseableHandProperties.Dispose();
         }
 
         public void addTracksForAction(ShowPropAction showProp, TimelineView timelineView, TimelineDataProperties actionProperties)
