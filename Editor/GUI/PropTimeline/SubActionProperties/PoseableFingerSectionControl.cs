@@ -28,6 +28,7 @@ namespace Medical.GUI
                 this.yawEdit.MinValue = -360;
                 this.yawEdit.MaxValue = 360;
                 this.yawEdit.Increment = 1;
+                this.yawEdit.AllowFloat = false;
             }
 
             this.pitchEdit = new NumericEdit(pitchEdit);
@@ -35,6 +36,7 @@ namespace Medical.GUI
             this.pitchEdit.MinValue = -360;
             this.pitchEdit.MaxValue = 360;
             this.pitchEdit.Increment = 1;
+            this.pitchEdit.AllowFloat = false;
         }
 
         public PoseableFingerSectionAnimator FingerSection
@@ -50,9 +52,9 @@ namespace Medical.GUI
                 {
                     if (yawEdit != null)
                     {
-                        yawEdit.FloatValue = fingerSection.Yaw;
+                        yawEdit.IntValue = (int)fingerSection.Yaw;
                     }
-                    pitchEdit.FloatValue = fingerSection.Pitch;
+                    pitchEdit.IntValue = (int)fingerSection.Pitch;
                 }
             }
         }

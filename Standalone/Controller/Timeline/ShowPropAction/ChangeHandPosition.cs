@@ -48,6 +48,11 @@ namespace Medical
         public override void editing()
         {
             findHandBehavior();
+            Thumb.apply();
+            Index.apply();
+            Middle.apply();
+            Ring.apply();
+            Pinky.apply();
         }
 
         private void findHandBehavior()

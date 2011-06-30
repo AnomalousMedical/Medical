@@ -17,6 +17,11 @@ namespace Medical
             
         }
 
+        public void apply()
+        {
+            FingerSection.setOrientation(yaw, pitch);
+        }
+
         public PoseableFingerSection FingerSection { get; set; }
 
         public Degree Yaw

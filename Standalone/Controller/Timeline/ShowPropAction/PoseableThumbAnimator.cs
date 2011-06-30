@@ -26,6 +26,13 @@ namespace Medical
             distalAnimator.FingerSection = thumb.DistalPhalanges;
         }
 
+        public void apply()
+        {
+            metacarpalAnimator.apply();
+            proximalAnimator.apply();
+            distalAnimator.apply();
+        }
+
         public PoseableFingerSectionAnimator MetacarpalAnimator
         {
             get
