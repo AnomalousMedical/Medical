@@ -88,6 +88,7 @@ namespace Medical.GUI
             //Pen
             ShowPropSubActionFactoryData penData = new ShowPropSubActionFactoryData();
             penData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            penData.addTrack(typeof(ClickPenAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(Pen.DefinitionName, penData);
 
             //Caliper
