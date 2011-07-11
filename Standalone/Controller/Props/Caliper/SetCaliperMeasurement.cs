@@ -7,26 +7,24 @@ using Engine.Saving;
 
 namespace Medical
 {
-    [TimelineActionProperties("Click Pen")]
-    public class ClickPenAction : EditableShowPropSubAction
+    [TimelineActionProperties("Set Measurement")]
+    class SetCaliperMeasurement : EditableShowPropSubAction
     {
-        private Pen pen;
+        private bool finished = false;
 
-        public ClickPenAction()
+        public SetCaliperMeasurement()
         {
 
         }
 
         public override void started(float timelineTime, Clock clock)
         {
-            pen = PropSimObject.getElement(Pen.PenBehaviorName) as Pen;
-            pen.Clicked = !pen.Clicked;
+            
         }
 
         public override void skipTo(float timelineTime)
         {
-            pen = PropSimObject.getElement(Pen.PenBehaviorName) as Pen;
-            pen.Clicked = !pen.Clicked;
+            
         }
 
         public override void stopped(float timelineTime, Clock clock)
@@ -46,27 +44,12 @@ namespace Medical
 
         public override bool Finished
         {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override float Duration
-        {
-            get
-            {
-                return 0.8f;
-            }
-            set
-            {
-                
-            }
+            get { return finished; }
         }
 
         #region Saveable Members
 
-        protected ClickPenAction(LoadInfo info)
+        protected SetCaliperMeasurement(LoadInfo info)
             :base (info)
         {
             
