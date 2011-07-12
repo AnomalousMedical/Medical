@@ -125,14 +125,14 @@ namespace Medical
         {
             date = new DateTime(info.GetInt64("ExamReserved_Date"));
             prettyName = info.GetString("ExamReserved_PrettyName");
-            ReflectedSaver.RestoreObject(this, info, BehaviorSaveMemberScanner.Scanner);
+            ReflectedSaver.RestoreObject(this, info, ExamSaveMemberScanner.Scanner);
         }
 
         public void getInfo(SaveInfo info)
         {
             info.AddValue("ExamReserved_Date", date.Ticks);
             info.AddValue("ExamReserved_PrettyName", prettyName);
-            ReflectedSaver.SaveObject(this, info, BehaviorSaveMemberScanner.Scanner);
+            ReflectedSaver.SaveObject(this, info, ExamSaveMemberScanner.Scanner);
         }
 
         #endregion

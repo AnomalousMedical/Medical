@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Window" skin="WindowCSX" position="81 77 300 400" layer="Overlapped">
-        <Widget type="ScrollView" skin="ScrollView" position_real="0 0 1 1" align="Stretch" name="Table">
+    <Widget type="Window" skin="WindowCSX" position="78 77 750 475" layer="Overlapped">
+        <Widget type="ScrollView" skin="ScrollView" position="244 0 505 457" align="Stretch" name="Table">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="100 100"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="0 0 242 457" align="Left VStretch" name="Index">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
         </Widget>
     </Widget>
 </MyGUI>

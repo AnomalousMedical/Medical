@@ -106,8 +106,11 @@
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
     <Compile Include="Controller\Exam\AbstractExamMemberScanner.cs" />
+    <Compile Include="Controller\Exam\AbstractExamSection.cs" />
     <Compile Include="Controller\Exam\Exam.cs" />
     <Compile Include="Controller\Exam\ExamController.cs" />
+    <Compile Include="Controller\Exam\ExamSaveMemberScanner.cs" />
+    <Compile Include="Controller\Exam\ExamSection.cs" />
     <Compile Include="Controller\Exam\HiddenAttribute.cs" />
     <Compile Include="Controller\FixedMedicalUpdate.cs" />
     <Compile Include="Controller\FullSpeedMedicalUpdate.cs" />
