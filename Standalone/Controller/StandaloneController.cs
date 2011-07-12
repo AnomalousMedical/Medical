@@ -271,6 +271,7 @@ namespace Medical
             medicalStateController.clearStates();
             bool success = changeScene(filename);
             medicalStateController.createNormalStateFromScene();
+            examController.clear();
             return success;
         }
 
