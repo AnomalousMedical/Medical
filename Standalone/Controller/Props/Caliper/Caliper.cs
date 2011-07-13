@@ -209,6 +209,10 @@ namespace Medical
             newPos.y -= (PLUNGE_RANGE * percent);
             sliderBone.setPosition(newPos);
             sliderBone.needUpdate(true);
+
+            unlockAnim.setEnabled(false);
+            lockAnim.setEnabled(true);
+            lockAnim.setTimePosition(lockAnimLength); //The caliper starts unlocked, so set this animation active and at the end to keep it locked.
         }
     }
 }

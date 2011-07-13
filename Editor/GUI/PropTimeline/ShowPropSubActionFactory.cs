@@ -94,6 +94,7 @@ namespace Medical.GUI
             //Caliper
             ShowPropSubActionFactoryData caliperData = new ShowPropSubActionFactoryData();
             caliperData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            caliperData.addTrack(typeof(SetCaliperMeasurement), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(Caliper.DefinitionName, caliperData);
         }
 
