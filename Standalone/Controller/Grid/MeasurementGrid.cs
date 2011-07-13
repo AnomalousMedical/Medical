@@ -99,7 +99,7 @@ namespace Medical.Controller
         public void drawGrid(float gridSpacingMM, float gridMax)
         {
             textWatermark.Text = String.Format("Grid Spacing: {0} mm", gridSpacingMM);
-            float gridSpacing = gridSpacingMM * (1.0f / Measurement.unitsToMM);
+            float gridSpacing = gridSpacingMM * (1.0f / SimulationConfig.UnitsToMM);
             Vector3 startPoint = new Vector3(0.0f, -gridMax, 0.0f);
             Vector3 endPoint = new Vector3(0.0f, gridMax, 0.0f);
             manualObject.clear();

@@ -29,8 +29,6 @@ namespace Medical
         }
 #endif
 
-        public const float unitsToMM = 8.467f;
-
         [Editable]
         String deltaSimObjectName;
 
@@ -76,7 +74,7 @@ namespace Medical
             if (diff != lastLength)
             {
                 lastLength = diff;
-                currentDelta = diff.length() * unitsToMM;
+                currentDelta = diff.length() * SimulationConfig.UnitsToMM;
                 if (MeasurementChanged != null)
                 {
                     MeasurementChanged.Invoke(this);

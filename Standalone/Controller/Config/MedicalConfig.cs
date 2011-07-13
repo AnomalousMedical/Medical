@@ -13,8 +13,6 @@ namespace Medical
 {
     public class MedicalConfig
     {
-        public const float UnitsToMM = 8.467f;
-
         private static ConfigFile configFile;
         private static String docRoot;
         private static String windowsFile;

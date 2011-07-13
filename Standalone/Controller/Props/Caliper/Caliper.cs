@@ -17,7 +17,7 @@ namespace Medical
         public const String BehaviorName = "CaliperBehavior";
 
         private const float CALIPER_MAX_MM = 100;
-        private const float PLUNGE_RANGE = 11.86f;//Shoud be able to do CALIPER_MAX_MM / MedicalConfig.UnitsToMM;, but this gives 11.8105, which is too small caliper may not be correct size, but close enough.
+        private const float PLUNGE_RANGE = 11.86f;//Shoud be able to do CALIPER_MAX_MM / SimulationConfig.UnitsToMM;, but this gives 11.8105, which is too small caliper may not be correct size, but close enough.
 
         public static void createPropDefinition(PropFactory propFactory)
         {
