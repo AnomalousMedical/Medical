@@ -87,7 +87,6 @@
     <Compile Include="Controller\NavigationControl\NavigationSerializer.cs" />
     <Compile Include="Controller\NavigationControl\NavigationState.cs" />
     <Compile Include="Controller\NavigationControl\NavigationStateSet.cs" />
-    <Compile Include="GUI\Distortions\DistortionChooser.cs" />
     <Compile Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.cs" />
     <Compile Include="GUI\StateWizard\Panels\Fossa\FossaPanel.cs" />
@@ -112,6 +111,7 @@
     <Compile Include="GUI\StateWizard\StateWizardPanel.cs" />
     <Compile Include="GUI\StateWizard\StateWizardPanelController.cs" />
     <Compile Include="GUI\StateWizard\WizardIconPanel.cs" />
+    <Compile Include="GUI\TaskMenu\StartWizardTaskMenuItem.cs" />
     <Compile Include="PiperJBOAtlasPlugin.cs" />
     <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
@@ -162,7 +162,6 @@
     <Compile Include="TimelineGUI\TimelineWizard.cs" />
     <Compile Include="TimelineGUI\TimelineWizardPanel.cs" />
     <Compile Include="TimelineGUI\TimelineWizardPanelData.cs" />
-    <EmbeddedResource Include="GUI\Distortions\DistortionChooser.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Disclaimer\DisclaimerPanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\DiscSpace\DiscSpacePanel.layout" />
     <EmbeddedResource Include="GUI\StateWizard\Panels\Doppler\DopplerPanel.layout" />

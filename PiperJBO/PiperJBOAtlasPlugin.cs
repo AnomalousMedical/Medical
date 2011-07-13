@@ -19,9 +19,6 @@ namespace Medical.GUI
         private NavigationController navigationController;
         private LayerController layerController;
 
-        //Dialogs
-        private DistortionChooser distortionChooser;
-
         //Wizards
         private StateWizardPanelController stateWizardPanelController;
         private StateWizardController stateWizardController;
@@ -38,8 +35,6 @@ namespace Medical.GUI
 
         public void Dispose()
         {
-            distortionChooser.Dispose();
-
             stateWizardController.Dispose();
             stateWizardPanelController.Dispose();
 
@@ -67,12 +62,13 @@ namespace Medical.GUI
             //Wizards
             wizards = new PiperJBOWizards(StateWizardPanelController, StateWizardController, licenseManager);
 
-            //Distortions Popup, must come after wizards
-            distortionChooser = new DistortionChooser(StateWizardController, this);
-            guiManager.addManagedDialog(distortionChooser);
+            //Tasks Menu
+            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
 
-            //Taskbar
-            guiManager.Taskbar.addItem(new DialogOpenTaskbarItem(distortionChooser, "Distortions", "DistortionsIcon"));
+            foreach (StateWizard wizard in stateWizardController.WizardEnum)
+            {
+                tasksSection.addItem(new StartWizardTaskMenuItem(this, wizard));
+            }
 
             //Timeline GUIs
             timelineWizard = new TimelineWizard(standaloneController);

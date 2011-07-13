@@ -9,12 +9,27 @@ using System.Reflection;
 
 namespace Medical.GUI
 {
-    public interface AppMenu : IDisposable
+    public abstract class AppMenu : Component
     {
-        void show(int x, int y);
+        public AppMenu(String layout)
+            :base(layout)
+        {
 
-        int Width { get; }
+        }
 
-        int Height { get; }
+        internal void putOnTaskMenu(Widget taskMenuWidget)
+        {
+            widget.attachToWidget(taskMenuWidget);
+        }
+
+        public void layout(int parentWidth, int parentHeight)
+        {
+            widget.setPosition(0, parentHeight / 2 - widget.Height / 2);
+        }
+
+        public void hide()
+        {
+
+        }
     }
 }

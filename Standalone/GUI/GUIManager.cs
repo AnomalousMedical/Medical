@@ -20,6 +20,7 @@ namespace Medical.GUI
         private VerticalPopoutLayoutContainer bottomAnimatedContainer;
 
         private Taskbar taskbar;
+        private TaskMenu taskMenu;
         private BorderLayoutContainer innerBorderLayout;
 
         //Dialogs
@@ -47,6 +48,7 @@ namespace Medical.GUI
             continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
             standaloneController.SceneUnloading -= standaloneController_SceneUnloading;
+            taskMenu.Dispose();
             MedicalConfig.TaskbarAlignment = taskbar.Alignment;
             taskbar.Dispose();
         }
@@ -70,9 +72,13 @@ namespace Medical.GUI
             taskbar = new Taskbar(standaloneController);
             taskbar.Alignment = MedicalConfig.TaskbarAlignment;
             taskbar.SuppressLayout = true;
+            taskbar.OpenTaskMenu += new GUI.Taskbar.OpenTaskMenuEvent(taskbar_OpenTaskMenu);
 
             taskbar.Child = innerBorderLayout;
             screenLayoutManager.Root = taskbar;
+
+            //Task Menu
+            taskMenu = new TaskMenu();
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -206,6 +212,14 @@ namespace Medical.GUI
             }
         }
 
+        public TaskMenu TaskMenu
+        {
+            get
+            {
+                return taskMenu;
+            }
+        }
+
         internal void loadDialogPositions()
         {
             dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
@@ -243,6 +257,11 @@ namespace Medical.GUI
         {
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
+            if (taskMenu.Visible)
+            {
+                taskMenu.setPosition((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
+                taskMenu.setSize((int)innerBorderLayout.WorkingSize.Width, (int)innerBorderLayout.WorkingSize.Height);
+            }
         }
 
         public event ScreenSizeChanged ScreenSizeChanged
@@ -255,6 +274,12 @@ namespace Medical.GUI
             {
                 screenLayoutManager.ScreenSizeChanged -= value;
             }
+        }
+
+        void taskbar_OpenTaskMenu(int left, int top, int width, int height)
+        {
+            taskMenu.setSize(width, height);
+            taskMenu.show(left, top);
         }
     }
 }

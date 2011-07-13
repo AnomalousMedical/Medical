@@ -60,12 +60,13 @@ namespace Medical
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
-            //Taskbar
-            Taskbar taskbar = guiManager.Taskbar;
-            taskbar.addItem(new TimelineEditorTaskbarItem(timelinePropertiesController));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(propTimeline, "Prop Timeline Editor", "PropEditorIcon"));
+            //Tasks Menu
+            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+
+            tasksSection.addItem(new TimelineEditorTaskMenuItem(timelinePropertiesController));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(timelineAnalyzer, "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(movementSequenceEditor, "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(propTimeline, "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)

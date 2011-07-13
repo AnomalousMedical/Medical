@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\TaskMenu\ShowToothContactsTaskMenuItem.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayout.cs" />
     <Compile Include="GUI\WindowLayout\WindowLayoutMenu.cs" />
     <Compile Include="PremiumAtlasPluginEntryPoint.cs" />
@@ -77,7 +78,6 @@
     <Compile Include="GUI\SequencePlayer\SequenceMenu.cs" />
     <Compile Include="GUI\SequencePlayer\SequencePlayer.cs" />
     <Compile Include="GUI\StateList\StateListDialog.cs" />
-    <Compile Include="GUI\Taskbar\ShowToothContactsTaskbarItem.cs" />
     <Compile Include="PremiumBodyAtlasPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

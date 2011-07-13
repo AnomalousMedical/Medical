@@ -17,10 +17,12 @@ namespace Medical.GUI
 
     public class Taskbar : LayoutContainer, IDisposable
     {
+        public delegate void OpenTaskMenuEvent(int left, int top, int width, int height);
+        public event OpenTaskMenuEvent OpenTaskMenu;
+
         private Layout myGUIlayout;
         private Widget taskbarWidget;
         private Button appButton;
-        private AppMenu appMenu;
         private float padding = 3;
         private Size2 itemSize = new Size2(48, 48);
         private LayoutContainer child;
@@ -36,6 +38,16 @@ namespace Medical.GUI
             taskbarWidget.MouseDrag += new MyGUIEvent(taskbarWidget_MouseDrag);
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
+            appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+        }
+
+        public void Dispose()
+        {
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                item.Dispose();
+            }
+            LayoutManager.Instance.unloadLayout(myGUIlayout);
         }
 
         void taskbarWidget_MouseDrag(Widget source, EventArgs e)
@@ -92,23 +104,9 @@ namespace Medical.GUI
             }
         }
 
-        public void Dispose()
+        public void setAppIcon(String appIcon)
         {
-            foreach (TaskbarItem item in taskbarItems)
-            {
-                item.Dispose();
-            }
-            LayoutManager.Instance.unloadLayout(myGUIlayout);
-        }
-
-        public void setAppMenu(AppMenu appMenu, String appIcon)
-        {
-            if (appMenu != null)
-            {
-                this.appMenu = appMenu;
-                appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
-                appButton.StaticImage.setItemResource(appIcon);
-            }
+            appButton.StaticImage.setItemResource(appIcon);
         }
 
         public void addItem(TaskbarItem item)
@@ -119,20 +117,30 @@ namespace Medical.GUI
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            switch (alignment)
+            if (OpenTaskMenu != null)
             {
-                case TaskbarAlignment.Left:
-                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
-                    break;
-                case TaskbarAlignment.Right:
-                    appMenu.show(appButton.AbsoluteLeft - appMenu.Width + appButton.Width, appButton.AbsoluteTop + appButton.Height);
-                    break;
-                case TaskbarAlignment.Top:
-                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop + appButton.Height);
-                    break;
-                case TaskbarAlignment.Bottom:
-                    appMenu.show(appButton.AbsoluteLeft, appButton.AbsoluteTop - appMenu.Height);
-                    break;
+                int left = 0;
+                int top = 0;
+                int width = (int)TopmostWorkingSize.Width;
+                int height = (int)TopmostWorkingSize.Height;
+                switch (alignment)
+                {
+                    case TaskbarAlignment.Left:
+                        width -= taskbarWidget.Width;
+                        left = taskbarWidget.Right;
+                        break;
+                    case TaskbarAlignment.Right:
+                        width -= taskbarWidget.Width;
+                        break;
+                    case TaskbarAlignment.Top:
+                        height -= taskbarWidget.Height;
+                        top = taskbarWidget.Bottom;
+                        break;
+                    case TaskbarAlignment.Bottom:
+                        height -= taskbarWidget.Height;
+                        break;
+                }
+                OpenTaskMenu.Invoke(left, top, width, height);
             }
         }
 
@@ -229,18 +237,20 @@ namespace Medical.GUI
 
         private void layoutTaskbarVertical()
         {
-            Vector2 startLocation = new Vector2(appButton.Left, appButton.Bottom + padding);
+            Vector2 startLocation = new Vector2(appButton.Left, 0);
             Vector2 currentLocation = startLocation;
+            int positionOffset = (int)(appButton.Bottom + padding);
+            int iconAreaHeight = (int)(WorkingSize.Height - positionOffset);
 
             foreach (TaskbarItem item in taskbarItems)
             {
-                if (currentLocation.y + itemSize.Height > WorkingSize.Height)
+                if (currentLocation.y + itemSize.Height > iconAreaHeight)
                 {
                     currentLocation.x += itemSize.Width + padding;
                     currentLocation.y = startLocation.y;
                 }
 
-                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x, (int)currentLocation.y + positionOffset, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.y += itemSize.Height + padding;
             }
 
@@ -271,18 +281,20 @@ namespace Medical.GUI
 
         private void layoutTaskbarHorizontal()
         {
-            Vector2 startLocation = new Vector2(appButton.Right + padding, appButton.Top);
+            Vector2 startLocation = new Vector2(0, appButton.Top);
             Vector2 currentLocation = startLocation;
+            int positionOffset = (int)(appButton.Right + padding);
+            int iconAreaWidth = (int)(WorkingSize.Width - positionOffset);
 
             foreach (TaskbarItem item in taskbarItems)
             {
-                if (currentLocation.x + itemSize.Width > WorkingSize.Width)
+                if (currentLocation.x + itemSize.Width > iconAreaWidth)
                 {
                     currentLocation.y += itemSize.Height + padding;
                     currentLocation.x = startLocation.x;
                 }
 
-                item.setCoord((int)currentLocation.x, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
+                item.setCoord((int)currentLocation.x + positionOffset, (int)currentLocation.y, (int)itemSize.Width, (int)itemSize.Height);
                 currentLocation.x += itemSize.Width + padding;
             }
 

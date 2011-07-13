@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="CustomPanelOnPanel" position="189 155 395 430" layer="Overlapped">
-        <Widget type="Widget" skin="Separator4" position="156 2 1 427" name="RecentDocsHorizDivider"/>
-        <Widget type="Widget" skin="Separator1" position="157 17 237 1" name="RecentDocsVertDivider"/>
-        <Widget type="StaticText" skin="StaticText" position="161 4 117 14">
-            <Property key="Widget_Caption" value="Recent Documents"/>
-            <Property key="Text_TextColour" value="FFFFFFFF"/>
-        </Widget>
+    <Widget type="Widget" skin="CustomPanelOnPanel" position="189 155 158 430" layer="Overlapped">
         <Widget type="Button" skin="AppMenuIconButton" position="4 4 151 40" name="File/ChangeScene">
             <Property key="Widget_Caption" value="New Scene..."/>
             <Property key="Text_TextColour" value="FFFFFF"/>

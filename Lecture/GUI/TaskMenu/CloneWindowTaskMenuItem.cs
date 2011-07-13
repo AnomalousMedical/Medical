@@ -2,31 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MyGUIPlugin;
 
 namespace Medical.GUI
 {
-    public class CloneWindowTaskbarItem : TaskbarItem
+    class CloneWindowTaskMenuItem : TaskMenuItem
     {
         private StandaloneController standaloneController;
         private CloneWindowDialog cloneWindowDialog;
 
-        public CloneWindowTaskbarItem(StandaloneController standaloneController)
-            : base("Clone Window", "CloneWindowIcon")
+        public CloneWindowTaskMenuItem(StandaloneController standaloneController, CloneWindowDialog cloneWindowDialog)
+            : base("Clone Window", "CloneWindowIcon", TaskMenuCategories.System)
         {
             this.standaloneController = standaloneController;
+            this.cloneWindowDialog = cloneWindowDialog;
 
-            cloneWindowDialog = new CloneWindowDialog();
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
         }
 
-        public override void Dispose()
-        {
-            cloneWindowDialog.Dispose();
-            base.Dispose();
-        }
-
-        public override void clicked(Widget source, EventArgs e)
+        public override void clicked()
         {
             toggleCloneWindow();
         }

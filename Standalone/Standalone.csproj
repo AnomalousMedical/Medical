@@ -190,6 +190,12 @@
     <Compile Include="GUI\MDIDialogEntry.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\Taskbar\MDIDialogOpenTaskbarItem.cs" />
+    <Compile Include="GUI\TaskMenu\DialogOpenTaskMenuItem.cs" />
+    <Compile Include="GUI\TaskMenu\MDIDialogOpenTaskMenuItem.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuItem.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuSection.cs" />
     <Compile Include="Layout\MDI\MDIBorderContainerDock.cs" />
     <Compile Include="GUI\FixedSizeMDIDialog.cs" />
     <Compile Include="Layout\MDI\FloatingWindowContainer.cs" />
@@ -367,6 +373,9 @@
     <EmbeddedResource Include="GUI\Options\OptionsDialog.layout" />
     <EmbeddedResource Include="GUI\RenderProgress\MyGUIImageRendererProgress.layout" />
     <EmbeddedResource Include="GUI\Taskbar\Taskbar.layout" />
+    <EmbeddedResource Include="GUI\TaskMenu\TaskMenu.layout">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
@@ -376,6 +385,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

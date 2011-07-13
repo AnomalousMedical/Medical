@@ -94,13 +94,18 @@ namespace Medical
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(anatomyFinder, "Anatomy Finder", "SearchIcon"));
-            taskbar.addItem(new ShowToothContactsTaskbarItem());
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(stateList, "States", "StatesIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(notesDialog, "Notes", "NotesIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(sequencePlayer, "Sequences", "SequenceIcon"));
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(mandibleMovementDialog, "Manual Movement", "MovementIcon"));
-            taskbar.addItem(new DialogOpenTaskbarItem(windowLayout, "Window Layout", "WindowLayoutIcon"));
+
+            //Tasks Menu
+            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+
+            //tasksSection.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(anatomyFinder, "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            tasksSection.addItem(new ShowToothContactsTaskMenuItem());
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(stateList, "States", "StatesIcon", TaskMenuCategories.Patient));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(notesDialog, "Notes", "NotesIcon", TaskMenuCategories.Patient));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(sequencePlayer, "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(mandibleMovementDialog, "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(windowLayout, "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
         }
 
         public void sceneLoaded(SimScene scene)

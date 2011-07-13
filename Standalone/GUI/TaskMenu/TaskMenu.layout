@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Popup">
+        <Property key="Widget_Alpha" value="1"/>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="203 45 381 437" align="Stretch" name="IconScroller">
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <Property key="ScrollView_CanvasSize" value="381 437"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="393 8 184 26" align="Right Top" name="SearchBox"/>
+    </Widget>
+</MyGUI>

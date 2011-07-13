@@ -78,13 +78,16 @@ namespace Medical.GUI
 
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
-            taskbar.setAppMenu(appMenu, "AppButton/Image");
+            taskbar.setAppIcon("AppButton/Image");
 
-            MDIDialogOpenTaskbarItem renderTaskbarItem = new MDIDialogOpenTaskbarItem(renderDialog, "Render", "RenderIcon");
-            renderTaskbarItem.RightClicked += new EventHandler(renderTaskbarItem_RightClicked);
-            taskbar.addItem(renderTaskbarItem);
+            TaskMenu taskMenu = guiManager.TaskMenu;
+            taskMenu.setAppMenu(appMenu);
 
-            taskbar.addItem(new MDIDialogOpenTaskbarItem(examViewer, "Exam Viewer", "ExamIcon"));
+            //Tasks Menu
+            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(renderDialog, "Render", "RenderIcon", TaskMenuCategories.Tools));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(examViewer, "Exam Viewer", "ExamIcon", TaskMenuCategories.Exams));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -195,16 +198,6 @@ namespace Medical.GUI
         {
             changeActiveFile(null);
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
-        }
-
-        void renderTaskbarItem_OnClicked(object sender, EventArgs e)
-        {
-            renderDialog.render();
-        }
-
-        void renderTaskbarItem_RightClicked(object sender, EventArgs e)
-        {
-            renderDialog.render();
         }
     }
 }
