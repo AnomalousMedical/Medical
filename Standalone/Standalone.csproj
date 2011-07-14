@@ -190,6 +190,7 @@
     <Compile Include="GUI\MDIDialogEntry.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
     <Compile Include="GUI\Taskbar\MDIDialogOpenTaskbarItem.cs" />
+    <Compile Include="GUI\TaskMenu\CallbackTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\DialogOpenTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\MDIDialogOpenTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />

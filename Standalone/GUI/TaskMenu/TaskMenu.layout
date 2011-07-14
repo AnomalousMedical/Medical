@@ -9,6 +9,7 @@
             <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
+            <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="393 8 184 26" align="Right Top" name="SearchBox"/>
     </Widget>

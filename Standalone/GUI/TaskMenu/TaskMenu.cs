@@ -25,9 +25,9 @@ namespace Medical.GUI
             iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout());
             iconGrid.HighlightSelectedButton = false;
 
+            iconGrid.defineGroup(TaskMenuCategories.Patient);
             iconGrid.defineGroup(TaskMenuCategories.Navigation);
             iconGrid.defineGroup(TaskMenuCategories.Exams);
-            iconGrid.defineGroup(TaskMenuCategories.Patient);
             iconGrid.defineGroup(TaskMenuCategories.Simulation);
             iconGrid.defineGroup(TaskMenuCategories.Tools);
             iconGrid.defineGroup(TaskMenuCategories.Editor);
