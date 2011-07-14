@@ -7,6 +7,8 @@ using Engine;
 
 namespace Medical.GUI
 {
+    public delegate void TaskItemDelegate(TaskMenuItem item);
+
     public class TaskMenu : PopupContainer
     {
         private class TaskMenuItemComparer : IComparer<ButtonGridItem>
@@ -26,6 +28,8 @@ namespace Medical.GUI
         private TaskMenuSection tasksSection;
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
+
+        public event TaskItemDelegate TaskItemOpened;
 
         public TaskMenu()
             :base("Medical.GUI.TaskMenu.TaskMenu.layout")
@@ -93,8 +97,13 @@ namespace Medical.GUI
 
         void item_ItemClicked(object sender, EventArgs e)
         {
-            ((TaskMenuItem)iconGrid.SelectedItem.UserObject).clicked();
+            TaskMenuItem item = (TaskMenuItem)iconGrid.SelectedItem.UserObject;
+            item.clicked();
             hide();
+            if (TaskItemOpened != null)
+            {
+                TaskItemOpened.Invoke(item);
+            }
         }
     }
 }

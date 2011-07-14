@@ -15,6 +15,7 @@ namespace Medical.GUI
         {
             this.piperAtlasPlugin = piperAtlasPlugin;
             this.wizard = wizard;
+            ShowOnTaskbar = false;
         }
 
         public override void clicked()

@@ -115,6 +115,16 @@ namespace Medical.GUI
             item._configureForTaskbar(this, taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button);
         }
 
+        public void removeItem(TaskbarItem item)
+        {
+            int index = taskbarItems.IndexOf(item);
+            if (index >= 0)
+            {
+                taskbarItems.RemoveAt(index);
+                item._deconfigureForTaskbar();
+            }
+        }
+
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
             if (OpenTaskMenu != null)

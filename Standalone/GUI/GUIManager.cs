@@ -79,6 +79,7 @@ namespace Medical.GUI
 
             //Task Menu
             taskMenu = new TaskMenu();
+            taskMenu.TaskItemOpened += new TaskItemDelegate(taskMenu_TaskItemOpened);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -280,6 +281,25 @@ namespace Medical.GUI
         {
             taskMenu.setSize(width, height);
             taskMenu.show(left, top);
+        }
+
+        void taskMenu_TaskItemOpened(TaskMenuItem item)
+        {
+            if (item.ShowOnTaskbar && item._TaskbarItem == null)
+            {
+                item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
+                item.ItemClosed += item_ItemClosed;
+                taskbar.addItem(item._TaskbarItem);
+                taskbar.layout();
+            }
+        }
+
+        void item_ItemClosed(TaskMenuItem item)
+        {
+            item.ItemClosed -= item_ItemClosed;
+            taskbar.removeItem(item._TaskbarItem);
+            item._TaskbarItem = null;
+            taskbar.layout();
         }
     }
 }

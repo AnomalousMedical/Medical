@@ -20,7 +20,7 @@ namespace Medical.GUI
 
         public virtual void Dispose()
         {
-
+            //Don't have to destroy the button because MyGUI will do it for us.
         }
 
         public abstract void clicked(Widget source, EventArgs e);
@@ -47,6 +47,16 @@ namespace Medical.GUI
             taskbarButton.MouseButtonReleased += new MyGUIEvent(taskbarButton_MouseButtonReleased);
             taskbarButton.NeedToolTip = true;
             taskbarButton.EventToolTip += new MyGUIEvent(taskbarButton_EventToolTip);
+        }
+
+        internal void _deconfigureForTaskbar()
+        {
+            if (taskbarButton != null)
+            {
+                Gui.Instance.destroyWidget(taskbarButton);
+                taskbar = null;
+                taskbarButton = null;
+            }
         }
 
         void taskbarButton_EventToolTip(Widget source, EventArgs e)

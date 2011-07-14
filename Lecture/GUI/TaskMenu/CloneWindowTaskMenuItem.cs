@@ -21,14 +21,10 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            toggleCloneWindow();
-        }
-
-        public void toggleCloneWindow()
-        {
             if (standaloneController.SceneViewController.HasCloneWindow)
             {
                 standaloneController.SceneViewController.destroyCloneWindow();
+                fireItemClosed();
             }
             else
             {

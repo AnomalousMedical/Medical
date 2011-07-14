@@ -21,11 +21,24 @@ namespace Medical.GUI
         {
             this.dialog = dialog;
             this.Weight = weight;
+            dialog.Closed += new EventHandler(dialog_Closed);
         }
 
         public override void clicked()
         {
-            dialog.Visible = !dialog.Visible;
+            if (!dialog.Visible)
+            {
+                dialog.Visible = true;
+            }
+            else
+            {
+                dialog.bringToFront();
+            }
+        }
+
+        void dialog_Closed(object sender, EventArgs e)
+        {
+            fireItemClosed();
         }
     }
 }

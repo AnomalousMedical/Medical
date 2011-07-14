@@ -15,6 +15,7 @@ namespace Medical.GUI
         {
             this.standaloneController = standaloneController;
             this.Weight = weight;
+            this.ShowOnTaskbar = false;
         }
 
         public override void clicked()

@@ -15,7 +15,11 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            TeethController.HighlightContacts = !TeethController.HighlightContacts;
+            ShowOnTaskbar = TeethController.HighlightContacts = !TeethController.HighlightContacts;
+            if (!TeethController.HighlightContacts)
+            {
+                fireItemClosed();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Medical.GUI
     /// </summary>
     public class CallbackTaskMenuItem : TaskMenuItem
     {
-        public delegate void ClickedCallback();
+        public delegate void ClickedCallback(CallbackTaskMenuItem item);
 
         public event ClickedCallback OnClicked;
 
@@ -30,7 +30,7 @@ namespace Medical.GUI
         {
             if(OnClicked != null)
             {
-                OnClicked.Invoke();
+                OnClicked.Invoke(this);
             }
         }
     }
