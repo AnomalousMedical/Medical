@@ -67,6 +67,18 @@ namespace Medical.GUI
             }
         }
 
+        public bool SuppressLayout
+        {
+            get
+            {
+                return iconGrid.SuppressLayout;
+            }
+            set
+            {
+                iconGrid.SuppressLayout = value;
+            }
+        }
+
         void tasksSection_TaskItemRemoved(TaskMenuItem taskItem)
         {
             

@@ -227,9 +227,12 @@ namespace Medical
         public void initializePlugins()
         {
             Taskbar taskbar = GUIManager.Taskbar;
+            TaskMenu taskMenu = GUIManager.TaskMenu;
             taskbar.SuppressLayout = true;
+            taskMenu.SuppressLayout = true;
             atlasPluginManager.initialzePlugins();
             taskbar.SuppressLayout = false;
+            taskMenu.SuppressLayout = false;
             taskbar.layout();
             guiManager.loadDialogPositions();
 
