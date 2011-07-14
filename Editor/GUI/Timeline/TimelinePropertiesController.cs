@@ -49,6 +49,7 @@ namespace Medical.GUI
         private Timeline currentTimeline;
 
         private bool visible = false;
+        private bool togglingVisible = false;
 
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
@@ -72,6 +73,7 @@ namespace Medical.GUI
             guiManager.addManagedDialog(timelineProperties);
 
             timelineFileExplorer = new TimelineFileExplorer(editorTimelineController, standaloneController.DocumentController, this);
+            timelineFileExplorer.Closed += new EventHandler(timelineFileExplorer_Closed);
             guiManager.addManagedDialog(timelineFileExplorer);
 
             browserWindow = new BrowserWindow();
@@ -107,6 +109,18 @@ namespace Medical.GUI
             questionEditor.Dispose();
             browserWindow.Dispose();
             fileBrowserDialog.Dispose();
+        }
+
+        public event EventHandler Closed
+        {
+            add
+            {
+                timelineFileExplorer.Closed += value;
+            }
+            remove
+            {
+                timelineFileExplorer.Closed -= value;
+            }
         }
 
         /// <summary>
@@ -265,11 +279,25 @@ namespace Medical.GUI
             {
                 if (visible != value)
                 {
+                    togglingVisible = true;
                     visible = value;
-                    timelineProperties.Visible = value;
-                    timelineFileExplorer.Visible = value;
-                    timelineObjectExplorer.Visible = value;
-                    timelineObjectProperties.Visible = value;
+                    if (timelineProperties.Visible != value)
+                    {
+                        timelineProperties.Visible = value;
+                    }
+                    if (timelineFileExplorer.Visible != value)
+                    {
+                        timelineFileExplorer.Visible = value;
+                    }
+                    if (timelineObjectExplorer.Visible != value)
+                    {
+                        timelineObjectExplorer.Visible = value;
+                    }
+                    if (timelineObjectProperties.Visible != value)
+                    {
+                        timelineObjectProperties.Visible = value;
+                    }
+                    togglingVisible = false;
                 }
             }
         }
@@ -353,6 +381,26 @@ namespace Medical.GUI
         void editorTimelineController_TimelinePlaybackStopped(object sender, EventArgs e)
         {
             resetCurrentTimelineController();
+        }
+
+        void timelineFileExplorer_Closed(object sender, EventArgs e)
+        {
+            if (!togglingVisible)
+            {
+                visible = false;
+                if (timelineProperties.Visible)
+                {
+                    timelineProperties.Visible = false;
+                }
+                if (timelineObjectExplorer.Visible)
+                {
+                    timelineObjectExplorer.Visible = false;
+                }
+                if (timelineObjectProperties.Visible)
+                {
+                    timelineObjectProperties.Visible = false;
+                }
+            }
         }
     }
 }

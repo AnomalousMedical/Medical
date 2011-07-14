@@ -13,11 +13,26 @@ namespace Medical.GUI
             :base("Timeline", "TimelineEditorIcon", TaskMenuCategories.Editor)
         {
             this.timelinePropertiesController = timelinePropertiesController;
+            timelinePropertiesController.Closed += new EventHandler(timelinePropertiesController_Closed);
         }
 
         public override void clicked()
         {
-            timelinePropertiesController.Visible = !timelinePropertiesController.Visible;
+            if (timelinePropertiesController.Visible)
+            {
+                timelinePropertiesController.Visible = false;
+                fireItemClosed();
+            }
+            else
+            {
+                timelinePropertiesController.Visible = true;
+            }
+            ShowOnTaskbar = timelinePropertiesController.Visible;
+        }
+
+        void timelinePropertiesController_Closed(object sender, EventArgs e)
+        {
+            fireItemClosed();
         }
     }
 }
