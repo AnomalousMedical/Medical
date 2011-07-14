@@ -17,6 +17,7 @@ namespace Medical.GUI
             this.cloneWindowDialog = cloneWindowDialog;
 
             cloneWindowDialog.CreateCloneWindow += new EventHandler(cloneWindowDialog_CreateCloneWindow);
+            cloneWindowDialog.Closed += new EventHandler(cloneWindowDialog_Closed);
         }
 
         public override void clicked()
@@ -35,6 +36,14 @@ namespace Medical.GUI
         void cloneWindowDialog_CreateCloneWindow(object sender, EventArgs e)
         {
             standaloneController.SceneViewController.createCloneWindow(cloneWindowDialog.createWindowInfo());
+        }
+
+        void cloneWindowDialog_Closed(object sender, EventArgs e)
+        {
+            if (!standaloneController.SceneViewController.HasCloneWindow)
+            {
+                fireItemClosed();
+            }
         }
     }
 }

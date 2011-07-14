@@ -93,11 +93,11 @@ namespace Medical.GUI
 
         void acceptButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            this.close();
             if (CreateCloneWindow != null)
             {
                 CreateCloneWindow.Invoke(this, EventArgs.Empty);
             }
+            this.close();
         }
     }
 }

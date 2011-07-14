@@ -80,21 +80,21 @@ namespace Medical.GUI
             TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
 
             //Patient Section
-            tasksSection.addItem(new DialogOpenTaskMenuItem(chooseSceneDialog, "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(openPatientDialog, "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(chooseSceneDialog, "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0, false));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(openPatientDialog, "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1, false));
 
-            CallbackTaskMenuItem saveTaskItem = new CallbackTaskMenuItem("Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2);
+            CallbackTaskMenuItem saveTaskItem = new CallbackTaskMenuItem("Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
             saveTaskItem.OnClicked +=new CallbackTaskMenuItem.ClickedCallback(saveTaskItem_OnClicked);
             tasksSection.addItem(saveTaskItem);
 
-            CallbackTaskMenuItem saveAsTaskItem = new CallbackTaskMenuItem("Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3);
+            CallbackTaskMenuItem saveAsTaskItem = new CallbackTaskMenuItem("Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
             saveAsTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(saveAsTaskItem_OnClicked);
             tasksSection.addItem(saveAsTaskItem);
 
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(examViewer, "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
 
             //System Section
-            CallbackTaskMenuItem helpTaskItem = new CallbackTaskMenuItem("Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4);
+            CallbackTaskMenuItem helpTaskItem = new CallbackTaskMenuItem("Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
             helpTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(helpTaskItem_OnClicked);
             tasksSection.addItem(helpTaskItem);
 
@@ -102,11 +102,11 @@ namespace Medical.GUI
             tasksSection.addItem(new DialogOpenTaskMenuItem(aboutDialog, "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
             tasksSection.addItem(new CheckForUpdatesTaskMenuItem(standaloneController, int.MaxValue - 2));
 
-            CallbackTaskMenuItem logoutTaskItem = new CallbackTaskMenuItem("Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1);
+            CallbackTaskMenuItem logoutTaskItem = new CallbackTaskMenuItem("Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1, false);
             logoutTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(logoutTaskItem_OnClicked);
             tasksSection.addItem(logoutTaskItem);
 
-            CallbackTaskMenuItem exitTaskItem = new CallbackTaskMenuItem("Exit", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue);
+            CallbackTaskMenuItem exitTaskItem = new CallbackTaskMenuItem("Exit", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue, false);
             exitTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(exitTaskItem_OnClicked);
             tasksSection.addItem(exitTaskItem);
 

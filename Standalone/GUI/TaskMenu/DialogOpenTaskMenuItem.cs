@@ -17,10 +17,23 @@ namespace Medical.GUI
         }
 
         public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, int weight)
+            : this(dialog, name, iconName, category, weight, true)
+        {
+            
+        }
+
+        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, bool showOnTaskbar)
+            : this(dialog, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
+        {
+
+        }
+
+        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, int weight, bool showOnTaskbar)
             : base(name, iconName, category)
         {
             this.dialog = dialog;
             this.Weight = weight;
+            this.ShowOnTaskbar = showOnTaskbar;
             dialog.Closed += new EventHandler(dialog_Closed);
         }
 
