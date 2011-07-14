@@ -22,7 +22,7 @@ namespace Medical.GUI
             tasksSection.TaskItemRemoved += new TaskMenuSection.TaskEvent(tasksSection_TaskItemRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
-            iconGrid = new ButtonGrid(iconScroller);
+            iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout());
             iconGrid.HighlightSelectedButton = false;
 
             iconGrid.defineGroup(TaskMenuCategories.Navigation);

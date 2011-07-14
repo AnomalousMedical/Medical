@@ -6,7 +6,7 @@
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="381 437"/>
             <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
-            <UserString key="ItemHeight" value="48"/>
+            <UserString key="ItemHeight" value="54"/>
             <UserString key="ItemWidth" value="100"/>
             <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
         </Widget>
