@@ -88,6 +88,7 @@ namespace Medical.GUI
 
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(renderDialog, "Render", "RenderIcon", TaskMenuCategories.Tools));
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(examViewer, "Exam Viewer", "ExamIcon", TaskMenuCategories.Exams));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(options, "Options", "FileToolstrip/Options", TaskMenuCategories.System));
         }
 
         public void sceneLoaded(SimScene scene)

@@ -24,6 +24,14 @@ namespace Medical.GUI
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
             iconGrid = new ButtonGrid(iconScroller);
             iconGrid.HighlightSelectedButton = false;
+
+            iconGrid.defineGroup(TaskMenuCategories.Navigation);
+            iconGrid.defineGroup(TaskMenuCategories.Exams);
+            iconGrid.defineGroup(TaskMenuCategories.Patient);
+            iconGrid.defineGroup(TaskMenuCategories.Simulation);
+            iconGrid.defineGroup(TaskMenuCategories.Tools);
+            iconGrid.defineGroup(TaskMenuCategories.Editor);
+            iconGrid.defineGroup(TaskMenuCategories.System);
         }
 
         public void setPosition(int left, int top)

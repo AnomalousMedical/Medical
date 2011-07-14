@@ -5,6 +5,10 @@
         <Widget type="ScrollView" skin="ScrollViewEmpty" position="203 45 381 437" align="Stretch" name="IconScroller">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="381 437"/>
+            <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
+            <UserString key="ItemHeight" value="48"/>
+            <UserString key="ItemWidth" value="100"/>
+            <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="393 8 184 26" align="Right Top" name="SearchBox"/>
     </Widget>
