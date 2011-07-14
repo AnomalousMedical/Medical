@@ -90,24 +90,24 @@ namespace Medical.GUI
             saveAsTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(saveAsTaskItem_OnClicked);
             tasksSection.addItem(saveAsTaskItem);
 
-            CallbackTaskMenuItem helpTaskItem = new CallbackTaskMenuItem("Help", "FileToolstrip/Help", TaskMenuCategories.System);
+            CallbackTaskMenuItem helpTaskItem = new CallbackTaskMenuItem("Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4);
             helpTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(helpTaskItem_OnClicked);
             tasksSection.addItem(helpTaskItem);
 
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(renderDialog, "Render", "RenderIcon", TaskMenuCategories.Tools));
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(examViewer, "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient));
             tasksSection.addItem(new DialogOpenTaskMenuItem(options, "Options", "FileToolstrip/Options", TaskMenuCategories.System));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(aboutDialog, "About", "FileToolstrip/About", TaskMenuCategories.System));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(aboutDialog, "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 3));
 
-            CallbackTaskMenuItem logoutTaskItem = new CallbackTaskMenuItem("Log Out", "FileToolstrip/Exit", TaskMenuCategories.System);
+            CallbackTaskMenuItem logoutTaskItem = new CallbackTaskMenuItem("Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1);
             logoutTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(logoutTaskItem_OnClicked);
             tasksSection.addItem(logoutTaskItem);
 
-            CallbackTaskMenuItem exitTaskItem = new CallbackTaskMenuItem("Exit", "FileToolstrip/Exit", TaskMenuCategories.System);
+            CallbackTaskMenuItem exitTaskItem = new CallbackTaskMenuItem("Exit", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue);
             exitTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(exitTaskItem_OnClicked);
             tasksSection.addItem(exitTaskItem);
 
-            tasksSection.addItem(new CheckForUpdatesTaskMenuItem(standaloneController));
+            tasksSection.addItem(new CheckForUpdatesTaskMenuItem(standaloneController, int.MaxValue - 2));
         }
 
         public void sceneLoaded(SimScene scene)

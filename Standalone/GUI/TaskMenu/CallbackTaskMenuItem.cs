@@ -15,9 +15,15 @@ namespace Medical.GUI
         public event ClickedCallback OnClicked;
 
         public CallbackTaskMenuItem(String name, String iconName, String category)
-            :base(name, iconName, category)
+            : this(name, iconName, category, DEFAULT_WEIGHT)
         {
 
+        }
+
+        public CallbackTaskMenuItem(String name, String iconName, String category, int weight)
+            : base(name, iconName, category)
+        {
+            this.Weight = weight;
         }
 
         public override void clicked()

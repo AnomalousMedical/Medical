@@ -7,12 +7,14 @@ namespace Medical.GUI
 {
     public abstract class TaskMenuItem
     {
+        protected const int DEFAULT_WEIGHT = 1000;
+
         public TaskMenuItem(String name, String iconName, String category)
         {
             this.Name = name;
             this.IconName = iconName;
             this.Category = category;
-            Weight = 0;
+            Weight = DEFAULT_WEIGHT;
         }
 
         public abstract void clicked();

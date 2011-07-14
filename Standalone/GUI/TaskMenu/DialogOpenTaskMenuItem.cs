@@ -11,9 +11,16 @@ namespace Medical.GUI
         private Dialog dialog;
 
         public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category)
-            :base(name, iconName, category)
+            : this(dialog, name, iconName, category, DEFAULT_WEIGHT)
+        {
+            
+        }
+
+        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, int weight)
+            : base(name, iconName, category)
         {
             this.dialog = dialog;
+            this.Weight = weight;
         }
 
         public override void clicked()

@@ -9,6 +9,20 @@ namespace Medical.GUI
 {
     public class TaskMenu : PopupContainer
     {
+        private class TaskMenuItemComparer : IComparer<ButtonGridItem>
+        {
+            public int Compare(ButtonGridItem x, ButtonGridItem y)
+            {
+                TaskMenuItem xItem = (TaskMenuItem)x.UserObject;
+                TaskMenuItem yItem = (TaskMenuItem)y.UserObject;
+                if(xItem != null && yItem != null)
+                {
+                    return xItem.Weight - yItem.Weight;
+                }
+                return 0;
+            }
+        }
+
         private TaskMenuSection tasksSection;
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
@@ -21,7 +35,7 @@ namespace Medical.GUI
             tasksSection.TaskItemRemoved += new TaskMenuSection.TaskEvent(tasksSection_TaskItemRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
-            iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout());
+            iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer());
             iconGrid.HighlightSelectedButton = false;
 
             iconGrid.defineGroup(TaskMenuCategories.Patient);

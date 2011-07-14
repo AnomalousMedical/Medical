@@ -10,10 +10,11 @@ namespace Medical.GUI
     {
         private StandaloneController standaloneController;
 
-        public CheckForUpdatesTaskMenuItem(StandaloneController standaloneController)
+        public CheckForUpdatesTaskMenuItem(StandaloneController standaloneController, int weight)
             :base("Check for Updates", "FileToolstrip/CheckForUpdates", TaskMenuCategories.System)
         {
             this.standaloneController = standaloneController;
+            this.Weight = weight;
         }
 
         public override void clicked()
