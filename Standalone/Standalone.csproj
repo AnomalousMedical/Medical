@@ -263,7 +263,6 @@
     <Compile Include="Controller\SplashScreen.cs" />
     <Compile Include="Controller\Timeline\LoadAnotherTimeline.cs" />
     <Compile Include="Controller\Timeline\ChangeMedicalStateAction.cs" />
-    <Compile Include="GUI\AppMenu.cs" />
     <Compile Include="GUI\FileManagement\ChooseSceneDialog.cs" />
     <Compile Include="GUI\FileManagement\OpenPatientDialog.cs" />
     <Compile Include="GUI\FileManagement\SavePatientDialog.cs" />

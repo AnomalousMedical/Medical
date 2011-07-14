@@ -9,7 +9,6 @@ namespace Medical.GUI
 {
     public class TaskMenu : PopupContainer
     {
-        private AppMenu appMenu;
         private TaskMenuSection tasksSection;
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
@@ -42,17 +41,8 @@ namespace Medical.GUI
         public void setSize(int width, int height)
         {
             widget.setSize(width, height);
-            appMenu.layout(width, height);
             IntCoord clientCoord = iconScroller.ClientCoord;
             iconGrid.resizeAndLayout(clientCoord.width);
-        }
-
-        public void setAppMenu(AppMenu appMenu)
-        {
-            this.appMenu = appMenu;
-            widget.Visible = true;
-            appMenu.putOnTaskMenu(widget);
-            widget.Visible = false;
         }
 
         public TaskMenuSection Tasks

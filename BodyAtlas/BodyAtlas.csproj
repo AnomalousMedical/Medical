@@ -94,7 +94,6 @@
     <Compile Include="BodyAtlasMainPlugin.cs" />
     <Compile Include="Controller\Documents\PatientDocumentHandler.cs" />
     <Compile Include="GUI\AboutDialog\AboutDialog.cs" />
-    <Compile Include="GUI\Menus\BodyAtlasAppMenu.cs" />
     <Compile Include="GUI\Menus\SystemMenu.cs" />
     <Compile Include="GUI\Render\RenderPropertiesDialog.cs" />
     <Compile Include="GUI\Render\ResolutionMenu.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI\AboutDialog\AboutDialog.layout" />
-    <EmbeddedResource Include="GUI\Menus\BodyAtlasAppMenu.layout" />
     <EmbeddedResource Include="GUI\Render\RenderPropertiesDialog.layout" />
     <EmbeddedResource Include="GUI\Render\ResolutionMenu.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">

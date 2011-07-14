@@ -14,7 +14,6 @@ namespace Medical.GUI
     {
         private StandaloneController standaloneController;
         private GUIManager guiManager;
-        private BodyAtlasAppMenu appMenu;
         private SystemMenu systemMenu;
         private LicenseManager licenseManager;
         private BodyAtlasController bodyAtlasController;
@@ -41,7 +40,6 @@ namespace Medical.GUI
             chooseSceneDialog.Dispose();
             savePatientDialog.Dispose();
             openPatientDialog.Dispose();
-            appMenu.Dispose();
             aboutDialog.Dispose();
         }
 
@@ -52,8 +50,6 @@ namespace Medical.GUI
             standaloneController.DocumentController.addDocumentHandler(new PatientDocumentHandler(standaloneController, this));
 
             Gui.Instance.load("Medical.Resources.BodyAtlasImagesets.xml");
-
-            appMenu = new BodyAtlasAppMenu(this, standaloneController);
 
             //Create Dialogs
             aboutDialog = new AboutDialog(licenseManager);
@@ -79,9 +75,6 @@ namespace Medical.GUI
             //Taskbar
             Taskbar taskbar = guiManager.Taskbar;
             taskbar.setAppIcon("AppButton/Image");
-
-            TaskMenu taskMenu = guiManager.TaskMenu;
-            taskMenu.setAppMenu(appMenu);
 
             //Tasks Menu
             TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
