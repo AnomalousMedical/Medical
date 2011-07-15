@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define CRACKED
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +58,10 @@ namespace Medical
 
         public void getKey()
         {
+#if CRACKED
+            Logging.Log.ImportantInfo("Running with no copy protection");
+            ThreadManager.invoke(keyValidCallback);
+#else
             Thread t = new Thread(delegate()
             {
                 if (File.Exists(keyFile))
@@ -129,15 +136,21 @@ namespace Medical
                 }
             });
             t.Start();
+#endif
         }
 
         public bool allowFeature(int featureCode)
         {
+#if CRACKED
+            return true;
+#else
             return license != null ? license.supportsFeature(featureCode) : false;
+#endif
         }
 
         public void deleteLicense()
         {
+#if !CRACKED
             try
             {
                 File.Delete(keyFile);
@@ -146,13 +159,18 @@ namespace Medical
             {
 
             }
+#endif
         }
 
         public String Key
         {
             get
             {
+#if CRACKED
+                return "Anomalous Medical Internal";
+#else
                 return license != null ? license.ProductKey : "None";
+#endif
             }
         }
 
@@ -163,7 +181,11 @@ namespace Medical
         {
             get
             {
+#if CRACKED
+                return false;
+#else
                 return license != null ? license.IsExpired : false;
+#endif
             }
         }
 
@@ -171,7 +193,11 @@ namespace Medical
         {
             get
             {
+#if CRACKED
+                return true;
+#else
                 return license != null && !license.IsExpired && license.MachineID == getMachineId() && KeyChecker.checkValid(programName, license.ProductKey);
+#endif
             }
         }
 
@@ -187,7 +213,11 @@ namespace Medical
         {
             get
             {
+#if CRACKED
+                return "Anomalous Medical Internal";
+#else
                 return license != null ? license.LicenseeName : "Invalid";
+#endif
             }
         }
 
