@@ -21,7 +21,7 @@ namespace Medical.GUI
         public TaskMenuRecentDocuments(Widget widget, DocumentController documentController)
         {
             documentScroller = (ScrollView)widget.findWidget("DocumentScroller");
-            documentGrid = new ButtonGrid(documentScroller);
+            documentGrid = new ButtonGrid(documentScroller, new ButtonGridTextAdjustedGridLayout());
             documentGrid.HighlightSelectedButton = false;
 
             this.documentController = documentController;

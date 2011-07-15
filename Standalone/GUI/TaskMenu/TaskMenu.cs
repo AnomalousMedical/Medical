@@ -65,6 +65,8 @@ namespace Medical.GUI
             viewButtonGroup.addButton(tasksButton);
             documentsButton = (Button)widget.findWidget("Documents");
             viewButtonGroup.addButton(documentsButton);
+
+            this.Hidden += new EventHandler(TaskMenu_Hidden);
         }
 
         public void setPosition(int left, int top)
@@ -140,8 +142,12 @@ namespace Medical.GUI
 
         void recentDocuments_DocumentClicked()
         {
-            viewButtonGroup.SelectedButton = tasksButton;
             this.hide();
+        }
+
+        void TaskMenu_Hidden(object sender, EventArgs e)
+        {
+            viewButtonGroup.SelectedButton = tasksButton;
         }
     }
 }
