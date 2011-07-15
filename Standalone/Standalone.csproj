@@ -194,6 +194,7 @@
     <Compile Include="GUI\TaskMenu\CallbackTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\DialogOpenTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\MDIDialogOpenTaskMenuItem.cs" />
+    <Compile Include="GUI\TaskMenu\StartEmbeddedTimelineTaskMenuItem.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuItem.cs" />
