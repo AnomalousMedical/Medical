@@ -14,6 +14,7 @@ namespace Medical.GUI
         {
             this.timelinePropertiesController = timelinePropertiesController;
             timelinePropertiesController.Closed += new EventHandler(timelinePropertiesController_Closed);
+            timelinePropertiesController.VisibilityChanged += new Engine.EventDelegate<TimelinePropertiesController>(timelinePropertiesController_VisibilityChanged);
         }
 
         public override void clicked()
@@ -28,6 +29,14 @@ namespace Medical.GUI
                 timelinePropertiesController.Visible = true;
             }
             ShowOnTaskbar = timelinePropertiesController.Visible;
+        }
+
+        void timelinePropertiesController_VisibilityChanged(TimelinePropertiesController source)
+        {
+            if (source.Visible && !OnTaskbar)
+            {
+                fireRequestShowInTaskbar();
+            }
         }
 
         void timelinePropertiesController_Closed(object sender, EventArgs e)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace Medical
 {
@@ -27,6 +28,11 @@ namespace Medical
         public void removeDocumentHandler(DocumentHandler handler)
         {
             documentHandlers.Remove(handler);
+        }
+
+        public void loadRecentDocuments()
+        {
+            recentDocuments.load();
         }
 
         public void saveRecentDocuments()
@@ -55,6 +61,30 @@ namespace Medical
                 }
             }
             return false;
+        }
+
+        public String getFileTypePrettyName(String filename)
+        {
+            foreach (DocumentHandler handler in documentHandlers)
+            {
+                if (handler.canReadFile(filename))
+                {
+                    return handler.getPrettyName(filename);
+                }
+            }
+            return Path.GetExtension(filename);
+        }
+
+        public String getFileTypeIcon(String filename)
+        {
+            foreach (DocumentHandler handler in documentHandlers)
+            {
+                if (handler.canReadFile(filename))
+                {
+                    return handler.getIcon(filename);
+                }
+            }
+            return "";
         }
 
         /// <summary>

@@ -78,7 +78,7 @@ namespace Medical.GUI
             screenLayoutManager.Root = taskbar;
 
             //Task Menu
-            taskMenu = new TaskMenu();
+            taskMenu = new TaskMenu(standaloneController.DocumentController);
             taskMenu.TaskItemOpened += new TaskItemDelegate(taskMenu_TaskItemOpened);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);

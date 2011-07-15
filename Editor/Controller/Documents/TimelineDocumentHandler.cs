@@ -23,7 +23,22 @@ namespace Medical
         public bool processFile(string filename)
         {
             timelinePropertiesController.openProject(filename);
+            timelinePropertiesController.Visible = true;
             return true;
+        }
+
+        public string getPrettyName(string filename)
+        {
+            if (filename.EndsWith(".tl"))
+            {
+                return "Timeline";
+            }
+            return "Timeline Project";
+        }
+
+        public string getIcon(string filename)
+        {
+            return "TimelineEditorIcon";
         }
     }
 }

@@ -25,5 +25,19 @@ namespace Medical
         /// <param name="filename">The filename to read.</param>
         /// <returns>True to add to the recent documents list. False to keep it off.</returns>
         bool processFile(String filename);
+
+        /// <summary>
+        /// Get a nicely formatted name for this type of file.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        string getPrettyName(string filename);
+
+        /// <summary>
+        /// Get an icon resource name for the file.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        string getIcon(string filename);
     }
 }

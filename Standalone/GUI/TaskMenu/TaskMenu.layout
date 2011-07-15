@@ -2,7 +2,7 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="TaskMenuBackground" position="0 40 584 482" layer="Popup">
         <Property key="Widget_Alpha" value="1"/>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="203 45 381 437" align="Stretch" name="IconScroller">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="IconScroller">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="381 437"/>
             <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
@@ -12,5 +12,22 @@
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="393 8 184 26" align="Right Top" name="SearchBox"/>
+        <Widget type="Button" skin="Button" position="2 11 66 22" name="Tasks">
+            <Property key="Widget_Caption" value="Tasks"/>
+            <Property key="Text_TextColour" value="FFFFFF"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="70 11 76 22" name="Documents">
+            <Property key="Widget_Caption" value="Documents"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="2 45 574 432" align="Stretch" name="DocumentScroller">
+            <Property key="ScrollView_CanvasSize" value="300 300"/>
+            <Property key="Widget_Visible" value="false"/>
+            <Property key="ScrollView_CanvasAlign" value="Left Top"/>
+            <UserString key="ButtonSkin" value="TaskMenuButtonGridButton"/>
+            <UserString key="ItemHeight" value="54"/>
+            <UserString key="ItemWidth" value="100"/>
+            <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
+            <UserString key="GroupPaddingY" value="11"/>
+        </Widget>
     </Widget>
 </MyGUI>

@@ -27,7 +27,18 @@ namespace Medical
             section = configFile.createOrRetrieveConfigSection("RecentDocuments");
             section.SectionLoaded += new ConfigEvent(section_SectionLoaded);
             section.SectionSaving += new ConfigEvent(section_SectionSaving);
+        }
+
+        public void load()
+        {
             configFile.loadConfigFile();
+            if (DocumentAdded != null)
+            {
+                foreach (String document in recentDocumentList)
+                {
+                    DocumentAdded.Invoke(this, document);
+                }
+            }
         }
 
         public void save()

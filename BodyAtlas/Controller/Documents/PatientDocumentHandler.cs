@@ -37,5 +37,15 @@ namespace Medical
             }
             return false; //bodyAtlasPlugin.changeActiveFile will have already added this to the recent docs list for us.
         }
+
+        public string getPrettyName(string filename)
+        {
+            return "Patient";
+        }
+
+        public string getIcon(string filename)
+        {
+            return "ExamIcon";
+        }
     }
 }

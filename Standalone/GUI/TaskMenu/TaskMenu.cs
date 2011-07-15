@@ -29,9 +29,15 @@ namespace Medical.GUI
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
 
+        private TaskMenuRecentDocuments recentDocuments;
+
+        private ButtonGroup viewButtonGroup;
+        private Button tasksButton;
+        private Button documentsButton;
+
         public event TaskItemDelegate TaskItemOpened;
 
-        public TaskMenu()
+        public TaskMenu(DocumentController documentController)
             :base("Medical.GUI.TaskMenu.TaskMenu.layout")
         {
             tasksSection = new TaskMenuSection();
@@ -49,6 +55,16 @@ namespace Medical.GUI
             iconGrid.defineGroup(TaskMenuCategories.Tools);
             iconGrid.defineGroup(TaskMenuCategories.Editor);
             iconGrid.defineGroup(TaskMenuCategories.System);
+
+            recentDocuments = new TaskMenuRecentDocuments(widget, documentController);
+            recentDocuments.DocumentClicked += new EventDelegate(recentDocuments_DocumentClicked);
+
+            viewButtonGroup = new ButtonGroup();
+            viewButtonGroup.SelectedButtonChanged += new EventHandler(viewButtonGroup_SelectedButtonChanged);
+            tasksButton = (Button)widget.findWidget("Tasks");
+            viewButtonGroup.addButton(tasksButton);
+            documentsButton = (Button)widget.findWidget("Documents");
+            viewButtonGroup.addButton(documentsButton);
         }
 
         public void setPosition(int left, int top)
@@ -61,6 +77,7 @@ namespace Medical.GUI
             widget.setSize(width, height);
             IntCoord clientCoord = iconScroller.ClientCoord;
             iconGrid.resizeAndLayout(clientCoord.width);
+            recentDocuments.resizeAndLayout(clientCoord.width);
         }
 
         public TaskMenuSection Tasks
@@ -93,6 +110,15 @@ namespace Medical.GUI
             ButtonGridItem item = iconGrid.addItem(taskItem.Category, taskItem.Name, taskItem.IconName);
             item.UserObject = taskItem;
             item.ItemClicked += new EventHandler(item_ItemClicked);
+            taskItem.RequestShowInTaskbar += new TaskItemDelegate(taskItem_RequestShowInTaskbar);
+        }
+
+        void taskItem_RequestShowInTaskbar(TaskMenuItem item)
+        {
+            if (TaskItemOpened != null)
+            {
+                TaskItemOpened.Invoke(item);
+            }
         }
 
         void item_ItemClicked(object sender, EventArgs e)
@@ -104,6 +130,18 @@ namespace Medical.GUI
             {
                 TaskItemOpened.Invoke(item);
             }
+        }
+
+        void viewButtonGroup_SelectedButtonChanged(object sender, EventArgs e)
+        {
+            iconScroller.Visible = viewButtonGroup.SelectedButton == tasksButton;
+            recentDocuments.Visible = viewButtonGroup.SelectedButton == documentsButton;
+        }
+
+        void recentDocuments_DocumentClicked()
+        {
+            viewButtonGroup.SelectedButton = tasksButton;
+            this.hide();
         }
     }
 }

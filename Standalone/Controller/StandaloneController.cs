@@ -240,6 +240,9 @@ namespace Medical
             {
                 guiManager.createMenuBar(mainWindow.MenuBar);
             }
+
+            //Load recent documents here, this way the document handlers are all loaded
+            DocumentController.loadRecentDocuments();
         }
 
         public void onIdle()

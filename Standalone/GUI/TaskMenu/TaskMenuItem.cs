@@ -10,6 +10,7 @@ namespace Medical.GUI
         protected const int DEFAULT_WEIGHT = 1000;
 
         public event TaskItemDelegate ItemClosed;
+        public event TaskItemDelegate RequestShowInTaskbar;
 
         public TaskMenuItem(String name, String iconName, String category)
         {
@@ -35,11 +36,27 @@ namespace Medical.GUI
 
         public bool ShowOnTaskbar { get; set; }
 
+        public bool OnTaskbar
+        {
+            get
+            {
+                return _TaskbarItem != null;
+            }
+        }
+
         protected void fireItemClosed()
         {
             if (ItemClosed != null)
             {
                 ItemClosed.Invoke(this);
+            }
+        }
+
+        protected void fireRequestShowInTaskbar()
+        {
+            if (RequestShowInTaskbar != null)
+            {
+                RequestShowInTaskbar.Invoke(this);
             }
         }
 

@@ -198,6 +198,7 @@
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuItem.cs" />
+    <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuSection.cs" />
     <Compile Include="Layout\MDI\MDIBorderContainerDock.cs" />
     <Compile Include="GUI\FixedSizeMDIDialog.cs" />

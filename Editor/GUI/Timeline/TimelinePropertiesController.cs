@@ -9,6 +9,7 @@ using MyGUIPlugin;
 using Logging;
 using Engine.Editing;
 using Engine.Platform;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -50,6 +51,8 @@ namespace Medical.GUI
 
         private bool visible = false;
         private bool togglingVisible = false;
+
+        public event EventDelegate<TimelinePropertiesController> VisibilityChanged;
 
         public TimelinePropertiesController(StandaloneController standaloneController, EditorPlugin editorPlugin)
         {
@@ -297,6 +300,10 @@ namespace Medical.GUI
                     {
                         timelineObjectProperties.Visible = value;
                     }
+                    if (VisibilityChanged != null)
+                    {
+                        VisibilityChanged.Invoke(this);
+                    }
                     togglingVisible = false;
                 }
             }
@@ -399,6 +406,10 @@ namespace Medical.GUI
                 if (timelineObjectProperties.Visible)
                 {
                     timelineObjectProperties.Visible = false;
+                }
+                if (VisibilityChanged != null)
+                {
+                    VisibilityChanged.Invoke(this);
                 }
             }
         }
