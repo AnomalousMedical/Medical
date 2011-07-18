@@ -51,6 +51,7 @@ namespace Medical.GUI
             iconGrid.defineGroup(TaskMenuCategories.Patient);
             iconGrid.defineGroup(TaskMenuCategories.Navigation);
             iconGrid.defineGroup(TaskMenuCategories.Exams);
+            iconGrid.defineGroup(TaskMenuCategories.Education);
             iconGrid.defineGroup(TaskMenuCategories.Simulation);
             iconGrid.defineGroup(TaskMenuCategories.Tools);
             iconGrid.defineGroup(TaskMenuCategories.Editor);
