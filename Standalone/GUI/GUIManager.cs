@@ -7,6 +7,7 @@ using MyGUIPlugin;
 using OgreWrapper;
 using Engine.Platform;
 using Medical.Controller;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -80,6 +81,7 @@ namespace Medical.GUI
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController);
             taskMenu.TaskItemOpened += new TaskItemDelegate(taskMenu_TaskItemOpened);
+            taskMenu.TaskItemDropped += new TaskItemDroppedDelegate(taskMenu_TaskItemDropped);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -289,6 +291,16 @@ namespace Medical.GUI
             {
                 item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
                 item.ItemClosed += item_ItemClosed;
+                taskbar.addItem(item._TaskbarItem);
+                taskbar.layout();
+            }
+        }
+
+        void taskMenu_TaskItemDropped(TaskMenuItem item, IntVector2 position)
+        {
+            if (taskbar.containsPosition(position))
+            {
+                item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
                 taskbar.addItem(item._TaskbarItem);
                 taskbar.layout();
             }

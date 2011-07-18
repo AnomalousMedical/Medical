@@ -8,6 +8,7 @@ using Engine;
 namespace Medical.GUI
 {
     public delegate void TaskItemDelegate(TaskMenuItem item);
+    public delegate void TaskItemDroppedDelegate(TaskMenuItem item, IntVector2 position);
 
     public class TaskMenu : PopupContainer
     {
@@ -36,6 +37,9 @@ namespace Medical.GUI
         private Button documentsButton;
 
         public event TaskItemDelegate TaskItemOpened;
+        public event TaskItemDroppedDelegate TaskItemDropped;
+
+        private StaticImage dragIconPreview;
 
         public TaskMenu(DocumentController documentController)
             :base("Medical.GUI.TaskMenu.TaskMenu.layout")
@@ -68,6 +72,9 @@ namespace Medical.GUI
             viewButtonGroup.addButton(documentsButton);
 
             this.Hidden += new EventHandler(TaskMenu_Hidden);
+
+            dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 32, 32, Align.Default, "Info", "TaskMenuDragIconPreview");
+            dragIconPreview.Visible = false;
         }
 
         public void setPosition(int left, int top)
@@ -114,6 +121,8 @@ namespace Medical.GUI
             item.UserObject = taskItem;
             item.ItemClicked += new EventHandler(item_ItemClicked);
             taskItem.RequestShowInTaskbar += new TaskItemDelegate(taskItem_RequestShowInTaskbar);
+            item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
+            item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
         }
 
         void taskItem_RequestShowInTaskbar(TaskMenuItem item)
@@ -149,6 +158,26 @@ namespace Medical.GUI
         void TaskMenu_Hidden(object sender, EventArgs e)
         {
             viewButtonGroup.SelectedButton = tasksButton;
+        }
+
+        void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
+            if (!dragIconPreview.Visible)
+            {
+                dragIconPreview.Visible = true;
+                dragIconPreview.setItemResource(((TaskMenuItem)source.UserObject).IconName);
+                LayerManager.Instance.upLayerItem(dragIconPreview);
+            }
+        }
+
+        void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragIconPreview.Visible = false;
+            if (TaskItemDropped != null)
+            {
+                TaskItemDropped.Invoke((TaskMenuItem)source.UserObject, arg.Position);
+            }
         }
     }
 }

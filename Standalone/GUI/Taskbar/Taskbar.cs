@@ -245,6 +245,14 @@ namespace Medical.GUI
             }
         }
 
+        internal bool containsPosition(IntVector2 position)
+        {
+            return position.x > taskbarWidget.AbsoluteLeft &&
+                position.x < taskbarWidget.AbsoluteLeft + taskbarWidget.Width &&
+                position.y > taskbarWidget.AbsoluteTop &&
+                position.y < taskbarWidget.AbsoluteTop + taskbarWidget.Height;
+        }
+
         private void layoutTaskbarVertical()
         {
             Vector2 startLocation = new Vector2(appButton.Left, 0);
