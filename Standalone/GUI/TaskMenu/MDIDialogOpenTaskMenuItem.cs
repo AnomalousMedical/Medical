@@ -10,26 +10,26 @@ namespace Medical.GUI
     {
         private MDIDialog dialog;
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String name, String iconName, String category)
-            : this(dialog, name, iconName, category, DEFAULT_WEIGHT)
+        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category)
+            : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT)
         {
             
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String name, String iconName, String category, int weight)
-            : this(dialog, name, iconName, category, weight, true)
+        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, int weight)
+            : this(dialog, uniqueName, name, iconName, category, weight, true)
         {
             
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String name, String iconName, String category, bool showOnTaskbar)
-            : this(dialog, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
+        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
+            : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
         {
 
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String name, String iconName, String category, int weight, bool showOnTaskbar)
-            : base(name, iconName, category)
+        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
+            : base(uniqueName, name, iconName, category)
         {
             this.dialog = dialog;
             this.Weight = weight;

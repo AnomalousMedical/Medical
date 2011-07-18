@@ -12,8 +12,9 @@ namespace Medical.GUI
         public event TaskItemDelegate ItemClosed;
         public event TaskItemDelegate RequestShowInTaskbar;
 
-        public TaskMenuItem(String name, String iconName, String category)
+        public TaskMenuItem(String uniqueName, String name, String iconName, String category)
         {
+            this.UniqueName = uniqueName;
             this.Name = name;
             this.IconName = iconName;
             this.Category = category;
@@ -31,6 +32,8 @@ namespace Medical.GUI
         public String Name { get; private set; }
 
         public String Category { get; private set; }
+
+        public String UniqueName { get; set; }
 
         public int Weight { get; set; }
 

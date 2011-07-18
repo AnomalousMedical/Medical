@@ -99,13 +99,13 @@ namespace Medical
             TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
 
             //tasksSection.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(anatomyFinder, "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
             tasksSection.addItem(new ShowToothContactsTaskMenuItem());
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(stateList, "States", "StatesIcon", TaskMenuCategories.Patient));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(notesDialog, "Notes", "NotesIcon", TaskMenuCategories.Patient));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(sequencePlayer, "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(mandibleMovementDialog, "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(windowLayout, "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
+            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
+            tasksSection.addItem(new DialogOpenTaskMenuItem(windowLayout, "Medical.WindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
         }
 
         public void sceneLoaded(SimScene scene)

@@ -16,14 +16,14 @@ namespace Medical.GUI
         private Assembly assembly;
         private String resourceRoot;
 
-        public StartEmbeddedTimelineTaskMenuItem(String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController)
-            : this(name, iconName, category, typeInAssembly, resourceRoot, startTimeline, timelineController, DEFAULT_WEIGHT)
+        public StartEmbeddedTimelineTaskMenuItem(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController)
+            : this(uniqueName, name, iconName, category, typeInAssembly, resourceRoot, startTimeline, timelineController, DEFAULT_WEIGHT)
         {
 
         }
 
-        public StartEmbeddedTimelineTaskMenuItem(String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, int weight)
-            :base(name, iconName, category)
+        public StartEmbeddedTimelineTaskMenuItem(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, int weight)
+            :base(uniqueName, name, iconName, category)
         {
             this.ShowOnTaskbar = false;
             this.Weight = weight;

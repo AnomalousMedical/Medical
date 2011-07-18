@@ -10,26 +10,26 @@ namespace Medical.GUI
     {
         private Dialog dialog;
 
-        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category)
-            : this(dialog, name, iconName, category, DEFAULT_WEIGHT)
+        public DialogOpenTaskMenuItem(Dialog dialog, String uniqueName, String name, String iconName, String category)
+            : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT)
         {
             
         }
 
-        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, int weight)
-            : this(dialog, name, iconName, category, weight, true)
+        public DialogOpenTaskMenuItem(Dialog dialog, String uniqueName, String name, String iconName, String category, int weight)
+            : this(dialog, uniqueName, name, iconName, category, weight, true)
         {
             
         }
 
-        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, bool showOnTaskbar)
-            : this(dialog, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
+        public DialogOpenTaskMenuItem(Dialog dialog, String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
+            : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
         {
 
         }
 
-        public DialogOpenTaskMenuItem(Dialog dialog, String name, String iconName, String category, int weight, bool showOnTaskbar)
-            : base(name, iconName, category)
+        public DialogOpenTaskMenuItem(Dialog dialog, String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
+            : base(uniqueName, name, iconName, category)
         {
             this.dialog = dialog;
             this.Weight = weight;

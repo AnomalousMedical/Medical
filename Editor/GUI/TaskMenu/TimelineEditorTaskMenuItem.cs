@@ -10,7 +10,7 @@ namespace Medical.GUI
         private TimelinePropertiesController timelinePropertiesController;
 
         public TimelineEditorTaskMenuItem(TimelinePropertiesController timelinePropertiesController)
-            :base("Timeline", "TimelineEditorIcon", TaskMenuCategories.Editor)
+            :base("Medical.TimelineEditor", "Timeline", "TimelineEditorIcon", TaskMenuCategories.Editor)
         {
             this.timelinePropertiesController = timelinePropertiesController;
             timelinePropertiesController.Closed += new EventHandler(timelinePropertiesController_Closed);

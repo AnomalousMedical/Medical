@@ -11,7 +11,7 @@ namespace Medical.GUI
         private StandaloneController standaloneController;
 
         public CheckForUpdatesTaskMenuItem(StandaloneController standaloneController, int weight)
-            :base("Check for Updates", "FileToolstrip/CheckForUpdates", TaskMenuCategories.System)
+            :base("Medical.CheckForUpdates", "Check for Updates", "FileToolstrip/CheckForUpdates", TaskMenuCategories.System)
         {
             this.standaloneController = standaloneController;
             this.Weight = weight;

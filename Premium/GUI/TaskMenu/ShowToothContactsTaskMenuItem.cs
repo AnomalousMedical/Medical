@@ -8,7 +8,7 @@ namespace Medical.GUI
     class ShowToothContactsTaskMenuItem : TaskMenuItem
     {
         public ShowToothContactsTaskMenuItem()
-            : base("Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
+            : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
         {
 
         }
