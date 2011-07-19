@@ -41,6 +41,7 @@ namespace Medical
         private TimelineController timelineController;
         private PropFactory propFactory;
         private ExamController examController;
+        private TaskController taskController;
 
         //GUI
         private GUIManager guiManager;
@@ -197,6 +198,9 @@ namespace Medical
 
             //Exams
             examController = new ExamController();
+
+            //Tasks
+            taskController = new TaskController();
 
             //MultiTouch
             if (MedicalConfig.EnableMultitouch && MultiTouch.IsAvailable)
@@ -443,6 +447,14 @@ namespace Medical
             get
             {
                 return examController;
+            }
+        }
+
+        public TaskController TaskController
+        {
+            get
+            {
+                return taskController;
             }
         }
 

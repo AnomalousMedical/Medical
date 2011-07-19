@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Medical.GUI
+namespace Medical
 {
     /// <summary>
     /// A TaskMenuItem that will fire a delegate.
     /// </summary>
-    public class CallbackTaskMenuItem : TaskMenuItem
+    public class CallbackTask : Task
     {
-        public delegate void ClickedCallback(CallbackTaskMenuItem item);
+        public delegate void ClickedCallback(CallbackTask item);
 
         public event ClickedCallback OnClicked;
 
-        public CallbackTaskMenuItem(String uniqueName, String name, String iconName, String category)
+        public CallbackTask(String uniqueName, String name, String iconName, String category)
             : this(name, uniqueName, iconName, category, DEFAULT_WEIGHT, true)
         {
 
         }
 
-        public CallbackTaskMenuItem(String uniqueName, String name, String iconName, String category, int weight)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight)
             : this(name, uniqueName, iconName, category, weight, true)
         {
-            
+
         }
 
-        public CallbackTaskMenuItem(String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
             : this(name, uniqueName, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
         {
-            
+
         }
 
-        public CallbackTaskMenuItem(String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
+        public CallbackTask(String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
             : base(uniqueName, name, iconName, category)
         {
             this.Weight = weight;
@@ -41,7 +41,7 @@ namespace Medical.GUI
 
         public override void clicked()
         {
-            if(OnClicked != null)
+            if (OnClicked != null)
             {
                 OnClicked.Invoke(this);
             }

@@ -111,11 +111,11 @@
     <Compile Include="GUI\StateWizard\StateWizardPanel.cs" />
     <Compile Include="GUI\StateWizard\StateWizardPanelController.cs" />
     <Compile Include="GUI\StateWizard\WizardIconPanel.cs" />
-    <Compile Include="GUI\TaskMenu\StartWizardTaskMenuItem.cs" />
     <Compile Include="PiperJBOAtlasPlugin.cs" />
     <Compile Include="GUI\PiperJBOWizards.cs" />
     <Compile Include="PiperJBOAtlasPluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\StartWizardTaskMenuItem.cs" />
     <Compile Include="TimelineGUI\Panels\Disclaimer\DisclaimerGUIPrototype.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceControl.cs" />
     <Compile Include="TimelineGUI\Panels\DiscSpace\DiscSpaceGUI.cs" />

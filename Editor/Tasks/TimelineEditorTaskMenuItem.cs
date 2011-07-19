@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class TimelineEditorTaskMenuItem : TaskMenuItem
+    class TimelineEditorTask : Task
     {
         private TimelinePropertiesController timelinePropertiesController;
 
-        public TimelineEditorTaskMenuItem(TimelinePropertiesController timelinePropertiesController)
+        public TimelineEditorTask(TimelinePropertiesController timelinePropertiesController)
             :base("Medical.TimelineEditor", "Timeline", "TimelineEditorIcon", TaskMenuCategories.Editor)
         {
             this.timelinePropertiesController = timelinePropertiesController;

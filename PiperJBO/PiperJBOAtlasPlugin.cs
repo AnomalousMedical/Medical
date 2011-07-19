@@ -63,11 +63,11 @@ namespace Medical.GUI
             wizards = new PiperJBOWizards(StateWizardPanelController, StateWizardController, licenseManager);
 
             //Tasks Menu
-            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+            TaskController taskController = standaloneController.TaskController;
 
             foreach (StateWizard wizard in stateWizardController.WizardEnum)
             {
-                tasksSection.addItem(new StartWizardTaskMenuItem(this, wizard));
+                taskController.addTask(new StartWizardTask(this, wizard));
             }
 
             //Timeline GUIs

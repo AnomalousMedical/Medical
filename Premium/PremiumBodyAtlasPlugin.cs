@@ -96,15 +96,15 @@ namespace Medical
             taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
 
             //Tasks Menu
-            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+            TaskController taskController = standaloneController.TaskController;
 
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
-            tasksSection.addItem(new ShowToothContactsTaskMenuItem());
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(windowLayout, "Medical.WindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
+            taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
+            taskController.addTask(new ShowToothContactsTask());
+            taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));
+            taskController.addTask(new MDIDialogOpenTask(notesDialog, "Medical.Notes", "Notes", "NotesIcon", TaskMenuCategories.Patient));
+            taskController.addTask(new MDIDialogOpenTask(sequencePlayer, "Medical.Sequences", "Sequences", "SequenceIcon", TaskMenuCategories.Simulation));
+            taskController.addTask(new MDIDialogOpenTask(mandibleMovementDialog, "Medical.ManualMovement", "Manual Movement", "MovementIcon", TaskMenuCategories.Simulation));
+            taskController.addTask(new DialogOpenTask(windowLayout, "Medical.WindowLayout", "Window Layout", "WindowLayoutIcon", TaskMenuCategories.System));
         }
 
         public void sceneLoaded(SimScene scene)

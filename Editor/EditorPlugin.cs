@@ -61,12 +61,12 @@ namespace Medical
             guiManager.addManagedDialog(movementSequenceEditor);
 
             //Tasks Menu
-            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+            TaskController taskController = standaloneController.TaskController;
 
-            tasksSection.addItem(new TimelineEditorTaskMenuItem(timelinePropertiesController));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(timelineAnalyzer, "Medical.TimelineAnalyzer", "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new TimelineEditorTask(timelinePropertiesController));
+            taskController.addTask(new MDIDialogOpenTask(timelineAnalyzer, "Medical.TimelineAnalyzer", "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)

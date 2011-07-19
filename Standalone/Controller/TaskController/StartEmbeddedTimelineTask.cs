@@ -4,25 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace Medical.GUI
+namespace Medical
 {
-    /// <summary>
-    /// This class can be used by plugins to start their main timelines.
-    /// </summary>
-    public class StartEmbeddedTimelineTaskMenuItem : TaskMenuItem
+    public class StartEmbeddedTimelineTask : Task
     {
         private String startTimeline;
         private TimelineController timelineController;
         private Assembly assembly;
         private String resourceRoot;
 
-        public StartEmbeddedTimelineTaskMenuItem(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController)
+        public StartEmbeddedTimelineTask(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController)
             : this(uniqueName, name, iconName, category, typeInAssembly, resourceRoot, startTimeline, timelineController, DEFAULT_WEIGHT)
         {
 
         }
 
-        public StartEmbeddedTimelineTaskMenuItem(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, int weight)
+        public StartEmbeddedTimelineTask(String uniqueName, String name, String iconName, String category, Type typeInAssembly, String resourceRoot, String startTimeline, TimelineController timelineController, int weight)
             :base(uniqueName, name, iconName, category)
         {
             this.ShowOnTaskbar = false;

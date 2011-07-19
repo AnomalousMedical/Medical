@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Medical.GUI;
 
-namespace Medical.GUI
+namespace Medical
 {
-    public abstract class TaskMenuItem
+    public delegate void TaskDelegate(Task task);
+
+    public abstract class Task
     {
         protected const int DEFAULT_WEIGHT = 1000;
 
-        public event TaskItemDelegate ItemClosed;
-        public event TaskItemDelegate RequestShowInTaskbar;
+        public event TaskDelegate ItemClosed;
+        public event TaskDelegate RequestShowInTaskbar;
 
-        public TaskMenuItem(String uniqueName, String name, String iconName, String category)
+        public Task(String uniqueName, String name, String iconName, String category)
         {
             this.UniqueName = uniqueName;
             this.Name = name;

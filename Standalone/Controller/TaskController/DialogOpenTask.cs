@@ -4,31 +4,31 @@ using System.Linq;
 using System.Text;
 using MyGUIPlugin;
 
-namespace Medical.GUI
+namespace Medical
 {
-    public class MDIDialogOpenTaskMenuItem : TaskMenuItem
+    public class DialogOpenTask : Task
     {
-        private MDIDialog dialog;
+        private Dialog dialog;
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category)
+        public DialogOpenTask(Dialog dialog, String uniqueName, String name, String iconName, String category)
             : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT)
         {
             
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, int weight)
+        public DialogOpenTask(Dialog dialog, String uniqueName, String name, String iconName, String category, int weight)
             : this(dialog, uniqueName, name, iconName, category, weight, true)
         {
             
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
+        public DialogOpenTask(Dialog dialog, String uniqueName, String name, String iconName, String category, bool showOnTaskbar)
             : this(dialog, uniqueName, name, iconName, category, DEFAULT_WEIGHT, showOnTaskbar)
         {
 
         }
 
-        public MDIDialogOpenTaskMenuItem(MDIDialog dialog, String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
+        public DialogOpenTask(Dialog dialog, String uniqueName, String name, String iconName, String category, int weight, bool showOnTaskbar)
             : base(uniqueName, name, iconName, category)
         {
             this.dialog = dialog;

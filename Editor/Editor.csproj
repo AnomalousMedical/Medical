@@ -92,7 +92,6 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
-    <Compile Include="GUI\TaskMenu\TimelineEditorTaskMenuItem.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="GUI\Timeline\TimelineActionData.cs" />
     <Compile Include="GUI\Timeline\TimelineFileBrowserDialog.cs" />
     <Compile Include="GUI\Timeline\TimelineProperties.cs" />
+    <Compile Include="Tasks\TimelineEditorTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

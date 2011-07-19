@@ -7,8 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public delegate void TaskItemDelegate(TaskMenuItem item);
-    public delegate void TaskItemDroppedDelegate(TaskMenuItem item, IntVector2 position);
+    public delegate void TaskDroppedDelegate(Task item, IntVector2 position);
 
     public class TaskMenu : PopupContainer
     {
@@ -16,8 +15,8 @@ namespace Medical.GUI
         {
             public int Compare(ButtonGridItem x, ButtonGridItem y)
             {
-                TaskMenuItem xItem = (TaskMenuItem)x.UserObject;
-                TaskMenuItem yItem = (TaskMenuItem)y.UserObject;
+                Task xItem = (Task)x.UserObject;
+                Task yItem = (Task)y.UserObject;
                 if(xItem != null && yItem != null)
                 {
                     return xItem.Weight - yItem.Weight;
@@ -26,7 +25,6 @@ namespace Medical.GUI
             }
         }
 
-        private TaskMenuSection tasksSection;
         private ButtonGrid iconGrid;
         private ScrollView iconScroller;
 
@@ -35,18 +33,19 @@ namespace Medical.GUI
         private ButtonGroup viewButtonGroup;
         private Button tasksButton;
         private Button documentsButton;
+        private TaskController taskController;
 
-        public event TaskItemDelegate TaskItemOpened;
-        public event TaskItemDroppedDelegate TaskItemDropped;
+        public event TaskDelegate TaskItemOpened;
+        public event TaskDroppedDelegate TaskItemDropped;
 
         private StaticImage dragIconPreview;
 
-        public TaskMenu(DocumentController documentController)
+        public TaskMenu(DocumentController documentController, TaskController taskController)
             :base("Medical.GUI.TaskMenu.TaskMenu.layout")
         {
-            tasksSection = new TaskMenuSection();
-            tasksSection.TaskItemAdded += new TaskMenuSection.TaskEvent(tasksSection_TaskItemAdded);
-            tasksSection.TaskItemRemoved += new TaskMenuSection.TaskEvent(tasksSection_TaskItemRemoved);
+            this.taskController = taskController;
+            taskController.TaskAdded += new TaskDelegate(taskController_TaskAdded);
+            taskController.TaskRemoved += new TaskDelegate(taskController_TaskRemoved);
 
             iconScroller = (ScrollView)widget.findWidget("IconScroller");
             iconGrid = new ButtonGrid(iconScroller, new ButtonGridTextAdjustedGridLayout(), new TaskMenuItemComparer());
@@ -90,14 +89,6 @@ namespace Medical.GUI
             recentDocuments.resizeAndLayout(clientCoord.width);
         }
 
-        public TaskMenuSection Tasks
-        {
-            get
-            {
-                return tasksSection;
-            }
-        }
-
         public bool SuppressLayout
         {
             get
@@ -110,22 +101,22 @@ namespace Medical.GUI
             }
         }
 
-        void tasksSection_TaskItemRemoved(TaskMenuItem taskItem)
+        void taskController_TaskRemoved(Task task)
         {
             
         }
 
-        void tasksSection_TaskItemAdded(TaskMenuItem taskItem)
+        void taskController_TaskAdded(Task task)
         {
-            ButtonGridItem item = iconGrid.addItem(taskItem.Category, taskItem.Name, taskItem.IconName);
-            item.UserObject = taskItem;
+            ButtonGridItem item = iconGrid.addItem(task.Category, task.Name, task.IconName);
+            item.UserObject = task;
             item.ItemClicked += new EventHandler(item_ItemClicked);
-            taskItem.RequestShowInTaskbar += new TaskItemDelegate(taskItem_RequestShowInTaskbar);
+            task.RequestShowInTaskbar += new TaskDelegate(taskItem_RequestShowInTaskbar);
             item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
             item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
         }
 
-        void taskItem_RequestShowInTaskbar(TaskMenuItem item)
+        void taskItem_RequestShowInTaskbar(Task item)
         {
             if (TaskItemOpened != null)
             {
@@ -135,7 +126,7 @@ namespace Medical.GUI
 
         void item_ItemClicked(object sender, EventArgs e)
         {
-            TaskMenuItem item = (TaskMenuItem)iconGrid.SelectedItem.UserObject;
+            Task item = (Task)iconGrid.SelectedItem.UserObject;
             item.clicked();
             hide();
             if (TaskItemOpened != null)
@@ -166,7 +157,7 @@ namespace Medical.GUI
             if (!dragIconPreview.Visible)
             {
                 dragIconPreview.Visible = true;
-                dragIconPreview.setItemResource(((TaskMenuItem)source.UserObject).IconName);
+                dragIconPreview.setItemResource(((Task)source.UserObject).IconName);
                 LayerManager.Instance.upLayerItem(dragIconPreview);
             }
         }
@@ -176,7 +167,7 @@ namespace Medical.GUI
             dragIconPreview.Visible = false;
             if (TaskItemDropped != null)
             {
-                TaskItemDropped.Invoke((TaskMenuItem)source.UserObject, arg.Position);
+                TaskItemDropped.Invoke((Task)source.UserObject, arg.Position);
             }
         }
     }

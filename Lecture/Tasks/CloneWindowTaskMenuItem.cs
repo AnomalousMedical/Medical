@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class CloneWindowTaskMenuItem : TaskMenuItem
+    class CloneWindowTask : Task
     {
         private StandaloneController standaloneController;
         private CloneWindowDialog cloneWindowDialog;
 
-        public CloneWindowTaskMenuItem(StandaloneController standaloneController, CloneWindowDialog cloneWindowDialog)
+        public CloneWindowTask(StandaloneController standaloneController, CloneWindowDialog cloneWindowDialog)
             : base("Medical.CloneWindow", "Clone Window", "CloneWindowIcon", TaskMenuCategories.System)
         {
             this.standaloneController = standaloneController;

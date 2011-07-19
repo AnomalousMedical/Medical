@@ -33,7 +33,7 @@ namespace Medical
             cloneWindowDialog = new CloneWindowDialog();
 
             //Taskbar
-            standaloneController.GUIManager.TaskMenu.Tasks.addItem(new CloneWindowTaskMenuItem(standaloneController, cloneWindowDialog));
+            standaloneController.TaskController.addTask(new CloneWindowTask(standaloneController, cloneWindowDialog));
         }
 
         public void sceneLoaded(SimScene scene)

@@ -77,41 +77,41 @@ namespace Medical.GUI
             taskbar.setAppIcon("AppButton/Image");
 
             //Tasks Menu
-            TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
+            TaskController taskController = standaloneController.TaskController;
 
             //Patient Section
-            tasksSection.addItem(new DialogOpenTaskMenuItem(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0, false));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1, false));
+            taskController.addTask(new DialogOpenTask(chooseSceneDialog, "Medical.NewPatient", "New", "FileToolstrip/ChangeScene", TaskMenuCategories.Patient, 0, false));
+            taskController.addTask(new DialogOpenTask(openPatientDialog, "Medical.OpenPatient", "Open", "FileToolstrip/Open", TaskMenuCategories.Patient, 1, false));
 
-            CallbackTaskMenuItem saveTaskItem = new CallbackTaskMenuItem("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
-            saveTaskItem.OnClicked +=new CallbackTaskMenuItem.ClickedCallback(saveTaskItem_OnClicked);
-            tasksSection.addItem(saveTaskItem);
+            CallbackTask saveTaskItem = new CallbackTask("Medical.SavePatient", "Save", "FileToolstrip/Save", TaskMenuCategories.Patient, 2, false);
+            saveTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveTaskItem_OnClicked);
+            taskController.addTask(saveTaskItem);
 
-            CallbackTaskMenuItem saveAsTaskItem = new CallbackTaskMenuItem("Medical.SavePatientAs", "Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
-            saveAsTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(saveAsTaskItem_OnClicked);
-            tasksSection.addItem(saveAsTaskItem);
+            CallbackTask saveAsTaskItem = new CallbackTask("Medical.SavePatientAs", "Save As", "FileToolstrip/SaveAs", TaskMenuCategories.Patient, 3, false);
+            saveAsTaskItem.OnClicked += new CallbackTask.ClickedCallback(saveAsTaskItem_OnClicked);
+            taskController.addTask(saveAsTaskItem);
 
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
+            taskController.addTask(new MDIDialogOpenTask(examViewer, "Medical.ExamViewer", "Exam Viewer", "ExamIcon", TaskMenuCategories.Patient, 4));
 
             //System Section
-            CallbackTaskMenuItem helpTaskItem = new CallbackTaskMenuItem("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
-            helpTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(helpTaskItem_OnClicked);
-            tasksSection.addItem(helpTaskItem);
+            CallbackTask helpTaskItem = new CallbackTask("Medical.Help", "Help", "FileToolstrip/Help", TaskMenuCategories.System, int.MaxValue - 4, false);
+            helpTaskItem.OnClicked += new CallbackTask.ClickedCallback(helpTaskItem_OnClicked);
+            taskController.addTask(helpTaskItem);
 
-            tasksSection.addItem(new DialogOpenTaskMenuItem(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
-            tasksSection.addItem(new DialogOpenTaskMenuItem(aboutDialog, "Medical.About", "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
-            tasksSection.addItem(new CheckForUpdatesTaskMenuItem(standaloneController, int.MaxValue - 2));
+            taskController.addTask(new DialogOpenTask(options, "Medical.Options", "Options", "FileToolstrip/Options", TaskMenuCategories.System, int.MaxValue - 3));
+            taskController.addTask(new DialogOpenTask(aboutDialog, "Medical.About", "About", "FileToolstrip/About", TaskMenuCategories.System, int.MaxValue - 2));
+            taskController.addTask(new CheckForUpdatesTask(standaloneController, int.MaxValue - 2));
 
-            CallbackTaskMenuItem logoutTaskItem = new CallbackTaskMenuItem("Medical.LogOut", "Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1, false);
-            logoutTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(logoutTaskItem_OnClicked);
-            tasksSection.addItem(logoutTaskItem);
+            CallbackTask logoutTaskItem = new CallbackTask("Medical.LogOut", "Log Out", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue - 1, false);
+            logoutTaskItem.OnClicked += new CallbackTask.ClickedCallback(logoutTaskItem_OnClicked);
+            taskController.addTask(logoutTaskItem);
 
-            CallbackTaskMenuItem exitTaskItem = new CallbackTaskMenuItem("Medical.Exit", "Exit", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue, false);
-            exitTaskItem.OnClicked += new CallbackTaskMenuItem.ClickedCallback(exitTaskItem_OnClicked);
-            tasksSection.addItem(exitTaskItem);
+            CallbackTask exitTaskItem = new CallbackTask("Medical.Exit", "Exit", "FileToolstrip/Exit", TaskMenuCategories.System, int.MaxValue, false);
+            exitTaskItem.OnClicked += new CallbackTask.ClickedCallback(exitTaskItem_OnClicked);
+            taskController.addTask(exitTaskItem);
 
             //Tools Section
-            tasksSection.addItem(new MDIDialogOpenTaskMenuItem(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
+            taskController.addTask(new MDIDialogOpenTask(renderDialog, "Medical.Render", "Render", "RenderIcon", TaskMenuCategories.Tools));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -224,17 +224,17 @@ namespace Medical.GUI
             standaloneController.openNewScene(chooseSceneDialog.SelectedFile);
         }
 
-        void saveAsTaskItem_OnClicked(CallbackTaskMenuItem item)
+        void saveAsTaskItem_OnClicked(Task item)
         {
             saveAs();
         }
 
-        void saveTaskItem_OnClicked(CallbackTaskMenuItem item)
+        void saveTaskItem_OnClicked(Task item)
         {
             save();
         }
 
-        void logoutTaskItem_OnClicked(CallbackTaskMenuItem item)
+        void logoutTaskItem_OnClicked(Task item)
         {
             MessageBox.show("Logging out will delete your local license file. This will require you to log in the next time you use this program.\nYou will also not be able to use the software in offline mode until you log back in and save your password.", "Log Out", MessageBoxStyle.IconQuest | MessageBoxStyle.Yes | MessageBoxStyle.No,
                 delegate(MessageBoxStyle result)
@@ -247,12 +247,12 @@ namespace Medical.GUI
                 });
         }
 
-        void exitTaskItem_OnClicked(CallbackTaskMenuItem item)
+        void exitTaskItem_OnClicked(Task item)
         {
             standaloneController.exit();
         }
 
-        void helpTaskItem_OnClicked(CallbackTaskMenuItem item)
+        void helpTaskItem_OnClicked(Task item)
         {
             standaloneController.openHelpTopic(0);
         }

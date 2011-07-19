@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Medical.GUI
 {
-    class ShowToothContactsTaskMenuItem : TaskMenuItem
+    class ShowToothContactsTask : Task
     {
-        public ShowToothContactsTaskMenuItem()
+        public ShowToothContactsTask()
             : base("Medical.ShowOcclusalContacts", "Show Occlusal Contacts", "ShowTeethContactsIcon", TaskMenuCategories.Simulation)
         {
 

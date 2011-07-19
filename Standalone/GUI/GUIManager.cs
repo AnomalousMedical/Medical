@@ -92,9 +92,9 @@ namespace Medical.GUI
             screenLayoutManager.Root = taskbar;
 
             //Task Menu
-            taskMenu = new TaskMenu(standaloneController.DocumentController);
-            taskMenu.TaskItemOpened += new TaskItemDelegate(taskMenu_TaskItemOpened);
-            taskMenu.TaskItemDropped += new TaskItemDroppedDelegate(taskMenu_TaskItemDropped);
+            taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
+            taskMenu.TaskItemOpened += new TaskDelegate(taskMenu_TaskItemOpened);
+            taskMenu.TaskItemDropped += new TaskDroppedDelegate(taskMenu_TaskItemDropped);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -242,10 +242,11 @@ namespace Medical.GUI
             configFile.loadConfigFile();
             dialogManager.loadDialogLayout(configFile);
             ConfigIterator configIterator = new ConfigIterator(configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION), SAVED_TASKBAR_ITEM_BASE);
+            TaskController taskController = standaloneController.TaskController;
             while (configIterator.hasNext())
             {
                 String uniqueName = configIterator.next();
-                TaskMenuItem item = taskMenu.Tasks.getItem(uniqueName);
+                Task item = taskController.getTask(uniqueName);
                 if (item != null)
                 {
                     addPinnedTaskbarItem(item);
@@ -292,7 +293,7 @@ namespace Medical.GUI
             taskMenu.show(left, top);
         }
 
-        void taskMenu_TaskItemOpened(TaskMenuItem item)
+        void taskMenu_TaskItemOpened(Task item)
         {
             if (item.ShowOnTaskbar && item._TaskbarItem == null)
             {
@@ -303,7 +304,7 @@ namespace Medical.GUI
             }
         }
 
-        void taskMenu_TaskItemDropped(TaskMenuItem item, IntVector2 position)
+        void taskMenu_TaskItemDropped(Task item, IntVector2 position)
         {
             if (taskbar.containsPosition(position) && !pinnedTaskMenuItems.Contains(item.UniqueName))
             {
@@ -311,7 +312,7 @@ namespace Medical.GUI
             }
         }
 
-        private void addPinnedTaskbarItem(TaskMenuItem item)
+        private void addPinnedTaskbarItem(Task item)
         {
             item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
             taskbar.addItem(item._TaskbarItem);
@@ -319,7 +320,7 @@ namespace Medical.GUI
             pinnedTaskMenuItems.Add(item.UniqueName);
         }
 
-        void item_ItemClosed(TaskMenuItem item)
+        void item_ItemClosed(Task item)
         {
             item.ItemClosed -= item_ItemClosed;
             taskbar.removeItem(item._TaskbarItem);

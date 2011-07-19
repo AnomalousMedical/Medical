@@ -59,10 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GUI\CloneWindow\CloneWindowDialog.cs" />
-    <Compile Include="GUI\TaskMenu\CloneWindowTaskMenuItem.cs" />
     <Compile Include="LecturePlugin.cs" />
     <Compile Include="LecturePluginEntryPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\CloneWindowTaskMenuItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Simulation\Simulation.csproj">

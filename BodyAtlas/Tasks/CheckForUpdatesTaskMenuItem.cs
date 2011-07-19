@@ -6,11 +6,11 @@ using System.Reflection;
 
 namespace Medical.GUI
 {
-    class CheckForUpdatesTaskMenuItem : TaskMenuItem
+    class CheckForUpdatesTask : Task
     {
         private StandaloneController standaloneController;
 
-        public CheckForUpdatesTaskMenuItem(StandaloneController standaloneController, int weight)
+        public CheckForUpdatesTask(StandaloneController standaloneController, int weight)
             :base("Medical.CheckForUpdates", "Check for Updates", "FileToolstrip/CheckForUpdates", TaskMenuCategories.System)
         {
             this.standaloneController = standaloneController;

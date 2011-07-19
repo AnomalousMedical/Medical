@@ -8,9 +8,9 @@ namespace Medical.GUI
 {
     class TaskMenuItemTaskbarItem : TaskbarItem
     {
-        private TaskMenuItem item;
+        private Task item;
 
-        public TaskMenuItemTaskbarItem(TaskMenuItem item)
+        public TaskMenuItemTaskbarItem(Task item)
             :base(item.Name, item.IconName)
         {
             this.item = item;
