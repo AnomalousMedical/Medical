@@ -295,11 +295,7 @@ namespace Medical.GUI
 
         void taskMenu_TaskItemOpened(Task item)
         {
-            if (item.ShowOnTaskbar && item._TaskbarItem == null)
-            {
-                addTaskbarItem(item);
-                item.ItemClosed += item_ItemClosed;
-            }
+            addTaskbarItem(item);
         }
 
         void taskMenu_TaskItemDropped(Task item, IntVector2 position)
@@ -310,16 +306,6 @@ namespace Medical.GUI
             }
         }
 
-        private void addPinnedTaskbarItem(Task item)
-        {
-            PinnedTaskTaskbarItem pinnedTaskItem = new PinnedTaskTaskbarItem(item);
-            pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
-            item._TaskbarItem = pinnedTaskItem;
-            taskbar.addItem(pinnedTaskItem);
-            taskbar.layout();
-            pinnedTaskMenuItems.Add(item.UniqueName);
-        }
-
         void pinnedTaskItem_RemoveFromTaskbar(TaskTaskbarItem source)
         {
             Task task = source.Task;
@@ -327,21 +313,52 @@ namespace Medical.GUI
             taskbar.removeItem(source);
             taskbar.layout();
             pinnedTaskMenuItems.Remove(task.UniqueName);
+            if (task.Active)
+            {
+                addTaskbarItem(task);
+            }
         }
 
-        private void addTaskbarItem(Task item)
+        void taskbarItem_PinToTaskbar(TaskTaskbarItem source)
         {
-            item._TaskbarItem = new TaskTaskbarItem(item);
-            taskbar.addItem(item._TaskbarItem);
-            taskbar.layout();
+            addPinnedTaskbarItem(source.Task);
         }
 
         void item_ItemClosed(Task item)
         {
             item.ItemClosed -= item_ItemClosed;
+            item._TaskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
             taskbar.removeItem(item._TaskbarItem);
             item._TaskbarItem = null;
             taskbar.layout();
+        }
+
+        private void addTaskbarItem(Task item)
+        {
+            if (item.ShowOnTaskbar && item._TaskbarItem == null)
+            {
+                item._TaskbarItem = new TaskTaskbarItem(item);
+                taskbar.addItem(item._TaskbarItem);
+                taskbar.layout();
+                item.ItemClosed += item_ItemClosed;
+                item._TaskbarItem.PinToTaskbar += taskbarItem_PinToTaskbar;
+            }
+        }
+
+        private void addPinnedTaskbarItem(Task item)
+        {
+            if (item._TaskbarItem != null)
+            {
+                item.ItemClosed -= item_ItemClosed;
+                item._TaskbarItem.PinToTaskbar -= taskbarItem_PinToTaskbar;
+                taskbar.removeItem(item._TaskbarItem);
+            }
+            PinnedTaskTaskbarItem pinnedTaskItem = new PinnedTaskTaskbarItem(item);
+            pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
+            item._TaskbarItem = pinnedTaskItem;
+            taskbar.addItem(pinnedTaskItem);
+            taskbar.layout();
+            pinnedTaskMenuItems.Add(item.UniqueName);
         }
     }
 }

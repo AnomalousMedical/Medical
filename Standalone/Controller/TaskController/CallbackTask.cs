@@ -13,6 +13,7 @@ namespace Medical
         public delegate void ClickedCallback(CallbackTask item);
 
         public event ClickedCallback OnClicked;
+        private bool active = false;
 
         public CallbackTask(String uniqueName, String name, String iconName, String category)
             : this(name, uniqueName, iconName, category, DEFAULT_WEIGHT, true)
@@ -45,6 +46,16 @@ namespace Medical
             {
                 OnClicked.Invoke(this);
             }
+        }
+
+        public override bool Active
+        {
+            get { return active; }
+        }
+
+        public void setActive(bool value)
+        {
+            active = value;
         }
     }
 }

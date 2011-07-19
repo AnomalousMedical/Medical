@@ -22,5 +22,10 @@ namespace Medical.GUI
         {
             piperAtlasPlugin.startWizard(wizard);
         }
+
+        public override bool Active
+        {
+            get { return false; }
+        }
     }
 }

@@ -53,5 +53,10 @@ namespace Medical
         {
             fireItemClosed();
         }
+
+        public override bool Active
+        {
+            get { return dialog.Visible; }
+        }
     }
 }

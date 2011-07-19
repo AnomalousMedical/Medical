@@ -36,5 +36,10 @@ namespace Medical
             Timeline start = timelineController.openTimeline(startTimeline);
             timelineController.startPlayback(start);
         }
+
+        public override bool Active
+        {
+            get { return false; }
+        }
     }
 }

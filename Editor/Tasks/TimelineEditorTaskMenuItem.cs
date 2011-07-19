@@ -43,5 +43,10 @@ namespace Medical.GUI
         {
             fireItemClosed();
         }
+
+        public override bool Active
+        {
+            get { return timelinePropertiesController.Visible; }
+        }
     }
 }

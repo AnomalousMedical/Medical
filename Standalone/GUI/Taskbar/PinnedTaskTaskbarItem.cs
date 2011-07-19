@@ -17,7 +17,12 @@ namespace Medical.GUI
 
         }
 
-        public override void rightClicked(Widget source, EventArgs e)
+        protected override void customizeMenu()
+        {
+            addMenuItem("Remove", fireRemoved);
+        }
+
+        private void fireRemoved()
         {
             if (RemoveFromTaskbar != null)
             {

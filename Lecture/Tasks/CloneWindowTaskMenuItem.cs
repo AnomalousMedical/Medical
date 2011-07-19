@@ -45,5 +45,10 @@ namespace Medical.GUI
                 fireItemClosed();
             }
         }
+
+        public override bool Active
+        {
+            get { return standaloneController.SceneViewController.HasCloneWindow; }
+        }
     }
 }

@@ -49,6 +49,11 @@ namespace Medical
             }
         }
 
+        public override bool Active
+        {
+            get { return dialog.Visible; }
+        }
+
         void dialog_Closed(object sender, EventArgs e)
         {
             fireItemClosed();

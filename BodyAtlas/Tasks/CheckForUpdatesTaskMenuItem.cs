@@ -22,5 +22,10 @@ namespace Medical.GUI
         {
             UpdateManager.checkForUpdates(Assembly.GetAssembly(this.GetType()).GetName().Version, standaloneController.App.ProductID);
         }
+
+        public override bool Active
+        {
+            get { return false; }
+        }
     }
 }

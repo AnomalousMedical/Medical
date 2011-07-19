@@ -6,6 +6,7 @@ using Medical.GUI;
 
 namespace Medical
 {
+    public delegate void TaskMenuDelegate();
     public delegate void TaskDelegate(Task task);
 
     public abstract class Task
@@ -29,6 +30,11 @@ namespace Medical
         /// Called when this item is clicked.
         /// </summary>
         public abstract void clicked();
+
+        public abstract bool Active
+        {
+            get;
+        }
 
         public String IconName { get; private set; }
 
