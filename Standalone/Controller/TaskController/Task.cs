@@ -69,6 +69,6 @@ namespace Medical
         /// <summary>
         /// Used only by GUIManager
         /// </summary>
-        internal TaskMenuItemTaskbarItem _TaskbarItem { get; set; }
+        internal TaskTaskbarItem _TaskbarItem { get; set; }
     }
 }

@@ -297,10 +297,8 @@ namespace Medical.GUI
         {
             if (item.ShowOnTaskbar && item._TaskbarItem == null)
             {
-                item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
+                addTaskbarItem(item);
                 item.ItemClosed += item_ItemClosed;
-                taskbar.addItem(item._TaskbarItem);
-                taskbar.layout();
             }
         }
 
@@ -314,10 +312,28 @@ namespace Medical.GUI
 
         private void addPinnedTaskbarItem(Task item)
         {
-            item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
-            taskbar.addItem(item._TaskbarItem);
+            PinnedTaskTaskbarItem pinnedTaskItem = new PinnedTaskTaskbarItem(item);
+            pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
+            item._TaskbarItem = pinnedTaskItem;
+            taskbar.addItem(pinnedTaskItem);
             taskbar.layout();
             pinnedTaskMenuItems.Add(item.UniqueName);
+        }
+
+        void pinnedTaskItem_RemoveFromTaskbar(TaskTaskbarItem source)
+        {
+            Task task = source.Task;
+            task._TaskbarItem = null;
+            taskbar.removeItem(source);
+            taskbar.layout();
+            pinnedTaskMenuItems.Remove(task.UniqueName);
+        }
+
+        private void addTaskbarItem(Task item)
+        {
+            item._TaskbarItem = new TaskTaskbarItem(item);
+            taskbar.addItem(item._TaskbarItem);
+            taskbar.layout();
         }
 
         void item_ItemClosed(Task item)
