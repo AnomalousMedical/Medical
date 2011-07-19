@@ -304,7 +304,6 @@ namespace Medical.GUI
         {
             int oldGap = taskbar.GapIndex;
             taskbar.GapIndex = taskbar.getIndexForPosition(position);
-            Logging.Log.Debug(taskbar.GapIndex.ToString());
             if (oldGap != taskbar.GapIndex)
             {
                 taskbar.layout();

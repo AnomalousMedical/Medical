@@ -143,74 +143,72 @@ namespace Medical.GUI
 
         public int getIndexForPosition(IntVector2 position)
         {
-            switch (alignment)
+            Logging.Log.Debug("----------------------Get Index For Position----------------------");
+            int xPos = position.x;
+            int yPos = position.y;
+            if (xPos >= taskbarWidget.AbsoluteLeft && xPos <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width &&
+                yPos >= taskbarWidget.AbsoluteTop && yPos <= taskbarWidget.AbsoluteTop + taskbarWidget.Height)
             {
-                case TaskbarAlignment.Left:
-                    if (position.x >= taskbarWidget.AbsoluteLeft && position.x <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width)
+                Logging.Log.Debug("Checking Items");
+                int counter = 0;
+                foreach (TaskbarItem item in taskbarItems)
+                {
+                    int left = (int)(item.AbsoluteLeft - padding);
+                    int width = (int)(item.Width + padding);
+                    int right = left + width;
+
+                    int top = (int)(item.AbsoluteTop - padding);
+                    int height = (int)(item.Height + padding);
+                    int bottom = top + height;
+                    if (xPos >= left && xPos <= right && yPos >= top && yPos <= bottom)
                     {
-                        return getVerticalIndexForPosition(position.y);
+                        switch (alignment)
+                        {
+                            case TaskbarAlignment.Left:
+                                return yPos - top < height / 2 ? counter : counter + 1;
+                            case TaskbarAlignment.Right:
+                                return yPos - top < height / 2 ? counter : counter + 1;
+                            default:
+                                return xPos - left < width / 2 ? counter : counter + 1;
+                        }
                     }
-                    break;
-                case TaskbarAlignment.Right:
-                    if (position.x >= taskbarWidget.AbsoluteLeft && position.x <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width)
-                    {
-                        return getVerticalIndexForPosition(position.y);
-                    }
-                    break;
-                default:
-                    if (position.y >= taskbarWidget.AbsoluteTop && position.y <= taskbarWidget.AbsoluteTop + taskbarWidget.Height)
-                    {
-                        return getHorizontalIndexForPosition(position.x);
-                    }
-                    break;
+                    ++counter;
+                }
+                xPos -= taskbarWidget.AbsoluteLeft;
+                yPos -= taskbarWidget.AbsoluteTop;
+                Logging.Log.Debug("Checking Gap {0}, {1} : {2}, {3}, {4}, {5}", xPos, yPos, gapCoord.left, gapCoord.left + gapCoord.width, gapCoord.top, gapCoord.top + gapCoord.height);
+                if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width && yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
+                {
+                    return gapIndex;
+                }
             }
+            Logging.Log.Debug("Failed all tests");
             return -1;
         }
 
-        private int getHorizontalIndexForPosition(int xPos)
-        {
-            Logging.Log.Debug("Checking horizontal");
-            int counter = 0;
-            foreach (TaskbarItem item in taskbarItems)
-            {
-                int left = (int)(item.AbsoluteLeft - padding);
-                int width = (int)(item.Width + padding);
-                int right = left + width;
-                if (xPos >= left && xPos <= right)
-                {
-                    return xPos - left < width / 2 ? counter : counter + 1;
-                }
-                ++counter;
-            }
-            Logging.Log.Debug("Checking gap {0} : {1}, {2}", xPos, gapCoord.left, gapCoord.left + gapCoord.width);
-            if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width)
-            {
-                return gapIndex;
-            }
-            Logging.Log.Debug("All tests failed");
-            return -1;
-        }
-
-        private int getVerticalIndexForPosition(int yPos)
-        {
-            int counter = 0;
-            foreach (TaskbarItem item in taskbarItems)
-            {
-                int top = (int)(item.AbsoluteTop - padding);
-                int height = (int)(item.Height + padding);
-                int bottom = top + height;
-                if (yPos >= top && yPos <= bottom)
-                {
-                    return yPos - top < height / 2 ? counter : counter + 1;
-                }
-                ++counter;
-            }
-            if (yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
-            {
-                return gapIndex;
-            }
-            return -1;
-        }
+        //private int getVerticalIndexForPosition(int xPos, int yPos)
+        //{
+        //    int counter = 0;
+        //    foreach (TaskbarItem item in taskbarItems)
+        //    {
+        //        int left = (int)(item.AbsoluteLeft - padding);
+        //        int width = (int)(item.Width + padding);
+        //        int right = left + width;
+        //        int top = (int)(item.AbsoluteTop - padding);
+        //        int height = (int)(item.Height + padding);
+        //        int bottom = top + height;
+        //        if (xPos >= left && xPos <= right && yPos >= top && yPos <= bottom)
+        //        {
+        //            return xPos - left < width / 2 ? counter : counter + 1;
+        //        }
+        //        ++counter;
+        //    }
+        //    if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width && yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
+        //    {
+        //        return gapIndex;
+        //    }
+        //    return -1;
+        //}
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
@@ -378,8 +376,8 @@ namespace Medical.GUI
                         currentLocation.x += itemSize.Width + padding;
                         currentLocation.y = startLocation.y;
                     }
-                    gapCoord.left = (int)(currentLocation.x + positionOffset - padding);
-                    gapCoord.top = (int)(currentLocation.y - padding);
+                    gapCoord.left = (int)(currentLocation.x - padding);
+                    gapCoord.top = (int)(currentLocation.y + positionOffset - padding);
                     gapCoord.width = (int)(itemSize.Width + padding);
                     gapCoord.height = (int)(itemSize.Height + padding);
                     currentLocation.y += itemSize.Height + padding;
