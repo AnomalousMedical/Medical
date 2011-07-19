@@ -312,9 +312,20 @@ namespace Medical.GUI
 
         void taskMenu_TaskItemDropped(Task item, IntVector2 position)
         {
-            if (taskbar.containsPosition(position) && !pinnedTaskMenuItems.Contains(item.UniqueName))
+            if (taskbar.containsPosition(position))
             {
-                addPinnedTaskbarItem(item, taskbar.getIndexForPosition(position));
+                if (pinnedTaskMenuItems.Contains(item.UniqueName))
+                {
+                    taskbar.removeItem(item._TaskbarItem);
+                    int index = taskbar.getIndexForPosition(position);
+                    taskbar.addItem(item._TaskbarItem, index);
+                    pinnedTaskMenuItems.Remove(item.UniqueName);
+                    pinnedTaskMenuItems.Insert(index, item.UniqueName);
+                }
+                else
+                {
+                    addPinnedTaskbarItem(item, taskbar.getIndexForPosition(position));
+                }
             }
             taskbar.clearGapIndex();
             taskbar.layout();
