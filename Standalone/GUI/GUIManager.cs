@@ -94,7 +94,8 @@ namespace Medical.GUI
             //Task Menu
             taskMenu = new TaskMenu(standaloneController.DocumentController, standaloneController.TaskController);
             taskMenu.TaskItemOpened += new TaskDelegate(taskMenu_TaskItemOpened);
-            taskMenu.TaskItemDropped += new TaskDroppedDelegate(taskMenu_TaskItemDropped);
+            taskMenu.TaskItemDropped += new TaskDragDropEventDelegate(taskMenu_TaskItemDropped);
+            taskMenu.TaskItemDragged += new TaskDragDropEventDelegate(taskMenu_TaskItemDragged);
 
             topAnimatedContainer = new VerticalPopoutLayoutContainer(standaloneController.MedicalController.MainTimer);
             innerBorderLayout.Top = topAnimatedContainer;
@@ -249,8 +250,9 @@ namespace Medical.GUI
                 Task item = taskController.getTask(uniqueName);
                 if (item != null)
                 {
-                    addPinnedTaskbarItem(item);
+                    addPinnedTaskbarItem(item, -1);
                 }
+                taskbar.layout();
             }
         }
 
@@ -298,12 +300,25 @@ namespace Medical.GUI
             addTaskbarItem(item);
         }
 
+        void taskMenu_TaskItemDragged(Task item, IntVector2 position)
+        {
+            int oldGap = taskbar.GapIndex;
+            taskbar.GapIndex = taskbar.getIndexForPosition(position);
+            Logging.Log.Debug(taskbar.GapIndex.ToString());
+            if (oldGap != taskbar.GapIndex)
+            {
+                taskbar.layout();
+            }
+        }
+
         void taskMenu_TaskItemDropped(Task item, IntVector2 position)
         {
             if (taskbar.containsPosition(position) && !pinnedTaskMenuItems.Contains(item.UniqueName))
             {
-                addPinnedTaskbarItem(item);
+                addPinnedTaskbarItem(item, taskbar.getIndexForPosition(position));
             }
+            taskbar.clearGapIndex();
+            taskbar.layout();
         }
 
         void pinnedTaskItem_RemoveFromTaskbar(TaskTaskbarItem source)
@@ -321,7 +336,8 @@ namespace Medical.GUI
 
         void taskbarItem_PinToTaskbar(TaskTaskbarItem source)
         {
-            addPinnedTaskbarItem(source.Task);
+            addPinnedTaskbarItem(source.Task, taskbar.getIndexForPosition(new IntVector2(source.AbsoluteLeft, source.AbsoluteTop)));
+            taskbar.layout();
         }
 
         void item_ItemClosed(Task item)
@@ -345,7 +361,7 @@ namespace Medical.GUI
             }
         }
 
-        private void addPinnedTaskbarItem(Task item)
+        private void addPinnedTaskbarItem(Task item, int index)
         {
             if (item._TaskbarItem != null)
             {
@@ -356,9 +372,15 @@ namespace Medical.GUI
             PinnedTaskTaskbarItem pinnedTaskItem = new PinnedTaskTaskbarItem(item);
             pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
             item._TaskbarItem = pinnedTaskItem;
-            taskbar.addItem(pinnedTaskItem);
-            taskbar.layout();
-            pinnedTaskMenuItems.Add(item.UniqueName);
+            taskbar.addItem(pinnedTaskItem, index);
+            if (index == -1)
+            {
+                pinnedTaskMenuItems.Add(item.UniqueName);
+            }
+            else
+            {
+                pinnedTaskMenuItems.Insert(index, item.UniqueName);
+            }
         }
     }
 }

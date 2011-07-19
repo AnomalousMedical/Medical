@@ -27,6 +27,8 @@ namespace Medical.GUI
         private Size2 itemSize = new Size2(48, 48);
         private LayoutContainer child;
         private TaskbarAlignment alignment = TaskbarAlignment.Top;
+        private IntCoord gapCoord = new IntCoord();
+        private int gapIndex = -1;
 
         private List<TaskbarItem> taskbarItems  = new List<TaskbarItem>();
 
@@ -39,6 +41,8 @@ namespace Medical.GUI
 
             appButton = taskbarWidget.findWidget("AppButton") as Button;
             appButton.MouseButtonClick += new MyGUIEvent(appButton_MouseButtonClick);
+
+            clearGapIndex();
         }
 
         public void Dispose()
@@ -111,7 +115,19 @@ namespace Medical.GUI
 
         public void addItem(TaskbarItem item)
         {
-            taskbarItems.Add(item);
+            addItem(item, -1);
+        }
+
+        public void addItem(TaskbarItem item, int index)
+        {
+            if (index == -1)
+            {
+                taskbarItems.Add(item);
+            }
+            else
+            {
+                taskbarItems.Insert(index, item);
+            }
             item._configureForTaskbar(this, taskbarWidget.createWidgetT("Button", "TaskbarButton", 0, 0, (int)itemSize.Width, (int)itemSize.Height, Align.Left | Align.Top, item.Name) as Button);
         }
 
@@ -123,6 +139,77 @@ namespace Medical.GUI
                 taskbarItems.RemoveAt(index);
                 item._deconfigureForTaskbar();
             }
+        }
+
+        public int getIndexForPosition(IntVector2 position)
+        {
+            switch (alignment)
+            {
+                case TaskbarAlignment.Left:
+                    if (position.x >= taskbarWidget.AbsoluteLeft && position.x <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width)
+                    {
+                        return getVerticalIndexForPosition(position.y);
+                    }
+                    break;
+                case TaskbarAlignment.Right:
+                    if (position.x >= taskbarWidget.AbsoluteLeft && position.x <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width)
+                    {
+                        return getVerticalIndexForPosition(position.y);
+                    }
+                    break;
+                default:
+                    if (position.y >= taskbarWidget.AbsoluteTop && position.y <= taskbarWidget.AbsoluteTop + taskbarWidget.Height)
+                    {
+                        return getHorizontalIndexForPosition(position.x);
+                    }
+                    break;
+            }
+            return -1;
+        }
+
+        private int getHorizontalIndexForPosition(int xPos)
+        {
+            Logging.Log.Debug("Checking horizontal");
+            int counter = 0;
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                int left = (int)(item.AbsoluteLeft - padding);
+                int width = (int)(item.Width + padding);
+                int right = left + width;
+                if (xPos >= left && xPos <= right)
+                {
+                    return xPos - left < width / 2 ? counter : counter + 1;
+                }
+                ++counter;
+            }
+            Logging.Log.Debug("Checking gap {0} : {1}, {2}", xPos, gapCoord.left, gapCoord.left + gapCoord.width);
+            if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width)
+            {
+                return gapIndex;
+            }
+            Logging.Log.Debug("All tests failed");
+            return -1;
+        }
+
+        private int getVerticalIndexForPosition(int yPos)
+        {
+            int counter = 0;
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                int top = (int)(item.AbsoluteTop - padding);
+                int height = (int)(item.Height + padding);
+                int bottom = top + height;
+                if (yPos >= top && yPos <= bottom)
+                {
+                    return yPos - top < height / 2 ? counter : counter + 1;
+                }
+                ++counter;
+            }
+            if (yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
+            {
+                return gapIndex;
+            }
+            return -1;
         }
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
@@ -245,6 +332,27 @@ namespace Medical.GUI
             }
         }
 
+        public int GapIndex
+        {
+            get
+            {
+                return gapIndex;
+            }
+            set
+            {
+                gapIndex = value;
+                if (gapIndex == -1)
+                {
+                    gapCoord = new IntCoord();
+                }
+            }
+        }
+
+        public void clearGapIndex()
+        {
+            GapIndex = -1;
+        }
+
         internal bool containsPosition(IntVector2 position)
         {
             return position.x > taskbarWidget.AbsoluteLeft &&
@@ -260,8 +368,23 @@ namespace Medical.GUI
             int positionOffset = (int)(appButton.Bottom + padding);
             int iconAreaHeight = (int)(WorkingSize.Height - positionOffset);
 
+            int counter = 0;
             foreach (TaskbarItem item in taskbarItems)
             {
+                if (counter++ == GapIndex)
+                {
+                    if (currentLocation.y + itemSize.Height > iconAreaHeight)
+                    {
+                        currentLocation.x += itemSize.Width + padding;
+                        currentLocation.y = startLocation.y;
+                    }
+                    gapCoord.left = (int)(currentLocation.x + positionOffset - padding);
+                    gapCoord.top = (int)(currentLocation.y - padding);
+                    gapCoord.width = (int)(itemSize.Width + padding);
+                    gapCoord.height = (int)(itemSize.Height + padding);
+                    currentLocation.y += itemSize.Height + padding;
+                }
+
                 if (currentLocation.y + itemSize.Height > iconAreaHeight)
                 {
                     currentLocation.x += itemSize.Width + padding;
@@ -304,8 +427,23 @@ namespace Medical.GUI
             int positionOffset = (int)(appButton.Right + padding);
             int iconAreaWidth = (int)(WorkingSize.Width - positionOffset);
 
+            int counter = 0;
             foreach (TaskbarItem item in taskbarItems)
             {
+                if (counter++ == GapIndex)
+                {
+                    if (currentLocation.x + itemSize.Width > iconAreaWidth)
+                    {
+                        currentLocation.y += itemSize.Height + padding;
+                        currentLocation.x = startLocation.x;
+                    }
+                    gapCoord.left = (int)(currentLocation.x + positionOffset - padding);
+                    gapCoord.top = (int)(currentLocation.y - padding);
+                    gapCoord.width = (int)(itemSize.Width + padding);
+                    gapCoord.height = (int)(itemSize.Height + padding);
+                    currentLocation.x += itemSize.Width + padding;
+                }
+
                 if (currentLocation.x + itemSize.Width > iconAreaWidth)
                 {
                     currentLocation.y += itemSize.Height + padding;

@@ -7,7 +7,7 @@ using Engine;
 
 namespace Medical.GUI
 {
-    public delegate void TaskDroppedDelegate(Task item, IntVector2 position);
+    public delegate void TaskDragDropEventDelegate(Task item, IntVector2 position);
 
     public class TaskMenu : PopupContainer
     {
@@ -36,7 +36,8 @@ namespace Medical.GUI
         private TaskController taskController;
 
         public event TaskDelegate TaskItemOpened;
-        public event TaskDroppedDelegate TaskItemDropped;
+        public event TaskDragDropEventDelegate TaskItemDropped;
+        public event TaskDragDropEventDelegate TaskItemDragged;
 
         private StaticImage dragIconPreview;
 
@@ -159,6 +160,10 @@ namespace Medical.GUI
                 dragIconPreview.Visible = true;
                 dragIconPreview.setItemResource(((Task)source.UserObject).IconName);
                 LayerManager.Instance.upLayerItem(dragIconPreview);
+            }
+            if (TaskItemDragged != null)
+            {
+                TaskItemDragged.Invoke((Task)source.UserObject, arg.Position);
             }
         }
 

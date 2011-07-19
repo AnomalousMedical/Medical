@@ -69,6 +69,38 @@ namespace Medical.GUI
             taskbarButton.setCoord(x, y, width, height);
         }
 
+        internal int AbsoluteLeft
+        {
+            get
+            {
+                return taskbarButton.AbsoluteLeft;
+            }
+        }
+
+        internal int AbsoluteTop
+        {
+            get
+            {
+                return taskbarButton.AbsoluteTop;
+            }
+        }
+
+        internal int Width
+        {
+            get
+            {
+                return taskbarButton.Width;
+            }
+        }
+
+        internal int Height
+        {
+            get
+            {
+                return taskbarButton.Height;
+            }
+        }
+
         protected IntVector2 findGoodPosition(int width, int height)
         {
             switch (taskbar.Alignment)
