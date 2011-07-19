@@ -143,13 +143,11 @@ namespace Medical.GUI
 
         public int getIndexForPosition(IntVector2 position)
         {
-            Logging.Log.Debug("----------------------Get Index For Position----------------------");
             int xPos = position.x;
             int yPos = position.y;
             if (xPos >= taskbarWidget.AbsoluteLeft && xPos <= taskbarWidget.AbsoluteLeft + taskbarWidget.Width &&
                 yPos >= taskbarWidget.AbsoluteTop && yPos <= taskbarWidget.AbsoluteTop + taskbarWidget.Height)
             {
-                Logging.Log.Debug("Checking Items");
                 int counter = 0;
                 foreach (TaskbarItem item in taskbarItems)
                 {
@@ -176,39 +174,13 @@ namespace Medical.GUI
                 }
                 xPos -= taskbarWidget.AbsoluteLeft;
                 yPos -= taskbarWidget.AbsoluteTop;
-                Logging.Log.Debug("Checking Gap {0}, {1} : {2}, {3}, {4}, {5}", xPos, yPos, gapCoord.left, gapCoord.left + gapCoord.width, gapCoord.top, gapCoord.top + gapCoord.height);
                 if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width && yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
                 {
                     return gapIndex;
                 }
             }
-            Logging.Log.Debug("Failed all tests");
             return -1;
         }
-
-        //private int getVerticalIndexForPosition(int xPos, int yPos)
-        //{
-        //    int counter = 0;
-        //    foreach (TaskbarItem item in taskbarItems)
-        //    {
-        //        int left = (int)(item.AbsoluteLeft - padding);
-        //        int width = (int)(item.Width + padding);
-        //        int right = left + width;
-        //        int top = (int)(item.AbsoluteTop - padding);
-        //        int height = (int)(item.Height + padding);
-        //        int bottom = top + height;
-        //        if (xPos >= left && xPos <= right && yPos >= top && yPos <= bottom)
-        //        {
-        //            return xPos - left < width / 2 ? counter : counter + 1;
-        //        }
-        //        ++counter;
-        //    }
-        //    if (xPos >= gapCoord.left && xPos <= gapCoord.left + gapCoord.width && yPos >= gapCoord.top && yPos <= gapCoord.top + gapCoord.height)
-        //    {
-        //        return gapIndex;
-        //    }
-        //    return -1;
-        //}
 
         void appButton_MouseButtonClick(Widget source, EventArgs e)
         {
