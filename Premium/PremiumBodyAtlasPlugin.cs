@@ -98,7 +98,6 @@ namespace Medical
             //Tasks Menu
             TaskMenuSection tasksSection = guiManager.TaskMenu.Tasks;
 
-            //tasksSection.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
             tasksSection.addItem(new ShowToothContactsTaskMenuItem());
             tasksSection.addItem(new MDIDialogOpenTaskMenuItem(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));

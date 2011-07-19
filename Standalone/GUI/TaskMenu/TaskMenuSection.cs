@@ -12,7 +12,7 @@ namespace Medical.GUI
         public event TaskEvent TaskItemAdded;
         public event TaskEvent TaskItemRemoved;
 
-        private List<TaskMenuItem> items = new List<TaskMenuItem>();
+        private Dictionary<String, TaskMenuItem> items = new Dictionary<String, TaskMenuItem>();
 
         public TaskMenuSection()
         {
@@ -21,7 +21,7 @@ namespace Medical.GUI
 
         public void addItem(TaskMenuItem item)
         {
-            items.Add(item);
+            items.Add(item.UniqueName, item);
             if (TaskItemAdded != null)
             {
                 TaskItemAdded.Invoke(item);
@@ -30,18 +30,25 @@ namespace Medical.GUI
 
         public void removeItem(TaskMenuItem item)
         {
-            items.Remove(item);
+            items.Remove(item.UniqueName);
             if (TaskItemRemoved != null)
             {
                 TaskItemRemoved.Invoke(item);
             }
         }
 
+        public TaskMenuItem getItem(String uniqueName)
+        {
+            TaskMenuItem item = null;
+            items.TryGetValue(uniqueName, out item);
+            return item;
+        }
+
         public IEnumerable<TaskMenuItem> Items
         {
             get
             {
-                return items;
+                return items.Values;
             }
         }
     }

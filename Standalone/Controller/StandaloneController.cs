@@ -234,7 +234,7 @@ namespace Medical
             taskbar.SuppressLayout = false;
             taskMenu.SuppressLayout = false;
             taskbar.layout();
-            guiManager.loadDialogPositions();
+            guiManager.loadSavedUI();
 
             if (PlatformConfig.CreateMenu)
             {

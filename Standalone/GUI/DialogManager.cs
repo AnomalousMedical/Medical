@@ -29,20 +29,16 @@ namespace Medical.GUI
             dialogs.Add(new MDIDialogEntry(dialog));
         }
 
-        public void saveDialogLayout(String file)
+        public void saveDialogLayout(ConfigFile windowConfig)
         {
-            ConfigFile windowConfig = new ConfigFile(file);
             foreach (DialogEntry dialog in dialogs)
             {
                 dialog.serialize(windowConfig);
             }
-            windowConfig.writeConfigFile();
         }
 
-        public void loadDialogLayout(String file)
+        public void loadDialogLayout(ConfigFile windowConfig)
         {
-            ConfigFile windowConfig = new ConfigFile(file);
-            windowConfig.loadConfigFile();
             foreach (DialogEntry dialog in dialogs)
             {
                 dialog.deserialize(windowConfig);

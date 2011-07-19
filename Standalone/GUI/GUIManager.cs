@@ -13,6 +13,9 @@ namespace Medical.GUI
 {
     public class GUIManager : IDisposable
     {
+        private const String SAVED_TASKBAR_ITEM_BASE = "TaskbarItem";
+        private const String TASKBAR_ALIGNMENT_SECTION = "__TaskbarAlignment__";
+
         private ScreenLayoutManager screenLayoutManager;
         private StandaloneController standaloneController;
         private HorizontalPopoutLayoutContainer leftAnimatedContainer;
@@ -32,6 +35,8 @@ namespace Medical.GUI
         private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
+        private List<String> pinnedTaskMenuItems = new List<string>();
+
         public GUIManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
@@ -42,7 +47,15 @@ namespace Medical.GUI
         public void Dispose()
         {
             //Dialogs
-            dialogManager.saveDialogLayout(MedicalConfig.WindowsFile);
+            ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+            dialogManager.saveDialogLayout(configFile);
+            ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
+            int i = 0;
+            foreach (String uniqueName in pinnedTaskMenuItems)
+            {
+                taskbarSection.setValue(SAVED_TASKBAR_ITEM_BASE + i++, uniqueName);
+            }
+            configFile.writeConfigFile();
 
             //Other
             questionProvider.Dispose();
@@ -223,28 +236,22 @@ namespace Medical.GUI
             }
         }
 
-        internal void loadDialogPositions()
+        internal void loadSavedUI()
         {
-            dialogManager.loadDialogLayout(MedicalConfig.WindowsFile);
+            ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
+            configFile.loadConfigFile();
+            dialogManager.loadDialogLayout(configFile);
+            ConfigIterator configIterator = new ConfigIterator(configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION), SAVED_TASKBAR_ITEM_BASE);
+            while (configIterator.hasNext())
+            {
+                String uniqueName = configIterator.next();
+                TaskMenuItem item = taskMenu.Tasks.getItem(uniqueName);
+                if (item != null)
+                {
+                    addPinnedTaskbarItem(item);
+                }
+            }
         }
-
-        //private void animationCompleted(LayoutContainer oldChild)
-        //{
-        //    if (oldChild != null)
-        //    {
-        //        oldChild.Visible = false;
-        //    }
-        //}
-
-        //private void leftAnimationCompleted(LayoutContainer oldChild)
-        //{
-        //    animationCompleted(oldChild);
-        //    foreach (UIAnimationFinishedCallback animFinished in leftAnimationFinishedCBQueue)
-        //    {
-        //        animFinished.Invoke();
-        //    }
-        //    leftAnimationFinishedCBQueue.Clear();
-        //}
 
         private void standaloneController_SceneUnloading(SimScene scene)
         {
@@ -298,12 +305,18 @@ namespace Medical.GUI
 
         void taskMenu_TaskItemDropped(TaskMenuItem item, IntVector2 position)
         {
-            if (taskbar.containsPosition(position))
+            if (taskbar.containsPosition(position) && !pinnedTaskMenuItems.Contains(item.UniqueName))
             {
-                item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
-                taskbar.addItem(item._TaskbarItem);
-                taskbar.layout();
+                addPinnedTaskbarItem(item);
             }
+        }
+
+        private void addPinnedTaskbarItem(TaskMenuItem item)
+        {
+            item._TaskbarItem = new TaskMenuItemTaskbarItem(item);
+            taskbar.addItem(item._TaskbarItem);
+            taskbar.layout();
+            pinnedTaskMenuItems.Add(item.UniqueName);
         }
 
         void item_ItemClosed(TaskMenuItem item)
