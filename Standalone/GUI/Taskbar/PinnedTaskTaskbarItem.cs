@@ -17,6 +17,11 @@ namespace Medical.GUI
 
         }
 
+        internal override void addToPinnedTasksList(PinnedTaskSerializer pinnedTaskSerializer)
+        {
+            pinnedTaskSerializer.addPinnedTask(Task);
+        }
+
         protected override void customizeMenu()
         {
             addMenuItem("Remove", fireRemoved);

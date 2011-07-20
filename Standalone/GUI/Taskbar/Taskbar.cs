@@ -331,6 +331,14 @@ namespace Medical.GUI
                 position.y < taskbarWidget.AbsoluteTop + taskbarWidget.Height;
         }
 
+        internal void getPinnedTasks(PinnedTaskSerializer pinnedTaskSerializer)
+        {
+            foreach (TaskbarItem item in taskbarItems)
+            {
+                item.addToPinnedTasksList(pinnedTaskSerializer);
+            }
+        }
+
         private void layoutTaskbarVertical()
         {
             Vector2 startLocation = new Vector2(appButton.Left, 0);

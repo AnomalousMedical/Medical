@@ -13,7 +13,6 @@ namespace Medical.GUI
 {
     public class GUIManager : IDisposable
     {
-        private const String SAVED_TASKBAR_ITEM_BASE = "TaskbarItem";
         private const String TASKBAR_ALIGNMENT_SECTION = "__TaskbarAlignment__";
 
         private ScreenLayoutManager screenLayoutManager;
@@ -35,8 +34,6 @@ namespace Medical.GUI
         private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
 
-        private List<String> pinnedTaskMenuItems = new List<string>();
-
         public GUIManager(StandaloneController standaloneController)
         {
             this.standaloneController = standaloneController;
@@ -50,11 +47,8 @@ namespace Medical.GUI
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             dialogManager.saveDialogLayout(configFile);
             ConfigSection taskbarSection = configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION);
-            int i = 0;
-            foreach (String uniqueName in pinnedTaskMenuItems)
-            {
-                taskbarSection.setValue(SAVED_TASKBAR_ITEM_BASE + i++, uniqueName);
-            }
+            PinnedTaskSerializer taskSerializer = new PinnedTaskSerializer(taskbarSection);
+            taskbar.getPinnedTasks(taskSerializer);
             configFile.writeConfigFile();
 
             //Other
@@ -242,7 +236,8 @@ namespace Medical.GUI
             ConfigFile configFile = new ConfigFile(MedicalConfig.WindowsFile);
             configFile.loadConfigFile();
             dialogManager.loadDialogLayout(configFile);
-            ConfigIterator configIterator = new ConfigIterator(configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION), SAVED_TASKBAR_ITEM_BASE);
+            PinnedTaskSerializer pinnedTaskSerializer = new PinnedTaskSerializer(configFile.createOrRetrieveConfigSection(TASKBAR_ALIGNMENT_SECTION));
+            ConfigIterator configIterator = pinnedTaskSerializer.Tasks;
             TaskController taskController = standaloneController.TaskController;
             while (configIterator.hasNext())
             {
@@ -314,13 +309,11 @@ namespace Medical.GUI
         {
             if (taskbar.containsPosition(position))
             {
-                if (pinnedTaskMenuItems.Contains(item.UniqueName))
+                if (item._TaskbarItem is PinnedTaskTaskbarItem)
                 {
                     taskbar.removeItem(item._TaskbarItem);
                     int index = taskbar.getIndexForPosition(position);
                     taskbar.addItem(item._TaskbarItem, index);
-                    pinnedTaskMenuItems.Remove(item.UniqueName);
-                    pinnedTaskMenuItems.Insert(index, item.UniqueName);
                 }
                 else
                 {
@@ -337,7 +330,6 @@ namespace Medical.GUI
             task._TaskbarItem = null;
             taskbar.removeItem(source);
             taskbar.layout();
-            pinnedTaskMenuItems.Remove(task.UniqueName);
             if (task.Active)
             {
                 addTaskbarItem(task);
@@ -383,14 +375,6 @@ namespace Medical.GUI
             pinnedTaskItem.RemoveFromTaskbar += new EventDelegate<TaskTaskbarItem>(pinnedTaskItem_RemoveFromTaskbar);
             item._TaskbarItem = pinnedTaskItem;
             taskbar.addItem(pinnedTaskItem, index);
-            if (index == -1)
-            {
-                pinnedTaskMenuItems.Add(item.UniqueName);
-            }
-            else
-            {
-                pinnedTaskMenuItems.Insert(index, item.UniqueName);
-            }
         }
     }
 }

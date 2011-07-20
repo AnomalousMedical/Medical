@@ -195,6 +195,7 @@
     <Compile Include="GUI\MDIDialog.cs" />
     <Compile Include="GUI\MDIDialogEntry.cs" />
     <Compile Include="GUI\RenderProgress\MyGUIImageRendererProgress.cs" />
+    <Compile Include="GUI\Taskbar\PinnedTaskSerializer.cs" />
     <Compile Include="GUI\Taskbar\PinnedTaskTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\TaskTaskbarItem.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
@@ -273,7 +274,6 @@
     <Compile Include="GUI\DialogManager.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
-    <Compile Include="GUI\Taskbar\CallbackTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\ShowPopupTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />

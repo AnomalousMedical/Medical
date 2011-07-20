@@ -69,6 +69,11 @@ namespace Medical.GUI
             taskbarButton.setCoord(x, y, width, height);
         }
 
+        internal virtual void addToPinnedTasksList(PinnedTaskSerializer pinnedTaskSerializer)
+        {
+            
+        }
+
         internal int AbsoluteLeft
         {
             get
