@@ -33,6 +33,7 @@ namespace Medical.GUI
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
+        private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
 
         public GUIManager(StandaloneController standaloneController)
         {
@@ -215,6 +216,18 @@ namespace Medical.GUI
             dialogManager.addManagedDialog(dialog);
         }
 
+        public void addFullscreenPopup(FullscreenGUIPopup popup)
+        {
+            popup.setPosition((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
+            popup.setSize((int)innerBorderLayout.WorkingSize.Width, (int)innerBorderLayout.WorkingSize.Height);
+            fullscreenPopups.Add(popup);
+        }
+
+        public void removeFullscreenPopup(FullscreenGUIPopup popup)
+        {
+            fullscreenPopups.Remove(popup);
+        }
+
         public Taskbar Taskbar
         {
             get
@@ -265,10 +278,19 @@ namespace Medical.GUI
         {
             dialogManager.windowResized();
             continuePrompt.ensureVisible();
+            int xPos = (int)innerBorderLayout.Location.x;
+            int yPos = (int)innerBorderLayout.Location.y;
+            int innerWidth = (int)innerBorderLayout.WorkingSize.Width;
+            int innerHeight = (int)innerBorderLayout.WorkingSize.Height;
             if (taskMenu.Visible)
             {
-                taskMenu.setPosition((int)innerBorderLayout.Location.x, (int)innerBorderLayout.Location.y);
-                taskMenu.setSize((int)innerBorderLayout.WorkingSize.Width, (int)innerBorderLayout.WorkingSize.Height);
+                taskMenu.setPosition(xPos, yPos);
+                taskMenu.setSize(innerWidth, innerHeight);
+            }
+            foreach (FullscreenGUIPopup fullscreenPopup in fullscreenPopups)
+            {
+                fullscreenPopup.setPosition(xPos, yPos);
+                fullscreenPopup.setSize(innerWidth, innerHeight);
             }
         }
 

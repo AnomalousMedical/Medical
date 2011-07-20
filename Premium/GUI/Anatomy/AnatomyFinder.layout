@@ -20,7 +20,7 @@
         <Widget type="ScrollView" skin="ScrollView" position="7 32 256 303" align="Stretch" name="AnatomyList">
             <Property key="ScrollView_CanvasSize" value="238 10"/>
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
-            <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
+            <UserString key="ButtonSkin" value="AnatomyFinderIconButtonButton"/>
             <UserString key="ItemHeight" value="50"/>
             <UserString key="ItemWidth" value="238"/>
             <UserString key="ShowGroupCaptions" value="False"/>

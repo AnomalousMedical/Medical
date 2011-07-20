@@ -141,6 +141,7 @@
     <Compile Include="Controller\TaskController\CallbackTask.cs" />
     <Compile Include="Controller\TaskController\DialogOpenTask.cs" />
     <Compile Include="Controller\TaskController\MDIDialogOpenTask.cs" />
+    <Compile Include="Controller\TaskController\ShowPopupTask.cs" />
     <Compile Include="Controller\TaskController\StartEmbeddedTimelineTask.cs" />
     <Compile Include="Controller\TaskController\Task.cs" />
     <Compile Include="Controller\TaskController\TaskController.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="GUI\Editor\PropertiesTable.cs" />
     <Compile Include="GUI\ExamViewer\ExamViewer.cs" />
     <Compile Include="GUI\ExamViewer\GenericExamOverview.cs" />
+    <Compile Include="GUI\FullscreenGUIPopup.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
     <Compile Include="GUI\DialogEntry.cs" />
@@ -274,7 +276,6 @@
     <Compile Include="GUI\DialogManager.cs" />
     <Compile Include="GUI\Options\OptionsDialog.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginManager.cs" />
-    <Compile Include="GUI\Taskbar\ShowPopupTaskbarItem.cs" />
     <Compile Include="GUI\Taskbar\Taskbar.cs" />
     <Compile Include="GUI\Taskbar\TaskbarItem.cs" />
     <Compile Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.cs" />

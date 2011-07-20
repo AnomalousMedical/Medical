@@ -89,15 +89,12 @@ namespace Medical
             anatomyFinder = new AnatomyFinder(anatomyController, standaloneController.SceneViewController);
             guiManager.addManagedDialog(anatomyFinder);
 
-            bookmarks = new BookmarksGUI(bookmarksController);
-
-            //Taskbar
-            Taskbar taskbar = guiManager.Taskbar;
-            taskbar.addItem(new ShowPopupTaskbarItem(bookmarks, "Bookmarks", "FavoritesIcon"));
+            bookmarks = new BookmarksGUI(bookmarksController, standaloneController.GUIManager);
 
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
+            taskController.addTask(new ShowPopupTask(bookmarks, "Medical.Bookmarks", "Bookmarks", "FavoritesIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new MDIDialogOpenTask(anatomyFinder, "Medical.AnatomyFinder", "Anatomy Finder", "SearchIcon", TaskMenuCategories.Navigation));
             taskController.addTask(new ShowToothContactsTask());
             taskController.addTask(new MDIDialogOpenTask(stateList, "Medical.StateList", "States", "StatesIcon", TaskMenuCategories.Patient));

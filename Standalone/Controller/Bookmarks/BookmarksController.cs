@@ -21,7 +21,7 @@ namespace Medical.Controller
         public event BookmarkDelegate BookmarkAdded;
 
         private ImageRendererProperties imageProperties;
-        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(50, 50), new Size2(512, 512));
+        private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(100, 100), new Size2(512, 512));
 
         private StandaloneController standaloneController;
         private BookmarkDelegate mainThreadCallback;
@@ -34,8 +34,8 @@ namespace Medical.Controller
             mainThreadCallback = fireBookmarkAdded;
 
             imageProperties = new ImageRendererProperties();
-            imageProperties.Width = 50;
-            imageProperties.Height = 50;
+            imageProperties.Width = 100;
+            imageProperties.Height = 100;
             imageProperties.UseWindowBackgroundColor = false;
             imageProperties.CustomBackgroundColor = new Engine.Color(.94f, .94f, .94f);
             imageProperties.AntiAliasingMode = 2;
