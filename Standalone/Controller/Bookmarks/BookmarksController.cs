@@ -19,6 +19,7 @@ namespace Medical.Controller
         private static XmlSaver xmlSaver = new XmlSaver();
 
         public event BookmarkDelegate BookmarkAdded;
+        public event BookmarkDelegate BookmarkRemoved;
 
         private ImageRendererProperties imageProperties;
         private ImageAtlas imageAtlas = new ImageAtlas("Bookmarks", new Size2(100, 100), new Size2(512, 512));
@@ -72,18 +73,30 @@ namespace Medical.Controller
                 filename = String.Format(fileFormat, (++index).ToString());
             }
 
+            bookmark.BackingFile = filename;
+
             using (XmlTextWriter xmlWriter = new XmlTextWriter(filename, Encoding.Default))
             {
                 xmlWriter.Formatting = Formatting.Indented;
                 xmlSaver.saveObject(bookmark, xmlWriter);
             }
 
-            if (BookmarkAdded != null)
-            {
-                BookmarkAdded.Invoke(bookmark);
-            }
+            fireBookmarkAdded(bookmark);
 
             return bookmark;
+        }
+
+        public void removeBookmark(Bookmark bookmark)
+        {
+            fireBookmarkRemoved(bookmark);
+            try
+            {
+                File.Delete(bookmark.BackingFile);
+            }
+            catch (Exception)
+            {
+                MessageBox.show(String.Format("Could not delete bookmark '{0}'", bookmark.Name), "Error", MessageBoxStyle.IconError | MessageBoxStyle.Ok);
+            }
         }
 
         public void applyBookmark(Bookmark bookmark)
@@ -126,6 +139,7 @@ namespace Medical.Controller
                         using (XmlTextReader xmlReader = new XmlTextReader(file))
                         {
                             bookmark = (Bookmark)xmlSaver.restoreObject(xmlReader);
+                            bookmark.BackingFile = file;
                         }
                         if (bookmark != null)
                         {
@@ -142,10 +156,17 @@ namespace Medical.Controller
 
         private void fireBookmarkAdded(Bookmark bookmark)
         {
-
             if (BookmarkAdded != null)
             {
                 BookmarkAdded.Invoke(bookmark);
+            }
+        }
+
+        private void fireBookmarkRemoved(Bookmark bookmark)
+        {
+            if (BookmarkRemoved != null)
+            {
+                BookmarkRemoved.Invoke(bookmark);
             }
         }
 

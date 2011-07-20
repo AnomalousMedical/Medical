@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="TaskMenuBackground" position="133 116 884 537" layer="Overlapped">
+    <Widget type="Widget" skin="TaskMenuBackground" position="131 116 884 537" layer="Overlapped">
         <Property key="Widget_Caption" value="Bookmarks"/>
         <Widget type="Button" skin="Button" position="823 8 57 20" align="Right Top" name="AddButton">
             <Property key="Widget_Caption" value="Add"/>
@@ -15,6 +15,15 @@
         </Widget>
         <Widget type="Edit" skin="Edit" position="665 8 156 20" align="Right Top" name="BookmarkName">
             <Property key="Widget_Caption" value="Bookmark"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="8 8 76 16">
+            <Property key="Widget_Caption" value="Bookmarks"/>
+            <Property key="Text_TextColour" value="#FFFFFF"/>
+        </Widget>
+        <Widget type="Widget" skin="Panel" position="0 499 884 37" align="HStretch Bottom" name="TrashPanel">
+            <Widget type="StaticText" skin="StaticText" position="426 4 32 28" align="HCenter Top">
+                <Property key="Widget_Caption" value="Trash"/>
+            </Widget>
         </Widget>
     </Widget>
 </MyGUI>

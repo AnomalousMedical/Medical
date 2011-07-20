@@ -77,6 +77,12 @@ namespace Medical.GUI
             dragIconPreview.Visible = false;
         }
 
+        public override void Dispose()
+        {
+            Gui.Instance.destroyWidget(dragIconPreview);
+            base.Dispose();
+        }
+
         public void setPosition(int left, int top)
         {
             widget.setPosition(left, top);

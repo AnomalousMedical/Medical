@@ -18,12 +18,16 @@ namespace Medical.GUI
         Edit bookmarkName;
 
         IntSize2 widgetSmallSize;
+        Widget trashPanel;
+
+        private StaticImage dragIconPreview;
 
         public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
             : base("Medical.GUI.Bookmarks.BookmarksGUI.layout")
         {
             this.bookmarksController = bookmarksController;
             bookmarksController.BookmarkAdded += new BookmarkDelegate(bookmarksController_BookmarkAdded);
+            bookmarksController.BookmarkRemoved += new BookmarkDelegate(bookmarksController_BookmarkRemoved);
 
             this.guiManager = guiManager;
 
@@ -41,6 +45,18 @@ namespace Medical.GUI
 
             this.Showing += new EventHandler(BookmarksGUI_Showing);
             this.Hidden += new EventHandler(BookmarksGUI_Hidden);
+
+            trashPanel = widget.findWidget("TrashPanel");
+            trashPanel.Visible = false;
+
+            dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
+            dragIconPreview.Visible = false;
+        }
+
+        public override void Dispose()
+        {
+            Gui.Instance.destroyWidget(dragIconPreview);
+            base.Dispose();
         }
 
         public void setSize(int width, int height)
@@ -64,7 +80,42 @@ namespace Medical.GUI
             String imageKey = bookmarksController.createThumbnail(bookmark);
             ButtonGridItem item = bookmarksList.addItem("User", bookmark.Name, imageKey);
             item.ItemClicked += new EventHandler(item_ItemClicked);
+            item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
+            item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
             item.UserObject = bookmark;
+        }
+
+        void bookmarksController_BookmarkRemoved(Bookmark bookmark)
+        {
+            ButtonGridItem item = bookmarksList.findItemByCaption(bookmark.Name);
+            if (item != null)
+            {
+                bookmarksList.removeItem(item);
+            }
+        }
+
+        void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
+        {
+            trashPanel.Visible = false;
+            dragIconPreview.Visible = false;
+            IntVector2 mousePos = arg.Position;
+            if (mousePos.x >= trashPanel.AbsoluteLeft && mousePos.x <= trashPanel.AbsoluteLeft + trashPanel.Width &&
+                mousePos.y >= trashPanel.AbsoluteTop && mousePos.y <= trashPanel.AbsoluteTop + trashPanel.Bottom)
+            {
+                bookmarksController.removeBookmark((Bookmark)source.UserObject);
+            }
+        }
+
+        void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
+            if (!dragIconPreview.Visible)
+            {
+                trashPanel.Visible = true;
+                dragIconPreview.Visible = true;
+                dragIconPreview.setItemResource(bookmarksController.createThumbnail((Bookmark)source.UserObject));
+                LayerManager.Instance.upLayerItem(dragIconPreview);
+            }
         }
 
         void item_ItemClicked(object sender, EventArgs e)

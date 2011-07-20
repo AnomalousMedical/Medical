@@ -26,6 +26,8 @@ namespace Medical
 
         public String Name { get; set; }
 
+        internal String BackingFile { get; set; }
+
         #region Saveable Members
 
         private static String TRANSLATION = "CameraTranslation";
