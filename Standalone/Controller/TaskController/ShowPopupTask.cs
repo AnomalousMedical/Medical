@@ -19,7 +19,10 @@ namespace Medical
 
         public override void clicked()
         {
-            popupContainer.show(0, 0);
+            if (!popupContainer.Visible)
+            {
+                popupContainer.show(0, 0);
+            }
         }
 
         public override bool Active

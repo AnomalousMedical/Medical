@@ -2,18 +2,19 @@
 <MyGUI type="Layout">
     <Widget type="Widget" skin="TaskMenuBackground" position="224 51 347 537" layer="Overlapped">
         <Property key="Widget_Caption" value="Bookmarks"/>
-        <Widget type="Button" skin="Button" position="258 8 57 20" align="Right Top" name="AddButton">
+        <Widget type="Button" skin="Button" position="167 28 57 20" align="Left Top" name="AddButton">
             <Property key="Widget_Caption" value="Add"/>
         </Widget>
-        <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 31 340 502" align="Stretch" name="BookmarksList">
+        <Widget type="ScrollView" skin="ScrollViewEmpty" position="3 58 340 475" align="Stretch" name="BookmarksList">
             <Property key="ScrollView_CanvasAlign" value="Left Top"/>
             <Property key="ScrollView_CanvasSize" value="209 10"/>
             <Property key="ScrollView_VisibleHScroll" value="false"/>
             <UserString key="ButtonSkin" value="BookmarkListIconButtonButton"/>
             <UserString key="ItemHeight" value="122"/>
             <UserString key="ItemWidth" value="122"/>
+            <UserString key="ShowGroupCaptions" value="false"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="100 8 156 20" align="Right Top" name="BookmarkName">
+        <Widget type="Edit" skin="Edit" position="8 28 156 20" align="Left Top" name="BookmarkName">
             <Property key="Widget_Caption" value="Bookmark"/>
         </Widget>
         <Widget type="StaticText" skin="StaticText" position="8 8 76 16">
@@ -26,5 +27,6 @@
             </Widget>
         </Widget>
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
+        <Widget type="Widget" skin="Separator1" position="8 51 332 2" align="HStretch Top"/>
     </Widget>
 </MyGUI>

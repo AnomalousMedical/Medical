@@ -11,7 +11,6 @@
             <UserString key="GroupCaptionSkin" value="TaskMenuCategoryText"/>
             <UserString key="GroupPaddingY" value="11"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="365 8 184 26" align="Right Top" name="SearchBox"/>
         <Widget type="Button" skin="TaskMenuTopLevelCategoryButton" position="2 11 66 22" name="Tasks">
             <Property key="Widget_Caption" value="Tasks"/>
             <Property key="Text_TextColour" value="FFFFFF"/>
