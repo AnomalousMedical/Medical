@@ -26,9 +26,6 @@
     <Filter Include="OS">
       <UniqueIdentifier>{fc86476d-b5fd-4ade-b864-933212189fe9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Credentials">
-      <UniqueIdentifier>{a3573f7f-27d2-4765-940d-5db4557d0694}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\ImageViewer.cpp">
@@ -105,9 +102,6 @@
     </ClCompile>
     <ClCompile Include="Src\PlatformConfig.cpp">
       <Filter>OS</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CredentialsManager.cpp">
-      <Filter>Credentials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

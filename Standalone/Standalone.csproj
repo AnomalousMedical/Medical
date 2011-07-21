@@ -120,7 +120,6 @@
     <Compile Include="Controller\ImageRenderer\ImageRenderer.cs" />
     <Compile Include="Controller\Layers\LayerStateEditableProperty.cs" />
     <Compile Include="Controller\MedicalStates\PatientData.cs" />
-    <Compile Include="Controller\OSHelper\CredentialsManager.cs" />
     <Compile Include="Controller\OSHelper\LicenseManager.cs" />
     <Compile Include="Controller\Plugin\AtlasPluginEntryPointAttribute.cs" />
     <Compile Include="Controller\Props\BiteStick.cs" />
