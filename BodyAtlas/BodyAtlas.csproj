@@ -138,7 +138,6 @@
     <EmbeddedResource Include="Resources\BodyAtlasIcons.png" />
     <EmbeddedResource Include="Resources\BodyAtlasIcons.xml" />
     <EmbeddedResource Include="Resources\Background\BodyAtlasBackground.png" />
-    <EmbeddedResource Include="Resources\SplashScreen\AnomalousLogo.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashIMG.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.png" />
     <EmbeddedResource Include="Resources\SplashScreen\SplashScreen.xml" />

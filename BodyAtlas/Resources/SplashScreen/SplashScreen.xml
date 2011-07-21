@@ -10,14 +10,7 @@
     </Group>
   </Resource>
   <Resource type="ResourceImageSet" name="SplashScreen/Text">
-    <Group name="Icons" texture="Medical.Resources.SplashScreen.SplashText.png" size="700 153">
-      <Index name="Icon">
-        <Frame point="0 0"/>
-      </Index>
-    </Group>
-  </Resource>
-  <Resource type="ResourceImageSet" name="SplashScreen/AnomLogo">
-    <Group name="Icons" texture="Medical.Resources.SplashScreen.AnomalousLogo.png" size="240 70">
+    <Group name="Icons" texture="Medical.Resources.SplashScreen.SplashText.png" size="700 191">
       <Index name="Icon">
         <Frame point="0 0"/>
       </Index>
