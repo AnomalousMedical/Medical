@@ -21,12 +21,10 @@
             <Property key="Widget_Caption" value="Bookmarks"/>
             <Property key="Text_TextColour" value="#FFFFFF"/>
         </Widget>
-        <Widget type="Widget" skin="Panel" position="0 499 347 37" align="HStretch Bottom" name="TrashPanel">
-            <Widget type="StaticText" skin="StaticText" position="157 4 32 28" align="HCenter Top">
-                <Property key="Widget_Caption" value="Trash"/>
-            </Widget>
-        </Widget>
         <Widget type="Button" skin="ButtonXBig" position="318 7 24 20" align="Right Top" name="CloseButton"/>
         <Widget type="Widget" skin="Separator1" position="8 51 332 2" align="HStretch Top"/>
+        <Widget type="StaticImage" skin="StaticImage" position="147 426 100 100" align="HCenter Bottom" name="TrashPanel">
+            <Property key="Image_Resource" value="Bookmarks/Trash"/>
+        </Widget>
     </Widget>
 </MyGUI>

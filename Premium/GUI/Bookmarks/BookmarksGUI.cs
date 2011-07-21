@@ -18,7 +18,7 @@ namespace Medical.GUI
         Edit bookmarkName;
 
         IntSize2 widgetSmallSize;
-        Widget trashPanel;
+        StaticImage trash;
 
         private StaticImage dragIconPreview;
         private IntVector2 dragMouseStartPosition;
@@ -47,8 +47,8 @@ namespace Medical.GUI
             this.Showing += new EventHandler(BookmarksGUI_Showing);
             this.Hidden += new EventHandler(BookmarksGUI_Hidden);
 
-            trashPanel = widget.findWidget("TrashPanel");
-            trashPanel.Visible = false;
+            trash = (StaticImage)widget.findWidget("TrashPanel");
+            trash.Visible = false;
 
             dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
@@ -106,10 +106,10 @@ namespace Medical.GUI
 
         void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
         {
-            trashPanel.Visible = false;
+            trash.Visible = false;
             dragIconPreview.Visible = false;
             IntVector2 mousePos = arg.Position;
-            if (trashPanel.contains(mousePos.x, mousePos.y))
+            if (trash.contains(mousePos.x, mousePos.y))
             {
                 bookmarksController.removeBookmark((Bookmark)source.UserObject);
             }
@@ -120,10 +120,18 @@ namespace Medical.GUI
             dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
             if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
             {
-                trashPanel.Visible = true;
+                trash.Visible = true;
                 dragIconPreview.Visible = true;
                 dragIconPreview.setItemResource(bookmarksController.createThumbnail((Bookmark)source.UserObject));
                 LayerManager.Instance.upLayerItem(dragIconPreview);
+            }
+            if (trash.contains(arg.Position.x, arg.Position.y))
+            {
+                trash.setItemName("Highlight");
+            }
+            else
+            {
+                trash.setItemName("Normal");
             }
         }
 

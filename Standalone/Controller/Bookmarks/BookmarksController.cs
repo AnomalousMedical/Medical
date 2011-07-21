@@ -131,6 +131,7 @@ namespace Medical.Controller
         {
             Thread backgroundLoaderThread = new Thread(delegate()
                 {
+                    Thread.Sleep(1000);
                     ensureBookmarksFolderExists();
                     String[] bookmarkFiles = Directory.GetFiles(MedicalConfig.BookmarksFolder, "*.bmk");
                     foreach (String file in bookmarkFiles)
@@ -144,6 +145,7 @@ namespace Medical.Controller
                         if (bookmark != null)
                         {
                             ThreadManager.invokeAndWait(mainThreadCallback, bookmark);
+                            Thread.Sleep(50);
                         }
                         if (cancelBackgroundLoading)
                         {
