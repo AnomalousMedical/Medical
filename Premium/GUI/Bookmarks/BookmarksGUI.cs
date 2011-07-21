@@ -21,6 +21,7 @@ namespace Medical.GUI
         Widget trashPanel;
 
         private StaticImage dragIconPreview;
+        private IntVector2 dragMouseStartPosition;
 
         public BookmarksGUI(BookmarksController bookmarksController, GUIManager guiManager)
             : base("Medical.GUI.Bookmarks.BookmarksGUI.layout")
@@ -51,6 +52,9 @@ namespace Medical.GUI
 
             dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 100, 100, Align.Default, "Info", "BookmarksDragIconPreview");
             dragIconPreview.Visible = false;
+
+            Button closeButton = (Button)widget.findWidget("CloseButton");
+            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
         }
 
         public override void Dispose()
@@ -82,6 +86,7 @@ namespace Medical.GUI
             item.ItemClicked += new EventHandler(item_ItemClicked);
             item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
             item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
+            item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
             item.UserObject = bookmark;
         }
 
@@ -94,13 +99,17 @@ namespace Medical.GUI
             }
         }
 
+        void item_MouseButtonPressed(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragMouseStartPosition = arg.Position;
+        }
+
         void item_MouseButtonReleased(ButtonGridItem source, MouseEventArgs arg)
         {
             trashPanel.Visible = false;
             dragIconPreview.Visible = false;
             IntVector2 mousePos = arg.Position;
-            if (mousePos.x >= trashPanel.AbsoluteLeft && mousePos.x <= trashPanel.AbsoluteLeft + trashPanel.Width &&
-                mousePos.y >= trashPanel.AbsoluteTop && mousePos.y <= trashPanel.AbsoluteTop + trashPanel.Bottom)
+            if (trashPanel.contains(mousePos.x, mousePos.y))
             {
                 bookmarksController.removeBookmark((Bookmark)source.UserObject);
             }
@@ -109,7 +118,7 @@ namespace Medical.GUI
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
         {
             dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
-            if (!dragIconPreview.Visible)
+            if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
             {
                 trashPanel.Visible = true;
                 dragIconPreview.Visible = true;
@@ -134,6 +143,11 @@ namespace Medical.GUI
         void BookmarksGUI_Showing(object sender, EventArgs e)
         {
             guiManager.addFullscreenPopup(this);
+        }
+
+        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            this.hide();
         }
     }
 }

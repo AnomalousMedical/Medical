@@ -380,7 +380,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
-    <EmbeddedResource Include="Layout\MDI\MDIWindow.layout" />
+    <EmbeddedResource Include="Layout\MDI\MDIDocumentWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

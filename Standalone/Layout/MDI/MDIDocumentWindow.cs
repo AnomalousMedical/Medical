@@ -34,7 +34,7 @@ namespace Medical.Controller
         public MDIDocumentWindow(String caption)
             :base(DockLocation.Center)
         {
-            guiLayout = LayoutManager.Instance.loadLayout("Medical.Layout.MDI.MDIWindow.layout");
+            guiLayout = LayoutManager.Instance.loadLayout("Medical.Layout.MDI.MDIDocumentWindow.layout");
             mainWidget = guiLayout.getWidget(0);
 
             volumePanel = guiLayout.getWidget(1);

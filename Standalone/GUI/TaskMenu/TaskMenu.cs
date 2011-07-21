@@ -40,6 +40,7 @@ namespace Medical.GUI
         public event TaskDragDropEventDelegate TaskItemDragged;
 
         private StaticImage dragIconPreview;
+        private IntVector2 dragMouseStartPosition;
 
         public TaskMenu(DocumentController documentController, TaskController taskController)
             :base("Medical.GUI.TaskMenu.TaskMenu.layout")
@@ -75,6 +76,9 @@ namespace Medical.GUI
 
             dragIconPreview = (StaticImage)Gui.Instance.createWidgetT("StaticImage", "StaticImage", 0, 0, 32, 32, Align.Default, "Info", "TaskMenuDragIconPreview");
             dragIconPreview.Visible = false;
+
+            Button closeButton = (Button)widget.findWidget("CloseButton");
+            closeButton.MouseButtonClick += new MyGUIEvent(closeButton_MouseButtonClick);
         }
 
         public override void Dispose()
@@ -119,6 +123,7 @@ namespace Medical.GUI
             item.UserObject = task;
             item.ItemClicked += new EventHandler(item_ItemClicked);
             task.RequestShowInTaskbar += new TaskDelegate(taskItem_RequestShowInTaskbar);
+            item.MouseButtonPressed += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonPressed);
             item.MouseDrag += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseDrag);
             item.MouseButtonReleased += new EventDelegate<ButtonGridItem, MouseEventArgs>(item_MouseButtonReleased);
         }
@@ -158,10 +163,15 @@ namespace Medical.GUI
             viewButtonGroup.SelectedButton = tasksButton;
         }
 
+        void item_MouseButtonPressed(ButtonGridItem source, MouseEventArgs arg)
+        {
+            dragMouseStartPosition = arg.Position;
+        }
+
         void item_MouseDrag(ButtonGridItem source, MouseEventArgs arg)
         {
             dragIconPreview.setPosition(arg.Position.x - (dragIconPreview.Width / 2), arg.Position.y - (int)(dragIconPreview.Height * .75f));
-            if (!dragIconPreview.Visible)
+            if (!dragIconPreview.Visible && (Math.Abs(dragMouseStartPosition.x - arg.Position.x) > 5 || Math.Abs(dragMouseStartPosition.y - arg.Position.y) > 5))
             {
                 dragIconPreview.Visible = true;
                 dragIconPreview.setItemResource(((Task)source.UserObject).IconName);
@@ -180,6 +190,11 @@ namespace Medical.GUI
             {
                 TaskItemDropped.Invoke((Task)source.UserObject, arg.Position);
             }
+        }
+
+        void closeButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            this.hide();
         }
     }
 }
