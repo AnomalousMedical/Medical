@@ -187,6 +187,7 @@ namespace Medical
             RangeOfMotionScale.createPropDefinition(propFactory);
             Pen.createPropDefinition(propFactory);
             Caliper.createPropDefinition(propFactory);
+            Splint.createPropDefinition(propFactory);
 
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();

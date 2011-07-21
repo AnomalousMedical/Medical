@@ -136,6 +136,7 @@
     <Compile Include="Controller\Props\PoseableHand\PoseableHand.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumb.cs" />
     <Compile Include="Controller\Props\RangeOfMotionScale.cs" />
+    <Compile Include="Controller\Props\Splint.cs" />
     <Compile Include="Controller\StandaloneApp.cs" />
     <Compile Include="Controller\TaskController\CallbackTask.cs" />
     <Compile Include="Controller\TaskController\DialogOpenTask.cs" />
