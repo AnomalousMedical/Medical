@@ -188,6 +188,7 @@ namespace Medical
             Pen.createPropDefinition(propFactory);
             Caliper.createPropDefinition(propFactory);
             Splint.createPropDefinition(propFactory);
+            DentalFloss.createPropDefinition(propFactory);
 
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();

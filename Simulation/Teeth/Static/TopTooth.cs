@@ -61,19 +61,25 @@ namespace Medical
 
         void actorElement_ContactStarted(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
         {
-            BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
-            if (otherTooth != null)
+            if (otherBody != null)
             {
-                collidingTeeth.Add(otherTooth);
+                BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
+                if (otherTooth != null)
+                {
+                    collidingTeeth.Add(otherTooth);
+                }
             }
         }
 
         void actorElement_ContactEnded(ContactInfo contact, RigidBody sourceBody, RigidBody otherBody, bool isBodyA)
         {
-            BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
-            if (otherTooth != null)
+            if (otherBody != null)
             {
-                collidingTeeth.Remove(otherTooth);
+                BottomTooth otherTooth = otherBody.Owner.getElement("Behavior") as BottomTooth;
+                if (otherTooth != null)
+                {
+                    collidingTeeth.Remove(otherTooth);
+                }
             }
         }
 
