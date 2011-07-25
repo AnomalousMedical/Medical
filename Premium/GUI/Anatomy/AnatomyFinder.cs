@@ -48,6 +48,9 @@ namespace Medical.GUI
         private int lastWidth = -1;
         private int lastHeight = -1;
 
+        private Vector3 mouseDownMousePos;
+        private const int MOUSE_MOVE_GRACE_PIXELS = 3;
+
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -63,6 +66,7 @@ namespace Medical.GUI
             searchBox = (Edit)window.findWidget("SearchBox");
             searchBox.EventEditTextChange += new MyGUIEvent(searchBox_EventEditTextChange);
 
+            pickAnatomy.FirstFrameDownEvent += new MessageEventCallback(pickAnatomy_FirstFrameDownEvent);
             pickAnatomy.FirstFrameUpEvent += new MessageEventCallback(pickAnatomy_FirstFrameUpEvent);
             changeSelectionMode.FirstFrameUpEvent += new MessageEventCallback(changeSelectionMode_FirstFrameUpEvent);
 
@@ -151,14 +155,22 @@ namespace Medical.GUI
             }
         }
 
+        void pickAnatomy_FirstFrameDownEvent(EventManager eventManager)
+        {
+            mouseDownMousePos = eventManager.Mouse.getAbsMouse();
+        }
+
         void pickAnatomy_FirstFrameUpEvent(EventManager eventManager)
         {
-            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && pickingModeGroup.SelectedButton != noneButton)
+            Vector3 absMouse = eventManager.Mouse.getAbsMouse();
+            Vector3 mouseMovedAmount = mouseDownMousePos - absMouse;
+            mouseMovedAmount.x = Math.Abs(mouseMovedAmount.x);
+            mouseMovedAmount.y = Math.Abs(mouseMovedAmount.y);
+            if (!Gui.Instance.HandledMouseButtons && !InputManager.Instance.isModalAny() && pickingModeGroup.SelectedButton != noneButton && mouseMovedAmount.x < MOUSE_MOVE_GRACE_PIXELS && mouseMovedAmount.y < MOUSE_MOVE_GRACE_PIXELS)
             {
                 anatomyList.SuppressLayout = true;
                 anatomyList.clear();
 
-                Vector3 absMouse = eventManager.Mouse.getAbsMouse();
                 SceneViewWindow activeWindow = sceneViewController.ActiveWindow;
                 Vector2 windowLoc = activeWindow.Location;
                 Size2 windowSize = activeWindow.WorkingSize;

@@ -17,11 +17,11 @@ namespace Medical
 
         public static void createPropDefinition(PropFactory propFactory)
         {
-            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh");
-            createHand(propFactory, RightDefinitionName, "HandPoseable.mesh");
+            createHand(propFactory, LeftDefinitionName, "HandPoseable.mesh", "");
+            createHand(propFactory, RightDefinitionName, "HandPoseableRight.mesh", "Right");
         }
 
-        private static void createHand(PropFactory propFactory, String definitionName, String meshName)
+        private static void createHand(PropFactory propFactory, String definitionName, String meshName, String boneSuffix)
         {
             GenericSimObjectDefinition hand = new GenericSimObjectDefinition(definitionName);
             hand.Enabled = true;
@@ -34,6 +34,7 @@ namespace Medical
             hand.addElement(nodeDefinition);
 
             PoseableHand poseableHand = new PoseableHand();
+            poseableHand.BoneSuffix = boneSuffix;
             BehaviorDefinition poseableHandBehaviorDef = new BehaviorDefinition(PoseableHandBehavior, poseableHand);
             hand.addElement(poseableHandBehaviorDef);
 
@@ -55,6 +56,11 @@ namespace Medical
         private PoseableFinger middle;
         private PoseableFinger ring;
         private PoseableFinger pinky;
+
+        public PoseableHand()
+        {
+            BoneSuffix = "";
+        }
 
         protected override void constructed()
         {
@@ -80,23 +86,23 @@ namespace Medical
             {
                 blacklist("Could not find skeleton for PoseableHand SimObject");
             }
-            wrist = skeleton.getBone("bwrist");
+            wrist = skeleton.getBone("bwrist" + BoneSuffix);
             if (wrist == null)
             {
                 blacklist("Could not find bwrist in PoseableHand");
             }
             wrist.setManuallyControlled(true);
-            palm = skeleton.getBone("bpalm");
+            palm = skeleton.getBone("bpalm" + BoneSuffix);
             if (palm == null)
             {
                 blacklist("Could not find bpalm in PoseableHand");
             }
             palm.setManuallyControlled(true);
-            thumb = new PoseableThumb(skeleton, "bthumbBase", "bthumb02", "bthumb01");
-            index = new PoseableFinger(skeleton, "bIndexknuckle", "bIndex03", "bIndex02", "bIndex01");
-            middle = new PoseableFinger(skeleton, "bMiddleknuckle", "bMiddle03", "bMiddle02", "bMiddle01");
-            ring = new PoseableFinger(skeleton, "bringknuckle", "bring03", "bring02", "bring01");
-            pinky = new PoseableFinger(skeleton, "bpinkyknuckle", "bpinky03", "bpinky02", "bpinky01");
+            thumb = new PoseableThumb(skeleton, "bthumbBase" + BoneSuffix, "bthumb02" + BoneSuffix, "bthumb01" + BoneSuffix);
+            index = new PoseableFinger(skeleton, "bIndexknuckle" + BoneSuffix, "bIndex03" + BoneSuffix, "bIndex02" + BoneSuffix, "bIndex01" + BoneSuffix);
+            middle = new PoseableFinger(skeleton, "bMiddleknuckle" + BoneSuffix, "bMiddle03" + BoneSuffix, "bMiddle02" + BoneSuffix, "bMiddle01" + BoneSuffix);
+            ring = new PoseableFinger(skeleton, "bringknuckle" + BoneSuffix, "bring03" + BoneSuffix, "bring02" + BoneSuffix, "bring01" + BoneSuffix);
+            pinky = new PoseableFinger(skeleton, "bpinkyknuckle" + BoneSuffix, "bpinky03" + BoneSuffix, "bpinky02" + BoneSuffix, "bpinky01" + BoneSuffix);
         }
 
         public PoseableThumb Thumb
@@ -138,5 +144,7 @@ namespace Medical
                 return pinky;
             }
         }
+
+        public String BoneSuffix { get; set; }
     }
 }
