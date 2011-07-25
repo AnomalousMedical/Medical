@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Engine;
 
 namespace Medical
 {
@@ -77,8 +78,8 @@ namespace Medical
 
                 if (char.IsDigit(space1[0]) && char.IsDigit(space2[0]))
                 {
-                    int thisNumericChunk = int.Parse(str1);
-                    int thatNumericChunk = int.Parse(str2);
+                    int thisNumericChunk = NumberParser.ParseInt(str1);
+                    int thatNumericChunk = NumberParser.ParseInt(str2);
                     result = thisNumericChunk.CompareTo(thatNumericChunk);
                 }
                 else

@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using Engine.Platform;
 using Logging;
+using Engine;
 
 namespace Medical
 {
@@ -38,7 +39,7 @@ namespace Medical
             touchMovedCB = new TouchEventDelegate(touchMoved);
             touchCanceledCB = new TouchEventCanceledDelegate(allTouchesCanceled);
 
-            IntPtr windowPtr = new IntPtr(long.Parse(windowHandle.WindowHandle));
+            IntPtr windowPtr = new IntPtr(NumberParser.ParseLong(windowHandle.WindowHandle));
             Log.Info("Activating MultiTouch on window {0}", windowPtr.ToString());
             nativeMultiTouch = MultiTouch_new(windowPtr, touchStartedCB, touchEndedCB, touchMovedCB, touchCanceledCB);
         }

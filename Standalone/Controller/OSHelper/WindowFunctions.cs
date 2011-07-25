@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using System.Runtime.InteropServices;
 using Logging;
+using Engine;
 
 namespace Medical.Controller
 {
@@ -29,12 +30,12 @@ namespace Medical.Controller
         /// <param name="iconHandle">The icon to set.</param>
         public static void setWindowIcon(OSWindow windowHandle, WindowIcons icon)
         {
-            WindowFunctions_changeWindowIcon(new IntPtr(long.Parse(windowHandle.WindowHandle)), icon);
+            WindowFunctions_changeWindowIcon(new IntPtr(NumberParser.ParseLong(windowHandle.WindowHandle)), icon);
         }
 
         public static void maximizeWindow(OSWindow windowHandle)
         {
-            WindowFunctions_maximizeWindow(new IntPtr(long.Parse(windowHandle.WindowHandle)));
+            WindowFunctions_maximizeWindow(new IntPtr(NumberParser.ParseLong(windowHandle.WindowHandle)));
         }
 
         public static void pumpMessages()

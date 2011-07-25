@@ -8,6 +8,7 @@ using OgrePlugin;
 using Logging;
 using System.Text.RegularExpressions;
 using Engine.Platform;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -190,8 +191,8 @@ namespace Medical.GUI
                 videoOptionsChanged = true;
             }
             String[] res = resolutionCombo.getItemNameAt(resolutionCombo.SelectedIndex).Split(seps, StringSplitOptions.RemoveEmptyEntries);
-            int horizRes = int.Parse(res[0]);
-            int vertRes = int.Parse(res[1]);
+            int horizRes = NumberParser.ParseInt(res[0]);
+            int vertRes = NumberParser.ParseInt(res[1]);
             if(MedicalConfig.EngineConfig.HorizontalRes != horizRes || MedicalConfig.EngineConfig.VerticalRes != vertRes)
             {
                 MedicalConfig.EngineConfig.HorizontalRes = horizRes;

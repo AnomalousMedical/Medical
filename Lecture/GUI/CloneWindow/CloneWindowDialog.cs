@@ -6,6 +6,7 @@ using MyGUIPlugin;
 using OgreWrapper;
 using System.Text.RegularExpressions;
 using Engine.Renderer;
+using Engine;
 
 namespace Medical.GUI
 {
@@ -64,7 +65,7 @@ namespace Medical.GUI
         public WindowInfo createWindowInfo()
         {
             String[] res = resolutionCombo.getItemNameAt(resolutionCombo.SelectedIndex).Split(seps, StringSplitOptions.RemoveEmptyEntries);
-            WindowInfo info = new WindowInfo("Clone", int.Parse(res[0]), int.Parse(res[1]));
+            WindowInfo info = new WindowInfo("Clone", NumberParser.ParseInt(res[0]), NumberParser.ParseInt(res[1]));
             info.MonitorIndex = (int)monitorCombo.SelectedIndex;
             return info;
         }

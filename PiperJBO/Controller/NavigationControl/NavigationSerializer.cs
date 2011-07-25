@@ -210,7 +210,7 @@ namespace Medical
 
         private static Bitmap readThumbnail(XmlReader xmlReader)
         {
-            int size = int.Parse(xmlReader.GetAttribute(BITMAP_SIZE));
+            int size = NumberParser.ParseInt(xmlReader.GetAttribute(BITMAP_SIZE));
             byte[] buffer = new byte[size];
             xmlReader.ReadElementContentAsBinHex(buffer, 0, size);
             using (MemoryStream memStream = new MemoryStream(buffer))
