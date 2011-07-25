@@ -11,8 +11,6 @@ namespace Medical
         [STAThread]
         static void Main()
         {
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
-
             BodyAtlasController bodyAtlas = null;
             try
             {
