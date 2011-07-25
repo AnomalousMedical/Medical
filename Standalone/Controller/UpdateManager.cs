@@ -6,6 +6,7 @@ using System.Xml;
 using MyGUIPlugin;
 using System.Net;
 using System.IO;
+using System.Globalization;
 
 namespace Medical
 {
@@ -22,7 +23,7 @@ namespace Medical
                 HttpWebRequest request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(MedicalConfig.UpdateURL));
                 request.Timeout = 15000;
                 request.Method = "POST";
-                String postData = String.Format("productID={0}", productId);
+                String postData = String.Format(CultureInfo.InvariantCulture, "productID={0}", productId);
                 byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(postData);
                 request.ContentType = "application/x-www-form-urlencoded";
 

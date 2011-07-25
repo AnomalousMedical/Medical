@@ -19,6 +19,7 @@ using MyGUIPlugin;
 using Medical.GUI;
 using SoundPlugin;
 using Medical.Controller;
+using System.Globalization;
 
 namespace Medical
 {
@@ -183,7 +184,7 @@ namespace Medical
             if (logListener != null)
             {
                 DateTime now = DateTime.Now;
-                String crashFile = String.Format("{0}/CrashLogs/log {1}-{2}-{3} {4}.{5}.{6}.log", MedicalConfig.DocRoot, now.Month, now.Day, now.Year, now.Hour, now.Minute, now.Second);
+                String crashFile = String.Format(CultureInfo.InvariantCulture, "{0}/CrashLogs/log {1}-{2}-{3} {4}.{5}.{6}.log", MedicalConfig.DocRoot, now.Month, now.Day, now.Year, now.Hour, now.Minute, now.Second);
                 logListener.saveCrashLog(crashFile);
             }
         }
