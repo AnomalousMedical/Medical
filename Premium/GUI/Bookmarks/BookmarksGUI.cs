@@ -92,7 +92,7 @@ namespace Medical.GUI
 
         void bookmarksController_BookmarkRemoved(Bookmark bookmark)
         {
-            ButtonGridItem item = bookmarksList.findItemByCaption(bookmark.Name);
+            ButtonGridItem item = bookmarksList.findItemByUserObject(bookmark);
             if (item != null)
             {
                 bookmarksList.removeItem(item);
