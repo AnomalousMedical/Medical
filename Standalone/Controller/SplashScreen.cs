@@ -35,9 +35,9 @@ namespace Medical.Controller
             mainWidget = layout.getWidget(0);
 
             int imageWidth = 1920;
-            int.TryParse(mainWidget.getUserString("ImageWidth"), out imageWidth);
+            NumberParser.TryParse(mainWidget.getUserString("ImageWidth"), out imageWidth);
             int imageHeight = 1200;
-            int.TryParse(mainWidget.getUserString("ImageHeight"), out imageHeight);
+            NumberParser.TryParse(mainWidget.getUserString("ImageHeight"), out imageHeight);
 
             int viewWidth = gui.getViewWidth();
             int viewHeight = gui.getViewHeight();
