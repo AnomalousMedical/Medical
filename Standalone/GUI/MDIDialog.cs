@@ -71,8 +71,6 @@ namespace Medical.GUI
             desiredLocation = new Rect(window.Left, window.Top, window.Width, window.Height);
             dockedSize = new Size2(window.Width, window.Height);
             window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
-
-            window.WindowChangedCoord += new MyGUIEvent(window_WindowChangedCoord);
             window.CaptionWidget.MouseButtonPressed += new MyGUIEvent(window_MouseButtonPressed);
             window.CaptionWidget.MouseButtonReleased += new MyGUIEvent(window_MouseButtonReleased);
             window.CaptionWidget.MouseDrag += new MyGUIEvent(window_MouseDrag); //Wont have to override this in mygui 3.2 as it has all multicast delegates
