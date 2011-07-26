@@ -12,9 +12,6 @@ namespace Medical
     public class DetachableSimObjectFollower : Behavior
     {
         [Editable]
-        public String TargetSimObjectName { get; set; }
-
-        [Editable]
         bool attached;
 
         SimObject targetSimObject;
@@ -23,15 +20,7 @@ namespace Medical
 
         protected override void link()
         {
-            targetSimObject = Owner.getOtherSimObject(TargetSimObjectName);
-            if (targetSimObject == null)
-            {
-                blacklist("Cannot find target SimObject {0}.", TargetSimObjectName);
-            }
-            if (attached)
-            {
-                attach();
-            }
+            
         }
 
         public override void update(Clock clock, EventManager eventManager)
@@ -44,12 +33,16 @@ namespace Medical
             }
         }
 
-        public void attach()
+        public void attach(String targetObject)
         {
-            attached = true;
-            translationOffset = Owner.Translation - targetSimObject.Translation;
-            translationOffset = Quaternion.quatRotate(targetSimObject.Rotation.inverse(), translationOffset);
-            rotationOffset = Owner.Rotation;
+            targetSimObject = Owner.getOtherSimObject(targetObject);
+            if (targetSimObject != null)
+            {
+                attached = true;
+                translationOffset = Owner.Translation - targetSimObject.Translation;
+                translationOffset = Quaternion.quatRotate(targetSimObject.Rotation.inverse(), translationOffset);
+                rotationOffset = Owner.Rotation;
+            }
         }
 
         public void detach()

@@ -13,7 +13,7 @@ namespace Medical
     {
         public DetachableFollowerToggleAction()
         {
-
+            TargetObject = "Mandible";
         }
 
         public override void started(float timelineTime, Clock clock)
@@ -44,6 +44,9 @@ namespace Medical
         [Editable]
         public bool Attached { get; set; }
 
+        [Editable]
+        public String TargetObject { get; set; }
+
         public override bool Finished
         {
             get
@@ -71,7 +74,7 @@ namespace Medical
             {
                 if (Attached)
                 {
-                    follower.attach();
+                    follower.attach(TargetObject);
                 }
                 else
                 {
@@ -86,12 +89,14 @@ namespace Medical
             : base(info)
         {
             Attached = info.GetBoolean("Attached", Attached);
+            TargetObject = info.GetString("TargetObject", "Mandible");
         }
 
         public override void getInfo(SaveInfo info)
         {
             base.getInfo(info);
             info.AddValue("Attached", Attached);
+            info.AddValue("TargetObject", TargetObject);
         }
 
         #endregion
