@@ -102,6 +102,7 @@
     <Compile Include="Animation\BoneRotatorStateEntry.cs" />
     <Compile Include="Animation\BoneScalar.cs" />
     <Compile Include="Animation\BoneScalarStateEntry.cs" />
+    <Compile Include="Animation\DetachableSimObjectFollower.cs" />
     <Compile Include="Animation\InteractiveCurve.cs" />
     <Compile Include="Animation\FixedJointBoneFollower.cs" />
     <Compile Include="Animation\NodeFollower.cs" />

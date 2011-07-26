@@ -39,11 +39,13 @@ namespace Medical.GUI
             //PointingHandLeft
             ShowPropSubActionFactoryData pointingHandLeftData = new ShowPropSubActionFactoryData();
             pointingHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            pointingHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(PointingHand.LeftHandName, pointingHandLeftData);
 
             //PointingHandRight
             ShowPropSubActionFactoryData pointingRightHandData = new ShowPropSubActionFactoryData();
             pointingRightHandData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
+            pointingRightHandData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 255f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(PointingHand.RightHandName, pointingRightHandData);
 
             //Ruler
@@ -67,12 +69,14 @@ namespace Medical.GUI
             ShowPropSubActionFactoryData poseableHandLeftData = new ShowPropSubActionFactoryData();
             poseableHandLeftData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             poseableHandLeftData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), leftPoseableHandProperties);
+            poseableHandLeftData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(PoseableHand.LeftDefinitionName, poseableHandLeftData);
 
             //Poseable Hand Right
             ShowPropSubActionFactoryData poseableHandRightData = new ShowPropSubActionFactoryData();
             poseableHandRightData.addTrack(typeof(MovePropAction), new Color(247 / 255f, 150 / 255f, 70 / 255f), movePropProperties);
             poseableHandRightData.addTrack(typeof(ChangeHandPosition), new Color(128 / 255f, 0 / 255f, 255 / 255f), rightPoseableHandProperties);
+            poseableHandRightData.addTrack(typeof(DetachableFollowerToggleAction), new Color(128 / 255f, 0 / 128f, 255 / 255f), editInterfaceProperties);
             trackInfo.Add(PoseableHand.RightDefinitionName, poseableHandRightData);
 
             //Bite Stick

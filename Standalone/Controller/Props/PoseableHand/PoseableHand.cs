@@ -42,6 +42,11 @@ namespace Medical
             BehaviorDefinition propFadeBehaviorDef = new BehaviorDefinition(PropFactory.FadeBehaviorName, propFadeBehavior);
             hand.addElement(propFadeBehaviorDef);
 
+            DetachableSimObjectFollower detachableFollower = new DetachableSimObjectFollower();
+            detachableFollower.TargetSimObjectName = "Mandible";
+            BehaviorDefinition detachableFollowerDef = new BehaviorDefinition(PropFactory.DetachableFollowerName, detachableFollower);
+            hand.addElement(detachableFollowerDef);
+
             propFactory.addDefinition(definitionName, hand);
         }
 

@@ -127,6 +127,7 @@
     <Compile Include="Controller\Props\Caliper\SetCaliperMeasurement.cs" />
     <Compile Include="Controller\Props\CircularHighlight\CircularHighlight.cs" />
     <Compile Include="Controller\Props\DentalFloss.cs" />
+    <Compile Include="Controller\Props\DetachableFollowerToggleAction.cs" />
     <Compile Include="Controller\Props\Pen\ClickPenAction.cs" />
     <Compile Include="Controller\Props\Pen\Pen.cs">
       <SubType>Code</SubType>
