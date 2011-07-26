@@ -33,6 +33,8 @@ namespace Medical.GUI
 
         private const int START_COLUMN_WIDTH = 100;
 
+        private TimelineData editingStoppedLastData;
+
         public TimelineProperties(TimelineController timelineController, EditorPlugin editorPlugin, GUIManager guiManager, TimelinePropertiesController timelinePropertiesController, TimelineFileBrowserDialog fileBrowserDialog)
             :base("Medical.GUI.Timeline.TimelineProperties.layout")
         {
@@ -149,6 +151,7 @@ namespace Medical.GUI
 
         public void stopEditing()
         {
+            editingStoppedLastData = timelineView.CurrentData;
             timelineView.CurrentData = null;
         }
 
@@ -234,6 +237,7 @@ namespace Medical.GUI
             playButton.StaticImage.setItemResource("Timeline/PlayIcon");
             rewindButton.Enabled = true;
             fastForwardButton.Enabled = true;
+            timelineView.CurrentData = editingStoppedLastData;
         }
 
         void timelineController_TimelinePlaybackStarted(object sender, EventArgs e)
