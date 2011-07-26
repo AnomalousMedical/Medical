@@ -90,23 +90,23 @@ namespace Medical
             {
                 blacklist("Could not find skeleton for PoseableHand SimObject");
             }
-            wrist = skeleton.getBone("bwrist" + BoneSuffix);
+            wrist = skeleton.getBone("BWrist" + BoneSuffix);
             if (wrist == null)
             {
                 blacklist("Could not find bwrist in PoseableHand");
             }
             wrist.setManuallyControlled(true);
-            palm = skeleton.getBone("bpalm" + BoneSuffix);
+            palm = skeleton.getBone("BPalm" + BoneSuffix);
             if (palm == null)
             {
                 blacklist("Could not find bpalm in PoseableHand");
             }
             palm.setManuallyControlled(true);
-            thumb = new PoseableThumb(skeleton, "bthumbBase" + BoneSuffix, "bthumb02" + BoneSuffix, "bthumb01" + BoneSuffix);
-            index = new PoseableFinger(skeleton, "bIndexknuckle" + BoneSuffix, "bIndex03" + BoneSuffix, "bIndex02" + BoneSuffix, "bIndex01" + BoneSuffix);
-            middle = new PoseableFinger(skeleton, "bMiddleknuckle" + BoneSuffix, "bMiddle03" + BoneSuffix, "bMiddle02" + BoneSuffix, "bMiddle01" + BoneSuffix);
-            ring = new PoseableFinger(skeleton, "bringknuckle" + BoneSuffix, "bring03" + BoneSuffix, "bring02" + BoneSuffix, "bring01" + BoneSuffix);
-            pinky = new PoseableFinger(skeleton, "bpinkyknuckle" + BoneSuffix, "bpinky03" + BoneSuffix, "bpinky02" + BoneSuffix, "bpinky01" + BoneSuffix);
+            thumb = new PoseableThumb(skeleton, "BThumbBase" + BoneSuffix, "BThumb02" + BoneSuffix, "BThumb01" + BoneSuffix);
+            index = new PoseableFinger(skeleton, "BIndexKnuckle" + BoneSuffix, "BIndex03" + BoneSuffix, "BIndex02" + BoneSuffix, "BIndex01" + BoneSuffix);
+            middle = new PoseableFinger(skeleton, "BMiddleKnuckle" + BoneSuffix, "BMiddle03" + BoneSuffix, "BMiddle02" + BoneSuffix, "BMiddle01" + BoneSuffix);
+            ring = new PoseableFinger(skeleton, "BRingKnuckle" + BoneSuffix, "BRing03" + BoneSuffix, "BRing02" + BoneSuffix, "BRing01" + BoneSuffix);
+            pinky = new PoseableFinger(skeleton, "BPinkyKnuckle" + BoneSuffix, "BPinky03" + BoneSuffix, "BPinky02" + BoneSuffix, "BPinky01" + BoneSuffix);
         }
 
         public PoseableThumb Thumb

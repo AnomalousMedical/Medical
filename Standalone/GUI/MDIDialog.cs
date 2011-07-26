@@ -364,6 +364,8 @@ namespace Medical.GUI
 
                 LayerManager.Instance.detachFromLayer(window);
                 LayerManager.Instance.attachToLayerNode(originalLayer, window);
+
+                window.setActionWidgetsEnabled(true);
             }
             else
             {
@@ -372,10 +374,10 @@ namespace Medical.GUI
                 window.MaxSize = DOCKED_MAX_SIZE;
                 Size = (IntSize2)dockedSize;
 
-                //window.changeWidgetSkin("Window");
-
                 LayerManager.Instance.detachFromLayer(window);
                 LayerManager.Instance.attachToLayerNode("Back", window);
+
+                window.setActionWidgetsEnabled(false);
             }
         }
 
