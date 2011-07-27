@@ -26,6 +26,7 @@ namespace Medical.GUI
         {
             this.displayFactory = displayFactory;
             this.sceneWindow = sceneWindow;
+            sceneWindow.Resized += sceneWindow_Resized;
 
             widget.Visible = false;
             imageBox = widget.findWidget("ImageBox") as StaticImage;
@@ -33,6 +34,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            sceneWindow.Resized -= sceneWindow_Resized;
             displayFactory.displayDisposed(this);
             base.Dispose();
             imageAtlas.Dispose();
@@ -58,12 +60,6 @@ namespace Medical.GUI
         {
             LayerManager.Instance.upLayerItem(widget);
             widget.Visible = true;
-        }
-
-        public void screenResized(int width, int height)
-        {
-            adjustPosition(width, height);
-            adjustSize(width, height);
         }
 
         private void adjustPosition(int width, int height)
@@ -136,6 +132,12 @@ namespace Medical.GUI
                     adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
                 }
             }
+        }
+
+        void sceneWindow_Resized(SceneViewWindow window)
+        {
+            adjustPosition((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+            adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
         }
     }
 }

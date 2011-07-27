@@ -14,6 +14,7 @@ using MyGUIPlugin;
 namespace Medical.Controller
 {
     public delegate void SceneViewWindowRenderEvent(SceneViewWindow window, bool currentCameraRender);
+    public delegate void SceneViewWindowResizedEvent(SceneViewWindow window);
 
     public abstract class SceneViewWindow : LayoutContainer, IDisposable, CameraMotionValidator
     {
@@ -22,6 +23,7 @@ namespace Medical.Controller
         public event SceneViewWindowRenderEvent FindVisibleObjects;
         public event SceneViewWindowRenderEvent RenderingStarted;
         public event SceneViewWindowRenderEvent RenderingEnded;
+        public event SceneViewWindowResizedEvent Resized;
 
         private SceneView sceneView;
         private CameraMover cameraMover;
@@ -150,6 +152,10 @@ namespace Medical.Controller
             if (sceneView != null)
             {
                 sceneView.setDimensions(location.x, location.y, size.Width, size.Height);
+            }
+            if (Resized != null)
+            {
+                Resized.Invoke(this);
             }
         }
 

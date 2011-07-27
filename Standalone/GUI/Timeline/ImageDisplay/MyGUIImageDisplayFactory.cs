@@ -8,7 +8,7 @@ using Logging;
 
 namespace Medical.GUI
 {
-    class MyGUIImageDisplayFactory : IImageDisplayFactory, OSWindowListener
+    class MyGUIImageDisplayFactory : IImageDisplayFactory
     {
         private List<MyGUIImageDisplay> displays = new List<MyGUIImageDisplay>();
         private SceneViewController sceneViewController;
@@ -35,37 +35,5 @@ namespace Medical.GUI
         {
             displays.Remove(display);
         }
-
-        #region OSWindowListener Members
-
-        public void closed(OSWindow window)
-        {
-            
-        }
-
-        public void closing(OSWindow window)
-        {
-            
-        }
-
-        public void focusChanged(OSWindow window)
-        {
-            
-        }
-
-        public void moved(OSWindow window)
-        {
-            
-        }
-
-        public void resized(OSWindow window)
-        {
-            foreach (MyGUIImageDisplay display in displays)
-            {
-                display.screenResized(window.WindowWidth, window.WindowHeight);
-            }
-        }
-
-        #endregion
     }
 }

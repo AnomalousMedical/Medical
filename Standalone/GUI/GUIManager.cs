@@ -115,7 +115,6 @@ namespace Medical.GUI
             questionProvider = new MyGUIQuestionProvider(this);
 
             imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
-            standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
         }
 
         public void giveGUIsToTimelineController(TimelineController timelineController)
