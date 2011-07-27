@@ -114,7 +114,7 @@ namespace Medical.GUI
             continuePrompt = new MyGUIContinuePromptProvider();
             questionProvider = new MyGUIQuestionProvider(this);
 
-            imageDisplayFactory = new MyGUIImageDisplayFactory();
+            imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
             standaloneController.MedicalController.PluginManager.RendererPlugin.PrimaryWindow.Handle.addListener(imageDisplayFactory);
         }
 

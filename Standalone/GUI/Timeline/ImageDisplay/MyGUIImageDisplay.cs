@@ -6,6 +6,7 @@ using System.IO;
 using MyGUIPlugin;
 using System.Drawing;
 using Engine;
+using Medical.Controller;
 
 namespace Medical.GUI
 {
@@ -18,11 +19,13 @@ namespace Medical.GUI
         private Size2 size = new Size2();
         private Size bitmapSize;
         private bool keepAspectRatio = true;
+        private SceneViewWindow sceneWindow;
 
-        public MyGUIImageDisplay(MyGUIImageDisplayFactory displayFactory)
+        public MyGUIImageDisplay(MyGUIImageDisplayFactory displayFactory, SceneViewWindow sceneWindow)
             :base("Medical.GUI.Timeline.ImageDisplay.MyGUIImageDisplay.layout")
         {
             this.displayFactory = displayFactory;
+            this.sceneWindow = sceneWindow;
 
             widget.Visible = false;
             imageBox = widget.findWidget("ImageBox") as StaticImage;
@@ -65,7 +68,7 @@ namespace Medical.GUI
 
         private void adjustPosition(int width, int height)
         {
-            widget.setPosition((int)(position.x * width), (int)(position.y * height));
+            widget.setPosition((int)(position.x * width + sceneWindow.Location.x), (int)(position.y * height + sceneWindow.Location.y));
         }
 
         private void adjustSize(int width, int height)
@@ -102,7 +105,7 @@ namespace Medical.GUI
             set
             {
                 position = value;
-                adjustPosition(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
+                adjustPosition((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
             }
         }
 
@@ -115,7 +118,7 @@ namespace Medical.GUI
             set
             {
                 size = value;
-                adjustSize(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
+                adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
             }
         }
 
@@ -130,7 +133,7 @@ namespace Medical.GUI
                 if (keepAspectRatio != value)
                 {
                     keepAspectRatio = value;
-                    adjustSize(Gui.Instance.getViewWidth(), Gui.Instance.getViewHeight());
+                    adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
                 }
             }
         }

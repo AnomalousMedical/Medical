@@ -10,6 +10,6 @@ namespace Medical
     /// </summary>
     public interface IImageDisplayFactory
     {
-        IImageDisplay createImageDisplay();
+        IImageDisplay createImageDisplay(String cameraName);
     }
 }

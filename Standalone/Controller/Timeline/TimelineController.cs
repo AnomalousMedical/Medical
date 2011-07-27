@@ -266,14 +266,14 @@ namespace Medical
             return 0.0;
         }
 
-        public IImageDisplay showImage(String imageName)
+        public IImageDisplay showImage(String imageName, String cameraName)
         {
             IImageDisplay imageDisplay = null;
             try
             {
                 using (Stream imageStream = resourceProvider.openFile(imageName))
                 {
-                    imageDisplay = ImageDisplayFactory.createImageDisplay();
+                    imageDisplay = ImageDisplayFactory.createImageDisplay(cameraName);
                     imageDisplay.setImage(imageStream);
                     imageDisplay.show();
                     return imageDisplay;

@@ -29,7 +29,7 @@ namespace Medical
             if (imageFile != null)
             {
                 finished = false;
-                imageDisplay = TimelineController.showImage(imageFile);
+                imageDisplay = TimelineController.showImage(imageFile, CameraName);
                 if (imageDisplay == null)
                 {
                     finished = true;
@@ -73,7 +73,7 @@ namespace Medical
         {
             if (imageFile != null)
             {
-                imageDisplay = TimelineController.showImage(imageFile);
+                imageDisplay = TimelineController.showImage(imageFile, CameraName);
                 if (imageDisplay != null)
                 {
                     imageDisplay.KeepAspectRatio = keepAspectRatio;
@@ -167,12 +167,15 @@ namespace Medical
             }
         }
 
+        public String CameraName { get; set; }
+
         #region Saving
 
         private static String IMAGE_FILE = "ImageFile";
         private static String POSITION = "Position";
         private static String SIZE = "Size";
         private static String KEEP_ASPECT_RATIO = "KeepAspectRatio";
+        private static String CAMERA_NAME = "CameraName";
 
         protected ShowImageAction(LoadInfo info)
             :base(info)
@@ -181,6 +184,7 @@ namespace Medical
             position = info.GetValue<Vector2>(POSITION);
             size = info.GetValue<Size2>(SIZE);
             keepAspectRatio = info.GetValue(KEEP_ASPECT_RATIO, keepAspectRatio);
+            CameraName = info.GetValue(CAMERA_NAME, CameraName);
         }
 
         public override void getInfo(SaveInfo info)
@@ -190,6 +194,7 @@ namespace Medical
             info.AddValue(POSITION, position);
             info.AddValue(SIZE, size);
             info.AddValue(KEEP_ASPECT_RATIO, keepAspectRatio);
+            info.AddValue(CAMERA_NAME, CameraName);
         }
 
         #endregion
