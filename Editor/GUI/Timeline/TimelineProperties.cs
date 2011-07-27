@@ -21,8 +21,7 @@ namespace Medical.GUI
         private TimelineView timelineView;
         private NumberLine numberLine;
         private Dictionary<TimelineAction, TimelineActionData> actionDataBindings = new Dictionary<TimelineAction, TimelineActionData>();
-        private TimelineAction copySourceAction;
-        private CopySaver copySaver = new CopySaver();
+        private TimelineActionClipboard actionClipboard = new TimelineActionClipboard();
         private TimelineActionFactory actionFactory;
         private TimelinePropertiesController timelinePropertiesController;
 
@@ -131,22 +130,12 @@ namespace Medical.GUI
 
         public void paste()
         {
-            if (copySourceAction != null)
-            {
-                TimelineAction copiedAction = copySaver.copy<TimelineAction>(copySourceAction);
-                copiedAction.StartTime = timelineView.MarkerTime;
-                timelinePropertiesController.CurrentTimeline.addAction(copiedAction);
-                timelineView.CurrentData = actionDataBindings[copiedAction];
-            }
+            actionClipboard.paste(timelinePropertiesController.CurrentTimeline, timelineView.MarkerTime);
         }
 
         public void copy()
         {
-            TimelineActionData currentData = timelineView.CurrentData as TimelineActionData;
-            if (currentData != null)
-            {
-                copySourceAction = copySaver.copy<TimelineAction>(currentData.Action);
-            }
+            actionClipboard.copy(timelineView.SelectedData);
         }
 
         public void stopEditing()

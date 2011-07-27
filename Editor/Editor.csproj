@@ -92,6 +92,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
+    <Compile Include="GUI\Timeline\TimelineActionClipboard.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
     <Compile Include="GUI\Timeline\TimelineFileExplorer.cs" />
