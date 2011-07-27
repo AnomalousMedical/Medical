@@ -65,7 +65,7 @@ namespace Medical
             dataSource = info.GetString(DATA_SOURCE);
             notes = info.GetString(NOTES);
             //Check to see if the notes look like rtf.
-            if (notes.StartsWith("{\\rtf1"))
+            if (notes != null && notes.StartsWith("{\\rtf1"))
             {
                 //Do some really basic rtf parsing.
                 parseRTF();
