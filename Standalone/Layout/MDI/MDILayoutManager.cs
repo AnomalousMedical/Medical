@@ -106,25 +106,28 @@ namespace Medical.Controller
         /// <param name="window"></param>
         public void closeWindow(MDIWindow window)
         {
-            if (!windows.Contains(window))
+            //if (!windows.Contains(window))
+            //{
+            //    throw new MDIException("Attempted to close a window that is not part of this MDILayoutManager.");
+            //}
+            if (windows.Contains(window))
             {
-                throw new MDIException("Attempted to close a window that is not part of this MDILayoutManager.");
-            }
-            windows.Remove(window);
-            //Check to see if this window was the active window.
-            if (window == ActiveWindow)
-            {
-                if (windows.Count > 0)
+                windows.Remove(window);
+                //Check to see if this window was the active window.
+                if (window == ActiveWindow)
                 {
+                    if (windows.Count > 0)
+                    {
 
-                    ActiveWindow = windows[0];
+                        ActiveWindow = windows[0];
+                    }
+                    else
+                    {
+                        ActiveWindow = null;
+                    }
                 }
-                else
-                {
-                    ActiveWindow = null;
-                }
+                window._ParentContainer.removeChild(window);
             }
-            window._ParentContainer.removeChild(window);
         }
 
         /// <summary>
