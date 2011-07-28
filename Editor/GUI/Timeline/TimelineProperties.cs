@@ -158,7 +158,12 @@ namespace Medical.GUI
 
         void removeActionButton_MouseButtonClick(Widget source, EventArgs e)
         {
-            deleteCurrentAction();
+            TimelineActionData data = (TimelineActionData)timelineView.CurrentData;
+            if (data != null)
+            {
+                stopTimelineIfPlaying();
+                timelinePropertiesController.CurrentTimeline.removeAction(data.Action);
+            }
         }
 
         void actionFilter_AddTrackItem(string name)
@@ -251,12 +256,11 @@ namespace Medical.GUI
             }
         }
 
-        private void deleteCurrentAction()
+        private void deleteSelectedActions()
         {
-            TimelineActionData data = (TimelineActionData)timelineView.CurrentData;
-            if (data != null)
+            stopTimelineIfPlaying();
+            foreach (TimelineActionData data in timelineView.SelectedData)
             {
-                stopTimelineIfPlaying();
                 timelinePropertiesController.CurrentTimeline.removeAction(data.Action);
             }
         }
@@ -277,7 +281,7 @@ namespace Medical.GUI
             switch (e.Key)
             {
                 case KeyboardButtonCode.KC_DELETE:
-                    deleteCurrentAction();
+                    deleteSelectedActions();
                     break;
                 case KeyboardButtonCode.KC_SPACE:
                     timelinePropertiesController.togglePlayPreview(timelineView.MarkerTime);
