@@ -164,23 +164,19 @@ namespace Medical.Controller
             switch (CurrentDockLocation)
             {
                 case DockLocation.Left:
-                    separator.setPosition(me.Position.x, separator.Top);
-                    size = new Size2(separator.Left, 10);
+                    size = new Size2(me.Position.x - (int)Location.x, 10);
                     invalidate();
                     break;
                 case DockLocation.Right:
-                    separator.setPosition(me.Position.x, separator.Top);
-                    size = new Size2(TopmostWorkingSize.Width - separator.Left, 10);
+                    size = new Size2((int)(Location.x + WorkingSize.Width) - me.Position.x, 10);
                     invalidate();
                     break;
                 case DockLocation.Top:
-                    separator.setPosition(separator.Left, me.Position.y);
-                    size = new Size2(10, separator.Top);
+                    size = new Size2(10, me.Position.y - (int)Location.y);
                     invalidate();
                     break;
                 case DockLocation.Bottom:
-                    separator.setPosition(separator.Left, me.Position.y);
-                    size = new Size2(10, TopmostWorkingSize.Height - separator.Top);
+                    size = new Size2(10, (int)(Location.y + WorkingSize.Height) - me.Position.y);
                     invalidate();
                     break;
             }
