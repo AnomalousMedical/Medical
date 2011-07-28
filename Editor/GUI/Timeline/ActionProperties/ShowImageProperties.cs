@@ -20,6 +20,8 @@ namespace Medical.GUI
 
         private CheckButton keepAspectRatio;
 
+        private StaticText cameraText;
+
         public ShowImageProperties(Widget parentWidget)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowImageProperties.layout")
         {
@@ -54,6 +56,10 @@ namespace Medical.GUI
 
             keepAspectRatio = new CheckButton(mainWidget.findWidget("KeepAspectCheck") as Button);
             keepAspectRatio.CheckedChanged += new MyGUIEvent(keepAspectRatio_CheckedChanged);
+
+            cameraText = mainWidget.findWidget("Camera") as StaticText;
+            Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
+            useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -68,6 +74,7 @@ namespace Medical.GUI
             width.FloatValue = size.Width;
             height.FloatValue = size.Height;
             keepAspectRatio.Checked = showImage.KeepAspectRatio;
+            cameraText.Caption = showImage.CameraName;
         }
 
         void browseButton_MouseButtonClick(Widget source, EventArgs e)
@@ -94,6 +101,12 @@ namespace Medical.GUI
         void keepAspectRatio_CheckedChanged(Widget source, EventArgs e)
         {
             showImage.KeepAspectRatio = keepAspectRatio.Checked;
+        }
+
+        void useCurrent_MouseButtonClick(Widget source, EventArgs e)
+        {
+            showImage.capture();
+            cameraText.Caption = showImage.CameraName;
         }
     }
 }

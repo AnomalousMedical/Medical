@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Engine.Saving;
 using Engine;
+using Medical.Controller;
 
 namespace Medical
 {
@@ -67,6 +68,12 @@ namespace Medical
         public override void update(float timelineTime, Clock clock)
         {
             finished = timelineTime > StartTime + Duration;
+        }
+
+        public override void capture()
+        {
+            SceneViewWindow currentWindow = TimelineController.SceneViewController.ActiveWindow;
+            CameraName = currentWindow.Name;
         }
 
         public override void editing()
