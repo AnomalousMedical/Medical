@@ -62,36 +62,6 @@ namespace Medical.GUI
             widget.Visible = true;
         }
 
-        private void adjustPosition(int width, int height)
-        {
-            widget.setPosition((int)(position.x * width + sceneWindow.Location.x), (int)(position.y * height + sceneWindow.Location.y));
-        }
-
-        private void adjustSize(int width, int height)
-        {
-            if (keepAspectRatio)
-            {
-                if (height < width)
-                {
-                    int newHeight = (int)(size.Height * height);
-                    float heightRatio = (float)newHeight / bitmapSize.Height;
-                    int newWidth = (int)(heightRatio * bitmapSize.Width);
-                    widget.setSize(newWidth, newHeight);
-                }
-                else
-                {
-                    int newWidth = (int)(size.Width * width);
-                    float widthRatio = (float)newWidth / bitmapSize.Width;
-                    int newHeight = (int)(widthRatio * bitmapSize.Height);
-                    widget.setSize(newWidth, newHeight);
-                }
-            }
-            else
-            {
-                widget.setSize((int)(size.Width * width), (int)(size.Height * height));
-            }
-        }
-
         public Vector2 Position
         {
             get
@@ -101,7 +71,7 @@ namespace Medical.GUI
             set
             {
                 position = value;
-                adjustPosition((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                positionImage((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
             }
         }
 
@@ -114,7 +84,7 @@ namespace Medical.GUI
             set
             {
                 size = value;
-                adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                positionImage((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
             }
         }
 
@@ -129,15 +99,59 @@ namespace Medical.GUI
                 if (keepAspectRatio != value)
                 {
                     keepAspectRatio = value;
-                    adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                    positionImage((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
                 }
             }
         }
 
         void sceneWindow_Resized(SceneViewWindow window)
         {
-            adjustPosition((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
-            adjustSize((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+            positionImage((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+        }
+
+        private void positionImage(int width, int height)
+        {
+            int left = (int)(position.x * width + sceneWindow.Location.x);
+            int top = (int)(position.y * height + sceneWindow.Location.y);
+            int newWidth, newHeight;
+
+            if (keepAspectRatio)
+            {
+                if (height < width)
+                {
+                    newHeight = (int)(size.Height * height);
+                    float heightRatio = (float)newHeight / bitmapSize.Height;
+                    newWidth = (int)(heightRatio * bitmapSize.Width);
+                }
+                else
+                {
+                    newWidth = (int)(size.Width * width);
+                    float widthRatio = (float)newWidth / bitmapSize.Width;
+                    newHeight = (int)(widthRatio * bitmapSize.Height);
+                }
+            }
+            else
+            {
+                newWidth = (int)(size.Width * width);
+                newHeight = (int)(size.Height * height);
+            }
+
+            int right = left + newWidth;
+            int windowRight = (int)(sceneWindow.Location.x + sceneWindow.WorkingSize.Width);
+            if (right > windowRight)
+            {
+                left -= (int)(right - windowRight);
+            }
+
+            int bottom = top + newHeight;
+            int windowBottom = (int)(sceneWindow.Location.y + sceneWindow.WorkingSize.Height);
+            if (bottom > windowBottom)
+            {
+                top -= (int)(bottom - windowBottom);
+            }
+
+            widget.setPosition(left, top);
+            widget.setSize(newWidth, newHeight);
         }
     }
 }
