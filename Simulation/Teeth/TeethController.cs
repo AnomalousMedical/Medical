@@ -93,7 +93,7 @@ namespace Medical
             bool touching = true;
             foreach (Tooth tooth in teeth.Values)
             {
-                if (!tooth.Extracted && !tooth.MakingContact)
+                if (!tooth.Extracted && !tooth.MakingToothContact)
                 {
                     touching = false;
                     break;
@@ -110,7 +110,7 @@ namespace Medical
         {
             foreach (Tooth tooth in teeth.Values)
             {
-                if (!tooth.Extracted && tooth.MakingContact)
+                if (!tooth.Extracted && tooth.MakingToothContact)
                 {
                     return true;
                 }

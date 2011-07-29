@@ -208,7 +208,7 @@ namespace Medical
             bool highlight = false;
             if (TeethController.HighlightContacts)
             {
-                highlight = MakingContact;
+                highlight = MakingToothContact;
             }
             if (adaptTeeth > 0)
             {
@@ -357,7 +357,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        public override bool MakingContact
+        public override bool MakingToothContact
         {
             get
             {

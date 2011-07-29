@@ -187,7 +187,7 @@ namespace Medical
             RangeOfMotionScale.createPropDefinition(propFactory);
             Pen.createPropDefinition(propFactory);
             Caliper.createPropDefinition(propFactory);
-            Splint.createPropDefinition(propFactory);
+            SplintDefiner.createPropDefinition(propFactory);
             DentalFloss.createPropDefinition(propFactory);
 
             //Timeline

@@ -46,6 +46,10 @@ namespace Medical
         private Quaternion rotationOffset = Quaternion.Identity;
         private int adaptTeeth = 0;
 
+        [DoNotCopy]
+        [DoNotSave]
+        protected List<Splint> collidingSplints = new List<Splint>(1);
+
         private bool toolHighlight = false;
 
         [DoNotCopy]
@@ -104,11 +108,6 @@ namespace Medical
 
         public override void update(Clock clock, EventManager eventManager)
         {
-            bool highlight = false;
-            if (TeethController.HighlightContacts)
-            {
-                highlight = MakingContact;
-            }
             if (adaptTeeth > 0)
             {
                 switch (adaptTeeth)
@@ -136,9 +135,30 @@ namespace Medical
             {
                 HighlightColor = Color.Red;
             }
+            else if (TeethController.HighlightContacts)
+            {
+                bool toothContact = MakingToothContact;
+                bool splintContact = MakingSplintContact;
+                if (toothContact && splintContact)
+                {
+                    HighlightColor = new Color(0.0f, 1.0f, 1.0f);
+                }
+                else if (toothContact)
+                {
+                    HighlightColor = Color.Blue;
+                }
+                else if (splintContact)
+                {
+                    HighlightColor = Color.Green;
+                }
+                else
+                {
+                    HighlightColor = Color.White;
+                }
+            }
             else
             {
-                HighlightColor = highlight ? Color.Blue : Color.White;
+                HighlightColor = Color.White;
             }
         }
 
@@ -256,7 +276,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        public override bool MakingContact
+        public override bool MakingToothContact
         {
             get
             {
@@ -268,6 +288,15 @@ namespace Medical
                     }
                 }
                 return false;
+            }
+        }
+
+        [DoNotCopy]
+        public bool MakingSplintContact
+        {
+            get
+            {
+                return collidingSplints.Count > 0;
             }
         }
 

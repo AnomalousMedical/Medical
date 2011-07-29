@@ -56,7 +56,7 @@ namespace Medical
         }
 
         [DoNotCopy]
-        public abstract bool MakingContact
+        public abstract bool MakingToothContact
         {
             get;
         }
