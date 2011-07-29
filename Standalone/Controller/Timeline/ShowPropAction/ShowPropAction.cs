@@ -95,6 +95,16 @@ namespace Medical
             destroyProp();
         }
 
+        public override void capture()
+        {
+            moveToPropStartPosition();
+        }
+
+        public void moveToPropStartPosition()
+        {
+            TimelineController.PropFactory.getInitialPosition(propType, ref translation, ref rotation);
+        }
+
         public override void findFileReference(TimelineStaticInfo info)
         {
             

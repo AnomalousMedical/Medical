@@ -24,7 +24,6 @@ namespace Medical.GUI
         private Button rotationButton;
 
         private PropTimeline propTimeline;
-        private Button propTimelineButton;
 
         public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, SimObjectMover simObjectMover)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
@@ -56,11 +55,9 @@ namespace Medical.GUI
             toolButtonGroup.SelectedButtonChanged += new EventHandler(toolButtonGroup_SelectedButtonChanged);
 
             this.propTimeline = propTimeline;
-            propTimeline.Shown += new EventHandler(propTimeline_Shown);
-            propTimeline.Closed += new EventHandler(propTimeline_Closed);
 
-            propTimelineButton = mainWidget.findWidget("PropTimelineButton") as Button;
-            propTimelineButton.MouseButtonClick += new MyGUIEvent(propTimelineButton_MouseButtonClick);
+            Button moveToStart = (Button)mainWidget.findWidget("startPosButton");
+            moveToStart.MouseButtonClick += new MyGUIEvent(moveToStart_MouseButtonClick);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -166,24 +163,15 @@ namespace Medical.GUI
             simObjectMover.ShowRotateTools = toolButtonGroup.SelectedButton == rotationButton;
         }
 
-        void propTimelineButton_MouseButtonClick(Widget source, EventArgs e)
-        {
-            propTimeline.Visible = !propTimeline.Visible;
-        }
-
         void actionData_DurationChanged(float duration)
         {
             propTimeline.Duration = duration;
         }
 
-        void propTimeline_Closed(object sender, EventArgs e)
+        void moveToStart_MouseButtonClick(Widget source, EventArgs e)
         {
-            propTimelineButton.StateCheck = false;
-        }
-
-        void propTimeline_Shown(object sender, EventArgs e)
-        {
-            propTimelineButton.StateCheck = true;
+            showProp.moveToPropStartPosition();
+            showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
         }
 
         #region MovableObject Members

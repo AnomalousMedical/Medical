@@ -39,15 +39,20 @@ namespace Medical
             if (subScene != null)
             {
                 SimObjectDefinition definition;
-                prototypes.TryGetValue(propName, out definition);
-                if (definition != null)
+                if (prototypes.TryGetValue(propName, out definition))
                 {
+                    Vector3 originalTranslation = definition.Translation;
+                    Quaternion originalRotation = definition.Rotation;
+
                     definition.Name = UniqueKeyGenerator.generateStringKey();
                     definition.Translation = translation;
                     definition.Rotation = rotation;
                     SimObjectBase instance = definition.register(subScene);
                     medicalController.addSimObject(instance);
                     scene.buildScene();
+
+                    definition.Translation = originalTranslation;
+                    definition.Rotation = originalRotation;
                     return instance;
                 }
                 else
@@ -60,6 +65,16 @@ namespace Medical
                 Log.Error("Could not create prop {0}. The subscene is null.", propName);
             }
             return null;
+        }
+
+        public void getInitialPosition(String propName, ref Vector3 translation, ref Quaternion rotation)
+        {
+            SimObjectDefinition definition;
+            if (prototypes.TryGetValue(propName, out definition))
+            {
+                translation = definition.Translation;
+                rotation = definition.Rotation;
+            }
         }
 
         public IEnumerable<String> PropNames

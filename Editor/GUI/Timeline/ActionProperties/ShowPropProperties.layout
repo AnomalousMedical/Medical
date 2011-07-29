@@ -20,8 +20,8 @@
             <Property key="Widget_Caption" value="Fade Duration"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="3 149 204 20" name="FadeDurationEdit"/>
-        <Widget type="Button" skin="Button" position="2 26 127 20" name="PropTimelineButton">
-            <Property key="Widget_Caption" value="Edit Prop Timeline"/>
+        <Widget type="Button" skin="Button" position="3 25 146 20" name="startPosButton">
+            <Property key="Widget_Caption" value="Move to Start Position"/>
         </Widget>
     </Widget>
 </MyGUI>
