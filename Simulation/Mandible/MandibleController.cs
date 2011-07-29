@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Engine.ObjectManagement;
+using Engine;
 
 namespace Medical
 {
@@ -27,6 +28,8 @@ namespace Medical
             if (mandible == null)
             {
                 mandible = mandibleInstance;
+                StartTranslation = mandible.Owner.Translation;
+                StartRotation = mandible.Owner.Rotation;
             }
             else
             {
@@ -72,5 +75,9 @@ namespace Medical
                 return mandible;
             }
         }
+
+        public static Vector3 StartTranslation { get; set; }
+
+        public static Quaternion StartRotation { get; set; }
     }
 }

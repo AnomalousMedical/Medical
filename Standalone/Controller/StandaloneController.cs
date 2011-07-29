@@ -191,7 +191,7 @@ namespace Medical
             DentalFloss.createPropDefinition(propFactory);
 
             //temp
-            //Splint.dumpPositionsToLog("S:\\export\\Models\\Source\\Splints\\Splints.positions", "PerfMandible");
+            Splint.dumpPositionsToLog("S:\\export\\Models\\Source\\Splints\\Splints.positions", "PerfMandible");
             //end
 
             //Timeline
