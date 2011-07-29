@@ -190,10 +190,6 @@ namespace Medical
             Splint.createPropDefinition(propFactory);
             DentalFloss.createPropDefinition(propFactory);
 
-            //temp
-            Splint.dumpPositionsToLog("S:\\export\\Models\\Source\\Splints\\Splints.positions", "PerfMandible");
-            //end
-
             //Timeline
             TimelineGUIFactory = new TimelineGUIFactory();
             timelineController = new TimelineController(this);
