@@ -355,6 +355,18 @@ namespace Medical
                 stateWizardController.addWizard(discClockWizard);
             }
 
+            if(licenseManager.allowFeature((int)FeatureCodes.PiperJBOImaging))
+            {
+                //Eminence
+                StateWizard eminenceWizard = new StateWizard("Eminence", stateWizardController, WizardType.Anatomy);
+                eminenceWizard.TextLine1 = "Eminence";
+                eminenceWizard.ImageKey = "DistortionPanelIcons/LeftFossa";
+                eminenceWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.LeftFossa));
+                eminenceWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.RightFossa));
+                eminenceWizard.addStatePanel(stateWizardPanelController.getPanel(WizardPanels.NotesPanel));
+                stateWizardController.addWizard(eminenceWizard);
+            }
+
             //Create combination distortion wizards
 
             if (licenseManager.allowFeature((int)FeatureCodes.PiperJBOClinical))
