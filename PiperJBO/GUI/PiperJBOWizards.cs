@@ -127,7 +127,7 @@ namespace Medical
             FossaPanel leftFossaPanel = new FossaPanel("LeftFossa", "Medical.GUI.StateWizard.Panels.Fossa.FossaPanelLeft.layout", stateWizardPanelController);
             leftFossaPanel.NavigationState = "WizardLeftTMJ";
             leftFossaPanel.LayerState = "FossaLayers";
-            leftFossaPanel.TextLine1 = "Left Fossa";
+            leftFossaPanel.TextLine1 = "Left Eminence";
             leftFossaPanel.ImageKey = "DistortionPanelIcons/LeftFossa";
             return leftFossaPanel;
         }
@@ -137,7 +137,7 @@ namespace Medical
             FossaPanel rightFossaPanel = new FossaPanel("RightFossa", "Medical.GUI.StateWizard.Panels.Fossa.FossaPanelRight.layout", stateWizardPanelController);
             rightFossaPanel.NavigationState = "WizardRightTMJ";
             rightFossaPanel.LayerState = "FossaLayers";
-            rightFossaPanel.TextLine1 = "Right Fossa";
+            rightFossaPanel.TextLine1 = "Right Eminence";
             rightFossaPanel.ImageKey = "DistortionPanelIcons/RightFossa";
             return rightFossaPanel;
         }
