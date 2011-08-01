@@ -8,6 +8,7 @@ using Medical.Controller;
 using Medical.Muscles;
 using Engine.Saving.XMLSaver;
 using System.Xml;
+using Engine.Platform;
 
 namespace Medical.GUI
 {
@@ -25,12 +26,15 @@ namespace Medical.GUI
         private bool loadingSequenceFromFile = false;
         private XmlSaver xmlSaver = new XmlSaver();
         private ShowMenuButton showMenuButton;
+        private MovementSequenceClipboard movementClipboard = new MovementSequenceClipboard();
 
         private MovementSequenceController movementSequenceController;
 
         public MovementSequenceEditor(MovementSequenceController movementSequenceController)
             : base("Medical.GUI.MovementSequence.MovementSequenceEditor.layout")
         {
+            window.KeyButtonReleased += new MyGUIEvent(window_KeyButtonReleased);
+
             this.movementSequenceController = movementSequenceController;
             movementSequenceController.CurrentSequenceChanged += new MovementSequenceEvent(movementSequenceController_CurrentSequenceChanged);
             movementSequenceController.PlaybackStarted += new MovementSequenceEvent(movementSequenceController_PlaybackStarted);
@@ -53,6 +57,13 @@ namespace Medical.GUI
             fileMenu.addItem("Sep", MenuItemType.Separator);
             MenuItem reverseSides = fileMenu.addItem("Reverse Sides");
             reverseSides.MouseButtonClick += new MyGUIEvent(reverseSides_MouseButtonClick);
+            fileMenu.addItem("Sep2", MenuItemType.Separator);
+            MenuItem cut = fileMenu.addItem("Cut");
+            cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
+            MenuItem copy = fileMenu.addItem("Copy");
+            copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
+            MenuItem paste = fileMenu.addItem("Paste");
+            paste.MouseButtonClick += new MyGUIEvent(paste_MouseButtonClick);
 
             //Remove button
             Button removeButton = window.findWidget("RemoveAction") as Button;
@@ -74,6 +85,7 @@ namespace Medical.GUI
             timelineView = new TimelineView(timelineViewScrollView);
             timelineView.DurationChanged += new EventHandler(timelineView_DurationChanged);
             timelineView.Duration = 5.0f;
+            timelineView.KeyReleased += new EventHandler<KeyEventArgs>(timelineView_KeyReleased);
 
             //Properties
             ScrollView timelinePropertiesScrollView = window.findWidget("ActionPropertiesScrollView") as ScrollView;
@@ -96,6 +108,11 @@ namespace Medical.GUI
         {
             Gui.Instance.destroyWidget(fileMenu);
             base.Dispose();
+        }
+
+        internal void addStateToTimeline(MovementSequenceState state)
+        {
+            timelineView.addData(new MovementKeyframeData(state, movementSequenceController.CurrentSequence));
         }
 
         void playButton_MouseButtonClick(Widget source, EventArgs e)
@@ -124,6 +141,15 @@ namespace Medical.GUI
             movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
         }
 
+        private void deleteSelectedActions()
+        {
+            foreach (MovementKeyframeData data in timelineView.SelectedData)
+            {
+                timelineView.removeData(data);
+                movementSequenceController.CurrentSequence.deleteState(data.KeyFrame);
+            }
+        }
+
         private String CurrentSequenceFile
         {
             get
@@ -141,6 +167,26 @@ namespace Medical.GUI
                 {
                     window.Caption = "Movement Sequence";
                 }
+            }
+        }
+
+        void window_KeyButtonReleased(Widget source, EventArgs e)
+        {
+            processKeys((KeyEventArgs)e);
+        }
+
+        void timelineView_KeyReleased(object sender, KeyEventArgs e)
+        {
+            processKeys(e);
+        }
+
+        private void processKeys(KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case KeyboardButtonCode.KC_DELETE:
+                    deleteSelectedActions();
+                    break;
             }
         }
 
@@ -199,7 +245,7 @@ namespace Medical.GUI
             state.captureState();
             state.StartTime = timelineView.MarkerTime;
             movementSequenceController.CurrentSequence.addState(state);
-            timelineView.addData(new MovementKeyframeData(state, movementSequenceController.CurrentSequence));
+            addStateToTimeline(state);
         }
 
         private void synchronizeDuration(object sender, float duration)
@@ -304,6 +350,25 @@ namespace Medical.GUI
             {
                 movementSequenceController.CurrentSequence.reverseSides();
             }
+            fileMenu.setVisibleSmooth(false);
+        }
+
+        void cut_MouseButtonClick(Widget source, EventArgs e)
+        {
+            movementClipboard.copy(timelineView.SelectedData);
+            deleteSelectedActions();
+            fileMenu.setVisibleSmooth(false);
+        }
+
+        void copy_MouseButtonClick(Widget source, EventArgs e)
+        {
+            movementClipboard.copy(timelineView.SelectedData);
+            fileMenu.setVisibleSmooth(false);
+        }
+
+        void paste_MouseButtonClick(Widget source, EventArgs e)
+        {
+            movementClipboard.paste(movementSequenceController.CurrentSequence, this, timelineView.MarkerTime, timelineView.Duration);
             fileMenu.setVisibleSmooth(false);
         }
 

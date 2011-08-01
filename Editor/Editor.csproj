@@ -83,6 +83,7 @@
     <Compile Include="EditorPlugin.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeData.cs" />
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
+    <Compile Include="GUI\MovementSequence\MovementSequenceClipboard.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineClipboard.cs" />
