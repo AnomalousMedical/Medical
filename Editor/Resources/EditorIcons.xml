@@ -32,6 +32,14 @@
       </Index>
     </Group>
   </Resource>
+
+  <Resource type="ResourceImageSet" name="DiscEditorIcon">
+    <Group name="Icons" texture="Medical.Resources.EditorIcons.png" size="32 32">
+      <Index name="Icon">
+        <Frame point="128 0"/>
+      </Index>
+    </Group>
+  </Resource>
   
 </MyGUI>
 

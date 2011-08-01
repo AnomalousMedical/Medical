@@ -20,6 +20,7 @@ namespace Medical
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
+        private DiscControl discControl;
 
         public EditorPlugin()
         {
@@ -28,6 +29,7 @@ namespace Medical
 
         public void Dispose()
         {
+            discControl.Dispose();
             timelinePropertiesController.Dispose();
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
@@ -60,6 +62,9 @@ namespace Medical
             movementSequenceEditor = new MovementSequenceEditor(standaloneController.MovementSequenceController);
             guiManager.addManagedDialog(movementSequenceEditor);
 
+            discControl = new DiscControl();
+            guiManager.addManagedDialog(discControl);
+
             //Tasks Menu
             TaskController taskController = standaloneController.TaskController;
 
@@ -67,16 +72,19 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(timelineAnalyzer, "Medical.TimelineAnalyzer", "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "DiscEditor", "DiscEditorIcon", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)
         {
             propMover.sceneLoaded(scene);
+            discControl.sceneLoaded(scene);
         }
 
         public void sceneUnloading(SimScene scene)
         {
             propMover.sceneUnloading(scene);
+            discControl.sceneUnloading();
         }
 
         public void setMainInterfaceEnabled(bool enabled)

@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCX" position="117 68 272 770" layer="Back">
+        <Property key="Widget_Caption" value="Disc Properties"/>
+        <Widget type="HScroll" skin="HSlider" position="73 2 125 25" name="horizontalOffsetTrackBar"/>
+        <Widget type="StaticText" skin="StaticText" position="5 6 62 16">
+            <Property key="Widget_Caption" value="Horizontal"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="202 5 66 18" name="horizontalOffsetUpDown"/>
+    </Widget>
+</MyGUI>

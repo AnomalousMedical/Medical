@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="Panel" position="117 63 248 234" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="2 10 47 13">
+            <Property key="Widget_Caption" value="Position"/>
+        </Widget>
+        <Widget type="HScroll" skin="HSlider" position="82 5 103 22" name="discPopSlider"/>
+        <Widget type="Edit" skin="Edit" position="191 5 54 20" name="discPopUpDown"/>
+        <Widget type="Button" skin="CheckBox" position="3 32 179 17" name="lateralPoleDisplacementCheck">
+            <Property key="Widget_Caption" value="Lateral Pole Displacement"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="2 55 69 13">
+            <Property key="Widget_Caption" value="RDA Space"/>
+        </Widget>
+        <Widget type="HScroll" skin="HSlider" position="80 52 108 19" name="rdaOffsetSlider"/>
+        <Widget type="Edit" skin="Edit" position="191 52 54 20" name="rdaOffsetUpDown"/>
+        <Widget type="StaticText" skin="StaticText" position="2 89 69 13">
+            <Property key="Widget_Caption" value="Disc Space"/>
+        </Widget>
+        <Widget type="HScroll" skin="HSlider" position="80 85 108 21" name="discOffsetSlider"/>
+        <Widget type="Edit" skin="Edit" position="191 85 54 20" name="discOffsetUpDown"/>
+        <Widget type="Button" skin="CheckBox" position="5 118 70 17" name="discLockedCheck">
+            <Property key="Widget_Caption" value="Locked"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 138 104 13">
+            <Property key="Widget_Caption" value="Clock Face Offset"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="2 166 62 13">
+            <Property key="Widget_Caption" value="Horizontal"/>
+        </Widget>
+        <Widget type="HScroll" skin="HSlider" position="80 163 103 20" name="horizontalClockFaceSlider"/>
+        <Widget type="Edit" skin="Edit" position="191 164 54 20" name="horizontalClockFaceUpDown"/>
+        <Widget type="StaticText" skin="StaticText" position="3 203 44 13">
+            <Property key="Widget_Caption" value="Vertical"/>
+        </Widget>
+        <Widget type="HScroll" skin="HSlider" position="80 198 103 22" name="verticalClockFaceSlider"/>
+        <Widget type="Edit" skin="Edit" position="191 201 54 20" name="verticalClockFaceUpDown"/>
+    </Widget>
+</MyGUI>
