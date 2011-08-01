@@ -244,7 +244,7 @@ namespace Medical.GUI
 
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
-            propClipboard.paste(propData, this, timelineView.MarkerTime);
+            propClipboard.paste(propData, this, timelineView.MarkerTime, timelineView.Duration);
             editMenu.setVisibleSmooth(false);
         }
 

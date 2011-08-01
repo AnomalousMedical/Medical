@@ -38,12 +38,21 @@ namespace Medical.GUI
             }
         }
 
-        public void paste(ShowPropAction propData, PropTimeline propTimeline, float markerTime)
+        public void paste(ShowPropAction propData, PropTimeline propTimeline, float markerTime, float totalDuration)
         {
             foreach (ShowPropSubAction action in copiedActions)
             {
                 ShowPropSubAction copiedAction = copySaver.copy<ShowPropSubAction>(action);
                 copiedAction.StartTime = copiedAction.StartTime - startTimeZeroOffset + markerTime;
+                if (copiedAction.EndTime > totalDuration)
+                {
+                    copiedAction.StartTime -= (copiedAction.EndTime - totalDuration);
+                    if (copiedAction.StartTime < 0)
+                    {
+                        copiedAction.StartTime = 0.0f;
+                        copiedAction.Duration = totalDuration;
+                    }
+                }
                 propData.addSubAction(copiedAction);
                 propTimeline.addSubActionData(copiedAction);
             }
