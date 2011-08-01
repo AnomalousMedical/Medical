@@ -85,6 +85,7 @@
     <Compile Include="GUI\MovementSequence\MovementKeyframeProperties.cs" />
     <Compile Include="GUI\MovementSequence\MovementSequenceEditor.cs" />
     <Compile Include="GUI\PropTimeline\PropTimeline.cs" />
+    <Compile Include="GUI\PropTimeline\PropTimelineClipboard.cs" />
     <Compile Include="GUI\PropTimeline\PropTimelineData.cs" />
     <Compile Include="GUI\PropTimeline\ShowPropSubActionFactory.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\EditInterfaceProperties.cs" />

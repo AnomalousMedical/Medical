@@ -22,8 +22,7 @@ namespace Medical.GUI
 
         private ShowMenuButton editMenuButton;
         private PopupMenu editMenu;
-        private ShowPropSubAction copySourceAction;
-        private CopySaver copySaver = new CopySaver();
+        private PropTimelineClipboard propClipboard = new PropTimelineClipboard();
 
         public PropTimeline()
             :base("Medical.GUI.PropTimeline.PropTimeline.layout")
@@ -52,6 +51,8 @@ namespace Medical.GUI
             Button editButton = window.findWidget("EditButton") as Button;
             editMenu = Gui.Instance.createWidgetT("PopupMenu", "PopupMenu", 0, 0, 1000, 1000, Align.Default, "Overlapped", "") as PopupMenu;
             editMenu.Visible = false;
+            MenuItem cut = editMenu.addItem("Cut");
+            cut.MouseButtonClick += new MyGUIEvent(cut_MouseButtonClick);
             MenuItem copy = editMenu.addItem("Copy");
             copy.MouseButtonClick += new MyGUIEvent(copy_MouseButtonClick);
             MenuItem paste = editMenu.addItem("Paste");
@@ -171,7 +172,7 @@ namespace Medical.GUI
             addSubActionData(subAction);
         }
 
-        private void addSubActionData(ShowPropSubAction subAction)
+        internal void addSubActionData(ShowPropSubAction subAction)
         {
             PropTimelineData timelineData = new PropTimelineData(subAction);
             timelineView.addData(timelineData);
@@ -188,6 +189,15 @@ namespace Medical.GUI
             PropTimelineData propTlData = (PropTimelineData)timelineView.CurrentData;
             propData.removeSubAction(propTlData.Action);
             timelineView.removeData(propTlData);
+        }
+
+        private void removeSelectedData()
+        {
+            foreach (PropTimelineData propTlData in timelineView.SelectedData)
+            {
+                propData.removeSubAction(propTlData.Action);
+                timelineView.removeData(propTlData);
+            }
         }
 
         void timelineView_ActiveDataChanged(object sender, EventArgs e)
@@ -218,33 +228,30 @@ namespace Medical.GUI
             switch (e.Key)
             {
                 case KeyboardButtonCode.KC_DELETE:
-                    removeCurrentData();
+                    removeSelectedData();
                     break;
             }
         }
 
         #region Edit Menu
 
+        void cut_MouseButtonClick(Widget source, EventArgs e)
+        {
+            propClipboard.copy(timelineView.SelectedData);
+            removeSelectedData();
+            editMenu.setVisibleSmooth(false);
+        }
+
         void paste_MouseButtonClick(Widget source, EventArgs e)
         {
-            if (copySourceAction != null)
-            {
-                ShowPropSubAction copiedAction = copySaver.copy<ShowPropSubAction>(copySourceAction);
-                copiedAction.StartTime = timelineView.MarkerTime;
-                propData.addSubAction(copiedAction);
-                addSubActionData(copiedAction);
-                timelineView.CurrentData = actionDataBindings[copiedAction];
-            }
+            propClipboard.paste(propData, this, timelineView.MarkerTime);
             editMenu.setVisibleSmooth(false);
         }
 
         void copy_MouseButtonClick(Widget source, EventArgs e)
         {
-            PropTimelineData currentData = (PropTimelineData)timelineView.CurrentData;
-            if (currentData != null)
-            {
-                copySourceAction = copySaver.copy<ShowPropSubAction>(currentData.Action);
-            }
+            propClipboard.copy(timelineView.SelectedData);
+            editMenu.setVisibleSmooth(false);
         }
 
         #endregion Edit Menu
