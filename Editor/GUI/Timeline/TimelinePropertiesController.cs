@@ -222,6 +222,11 @@ namespace Medical.GUI
             }
         }
 
+        internal void cut()
+        {
+            timelineProperties.cut();
+        }
+
         public void copy()
         {
             timelineProperties.copy();

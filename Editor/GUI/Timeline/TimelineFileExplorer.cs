@@ -21,6 +21,7 @@ namespace Medical.GUI
         MenuItem saveTimelineAsItem;
 
         //Edit Menu
+        MenuItem cut;
         MenuItem copy;
         MenuItem paste;
 
@@ -63,6 +64,7 @@ namespace Medical.GUI
             editMenuItem = menuBar.addItem("Edit", MenuItemType.Popup);
             MenuCtrl editMenu = menuBar.createItemPopupMenuChild(editMenuItem);
             editMenu.ItemAccept += new MyGUIEvent(editMenu_ItemAccept);
+            cut = editMenu.addItem("Cut");
             copy = editMenu.addItem("Copy");
             paste = editMenu.addItem("Paste");
 
@@ -224,6 +226,10 @@ namespace Medical.GUI
             else if (menuEventArgs.Item == paste)
             {
                 timelinePropertiesController.paste();
+            }
+            else if (menuEventArgs.Item == cut)
+            {
+                timelinePropertiesController.cut();
             }
         }
 

@@ -138,6 +138,12 @@ namespace Medical.GUI
             actionClipboard.copy(timelineView.SelectedData);
         }
 
+        public void cut()
+        {
+            copy();
+            deleteSelectedActions();
+        }
+
         public void stopEditing()
         {
             editingStoppedLastData = timelineView.CurrentData;
