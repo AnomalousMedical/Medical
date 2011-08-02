@@ -19,6 +19,7 @@ namespace Medical.GUI
         private NumericEdit height;
         private NumericEdit fontHeight;
         private ComboBox fontNameCombo;
+        private EnumComboBox<TextualAlignment> alignCombo;
 
         private StaticText cameraText;
 
@@ -64,6 +65,9 @@ namespace Medical.GUI
             {
                 fontNameCombo.addItem(font);
             }
+
+            alignCombo = new EnumComboBox<TextualAlignment>((ComboBox)mainWidget.findWidget("AlignCombo"));
+            alignCombo.EventComboChangePosition += new MyGUIEvent(alignCombo_EventComboAccept);
 
             cameraText = mainWidget.findWidget("Camera") as StaticText;
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
@@ -117,6 +121,11 @@ namespace Medical.GUI
         void fontHeight_ValueChanged(Widget source, EventArgs e)
         {
             showText.FontHeight = fontHeight.IntValue;
+        }
+
+        void alignCombo_EventComboAccept(Widget source, EventArgs e)
+        {
+            showText.TextAlign = alignCombo.Value;
         }
     }
 }

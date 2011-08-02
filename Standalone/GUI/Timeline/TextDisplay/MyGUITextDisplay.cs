@@ -101,11 +101,43 @@ namespace Medical.GUI
         {
             get
             {
-                return (TextualAlignment)textBox.TextAlign;
+                return TextualAlignment.LeftTop;
             }
             set
             {
-                textBox.TextAlign = (Align)value;
+                switch (value)
+                {
+                    case TextualAlignment.LeftTop:
+                        textBox.TextAlign = Align.Left | Align.Top;
+                        break;
+                    case TextualAlignment.LeftBottom:
+                        textBox.TextAlign = Align.Left | Align.Bottom;
+                        break;
+                    case TextualAlignment.RightTop:
+                        textBox.TextAlign = Align.Right | Align.Top;
+                        break;
+                    case TextualAlignment.RightBottom:
+                        textBox.TextAlign = Align.Right | Align.Bottom;
+                        break;
+                    case TextualAlignment.TopCenter:
+                        textBox.TextAlign = Align.HCenter | Align.Top;
+                        break;
+                    case TextualAlignment.BottomCenter:
+                        textBox.TextAlign = Align.HCenter | Align.Bottom;
+                        break;
+                    case TextualAlignment.LeftCenter:
+                        textBox.TextAlign = Align.Left | Align.VCenter;
+                        break;
+                    case TextualAlignment.RightCenter:
+                        textBox.TextAlign = Align.Right | Align.VCenter;
+                        break;
+                    case TextualAlignment.Center:
+                        textBox.TextAlign = Align.HCenter | Align.VCenter;
+                        break;
+                    default:
+                        textBox.TextAlign = Align.Left | Align.Top;
+                        break;
+                }
             }
         }
 
