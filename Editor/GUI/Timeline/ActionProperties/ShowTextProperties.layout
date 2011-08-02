@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Widget" skin="PanelEmpty" position="79 57 211 148" layer="Back">
+        <Widget type="StaticText" skin="StaticText" position="3 5 31 13">
+            <Property key="Widget_Caption" value="Text"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="36 3 172 37" name="TextEdit">
+            <Property key="Edit_Static" value="false"/>
+            <Property key="Edit_WordWrap" value="true"/>
+            <Property key="Edit_MultiLine" value="true"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 44 56 17">
+            <Property key="Widget_Caption" value="Position"/>
+            <Property key="Text_TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="71 44 11 17">
+            <Property key="Widget_Caption" value="X"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="84 44 50 17" name="XPositionEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="136 44 11 17">
+            <Property key="Widget_Caption" value="Y"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="149 44 50 17" name="YPositionEdit"/>
+        <Widget type="Edit" skin="Edit" position="84 66 50 17" name="WidthEdit"/>
+        <Widget type="Edit" skin="Edit" position="149 66 50 17" name="HeightEdit"/>
+        <Widget type="StaticText" skin="StaticText" position="3 66 48 17">
+            <Property key="Widget_Caption" value="Size"/>
+            <Property key="Text_TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="71 66 11 17">
+            <Property key="Widget_Caption" value="W"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="136 66 11 17">
+            <Property key="Widget_Caption" value="H"/>
+            <Property key="Text_TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="Button" skin="CheckBox" position="3 88 134 13" name="KeepAspectCheck">
+            <Property key="Widget_Caption" value="Keep Aspect Ratio"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="3 104 66 13">
+            <Property key="Widget_Caption" value="Camera"/>
+        </Widget>
+        <Widget type="StaticText" skin="StaticText" position="71 104 137 17" name="Camera"/>
+        <Widget type="Button" skin="Button" position="3 123 89 22" name="UseCurrent">
+            <Property key="Widget_Caption" value="Use Current"/>
+        </Widget>
+    </Widget>
+</MyGUI>

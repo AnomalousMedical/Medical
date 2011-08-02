@@ -157,6 +157,9 @@
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerAnimator.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableFingerSectionAnimator.cs" />
     <Compile Include="Controller\Props\PoseableHand\PoseableThumbAnimator.cs" />
+    <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplay.cs" />
+    <Compile Include="Controller\Timeline\ShowTextAction\ITextDisplayFactory.cs" />
+    <Compile Include="Controller\Timeline\ShowTextAction\ShowTextAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEditInterface.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUI.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\AbstractTimelineGUIData.cs" />
@@ -205,6 +208,8 @@
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
+    <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
+    <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
     <Compile Include="Layout\MDI\MDIBorderContainerDock.cs" />
     <Compile Include="GUI\FixedSizeMDIDialog.cs" />
     <Compile Include="Layout\MDI\FloatingWindowContainer.cs" />
@@ -382,6 +387,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Timeline\ImageDisplay\MyGUIImageDisplay.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionProvider\MyGUIQuestionProvider.layout" />
+    <EmbeddedResource Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.layout" />
     <EmbeddedResource Include="Layout\MDI\MDIDocumentWindow.layout" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

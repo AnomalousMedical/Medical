@@ -290,6 +290,22 @@ namespace Medical
             }
         }
 
+        internal ITextDisplay showText(String text, String cameraName)
+        {
+            ITextDisplay textDisplay = null;
+            if (TextDisplayFactory != null)
+            {
+                textDisplay = TextDisplayFactory.createTextDisplay(cameraName);
+                textDisplay.setText(text);
+                textDisplay.show();
+            }
+            else
+            {
+                Log.Warning("Could not display text {0}. No TextDisplayFactory defined.");
+            }
+            return textDisplay;
+        }
+
         public void promptForFile(String filterString, FileChosenCallback callback)
         {
             if (FileBrowser != null)
@@ -430,6 +446,8 @@ namespace Medical
         public ITimelineFileBrowser FileBrowser { get; set; }
 
         public IImageDisplayFactory ImageDisplayFactory { get; set; }
+
+        public ITextDisplayFactory TextDisplayFactory { get; set; }
 
         public TimelineGUIFactory GUIFactory { get; private set; }
 

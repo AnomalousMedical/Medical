@@ -33,6 +33,7 @@ namespace Medical.GUI
         private MyGUIContinuePromptProvider continuePrompt;
         private MyGUIQuestionProvider questionProvider;
         private MyGUIImageDisplayFactory imageDisplayFactory;
+        private MyGUITextDisplayFactory textDisplayFactory;
         private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
 
         public GUIManager(StandaloneController standaloneController)
@@ -115,6 +116,7 @@ namespace Medical.GUI
             questionProvider = new MyGUIQuestionProvider(this);
 
             imageDisplayFactory = new MyGUIImageDisplayFactory(standaloneController.SceneViewController);
+            textDisplayFactory = new MyGUITextDisplayFactory(standaloneController.SceneViewController);
         }
 
         public void giveGUIsToTimelineController(TimelineController timelineController)
@@ -122,6 +124,7 @@ namespace Medical.GUI
             timelineController.ContinuePrompt = continuePrompt;
             timelineController.QuestionProvider = questionProvider;
             timelineController.ImageDisplayFactory = imageDisplayFactory;
+            timelineController.TextDisplayFactory = textDisplayFactory;
         }
 
         public void windowChanged(OSWindow newWindow)
