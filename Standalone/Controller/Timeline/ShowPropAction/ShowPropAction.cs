@@ -182,8 +182,14 @@ namespace Medical
                 propType = value;
                 if (simObject != null)
                 {
+                    bool wasEditing = currentlyEditing;
+                    bool wasKeptOpen = keepOpen;
+                    currentlyEditing = false;
+                    keepOpen = false;
                     destroyProp();
                     makeProp();
+                    currentlyEditing = wasEditing;
+                    keepOpen = wasKeptOpen;
                 }
             }
         }

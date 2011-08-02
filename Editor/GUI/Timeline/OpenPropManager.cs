@@ -54,6 +54,34 @@ namespace Medical.GUI
             }
         }
 
+        public void removeAllOpenProps()
+        {
+            while (propList.getItemCount() > 0)
+            {
+                removeOpenProp(0);
+            }
+        }
+
+        public void hideOpenProps()
+        {
+            uint count = propList.getItemCount();
+            for (uint i = 0; i < count; ++i)
+            {
+                ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(i);
+                prop.KeepOpen = false;
+            }
+        }
+
+        public void showOpenProps()
+        {
+            uint count = propList.getItemCount();
+            for (uint i = 0; i < count; ++i)
+            {
+                ShowPropAction prop = (ShowPropAction)propList.getItemDataAt(i);
+                prop.KeepOpen = true;
+            }
+        }
+
         void OpenPropManager_Resized(object sender, EventArgs e)
         {
             propList.setColumnWidthAt(0, propList.ClientWidget.Width);
@@ -70,10 +98,7 @@ namespace Medical.GUI
 
         void closeAll_MouseButtonClick(Widget source, EventArgs e)
         {
-            while (propList.getItemCount() > 0)
-            {
-                removeOpenProp(0);
-            }
+            removeAllOpenProps();
         }
     }
 }

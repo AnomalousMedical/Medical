@@ -50,7 +50,12 @@ namespace Medical
 
             this.standaloneController = standaloneController;
             editorTimelineController = new TimelineController(standaloneController);
+            editorTimelineController.PlaybackStarted += new EventHandler(editorTimelineController_PlaybackStarted);
+            editorTimelineController.PlaybackStopped += new EventHandler(editorTimelineController_PlaybackStopped);
             guiManager.giveGUIsToTimelineController(editorTimelineController);
+
+            standaloneController.TimelineController.PlaybackStarted += new EventHandler(TimelineController_PlaybackStarted);
+            standaloneController.TimelineController.PlaybackStopped += new EventHandler(TimelineController_PlaybackStopped);
 
             //Dialogs
             propTimeline = new PropTimeline();
@@ -60,6 +65,7 @@ namespace Medical
             guiManager.addManagedDialog(openPropManager);
 
             timelinePropertiesController = new TimelinePropertiesController(standaloneController, this);
+            timelinePropertiesController.CurrentTimelineChanged += new SingleArgumentEvent<TimelinePropertiesController, Timeline>(timelinePropertiesController_CurrentTimelineChanged);
 
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
             guiManager.addManagedDialog(timelineAnalyzer);
@@ -138,6 +144,41 @@ namespace Medical
         public void sceneRevealed()
         {
 
+        }
+
+        private void playbackStarted()
+        {
+            openPropManager.hideOpenProps();
+        }
+
+        private void playbackStopped()
+        {
+            openPropManager.showOpenProps();
+        }
+
+        void TimelineController_PlaybackStopped(object sender, EventArgs e)
+        {
+            playbackStopped();
+        }
+
+        void TimelineController_PlaybackStarted(object sender, EventArgs e)
+        {
+            playbackStarted();
+        }
+
+        void editorTimelineController_PlaybackStopped(object sender, EventArgs e)
+        {
+            playbackStopped();
+        }
+
+        void editorTimelineController_PlaybackStarted(object sender, EventArgs e)
+        {
+            playbackStarted();
+        }
+
+        void timelinePropertiesController_CurrentTimelineChanged(TimelinePropertiesController source, Timeline arg)
+        {
+            openPropManager.removeAllOpenProps();
         }
     }
 }
