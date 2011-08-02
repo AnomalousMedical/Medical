@@ -11,5 +11,10 @@ namespace Medical
     public interface ITextDisplayFactory
     {
         ITextDisplay createTextDisplay(String cameraName);
+
+        List<String> FontNames
+        {
+            get;
+        }
     }
 }

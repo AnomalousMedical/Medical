@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="79 57 211 148" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="79 57 211 192" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="3 5 31 13">
             <Property key="Widget_Caption" value="Text"/>
         </Widget>
@@ -37,15 +37,20 @@
             <Property key="Widget_Caption" value="H"/>
             <Property key="Text_TextAlign" value="Center"/>
         </Widget>
-        <Widget type="Button" skin="CheckBox" position="3 88 134 13" name="KeepAspectCheck">
-            <Property key="Widget_Caption" value="Keep Aspect Ratio"/>
-        </Widget>
-        <Widget type="StaticText" skin="StaticText" position="3 104 66 13">
+        <Widget type="StaticText" skin="StaticText" position="3 97 66 13">
             <Property key="Widget_Caption" value="Camera"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="71 104 137 17" name="Camera"/>
-        <Widget type="Button" skin="Button" position="3 123 89 22" name="UseCurrent">
+        <Widget type="StaticText" skin="StaticText" position="71 97 137 17" name="Camera"/>
+        <Widget type="Button" skin="Button" position="3 116 89 22" name="UseCurrent">
             <Property key="Widget_Caption" value="Use Current"/>
         </Widget>
+        <Widget type="StaticText" skin="StaticText" position="2 142 29 14">
+            <Property key="Widget_Caption" value="Font"/>
+        </Widget>
+        <Widget type="ComboBox" skin="ComboBox" position="32 141 175 20" name="FontCombo"/>
+        <Widget type="StaticText" skin="StaticText" position="2 168 69 13">
+            <Property key="Widget_Caption" value="Font Height"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="72 166 134 20" name="FontHeight"/>
     </Widget>
 </MyGUI>

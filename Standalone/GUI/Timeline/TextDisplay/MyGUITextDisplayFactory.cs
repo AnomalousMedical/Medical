@@ -5,6 +5,7 @@ using System.Text;
 using Engine.Platform;
 using Medical.Controller;
 using Logging;
+using MyGUIPlugin;
 
 namespace Medical.GUI
 {
@@ -29,6 +30,14 @@ namespace Medical.GUI
             MyGUITextDisplay display = new MyGUITextDisplay(this, sceneWindow);
             displays.Add(display);
             return display;
+        }
+
+        public List<String> FontNames
+        {
+            get
+            {
+                return new List<string>(new String[]{"TimelineText"});
+            }
         }
 
         internal void textDisposed(MyGUITextDisplay display)

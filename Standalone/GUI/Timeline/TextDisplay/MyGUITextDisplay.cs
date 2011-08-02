@@ -16,8 +16,6 @@ namespace Medical.GUI
         private MyGUITextDisplayFactory textFactory;
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
-        private Size bitmapSize;
-        private bool keepAspectRatio = true;
         private SceneViewWindow sceneWindow;
 
         public MyGUITextDisplay(MyGUITextDisplayFactory textFactory, SceneViewWindow sceneWindow)
@@ -75,19 +73,39 @@ namespace Medical.GUI
             }
         }
 
-        public bool KeepAspectRatio
+        public string FontName
         {
             get
             {
-                return keepAspectRatio;
+                return textBox.FontName;
             }
             set
             {
-                if (keepAspectRatio != value)
-                {
-                    keepAspectRatio = value;
-                    positionText((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
-                }
+                textBox.FontName = value;
+            }
+        }
+
+        public int FontHeight
+        {
+            get
+            {
+                return textBox.FontHeight;
+            }
+            set
+            {
+                textBox.FontHeight = value;
+            }
+        }
+
+        public TextualAlignment TextAlign
+        {
+            get
+            {
+                return (TextualAlignment)textBox.TextAlign;
+            }
+            set
+            {
+                textBox.TextAlign = (Align)value;
             }
         }
 
@@ -100,28 +118,9 @@ namespace Medical.GUI
         {
             int left = (int)(position.x * width + sceneWindow.Location.x);
             int top = (int)(position.y * height + sceneWindow.Location.y);
-            int newWidth, newHeight;
 
-            if (keepAspectRatio)
-            {
-                if (height < width)
-                {
-                    newHeight = (int)(size.Height * height);
-                    float heightRatio = (float)newHeight / bitmapSize.Height;
-                    newWidth = (int)(heightRatio * bitmapSize.Width);
-                }
-                else
-                {
-                    newWidth = (int)(size.Width * width);
-                    float widthRatio = (float)newWidth / bitmapSize.Width;
-                    newHeight = (int)(widthRatio * bitmapSize.Height);
-                }
-            }
-            else
-            {
-                newWidth = (int)(size.Width * width);
-                newHeight = (int)(size.Height * height);
-            }
+            int newWidth = (int)(size.Width * width);
+            int newHeight = (int)(size.Height * height);
 
             int right = left + newWidth;
             int windowRight = (int)(sceneWindow.Location.x + sceneWindow.WorkingSize.Width);

@@ -6,6 +6,7 @@ using Engine.Platform;
 using Engine.Saving;
 using Engine;
 using Medical.Controller;
+using MyGUIPlugin;
 
 namespace Medical
 {
@@ -17,7 +18,9 @@ namespace Medical
         private String text;
         private Size2 size;
         private Vector2 position;
-        private bool keepAspectRatio = true;
+        private String fontName = "TimelineText";
+        private int fontHeight = 14;
+        private TextualAlignment textAlign = TextualAlignment.LeftTop;
 
         public ShowTextAction()
         {
@@ -37,9 +40,11 @@ namespace Medical
                 }
                 else
                 {
-                    textDisplay.KeepAspectRatio = keepAspectRatio;
                     textDisplay.Position = position;
                     textDisplay.Size = size;
+                    textDisplay.FontName = fontName;
+                    textDisplay.FontHeight = fontHeight;
+                    textDisplay.TextAlign = textAlign;
                 }
             }
             else
@@ -83,9 +88,11 @@ namespace Medical
                 textDisplay = TimelineController.showText(text, CameraName);
                 if (textDisplay != null)
                 {
-                    textDisplay.KeepAspectRatio = keepAspectRatio;
                     textDisplay.Position = position;
                     textDisplay.Size = size;
+                    textDisplay.FontName = fontName;
+                    textDisplay.FontHeight = fontHeight;
+                    textDisplay.TextAlign = textAlign;
                 }
             }
         }
@@ -159,18 +166,50 @@ namespace Medical
             }
         }
 
-        public bool KeepAspectRatio
+        public String FontName
         {
             get
             {
-                return keepAspectRatio;
+                return fontName;
             }
             set
             {
-                keepAspectRatio = value;
+                fontName = value;
                 if (textDisplay != null)
                 {
-                    textDisplay.KeepAspectRatio = keepAspectRatio;
+                    textDisplay.FontName = fontName;
+                }
+            }
+        }
+
+        public int FontHeight
+        {
+            get
+            {
+                return fontHeight;
+            }
+            set
+            {
+                fontHeight = value;
+                if (textDisplay != null)
+                {
+                    textDisplay.FontHeight = fontHeight;
+                }
+            }
+        }
+
+        public TextualAlignment TextAlign
+        {
+            get
+            {
+                return textAlign;
+            }
+            set
+            {
+                textAlign = value;
+                if (textDisplay != null)
+                {
+                    textDisplay.TextAlign = textAlign;
                 }
             }
         }
@@ -182,8 +221,10 @@ namespace Medical
         private static String TEXT = "Text";
         private static String POSITION = "Position";
         private static String SIZE = "Size";
-        private static String KEEP_ASPECT_RATIO = "KeepAspectRatio";
         private static String CAMERA_NAME = "CameraName";
+        private static String FONT_NAME = "FontName";
+        private static String FONT_HEIGHT = "FontHeight";
+        private static String TEXT_ALIGN = "TextAlign";
 
         protected ShowTextAction(LoadInfo info)
             :base(info)
@@ -191,8 +232,10 @@ namespace Medical
             text = info.GetString(TEXT, text);
             position = info.GetValue<Vector2>(POSITION);
             size = info.GetValue<Size2>(SIZE);
-            keepAspectRatio = info.GetValue(KEEP_ASPECT_RATIO, keepAspectRatio);
             CameraName = info.GetValue(CAMERA_NAME, CameraName);
+            fontName = info.GetValue(FONT_NAME, fontName);
+            fontHeight = info.GetValue(FONT_HEIGHT, fontHeight);
+            textAlign = info.GetValue<TextualAlignment>(TEXT_ALIGN, textAlign);
         }
 
         public override void getInfo(SaveInfo info)
@@ -201,8 +244,10 @@ namespace Medical
             info.AddValue(TEXT, text);
             info.AddValue(POSITION, position);
             info.AddValue(SIZE, size);
-            info.AddValue(KEEP_ASPECT_RATIO, keepAspectRatio);
             info.AddValue(CAMERA_NAME, CameraName);
+            info.AddValue(FONT_NAME, fontName);
+            info.AddValue(FONT_HEIGHT, fontHeight);
+            info.AddValue(TEXT_ALIGN, textAlign);
         }
 
         #endregion

@@ -17,12 +17,12 @@ namespace Medical.GUI
         private NumericEdit yPosition;
         private NumericEdit width;
         private NumericEdit height;
-
-        private CheckButton keepAspectRatio;
+        private NumericEdit fontHeight;
+        private ComboBox fontNameCombo;
 
         private StaticText cameraText;
 
-        public ShowTextProperties(Widget parentWidget)
+        public ShowTextProperties(Widget parentWidget, ITextDisplayFactory textFactory)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowTextProperties.layout")
         {
             showTextEdit = mainWidget.findWidget("TextEdit") as Edit;
@@ -52,8 +52,18 @@ namespace Medical.GUI
             height.MaxValue = 1.0f;
             height.Increment = 0.05f;
 
-            keepAspectRatio = new CheckButton(mainWidget.findWidget("KeepAspectCheck") as Button);
-            keepAspectRatio.CheckedChanged += new MyGUIEvent(keepAspectRatio_CheckedChanged);
+            fontHeight = new NumericEdit(mainWidget.findWidget("FontHeight") as Edit);
+            fontHeight.ValueChanged += new MyGUIEvent(fontHeight_ValueChanged);
+            fontHeight.MinValue = 1;
+            fontHeight.MaxValue = 1000;
+            fontHeight.Increment = 1;
+            fontHeight.AllowFloat = false;
+
+            fontNameCombo = (ComboBox)mainWidget.findWidget("FontCombo");
+            foreach (String font in textFactory.FontNames)
+            {
+                fontNameCombo.addItem(font);
+            }
 
             cameraText = mainWidget.findWidget("Camera") as StaticText;
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
@@ -64,15 +74,23 @@ namespace Medical.GUI
         {
             timelineData = data;
             showText = (ShowTextAction)((TimelineActionData)data).Action;
-            showTextEdit.Caption = showText.Text;
+            showTextEdit.OnlyText = showText.Text.Replace("\\n", "\n");
             Vector2 position = showText.Position;
             xPosition.FloatValue = position.x;
             yPosition.FloatValue = position.y;
             Size2 size = showText.Size;
             width.FloatValue = size.Width;
             height.FloatValue = size.Height;
-            keepAspectRatio.Checked = showText.KeepAspectRatio;
             cameraText.Caption = showText.CameraName;
+            fontHeight.IntValue = showText.FontHeight;
+            uint index = fontNameCombo.findItemIndexWith(showText.FontName);
+            //Add the font to the combo if it isnt in there already
+            if (index == uint.MaxValue)
+            {
+                fontNameCombo.addItem(showText.FontName);
+                index = fontNameCombo.ItemCount - 1;
+            }
+            fontNameCombo.SelectedIndex = index;
         }
 
         void position_ValueChanged(Widget source, EventArgs e)
@@ -85,11 +103,6 @@ namespace Medical.GUI
             showText.Size = new Size2(width.FloatValue, height.FloatValue);
         }
 
-        void keepAspectRatio_CheckedChanged(Widget source, EventArgs e)
-        {
-            showText.KeepAspectRatio = keepAspectRatio.Checked;
-        }
-
         void useCurrent_MouseButtonClick(Widget source, EventArgs e)
         {
             showText.capture();
@@ -98,7 +111,12 @@ namespace Medical.GUI
 
         void showTextEdit_EventEditTextChange(Widget source, EventArgs e)
         {
-            showText.Text = showTextEdit.Caption;
+            showText.Text = showTextEdit.OnlyText.Replace("\n", "\\n");
+        }
+
+        void fontHeight_ValueChanged(Widget source, EventArgs e)
+        {
+            showText.FontHeight = fontHeight.IntValue;
         }
     }
 }
