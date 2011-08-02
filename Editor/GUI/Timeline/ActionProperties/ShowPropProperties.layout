@@ -20,8 +20,11 @@
             <Property key="Widget_Caption" value="Fade Duration"/>
         </Widget>
         <Widget type="Edit" skin="Edit" position="3 165 204 20" name="FadeDurationEdit"/>
-        <Widget type="Button" skin="Button" position="3 42 146 20" name="startPosButton">
+        <Widget type="Button" skin="Button" position="3 42 134 20" name="startPosButton">
             <Property key="Widget_Caption" value="Move to Start Position"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="138 42 69 20" name="keepOpen">
+            <Property key="Widget_Caption" value="Keep Open"/>
         </Widget>
     </Widget>
 </MyGUI>

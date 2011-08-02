@@ -22,6 +22,8 @@ namespace Medical
         private String propType;
         private Vector3 translation;
         private Quaternion rotation;
+        private bool currentlyEditing = false;
+        private bool keepOpen = false;
 
         private float fadeDuration;
         PropFadeBehavior propFade;
@@ -86,11 +88,13 @@ namespace Medical
 
         public override void editing()
         {
+            currentlyEditing = true;
             makeProp();
         }
 
         public override void editingCompleted()
         {
+            currentlyEditing = false;
             base.editingCompleted();
             destroyProp();
         }
@@ -236,6 +240,29 @@ namespace Medical
             }
         }
 
+        public bool KeepOpen
+        {
+            get
+            {
+                return keepOpen;
+            }
+            set
+            {
+                if (keepOpen != value)
+                {
+                    keepOpen = value;
+                    if (keepOpen)
+                    {
+                        makeProp();
+                    }
+                    else
+                    {
+                        destroyProp();
+                    }
+                }
+            }
+        }
+
         internal SimObject PropSimObject
         {
             get
@@ -246,16 +273,19 @@ namespace Medical
 
         private void makeProp()
         {
-            simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
-            if (simObject != null)
+            if (simObject == null)
             {
-                propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+                simObject = TimelineController.PropFactory.createProp(propType, translation, rotation);
+                if (simObject != null)
+                {
+                    propFade = simObject.getElement(PropFactory.FadeBehaviorName) as PropFadeBehavior;
+                }
             }
         }
 
         private void destroyProp()
         {
-            if (simObject != null)
+            if (simObject != null && !KeepOpen && !currentlyEditing)
             {
                 simObject.destroy();
                 simObject = null;

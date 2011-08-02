@@ -17,6 +17,7 @@ namespace Medical
         private MovementSequenceEditor movementSequenceEditor;
         private TimelineAnalyzer timelineAnalyzer;
         private TimelinePropertiesController timelinePropertiesController;
+        private OpenPropManager openPropManager;
 
         private TimelineController editorTimelineController;
         private SimObjectMover propMover;
@@ -34,6 +35,7 @@ namespace Medical
             timelineAnalyzer.Dispose();
             movementSequenceEditor.Dispose();
             propTimeline.Dispose();
+            openPropManager.Dispose();
         }
 
         public void initialize(StandaloneController standaloneController)
@@ -54,6 +56,9 @@ namespace Medical
             propTimeline = new PropTimeline();
             guiManager.addManagedDialog(propTimeline);
 
+            openPropManager = new OpenPropManager();
+            guiManager.addManagedDialog(openPropManager);
+
             timelinePropertiesController = new TimelinePropertiesController(standaloneController, this);
 
             timelineAnalyzer = new TimelineAnalyzer(editorTimelineController, timelinePropertiesController);
@@ -72,7 +77,8 @@ namespace Medical
             taskController.addTask(new MDIDialogOpenTask(timelineAnalyzer, "Medical.TimelineAnalyzer", "Timeline Analyzer", "TimelineAnalyzerIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(movementSequenceEditor, "Medical.MovementSequenceEditor", "Movement Sequence Editor", "MovementSequenceEditorIcon", TaskMenuCategories.Editor));
             taskController.addTask(new MDIDialogOpenTask(propTimeline, "Medical.PropTimelineEditor", "Prop Timeline Editor", "PropEditorIcon", TaskMenuCategories.Editor));
-            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "DiscEditor", "DiscEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(openPropManager, "Medical.OpenPropManager", "Prop Manager", "PropEditorIcon", TaskMenuCategories.Editor));
+            taskController.addTask(new MDIDialogOpenTask(discControl, "Medical.DiscEditor", "Disc Editor", "DiscEditorIcon", TaskMenuCategories.Editor));
         }
 
         public void sceneLoaded(SimScene scene)
@@ -118,6 +124,14 @@ namespace Medical
             get
             {
                 return editorTimelineController;
+            }
+        }
+
+        public OpenPropManager PropManager
+        {
+            get
+            {
+                return openPropManager;
             }
         }
 

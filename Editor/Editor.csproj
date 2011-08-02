@@ -96,6 +96,7 @@
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableFingerSectionControl.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PoseableHandProperties.cs" />
     <Compile Include="GUI\PropTimeline\SubActionProperties\PushPlungerProperties.cs" />
+    <Compile Include="GUI\Timeline\OpenPropManager.cs" />
     <Compile Include="GUI\Timeline\TimelineActionClipboard.cs" />
     <Compile Include="GUI\Timeline\TimelineActionFactory.cs" />
     <Compile Include="GUI\Timeline\TimelineAnalyzer.cs" />
@@ -150,6 +151,7 @@
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowImageProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\ActionProperties\ShowPropProperties.layout" />
     <EmbeddedResource Include="GUI\Timeline\NewProjectDialog.layout" />
+    <EmbeddedResource Include="GUI\Timeline\OpenPropManager.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditor.layout" />
     <EmbeddedResource Include="GUI\Timeline\QuestionEditorAnswerRow.layout" />
     <EmbeddedResource Include="GUI\Timeline\SaveTimelineDialog.layout" />

@@ -22,13 +22,17 @@ namespace Medical.GUI
 
         private Button translationButton;
         private Button rotationButton;
+        private Button keepOpenButton;
 
         private PropTimeline propTimeline;
+        private OpenPropManager propManager;
 
-        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, SimObjectMover simObjectMover)
+        public ShowPropProperties(Widget parentWidget, PropTimeline propTimeline, OpenPropManager propManager, SimObjectMover simObjectMover)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowPropProperties.layout")
         {
             this.simObjectMover = simObjectMover;
+            this.propManager = propManager;
+            propManager.PropClosed += new EventDelegate<OpenPropManager, ShowPropAction>(propManager_PropClosed);
 
             propTypes = mainWidget.findWidget("PropTypeCombo") as ComboBox;
             propTypes.EventComboChangePosition += new MyGUIEvent(propTypes_EventComboChangePosition);
@@ -58,6 +62,9 @@ namespace Medical.GUI
 
             Button moveToStart = (Button)mainWidget.findWidget("startPosButton");
             moveToStart.MouseButtonClick += new MyGUIEvent(moveToStart_MouseButtonClick);
+
+            keepOpenButton = (Button)mainWidget.findWidget("keepOpen");
+            keepOpenButton.MouseButtonClick += new MyGUIEvent(keepOpenButton_MouseButtonClick);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -99,6 +106,7 @@ namespace Medical.GUI
             simObjectMover.addMovableObject("Prop", this);
             simObjectMover.setDrawingSurfaceVisible(true);
             propTimeline.setPropData(showProp);
+            keepOpenButton.StateCheck = showProp.KeepOpen;
         }
 
         public override void editingCompleted()
@@ -172,6 +180,31 @@ namespace Medical.GUI
         {
             showProp.moveToPropStartPosition();
             showProp._movePreviewProp(showProp.Translation, showProp.Rotation);
+        }
+
+        void keepOpenButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            if (keepOpenButton.StateCheck)
+            {
+                propManager.removeOpenProp(showProp);
+            }
+            else
+            {
+                propManager.addOpenProp(showProp);
+                if (!propManager.Visible)
+                {
+                    propManager.Visible = true;
+                }
+            }
+            keepOpenButton.StateCheck = showProp.KeepOpen;
+        }
+
+        void propManager_PropClosed(OpenPropManager source, ShowPropAction arg)
+        {
+            if (arg == showProp)
+            {
+                keepOpenButton.StateCheck = arg.KeepOpen;
+            }
         }
 
         #region MovableObject Members
