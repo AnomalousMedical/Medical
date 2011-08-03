@@ -10,6 +10,7 @@ namespace Medical.GUI
 {
     public class ColorMenu : PopupContainer
     {
+        private static bool colorsLoaded = false;
         public delegate void ColorChosenDelegate(Color color);
 
         public static void ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback)
@@ -43,7 +44,11 @@ namespace Medical.GUI
 
         protected override void loadResources()
         {
-            Gui.Instance.load("Medical.GUI.ColorMenu.Colors.xml");
+            if (!colorsLoaded)
+            {
+                Gui.Instance.load("Medical.GUI.ColorMenu.Colors.xml");
+                colorsLoaded = true;
+            }
         }
 
         public Color SelectedColor

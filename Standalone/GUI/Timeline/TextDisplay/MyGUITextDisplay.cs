@@ -62,7 +62,14 @@ namespace Medical.GUI
                     if (currentLetter == '#')
                     {
                         //Skip one place for the # sign.
-                        currentIndex += 2;
+                        if (letterCount == 0)
+                        {
+                            ++currentIndex;
+                        }
+                        else
+                        {
+                            currentIndex += 2;
+                        }
                         --letterCount;
                     }
                     else
