@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Edit" skin="WordWrapSimple" position="81 139 222 137" layer="Back" name="TextBox">
+    <Widget type="Edit" skin="WordWrapSimple" position="81 139 222 137" layer="Overlapped" name="TextBox">
         <Property key="Edit_Static" value="true"/>
         <Property key="Edit_WordWrap" value="true"/>
         <Property key="Text_TextColour" value="#FFFFFF"/>

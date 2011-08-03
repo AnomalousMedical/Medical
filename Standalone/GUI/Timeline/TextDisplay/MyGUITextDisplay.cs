@@ -62,6 +62,10 @@ namespace Medical.GUI
 
         private static int findPositionInColorizedString(int position, String colorizedString)
         {
+            if (colorizedString.Length == 0)
+            {
+                return 0;
+            }
             int letterCount = position;
             int currentIndex = 0;
             char currentLetter;
