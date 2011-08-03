@@ -17,6 +17,7 @@ namespace Medical.GUI
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
         private SceneViewWindow sceneWindow;
+        private String fontName;
 
         public MyGUITextDisplay(MyGUITextDisplayFactory textFactory, SceneViewWindow sceneWindow)
             :base("Medical.GUI.Timeline.TextDisplay.MyGUITextDisplay.layout")
@@ -77,11 +78,12 @@ namespace Medical.GUI
         {
             get
             {
-                return textBox.FontName;
+                return fontName;
             }
             set
             {
-                textBox.FontName = value;
+                fontName = value;
+                textBox.FontName = textFactory.getMyGUIFont(fontName, FontHeight);
             }
         }
 
@@ -93,6 +95,7 @@ namespace Medical.GUI
             }
             set
             {
+                textBox.FontName = textFactory.getMyGUIFont(fontName, value);
                 textBox.FontHeight = value;
             }
         }

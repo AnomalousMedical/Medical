@@ -15,16 +15,16 @@ namespace Medical
     {
         private bool finished = false;
         private ITextDisplay textDisplay;
-        private String text;
+        private String text = "";
         private Size2 size;
         private Vector2 position;
         private String fontName = "TimelineText";
-        private int fontHeight = 14;
+        private int fontHeight = 21;
         private TextualAlignment textAlign = TextualAlignment.LeftTop;
 
         public ShowTextAction()
         {
-            size = new Size2(0.2f, 0.2f);
+            size = new Size2(1.0f, 1.0f);
             position = new Vector2(0.0f, 0.0f);
         }
 

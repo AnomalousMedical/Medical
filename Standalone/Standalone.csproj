@@ -208,6 +208,7 @@
     <Compile Include="GUI\TaskMenu\TaskMenu.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuCategories.cs" />
     <Compile Include="GUI\TaskMenu\TaskMenuRecentDocuments.cs" />
+    <Compile Include="GUI\Timeline\TextDisplay\MyGUIDynamicFontManager.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplay.cs" />
     <Compile Include="GUI\Timeline\TextDisplay\MyGUITextDisplayFactory.cs" />
     <Compile Include="Layout\MDI\MDIBorderContainerDock.cs" />
