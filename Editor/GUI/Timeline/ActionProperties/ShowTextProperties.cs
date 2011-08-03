@@ -78,7 +78,7 @@ namespace Medical.GUI
         {
             timelineData = data;
             showText = (ShowTextAction)((TimelineActionData)data).Action;
-            showTextEdit.OnlyText = showText.Text.Replace("\\n", "\n");
+            showTextEdit.OnlyText = showText.Text;
             Vector2 position = showText.Position;
             xPosition.FloatValue = position.x;
             yPosition.FloatValue = position.y;
@@ -115,7 +115,7 @@ namespace Medical.GUI
 
         void showTextEdit_EventEditTextChange(Widget source, EventArgs e)
         {
-            showText.Text = showTextEdit.OnlyText.Replace("\n", "\\n");
+            showText.Text = showTextEdit.OnlyText;
         }
 
         void fontHeight_ValueChanged(Widget source, EventArgs e)
