@@ -42,15 +42,28 @@ namespace Medical.GUI
         public String addColorToSelectedText(Engine.Color color)
         {
             String colorText = textBox.Caption;
-            uint selection = textBox.TextCursor;
-            colorText = colorText.Insert(findPositionInColorizedString((int)selection, 0, colorText), "#" + color.ToHexString());
+            String defaultColor = "#" + textBox.TextColor.ToHexString();
+            if (textBox.IsTextSelection)
+            {
+                int selectionStart = findPositionInColorizedString((int)textBox.TextSelectionStart, colorText);
+                String currentColor = findColorForPosition(selectionStart, colorText, defaultColor);
+                colorText = colorText.Insert(selectionStart, "#" + color.ToHexString());
+
+                int selectionEnd = findPositionInColorizedString((int)textBox.TextSelectionEnd, colorText);
+                colorText = colorText.Insert(selectionEnd, currentColor);
+            }
+            else
+            {
+                uint selection = textBox.TextCursor;
+                colorText = colorText.Insert(findPositionInColorizedString((int)selection, colorText), "#" + color.ToHexString());
+            }
             return colorText;
         }
 
-        private static int findPositionInColorizedString(int position, int startHint, String colorizedString)
+        private static int findPositionInColorizedString(int position, String colorizedString)
         {
-            int letterCount = position - startHint;
-            int currentIndex = startHint;
+            int letterCount = position;
+            int currentIndex = 0;
             char currentLetter;
             while (letterCount >= 0 && currentIndex < colorizedString.Length)
             {
@@ -85,6 +98,25 @@ namespace Medical.GUI
                 }
             }
             return currentIndex - 1;
+        }
+
+        private static String findColorForPosition(int position, String colorText, String defaultColor)
+        {
+            char currentLetter;
+            while (position >= 0)
+            {
+                currentLetter = colorText[position];
+                if (currentLetter == '#')
+                {
+                    if (position + 1 < colorText.Length && colorText[position + 1] != '#')
+                    {
+                        //Have a color string
+                        return colorText.Substring(position, 7);
+                    }
+                }
+                --position;
+            }
+            return defaultColor;
         }
 
         public void setText(String text)
