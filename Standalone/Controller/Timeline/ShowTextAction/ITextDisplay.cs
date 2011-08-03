@@ -25,6 +25,15 @@ namespace Medical
     /// </summary>
     public interface ITextDisplay : IDisposable
     {
+        event EventDelegate<ITextDisplay, String> TextEdited;
+
+        /// <summary>
+        /// Add a color to the text.
+        /// </summary>
+        /// <param name="color">The color to add.</param>
+        /// <returns>A new string formatted with the color info.</returns>
+        String addColorToSelectedText(Color color);
+
         /// <summary>
         /// Set the image for this IImageDisplay.
         /// </summary>
@@ -51,5 +60,7 @@ namespace Medical
         int FontHeight { get; set; }
 
         TextualAlignment TextAlign { get; set; }
+
+        bool Editable { get; set; }
     }
 }

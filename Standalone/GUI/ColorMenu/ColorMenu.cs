@@ -10,14 +10,23 @@ namespace Medical.GUI
 {
     public class ColorMenu : PopupContainer
     {
-        public event EventHandler ColorChanged;
+        public delegate void ColorChosenDelegate(Color color);
 
+        public static void ShowColorMenu(int left, int top, ColorChosenDelegate colorChosenCallback)
+        {
+            ColorMenu colorMenu = new ColorMenu(colorChosenCallback);
+            colorMenu.show(left, top);
+        }
+
+        private ColorChosenDelegate colorChosenCallback;
         private ButtonGrid colorGrid;
         private Color customColor = Color.Black;
 
-        public ColorMenu()
+        private ColorMenu(ColorChosenDelegate colorChosenCallback)
             :base("Medical.GUI.ColorMenu.ColorMenu.layout")
         {
+            this.colorChosenCallback = colorChosenCallback;
+
             colorGrid = new ButtonGrid(widget.findWidget("ColorGrid") as ScrollView);
             for (int i = 0; i < 77; ++i)
             {
@@ -28,6 +37,8 @@ namespace Medical.GUI
 
             Button moreColorsButton = widget.findWidget("MoreColorsButton") as Button;
             moreColorsButton.MouseButtonClick += new MyGUIEvent(moreColorsButton_MouseButtonClick);
+
+            this.Hidden += new EventHandler(ColorMenu_Hidden);
         }
 
         protected override void loadResources()
@@ -49,9 +60,9 @@ namespace Medical.GUI
 
         void colorGrid_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (ColorChanged != null)
+            if (colorChosenCallback != null)
             {
-                ColorChanged.Invoke(this, EventArgs.Empty);
+                colorChosenCallback.Invoke(SelectedColor);
             }
             this.hide();
         }
@@ -69,6 +80,11 @@ namespace Medical.GUI
                     colorGrid_SelectedValueChanged(this, EventArgs.Empty);
                 }
             }
+        }
+
+        void ColorMenu_Hidden(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
 
         private static Color[] colorTable = {

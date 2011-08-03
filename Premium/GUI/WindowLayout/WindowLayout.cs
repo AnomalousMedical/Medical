@@ -6,8 +6,6 @@ using MyGUIPlugin;
 using Medical.Controller;
 using Engine;
 using OgrePlugin;
-using System.Drawing;
-using System.Drawing.Imaging;
 using OgreWrapper;
 
 namespace Medical.GUI
@@ -15,7 +13,6 @@ namespace Medical.GUI
     public class WindowLayout : FixedSizeDialog
     {
         private SceneViewController sceneViewController;
-        private ColorMenu colorMenu;
         private WindowLayoutMenu windowLayoutMenu;
 
         public WindowLayout(StandaloneController standaloneController)
@@ -29,15 +26,11 @@ namespace Medical.GUI
             Button backgroundColor = window.findWidget("BackgroundColor") as Button;
             backgroundColor.MouseButtonClick += new MyGUIEvent(backgroundColor_MouseButtonClick);
 
-            colorMenu = new ColorMenu();
-            colorMenu.ColorChanged += new EventHandler(colorMenu_ColorChanged);
-
             windowLayoutMenu = new WindowLayoutMenu(standaloneController);
         }
 
         public override void Dispose()
         {
-            colorMenu.Dispose();
             base.Dispose();
         }
 
@@ -48,14 +41,10 @@ namespace Medical.GUI
 
         void backgroundColor_MouseButtonClick(Widget source, EventArgs e)
         {
-            colorMenu.show(source.AbsoluteLeft, source.AbsoluteTop + source.Height);
+            ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, delegate(Color color)
+            {
+                sceneViewController.ActiveWindow.BackColor = color;
+            });
         }
-
-        void colorMenu_ColorChanged(object sender, EventArgs e)
-        {
-            sceneViewController.ActiveWindow.BackColor = colorMenu.SelectedColor;
-        }
-
-
     }
 }

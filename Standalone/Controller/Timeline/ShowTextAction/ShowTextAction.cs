@@ -28,6 +28,15 @@ namespace Medical
             position = new Vector2(0.0f, 0.0f);
         }
 
+        public void setSelectionColor(Color color)
+        {
+            if (textDisplay != null)
+            {
+                text = textDisplay.addColorToSelectedText(color);
+                textDisplay.setText(text);
+            }
+        }
+
         public override void started(float timelineTime, Clock clock)
         {
             if (text != null)
@@ -93,6 +102,8 @@ namespace Medical
                     textDisplay.FontName = fontName;
                     textDisplay.FontHeight = fontHeight;
                     textDisplay.TextAlign = textAlign;
+                    textDisplay.Editable = true;
+                    textDisplay.TextEdited += new EventDelegate<ITextDisplay, string>(textDisplay_TextEdited);
                 }
             }
         }
@@ -212,6 +223,11 @@ namespace Medical
                     textDisplay.TextAlign = textAlign;
                 }
             }
+        }
+
+        void textDisplay_TextEdited(ITextDisplay source, string arg)
+        {
+            text = arg;
         }
 
         public String CameraName { get; set; }

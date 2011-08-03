@@ -12,12 +12,14 @@ namespace Medical.GUI
 {
     class MyGUITextDisplay : Component, ITextDisplay
     {
-        private Widget textBox;
+        private Edit textBox;
         private MyGUITextDisplayFactory textFactory;
         private Vector2 position = new Vector2();
         private Size2 size = new Size2();
         private SceneViewWindow sceneWindow;
         private String fontName;
+
+        public event EventDelegate<ITextDisplay, String> TextEdited;
 
         public MyGUITextDisplay(MyGUITextDisplayFactory textFactory, SceneViewWindow sceneWindow)
             :base("Medical.GUI.Timeline.TextDisplay.MyGUITextDisplay.layout")
@@ -27,7 +29,7 @@ namespace Medical.GUI
             sceneWindow.Resized += sceneWindow_Resized;
 
             widget.Visible = false;
-            textBox = widget.findWidget("TextBox");
+            textBox = (Edit)widget.findWidget("TextBox");
         }
 
         public override void Dispose()
@@ -35,6 +37,47 @@ namespace Medical.GUI
             sceneWindow.Resized -= sceneWindow_Resized;
             textFactory.textDisposed(this);
             base.Dispose();
+        }
+
+        public String addColorToSelectedText(Engine.Color color)
+        {
+            String colorText = textBox.Caption;
+            uint selection = textBox.TextCursor;
+            colorText = colorText.Insert(findPositionInColorizedString((int)selection, 0, colorText), "#" + color.ToHexString());
+            return colorText;
+        }
+
+        private static int findPositionInColorizedString(int position, int startHint, String colorizedString)
+        {
+            int letterCount = position - startHint;
+            int currentIndex = startHint;
+            char currentLetter;
+            while (letterCount >= 0 && currentIndex < colorizedString.Length)
+            {
+                currentLetter = colorizedString[currentIndex];
+                if (currentLetter == '#')
+                {
+                    //Found a # sign, spin to the next whitespace character.
+                    currentLetter = colorizedString[currentIndex + 1];
+                    if (currentLetter == '#')
+                    {
+                        //Skip one place for the # sign.
+                        currentIndex += 2;
+                        --letterCount;
+                    }
+                    else
+                    {
+                        //Skip 7 additional places for the color
+                        currentIndex += 7;
+                    }
+                }
+                else
+                {
+                    ++currentIndex;
+                    --letterCount;
+                }
+            }
+            return currentIndex - 1;
         }
 
         public void setText(String text)
@@ -97,6 +140,34 @@ namespace Medical.GUI
             {
                 textBox.FontName = textFactory.getMyGUIFont(fontName, value);
                 textBox.FontHeight = value;
+            }
+        }
+
+        public bool Editable
+        {
+            get
+            {
+                return !textBox.EditStatic;
+            }
+            set
+            {
+                textBox.EditStatic = !value;
+                if (value)
+                {
+                    textBox.EventEditTextChange += textBox_EventEditTextChange;
+                }
+                else
+                {
+                    textBox.EventEditTextChange -= textBox_EventEditTextChange;
+                }
+            }
+        }
+
+        void textBox_EventEditTextChange(Widget source, EventArgs e)
+        {
+            if (TextEdited != null)
+            {
+                TextEdited.Invoke(this, textBox.Caption);
             }
         }
 

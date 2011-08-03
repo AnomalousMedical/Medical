@@ -4,5 +4,6 @@
         <Property key="Edit_Static" value="true"/>
         <Property key="Edit_WordWrap" value="true"/>
         <Property key="Text_TextColour" value="#FFFFFF"/>
+        <Property key="Edit_MultiLine" value="true"/>
     </Widget>
 </MyGUI>

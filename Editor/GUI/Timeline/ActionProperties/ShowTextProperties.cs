@@ -11,7 +11,6 @@ namespace Medical.GUI
     {
         private ShowTextAction showText;
         private TimelineData timelineData;
-        private Edit showTextEdit;
 
         private NumericEdit xPosition;
         private NumericEdit yPosition;
@@ -26,9 +25,6 @@ namespace Medical.GUI
         public ShowTextProperties(Widget parentWidget, ITextDisplayFactory textFactory)
             :base(parentWidget, "Medical.GUI.Timeline.ActionProperties.ShowTextProperties.layout")
         {
-            showTextEdit = mainWidget.findWidget("TextEdit") as Edit;
-            showTextEdit.EventEditTextChange += new MyGUIEvent(showTextEdit_EventEditTextChange);
-
             xPosition = new NumericEdit(mainWidget.findWidget("XPositionEdit") as Edit);
             xPosition.ValueChanged += position_ValueChanged;
             xPosition.MinValue = 0.0f;
@@ -72,13 +68,15 @@ namespace Medical.GUI
             cameraText = mainWidget.findWidget("Camera") as StaticText;
             Button useCurrent = mainWidget.findWidget("UseCurrent") as Button;
             useCurrent.MouseButtonClick += new MyGUIEvent(useCurrent_MouseButtonClick);
+
+            Button colorButton = mainWidget.findWidget("ColorButton") as Button;
+            colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
         }
 
         public override void setCurrentData(TimelineData data)
         {
             timelineData = data;
             showText = (ShowTextAction)((TimelineActionData)data).Action;
-            showTextEdit.OnlyText = showText.Text;
             Vector2 position = showText.Position;
             xPosition.FloatValue = position.x;
             yPosition.FloatValue = position.y;
@@ -113,11 +111,6 @@ namespace Medical.GUI
             cameraText.Caption = showText.CameraName;
         }
 
-        void showTextEdit_EventEditTextChange(Widget source, EventArgs e)
-        {
-            showText.Text = showTextEdit.OnlyText;
-        }
-
         void fontHeight_ValueChanged(Widget source, EventArgs e)
         {
             showText.FontHeight = fontHeight.IntValue;
@@ -126,6 +119,14 @@ namespace Medical.GUI
         void alignCombo_EventComboAccept(Widget source, EventArgs e)
         {
             showText.TextAlign = alignCombo.Value;
+        }
+
+        void colorButton_MouseButtonClick(Widget source, EventArgs e)
+        {
+            ColorMenu.ShowColorMenu(source.AbsoluteLeft, source.AbsoluteTop + source.Height, delegate(Color color)
+            {
+                showText.setSelectionColor(color);
+            });
         }
     }
 }
