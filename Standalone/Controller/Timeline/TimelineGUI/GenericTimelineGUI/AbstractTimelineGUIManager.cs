@@ -35,7 +35,7 @@ namespace Medical
             subscribeToUpdates();
             if (navigationBar != null)
             {
-                navigationBar.setCurrentTimeline(gui.TimelineFile);
+                navigationBar.activeGUIChanged(gui);
             }
         }
 

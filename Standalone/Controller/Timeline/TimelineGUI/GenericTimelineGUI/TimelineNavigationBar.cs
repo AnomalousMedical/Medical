@@ -13,6 +13,7 @@ namespace Medical
         private FlowLayoutContainer flowLayout = new FlowLayoutContainer(FlowLayoutContainer.LayoutType.Horizontal, 10.0f, new Vector2(4.0f, 10.0f));
         private Dictionary<String, TimelineButtonContainer> panels = new Dictionary<String, TimelineButtonContainer>();
         private TimelineButtonContainer selectedButton;
+        private AbstractTimelineGUI currentGUI = null;
 
         public TimelineNavigationBar()
             :base("Medical.Controller.Timeline.TimelineGUI.GenericTimelineGUI.TimelineNavigationBar.layout")
@@ -35,22 +36,21 @@ namespace Medical
 
         public void addPanel(String timelineFile, String text, String imageKey)
         {
-            TimelineButtonContainer container;
-            if (!panels.TryGetValue(timelineFile, out container))
+            TimelineButtonContainer timelineButton;
+            if (!panels.TryGetValue(timelineFile, out timelineButton))
             {
                 Button button = iconScrollView.createWidgetT("Button", "RibbonButton", 0, 0, 78, 64, Align.Default, "") as Button;
-                
                 button.Caption = text;
-                button.MouseButtonClick += iconClicked;
                 int captionWidth = (int)button.getTextSize().Width;
                 button.setSize(captionWidth + 10, button.Height);
                 button.StaticImage.setItemResource(imageKey);
-                container = new TimelineButtonContainer(button);
+                timelineButton = new TimelineButtonContainer(button);
+                timelineButton.Clicked += new EventDelegate<TimelineButtonContainer>(timelineButton_Clicked);
             }
-            container.TimelineFile = timelineFile;
-            container.Visible = true;
-            flowLayout.addChild(container.Layout);
-            panels.Add(timelineFile, container);
+            timelineButton.TimelineFile = timelineFile;
+            timelineButton.Visible = true;
+            flowLayout.addChild(timelineButton.Layout);
+            panels.Add(timelineFile, timelineButton);
 
             //Adjust scroll area size
             Size2 size = iconScrollView.CanvasSize;
@@ -69,20 +69,22 @@ namespace Medical
             selectedButton = null;
         }
 
-        internal void setCurrentTimeline(string timelineFile)
+        internal void activeGUIChanged(AbstractTimelineGUI gui)
         {
+            currentGUI = gui;
+
             if (selectedButton != null)
             {
                 selectedButton.StateCheck = false;
             }
-            if (panels.TryGetValue(timelineFile, out selectedButton))
+            if (panels.TryGetValue(gui.TimelineFile, out selectedButton))
             {
                 selectedButton.StateCheck = true;
             }
             else
             {
                 selectedButton = null;
-                Logging.Log.Warning("Could not find a button for the timeline {0}.", timelineFile);
+                Logging.Log.Warning("Could not find a button for the timeline {0}.", gui.TimelineFile);
             }
         }
 
@@ -103,20 +105,17 @@ namespace Medical
             flowLayout.invalidate();
         }
 
-        void iconClicked(Widget source, EventArgs e)
+        void timelineButton_Clicked(TimelineButtonContainer source)
         {
-            //WizardButtonContainer buttonContainer = source.UserObject as WizardButtonContainer;
-            //if (buttonContainer != null)
-            //{
-            //    if (ModeChanged != null)
-            //    {
-            //        ModeChanged.Invoke(buttonContainer.ModeIndex);
-            //    }
-            //}
-            //else
-            //{
-            //    Log.Error("Somehow got a bad WizardButtonContainer. This error should never occur.");
-            //}
+            if (currentGUI != null)
+            {
+                currentGUI._alertNavigationBarTimelineChange();
+                currentGUI.closeAndPlayTimeline(source.TimelineFile);
+            }
+            else
+            {
+                Logging.Log.Warning("Navigation bar could not start next timeline '{0}', it does not have a current gui.", source.TimelineFile);
+            }
         }
 
 
@@ -124,12 +123,23 @@ namespace Medical
         {
             private Button button;
 
+            public event EventDelegate<TimelineButtonContainer> Clicked;
+
             public TimelineButtonContainer(Button button)
             {
                 this.button = button;
+                button.MouseButtonClick += new MyGUIEvent(button_MouseButtonClick);
                 button.UserObject = this;
                 Layout = new MyGUILayoutContainer(button);
                 TimelineFile = null;
+            }
+
+            void button_MouseButtonClick(Widget source, EventArgs e)
+            {
+                if (Clicked != null)
+                {
+                    Clicked.Invoke(this);
+                }
             }
 
             public void Dispose()

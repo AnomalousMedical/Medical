@@ -74,6 +74,19 @@ namespace Medical
             AbstractTimelineGUIManager.Instance.clearNavigationBar();
         }
 
+        internal void _alertNavigationBarTimelineChange()
+        {
+            navigationBarChangedTimelines();
+        }
+
+        /// <summary>
+        /// This is called when the navigation bar is changing timelines.
+        /// </summary>
+        protected virtual void navigationBarChangedTimelines()
+        {
+
+        }
+
         /// <summary>
         /// Used only by AbstractTimelineGUIManager. Do NOT touch.
         /// </summary>
