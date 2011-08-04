@@ -184,6 +184,7 @@ namespace Medical.GUI
             }
             catch (Exception ex)
             {
+                Log.Default.printException(ex);
                 MessageBox.show(String.Format("Error loading timeline {0}.\n{1}", filename, ex.Message), "Load Timeline Error", MessageBoxStyle.Ok | MessageBoxStyle.IconError);
             }
         }
