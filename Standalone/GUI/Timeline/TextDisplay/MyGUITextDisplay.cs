@@ -287,6 +287,36 @@ namespace Medical.GUI
 
             widget.setPosition(left, top);
             widget.setSize(newWidth, newHeight);
+
+            //Make sure the box is big enough for the text
+            bool needsChange = false;
+            Size2 textSize = textBox.getTextSize();
+            if (textSize.Width > width)
+            {
+                textSize.Width = width;
+            }
+            if (textSize.Height > height)
+            {
+                textSize.Height = height;
+            }
+            if (newWidth < textSize.Width)
+            {
+                needsChange = true;
+                //left -= (int)(textSize.Width - newWidth);
+                newWidth = (int)textSize.Width;
+            }
+            if (newHeight < textSize.Height)
+            {
+                needsChange = true;
+                //top -= (int)(textSize.Height - newHeight);
+                newHeight = (int)textSize.Height;
+            }
+
+            if (needsChange)
+            {
+                widget.setPosition(left, top);
+                widget.setSize(newWidth, newHeight);
+            }
         }
     }
 }
