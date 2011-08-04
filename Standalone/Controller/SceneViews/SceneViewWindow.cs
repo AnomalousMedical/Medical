@@ -191,6 +191,25 @@ namespace Medical.Controller
             return screenPos;
         }
 
+        /// <summary>
+        /// Compute an offset from the current camera position to one that includes the given point
+        /// </summary>
+        /// <param name="include"></param>
+        /// <returns></returns>
+        //public float computeOffsetToIncludePoint(Vector3 include)
+        //{
+        //    //Transform the point from world space to camera space
+        //    Matrix4x4 viewMatrix = Camera.getViewMatrix();
+        //    Vector3 localInclude = viewMatrix * include;
+        //    float nearDist = Camera.getNearClipDistance();
+        //    float fovy = Camera.getFOVy();
+
+        //    float d = localInclude.y;
+        //    float b = nearDist;
+        //    float c = (float)Math.Tan(fovy);
+
+        //}
+
         public Ray3 getCameraToViewportRay(float x, float y)
         {
             if (sceneView != null)

@@ -50,7 +50,7 @@ namespace Medical.GUI
 
         internal String getThumbnail(Anatomy anatomy)
         {
-            float fovy = sceneViewController.ActiveWindow.Camera.getFOVy() * 0.0174532925f;
+            Radian fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
             return anatomyController.getThumbnail(anatomy, fovy);
         }
 
@@ -88,7 +88,7 @@ namespace Medical.GUI
                 Vector3 center = boundingBox.Center;
 
                 float nearPlane = window.Camera.getNearClipDistance();
-                float theta = window.Camera.getFOVy() * 0.0174532925f;
+                float theta = window.Camera.getFOVy();
                 float aspectRatio = window.Camera.getAspectRatio();
                 if (aspectRatio < 1.0f)
                 {

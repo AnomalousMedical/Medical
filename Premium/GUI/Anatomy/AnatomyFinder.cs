@@ -331,7 +331,7 @@ namespace Medical.GUI
             ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "");
             if (this.Visible)
             {
-                String imageName = anatomyController.getThumbnail(anatomy, sceneViewController.ActiveWindow.Camera.getFOVy() * 0.0174532925f);
+                String imageName = anatomyController.getThumbnail(anatomy, sceneViewController.ActiveWindow.Camera.getFOVy());
                 anatomyItem.setImage(imageName);
             }
             anatomyItem.UserObject = anatomy;
@@ -342,7 +342,7 @@ namespace Medical.GUI
         {
             base.onShown(args);
             int itemCount = anatomyList.Count;
-            float fovy = sceneViewController.ActiveWindow.Camera.getFOVy() * 0.0174532925f;
+            float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
             for (int i = 0; i < itemCount; ++i)
             {
                 ButtonGridItem item = anatomyList.getItem(i);
