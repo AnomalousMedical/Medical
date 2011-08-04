@@ -37,7 +37,11 @@ namespace Medical.GUI
             sceneWindow.Resized -= sceneWindow_Resized;
             displayFactory.displayDisposed(this);
             base.Dispose();
-            imageAtlas.Dispose();
+            if (imageAtlas != null)
+            {
+                imageAtlas.Dispose();
+                imageAtlas = null;
+            }
         }
 
         public void setImage(Stream image)

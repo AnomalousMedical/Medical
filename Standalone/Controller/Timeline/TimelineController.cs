@@ -274,7 +274,14 @@ namespace Medical
                 using (Stream imageStream = resourceProvider.openFile(imageName))
                 {
                     imageDisplay = ImageDisplayFactory.createImageDisplay(cameraName);
-                    imageDisplay.setImage(imageStream);
+                    if (imageStream != null)
+                    {
+                        imageDisplay.setImage(imageStream);
+                    }
+                    else
+                    {
+                        Log.Warning("Could not load image {0}.", imageName);
+                    }
                     imageDisplay.show();
                     return imageDisplay;
                 }
