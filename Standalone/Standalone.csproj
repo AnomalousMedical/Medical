@@ -169,6 +169,7 @@
     <Compile Include="Controller\SceneViews\CameraPosition.cs" />
     <Compile Include="Controller\Layers\EditableLayerState.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\MyGUITimelineGUI.cs" />
+    <Compile Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\ShowTimelineGUIAction.cs" />
     <Compile Include="Controller\Timeline\TimelineEmbeddedResourceProvider.cs" />
     <Compile Include="Controller\Timeline\TimelineGUI\TimelineGUI.cs" />
@@ -366,6 +367,7 @@
   <ItemGroup>
     <None Include="Properties\Standalone.manifest" />
     <None Include="Resources\AnomalousMedical.png" />
+    <EmbeddedResource Include="Controller\Timeline\TimelineGUI\GenericTimelineGUI\TimelineNavigationBar.layout" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.png" />
     <EmbeddedResource Include="GUI\ColorMenu\Colors.xml" />
     <Content Include="Preprocessor.txt" />

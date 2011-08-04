@@ -15,6 +15,7 @@ namespace Medical
         private List<AbstractTimelineGUI> requestList = new List<AbstractTimelineGUI>();
         private UpdateTimer updateTimer;
         private bool updating = false;
+        private TimelineNavigationBar navigationBar = null;
 
         public AbstractTimelineGUIManager(UpdateTimer updateTimer, GUIManager guiManager)
         {
@@ -32,6 +33,10 @@ namespace Medical
             gui._RequestClosed = false;
             requestList.Add(gui);
             subscribeToUpdates();
+            if (navigationBar != null)
+            {
+                navigationBar.setCurrentTimeline(gui.TimelineFile);
+            }
         }
 
         public void requestClose(AbstractTimelineGUI gui)
@@ -39,6 +44,44 @@ namespace Medical
             gui._RequestClosed = true;
             requestList.Add(gui);
             subscribeToUpdates();
+        }
+
+        public void showNavigationBar()
+        {
+            if (navigationBar == null)
+            {
+                navigationBar = new TimelineNavigationBar();
+            }
+            guiManager.changeTopPanel(navigationBar.Layout, null);
+        }
+
+        public void hideNavigationBar()
+        {
+            if (navigationBar != null)
+            {
+                guiManager.changeTopPanel(null, delegate(LayoutContainer oldChild)
+                {
+                    navigationBar.Dispose();
+                    navigationBar = null;
+                });
+            }
+        }
+
+        public void addToNavigationBar(String timeline, String text, String imageKey)
+        {
+            if (navigationBar == null)
+            {
+                navigationBar = new TimelineNavigationBar();
+            }
+            navigationBar.addPanel(timeline, text, imageKey);
+        }
+
+        public void clearNavigationBar()
+        {
+            if (navigationBar != null)
+            {
+                navigationBar.clearPanels();
+            }
         }
 
         public void exceededMaxDelta()

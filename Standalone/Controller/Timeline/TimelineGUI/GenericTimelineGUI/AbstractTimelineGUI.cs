@@ -54,6 +54,26 @@ namespace Medical
             showTimelineAction.stopTimelines();
         }
 
+        public void showNavigationBar()
+        {
+            AbstractTimelineGUIManager.Instance.showNavigationBar();
+        }
+
+        public void hideNavigationBar()
+        {
+            AbstractTimelineGUIManager.Instance.hideNavigationBar();
+        }
+
+        public void addToNavigationBar(String timeline, String text, String imageKey)
+        {
+            AbstractTimelineGUIManager.Instance.addToNavigationBar(timeline, text, imageKey);
+        }
+
+        public void clearNavigationBar()
+        {
+            AbstractTimelineGUIManager.Instance.clearNavigationBar();
+        }
+
         /// <summary>
         /// Used only by AbstractTimelineGUIManager. Do NOT touch.
         /// </summary>
@@ -69,6 +89,14 @@ namespace Medical
         internal void _animationCallback(LayoutContainer oldChild)
         {
             Dispose();
+        }
+
+        internal String TimelineFile
+        {
+            get
+            {
+                return showTimelineAction.Timeline.SourceFile;
+            }
         }
 
         /// <summary>
