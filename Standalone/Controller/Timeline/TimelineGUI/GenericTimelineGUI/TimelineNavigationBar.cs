@@ -84,7 +84,7 @@ namespace Medical
             else
             {
                 selectedButton = null;
-                Logging.Log.Warning("Could not find a button for the timeline {0}.", gui.TimelineFile);
+                Logging.Log.Warning("Could not find a button for the timeline {0}", gui.TimelineFile);
             }
         }
 
