@@ -193,23 +193,19 @@ namespace Medical.Controller
 
         public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime)
         {
-            float distance = computeOffsetToIncludePoint(includePoint);
+            Matrix4x4 viewMatrix = Camera.getViewMatrix();
+            float aspect = Camera.getAspectRatio();
+            float fovy = Camera.getFOVy() * 0.5f;
+
+            float distance = computeOffsetToIncludePoint(viewMatrix, includePoint, aspect, fovy);
             Vector3 direction = (Translation - LookAt).normalized();
             setPosition(Translation - (direction * distance), LookAt, transitionTime);
         }
 
-        /// <summary>
-        /// Compute an offset from the current camera position to one that includes the given point
-        /// </summary>
-        /// <param name="include"></param>
-        /// <returns></returns>
-        public float computeOffsetToIncludePoint(Vector3 include)
+        public static float computeOffsetToIncludePoint(Matrix4x4 viewMatrix, Vector3 include, float aspect, float fovy)
         {
             //Transform the point from world space to camera space
-            Matrix4x4 viewMatrix = Camera.getViewMatrix();
             Vector3 localInclude = viewMatrix * include;
-            float aspect = Camera.getAspectRatio();
-            float fovy = Camera.getFOVy() * 0.5f;
             float fovx = (float)Math.Atan(aspect * Math.Tan(fovy));
 
             //Project the points onto the two triangles formed between the camera, the z coord and the x or y coord we know the 
