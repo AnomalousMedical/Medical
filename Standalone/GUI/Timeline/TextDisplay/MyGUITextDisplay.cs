@@ -229,15 +229,18 @@ namespace Medical.GUI
             }
             set
             {
-                positionOnScenePoint = value;
-                if (positionOnScenePoint)
+                if (positionOnScenePoint != value)
                 {
-                    sceneWindow.RenderingStarted += sceneWindow_RenderingStarted;
-                }
-                else
-                {
-                    sceneWindow.RenderingStarted -= sceneWindow_RenderingStarted;
-                    positionText((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                    positionOnScenePoint = value;
+                    if (positionOnScenePoint)
+                    {
+                        sceneWindow.RenderingStarted += sceneWindow_RenderingStarted;
+                    }
+                    else
+                    {
+                        sceneWindow.RenderingStarted -= sceneWindow_RenderingStarted;
+                        positionText((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                    }
                 }
             }
         }
