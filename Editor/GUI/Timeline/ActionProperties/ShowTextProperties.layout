@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout">
-    <Widget type="Widget" skin="PanelEmpty" position="79 57 211 219" layer="Back">
+    <Widget type="Widget" skin="PanelEmpty" position="254 64 211 219" layer="Back">
         <Widget type="StaticText" skin="StaticText" position="3 44 56 17">
             <Property key="Widget_Caption" value="Position"/>
             <Property key="Text_TextAlign" value="Left VCenter"/>
@@ -36,20 +36,24 @@
         <Widget type="Button" skin="Button" position="3 19 89 22" name="UseCurrent">
             <Property key="Widget_Caption" value="Use Current"/>
         </Widget>
-        <Widget type="StaticText" skin="StaticText" position="2 142 29 14">
+        <Widget type="StaticText" skin="StaticText" position="2 150 29 14">
             <Property key="Widget_Caption" value="Font"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="32 141 175 20" name="FontCombo"/>
-        <Widget type="StaticText" skin="StaticText" position="2 168 69 13">
+        <Widget type="ComboBox" skin="ComboBox" position="32 149 175 20" name="FontCombo"/>
+        <Widget type="StaticText" skin="StaticText" position="2 175 69 13">
             <Property key="Widget_Caption" value="Font Height"/>
         </Widget>
-        <Widget type="Edit" skin="Edit" position="72 166 134 20" name="FontHeight"/>
-        <Widget type="StaticText" skin="StaticText" position="1 194 62 14">
+        <Widget type="Edit" skin="Edit" position="72 173 134 20" name="FontHeight"/>
+        <Widget type="StaticText" skin="StaticText" position="1 200 62 14">
             <Property key="Widget_Caption" value="Text Align"/>
         </Widget>
-        <Widget type="ComboBox" skin="ComboBox" position="66 191 140 20" name="AlignCombo"/>
-        <Widget type="Button" skin="Button" position="3 88 68 19" name="ColorButton">
+        <Widget type="ComboBox" skin="ComboBox" position="66 197 140 20" name="AlignCombo"/>
+        <Widget type="Button" skin="Button" position="3 127 68 19" name="ColorButton">
             <Property key="Widget_Caption" value="Set Color"/>
         </Widget>
+        <Widget type="Button" skin="CheckBox" position="5 88 197 14" name="PositionOnScenePoint">
+            <Property key="Widget_Caption" value="Position on Scene Point"/>
+        </Widget>
+        <Widget type="Edit" skin="Edit" position="6 103 198 20" name="ScenePointEdit"/>
     </Widget>
 </MyGUI>

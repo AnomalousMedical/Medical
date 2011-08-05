@@ -21,6 +21,8 @@ namespace Medical
         private String fontName = "TimelineText";
         private int fontHeight = 21;
         private TextualAlignment textAlign = TextualAlignment.LeftTop;
+        private Vector3 scenePoint = Vector3.Zero;
+        private bool positionOnScenePoint = false;
 
         public ShowTextAction()
         {
@@ -54,6 +56,8 @@ namespace Medical
                     textDisplay.FontName = fontName;
                     textDisplay.FontHeight = fontHeight;
                     textDisplay.TextAlign = textAlign;
+                    textDisplay.ScenePoint = scenePoint;
+                    textDisplay.PositionOnScenePoint = positionOnScenePoint;
                 }
             }
             else
@@ -102,6 +106,8 @@ namespace Medical
                     textDisplay.FontName = fontName;
                     textDisplay.FontHeight = fontHeight;
                     textDisplay.TextAlign = textAlign;
+                    textDisplay.ScenePoint = scenePoint;
+                    textDisplay.PositionOnScenePoint = positionOnScenePoint;
                     textDisplay.Editable = true;
                     textDisplay.TextEdited += new EventDelegate<ITextDisplay, string>(textDisplay_TextEdited);
                 }
@@ -113,6 +119,7 @@ namespace Medical
             if (textDisplay != null)
             {
                 textDisplay.Dispose();
+                textDisplay = null;
             }
         }
 
@@ -225,6 +232,38 @@ namespace Medical
             }
         }
 
+        public Vector3 ScenePoint
+        {
+            get
+            {
+                return scenePoint;
+            }
+            set
+            {
+                scenePoint = value;
+                if (textDisplay != null)
+                {
+                    textDisplay.ScenePoint = scenePoint;
+                }
+            }
+        }
+
+        public bool PositionOnScenePoint
+        {
+            get
+            {
+                return positionOnScenePoint;
+            }
+            set
+            {
+                positionOnScenePoint = value;
+                if (textDisplay != null)
+                {
+                    textDisplay.PositionOnScenePoint = positionOnScenePoint;
+                }
+            }
+        }
+
         void textDisplay_TextEdited(ITextDisplay source, string arg)
         {
             text = arg;
@@ -241,6 +280,8 @@ namespace Medical
         private static String FONT_NAME = "FontName";
         private static String FONT_HEIGHT = "FontHeight";
         private static String TEXT_ALIGN = "TextAlign";
+        private static String SCENE_POINT = "ScenePoint";
+        private static String POSITION_ON_SCENE_POINT = "PositionOnScenePoint";
 
         protected ShowTextAction(LoadInfo info)
             :base(info)
@@ -252,6 +293,8 @@ namespace Medical
             fontName = info.GetValue(FONT_NAME, fontName);
             fontHeight = info.GetValue(FONT_HEIGHT, fontHeight);
             textAlign = info.GetValue<TextualAlignment>(TEXT_ALIGN, textAlign);
+            scenePoint = info.GetVector3(SCENE_POINT, scenePoint);
+            positionOnScenePoint = info.GetBoolean(POSITION_ON_SCENE_POINT, positionOnScenePoint);
         }
 
         public override void getInfo(SaveInfo info)
@@ -264,6 +307,8 @@ namespace Medical
             info.AddValue(FONT_NAME, fontName);
             info.AddValue(FONT_HEIGHT, fontHeight);
             info.AddValue(TEXT_ALIGN, textAlign);
+            info.AddValue(SCENE_POINT, scenePoint);
+            info.AddValue(POSITION_ON_SCENE_POINT, positionOnScenePoint);
         }
 
         #endregion

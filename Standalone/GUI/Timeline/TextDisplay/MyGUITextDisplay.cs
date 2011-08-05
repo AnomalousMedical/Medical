@@ -18,6 +18,8 @@ namespace Medical.GUI
         private Size2 size = new Size2();
         private SceneViewWindow sceneWindow;
         private String fontName;
+        private Vector3 scenePoint;
+        private bool positionOnScenePoint;
 
         public event EventDelegate<ITextDisplay, String> TextEdited;
 
@@ -35,6 +37,7 @@ namespace Medical.GUI
         public override void Dispose()
         {
             sceneWindow.Resized -= sceneWindow_Resized;
+            sceneWindow.RenderingStarted -= sceneWindow_RenderingStarted;
             textFactory.textDisposed(this);
             base.Dispose();
         }
@@ -206,6 +209,39 @@ namespace Medical.GUI
             }
         }
 
+        public Vector3 ScenePoint
+        {
+            get
+            {
+                return scenePoint;
+            }
+            set
+            {
+                scenePoint = value;
+            }
+        }
+
+        public bool PositionOnScenePoint
+        {
+            get
+            {
+                return positionOnScenePoint;
+            }
+            set
+            {
+                positionOnScenePoint = value;
+                if (positionOnScenePoint)
+                {
+                    sceneWindow.RenderingStarted += sceneWindow_RenderingStarted;
+                }
+                else
+                {
+                    sceneWindow.RenderingStarted -= sceneWindow_RenderingStarted;
+                    positionText((int)sceneWindow.WorkingSize.Width, (int)sceneWindow.WorkingSize.Height);
+                }
+            }
+        }
+
         void textBox_EventEditTextChange(Widget source, EventArgs e)
         {
             if (TextEdited != null)
@@ -317,6 +353,45 @@ namespace Medical.GUI
                 widget.setPosition(left, top);
                 widget.setSize(newWidth, newHeight);
             }
+        }
+
+        private void positionOnPoint()
+        {
+            Vector3 screenPos = sceneWindow.getScreenPosition(scenePoint);
+            int windowLeft = (int)sceneWindow.Location.x;
+            int windowTop = (int)sceneWindow.Location.y;
+            int windowRight = windowLeft + sceneWindow.RenderWidth;
+            int windowBottom = windowTop + sceneWindow.RenderHeight;
+
+            int left = (int)screenPos.x + windowLeft;
+            int top = (int)screenPos.y + windowTop;
+            int right = left + widget.Width;
+            int bottom = top + widget.Height;
+
+            if (right > windowRight)
+            {
+                left += windowRight - right;
+            }
+            if (bottom > windowBottom)
+            {
+                top += windowBottom - bottom;
+            }
+
+            if (left < windowLeft)
+            {
+                left = windowLeft;
+            }
+            if (top < windowTop)
+            {
+                top = windowTop;
+            }
+
+            widget.setPosition(left, top);
+        }
+
+        void sceneWindow_RenderingStarted(SceneViewWindow window, bool currentCameraRender)
+        {
+            positionOnPoint();
         }
     }
 }

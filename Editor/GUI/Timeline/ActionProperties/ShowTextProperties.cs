@@ -19,6 +19,8 @@ namespace Medical.GUI
         private NumericEdit fontHeight;
         private ComboBox fontNameCombo;
         private EnumComboBox<TextualAlignment> alignCombo;
+        private Edit scenePointEdit;
+        private CheckButton positionOnScenePoint;
 
         private StaticText cameraText;
 
@@ -71,6 +73,12 @@ namespace Medical.GUI
 
             Button colorButton = mainWidget.findWidget("ColorButton") as Button;
             colorButton.MouseButtonClick += new MyGUIEvent(colorButton_MouseButtonClick);
+
+            positionOnScenePoint = new CheckButton((Button)mainWidget.findWidget("PositionOnScenePoint"));
+            positionOnScenePoint.CheckedChanged += new MyGUIEvent(positionOnScenePoint_CheckedChanged);
+
+            scenePointEdit = (Edit)mainWidget.findWidget("ScenePointEdit");
+            scenePointEdit.EventEditSelectAccept += new MyGUIEvent(scenePointEdit_EventEditSelectAccept);
         }
 
         public override void setCurrentData(TimelineData data)
@@ -93,6 +101,8 @@ namespace Medical.GUI
                 index = fontNameCombo.ItemCount - 1;
             }
             fontNameCombo.SelectedIndex = index;
+            scenePointEdit.OnlyText = showText.ScenePoint.ToString();
+            positionOnScenePoint.Checked = showText.PositionOnScenePoint;
         }
 
         void position_ValueChanged(Widget source, EventArgs e)
@@ -127,6 +137,18 @@ namespace Medical.GUI
             {
                 showText.setSelectionColor(color);
             });
+        }
+
+        void scenePointEdit_EventEditSelectAccept(Widget source, EventArgs e)
+        {
+            Vector3 trans = new Vector3();
+            trans.setValue(scenePointEdit.OnlyText);
+            showText.ScenePoint = trans;
+        }
+
+        void positionOnScenePoint_CheckedChanged(Widget source, EventArgs e)
+        {
+            showText.PositionOnScenePoint = positionOnScenePoint.Checked;
         }
     }
 }

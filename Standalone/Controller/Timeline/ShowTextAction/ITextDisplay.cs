@@ -62,5 +62,9 @@ namespace Medical
         TextualAlignment TextAlign { get; set; }
 
         bool Editable { get; set; }
+
+        Vector3 ScenePoint { get; set; }
+
+        bool PositionOnScenePoint { get; set; }
     }
 }
