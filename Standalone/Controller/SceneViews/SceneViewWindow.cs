@@ -191,6 +191,13 @@ namespace Medical.Controller
             return screenPos;
         }
 
+        public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime)
+        {
+            float distance = computeOffsetToIncludePoint(includePoint);
+            Vector3 direction = (Translation - LookAt).normalized();
+            setPosition(Translation - (direction * distance), LookAt, transitionTime);
+        }
+
         /// <summary>
         /// Compute an offset from the current camera position to one that includes the given point
         /// </summary>
@@ -201,54 +208,26 @@ namespace Medical.Controller
             //Transform the point from world space to camera space
             Matrix4x4 viewMatrix = Camera.getViewMatrix();
             Vector3 localInclude = viewMatrix * include;
-            float nearDist = Camera.getNearClipDistance();
-            float fovy = Camera.getFOVy();
+            float aspect = Camera.getAspectRatio();
+            float fovy = Camera.getFOVy() * 0.5f;
+            float fovx = (float)Math.Atan(aspect * Math.Tan(fovy));
 
-            /*
-             *            / D
-             *           / |
-             *          /  |
-             *         /   |
-             *        /    |
-             *       /     |
-             *      /      |C
-             *     /       |
-             *    /        |
-             *   /         |
-             *  /          |
-             * /           |
-             * -------------
-             * E   A       B
-             * 
-             * To compute the location of things
-             * use:
-             * e = (D * nearDist) / (tan(theta) * neardist)
-             * Where
-             * e - length of leg EB, must subtract neardist to get offset from point A (this is the final answer we are searching for
-             * D - length of leg DB, can use d.y (or d.x) as appropriate
-             * theta - fovy (or fovx)
-             * How does it work:
-             * Assuming we are in camera space:
-             * The triangle ABC is the actual camera position.
-             * The triangle EBD is the point we wish to include.
-             * The two triangles are similar so their lengths are in a ratio to each other. So we want to find the length of leg EB, we know AB, BC and BD
-             * AB is neardistance or length from camera to near plane
-             * BC is tan(theta) * neardist, by definition
-             * BD is the y (or x) value of the include point in camera space
-             * The formula was derived from
-             * AB / EB = BC / BD
-             * This becomes:
-             * BD * AB / BC
-             * Then we can substitute
-             * (y (or x)) value of include point * nearDist / (tan(theta) * neardist) or the nicer form of the equation above.
-             * From this we get the length of EB, if we subtract the length of AB we know how much to move the camera back to get this dimension in view
-             * Repeat for the X, Z plane, if this camera move value is bigger use it instead
-             */ 
+            //Project the points onto the two triangles formed between the camera, the z coord and the x or y coord we know the 
+            //length of the opposite leg (x or y) and can compute the adjacent leg by multiplying by the Tan(field of view). This gives
+            //the distance from the include point the camera needs to be to include it in view on that dimension (x or y). 
+            float yOffset = Math.Abs(localInclude.y) / (float)Math.Tan(fovy);
+            float xOffset = Math.Abs(localInclude.x) / (float)Math.Tan(fovx);
 
-            //Compute for z, y plane
-            float e = localInclude.y * nearDist / ((float)Math.Tan(fovy) * nearDist);
-
-            throw new NotImplementedException();
+            //The camera is currently at localInclude.z so figure out how far it would need to move to be at the final point. This is 
+            //the difference between the z coord and the offset.
+            float zValue = Math.Abs(localInclude.z);
+            xOffset = zValue - xOffset;
+            yOffset = zValue - yOffset;
+            if (xOffset < yOffset)
+            {
+                return xOffset;
+            }
+            return yOffset;
         }
 
         public Ray3 getCameraToViewportRay(float x, float y)
