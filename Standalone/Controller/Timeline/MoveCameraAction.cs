@@ -18,7 +18,7 @@ namespace Medical
         public MoveCameraAction()
             :this(0.0f, null)
         {
-
+            
         }
 
         public MoveCameraAction(float startTime, String cameraName)
@@ -26,6 +26,7 @@ namespace Medical
             this.StartTime = startTime;
             this.CameraName = cameraName;
             this.Duration = 1.0f;
+            IncludePoint = Vector3.Invalid;
         }
 
         public MoveCameraAction(float startTime, String cameraName, Vector3 translation, Vector3 lookAt)
@@ -40,7 +41,7 @@ namespace Medical
             MDISceneViewWindow window = TimelineController.SceneViewController.findWindow(CameraName);
             if (window != null)
             {
-                window.setPosition(Translation, LookAt, Duration);
+                window.setPosition(computeTranslationWithIncludePoint(window), LookAt, Duration);
             }
             else
             {
@@ -57,7 +58,7 @@ namespace Medical
                 {
                     Vector3 translation = window.Translation;
                     Vector3 lookAt = window.LookAt;
-                    Vector3 finalTrans = Translation;
+                    Vector3 finalTrans = computeTranslationWithIncludePoint(window);
                     Vector3 finalLookAt = LookAt;
                     float percent = 1.0f;
                     float currentTime = timelineTime - StartTime;
@@ -71,12 +72,13 @@ namespace Medical
                     {
                         time = 0.001f;
                     }
-                    window.setPosition(Translation, LookAt, time);
+                    window.setPosition(finalTrans, LookAt, time);
                 }
                 else
                 {
-                    window.immediatlySetPosition(Translation, LookAt);
-                    window.setPosition(Translation, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
+                    Vector3 finalTrans = computeTranslationWithIncludePoint(window);
+                    window.immediatlySetPosition(finalTrans, LookAt);
+                    window.setPosition(finalTrans, LookAt, 0.001f); //Its weird that you have to do this, but the position won't visibly update if you don't.
                 }
             }
         }
@@ -95,6 +97,7 @@ namespace Medical
         {
             Translation = new Vector3(-Translation.x, Translation.y, Translation.z);
             LookAt = new Vector3(-LookAt.x, LookAt.y, LookAt.z);
+            IncludePoint = new Vector3(-IncludePoint.x, IncludePoint.y, IncludePoint.z);
         }
 
         public override bool Finished
@@ -111,6 +114,8 @@ namespace Medical
             Translation = currentWindow.Translation;
             LookAt = currentWindow.LookAt;
             CameraName = currentWindow.Name;
+            IncludePoint = currentWindow.getCameraToViewportRay(0, 0).Origin;
+            Log.Debug(IncludePoint.ToString());
         }
 
         public override void editing()
@@ -120,7 +125,7 @@ namespace Medical
                 SceneViewWindow window = TimelineController.SceneViewController.ActiveWindow;
                 if (window != null)
                 {
-                    window.setPosition(Translation, LookAt);
+                    window.setPosition(computeTranslationWithIncludePoint(window), LookAt);
                 }
             }
         }
@@ -136,11 +141,39 @@ namespace Medical
 
         public String CameraName { get; set; }
 
+        public Vector3 IncludePoint { get; set; }
+
+        private Vector3 computeTranslationWithIncludePoint(SceneViewWindow sceneWindow)
+        {
+            if (IncludePoint.isNumber())
+            {
+                float aspect = sceneWindow.Camera.getAspectRatio();
+                float fovy = sceneWindow.Camera.getFOVy() * 0.5f;
+
+                Vector3 direction = LookAt - Translation;
+
+                //Figure out direction, must use ogre fixed yaw calculation, first adjust direction to face -z
+                Vector3 zAdjustVec = -direction;
+                zAdjustVec.normalize();
+                Quaternion targetWorldOrientation = Quaternion.shortestArcQuatFixedYaw(ref zAdjustVec);
+
+                Matrix4x4 viewMatrix = Matrix4x4.makeViewMatrix(Translation, targetWorldOrientation);
+                float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, IncludePoint, aspect, fovy);
+
+                direction.normalize();
+                Vector3 newTrans = Translation + offset * direction;
+                return newTrans;
+            }
+
+            return Translation;
+        }
+
         #region Saveable
 
         private static readonly String TRANSLATION = "Translation";
         private static readonly String LOOKAT = "LookAt";
         private static readonly String CAMERA_NAME = "CameraName";
+        private static readonly String INCLUDE_POINT = "CameraName";
 
         protected MoveCameraAction(LoadInfo info)
             : base(info)
@@ -148,6 +181,7 @@ namespace Medical
             Translation = info.GetVector3(TRANSLATION);
             LookAt = info.GetVector3(LOOKAT);
             CameraName = info.GetString(CAMERA_NAME);
+            IncludePoint = info.GetVector3(INCLUDE_POINT, Vector3.Invalid);
         }
 
         public override void getInfo(SaveInfo info)
@@ -155,6 +189,7 @@ namespace Medical
             info.AddValue(TRANSLATION, Translation);
             info.AddValue(LOOKAT, LookAt);
             info.AddValue(CAMERA_NAME, CameraName);
+            info.AddValue(INCLUDE_POINT, IncludePoint);
             base.getInfo(info);
         }
 
