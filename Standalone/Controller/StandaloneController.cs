@@ -589,9 +589,118 @@ namespace Medical
             ThreadManager.doInvoke();
         }
 
+        /// <summary>
+        /// This matches ogre perfectly, leave it alone and calculate the correct orientation for input.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="orientation"></param>
+        /// <returns></returns>
+        Matrix4x4 makeViewMatrix(Vector3 position, Quaternion orientation) 
+		    //,const Matrix4x4 reflectMatrix)
+	    {
+		    Matrix4x4 viewMatrix;
+
+		    // View matrix is:
+		    //
+		    //  [ Lx  Uy  Dz  Tx  ]
+		    //  [ Lx  Uy  Dz  Ty  ]
+		    //  [ Lx  Uy  Dz  Tz  ]
+		    //  [ 0   0   0   1   ]
+		    //
+		    // Where T = -(Transposed(Rot) * Pos)
+
+		    // This is most efficiently done using 3x3 Matrices
+		    Matrix3x3 rot = orientation.toRotationMatrix();
+
+		    // Make the translation relative to new axes
+		    Matrix3x3 rotT = rot.transpose();
+		    Vector3 trans = -rotT * position;
+
+		    // Make final matrix
+		    viewMatrix = Matrix4x4.Identity;
+		    viewMatrix.setRotation(rotT); // fills upper 3x3
+		    viewMatrix.m03 = trans.x;
+            viewMatrix.m13 = trans.y;
+            viewMatrix.m23 = trans.z;
+
+		    // Deal with reflections
+            //if (reflectMatrix)
+            //{
+            //    viewMatrix = viewMatrix * (*reflectMatrix);
+            //}
+
+		    return viewMatrix;
+	    }
+
+        public Quaternion shortestArcQuatFixedYaw(ref Vector3 v0, ref Vector3 v1)
+        {
+            throw new NotImplementedException();
+        }
+
         void medicalController_FixedLoopUpdate(Clock time)
         {
+            //Log.Debug("Matrix test");
+            //Matrix3x3 matrix = new Matrix3x3(0, 1, 2, 3, 4, 5, 6, 7, 8);
+            //for (int i = 0; i < 3; ++i)
+            //{
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        Log.Debug("Matrix index {0}, {1} is {2}", i, j, matrix[i, j]);
+            //    }
+            //}
 
+            Log.Debug("------------------------------------");
+
+            Vector3 localTrans = new Vector3(15, -17, 29);
+            SceneViewWindow sceneWindow = sceneViewController.ActiveWindow;
+            float aspect = sceneWindow.Camera.getAspectRatio();
+            float fovy = sceneWindow.Camera.getFOVy() * 0.5f;
+
+            Vector3 direction = sceneWindow.LookAt - sceneWindow.Translation;
+            direction.normalize();
+            Log.Debug("My direction {0} length {1}", direction, direction.length());
+
+            Quaternion viewUpdateOrientation = sceneWindow.Camera.getOrientationForViewUpdate();
+            Log.Debug("Ogre direction {0}", Quaternion.quatRotate(viewUpdateOrientation, Vector3.Forward));
+
+            //Figure out direction, must use ogre fixed yaw calculation
+            Vector3 zAdjustVec = -direction;
+            zAdjustVec.normalize();
+            Vector3 mYawFixedAxis = Vector3.Up;
+            Vector3 xVec = mYawFixedAxis.cross(ref zAdjustVec);
+            xVec.normalize();
+
+            Vector3 yVec = zAdjustVec.cross(ref xVec);
+            yVec.normalize();
+
+            Quaternion targetWorldOrientation = new Quaternion();
+            targetWorldOrientation.fromAxes(xVec, yVec, zAdjustVec);
+
+
+            Log.Debug("My orientation {0}", targetWorldOrientation);// Quaternion.shortestArcQuat(ref Vector3.Forward, ref direction).normalize());//Vector3.Forward.getRotationTo(direction));
+            Log.Debug("Ogre orientatin {0}", viewUpdateOrientation);
+
+            //Log.Debug("My ogre view matrix\n {0}\n ogre\n {1}", makeViewMatrix(sceneWindow.Translation, viewUpdateOrientation).DisplayString, sceneWindow.Camera.getViewMatrix().DisplayString);
+
+            //Log.Debug("My Matrix      --   {0}\n{1}", myMatrix * localTrans, myMatrix.DisplayString);
+            //Log.Debug("Ogre Matrix    --   {0}\n{1}", viewMatrix * localTrans, viewMatrix.DisplayString);
+            //Log.Debug("My Result   {0}", SceneViewWindow.computeOffsetToIncludePoint(myMatrix, localTrans, aspect, fovy));
+            //Log.Debug("Ogre Result {0}", SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, localTrans, aspect, fovy));
+
+            //Log.Debug("My Right   {0,10}, {1,10}, {2,10}", myMatrix.m00, myMatrix.m10, myMatrix.m20);
+            //Log.Debug("Ogre Right {0,10}, {1,10}, {2,10}", viewMatrix.m00, viewMatrix.m10, viewMatrix.m20);
+
+            //Log.Debug("My Up   {0,10}, {1,10}, {2,10}", myMatrix.m01, myMatrix.m11, myMatrix.m21);
+            //Log.Debug("Ogre Up {0,10}, {1,10}, {2,10}", viewMatrix.m01, viewMatrix.m11, viewMatrix.m21);
+
+            //Log.Debug("My Forward   {0,10}, {1,10}, {2,10}", myMatrix.m02, myMatrix.m12, myMatrix.m22);
+            //Log.Debug("Ogre Forward {0,10}, {1,10}, {2,10}", viewMatrix.m02, viewMatrix.m12, viewMatrix.m22);
+
+            //Log.Debug("My CamPos   {0,10}, {1,10}, {2,10}", myMatrix.m03, myMatrix.m13, myMatrix.m23);
+            //Log.Debug("Ogre CamPos {0,10}, {1,10}, {2,10}", viewMatrix.m03, viewMatrix.m13, viewMatrix.m23);
+
+            //Log.Debug("My LookAtDirection {0}", ((sceneWindow.LookAt - sceneWindow.Translation).normalized()));
+            //Log.Debug("Ogre LookAtDirection {0}", Quaternion.quatRotate(sceneWindow.Camera.getDerivedOrientation(), Vector3.Forward));
         }
 
         void timelineController_PlaybackStopped(object sender, EventArgs e)
