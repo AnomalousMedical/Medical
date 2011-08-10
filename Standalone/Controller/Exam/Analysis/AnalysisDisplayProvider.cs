@@ -9,6 +9,6 @@ namespace Medical
     {
         void showRawData(Exam exam);
 
-        void showTextData(String text);
+        void showTextData(String title, String text);
     }
 }

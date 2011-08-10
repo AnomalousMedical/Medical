@@ -13,9 +13,10 @@ namespace Medical.GUI
             viewer.open(false);
         }
 
-        public void showTextData(string text)
+        public void showTextData(String title, String text)
         {
-            
+            TextAnalysisViewer viewer = new TextAnalysisViewer(title, text);
+            viewer.open(false);
         }
     }
 }

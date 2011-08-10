@@ -202,6 +202,7 @@
     <Compile Include="GUI\ExamViewer\ExamViewer.cs" />
     <Compile Include="GUI\ExamViewer\GenericExamOverview.cs" />
     <Compile Include="GUI\ExamViewer\MyGUIAnalysisDisplayProvider.cs" />
+    <Compile Include="GUI\ExamViewer\TextAnalysisViewer.cs" />
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />
@@ -384,6 +385,7 @@
     <EmbeddedResource Include="GUI\Editor\BrowserWindow.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\ExamViewer.layout" />
     <EmbeddedResource Include="GUI\ExamViewer\GenericExamOverview.layout" />
+    <EmbeddedResource Include="GUI\ExamViewer\TextAnalysisViewer.layout" />
     <EmbeddedResource Include="GUI\LicenseDialog\LicenseDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\ChooseSceneDialog.layout" />
     <EmbeddedResource Include="GUI\FileManagement\OpenPatientDialog.layout" />
