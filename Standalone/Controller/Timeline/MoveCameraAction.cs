@@ -114,14 +114,10 @@ namespace Medical
             Translation = currentWindow.Translation;
             LookAt = currentWindow.LookAt;
             CameraName = currentWindow.Name;
+
+            //Make the include point projected out to the lookat location
             Ray3 camRay = currentWindow.getCameraToViewportRay(1, 0);
-            Log.Debug("Cam origin {0}", camRay.Origin);
-            IncludePoint = camRay.Origin + camRay.Direction * 1.0f;
-            Log.Debug("Cam ray based {0}", IncludePoint.ToString());
-            IncludePoint = currentWindow.unproject(1, 0);
-            Log.Debug("Unproject based {0}", IncludePoint.ToString());
-            IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length(); //This is the best one
-            Log.Debug("Projected to LookAt {0}", IncludePoint);
+            IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length();
         }
 
         public override void editing()

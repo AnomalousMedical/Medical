@@ -222,10 +222,6 @@ namespace Medical.Controller
             yOffset = zValue - yOffset;
 
             Vector3 projectionSpace = (projectionMatrix * viewMatrix) * include;
-            Log.Debug("Projection {0}", projectionSpace);
-
-            Log.Debug("XOffset {0}", xOffset);
-            Log.Debug("YOffset {0}", yOffset);
 
             //Find the dimension that is more off the screen.
             if (projectionSpace.x > projectionSpace.y)
