@@ -15,9 +15,9 @@ namespace Medical
     public interface Exam : Saveable
     {
         /// <summary>
-        /// This method will make the exam show a gui that shows a breakdown of the exam.
+        /// Get a collection of ExamAnalyzers for this exam.
         /// </summary>
-        void showBreakdownGUI();
+        ExamAnalyzerCollection Analyzers { get; }
 
         /// <summary>
         /// The Date an exam was taken.

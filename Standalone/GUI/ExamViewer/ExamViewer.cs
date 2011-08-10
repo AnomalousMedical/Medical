@@ -10,6 +10,7 @@ namespace Medical.GUI
     {
         private ExamController examController;
         private MultiList examList;
+        private MyGUIAnalysisDisplayProvider displayProvider = new MyGUIAnalysisDisplayProvider();
 
         public ExamViewer(ExamController examController)
             :base("Medical.GUI.ExamViewer.ExamViewer.layout")
@@ -58,7 +59,10 @@ namespace Medical.GUI
             if (selectedIndex != uint.MaxValue)
             {
                 Exam exam = (Exam)examList.getItemDataAt(selectedIndex);
-                exam.showBreakdownGUI();
+                ExamAnalyzerMenu menu = new ExamAnalyzerMenu(exam.Analyzers);
+                menu.Closed += new Engine.EventDelegate<ExamAnalyzerMenu>(menu_Closed);
+                menu.RunExamAnalyzer += new Engine.EventDelegate<ExamAnalyzerMenu, ExamAnalyzer>(menu_RunExamAnalyzer);
+                menu.show(source.AbsoluteLeft, source.AbsoluteTop);
             }
         }
 
@@ -66,6 +70,21 @@ namespace Medical.GUI
         {
             examList.setColumnWidthAt(0, examList.Width / 2);
             examList.setColumnWidthAt(1, examList.Width / 2);
+        }
+
+        void menu_Closed(ExamAnalyzerMenu source)
+        {
+            source.Dispose();
+        }
+
+        void menu_RunExamAnalyzer(ExamAnalyzerMenu source, ExamAnalyzer arg)
+        {
+            uint selectedIndex = examList.getIndexSelected();
+            if (selectedIndex != uint.MaxValue)
+            {
+                Exam exam = (Exam)examList.getItemDataAt(selectedIndex);
+                arg.analyzeExam(exam, displayProvider);
+            }
         }
     }
 }

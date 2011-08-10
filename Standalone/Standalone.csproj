@@ -105,9 +105,14 @@
     <Compile Include="Controller\Bookmarks\Bookmark.cs" />
     <Compile Include="Controller\Bookmarks\BookmarksController.cs" />
     <Compile Include="Controller\Exam\AbstractExam.cs" />
+    <Compile Include="Controller\Exam\Analysis\AbstractExamAnalyzer.cs" />
     <Compile Include="Controller\Exam\AbstractExamMemberScanner.cs" />
     <Compile Include="Controller\Exam\AbstractExamSection.cs" />
+    <Compile Include="Controller\Exam\Analysis\AnalysisDisplayProvider.cs" />
+    <Compile Include="Controller\Exam\Analysis\RawDataAnalyzer.cs" />
     <Compile Include="Controller\Exam\Exam.cs" />
+    <Compile Include="Controller\Exam\Analysis\ExamAnalyzer.cs" />
+    <Compile Include="Controller\Exam\Analysis\ExamAnalyzerCollection.cs" />
     <Compile Include="Controller\Exam\ExamController.cs" />
     <Compile Include="Controller\Exam\ExamSaveMemberScanner.cs" />
     <Compile Include="Controller\Exam\ExamSection.cs" />
@@ -193,8 +198,10 @@
     <Compile Include="GUI\Editor\MedicalUICallback.cs" />
     <Compile Include="GUI\Editor\ObjectEditor.cs" />
     <Compile Include="GUI\Editor\PropertiesTable.cs" />
+    <Compile Include="GUI\ExamViewer\ExamAnalyzerMenu.cs" />
     <Compile Include="GUI\ExamViewer\ExamViewer.cs" />
     <Compile Include="GUI\ExamViewer\GenericExamOverview.cs" />
+    <Compile Include="GUI\ExamViewer\MyGUIAnalysisDisplayProvider.cs" />
     <Compile Include="GUI\FullscreenGUIPopup.cs" />
     <Compile Include="GUI\StandardDialogEntry.cs" />
     <Compile Include="GUI\GUIManager.cs" />

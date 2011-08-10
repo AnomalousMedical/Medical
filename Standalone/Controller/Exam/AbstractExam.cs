@@ -21,7 +21,7 @@ namespace Medical
     /// reference.
     /// </summary>
     /// <typeparam name="ExamType"></typeparam>
-    public class AbstractExam<ExamType> : Exam
+    public abstract class AbstractExam<ExamType> : Exam
         where ExamType : Exam, new()
     {
 
@@ -82,12 +82,6 @@ namespace Medical
             this.prettyName = prettyName;
         }
 
-        public virtual void showBreakdownGUI()
-        {
-            GenericExamOverview viewer = new GenericExamOverview(this);
-            viewer.open(false);
-        }
-
         [Hidden]
         public DateTime Date
         {
@@ -118,6 +112,9 @@ namespace Medical
                 return editInterface;
             }
         }
+
+        [Hidden]
+        public abstract ExamAnalyzerCollection Analyzers { get; }
 
         #region Saveable Members
 
