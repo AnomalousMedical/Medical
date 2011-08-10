@@ -45,6 +45,15 @@ namespace Medical
         }
 
         /// <summary>
+        /// Open the given exam for review. Will set the given exam as Current.
+        /// </summary>
+        /// <param name="exam">The exam to review.</param>
+        public static void openForReview(ExamType exam)
+        {
+            currentExam = exam;
+        }
+
+        /// <summary>
         /// Save this exam and clear the current exam.
         /// </summary>
         public static void saveAndClear()
