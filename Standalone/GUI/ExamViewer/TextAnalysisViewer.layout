@@ -4,6 +4,7 @@
         <Widget type="Edit" skin="Edit" position="5 5 222 257" align="Stretch" name="TextArea">
             <Property key="Edit_MultiLine" value="true"/>
             <Property key="Text_TextAlign" value="Left Top"/>
+            <Property key="Edit_WordWrap" value="true"/>
         </Widget>
     </Widget>
 </MyGUI>
