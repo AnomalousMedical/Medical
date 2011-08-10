@@ -114,8 +114,14 @@ namespace Medical
             Translation = currentWindow.Translation;
             LookAt = currentWindow.LookAt;
             CameraName = currentWindow.Name;
-            IncludePoint = currentWindow.getCameraToViewportRay(0, 0).Origin;
-            Log.Debug(IncludePoint.ToString());
+            Ray3 camRay = currentWindow.getCameraToViewportRay(1, 0);
+            Log.Debug("Cam origin {0}", camRay.Origin);
+            IncludePoint = camRay.Origin + camRay.Direction * 1.0f;
+            Log.Debug("Cam ray based {0}", IncludePoint.ToString());
+            IncludePoint = currentWindow.unproject(1, 0);
+            Log.Debug("Unproject based {0}", IncludePoint.ToString());
+            IncludePoint = camRay.Origin + camRay.Direction * (LookAt - Translation).length(); //This is the best one
+            Log.Debug("Projected to LookAt {0}", IncludePoint);
         }
 
         public override void editing()
@@ -158,7 +164,8 @@ namespace Medical
                 Quaternion targetWorldOrientation = Quaternion.shortestArcQuatFixedYaw(ref zAdjustVec);
 
                 Matrix4x4 viewMatrix = Matrix4x4.makeViewMatrix(Translation, targetWorldOrientation);
-                float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, IncludePoint, aspect, fovy);
+                Matrix4x4 projectionMatrix = sceneWindow.Camera.getProjectionMatrix();
+                float offset = SceneViewWindow.computeOffsetToIncludePoint(viewMatrix, projectionMatrix, IncludePoint, aspect, fovy);
 
                 direction.normalize();
                 Vector3 newTrans = Translation + offset * direction;
@@ -173,7 +180,7 @@ namespace Medical
         private static readonly String TRANSLATION = "Translation";
         private static readonly String LOOKAT = "LookAt";
         private static readonly String CAMERA_NAME = "CameraName";
-        private static readonly String INCLUDE_POINT = "CameraName";
+        private static readonly String INCLUDE_POINT = "IncludePoint";
 
         protected MoveCameraAction(LoadInfo info)
             : base(info)

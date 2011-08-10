@@ -194,15 +194,16 @@ namespace Medical.Controller
         public void moveCameraToIncludePoint(Vector3 includePoint, float transitionTime)
         {
             Matrix4x4 viewMatrix = Camera.getViewMatrix();
+            Matrix4x4 projectionMatrix = Camera.getProjectionMatrix();
             float aspect = Camera.getAspectRatio();
             float fovy = Camera.getFOVy() * 0.5f;
 
-            float distance = computeOffsetToIncludePoint(viewMatrix, includePoint, aspect, fovy);
+            float distance = computeOffsetToIncludePoint(viewMatrix, projectionMatrix, includePoint, aspect, fovy);
             Vector3 direction = (Translation - LookAt).normalized();
             setPosition(Translation - (direction * distance), LookAt, transitionTime);
         }
 
-        public static float computeOffsetToIncludePoint(Matrix4x4 viewMatrix, Vector3 include, float aspect, float fovy)
+        public static float computeOffsetToIncludePoint(Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, Vector3 include, float aspect, float fovy)
         {
             //Transform the point from world space to camera space
             Vector3 localInclude = viewMatrix * include;
@@ -219,7 +220,15 @@ namespace Medical.Controller
             float zValue = Math.Abs(localInclude.z);
             xOffset = zValue - xOffset;
             yOffset = zValue - yOffset;
-            if (xOffset < yOffset)
+
+            Vector3 projectionSpace = (projectionMatrix * viewMatrix) * include;
+            Log.Debug("Projection {0}", projectionSpace);
+
+            Log.Debug("XOffset {0}", xOffset);
+            Log.Debug("YOffset {0}", yOffset);
+
+            //Find the dimension that is more off the screen.
+            if (projectionSpace.x > projectionSpace.y)
             {
                 return xOffset;
             }
@@ -233,6 +242,17 @@ namespace Medical.Controller
                 return sceneView.getCameraToViewportRay(x, y);
             }
             return new Ray3();
+        }
+
+        public Vector3 unproject(float screenX, float screenY)
+        {
+            Matrix4x4 inverseVP = (Camera.getProjectionMatrix() * Camera.getViewMatrix()).inverse();
+
+            float nx = (2.0f * screenX) - 1.0f;
+            float ny = 1.0f - (2.0f * screenY);
+            Vector3 midPoint = new Vector3(nx, ny, 0.0f);
+
+            return inverseVP * midPoint;
         }
 
         public void showSceneStats(bool show)
