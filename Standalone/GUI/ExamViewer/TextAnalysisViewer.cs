@@ -16,6 +16,7 @@ namespace Medical.GUI
             window.Caption = caption;
 
             textArea = (Edit)window.findWidget("TextArea");
+            textArea.MaxTextLength = (uint)text.Length;
             textArea.Caption = text;
         }
 
