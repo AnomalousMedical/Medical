@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout">
+    <Widget type="Window" skin="WindowCSX" position="98 60 314 304" layer="Overlapped">
+        <Widget type="Button" skin="Button" position="3 2 107 26" name="Add">
+            <Property key="Widget_Caption" value="Add Buttons"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="114 2 107 26" name="Remove">
+            <Property key="Widget_Caption" value="Remove Buttons"/>
+        </Widget>
+        <Widget type="ScrollView" skin="ScrollView" position="8 31 299 250" align="Stretch" name="ButtonScroller">
+            <Property key="ScrollView_CanvasSize" value="299 250"/>
+        </Widget>
+        <Widget type="Button" skin="Button" position="222 5 90 22" name="Invalid">
+            <Property key="Widget_Caption" value="Create Invalid"/>
+        </Widget>
+    </Widget>
+</MyGUI>
