@@ -213,6 +213,9 @@ namespace Medical
             {
                 Log.Info("MultiTouch not available");
             }
+
+            //Coroutine
+            Coroutine.SetTimerFixed(medicalController.MainTimer);
         }
 
         public void createGUI()

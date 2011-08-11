@@ -85,7 +85,24 @@ namespace Medical
             }
         }
 
-        public String getThumbnail(Anatomy anatomy, float theta)
+        /// <summary>
+        /// Check to see if a piece of anatomy has a thumbnail.
+        /// </summary>
+        /// <param name="anatomy">The anatomy to check.</param>
+        /// <returns>True if there is a thumbnail, false if not.</returns>
+        public bool hasThumbnail(Anatomy anatomy)
+        {
+            return imageAtlas.containsImage(anatomy.AnatomicalName);
+        }
+
+        /// <summary>
+        /// Get the string for a thumbnail. Will return true if the thumbnail had to be created.
+        /// </summary>
+        /// <param name="anatomy">The anatomy to create the thumbnail for.</param>
+        /// <param name="theta">The fovy</param>
+        /// <param name="imageName">The name of the image will be put here.</param>
+        /// <returns></returns>
+        public bool getThumbnail(Anatomy anatomy, float theta, out String imageName)
         {
             if (!imageAtlas.containsImage(anatomy.AnatomicalName))
             {
@@ -112,7 +129,6 @@ namespace Medical
                 imageProperties.CameraLookAt = center;
                 imageProperties.CameraPosition = translation;
 
-                String imageName;
                 using (Bitmap thumb = imageRenderer.renderImage(imageProperties))
                 {
                     imageName = imageAtlas.addImage(anatomy.AnatomicalName, thumb);
@@ -120,11 +136,12 @@ namespace Medical
 
                 TransparencyController.ActiveTransparencyState = currentState;
 
-                return imageName;
+                return true;
             }
             else
             {
-                return imageAtlas.getImageId(anatomy.AnatomicalName);
+                imageName = imageAtlas.getImageId(anatomy.AnatomicalName);
+                return false;
             }
         }
     }

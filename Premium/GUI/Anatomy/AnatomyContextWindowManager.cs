@@ -51,7 +51,9 @@ namespace Medical.GUI
         internal String getThumbnail(Anatomy anatomy)
         {
             Radian fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-            return anatomyController.getThumbnail(anatomy, fovy);
+            String thumbnail;
+            anatomyController.getThumbnail(anatomy, fovy, out thumbnail);
+            return thumbnail;
         }
 
         internal void centerAnatomy(AnatomyContextWindow requestingWindow)

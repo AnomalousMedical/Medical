@@ -51,6 +51,9 @@ namespace Medical.GUI
         private Vector3 mouseDownMousePos;
         private const int MOUSE_MOVE_GRACE_PIXELS = 3;
 
+        private bool runningThumbnailCoroutine = false;
+        private int currentThumbnailIndex = 0;
+
         public AnatomyFinder(AnatomyController anatomyController, SceneViewController sceneViewController)
             :base("Medical.GUI.Anatomy.AnatomyFinder.layout")
         {
@@ -331,11 +334,41 @@ namespace Medical.GUI
             ButtonGridItem anatomyItem = anatomyList.addItem("", anatomy.AnatomicalName, "");
             if (this.Visible)
             {
-                String imageName = anatomyController.getThumbnail(anatomy, sceneViewController.ActiveWindow.Camera.getFOVy());
-                anatomyItem.setImage(imageName);
+                startThumbnailCoroutine();
             }
             anatomyItem.UserObject = anatomy;
             return anatomyItem;
+        }
+
+        private void startThumbnailCoroutine()
+        {
+            if (!runningThumbnailCoroutine)
+            {
+                runningThumbnailCoroutine = true;
+                Coroutine.Start(cogenerateThumbnails());
+            }
+            currentThumbnailIndex = 0;
+        }
+
+        IEnumerator<YieldAction> cogenerateThumbnails()
+        {
+            while (currentThumbnailIndex < anatomyList.Count)
+            {
+                ButtonGridItem anatomyItem = anatomyList.getItem(currentThumbnailIndex);
+                String imageName;
+                bool generatedThumb = anatomyController.getThumbnail((Anatomy)anatomyItem.UserObject, sceneViewController.ActiveWindow.Camera.getFOVy(), out imageName);
+                anatomyItem.setImage(imageName);
+                
+                ++currentThumbnailIndex;
+
+                if (generatedThumb)
+                {
+                    //Only delay if the thumbnail had to be generated. Otherwise using the existing thumbnail is fast.
+                    yield return Coroutine.Wait(0);
+                }
+            }
+            runningThumbnailCoroutine = false;
+            yield break;
         }
 
         protected override void onShown(EventArgs args)
@@ -343,11 +376,7 @@ namespace Medical.GUI
             base.onShown(args);
             int itemCount = anatomyList.Count;
             float fovy = sceneViewController.ActiveWindow.Camera.getFOVy();
-            for (int i = 0; i < itemCount; ++i)
-            {
-                ButtonGridItem item = anatomyList.getItem(i);
-                item.setImage(anatomyController.getThumbnail((Anatomy)item.UserObject, fovy));
-            }
+            startThumbnailCoroutine();
         }
     }
 }
