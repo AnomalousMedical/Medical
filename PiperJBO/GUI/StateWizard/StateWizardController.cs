@@ -60,6 +60,7 @@ namespace Medical.GUI
         public void Dispose()
         {
             stateWizardButtons.Dispose();
+            wizardIconPanel.Dispose();
         }
 
         public void addWizard(StateWizard wizard)

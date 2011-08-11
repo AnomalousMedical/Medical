@@ -31,6 +31,7 @@ namespace Medical.GUI
 
         public override void Dispose()
         {
+            windowLayoutMenu.Dispose();
             base.Dispose();
         }
 

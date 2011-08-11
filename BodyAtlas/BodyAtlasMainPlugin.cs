@@ -35,6 +35,7 @@ namespace Medical.GUI
 
         public void Dispose()
         {
+            examViewer.Dispose();
             renderDialog.Dispose();
             options.Dispose();
             chooseSceneDialog.Dispose();

@@ -35,6 +35,7 @@ namespace Medical.GUI
         private MyGUIImageDisplayFactory imageDisplayFactory;
         private MyGUITextDisplayFactory textDisplayFactory;
         private List<FullscreenGUIPopup> fullscreenPopups = new List<FullscreenGUIPopup>();
+        private MyGUIImageRendererProgress imageRendererProgress;
 
         public GUIManager(StandaloneController standaloneController)
         {
@@ -54,6 +55,7 @@ namespace Medical.GUI
             configFile.writeConfigFile();
 
             //Other
+            imageRendererProgress.Dispose();
             questionProvider.Dispose();
             continuePrompt.Dispose();
             standaloneController.SceneLoaded -= standaloneController_SceneLoaded;
@@ -107,7 +109,8 @@ namespace Medical.GUI
 
             screenLayoutManager.Root.SuppressLayout = false;
 
-            standaloneController.ImageRenderer.ImageRendererProgress = new MyGUIImageRendererProgress();
+            imageRendererProgress = new MyGUIImageRendererProgress();
+            standaloneController.ImageRenderer.ImageRendererProgress = imageRendererProgress;
 
             taskbar.SuppressLayout = false;
             taskbar.layout();

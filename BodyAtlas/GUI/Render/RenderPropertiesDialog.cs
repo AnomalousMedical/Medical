@@ -41,6 +41,12 @@ namespace Medical.GUI
             resolutionMenu.ResolutionChanged += new EventHandler(resolutionMenu_ResolutionChanged);
         }
 
+        public override void Dispose()
+        {
+            resolutionMenu.Dispose();
+            base.Dispose();
+        }
+
         public void render()
         {
             SceneViewWindow drawingWindow = sceneViewController.ActiveWindow;

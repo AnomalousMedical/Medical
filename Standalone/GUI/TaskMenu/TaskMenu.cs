@@ -61,6 +61,7 @@ namespace Medical.GUI
             iconGrid.defineGroup(TaskMenuCategories.Tools);
             iconGrid.defineGroup(TaskMenuCategories.Editor);
             iconGrid.defineGroup(TaskMenuCategories.System);
+            iconGrid.defineGroup(TaskMenuCategories.Developer);
 
             recentDocuments = new TaskMenuRecentDocuments(widget, documentController);
             recentDocuments.DocumentClicked += new EventDelegate(recentDocuments_DocumentClicked);

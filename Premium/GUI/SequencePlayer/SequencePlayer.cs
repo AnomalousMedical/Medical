@@ -38,6 +38,12 @@ namespace Medical
             sequenceController.CurrentSequenceChanged += new MovementSequenceEvent(sequenceController_CurrentSequenceChanged);
         }
 
+        public override void Dispose()
+        {
+            sequenceMenu.Dispose();
+            base.Dispose();
+        }
+
         void stopButton_MouseButtonClick(Widget source, EventArgs e)
         {
             sequenceController.stopPlayback();

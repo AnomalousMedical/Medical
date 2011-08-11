@@ -8,7 +8,7 @@ using Medical.Controller;
 
 namespace Medical.GUI
 {
-    class MyGUIImageRendererProgress : ImageRendererProgress
+    class MyGUIImageRendererProgress : ImageRendererProgress, IDisposable
     {
         private Layout layout;
         private Widget mainWidget;
@@ -25,6 +25,11 @@ namespace Medical.GUI
             statusText = mainWidget.findWidget("StatusText") as StaticText;
 
             Visible = false;
+        }
+
+        public void Dispose()
+        {
+            LayoutManager.Instance.unloadLayout(layout);
         }
 
         public void update(uint percentage, String status)
