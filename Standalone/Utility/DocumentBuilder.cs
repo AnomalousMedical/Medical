@@ -47,6 +47,16 @@ namespace Medical
             stringBuilder.Append("  ");
         }
 
+        public void write(String text)
+        {
+            stringBuilder.Append(text);
+        }
+
+        public void write(String text, params Object[] args)
+        {
+            stringBuilder.AppendFormat(text, args);
+        }
+
         public void startParagraph()
         {
             stringBuilder.Append('\t');
